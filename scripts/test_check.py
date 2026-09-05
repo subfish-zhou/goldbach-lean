@@ -1,0 +1,63 @@
+"""Regression tests for the source scanner and the axiom-report acceptance gate."""
+import unittest
+
+from check import EXPECTED, check_axiom_output, code_only
+
+
+class SourceMaskTests(unittest.TestCase):
+    def test_nested_comments(self):
+        text = "theorem ok : True := by trivial /- sorry /- axiom -/ admit -/"
+        result = code_only(text)
+        self.assertIn("by trivial", result)
+        self.assertNotIn("sorry", result)
+        self.assertEqual(len(text), len(result))
+
+    def test_line_comments_and_strings(self):
+        text = 'def s := "sorry \\" /-" -- axiom\ntheorem bad := sorry\n'
+        result = code_only(text)
+        self.assertEqual(result.count("sorry"), 1)
+        self.assertEqual(result.count("\n"), text.count("\n"))
+
+    def test_code_survives(self):
+        text = "axiom bad : False\nexample : False := by sorry\n"
+        self.assertEqual(code_only(text), text)
+
+    def test_unterminated_comment(self):
+        with self.assertRaises(ValueError):
+            code_only("/- unfinished")
+
+
+class AxiomReportTests(unittest.TestCase):
+    @staticmethod
+    def reports(extra=""):
+        names = ",\n Classical.choice, Quot.sound" + extra
+        return "\n".join(f"'{name}' depends on axioms: [propext{names}]" for name in EXPECTED)
+
+    def test_multiline_reports(self):
+        check_axiom_output(self.reports())
+
+    def test_missing_report_rejected(self):
+        with self.assertRaises(RuntimeError):
+            check_axiom_output("")
+
+    def test_nonstandard_axiom_rejected(self):
+        with self.assertRaises(RuntimeError):
+            check_axiom_output(self.reports(", sorryAx"))
+
+    def test_early_nonstandard_report_rejected(self):
+        bad = "'Goldbach.chen_theorem' depends on axioms: [sorryAx]\n"
+        with self.assertRaises(RuntimeError):
+            check_axiom_output(bad + self.reports())
+
+    def test_duplicate_report_rejected(self):
+        duplicate = "'Goldbach.chen_theorem' depends on axioms: [propext]\n"
+        with self.assertRaises(RuntimeError):
+            check_axiom_output(duplicate + self.reports())
+
+    def test_standard_subset_accepted(self):
+        check_axiom_output("\n".join(
+            f"'{name}' depends on axioms: [propext]" for name in EXPECTED))
+
+
+if __name__ == "__main__":
+    unittest.main()
