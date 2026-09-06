@@ -489,7 +489,7 @@ private lemma qD_eq_dde_mainStrict
 
 private lemma qD_le_lambdaNegDeriv_mul_weightStrict
     {H : Section13HatLayers} {β D d Δ t : ℝ}
-    (hH : Section13HatContract H β) (sign : ErrorSign)
+    (_hH : Section13HatContract H β) (sign : ErrorSign)
     (hlog : 0 < Real.log D) (ht : 1 < t)
     (hasymp : weightedHat H sign t * perturbationSlope D d 0 t ≤
       t * H.T sign.opposite (t - 1) *
@@ -522,7 +522,7 @@ private lemma qD_le_lambdaNegDeriv_mul_weightStrict
   rw [qD_eq_dde_mainStrict sign hlog ht]
   dsimp [lambdaNegDerivStrict]
   apply mul_le_mul_of_nonneg_right _ hw0
-  convert mul_le_mul_of_nonneg_left hmain hp0 using 1 <;> ring
+  convert mul_le_mul_of_nonneg_left hmain hp0 using 1; ring
 
 private lemma continuousOn_lambdaNegDerivStrict
     {H : Section13HatLayers} {β D d a b : ℝ}

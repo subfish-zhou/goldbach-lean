@@ -11,16 +11,18 @@ namespace DirichletCharacter
 
 variable {q : ℕ} [NeZero q]
 
+omit [NeZero q] in
 private lemma inv_zero_eq_zero {χ : DirichletCharacter ℂ q} (hq : 1 < q) :
     χ⁻¹ (0 : ZMod q) = 0 := by
   let hq' : Fact (1 < q) := ⟨hq⟩
-  letI := hq'
+  let := hq'
   simpa using (MulChar.map_nonunit χ⁻¹ (a := (0 : ZMod q)) not_isUnit_zero)
 
 private lemma stdAddChar_mul_natCast_eq_pow (j : ZMod q) (n : ℕ) :
     stdAddChar (j * (n : ZMod q)) = stdAddChar j ^ n := by
   rw [mul_comm, ← nsmul_eq_mul, AddChar.map_nsmul_eq_pow]
 
+omit [NeZero q] in
 private lemma natCast_ne_zero_of_lt {n : ℕ} (hn1 : 1 ≤ n) (hnq : n < q) :
     (n : ZMod q) ≠ 0 := by
   intro h
@@ -190,7 +192,8 @@ private lemma norm_sum_range_stdAddChar_natCast_le_q_div_min
 where
   hqpos : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
 
-private lemma q_div_min_le_q_mul_inv_add_inv {n : ℕ} (hn1 : 1 ≤ n) (hnq : n < q) :
+omit [NeZero q] in
+private lemma q_div_min_le_q_mul_inv_add_inv {n : ℕ} (hn1 : 1 ≤ n) (_hnq : n < q) :
     (q : ℝ) / min n (q - n) ≤
       (q : ℝ) * (((n : ℝ)⁻¹) + (((q - n : ℕ) : ℝ)⁻¹)) := by
   have hq0 : 0 ≤ (q : ℝ) := by positivity

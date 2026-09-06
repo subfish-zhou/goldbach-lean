@@ -172,7 +172,7 @@ theorem claim145_odd_lowStrip_smallLog_scalarUniform_one
       simp
     dsimp only
     rw [show Real.exp (Real.sqrt K / 2) * Real.exp (Real.sqrt K / 2) =
-      Real.exp (Real.sqrt K) by rw [← Real.exp_add]; congr 1 <;> ring] at hmul
+      Real.exp (Real.sqrt K) by rw [← Real.exp_add]; congr 1; ring] at hmul
     rw [hpow] at hmul
     dsimp [R, L] at hmul ⊢
     nlinarith

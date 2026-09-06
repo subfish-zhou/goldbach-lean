@@ -12,6 +12,8 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    env:
+      LEAN_NUM_THREADS: "2"
     steps:
       - uses: actions/checkout@v4
       - name: Install elan
@@ -23,8 +25,8 @@ jobs:
           printf '%s\n' "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Fetch dependency cache
         run: lake exe cache get
-      - name: Build public theorem
-        run: lake build
+      - name: Build all libraries without warnings
+        run: lake --wfail build
       - name: Check sources, statements and axioms
         run: python3 scripts/check.py
       - name: Test verification scripts
@@ -59,3 +61,28 @@ jobs:
           name: goldbach-blueprint
           path: blueprint/web
           if-no-files-found: error
+      - name: Build and validate Lean API documentation
+        run: python3 scripts/build_docs.py --blueprint blueprint/web
+      - name: Upload complete documentation website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docbuild/.lake/build/site
+
+  deploy:
+    name: Publish documentation
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified documentation
+        id: deployment
+        uses: actions/deploy-pages@v4

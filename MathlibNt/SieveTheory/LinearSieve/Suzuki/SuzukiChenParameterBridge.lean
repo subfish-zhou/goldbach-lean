@@ -45,7 +45,7 @@ theorem chen_exponent_div_s {ε : ℝ} (hε : ε < 1 / 2) :
 /-- Exact, scan-free floor/rpow/ceiling bridge.  Every natural below Chen's
 `N^(1/10)` cutoff is strictly below the Suzuki natural cutoff `z`. -/
 theorem chen_lt_tenth_rpow_imp_lt_chenZ
-    {N p : ℕ} {ε : ℝ} (hN : 1 ≤ N) (hε0 : 0 ≤ ε) (hε : ε < 1 / 10)
+    {N p : ℕ} {ε : ℝ} (hN : 1 ≤ N) (_hε0 : 0 ≤ ε) (hε : ε < 1 / 10)
     (hp : (p : ℝ) < (N : ℝ) ^ (1 / 10 : ℝ)) :
     p < chenZ N ε := by
   let a : ℝ := 1 / 2 - ε

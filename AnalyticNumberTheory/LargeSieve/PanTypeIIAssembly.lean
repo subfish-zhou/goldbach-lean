@@ -24,8 +24,6 @@ open scoped ArithmeticFunction
 
 noncomputable section
 
-set_option linter.unusedVariables false
-set_option linter.style.haveILetI false
 set_option maxHeartbeats 4000000
 
 /-! ### Primitive-character decomposition: termwise bounds and fiber cardinality -/
@@ -181,7 +179,7 @@ theorem panTypeII_sqSum_primitiveDecomposition (q m u v : ℕ) (hq : 0 < q) :
     panTypeIICharSqSum q m u v ≤
       2 * (∑ q' ∈ q.divisors, (Nat.totient q : ℝ) * panTypeIIPrimitiveSqSum q' m u v) +
         2 * (Nat.totient q : ℝ) * (panTypeII_nonCoprimeDensity q m u v) ^ 2 := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
   have hpoint : ∀ χ : DirichletCharacter ℂ q,
       ‖panTypeIIV3CharSum q m u v χ‖ ^ 2 ≤
         2 * ‖panTypeIIV3CharSum χ.conductor m u v χ.primitiveCharacter‖ ^ 2 +

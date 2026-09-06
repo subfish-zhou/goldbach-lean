@@ -32,7 +32,6 @@ lemma test_int_gamma {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
   apply Finset.sum_congr rfl
   intro ν hν
   rw [← Complex.exp_add]
-  congr 1
   ring
 
 /-- The Gamma tail is a shifted Laplace moment, including its factorial normalization. -/
@@ -69,17 +68,15 @@ lemma test_int_gamma_value {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
         apply setIntegral_congr_fun measurableSet_Ioi
         intro u hu
         simp only [chenGammaCDF, chenExpPartial, chenLaplaceMoment, pow_zero,
-          Finset.sum_range_succ, Finset.sum_range_zero, Finset.sum_empty,
-          Finset.sum_insert, Nat.factorial_zero, Nat.cast_one, div_one,
-          Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_mul,
-          Complex.ofReal_exp, Complex.ofReal_neg, mul_one, zero_add]
+          Finset.sum_range_succ, Finset.sum_range_zero, Nat.factorial_zero, Nat.cast_one, div_one,
+          Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_exp, Complex.ofReal_neg, mul_one, zero_add]
         rw [mul_sub, mul_one]
         congr 1
         rw [← Complex.exp_add]
         congr 1
         ring, h0, h1]
-      have hq0 : q ≠ 0 := by intro h; simpa [h] using hq
-      have hq10 : q + 1 ≠ 0 := by intro h; simpa [h] using hq1
+      have hq0 : q ≠ 0 := by intro h; simp [h] at hq
+      have hq10 : q + 1 ≠ 0 := by intro h; simp [h] at hq1
       rw [add_comm 1 q]
       field_simp [hq0, hq10]
       ring
@@ -111,8 +108,8 @@ lemma test_int_gamma_value {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
         rw [integral_div, integral_chenLaplaceMoment hq1]
         have hf : ((n + 1).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (n + 1)
         field_simp]
-      have hq0 : q ≠ 0 := by intro h; simpa [h] using hq
-      have hq10 : q + 1 ≠ 0 := by intro h; simpa [h] using hq1
+      have hq0 : q ≠ 0 := by intro h; simp [h] at hq
+      have hq10 : q + 1 ≠ 0 := by intro h; simp [h] at hq1
       rw [add_comm 1 q]
       field_simp [hq0, hq10]
       ring
@@ -204,7 +201,7 @@ lemma mellin_eq_integral_exp_neg (f : ℝ → ℂ) (s : ℂ) :
   rw [abs_neg, abs_of_pos (Real.exp_pos _)]
   rw [← mul_assoc, mul_comm (Real.exp (-u) : ℂ), chen_cpow_exp_neg]
 
-lemma chen1973GammaDensityPrimitive_exp_neg {x : ℝ} (hx : 1 < x) (u : ℝ) :
+lemma chen1973GammaDensityPrimitive_exp_neg {x : ℝ} (_hx : 1 < x) (u : ℝ) :
     chen1973GammaDensityPrimitive x (Real.exp (-u)) =
       if u ≤ 0 then 0 else
         (chenGammaCDF (chen1973PerronOrder x) (chen1973PerronScale x * u) : ℂ) := by
@@ -217,7 +214,7 @@ lemma chen1973GammaDensityPrimitive_exp_neg {x : ℝ} (hx : 1 < x) (u : ℝ) :
     have hlog : Real.log (1 / Real.exp (-u)) = u := by
       rw [one_div, ← Real.exp_neg, neg_neg, Real.log_exp]
     simp [chen1973GammaDensityPrimitive, hu, not_le_of_gt he0,
-      not_le_of_gt he1, hlog]
+      not_le_of_gt he1]
 
 lemma mellin_chen1973GammaDensityPrimitive {x : ℝ} (hx : 1 < x)
     {s : ℂ} (hs : 0 < s.re) :

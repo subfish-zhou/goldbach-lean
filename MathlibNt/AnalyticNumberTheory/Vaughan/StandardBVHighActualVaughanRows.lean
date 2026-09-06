@@ -176,7 +176,7 @@ lemma highConductorSet_eq_interval (N Q C : ℕ)
     exact ⟨⟨by omega, hdQ⟩, Nat.add_one_le_iff.mp hRd⟩
 
 private lemma three_sq_le_three_sum_sq {x y z : ℝ}
-    (hx : 0 ≤ x) (hy : 0 ≤ y) (hz : 0 ≤ z) :
+    (_hx : 0 ≤ x) (_hy : 0 ≤ y) (_hz : 0 ≤ z) :
     (x + y + z) ^ 2 ≤ 3 * (x ^ 2 + y ^ 2 + z ^ 2) := by
   nlinarith [sq_nonneg (x - y), sq_nonneg (x - z), sq_nonneg (y - z)]
 

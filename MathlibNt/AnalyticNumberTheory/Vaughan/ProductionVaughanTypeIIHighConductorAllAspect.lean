@@ -126,8 +126,8 @@ theorem apNormalizedVaughanTypeIIMeanOn_highConductor_le_allAspect_aggregate
       have h2i : 2 * i ≤ N := by omega
       convert
         apNormalizedVaughanTypeIIMeanOn_productionCell_le_allAspect
-          N Q C u v i G hi hIoc hN (G.lower_pos i hi) h2i hu hv using 1 <;>
-        dsimp [A, K, U, V] <;> ring
+          N Q C u v i G hi hIoc hN (G.lower_pos i hi) h2i hu hv using 1;
+        dsimp [A, K, U, V]; ring
   -- Reindex the exact high-conductor carrier, without adding conductors.
   have hreindex :
       apNormalizedVaughanTypeIIMeanOn N u v (highConductorSet N Q C) =
@@ -151,7 +151,6 @@ theorem apNormalizedVaughanTypeIIMeanOn_highConductor_le_allAspect_aggregate
         _ = _ := by
           simp only [div_eq_mul_inv, Finset.sum_add_distrib,
             Finset.sum_const, nsmul_eq_mul]
-          push_cast
           rw [← Finset.mul_sum, ← Finset.sum_mul]
           ring
     _ ≤ A * K *

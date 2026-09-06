@@ -49,7 +49,7 @@ theorem norm_deriv_holomorphicLog_le
       simpa [mem_ball, hznorm] using (half_lt_self hR)
     have hbc := borelCaratheodory_zero hA hHd hHre hR hzball hH0
     rw [hznorm] at hbc
-    convert hbc using 1 <;> field_simp <;> ring
+    convert hbc using 1; field_simp; ring
   -- The closed half-radius disk stays inside the holomorphicity domain.
   have hclosure : closure (ball (0 : ℂ) (R / 2)) ⊆ ball 0 R := by
     rw [closure_ball 0 hhalf.ne']
@@ -69,14 +69,14 @@ theorem norm_deriv_holomorphicLog_le
         (houter.comp 0 ((hasDerivAt_id (0 : ℂ)).const_add c)).sub_const (h c)
     exact hH.deriv
   rw [hderiv] at hcauchy
-  convert hcauchy using 1 <;> field_simp <;> ring
+  convert hcauchy using 1; field_simp; ring
 
 /-- If `h` is a holomorphic logarithm of `g`, the preceding additive estimate
 is exactly an `O(A/R)` estimate for the nonzero local explicit-formula
 remainder `g'/g`. -/
 theorem norm_logDeriv_le_of_holomorphicLog_oscillation
     (g h : ℂ → ℂ) (c : ℂ) {R A : ℝ} (hR : 0 < R) (hA : 0 < A)
-    (hg : DifferentiableOn ℂ g (ball c R))
+    (_hg : DifferentiableOn ℂ g (ball c R))
     (hh : DifferentiableOn ℂ h (ball c R))
     (hexp : EqOn (fun z ↦ exp (h z)) g (ball c R))
     (hosc : ∀ z ∈ ball c R, (h z).re - (h c).re ≤ A) :

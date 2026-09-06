@@ -209,7 +209,7 @@ theorem caseII_total_le_doubleRounded_direct_concrete_relative_natCeil
           (caseIIRoundedTransportErr S H N (D : ℝ) yr zr
             d Δ σ C K B0 s + suzukiVProduct S (z : ℝ) *
               (K * 3 ^ 2 / (s * Real.log (D : ℝ)))) := by
-        convert hSharp using 1 <;> ring
+        convert hSharp using 1; ring
     _ ≤ suzukiVProduct S (z : ℝ) * finiteSourceLayer 1 2 N s +
           (B0 + suzukiVProduct S (z : ℝ) *
             (P * E * L * (R + A + Qr + B))) := by

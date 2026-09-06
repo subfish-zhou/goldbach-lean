@@ -120,7 +120,7 @@ private theorem lowS_exponent_comparison
         (Real.log B + 4) * (r + s) := by
       nlinarith
     have hBpart : B * (r + s) ≤ (B + Real.log B + 10) * (r + s) := by
-      gcongr <;> linarith
+      gcongr; linarith
     nlinarith
   calc
     L + m * (1 + Real.log L - Real.log m) =

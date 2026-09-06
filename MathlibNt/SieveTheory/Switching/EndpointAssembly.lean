@@ -228,13 +228,13 @@ noncomputable def switchingSieve (N a : ℕ) : BoundingSieve where
     intro p hp hdiv
     unfold switchingSieveNu
     have hp0 : p ≠ 0 := hp.ne_zero
-    simp [hp0]
+    simp []
     exact hp.pos
   nu_lt_one_of_prime := by
     intro p hp hdiv
     unfold switchingSieveNu
     have hp0 : p ≠ 0 := hp.ne_zero
-    simp [hp0]
+    simp []
     simpa [div_eq_mul_inv] using
       (div_lt_one (by exact_mod_cast hp.pos : (0 : ℝ) < (p : ℝ))).mpr
         (by exact_mod_cast hp.one_lt : (1 : ℝ) < (p : ℝ))
@@ -522,7 +522,7 @@ theorem switchingSieve_mainTerm_eq_primeProduct (N a : ℕ) :
   have hqprime : q.Prime := (Finset.mem_filter.mp hq).2
   have hq0 : q ≠ 0 := hqprime.ne_zero
   unfold switchingSieve switchingSieveNu
-  simp [hq0]
+  simp []
 
 /-- **Selberg upper bound for the switching sieve**, an unconditional instance: the switched-set sifted sum satisfies
 ≤ `totalMass·(Σ selbergTerms)⁻¹ + errSum(Λ²w*)`. -/
@@ -750,7 +750,7 @@ theorem corrected_chens_theorem_of_q1Count_and_triple
     (hq1 : ∀ N : ℕ, Nq ≤ N → Even N →
       correctedChenQ1Count N ≤ Cq * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
         (correctedChenZ N - 1) * (N : ℝ) / (log (N : ℝ)) ^ 2)
-    (hCq : 0 < Cq)
+    (_hCq : 0 < Cq)
     (hnum : (10 / 3 : ℝ) > (cₘ + (Cq + 1 / 2)) / 2) :
     ∃ N₀ : ℕ, ∀ N : ℕ, N ≥ N₀ → Even N →
       ∃ p q : ℕ, p.Prime ∧ q ≥ 2 ∧ Nat.IsAtMostAlmostPrime 2 q ∧ N = p + q := by
@@ -1097,7 +1097,7 @@ lemma correctedChenSieveProduct_pos_aux (N : ℕ) : 0 ≤ correctedChenSieveProd
       (Nat.mem_primeFactors.mp hp).2.1
     have hpc : p < correctedChenZ N ∧ 2 < p ∧ ¬ p ∣ N :=
       (prime_dvd_correctedChenSiftingProduct hpp).mp hpdvd
-    have hinv := correctedChenNu_inv_prime (N := N) hpp hpc.2.1
+    have hinv := correctedChenNu_inv_prime (_N := N) hpp hpc.2.1
     have hpos : 0 < (1 - correctedChenNu p) := by
       have hnum : 0 < ((p : ℝ) - 1) / ((p : ℝ) - 2) := by
         have hcast : (3 : ℝ) ≤ (p : ℝ) := by exact_mod_cast (by omega : 3 ≤ p)
@@ -1371,7 +1371,7 @@ theorem chensTheorem_of_jurkatRichertWeightedLowerBound_and_triplePenalty
         (pow_pos hlog 2)
     have hJR' : (2.6408 - 1 / 10 : ℝ) * M ≤
         jurkatRichertWeightedCount N := by
-      convert hJRN hEven using 1 <;> dsimp [M] <;> ring
+      convert hJRN hEven using 1; dsimp [M]; ring
     have hT0 := hTN hEven
     have hR0 := hremN hEven
     have hT : correctedChenTriplePenalty N ≤

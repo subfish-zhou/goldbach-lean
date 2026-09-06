@@ -1346,7 +1346,7 @@ native forms. -/
 def Q1SharpLevelSelbergMainBound
     (κ : ℝ) (B : ℕ) (level : ℕ → ℕ) (cMain : ℝ) : Prop :=
   ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Even N →
-    ∃ hL : 1 ≤ level N,
+    ∃ _hL : 1 ≤ level N,
       LiuWeight.liuLogarithmicIntegral κ (N - 2 : ℝ) *
           q1LevelSwitchingReciprocalSum N B (level N) /
             q1LevelSelbergDenominator N (level N) ≤

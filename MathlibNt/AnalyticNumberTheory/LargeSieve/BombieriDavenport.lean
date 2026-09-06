@@ -211,7 +211,7 @@ theorem weighted_primitive_modulus_le_reduced {q : ℕ} [NeZero q]
             ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
               b n * χ.1 (n : ZMod q)‖ ^ 2 := by rw [hn]
       _ = ‖∑ a ∈ reducedResidues q, χ.1⁻¹ (a : ZMod q) * A a‖ ^ 2 := by
-        convert hiNorm using 1 <;> ring
+        convert hiNorm using 1; ring
       _ = ‖∑ a ∈ reducedResidues q, A a * χ.1⁻¹ (a : ZMod q)‖ ^ 2 := by
         congr 2
         apply Finset.sum_congr rfl
@@ -313,7 +313,7 @@ theorem weighted_primitive_bombieri_davenport (b : ℤ → ℂ) (M : ℤ)
           (charReal ((n : ℝ) * (a : ℝ) / (q : ℝ)) : ℂ) * b n‖ ^ 2 := by
       apply Finset.sum_le_sum
       intro q hq
-      letI : NeZero q := ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
+      let : NeZero q := ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
       exact weighted_primitive_modulus_le_reduced b M N
     _ = ∑ qa ∈ reducedFareyIndices Q,
         ‖∑ n ∈ Finset.Icc (M + 1) (M + N),

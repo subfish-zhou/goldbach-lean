@@ -78,7 +78,7 @@ in addition to mathlib's instances for `Circle` and algebraic closures. -/
 theorem complexHasEnoughRootsOfUnity (n : ℕ) (hn : n ≠ 0) :
     HasEnoughRootsOfUnity ℂ n := by
   classical
-  haveI : NeZero n := ⟨hn⟩
+  have : NeZero n := ⟨hn⟩
   refine { prim := ?_, cyc := ?_ }
   · exact ⟨Complex.exp (2 * Real.pi * Complex.I / (n : ℂ)), Complex.isPrimitiveRoot_exp n hn⟩
   · infer_instance
@@ -404,8 +404,8 @@ theorem charOrthSum {q : ℕ} (hq : 0 < q) (m n : ZMod q) :
     (∑ χ : DirichletCharacter ℂ q, χ m * star (χ n)) =
       if IsUnit m ∧ IsUnit n ∧ m = n then (q.totient : ℂ) else 0 := by
   classical
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  haveI : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
     complexHasEnoughRootsOfUnity (Monoid.exponent (ZMod q)ˣ) (by
       -- The finite unit group (ZMod q)ˣ has nonzero exponent, by finiteness.
       have hfin : Finite (ZMod q)ˣ := inferInstance
@@ -436,7 +436,7 @@ theorem charOrthSum {q : ℕ} (hq : 0 < q) (m n : ZMod q) :
             have h := ZMod.coe_mul_inv_eq_one n.val hnval
             simpa [ZMod.natCast_zmod_val] using h
           have hmul' : n * (↑hn.unit⁻¹ : ZMod q) = 1 := by
-            simpa [hspec] using Units.val_inv hn.unit
+            simp
           have hninv : (↑hn.unit⁻¹ : ZMod q) = n⁻¹ := (inv_unique hmul hmul').symm
           rw [hninv]
         rw [hconj, hinv]
@@ -778,7 +778,7 @@ theorem charOrthogonality_le {q : ℕ} [NeZero q] (a : ℤ → ℂ) (M : ℤ) (N
       by_cases h1 : IsUnit (m : ZMod q)
       · by_cases h2 : IsUnit (n : ZMod q)
         · by_cases h3 : (m : ZMod q) = (n : ZMod q)
-          · simp [h1, h2, h3]
+          · simp [h2, h3]
           · simp [h1, h2, h3]
         · simp [h1, h2]
       · simp [h1]
@@ -786,7 +786,7 @@ theorem charOrthogonality_le {q : ℕ} [NeZero q] (a : ℤ → ℂ) (M : ℤ) (N
     by_cases h1 : IsUnit (m : ZMod q)
     · by_cases h2 : IsUnit (n : ZMod q)
       · by_cases h3 : (m : ZMod q) = (n : ZMod q)
-        · simp [h1, h2, h3]
+        · simp [h2, h3]
         · simp [h1, h2, h3]
       · simp [h1, h2]
     · simp [h1]
@@ -822,7 +822,7 @@ theorem charOrthogonality_le {q : ℕ} [NeZero q] (a : ℤ → ℂ) (M : ℤ) (N
             intro χ hχ
             norm_num
       _ = (↑(∑ χ : DirichletCharacter ℂ q, ‖S χ‖ ^ 2) : ℂ) := by
-            simpa using (map_sum (algebraMap ℝ ℂ) (fun χ => ‖S χ‖ ^ 2) (Finset.univ)).symm
+            simp
   have hR : (q.totient : ℂ) * ∑ x : ZMod q, (if IsUnit x then 1 else 0) * (‖T x‖ : ℂ) ^ 2 =
       (↑((q.totient : ℝ) * ∑ x : ZMod q, (if IsUnit x then 1 else 0) * ‖T x‖ ^ 2) : ℂ) := by
     calc
@@ -844,7 +844,7 @@ theorem charOrthogonality_le {q : ℕ} [NeZero q] (a : ℤ → ℂ) (M : ℤ) (N
                       rw [h1r]
                       norm_num
             · have h1 : (if IsUnit x then (1 : ℂ) else 0) = 0 := by simp [h]
-              simp [h1, h]
+              simp [h]
       _ = (↑((q.totient : ℝ) * ∑ x : ZMod q, (if IsUnit x then 1 else 0) * ‖T x‖ ^ 2) : ℂ) := by
             rw [← Complex.ofReal_sum]
             rw [← Complex.ofReal_mul]
@@ -1036,7 +1036,7 @@ theorem rationals_distToInt_ge {q₁ r₁ q₂ r₂ : ℕ} (hq₁ : 0 < q₁) (h
       exact Int.fract_nonneg z
     calc
       |z - (⌊z⌋ : ℝ)| = z - (⌊z⌋ : ℝ) := abs_of_nonneg hzge
-      _ = Int.fract z := by simpa using (Int.self_sub_floor z)
+      _ = Int.fract z := Int.self_sub_floor z
   have hf2 : |z - ((⌊z⌋ + 1 : ℤ) : ℝ)| = 1 - Int.fract z := by
     -- ⌊z⌋+1 − z = 1 − fract z ≥ 0
     have hzle : 0 ≤ ((⌊z⌋ + 1 : ℤ) : ℝ) - z := by
@@ -1045,7 +1045,7 @@ theorem rationals_distToInt_ge {q₁ r₁ q₂ r₂ : ℕ} (hq₁ : 0 < q₁) (h
         -- Int.lt_floor_add_one
         have := Int.lt_floor_add_one z
         -- z < ↑⌊z⌋ + 1
-        simpa using this
+        exact this
       have hle : (⌊z⌋ : ℝ) + 1 ≤ ((⌊z⌋ + 1 : ℤ) : ℝ) := by norm_num
       linarith
     have habs : |z - ((⌊z⌋ + 1 : ℤ) : ℝ)| = ((⌊z⌋ + 1 : ℤ) : ℝ) - z := by
@@ -1185,7 +1185,7 @@ theorem zmod_dvd_add_iff {q a b : ℕ} (hq : 0 < q) (ha : a < q) (hb : b < q) :
       rw [habq']
 
 /-- For `0 ≤ a,b < q`, `q | a−b` if and only if `a = b`. -/
-theorem zmod_dvd_sub_iff {q a b : ℕ} (hq : 0 < q) (ha : a < q) (hb : b < q) :
+theorem zmod_dvd_sub_iff {q a b : ℕ} (_hq : 0 < q) (ha : a < q) (hb : b < q) :
     ((q : ℤ) ∣ ((a : ℤ) - (b : ℤ))) ↔ a = b := by
   constructor
   · intro hd

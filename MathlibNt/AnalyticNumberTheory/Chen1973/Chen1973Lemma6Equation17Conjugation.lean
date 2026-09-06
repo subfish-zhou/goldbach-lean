@@ -129,7 +129,7 @@ theorem primitiveLDeriv_conj
   have heq : (fun z => (primitiveCharacterConjEquiv q χ).1.LFunction z) =ᶠ[𝓝 (conj s)] F := by
     filter_upwards [hopen.mem_nhds hmem] with z hz
     have hz' : 0 < (conj z).re := by
-      simpa only [Set.mem_setOf_eq, Complex.conj_re] using hz
+      simpa only [Set.mem_ofPred_eq, Complex.conj_re] using hz
     simpa [F] using primitiveLFunction_conj χ hχ (conj z) hz'
   exact (hF.congr_of_eventuallyEq heq).deriv
 
@@ -195,7 +195,7 @@ theorem chen1973Lemma6PrimitiveLValue_conj
       conj (chen1973Lemma6PrimitiveLValue q s χ) := by
   unfold chen1973Lemma6PrimitiveLValue
   split_ifs with hq
-  · letI : NeZero q := ⟨Nat.ne_zero_of_lt hq⟩
+  · let : NeZero q := ⟨Nat.ne_zero_of_lt hq⟩
     have hχ : χ.1 ≠ 1 := by
       intro h
       have hc := χ.2
@@ -301,7 +301,7 @@ theorem chen1973Lemma6A_reflection
       omega
     · simp [chen1973Lemma6ConductorBlock, hl, chen1973Lemma6DyadicShell] at hq
       omega
-  letI : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
+  let : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
   congr 1
   rw [← (primitiveCharacterConjEquiv q).sum_comp]
   apply sum_congr rfl
@@ -342,7 +342,7 @@ theorem chen1973Lemma6B_reflection
       omega
     · simp [chen1973Lemma6ConductorBlock, hl, chen1973Lemma6DyadicShell] at hq
       omega
-  letI : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
+  let : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
   congr 1
   rw [← (primitiveCharacterConjEquiv q).sum_comp]
   apply sum_congr rfl
@@ -354,7 +354,7 @@ theorem chen1973Lemma6B_reflection
     omega
   have hsre : 0 < ((a : ℂ) + (v : ℂ) * I).re := by simpa using ha
   rw [← ofReal_neg, ← conj_verticalLine a v]
-  split_ifs with hq'
+  split_ifs
   · change ‖chen1973Lemma6Eq17PairPolynomial x B k m
         (conj ((a : ℂ) + (v : ℂ) * I)) (primitiveCharacterConjEquiv q χ)‖ *
       ‖deriv (primitiveCharacterConjEquiv q χ).1.LFunction
@@ -364,7 +364,7 @@ theorem chen1973Lemma6B_reflection
     rw [chen1973Lemma6Eq17PairPolynomial_conj,
       primitiveLDeriv_conj χ hχ _ hsre,
       chen1973Lemma6MobiusPartialSum_conj]
-    simp only [chen1973Lemma6Eq17PairPolynomial, map_mul, Complex.norm_conj]
+    simp only [chen1973Lemma6Eq17PairPolynomial, Complex.norm_conj]
     congr 1
     exact norm_conj_mul_conj _ _
 

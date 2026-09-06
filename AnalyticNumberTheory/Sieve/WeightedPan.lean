@@ -87,7 +87,7 @@ theorem lcmPairCount (d : ℕ) (hsq : Squarefree d) :
 
 /-- The lcm of two divisors of squarefree `Q` still divides `Q`,
 by the defining divisibility property of the lcm. -/
-private theorem lcm_dvd_of_squarefree {Q d₁ d₂ : ℕ} (hQ : Squarefree Q)
+private theorem lcm_dvd_of_squarefree {Q d₁ d₂ : ℕ} (_hQ : Squarefree Q)
     (h₁ : d₁ ∣ Q) (h₂ : d₂ ∣ Q) : Nat.lcm d₁ d₂ ∣ Q := by
   exact Nat.lcm_dvd h₁ h₂
 

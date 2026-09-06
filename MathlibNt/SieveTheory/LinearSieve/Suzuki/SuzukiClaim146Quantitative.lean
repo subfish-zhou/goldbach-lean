@@ -88,7 +88,7 @@ lemma hasDerivAt_perturbation
     (p := d) (Or.inl (ne_of_gt hte))
   have hpow : HasDerivAt (fun x : ℝ => (x + ε) ^ d)
       (d * (t + ε) ^ (d - 1)) t := by
-    convert hpow0 using 1 <;> simp only [id_eq] <;> ring
+    convert hpow0 using 1 <;> simp only [id_eq]; ring
   have hB : HasDerivAt B (d * (t + ε) ^ (d - 1) / Real.log D) t := by
     simpa [B] using hpow.div_const (Real.log D) |>.const_add 1
   have hBpos : 0 < B t := by
@@ -154,7 +154,7 @@ theorem lambda_antitoneOn_Icc_of_log_bound
     {H : Section13HatLayers} {β D d ε σ ρ : ℝ}
     (hH : Section13HatContract H β) (sign : ErrorSign)
     (hd : 0 ≤ d) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1)
-    (hσ : β + sign.epsilon ≤ σ) (hρ : 0 < ρ)
+    (hσ : β + sign.epsilon ≤ σ) (_hρ : 0 < ρ)
     (hlog : 0 < Real.log D)
     (hDlarge : (1 + σ * d) * (σ + 1) ^ d ≤ ρ * Real.log D)
     (hdelay : ∀ t, β + sign.epsilon < t → t ≤ σ →

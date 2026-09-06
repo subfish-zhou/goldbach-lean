@@ -101,7 +101,7 @@ theorem chen1973Lemma6_eq19_LDeriv_fourth_moment_sharp_cauchy
     intro d hd χ
     have hdI := Finset.mem_Icc.mp (hcell hd)
     have hd1 : 1 < d := by omega
-    letI : NeZero d := ⟨Nat.ne_zero_of_lt hd1⟩
+    let : NeZero d := ⟨Nat.ne_zero_of_lt hd1⟩
     have hχ : χ.1 ≠ 1 := chen1973_primitive_ne_one hd1 χ
     have hcircle : ∀ z ∈ Metric.sphere s r,
         ‖χ.1.LFunction z‖ ≤ Real.sqrt (Real.sqrt (E + 1)) := by
@@ -182,7 +182,7 @@ theorem chen1973Lemma6_eq19_LDeriv_fourth_moment_sharp_cauchy
         have hφpos : (0 : ℝ) < d.totient := by
           exact_mod_cast Nat.totient_pos.mpr hdpos
         have hcardNat : Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
-          letI : NeZero d := ⟨Nat.ne_of_gt hdpos⟩
+          let : NeZero d := ⟨Nat.ne_of_gt hdpos⟩
           calc
             Fintype.card (PrimitiveCharacter d) ≤
                 Fintype.card (DirichletCharacter ℂ d) :=
@@ -445,9 +445,9 @@ private theorem eq19_corrected_inv_le_21
 /-- Explicit alpha-envelope integral, with no continuity or growth premise. -/
 theorem chen1973Lemma6_eq19_first_fixedPower_integrable_and_bound
     (x L level B k m H D Q : ℕ) (σ : ℝ)
-    (hx : 3 ≤ x) (hH : 0 < H) (hD : 0 < D) (hDQ : D < Q)
+    (hx : 3 ≤ x) (_hH : 0 < H) (_hD : 0 < D) (_hDQ : D < Q)
     (hσ : 1 ≤ σ) (horder : 3 ≤ chen1973PerronOrder (x : ℝ) + 1)
-    (hcell : chen1973Lemma6ConductorBlock x L level ⊆ Ioc D Q) :
+    (_hcell : chen1973Lemma6ConductorBlock x L level ⊆ Ioc D Q) :
     let F := fun v : ℝ =>
       chen1973Lemma6Eq19FirstFixedPower x L level B k m H D Q σ * (1 + v) /
         chen1973Lemma6Eq17CorrectedKernel x (σ + v * I)

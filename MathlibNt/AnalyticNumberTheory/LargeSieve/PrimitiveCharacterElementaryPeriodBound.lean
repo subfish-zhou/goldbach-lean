@@ -12,7 +12,7 @@ noncomputable section
 /-- A primitive character of modulus greater than one is nonprincipal. -/
 theorem primitiveCharacter_ne_one {q : ℕ} (hq : 1 < q)
     (χ : PrimitiveCharacter q) : χ.1 ≠ 1 := by
-  letI : NeZero q := ⟨by omega⟩
+  let : NeZero q := ⟨by omega⟩
   intro hχ
   have hc : χ.1.conductor = 1 :=
     (DirichletCharacter.eq_one_iff_conductor_eq_one).mp hχ
@@ -29,7 +29,7 @@ theorem primitiveCharacter_sum_zmod_eq_zero {q : ℕ} [NeZero q] (hq : 1 < q)
 theorem primitiveCharacter_sum_range_period_eq_zero {q : ℕ} (hq : 1 < q)
     (χ : PrimitiveCharacter q) :
     ∑ n ∈ range q, χ.1 (n : ZMod q) = 0 := by
-  letI : NeZero q := ⟨by omega⟩
+  let : NeZero q := ⟨by omega⟩
   rw [← sum_zmod_eq_sum_range]
   exact primitiveCharacter_sum_zmod_eq_zero hq χ
 
@@ -157,7 +157,7 @@ theorem primitiveCharacter_logWeight_range_norm_le {q M : ℕ} (hq : 1 < q)
             Real.log (k + 2) - Real.log (k + 1) := by
           have hwk1 : w (k + 1) = (Real.log ((k : ℝ) + 2) : ℂ) := by
             simp only [w, Nat.cast_add, Nat.cast_one]
-            congr 2 <;> ring
+            congr 2; ring
           rw [show w k = (Real.log ((k : ℝ) + 1) : ℂ) by rfl, hwk1,
             ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
           rw [abs_of_nonpos (sub_nonpos.mpr (hwmono k))]

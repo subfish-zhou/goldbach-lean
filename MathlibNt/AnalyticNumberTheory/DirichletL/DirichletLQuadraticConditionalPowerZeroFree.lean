@@ -65,14 +65,14 @@ theorem norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
     rw [uIoc_of_le hσ₁σ₂, mem_Ioc] at hσ
     convert norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
       χ hχ (hσ₁half.trans hσ.1.le) (hσ.2.trans hσ₂upper)
-      (hσ₁lower.trans hσ.1.le) using 1 <;> ring
+      (hσ₁lower.trans hσ.1.le) using 1; ring
 
 /-- Common conductor-height and zeta-pole scale used in the conditional
 quadratic zero-free headline. -/
 noncomputable def dirichletLQuadraticConditionalPowerZeroFreeH
     (q : ℕ) (t : ℝ) : ℝ :=
   1 + Real.log (dirichletLConductorHeightCutoff q t) +
-    if ht : t = 0 then 0
+    if _ht : t = 0 then 0
     else 1 + Real.log (|2 * t| + 2) + 1 / |2 * t|
 
 /-- Integrating the global conductor-log derivative bound along the genuine
@@ -92,7 +92,7 @@ theorem norm_LFunction_vertical_sub_le_sixtyfour_mul_conductorHeightLogSq
         have hu0 : 0 ≤ u := hu.1
         have hu1 : u ≤ 1 := hu.2
         have hline : AffineMap.lineMap (1 : ℂ) (1 + t * I) u = 1 + (u * t) * I := by
-          apply Complex.ext <;> simp [AffineMap.lineMap_apply] <;> ring
+          apply Complex.ext <;> simp [AffineMap.lineMap_apply]
         have him : |(AffineMap.lineMap (1 : ℂ) (1 + t * I) u).im| ≤ |t| := by
           rw [hline]
           simp only [add_im, one_im, mul_im, mul_re, ofReal_re, ofReal_im, I_re,
@@ -159,7 +159,7 @@ theorem LFunction_ne_zero_lowHeight_of_twoSegmentBudgets
     (hbudget : Bh + Bv < (χ.LFunction 1).re) :
     χ.LFunction (β + I * t) ≠ 0 := by
   intro hz
-  have hz' : χ.LFunction (β + t * I) = 0 := by convert hz using 1 <;> ring
+  have hz' : χ.LFunction (β + t * I) = 0 := by convert hz using 1; ring
   have hre := DirichletCharacter.LFunction_apply_one_re_pos_of_sq_eq_one hquad hχ
   have him := DirichletCharacter.LFunction_apply_one_im_eq_zero_of_sq_eq_one hquad hχ
   have hnormone : ‖χ.LFunction 1‖ = (χ.LFunction 1).re := by
@@ -215,7 +215,7 @@ theorem LFunction_ne_zero_highHeight_of_valueProduct
     (hzeta : ∀ (x u : ℝ), 0 < x → x ≤ 1 → u ≠ 0 →
       ‖riemannZeta (1 + x + I * u)‖ ≤
         Z * (1 + Real.log (|u| + 2) + 1 / |u|))
-    (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) (hχ : χ ≠ 1)
+    (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) (_hχ : χ ≠ 1)
     {β t x D : ℝ} (hx : 0 < x) (hx1 : x ≤ 1) (ht : t ≠ 0)
     (htriv : ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ≤ 2 / x)
     (hright : ‖χ.LFunction (1 + x + I * t)‖ ≤ D * x)
@@ -233,7 +233,7 @@ theorem LFunction_ne_zero_highHeight_of_valueProduct
         ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ^ 3 *
           ‖χ.LFunction (1 + x + I * t)‖ ^ 4 *
           ‖(χ ^ 2).LFunction (1 + x + 2 * I * t)‖ by
-      simpa only [norm_mul, norm_pow] using hp) using 1 <;> ring
+      simpa only [norm_mul, norm_pow] using hp) using 1; ring
   have hmajor : 1 ≤ (2 / x) ^ 3 * (D * x) ^ 4 *
       ((1 + Real.log q) *
         (Z * (1 + Real.log (|2 * t| + 2) + 1 / |2 * t|))) := by
@@ -436,7 +436,7 @@ theorem exists_dirichletL_quadratic_conditional_powerZeroFree
           linarith
     intro hz
     have hz' : χ.LFunction (β + t * I) = 0 := by
-      convert hz using 1 <;> ring
+      convert hz using 1; ring
     have hright : ‖χ.LFunction (1 + x + I * t)‖ ≤ (128 * H ^ 2) * x := by
       calc
         ‖χ.LFunction (1 + x + I * t)‖ =
@@ -446,7 +446,7 @@ theorem exists_dirichletL_quadratic_conditional_powerZeroFree
               ring
         _ ≤ 64 * (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 2 *
             ((1 + x) - β) := by
-              convert hright0 using 1 <;> push_cast <;> ring
+              convert hright0 using 1; push_cast; ring
         _ ≤ (128 * H ^ 2) * x := by
           have hwidth : 1 - β ≤ x := by linarith
           have hdiff : (1 + x) - β ≤ 2 * x := by linarith

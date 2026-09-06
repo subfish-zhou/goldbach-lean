@@ -43,7 +43,7 @@ noncomputable instance (q : ℕ) : Fintype (PrimitiveCharacter q) :=
 /-- A positive modulus has at most its totient many primitive characters. -/
 theorem primitiveCharacter_card_le_totient_basic (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  letI : NeZero q := ⟨hq.ne'⟩
+  let : NeZero q := ⟨hq.ne'⟩
   calc
     Fintype.card (PrimitiveCharacter q) ≤
         Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _

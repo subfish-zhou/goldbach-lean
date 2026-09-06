@@ -377,7 +377,7 @@ theorem Sigma11FiniteLayerMajorization
     intro t ht
     have hm := parityDomain_upperClosed hdom (sub_le_sub_right ht.1 1)
     simpa using hm
-  rw [intervalIntegral.integral_finset_sum hint, Finset.mul_sum]
+  rw [intervalIntegral.integral_finsetSum hint, Finset.mul_sum]
   calc
     (∑ n ∈ finiteSourceRecursionIndices N,
         (1 / s) * ∫ t in τ..σ, suzukiLayer 1 β (n - 1) (t - 1)) ≤

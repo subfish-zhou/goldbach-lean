@@ -47,8 +47,6 @@ open AnalyticNumberTheory.Sieve
 
 noncomputable section
 
-set_option linter.unusedVariables false
-set_option linter.style.haveILetI false
 set_option maxHeartbeats 4000000
 
 /-! ## 1. The standard additive character e_q and Gauss sum bridge -/
@@ -214,7 +212,7 @@ lemma zmodParseval_zmod {q : ℕ} [NeZero q] (z : ZMod q → ℂ) :
 /-- |chi(a)| = 1 for unit a. -/
 lemma dirichletChar_norm_unit {q : ℕ} (χ : DirichletCharacter ℂ q) {a : ZMod q} (ha : IsUnit a) :
     ‖χ a‖ = 1 := by
-  haveI : Fintype (ZMod q)ˣ := Fintype.ofFinite _
+  have : Fintype (ZMod q)ˣ := Fintype.ofFinite _
   let n : ℕ := Fintype.card (ZMod q)ˣ
   have hn : n ≠ 0 := ne_of_gt (Fintype.card_pos (α := (ZMod q)ˣ))
   have hpow_u : ha.unit ^ n = 1 := pow_card_eq_one (G := (ZMod q)ˣ) (x := ha.unit)
@@ -260,7 +258,7 @@ lemma charNormSq_sum {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
         · intro u
           ext
           rfl
-      simpa [hcard]
+      simp [hcard]
 
 /-- chi^{-1} a = star (chi a) for all a (complex characters). -/
 lemma char_inv_eq_star {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (a : ZMod q) :
@@ -576,14 +574,12 @@ lemma charParseval_units {q : ℕ} [NeZero q] (T : ZMod q → ℂ) :
     calc
       ((∑ χ : DirichletCharacter ℂ q, ‖∑ x : ZMod q, star (χ x) * T x‖ ^ 2 : ℝ) : ℂ)
           = ∑ χ : DirichletCharacter ℂ q, (‖∑ x : ZMod q, star (χ x) * T x‖ ^ 2 : ℂ) := by
-            simpa using (map_sum (algebraMap ℝ ℂ)
-              (fun χ : DirichletCharacter ℂ q => ‖∑ x : ZMod q, star (χ x) * T x‖ ^ 2)
-              (Finset.univ))
+            simp
       _ = (q.totient : ℂ) * (∑ x : ZMod q, (if IsUnit x then (‖T x‖ ^ 2 : ℂ) else 0)) := hC
       _ = (algebraMap ℝ ℂ) ((q.totient : ℝ) * ∑ x : ZMod q, (if IsUnit x then ‖T x‖ ^ 2 else 0)) := by
             have hmid : (q.totient : ℂ) * (∑ x : ZMod q, (((if IsUnit x then ‖T x‖ ^ 2 else 0 : ℝ) : ℂ))) =
                 (algebraMap ℝ ℂ) ((q.totient : ℝ) * ∑ x : ZMod q, (if IsUnit x then ‖T x‖ ^ 2 else 0)) := by
-              simpa [cast_mul_sum]
+              simp
             calc
               (q.totient : ℂ) * (∑ x : ZMod q, (if IsUnit x then (‖T x‖ ^ 2 : ℂ) else 0))
                   = (q.totient : ℂ) * (∑ x : ZMod q, (((if IsUnit x then ‖T x‖ ^ 2 else 0 : ℝ) : ℂ))) := by
@@ -734,7 +730,7 @@ theorem bombieriDavenport_le (Q : ℕ) (hQ : 0 < Q) (a : ℤ → ℂ) (M : ℤ) 
         ≤ ∑ r ∈ (Finset.range q).filter (fun r => r.Coprime q),
             ‖∑ n ∈ Finset.Icc (M + 1) (M + N), a n * charReal ((n : ℝ) * ((r : ℝ) / (q : ℝ)))‖ ^ 2 := by
     intro q hq
-    haveI : NeZero q := ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
+    have : NeZero q := ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
     let primChars : Finset (DirichletCharacter ℂ q) :=
       (Finset.univ : Finset (DirichletCharacter ℂ q)).filter (fun χ => χ.IsPrimitive)
     have h1 : (∑ χ ∈ primChars, ‖∑ n ∈ Finset.Icc (M + 1) (M + N), a n * χ (n : ZMod q)‖ ^ 2) ≤
@@ -892,11 +888,7 @@ lemma vaughanFirst_Icc_normSq (m u : ℕ) :
     · exact Int.toNat_natCast n
   · intro n hn
     have hnon : 0 ≤ (n : ℤ) := (Finset.mem_Icc.mp hn).1
-    -- ‖(vaughanFirst n u : ℂ)‖² = (vaughanFirst n u)²
-    have hnorm : ‖(vaughanFirst n.toNat u : ℂ)‖ ^ 2 = (vaughanFirst n.toNat u) ^ 2 := by
-      rw [← Complex.normSq_eq_norm_sq]
-      simpa [pow_two] using Complex.normSq_ofReal (vaughanFirst n.toNat u)
-    simp [hnon, hnorm]
+    simp [hnon]
 
 /-- **Bombieri-Davenport for the type-I coefficients**: the primitive-character
   (q/phi(q))-weighted mean bound for vaughanFirst(n,u), i.e. the corrected
@@ -1028,11 +1020,7 @@ lemma vaughanThird_Icc_normSq (m u v : ℕ) :
     · exact Int.toNat_natCast n
   · intro n hn
     have hnon : 0 ≤ (n : ℤ) := (Finset.mem_Icc.mp hn).1
-    -- ‖(vaughanThird n u v : ℂ)‖² = (vaughanThird n u v)²
-    have hnorm : ‖(vaughanThird n.toNat u v : ℂ)‖ ^ 2 = (vaughanThird n.toNat u v) ^ 2 := by
-      rw [← Complex.normSq_eq_norm_sq]
-      simpa [pow_two] using Complex.normSq_ofReal (vaughanThird n.toNat u v)
-    simp [hnon, hnorm]
+    simp [hnon]
 
 /-- **Bombieri-Davenport for the type-II coefficients**: the primitive-character
   (q/phi(q))-weighted mean bound for vaughanThird(n,u,v), i.e. the corrected

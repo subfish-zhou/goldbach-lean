@@ -130,7 +130,7 @@ private noncomputable def Tfilter (n z y : ℕ) : Finset ℕ :=
       p₁ * p₂ * p₃ = n ∧ p₁ < p₂ ∧ p₂ ≤ p₃)
 
 /-- Elementary construction of exactDiv: p prime and p | n imply p^(n.factorization p) ∥ n. -/
-private lemma exactDiv_of_factorization {p n : ℕ} (hp : p.Prime) (hn : n ≠ 0) (hpdvd : p ∣ n) :
+private lemma exactDiv_of_factorization {p n : ℕ} (hp : p.Prime) (hn : n ≠ 0) (_hpdvd : p ∣ n) :
     exactDiv p (n.factorization p) n := by
   unfold exactDiv
   constructor
@@ -160,7 +160,7 @@ private lemma tripleFactorCount_eq_cast (n z y : ℕ) :
   rfl
 
 /-- q ∈ Sfilter implies 1 ≤ S, as a real-number inequality. -/
-private lemma primePowerSum_ge_one_of_mem {n z y q : ℕ} (hz : 2 ≤ z) (hn : 1 ≤ n)
+private lemma primePowerSum_ge_one_of_mem {n z y q : ℕ} (_hz : 2 ≤ z) (hn : 1 ≤ n)
     (hq : q ∈ Sfilter n z y) : (1 : ℝ) ≤ primePowerSum n z y := by
   have hq' : q ∈ (range y).filter (fun x => x.Prime ∧ z ≤ x ∧
       ∃ k : ℕ, 1 ≤ k ∧ exactDiv x k n) := by simpa [Sfilter] using hq
@@ -189,7 +189,7 @@ private lemma tripleFactorCount_pos_imp_primePowerSum_pos {n z y : ℕ} (hz : 2 
     hyp₂, hp₂p₃, hprod, hqlt, _⟩
   have hdvd : p₁ ∣ n := by
     rw [← hprod]
-    simpa [Nat.mul_assoc] using dvd_mul_right p₁ (p₂ * p₃)
+    simp [Nat.mul_assoc]
   have hp₁S : p₁ ∈ Sfilter n z y :=
     primePowerSum_mem_of_dvd hp₁_prime hz₁ hp₁_lt_y (by omega : n ≠ 0) hdvd
   have hS_ge : (1 : ℝ) ≤ primePowerSum n z y := primePowerSum_ge_one_of_mem hz hn hp₁S
@@ -233,7 +233,7 @@ private lemma length_le_two_cases {l : List ℕ} (hl : l.length ≤ 2) :
               omega
 
 /-- If S = 0 and n has no prime factor < z, all prime factors of n are ≥ y. -/
-private lemma all_prime_factors_ge_y_of_S_zero {n z y : ℕ} (hz : 2 ≤ z) (hy : z < y)
+private lemma all_prime_factors_ge_y_of_S_zero {n z y : ℕ} (hz : 2 ≤ z) (_hy : z < y)
     (hn : 1 ≤ n) (hS : primePowerSum n z y = 0)
     (hcop : ∀ p : ℕ, p.Prime → p < z → ¬ p ∣ n) :
     ∀ p : ℕ, p.Prime → p ∣ n → y ≤ p := by
@@ -327,7 +327,7 @@ private lemma tripleFactorCount_ge_one {n z y q p₂ p₃ : ℕ} (hq : q.Prime) 
   exact_mod_cast hcard_ge
 
 /-- S = 1 gives a unique prime q ∈ [z,y), with n = q·m and all prime factors of m ≥ y. -/
-private lemma S_one_structure {n z y : ℕ} (hz : 2 ≤ z) (hy : z < y) (hn : 1 ≤ n)
+private lemma S_one_structure {n z y : ℕ} (_hz : 2 ≤ z) (_hy : z < y) (hn : 1 ≤ n)
     (hS : primePowerSum n z y = 1)
     (hcop : ∀ p : ℕ, p.Prime → p < z → ¬ p ∣ n) :
     ∃ q m : ℕ, q.Prime ∧ z ≤ q ∧ q < y ∧ n = q * m ∧
@@ -536,7 +536,7 @@ noncomputable def chenW (N : ℕ) : ℝ :=
 The error constant in the current linear-sieve interface may depend on the fixed `N`,
 so the remainder cannot be removed without a uniformity hypothesis.
 The genuinely uniform Jurkat--Richert lower bound is included in `ChenAnalyticBounds` below. -/
-theorem chenW_lower_bound (N : ℕ) (hN : Even N) (hN_large : 1000 ≤ N) :
+theorem chenW_lower_bound (N : ℕ) (_hN : Even N) (hN_large : 1000 ≤ N) :
     ∃ C : ℝ,
       2.6408 * chenW N ≥
         2.6408 * 2.6408 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 -
@@ -987,7 +987,7 @@ namespace Internal
 
 /-- 𝔖(N) = 𝔖_trunc(N, z−1) · ∏_{z ≤ p ≤ N} localFactor(p, N), the exact
 tail split used to compare the truncated and full singular series. -/
-theorem singularSeries_eq_trunc_mul_tail (N : ℕ) (hN2 : 2 ≤ N)
+theorem singularSeries_eq_trunc_mul_tail (N : ℕ) (_hN2 : 2 ≤ N)
     (hz1 : 1 ≤ correctedChenZ N) (hzleN : correctedChenZ N ≤ N + 1) :
     SingularSeries.singularSeries N =
       SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) *
@@ -1018,7 +1018,7 @@ end Internal
 is the number of prime divisors of `N` in the tail: `p ∤ N` factors are
 `< 1`, `p ∣ N` factors are `≤ 3/2`. -/
 private theorem chenZ_tail_prod_le (N : ℕ) (hz3 : 3 ≤ correctedChenZ N)
-    (hzleN : correctedChenZ N ≤ N + 1) :
+    (_hzleN : correctedChenZ N ≤ N + 1) :
     ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
       (fun p => SingularSeries.localFactor p N) ≤
     (3 / 2 : ℝ) ^ ((Finset.Ico (correctedChenZ N) (N + 1)).filter

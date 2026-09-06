@@ -47,7 +47,7 @@ private theorem lowerRosserBoundaryAccum_list_expansion
           · omega
           · exact False.elim ((Nat.not_lt_of_ge (hlt r hr).le) hrq)
         · intro h
-          simpa using h
+          simp at h
       have hqSuffix : (insert q qs.toFinset).filter (fun r => q < r) = qs.toFinset := by
         ext r
         simp only [mem_filter, mem_insert]
@@ -59,7 +59,7 @@ private theorem lowerRosserBoundaryAccum_list_expansion
           exact ⟨Or.inr hr, hlt r hr⟩
       rw [Finset.sum_insert hqnot, hqPrefix, hqSuffix,
         foldr_insert_empty_eq_toFinset]
-      simp only [Finset.prod_empty, one_mul]
+      simp only [Finset.prod_empty]
       have htail :
           (∑ r ∈ qs.toFinset,
             nu r * (∏ a ∈ (insert q qs.toFinset).filter (fun a => a < r),

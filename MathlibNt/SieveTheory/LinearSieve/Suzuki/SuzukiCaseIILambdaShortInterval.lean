@@ -10,7 +10,7 @@ by one explicit perturbation factor times the current lambda.  A factor one
 would have the wrong direction in general. -/
 theorem lambda_three_le_perturb_three_mul_lambda_caseII
     {H : Section13HatLayers} {D d s : ℝ}
-    (hH : Section13HatContract H 2) (hD : 1 < D) (hd : 0 ≤ d)
+    (hH : Section13HatContract H 2) (hD : 1 < D) (_hd : 0 ≤ d)
     (hs : 0 < s) (hs3 : s ≤ 3) :
     lambda H .plus D d 0 3 ≤
       perturbation D d 0 3 * lambda H .plus D d 0 s := by
@@ -44,7 +44,7 @@ theorem caseII_integral_absorb_with_lambda_ratio
     {D d Δ σ s R : ℝ}
     (hs : 0 < s)
     (hcut : 0 ≤ (1 - 1 / σ) ^ (1 - Δ))
-    (hR : 0 ≤ R)
+    (_hR : 0 ≤ R)
     (hiii :
       (∫ t in (3 : ℝ)..σ,
           qD H (ErrorSign.ofDepth N).opposite D d Δ t) ≤

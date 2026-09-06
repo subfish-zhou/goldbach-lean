@@ -33,7 +33,7 @@ def NonprincipalPrimitivePsiSiegelWalfiszSource : Prop :=
 
 lemma primitiveCharacter_ne_one_of_two_le
     {d : ℕ} (hd : 2 ≤ d) (ψ : PrimitiveCharacter d) : ψ.1 ≠ 1 := by
-  letI : NeZero d := ⟨by omega⟩
+  let : NeZero d := ⟨by omega⟩
   intro h
   have hc : ψ.1.conductor = 1 := by rw [h, DirichletCharacter.conductor_one]
   rw [primitive_conductor ψ] at hc
@@ -86,7 +86,6 @@ theorem lowConductorArithmeticMass_le_explicit (N Q C : ℕ) :
     _ = (lowConductorSet N Q C).card * conductorHarmonicFactor Q ^ 2 := by simp
     _ ≤ (logConductorThreshold N C : ℝ) * conductorHarmonicFactor Q ^ 2 := by
       gcongr
-      norm_cast
       refine (Finset.card_le_card (show lowConductorSet N Q C ⊆
         Finset.Icc 1 (logConductorThreshold N C) from ?_)).trans ?_
       · intro d hd

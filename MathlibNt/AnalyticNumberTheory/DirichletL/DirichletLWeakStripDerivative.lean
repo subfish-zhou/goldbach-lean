@@ -17,6 +17,7 @@ namespace DirichletLWeakStripDerivative
 
 variable {q : ℕ} [NeZero q]
 
+omit [NeZero q] in
 lemma character_norm_le_one (χ : DirichletCharacter ℂ q) (n : ℕ) : ‖χ n‖ ≤ 1 := by
   exact DirichletCharacter.norm_le_one χ (n : ZMod q)
 
@@ -42,7 +43,7 @@ lemma sum_one_period_eq_zero (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) :
 lemma sum_aligned_period_eq_zero (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (k : ℕ) :
     ∑ i ∈ range q, χ (k * q + i) = 0 := by
   have hterm (i : ℕ) : χ (k * q + i) = χ i := by
-    simp only [Nat.cast_add, Nat.cast_mul, ZMod.natCast_self, mul_zero, zero_add]
+    simp only [ZMod.natCast_self, mul_zero, zero_add]
   simpa only [hterm] using sum_one_period_eq_zero χ hχ
 
 lemma sum_mul_period_eq_zero (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) :
@@ -70,6 +71,7 @@ lemma norm_sum_range_character_le_modulus (χ : DirichletCharacter ℂ q) (hχ :
     _ = ((N % q : ℕ) : ℝ) := by simp
     _ ≤ q := by exact_mod_cast (Nat.le_of_lt (Nat.mod_lt N hq))
 
+omit [NeZero q] in
 /-- Finite Abel summation for a Dirichlet character. -/
 lemma abel_Ico (χ : DirichletCharacter ℂ q) (f : ℕ → ℂ) {m n : ℕ} (hmn : m < n) :
     ∑ i ∈ Ico m n, f i * χ i =
@@ -77,6 +79,7 @@ lemma abel_Ico (χ : DirichletCharacter ℂ q) (f : ℕ → ℂ) {m n : ℕ} (hm
         ∑ i ∈ Ico m (n - 1), (f (i + 1) - f i) * (∑ j ∈ range (i + 1), χ j) := by
   simpa only [smul_eq_mul] using Finset.sum_Ico_by_parts f (fun i : ℕ => χ i) hmn
 
+omit [NeZero q] in
 /-- Exact finite partial summation for the weight `k ↦ k⁻ˢ`. -/
 lemma dirichlet_cpow_abel_Ico (χ : DirichletCharacter ℂ q) (s : ℂ) {m n : ℕ}
     (hmn : m < n) :
@@ -88,6 +91,7 @@ lemma dirichlet_cpow_abel_Ico (χ : DirichletCharacter ℂ q) (s : ℂ) {m n : �
             (∑ j ∈ range (k + 1), χ j) := by
   exact abel_Ico χ (fun k : ℕ => (k : ℂ) ^ (-s)) hmn
 
+omit [NeZero q] in
 /-- Exact finite Abel summation for the derivative weight
 `-log(k) k⁻ˢ`. -/
 lemma dirichlet_derivative_weight_abel_Ico (χ : DirichletCharacter ℂ q) (s : ℂ)

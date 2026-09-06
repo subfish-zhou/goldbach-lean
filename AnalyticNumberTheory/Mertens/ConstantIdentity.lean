@@ -43,7 +43,7 @@ theorem mertensConstant_eq_eulerMascheroni_of_primeFinitePart
   have hzetaε : Tendsto
       (fun ε : ℝ => Real.log (riemannZeta ((1 + ε : ℝ) : ℂ)).re + Real.log ε)
       (𝓝[>] 0) (𝓝 0) := by
-    convert hzeta.comp hadd using 1 <;> simp [Function.comp_def]
+    convert hzeta.comp hadd using 1; simp [Function.comp_def]
   have hcorrection : Tendsto
       (fun ε : ℝ => ∑' p : Nat.Primes, primeEulerCorrection (1 + ε) p)
       (𝓝[>] 0) (𝓝 logarithmicCorrectionLimit) :=

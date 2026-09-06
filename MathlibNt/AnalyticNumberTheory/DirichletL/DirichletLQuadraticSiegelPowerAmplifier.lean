@@ -69,7 +69,7 @@ theorem quadraticSiegelPowerCoefficient_one
   | zero => rw [quadraticSiegelPowerCoefficient_zero]; simp
   | succ r ih =>
       rw [quadraticSiegelPowerCoefficient_succ]
-      simpa only [Nat.divisorsAntidiagonal_one, sum_singleton, ih, zetaMul_one, mul_one]
+      simp only [Nat.divisorsAntidiagonal_one, sum_singleton, ih, zetaMul_one, mul_one]
 
 /-- Quadraticity makes every coefficient of every convolution power
 nonnegative (in the real-axis order on `ℂ`). -/

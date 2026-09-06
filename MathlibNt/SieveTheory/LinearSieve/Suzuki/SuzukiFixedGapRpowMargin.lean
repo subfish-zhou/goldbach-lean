@@ -22,7 +22,7 @@ lemma fixedGap_rpow_margin
   have hlinear : base ^ exponent ≤ 1 - gap / (2 * (M + 2)) := by
     simp only [Real.one_rpow, mul_one] at hamgm
     dsimp [base, exponent] at hamgm ⊢
-    convert hamgm using 1 <;> field_simp [ne_of_gt hMp2] <;> ring
+    convert hamgm using 1; field_simp [ne_of_gt hMp2]; ring
   have hstrict : 1 - gap / (2 * (M + 2)) < 1 - gap / (4 * M) := by
     rw [sub_lt_sub_iff_left]
     rw [div_lt_div_iff₀ (mul_pos (by norm_num) hMpos) (mul_pos (by norm_num) hMp2)]

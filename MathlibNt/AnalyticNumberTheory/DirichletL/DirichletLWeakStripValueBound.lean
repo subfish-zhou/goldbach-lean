@@ -19,6 +19,7 @@ open DirichletLWeakStripDerivativeBound
 
 variable {q : ℕ} [NeZero q]
 
+omit [NeZero q] in
 /-- The finite value truncation costs only one logarithm in the weak strip. -/
 lemma norm_value_truncation_le
     (χ : DirichletCharacter ℂ q) {A σ t : ℝ}
@@ -63,6 +64,7 @@ lemma norm_value_truncation_le
       linarith
     _ = Real.exp A * 2 * Real.log |t| := by ring
 
+omit [NeZero q] in
 /-- At the canonical cutoff the explicit Abel tail is bounded by a fixed
 multiple of `exp A * q * log |t|`. -/
 lemma canonical_value_tail_le_fixed_log

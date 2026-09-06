@@ -195,7 +195,7 @@ theorem claim145_odd_lowStrip_pointwise_of_scalar
       (2 * A * claim14_5VProduct S (D : ℝ) * Real.exp (Real.sqrt K) *
         errorEnvelope H N (D : ℝ) d s) /
           (2 * (L * sourceSigma (D : ℝ) d) * L ^ Δ) by
-            field_simp [hden.ne', hpow.ne'] <;> ring]
+            field_simp [hden.ne', hpow.ne']]
     apply (le_div_iff₀ (show 0 < 2 * (L * sourceSigma (D : ℝ) d) * L ^ Δ by
       positivity)).2
     calc

@@ -65,7 +65,7 @@ theorem logEnvelopePlus_hasDerivAt
       (-(2 * R s + R (s - 1)) / s) / R s + ξ s + c =
         -R (s - 1) / (s * R s) + ξ s + c - 2 / s := by
     field_simp [ne_of_gt hs, ne_of_gt hR]
-    <;> ring
+    ring
   have hfun :
       ((fun y : ℝ => Real.log (R y)) + xiPhase ξ + fun u : ℝ => c * u) =
         logEnvelopePlus R ξ c := by

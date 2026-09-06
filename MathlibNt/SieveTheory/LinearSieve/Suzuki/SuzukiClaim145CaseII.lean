@@ -125,7 +125,7 @@ theorem caseII_T4_base_error_exact
 theorem caseII_base_error_le_errorEnvelope
     {H : Section13HatLayers} {β D d Δ K s : ℝ} {N : ℕ}
     (hH : Section13HatContract H β) (hN : Odd N)
-    (hD : Real.exp 1 ≤ D) (hd : 0 ≤ d) (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1)
+    (hD : Real.exp 1 ≤ D) (_hd : 0 ≤ d) (_hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1)
     (hs : 0 < s) (hsβ : s ≤ β + 1) (hK : 0 ≤ K) :
     K * (β + 1) ^ 2 / (s * Real.log D) ≤
       (K * (β + 1) ^ 2 / (β - 1)) *
@@ -166,8 +166,8 @@ those two interfaces—including the exact continuous parity identity and the
 T4/error normalization of the base term—is proved here. -/
 theorem claim14_5_caseII_finite_assembly
     {S : BoundingSieve} {H : Section13HatLayers}
-    {β D d Δ K s Vz endpointErr : ℝ} {N Dnat znat ynat : ℕ}
-    (hH : Section13HatContract H β) (hN : Odd N)
+    {β D _d _Δ K s Vz endpointErr : ℝ} {N Dnat znat ynat : ℕ}
+    (_hH : Section13HatContract H β) (hN : Odd N)
     (hs : 0 < s) (hsβ : s ≤ β + 1)
     (hcut : section14ExtendedT S N Dnat znat =
       section14ExtendedT S N Dnat ynat + section14ExtendedV S 1 Dnat znat)
@@ -211,7 +211,7 @@ theorem claim14_5_caseII_finite_assembly_normalized
         Vz * ((K * (β + 1) ^ 2 / (β - 1)) *
           errorEnvelope H N D d s * (Real.log D) ^ (-Δ)) := by
   have hassembly := claim14_5_caseII_finite_assembly
-    (d := d) (Δ := Δ) hH hN hs hsβ hcut hendpoint hbase
+    (_d := d) (_Δ := Δ) hH hN hs hsβ hcut hendpoint hbase
   have hnorm := mul_le_mul_of_nonneg_left
     (caseII_base_error_le_errorEnvelope hH hN hD hd hΔ0 hΔ1 hs hsβ hK) hVz
   nlinarith [hassembly, hnorm]

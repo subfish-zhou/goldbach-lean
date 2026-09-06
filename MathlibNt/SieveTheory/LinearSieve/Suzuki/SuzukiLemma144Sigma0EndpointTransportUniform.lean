@@ -94,9 +94,9 @@ theorem caseI1423_sigmaZero_realEndpoint_sourceBound_uniform
     caseISigmaZeroDirectRemainder S H N D C145 K d Δ ≤
         A0 * caseI1423RemainderUnit
           (sigma12InheritedBudget S H N D z C K d Δ σ) (D : ℝ) σ := by
-            convert hsrc using 1 <;>
+            convert hsrc using 1;
               simp [A0, caseISourceOrderCoefficient,
-                caseI1423RemainderUnit, σ] <;> ring
+                caseI1423RemainderUnit, σ]; ring
     _ ≤ A0 * caseI1423RemainderUnit
           (sigma12InheritedBudget S H N D z C K d Δ s) (D : ℝ) σ := by
       unfold caseI1423RemainderUnit

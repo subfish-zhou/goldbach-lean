@@ -19,6 +19,7 @@ open DirichletLWeakStripDerivative DirichletLAbelWeightVariation
 
 variable {q : ℕ} [NeZero q]
 
+omit [NeZero q] in
 private lemma norm_sum_Ico_cpowWeight_character_le_of_prefix_bound
     (χ : DirichletCharacter ℂ q) (s : ℂ) (hs : 0 < s.re)
     (P : ℝ) (hP : ∀ N : ℕ, ‖∑ k ∈ range N, χ k‖ ≤ P)

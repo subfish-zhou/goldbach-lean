@@ -1,17 +1,23 @@
 # goldbach-lean
 
-A Lean 4 formalization of **Chen's 1+2 theorem**, preparing for **v1.0.0**:
+A Lean 4 formalization of **Chen's 1+2 theorem**, **v1.0.0**:
 
 every sufficiently large even natural number is the sum of a prime and either
 a prime or a product of two primes. The two factors may be equal.
 
-This is the version-one release candidate. It does **not** assert the binary
+This is the first stable release. It does **not** assert the binary
 Goldbach conjecture, an explicit numerical threshold, or the separate 1+1.9
 result.
 
 See the [release notes](docs/RELEASE_NOTES.md) for the comparison with v1.0.0-rc1:
 233,282 to 221,487 nonblank, comment-free Lean source lines, including Blueprint
 metadata. No cross-machine build-time comparison is claimed.
+
+**[Browse the Lean API documentation](https://subfish-zhou.github.io/goldbach-lean/)**
+· **[Interactive proof Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)**
+
+The API site covers all four project libraries, with declaration search, source
+links, and import navigation. See [how the website is built](docs/DOCUMENTATION.md).
 
 | Read the mathematics | Explore the proof | Check the result |
 |---|---|---|
@@ -34,9 +40,10 @@ This is a mathematical roadmap: arrows point from an input to the result it
 supports, and may summarize several modules. The [source map](docs/ARCHITECTURE.md)
 separates this view from direct imports and compiled declaration dependencies.
 
-The [interactive Blueprint](docs/ARCHITECTURE.md#interactive-blueprint) renders
-selected declaration dependencies from LeanArchitect, with links to their Lean
-source. CI provides the generated site as the `goldbach-blueprint` artifact.
+The [interactive Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)
+renders selected declaration dependencies from LeanArchitect, with links to their
+Lean source. CI validates both documentation views and publishes them together
+from `main`. The Blueprint remains available as the `goldbach-blueprint` artifact.
 
 ## Main results
 
@@ -68,7 +75,7 @@ Install [elan](https://github.com/leanprover/elan), then run from this directory
 
 ```sh
 lake exe cache get
-lake build
+lake --wfail build
 python3 scripts/check.py
 lake env lean Goldbach/Checks.lean
 lake env leanchecker --verbose Goldbach.Theorem

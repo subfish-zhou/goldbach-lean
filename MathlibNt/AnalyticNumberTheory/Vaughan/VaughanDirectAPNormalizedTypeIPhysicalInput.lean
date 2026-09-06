@@ -241,7 +241,7 @@ the square ledger gives the exact short-scale term `Q * sqrt (N*D)`.  The older
 not intrinsic to double Cauchy. -/
 theorem apNormalized_typeI_shell_physical
     (shellMean H E B D W R C N Q : ℝ)
-    (hmean : 0 ≤ shellMean) (hH : 0 ≤ H) (hE : 0 ≤ E) (hB : 0 ≤ B)
+    (hmean : 0 ≤ shellMean) (hH : 0 ≤ H) (_hE : 0 ≤ E) (hB : 0 ≤ B)
     (hD : 0 < D) (hW : 0 ≤ W) (hR : 0 ≤ R) (hC : 1 ≤ C)
     (hN : 0 ≤ N) (hQ : 0 ≤ Q)
     (hsq : shellMean ^ 2 ≤ H * E * B)
@@ -301,7 +301,7 @@ theorem vaughanDirectAPNormalizedTypeIInput_of_shells
     (firstShells : Finset α) (middleShells : Finset β)
     (firstMean : α → ℝ) (middleMean : β → ℝ)
     (N Q u v : ℕ) (logPay : ℝ)
-    (hlog : 0 ≤ logPay)
+    (_hlog : 0 ≤ logPay)
     (hdecomp : apNormalizedVaughanTypeIMean N Q u v ≤
       (∑ s ∈ firstShells, firstMean s) +
         ∑ s ∈ middleShells, middleMean s)

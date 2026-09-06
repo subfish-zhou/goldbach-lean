@@ -369,7 +369,7 @@ theorem weightedPrimitiveSquareLedger_largeSieve_of_directBessel
         ‖reducedAdditiveAmplitude q b M N a‖ ^ 2 := by
       apply Finset.sum_le_sum
       intro q hq
-      letI : NeZero q := ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
+      let : NeZero q := ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
       exact weightedPrimitiveSquareLedger_le_reducedAdditive_of_directBessel
         (hB q hq) b M N
     _ = ∑ qa ∈ reducedFareyIndices Q,

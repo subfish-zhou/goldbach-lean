@@ -568,12 +568,12 @@ theorem primeReciprocalSum_range_eq (a b : ℕ) (ha : 1 ≤ a) (hab : a ≤ b) :
         (∑ p ∈ ((Finset.range (b + 1)).filter Nat.Prime).filter (fun p => a ≤ p), 1 / (p : ℝ)) := by
       congr 1
       ext p
-      simp [Finset.filter_filter, and_comm, and_assoc]
+      simp [Finset.filter_filter, and_comm]
     have h₂ : (∑ p ∈ (Finset.range (b + 1)).filter (fun p => p.Prime ∧ p < a), 1 / (p : ℝ)) =
         (∑ p ∈ ((Finset.range (b + 1)).filter Nat.Prime).filter (fun p => ¬ a ≤ p), 1 / (p : ℝ)) := by
       congr 1
       ext p
-      simp [Finset.filter_filter, and_comm, and_assoc, not_le]
+      simp [Finset.filter_filter, and_comm, not_le]
     rw [h₁, h₂]
     simpa [Finset.filter_filter, and_comm, and_assoc] using
       (Finset.sum_filter_add_sum_filter_not

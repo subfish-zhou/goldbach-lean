@@ -62,7 +62,7 @@ theorem summable_zeta_primeEulerCorrection {s : ℂ} (hs : 1 < s.re) :
   refine ((summable_zeta_primeEulerLog hs).sub (summable_zeta_primeDirichlet hs)).congr ?_
   intro p
   rw [MulChar.one_apply (isUnit_of_subsingleton _)]
-  ring
+  ring_nf
 
 /-- Algebraic decomposition of the Euler-log summand into its prime Dirichlet
 term and its quadratic-and-higher correction.  Summability is kept explicit:

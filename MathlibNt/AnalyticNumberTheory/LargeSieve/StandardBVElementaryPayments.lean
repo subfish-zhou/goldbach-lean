@@ -119,7 +119,6 @@ theorem principalBadPhysical_le_explicit (N Q : ℕ) :
     _ ≤ (Q : ℝ) *
         ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log N) := by
       gcongr
-      norm_cast
       simp
     _ = _ := by ring
 
@@ -184,7 +183,6 @@ theorem directConductorCorrectionMean_vonMangoldt_le (N Q : ℕ) :
     _ = ((Finset.Icc 1 Q).card : ℝ) * C := by simp
     _ ≤ (Q : ℝ) * C := by
       gcongr
-      norm_cast
       simp
     _ = _ := by rfl
 

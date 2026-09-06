@@ -129,7 +129,7 @@ theorem equation14_13_source_normalization
   unfold errorEnvelope Section13HatLayers.kappaHat
   rw [ErrorSign.ofDepth_pred_eq_opposite hN]
   norm_num [Real.rpow_one]
-  <;> ring
+
 
 /-- The pointwise majorization used to pass from inherited `E_{N-1}` to
 `(log D)^(-Δ) q_D^∓`.  Its proof is the genuinely analytic/base-comparison

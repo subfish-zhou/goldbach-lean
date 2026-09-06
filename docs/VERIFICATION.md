@@ -4,14 +4,14 @@ Run all commands at the project root with the pinned toolchain:
 
 ```sh
 lake exe cache get
-lake build
+lake --wfail build
 python3 scripts/check.py
 lake env leanchecker --verbose Goldbach.Theorem
 ```
 
 ## Separate acceptance gates
 
-1. **Source build:** `lake build` compiles all four default libraries, including
+1. **Source build:** `lake --wfail build` compiles all four default libraries, including
    the public entry point, acceptance checks, and every shipped Lean module.
 2. **Source surface:** `python3 scripts/check.py --static-only` checks all shipped
    Lean files for missing local imports, import cycles, source reachability,
@@ -47,5 +47,8 @@ is a Lean proof with an existential threshold. The standard axiom report does
 not on its own establish that a named predicate matches the intended mathematics;
 that is why the literal target and almost-prime conversion are checked separately.
 
-No unqualified claim of a warning-free codebase is made: existing proof-style
-linter warnings are distinct from proof holes, build errors, and unexpected axioms.
+The release gate uses `lake --wfail build`: any reported warning fails the
+build, including replayed warnings from cached modules. The public statement
+check also enables `warningAsError`. Fix the cause rather than adding linter
+suppressions. A warning-free build is a separate engineering gate, not a
+substitute for the literal theorem and axiom checks above.

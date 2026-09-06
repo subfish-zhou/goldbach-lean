@@ -145,8 +145,8 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
       funext t
       rw [← Complex.ofReal_mul]
       rfl
-    convert hg.mul_const (a m * b n * χ.1 ((m * n : ℤ) : ZMod q)) using 1 <;>
-      funext t <;> ring
+    convert hg.mul_const (a m * b n * χ.1 ((m * n : ℤ) : ZMod q)) using 1;
+      funext t; ring
   let F : (q : ℕ) → PrimitiveCharacter q → ℝ → ℂ := fun q χ t =>
     (Real.exp (-ε * t) : ℂ) *
       rectangularKernelCharacterSum a b y t Ma Mb Na Nb q χ
@@ -199,7 +199,7 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
       intro m hm'
       rw [Finset.mul_sum]
     rw [hprod]
-    simp only [Finset.mul_sum, Finset.sum_add_distrib]
+    simp only [Finset.mul_sum]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro m hm'
@@ -516,7 +516,7 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
       (7 * Real.log (M : ℝ) + 2) * R := by
     rw [hlogε] at hmajorInt
     dsimp only [L₁, L₂] at hmajorInt
-    convert hmajorInt using 1 <;> ring
+    convert hmajorInt using 1; ring
   unfold rectangularSmoothedKernelWeightedPrimitiveMean
   change (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
     ‖rectangularSmoothedKernelCharacterSum a b ε y Ma Mb Na Nb q χ‖) ≤ _
@@ -584,7 +584,7 @@ theorem rectangularSharpHyperbolicWeightedPrimitiveMean_le_smoothed
     (hM : 1 ≤ M) (hYM : Y ≤ M)
     (hmnPos : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
       ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 0 < m * n)
-    (hmnM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
+    (_hmnM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
       ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), m * n ≤ (M : ℤ)) :
     rectangularSharpHyperbolicWeightedPrimitiveMean a b Y Ma Mb Na Nb S ≤
       rectangularSmoothedKernelWeightedPrimitiveMean a b (1 / (M : ℝ) ^ 2)
@@ -695,7 +695,7 @@ theorem rectangularSharpHyperbolicWeightedPrimitiveMean_le_smoothed
     let B := rectangularSmoothedKernelCharacterSum a b ε
       (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y) Ma Mb Na Nb q χ
     calc
-      ‖A‖ = ‖B + (A - B)‖ := by congr 1 <;> ring
+      ‖A‖ = ‖B + (A - B)‖ := by congr 1; ring
       _ ≤ ‖B‖ + ‖A - B‖ := norm_add_le _ _
       _ ≤ ‖B‖ + E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
         gcongr

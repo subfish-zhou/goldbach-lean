@@ -61,7 +61,7 @@ private lemma one_le_fixed_perturbation
 
 /-- The elementary fixed-compact perturbation input used by the source assembly. -/
 theorem fixedCompactPerturbationContract
-    {d M : ℝ} (hd : 0 ≤ d) (hM : 4 ≤ M) :
+    {d M : ℝ} (_hd : 0 ≤ d) (hM : 4 ≤ M) :
     FixedCompactPerturbationContract d M := by
   have htpos : 0 < M + 2 := by linarith
   have hev : ∀ᶠ D : ℝ in atTop, perturbation D d 0 (M + 2) < 2 :=
@@ -271,7 +271,7 @@ theorem lemma133WeightedHeadContract_corrected
         rw [show 1 - Δ = 1 + (-Δ) by ring,
           Real.rpow_add (div_pos htm0 ht0), Real.rpow_one]
         field_simp [ne_of_gt ht0, ne_of_gt htm0]
-        <;> ring
+
       _ ≤ (C * b ^ θ) * hatTailIntegrand H sign t :=
         mul_le_mul_of_nonneg_right hfac htail0
       _ = C * (b ^ θ * hatTailIntegrand H sign t) := by ring

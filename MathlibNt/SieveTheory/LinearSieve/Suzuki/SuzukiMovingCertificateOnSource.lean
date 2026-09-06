@@ -89,7 +89,7 @@ private lemma qD_le_lambdaNegDeriv_mul_weight
   rw [qD_eq_dde_main sign hlog ht]
   dsimp [lambdaNegDeriv]
   apply mul_le_mul_of_nonneg_right _ hw0
-  convert mul_le_mul_of_nonneg_left hmain hp0 using 1 <;> ring
+  convert mul_le_mul_of_nonneg_left hmain hp0 using 1; ring
 
 private lemma continuousOn_lambdaNegDeriv
     {H : Section13HatLayers} {β D d a b : ℝ}

@@ -58,7 +58,8 @@ lemma abs_sum_range_mul_le_of_prefix
           rw [← Finset.mul_sum, Finset.sum_range_sub']
           ring
 
- /-- Reindex the divisor double sum by the divisor.  The multiplicity of `d` is
+ omit [NeZero q] in
+/-- Reindex the divisor double sum by the divisor.  The multiplicity of `d` is
 exactly `⌊X/d⌋`. -/
 theorem quadraticDivisorDoubleSum_eq_floorSum
     (χ : DirichletCharacter ℂ q) (X : ℕ) :
@@ -83,7 +84,7 @@ theorem quadraticDivisorDoubleSum_eq_floorSum
           exact ⟨hdn, by omega⟩
       · intro d hd
         simp only [mem_filter] at hd
-        simp [hd.2]
+        simp []
     _ = ∑ d ∈ Icc 1 X, ∑ n ∈ Icc 1 X, if d ∣ n then (χ d).re else 0 := by
       rw [sum_comm]
     _ = ∑ d ∈ Icc 1 X, ((X / d : ℕ) : ℝ) * (χ d).re := by
@@ -98,14 +99,15 @@ theorem quadraticDivisorDoubleSum_eq_floorSum
         constructor
         · simp only [mem_filter, mem_Icc]
           rintro ⟨⟨hn1, hnX⟩, hdn⟩
-          simp only [mem_filter, mem_range]
+          simp only [mem_range]
           exact ⟨Nat.lt_succ_of_le hnX, by omega, hdn⟩
         · simp only [mem_filter, mem_range]
           rintro ⟨hnX, hn0, hdn⟩
-          simp only [mem_filter, mem_Icc]
+          simp only [mem_Icc]
           exact ⟨⟨Nat.pos_of_ne_zero hn0, Nat.le_of_lt_succ hnX⟩, hdn⟩
-      simp [hcard, mul_comm]
+      simp [hcard]
 
+omit [NeZero q] in
 /-- At `s=1`, the real harmonic truncation is the ordinary finite sum
 `∑_{1≤d<m} Re χ(d)/d`. -/
 theorem quadraticHarmonicTruncation_eq_Ico
@@ -161,7 +163,7 @@ finite Abel summation.  This is the cancellation step which prevents a
 termwise `O(X)` bound. -/
 theorem IsPrimitive.abs_floorWeighted_character_tail_le
     {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hq : 1 < q)
-    {m X : ℕ} (hm : 1 ≤ m) (hmX : m ≤ X) :
+    {m X : ℕ} (hm : 1 ≤ m) (_hmX : m ≤ X) :
     |∑ d ∈ Icc m X, ((X / d : ℕ) : ℝ) * (χ d).re| ≤
       (8 * Real.sqrt q * (1 + Real.log q)) * ((X / m : ℕ) : ℝ) := by
   let L := X + 1 - m
@@ -192,6 +194,7 @@ theorem IsPrimitive.abs_floorWeighted_character_tail_le
         (by omega : 0 < m + i))
   simpa only [L, f, w, Nat.cast_add, Nat.add_zero, zero_add] using hab
 
+omit [NeZero q] in
 /-- Exact floor-sum expansion of the production discrepancy. -/
 theorem quadraticSiegelConvolutionDiscrepancy_eq_floorSum_sub
     (χ : DirichletCharacter ℂ q) (X m : ℕ) :

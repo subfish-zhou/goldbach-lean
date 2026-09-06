@@ -102,7 +102,7 @@ lemma qD_mul_eq_at_plus_boundary
 lemma qD_mul_antitoneOn_short_minus
     {H : Section13HatLayers} {β D d Δ τ σ ρ : ℝ}
     (hH : Section13HatContract H β)
-    (hd : 0 ≤ d) (hΔ : -1 ≤ Δ) (hρ : 0 < ρ)
+    (hd : 0 ≤ d) (_hΔ : -1 ≤ Δ) (hρ : 0 < ρ)
     (hlog : 0 < Real.log D)
     (hDlarge : (1 + σ * d) * (σ + 1) ^ d ≤ ρ * Real.log D)
     (hτlower : β ≤ τ) (hτupper : τ ≤ β + 2) (hτσ : τ ≤ σ)

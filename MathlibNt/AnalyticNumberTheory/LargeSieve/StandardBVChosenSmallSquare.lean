@@ -354,12 +354,7 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
                     9 * Real.log (N : ℝ) ^ 2 *
                       (cLS * (N : ℝ) * Real.log (N : ℝ)) *
                       (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2) := by
-                gcongr <;> try positivity <;>
-                  first
-                  | exact hlog2Sq
-                  | exact hPLC
-                  | exact hvLogSq
-                  | exact hPLC0
+                gcongr
               have hcore0 :
                   0 ≤ (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
                     ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) := by
@@ -453,7 +448,7 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
             (Real.sqrt N / Real.log N ^ (2 * (A + κ))) := by
       gcongr
     have hsqrt : Real.sqrt N * Real.sqrt N = (N : ℝ) := by
-      simpa [pow_two] using (Real.sq_sqrt (show (0 : ℝ) ≤ N by positivity))
+      exact Real.mul_self_sqrt (Nat.cast_nonneg N)
     have hmain' :
         M * (N : ℝ) * Real.sqrt N *
             (Real.sqrt N / Real.log N ^ (2 * (A + κ))) =

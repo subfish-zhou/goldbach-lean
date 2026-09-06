@@ -106,7 +106,6 @@ theorem conductorErrorPrefixSquare_le_energy
   have hcard : ((Finset.Icc (M + 1) (M + y)).card : ℝ) ≤ N := by
     rw [Int.card_Icc]
     have heq : (M + (y : ℤ) + 1 - (M + 1)).toNat = y := by
-      congr 1
       omega
     rw [heq]
     exact_mod_cast hy
@@ -208,7 +207,7 @@ theorem sum_nonprincipal_by_conductor
     (∑ χ ∈ nonprincipalCharacters q,
         F χ.conductor (conductorPrimitiveCharacter χ)) =
       ∑ d ∈ nonprincipalConductors q, ∑ ψ : PrimitiveCharacter d, F d ψ := by
-  letI : NeZero q := ⟨hq.ne'⟩
+  let : NeZero q := ⟨hq.ne'⟩
   rw [Finset.sum_sigma' (s := nonprincipalConductors q)
     (t := fun d => Finset.univ) (f := F)]
   let T := (nonprincipalConductors q).sigma
@@ -342,7 +341,7 @@ theorem weighted_allCharacter_nonprincipal_prefix_ledger
       8 * (N : ℝ) *
         ∑ q ∈ Finset.Icc 1 Q,
           ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ ∈ nonprincipalCharacters q,
+            ∑ _χ ∈ nonprincipalCharacters q,
               ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
   have hgroup := weighted_sum_nonprincipal_by_conductor Q
     (fun d ψ => primitiveCharacterPrefixMaxSquare b M N d ψ)

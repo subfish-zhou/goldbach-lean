@@ -82,7 +82,7 @@ lemma caseA_lowerProfile_eventually_one
               rw [Real.exp_log hx0]
       _ = _ := by
         repeat' rw [← Real.exp_add]
-        congr 1 <;> ring
+        congr 1; ring
   calc
     1 = Real.exp 0 := Real.exp_zero.symm
     _ ≤ Real.exp _ := Real.exp_le_exp.mpr hexponent

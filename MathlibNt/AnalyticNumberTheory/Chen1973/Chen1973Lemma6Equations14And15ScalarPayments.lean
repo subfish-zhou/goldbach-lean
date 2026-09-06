@@ -77,7 +77,7 @@ theorem chen1973Lemma6_equation14_remainder_pointwise
         chen1973Lemma6NaturalMobiusPolynomial H s χ‖ ≤
       (40 * ‖s‖ * Real.sqrt d * Real.log d *
         (((H + 1 : ℕ) : ℝ) ^ (-s.re))) * liuHarmonic H := by
-  letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+  let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
   have hdomain : Chen1973Lemma3Domain s s.re s.im := by
     constructor
     · apply Complex.ext <;> simp

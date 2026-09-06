@@ -91,7 +91,7 @@ theorem caseI1423EndpointSourceBounds_of_sourceScalar
     (S : BoundingSieve) (H : Section13HatLayers) (C K d Δ : ℝ)
     (hH : Section13HatSourceContract H)
     (hC : 0 < C)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
+    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (_hd : 7 / (1 - Δ) < d) :
     CaseI1423EndpointSourceBoundsSourceLargeLog S H C K d Δ := by
   obtain ⟨L, hL, hfinite⟩ :=
     finiteSourceLayer_pred_le_uniform_oppositeHat

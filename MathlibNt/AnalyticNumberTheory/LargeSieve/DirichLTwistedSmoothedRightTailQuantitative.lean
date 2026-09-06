@@ -18,6 +18,7 @@ noncomputable def twistedVonMangoldtRightMajorant
     ‖twistedVonMangoldtCoeff χ n /
       (n : ℂ) ^ ((1 + δ : ℝ) + t * I)‖
 
+omit [NeZero q] in
 /-- A completely explicit character- and height-independent estimate for the
 absolute von Mangoldt Dirichlet series. -/
 theorem twistedVonMangoldtRightMajorant_le
@@ -50,7 +51,7 @@ theorem twistedVonMangoldtRightMajorant_le
               field_simp [hδ.ne']
         _ = (2 / δ) * (n : ℝ) ^ (δ / 2 - (1 + δ)) := by
               rw [Real.rpow_sub hnpos]
-        _ = _ := by congr 2 <;> ring
+        _ = _ := by congr 2; ring
     rw [norm_div, twistedVonMangoldtCoeff, norm_mul,
       Complex.norm_real, Real.norm_of_nonneg ArithmeticFunction.vonMangoldt_nonneg,
       Complex.norm_natCast_cpow_of_re_ne_zero n]

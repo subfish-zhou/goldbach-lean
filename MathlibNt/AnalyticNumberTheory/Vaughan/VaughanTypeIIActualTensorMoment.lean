@@ -343,7 +343,7 @@ theorem vaughanBilinearTensorEnergy_canonical_le_BVScale
         (vaughanCanonicalDyadicBlock N v l) ≤
       C * B ^ 2 * (y : ℝ) * Real.log (y + 1 : ℕ) ^ 5 :=
   (vaughanBilinearTensorEnergy_le_actual b y _ _
-      (fun e he => (mem_vaughanCanonicalDyadicBlock.mp he).1)).trans
+      (fun _e he => (mem_vaughanCanonicalDyadicBlock.mp he).1)).trans
     (vaughanActualTensorCoeffEnergy_canonical_le_BVScale
       b y N u v k l B C hB hMoment hC)
 

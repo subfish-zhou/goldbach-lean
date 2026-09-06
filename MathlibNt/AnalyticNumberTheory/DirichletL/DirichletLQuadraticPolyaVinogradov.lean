@@ -21,7 +21,7 @@ variable {q : ℕ} [NeZero q]
 /-- The Gauss sum of a primitive character modulo `q` has norm `sqrt q`.
 This is extracted from the already proved unit norm of the root number. -/
 theorem IsPrimitive.norm_gaussSum_stdAddChar
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hq : 1 < q) :
+    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (_hq : 1 < q) :
     ‖gaussSum χ stdAddChar‖ = Real.sqrt q := by
   have hqpos : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
   have hpow : (q : ℂ) ^ (1 / 2 : ℂ) = (Real.sqrt q : ℂ) := by

@@ -197,7 +197,7 @@ theorem eventually_nonquadraticPointwiseSW_leftEdge
         dsimp only [z]
         ring
       _ ≤ L ^ (-(E : ℝ)) :=
-        Real.rpow_le_rpow_of_exponent_le hL1 (by dsimp only [M]; push_cast; linarith)
+        Real.rpow_le_rpow_of_exponent_le hL1 (by dsimp only [M]; linarith)
       _ = (Real.log (N : ℝ) ^ E)⁻¹ := by
         rw [Real.rpow_neg hLpos.le, Real.rpow_natCast]
   rw [dirichletLTwistedSmoothedConductorLogFinalLeft,
@@ -251,7 +251,7 @@ theorem norm_lambdaCharacterPrefix_le_const_mul_self
 /-- The smoothing-removal constant is uniform in both the modulus and the
 character.  This is the quantifier order needed by pointwise applications. -/
 theorem exists_uniform_twistedSmoothedPsiClose
-    {SmoothingF : ℝ → ℝ} (diffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {SmoothingF : ℝ → ℝ} (_diffSmoothingF : ContDiff ℝ 1 SmoothingF)
     (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
     (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
     (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1) :

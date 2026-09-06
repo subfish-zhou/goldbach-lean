@@ -156,7 +156,7 @@ theorem chen1973Lemma6_eq19_conductorBlock_subset_source_Icc
 bounds. -/
 theorem chen1973Lemma6_eq19_primePairShell_product_mem_source_Ioc
     {x L B lastD level k m : ℕ}
-    (P : Chen1973Lemma6Eq19SourceParameters x L B lastD level k)
+    (_P : Chen1973Lemma6Eq19SourceParameters x L B lastD level k)
     {pp : ℕ × ℕ} (hpp : pp ∈ chen1973Lemma6PrimePairShell x B k m) :
     pp.1 * pp.2 ∈ Finset.Ioc (chen1973Lemma6Eq19PairD B k)
       (chen1973Lemma6Eq19PairQ B k) := by
@@ -213,7 +213,7 @@ theorem chen1973Lemma6_eq19_first_log_payment
 /-- Exact payment of the printed square-root contour prefactor against a
 square-root-sized second-integral bound. -/
 theorem chen1973Lemma6_eq19_second_power_payment
-    {x C : ℝ} (hx : 0 < x) (hlog : 0 < Real.log x) :
+    {x C : ℝ} (hx : 0 < x) (_hlog : 0 < Real.log x) :
     x ^ ((1 : ℝ) / 2) *
         (C * x ^ ((1 : ℝ) / 2) / Real.log x ^ (20 : ℕ)) =
       C * x / Real.log x ^ (20 : ℕ) := by
@@ -228,7 +228,7 @@ theorem chen1973Lemma6_eq19_second_power_payment
 before `x` and before every cell parameter; `hlarge` is the explicit large-`x`
 threshold. -/
 theorem chen1973Lemma6_eq19_absorb_global_constant
-    (Cabs : ℝ) {x : ℝ} (hC : 0 ≤ Cabs) (hlog : 1 ≤ Real.log x)
+    (Cabs : ℝ) {x : ℝ} (_hC : 0 ≤ Cabs) (hlog : 1 ≤ Real.log x)
     {a b : ℕ} (hab : a ≤ b)
     (hlarge : Cabs ≤ Real.log x ^ (b - a)) :
     Cabs * Real.log x ^ a ≤ Real.log x ^ b := by

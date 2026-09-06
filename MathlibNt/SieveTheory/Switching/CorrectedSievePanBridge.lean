@@ -478,7 +478,7 @@ theorem moebius_coprime_sum_forbidden (N m : ℕ) :
 
 /-- **Möbius decomposition of the support AP count for the Pan bridge**: pointwise,
 `1_{p ∈ support, p ≡ N mod d} = Σ_{e | F(N)} μ(e)·1_{base ∧ e | N−p}`. -/
-private theorem support_AP_indicator_eq_moebiusSum (N p d : ℕ) (hp : p ∈ Finset.range N) :
+private theorem support_AP_indicator_eq_moebiusSum (N p d : ℕ) (_hp : p ∈ Finset.range N) :
     (if p ∈ correctedChenUnsiftedPrimeSupport N ∧ p ≡ N [MOD d] then (1 : ℝ) else 0) =
       ∑ e ∈ (correctedChenForbiddenProduct N).divisors,
         if p.Prime ∧ 2 ≤ N - p ∧ p ≡ N [MOD d] ∧ e ∣ N - p then (μ e : ℝ) else 0 := by
@@ -1046,7 +1046,6 @@ theorem abs_distributionError_le_panMaxY_of_coprime (N d : ℕ)
       (Finset.range (Nat.floor (N : ℝ) + 1)))
       (AnalyticNumberTheory.Sieve.panMaxL (N - 2) N d chenPanWeightOne) (by
       exact Finset.mem_image.mpr ⟨N - 2, by
-        change N - 2 ∈ Finset.range (Nat.floor (N : ℝ) + 1)
         have hfl : Nat.floor (N : ℝ) = N := Nat.floor_natCast N
         rw [hfl]
         exact Finset.mem_range.mpr (by omega), rfl⟩)
@@ -1435,7 +1434,7 @@ theorem correctedChenPanInput_of_panMeanValueUniform
     have hlogx₀ : 0 ≤ (Real.log (x₀ : ℝ)) ^ A := by
       apply Real.rpow_nonneg
       by_cases h : (x₀ : ℕ) = 0
-      · simp [h, Real.log_zero, Real.zero_rpow (ne_of_gt hA)]
+      · simp [h, Real.log_zero]
       · have hx₀ : 1 ≤ (x₀ : ℝ) := by exact_mod_cast (Nat.succ_le_of_lt (Nat.pos_of_ne_zero h))
         exact Real.log_nonneg hx₀
     have hcs : 0 ≤ Csmall := by
@@ -1492,7 +1491,7 @@ theorem correctedChenPanInput_of_panMeanValueUniform
                   have hlogx₀ : 0 ≤ (Real.log (x₀ : ℝ)) ^ A := by
                     apply Real.rpow_nonneg
                     by_cases h : (x₀ : ℕ) = 0
-                    · simp [h, Real.log_zero, Real.zero_rpow (ne_of_gt hA)]
+                    · simp [h, Real.log_zero]
                     · exact Real.log_nonneg (by exact_mod_cast (Nat.succ_le_of_lt (Nat.pos_of_ne_zero h)))
                   dsimp [Csmall]
                   exact mul_nonneg (mul_nonneg hz₀ hc) hlogx₀

@@ -49,7 +49,7 @@ def dirichletLQuadraticConditionalLowerRectangle
 majorant. -/
 theorem dirichletLQuadraticConditionalPowerZeroFreeH_le_fixedH
     {q : ℕ} [NeZero q] {τ T t : ℝ}
-    (hτ : 0 < τ) (hT : τ ≤ T) (htlow : τ ≤ |t|) (hthigh : |t| ≤ T) :
+    (hτ : 0 < τ) (_hT : τ ≤ T) (htlow : τ ≤ |t|) (hthigh : |t| ≤ T) :
     dirichletLQuadraticConditionalPowerZeroFreeH q t ≤
       dirichletLQuadraticConditionalFixedH q τ T := by
   have ht : t ≠ 0 := by
@@ -113,7 +113,7 @@ private theorem LFunction_ne_zero_on_quadraticConditionalRectangle_aux
           (dirichletLQuadraticConditionalPowerZeroFreeH q t) ^ 12) 1 →
       χ.LFunction (β + I * t) ≠ 0)
     {s : ℂ} (hre : dirichletLQuadraticConditionalFixedLeft A η q τ T ≤ s.re)
-    (hre2 : s.re ≤ 2) (htlow : τ ≤ |s.im|) (hthigh : |s.im| ≤ T) :
+    (_hre2 : s.re ≤ 2) (htlow : τ ≤ |s.im|) (hthigh : |s.im| ≤ T) :
     χ.LFunction s ≠ 0 := by
   by_cases hsre : 1 ≤ s.re
   · exact χ.LFunction_ne_zero_of_one_le_re (Or.inl hχ) hsre

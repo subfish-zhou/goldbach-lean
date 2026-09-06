@@ -47,18 +47,18 @@ theorem caseII_total_le_concrete_finiteSourceLayer_add_rawBase
         suzukiVProduct S (z : ℝ) *
           (((2 : ℝ) + 1) / s * finiteSourceLayer 1 2 N ((2 : ℝ) + 1)) +
             endpointErr := by
-    convert hendpoint using 1 <;> norm_num
+    convert hendpoint using 1; norm_num
   have hbase' : suzukiSourceV S 1 D z ≤
       suzukiVProduct S (z : ℝ) *
         (finiteSourceLayer 1 2 1 s +
           K * ((2 : ℝ) + 1) ^ 2 / (s * Real.log (D : ℝ))) := by
-    convert hbase using 1 <;> norm_num
+    convert hbase using 1; norm_num
   have hraw := caseII_source_finite_assembly
     (S := S) (β := (2 : ℝ)) (s := s) (K := K)
     (Vz := suzukiVProduct S (z : ℝ)) (endpointErr := endpointErr)
     hN hs (by norm_num at hs3 ⊢; exact hs3)
     hyz hyLower hyUpper hendpoint' hbase'
-  convert hraw using 1 <;> norm_num
+  convert hraw using 1; norm_num
 
 /-- Full production endpoint transport followed by the sharp source-native
 Case-II assembly.  Every term of `caseIIEndpointErr` is retained (including the
@@ -111,7 +111,7 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase
     (hK : 2 ≤ K)
     (hlocal : HasDimensionOneLocalProductBound S K)
     (hClaim14_6_ii : Claim14_6_MonotoneQPremise H (D : ℝ) d Δ σ)
-    (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1) (hd : 0 ≤ d)
+    (hΔ0 : 0 ≤ Δ) (_hΔ1 : Δ ≤ 1) (_hd : 0 ≤ d)
     (hCeilFull : ∀ p ∈ S.prodPrimes.primeFactors,
       (D : ℝ) ^ (1 / σ) ≤ (p : ℝ) → (p : ℝ) < (y : ℝ) →
       2 ≤ p ∧ 2 * p ≤ D)
@@ -142,7 +142,7 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase
     (S := S) (H := H) (N := N) (D := D) (y := y)
     (β := (2 : ℝ)) (σ := σ) (C := C) (C1 := C1) (K := K)
     (ΘK := ΘK) (Δ := Δ) (d := d) (B0 := B0)
-    hH hN hN2 hycube (by convert hpower using 1 <;> norm_num) hyDhalf
+    hH hN hN2 hycube (by convert hpower using 1; norm_num) hyDhalf
     (by norm_num at h3σ ⊢; exact h3σ) hDone
     (by norm_num at hDlarge ⊢; exact hDlarge) hwy hy2 hw2 hEndpoint
     (by norm_num at hnu ⊢; exact hnu) hC
@@ -159,8 +159,8 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase
           (finiteSourceLayer 1 2 N 3 + caseIIEndpointSigma11 K N (D : ℝ) σ) +
           suzukiVProduct S (y : ℝ) *
             caseIIEndpointQD H N (D : ℝ) d Δ σ C K := by
-    convert hcaseIRaw using 1 <;>
-      simp only [caseIIEndpointSigma11, caseIIEndpointQD] <;> ring
+    convert hcaseIRaw using 1;
+      simp only [caseIIEndpointSigma11, caseIIEndpointQD]; ring
   have hVratio := suzukiVProduct_le_dimensionOne_ratio S hy2 hyz hlocal
   have hlogRatio : Real.log (z : ℝ) / Real.log (y : ℝ) = 3 / s :=
     caseII_log_ratio_of_power_identities hD hs hpower.symm hz

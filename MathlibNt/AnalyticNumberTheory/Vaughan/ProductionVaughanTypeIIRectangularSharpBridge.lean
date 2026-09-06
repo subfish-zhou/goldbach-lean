@@ -249,7 +249,7 @@ theorem vaughanTypeIICanonicalBilinearBlock_eq_rectangularSharp
       by_cases hlow : (t : ℕ) < 2 ^ l
       · dsimp [F]
         rw [vaughanTypeIIRectRightCoeff_eq_zero_of_lt N v l t]
-        · simp [F]
+        · simp []
         · exact_mod_cast htN'.1
         · exact_mod_cast hlow
       · have hhigh : N / 2 ^ k < t := by omega

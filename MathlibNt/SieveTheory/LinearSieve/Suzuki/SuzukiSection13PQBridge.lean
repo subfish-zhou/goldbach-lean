@@ -146,7 +146,7 @@ theorem section13_T_eq_Q_add_sign_P
     (H : Section13HatLayers) (sign : ErrorSign) (s : ℝ) :
     H.T sign s =
       (section13Qhat H s + (if sign = .plus then section13Phat H s else -section13Phat H s)) / 2 := by
-  cases sign <;> simp [section13Qhat, section13Phat] <;> ring
+  cases sign <;> simp [section13Qhat, section13Phat]; ring
 
 /-- The exact order-theoretic last step in the Lemma 10.17 bridge.  The hard
 input is only a strict contraction of `P̂` relative to `Q̂`; no final

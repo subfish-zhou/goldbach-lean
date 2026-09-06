@@ -139,7 +139,7 @@ private theorem sourceLargeLog_core_decay
           x ^ (1 / d * (2 : ℝ)) * (4 * x ^ (1 / d)) =
               4 * (x ^ (1 / d * 2) * x ^ (1 / d)) := by ring
           _ = 4 * x ^ (1 / d * 2 + 1 / d) := by rw [Real.rpow_add hx0]
-          _ = 4 * x ^ (3 / d) := by congr 2 <;> ring
+          _ = 4 * x ^ (3 / d) := by congr 2; ring
   have hKTheta : K ^ Θ < x := by
     calc
       K ^ Θ ≤ C1 * K ^ Θ := by

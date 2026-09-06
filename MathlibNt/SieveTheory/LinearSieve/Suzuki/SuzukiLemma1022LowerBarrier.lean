@@ -87,7 +87,7 @@ threshold is fixed before the least-crossing argument, so every later point has
 both the local inequality and the strict kernel estimate. -/
 theorem lemma10_22_lower_barrier_eventually_of_kernel
     {b E s₀ : ℝ} {f : ℝ → ℝ}
-    (hb : 0 < b) (hE : 1 ≤ E)
+    (hb : 0 < b) (_hE : 1 ≤ E)
     (hcanonical : CanonicalKernelGrowth b E) (hs₀ : 0 ≤ s₀)
     (hcont : ContinuousOn f (Ici s₀))
     (hpos : ∀ s, s₀ ≤ s → 0 < f s)

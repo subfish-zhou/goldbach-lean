@@ -22,7 +22,7 @@ theorem sigmaEleven_add_sigmaTwelve_suzukiVProduct_le_finiteSourceLayer_add_qD_n
     (hsdom : s ∈ KappaOneModel.parityDomain β N)
     (hτdom : τ - 1 ∈ KappaOneModel.parityDomain β (N - 1))
     (hsτ : s ≤ τ) (hτσ : τ ≤ σ)
-    (hD : 1 < (D : ℝ)) (hz2 : 2 ≤ (z : ℝ))
+    (hD : 1 < (D : ℝ)) (_hz2 : 2 ≤ (z : ℝ))
     (hroot2 : 2 ≤ (D : ℝ) ^ (1 / s))
     (hv2 : 2 ≤ (D : ℝ) ^ (1 / τ))
     (hw2 : 2 ≤ (D : ℝ) ^ (1 / σ))

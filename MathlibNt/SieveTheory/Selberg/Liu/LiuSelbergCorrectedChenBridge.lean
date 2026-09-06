@@ -1406,7 +1406,7 @@ theorem liu_pan_wang_ding_strictTriple_upper
   filter_upwards [htriple] with N htripleN
   intro hEven
   unfold correctedChenTriplePenalty
-  convert htripleN hEven using 1 <;> norm_num [Real.rpow_natCast]
+  convert htripleN hEven using 1; norm_num [Real.rpow_natCast]
 
 /-- Backward-compatible wrapper for the stronger canonical source contract. -/
 theorem LiuPanWangDingTheorem.eventually_correctedChenOmegaTriple_le

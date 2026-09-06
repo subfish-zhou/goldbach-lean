@@ -40,7 +40,7 @@ theorem nonprincipalPrimitivePsiSiegelWalfiszSource_of_rawLandauSiegelLowerBound
   filter_upwards [hn, hq] with N hnN hqN
   intro hN2 q hqmem ψ hψ y hy
   obtain ⟨hq2, hthreshold⟩ := Finset.mem_Icc.mp hqmem
-  letI : NeZero q := ⟨by omega⟩
+  let : NeZero q := ⟨by omega⟩
   by_cases hquad : ψ.1 ^ 2 = 1
   · calc
       ‖lambdaCharacterPrefix y q ψ.1‖ ≤

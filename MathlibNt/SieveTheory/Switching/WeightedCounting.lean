@@ -1503,7 +1503,7 @@ def ChenJurkatRichertTriplePenaltyUpperBound : Prop :=
 /-! ## Uniform prime-power bound -/
 
 /-- `#{p < N : m | N-p} ≤ N/m + 1`: `p` is determined by the quotient `(N-p)/m` when `1 ≤ m`. -/
-private theorem range_dvd_count_le (N m : ℕ) (hm : 1 ≤ m) :
+private theorem range_dvd_count_le (N m : ℕ) (_hm : 1 ≤ m) :
     ((Finset.range N).filter (fun p => m ∣ N - p)).card ≤ N / m + 1 := by
   classical
   let s : Finset ℕ := (Finset.range N).filter (fun p => m ∣ N - p)
@@ -1605,7 +1605,7 @@ private theorem inv_mul_sub_one_Ico_sum (a b : ℕ) (ha : 2 ≤ a) (hab : a ≤ 
 /-- **Uniform bound for proper prime powers**: the number of pairs `(p,q)` with p a corrected candidate,
 q a prime in `[z,y)`, and `q² | N-p` is uniformly bounded by `6·N^{9/10}`. -/
 theorem correctedChenPrimePowerProperCountBound (N : ℕ) (hNbig : 2 ^ 110 < N)
-    (hEven : Even N) :
+    (_hEven : Even N) :
     (correctedChenCandidates N).sum (fun p =>
       ((Finset.range (correctedChenY N)).filter
         (fun q => q.Prime ∧ correctedChenZ N ≤ q ∧ q ^ 2 ∣ N - p)).card) ≤
@@ -1783,10 +1783,10 @@ theorem correctedChenPrimePowerProperCountBound (N : ℕ) (hNbig : 2 ^ 110 < N)
                   rw [Finset.card_filter]
                   rw [Nat.cast_sum]
                   simp only [Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
-                  simp [Q, Finset.sum_filter, and_assoc, and_left_comm, and_comm]
+                  simp [Q, and_comm]
                   congr 1
                   ext x
-                  simp [Finset.mem_filter, and_assoc, and_left_comm, and_comm]
+                  simp [Finset.mem_filter, and_left_comm, and_comm]
             _ = ∑ q ∈ Q, (correctedChenCandidates N).sum (fun p =>
                   if q ^ 2 ∣ N - p then (1 : ℝ) else 0) := by
                   rw [Finset.sum_comm]

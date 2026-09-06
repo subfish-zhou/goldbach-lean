@@ -385,7 +385,7 @@ private theorem chen1973Lemma6_eq20_corrected_integrable_of_quadratic_growth
 
 theorem chen1973Lemma6_equation20_corrected_complementary_cell
     {x L level B D k m Q : ℕ} {ε C₁ C₂ G₁ G₂ r : ℝ}
-    (hcell20 : chen1973Lemma6Eq20Cell x L B D level k)
+    (_hcell20 : chen1973Lemma6Eq20Cell x L B D level k)
     (hx : 3 ≤ x) (hD : 0 < D) (hDQ : D < Q) (hQ : 2 ≤ Q) (hr : 0 < r)
     (horder21 : 3 ≤ chen1973PerronOrder (x : ℝ) + 1)
     (horder4 : 4 ≤ chen1973PerronOrder (x : ℝ) + 1)

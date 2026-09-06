@@ -31,7 +31,7 @@ theorem caseII_endpoint_le_concrete_finiteSourceLayer_add_qD_natCeil_of_errorTra
     (hN : Odd N) (hN2 : 2 ≤ N)
     (hycube : ∀ p ∈ suzukiSupportedBelow S y, p ^ 3 < D)
     (hyceil : y = ⌈(D : ℝ) ^ (1 / (β + 1))⌉₊)
-    (hyDhalf : (y : ℝ) ≤ (D : ℝ) / 2)
+    (_hyDhalf : (y : ℝ) ≤ (D : ℝ) / 2)
     (hβ1σ : β + 1 ≤ σ)
     (hD : 1 < (D : ℝ))
     (hDlarge : β * Real.log 2 ≤ (β - 1) * Real.log (D : ℝ))
@@ -344,11 +344,11 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase_natCeil_of_errorTra
       (S := S) (H := H) (N := N) (D := D) (y := y)
       (β := (2 : ℝ)) (σ := σ) (C := C) (C1 := C1) (K := K)
       (ΘK := ΘK) (Δ := Δ) (d := d) (B0 := B0)
-      hH hN hN2 hycube (by convert hyceil using 1 <;> norm_num) hyDhalf
+      hH hN hN2 hycube (by convert hyceil using 1; norm_num) hyDhalf
       (by norm_num at h3σ ⊢; exact h3σ) hDone
       (by norm_num at hDlarge ⊢; exact hDlarge)
-      (by convert hwy using 1 <;> norm_num) hy2
-      (by convert hyr2 using 1 <;> norm_num) hw2 hEndpoint
+      (by convert hwy using 1; norm_num) hy2
+      (by convert hyr2 using 1; norm_num) hw2 hEndpoint
       (by norm_num at hnu ⊢; exact hnu) hC
       (by norm_num at hlog ⊢; exact hlog)
       (by norm_num at hSourceDomain ⊢; exact hSourceDomain)
@@ -356,9 +356,9 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase_natCeil_of_errorTra
       (by norm_num at hIH ⊢; exact hIH)
       (by norm_num at hErrorThreshold ⊢; exact hErrorThreshold) hK hlocal
       hClaim14_6_ii hΔ0
-      (by convert hCeilFull using 1 <;> norm_num)
-      (by convert hT using 1 <;> norm_num)
-      (by convert hClaim14_13 using 1 <;> norm_num)
+      (by convert hCeilFull using 1; norm_num)
+      (by convert hT using 1; norm_num)
+      (by convert hClaim14_13 using 1; norm_num)
   have hVy : suzukiVProduct S (y : ℝ) = suzukiVProduct S yr := by
     exact suzukiVProduct_natCeil_eq S (by simpa [yr] using hyceil)
   have hVz : suzukiVProduct S (z : ℝ) = suzukiVProduct S zr := by
@@ -369,8 +369,8 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase_natCeil_of_errorTra
           (finiteSourceLayer 1 2 N 3 + caseIIEndpointSigma11 K N (D : ℝ) σ) +
           suzukiVProduct S yr * caseIIEndpointQD H N (D : ℝ) d Δ σ C K := by
     rw [← hVy]
-    convert hcaseIRaw using 1 <;>
-      simp only [caseIIEndpointSigma11, caseIIEndpointQD] <;> ring
+    convert hcaseIRaw using 1;
+      simp only [caseIIEndpointSigma11, caseIIEndpointQD]; ring
   have hVratio : suzukiVProduct S yr ≤
       suzukiVProduct S zr * (Real.log zr / Real.log yr) *
         (1 + K / Real.log yr) := by
@@ -652,7 +652,7 @@ theorem caseII_total_le_doubleRounded_direct_concrete_relative_natCeil_of_errorT
           (caseIIRoundedTransportErr S H N (D : ℝ) yr zr
             d Δ σ C K B0 s + suzukiVProduct S (z : ℝ) *
               (K * 3 ^ 2 / (s * Real.log (D : ℝ)))) := by
-        convert hSharp using 1 <;> ring
+        convert hSharp using 1; ring
     _ ≤ suzukiVProduct S (z : ℝ) * finiteSourceLayer 1 2 N s +
           (B0 + suzukiVProduct S (z : ℝ) *
             (P * E * L * (R + A + Qr + B))) := by

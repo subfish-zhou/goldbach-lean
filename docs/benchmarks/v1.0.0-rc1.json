@@ -1,0 +1,28 @@
+{
+  "scope": "Clean build of all four project libraries, with independently copied pinned third-party source/cache; excludes toolchain/dependency acquisition and cache-copy time",
+  "command": [
+    "lake",
+    "-Kjobs=8",
+    "build"
+  ],
+  "LEAN_NUM_THREADS": "2",
+  "logical_cpus": 32,
+  "machine": "x86_64",
+  "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+  "started_unix": 1788612642.1047447,
+  "status": "passed",
+  "peak_sum_rss_bytes": 11257999360,
+  "peak_sum_pss_bytes": 6414389248,
+  "peak_process_count": 3,
+  "samples": 1919,
+  "pss_read_failures": 102,
+  "sample_interval_seconds": 1,
+  "elapsed_seconds": 2183.4177588121966,
+  "exit_code": 0,
+  "finished_unix": 1788614825.5225167,
+  "success_line": "Build completed successfully (4627 jobs).",
+  "memory_method": "Once-per-second sum of PSS/RSS over Lake and recursively observed child processes; PSS apportions shared pages, RSS can double-count them. Excludes filesystem cache and unrelated processes. Sampled peaks, not minimum required RAM.",
+  "source_revision": "976e60343f5cc50b2f5b2b980de21124e5afc662",
+  "release": "v1.0.0-rc1",
+  "provenance": "Original recorded release-candidate benchmark; not rerun for the v1.0.0 release."
+}

@@ -97,8 +97,8 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
       funext t
       rw [← Complex.ofReal_mul]
       rfl
-    convert hg.mul_const (a m * b n * χ.1 ((m * n : ℤ) : ZMod q)) using 1 <;>
-      funext t <;> ring
+    convert hg.mul_const (a m * b n * χ.1 ((m * n : ℤ) : ZMod q)) using 1;
+      funext t; ring
   have hsumInt : ∀ {ι : Type} (s : Finset ι) (g : ι → ℝ → ℂ)
       (μ : Measure ℝ), (∀ i ∈ s, Integrable (g i) μ) →
         Integrable (fun t => ∑ i ∈ s, g i t) μ := by
@@ -135,10 +135,10 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
                   (Real.log (Y' q χ / ((m * n : ℤ) : ℝ))) t : ℂ)) := by
       unfold F rectangularKernelCharacterSum
       simp_rw [Finset.mul_sum]
-      rw [integral_finset_sum sM]
+      rw [integral_finsetSum sM]
       · apply Finset.sum_congr rfl
         intro m hm
-        rw [integral_finset_sum sN]
+        rw [integral_finsetSum sN]
         · apply Finset.sum_congr rfl
           intro n hn
           rw [← MeasureTheory.integral_const_mul]
@@ -166,7 +166,7 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
       intro m hm
       rw [Finset.mul_sum]
     rw [hprod]
-    simp only [Finset.mul_sum, Finset.sum_add_distrib]
+    simp only [Finset.mul_sum]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro m hm
@@ -201,10 +201,10 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
     ring
   have hGint : IntegrableOn G (Set.Ioi 0) := by
     dsimp only [G]
-    apply integrable_finset_sum
+    apply integrable_finsetSum
     intro q hq
     apply Integrable.const_mul
-    apply integrable_finset_sum
+    apply integrable_finsetSum
     intro χ hχ
     exact (hFint q χ).norm
   have hDmean :
@@ -236,15 +236,15 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
           positivity
       _ = ∫ t in Set.Ioi (0 : ℝ), G t := by
         dsimp only [G]
-        rw [integral_finset_sum S]
+        rw [integral_finsetSum S]
         · apply Finset.sum_congr rfl
           intro q hq
           rw [MeasureTheory.integral_const_mul]
-          rw [integral_finset_sum Finset.univ]
+          rw [integral_finsetSum Finset.univ]
           intro χ hχ
           exact (hFint q χ).norm
         · intro q hq
-          exact (integrable_finset_sum Finset.univ fun χ hχ => (hFint q χ).norm).const_mul _
+          exact (integrable_finsetSum Finset.univ fun χ hχ => (hFint q χ).norm).const_mul _
   have hbase :
       rankOneRectangularWeightedPrimitiveMean a b Ma Mb Na Nb S ≤ R := by
     simpa only [R, rankOneRectangularLSRHS] using
@@ -552,7 +552,7 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
       (14 * Real.log (M : ℝ) + 4) * R := by
     rw [hlogε] at hmajorInt
     dsimp [L₁, L₂] at hmajorInt
-    convert hmajorInt using 1 <;> ring
+    convert hmajorInt using 1; ring
   change (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
     ‖rectangularSmoothedKernelCharacterSum a b ε (Y' q χ) Ma Mb Na Nb q χ‖) ≤ _
   calc
@@ -618,7 +618,7 @@ private theorem selectorRectangularSharpHyperbolicWeightedPrimitiveMean_le_smoot
     (hYM : ∀ q χ, Y q χ ≤ M)
     (hmnPos : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
       ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 0 < m * n)
-    (hmnM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
+    (_hmnM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
       ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), m * n ≤ (M : ℤ)) :
     (∑ q ∈ S, ((q : ℝ) / (q.totient : ℝ)) *
       ∑ χ : PrimitiveCharacter q,
@@ -712,7 +712,7 @@ private theorem selectorRectangularSharpHyperbolicWeightedPrimitiveMean_le_smoot
       have hnorm_one (s : ℝ) : ‖(1 : ℂ) - (s : ℂ)‖ = |1 - s| := by
         simpa using hnorm 1 s
       have hnorm_zero (s : ℝ) : ‖(0 : ℂ) - (s : ℂ)‖ = |0 - s| := by
-        simpa using hnorm 0 s
+        simp
       by_cases hcut : m * n ≤ (Y q χ : ℤ)
       · simpa only [if_pos hcut] using hnorm_one
           (dampedArctanPerronKernel ε
@@ -751,7 +751,7 @@ private theorem selectorRectangularSharpHyperbolicWeightedPrimitiveMean_le_smoot
       (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep (Y q χ))
       Ma Mb Na Nb q χ
     calc
-      ‖A‖ = ‖B + (A - B)‖ := by congr 1 <;> ring
+      ‖A‖ = ‖B + (A - B)‖ := by congr 1; ring
       _ ≤ ‖B‖ + ‖A - B‖ := norm_add_le _ _
       _ ≤ ‖B‖ + E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
         gcongr

@@ -31,7 +31,7 @@ lemma character_nat_zero_of_ne_one
     subst q
     exact hχ (Subsingleton.elim _ _)
   have hq0 : q ≠ 0 := NeZero.ne q
-  letI : Fact (1 < q) :=
+  let : Fact (1 < q) :=
     ⟨Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨hq0, hq1⟩⟩
   simpa only [Nat.cast_zero] using
     (MulChar.map_nonunit χ (a := (0 : ZMod q)) not_isUnit_zero)

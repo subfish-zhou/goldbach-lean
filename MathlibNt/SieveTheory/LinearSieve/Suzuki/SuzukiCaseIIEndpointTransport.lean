@@ -146,7 +146,7 @@ placed in `caseIIEndpointErr`. -/
 theorem caseII_endpoint_transport_explicit
     (S : BoundingSieve) (H : Section13HatLayers)
     {N D y z : ℕ} {d Δ σ C K B0 s : ℝ}
-    (hs : 0 < s)
+    (_hs : 0 < s)
     (hlogRatio : Real.log (z : ℝ) / Real.log (y : ℝ) = 3 / s)
     (hVratio : suzukiVProduct S (y : ℝ) ≤
       suzukiVProduct S (z : ℝ) *
@@ -276,7 +276,7 @@ theorem caseII_total_le_from_caseI_endpoint_explicit
     (S := S) (H := H) (N := N) (D := D) (y := y)
     (β := (2 : ℝ)) (σ := σ) (C := C) (C1 := C1) (K := K)
     (ΘK := ΘK) (Δ := Δ) (d := d) (B0 := B0)
-    hH hN hN2 hycube (by convert hpower using 1 <;> norm_num) hyDhalf
+    hH hN hN2 hycube (by convert hpower using 1; norm_num) hyDhalf
     (by norm_num at h3σ ⊢; exact h3σ) hDone
     (by norm_num at hDlarge ⊢; exact hDlarge) hwy hy2 hw2 hEndpoint
     (by norm_num at hnu ⊢; exact hnu) hC
@@ -293,8 +293,8 @@ theorem caseII_total_le_from_caseI_endpoint_explicit
           (finiteSourceLayer 1 2 N 3 + caseIIEndpointSigma11 K N (D : ℝ) σ) +
           suzukiVProduct S (y : ℝ) *
             caseIIEndpointQD H N (D : ℝ) d Δ σ C K := by
-    convert hcaseIRaw using 1 <;>
-      simp only [caseIIEndpointSigma11, caseIIEndpointQD] <;> ring
+    convert hcaseIRaw using 1;
+      simp only [caseIIEndpointSigma11, caseIIEndpointQD]; ring
   have hVratio := suzukiVProduct_le_dimensionOne_ratio S hy2 hyz hlocal
   have hlogRatio : Real.log (z : ℝ) / Real.log (y : ℝ) = 3 / s :=
     caseII_log_ratio_of_power_identities hD hs hpower.symm hz

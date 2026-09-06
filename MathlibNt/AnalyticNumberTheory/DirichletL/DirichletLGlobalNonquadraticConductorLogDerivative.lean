@@ -100,7 +100,7 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
     calc
       ‖(χ ^ 2).LFunction (1 + x + I * (2 * t))‖
           ≤ 32 * (1 + Real.log m₂) := by
-            convert hv using 1 <;> push_cast <;> ring
+            convert hv using 1; push_cast; ring
       _ ≤ 64 * L := by
         dsimp only [L]
         nlinarith
@@ -123,7 +123,7 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
         ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ^ 3 *
           ‖χ.LFunction (1 + x + I * t)‖ ^ 4 *
           ‖(χ ^ 2).LFunction (1 + x + 2 * I * t)‖ by
-        simpa only [norm_mul, norm_pow] using hp) using 1 <;> ring
+        simpa only [norm_mul, norm_pow] using hp) using 1; ring
   have hmajor : 1 ≤
       (2 / x) ^ 3 * ‖χ.LFunction (1 + x + I * t)‖ ^ 4 * (64 * L) := by
     calc
@@ -162,7 +162,7 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
           χ hχ (σ := σ) (t := t)
           (hβlower.trans hσpath.1.le) (hσpath.2.trans hσtwo)
           (by simpa only [m] using hnear)
-      convert hd using 1 <;> ring
+      convert hd using 1; ring
   have hdiff' :
       ‖χ.LFunction (1 + x + I * t) - χ.LFunction (β + I * t)‖ ≤
         128 * L ^ 2 * x := by
@@ -170,7 +170,6 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
       push_cast
       ring
     have hargβ : ((β : ℂ) + t * I) = β + I * t := by
-      push_cast
       ring
     rw [harg₁, hargβ] at hdiff
     calc

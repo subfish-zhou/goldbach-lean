@@ -73,7 +73,7 @@ theorem lemma14_4_noDmin_base_one_of_actualClaim145
     (hC145 : 0 ≤ C145) (hd : 0 < d)
     (hCnorm : claim145UniformNormalizationConstant C145 d ≤ C)
     (hH : Section13HatSourceContract H)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K)
+    (_hK : 2 ≤ K) (_hlocal : HasDimensionOneLocalProductBound S K)
     (hDbase : 2 ≤ Dbase)
     (hbase : Lemma144MovingDomainNatCeilAt S H C K d Δ 1 Dbase)
     (hbudget : Real.log (Dbase : ℝ) ≤ C1 * K ^ Θ)
@@ -114,7 +114,7 @@ theorem lemma14_4_noDmin_successor_of_actual_cases
     (hC145 : 0 ≤ C145) (hd : 0 < d)
     (hCnorm : claim145UniformNormalizationConstant C145 d ≤ C)
     (hH : Section13HatSourceContract H)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K)
+    (_hK : 2 ≤ K) (_hlocal : HasDimensionOneLocalProductBound S K)
     (hpred : Lemma144MovingDomainNatCeilAt S H C K d Δ N 2)
     (hclaim : ∀ (D : ℕ) (s : ℝ),
       2 ≤ D → 2 ≤ s →

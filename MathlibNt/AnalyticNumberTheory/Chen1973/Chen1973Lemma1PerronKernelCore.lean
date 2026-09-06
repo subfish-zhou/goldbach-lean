@@ -119,7 +119,7 @@ theorem chen1973GammaDensityPrimitive_one_div {x y : ℝ} (hy : 0 < y) :
     have hrecpos : 0 < 1 / y := one_div_pos.mpr hy
     have hreclt : 1 / y < 1 := (div_lt_one₀ hy).2 hy1'
     have hcond : ¬(1 / y ≤ 0 ∨ 1 ≤ 1 / y) := by
-      push_neg
+      push Not
       exact ⟨hrecpos, hreclt⟩
     have hlog : Real.log (1 / (1 / y)) = Real.log y := by
       congr 1
@@ -142,8 +142,7 @@ theorem verticalIntegrable_chen1973MellinKernel {x : ℝ} (hx : 1 < x) :
     let ω : ℂ := (((2 : ℝ) : ℂ) + t * Complex.I)
     let η : ℂ := (A + 2 : ℂ) + t * Complex.I
     have hηeq : 1 + ω / A = η / A := by
-      apply Complex.ext <;> simp [ω, η, hA.ne', add_comm, add_left_comm, add_assoc,
-        div_eq_mul_inv, mul_add, add_mul]
+      apply Complex.ext <;> simp [ω, η, hA.ne', add_comm, add_left_comm, div_eq_mul_inv, add_mul]
     have hnormω : ‖ω‖ ^ 2 = 4 + t ^ 2 := by
       rw [Complex.sq_norm]
       simp [ω, Complex.normSq_apply, pow_two]
@@ -171,7 +170,7 @@ theorem verticalIntegrable_chen1973MellinKernel {x : ℝ} (hx : 1 < x) :
         ‖1 / (ω * (1 + ω / A) ^ (n + 1))‖ =
           A ^ (n + 1 : ℕ) / (‖ω‖ * ‖η‖ ^ (n + 1)) := by
       rw [norm_div, norm_mul, norm_pow, hηeq, norm_div, div_pow]
-      simp [hA.ne', abs_of_pos hA, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+      simp [abs_of_pos hA, div_eq_mul_inv, mul_left_comm, mul_comm]
     change ‖1 / (ω * (1 + ω / A) ^ (n + 1))‖ ≤ _
     rw [hnorm]
     calc

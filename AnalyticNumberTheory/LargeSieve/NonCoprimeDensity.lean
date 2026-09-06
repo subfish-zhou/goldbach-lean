@@ -37,8 +37,6 @@ open AnalyticNumberTheory.Sieve
 
 noncomputable section
 
-set_option linter.unusedVariables false
-set_option linter.style.haveILetI false
 set_option maxHeartbeats 4000000
 
 /-- `τ(p·k) ≤ 2·τ(k)` for prime `p`: a divisor of `pk` either divides

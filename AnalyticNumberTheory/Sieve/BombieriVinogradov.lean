@@ -279,7 +279,7 @@ noncomputable def chenSelbergLevel (N : ℕ) (ε : ℝ) : ℝ :=
   (N : ℝ) ^ (1/4 - ε/2)
 
 /-- Sieve ratio `s = log(D)/log(z) = (1/2 - ε)/(1/10) = 5 - 10ε`. -/
-noncomputable def chenSieveRatio (N : ℕ) (ε : ℝ) : ℝ :=
+noncomputable def chenSieveRatio (_N : ℕ) (ε : ℝ) : ℝ :=
   (1/2 - ε) / (1/10 : ℝ)
 
 /-- For sufficiently small positive `ε`, the sieve ratio is close to 5. -/

@@ -12,11 +12,13 @@ local notation "conj" => starRingEnd ℂ
 
 variable {q : ℕ} [NeZero q]
 
+omit [NeZero q] in
 /-- Complex conjugation fixes a quadratic Dirichlet character. -/
 lemma star_eq_self_of_sq_eq_one (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) :
     star χ = χ := by
   rw [MulChar.star_eq_inv, (MulChar.isQuadratic_iff_sq_eq_one.mpr hquad).inv]
 
+omit [NeZero q] in
 private lemma conj_character_apply_of_sq_eq_one
     (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) (k : ℕ) :
     conj (χ k) = χ k := by
@@ -33,6 +35,7 @@ private lemma conj_cpowWeight (s : ℂ) (k : ℕ) :
     exact ne_of_lt Real.pi_pos
   simpa using (Complex.cpow_conj (k : ℂ) (-s) harg).symm
 
+omit [NeZero q] in
 /-- Conjugating a finite natural-order partial sum conjugates its parameter. -/
 lemma conj_sum_range_cpowWeight_character_of_sq_eq_one
     (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) (s : ℂ) (n : ℕ) :

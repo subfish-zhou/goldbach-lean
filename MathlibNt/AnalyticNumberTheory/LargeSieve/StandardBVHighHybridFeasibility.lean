@@ -30,11 +30,11 @@ noncomputable section
 `K < L*logPow`.  The modulus data `Q,B` are deliberately present but absent
 from the hypotheses and conclusion: changing them cannot alter this lane. -/
 theorem positive_N_lane_not_paid_by_modulus_cutoff
-    (N L K logPow Q B : ℝ) (hN : 0 < N) (hL : 0 < L)
+    (N L K logPow _Q _B : ℝ) (hN : 0 < N) (_hL : 0 < L)
     (hlogPow : 0 < logPow) (hgap : K < L * logPow) :
     K * N / logPow < L * N := by
   rw [div_lt_iff₀ hlogPow]
-  nlinarith [mul_pos hL hN]
+  nlinarith [mul_lt_mul_of_pos_right hgap hN]
 
 /-- Formal contradiction certificate for any physical majorant which retains a
 positive multiple of `N` but is advertised at inverse-logarithmic scale. -/

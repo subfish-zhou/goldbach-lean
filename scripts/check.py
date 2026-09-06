@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -100,6 +101,7 @@ def release_files() -> list[Path]:
         if directory.exists():
             files.extend(p for p in directory.rglob("*")
                          if p.is_file() and "__pycache__" not in p.parts)
+    files.extend(p for p in (ROOT / "docbuild").glob("*") if p.is_file())
     files.extend(p for p in (ROOT / "blueprint/src").glob("*")
                  if p.is_file() and p.suffix in {".tex", ".cfg", ".py"})
     requirements = ROOT / "blueprint/requirements.txt"
@@ -191,6 +193,13 @@ def check_axiom_output(text: str) -> None:
     print("All public theorem axiom reports use only the standard classical axioms.")
 
 
+def lean_environment():
+    env = os.environ.copy()
+    for name in ("LEAN_PATH", "LEAN_SRC_PATH"):
+        env.pop(name, None)
+    return env
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--static-only", action="store_true")
@@ -206,8 +215,8 @@ def main() -> int:
             counts[area] += count_code_lines(path.read_text(encoding="utf-8"))
         print(json.dumps({"lean_code_lines": counts, "total": sum(counts.values())}, indent=2))
     if not args.static_only:
-        result = subprocess.run(["lake", "env", "lean", "Goldbach/Checks.lean"],
-                                cwd=ROOT, text=True, stdout=subprocess.PIPE,
+        result = subprocess.run(["lake", "env", "lean", "-DwarningAsError=true", "Goldbach/Checks.lean"],
+                                cwd=ROOT, env=lean_environment(), text=True, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         print(result.stdout, end="")
         if result.returncode:

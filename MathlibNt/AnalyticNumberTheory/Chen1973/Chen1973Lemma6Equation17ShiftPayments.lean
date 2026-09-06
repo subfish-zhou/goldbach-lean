@@ -22,7 +22,7 @@ ordered Abel representation at cutoff one is enough: on `1/2 ≤ σ ≤ 2`, `L'`
 has at most linear growth in the height. -/
 theorem norm_deriv_LFunction_le_modulus_mul_linear_height
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
-    {σ t : ℝ} (hσlower : 1 / 2 ≤ σ) (hσupper : σ ≤ 2) :
+    {σ t : ℝ} (hσlower : 1 / 2 ≤ σ) (_hσupper : σ ≤ 2) :
     ‖deriv χ.LFunction (σ + I * t)‖ ≤
       (q : ℝ) * (2 + 4 * ‖(σ + I * t : ℂ)‖) := by
   have hσpos : 0 < σ := lt_of_lt_of_le (by norm_num) hσlower
@@ -160,8 +160,8 @@ private theorem eq17_kernel_pays_linear_growth
         A ^ (n + 1) / (‖z‖ * ‖η‖ ^ (n + 1)) := by
     unfold chen1973MellinKernel
     rw [norm_div, norm_one, norm_mul, norm_pow, hηeq, norm_div, div_pow]
-    simp [A, n, hApos.ne', abs_of_pos hApos,
-      div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+    simp [A, n, abs_of_pos hApos,
+      div_eq_mul_inv, mul_left_comm, mul_comm]
   change (2 + 4 * ‖z‖) * ‖chen1973MellinKernel (x : ℝ) z‖ ≤ _
   rw [hknorm]
   have hzpos : 0 < ‖z‖ := hβ.trans_le hnormz

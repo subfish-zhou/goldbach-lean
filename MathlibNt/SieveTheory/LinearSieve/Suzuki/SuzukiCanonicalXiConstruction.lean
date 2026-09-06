@@ -8,8 +8,6 @@ namespace Section10CanonicalXi
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
-set_option linter.unusedTactic false
-set_option linter.unreachableTactic false
 
 /-- The canonical function `η(x)=∫₀¹ exp(tx)dt`, including its removable value at zero. -/
 noncomputable def eta (x : ℝ) : ℝ := ∫ t in (0 : ℝ)..1, Real.exp (t * x)

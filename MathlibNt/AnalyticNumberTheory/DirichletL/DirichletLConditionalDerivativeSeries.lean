@@ -25,9 +25,10 @@ lemma logCpowWeight_nat_eq (s : ℂ) {k : ℕ} (hk : 1 ≤ k) :
   have hcast : ((k : ℝ) : ℂ) = (k : ℂ) := by norm_num
   rw [logCpowWeight, cpowWeight, Complex.ofReal_log hk0, hcast]
 
+omit [NeZero q] in
 /-- Exact finite Abel identity, stated with `logCpowWeight`. -/
 lemma logCpowWeight_abel_Ico (χ : DirichletCharacter ℂ q) (s : ℂ)
-    {m n : ℕ} (hm : 1 ≤ m) (hmn : m < n) :
+    {m n : ℕ} (_hm : 1 ≤ m) (hmn : m < n) :
     ∑ k ∈ Ico m n, logCpowWeight s k * χ k =
       logCpowWeight s (n - 1 : ℕ) * (∑ k ∈ range n, χ k) -
         logCpowWeight s m * (∑ k ∈ range m, χ k) -

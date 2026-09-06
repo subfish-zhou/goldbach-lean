@@ -399,7 +399,7 @@ theorem standardBVSmall_squareLedger_payable_of_le_balanced
             (Real.sqrt N / Real.log N ^ (2 * (A + κ))) := by
       gcongr
     have hsqrt : Real.sqrt N * Real.sqrt N = (N : ℝ) := by
-      simpa [pow_two] using (Real.sq_sqrt (show (0 : ℝ) ≤ N by positivity))
+      exact Real.mul_self_sqrt (Nat.cast_nonneg N)
     have hmain' :
         M * (N : ℝ) * Real.sqrt N *
             (Real.sqrt N / Real.log N ^ (2 * (A + κ))) =

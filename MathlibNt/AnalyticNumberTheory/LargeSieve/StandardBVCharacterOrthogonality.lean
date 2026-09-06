@@ -67,7 +67,7 @@ theorem lambdaAPPrefix_eq_character_average
   rw [hfactor, charOrthSum hq]
   by_cases heq : (n : ZMod q) = (a : ZMod q)
   · have hnu : IsUnit (n : ZMod q) := heq ▸ hau
-    simp [heq, hnu, hau]
+    simp [heq, hau]
     field_simp
   · simp [heq]
 
@@ -136,7 +136,7 @@ theorem norm_lambdaAPMainError_le_principal_add_nonprincipal
         (q.totient : ℝ)⁻¹ *
           ‖∑ χ ∈ nonprincipalCharacters q,
             star (χ (a : ZMod q)) * lambdaCharacterPrefix y q χ‖ := by
-      simp [norm_mul, abs_of_pos hφ]
+      simp
     _ ≤ (q.totient : ℝ)⁻¹ * ‖principalLambdaMainError y q‖ +
         (q.totient : ℝ)⁻¹ *
           ∑ χ ∈ nonprincipalCharacters q,

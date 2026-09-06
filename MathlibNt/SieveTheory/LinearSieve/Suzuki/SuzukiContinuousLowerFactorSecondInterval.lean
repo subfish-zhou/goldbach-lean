@@ -56,9 +56,9 @@ private theorem upper_inner_shift {u : ℝ} :
       apply intervalIntegral.integral_congr
       intro x _hx
       dsimp [f]
-      congr 2 <;> ring
+      congr 2; ring
     _ = ∫ t in (2 : ℝ)..(u - 1), f t := by
-      convert h using 1 <;> norm_num
+      convert h using 1; norm_num
     _ = ∫ t in (2 : ℝ)..(u - 1), Real.log (t - 1) / t := by rfl
 
 /-- The production source identity and the first lower interval give the
@@ -156,7 +156,7 @@ theorem suzukiContinuousLowerFactor_eq_second_source_formula
         ring
       _ = suzukiLowerSieveAmplitude *
           (1 + ∫ t in (2 : ℝ)..(x - 2), Real.log (t - 1) / t) - (x - 1) := by
-        convert congrArg (fun z : ℝ => z - (x - 1)) hu using 1 <;> ring_nf
+        convert congrArg (fun z : ℝ => z - (x - 1)) hu using 1; ring_nf
   rw [intervalIntegral.integral_congr hpoint] at hsource
   have hfcont : ContinuousOn (fun t : ℝ => Real.log (t - 1) / t)
       (Set.Icc (2 : ℝ) 4) := by

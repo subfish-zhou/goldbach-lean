@@ -133,7 +133,7 @@ private lemma norm_prefix_le
 
 private lemma norm_tail_le
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) {σ t : ℝ}
-    (hσlower : 1 / 2 ≤ σ) (hσupper : σ ≤ 2)
+    (hσlower : 1 / 2 ≤ σ) (_hσupper : σ ≤ 2)
     (hnear : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ σ) :
     ‖orderedValueSeries χ hχ (σ + I * t)
         (by have hσpos : 0 < σ := lt_of_lt_of_le (by norm_num) hσlower

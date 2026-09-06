@@ -125,7 +125,7 @@ theorem norm_vaughanTypeIFirstLong_le_elementaryCauchy
 
 /-- The complete literal middle lane, bounded by Cauchy over the actual `(d,e)` rows. -/
 theorem norm_vaughanTypeIMiddleLong_le_elementaryCauchy
-    {N y u v q : ℕ} (hy : y ≤ N) (hq : 1 < q)
+    {N y u v q : ℕ} (_hy : y ≤ N) (hq : 1 < q)
     (χ : PrimitiveCharacter q) :
     ‖vaughanTypeIMiddleLong (fun _ => 1) y u v q χ‖ ≤
       2 * u * v * q * Real.log (v + 1 : ℕ) := by

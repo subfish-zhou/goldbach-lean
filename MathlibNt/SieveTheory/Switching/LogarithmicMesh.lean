@@ -1353,7 +1353,7 @@ mesh is within `O(meshWidth)` of its logarithmic integral. -/
 theorem upperRosserDepthTwoMesh_darbouxSum_le_integral_add
     (m : ℕ) {f : ℝ → ℝ} {B L : ℝ}
     (hB : 0 ≤ B) (hL : 0 ≤ L)
-    (hf : ∀ x ∈ Set.Icc (1 / 6 : ℝ) 1, 0 ≤ f x)
+    (_hf : ∀ x ∈ Set.Icc (1 / 6 : ℝ) 1, 0 ≤ f x)
     (hfB : ∀ x ∈ Set.Icc (1 / 6 : ℝ) 1, f x ≤ B)
     (hfLip : ∀ x ∈ Set.Icc (1 / 6 : ℝ) 1,
       ∀ y ∈ Set.Icc (1 / 6 : ℝ) 1, |f x - f y| ≤ L * |x - y|)

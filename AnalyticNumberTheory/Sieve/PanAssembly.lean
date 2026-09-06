@@ -61,8 +61,6 @@ open scoped Classical
 open scoped ArithmeticFunction.Moebius
 
 set_option maxHeartbeats 6000000
--- The li piece is independent of the residue parameter l'; suppress the corresponding warning, as in PanMainTerm.lean.
-set_option linter.unusedVariables false
 
 /-- **Coarse pure-li Vaughan split**, with a polylogarithmic right side:
 for each `A > 0`, there are `C > 0`, `B`, and `x₀` such that
@@ -80,7 +78,7 @@ The pure-`li` piece admits polylogarithmic absorption
 Type I/II by their weighted bounds and retains the signed
 middle/main-term difference; its logarithmic saving needs that
 additional analytic cancellation (Liu Thm 2). -/
-def PanVaughanSplitCrude (x : ℕ → ℝ) (f : ℕ → ℝ) (u v : ℕ) : Prop :=
+def PanVaughanSplitCrude (x : ℕ → ℝ) (f : ℕ → ℝ) (_u _v : ℕ) : Prop :=
   ∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∃ B : ℝ, ∃ x₀ : ℕ,
     ∀ X : ℕ, x₀ ≤ X →
       ∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) /
@@ -113,12 +111,12 @@ middle terms as well as V1 and V3. Passing from
 main-term difference require analytic input before taking maxima
 over `y,l`. The pure-`li` inequality here is an explicit coarse
 assumption, not a consequence of that finite identity alone. -/
-def PanVaughanPointwiseSplit (x : ℕ → ℝ) (f : ℕ → ℝ) (u v : ℕ) : Prop :=
+def PanVaughanPointwiseSplit (_x : ℕ → ℝ) (f : ℕ → ℝ) (u v : ℕ) : Prop :=
   ∀ X q y : ℕ, 0 < q →
     panMaxY X q y f ≤
       panPieceMaxY X q y f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
       panPieceMaxY X q y f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-      panPieceMaxY X q y f (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)
+      panPieceMaxY X q y f (fun y q _ => logarithmicIntegral (y : ℝ) / Nat.totient q)
 
 /-- The piece's `l`-maximum is nonnegative; when `q = 0` the residue
 set is empty and its value is 0. This mirrors `panMaxL_nonneg`. -/
@@ -166,14 +164,14 @@ private lemma panAssembly_pointwise (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ)
       panMaxY X q x f ≤
         panPieceMaxY X q x f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
         panPieceMaxY X q x f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-        panPieceMaxY X q x f (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)) :
+        panPieceMaxY X q x f (fun y q _ => logarithmicIntegral (y : ℝ) / Nat.totient q)) :
     ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card * panMaxY X q x f ≤
       ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
         panPieceMaxY X q x f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
       ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
         panPieceMaxY X q x f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
       ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-        panPieceMaxY X q x f (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q) := by
+        panPieceMaxY X q x f (fun y q _ => logarithmicIntegral (y : ℝ) / Nat.totient q) := by
   by_cases hq0 : q = 0
   · subst q
     have hμ : (μ 0 : ℤ) = 0 := by
@@ -259,7 +257,7 @@ theorem PanVaughanSplitCrude.of_analyticInputs
       (fun y q l => apV3 y q l u v / Real.log (y : ℝ))
   let pM : ℕ → ℝ := fun q =>
     panPieceMaxY X q (Nat.floor (x X)) f
-      (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)
+      (fun y q _ => logarithmicIntegral (y : ℝ) / Nat.totient q)
   have hw : ∀ q, 0 ≤ w q := fun q => panTypeI_weight_nonneg q
   have hInn : ∀ q, 0 ≤ pI q := fun q => panPieceMaxY_nonneg _ _ _ _ _
   have hIInn : ∀ q, 0 ≤ pII q := fun q => panPieceMaxY_nonneg _ _ _ _ _
@@ -344,7 +342,7 @@ def PanSignedMainTermBound (x f : ℕ → ℝ)
 
 /-- Corrected pointwise Vaughan split.  Unlike `PanVaughanPointwiseSplit`,
 the residual kernels stay inside the signed main block. -/
-def PanVaughanPointwiseSplitSigned (x : ℕ → ℝ) (f : ℕ → ℝ) (u v : ℕ)
+def PanVaughanPointwiseSplitSigned (_x : ℕ → ℝ) (f : ℕ → ℝ) (u v : ℕ)
     (main correction : ℕ → ℕ → ℕ → ℝ) : Prop :=
   ∀ X q y : ℕ, 0 < q →
     panMaxY X q y f ≤

@@ -72,12 +72,12 @@ theorem localFactor_two_odd (hN : Odd N) : localFactor 2 N = 1 := by
   simp [localFactor, hN.not_two_dvd_nat]
 
 /-- For a prime p > 2 with p | N, the factor is p/(p-1). -/
-theorem localFactor_of_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
+theorem localFactor_of_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
     localFactor p N = (p : ℝ) / (p - 1) := by
   simp [localFactor, ne_of_gt hp2, hpdvd]
 
 /-- For a prime p > 2 with p ∤ N, the factor is p(p-2)/(p-1)². -/
-theorem localFactor_of_not_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
+theorem localFactor_of_not_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N = (p : ℝ) * (p - 2) / ((p - 1) ^ 2) := by
   simp [localFactor, ne_of_gt hp2, hpn]
 
@@ -118,7 +118,7 @@ noncomputable def singularSeriesTruncated (N z : ℕ) : ℝ :=
   ((range (z + 1)).filter Nat.Prime).prod (fun p => localFactor p N)
 
 /-- The truncated singular series is positive, since all its factors are positive. -/
-theorem singularSeriesTruncated_pos (N z : ℕ) (hz : 1 ≤ z) :
+theorem singularSeriesTruncated_pos (N z : ℕ) (_hz : 1 ≤ z) :
     0 < singularSeriesTruncated N z := by
   unfold singularSeriesTruncated
   apply Finset.prod_pos
@@ -144,7 +144,7 @@ theorem singularSeries_pos (N : ℕ) (hN : 2 ≤ N) :
 
 /-- For even N, the singular series contains the factor 2 at p = 2;
 the truncation at 2 consists of this factor alone. -/
-theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (hN2 : 2 ≤ N) :
+theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (_hN2 : 2 ≤ N) :
     singularSeriesTruncated N 2 = 2 := by
   unfold singularSeriesTruncated
   have h_range : (range 3).filter Nat.Prime = {2} := by decide

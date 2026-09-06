@@ -254,7 +254,7 @@ private lemma eventually_log_rpow_mul_exp_le_one
       ((isLittleO_log_rpow_atTop hp).bound (div_pos hc hA))
   filter_upwards [hsmall, Filter.eventually_gt_atTop (Real.exp 1)] with x hx hxlarge
   have hexp1 : 1 < x := by
-    have : (1 : ℝ) < Real.exp 1 := by simpa using Real.exp_lt_exp.mpr (zero_lt_one)
+    have : (1 : ℝ) < Real.exp 1 := Real.one_lt_exp_iff.mpr zero_lt_one
     linarith
   have hlog : 0 < Real.log x := Real.log_pos hexp1
   have hlogone : 1 < Real.log x := by

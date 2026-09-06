@@ -479,7 +479,7 @@ theorem largeSieveBound_nonneg (N : ℕ) {δ : ℝ} (hδ : 0 < δ) :
   positivity
 
 /-- `K := ⌈log₂(1/δ)⌉` satisfies `(1/2)^{K+1} < δ` for `0 < δ ≤ 1`. -/
-theorem log2_ceil_half_lt {δ : ℝ} (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
+theorem log2_ceil_half_lt {δ : ℝ} (hδ : 0 < δ) (_hδ1 : δ ≤ 1) :
     (1 / 2 : ℝ) ^ (Nat.ceil (Real.log (1 / δ) / Real.log 2) + 1) < δ := by
   -- Compare logarithms; the extra step above the ceiling makes the bound strict.
   have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)

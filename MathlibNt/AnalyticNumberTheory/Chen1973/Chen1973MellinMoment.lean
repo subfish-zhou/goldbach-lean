@@ -47,7 +47,7 @@ theorem integral_chenLaplaceMoment {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
   | succ n ih =>
       have hq0 : q ≠ 0 := by
         intro h
-        simpa [h] using hq
+        simp [h] at hq
       let F : ℝ → ℂ := fun u => Complex.exp (-q * u) * (u : ℂ) ^ (n + 1)
       let F' : ℝ → ℂ := fun u =>
         -q * chenLaplaceMoment q (n + 1) u + (n + 1 : ℂ) * chenLaplaceMoment q n u
@@ -63,7 +63,7 @@ theorem integral_chenLaplaceMoment {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
           simp only [id_eq, Nat.cast_add, Nat.cast_one, add_comm (n : ℕ) 1]
           rw [show 1 + n - 1 = n by omega]
           ring
-        convert! hc.comp_ofReal using 1 <;> ring
+        convert! hc.comp_ofReal using 1; ring
       have hFint : IntegrableOn F (Ioi 0) := by
         change IntegrableOn (chenLaplaceMoment q (n + 1)) (Ioi 0)
         exact integrableOn_chenLaplaceMoment hq (n + 1)

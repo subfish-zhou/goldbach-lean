@@ -1,5 +1,5 @@
 name = "goldbach"
-version = "1.0.0-rc1"
+version = "1.0.0"
 keywords = ["mathematics", "number-theory", "chen-theorem"]
 defaultTargets = ["Goldbach", "MathlibNt", "AnalyticNumberTheory", "PrimeNumberTheoremAnd"]
 

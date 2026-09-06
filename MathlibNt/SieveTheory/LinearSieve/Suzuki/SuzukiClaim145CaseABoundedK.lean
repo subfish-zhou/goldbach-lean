@@ -50,7 +50,7 @@ lemma claim14_5Scale_upperK_le
     errorEnvelope_nonneg H N hD hs.le hT
   have hpow : 0 ≤ (Real.log D) ^ (-Δ) := Real.rpow_nonneg hlogD.le _
   have hexpK : 1 ≤ Real.exp (Real.sqrt K) := by
-    simpa using Real.exp_one_le_iff.mpr (Real.sqrt_nonneg K)
+    simp
   unfold claim14_5Scale
   have hcommon : 0 ≤ claim14_5VProduct S D /
       (Real.log D * σ) * errorEnvelope H N D d s *

@@ -105,6 +105,7 @@ lemma natFloor_add_one_rpow_one_sub_sigma_le {A σ t : ℝ}
       _ ≤ Real.exp A * 3 := mul_le_mul_of_nonneg_left hexpA3 (Real.exp_pos A).le
       _ = 3 * Real.exp A := by ring
 
+omit [NeZero q] in
 /-- Exact calibration of the multiplication order in the finite derivative
 sum.  The zero term is handled separately; positive terms use the existing
 `logCpowWeight_nat_eq` bridge. -/
@@ -160,6 +161,7 @@ theorem norm_deriv_LFunction_le_truncation_add_tail
             logVariationBudget (σ + t * I) m) := by
       exact add_le_add hfinite' htail
 
+omit [NeZero q] in
 /-- At the canonical cutoff the entire explicit Abel tail is absorbed by a
 fixed numerical multiple of the weak-strip logarithmic budget. -/
 theorem canonical_tail_le_fixed_log_sq

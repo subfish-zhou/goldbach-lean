@@ -109,14 +109,14 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
           dsimp only [dirichletLQuadraticConditionalFixedLeft, x, p, H, τ]
           linarith) (le_refl 1) htlow htT
       change 64 * H ^ 2 * x ≤ ‖χ.LFunction (1 + I * t)‖
-      convert h using 1 <;> push_cast <;> ring
+      convert h using 1; push_cast; ring
     have hdiff0 := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
       χ hχ (σ₁ := 1) (σ₂ := σ) (t := t) (by norm_num) hnear1 hσone' hσtwo
     have hdiff : ‖χ.LFunction (σ + I * t) - χ.LFunction (1 + I * t)‖ ≤
         16 * H ^ 2 * x := by
       calc
         _ ≤ 64 * (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 2 *
-            (σ - 1) := by convert hdiff0 using 1 <;> push_cast <;> ring
+            (σ - 1) := by convert hdiff0 using 1; push_cast; ring
         _ ≤ 64 * H ^ 2 * (x / 4) := by
           rw [hright] at hσright
           apply mul_le_mul

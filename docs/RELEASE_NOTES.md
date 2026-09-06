@@ -20,16 +20,16 @@ artifacts. These are source lines, not theorem counts or proof-term sizes.
 | Source area | v1.0.0-rc1 | This revision | Change |
 |---|---:|---:|---:|
 | Goldbach (including Blueprint metadata) | 55 | 110 | +55 |
-| MathlibNt | 201,703 | 192,389 | -9,314 |
-| AnalyticNumberTheory | 16,003 | 13,868 | -2,135 |
+| MathlibNt | 201,703 | 192,373 | -9,330 |
+| AnalyticNumberTheory | 16,003 | 13,841 | -2,162 |
 | PrimeNumberTheoremAnd | 15,477 | 15,076 | -401 |
 | Root entry files | 44 | 44 | 0 |
-| **Total** | **233,282** | **221,487** | **-11,795 (-5.06%)** |
+| **Total** | **233,282** | **221,444** | **-11,838 (-5.07%)** |
 
 The Lean source file count changes from **729 to 735**. Five focused helper
 modules replace repeated local arguments, and one isolated module annotates
 existing declarations for Blueprint. Without its 55 lines of presentation
-metadata, the proof source is 221,432 lines, a reduction of 11,850 lines (5.08%).
+metadata, the proof source is 221,389 lines, a reduction of 11,893 lines (5.10%).
 The total above includes it; fewer lines need not mean fewer modules.
 Counts compare the complete source trees, not a sum of overlapping
 optimization batches. A scanner that also erases strings will undercount both
@@ -106,9 +106,9 @@ and the public endpoints in [Goldbach/Theorem.lean](../Goldbach/Theorem.lean)
 are unchanged from the release candidate. The qualitative and quantitative
 endpoints share the proved Liu-Pan distribution input but remain distinct
 declarations. The qualitative public theorem does not directly call the public
-quantitative theorem. No theorem assumptions were weakened to obtain the line
-reduction, and no custom axioms, proof placeholders, or kernel bypasses were
-introduced.
+quantitative theorem. No public conclusion was weakened and no mathematical
+premise was added to a public endpoint. No custom axioms, proof placeholders, or
+kernel bypasses were introduced.
 
 ## Navigation and dependency views
 
@@ -131,22 +131,37 @@ exclude upstream display dependencies to define the diagram boundary; their Lean
 proof dependencies remain intact. The renderer links declarations to the source
 positions exported by LeanArchitect, pinned to the Git revision used to render.
 CI builds a downloadable `goldbach-blueprint` website artifact after the proof
-checks. See the [build instructions](ARCHITECTURE.md#interactive-blueprint).
-This is not an exhaustive project graph or an automatically published Pages site.
+checks. It is also included under `blueprint/` in the complete API website.
+See the [build instructions](ARCHITECTURE.md#interactive-blueprint).
+The seven-node Blueprint is a curated explanation, not an exhaustive project graph.
+
+The API website uses the same doc-gen4 renderer as mathlib documentation and
+covers all four project libraries, with declaration search, source links pinned
+to the checked-out revision, and links to external dependency documentation.
+Mathlib's external documentation is a rolling website, not a version-pinned
+proof dependency. Successful main-branch verification is required before
+GitHub Pages deployment. See [DOCUMENTATION.md](DOCUMENTATION.md).
 
 ## Verification and performance
 
-After the 20-target integration check, the final source tree passed the full
-build (735 source modules), literal public statement and standard-axiom checks,
-14 checker tests, and an independent replay of `Goldbach.Theorem`. The replay
-checks that module over its cached imports, not a fresh independent replay of
-the entire import closure. The Blueprint was rendered and checked for seven
-nodes, six edges, resolved labels, and source links; desktop and mobile browser
-checks confirmed graph display and node selection. CI repeats the build and
-verification on the pushed revision. See [VERIFICATION.md](VERIFICATION.md)
-for the separate acceptance gates and isolated reconstruction instructions.
+The release gates are a full warning-fatal build, literal public statement and
+standard-axiom checks, script regression tests, an independent replay of
+`Goldbach.Theorem`, and validation of the complete documentation website.
+The replay checks that module over its cached imports, not a fresh independent
+replay of the entire import closure. Blueprint checks distinguish the seven
+selected nodes and six endpoint edges from the full proof dependency graph.
+See [VERIFICATION.md](VERIFICATION.md) for the separate acceptance gates and
+isolated reconstruction instructions.
 
-**No cross-version build-time comparison is reported.** The original version
-and the current revision were built on different machines. Historical local
-experiments and concurrent shard timings are not used to claim an overall
-speedup. The source-size reduction above is independent of build hardware.
+Warnings are treated as build failures rather than globally suppressed.
+Cleanup covers unused variables, redundant tactics and simplifier arguments,
+deprecated names, and explicitly scoped unused section instances. Where an
+unused binder received an underscore prefix, in-tree named-argument consumers
+were updated as well. The public theorem statements remain unchanged.
+
+[BUILD_BENCHMARK.md](BUILD_BENCHMARK.md) defines the clean-project timing
+boundary and records the historical 36-minute-23-second baseline. The new
+measurement uses a separate checkout with cached pinned dependencies and no
+compiled project modules. Incremental builds and concurrent shard timings
+are not used as substitutes. Source-size reduction and build time are separate
+measurements; single-run timings do not establish a hardware-independent speedup.

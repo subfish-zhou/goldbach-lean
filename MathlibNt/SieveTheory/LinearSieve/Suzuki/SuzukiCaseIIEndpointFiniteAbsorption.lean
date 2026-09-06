@@ -13,7 +13,7 @@ set_option maxHeartbeats 800000
 with the integral in `caseIIEndpointQD` omitted.  The power coordinates are
 kept as real variables so that their exact logarithmic identities can be used. -/
 noncomputable def caseIINonIntegralEndpointCorrections
-    (H : Section13HatLayers) (N : ℕ) (D y w d Δ σ C K s : ℝ) : ℝ :=
+    (H : Section13HatLayers) (N : ℕ) (D y w d Δ _σ C K s : ℝ) : ℝ :=
   (3 / s) * (K / Real.log y) * finiteSourceLayer 1 2 N 3 +
   (3 / s) * (1 + K / Real.log y) *
     ((6 * K ^ 2 * finiteSourceLayer 1 2 (N - 1) 2 / Real.log w) * (3 / 3)) +
@@ -31,7 +31,7 @@ noncomputable def caseIIAlgebraicEndpointCoeff
 
 /-- A named coefficient for the cubic `q_D(3)/log w` endpoint term. -/
 noncomputable def caseIIQDEndpointCoeff
-    (d Δ σ C K : ℝ) : ℝ :=
+    (_d Δ σ C K : ℝ) : ℝ :=
   72 * K ^ 2 * σ * (1 + 3 * K) * C * Real.exp (Real.sqrt K) *
     ((3 : ℝ) / 2) ^ Δ
 
@@ -45,7 +45,7 @@ theorem caseII_nonIntegral_endpoint_corrections_separate
     (hH : Section13HatContract H 2) (hN : Odd N)
     (hD : Real.exp 1 ≤ D)
     (hy : y = D ^ (1 / (3 : ℝ))) (hw : w = D ^ (1 / σ))
-    (hσ : 0 < σ) (hs1 : 1 < s) (hs3 : s ≤ 3)
+    (hσ : 0 < σ) (hs1 : 1 < s) (_hs3 : s ≤ 3)
     (hK : 0 ≤ K) (hC : 0 ≤ C)
     (hsmall : (3 : ℝ) ^ d ≤ Real.log D) :
     (3 / s) * (K / Real.log y) * finiteSourceLayer 1 2 N 3 +

@@ -66,8 +66,8 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronLeft
 integrand on the narrower variable-right rectangle. -/
 theorem twistedSmoothedPerronIntegrand_holomorphicOn_quadraticConditionalRectangle
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
-    {A A₀ c η T : ℝ} (hAA₀ : A ≤ A₀) (hA : 0 < A)
-    (hc : 0 < c) (hη : 0 < η) (hT : 0 < T) (hχ : χ ≠ 1)
+    {A A₀ c η T : ℝ} (_hAA₀ : A ≤ A₀) (_hA : 0 < A)
+    (_hc : 0 < c) (_hη : 0 < η) (hT : 0 < T) (hχ : χ ≠ 1)
     (hw : 0 < dirichletLQuadraticConditionalCrossZeroWidth A c η q T)
     (hw2 : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ 1 / 2)
     (hwidthle : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤

@@ -80,10 +80,10 @@ theorem exists_dirichletLTwistedSmoothedNonquadraticErrorAssembly
     (fun t : ℝ => F ((b : ℂ) + t * I)) hf hT0.le
   have htlow : ‖∫ t in Iic (-T), F ((b : ℂ) + t * I)‖ ≤ c * D := by
     dsimp only [F, b, D, dirichletLTwistedSmoothedConductorLogRight]
-    convert ht.1 using 1 <;> (try ring)
+    convert ht.1 using 1; (try ring)
   have htupper : ‖∫ t in Ici T, F ((b : ℂ) + t * I)‖ ≤ c * D := by
     dsimp only [F, b, D, dirichletLTwistedSmoothedConductorLogRight]
-    convert ht.2 using 1 <;> (try ring)
+    convert ht.2 using 1; (try ring)
   have hmid :
       ‖∫ t in Ioc (-T) T, F ((b : ℂ) + t * I)‖ =
         ‖VIntegral F b (-T) T‖ := by
@@ -96,13 +96,13 @@ theorem exists_dirichletLTwistedSmoothedNonquadraticErrorAssembly
         linear_combination hshift)
     have hleft : ‖VIntegral F a (-T) T‖ ≤ C * A := by
       dsimp only [F, a, A, LM]
-      convert hct.1 using 1 <;> (try ring)
+      convert hct.1 using 1; (try ring)
     have htop : ‖HIntegral F a b T‖ ≤ C * B := by
       dsimp only [F, a, b, B, LM]
-      convert hct.2.1 using 1 <;> (try ring)
+      convert hct.2.1 using 1; (try ring)
     have hbottom : ‖HIntegral F a b (-T)‖ ≤ C * B := by
       dsimp only [F, a, b, B, LM]
-      convert hct.2.2 using 1 <;> (try ring)
+      convert hct.2.2 using 1; (try ring)
     rw [heq]
     calc
       ‖VIntegral F a (-T) T + HIntegral F a b T - HIntegral F a b (-T)‖

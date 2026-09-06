@@ -25,7 +25,7 @@ lemma hasDerivAt_cpowWeight (s : ℂ) {x : ℝ} (hx : 0 < x) :
     HasDerivAt (cpowWeight s) (cpowWeightDeriv s x) x := by
   have h := (@HasDerivAt.cpow_const _ _ _ (-s) (hasDerivAt_id (x : ℂ))
     (Or.inl (by simpa [Complex.slitPlane] using hx))).comp_ofReal
-  convert! h using 1 <;> simp [cpowWeight, cpowWeightDeriv] <;> ring
+  convert! h using 1; simp [cpowWeightDeriv]
 
 lemma norm_cpowWeightDeriv (s : ℂ) {x : ℝ} (hx : 0 < x) :
     ‖cpowWeightDeriv s x‖ = ‖s‖ * x ^ (-s.re - 1) := by
@@ -90,7 +90,7 @@ lemma norm_cpowWeight_succ_sub_le (s : ℂ) (hs : 0 < s.re) {k : ℕ} (hk : 1 �
           exact fun h0 => (not_le_of_gt hk0) h0.1
     _ = (‖s‖ / s.re) * ((k : ℝ) ^ (-s.re) - (k + 1 : ℝ) ^ (-s.re)) := by
       field_simp
-      <;> ring
+      ring
 
 /-- Strong finite telescoping estimate for the total variation of `k ↦ k⁻ˢ`. -/
 lemma sum_norm_cpowWeight_sub_le_sub (s : ℂ) (hs : 0 < s.re) {m n : ℕ}
@@ -177,7 +177,7 @@ lemma norm_logCpowWeightDeriv_le (s : ℂ) {x : ℝ} (hx : 1 ≤ x) :
   have hx0 : 0 < x := lt_of_lt_of_le zero_lt_one hx
   have hlog : 0 ≤ Real.log x := Real.log_nonneg hx
   rw [logCpowWeightDeriv, norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hx0]
-  simp only [map_sub, map_mul, norm_real, norm_one, neg_re, sub_re, one_re]
+  simp only [neg_re, sub_re, one_re]
   have hc : ‖s * (Real.log x : ℂ) - 1‖ ≤ ‖s‖ * Real.log x + 1 := by
     calc
       _ ≤ ‖s * (Real.log x : ℂ)‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
@@ -199,7 +199,7 @@ lemma hasDerivAt_logVariationBudget (s : ℂ) (hs : 0 < s.re) {x : ℝ} (hx : 0 
       (fun y : ℝ => 1 / s.re + ‖s‖ * (Real.log y / s.re + 1 / s.re ^ 2))
       (‖s‖ * (x⁻¹ / s.re)) x := by
     convert ((hl.div_const s.re).add_const (1 / s.re ^ 2)).const_mul ‖s‖ |>.const_add
-      (1 / s.re) using 1 <;> ring
+      (1 / s.re) using 1
   have hxp : x * x ^ (-s.re - 1) = x ^ (-s.re) := by
     calc
       x * x ^ (-s.re - 1) = x ^ (-s.re - 1) * x := mul_comm _ _
@@ -285,7 +285,7 @@ lemma norm_logCpowWeight_succ_sub_le (s : ℂ) (hs : 0 < s.re) {k : ℕ} (hk : 1
       change HasDerivAt (-logVariationBudget s)
         (-(-(1 + ‖s‖ * Real.log x) * x ^ (-s.re - 1))) x
       exact hneg
-    convert intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi using 1 <;> ring
+    convert intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi using 1; ring
   rw [← hFTC]
   exact hmajor.trans_eq hprim
 

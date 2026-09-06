@@ -9,6 +9,7 @@ namespace DirichletCharacter
 variable {q : ℕ} [NeZero q]
 local notation "λχ" => AnalyticNumberTheory.LargeSieve.lambdaCharacterPrefix
 
+omit [NeZero q] in
 /-- A termwise (hence twist-safe) version of the transition-band estimate. -/
 theorem twistedSmoothedPsiClose_aux
     (SmoothingF : ℝ → ℝ)
@@ -236,12 +237,13 @@ theorem twistedSmoothedPsiClose_aux
     _ ≤ C * ε * X * Real.log X + C * ε * X * Real.log X := add_le_add hL hU
     _ = 2 * C * ε * X * Real.log X := by ring
 
+omit [NeZero q] in
 /-- The smoothed von Mangoldt sum twisted by an arbitrary Dirichlet character
 is close to the genuine finite character prefix through `⌊X⌋₊`.  The proof is
 termwise: `‖χ n‖ ≤ 1` is applied before the two nonnegative transition bands
 are bounded by `SmoothedChebyshevClose_aux`. -/
 theorem twistedSmoothedPsiClose (χ : DirichletCharacter ℂ q) {SmoothingF : ℝ → ℝ}
-    (diffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (_diffSmoothingF : ContDiff ℝ 1 SmoothingF)
     (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
     (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
     (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1) :

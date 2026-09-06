@@ -241,7 +241,7 @@ theorem lowerRosserBoundaryChain_singleton_iff {D q p : ℕ} :
   · rintro ⟨hpD, hterminal⟩
     refine ⟨?_, by simp, by simpa using hpD, ?_, by simpa using hterminal⟩
     · intro i j hij
-      fin_cases i <;> fin_cases j
+      fin_cases i; fin_cases j
       simp at hij
     · intro i hiOdd
       fin_cases i

@@ -325,7 +325,7 @@ theorem chen1973Lemma6_eq19_LDeriv_fourth_moment_cauchy
     intro d hd χ
     have hdI := Finset.mem_Icc.mp (hcell hd)
     have hd1 : 1 < d := by omega
-    letI : NeZero d := ⟨Nat.ne_zero_of_lt hd1⟩
+    let : NeZero d := ⟨Nat.ne_zero_of_lt hd1⟩
     have hχ : χ.1 ≠ 1 := chen1973_primitive_ne_one hd1 χ
     have hcircle : ∀ z ∈ Metric.sphere s r, ‖χ.1.LFunction z‖ ≤ E + 1 := by
       intro z hz
@@ -410,7 +410,7 @@ theorem chen1973Lemma6_eq19_LDeriv_fourth_moment_cauchy
         have hφpos : (0 : ℝ) < d.totient := by
           exact_mod_cast Nat.totient_pos.mpr hdpos
         have hcardNat : Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
-          letI : NeZero d := ⟨Nat.ne_of_gt hdpos⟩
+          let : NeZero d := ⟨Nat.ne_of_gt hdpos⟩
           calc
             Fintype.card (PrimitiveCharacter d) ≤
                 Fintype.card (DirichletCharacter ℂ d) :=

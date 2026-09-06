@@ -25,6 +25,7 @@ noncomputable def quadraticHarmonicTruncation
     (χ : DirichletCharacter ℂ q) (m : ℕ) : ℝ :=
   (∑ n ∈ range m, cpowWeight (1 : ℂ) n * χ n).re
 
+omit [NeZero q] in
 /-- A finite harmonic truncation of a quadratic character is itself real as a
 complex number.  This uses the pointwise quadratic reality of the character,
 not positivity of `L(1, χ)`. -/

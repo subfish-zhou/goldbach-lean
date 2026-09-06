@@ -323,7 +323,7 @@ theorem equation1055_internal_strict
     calc
       4 * c < (1 + (c - 1) / 2) ^ 2 := hpoly
       _ < (Real.exp ((c - 1) / 2)) ^ 2 := by nlinarith [Real.exp_pos ((c - 1) / 2)]
-      _ = Real.exp (c - 1) := by rw [pow_two, ← Real.exp_add]; congr 1 <;> ring
+      _ = Real.exp (c - 1) := by rw [pow_two, ← Real.exp_add]; congr 1; ring
   have hAupper : A ≤ c * xi s := by
     dsimp [A]
     have hsum : xi s + c ≤ c * xi s := by nlinarith

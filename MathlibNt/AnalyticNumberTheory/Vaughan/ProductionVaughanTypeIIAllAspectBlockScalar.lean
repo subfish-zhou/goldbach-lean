@@ -217,7 +217,7 @@ theorem vaughanTypeIIRectangularRexp_le_expanded_allAspect
 
 private lemma allAspect_root_log_le
     (N u v k l : ℕ) (hN : 9 ≤ N)
-    (hactive : (k, l) ∈ vaughanTypeIIActiveCanonicalRectangles N u v) :
+    (_hactive : (k, l) ∈ vaughanTypeIIActiveCanonicalRectangles N u v) :
     Real.sqrt (27 * Real.log (vaughanTypeIIRectangularX N k + 1 : ℕ) ^ 5) ≤
       6 * Real.log (4 * N + 4 : ℕ) ^ 3 := by
   let L := Real.log (4 * N + 4 : ℕ)
@@ -332,9 +332,9 @@ private lemma allAspect_sharpTerm_le
 production conductor cell. -/
 theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
     (N Q C u v k l i : ℕ) (G : ProductionConductorBlockGeometry N Q C)
-    (hiG : i ∈ G.index) (hcell : G.cell i ⊆ Finset.Ioc i (2 * i))
+    (_hiG : i ∈ G.index) (hcell : G.cell i ⊆ Finset.Ioc i (2 * i))
     (hN : 9 ≤ N) (hi : 0 < i) (h2i : 2 * i ≤ N)
-    (hu : u < N) (hv : v < N)
+    (_hu : u < N) (_hv : v < N)
     (hactive : (k, l) ∈ vaughanTypeIIActiveCanonicalRectangles N u v) :
     apNormalizedVaughanActualCollectedShellMeanOn N u v k l (G.cell i) ≤
       1000000 * Real.log (4 * N + 4 : ℕ) ^ 15 *
@@ -488,7 +488,7 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
       _ ≤ _ := by
         apply mul_le_mul_of_nonneg_left _ (by positivity)
         convert mul_le_mul_of_nonneg_left hinner
-          (mul_nonneg (by positivity : 0 ≤ 8 * L) (by positivity : 0 ≤ 6 * L ^ 3)) using 1 <;> ring
+          (mul_nonneg (by positivity : 0 ≤ 8 * L) (by positivity : 0 ≤ 6 * L ^ 3)) using 1; ring
   calc
     _ ≤ (1 / (i : ℝ)) * vaughanActualCanonicalCollectedShellWeightedMean
         N u v k l (G.cell i) := hnorm

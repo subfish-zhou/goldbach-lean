@@ -90,7 +90,7 @@ theorem caseII_total_le_doubleRounded_direct_sourceLarge_relative_natCeil_of_err
       perturbation (D : ℝ) d 0 3 *
         lambda H (ErrorSign.ofDepth N) (D : ℝ) d 0 s)
     (hP : 3 ≤ C * Real.exp (Real.sqrt K))
-    (hPE : 1 ≤ (C * Real.exp (Real.sqrt K)) *
+    (_hPE : 1 ≤ (C * Real.exp (Real.sqrt K)) *
       errorEnvelope H N (D : ℝ) d s) :
     (∑ n ∈ sourceParityIndices N, suzukiSourceV S n D z) ≤
       B0 + suzukiVProduct S (z : ℝ) *
@@ -162,7 +162,7 @@ theorem caseII_total_le_doubleRounded_direct_sourceLarge_relative_natCeil_of_err
           (caseIIRoundedTransportErr S H N (D : ℝ) yr zr
             d Δ σ C K B0 s + suzukiVProduct S (z : ℝ) *
               (K * 3 ^ 2 / (s * Real.log (D : ℝ)))) := by
-        convert hSharp using 1 <;> ring
+        convert hSharp using 1; ring
     _ ≤ suzukiVProduct S (z : ℝ) * finiteSourceLayer 1 2 N s +
           (B0 + suzukiVProduct S (z : ℝ) *
             (P * E * L * R + P * E * L * C_end)) := by

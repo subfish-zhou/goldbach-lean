@@ -102,7 +102,7 @@ private theorem chen1973Lemma6_mem_some_dyadicShell
 
 private theorem chen1973Lemma6_dyadicShell_disjoint
     {α : Type*} [DecidableEq α] (S : Finset α) (size : α → ℕ)
-    {B i j : ℕ} (hB : 0 < B) (hij : i ≠ j) :
+    {B i j : ℕ} (_hB : 0 < B) (hij : i ≠ j) :
     Disjoint (chen1973Lemma6DyadicShell S size B i)
       (chen1973Lemma6DyadicShell S size B j) := by
   rw [Finset.disjoint_left]
@@ -204,13 +204,13 @@ def chen1973Lemma6DyadicMajorant (x L I1 B I2 m : ℕ)
       chen1973Lemma6NmBlock x L level B k m Phi
 
 /-- `1≤l≤I₁` cells in the first two ranges treated by source equation (19). -/
-def chen1973Lemma6Eq19Cell (x L B D level k : ℕ) : Prop :=
+def chen1973Lemma6Eq19Cell (_x L B D level k : ℕ) : Prop :=
   1 ≤ level ∧
     (D < B * 2 ^ k ∨
       (B * 2 ^ k ≤ D ∧ L * 2 ^ level < B * 2 ^ k))
 
 /-- `1≤l≤I₁` cells in the complementary range treated by source equation (20). -/
-def chen1973Lemma6Eq20Cell (x L B D level k : ℕ) : Prop :=
+def chen1973Lemma6Eq20Cell (_x L B D level k : ℕ) : Prop :=
   1 ≤ level ∧ B * 2 ^ k ≤ L * 2 ^ level ∧ L * 2 ^ level ≤ 2 * D
 
 /-- Every positive-level cell is assigned to (19) or (20), under the printed

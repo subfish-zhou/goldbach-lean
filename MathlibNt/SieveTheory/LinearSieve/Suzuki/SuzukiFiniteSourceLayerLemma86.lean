@@ -23,7 +23,7 @@ private theorem suzukiParityDomainOne_upperClosed {β : ℝ} {N : ℕ} :
   · simp [suzukiParityDomainOne, KappaOneModel.parityDomain, hpar] at hx ⊢
     exact hx.trans_le hxy
   · have hzero : N % 2 = 0 := by omega
-    simp [suzukiParityDomainOne, KappaOneModel.parityDomain, hpar, hzero] at hx ⊢
+    simp [suzukiParityDomainOne, KappaOneModel.parityDomain, hzero] at hx ⊢
     exact hx.trans hxy
 
 /-- Global lower-clamped extension of a finite source layer. -/

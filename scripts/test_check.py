@@ -1,7 +1,21 @@
 """Regression tests for the source scanner and the axiom-report acceptance gate."""
+import os
 import unittest
+from unittest.mock import patch
 
-from check import EXPECTED, check_axiom_output, code_only, count_code_lines
+from check import EXPECTED, check_axiom_output, code_only, count_code_lines, lean_environment
+
+
+class EnvironmentTests(unittest.TestCase):
+    def test_ambient_lean_paths_do_not_override_the_project(self):
+        with patch.dict(os.environ, {"LEAN_PATH": "foreign-artifacts",
+                                     "LEAN_SRC_PATH": "foreign-sources",
+                                     "GOLDBACH_TEST_KEEP": "preserved"}):
+            env = lean_environment()
+            self.assertNotIn("LEAN_PATH", env)
+            self.assertNotIn("LEAN_SRC_PATH", env)
+            self.assertEqual(env["GOLDBACH_TEST_KEEP"], "preserved")
+            self.assertEqual(os.environ["LEAN_PATH"], "foreign-artifacts")
 
 
 class SourceMaskTests(unittest.TestCase):

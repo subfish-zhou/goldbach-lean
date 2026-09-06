@@ -236,7 +236,7 @@ but not optimality or the quadratic-form estimate above. These structural
 hypotheses do not imply a remainder-free `3.94033` bound for arbitrary `SW`.
 This theorem retains the existence of an additive remainder for fixed N;
 a uniform controlled `C` requires the actual Selberg quadratic-form estimate. -/
-theorem main_term_bound (N : ℕ) (ε : ℝ) (hε : 0 < ε) (hε' : ε < 1/2)
+theorem main_term_bound (N : ℕ) (ε : ℝ) (_hε : 0 < ε) (_hε' : ε < 1/2)
     (hN : 2 ≤ N) (SW : SelbergWeights N ε) :
     ∃ C : ℝ,
       (selbergQ N ε).divisors.sum (fun d₁ =>
@@ -320,7 +320,7 @@ A strong-induction proof has the following structure:
     D) p∤d₁, p∤d₂: impossible, since then p ∤ lcm(d₁,d₂) = d
   - Thus f(d) = 3·f(d') = 3·3^ω(d') = 3^(ω(d')+1) = 3^ω(d).
 The proof below applies Mathlib's existing counting theorem. -/
-theorem lcm_pair_count (d : ℕ) (hd : d ≠ 0) (hsq : Squarefree d) :
+theorem lcm_pair_count (d : ℕ) (_hd : d ≠ 0) (hsq : Squarefree d) :
     ((d.divisors ×ˢ d.divisors).filter (fun ⟨d₁, d₂⟩ => Nat.lcm d₁ d₂ = d)).card =
       3 ^ d.primeFactors.card := by
   -- Apply Mathlib's Nat.card_pair_lcm_eq (Mathlib.Algebra.Order.Antidiag.Nat):
@@ -772,7 +772,7 @@ private lemma prime_inv_sq_minus_one_sum_le :
     have hple : p ≤ n := by
       by_cases hn0 : n = 0
       · subst n
-        exact False.elim (by simpa using hp)
+        simp at hp
       · exact Nat.le_of_dvd (Nat.pos_of_ne_zero hn0) hpdvd
     exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega : p < n + 1), hp'⟩
   have h1 : (∑ p ∈ n.primeFactors, 4 / (p : ℝ) ^ 2) ≤
@@ -1253,7 +1253,7 @@ private lemma primeFactors_card_eq_cardDistinctFactors (d : ℕ) :
     d.primeFactors.card = ArithmeticFunction.cardDistinctFactors d := by
   rw [ArithmeticFunction.cardDistinctFactors_apply, ← List.card_toFinset, Nat.toFinset_factors]
 
-private lemma chenDivisorWeight_mul (A : ℝ) {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0)
+private lemma chenDivisorWeight_mul (A : ℝ) {m n : ℕ} (_hm : m ≠ 0) (_hn : n ≠ 0)
     (hmn : m.Coprime n) :
     chenDivisorWeight A (m * n) = chenDivisorWeight A m * chenDivisorWeight A n := by
   -- Both public weight definitions have the same arithmetic-function values.
@@ -1503,7 +1503,7 @@ Indeed, a | a*p, and primality gives a = 1 or a = a*p. The first case
 contradicts a ≥ 2, and the second gives p = 1.
 Thus at most one p satisfies the conditions, and the count is at most 1. -/
 theorem coprime_condition_implies_bounded_ap
-    (N a d : ℕ) (hN : 2 ≤ N) (ha : 1 ≤ a) (hd : 1 ≤ d)
+    (N a d : ℕ) (_hN : 2 ≤ N) (ha : 1 ≤ a) (_hd : 1 ≤ d)
     (h_not_coprime : 1 < Nat.gcd a d) :
     primesInAP_weighted N a d (N % d) ≤ 1 := by
   -- Step 1: gcd(a,d) > 1 and a ≥ 1 imply a ≥ 2, since gcd(1,d) = 1.
@@ -1515,7 +1515,7 @@ theorem coprime_condition_implies_bounded_ap
     | inl h0 => omega
     | inr h1 =>
       rw [h1] at h_not_coprime
-      simp [Nat.gcd_one_right] at h_not_coprime
+      simp [] at h_not_coprime
   -- Step 2: for a ≥ 2, a*p can be prime only if p = 1.
   unfold primesInAP_weighted
   apply Finset.card_le_one.mpr
@@ -1828,11 +1828,11 @@ private lemma r1_pair_x_ge_two (N : ℕ) {p₁ p₂ : ℕ} (hp₁ : 1 ≤ p₁) 
 p₁ ≤ N^(1/3) < p₂ and p₁' ≤ N^(1/3) < p₂', equal products imply
 equal pairs, by uniqueness of prime factorization. -/
 private lemma r1_pair_unique (N : ℕ) {p₁ p₂ q₁ q₂ : ℕ}
-    (hp₁prime : p₁.Prime) (hp₂prime : p₂.Prime)
+    (hp₁prime : p₁.Prime) (_hp₂prime : p₂.Prime)
     (hq₁prime : q₁.Prime) (hq₂prime : q₂.Prime)
     (hp₁high : (p₁ : ℝ) ≤ (N : ℝ) ^ (1/3 : ℝ))
-    (hp₂low : (N : ℝ) ^ (1/3 : ℝ) < (p₂ : ℝ))
-    (hq₁high : (q₁ : ℝ) ≤ (N : ℝ) ^ (1/3 : ℝ))
+    (_hp₂low : (N : ℝ) ^ (1/3 : ℝ) < (p₂ : ℝ))
+    (_hq₁high : (q₁ : ℝ) ≤ (N : ℝ) ^ (1/3 : ℝ))
     (hq₂low : (N : ℝ) ^ (1/3 : ℝ) < (q₂ : ℝ))
     (h : p₁ * p₂ = q₁ * q₂) :
     p₁ = q₁ ∧ p₂ = q₂ := by

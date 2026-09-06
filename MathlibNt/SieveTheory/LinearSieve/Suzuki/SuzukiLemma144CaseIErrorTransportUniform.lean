@@ -63,8 +63,7 @@ theorem exists_caseI_errorEnvelope_transport_quotient_cutoff_uniform_in_S
     have : (1 : ℝ) < (Dmin : ℝ) := hA1.trans hDminA
     exact_mod_cast this
   refine ⟨Dmin, hDmin2, ?_⟩
-  intro S D N s hscale hinherited hrecursiveUpper
-  intro p hpCarrier
+  intro S D N s hscale hinherited hrecursiveUpper p hpCarrier
   have hpSupport : p ∈ S.prodPrimes.primeFactors :=
     (Finset.mem_filter.mp hpCarrier).1
   have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpSupport

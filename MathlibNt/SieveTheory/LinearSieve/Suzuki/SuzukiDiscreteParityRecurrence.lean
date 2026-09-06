@@ -274,7 +274,7 @@ theorem sourceDiscreteLowerBoundaryV_two_eq_chainCarrier
     rw [← lowerRosserBoundaryChainsFixedPairDepth0Density_zero_eq_sourceIndex_two]
     exact lowerRosserBoundaryChainsFixedPairDepth0Density_zero
       S.nu hqnot hqprime hqmin
-  simpa [P, hinner]
+  simp [P, hinner]
 
 /-- The base carriers are genuinely different, already on prime-shaped data:
 with stored prime `p = 5`, terminal prime `q = 2`, and level `D = 9`, the

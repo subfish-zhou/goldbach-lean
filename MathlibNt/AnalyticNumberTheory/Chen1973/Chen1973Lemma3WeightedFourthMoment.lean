@@ -65,7 +65,7 @@ lemma weighted_truncation_error_scalar
           (Fintype.card (PrimitiveCharacter q) : ℝ) *
             (40 * ‖s‖ * Real.sqrt q * Real.log q * (((N + 1 : ℕ) : ℝ) ^ (-s.re))) ^ 4 := by
         by_cases hq1 : 1 < q
-        · letI : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
+        · let : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
           calc
             _ ≤ ∑ _χ : PrimitiveCharacter q,
                 (40 * ‖s‖ * Real.sqrt q * Real.log q * (((N + 1 : ℕ) : ℝ) ^ (-s.re))) ^ 4 := by

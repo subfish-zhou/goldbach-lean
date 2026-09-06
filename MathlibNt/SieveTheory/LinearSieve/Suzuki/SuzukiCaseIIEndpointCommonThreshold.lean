@@ -50,7 +50,7 @@ theorem exists_caseII_endpoint_common_threshold
     (N : ℕ) (K C d Δ : ℝ)
     (hF0 : 0 ≤ finiteSourceLayer 1 2 N 3)
     (hF1 : 0 ≤ finiteSourceLayer 1 2 (N - 1) 2)
-    (hK : 0 ≤ K) (hC : 0 ≤ C)
+    (hK : 0 ≤ K) (_hC : 0 ≤ C)
     (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
     (hd : 7 / (1 - Δ) < d) :
     ∃ D0 : ℝ, 1 < D0 ∧ ∀ D : ℝ, D0 ≤ D →

@@ -81,8 +81,8 @@ theorem datum_eq_of_pairCharacter_eq_one
       _ = (χx * χy) * χy := by simp [pow_two, mul_assoc]
       _ = 1 * χy := by simpa [χx, χy, pairCharacter] using congrArg (fun χ => χ * χy) hpair
       _ = χy := by simp
-  haveI : NeZero x.modulus := ⟨x.modulus_ne⟩
-  haveI : NeZero y.modulus := ⟨y.modulus_ne⟩
+  have : NeZero x.modulus := ⟨x.modulus_ne⟩
+  have : NeZero y.modulus := ⟨y.modulus_ne⟩
   have hxFactors : x.character.FactorsThrough (Nat.gcd x.modulus y.modulus) :=
     DirichletCharacter.factorsThrough_gcd x.character y.character hlift
   have hyFactors : y.character.FactorsThrough (Nat.gcd x.modulus y.modulus) := by
@@ -143,7 +143,7 @@ four-factor Euler product, rather than by an exception predicate. -/
 theorem pairValue_pos_of_datum_ne
     (x y : PrimitiveQuadraticDatum) (hxy : x ≠ y) :
     0 < pairValue x y := by
-  haveI : NeZero (x.modulus * y.modulus) :=
+  have : NeZero (x.modulus * y.modulus) :=
     ⟨Nat.mul_ne_zero x.modulus_ne y.modulus_ne⟩
   simpa [pairValue] using
     (DirichletCharacter.LFunction_apply_one_re_pos_of_sq_eq_one

@@ -827,7 +827,7 @@ private theorem compact_tail_integral
   exact MathlibNt.SieveTheory.compact_tail_integral hcont hzero
 
 private theorem sourceIntegral_succ_eq_of_div_three_le_upper
-    (k : ℕ) {s b c : ℝ} (hs : 0 ≤ s)
+    (k : ℕ) {s b c : ℝ} (_hs : 0 ≤ s)
     (hb : s / 3 ≤ b) (hc : s / 3 ≤ c) :
     upperRosserBoundarySourceIntegral (k + 1) s b =
       upperRosserBoundarySourceIntegral (k + 1) s c := by
@@ -861,7 +861,7 @@ private theorem shifted_odd_suzukiLayer_continuousOn
     (2 * k + 1)).comp (continuous_id.sub continuous_const).continuousOn
   intro v hv
   unfold suzukiParityDomainOne KappaOneModel.parityDomain
-  split <;> simp_all <;> linarith
+  split <;> simp_all; linarith
 
 private theorem weighted_suzukiLayer_odd_lowStrip
     (k : ℕ) {x : ℝ} (hx0 : 0 < x) (hx3 : x ≤ 3) :
@@ -903,7 +903,7 @@ private theorem shifted_even_suzukiLayer_continuousOn
     (2 * k + 2)).comp (continuous_id.sub continuous_const).continuousOn
   intro t ht
   unfold suzukiParityDomainOne KappaOneModel.parityDomain
-  split <;> simp_all <;> linarith
+  split <;> simp_all; linarith
 
 private theorem predecessor_source_tail_eq_interval
     (k : ℕ)

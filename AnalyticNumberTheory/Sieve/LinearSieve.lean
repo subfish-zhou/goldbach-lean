@@ -152,7 +152,7 @@ noncomputable def sieveFunctionf (s : ℝ) : ℝ :=
 /-! ## 3. Basic properties of the sieve functions -/
 
 /-- `F(s)` is positive on `[2,4]`. -/
-theorem sieveF_pos_on_2_4 {s : ℝ} (hs : 2 ≤ s) (hs' : s ≤ 4) :
+theorem sieveF_pos_on_2_4 {s : ℝ} (_hs : 2 ≤ s) (hs' : s ≤ 4) :
     0 < sieveFunctionF s := by
   unfold sieveFunctionF
   by_cases h2 : s ≤ 2
@@ -369,7 +369,7 @@ This is mathlib's `multSum_eq_main_err`,
 The remainder `rem d` is `R_d`; the distribution level describes the
 range where it should be negligible, but this identity alone gives
 no remainder estimate. -/
-theorem distribution_condition (SP : SieveProblem) (d : ℕ) (hd : (d : ℝ) ≤ SP.D) (hd_pos : 1 ≤ d) :
+theorem distribution_condition (SP : SieveProblem) (d : ℕ) (_hd : (d : ℝ) ≤ SP.D) (_hd_pos : 1 ≤ d) :
     SP.multSum d = SP.nu d * SP.totalMass + SP.rem d := by
   exact SP.multSum_eq_main_err d
 

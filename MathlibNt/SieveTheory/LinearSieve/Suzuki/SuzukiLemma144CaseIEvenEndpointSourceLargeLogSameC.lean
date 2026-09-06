@@ -24,7 +24,7 @@ set_option maxHeartbeats 2000000
 
 theorem evenEndpoint_carrier_scale
     (S : BoundingSieve) {D Dmin : ℕ} {σ : ℝ}
-    (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
+    (_hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
     CarrierQuotientThresholdGeometry S.prodPrimes.primeFactors D Dmin σ 2 := by
   intro p hp
   have hp' := hp
@@ -236,7 +236,7 @@ its coefficient cutoff before the later common constant and `K`. -/
 theorem caseI1423EndpointSourceBounds_evenEndpoint_explicit
     (S : BoundingSieve) (H : Section13HatLayers) (C K d Δ L R : ℝ)
     (hH : Section13HatSourceContract H) (hC : 0 < C)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d)
+    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (_hd : 7 / (1 - Δ) < d)
     (hL : 1 ≤ L)
     (hfinite : ∀ M : ℕ, Even M → 2 ≤ M →
       finiteSourceLayer 1 2 (M - 1) 1 ≤

@@ -17,7 +17,7 @@ uniformly for every odd depth `N ≥ 3`. -/
 theorem exists_caseII_endpoint_common_threshold_uniform
     {H : Section13HatLayers} (hH : Section13HatSourceContract H)
     (K C d Δ : ℝ)
-    (hK : 0 ≤ K) (hC : 0 ≤ C)
+    (hK : 0 ≤ K) (_hC : 0 ≤ C)
     (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
     (hd : 7 / (1 - Δ) < d) :
     ∃ D0 : ℝ, 1 < D0 ∧ ∀ (N : ℕ) (D : ℝ),

@@ -83,8 +83,6 @@ open AnalyticNumberTheory.Mertens
 open scoped Classical
 open scoped ArithmeticFunction.Moebius
 
--- The main-term function g ignores the residue parameter l'; suppress the corresponding unused-variable warning.
-set_option linter.unusedVariables false
 
 /-! ## 1. Main-term inner sums and maximum reductions -/
 
@@ -129,8 +127,8 @@ and use `|f| ≤ 1`, starting from
 `|f(a)·li(⌊y/a⌋)/φ(q)| ≤ |f(a)|·|li(⌊y/a⌋)|/φ(q)`.
 Only `φ(q) ≥ 0` is needed, so the bound holds for every `q`;
 both sides vanish at `q = 0`. -/
-private lemma panMain_summand_abs_le (y X q : ℕ) (f : ℕ → ℝ) (a : ℕ)
-    (hfb : ∀ a : ℕ, |f a| ≤ 1) :
+private lemma panMain_summand_abs_le (y _X q : ℕ) (f : ℕ → ℝ) (a : ℕ)
+    (_hfb : ∀ a : ℕ, |f a| ≤ 1) :
     |if a.Coprime q then
       f a * (logarithmicIntegral ((y / a : ℕ) : ℝ) / (Nat.totient q : ℝ))
     else 0|
@@ -155,7 +153,7 @@ private lemma panMain_summand_abs_le (y X q : ℕ) (f : ℕ → ℝ) (a : ℕ)
 The bound is uniform under `|f| ≤ 1` and independent of `l`. -/
 theorem panMainPieceSum_abs_le (y X q : ℕ) (f : ℕ → ℝ) (l : ℕ)
     (hfb : ∀ a : ℕ, |f a| ≤ 1) :
-    |panPieceSum y X q l f (fun y' q' l' => logarithmicIntegral (y' : ℝ) / Nat.totient q')|
+    |panPieceSum y X q l f (fun y' q' _ => logarithmicIntegral (y' : ℝ) / Nat.totient q')|
       ≤ mainTermInnerSum y X / (Nat.totient q : ℝ) := by
   unfold panPieceSum mainTermInnerSum
   calc
@@ -193,7 +191,7 @@ theorem panMainPieceSum_abs_le (y X q : ℕ) (f : ℕ → ℝ) (l : ℕ)
 `panPieceMaxL ≤ innerSum/φ(q)`, since the bound is independent of `l`.
 For `q = 0`, the residue set is empty and nonnegativity gives the result. -/
 theorem panMainPieceMaxL_le (y X q : ℕ) (f : ℕ → ℝ) (hfb : ∀ a : ℕ, |f a| ≤ 1) :
-    panPieceMaxL y X q f (fun y' q' l' => logarithmicIntegral (y' : ℝ) / Nat.totient q') ≤
+    panPieceMaxL y X q f (fun y' q' _ => logarithmicIntegral (y' : ℝ) / Nat.totient q') ≤
       mainTermInnerSum y X / (Nat.totient q : ℝ) := by
   unfold panPieceMaxL
   by_cases hS : (unitResidues q).Nonempty
@@ -212,14 +210,14 @@ theorem panMainPieceMaxL_le (y X q : ℕ) (f : ℕ → ℝ) (hfb : ∀ a : ℕ, 
 `panPieceMaxY ≤ innerSumMax/φ(q)`, by taking the maximum of the
 pointwise bounds `panPieceMaxL ≤ innerSum/φ(q)`. -/
 theorem panMainPieceMaxY_le (X q x : ℕ) (f : ℕ → ℝ) (hfb : ∀ a : ℕ, |f a| ≤ 1) :
-    panPieceMaxY X q x f (fun y' q' l' => logarithmicIntegral (y' : ℝ) / Nat.totient q') ≤
+    panPieceMaxY X q x f (fun y' q' _ => logarithmicIntegral (y' : ℝ) / Nat.totient q') ≤
       mainTermInnerSumMax X x / (Nat.totient q : ℝ) := by
   unfold panPieceMaxY mainTermInnerSumMax
   apply Finset.max'_le
   intro z hz
   rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
   calc
-    panPieceMaxL y X q f (fun y' q' l' => logarithmicIntegral (y' : ℝ) / Nat.totient q')
+    panPieceMaxL y X q f (fun y' q' _ => logarithmicIntegral (y' : ℝ) / Nat.totient q')
         ≤ mainTermInnerSum y X / (Nat.totient q : ℝ) := panMainPieceMaxL_le y X q f hfb
     _ ≤ mainTermInnerSumMax X x / (Nat.totient q : ℝ) := by
           exact div_le_div_of_nonneg_right
@@ -235,14 +233,14 @@ for the other moduli use the pointwise bound and nonnegative weights. -/
 theorem panMainWeightedSum_le (X Q x : ℕ) (f : ℕ → ℝ) (hfb : ∀ a : ℕ, |f a| ≤ 1) :
     (∑ q ∈ Finset.range (Q + 1),
       ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-        panPieceMaxY X q x f (fun y' q' l' => logarithmicIntegral (y' : ℝ) / Nat.totient q')) ≤
+        panPieceMaxY X q x f (fun y' q' _ => logarithmicIntegral (y' : ℝ) / Nat.totient q')) ≤
       mainTermInnerSumMax X x *
         (∑ q ∈ Finset.range (Q + 1),
           ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card / (Nat.totient q : ℝ)) := by
   calc
     (∑ q ∈ Finset.range (Q + 1),
         ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-          panPieceMaxY X q x f (fun y' q' l' => logarithmicIntegral (y' : ℝ) / Nat.totient q'))
+          panPieceMaxY X q x f (fun y' q' _ => logarithmicIntegral (y' : ℝ) / Nat.totient q'))
         ≤ ∑ q ∈ Finset.range (Q + 1),
             ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
               (mainTermInnerSumMax X x / (Nat.totient q : ℝ)) := by
@@ -359,7 +357,7 @@ theorem PanMainTermBound.of_sieveBound {x : ℕ → ℝ} {f : ℕ → ℝ}
     (∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (log (x X)) ^ B) + 1),
         ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
           panPieceMaxY X q (Nat.floor (x X)) f
-            (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q))
+            (fun y q _ => logarithmicIntegral (y : ℝ) / Nat.totient q))
         ≤ mainTermInnerSumMax X (Nat.floor (x X)) *
             (∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (log (x X)) ^ B) + 1),
               ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card / (Nat.totient q : ℝ)) :=
@@ -764,7 +762,7 @@ theorem panMainWeightedSum_polylog (x : ℕ → ℝ) (f : ℕ → ℝ) (hfb : �
       (∑ q ∈ Finset.range (Q + 1),
         ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
           panPieceMaxY X q (Nat.floor (x X)) f
-            (fun y q' l' => logarithmicIntegral (y : ℝ) / Nat.totient q')) ≤
+            (fun y q' _ => logarithmicIntegral (y : ℝ) / Nat.totient q')) ≤
         C * |x X| * (1 + Real.log (X : ℝ)) * (Real.log (Q + 2)) ^ (6 : ℝ) := by
   classical
   obtain ⟨C₁, hC₁, hQ⟩ := panMainTotientWeightedSum_le_polylog
@@ -806,7 +804,7 @@ theorem panMainWeightedSum_polylog (x : ℕ → ℝ) (f : ℕ → ℝ) (hfb : �
     (∑ q ∈ Finset.range (Q + 1),
         ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
           panPieceMaxY X q (Nat.floor (x X)) f
-            (fun y q' l' => logarithmicIntegral (y : ℝ) / Nat.totient q'))
+            (fun y q' _ => logarithmicIntegral (y : ℝ) / Nat.totient q'))
         ≤ mainTermInnerSumMax X (Nat.floor (x X)) * panMainTotientWeightedSum Q := by
           simpa [panMainTotientWeightedSum] using
             panMainWeightedSum_le X Q (Nat.floor (x X)) f hfb
@@ -973,13 +971,12 @@ theorem panMainSieveAbsorption_of_dom {x : ℕ → ℝ} (hdom : ∀ X : ℕ, (X 
           ≤ (1 + Real.log (X : ℝ)) * (Real.log (x X + 2)) ^ 6 := by
         have heq : (1 + Real.log (X : ℝ)) * (Real.log (x X + 2)) ^ (6 : ℝ) =
             (1 + Real.log (X : ℝ)) * (Real.log (x X + 2)) ^ 6 := by
-          simpa using congrArg (fun t => (1 + Real.log (X : ℝ)) * t)
-            (Real.rpow_natCast (Real.log (x X + 2)) 6)
+          simp
         exact le_of_eq heq
       _ ≤ 128 * (Real.log (x X)) ^ 7 := hprod
       _ ≤ 128 * (Real.log (x X)) ^ (A + 7) := by
         have h7 : (Real.log (x X)) ^ 7 = (Real.log (x X)) ^ (7 : ℝ) := by
-          simpa using (Real.rpow_natCast (Real.log (x X)) 7)
+          simp
         have hle : (Real.log (x X)) ^ (7 : ℝ) ≤ (Real.log (x X)) ^ (A + 7) :=
           Real.rpow_le_rpow_of_exponent_le hL (by linarith : (7 : ℝ) ≤ A + 7)
         rw [h7]

@@ -43,7 +43,6 @@ theorem qD_minus_three_eq
     qD H .minus D d Δ 3 =
       (1 + (3 : ℝ) ^ d / Real.log D) ^ (2 : ℕ) * ((3 : ℝ) / 2) ^ Δ := by
   have hinit := hH.initial_minus 2 (by norm_num) (by norm_num)
-  norm_num at hinit
   simp only [qD, Section13HatLayers.kappaHat]
   norm_num [Real.rpow_one]
   have hT : H.T .minus 2 = 1 / 2 := by
@@ -107,7 +106,7 @@ margin, its product with the contraction coefficient still leaves half of that
 margin for all finite endpoint terms. -/
 theorem caseII_contraction_with_cubic_perturbation
     {D d Δ σ : ℝ}
-    (hσ : 1 < σ) (hΔ : Δ < 1)
+    (hσ : 1 < σ) (_hΔ : Δ < 1)
     (hpert : perturbation D d 0 3 ≤
       1 + (1 - (1 - 1 / σ) ^ (1 - Δ)) /
         (2 * (1 - 1 / σ) ^ (1 - Δ))) :

@@ -134,9 +134,9 @@ theorem caseII_positiveEndpoint_packet_fixed_coefficients
                 (Real.log D) ^ (Δ - 1) +
             σ * caseIIQDEndpointCoeffA0 d Δ C K / Real.log D +
             27 * K * (Real.log D) ^ (Δ - 1) * E) * L)) := by
-  convert hpacket using 1 <;>
+  convert hpacket using 1;
     unfold caseIIAlgebraicEndpointCoeffA0
-      caseIIAlgebraicEndpointCoeffA1 caseIIQDEndpointCoeffA0 <;>
+      caseIIAlgebraicEndpointCoeffA1 caseIIQDEndpointCoeffA0;
     ring
 
 /-- The same restatement specialized to the production normalization

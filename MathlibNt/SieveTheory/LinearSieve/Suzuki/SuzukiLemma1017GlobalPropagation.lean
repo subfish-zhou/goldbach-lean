@@ -28,7 +28,7 @@ theorem propagate_one_unit
   by_contra hfail
   have hFx : 0 < F x := by
     dsimp [F]
-    push_neg at hfail
+    push Not at hfail
     linarith
   let B : Set ℝ := Icc a x ∩ F ⁻¹' Ici 0
   have hBcompact : IsCompact B :=
@@ -54,7 +54,7 @@ theorem propagate_one_unit
     have hdB : d ∈ B := by
       constructor
       · exact ⟨hdac.1, hdac.2.trans hcax.2⟩
-      · simpa [hFd]
+      · simp [hFd]
     have hcd : c ≤ d := hcmin hdB
     have hdc : d < c := lt_of_le_of_ne hdac.2 (by
       intro hdc
@@ -75,7 +75,7 @@ theorem propagate_one_unit
         linarith [hprev t htprev]
       · have hat : a < t := lt_of_not_ge hta
         by_cases htc : t = c
-        · simpa [htc, hFc]
+        · simp [htc, hFc]
         · have htc_lt : t < c := lt_of_le_of_ne ht.2 htc
           by_contra hnot
           have hFt0 : 0 ≤ F t := le_of_not_ge hnot
@@ -151,7 +151,6 @@ theorem lemma10_17_global_uniform_eta
   apply global_eta_of_compact_seed h
   intro s hs
   rw [hP, hQ, abs_lt]
-  simp only [Pi.sub_apply, Pi.add_apply]
   constructor <;> linarith [hp_pos s hs, hm_pos s hs]
 
 

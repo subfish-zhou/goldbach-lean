@@ -176,7 +176,7 @@ theorem claim145_caseA_lowS_target_le_equation14_6_lower
         ring
       have hpow : L ^ (-Δ) * L ^ (1 + Δ) = L := by
         rw [← Real.rpow_add hL]
-        convert Real.rpow_one L using 1 <;> ring
+        convert Real.rpow_one L using 1; ring
       calc
         X * (V * Real.exp (Real.sqrt K / 2)) =
             V * Real.exp (-s * Real.log s - s * Real.log (Real.log (3 * s)) +

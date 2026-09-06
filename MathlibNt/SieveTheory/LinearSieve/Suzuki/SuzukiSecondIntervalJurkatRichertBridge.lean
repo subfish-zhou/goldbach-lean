@@ -57,7 +57,7 @@ theorem suzukiLowerSecondIntervalSourceKernel_eq_jurkatRichert
           SwitchingPrinciple.jurkatRichertInnerIntegral u / u := by
     convert intervalIntegral.integral_comp_sub_right
       (fun u : ℝ => SwitchingPrinciple.jurkatRichertInnerIntegral u / u)
-      (a := (4 : ℝ)) (b := s) 1 using 1 <;> norm_num
+      (a := (4 : ℝ)) (b := s) 1 using 1; norm_num
   unfold suzukiLowerSecondIntervalSourceKernel
   rw [hlog, hshift]
   ring

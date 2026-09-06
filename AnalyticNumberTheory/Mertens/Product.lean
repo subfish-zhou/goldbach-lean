@@ -49,7 +49,7 @@ private theorem norm_logarithmicCorrectionTerm_le (p : ℕ) :
   · rw [Real.norm_eq_abs]
     calc
       |-log (1 - 1 / (p : ℝ)) - 1 / (p : ℝ)| =
-          |-(log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ))| := by congr 1 <;> ring
+          |-(log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ))| := by congr 1; ring
       _ = |log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ)| := abs_neg _
       _ ≤ 2 / (p : ℝ) ^ 2 := abs_log_primeFactor_add_le hp
   · simp only [norm_zero]

@@ -1034,7 +1034,7 @@ theorem q1SieveProduct_nonneg (N : ℕ) : 0 ≤ q1SieveProduct N := by
 
 /-- The main-term product over odd forbidden primes is at most 1:
 each factor lies in (0, 1]. -/
-theorem q1ForbiddenOddProduct_le_one (N : ℕ) (hz3 : 3 ≤ correctedChenZ N) :
+theorem q1ForbiddenOddProduct_le_one (N : ℕ) (_hz3 : 3 ≤ correctedChenZ N) :
     q1ForbiddenOddProduct N ≤ 1 := by
   unfold q1ForbiddenOddProduct
   exact Finset.prod_le_one

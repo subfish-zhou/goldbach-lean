@@ -54,7 +54,7 @@ lemma powerScale_pos (η : ℝ) (x : PrimitiveQuadraticDatum) :
   exact Real.rpow_pos_of_pos (by exact_mod_cast x.modulus_pos) (-η)
 
 lemma value_pos (x : PrimitiveQuadraticDatum) : 0 < x.value := by
-  letI : NeZero x.modulus := ⟨x.modulus_ne⟩
+  let : NeZero x.modulus := ⟨x.modulus_ne⟩
   simpa [value] using
     (DirichletCharacter.LFunction_apply_one_re_pos_of_sq_eq_one
       x.square_eq_one x.ne_one)

@@ -41,10 +41,10 @@ def chen1973Lemma4LocalMagnitude (p m : ℕ) : ℕ :=
 /-- For an odd prime modulus, primitivity is exactly nonprincipality.  This is
 the formal version of the range `1 ≤ ν ≤ p-2` in Chen's proof. -/
 theorem chen1973_isPrimitive_iff_ne_one_of_odd_prime
-    {p : ℕ} (hp : p.Prime) (hodd : Odd p)
+    {p : ℕ} (hp : p.Prime) (_hodd : Odd p)
     (χ : DirichletCharacter ℂ p) :
     χ.IsPrimitive ↔ χ ≠ 1 := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
+  let : NeZero p := ⟨hp.ne_zero⟩
   constructor
   · intro hχ hχone
     have hc : χ.conductor = p := hχ
@@ -71,7 +71,7 @@ theorem chen1973_prime_characterSum_eq
     {p m : ℕ} (hp : p.Prime) (hodd : Odd p) (hmp : Nat.Coprime m p) :
     chen1973Lemma4CharacterSum p m =
       (if (m : ZMod p) = 1 then (p.totient : ℂ) else 0) - 1 := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
+  let : NeZero p := ⟨hp.ne_zero⟩
   rw [chen1973Lemma4CharacterSum]
   rw [show (∑ χ : PrimitiveCharacter p, χ.1 (m : ZMod p)) =
       ∑ χ ∈ primitiveCharacters p, χ (m : ZMod p) from
@@ -94,9 +94,8 @@ theorem chen1973_prime_characterSum_eq
 
 /-- The congruence in the local factor is exactly divisibility of `m-1`. -/
 lemma chen1973_natCast_zmod_eq_one_iff
-    {p m : ℕ} (hp : p.Prime) (hm : 0 < m) :
+    {p m : ℕ} (_hp : p.Prime) (hm : 0 < m) :
     (m : ZMod p) = 1 ↔ p ∣ m - 1 := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
   rw [show (1 : ZMod p) = ((1 : ℕ) : ZMod p) by norm_num,
     ZMod.natCast_eq_natCast_iff]
   constructor
@@ -164,8 +163,8 @@ theorem chen1973_localMagnitude_product_le_selected
 CRT reindexing asserted by the two preceding displayed equalities on p. 115,
 not a proposition-valued black box. -/
 theorem chen1973_lemma4_of_squarefree_local_factorization
-    {k m : ℕ} (hkOdd : Odd k) (hkSq : Squarefree k)
-    (hm : 0 < m) (hmk : Nat.Coprime m k) (hm1 : m ≠ 1)
+    {k m : ℕ} (_hkOdd : Odd k) (hkSq : Squarefree k)
+    (hm : 0 < m) (_hmk : Nat.Coprime m k) (hm1 : m ≠ 1)
     (hfactor : ‖chen1973Lemma4CharacterSum k m‖ =
       ∏ p ∈ k.primeFactors, chen1973Lemma4LocalMagnitude p m) :
     ‖chen1973Lemma4CharacterSum k m‖ ≤ (Nat.gcd (m - 1) k : ℝ) := by

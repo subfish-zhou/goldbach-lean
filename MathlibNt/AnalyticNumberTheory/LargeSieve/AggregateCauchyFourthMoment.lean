@@ -13,7 +13,7 @@ local instance aggregateCauchyFactFour : Fact ((1 : ℝ≥0∞) ≤ 4) := ⟨by 
 
 lemma piLp_four_norm_pow {ι : Type*} [Fintype ι]
     (v : PiLp 4 (fun _ : ι => ℂ)) : ‖v‖ ^ 4 = ∑ i, ‖v i‖ ^ 4 := by
-  haveI : Fact ((1 : ℝ≥0∞) ≤ (4 : ℕ)) := ⟨by norm_num⟩
+  have : Fact ((1 : ℝ≥0∞) ≤ (4 : ℕ)) := ⟨by norm_num⟩
   rw [PiLp.norm_eq_of_nat (p := (4 : ℝ≥0∞)) 4 (by norm_num)]
   simpa only [one_div] using (Real.rpow_inv_natCast_pow
     (x := ∑ i, ‖v i‖ ^ 4) (n := 4) (by positivity) (by norm_num))

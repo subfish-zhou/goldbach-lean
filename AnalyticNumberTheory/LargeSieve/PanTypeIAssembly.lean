@@ -169,8 +169,6 @@ open scoped ArithmeticFunction.Moebius
 
 noncomputable section
 
-set_option linter.unusedVariables false
-set_option linter.style.haveILetI false
 set_option maxHeartbeats 4000000
 
 /-! ## S3: The totient-weight sum -/
@@ -346,8 +344,8 @@ lemma panTypeI_liftPrimitive_isPrimitive {q q' : ℕ} (χ : DirichletCharacter �
 `panTypeI_charAbsSum_le_cs`. -/
 lemma panTypeI_charCard_eq_totient (q : ℕ) (hq : 0 < q) :
     Fintype.card (DirichletCharacter ℂ q) = Nat.totient q := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  haveI : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
     AnalyticNumberTheory.LargeSieve.complexHasEnoughRootsOfUnity (Monoid.exponent (ZMod q)ˣ)
       (Monoid.exponent_ne_zero_of_finite (G := (ZMod q)ˣ))
   rw [← Nat.card_eq_fintype_card]
@@ -413,7 +411,7 @@ theorem panTypeI_sqSum_primitiveDecomposition (q m u : ℕ) (hq : 0 < q) :
     panTypeICharSqSum q m u ≤
       2 * (∑ q' ∈ q.divisors, (Nat.totient q : ℝ) * panTypeIPrimitiveSqSum q' m u) +
         2 * (Nat.totient q : ℝ) * (panTypeI_nonCoprimeDensity q m u) ^ 2 := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
   have hpoint : ∀ χ : DirichletCharacter ℂ q,
       ‖panTypeIV1CharSum q m u χ‖ ^ 2 ≤
         2 * ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2 +

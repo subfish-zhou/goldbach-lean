@@ -164,7 +164,7 @@ theorem weighted_imprimitive_vaughanTypeII_endpoint_window_unconditional
     mul_nonneg (Nat.cast_nonneg (Q / C))
       (conductorHarmonicFactor_nonneg (Q / C))
   have hh := mul_le_mul_of_nonneg_left hblock hfac
-  convert hh using 1 <;> first | rfl | ring
+  convert hh using 1; first | rfl | ring
 
 /-- Algebraic payment audit: the length term of the primitive large sieve pays
 `N` a second time after the tensor moment has already paid its physical row mass

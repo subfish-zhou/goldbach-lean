@@ -21,12 +21,12 @@ theorem caseII_rounded_transportErr_le_positiveDelta_relative_packet_sourceLarge
     (hD : Real.exp 1 ≤ (D : ℝ))
     (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
     (hσ : 3 ≤ σ) (hs1 : 1 < s)
-    (hK : 0 ≤ K) (hC : 0 ≤ C)
+    (hK : 0 ≤ K) (_hC : 0 ≤ C)
     (hsmall : (3 : ℝ) ^ d ≤ Real.log (D : ℝ))
     (hE : (1 / 3 : ℝ) ≤ errorEnvelope H N (D : ℝ) d s)
     (hP : 3 ≤ C * Real.exp (Real.sqrt K))
     (hyr : yr = (D : ℝ) ^ (1 / (3 : ℝ)))
-    (hzr : zr = (D : ℝ) ^ (1 / s))
+    (_hzr : zr = (D : ℝ) ^ (1 / s))
     (hz : z = ⌈zr⌉₊) :
     caseIIRoundedTransportErr S H N (D : ℝ) yr zr d Δ σ C K B0 s +
         suzukiVProduct S (z : ℝ) *

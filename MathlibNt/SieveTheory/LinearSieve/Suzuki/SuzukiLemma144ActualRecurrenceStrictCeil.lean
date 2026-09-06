@@ -63,7 +63,7 @@ theorem suzukiSourceV_succ_eq_unrestricted_strict
       exact ⟨⟨hpSupport'.1, hpz⟩, hLower, hUpper⟩
     have hpowD : p ^ (n + 3) < D := by
       have h := Nat.lt_of_not_ge hLowerFails
-      convert h using 1 <;> omega
+      convert h using 1
     have hDceil : D ≤ p * (D ⌈/⌉ p) :=
       (ceilDiv_le_iff_le_mul hp0).1 le_rfl
     have hpowCeil : p ^ (n + 2) ≤ D ⌈/⌉ p := by
@@ -75,7 +75,7 @@ theorem suzukiSourceV_succ_eq_unrestricted_strict
         calc
           p * p ^ (n + 2) = p ^ (n + 2) * p := Nat.mul_comm _ _
           _ = p ^ ((n + 2) + 1) := (pow_succ _ _).symm
-          _ = p ^ (n + 3) := by congr 1 <;> omega
+          _ = p ^ (n + 3) := by congr 1
       rw [hpowsucc] at hmul
       omega
     rw [suzukiSourceV_eq_zero_of_pow_le_allDepth S n (D ⌈/⌉ p) p hpowCeil, mul_zero]
@@ -114,14 +114,14 @@ theorem suzukiActualT_caseI_recurrence_strict
                 apply hOddCarrier
                 have hk' : Odd ((k + 2) + 2) :=
                   hk.add_even (by norm_num : Even (2 : ℕ))
-                convert hk' using 1 <;> omega
+                convert hk' using 1
               have hrecSmall := ih (by omega : 2 ≤ k + 2) hOddSmall
               have hv := suzukiSourceV_succ_eq_unrestricted_strict
                 (S := S) (n := k + 3) (D := D) (z := z) (by omega)
                 (by
                   intro hk
                   apply hOddCarrier
-                  convert hk using 1 <;> omega)
+                  convert hk using 1)
               rw [suzukiActualT_add_two, hv, hrecSmall]
               rw [← Finset.sum_add_distrib]
               apply Finset.sum_congr rfl

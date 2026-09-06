@@ -148,11 +148,11 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalErrorAssembly
   have htlow : ‖∫ t in Iic (-T), F ((b : ℂ) + t * I)‖ ≤ Ctail * Etail := by
     dsimp only [F, Etail]
     rw [hbdef]
-    convert ht.1 using 1 <;> ring
+    convert ht.1 using 1; ring
   have htupper : ‖∫ t in Ici T, F ((b : ℂ) + t * I)‖ ≤ Ctail * Etail := by
     dsimp only [F, Etail]
     rw [hbdef]
-    convert ht.2 using 1 <;> ring
+    convert ht.2 using 1; ring
   have hmid : ‖∫ t in Ioc (-T) T, F ((b : ℂ) + t * I)‖ =
       ‖VIntegral F b (-T) T‖ := by
     rw [VIntegral, norm_smul, norm_I, one_mul,
@@ -163,13 +163,13 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalErrorAssembly
       simpa only [F, a, b] using (by linear_combination hshift)
     have hleft : ‖VIntegral F a (-T) T‖ ≤ C * Eleft := by
       dsimp only [F, a, Eleft, Q]
-      convert hct.1 using 1 <;> (try ring)
+      convert hct.1 using 1; (try ring)
     have htop : ‖HIntegral F a b T‖ ≤ C * Ehoriz := by
       dsimp only [F, a, b, Ehoriz, Q]
-      convert hct.2.1 using 1 <;> (try ring)
+      convert hct.2.1 using 1; (try ring)
     have hbottom : ‖HIntegral F a b (-T)‖ ≤ C * Ehoriz := by
       dsimp only [F, a, b, Ehoriz, Q]
-      convert hct.2.2 using 1 <;> (try ring)
+      convert hct.2.2 using 1; (try ring)
     rw [heq]
     calc
       _ ≤ ‖VIntegral F a (-T) T‖ + ‖HIntegral F a b T‖ +
@@ -245,8 +245,7 @@ theorem exists_quadraticConditionalExactPrefix_of_four_payments
   obtain ⟨C, hC, hclose⟩ :=
     exists_uniform_twistedSmoothedPsiClose diffν suppν νpos mass_one
   refine ⟨A, hA, 3 * K₀ + C + 1, by positivity, ?_⟩
-  intro q _ χ T ε X R hquad hχ hT hSiegel hε hε1 hX hXε hR
-  intro Q a d b hleft hhoriz htail hsmooth
+  intro q _ χ T ε X R hquad hχ hT hSiegel hε hε1 hX hXε hR Q a d b hleft hhoriz htail hsmooth
   have hs := herror χ hquad hχ hT hSiegel hε hε1 (by linarith : 1 ≤ X)
   have hcclose := hclose χ X hX ε hε hε1 hXε
   have hsmoothed : ‖DirichletCharacter.twistedSmoothedPsi χ ν ε X‖ ≤ 3 * K₀ * R := by

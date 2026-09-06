@@ -169,7 +169,7 @@ theorem hasDerivAt_mul_exp_neg_suzukiEin
         Real.exp (-suzukiEin x) * -(1 - Real.exp (-x)) =
       Real.exp (-suzukiEin x) * Real.exp (-x) by ring,
       ← Real.exp_add]
-    congr 1 <;> ring
+    congr 1; ring
   exact hprod.congr_deriv heq
 
 /-- Every finite truncation of the integral defining `r_{1,-1}(1)` is

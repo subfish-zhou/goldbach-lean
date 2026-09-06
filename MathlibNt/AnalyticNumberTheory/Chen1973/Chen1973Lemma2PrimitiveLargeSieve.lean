@@ -306,7 +306,7 @@ private lemma chen1973_shiftedDerivative_energy_le
   refine hsum.trans ?_
   rw [← Finset.mul_sum]
   gcongr
-  simpa [s, chen1973CoefficientEnergy, Real.norm_eq_abs]
+  simp [s, chen1973CoefficientEnergy, Real.norm_eq_abs]
 
 private lemma local_norm_sq_le_average_add_cross
     {f g : ℝ → ℂ} {u v : ℝ} (huv : u < v)
@@ -535,8 +535,8 @@ private lemma local_norm_sq_center_le_average_add_cross
               (∫ x in c - h..c, (2 : ℝ) * ‖f x‖ * ‖g x‖)) +
             (h⁻¹ * (∫ x in c..c + h, ‖f x‖ ^ 2) +
               (∫ x in c..c + h, (2 : ℝ) * ‖f x‖ * ‖g x‖))) := by
-          have hsubL : (c - (c - h))⁻¹ = h⁻¹ := by congr 1 <;> ring
-          have hsubR : (c + h - c)⁻¹ = h⁻¹ := by congr 1 <;> ring
+          have hsubL : (c - (c - h))⁻¹ = h⁻¹ := by congr 1; ring
+          have hsubR : (c + h - c)⁻¹ = h⁻¹ := by congr 1; ring
           rw [hsubL] at hL
           rw [hsubR] at hR
           nlinarith
@@ -871,8 +871,8 @@ theorem chen1973FareyEquationFour : Chen1973FareyEquationFour := by
         simpa [h] using sum_fareyArc_integrals_le_unitInterval hX
           (fun x => ‖F x‖ ^ 2) (hFcont.norm.pow 2) (fun x => sq_nonneg _)
       _ = E := by
-        convert chen1973_shifted_energy_eq a M N (-h) using 1 <;>
-          simp [F, τ, E] <;> ring
+        convert chen1973_shifted_energy_eq a M N (-h) using 1;
+          simp [F, τ]; ring
   have hCpay :
       (∑ qa ∈ reducedFareyIndices X,
           ∫ x in reducedFareyPoint qa - h..reducedFareyPoint qa + h,
@@ -883,8 +883,8 @@ theorem chen1973FareyEquationFour : Chen1973FareyEquationFour := by
           (fun x => ‖F x‖ * ‖G x‖) (hFcont.norm.mul hGcont.norm)
           (fun x => mul_nonneg (norm_nonneg _) (norm_nonneg _))
       _ ≤ Real.pi * (N : ℝ) * E := by
-        convert chen1973_cross_integral_le a M hN (-h) using 1 <;>
-          simp [F, G, τ, E] <;> ring
+        convert chen1973_cross_integral_le a M hN (-h) using 1;
+          simp [F, G, τ]; ring
   calc
     (∑ qa ∈ reducedFareyIndices X,
         ‖chen1973ExponentialSum a M N (reducedFareyPoint qa)‖ ^ 2) ≤
@@ -982,7 +982,7 @@ theorem chen1973Lemma2_equationTwo_of_fareyEquationFour
                   ‖reducedAdditiveAmplitude q (fun n => (a n : ℂ)) M N r‖ ^ 2 := by
                     apply Finset.sum_le_sum
                     intro q hq
-                    letI : NeZero q :=
+                    let : NeZero q :=
                       ⟨Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩
                     simpa using
                       (weightedPrimitiveSquareLedger_le_reducedAdditive_of_directBessel

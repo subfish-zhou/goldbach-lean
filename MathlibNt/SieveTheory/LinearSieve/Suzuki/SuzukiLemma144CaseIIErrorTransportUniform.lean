@@ -106,8 +106,7 @@ theorem eventually_caseII_errorEnvelope_transport_uniform_in_S
     [eventually_ge_atTop (Dmin ^ 2),
       eventually_recursiveCoordinate_le_quotient_sourceSigma_uniform hd1]
     with D hD hrecursiveUpper
-  intro S N s _hN _hs1 _hs3 hdomains
-  intro p hpCarrier
+  intro S N s _hN _hs1 _hs3 hdomains p hpCarrier
   have hpFull : p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D
       (sourceSigma (D : ℝ) d) 3 := by
     have hp := hpCarrier

@@ -97,7 +97,7 @@ private lemma vaughanBilinearTensorCoeff_eq_ambient_of_mem_divPrefix
         exact_mod_cast hmt.trans htcast.symm
       calc
         m * (d * e) = d * (e * m) := by
-          simp [mul_assoc, mul_comm, mul_left_comm]
+          simp [mul_comm, mul_left_comm]
         _ = d * t.toNat := by rw [hemt]
         _ ≤ y := hdt
   rw [vaughanBilinearTensorCoeff_eq_fiber b y d ES t hES,

@@ -192,7 +192,7 @@ theorem chen1973DirichletPolynomial_eq_sum_range
           omega
         subst n
         have hzero : χ.1 (0 : ℕ) = 0 := by
-          letI : Fact (1 < q) := ⟨hq⟩
+          let : Fact (1 < q) := ⟨hq⟩
           simpa only [Nat.cast_zero] using
             (MulChar.map_nonunit χ.1 (a := (0 : ZMod q)) not_isUnit_zero)
         rw [hzero]
@@ -604,7 +604,7 @@ theorem chen1973_truncation_error_fourth_sum_le
   apply Finset.sum_le_sum
   intro q hq
   by_cases hq1 : 1 < q
-  · letI : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
+  · let : NeZero q := ⟨Nat.ne_zero_of_lt hq1⟩
     calc
       (∑ χ : PrimitiveCharacter q,
           ‖chen1973PrimitiveLValue q s χ -

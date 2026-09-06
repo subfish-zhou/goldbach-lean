@@ -185,7 +185,7 @@ theorem StandardBVPayload_le_explicit :
           hNR (by exact_mod_cast hQN)
       linarith [natLog2_cast_le_two_log hQ2]
     · have hQle : Q ≤ 1 := by omega
-      have hlog2Q : Nat.log2 Q = 0 := by interval_cases Q <;> rfl
+      have hlog2Q : Nat.log2 Q = 0 := by interval_cases Q; rfl
       rw [hlog2Q]
       norm_num
       exact hlog0

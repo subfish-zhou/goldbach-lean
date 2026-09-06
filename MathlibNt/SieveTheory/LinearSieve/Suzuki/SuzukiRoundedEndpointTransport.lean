@@ -90,30 +90,30 @@ theorem caseII_total_le_concrete_finiteSourceLayer_add_rawBase_natCeil
       (S := S) (D := (D : ℝ)) (β := (2 : ℝ))
       (z := (D : ℝ) ^ (1 / s)) (s := s) (K := K)
       hDone (by norm_num) hs (by norm_num at hs3 ⊢; exact hs3)
-      rfl hzr2 hK hlocal using 1 <;> ring
+      rfl hzr2 hK hlocal using 1; ring
   have hbase : suzukiSourceV S 1 D z ≤
       suzukiVProduct S (z : ℝ) *
         (finiteSourceLayer 1 2 1 s + 9 * K / (s * Real.log (D : ℝ))) := by
     rw [hVz]
-    convert hbase0 using 1 <;> ring
+    convert hbase0 using 1; ring
   have hendpoint' :
       (∑ n ∈ sourceParityIndices N, suzukiSourceV S n D y) ≤
         suzukiVProduct S (z : ℝ) *
           (((2 : ℝ) + 1) / s * finiteSourceLayer 1 2 N ((2 : ℝ) + 1)) +
           endpointErr := by
     rw [hVz]
-    convert hendpoint using 1 <;> norm_num
+    convert hendpoint using 1; norm_num
   have hbase' : suzukiSourceV S 1 D z ≤
       suzukiVProduct S (z : ℝ) *
         (finiteSourceLayer 1 2 1 s +
           K * ((2 : ℝ) + 1) ^ 2 / (s * Real.log (D : ℝ))) := by
-    convert hbase using 1 <;> ring
+    convert hbase using 1; ring
   have hraw := caseII_source_finite_assembly
     (S := S) (β := (2 : ℝ)) (s := s) (K := K)
     (Vz := suzukiVProduct S (z : ℝ)) (endpointErr := endpointErr)
     hN hs (by norm_num at hs3 ⊢; exact hs3)
     hyz hyLower hyUpper hendpoint' hbase'
-  convert hraw using 1 <;> ring
+  convert hraw using 1; ring
 
 /-- Double-rounded sharp Case-II endpoint transport.
 
@@ -208,11 +208,11 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase_natCeil
       (S := S) (H := H) (N := N) (D := D) (y := y)
       (β := (2 : ℝ)) (σ := σ) (C := C) (C1 := C1) (K := K)
       (ΘK := ΘK) (Δ := Δ) (d := d) (B0 := B0)
-      hH hN hN2 hycube (by convert hyceil using 1 <;> norm_num) hyDhalf
+      hH hN hN2 hycube (by convert hyceil using 1; norm_num) hyDhalf
       (by norm_num at h3σ ⊢; exact h3σ) hDone
       (by norm_num at hDlarge ⊢; exact hDlarge)
-      (by convert hwy using 1 <;> norm_num) hy2
-      (by convert hyr2 using 1 <;> norm_num) hw2 hEndpoint
+      (by convert hwy using 1; norm_num) hy2
+      (by convert hyr2 using 1; norm_num) hw2 hEndpoint
       (by norm_num at hnu ⊢; exact hnu) hC
       (by norm_num at hlog ⊢; exact hlog)
       (by norm_num at hSourceDomain ⊢; exact hSourceDomain)
@@ -221,9 +221,9 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase_natCeil
       (by norm_num at hIH ⊢; exact hIH)
       (by norm_num at hErrorThreshold ⊢; exact hErrorThreshold) hK hlocal
       hClaim14_6_ii hΔ0
-      (by convert hCeilFull using 1 <;> norm_num)
-      (by convert hT using 1 <;> norm_num)
-      (by convert hClaim14_13 using 1 <;> norm_num)
+      (by convert hCeilFull using 1; norm_num)
+      (by convert hT using 1; norm_num)
+      (by convert hClaim14_13 using 1; norm_num)
   have hVy : suzukiVProduct S (y : ℝ) = suzukiVProduct S yr := by
     exact suzukiVProduct_natCeil_eq S (by simpa [yr] using hyceil)
   have hVz : suzukiVProduct S (z : ℝ) = suzukiVProduct S zr := by
@@ -234,8 +234,8 @@ theorem caseII_total_le_from_caseI_endpoint_explicit_rawBase_natCeil
           (finiteSourceLayer 1 2 N 3 + caseIIEndpointSigma11 K N (D : ℝ) σ) +
           suzukiVProduct S yr * caseIIEndpointQD H N (D : ℝ) d Δ σ C K := by
     rw [← hVy]
-    convert hcaseIRaw using 1 <;>
-      simp only [caseIIEndpointSigma11, caseIIEndpointQD] <;> ring
+    convert hcaseIRaw using 1;
+      simp only [caseIIEndpointSigma11, caseIIEndpointQD]; ring
   have hVratio : suzukiVProduct S yr ≤
       suzukiVProduct S zr * (Real.log zr / Real.log yr) *
         (1 + K / Real.log yr) := by

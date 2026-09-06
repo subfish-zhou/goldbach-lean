@@ -190,12 +190,12 @@ lemma scalar_absorption_of_elementary_bounds
       apply (div_lt_iff₀ hm').2
       dsimp [A, m] at hgap ⊢
       nlinarith
-    convert hh using 1 <;> ring
+    convert hh using 1; ring
   unfold Equation1053EarliestScalarInequality equation1056ScalarRatio
   have hmul := mul_le_mul_of_nonneg_left hK hA.le
   apply lt_of_le_of_lt _ hfactor
   dsimp [A, m] at hmul ⊢
-  convert hmul using 1 <;> ring
+  convert hmul using 1; ring
 
 lemma xi_nonneg (s : ℝ) : 0 ≤ xi s := by
   exact (etaOrderIso.symm ⟨max s 1, le_max_right s 1⟩).property

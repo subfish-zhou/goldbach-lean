@@ -381,7 +381,7 @@ theorem tendsto_primeDirichlet_finitePart :
               primeAbelRemainder u * (Real.exp (-(ε * u)) : ℂ))
       (𝓝[>] 0)
       (𝓝 ((mertensSecondConstant - Real.eulerMascheroniConstant : ℝ) : ℂ)) := by
-    convert (tendsto_const_nhds.add hrem) using 1 <;> push_cast <;> ring
+    convert (tendsto_const_nhds.add hrem) using 1; push_cast; ring_nf
   have heq : (fun ε : ℝ =>
       (↑((∑' p : Nat.Primes, (p : ℝ) ^ (-(1 + ε))) + Real.log ε) : ℂ))
       =ᶠ[𝓝[>] 0]

@@ -413,7 +413,7 @@ def PanMainTermBound (x f : ℕ → ℝ) : Prop :=
       ∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (log (x X)) ^ B) + 1),
         ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
           panPieceMaxY X q (Nat.floor (x X)) f
-            (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q) ≤
+            (fun y q _ => logarithmicIntegral (y : ℝ) / Nat.totient q) ≤
         C * x X * (log (x X)) ^ (A + 7)
 
 
@@ -438,7 +438,6 @@ the required analytic and support conditions.
 -/
 noncomputable section
 
-set_option linter.style.haveILetI false
 
 /-- Complex Type I character sum:
 `V_χ(y,u) = Σ_{n≤y} vaughanFirst(n,u)·χ(n)`. -/
@@ -449,7 +448,7 @@ noncomputable def panTypeIV1CharSum (q y u : ℕ) (χ : DirichletCharacter ℂ q
 finite-order unit is a root of unity. -/
 theorem charValue_norm_eq_one {q : ℕ} {χ : DirichletCharacter ℂ q} {l : ℕ}
     (hl : IsUnit (l : ZMod q)) : ‖χ (l : ZMod q)‖ = 1 := by
-  haveI : Fintype (ZMod q)ˣ := Fintype.ofFinite _
+  have : Fintype (ZMod q)ˣ := Fintype.ofFinite _
   let n : ℕ := Fintype.card (ZMod q)ˣ
   have hn : n ≠ 0 := by
     exact ne_of_gt (Fintype.card_pos (α := (ZMod q)ˣ))
@@ -496,11 +495,11 @@ theorem apV1_abs_le {q y u : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod 
 is again a unit modulo `q`, as needed for the pointwise `apV1` bound. -/
 lemma isUnit_natInvMod_mul_residue {q a l : ℕ} (hq : 0 < q) (hcop_a : a.Coprime q)
     (hl : l.Coprime q) : IsUnit (((natInvMod q a * l % q) : ℕ) : ZMod q) := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
   have hval : (((natInvMod q a * l % q : ℕ) : ZMod q)) =
       (((natInvMod q a * l : ℕ) : ZMod q)) := by
     have hz := ZMod.natCast_zmod_val (((natInvMod q a * l : ℕ) : ZMod q))
-    simpa [ZMod.val_natCast] using hz
+    simp
   rw [hval, Nat.cast_mul]
   have hni : (natInvMod q a : ZMod q) = (a⁻¹ : ZMod q) := by
     unfold natInvMod
@@ -745,8 +744,8 @@ using the character count `φ(q)` and `(Σa_i)² ≤ n·Σa_i²`. -/
 theorem panTypeI_charAbsSum_le_cs (q m u : ℕ) (hq : 0 < q) :
     (∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum q m u χ‖) ≤
       Real.sqrt (Nat.totient q : ℝ) * Real.sqrt (panTypeICharSqSum q m u) := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  haveI : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
     AnalyticNumberTheory.LargeSieve.complexHasEnoughRootsOfUnity (Monoid.exponent (ZMod q)ˣ)
       (Monoid.exponent_ne_zero_of_finite (G := (ZMod q)ˣ))
   have hcard : Fintype.card (DirichletCharacter ℂ q) = Nat.totient q := by
@@ -1219,8 +1218,8 @@ using the character count `φ(q)` and `(Σa_i)² ≤ n·Σa_i²`. -/
 theorem panTypeII_charAbsSum_le_cs (q m u v : ℕ) (hq : 0 < q) :
     (∑ χ : DirichletCharacter ℂ q, ‖panTypeIIV3CharSum q m u v χ‖) ≤
       Real.sqrt (Nat.totient q : ℝ) * Real.sqrt (panTypeIICharSqSum q m u v) := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  haveI : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : HasEnoughRootsOfUnity ℂ (Monoid.exponent (ZMod q)ˣ) :=
     AnalyticNumberTheory.LargeSieve.complexHasEnoughRootsOfUnity (Monoid.exponent (ZMod q)ˣ)
       (Monoid.exponent_ne_zero_of_finite (G := (ZMod q)ˣ))
   have hcard : Fintype.card (DirichletCharacter ℂ q) = Nat.totient q := by

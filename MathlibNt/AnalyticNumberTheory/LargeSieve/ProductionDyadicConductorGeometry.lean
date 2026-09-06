@@ -99,7 +99,7 @@ private lemma dyadic_cover_aux (R Q d : ℕ) (hR : 0 < R) (hRd : R < d)
     omega
   exact ⟨j, hj, hlo, hhi⟩
 
-private lemma dyadic_cells_pairwise (N Q C R : ℕ) (hR : 0 < R) :
+private lemma dyadic_cells_pairwise (N Q C R : ℕ) (_hR : 0 < R) :
     (↑(dyadicLowers R Q) : Set ℕ).PairwiseDisjoint (dyadicCell N Q C) := by
   intro i hi j hj hij
   change Disjoint (dyadicCell N Q C i) (dyadicCell N Q C j)

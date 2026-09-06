@@ -75,7 +75,7 @@ theorem caseI_midpoint_gap_lower
 same-`C` midpoint gap.  This is the complete scalar step in (14.23); its proof
 uses the literal `sourceSigma` and the growth of `log (log D)`. -/
 theorem eventually_caseISourceOrderCoefficient_le_sameC_gap
-    {A d Δ : ℝ} (hA : 0 ≤ A) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
+    {A d Δ : ℝ} (_hA : 0 ≤ A) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
     (hd : 7 / (1 - Δ) < d) :
     ∀ᶠ D : ℝ in atTop,
       ∃ q : Lemma144StrictFactor,

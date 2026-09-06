@@ -70,13 +70,13 @@ theorem localFactor_two_odd (hN : Odd N) : localFactor 2 N = 1 := by
   simp [localFactor, hN.not_two_dvd_nat]
 
 /-- For a prime `p > 2` dividing `N`, the factor is `p/(p-1)`. -/
-theorem localFactor_of_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
+theorem localFactor_of_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
     localFactor p N = (p : ℝ) / (p - 1) := by
   simp [localFactor, ne_of_gt hp2, hpdvd]
 
 /-- For a prime `p > 2` not dividing `N`,
 the factor is `p(p-2)/(p-1)²`. -/
-theorem localFactor_of_not_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
+theorem localFactor_of_not_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N = (p : ℝ) * (p - 2) / ((p - 1) ^ 2) := by
   simp [localFactor, ne_of_gt hp2, hpn]
 
@@ -111,7 +111,7 @@ noncomputable def singularSeriesTruncated (N z : ℕ) : ℝ :=
 
 /-- The truncated singular series is positive, since all factors
 are positive. -/
-theorem singularSeriesTruncated_pos (N z : ℕ) (hz : 1 ≤ z) :
+theorem singularSeriesTruncated_pos (N z : ℕ) (_hz : 1 ≤ z) :
     0 < singularSeriesTruncated N z := by
   unfold singularSeriesTruncated
   apply Finset.prod_pos
@@ -140,7 +140,7 @@ theorem singularSeries_pos (N : ℕ) (hN : 2 ≤ N) :
 /-! ## 5. Explicit even case -/
 
 /-- For even `N`, truncating at 2 gives exactly the factor 2. -/
-theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (hN2 : 2 ≤ N) :
+theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (_hN2 : 2 ≤ N) :
     singularSeriesTruncated N 2 = 2 := by
   unfold singularSeriesTruncated
   have h_range : (range 3).filter Nat.Prime = {2} := by decide
@@ -302,8 +302,7 @@ lemma prime_square_product_ge_int (N : ℕ) :
       have hp1_lt : p - 1 < N := by omega
       have hp1_prime : (p - 1 + 1).Prime := by rwa [hp1]
       simp [T, mem_filter, hp1_ge2, hp1_lt, hp1_prime]
-    · intro p hp
-      intro p' hp' hpp'
+    · intro p hp p' hp' hpp'
       rw [mem_filter] at hp hp'
       rcases hp with ⟨_, _, hp2⟩
       rcases hp' with ⟨_, _, hp2'⟩

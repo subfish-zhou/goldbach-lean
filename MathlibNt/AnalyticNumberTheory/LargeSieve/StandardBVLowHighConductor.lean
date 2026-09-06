@@ -102,7 +102,7 @@ def lowConductorArithmeticMass (N Q C : ℕ) : ℝ :=
 literal conductor multiplicity and character count. -/
 theorem lowConductorPhysical_le_of_primitivePrefix
     (N Q C : ℕ) (X : ℝ)
-    (hX : 0 ≤ X)
+    (_hX : 0 ≤ X)
     (hSW : ∀ d ∈ lowConductorSet N Q C,
       ∀ ψ : PrimitiveCharacter d,
         primitivePrefixAmplitude vonMangoldtIntegerCoeff N d ψ ≤ X) :
@@ -413,7 +413,7 @@ def StandardBVSufficient : Prop :=
 /-- The sufficient interface has exactly the usual Standard-BV conclusion. -/
 theorem standardBV_of_sufficient (h : StandardBVSufficient) :
     ∀ A : ℝ, 0 < A →
-      ∃ C : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
+      ∃ _C : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
         ∀ᶠ N : ℕ in Filter.atTop,
           (∑ q ∈ Finset.Icc 1
               (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),

@@ -129,7 +129,7 @@ theorem eventually_lemma144_caseII_odd_rawRoundedFinal
     have hNm : (N - 1) % 2 = 0 := by
       have hmod : N % 2 = 1 := Nat.odd_iff.mp hN
       omega
-    constructor <;> simp [KappaOneModel.parityDomain, hNm, *]
+    constructor <;> simp [KappaOneModel.parityDomain, *]
   have herror : CaseIIErrorEnvelopeTransport S H N D d :=
     herrorD N s hN hs1 hs3 (by simpa [y, σ] using hdomains)
   have hsource : ∀ p ∈ sigmaOneCarrier (suzukiSupportedBelow S y) D σ 3,

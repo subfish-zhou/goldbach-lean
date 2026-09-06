@@ -24,7 +24,7 @@ actual discrete quantity.  The final statement is uniform in the natural depth
 theorem claim145_caseA_highS_sourceL_le_logK
     {D K C1 Θ : ℝ}
     (hD : 2 ≤ D) (hK : 3 ≤ K) (hlogK1 : 1 ≤ Real.log K)
-    (hC1 : 0 < C1) (hΘ : 0 ≤ Θ)
+    (hC1 : 0 < C1) (_hΘ : 0 ≤ Θ)
     (hsmall : Real.log D ≤ C1 * K ^ Θ) :
     suzukiSourceL D K ≤
       (Θ + 2 + |Real.log C1| + |Real.log (Real.log 2)|) * Real.log K := by
@@ -62,7 +62,7 @@ theorem claim145_caseA_highS_sourceL_le_logK
 theorem claim145_caseA_highS_sourceSigma_le_Kbound
     {D K C1 Θ d : ℝ}
     (hD : 2 ≤ D) (hK : 3 ≤ K) (hlogK1 : 1 ≤ Real.log K)
-    (hC1 : 0 < C1) (hΘ : 0 ≤ Θ) (hd : 0 < d)
+    (hC1 : 0 < C1) (_hΘ : 0 ≤ Θ) (hd : 0 < d)
     (hsmall : Real.log D ≤ C1 * K ^ Θ) :
     sourceSigma D d ≤
       (C1 ^ (1 / d)) *
@@ -141,7 +141,7 @@ theorem claim145_caseA_highS_sourceSigma_le_Kbound
 theorem claim145_caseA_highS_log_gain_of_growth_with_constant
     {D K s d C1 Θ A : ℝ}
     (hD : 1 < D) (hK : 1 < K) (hs : 1 < s)
-    (hC1 : 0 < C1)
+    (_hC1 : 0 < C1)
     (hchain : Real.log D ≤ C1 * (16 : ℝ) ^ Θ * s ^ (2 * Θ) *
       (Real.log s) ^ (2 * Θ))
     (hgrowth :

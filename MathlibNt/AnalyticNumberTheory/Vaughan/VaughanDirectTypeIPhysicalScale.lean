@@ -35,7 +35,7 @@ def apNormalizedVaughanTypeIMean (N Q u v : ℕ) : ℝ :=
 
 /-- The old unsquared weight is exactly `q` times the AP-normalized summand. -/
 theorem directPrimitiveMean_summand_eq_q_mul
-    (a : ℤ → ℂ) (N q : ℕ) (hq : 0 < q) :
+    (a : ℤ → ℂ) (N q : ℕ) (_hq : 0 < q) :
     ((q : ℝ) / (q.totient : ℝ)) *
         ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ =
       (q : ℝ) * (((q.totient : ℝ)⁻¹) *
@@ -217,7 +217,7 @@ theorem vaughanTypeIMiddleShortEnergy_explicitLambda
 `P = logPay * (N + Q² sqrt N)` is the exact producer shape. -/
 theorem corrected_typeI_shell_physical_of_square
     (shellMean logPay N Q : ℝ)
-    (hmean : 0 ≤ shellMean) (hlog : 0 ≤ logPay) (hN : 0 ≤ N) (hQ : 0 ≤ Q)
+    (hmean : 0 ≤ shellMean) (hlog : 0 ≤ logPay) (hN : 0 ≤ N) (_hQ : 0 ≤ Q)
     (hsq : shellMean ^ 2 ≤
       (logPay * (N + Q ^ 2 * Real.sqrt N)) ^ 2) :
     shellMean ≤ logPay * (N + Q ^ 2 * Real.sqrt N) := by

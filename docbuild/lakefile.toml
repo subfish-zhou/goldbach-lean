@@ -1,0 +1,15 @@
+name = "goldbach-docbuild"
+reservoir = false
+version = "1.0.0"
+
+# Keep documentation dependencies separate from the theorem project.
+[[require]]
+name = "doc-gen4"
+git = "https://github.com/leanprover/doc-gen4.git"
+# Official v4.33.0-rc1 tag, matching the parent lean-toolchain.
+rev = "498457dedc5bf2eb884c5100804ef24c96b92a08"
+
+[[lean_exe]]
+name = "goldbach-docs"
+root = "GoldbachDocs"
+supportInterpreter = true

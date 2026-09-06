@@ -51,8 +51,6 @@ open scoped ArithmeticFunction.Moebius
 
 noncomputable section
 
-set_option linter.unusedVariables false
-set_option linter.style.haveILetI false
 set_option maxHeartbeats 800000
 
 /-! ## 1. Elementary pointwise bound for vaughanThird -/
@@ -239,7 +237,7 @@ theorem vaughanThird_l2_sum_le (u v : ℕ) : ∃ C : ℝ, 0 < C ∧ ∀ N : ℕ,
           have hle1 : (Real.log (N + 1)) ^ 2 ≤ (1 + Real.log (N + 1)) ^ 2 := by
             exact sq_le_sq.mpr (by
               have h1 : Real.log (N + 1) ≤ 1 + Real.log (N + 1) := by linarith
-              simpa [abs_of_nonneg hlog, abs_of_nonneg (by linarith : 0 ≤ 1 + Real.log (N + 1))] using h1)
+              simp [abs_of_nonneg hlog, abs_of_nonneg (by linarith : 0 ≤ 1 + Real.log (N + 1))])
           have hN : 0 ≤ (N : ℝ) := by exact_mod_cast Nat.zero_le N
           calc
             (Real.log (N + 1)) ^ 2 * (N : ℝ) * (1 + Real.log (N + 1)) ^ 3
@@ -275,7 +273,7 @@ theorem panTypeIICharSqSum_le_additiveSieve (q m u v : ℕ) (hq : 0 < q) :
       ((q.totient : ℝ) / (q : ℝ)) *
         largeSieveBound (m + 1) (1 / (q : ℝ) ^ 2) *
           (∑ n ∈ Finset.range (m + 1), (vaughanThird n u v) ^ 2) := by
-  haveI : NeZero q := ⟨Nat.ne_of_gt hq⟩
+  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
   let a : ℤ → ℂ := fun n => if 0 ≤ n then (vaughanThird n.toNat u v : ℂ) else 0
   let M : ℤ := -1
   let N : ℕ := m + 1

@@ -45,7 +45,7 @@ theorem caseIIPositiveDeltaIntegralPart_source_exact_relative
       1 + 3 * K / Real.log D := by
     rw [hlogy]
     field_simp [ne_of_gt hlog]
-    <;> ring
+
   have hlambda : lambda H (ErrorSign.ofDepth N) D d 0 s = s * E := by
     dsimp [E]
     unfold lambda errorEnvelope
@@ -66,7 +66,7 @@ theorem caseIIPositiveDeltaIntegralPart_source_exact_relative
       _ = (c * R) * E := by
         rw [hlambda]
         field_simp [ne_of_gt hs]
-        <;> ring
+
   have hP : 0 ≤ P := by dsimp [P]; positivity
   have hL : 0 ≤ L := by dsimp [L]; exact Real.rpow_nonneg hlog.le _
   have hr : 0 ≤ 1 + 3 * K / Real.log D := by positivity
@@ -82,7 +82,7 @@ theorem caseIIPositiveDeltaIntegralPart_source_exact_relative
     _ = _ := by ring
 /-- The cubic perturbation has linear excess when `3^d` is at most `log D`. -/
 lemma perturbation_three_le_one_add_seven_ratio
-    {D d : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d)
+    {D d : ℝ} (hlog : 0 < Real.log D) (_hd : 0 ≤ d)
     (hsmall : 3 ^ d ≤ Real.log D) :
     perturbation D d 0 3 ≤ 1 + 7 * (3 ^ d / Real.log D) := by
   let x : ℝ := 3 ^ d / Real.log D

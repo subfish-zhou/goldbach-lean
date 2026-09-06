@@ -61,7 +61,7 @@ separate public bookkeeping lemma because it is exactly what turns
 `1/φ(q)^2` after Cauchy into `1/φ(q)`. -/
 lemma card_nonprincipalCharacters_le_totient {q : ℕ} (hq : 0 < q) :
     (nonprincipalCharacters q).card ≤ q.totient := by
-  letI : NeZero q := ⟨hq.ne'⟩
+  let : NeZero q := ⟨hq.ne'⟩
   have hchars : Fintype.card (DirichletCharacter ℂ q) = q.totient := by
     have horth := charOrthSum hq (1 : ZMod q) 1
     have hc : ((Fintype.card (DirichletCharacter ℂ q) : ℕ) : ℂ) =

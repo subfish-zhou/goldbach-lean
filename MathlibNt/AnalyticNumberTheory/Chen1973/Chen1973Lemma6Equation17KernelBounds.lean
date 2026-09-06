@@ -152,7 +152,7 @@ theorem chen1973Lemma6_eq17_kernel_pos {x : ℕ} (hx : 1 < x)
 denominator.  The harmless factor `2` covers both source lines (`σ ≤ 2`) at
 the explicit cutoff `x ≥ 3`. -/
 theorem chen1973Lemma6_eq17_cauchy_le_kernel
-    {x : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (hσ : 0 < σ) (hσupper : σ ≤ 2) :
+    {x : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (_hσ : 0 < σ) (hσupper : σ ≤ 2) :
     (1 / 2 : ℝ) * σ *
         (1 + (v / chen1973PerronScale (x : ℝ)) ^ 2) ≤
       chen1973Lemma6Eq17Kernel x (σ + v * I) := by

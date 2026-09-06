@@ -35,7 +35,7 @@ lemma totient_block_sum_le_weighted (D Q : ℕ) (hD : 0 < D)
 lemma primitiveLValue_differentiable (q : ℕ) (χ : PrimitiveCharacter q) :
     Differentiable ℂ (fun z => chen1973PrimitiveLValue q z χ) := by
   by_cases hq : 1 < q
-  · letI : NeZero q := ⟨Nat.ne_zero_of_lt hq⟩
+  · let : NeZero q := ⟨Nat.ne_zero_of_lt hq⟩
     simpa only [chen1973PrimitiveLValue, dif_pos hq] using
       χ.1.differentiable_LFunction (chen1973_primitive_ne_one hq χ)
   · simp only [chen1973PrimitiveLValue, dif_neg hq]

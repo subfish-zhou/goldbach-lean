@@ -69,9 +69,7 @@ private theorem suzukiEin_nat_eq_integral_einNatKernel (n : ℕ) :
   have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
   calc
     suzukiEin (n : ℝ) = (n : ℝ) * ∫ u in (0 : ℝ)..1, suzukiEinKernel (u * (n : ℝ)) := by
-      simpa [suzukiEin] using
-        (mul_integral_comp_mul_right (f := suzukiEinKernel) (a := (0 : ℝ)) (b := 1)
-          (c := (n : ℝ))).symm
+      simp [suzukiEin]
     _ = ∫ u in (0 : ℝ)..1, (n : ℝ) * suzukiEinKernel (u * (n : ℝ)) := by
       rw [intervalIntegral.integral_const_mul]
     _ = ∫ u in (0 : ℝ)..1, einNatKernel n u := by
@@ -113,8 +111,7 @@ private theorem integral_harmonicKernel (n : ℕ) :
               (intervalIntegral.integral_comp_sub_left (f := fun x : ℝ => x ^ i)
                 (a := (0 : ℝ)) (b := 1) (d := 1))
           rw [hsub]
-          simpa [div_eq_mul_inv] using
-            (intervalIntegral.integral_pow (a := (0 : ℝ)) (b := 1) (n := i))
+          simp [div_eq_mul_inv]
     _ = (harmonic n : ℝ) := by
           simp [harmonic]
 
@@ -149,7 +146,7 @@ private theorem gapKernel_eq_quotient {n : ℕ} {u : ℝ} (hu : u ≠ 0) :
 private theorem gapKernel_nonneg {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ Icc (0 : ℝ) 1) :
     0 ≤ gapKernel n u := by
   rcases eq_or_ne u 0 with rfl | hu0
-  · simp [gapKernel, harmonicKernel, einNatKernel, hn]
+  · simp [gapKernel, harmonicKernel, einNatKernel]
   have hu_pos : 0 < u := lt_of_le_of_ne hu.1 (Ne.symm hu0)
   have hn_pos : 0 < n := lt_of_lt_of_le zero_lt_one hn
   have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast (ne_of_gt hn_pos)
@@ -208,7 +205,7 @@ private theorem gapKernel_le_aux {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ 
       _ = (n : ℝ) * x ^ (n - 1) := by
             simpa [S, x, mul_comm, mul_left_comm, mul_assoc] using (geom_sum₂_self x n)
   have hxpow : x ^ n = Real.exp (-(n : ℝ) * u) := by
-    simp [x, ← Real.exp_nat_mul, mul_comm, mul_assoc]
+    simp [x, ← Real.exp_nat_mul, mul_comm]
   rw [gapKernel_eq_quotient hu0, ← hxpow]
   change (x ^ n - y ^ n) / u ≤
     (n : ℝ) * u * Real.exp (-((n - 1 : ℕ) : ℝ) * u)
@@ -223,7 +220,7 @@ private theorem gapKernel_le_aux {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ 
     _ ≤ u * ((n : ℝ) * x ^ (n - 1)) := by
       exact mul_le_mul_of_nonneg_left hS_le hu.1
     _ = (n : ℝ) * u * Real.exp (-((n - 1 : ℕ) : ℝ) * u) := by
-      simp [x, ← Real.exp_nat_mul, mul_comm, mul_left_comm, mul_assoc]
+      simp [x, ← Real.exp_nat_mul, mul_comm, mul_assoc]
 
 private theorem harmonic_sub_suzukiEin_nonneg (n : ℕ) :
     0 ≤ (harmonic n : ℝ) - suzukiEin n := by
@@ -304,7 +301,7 @@ private theorem harmonic_sub_suzukiEin_le (n : ℕ) (hn : 2 ≤ n) :
     have hne : (((n - 1 : ℕ) : ℝ)) ≠ 0 := by positivity
     rw [show (2 : ℝ) = (2 : ℕ) by norm_num, Real.rpow_natCast]
     field_simp [hne]
-  have hG : Real.Gamma 2 = 1 := by simpa using Real.Gamma_nat_eq_factorial 1
+  have hG : Real.Gamma 2 = 1 := by simp
   rw [hpow, hG]
   have hn1 : 1 ≤ n := le_trans (by decide : 1 ≤ 2) hn
   have hcast : (((n - 1 : ℕ) : ℝ)) = (n : ℝ) - 1 := by
@@ -442,7 +439,7 @@ theorem suzukiEinEulerTailAsymptotic_proof : SuzukiEinEulerTailAsymptotic := by
     Real.continuous_exp.continuousAt.tendsto.comp hg.neg
   refine hexp.congr' ?_
   filter_upwards [Ioi_mem_atTop (0 : ℝ)] with x hx
-  simp [g, sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
+  simp [g, sub_eq_add_neg, add_comm]
   calc
     Real.exp (Real.log x + -suzukiEin x)
         = Real.exp (Real.log x) * Real.exp (-suzukiEin x) := by rw [Real.exp_add]

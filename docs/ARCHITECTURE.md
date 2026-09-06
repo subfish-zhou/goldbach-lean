@@ -181,8 +181,11 @@ The site is generated under `blueprint/web`; the default preview is
 `http://localhost:8000`. Generated HTML, exported TeX, and the Python environment
 are ignored by Git. The verification workflow builds the same site after the
 Lean checks and uploads it as `goldbach-blueprint`. Download that Actions
-artifact to inspect a particular revision. GitHub Pages deployment is not
-enabled by this configuration. PDF generation is not part of this release.
+artifact to inspect a particular revision. The complete documentation website
+also includes this Blueprint at `blueprint/` alongside the
+[Lean API documentation](DOCUMENTATION.md); successful `main` builds deploy the
+combined site to [GitHub Pages](https://subfish-zhou.github.io/goldbach-lean/).
+PDF generation is not part of this release.
 
 The small [source-link adapter](../blueprint/src/sources.py) prevents project
 declarations from being sent to Mathlib's default documentation search.

@@ -41,7 +41,7 @@ theorem roundedBaseOne_sourceV_one_eq_realVOne
   apply Finset.sum_congr
   · ext p
     simp only [suzukiSupportedBelow, Finset.mem_filter, hz, Nat.lt_ceil,
-      roundedBaseOne_cube_carrier_iff, and_assoc, and_left_comm, and_comm]
+      roundedBaseOne_cube_carrier_iff, and_assoc, and_comm]
   · intro p hp
     have hpx : (p : ℝ) < x := (Finset.mem_filter.mp hp).2.2
     symm
@@ -91,7 +91,7 @@ theorem suzukiSourceV_one_le_V_natCeil_mul_fOne_add_localError
       rfl hroot2 hK hlocal
   rw [roundedBaseOne_sourceV_one_eq_realVOne S hz]
   rw [roundedBaseOne_V_natCeil_eq_real S hz]
-  convert hbase using 1 <;> ring
+  convert hbase using 1; ring
 
 
 end MathlibNt.SieveTheory

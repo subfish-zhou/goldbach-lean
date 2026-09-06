@@ -138,7 +138,7 @@ theorem norm_LFunction_ge_on_quadraticConditionalAnnulus
     calc
       _ ≤ 64 * (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 2 *
           ((1 + x) - β) := by
-            convert hdiff0 using 1 <;> push_cast <;> ring
+            convert hdiff0 using 1; push_cast; ring
       _ ≤ 64 * H ^ 2 * (2 * x) := by
         have hwidth : 1 - β ≤ x := by linarith
         have hinterval : 0 ≤ (1 + x) - β := by linarith
@@ -171,7 +171,7 @@ theorem norm_LFunction_ge_on_quadraticConditionalAnnulus
         ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ^ 3 *
           ‖χ.LFunction (1 + x + I * t)‖ ^ 4 *
           ‖(χ ^ 2).LFunction (1 + x + 2 * I * t)‖ by
-      simpa only [norm_mul, norm_pow] using hpv) using 1 <;> ring
+      simpa only [norm_mul, norm_pow] using hpv) using 1; ring
   by_contra! hlow
   have hright : ‖χ.LFunction (1 + x + I * t)‖ < 192 * H ^ 2 * x := by
     have htri := norm_add_le

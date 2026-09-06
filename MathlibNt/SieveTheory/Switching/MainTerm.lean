@@ -139,7 +139,7 @@ theorem correctedChenCandidates_card_ge_X_mul_sieveProduct_sub_errSum (N : ℕ) 
 
 /-- At a sieved prime `2 < p < z` with `p ∤ N`, the corrected Goldbach
 density factor satisfies `(1 - ν(p))⁻¹ = (p-1)/(p-2)`. -/
-theorem correctedChenNu_inv_prime {N p : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
+theorem correctedChenNu_inv_prime {_N p : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
     (1 - correctedChenNu p)⁻¹ = ((p : ℝ) - 1) / ((p : ℝ) - 2) := by
   rw [AnalyticNumberTheory.Sieve.goldbachNu_apply_prime hp]
   have hp2r : (2 : ℝ) < p := by exact_mod_cast hp2
@@ -166,7 +166,7 @@ theorem correctedChenNu_inv_prime_localFactor {N p : ℕ} (hp : p.Prime)
       (p - 1) / (p - 2) := by
     field_simp [hpm1, hpm2]
   rw [hrhs]
-  exact correctedChenNu_inv_prime (N := N) hp hp2
+  exact correctedChenNu_inv_prime (_N := N) hp hp2
 
 /-- The corrected Selberg divisor sum splits into the Mertens-type prime
 product over the sieved primes and the reciprocal of their singular-series
@@ -203,7 +203,7 @@ private theorem correctedChenSelbergSum_eq_prod_ratio (N : ℕ) :
   apply Finset.prod_congr rfl
   intro p hp
   rcases Finset.mem_filter.mp hp with ⟨hpz, hpP, hp2, hpn⟩
-  exact correctedChenNu_inv_prime (N := N) hpP hp2
+  exact correctedChenNu_inv_prime (_N := N) hpP hp2
 
 /-- The Mertens-type factor `p/(p-1)` (real subtraction). -/
 private noncomputable def mertensTypeFactor (p : ℕ) : ℝ :=

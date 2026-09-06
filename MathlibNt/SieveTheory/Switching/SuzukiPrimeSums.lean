@@ -521,14 +521,14 @@ private theorem suzukiFiniteNodeAtomSum_tail_eq_primeSum
       have hqs : q ∈ s := by
         rw [hs]
         exact Finset.mem_filter.mpr ⟨hq, by exact_mod_cast hxq, hqz⟩
-      simpa [hs_empty] using hqs
+      simp [hs_empty] at hqs
     have hedge := suzukiFiniteNodeAtom_eq_primeAtom S z z x hx hxz hxz hgap
     simp [hs_empty, suzukiFiniteNodeAtomSum, hedge]
 
 /-- The real finite-node atom sum, with genuine endpoints `w,z`, is exactly
 Suzuki's finite prime sum for `g x = H (log D / log x)`. -/
 theorem suzukiFiniteNodeAtomSum_eq_lemmaEightSixPrimeSum
-    (S : BoundingSieve) (D w z : ℝ) (H : ℝ → ℝ) (hwz : w ≤ z) :
+    (S : BoundingSieve) (D w z : ℝ) (H : ℝ → ℝ) (_hwz : w ≤ z) :
     suzukiFiniteNodeAtomSum S z (fun x => H (Real.log D / Real.log x))
         (suzukiFiniteNodes S w z) =
       suzukiLemmaEightSixPrimeSum S D w z H := by
@@ -614,7 +614,7 @@ theorem suzukiFiniteNodeAtomSum_eq_lemmaEightSixPrimeSum
       (fun q => suzukiFinitePrimeAtom S z q * g q) hp_mem]
     unfold suzukiFinitePrimeAtom suzukiLocalRatio
     unfold suzukiLemmaEightSixPrimeSum
-    simpa [carrier, g, Nat.cast_le, mul_assoc]
+    simp [carrier, g, Nat.cast_le, mul_assoc]
   · have hc_empty : carrier = ∅ := Finset.not_nonempty_iff_eq_empty.mp hne
     have hw_filter : S.prodPrimes.primeFactors.filter
         (fun p : ℕ => w ≤ (p : ℝ) ∧ (p : ℝ) < z) = ∅ := by
@@ -627,13 +627,12 @@ theorem suzukiFiniteNodeAtomSum_eq_lemmaEightSixPrimeSum
       unfold suzukiFiniteNodeAtom suzukiLocalRatio
       rw [hw_filter, hz_filter]
       simp
-    simp [hc_empty, carrier, suzukiFiniteNodes, suzukiSupportedPrimeNodes,
-      suzukiFiniteNodeAtomSum, hedge, suzukiLemmaEightSixPrimeSum]
+    simp [hc_empty, carrier, suzukiFiniteNodeAtomSum, hedge, suzukiLemmaEightSixPrimeSum]
 
 /-- The Suzuki transform is increasing in the underlying variable. -/
 theorem transformedH_monotoneOn
     {D w z s σ : ℝ} {H : ℝ → ℝ}
-    (hD : 1 < D) (hw : 1 < w) (hwz : w ≤ z)
+    (hD : 1 < D) (hw : 1 < w) (_hwz : w ≤ z)
     (hcoord : ∀ x ∈ Set.Icc w z, Real.log D / Real.log x ∈ Set.Icc s σ)
     (hH : ∀ t ∈ Set.Icc s σ, 0 ≤ H t)
     (hHt : AntitoneOn (fun t => H t * t) (Set.Icc s σ)) :

@@ -317,7 +317,7 @@ lemma minusFirstCrossing_scalarRatio_ge_one_local
     unfold equation1056ScalarRatio
     rw [hAeq]
     have hadjshift : 0 < explicitKappaOneAdjointPlus (w.s - 1 + 1) := by
-      convert hadjs using 1 <;> ring
+      convert hadjs using 1; ring
     rw [exp_neg_psiMinus hadjshift]
     dsimp [envelopeMinus]
     field_simp [ne_of_gt hs0, ne_of_gt hRs, ne_of_gt hadjs, Real.exp_ne_zero]

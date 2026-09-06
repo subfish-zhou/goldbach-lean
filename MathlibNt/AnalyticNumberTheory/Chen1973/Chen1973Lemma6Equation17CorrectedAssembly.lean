@@ -104,7 +104,7 @@ private theorem chen1973Lemma6_eq17_mellinKernel_norm_le_correctedRadialKernel
 
 private theorem chen1973Lemma6_eq17_correctedRadialKernel_inv_le_cauchy
     {x level : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (hσ : 0 < σ)
-    (hσupper : σ ≤ 2) :
+    (_hσupper : σ ≤ 2) :
     (chen1973Lemma6Eq17CorrectedRadialKernel x level (σ + v * I))⁻¹ ≤
       2 * σ⁻¹ * (1 + (v / chen1973PerronScale (x : ℝ)) ^ 2)⁻¹ := by
   let A := chen1973PerronScale (x : ℝ)
@@ -414,7 +414,7 @@ private theorem integrable_inv_eq17Kernel_line
       integrable_inv_one_add_sq.comp_mul_left' (inv_ne_zero ha.ne')
     convert hbase.const_mul (2 * σ⁻¹) using 1
     funext t
-    simp [a, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
+    simp [a, div_eq_mul_inv, mul_comm, mul_assoc]
   have hmeas : AEStronglyMeasurable (fun t : ℝ =>
       (chen1973Lemma6Eq17CorrectedRadialKernel x level (σ + t * I))⁻¹) := by
     apply Continuous.aestronglyMeasurable
@@ -495,7 +495,7 @@ private theorem integrable_scaledKernel_alpha
 
 private theorem integrable_alphaNegLogDerivIntegrand
     {x d level : ℕ} [NeZero d] (χ : PrimitiveCharacter d) (hd : 1 < d)
-    (hχ : χ.1 ≠ 1)
+    (_hχ : χ.1 ≠ 1)
     (hx : 3 ≤ x) (pp : ℕ × ℕ) (hp₁ : 0 < pp.1) (hp₂ : 0 < pp.2) :
     Integrable (chen1973Lemma6AlphaNegLogDerivIntegrand x d χ pp) := by
   rcases pp with ⟨p₁, p₂⟩
@@ -706,7 +706,7 @@ private theorem eq17FirstCharacterIntegrand_eq_collected
 
 private theorem eq17SecondBetaCharacterIntegrand_eq_collected
     {x d B k m H : ℕ} [NeZero d] (χ : PrimitiveCharacter d)
-    (hd : 1 < d) (hx : 3 ≤ x) (t : ℝ) :
+    (_hd : 1 < d) (hx : 3 ≤ x) (t : ℝ) :
     eq17SecondBetaCharacterIntegrand x d B k m H χ t =
       (-chen1973PrimitiveLDeriv d (chen1973Lemma6Beta x + t * I) χ *
           chen1973Lemma6MobiusPartialSum H
@@ -1031,7 +1031,7 @@ private theorem norm_normalized_first_le
             (chen1973Lemma6Alpha x + t * I))‖ := by
               dsimp [C, D]
               simp only [norm_mul]
-              simp only [norm_neg, norm_div, norm_inv]
+              simp only [norm_neg, norm_div]
               ring
     _ ≤ (D * C) * ((x : ℝ) /
           chen1973Lemma6Eq17CorrectedRadialKernel x level
@@ -1094,7 +1094,7 @@ private theorem norm_logCpowWeight_le_two
   rw [norm_mul, norm_neg, norm_real, Real.norm_eq_abs,
     abs_of_nonneg hlog, Complex.norm_cpow_eq_rpow_re_of_pos hnpos]
   simp only [neg_re, add_re, ofReal_re, mul_re, I_re, zero_mul,
-    ofReal_im, I_im, mul_one, sub_self, add_zero]
+    ofReal_im, I_im]
   norm_num
   rw [Real.rpow_neg (Nat.cast_nonneg n)]
   calc
@@ -1327,7 +1327,7 @@ private theorem norm_deriv_LFunction_beta_sublinear
             (∑ n ∈ range M, logCpowWeight s n * χ.1 n)
             (deriv χ.1.LFunction s -
               ∑ n ∈ range M, logCpowWeight s n * χ.1 n)
-          convert this using 1 <;> ring
+          convert this using 1; ring
     _ ≤ 4 * U ^ p + 20 * d * U ^ p :=
       add_le_add (hprefix.trans hprefixFinal) htailFinal
     _ ≤ 24 * ((d : ℝ) + 1) * U ^ p := by
@@ -1350,7 +1350,6 @@ private theorem integrable_one_add_abs_rpow {a : ℝ} (ha : a < -1) :
   have hpos : IntegrableOn (fun t : ℝ => (1 + |t|) ^ a) (Ici 0) := by
     exact hbase.congr_fun (fun t ht => by
       rw [abs_of_nonneg (mem_Ici.mp ht)]
-      congr 1
       ring) measurableSet_Ici
   have hneg : IntegrableOn (fun t : ℝ => (1 + |t|) ^ a) (Iic 0) := by
     have hbase' : IntegrableOn (fun t : ℝ => (t + 1) ^ a) (Ici (-(0 : ℝ))) := by
@@ -1361,13 +1360,12 @@ private theorem integrable_one_add_abs_rpow {a : ℝ} (ha : a < -1) :
         (c := (0 : ℝ)) hbase'
     exact h.congr_fun (fun t ht => by
       rw [abs_of_nonpos (mem_Iic.mp ht)]
-      congr 1
       ring) measurableSet_Iic
   rw [← integrableOn_univ, ← Iic_union_Ici (a := (0 : ℝ))]
   exact hneg.union hpos
 
 private theorem integrable_growth_div_radialKernel
-    {x level : ℕ} (hx : 3 ≤ x) {σ p : ℝ}
+    {x _level : ℕ} (hx : 3 ≤ x) {σ p : ℝ}
     (hσ : 0 < σ) (hp : p < 1) :
     Integrable (fun t : ℝ =>
       (1 + |t|) ^ p /
@@ -1468,7 +1466,7 @@ private theorem integrable_growth_div_eq17Kernel
       (1 + |t|) ^ p /
         chen1973Lemma6Eq17CorrectedRadialKernel x level (σ + t * I)) := by
   have hold := integrable_growth_div_radialKernel
-    (x := x) (level := level) hx hσ hp
+    (x := x) (_level := level) hx hσ hp
   have hdom : Integrable (fun t : ℝ => 2 *
       ((1 + |t|) ^ p /
         eq17LinearKernel x (σ + t * I))) :=
@@ -1595,7 +1593,7 @@ private theorem norm_alpha_logDeriv_le
         ‖DirichletCharacter.twistedVonMangoldtCoeff χ.1 n /
           (n : ℂ) ^ ((chen1973Lemma6Alpha x : ℝ) : ℂ)‖ := by
     by_cases hn : n = 0
-    · simp [hn, DirichletCharacter.twistedVonMangoldtCoeff, LSeries.term]
+    · simp [hn, DirichletCharacter.twistedVonMangoldtCoeff]
     · rw [norm_div, norm_div,
         Complex.norm_natCast_cpow_of_re_ne_zero,
         Complex.norm_natCast_cpow_of_re_ne_zero]
@@ -1729,7 +1727,7 @@ private theorem continuous_pairPolynomial_line
     Continuous (fun t : ℝ =>
       chen1973Lemma6Eq17PairPolynomial x B k m (σ + t * I) χ) := by
   unfold chen1973Lemma6Eq17PairPolynomial
-  apply continuous_finset_sum
+  apply continuous_finsetSum
   intro pp hpp
   obtain ⟨hp₁, hp₂⟩ := chen1973Lemma6PrimePairShell_pos hpp
   by_cases hlog :
@@ -1751,7 +1749,7 @@ private theorem continuous_mobiusPartialSum_line
     Continuous (fun t : ℝ =>
       chen1973Lemma6MobiusPartialSum H (σ + t * I) χ) := by
   unfold chen1973Lemma6MobiusPartialSum
-  apply continuous_finset_sum
+  apply continuous_finsetSum
   intro n hn
   have hnpos : 0 < n :=
     lt_of_lt_of_le Nat.zero_lt_one (Finset.mem_Icc.mp hn).1
@@ -1788,7 +1786,7 @@ private theorem integrable_eq17FirstScalarTerm
   have hmeas : AEStronglyMeasurable
       (eq17FirstScalarTerm x d level B k m H χ) := by
     unfold eq17FirstScalarTerm
-    simp only [chen1973PrimitiveLDeriv, chen1973Lemma6PrimitiveLValue, dif_pos hd]
+    simp only [chen1973Lemma6PrimitiveLValue, dif_pos hd]
     apply Continuous.aestronglyMeasurable
     have hline : Continuous (fun t : ℝ => (α + t * I : ℂ)) := by fun_prop
     have hentire := DirichletCharacter.lFunction_entire_of_ne_one hχ
@@ -1839,8 +1837,7 @@ private theorem integrable_eq17FirstScalarTerm
     positivity
   rw [Real.norm_eq_abs, abs_of_nonneg hterm0]
   unfold eq17FirstScalarTerm
-  simp only [chen1973Lemma6PrimitiveLValue, dif_pos hd,
-    Real.norm_eq_abs, abs_of_nonneg (div_nonneg (by positivity) hKpos.le)]
+  simp only [chen1973Lemma6PrimitiveLValue, dif_pos hd]
   change _ ≤ C * _
   dsimp [C, CP, CS]
   rw [div_eq_mul_inv]
@@ -1902,8 +1899,7 @@ private theorem integrable_eq17SecondScalarTerm
     positivity
   rw [Real.norm_eq_abs, abs_of_nonneg hterm0]
   unfold eq17SecondScalarTerm
-  simp only [chen1973PrimitiveLDeriv, dif_pos hd,
-    Real.norm_eq_abs, abs_of_nonneg (div_nonneg (by positivity) hKpos.le)]
+  simp only [chen1973PrimitiveLDeriv, dif_pos hd]
   change _ ≤ C * ((1 + |t|) ^ p / _)
   dsimp [C, CP, CS, p]
   rw [norm_mul, div_eq_mul_inv, div_eq_mul_inv]
@@ -2035,9 +2031,9 @@ private theorem firstFullIntegral_eq_sum_integrals
           eq17FirstScalarTerm x d level B k m H χ t) := by
     intro d hdmem
     have hd : 1 < d := one_lt_of_mem_conductorBlock hlevel hdmem
-    letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+    let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
     apply Integrable.const_mul
-    apply integrable_finset_sum
+    apply integrable_finsetSum
     intro χ hχmem
     exact integrable_eq17FirstScalarTerm χ hd
       (primitiveCharacter_ne_one_of_one_lt hd χ) hx
@@ -2074,7 +2070,7 @@ private theorem firstFullIntegral_eq_sum_integrals
       intro d hdmem
       rw [MeasureTheory.integral_const_mul, integral_finsetSum]
       have hd : 1 < d := one_lt_of_mem_conductorBlock hlevel hdmem
-      letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+      let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
       intro χ hχmem
       exact integrable_eq17FirstScalarTerm χ hd
         (primitiveCharacter_ne_one_of_one_lt hd χ) hx
@@ -2096,9 +2092,9 @@ private theorem secondFullIntegral_eq_sum_integrals
           eq17SecondScalarTerm x d level B k m H χ t) := by
     intro d hdmem
     have hd : 1 < d := one_lt_of_mem_conductorBlock hlevel hdmem
-    letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+    let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
     apply Integrable.const_mul
-    apply integrable_finset_sum
+    apply integrable_finsetSum
     intro χ hχmem
     exact integrable_eq17SecondScalarTerm χ hd
       (primitiveCharacter_ne_one_of_one_lt hd χ) hx
@@ -2135,7 +2131,7 @@ private theorem secondFullIntegral_eq_sum_integrals
       intro d hdmem
       rw [MeasureTheory.integral_const_mul, integral_finsetSum]
       have hd : 1 < d := one_lt_of_mem_conductorBlock hlevel hdmem
-      letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+      let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
       intro χ hχmem
       exact integrable_eq17SecondScalarTerm χ hd
         (primitiveCharacter_ne_one_of_one_lt hd χ) hx
@@ -2188,7 +2184,7 @@ private theorem chen1973Lemma6_equation17_corrected_radial_main
       apply Finset.sum_le_sum
       intro d hdmem
       have hd : 1 < d := one_lt_of_mem_conductorBlock hlevel hdmem
-      letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+      let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
       apply mul_le_mul_of_nonneg_left _ (hw d)
       simpa [X, Y] using norm_alphaCharacterSum_le
         (level := level) (H := H) hd hx (hAlpha d hdmem)
@@ -2201,7 +2197,7 @@ private theorem chen1973Lemma6_equation17_corrected_radial_main
       simp_rw [mul_add]
       rw [Finset.sum_add_distrib]
       congr 1 <;> simp_rw [Finset.mul_sum] <;>
-        simp only [mul_assoc, mul_left_comm]
+        simp only [mul_left_comm]
     _ = 6 * (x : ℝ) * (Real.log x) ^ 2 *
           chen1973Lemma6Eq17CorrectedRadialFirstFullIntegral x L level B k m H +
         (x : ℝ) ^ ((1 : ℝ) / 2) *
@@ -2232,7 +2228,7 @@ theorem chen1973Lemma6_equation17_alphaLogDerivativePayment_unconditional
     Chen1973Equation17AlphaLogDerivativePayment x L level := by
   intro d hdmem χ t
   have hd : 1 < d := one_lt_of_mem_conductorBlock hlevel hdmem
-  letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+  let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
   exact chen1973Lemma6_alphaLogDerivative_le_six_mul_log_sq χ hd hx t
 
 /-- Unconditional corrected equation-(17) assembly.  The source `A` remains

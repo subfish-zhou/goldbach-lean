@@ -1606,7 +1606,7 @@ private lemma baseCount_lcm_congr {N p m e : ℕ} (hp : p < N) :
 
 /-- Pointwise indicator identity: `[p ∈ candidates ∧ q | N-p] =
 Σ_{d | P_sift} μ(d)·[p ∈ unsifted ∧ q | N−p ∧ d | N−p]`. -/
-private theorem candidatesAP_indicator_eq_moebiusSum (N p q : ℕ) (hp : p ∈ Finset.range N) :
+private theorem candidatesAP_indicator_eq_moebiusSum (N p q : ℕ) (_hp : p ∈ Finset.range N) :
     (if p ∈ correctedChenCandidates N ∧ q ∣ N - p then (1 : ℝ) else 0) =
       ∑ d ∈ (correctedChenSiftingProduct N).divisors,
         if p ∈ correctedChenUnsiftedPrimeSupport N ∧ q ∣ N - p ∧ d ∣ N - p then (μ d : ℝ) else 0 := by

@@ -86,7 +86,7 @@ theorem hasDerivAt_weighted_suzukiLayer_of_threshold_lt
     have hpar : (n - 1) % 2 + n % 2 = 1 := by omega
     have hparR : (((n - 1) % 2 : ℕ) : ℝ) + ((n % 2 : ℕ) : ℝ) = 1 := by
       exact_mod_cast hpar
-    simp only [sourceEpsilon, KappaOneModel.eps]
+    simp only [KappaOneModel.eps]
     simp only [sourceEpsilon] at hs
     linarith
   have hfOn : ContinuousOn f (Ioi (β + sourceEpsilon n)) := by

@@ -2158,7 +2158,7 @@ theorem twinPrimeConstant_pos : 0 < twinPrimeConstant := by
 
 /-- Each factor 1 - 1/(p-1)² < 1: p ≥ 3 gives (p-1)² ≥ 4 > 1,
 so 1/(p-1)² > 0. -/
-private lemma twinPrimeConstant_factor_lt_one {p : ℕ} (hp : Nat.Prime p) (hp2 : 2 < p) :
+private lemma twinPrimeConstant_factor_lt_one {p : ℕ} (_hp : Nat.Prime p) (hp2 : 2 < p) :
     1 - 1 / ((p : ℝ) - 1) ^ 2 < 1 := by
   have hp3 : 3 ≤ p := by omega
   have hp1_pos : (0 : ℝ) < p - 1 := by
@@ -2174,7 +2174,7 @@ private lemma twinPrimeConstant_factor_le_one {p : ℕ} (hp : Nat.Prime p) (hp2 
   exact le_of_lt (twinPrimeConstant_factor_lt_one hp hp2)
 
 /-- Each factor is positive. -/
-private lemma twinPrimeConstant_factor_pos {p : ℕ} (hp : Nat.Prime p) (hp2 : 2 < p) :
+private lemma twinPrimeConstant_factor_pos {p : ℕ} (_hp : Nat.Prime p) (hp2 : 2 < p) :
     0 < 1 - 1 / ((p : ℝ) - 1) ^ 2 := by
   have hp3 : 3 ≤ p := by omega
   have hp1_pos : (0 : ℝ) < p - 1 := by

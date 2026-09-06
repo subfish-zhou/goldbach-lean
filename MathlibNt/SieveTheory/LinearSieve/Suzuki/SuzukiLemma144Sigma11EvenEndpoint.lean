@@ -26,7 +26,7 @@ theorem finiteSourceLayer_continuousOn_closedDomain
     ContinuousOn (finiteSourceLayer 1 β N) (KappaOneModel.closedDomain β N) := by
   classical
   unfold finiteSourceLayer
-  apply continuousOn_finset_sum
+  apply continuousOn_finsetSum
   intro n hn
   by_cases hpar : n % 2 = N % 2
   · simp only [hpar, if_true]
