@@ -66,17 +66,9 @@ private lemma primitive_norm_gaussSum_sq
 /-- The functional-equation root number of a primitive Dirichlet character has norm one. -/
 theorem IsPrimitive.norm_rootNumber {χ : DirichletCharacter ℂ N} (hχ : χ.IsPrimitive) :
     ‖χ.rootNumber‖ = 1 := by
-  rcases eq_or_ne N 1 with rfl | hN
+  rcases eq_or_ne N 1 with rfl | _hN
   · rw [rootNumber_modOne, norm_one]
-  have hχ_ne_one : χ ≠ 1 := by
-    intro hχ_one
-    apply hN
-    have hcond : χ.conductor = N := hχ
-    rw [hχ_one, conductor_one] at hcond
-    exact hcond.symm
-  have hN_ne_one : N ≠ 1 := fun hN_one ↦ hχ_ne_one (χ.level_one' hN_one)
-  have hN_gt_one : 1 < N := Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨NeZero.ne N, hN_ne_one⟩
-  have hNpos : (0 : ℝ) < N := by exact_mod_cast hN_gt_one.trans' Nat.zero_lt_one
+  have hNpos : (0 : ℝ) < N := by exact_mod_cast (NeZero.pos N)
   have hgauss_sq : ‖gaussSum χ stdAddChar‖ ^ 2 = (N : ℝ) :=
     primitive_norm_gaussSum_sq hχ
   have hgauss : ‖gaussSum χ stdAddChar‖ = Real.sqrt N := by

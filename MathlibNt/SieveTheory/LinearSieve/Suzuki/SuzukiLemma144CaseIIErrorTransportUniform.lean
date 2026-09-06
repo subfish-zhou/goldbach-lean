@@ -37,7 +37,7 @@ def CaseIIErrorEnvelopeTransport
       errorEnvelope H (N - 1) ((D ⌈/⌉ p : ℕ) : ℝ) d
         (inheritedCoordinate D p)
 
-private theorem caseII_cubic_carrier_quotient_scale
+theorem caseII_cubic_carrier_quotient_scale
     (S : BoundingSieve) {D Dmin : ℕ} {d : ℝ}
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
     CarrierQuotientThresholdGeometry

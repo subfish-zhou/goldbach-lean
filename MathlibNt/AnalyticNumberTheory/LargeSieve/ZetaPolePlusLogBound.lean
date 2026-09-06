@@ -24,23 +24,8 @@ theorem zeta_pole_bound_small_height :
   rcases Metric.isOpen_iff.mp hUopen 1 h1U with ⟨ε, hεpos, hεU⟩
   let R : Set ℂ := {s | s.re ∈ Icc 1 2 ∧ s.im ∈ Icc (-3) 3}
   have hRcompact : IsCompact R := by
-    let φ : ℝ × ℝ → ℂ := fun p => (p.1 : ℂ) + (p.2 : ℂ) * I
-    have hφ : Continuous φ := by fun_prop
-    have hprod : IsCompact (Icc (1 : ℝ) 2 ×ˢ Icc (-3 : ℝ) 3) :=
-      isCompact_Icc.prod isCompact_Icc
-    have hReq : R = φ '' (Icc (1 : ℝ) 2 ×ˢ Icc (-3 : ℝ) 3) := by
-      ext s
-      constructor
-      · intro hs
-        refine ⟨(s.re, s.im), ?_, ?_⟩
-        · exact ⟨⟨hs.1.1, hs.1.2⟩, hs.2.1, hs.2.2⟩
-        · apply Complex.ext <;> simp [φ]
-      · rintro ⟨p, hp, rfl⟩
-        have hp' : (1 ≤ p.1 ∧ p.1 ≤ 2) ∧ (-3 ≤ p.2 ∧ p.2 ≤ 3) :=
-          ⟨⟨hp.1.1, hp.1.2⟩, hp.2.1, hp.2.2⟩
-        simpa [R, φ] using hp'
-    rw [hReq]
-    exact hprod.image hφ
+    change IsCompact (Complex.reProdIm (Icc (1 : ℝ) 2) (Icc (-3 : ℝ) 3))
+    exact isCompact_Icc.reProdIm isCompact_Icc
   let K : Set ℂ := R ∩ {s | ε ≤ dist s 1}
   have hKclosed : IsClosed K := by
     exact hRcompact.isClosed.inter <|

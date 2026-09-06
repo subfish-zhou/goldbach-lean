@@ -274,7 +274,8 @@ theorem equation1055_internal_strict
     have hu0 : 0 ≤ u := by dsimp [u]; linarith [ht.1]
     have hu1 : u ≤ 1 := by dsimp [u]; linarith [ht.2]
     have hquad : u / 2 ≤ u - u ^ 2 / 2 := by nlinarith
-    have hcorr0 : 0 ≤ (u - u ^ 2 / 2) / s := div_nonneg (by nlinarith) hs0.le
+    have hcorr0 : 0 ≤ (u - u ^ 2 / 2) / s :=
+      div_nonneg ((div_nonneg hu0 (by norm_num)).trans hquad) hs0.le
     have hsec := psiPlus_secant_upper (c := c) hs ht
     have hexpsec :
         Real.exp (-A * u + (u - u ^ 2 / 2) / s) ≤

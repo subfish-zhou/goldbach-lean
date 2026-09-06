@@ -81,13 +81,8 @@ theorem sum_Ioc_norm_zetaMul_div_sqrt_le
       (g := fun t : ℝ => (1 / 2 : ℝ) * t ^ (-3 / 2 : ℝ)) (m := 0) ?_
     · have hc := hlocal.integrableOn_compact_subset
         (show Set.Icc 1 (m : ℝ) ⊆ Set.Ici 1 from fun _ ht => ht.1) isCompact_Icc
-      have heq : (fun t => (1 / 2 : ℝ) * t ^ (-3 / 2 : ℝ) *
-          ∑ n ∈ Finset.Icc 0 ⌊t⌋₊, ‖χ.zetaMul n‖) =
-          fun t => (1 / 2 : ℝ) * t ^ (-3 / 2 : ℝ) * S t := by
-        funext t
-        rw [sum_Icc_zero_norm_zetaMul]
-      rw [heq] at hc
-      exact hc.mono_set Set.Ioc_subset_Icc_self
+      simpa only [sum_Icc_zero_norm_zetaMul, S] using
+        hc.mono_set Set.Ioc_subset_Icc_self
     · exact (show ContinuousOn (fun t : ℝ => (1 / 2 : ℝ) * t ^ (-3 / 2 : ℝ))
         (Set.Ici 1) from fun t ht =>
           ((Real.continuousAt_rpow_const t _
@@ -135,7 +130,7 @@ theorem sum_Ioc_norm_zetaMul_div_sqrt_le
         have hs : Real.sqrt (m : ℝ) ≠ 0 := (Real.sqrt_pos.mpr (by linarith)).ne'
         field_simp
         nlinarith [Real.sq_sqrt (Nat.cast_nonneg m)]
-  linarith
+  linarith only [hboundary, hInt]
 
 private theorem sqrt_natDiv_le (N b : ℕ) :
     Real.sqrt ((N / b : ℕ) : ℝ) ≤ Real.sqrt N / Real.sqrt b := by
@@ -185,6 +180,7 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
       (N : ℂ) * twoCharacterResidue χ ψ‖ ≤ 300 * (q : ℝ) ^ 2 * (N : ℝ) ^ (3 / 4 : ℝ) := by
   rcases N.eq_zero_or_pos with rfl | hN
   · simp
+  -- Split at √N: A is the positive quadratic factor, B the actual second pair.
   let m := N.sqrt
   let A : ArithmeticFunction ℂ := χ.zetaMul
   let B : ArithmeticFunction ℂ :=
@@ -204,6 +200,7 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
     (Real.le_sqrt (by norm_num) (by positivity)).mpr (by simpa using hmR)
   have hmle : (m : ℝ) ≤ Real.sqrt N :=
     Real.le_sqrt_of_sq_le (by exact_mod_cast Nat.sqrt_le' N)
+  -- Domination by A transfers both unweighted and square-root-weighted bounds to B.
   have hB (n : ℕ) : ‖B n‖ ≤ ‖A n‖ := norm_pair_le_norm_zetaMul χ ψ n
   have hAnorm : (∑ a ∈ Ioc 0 m, ‖A a‖) ≤ 9 * q * m :=
     sum_Ioc_norm_zetaMul_le_nine_mul_modulus χ hχ hquad m
@@ -217,6 +214,7 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
   have hBS (n : ℕ) : ‖BS n‖ ≤ 3 * q * Real.sqrt n := by
     simpa only [hI] using
       norm_sum_Icc_character_pair_convolution_le_three_mul_sqrt ψ (χ * ψ) hψ hprod n
+  -- The U half uses cancellation in B; the V half uses the main term for A.
   have hU : ‖U‖ ≤ 54 * (q : ℝ) ^ 2 * Real.sqrt N * Real.sqrt m := by
     calc
       _ ≤ ∑ a ∈ Ioc 0 m, ‖A a‖ * ‖BS (N / a)‖ := by
@@ -267,6 +265,7 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
         add_le_add (mul_le_mul_of_nonneg_left hBweight (by positivity))
           (mul_le_mul_of_nonneg_left hBnorm (by positivity))
       _ = _ := by ring
+  -- Complete the truncated harmonic factor to the product of the two actual L-values.
   have hT : ‖T - (N : ℂ) * twoCharacterResidue χ ψ‖ ≤
       18 * (q : ℝ) ^ 2 * ((N : ℝ) / Real.sqrt m) := by
     have htail : ‖H - ψ.LFunction 1 * (χ * ψ).LFunction 1‖ ≤
@@ -284,12 +283,14 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
           (mul_le_mul_of_nonneg_left (norm_LFunction_one_le_two_mul_modulus χ hχ) (by positivity))
           htail (norm_nonneg _) (by positivity)
       _ = _ := by ring
+  -- Subtract the overlap of the two hyperbola halves.
   have hO : ‖AS m * BS m‖ ≤ 27 * (q : ℝ) ^ 2 * m * Real.sqrt m := by
     rw [norm_mul]
     calc
       _ ≤ (9 * q * m) * (3 * q * Real.sqrt m) :=
         mul_le_mul ((norm_sum_le _ _).trans hAnorm) (hBS m) (norm_nonneg _) (by positivity)
       _ = _ := by ring
+  -- Put the harmonic tail and overlap on the common √N √m error scale.
   have hNdiv : (N : ℝ) / Real.sqrt m ≤ 2 * Real.sqrt N * Real.sqrt m := by
     have hsN : Real.sqrt (N : ℝ) ≤ 2 * m := by
       apply Real.sqrt_le_iff.mpr
@@ -301,7 +302,12 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
     nlinarith [Real.sq_sqrt hN0.le, Real.sq_sqrt (show (0 : ℝ) ≤ m by positivity),
       mul_le_mul_of_nonneg_left hsN (Real.sqrt_nonneg (N : ℝ))]
   have hmsmall : (m : ℝ) ≤ Real.sqrt N * Real.sqrt m := by
-    nlinarith [mul_le_mul_of_nonneg_left hsm1 (show (0 : ℝ) ≤ m by positivity)]
+    calc
+      (m : ℝ) = (m : ℝ) * 1 := (mul_one _).symm
+      _ ≤ (m : ℝ) * Real.sqrt m :=
+        mul_le_mul_of_nonneg_left hsm1 (Nat.cast_nonneg _)
+      _ ≤ Real.sqrt N * Real.sqrt m :=
+        mul_le_mul_of_nonneg_right hmle hsm.le
   have hOm : (m : ℝ) * Real.sqrt m ≤ Real.sqrt N * Real.sqrt m :=
     mul_le_mul_of_nonneg_right hmle hsm.le
   have heq :
@@ -334,7 +340,7 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
         (27 * (q : ℝ) ^ 2 * m * Real.sqrt m) :=
       add_le_add (add_le_add (add_le_add hU hV) hT) hO
     _ ≤ 300 * (q : ℝ) ^ 2 * (Real.sqrt N * Real.sqrt m) := by
-      nlinarith [mul_le_mul_of_nonneg_left hNdiv (show (0 : ℝ) ≤ 18 * (q : ℝ) ^ 2 by positivity),
+      nlinarith only [mul_le_mul_of_nonneg_left hNdiv (show (0 : ℝ) ≤ 18 * (q : ℝ) ^ 2 by positivity),
         mul_le_mul_of_nonneg_left hmsmall (show (0 : ℝ) ≤ 18 * (q : ℝ) ^ 2 by positivity),
         mul_le_mul_of_nonneg_left hOm (show (0 : ℝ) ≤ 27 * (q : ℝ) ^ 2 by positivity),
         mul_nonneg (sq_nonneg (q : ℝ)) (mul_nonneg (Real.sqrt_nonneg (N : ℝ)) hsm.le)]
@@ -396,7 +402,10 @@ theorem norm_sum_Icc_floor_twoCharacterConvolution_sub_residue_main_le
       (by norm_num : (0 : ℝ) ≤ 3 / 4)
   have hq : (1 : ℝ) ≤ q := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
   have hqq : (q : ℝ) ^ 2 ≤ (q : ℝ) ^ 3 := by
-    nlinarith [mul_nonneg (sq_nonneg (q : ℝ)) (sub_nonneg.mpr hq)]
+    calc
+      (q : ℝ) ^ 2 = (q : ℝ) ^ 2 * 1 := (mul_one _).symm
+      _ ≤ (q : ℝ) ^ 2 * q := mul_le_mul_of_nonneg_left hq (sq_nonneg _)
+      _ = (q : ℝ) ^ 3 := by ring
   calc
     _ = ‖((∑ n ∈ Finset.Icc 1 ⌊X⌋₊, twoCharacterConvolution χ ψ n) -
         (⌊X⌋₊ : ℂ) * twoCharacterResidue χ ψ) +

@@ -79,14 +79,9 @@ theorem coordinate_bounds {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
   have hlowerR : (D : ℝ) / p ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
     rw [div_le_iff₀ hpR]
     exact_mod_cast hlowerNat
-  have hqpos : (0 : ℝ) < ((D ⌈/⌉ p : ℕ) : ℝ) := by
-    have : 0 < D ⌈/⌉ p := by
-      by_contra h
-      have hz : D ⌈/⌉ p = 0 := Nat.eq_zero_of_not_pos h
-      simp [hz] at hlowerNat
-      exact (Nat.ne_of_gt hD0) hlowerNat
-    positivity
   have hDdivpos : (0 : ℝ) < (D : ℝ) / p := div_pos (by positivity) hpR
+  have hqpos : (0 : ℝ) < ((D ⌈/⌉ p : ℕ) : ℝ) :=
+    hDdivpos.trans_le hlowerR
   have hloglower : Real.log ((D : ℝ) / p) ≤ Real.log ((D ⌈/⌉ p : ℕ) : ℝ) :=
     Real.strictMonoOn_log.monotoneOn hDdivpos hqpos hlowerR
   have hupperProdR : (((D ⌈/⌉ p : ℕ) : ℝ) * p) ≤ (3 / 2 : ℝ) * D := by
@@ -134,13 +129,10 @@ theorem coordinate_bounds_sharp {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
     rw [le_div_iff₀ hpR]
     exact_mod_cast hupperNat
   have hqpos : (0 : ℝ) < ((D ⌈/⌉ p : ℕ) : ℝ) := by
-    have hlower := (ceilDiv_mul_bounds (D := D) (p := p) hp0).1
-    have : 0 < D ⌈/⌉ p := by
-      by_contra h
-      have hz : D ⌈/⌉ p = 0 := Nat.eq_zero_of_not_pos h
-      simp [hz] at hlower
-      exact (Nat.ne_of_gt hD0) hlower
-    positivity
+    have hlowerR : (D : ℝ) / p ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
+      rw [div_le_iff₀ hpR]
+      exact_mod_cast (ceilDiv_mul_bounds (D := D) (p := p) hp0).1
+    exact (div_pos hDR hpR).trans_le hlowerR
   have hfactor : (0 : ℝ) < 1 + ((p : ℝ) - 1) / D := by
     have hpminus : (0 : ℝ) ≤ (p : ℝ) - 1 := by
       exact sub_nonneg.mpr (by exact_mod_cast (show 1 ≤ p by omega))
@@ -315,12 +307,10 @@ theorem naturalCeil_error_le_claim14_13
   have hdiv2 : (2 : ℝ) ≤ (D : ℝ) / (p : ℝ) := by
     rw [le_div_iff₀ hpR]
     exact_mod_cast hDp
-  have hceil2 : (2 : ℝ) ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
-    calc
-      (2 : ℝ) ≤ (D : ℝ) / (p : ℝ) := hdiv2
-      _ ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
-        rw [div_le_iff₀ hpR]
-        exact_mod_cast (ceilDiv_mul_bounds (D := D) (p := p) (by omega : 0 < p)).1
+  have hceilLower : (D : ℝ) / (p : ℝ) ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
+    rw [div_le_iff₀ hpR]
+    exact_mod_cast (ceilDiv_mul_bounds (D := D) (p := p) (by omega : 0 < p)).1
+  have hceil2 : (2 : ℝ) ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := hdiv2.trans hceilLower
   have hlogceil : 0 ≤ Real.log ((D ⌈/⌉ p : ℕ) : ℝ) :=
     (Real.log_pos (lt_of_lt_of_le (by norm_num) hceil2)).le
   have hlogdiv : 0 ≤ Real.log ((D : ℝ) / (p : ℝ)) :=
@@ -330,9 +320,6 @@ theorem naturalCeil_error_le_claim14_13
   have hinherited_nonneg : 0 ≤ inheritedCoordinate D p := by
     rw [inheritedCoordinate_eq_log_div D p (by omega) hp]
     exact div_nonneg hlogdiv hlogp.le
-  have hceilLower : (D : ℝ) / (p : ℝ) ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
-    rw [div_le_iff₀ hpR]
-    exact_mod_cast (ceilDiv_mul_bounds (D := D) (p := p) (by omega : 0 < p)).1
   have hcutoff := errorEnvelope_antitone_cutoff H (N - 1) (d := d)
     (lt_of_lt_of_le (by norm_num) hdiv2) hceilLower hinherited_nonneg hT
   have herror_nonneg := errorEnvelope_nonneg H (N - 1) (d := d)

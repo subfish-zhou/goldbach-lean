@@ -62,17 +62,17 @@ theorem twistedSmoothedPsiClose_aux
     · simp [Upper, h]
     · simpa [Upper, h] using smooth1BddBelow n hn
 
+  have hInnerCutoff (n : ℕ) (hnin : (n : ℝ) ≤ X * (1 - c₁ * ε)) :
+      (n : ℝ) / X ≤ 1 := by
+    rw [div_le_one X_pos]
+    exact hnin.trans (mul_le_of_le_one_right X_pos.le h_inner_le_one)
   have hLowerOne (n : ℕ) (hn : 0 < n)
       (hnin : (n : ℝ) ≤ X * (1 - c₁ * ε)) : Lower SmoothingF ε (n / X) = 1 := by
-    have hnx : (n : ℝ) / X ≤ 1 := by
-      rw [div_le_one X_pos]
-      exact hnin.trans (mul_le_of_le_one_right X_pos.le h_inner_le_one)
+    have hnx := hInnerCutoff n hnin
     simp [Lower, hnx, smoothIs1 n hn hnin]
   have hUpperOne (n : ℕ) (_hn : 0 < n)
       (hnin : (n : ℝ) ≤ X * (1 - c₁ * ε)) : Upper SmoothingF ε (n / X) = 1 := by
-    have hnx : (n : ℝ) / X ≤ 1 := by
-      rw [div_le_one X_pos]
-      exact hnin.trans (mul_le_of_le_one_right X_pos.le h_inner_le_one)
+    have hnx := hInnerCutoff n hnin
     simp [Upper, hnx]
   have hLowerOuter (n : ℕ) (hn : 1 + c₂ * ε ≤ (n : ℝ) / X) :
       Lower SmoothingF ε (n / X) = 0 := by
@@ -110,9 +110,15 @@ theorem twistedSmoothedPsiClose_aux
       simpa [N] using Nat.lt_floor_add_one (X * (1 + c₂ * ε))
     have hnNr : (N : ℝ) ≤ n := by exact_mod_cast hnN
     simpa [mul_comm] using houtN.le.trans hnNr
-  have hIz (n : ℕ) (hn : n ∉ Finset.range N) : ¬ n ≤ Y := by
-    have hnN : N ≤ n := by simpa [Finset.mem_range] using hn
+  have hfilt : (Finset.range N).filter (fun n => n ≤ Y) = Finset.range (Y + 1) := by
+    ext n
+    simp only [Finset.mem_filter, Finset.mem_range]
     omega
+  have hOutsideCutoff (n : ℕ) (hn : n ∉ Finset.range N) : ¬ (n : ℝ) / X ≤ 1 := by
+    rw [not_le, one_lt_div X_pos]
+    have hnN : N ≤ n := by simpa [Finset.mem_range] using hn
+    have hnNr : (N : ℝ) ≤ n := by exact_mod_cast hnN
+    exact hXN.trans_le hnNr
 
   have htwistedFinite : twistedSmoothedPsi χ SmoothingF ε X =
       ∑ n ∈ Finset.range N, twistedVonMangoldtCoeff χ n * Smooth1 SmoothingF ε (n / X) := by
@@ -124,10 +130,6 @@ theorem twistedSmoothedPsiClose_aux
       ∑ n ∈ Finset.range N,
         twistedVonMangoldtCoeff χ n * (if n ≤ Y then (1 : ℝ) else 0) := by
     rw [AnalyticNumberTheory.LargeSieve.lambdaCharacterPrefix]
-    have hfilt : (Finset.range N).filter (fun n => n ≤ Y) = Finset.range (Y + 1) := by
-      ext n
-      simp only [Finset.mem_filter, Finset.mem_range]
-      omega
     rw [← hfilt, Finset.sum_filter]
     apply Finset.sum_congr rfl
     intro n hn
@@ -139,39 +141,23 @@ theorem twistedSmoothedPsiClose_aux
       ∑ n ∈ Finset.range N, ArithmeticFunction.vonMangoldt n * Lower SmoothingF ε (n / X) := by
     apply tsum_eq_sum (s := Finset.range N)
     intro n hn
-    have hnI := hIz n hn
-    have hnx : ¬ (n : ℝ) / X ≤ 1 := by
-      rw [not_le, one_lt_div X_pos]
-      have hnN : N ≤ n := by simpa [Finset.mem_range] using hn
-      have hnNr : (N : ℝ) ≤ n := by exact_mod_cast hnN
-      exact hXN.trans_le hnNr
+    have hnx := hOutsideCutoff n hn
     simp [Lower, hnx]
   have hUpperFinite : (∑' n : ℕ, ArithmeticFunction.vonMangoldt n * Upper SmoothingF ε (n / X)) =
       ∑ n ∈ Finset.range N, ArithmeticFunction.vonMangoldt n * Upper SmoothingF ε (n / X) := by
     apply tsum_eq_sum (s := Finset.range N)
     intro n hn
-    have hnx : ¬ (n : ℝ) / X ≤ 1 := by
-      rw [not_le, one_lt_div X_pos]
-      have hnN : N ≤ n := by simpa [Finset.mem_range] using hn
-      have hnNr : (N : ℝ) ≤ n := by exact_mod_cast hnN
-      exact hXN.trans_le hnNr
+    have hnx := hOutsideCutoff n hn
     simp [Upper, hnx, hFzero n hn]
 
   have hpsi : Chebyshev.psi X = ∑ n ∈ Finset.range N, ArithmeticFunction.vonMangoldt n * (if n ≤ Y then (1 : ℝ) else 0) := by
     rw [Chebyshev.psi_eq_sum_range]
-    have hfilt : (Finset.range N).filter (fun n => n ≤ Y) = Finset.range (Y + 1) := by
-      ext n
-      simp only [Finset.mem_filter, Finset.mem_range]
-      omega
     rw [← hfilt, Finset.sum_filter]
     simp
 
-  have hfloor (n : ℕ) : n ≤ Y ↔ (n : ℝ) ≤ X := by
-    constructor
-    · intro h
-      have hcast : (n : ℝ) ≤ Y := by exact_mod_cast h
-      exact hcast.trans (Nat.floor_le X_pos.le)
-    · exact Nat.le_floor
+  have hfloor (n : ℕ) : n ≤ Y ↔ (n : ℝ) / X ≤ 1 := by
+    rw [div_le_one X_pos]
+    exact Nat.le_floor_iff X_pos.le
 
   have hpoint (n : ℕ) (hn : n ∈ Finset.range N) :
       ‖twistedVonMangoldtCoeff χ n *
@@ -194,11 +180,9 @@ theorem twistedSmoothedPsiClose_aux
     apply (mul_le_mul_of_nonneg_right hcoeff (abs_nonneg _)).trans
     apply mul_le_mul_of_nonneg_left _ ArithmeticFunction.vonMangoldt_nonneg
     by_cases hny : n ≤ Y
-    · have hnx : (n : ℝ) / X ≤ 1 := (div_le_one X_pos).2 ((hfloor n).mp hny)
+    · have hnx : (n : ℝ) / X ≤ 1 := (hfloor n).mp hny
       simp [hny, Lower, Upper, hnx, abs_of_nonpos (sub_nonpos.mpr hF1)]
-    · have hnx : ¬ (n : ℝ) / X ≤ 1 := by
-        rw [not_le, one_lt_div X_pos]
-        exact lt_of_not_ge (fun h => hny ((hfloor n).mpr h))
+    · have hnx : ¬ (n : ℝ) / X ≤ 1 := fun h => hny ((hfloor n).mpr h)
       simp [hny, Lower, Upper, hnx, abs_of_nonneg hF0]
 
   rw [htwistedFinite, hprefixFinite, ← Finset.sum_sub_distrib]
@@ -225,11 +209,9 @@ theorem twistedSmoothedPsiClose_aux
         have hnpos : 0 < n := Nat.pos_of_ne_zero hn0
         apply mul_le_mul_of_nonneg_left _ ArithmeticFunction.vonMangoldt_nonneg
         by_cases hny : n ≤ Y
-        · have hnx : (n : ℝ) / X ≤ 1 := (div_le_one X_pos).2 ((hfloor n).mp hny)
+        · have hnx : (n : ℝ) / X ≤ 1 := (hfloor n).mp hny
           simpa [hny, Lower, hnx] using smooth1BddAbove n hnpos
-        · have hnx : ¬ (n : ℝ) / X ≤ 1 := by
-            rw [not_le, one_lt_div X_pos]
-            exact lt_of_not_ge (fun h => hny ((hfloor n).mpr h))
+        · have hnx : ¬ (n : ℝ) / X ≤ 1 := fun h => hny ((hfloor n).mpr h)
           simp [hny, Lower, hnx]
       have hIleU : (∑ n ∈ Finset.range N, ArithmeticFunction.vonMangoldt n * (if n ≤ Y then (1 : ℝ) else 0)) ≤
           ∑ n ∈ Finset.range N, ArithmeticFunction.vonMangoldt n * Upper SmoothingF ε (n / X) := by
@@ -240,11 +222,9 @@ theorem twistedSmoothedPsiClose_aux
         have hnpos : 0 < n := Nat.pos_of_ne_zero hn0
         apply mul_le_mul_of_nonneg_left _ ArithmeticFunction.vonMangoldt_nonneg
         by_cases hny : n ≤ Y
-        · have hnx : (n : ℝ) / X ≤ 1 := (div_le_one X_pos).2 ((hfloor n).mp hny)
+        · have hnx : (n : ℝ) / X ≤ 1 := (hfloor n).mp hny
           simp [hny, Upper, hnx]
-        · have hnx : ¬ (n : ℝ) / X ≤ 1 := by
-            rw [not_le, one_lt_div X_pos]
-            exact lt_of_not_ge (fun h => hny ((hfloor n).mpr h))
+        · have hnx : ¬ (n : ℝ) / X ≤ 1 := fun h => hny ((hfloor n).mpr h)
           simpa [hny, Upper, hnx] using smooth1BddBelow n hnpos
       rw [← Complex.ofReal_sub, ← Complex.ofReal_sub, Complex.norm_real,
         Complex.norm_real, Real.norm_eq_abs, Real.norm_eq_abs,
@@ -315,22 +295,10 @@ theorem twistedSmoothedPsiClose (χ : DirichletCharacter ℂ q) {SmoothingF : �
       exact le_of_lt (h.trans Xε_gt_two)
     · exact Real.log_pos (by norm_num)
   have X_bound_2 : 1 ≤ X * ε * c₂ := by
-    rw [c₂_eq, ← div_le_iff₀]
-    · have h : 1 / (2 * Real.log 2) < 2 := by
-        nth_rewrite 3 [← one_div_one_div 2]
-        · rw [one_div_lt_one_div, ← one_mul (1 / 2)]
-          · apply mul_lt_mul
-            · norm_num
-            · apply le_of_lt
-              exact lt_trans (by norm_num) Real.log_two_gt_d9
-            · norm_num
-            · norm_num
-          · norm_num
-            exact Real.log_pos (by norm_num)
-          · norm_num
-      exact le_of_lt (h.trans Xε_gt_two)
-    · norm_num
-      exact Real.log_pos (by norm_num)
+    apply X_bound_1.trans
+    apply mul_le_mul_of_nonneg_left _ (mul_nonneg X_pos.le ε_pos.le)
+    rw [c₁_eq, c₂_eq]
+    linarith only [Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)]
   exact twistedSmoothedPsiClose_aux SmoothingF c₁ c₁_pos c₁_lt c₂ c₂_pos c₂_lt hc₂
     C₀ rfl ε ε_pos ε_lt_one X X_pos X_gt_three X_bound_1 X_bound_2
     smoothAbove smoothBelow smoothOne smoothZero χ

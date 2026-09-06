@@ -139,14 +139,7 @@ theorem exists_baseOne_localError_sameC_threshold
 /-- The Euler product multiplying both base-one brackets is nonnegative. -/
 theorem suzukiVProduct_nonneg (S : BoundingSieve) (x : ℝ) :
     0 ≤ suzukiVProduct S x := by
-  classical
-  unfold suzukiVProduct
-  apply Finset.prod_nonneg
-  intro p hp
-  have hpP : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hp).1
-  have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpP
-  have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpP).2.1
-  exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hpprime hpdiv).le
+  exact (suzukiVProduct_pos S x).le
 
 /-- `log D ≥ 3` is a uniform root threshold for every `1 < s ≤ 3`. -/
 theorem two_le_rpow_inv_lowStrip

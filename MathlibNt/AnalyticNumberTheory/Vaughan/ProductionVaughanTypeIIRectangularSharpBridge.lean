@@ -124,26 +124,18 @@ private theorem sum_Icc_natCast_eq_int
     (A B : ℕ) (f : ℤ → ℂ) :
     (∑ n ∈ Finset.Icc A B, f n) =
       ∑ z ∈ Finset.Icc (A : ℤ) (B : ℤ), f z := by
-  refine Finset.sum_bij (s := Finset.Icc A B)
-    (t := Finset.Icc (A : ℤ) (B : ℤ))
-    (f := fun n => f n) (g := f) (fun n _ => (n : ℤ)) ?_ ?_ ?_ ?_
+  refine Finset.sum_nbij' (fun n : ℕ => (n : ℤ)) Int.toNat ?_ ?_ ?_ ?_
+    (fun _ _ => rfl)
   · intro n hn
-    exact Finset.mem_Icc.mpr ⟨by exact_mod_cast (Finset.mem_Icc.mp hn).1,
-      by exact_mod_cast (Finset.mem_Icc.mp hn).2⟩
-  · intro a ha b hb hab
-    exact_mod_cast hab
+    simpa only [Finset.mem_Icc, Nat.cast_le] using hn
   · intro z hz
-    have hz0 : 0 ≤ z := le_trans (by exact_mod_cast Nat.zero_le A)
-      (Finset.mem_Icc.mp hz).1
-    refine ⟨z.toNat, Finset.mem_Icc.mpr ⟨?_, ?_⟩, Int.toNat_of_nonneg hz0⟩
-    · have hcast : (A : ℤ) ≤ (z.toNat : ℤ) := by
-        simpa [Int.toNat_of_nonneg hz0] using (Finset.mem_Icc.mp hz).1
-      exact_mod_cast hcast
-    · have hcast : (z.toNat : ℤ) ≤ (B : ℤ) := by
-        simpa [Int.toNat_of_nonneg hz0] using (Finset.mem_Icc.mp hz).2
-      exact_mod_cast hcast
-  · intros
-    rfl
+    obtain ⟨hA, hB⟩ := Finset.mem_Icc.mp hz
+    exact Finset.mem_Icc.mpr ⟨by omega, by omega⟩
+  · intro n hn
+    exact Int.toNat_natCast n
+  · intro z hz
+    exact Int.toNat_of_nonneg
+      ((Nat.cast_nonneg A).trans (Finset.mem_Icc.mp hz).1)
 
 /-- An active canonical Type-II shell is literally a sharp rectangular
 hyperbolic character sum.  The rectangular coefficients retain the canonical

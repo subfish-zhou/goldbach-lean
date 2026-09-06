@@ -183,30 +183,27 @@ theorem bilinear_direct_shell_physical_scale
     (hQ : 0 ≤ Q) (hc : 0 ≤ c) (hDM : D * M ≤ y) :
     Real.sqrt (D * (M + c * Q ^ 2) * (D * M)) ≤
       y + Real.sqrt c * Q * Real.sqrt (D * y) := by
-  have hleft0 : 0 ≤ D * (M + c * Q ^ 2) * (D * M) := by positivity
   have hDy : 0 ≤ D * y := mul_nonneg hD hy
   have hmain : D * (M + c * Q ^ 2) * (D * M) ≤
       (y + Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 := by
     have hcroot : (Real.sqrt c) ^ 2 = c := Real.sq_sqrt hc
     have hdyroot : (Real.sqrt (D * y)) ^ 2 = D * y := Real.sq_sqrt hDy
     have hDM0 : 0 ≤ D * M := mul_nonneg hD hM
-    have hsqDM : (D * M) ^ 2 ≤ y ^ 2 := by nlinarith
+    have hsqDM : (D * M) ^ 2 ≤ y ^ 2 := (sq_le_sq₀ hDM0 hy).2 hDM
     have hmod : c * Q ^ 2 * D * (D * M) ≤ c * Q ^ 2 * D * y := by
       gcongr
     have hcross : 0 ≤ 2 * y * (Real.sqrt c * Q * Real.sqrt (D * y)) := by
       positivity
-    rw [show D * (M + c * Q ^ 2) * (D * M) =
-      (D * M) ^ 2 + c * Q ^ 2 * D * (D * M) by ring]
     have hrootprod :
         (Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 = c * Q ^ 2 * D * y := by
       rw [mul_pow, mul_pow, hcroot, hdyroot]
       ring
-    rw [show (y + Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 =
-      y ^ 2 + c * Q ^ 2 * D * y +
-        2 * y * (Real.sqrt c * Q * Real.sqrt (D * y)) by
-          rw [add_pow_two, hrootprod]
-          ring]
-    linarith
+    calc
+      _ = (D * M) ^ 2 + c * Q ^ 2 * D * (D * M) := by ring
+      _ ≤ y ^ 2 + c * Q ^ 2 * D * y := add_le_add hsqDM hmod
+      _ ≤ (y + Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 := by
+        rw [add_pow_two, hrootprod]
+        linarith only [hcross]
   have htarget : 0 ≤ y + Real.sqrt c * Q * Real.sqrt (D * y) := by positivity
   exact (Real.sqrt_le_iff).2 ⟨htarget, hmain⟩
 

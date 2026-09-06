@@ -124,7 +124,7 @@ theorem WeakPNT'' : ψ ~[atTop] (fun x ↦ x) := by
     have hb' : 0 ≤ b := le_of_lt (lt_of_lt_of_le (inv_pos_of_pos hε) hb)
     rw [abs_of_nonneg, abs_of_nonneg hb']
     · apply LE.le.trans _ ((inv_le_iff_one_le_mul₀' hε).mp hb)
-      linarith [Nat.lt_floor_add_one b]
+      exact (sub_lt_iff_lt_add'.mpr (Nat.lt_floor_add_one b)).le
     rw [sub_nonneg]
     exact floor_le hb'
 
@@ -143,7 +143,7 @@ lemma tendsto_floor_add_one_div_self : Tendsto (fun x : ℝ ↦ (⌊x⌋₊ + 1 
   have h' : IsEquivalent atTop (fun x : ℝ ↦ (⌊x⌋₊ : ℝ) + 1) _root_.id :=
     h.add_isLittleO (isLittleO_const_id_atTop 1)
   rwa [isEquivalent_iff_tendsto_one
-    (by filter_upwards [eventually_gt_atTop 0] with x hx a; simp only [_root_.id] at a; linarith)] at h'
+    (by filter_upwards [eventually_gt_atTop 0] with x hx; exact hx.ne')] at h'
 
 /-- `x =Θ x / c` for nonzero constant `c`. -/
 lemma isTheta_self_div_const {c : ℝ} (hc : c ≠ 0) : (fun x : ℝ ↦ x) =Θ[atTop] fun x ↦ x / c := by
@@ -181,7 +181,7 @@ theorem chebyshev_asymptotic : θ ~[atTop] id := by
     exact ⟨2, fun x hx ↦ by
       rw [Pi.sub_apply, norm_eq_abs, norm_eq_abs, abs_of_nonneg (by bound : 0 ≤ 2 * √x * log x)]
       exact (abs_of_nonneg (sub_nonneg.mpr (Chebyshev.theta_le_psi x))).symm ▸
-        Chebyshev.abs_psi_sub_theta_le_sqrt_mul_log (by linarith : 1 ≤ x)⟩
+        Chebyshev.abs_psi_sub_theta_le_sqrt_mul_log (one_le_two.trans hx)⟩
   · simpa only [mul_assoc] using! isLittleO_sqrt_mul_log.const_mul_left 2
 
 theorem chebyshev_asymptotic_finsum :
@@ -1197,137 +1197,37 @@ lemma prime_in_gap (a b : ℝ) (ha : 0 < a)
 
 lemma bound_f_second_term (f : ℝ → ℝ) (hf : Tendsto f atTop (nhds 0)) (δ : ℝ) (hδ : δ > 0) :
     ∀ᶠ x : ℝ in atTop, (1 + f x) < (1 + δ) := by
-  have bound_one_plus_f: ∀ y: ℝ, ∀ z: ℝ, |f y| < z → 1 + (f y) < 1 + z := by
-    intro y z hf
-    by_cases f_pos: 0 < f y
-    · rw [abs_of_pos f_pos] at hf
-      linarith
-    · rw [not_lt] at f_pos
-      rw [abs_of_nonpos f_pos] at hf
-      linarith
-
-  have f_small := NormedAddGroup.tendsto_nhds_zero.mp hf δ hδ
-  simp only [norm_eq_abs, eventually_atTop] at f_small
-  obtain ⟨p, hp⟩ := f_small
-
-  let a := ((max 1 p) : ℝ)
-  have ha: ∀ b: ℝ, a ≤ b → |f b| < δ := by
-    intro b hb
-    have b_ge_p: p ≤ b := by
-      have a_ge_p: p ≤ a := by simp [a]
-      linarith
-    exact hp b b_ge_p
-
-  rw [Filter.eventually_atTop]
-
-  use a
-  intro b hb
-  exact bound_one_plus_f b δ (ha b (by linarith))
+  filter_upwards [hf.eventually (gt_mem_nhds hδ)] with x hx
+  simpa only [add_comm] using add_lt_add_left hx 1
 
 
 lemma bound_f_first_term {ε : ℝ} (hε : 0 < ε) (f : ℝ → ℝ)
     (hf : Tendsto f atTop (nhds 0)) (δ : ℝ) (hδ : δ > 0) :
     ∀ᶠ x: ℝ in atTop, (1 + f ((1 + ε) * x)) > (1 - δ)  := by
-  have bound_one_plus_f: ∀ y: ℝ, ∀ z: ℝ, |f y| < z → 1 + (f y) > 1 - z := by
-    intro y z hf
-    by_cases f_pos: 0 < f y
-    · rw [abs_of_pos f_pos] at hf
-      linarith
-    · rw [not_lt] at f_pos
-      rw [abs_of_nonpos f_pos] at hf
-      linarith
+  have hscaled : Tendsto (fun x : ℝ ↦ f ((1 + ε) * x)) atTop (nhds 0) :=
+    hf.comp (tendsto_id.const_mul_atTop (by linarith))
+  filter_upwards [hscaled.eventually (lt_mem_nhds (show -δ < (0 : ℝ) by linarith))] with x hx
+  linarith only [hx]
 
-  have f_small := NormedAddGroup.tendsto_nhds_zero.mp hf δ hδ
-  simp only [norm_eq_abs, eventually_atTop] at f_small
-  obtain ⟨p, hp⟩ := f_small
-
-  let a := ((max 1 p) : ℝ)
-  have ha: ∀ b: ℝ, a ≤ b → |f b| < δ := by
-    intro b hb
-    have b_ge_p: p ≤ b := by
-      have a_ge_p: p ≤ a := by simp [a]
-      linarith
-    exact hp b b_ge_p
-
-
-  rw [Filter.eventually_atTop]
-
-  use a
-  intro b hb
-
-  have a_pos: 0 < a := by
-    simp [a]
-
-  have pos_mul: ∀ x y z : ℝ, 0 < x → 0 < y → 1 < z → x ≤ y → x < y * z := by
-    intro x y z _ hy hz hlt
-    have y_lt: y < y * z := by
-      exact (lt_mul_iff_one_lt_right hy).mpr hz
-    linarith
-
-  have mul_increase: a ≤ (1 + ε) * b := by
-    simp only [ a] at hb
-    have a_le := pos_mul a b (1 + ε) a_pos (by linarith) (by linarith) (by linarith)
-    linarith
-
-  exact bound_one_plus_f ((1 + ε) * b) δ (ha ((1 + ε) * b) mul_increase)
 
 lemma smaller_terms {ε : ℝ} (hε : 0 < ε) (f : ℝ → ℝ) (hf : Tendsto f atTop (nhds 0)) (δ : ℝ)
     (hδ : δ > 0) :
     ∀ᶠ x : ℝ in atTop, (1 - δ) * ((1 + ε) * x / (Real.log ((1 + ε) * x))) <
       (1 + f ((1 + ε) * x)) * ((1 + ε) * x / (Real.log ((1 + ε) * x))) := by
-  have first_term := bound_f_first_term hε f hf δ hδ
-  simp only [gt_iff_lt, eventually_atTop] at first_term
-  obtain ⟨p, hp⟩ := first_term
-  simp only [eventually_atTop]
-  let a := max p 1
-  have ha: ∀ (b : ℝ), a ≤ b → 1 - δ < 1 + f ((1 + ε) * b) := by
-    intro b hb
-    have a_ge_p: p ≤ a := by
-      simp [a]
-    specialize hp b (by linarith)
-    exact hp
-  use a
-  intro b hb
-  rw [mul_lt_mul_iff_left₀]
-  · exact ha b hb
-  · simp only [sup_le_iff, a] at hb
-    have b_ge_one: 1 ≤ b := hb.2
-    have log_pos: Real.log ((1 + ε) *b) > 0 := by
-      have one_pplus_pos: 1 < (1 + ε) := by linarith
-      refine (Real.log_pos_iff ?_).mpr ?_
-      · positivity
-      · exact one_lt_mul_of_lt_of_le one_pplus_pos b_ge_one
+  filter_upwards [bound_f_first_term hε f hf δ hδ, eventually_ge_atTop 1] with x hbound hx
+  have hscaled : 1 < (1 + ε) * x :=
+    one_lt_mul_of_lt_of_le (by linarith) hx
+  exact mul_lt_mul_of_pos_right hbound
+    (div_pos (zero_lt_one.trans hscaled) (Real.log_pos hscaled))
 
-    positivity
 
 lemma second_smaller_terms (f : ℝ → ℝ) (hf : Tendsto f atTop (nhds 0)) (δ : ℝ) (hδ : δ > 0) :
     ∀ᶠ x : ℝ in atTop,
       (1 + δ) * (x / Real.log x) > (1 + f x) * (x / Real.log x) := by
-  have first_term := bound_f_second_term f hf δ hδ
+  filter_upwards [bound_f_second_term f hf δ hδ, eventually_gt_atTop 1] with x hbound hx
+  exact mul_lt_mul_of_pos_right hbound
+    (div_pos (zero_lt_one.trans hx) (Real.log_pos hx))
 
-  simp only [_root_.add_lt_add_iff_left, eventually_atTop] at first_term
-  obtain ⟨p, hp⟩ := first_term
-  simp only [gt_iff_lt, eventually_atTop]
-  let a := max p 2
-  have ha: ∀ (b : ℝ), a ≤ b → 1 + δ > 1 + f ( b) := by
-    intro b hb
-    have a_ge_p: p <= a := by simp [a]
-    specialize hp b (by linarith)
-    linarith
-  use a
-  intro b hb
-  specialize ha b hb
-  have rhs_nonzero:  b / log ( b) > 0 := by
-    simp only [sup_le_iff, a] at hb
-    obtain ⟨_, hb2⟩ := hb
-    have log_pos: Real.log (b) > 0 := by
-      refine (Real.log_pos_iff ?_).mpr ?_
-      · positivity
-      · linarith
-    positivity
-  rw [mul_lt_mul_iff_left₀]
-  · exact ha
-  · linarith
 
 lemma x_log_x_atTop : Filter.Tendsto (fun x => x / Real.log x) Filter.atTop Filter.atTop := by
   have inv_log_x_div := Filter.Tendsto.comp (f := fun x => Real.log x / x) (g := fun x => x⁻¹)

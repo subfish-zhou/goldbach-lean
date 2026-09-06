@@ -425,23 +425,8 @@ theorem mertensSecond_nat :
     ∃ C > 0, ∀ n : ℕ, 2 ≤ n →
       |primeReciprocalSum n - (log (log n) + mertensSecondConstant)| ≤
         C / log n := by
-  obtain ⟨D, hD, hD_bound⟩ := mertensSecond_eventually
-  have hreal :
-      (fun x : ℝ => primeReciprocalSum ⌊x⌋₊ -
-        (log (log x) + mertensSecondConstant)) =O[atTop]
-        fun x : ℝ => 1 / log x := by
-    apply Asymptotics.IsBigO.of_bound D
-    filter_upwards [hD_bound, eventually_gt_atTop (1 : ℝ)] with x hx hx1
-    have hlog : 0 < log x := Real.log_pos hx1
-    simpa [Real.norm_eq_abs, abs_of_pos (one_div_pos.mpr hlog),
-      div_eq_mul_inv, abs_of_pos hlog] using hx
-  have hnat :
-      (fun n : ℕ => primeReciprocalSum ⌊(n : ℝ)⌋₊ -
-        (log (log (n : ℝ)) + mertensSecondConstant)) =O[atTop]
-        fun n : ℕ => 1 / log (n : ℝ) :=
-    hreal.natCast_atTop
   obtain ⟨C, hC, hbound⟩ :=
-    Asymptotics.bound_of_isBigO_nat_atTop hnat
+    Asymptotics.bound_of_isBigO_nat_atTop mertensSecond_isBigO
   refine ⟨C, hC, fun n hn => ?_⟩
   have hn1 : (1 : ℝ) < n := by
     exact_mod_cast (show 1 < n by omega)

@@ -176,7 +176,7 @@ lemma second_fourier_integrable_aux1a (hσ : 1 < σ') :
   simp_rw [fun (a x : ℝ) ↦ (by ring : -(x * a) = -a * x)]
   rw [integrableOn_Ici_iff_integrableOn_Ioi]
   apply exp_neg_integrableOn_Ioi
-  linarith
+  exact sub_pos.mpr hσ
 
 lemma second_fourier_integrable_aux1 (hcont : Measurable ψ) (hsupp : Integrable ψ) (hσ : 1 < σ') :
     let ν : Measure (ℝ × ℝ) := (volume.restrict (Ici (-Real.log x))).prod volume
@@ -201,7 +201,7 @@ lemma second_fourier_integrable_aux2 (hσ : 1 < σ') :
   refine (integrable_norm_iff (Measurable.aestronglyMeasurable <| by fun_prop)).mp ?_
   suffices IntegrableOn (fun a ↦ rexp (-(σ' - 1) * a)) (Ioi (-x.log)) _ by simpa [Complex.norm_exp]
   apply exp_neg_integrableOn_Ioi
-  linarith
+  exact sub_pos.mpr hσ
 
 lemma second_fourier_aux (hx : 0 < x) :
     -(cexp (-((1 - ↑σ' - ↑t * I) * ↑(Real.log x))) / (1 - ↑σ' - ↑t * I)) =
@@ -3095,120 +3095,23 @@ lemma norm_mul_integral_Ici_le_integral_norm
     (hF : IntegrableOn F (Set.Ici a))
     (hnorm : Integrable (fun u : ℝ => ‖F u‖)) :
     ‖A * (∫ u in Set.Ici a, F u)‖ ≤ ‖A‖ * (∫ u : ℝ, ‖F u‖) := by
-  have hmul : ‖A * (∫ u in Set.Ici a, F u)‖ = ‖A‖ * ‖∫ u in Set.Ici a, F u‖ := by
-    simp
-  have hnormI :
-      ‖∫ u in Set.Ici a, F u‖ ≤ ∫ u in Set.Ici a, ‖F u‖ := by
-    have _ : Integrable F (Measure.restrict volume (Set.Ici a)) := hF
-    have h :
-        ‖∫ u, F u ∂Measure.restrict volume (Set.Ici a)‖
-          ≤ ∫ u, ‖F u‖ ∂Measure.restrict volume (Set.Ici a) :=
-      norm_integral_le_integral_norm (μ := Measure.restrict volume (Set.Ici a)) (f := F)
-    simpa using h
-
-  have hdom :
-      (∫ u in Set.Ici a, ‖F u‖) ≤ ∫ u : ℝ, ‖F u‖ := by
-    have hEq :
-        (∫ u in Set.Ici a, ‖F u‖) =
-          ∫ u : ℝ, Set.indicator (Set.Ici a) (fun u => ‖F u‖) u := by
-      have h := (integral_indicator (μ := (volume : Measure ℝ))
-        (s := Set.Ici a) (f := fun u => ‖F u‖))
-      have h' := h measurableSet_Ici
-      simpa using h'.symm
-    have hind_int :
-        Integrable (Set.indicator (Set.Ici a) (fun u => ‖F u‖)) :=
-      hnorm.indicator measurableSet_Ici
-    have hpoint :
-        Set.indicator (Set.Ici a) (fun u => ‖F u‖)
-            ≤ᵐ[volume] (fun u : ℝ => ‖F u‖) := by
-      filter_upwards with u
-      by_cases hu : u ∈ Set.Ici a
-      · simp [Set.indicator_of_mem hu]
-      · simp [Set.indicator_of_notMem hu]
-    have hmono :=
-        integral_mono_ae (μ := (volume : Measure ℝ))
-          hind_int hnorm hpoint
-    simpa [hEq] using hmono
-
   calc
-    ‖A * (∫ u in Set.Ici a, F u)‖
-        = ‖A‖ * ‖∫ u in Set.Ici a, F u‖ := hmul
-    _   ≤ ‖A‖ * (∫ u in Set.Ici a, ‖F u‖) :=
-      mul_le_mul_of_nonneg_left hnormI (by simp)
-    _   ≤ ‖A‖ * (∫ u : ℝ, ‖F u‖) :=
-      mul_le_mul_of_nonneg_left hdom (by simp)
+    ‖A * (∫ u in Set.Ici a, F u)‖ = ‖A‖ * ‖∫ u in Set.Ici a, F u‖ := norm_mul _ _
+    _ ≤ ‖A‖ * (∫ u in Set.Ici a, ‖F u‖) :=
+      mul_le_mul_of_nonneg_left (norm_integral_le_integral_norm _) (norm_nonneg A)
+    _ ≤ ‖A‖ * (∫ u : ℝ, ‖F u‖) :=
+      mul_le_mul_of_nonneg_left
+        (setIntegral_le_integral hnorm (.of_forall fun u ↦ norm_nonneg (F u))) (norm_nonneg A)
 
 lemma fourier_decay_of_CS2
     (ψ : CS 2 ℂ) :
     ∃ C : ℝ, ∀ u : ℝ, ‖𝓕 (ψ : ℝ → ℂ) u‖ ≤ C / (1 + u ^ 2) := by
-  let ψ' : W21 := (ψ : W21)
-  obtain ⟨C, hC⟩ :
-      ∃ C : ℝ, ∀ u : ℝ, ‖𝓕 (ψ' : ℝ → ℂ) u‖ ≤ C / (1 + u ^ 2) := by
-    simpa using (decay_bounds_cor (ψ := ψ'))
-  refine ⟨C, ?_⟩
-  intro u
-  simpa [ψ'] using! (hC u)
+  simpa using! decay_bounds_cor (ψ : W21)
 
 lemma integrable_norm_fourier_scaled_of_CS2
     (ψ : CS 2 ℂ) :
     Integrable (fun u : ℝ => ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) := by
-  obtain ⟨C, hdecay⟩ := fourier_decay_of_CS2 (ψ := ψ)
-  have hC_nonneg : 0 ≤ C := by
-    have h0 := hdecay 0
-    have hnorm : 0 ≤ ‖𝓕 (ψ : ℝ → ℂ) 0‖ := norm_nonneg _
-    have hC' : ‖𝓕 (ψ : ℝ → ℂ) 0‖ ≤ C := by simpa using h0
-    exact hnorm.trans hC'
-  have hmaj_int : Integrable (fun u : ℝ => (C : ℝ) / (1 + (u / (2 * Real.pi))^2)) := by
-    have hbase : Integrable (fun u : ℝ => (1 + u ^ 2)⁻¹) := integrable_inv_one_add_sq
-    have hscale :
-        Integrable (fun u : ℝ => (1 + (u / (2 * Real.pi)) ^ 2)⁻¹) :=
-      hbase.comp_div (by nlinarith [Real.pi_pos])
-    simpa [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc, pow_two] using
-      hscale.const_mul C
-  have hle :
-      (fun u : ℝ => ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖)
-        ≤ᵐ[volume]
-      (fun u : ℝ => (C : ℝ) / (1 + (u / (2 * Real.pi))^2)) := by
-    refine Filter.Eventually.of_forall ?_
-    intro u
-    simpa using (hdecay (u / (2 * Real.pi)))
-  have hle_norm :
-      (fun u : ℝ => ‖‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖‖)
-        ≤ᵐ[volume]
-      (fun u : ℝ => ‖(C : ℝ) / (1 + (u / (2 * Real.pi))^2)‖) := by
-    refine hle.mono ?_
-    intro u hu
-    have hden_pos : 0 < 1 + (u / (2 * Real.pi)) ^ 2 := by nlinarith
-    have hnonneg : 0 ≤ (C : ℝ) / (1 + (u / (2 * Real.pi))^2) :=
-      div_nonneg hC_nonneg hden_pos.le
-    have hleft_nonneg : 0 ≤ ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖ := norm_nonneg _
-    have hbound : ‖‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖‖ ≤
-        (C : ℝ) / (1 + (u / (2 * Real.pi))^2) := by
-      simpa [Real.norm_eq_abs, abs_of_nonneg hleft_nonneg] using hu
-    have hC_abs : |C| = C := abs_of_nonneg hC_nonneg
-    have hden_abs : |1 + (u / (2 * Real.pi))^2| = 1 + (u / (2 * Real.pi))^2 := by
-      have : 0 ≤ 1 + (u / (2 * Real.pi))^2 := by nlinarith
-      simpa using abs_of_nonneg this
-    have hnorm :
-        ‖(C : ℝ) / (1 + (u / (2 * Real.pi))^2)‖ =
-          (C : ℝ) / (1 + (u / (2 * Real.pi))^2) := by
-      have hrec :
-          ‖(C : ℝ) / (1 + (u / (2 * Real.pi))^2)‖ =
-            |C| / |1 + (u / (2 * Real.pi))^2| := by
-        simp [Real.norm_eq_abs]
-      simp [hC_abs, hden_abs, hrec]
-    simpa [hnorm] using hbound
-  have hmaj_int_norm :
-      Integrable (fun u : ℝ => ‖(C : ℝ) / (1 + (u / (2 * Real.pi))^2)‖) :=
-    hmaj_int.norm
-  have hmeas :
-      AEStronglyMeasurable (fun u : ℝ => ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) := by
-    have hcont : Continuous fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) u := by
-      simpa using! continuous_FourierIntegral (ψ : W21)
-    have hcont_scaled : Continuous fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi)) :=
-      hcont.comp (by continuity)
-    exact hcont_scaled.aestronglyMeasurable.norm
-  exact hmaj_int_norm.mono' hmeas hle_norm
+  simpa using! ((ψ : W21).integrable_fourier (by positivity : 2 * Real.pi ≠ 0)).norm
 
 lemma exists_bound_norm_G_on_tsupport
     (hG : ContinuousOn G {s : ℂ | 1 ≤ s.re})

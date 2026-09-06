@@ -476,9 +476,7 @@ lemma MellinOfPsi_aux {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
     · apply ContinuousOn.congr (f := fun (x : ℝ) ↦ (x : ℂ) ^ (s - 1)) ?_
         fun x hx ↦ gderiv hs hx
       exact Continuous.continuousOn (by continuity) |>.cpow continuousOn_const (by simp)
-  · congr; funext; congr
-    apply (hasDerivAt_deriv_iff.mpr ?_).ofReal_comp.deriv
-    exact diffν.contDiffAt.differentiableAt (by norm_num)
+  · simp only [deriv.ofReal_comp']
   · simp only [neg_mul, neg_inj]
     conv => lhs; rhs; intro; rw [← mul_one_div, mul_comm]
     rw [integral_const_mul]
@@ -553,19 +551,12 @@ lemma MellinOfPsi {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
           exact le_trans h <| rpow_le_rpow_of_exponent_le (by norm_num) hs₂
         convert! mul_le_mul f_bound pow_bound (norm_nonneg _) ?_ using 1 <;> simp [f]
   have Cnonneg : 0 ≤ C := by
-    have hh := mainBnd 1 (by norm_num) ((3 : ℂ) / 2) (by norm_num) (by norm_num)
-    have hhh : 0 ≤ ‖𝓜 (fun x ↦ (ν x : ℂ)) ((3 : ℂ) / 2)‖ := by positivity
-    have hhhh : 0 < ‖(3 : ℂ) / 2‖⁻¹ := by norm_num
-    have := hhh.trans hh
-    exact (mul_nonneg_iff_of_pos_right hhhh).mp this
-  by_cases CeqZero : C = 0
-  · refine ⟨1, by linarith, ?_⟩
-    intro ε εpos s hs₁ hs₂
-    have := mainBnd ε εpos s hs₁ hs₂
-    rw [CeqZero, zero_mul] at this
-    have : 0 ≤ 1 * ‖s‖⁻¹ := by positivity
-    linarith
-  · exact ⟨C, lt_of_le_of_ne Cnonneg fun a ↦ CeqZero (id (Eq.symm a)), mainBnd⟩
+    dsimp [C, f]
+    positivity
+  refine ⟨C + 1, by positivity, ?_⟩
+  intro σ₁ hσ₁ s hs₁ hs₂
+  exact (mainBnd σ₁ hσ₁ s hs₁ hs₂).trans
+    (mul_le_mul_of_nonneg_right (le_add_of_nonneg_right zero_le_one) (by positivity))
 
 
 
@@ -599,22 +590,10 @@ This spike still has mass one:
   -/)
   (latexEnv := "lemma")]
 lemma DeltaSpikeMass {ν : ℝ → ℝ} (mass_one : ∫ x in Ioi 0, ν x / x = 1) {ε : ℝ}
-    (εpos : 0 < ε) : ∫ x in Ioi 0, ((DeltaSpike ν ε) x) / x = 1 :=
-  calc
-    _ = ∫ (x : ℝ) in Ioi 0, (|1/ε| * x ^ (1 / ε - 1)) •
-      ((fun z ↦ (ν z) / z) (x ^ (1 / ε))) := by
-      apply setIntegral_congr_ae measurableSet_Ioi
-      filter_upwards with x hx
-      simp only [smul_eq_mul, abs_of_pos (one_div_pos.mpr εpos)]
-      symm; calc
-        _ = (ν (x ^ (1 / ε)) / x ^ (1 / ε)) * x ^ (1 / ε - 1) * (1 / ε) := by ring
-        _ = _ := by rw [rpow_sub hx, rpow_one]
-        _ = (ν (x ^ (1 / ε)) / x ^ (1 / ε) * x ^ (1 / ε) / x) * (1/ ε) := by ring
-        _ = _ := by rw [div_mul_cancel₀ _ (ne_of_gt (rpow_pos_of_pos hx (1/ε)))]
-        _ = (ν (x ^ (1 / ε)) / ε / x) := by ring
-    _ = 1 := by
-      rw [integral_comp_rpow_Ioi (fun z ↦ (ν z) / z), ← mass_one]
-      simp only [ne_eq, div_eq_zero_iff, one_ne_zero, εpos.ne', or_self, not_false_eq_true]
+    (εpos : 0 < ε) : ∫ x in Ioi 0, ((DeltaSpike ν ε) x) / x = 1 := by
+  have haar := integral_comp_rpow_I0i_haar_real ν (one_div_ne_zero εpos.ne')
+  simpa only [DeltaSpike, abs_of_pos (one_div_pos.mpr εpos), one_div_mul_eq_div]
+    using haar.trans mass_one
 
 
 
@@ -843,31 +822,14 @@ $$
 
 lemma Smooth1Properties_estimate {ε : ℝ} (εpos : 0 < ε) :
     (1 - 2 ^ (-ε)) / ε < Real.log 2 := by
-  apply (div_lt_iff₀' εpos).mpr
-  have : 1 - 1 / (2 : ℝ) ^ ε = ((2 : ℝ) ^ ε - 1) / (2 : ℝ) ^ ε := by
-    rw [sub_div, div_self (by positivity)]
-  rw [← Real.log_rpow (by norm_num), rpow_neg (by norm_num), inv_eq_one_div (2 ^ ε), this]
-  set c := (2 : ℝ) ^ ε
-  have hc : 1 < c := by
-    rw [← rpow_zero (2 : ℝ)]
-    apply Real.rpow_lt_rpow_of_exponent_lt (by norm_num) εpos
-  apply (div_lt_iff₀' (by positivity)).mpr <| lt_sub_iff_add_lt'.mp ?_
-  let f := (fun x ↦ x * Real.log x - x)
-  rw [(by simp [f] : -1 = f 1), (by simp [f] : c * Real.log c - c = f c)]
-  have mono: StrictMonoOn f <| Ici 1 := by
-    refine strictMonoOn_of_deriv_pos (convex_Ici _) ?_ ?_
-    · apply continuousOn_id.mul (continuousOn_id.log ?_) |>.sub continuousOn_id
-      intro x hx; simp only [mem_Ici] at hx; simp only [id_eq, ne_eq]; linarith
-    · intro x hx; simp only [nonempty_Iio, interior_Ici', mem_Ioi] at hx
-      dsimp only [f]
-      rw [deriv_fun_sub, deriv_fun_mul, Real.deriv_log, deriv_id'', one_mul, mul_inv_cancel₀]
-      · simp [log_pos hx]
-      · linarith
-      · simp only [differentiableAt_fun_id]
-      · simp only [differentiableAt_log_iff, ne_eq]; linarith
-      · exact differentiableAt_fun_id.mul <| differentiableAt_fun_id.log (by linarith)
-      · simp only [differentiableAt_fun_id]
-  exact mono (by rw [mem_Ici]) (mem_Ici.mpr <| le_of_lt hc) hc
+  have hpow : (2 : ℝ) ^ (-ε) < 1 := by
+    simpa only [rpow_zero] using
+      (rpow_lt_rpow_of_exponent_lt (by norm_num : (1 : ℝ) < 2) (neg_lt_zero.mpr εpos))
+  have hlog := log_lt_sub_one_of_pos (rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) (-ε))
+    hpow.ne
+  rw [log_rpow (by norm_num : (0 : ℝ) < 2)] at hlog
+  apply (div_lt_iff₀ εpos).mpr
+  linarith only [hlog]
 
 
 
@@ -1056,22 +1018,11 @@ lemma Smooth1Properties_above {ν : ℝ → ℝ} (suppν : ν.support ⊆ Icc (1
   swap
   · simp [ypos, y1]
   simp only [mem_Ioi.mp hy, y1, and_self, ↓reduceIte, div_eq_zero_iff]; left
-  apply DeltaSpikeSupport hε.1 ?_ suppν
-  on_goal 1 =>
-    simp only [mem_Icc, not_and, not_le]
-  on_goal 2 =>
-    suffices h : 2 ^ ε < x / y by
-      linarith [(by apply rpow_pos_of_pos (by norm_num) : 0 < (2 : ℝ) ^ ε)]
-  all_goals
-  try intro
-  have : x / y = ((x / y) ^ (1 / ε)) ^ ε := by
-    rw [← rpow_mul]
-    simp only [one_div, inv_mul_cancel₀ (ne_of_gt hε.1), rpow_one]
-    apply div_nonneg_iff.mpr; left;
-    exact ⟨(le_trans (rpow_pos_of_pos (by norm_num) ε).le) hx2.le, ypos.le⟩
-  rw [this]
-  refine rpow_lt_rpow (by norm_num) ?_ hε.1
-  exact Smooth1Properties_above_aux2 hε ⟨ypos, y1⟩ hx2
+  have hxpos : 0 < x := (rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) ε).trans hx2
+  have hxy : 2 ^ ε < x / y :=
+    hx2.trans_le (le_div_self hxpos.le ypos y1)
+  exact DeltaSpikeSupport hε.1 (div_pos hxpos ypos).le suppν
+    (fun hmem ↦ (not_le_of_gt hxy) hmem.2)
 
 
 lemma DeltaSpikeNonNeg_of_NonNeg {ν : ℝ → ℝ} (νnonneg : ∀ x > 0, 0 ≤ ν x)
@@ -1120,16 +1071,10 @@ lemma Smooth1Nonneg {ν : ℝ → ℝ} (νnonneg : ∀ x > 0, 0 ≤ ν x) {ε x 
 lemma Smooth1LeOne_aux {x ε : ℝ} {ν : ℝ → ℝ} (xpos : 0 < x) (εpos : 0 < ε)
     (mass_one : ∫ x in Ioi 0, ν x / x = 1) :
     ∫ (y : ℝ) in Ioi 0, ν ((x / y) ^ (1 / ε)) / ε / y = 1 := by
-    calc
-      _ = ∫ (y : ℝ) in Ioi 0, (ν (y ^ (1 / ε)) / ε) / y := ?_
-      _ = ∫ (y : ℝ) in Ioi 0, ν y / y := ?_
-      _ = 1 := mass_one
-    · have := integral_comp_div_I0i_haar (fun y ↦ ν ((x / y) ^ (1 / ε)) / ε) xpos
-      convert! this.symm using 1
-      congr; funext y; congr; field_simp [mul_comm]
-    · have := integral_comp_rpow_I0i_haar_real (fun y ↦ ν y) (one_div_ne_zero εpos.ne')
-      rw [← this, abs_of_pos <| one_div_pos.mpr εpos]
-      field_simp
+  calc
+    _ = ∫ (y : ℝ) in Ioi 0, DeltaSpike ν ε y / y :=
+      integral_comp_div_I0i_haar (DeltaSpike ν ε) xpos
+    _ = 1 := DeltaSpikeMass mass_one εpos
 
 
 @[blueprint

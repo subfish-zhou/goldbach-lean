@@ -90,20 +90,9 @@ theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_
   have hCBC : CB ≤ C := (le_max_right 3 CB).trans hCcommon
   have hC3 : (3 : ℝ) ≤ C := (le_max_left 3 CB).trans hCcommon
   have hCpos : 0 < C := by linarith
-  have hcoefC1 : C1coef ≤ C1 :=
-    (le_max_left C1coef (max C1scalar (max C1B C1cut))).trans
-      ((le_max_right 1 _).trans hC1)
-  have hscalarC1 : C1scalar ≤ C1 :=
-    (le_max_left C1scalar (max C1B C1cut)).trans
-      ((le_max_right C1coef _).trans ((le_max_right 1 _).trans hC1))
-  have hcaseBC1 : C1B ≤ C1 :=
-    (le_max_left C1B C1cut).trans
-      ((le_max_right C1scalar _).trans
-        ((le_max_right C1coef _).trans ((le_max_right 1 _).trans hC1)))
-  have hcutC1 : C1cut ≤ C1 :=
-    (le_max_right C1B C1cut).trans
-      ((le_max_right C1scalar _).trans
-        ((le_max_right C1coef _).trans ((le_max_right 1 _).trans hC1)))
+  obtain ⟨hC1one, hcoefC1, hscalarC1, hcaseBC1, hcutC1⟩ :
+      1 ≤ C1 ∧ C1coef ≤ C1 ∧ C1scalar ≤ C1 ∧ C1B ≤ C1 ∧ C1cut ≤ C1 := by
+    simpa only [C1min, max_le_iff] using hC1
   have hDpos : 0 < (D : ℝ) := by
     exact_mod_cast (show 0 < D by
       by_contra hn
@@ -115,36 +104,15 @@ theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_
       have hKpow : 0 ≤ K ^ Θ := Real.rpow_nonneg (by linarith) _
       nlinarith [mul_nonneg hC10 hKpow])
   have hDcutD : Dcut < (D : ℝ) := hcut C1 K (D : ℝ) hcutC1 hK hDpos hlarge
-  have hD4 : 4 ≤ D := by
-    exact_mod_cast ((le_max_left 4 _).trans hDcutD.le)
+  obtain ⟨hD4real, hD12, hD146, hDg, hDσ, hDrecReal, hDerrReal⟩ :
+      (4 : ℝ) ≤ D ∧ D12 ≤ D ∧ D146 ≤ D ∧ Dg ≤ D ∧ Dσ ≤ D ∧
+        (Drec : ℝ) ≤ D ∧ (Derr : ℝ) ≤ D := by
+    simpa only [Dcut, max_le_iff] using hDcutD.le
+  have hD4 : 4 ≤ D := by exact_mod_cast hD4real
   have hD3 : 3 ≤ D := by omega
   have hD2 : 2 ≤ D := by omega
-  have hD12 : D12 ≤ (D : ℝ) :=
-    (le_max_left D12 _).trans ((le_max_right 4 _).trans hDcutD.le)
-  have hD146 : D146 ≤ (D : ℝ) :=
-    (le_max_left D146 _).trans
-      ((le_max_right D12 _).trans ((le_max_right 4 _).trans hDcutD.le))
-  have hDg : Dg ≤ (D : ℝ) :=
-    (le_max_left Dg _).trans
-      ((le_max_right D146 _).trans
-        ((le_max_right D12 _).trans ((le_max_right 4 _).trans hDcutD.le)))
-  have hDσ : Dσ ≤ (D : ℝ) :=
-    (le_max_left Dσ _).trans
-      ((le_max_right Dg _).trans
-        ((le_max_right D146 _).trans
-          ((le_max_right D12 _).trans ((le_max_right 4 _).trans hDcutD.le))))
-  have hDrec : Drec ≤ D := by
-    exact_mod_cast ((le_max_left (Drec : ℝ) (Derr : ℝ)).trans
-      ((le_max_right Dσ _).trans
-        ((le_max_right Dg _).trans
-          ((le_max_right D146 _).trans
-            ((le_max_right D12 _).trans ((le_max_right 4 _).trans hDcutD.le))))))
-  have hDerr : Derr ≤ D := by
-    exact_mod_cast ((le_max_right (Drec : ℝ) (Derr : ℝ)).trans
-      ((le_max_right Dσ _).trans
-        ((le_max_right Dg _).trans
-          ((le_max_right D146 _).trans
-            ((le_max_right D12 _).trans ((le_max_right 4 _).trans hDcutD.le))))))
+  have hDrec : Drec ≤ D := by exact_mod_cast hDrecReal
+  have hDerr : Derr ≤ D := by exact_mod_cast hDerrReal
   have hσ3 : (3 : ℝ) ≤ sourceSigma (D : ℝ) d := hσlarge _ hDσ
   have h2σ : (2 : ℝ) ≤ sourceSigma (D : ℝ) d := by linarith
   have g := hg D M hDg 2 (by norm_num) h2σ

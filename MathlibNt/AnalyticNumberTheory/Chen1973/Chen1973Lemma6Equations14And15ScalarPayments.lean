@@ -46,14 +46,12 @@ theorem chen1973Lemma6_mobiusPolynomial_norm_le_harmonic
       intro n hn
       have hnpos : (0 : ℝ) < n := by exact_mod_cast (mem_Icc.mp hn).1
       rw [norm_div, norm_mul]
-      have hnorm : ‖(n : ℂ) ^ s‖ = (n : ℝ) ^ s.re := by
-        rw [show (n : ℂ) = ((n : ℝ) : ℂ) by norm_num]
-        exact Complex.norm_cpow_eq_rpow_re_of_pos hnpos s
-      rw [hnorm]
+      rw [Complex.norm_natCast_cpow_of_pos (by exact_mod_cast hnpos)]
       have hμ := chen1973Lemma6_moebius_complex_norm_le_one n
       have hχ := DirichletCharacter.norm_le_one χ.1 (n : ZMod d)
       have hnum : ‖((ArithmeticFunction.moebius n : ℤ) : ℂ)‖ *
-          ‖χ.1 (n : ZMod d)‖ ≤ 1 := by nlinarith [norm_nonneg (χ.1 (n : ZMod d))]
+          ‖χ.1 (n : ZMod d)‖ ≤ 1 :=
+        mul_le_one₀ hμ (norm_nonneg _) hχ
       calc
         ‖((ArithmeticFunction.moebius n : ℤ) : ℂ)‖ * ‖χ.1 (n : ZMod d)‖ /
             (n : ℝ) ^ s.re ≤ 1 / (n : ℝ) ^ s.re := by gcongr
@@ -67,16 +65,7 @@ theorem chen1973Lemma6_mobiusPolynomial_norm_le_harmonic
 
 private lemma chen1973Lemma6_card_primitive_le_totient (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  let _ : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) :=
-      @Fintype.card_subtype_le (DirichletCharacter ℂ q) _
-        (fun χ => χ.IsPrimitive) _
-    _ = q.totient := by
-      have h := DirichletCharacter.sum_char_inv_mul_char_eq ℂ
-        (a := (1 : ZMod q)) isUnit_one (1 : ZMod q)
-      simpa using h
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 /-- Pointwise Abel--Pólya--Vinogradov payment for the literal remainder in
 (14).  The source range `Re(s) ≥ 1` is explicit. -/
@@ -146,7 +135,7 @@ theorem chen1973Lemma6_equation14_remainderMoment_le_explicit
           (Fintype.card (PrimitiveCharacter d) : ℝ) ≤ 1 := by
         rw [one_div, inv_mul_le_one₀ hφpos]
         exact hcard
-      nlinarith [sq_nonneg B]
+      simpa only [one_mul] using mul_le_mul_of_nonneg_right hw (sq_nonneg B)
 
 /-- Logarithmic form of the Abel--PV remainder payment.  Positivity of `H`
 is stated because it is exactly what makes `1 + log H` a nonnegative majorant
@@ -234,11 +223,10 @@ theorem chen1973Lemma6_CHWeightedCoefficient_norm_le
         exact_mod_cast hab.2.trans hmn.symm
       rw [norm_mul, norm_div]
       have hnorma : ‖(ab.1 : ℂ) ^ (-s)‖ = (ab.1 : ℝ) ^ (-s.re) := by
-        rw [show (ab.1 : ℂ) = ((ab.1 : ℝ) : ℂ) by norm_num]
-        simpa using Complex.norm_cpow_eq_rpow_re_of_pos hapos (-s)
-      have hnormb : ‖(ab.2 : ℂ) ^ s‖ = (ab.2 : ℝ) ^ s.re := by
-        rw [show (ab.2 : ℂ) = ((ab.2 : ℝ) : ℂ) by norm_num]
-        exact Complex.norm_cpow_eq_rpow_re_of_pos hbpos s
+        simpa only [Complex.neg_re] using
+          Complex.norm_natCast_cpow_of_pos (by exact_mod_cast hapos) (-s)
+      have hnormb : ‖(ab.2 : ℂ) ^ s‖ = (ab.2 : ℝ) ^ s.re :=
+        Complex.norm_natCast_cpow_of_pos (by exact_mod_cast hbpos) s
       rw [hnorma, hnormb]
       have hμ := chen1973Lemma6_moebius_complex_norm_le_one ab.2
       have hden : 0 < (ab.2 : ℝ) ^ s.re := Real.rpow_pos_of_pos hbpos _
@@ -342,12 +330,10 @@ theorem chen1973Lemma6_mobiusSquareCoefficient_norm_le
         have hmn : (m.toNat : ℤ) = m := Int.toNat_of_nonneg hmposZ.le
         exact_mod_cast hab.2.trans hmn.symm
       rw [norm_mul, norm_div, norm_div]
-      have hnorma : ‖(ab.1 : ℂ) ^ s‖ = (ab.1 : ℝ) ^ s.re := by
-        rw [show (ab.1 : ℂ) = ((ab.1 : ℝ) : ℂ) by norm_num]
-        exact Complex.norm_cpow_eq_rpow_re_of_pos hapos s
-      have hnormb : ‖(ab.2 : ℂ) ^ s‖ = (ab.2 : ℝ) ^ s.re := by
-        rw [show (ab.2 : ℂ) = ((ab.2 : ℝ) : ℂ) by norm_num]
-        exact Complex.norm_cpow_eq_rpow_re_of_pos hbpos s
+      have hnorma : ‖(ab.1 : ℂ) ^ s‖ = (ab.1 : ℝ) ^ s.re :=
+        Complex.norm_natCast_cpow_of_pos (by exact_mod_cast hapos) s
+      have hnormb : ‖(ab.2 : ℂ) ^ s‖ = (ab.2 : ℝ) ^ s.re :=
+        Complex.norm_natCast_cpow_of_pos (by exact_mod_cast hbpos) s
       rw [hnorma, hnormb]
       have hμa := chen1973Lemma6_moebius_complex_norm_le_one ab.1
       have hμb := chen1973Lemma6_moebius_complex_norm_le_one ab.2
@@ -467,9 +453,7 @@ theorem chen1973Lemma6_equation14_remainderMoment_final_scalar
       have hsqrt : Real.sqrt d ≤ Real.sqrt Q :=
         Real.sqrt_le_sqrt (by exact_mod_cast hdI.2)
       have hlog : Real.log d ≤ Real.log Q :=
-        Real.strictMonoOn_log.monotoneOn
-          (show (0 : ℝ) < d by exact_mod_cast (show 0 < d by omega))
-          (show (0 : ℝ) < Q by exact_mod_cast (show 0 < Q by omega))
+        Real.log_le_log (by exact_mod_cast (show 0 < d by omega))
           (by exact_mod_cast hdI.2)
       have hnonnegd : 0 ≤ 40 * ‖s‖ * Real.sqrt d * Real.log d *
           (((H + 1 : ℕ) : ℝ) ^ (-s.re)) := by positivity

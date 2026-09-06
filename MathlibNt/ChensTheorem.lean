@@ -1,5 +1,4 @@
 import Mathlib.NumberTheory.AlmostPrime
-import Mathlib.Tactic.Linarith
 
 /-!
 # Prime-plus-at-most-two-primes representation vocabulary
@@ -23,66 +22,40 @@ def Semiprime (n : ℕ) : Prop :=
 
 /-- A prime has at most two prime factors. -/
 theorem prime_semiprime {p : ℕ} (hp : p.Prime) : Semiprime p := by
-  refine ⟨hp.two_le, ?_⟩
-  exact hp.isAlmostPrime_one.isAtMost (by decide : (1 : ℕ) ≤ 2)
+  exact ⟨hp.two_le, hp.isAlmostPrime_one.isAtMost (by decide)⟩
 
 /-- A product of two primes has at most two prime factors; equal factors are allowed. -/
 theorem mul_prime_semiprime {p₁ p₂ : ℕ} (hp₁ : p₁.Prime) (hp₂ : p₂.Prime) :
     Semiprime (p₁ * p₂) := by
-  refine ⟨?_, ?_⟩
-  · have h1 : (2 : ℕ) ≤ p₁ := hp₁.two_le
-    have h2 : (2 : ℕ) ≤ p₂ := hp₂.two_le
-    nlinarith
-  · exact hp₁.mul_isAlmostPrime_two hp₂ |>.isAtMost (by decide : (2 : ℕ) ≤ 2)
+  exact ⟨hp₁.two_le.trans (Nat.le_mul_of_pos_right _ hp₂.pos),
+    (hp₁.mul_isAlmostPrime_two hp₂).isAtMost le_rfl⟩
 
 /-- The internal predicate is exactly a prime or a product of two primes. -/
 theorem semiprime_iff :
     Semiprime n ↔ n.Prime ∨ ∃ p₁ p₂ : ℕ, p₁.Prime ∧ p₂.Prime ∧ n = p₁ * p₂ := by
   constructor
-  · -- Mathlib definition → constructive definition
-    intro h
-    obtain ⟨hn2, hn⟩ := h
-    obtain ⟨hn0, hΩ⟩ := hn
-    -- Since n ≥ 2, n ≠ 1 and there is a prime factor p ∣ n.
-    have hn1 : n ≠ 1 := by omega
-    obtain ⟨p, hp, hp_dvd⟩ := Nat.exists_prime_and_dvd hn1
-    -- n = p * m
+  · rintro ⟨hn2, hn0, hΩ⟩
+    -- Remove one prime factor. The remaining factor has at most one prime factor.
+    obtain ⟨p, hp, hp_dvd⟩ := Nat.exists_prime_and_dvd (show n ≠ 1 by omega)
     obtain ⟨m, hm⟩ := exists_eq_mul_right_of_dvd hp_dvd
-    -- p ≠ 0 (since p is prime), and m ≠ 0 (since n ≠ 0 and n = p * m).
-    have hp0 : p ≠ 0 := hp.ne_zero
     have hm0 : m ≠ 0 := by
-      intro heq; rw [heq, mul_zero] at hm; omega
-    -- Ω(n) = Ω(p * m) = Ω(p) + Ω(m) = 1 + Ω(m)
+      intro hm_zero
+      simp [hm_zero] at hm
+      exact hn0 hm
     have hΩn : Ω n = 1 + Ω m := by
-      rw [hm, ArithmeticFunction.cardFactors_mul hp0 hm0,
+      rw [hm, ArithmeticFunction.cardFactors_mul hp.ne_zero hm0,
         ArithmeticFunction.cardFactors_apply_prime hp]
-    -- Ω(m) ≤ 1
-    have hΩm_le : Ω m ≤ 1 := by omega
-    -- Split into cases according to Ω(m).
-    by_cases h0 : Ω m = 0
-    · -- Ω(m) = 0 → m = 1 → n = p → n is prime.
-      left
-      have hm1 : m = 1 := by
-        rcases ArithmeticFunction.cardFactors_eq_zero_iff_eq_zero_or_one.mp h0 with h | h
-        · exact absurd h hm0
-        · exact h
-      rw [hm, hm1, mul_one]
-      exact hp
-    · -- Ω(m) = 1 → m is prime → n = p * m.
-      right
+    -- A unit cofactor gives a prime; every other cofactor must itself be prime.
+    by_cases hm1 : m = 1
+    · exact Or.inl (by simpa [hm, hm1] using hp)
+    · have hΩm_pos : 0 < Ω m :=
+        ArithmeticFunction.cardFactors_pos_iff_one_lt.mpr (by omega)
       have hm_prime : m.Prime :=
         ArithmeticFunction.cardFactors_eq_one_iff_prime.mp (by omega)
-      exact ⟨p, m, hp, hm_prime, hm⟩
-  · -- Constructive definition → Mathlib definition
-    rintro (hn | ⟨p₁, p₂, hp₁, hp₂, hn⟩)
-    · -- n is prime: Ω(n) = 1 ≤ 2 and n ≥ 2.
-      refine ⟨hn.two_le, ?_⟩
-      exact hn.isAlmostPrime_one.isAtMost (by decide : (1 : ℕ) ≤ 2)
-    · -- n = p₁ * p₂: Ω(n) = 2 ≤ 2, n ≥ 4 ≥ 2
-      subst hn
-      refine ⟨?_, ?_⟩
-      · nlinarith [hp₁.two_le, hp₂.two_le]
-      · exact hp₁.mul_isAlmostPrime_two hp₂ |>.isAtMost (by decide : (2 : ℕ) ≤ 2)
+      exact Or.inr ⟨p, m, hp, hm_prime, hm⟩
+  · rintro (hn | ⟨p₁, p₂, hp₁, hp₂, rfl⟩)
+    · exact prime_semiprime hn
+    · exact mul_prime_semiprime hp₁ hp₂
 
 /-- The internal predicate excludes zero and one. -/
 theorem semiprime_ge_two {n : ℕ} (h : Semiprime n) : n ≥ 2 := h.1
@@ -90,11 +63,7 @@ theorem semiprime_ge_two {n : ℕ} (h : Semiprime n) : n ≥ 2 := h.1
 /-- Mathlib's exactly-two-factor predicate implies the at-most-two-factor predicate. -/
 theorem isSemiprime_implies_semiprime {n : ℕ} (h : n.IsSemiprime) : Semiprime n := by
   have hΩ : Ω n = 2 := h.2
-  have hn2 : 2 ≤ n := by
-    have hΩpos : 0 < Ω n := hΩ ▸ (by decide : (0 : ℕ) < 2)
-    have h1lt : 1 < n := ArithmeticFunction.cardFactors_pos_iff_one_lt.mp hΩpos
-    omega
-  refine ⟨hn2, ?_⟩
-  exact h.isAtMost (by decide : (2 : ℕ) ≤ 2)
+  have hn2 : 2 ≤ n := ArithmeticFunction.cardFactors_pos_iff_one_lt.mp (by omega : 0 < Ω n)
+  exact ⟨hn2, h.isAtMost le_rfl⟩
 
 end MathlibNt.ChensTheorem

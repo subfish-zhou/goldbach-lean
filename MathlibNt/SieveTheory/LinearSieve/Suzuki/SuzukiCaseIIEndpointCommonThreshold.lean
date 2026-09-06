@@ -89,21 +89,10 @@ theorem exists_caseII_endpoint_common_threshold
     (le_max_left Dσ D0a).trans (le_max_left (max Dσ D0a) _)
   refine ⟨D0, hD0, ?_⟩
   intro D hD
-  have hDσD : Dσ ≤ D :=
-    (le_max_left Dσ D0a).trans ((le_max_left (max Dσ D0a) _).trans hD)
-  have hD0aD : D0a ≤ D :=
-    (le_max_right Dσ D0a).trans ((le_max_left (max Dσ D0a) _).trans hD)
-  have hD1aD : D1a ≤ D :=
-    (le_max_left D1a (max Dqa Dba)).trans
-      ((le_max_right (max Dσ D0a) _).trans hD)
-  have hDqaD : Dqa ≤ D :=
-    (le_max_left Dqa Dba).trans
-      ((le_max_right D1a (max Dqa Dba)).trans
-        ((le_max_right (max Dσ D0a) _).trans hD))
-  have hDbaD : Dba ≤ D :=
-    (le_max_right Dqa Dba).trans
-      ((le_max_right D1a (max Dqa Dba)).trans
-        ((le_max_right (max Dσ D0a) _).trans hD))
+  have hthresholds : (Dσ ≤ D ∧ D0a ≤ D) ∧
+      (D1a ≤ D ∧ (Dqa ≤ D ∧ Dba ≤ D)) := by
+    simpa only [D0, max_le_iff] using hD
+  rcases hthresholds with ⟨⟨hDσD, hD0aD⟩, hD1aD, hDqaD, hDbaD⟩
   let σ : ℝ := sourceSigma D d
   let T : ℝ := (1 - Δ) / (32 * σ)
   have hσone : 1 ≤ σ := by simpa [σ] using hsigma D hDσD
@@ -116,8 +105,8 @@ theorem exists_caseII_endpoint_common_threshold
     have hscale :
         caseIIAlgebraicEndpointCoeffA0 N K * (Real.log D) ^ (Δ - 1) ≤
           caseIIAlgebraicEndpointCoeffA0 N K * σ * (Real.log D) ^ (Δ - 1) := by
-      have := mul_le_mul_of_nonneg_left hσone ha0
-      nlinarith [mul_nonneg ha0 hp]
+      exact mul_le_mul_of_nonneg_right
+        (le_mul_of_one_le_right ha0 hσone) hp
     exact hscale.trans (by simpa [σ, T] using ha D hD0aD)
   have ha1raw :
       σ * caseIIAlgebraicEndpointCoeffA1 N K * (Real.log D) ^ (Δ - 1) ≤ T := by
@@ -131,8 +120,8 @@ theorem exists_caseII_endpoint_common_threshold
     have hscale :
         27 * K * (Real.log D) ^ (Δ - 1) ≤
           (27 * K) * σ * (Real.log D) ^ (Δ - 1) := by
-      have := mul_le_mul_of_nonneg_left hσone hbase
-      nlinarith [mul_nonneg hbase hp]
+      exact mul_le_mul_of_nonneg_right
+        (le_mul_of_one_le_right hbase hσone) hp
     exact hscale.trans (by simpa [σ, T] using hb D hDbaD)
   rw [caseIISharpPositiveEndpointRelativeCoeff_eq]
   change _ ≤ 4 * T

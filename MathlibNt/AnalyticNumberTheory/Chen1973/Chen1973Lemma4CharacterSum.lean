@@ -87,7 +87,7 @@ theorem chen1973_prime_characterSum_eq
     (∑ χ ∈ (Finset.univ.erase (1 : DirichletCharacter ℂ p)), χ (m : ZMod p)) =
         (∑ χ : DirichletCharacter ℂ p, χ (m : ZMod p)) -
           (1 : DirichletCharacter ℂ p) (m : ZMod p) := by
-      linear_combination herase
+      exact eq_sub_of_add_eq herase
     _ = _ := by
       rw [DirichletCharacter.sum_characters_eq]
       rw [hone]
@@ -150,11 +150,7 @@ theorem chen1973_localMagnitude_product_le_selected
     (k m : ℕ) :
     (∏ p ∈ k.primeFactors, chen1973Lemma4LocalMagnitude p m) ≤
       ∏ p ∈ k.primeFactors.filter (· ∣ m - 1), p := by
-  have hselected :
-      (∏ p ∈ k.primeFactors.filter (· ∣ m - 1), p) =
-        ∏ p ∈ k.primeFactors, if p ∣ m - 1 then p else 1 := by
-    rw [Finset.prod_filter]
-  rw [hselected]
+  rw [Finset.prod_filter]
   apply Finset.prod_le_prod
   · intro p hp
     exact Nat.zero_le _

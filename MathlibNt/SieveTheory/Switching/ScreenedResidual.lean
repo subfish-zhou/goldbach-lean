@@ -76,12 +76,8 @@ theorem
     hqscreen hb
   have hz1 : 1 < z := lt_of_lt_of_le (by norm_num) (hz₀.trans hz)
   have hΔone : 1 < Δ := by
-    have hlogΔpos : 0 < Real.log Δ := by
-      by_contra h
-      have hlogΔnonpos : Real.log Δ ≤ 0 := le_of_not_gt h
-      have hratioNonpos : Real.log Δ / Real.log z ≤ 0 :=
-        div_nonpos_of_nonpos_of_nonneg hlogΔnonpos (Real.log_pos hz1).le
-      linarith [hsRange.1]
+    have hlogΔpos : 0 < Real.log Δ :=
+      (div_pos_iff_of_pos_right (Real.log_pos hz1)).mp (hs ▸ hsRange.1)
     exact (Real.log_pos_iff hΔ.le).mp hlogΔpos
   exact hcomparison S z q hz hlocal hΔone hs hsRange.2 hP hqs hqprime
     (fun p hp => Nat.prime_of_mem_primeFactors (hP hp)) hqmin hupper hqscreen hb
@@ -133,12 +129,8 @@ theorem
         hqscreen
       have hz1 : 1 < z := lt_of_lt_of_le (by norm_num) hz
       have hΔone : 1 < Δ := by
-        have hlogΔpos : 0 < Real.log Δ := by
-          by_contra h
-          have hlogΔnonpos : Real.log Δ ≤ 0 := le_of_not_gt h
-          have hratioNonpos : Real.log Δ / Real.log z ≤ 0 :=
-            div_nonpos_of_nonpos_of_nonneg hlogΔnonpos (Real.log_pos hz1).le
-          linarith [hsRange.1]
+        have hlogΔpos : 0 < Real.log Δ :=
+          (div_pos_iff_of_pos_right (Real.log_pos hz1)).mp (hs ▸ hsRange.1)
         exact (Real.log_pos_iff hΔ.le).mp hlogΔpos
       have hD : 1 < Nat.floor Δ + 1 := by
         have hone : ((1 : ℕ) : ℝ) ≤ Δ := by simpa using hΔone.le
@@ -169,12 +161,8 @@ theorem
       have hz1 : 1 < z := lt_of_lt_of_le (by norm_num) (hz₀.trans hz)
       have hzpos : 0 < z := by linarith
       have hlogz : 0 < Real.log z := Real.log_pos hz1
-      have hlogΔ : 0 < Real.log Δ := by
-        by_contra h
-        have hlogΔnonpos : Real.log Δ ≤ 0 := le_of_not_gt h
-        have hratioNonpos : Real.log Δ / Real.log z ≤ 0 :=
-          div_nonpos_of_nonpos_of_nonneg hlogΔnonpos hlogz.le
-        linarith [hsRange.1]
+      have hlogΔ : 0 < Real.log Δ :=
+        (div_pos_iff_of_pos_right (hlogz)).mp (hs ▸ hsRange.1)
       let l : Filter ℝ := nhdsWithin z (Set.Ioi z)
       have hlevelT :
           Filter.Tendsto (fun Z : ℝ => Real.log Δ / Real.log Z) l (nhds s) := by
@@ -468,10 +456,8 @@ theorem
             rw [MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
               Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hc1.le)]
             rfl
-          _ ≤ c⁻¹ := by
-            have hwidth : 1 - c ≤ 1 := by linarith
-            nlinarith [mul_le_mul_of_nonneg_right hwidth
-              (inv_nonneg.mpr hc.le)]
+          _ ≤ c⁻¹ :=
+            mul_le_of_le_one_left (inv_nonneg.mpr hc.le) (sub_le_self _ hc.le)
       have hmassComparison :=
         hmass S z Q (fun _ => (1 : ℝ)) (fun _ => (1 : ℝ))
           hzMassZ hlocal hQ hQcoord
@@ -1095,7 +1081,7 @@ theorem exists_screenedResidualBoundaryMass_le_integral_add_of_three_halves_le
             have hlength :
                 min 1 (s / 3) - Real.log q / Real.log z ≤ 1 := by
               linarith [min_le_left (1 : ℝ) (s / 3)]
-            nlinarith
+            exact mul_le_of_le_one_left (by positivity) hlength
       have hintegral :
           (∫ x in Set.Ioo (Real.log q / Real.log z) (min 1 (s / 3)),
             x⁻¹ * (LinearSieve.upperRosserBoundaryLogKernel s

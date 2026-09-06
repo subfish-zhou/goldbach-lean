@@ -29,16 +29,17 @@ theorem low_budget_scalar {X L A W R U b K c : ℝ}
     R * ((K * X / L ^ (U + b + 2)) * (1 + L) + A * W) ≤
       (2 * K + c) * X / L ^ U := by
   have hLp : 0 < L := lt_of_lt_of_le zero_lt_one hL
+  -- Spend the two extra log powers in the main term's exponent U + b + 2.
+  have hharmonic : 1 + L ≤ 2 * L ^ (2 : ℕ) := by
+    nlinarith only [hL]
   have hmain : L ^ b * ((K * X / L ^ (U + b + 2)) * (1 + L)) ≤
       2 * K * X / L ^ U := by
     calc
       _ ≤ L ^ b * ((K * X / L ^ (U + b + 2)) * (2 * L ^ (2 : ℕ))) := by
         apply mul_le_mul_of_nonneg_left _ (Real.rpow_nonneg hLp.le _)
-        apply mul_le_mul_of_nonneg_left _ (by positivity)
-        nlinarith
+        exact mul_le_mul_of_nonneg_left hharmonic (by positivity)
       _ = _ := by
-        rw [show U + b + 2 = (U + b) + (2 : ℝ) by ring,
-          Real.rpow_add hLp, Real.rpow_add hLp, Real.rpow_two]
+        rw [Real.rpow_add hLp, Real.rpow_add hLp, Real.rpow_two]
         field_simp
   have hbad : L ^ b * (A * W) ≤ c * X / L ^ U := by
     apply (le_div_iff₀ (Real.rpow_pos_of_pos hLp U)).2
@@ -86,10 +87,10 @@ theorem exists_low_budget_payment (U b K : ℝ) (_hU : 0 < U) (_hb : 0 ≤ b)
   filter_upwards [hn, hl, eventually_ge_atTop (3 : ℕ)] with N hlogs hL hN
   intro m A₂ Q hm hmN hA hQ
   have hNp : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+  have hlog_nonneg : 0 ≤ Real.log (N : ℝ) := zero_le_one.trans hL
   have hlog : Real.log (N : ℝ) ^ (U + b + 1) ≤ (N : ℝ) ^ (1 / 3 : ℝ) := by
-    simpa only [Real.norm_eq_abs, abs_of_nonneg (Real.rpow_nonneg (by linarith :
-      0 ≤ Real.log (N : ℝ)) _), abs_of_nonneg (Real.rpow_nonneg hNp.le _), one_mul]
-      using hlogs
+    simpa only [Real.norm_eq_abs, abs_of_nonneg (Real.rpow_nonneg hlog_nonneg _),
+      abs_of_nonneg (Real.rpow_nonneg hNp.le _), one_mul] using hlogs
   have hmX : (m : ℝ) ≤ N := hmN.trans (by
     rw [Real.sqrt_eq_rpow]
     exact Real.rpow_le_self_of_one_le (by exact_mod_cast (show 1 ≤ N by omega))

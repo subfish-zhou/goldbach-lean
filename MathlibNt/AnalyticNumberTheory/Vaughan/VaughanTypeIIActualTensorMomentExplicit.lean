@@ -1,4 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
+import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorHarmonic
 
 namespace AnalyticNumberTheory.LargeSieve
@@ -172,10 +173,7 @@ theorem liuHarmonic_le_three_log_add_one (X : ℕ) :
 private theorem sum_dvd_indicator_Icc'
     (R e : ℕ) (he : 0 < e) :
     (∑ r ∈ Finset.Icc 1 R, if e ∣ r then (1 : ℝ) else 0) = (R / e : ℕ) := by
-  rw [← Finset.sum_filter]
-  rw [sum_multiples_Icc_reindex (R := ℝ) (F := fun _ => (1 : ℝ))
-    (k := e) (y := R) he]
-  simp
+  exact AnalyticNumberTheory.LargeSieve.sum_dvd_indicator_Icc R e he
 
 theorem sum_Icc_int_toNat_eq_sum_Icc
     {F : ℕ → ℝ} (X : ℕ) :
@@ -267,57 +265,9 @@ private theorem divisorSquarePrefix_le_cube_harmonic (X : ℕ) :
         ((X / (g * u * v) : ℕ) : ℝ) ≤ (X : ℝ) / (g * u * v) := hdiv
         _ = (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹ * (v : ℝ)⁻¹ := hfac
     _ = (X : ℝ) * liuHarmonic X ^ 3 := by
-      let S : Finset ℕ := Finset.Icc 1 X
-      let H : ℝ := ∑ n ∈ S, (n : ℝ)⁻¹
-      have hinner :
-          ∀ g ∈ S,
-            (∑ u ∈ S, ∑ v ∈ S,
-              (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹ * (v : ℝ)⁻¹) =
-              (X : ℝ) * (g : ℝ)⁻¹ * H * H := by
-        intro g hg
-        calc
-          (∑ u ∈ S, ∑ v ∈ S,
-              (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹ * (v : ℝ)⁻¹) =
-              ∑ u ∈ S, ((X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹) * H := by
-                apply Finset.sum_congr rfl
-                intro u hu
-                simpa [H, mul_assoc] using
-                  (show
-                    (∑ v ∈ S,
-                      (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹ * (v : ℝ)⁻¹) =
-                      ((X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹) *
-                        ∑ v ∈ S, (v : ℝ)⁻¹ by
-                    rw [← Finset.mul_sum])
-          _ = (∑ u ∈ S, (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹) * H := by
-                rw [← Finset.sum_mul]
-          _ = (((X : ℝ) * (g : ℝ)⁻¹) * ∑ u ∈ S, (u : ℝ)⁻¹) * H := by
-                simpa [mul_assoc] using congrArg (fun z : ℝ => z * H) <|
-                  (show
-                    (∑ u ∈ S, (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹) =
-                      ((X : ℝ) * (g : ℝ)⁻¹) * ∑ u ∈ S, (u : ℝ)⁻¹ by
-                    rw [← Finset.mul_sum])
-          _ = (X : ℝ) * (g : ℝ)⁻¹ * H * H := by
-                simp [H, mul_assoc]
-      calc
-        (∑ g ∈ S, ∑ u ∈ S, ∑ v ∈ S,
-            (X : ℝ) * (g : ℝ)⁻¹ * (u : ℝ)⁻¹ * (v : ℝ)⁻¹) =
-            ∑ g ∈ S, (X : ℝ) * (g : ℝ)⁻¹ * H * H := by
-              apply Finset.sum_congr rfl
-              intro g hg
-              exact hinner g hg
-        _ = ∑ g ∈ S, ((X : ℝ) * (g : ℝ)⁻¹) * (H * H) := by
-              apply Finset.sum_congr rfl
-              intro g hg
-              ring
-        _ = (∑ g ∈ S, (X : ℝ) * (g : ℝ)⁻¹) * (H * H) := by
-              rw [← Finset.sum_mul]
-        _ = ((X : ℝ) * ∑ g ∈ S, (g : ℝ)⁻¹) * (H * H) := by
-              rw [← Finset.mul_sum]
-        _ = (X : ℝ) * H ^ 3 := by
-              rw [pow_succ, pow_two]
-              ring
-        _ = (X : ℝ) * liuHarmonic X ^ 3 := by
-              simp [S, H, liuHarmonic]
+      -- Factor the three independent reciprocal sums, one for each index.
+      simp only [← Finset.mul_sum, ← Finset.sum_mul, liuHarmonic]
+      ring
 
 /-- Weighted divisor-square energy in the form used in Chen's Lemma 3.
 The elementary four-harmonic proof keeps the endpoint `X = 0` harmless. -/
@@ -387,44 +337,10 @@ theorem divisorSquareWeightedPrefix_le_fourth_harmonic (X : ℕ) :
               rw [← Finset.mul_sum]
               rfl
     _ = liuHarmonic X ^ 4 := by
-      let S : Finset ℕ := Finset.Icc 1 X
-      let H : ℝ := liuHarmonic X
-      change (∑ g ∈ S, ∑ u ∈ S, ∑ v ∈ S,
-        ((g * u * v : ℕ) : ℝ)⁻¹ * H) = H ^ 4
+      -- The three reciprocal sums contribute three further harmonic factors.
       simp only [Nat.cast_mul, mul_inv_rev]
-      have hS : (∑ n ∈ S, (n : ℝ)⁻¹) = H := by rfl
-      simp_rw [mul_assoc]
-      calc
-        (∑ g ∈ S, ∑ u ∈ S, ∑ v ∈ S,
-            (v : ℝ)⁻¹ * ((u : ℝ)⁻¹ * ((g : ℝ)⁻¹ * H))) =
-          ∑ g ∈ S, ∑ u ∈ S,
-            H * ((u : ℝ)⁻¹ * ((g : ℝ)⁻¹ * H)) := by
-              apply Finset.sum_congr rfl
-              intro g hg
-              apply Finset.sum_congr rfl
-              intro u hu
-              rw [← Finset.sum_mul, hS]
-        _ = ∑ g ∈ S, H * (H * ((g : ℝ)⁻¹ * H)) := by
-              apply Finset.sum_congr rfl
-              intro g hg
-              calc
-                (∑ u ∈ S, H * ((u : ℝ)⁻¹ * ((g : ℝ)⁻¹ * H))) =
-                    H * (∑ u ∈ S, (u : ℝ)⁻¹ * ((g : ℝ)⁻¹ * H)) := by
-                      rw [Finset.mul_sum]
-                _ = H * (H * ((g : ℝ)⁻¹ * H)) := by
-                      rw [← Finset.sum_mul, hS]
-        _ = H * (H * (H * H)) := by
-              calc
-                (∑ g ∈ S, H * (H * ((g : ℝ)⁻¹ * H))) =
-                    ∑ g ∈ S, H * H * ((g : ℝ)⁻¹ * H) := by
-                      apply Finset.sum_congr rfl
-                      intro g hg
-                      ring
-                _ = H * H * (∑ g ∈ S, (g : ℝ)⁻¹ * H) := by
-                      rw [Finset.mul_sum]
-                _ = H * H * (H * H) := by rw [← Finset.sum_mul, hS]
-                _ = H * (H * (H * H)) := by ring
-        _ = H ^ 4 := by ring
+      simp only [mul_assoc, ← Finset.sum_mul, ← Finset.mul_sum, liuHarmonic]
+      ring
 
 theorem divisorSquareMomentBound_27 :
     DivisorSquareMomentBound 27 := by

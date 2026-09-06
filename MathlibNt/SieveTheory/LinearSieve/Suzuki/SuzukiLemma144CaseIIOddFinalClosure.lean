@@ -3,6 +3,7 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIBracketGapQu
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorEnvelopeTransportFull
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceRoundedGeometryPacket
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -18,21 +19,7 @@ set_option maxHeartbeats 2000000
 private theorem suzukiVProduct_antitone_local
     (S : BoundingSieve) {x y : ℝ} (hxy : x ≤ y) :
     suzukiVProduct S y ≤ suzukiVProduct S x := by
-  unfold suzukiVProduct
-  apply Finset.prod_le_prod_of_subset_of_le_one
-  · intro p hp
-    simp only [Finset.mem_filter] at hp ⊢
-    exact ⟨hp.1, hp.2.trans_le hxy⟩
-  · intro p hp
-    have hp' := Finset.mem_filter.mp hp
-    have hprime : p.Prime := Nat.prime_of_mem_primeFactors hp'.1
-    have hdvd : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hp'.1).2.1
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hprime hdvd).le
-  · intro p hp _
-    have hnu := S.nu_pos_of_prime p
-      (Nat.prime_of_mem_primeFactors (Finset.mem_filter.mp hp).1)
-      (Nat.mem_primeFactors.mp (Finset.mem_filter.mp hp).1).2.1
-    linarith
+  exact MathlibNt.SieveTheory.suzukiVProduct_mono_antitone S hxy
 
 /-- The quantitative Case-II bracket gap, Claim 14.5 at the moving source
 endpoint, full Claim 14.6(i), and Euler-product monotonicity give the exact
@@ -71,20 +58,10 @@ theorem lemma144_caseII_odd_claim145_scaling_bridge
   let D0 : ℝ := max D146 (max Dgeom (max Dconst (max Dlarge Dgap)))
   refine ⟨D0, hD146.trans_le (le_max_left _ _), ?_⟩
   intro D hD s hs1 hs3
-  have h146D : D146 ≤ (D : ℝ) := (le_max_left D146 _).trans hD
-  have hgeomD : Dgeom ≤ (D : ℝ) :=
-    (le_max_left Dgeom _).trans ((le_max_right D146 _).trans hD)
-  have hconstD : Dconst ≤ (D : ℝ) :=
-    (le_max_left Dconst _).trans
-      ((le_max_right Dgeom _).trans ((le_max_right D146 _).trans hD))
-  have hlargeD : Dlarge ≤ (D : ℝ) :=
-    (le_max_left Dlarge Dgap).trans
-      ((le_max_right Dconst _).trans
-        ((le_max_right Dgeom _).trans ((le_max_right D146 _).trans hD)))
-  have hgapD : Dgap ≤ (D : ℝ) :=
-    (le_max_right Dlarge Dgap).trans
-      ((le_max_right Dconst _).trans
-        ((le_max_right Dgeom _).trans ((le_max_right D146 _).trans hD)))
+  have hthresholds : D146 ≤ (D : ℝ) ∧ Dgeom ≤ (D : ℝ) ∧
+      Dconst ≤ (D : ℝ) ∧ Dlarge ≤ (D : ℝ) ∧ Dgap ≤ (D : ℝ) := by
+    simpa only [D0, max_le_iff] using hD
+  rcases hthresholds with ⟨h146D, hgeomD, hconstD, hlargeD, hgapD⟩
   have hg := hgeom S D hgeomD s hs1 hs3
   obtain ⟨hi, _hii, _hiii⟩ := h146 (D : ℝ) h146D
   have hD1 : 1 < (D : ℝ) := hDlarge.trans_le hlargeD

@@ -188,15 +188,7 @@ theorem chen1973Lemma5M2SourceInner_eq_NmTotient (x D d : ℕ) :
     chen1973Lemma5M2SourceInner x D d = chen1973Lemma6NmTotient x D d := by
   classical
   unfold chen1973Lemma5M2SourceInner chen1973Lemma6NmTotient
-  apply Finset.sum_congr rfl
-  intro l hl
-  congr 1
-  apply congrArg norm
-  apply Finset.sum_congr rfl
-  intro χ hχ
-  split_ifs with hprincipal
-  · rfl
-  rw [chen1973Lemma6_primitiveTwistCoprime_eq_actualPhi]
+  simp_rw [chen1973Lemma6_primitiveTwistCoprime_eq_actualPhi]
 
 /-- The expression after the true outer-`d` regrouping and before replacing
 the inner reciprocal totient by the literal reciprocal modulus in `N_d`. -/
@@ -211,9 +203,7 @@ theorem chen1973Lemma5M2Source_eq_outerTotientSum (x D : ℕ) :
   classical
   unfold chen1973Lemma5M2Source chen1973Lemma6OuterTotientSum
     chen1973Lemma6OuterDivisors chen1973Lemma6OuterWeight
-  apply Finset.sum_congr rfl
-  intro d hd
-  rw [chen1973Lemma5M2SourceInner_eq_NmTotient]
+  simp_rw [chen1973Lemma5M2SourceInner_eq_NmTotient]
 
 /-- The same outer grouping after the pointwise totient-to-modulus estimate. -/
 def chen1973Lemma6OuterLiteralSum (x D : ℕ) : ℝ :=

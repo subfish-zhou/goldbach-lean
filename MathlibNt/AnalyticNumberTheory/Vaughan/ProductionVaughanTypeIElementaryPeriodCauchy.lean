@@ -18,47 +18,6 @@ open scoped BigOperators ArithmeticFunction ComplexConjugate
 
 noncomputable section
 
-/-- Exact finite complex Cauchy--Schwarz, with no intervening `norm_sum_le`. -/
-theorem finiteComplexCauchy
-    {ι : Type*} [DecidableEq ι] (s : Finset ι) (a b : ι → ℂ) :
-    ‖∑ i ∈ s, a i * b i‖ ^ 2 ≤
-      (∑ i ∈ s, ‖a i‖ ^ 2) * (∑ i ∈ s, ‖b i‖ ^ 2) := by
-  let x : EuclideanSpace ℂ ↥s := WithLp.toLp 2 (fun i => conj (a i.1))
-  let y : EuclideanSpace ℂ ↥s := WithLp.toLp 2 (fun i => b i.1)
-  have hi : inner ℂ x y = ∑ i ∈ s, a i * b i := by
-    rw [PiLp.inner_apply]
-    simp only [x, y, RCLike.inner_apply]
-    rw [Finset.sum_subtype s (fun i => by rfl)]
-    apply Finset.sum_congr rfl
-    intro i hi
-    simp
-    ring
-  have hx : ‖x‖ ^ 2 = ∑ i ∈ s, ‖a i‖ ^ 2 := by
-    rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
-      PiLp.inner_apply (𝕜 := ℂ), map_sum]
-    simp only [x]
-    rw [Finset.sum_subtype s (fun i => by rfl)]
-    apply Finset.sum_congr rfl
-    intro i hi
-    calc
-      RCLike.re (inner ℂ (conj (a i.1)) (conj (a i.1))) =
-          ‖conj (a i.1)‖ ^ 2 :=
-        (InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ) (conj (a i.1))).symm
-      _ = ‖a i.1‖ ^ 2 := by rw [Complex.norm_conj]
-  have hy : ‖y‖ ^ 2 = ∑ i ∈ s, ‖b i‖ ^ 2 := by
-    rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
-      PiLp.inner_apply (𝕜 := ℂ), map_sum]
-    simp only [y]
-    rw [Finset.sum_subtype s (fun i => by rfl)]
-    apply Finset.sum_congr rfl
-    intro i hi
-    exact (InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ) (b i.1)).symm
-  have h := norm_inner_le_norm (𝕜 := ℂ) x y
-  rw [hi] at h
-  have hsq := pow_le_pow_left₀ (norm_nonneg (∑ i ∈ s, a i * b i)) h 2
-  rw [mul_pow, hx, hy] at hsq
-  exact hsq
-
 private lemma moebius_complex_norm_le_one (d : ℕ) :
     ‖((ArithmeticFunction.moebius d : ℤ) : ℂ)‖ ≤ 1 := by
   rcases ArithmeticFunction.moebius_eq_or d with h | h | h <;> simp [h]
@@ -162,7 +121,7 @@ theorem norm_vaughanTypeIFirstLong_le_elementaryCauchy
   have ht : 0 ≤ 4 * (u : ℝ) * q * L := by
     dsimp [L]
     positivity
-  nlinarith [norm_nonneg (vaughanTypeIFirstLong (fun _ => 1) y u q χ)]
+  exact (sq_le_sq₀ (norm_nonneg _) ht).mp hsquare
 
 /-- The complete literal middle lane, bounded by Cauchy over the actual `(d,e)` rows. -/
 theorem norm_vaughanTypeIMiddleLong_le_elementaryCauchy
@@ -173,6 +132,9 @@ theorem norm_vaughanTypeIMiddleLong_le_elementaryCauchy
   let D := vaughanTypeIShortRange y u
   let E := vaughanTypeIShortRange y v
   let R := D ×ˢ E
+  have hcard : R.card ≤ u * v := by
+    rw [show R.card = D.card * E.card by simp [R]]
+    exact Nat.mul_le_mul (shortRange_card_le y u) (shortRange_card_le y v)
   let A : ℕ × ℕ → ℂ := fun de =>
     ((((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
       (ArithmeticFunction.vonMangoldt de.2 : ℂ)) *
@@ -203,9 +165,6 @@ theorem norm_vaughanTypeIMiddleLong_le_elementaryCauchy
       _ = (R.card : ℕ) * L ^ 2 := by simp
       _ ≤ ((u : ℝ) * v) * L ^ 2 := by
         gcongr
-        have hcard : R.card ≤ u * v := by
-          rw [show R.card = D.card * E.card by simp [R]]
-          exact Nat.mul_le_mul (shortRange_card_le y u) (shortRange_card_le y v)
         exact_mod_cast hcard
   have hBpoint (de : ℕ × ℕ) : ‖B de‖ ≤ 2 * q := by
     have hset : Finset.Ico 1 (y / (de.1 * de.2) + 1) =
@@ -225,9 +184,6 @@ theorem norm_vaughanTypeIMiddleLong_le_elementaryCauchy
       _ = (R.card : ℕ) * (2 * (q : ℝ)) ^ 2 := by simp
       _ ≤ ((u : ℝ) * v) * (2 * (q : ℝ)) ^ 2 := by
         gcongr
-        have hcard : R.card ≤ u * v := by
-          rw [show R.card = D.card * E.card by simp [R]]
-          exact Nat.mul_le_mul (shortRange_card_le y u) (shortRange_card_le y v)
         exact_mod_cast hcard
   have hc := finiteComplexCauchy R A B
   have hid : vaughanTypeIMiddleLong (fun _ => 1) y u v q χ =
@@ -244,7 +200,7 @@ theorem norm_vaughanTypeIMiddleLong_le_elementaryCauchy
   have ht : 0 ≤ 2 * (u : ℝ) * v * q * L := by
     dsimp [L]
     positivity
-  nlinarith [norm_nonneg (vaughanTypeIMiddleLong (fun _ => 1) y u v q χ)]
+  exact (sq_le_sq₀ (norm_nonneg _) ht).mp hsquare
 
 /-- Pointwise primitive Type-I prefix amplitude from the exact phase identity.
 The only triangle inequality is between the two already-complete lanes. -/
@@ -282,13 +238,7 @@ theorem primitivePrefixAmplitude_vaughanTypeI_le_elementaryCauchy
 private theorem primitiveCharacter_card_le_totient_elementary
     (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  letI : NeZero q := ⟨hq.ne'⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _
-    _ = q.totient := by
-      rw [← Nat.card_eq_fintype_card]
-      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ q
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 /-- AP-normalized Type-I mean on any conductor subset of `Icc 2 Q`. -/
 theorem apNormalizedPrimitiveMeanOn_vaughanTypeI_le_elementaryCauchy

@@ -1,4 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
 
 open scoped Classical BigOperators
 open Filter Finset Topology
@@ -41,6 +41,7 @@ theorem claim145_sourceSigma_allS_scalar_eventually
       nlinarith
     exact hfrac.trans_lt hd
   have hd0 : 0 < d := by linarith
+  -- Choose eventual thresholds using logarithmic growth versus `x^(1/d)`.
   let a : ℝ := 1 / d
   have ha : 0 < a := by dsimp [a]; positivity
   have ha1 : a ≤ 1 := by
@@ -82,6 +83,7 @@ theorem claim145_sourceSigma_allS_scalar_eventually
       hloglog.eventually_ge_atTop (max M 0),
       hlogloglog.eventually_ge_atTop r0] with D hD1 hxlarge hqlarge hqM hrlarge
   intro s hsσ
+  -- Normalize the endpoint: `x = log D`, `q = log x`, and `σ = x^a * ell`.
   let x : ℝ := Real.log D
   let q : ℝ := Real.log x
   let ell : ℝ := Real.log (Real.log (27 * D))
@@ -154,10 +156,12 @@ theorem claim145_sourceSigma_allS_scalar_eventually
     exact mul_le_mul_of_nonneg_left hellLower (Real.rpow_nonneg hx.le _)
   have hσUpper : σ ≤ 2 * x * q := by
     rw [hσdef]
-    nlinarith [mul_le_mul hxale hellUpper hell.le hx.le]
+    calc
+      x ^ a * ell ≤ x * (2 * q) := mul_le_mul hxale hellUpper hell.le hx.le
+      _ = 2 * x * q := by ring
   have hσ4 : 4 ≤ σ := by
     calc 4 ≤ q := hq4
-      _ ≤ x ^ a * q := by nlinarith
+      _ ≤ x ^ a * q := le_mul_of_one_le_left hq.le hxa1
       _ ≤ σ := hσLower
   have hσpos : 0 < σ := by linarith
   have hsσ' : σ ≤ s := by simpa [σ] using hsσ
@@ -185,29 +189,36 @@ theorem claim145_sourceSigma_allS_scalar_eventually
   have hLsq : L ≤ q ^ 2 := by
     rw [hLdef]
     have hBabs : B ≤ |B| := le_abs_self B
-    nlinarith [sq_nonneg (q - 2)]
+    nlinarith only [hqB, hBabs, sq_nonneg (q - 1)]
   have hdomx : 2 * q ^ 2 ≤ x ^ a := by
     simpa [q] using hX x hxX
   have habsorbσ : q ^ 2 + 9 * q + |Real.log Q| ≤ σ := by
     have htail : 9 * q + |Real.log Q| ≤ q ^ 2 := by
       have habs : 0 ≤ |Real.log Q| := abs_nonneg _
-      nlinarith
+      nlinarith only [hqQ, hq4, habs]
     have hxa_le_σ : x ^ a ≤ σ := by
-      calc x ^ a ≤ x ^ a * q := by nlinarith [Real.rpow_nonneg hx.le a]
+      calc
+        x ^ a ≤ x ^ a * q :=
+          le_mul_of_one_le_right (Real.rpow_nonneg hx.le a) (by linarith only [hq4])
         _ ≤ σ := hσLower
-    linarith
+    calc
+      q ^ 2 + 9 * q + |Real.log Q| ≤ 2 * q ^ 2 := by linarith only [htail]
+      _ ≤ x ^ a := hdomx
+      _ ≤ σ := hxa_le_σ
   have hsourceσ : Real.exp 1 * L ≤ σ - 2 := by
     have hsigStrong : Real.exp 1 * q ^ 2 + 2 ≤ 2 * q ^ 3 := by
       have hepos := Real.exp_pos 1
-      nlinarith [sq_nonneg q, mul_nonneg (sq_nonneg q) (sub_nonneg.mpr hqe)]
+      nlinarith only [hq4, hepos, sq_nonneg q,
+        mul_nonneg (sq_nonneg q) (sub_nonneg.mpr hqe)]
     have htwoq3 : 2 * q ^ 3 ≤ σ := by
       have hmul := mul_le_mul_of_nonneg_right hdomx hq.le
       calc
         2 * q ^ 3 = (2 * q ^ 2) * q := by ring
         _ ≤ x ^ a * q := hmul
         _ ≤ σ := hσLower
-    nlinarith [mul_le_mul_of_nonneg_left hLsq (Real.exp_pos 1).le]
-  have hsource : Real.exp 1 * L ≤ s - 2 := by linarith
+    linarith only [hsigStrong, htwoq3,
+      mul_le_mul_of_nonneg_left hLsq (Real.exp_pos 1).le]
+  have hsource : Real.exp 1 * L ≤ s - 2 := by linarith only [hsourceσ, hsσ']
   have hlogsσ : Real.log σ ≤ 3 * q := by
     have hboundpos : 0 < 2 * x * q := by positivity
     have h := Real.log_le_log hσpos hσUpper
@@ -215,12 +226,12 @@ theorem claim145_sourceSigma_allS_scalar_eventually
       Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (ne_of_gt hx)] at h
     have hlog2le : Real.log 2 ≤ q := by
       exact Real.strictMonoOn_log.monotoneOn (by norm_num) hx hx2
-    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (by linarith)
+    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (sub_le_self q zero_le_one)
     dsimp [q] at hlog2le
     linarith
   have hloglog3σ : Real.log (Real.log (3 * σ)) ≤ 2 * Real.log q := by
     have h3σ : 0 < 3 * σ := by positivity
-    have h6xq : 3 * σ ≤ 6 * x * q := by nlinarith [hσUpper]
+    have h6xq : 3 * σ ≤ 6 * x * q := by linarith only [hσUpper]
     have h6pos : 0 < 6 * x * q := by positivity
     have hlogfirst := Real.log_le_log h3σ h6xq
     rw [Real.log_mul (by positivity : (6 * x : ℝ) ≠ 0) (ne_of_gt hq),
@@ -230,11 +241,11 @@ theorem claim145_sourceSigma_allS_scalar_eventually
         dsimp [q, x]
         exact (le_max_left _ _).trans hqlarge
       exact (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 6)).trans (by linarith)
-    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (by linarith)
+    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (sub_le_self q zero_le_one)
     have hinner : Real.log (3 * σ) ≤ 3 * q := by
       dsimp [q] at hlog6le
       linarith
-    have hinnerpos : 0 < Real.log (3 * σ) := Real.log_pos (by nlinarith [hσ4])
+    have hinnerpos : 0 < Real.log (3 * σ) := Real.log_pos (by linarith only [hσ4])
     have h3qpos : 0 < 3 * q := by positivity
     have hsecond := Real.log_le_log hinnerpos hinner
     have hlog3le : Real.log 3 ≤ Real.log q :=
@@ -252,9 +263,10 @@ theorem claim145_sourceSigma_allS_scalar_eventually
     dsimp [r0] at ht
     field_simp [ne_of_gt hd4] at ht
     linarith
+  -- Transport the endpoint bounds to every `s ≥ σ` using `u = s / σ ≥ 1`.
   have habsorb : L + 2 * Real.log s + 3 * q + |Real.log Q| ≤ s := by
     have hbase : L + 2 * Real.log σ + 3 * q + |Real.log Q| ≤ σ := by
-      linarith [hLsq, hlogsσ, habsorbσ]
+      linarith only [hLsq, hlogsσ, habsorbσ]
     rw [hlogsSplit]
     have hlogtransport : 2 * Real.log u ≤ 2 * (u - 1) :=
       mul_le_mul_of_nonneg_left hlogu_le (by norm_num)
@@ -266,7 +278,7 @@ theorem claim145_sourceSigma_allS_scalar_eventually
         2 * Real.log u ≤ 2 * (u - 1) := hlogtransport
         _ ≤ σ * (u - 1) := hscale
         _ = s - σ := by rw [hsu]; ring
-    linarith
+    linarith only [hbase, htransport]
   have hqσ : q ≤ σ := by
     have hm := mul_le_mul_of_nonneg_right hxa1 hq.le
     have hm' : q ≤ x ^ a * q := by simpa [mul_comm] using hm
@@ -293,12 +305,13 @@ theorem claim145_sourceSigma_allS_scalar_eventually
       _ = u * Real.log (3 * σ) := by ring
   have hloglog3s :
       Real.log (Real.log (3 * s)) ≤ 2 * Real.log q + Real.log u := by
-    have hleftpos : 0 < Real.log (3 * s) := Real.log_pos (by nlinarith [hs4])
+    have hleftpos : 0 < Real.log (3 * s) := Real.log_pos (by linarith only [hs4])
     have hrightpos : 0 < u * Real.log (3 * σ) := mul_pos hupos (lt_of_lt_of_le zero_lt_one hAlog)
     have hh := Real.log_le_log hleftpos hlog3s_le
     rw [Real.log_mul (ne_of_gt hupos)
       (ne_of_gt (lt_of_lt_of_le zero_lt_one hAlog))] at hh
     linarith
+  -- The gain `s^d / log D` dominates the logarithmic losses.
   have hσPow : σ ^ d = x * ell ^ d := by
     rw [hσdef, Real.mul_rpow (Real.rpow_nonneg hx.le _) hell.le]
     have hxad : (x ^ a) ^ d = x := by
@@ -322,7 +335,8 @@ theorem claim145_sourceSigma_allS_scalar_eventually
     have hy_le : u ^ d * q ^ d ≤ b := by
       dsimp [b]
       rw [hquot]
-      nlinarith [mul_le_mul_of_nonneg_left hqpow hupow]
+      exact (mul_le_mul_of_nonneg_left hqpow hupow).trans
+        (le_add_of_nonneg_left zero_le_one)
     have hypos : 0 < u ^ d * q ^ d := mul_pos (Real.rpow_pos_of_pos hupos _)
       (Real.rpow_pos_of_pos hq _)
     have hh := Real.log_le_log hypos hy_le
@@ -334,8 +348,10 @@ theorem claim145_sourceSigma_allS_scalar_eventually
       Real.log b := by
     have hmid : Real.log L + Real.log (Real.log (3 * s)) + C + 2 + Real.log 2 ≤
         d * Real.log q + d * Real.log u := by
-      nlinarith [mul_nonneg (show 0 ≤ d - 1 by linarith) hlogu0]
+      nlinarith only [hlogL, hloglog3s, hconst,
+        mul_nonneg (show 0 ≤ d - 1 by linarith only [hd7]) hlogu0]
     exact hmid.trans hblog
+  -- Combine the scalar exponent comparison with the sieve-product lower bound.
   have hcore := claim145_caseB_scalar_exponent_comparison hx hq hL hs4 hQ rfl
     habsorb hgap
   have hVedge := claim14_5VProduct_lower_of_localProduct

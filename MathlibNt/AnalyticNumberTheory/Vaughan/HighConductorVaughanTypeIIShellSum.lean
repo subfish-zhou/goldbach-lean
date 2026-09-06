@@ -1,4 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.Vaughan.HighConductorVaughanTypeIIFixedShell
+import MathlibNt.AnalyticNumberTheory.LargeSieve.PrefixMaximal
 import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualDecomposition
 
 /-!
@@ -97,21 +98,7 @@ def highConductorVaughanTypeIIShellSumAmplitude
 private theorem norm_sum_sq_le_card_mul_sum_sq
     {ι : Type*} [DecidableEq ι] (s : Finset ι) (z : ι → ℂ) :
     ‖∑ i ∈ s, z i‖ ^ 2 ≤ (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by
-  have hn : ‖∑ i ∈ s, z i‖ ≤ ∑ i ∈ s, ‖z i‖ := norm_sum_le _ _
-  calc
-    ‖∑ i ∈ s, z i‖ ^ 2 ≤ (∑ i ∈ s, ‖z i‖) ^ 2 :=
-      pow_le_pow_left₀ (norm_nonneg _) hn 2
-    _ ≤ (∑ i ∈ s, (1 : ℝ) ^ 2) * (∑ i ∈ s, ‖z i‖ ^ 2) :=
-      by simpa only [one_mul] using
-        Finset.sum_mul_sq_le_sq_mul_sq s (fun _ => (1 : ℝ)) (fun i => ‖z i‖)
-    _ = (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by simp
-
-private theorem vaughanTypeIIFixedShellPrefixSquare_nonneg
-    (N k y d : ℕ) (a : ℕ → ℂ) (c : ℕ → ℕ → ℂ)
-    (χ : PrimitiveCharacter d) :
-    0 ≤ vaughanTypeIIFixedShellPrefixSquare N k y d a c χ := by
-  unfold vaughanTypeIIFixedShellPrefixSquare
-  positivity
+  exact AnalyticNumberTheory.LargeSieve.norm_finset_sum_sq_le_card_mul_sum_norm_sq s z
 
 private theorem vaughanTypeIIFixedShellPrefixMaxSquare_nonneg
     (N k d : ℕ) (a : ℕ → ℂ) (c : ℕ → ℕ → ℂ)
@@ -155,13 +142,11 @@ theorem vaughanTypeIICollectedPrefixSquare_le_shellSumMajorant
       · apply Finset.sum_le_sum
         intro k hk
         unfold vaughanTypeIIFixedShellPrefixMaxSquare
-        simpa [z, vaughanTypeIIFixedShellPrefixSquare] using
-          (Finset.le_max'
-            ((Finset.range (vaughanTypeIIFixedShellLength N k + 1)).image
-              (fun z => vaughanTypeIIFixedShellPrefixSquare N k z d a c χ))
-            (vaughanTypeIIFixedShellPrefixSquare N k
-              (min y (vaughanTypeIIFixedShellLength N k)) d a c χ)
-            (Finset.mem_image.mpr ⟨_, by simp, rfl⟩))
+        -- The truncated physical prefix belongs to this shell's full prefix range.
+        apply Finset.le_max'
+        exact Finset.mem_image.mpr
+          ⟨min y (vaughanTypeIIFixedShellLength N k), by simp,
+            by simp [z, vaughanTypeIIFixedShellPrefixSquare]⟩
       · positivity
     _ = vaughanTypeIIShellSumMajorantSquare N K d a c χ := rfl
 
@@ -204,10 +189,7 @@ theorem highConductorVaughanTypeIIShellSum_squareLedger_le
           (((d : ℝ) / d.totient) *
             ∑ χ : PrimitiveCharacter d,
               vaughanTypeIIFixedShellPrefixMaxSquare N k d a c χ) := by
-    rw [← mul_assoc, Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro k hk
-    ring
+    simp only [Finset.mul_sum, mul_left_comm]
   simp_rw [highConductorVaughanTypeIIShellSumAmplitude, hsqrt, hchars]
   calc
     (∑ d ∈ Finset.Ioc R Q, ((d : ℝ) / d.totient) *

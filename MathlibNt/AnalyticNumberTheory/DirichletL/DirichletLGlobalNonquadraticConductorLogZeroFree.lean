@@ -78,21 +78,13 @@ theorem norm_LFunction_ne_zero_of_nonquadratic_conductorLog
     have hLpow : 1 ≤ L ^ 9 := one_le_pow₀ hL.le
     nlinarith
   have hxlog : x ≤ 1 / Real.log m := by
-    have hlogL : Real.log (m : ℝ) < L := by dsimp only [L]; linarith
+    apply one_div_le_one_div_of_le hlogm
     calc
-      x ≤ 1 / L := by
-        rw [le_div_iff₀ hL0]
-        dsimp only [x]
-        rw [div_mul_eq_mul_div,
-          div_le_iff₀ (show 0 < 274877906944 * L ^ 9 by positivity)]
-        norm_num only [one_mul]
-        calc
-          L = L ^ 1 := by ring
-          _ ≤ L ^ 9 := pow_le_pow_right₀ hL.le (by norm_num)
-          _ ≤ 274877906944 * L ^ 9 := by
-            have : 0 ≤ L ^ 9 := pow_nonneg hL0.le 9
-            nlinarith
-      _ ≤ 1 / Real.log m := one_div_le_one_div_of_le hlogm hlogL.le
+      Real.log (m : ℝ) ≤ L := by dsimp only [L]; linarith
+      _ = L ^ 1 := by ring
+      _ ≤ L ^ 9 := pow_le_pow_right₀ hL.le (by norm_num)
+      _ ≤ 274877906944 * L ^ 9 :=
+        le_mul_of_one_le_left (pow_nonneg hL0.le 9) (by norm_num)
   have hσ : 1 < 1 + x := by linarith
   have hσtwo : 1 + x ≤ 2 := by linarith
   have hχsqvalue :

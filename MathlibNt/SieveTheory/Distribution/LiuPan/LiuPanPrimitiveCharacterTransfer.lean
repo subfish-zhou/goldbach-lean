@@ -57,15 +57,15 @@ theorem liuPanActualCharacterAmplitude_eq_primitive_cofactor
       PanLow.coprimePrimePrefix χ (N / a) q else 0) = _
   rw [liuPan_coprimePrimePrefix_eq_primitive,
     PanLow.coprimePrimePrefix_eq_Icc]
-  have hs := liuPan_screened_character_eq_primitive χ a
+  have hscreen := liuPan_screened_character_eq_primitive χ a
   change (if a.Coprime q then (f a : ℂ) * χ (a : ZMod q) * _ else 0) =
     (if a.Coprime (q / χ.conductor) then (f a : ℂ) else 0) *
       χ.primitiveCharacter (a : ZMod χ.conductor) * _
-  have hmul := congrArg (fun z : ℂ => (f a : ℂ) * z *
-    ∑ p ∈ Icc 1 (N / a),
-      (if p.Prime ∧ p.Coprime (q / χ.conductor) then (1 : ℂ) else 0) *
-        χ.primitiveCharacter (p : ZMod χ.conductor)) hs
-  simpa only [conductorPrimitiveCharacter_val, mul_ite, ite_mul, mul_zero, zero_mul] using hmul
+  -- Weight the screened identity by the unchanged complete prime prefix.
+  have hweighted := congrArg (fun z : ℂ => (f a : ℂ) * z *
+    PanLow.coprimePrimePrefix χ.primitiveCharacter (N / a) (q / χ.conductor)) hscreen
+  simpa only [PanLow.coprimePrimePrefix_eq_Icc, conductorPrimitiveCharacter_val,
+    mul_ite, ite_mul, mul_zero, zero_mul] using hweighted
 
 /-- Pan's exact same-modulus nonprincipal mass, indexed by the unique primitive
 conductor. The conductor-one carrier is empty, and neither cofactor screen

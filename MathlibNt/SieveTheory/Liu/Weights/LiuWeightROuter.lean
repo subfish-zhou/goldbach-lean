@@ -106,8 +106,7 @@ theorem liuPaperQSourceFullSignedWeightedSum_eq_coprime_add_noncoprime
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro d _
-  rw [liuMainFullSum_eq_coprime_add_noncoprime]
-  ring
+  rw [liuMainFullSum_eq_coprime_add_noncoprime, mul_add]
 
 /-- The neutral non-coprime signed weighted sum is bounded by the existing
 termwise `R₁` majorant. -/
@@ -115,40 +114,11 @@ theorem abs_liuPaperQSourceNoncoprimeSignedWeightedSum_le_majorant
     (main : ℝ → ℝ) (N : ℕ) (ε : ℝ) :
     |liuPaperQSourceNoncoprimeSignedWeightedSum main N ε| ≤
       liuPaperQSourceR1Majorant main N ε := by
-  classical
-  unfold liuPaperQSourceNoncoprimeSignedWeightedSum liuPaperQSourceR1Majorant
-  calc
-    |∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-        (fun d => d ≤ liuSourceD2 N),
-        (3 : ℝ) ^ d.primeFactors.card *
-          liuMainNoncoprimeSum main N N d (N % d)
-            (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))| ≤
-        ∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-          (fun d => d ≤ liuSourceD2 N),
-          |(3 : ℝ) ^ d.primeFactors.card *
-            liuMainNoncoprimeSum main N N d (N % d)
-              (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))| :=
-      Finset.abs_sum_le_sum_abs _ _
-    _ = ∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-          (fun d => d ≤ liuSourceD2 N),
-          (3 : ℝ) ^ d.primeFactors.card *
-            |liuMainNoncoprimeSum main N N d (N % d)
-              (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))| := by
-      apply Finset.sum_congr rfl
-      intro d _
-      rw [abs_mul, abs_of_nonneg (by positivity :
-        0 ≤ (3 : ℝ) ^ d.primeFactors.card)]
-    _ ≤ ∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-          (fun d => d ≤ liuSourceD2 N),
-          (3 : ℝ) ^ d.primeFactors.card *
-            liuMainNoncoprimeMajorant main N N d (N % d)
-              (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) := by
-      apply Finset.sum_le_sum
-      intro d _
-      exact mul_le_mul_of_nonneg_left
-        (abs_liuMainNoncoprimeSum_le main N N d (N % d)
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)))
-        (by positivity)
+  simpa [liuPaperQSourceNoncoprimeSignedWeightedSum, liuPaperQSourceR1Majorant,
+    paperQStyleMainR1SignedSum, paperQStyleMainR1Majorant, paperQStyleR1Divisors,
+    liuPaperQModulus_eq_paperQStyleModulus] using
+    abs_paperQStyleMainR1SignedSum_le_majorant main N (liuSourceZ10 N)
+      (paperQSourceCutoff N ε) (liuSourceY3 N) (liuSourceD2 N) N
 
 /-! ## The source `eqn-r` absolute majorants -/
 
@@ -267,10 +237,7 @@ theorem liuPaperQSourceFullDistributionMajorant_le_coprime_add_r1
           (3 : ℝ) ^ d.primeFactors.card *
             |liuMainNoncoprimeSum main N N d (N % d)
               (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))| := by
-      rw [← Finset.sum_add_distrib]
-      apply Finset.sum_congr rfl
-      intro d _
-      ring
+      simp only [mul_add, Finset.sum_add_distrib]
     _ ≤ (∑ d ∈ (liuPaperQModulus N ε).divisors.filter
           (fun d => d ≤ liuSourceDEpsilon N ε),
           (3 : ℝ) ^ d.primeFactors.card *

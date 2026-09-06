@@ -78,9 +78,9 @@ theorem rankOneRectangularWeightedPrimitiveMean_sq_le
   refine (Finset.sum_mul_sq_le_sq_mul_sq T
     (fun x => Real.sqrt (w x.1) * A x.1 x.2)
     (fun x => Real.sqrt (w x.1) * B x.1 x.2)).trans ?_
-  have hAflat :
-      (∑ x ∈ T, (Real.sqrt (w x.1) * A x.1 x.2) ^ 2) =
-        ∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, A q χ ^ 2 := by
+  have hsquare_flat (F : (q : ℕ) → PrimitiveCharacter q → ℝ) :
+      (∑ x ∈ T, (Real.sqrt (w x.1) * F x.1 x.2) ^ 2) =
+        ∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, F q χ ^ 2 := by
     dsimp [T]
     rw [Finset.sum_sigma]
     apply Finset.sum_congr rfl
@@ -90,42 +90,26 @@ theorem rankOneRectangularWeightedPrimitiveMean_sq_le
     intro χ hχ
     have hw : 0 ≤ w q := by dsimp [w]; positivity
     rw [mul_pow, Real.sq_sqrt hw]
-  have hBflat :
-      (∑ x ∈ T, (Real.sqrt (w x.1) * B x.1 x.2) ^ 2) =
-        ∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, B q χ ^ 2 := by
-    dsimp [T]
-    rw [Finset.sum_sigma]
-    apply Finset.sum_congr rfl
-    intro q hq
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro χ hχ
-    have hw : 0 ≤ w q := by dsimp [w]; positivity
-    rw [mul_pow, Real.sq_sqrt hw]
-  rw [hAflat, hBflat]
+  have hlarge (c : ℤ → ℂ) (M : ℤ) (L : ℕ) :
+      (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
+        ‖∑ n ∈ Finset.Icc (M + 1) (M + L), c n * χ.1 (n : ZMod q)‖ ^ 2) ≤
+      largeSieveBound L (1 / (Q : ℝ) ^ 2) *
+        ∑ n ∈ Finset.Icc (M + 1) (M + L), ‖c n‖ ^ 2 := by
+    calc
+      _ ≤
+          ∑ q ∈ Finset.Icc 1 Q,
+            w q * ∑ χ : PrimitiveCharacter q,
+              ‖∑ n ∈ Finset.Icc (M + 1) (M + L), c n * χ.1 (n : ZMod q)‖ ^ 2 := by
+        apply Finset.sum_le_sum_of_subset_of_nonneg hS
+        intro q hq hnot
+        exact mul_nonneg (by dsimp [w]; positivity)
+          (Finset.sum_nonneg fun χ hχ => sq_nonneg _)
+      _ ≤ _ := by
+        simpa [w] using weighted_primitive_bombieri_davenport c M L Q hQ
+  rw [hsquare_flat A, hsquare_flat B]
   apply mul_le_mul
-  · calc
-      (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, A q χ ^ 2) ≤
-          ∑ q ∈ Finset.Icc 1 Q,
-            w q * ∑ χ : PrimitiveCharacter q, A q χ ^ 2 := by
-        apply Finset.sum_le_sum_of_subset_of_nonneg hS
-        intro q hq hnot
-        exact mul_nonneg (by dsimp [w]; positivity)
-          (Finset.sum_nonneg fun χ hχ => sq_nonneg _)
-      _ ≤ largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-          ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖a m‖ ^ 2 := by
-        simpa [w, A] using weighted_primitive_bombieri_davenport a Ma Na Q hQ
-  · calc
-      (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, B q χ ^ 2) ≤
-          ∑ q ∈ Finset.Icc 1 Q,
-            w q * ∑ χ : PrimitiveCharacter q, B q χ ^ 2 := by
-        apply Finset.sum_le_sum_of_subset_of_nonneg hS
-        intro q hq hnot
-        exact mul_nonneg (by dsimp [w]; positivity)
-          (Finset.sum_nonneg fun χ hχ => sq_nonneg _)
-      _ ≤ largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-          ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), ‖b n‖ ^ 2 := by
-        simpa [w, B] using weighted_primitive_bombieri_davenport b Mb Nb Q hQ
+  · exact hlarge a Ma Na
+  · exact hlarge b Mb Nb
   · exact Finset.sum_nonneg fun q hq => mul_nonneg (by dsimp [w]; positivity)
       (Finset.sum_nonneg fun χ hχ => sq_nonneg _)
   · unfold largeSieveBound

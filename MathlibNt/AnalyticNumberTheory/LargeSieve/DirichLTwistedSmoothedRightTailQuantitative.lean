@@ -235,38 +235,21 @@ theorem twistedSmoothedPerron_right_tails_quantitative
                 gcongr
       _ = 6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ) * (1 + t ^ 2)⁻¹ := by
         ring
-  constructor
-  · calc
-      ‖∫ t in Iic (-T), f t‖ ≤ ∫ t in Iic (-T), ‖f t‖ :=
-        norm_integral_le_integral_norm _
-      _ ≤ ∫ t in Iic (-T), g t := by
-        exact integral_mono_ae hf.norm.integrableOn hg.integrableOn
-          (ae_restrict_of_forall_mem measurableSet_Iic fun t _ => hpoint t)
-      _ ≤ 6 * C * X ^ (1 + δ) * (1 + δ⁻¹ ^ 2) / (ε * T) := by
-        dsimp [g]
+  have htail (s : Set ℝ)
+      (hdecay : ∫ t in s, (1 + t ^ 2)⁻¹ ≤ T⁻¹) :
+      ‖∫ t in s, f t‖ ≤ 6 * C * X ^ (1 + δ) * (1 + δ⁻¹ ^ 2) / (ε * T) := by
+    calc
+      ‖∫ t in s, f t‖ ≤ ∫ t in s, ‖f t‖ := norm_integral_le_integral_norm _
+      _ ≤ ∫ t in s, g t :=
+        integral_mono_ae hf.norm.integrableOn hg.integrableOn (Filter.Eventually.of_forall hpoint)
+      _ = (6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ)) *
+          ∫ t in s, (1 + t ^ 2)⁻¹ := by
+        dsimp only [g]
         rw [integral_const_mul]
-        have htail := integral_left_inv_one_add_sq_le_inv hT
-        calc
-          (6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ)) *
-              ∫ t in Iic (-T), (1 + t ^ 2)⁻¹
-              ≤ (6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ)) * T⁻¹ := by
-                gcongr
-          _ = _ := by field_simp [hε.ne', (lt_of_lt_of_le zero_lt_one hT).ne']
-  · calc
-      ‖∫ t in Ici T, f t‖ ≤ ∫ t in Ici T, ‖f t‖ :=
-        norm_integral_le_integral_norm _
-      _ ≤ ∫ t in Ici T, g t := by
-        exact integral_mono_ae hf.norm.integrableOn hg.integrableOn
-          (ae_restrict_of_forall_mem measurableSet_Ici fun t _ => hpoint t)
-      _ ≤ 6 * C * X ^ (1 + δ) * (1 + δ⁻¹ ^ 2) / (ε * T) := by
-        dsimp [g]
-        rw [integral_const_mul]
-        have htail := integral_right_inv_one_add_sq_le_inv hT
-        calc
-          (6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ)) *
-              ∫ t in Ici T, (1 + t ^ 2)⁻¹
-              ≤ (6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ)) * T⁻¹ := by
-                gcongr
-          _ = _ := by field_simp [hε.ne', (lt_of_lt_of_le zero_lt_one hT).ne']
+      _ ≤ (6 * (1 + δ⁻¹ ^ 2) * C / ε * X ^ (1 + δ)) * T⁻¹ :=
+        mul_le_mul_of_nonneg_left hdecay (by positivity)
+      _ = _ := by ring
+  exact ⟨htail (Iic (-T)) (integral_left_inv_one_add_sq_le_inv hT),
+    htail (Ici T) (integral_right_inv_one_add_sq_le_inv hT)⟩
 
 end DirichletCharacter

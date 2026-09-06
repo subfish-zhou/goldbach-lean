@@ -27,14 +27,7 @@ noncomputable def dirichletLConductorHeightCutoff (q : ℕ) (t : ℝ) : ℕ :=
 
 private lemma character_nat_zero_of_ne_one
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) : χ (0 : ℕ) = 0 := by
-  have hq1 : q ≠ 1 := by
-    intro h
-    subst q
-    exact hχ (Subsingleton.elim _ _)
-  letI : Fact (1 < q) :=
-    ⟨Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨NeZero.ne q, hq1⟩⟩
-  simpa only [Nat.cast_zero] using
-    (MulChar.map_nonunit χ (a := (0 : ZMod q)) not_isUnit_zero)
+  exact DirichletLConditionalValueSeries.character_nat_zero_of_ne_one χ hχ
 
 /-- A nonprincipal character cannot have modulus zero or one. -/
 lemma two_le_modulus_of_ne_one
@@ -67,7 +60,8 @@ lemma log_conductorHeightCutoff_pos
   apply Real.log_pos
   exact_mod_cast (two_le_conductorHeightCutoff χ hχ t)
 
-private lemma rpow_one_sub_le_exp_one
+/-- Natural powers near the line `σ = 1` are bounded by `exp 1` up to the cutoff. -/
+lemma rpow_one_sub_le_exp_one
     {m k : ℕ} {σ : ℝ} (hm : 2 ≤ m) (hk1 : 1 ≤ k) (hkm : k ≤ m)
     (hnear : 1 - 1 / Real.log m ≤ σ) :
     (k : ℝ) ^ (1 - σ) ≤ Real.exp 1 := by
@@ -78,23 +72,16 @@ private lemma rpow_one_sub_le_exp_one
   rw [Real.rpow_def_of_pos hkpos]
   apply Real.exp_le_exp.mpr
   have hlogk0 : 0 ≤ Real.log (k : ℝ) := Real.log_nonneg (by exact_mod_cast hk1)
-  by_cases he : 1 - σ ≤ 0
-  · nlinarith
-  · have hepos : 0 < 1 - σ := lt_of_not_ge he
-    have hlogle : Real.log (k : ℝ) ≤ Real.log (m : ℝ) := by
-      exact Real.strictMonoOn_log.monotoneOn hkpos
-        (show (0 : ℝ) < (m : ℝ) by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_two hm))
-        (by exact_mod_cast hkm)
-    have hene : 1 - σ ≤ 1 / Real.log (m : ℝ) := by linarith
-    have hfirst : Real.log (k : ℝ) * (1 - σ) ≤
-        Real.log (k : ℝ) * (1 / Real.log (m : ℝ)) :=
+  have hlogle : Real.log (k : ℝ) ≤ Real.log (m : ℝ) :=
+    Real.log_le_log hkpos (by exact_mod_cast hkm)
+  have hene : 1 - σ ≤ 1 / Real.log (m : ℝ) := by linarith
+  calc
+    Real.log (k : ℝ) * (1 - σ)
+        ≤ Real.log (k : ℝ) * (1 / Real.log (m : ℝ)) :=
       mul_le_mul_of_nonneg_left hene hlogk0
-    have hsecond : Real.log (k : ℝ) * (1 / Real.log (m : ℝ)) ≤
-        Real.log (m : ℝ) * (1 / Real.log (m : ℝ)) :=
+    _ ≤ Real.log (m : ℝ) * (1 / Real.log (m : ℝ)) :=
       mul_le_mul_of_nonneg_right hlogle (by positivity)
-    have hprod := hfirst.trans hsecond
-    rw [mul_one_div_cancel (ne_of_gt hlogm)] at hprod
-    nlinarith
+    _ = 1 := mul_one_div_cancel hlogm.ne'
 
 private lemma norm_prefix_le
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) {σ t : ℝ} {m : ℕ}
@@ -217,11 +204,8 @@ theorem norm_LFunction_le_thirtytwo_mul_one_add_log_conductorHeightCutoff
   calc
     _ ≤ ‖orderedValueSeries χ hχ (σ + I * t) (by simpa using hσpos) -
           ∑ k ∈ range m, cpowWeight (σ + I * t) k * χ k‖ +
-        ‖∑ k ∈ range m, cpowWeight (σ + I * t) k * χ k‖ := by
-          simpa only [sub_add_cancel] using norm_add_le
-            (orderedValueSeries χ hχ (σ + I * t) (by simpa using hσpos) -
-              ∑ k ∈ range m, cpowWeight (σ + I * t) k * χ k)
-            (∑ k ∈ range m, cpowWeight (σ + I * t) k * χ k)
+        ‖∑ k ∈ range m, cpowWeight (σ + I * t) k * χ k‖ :=
+          norm_le_norm_sub_add _ _
     _ ≤ 7 * Real.exp 1 + 2 * Real.exp 1 * (1 + Real.log m) := by
       gcongr
     _ ≤ 32 * (1 + Real.log m) := by

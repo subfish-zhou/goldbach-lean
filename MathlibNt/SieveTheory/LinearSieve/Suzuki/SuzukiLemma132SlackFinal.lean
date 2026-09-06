@@ -231,6 +231,28 @@ theorem lemma132_finiteLayerHatUniform_slack
         have hsignPred : ErrorSign.ofDepth (N - 1) =
             (ErrorSign.ofDepth N).opposite :=
           ErrorSign.ofDepth_pred_eq_opposite (by omega)
+        have predecessor_bound (y : ℝ)
+            (hy : 2 + ((N % 2 : ℕ) : ℝ) ≤ y) :
+            ∀ t ∈ Ioi y,
+              finiteSourceLayer 1 2 (N - 1) (t - 1) ≤
+                C * ((t - 1) *
+                  H.T (ErrorSign.ofDepth N).opposite (t - 1)) := by
+          intro t ht
+          have htdom := pred_parityDomain_of_exact_threshold N hN2 hy ht
+          have hIH := ih (N - 1) (by omega) (t - 1) hpred htdom
+          rw [hsignPred] at hIH
+          have ht1 : 0 < t - 1 := by
+            have hmod0 : (0 : ℝ) ≤ ((N % 2 : ℕ) : ℝ) := Nat.cast_nonneg _
+            change y < t at ht
+            linarith
+          apply le_of_mul_le_mul_left _ ht1
+          calc
+            (t - 1) * finiteSourceLayer 1 2 (N - 1) (t - 1) ≤
+                C * (t - 1) ^ 2 *
+                  H.T (ErrorSign.ofDepth N).opposite (t - 1) := hIH
+            _ = (t - 1) *
+                (C * ((t - 1) *
+                  H.T (ErrorSign.ofDepth N).opposite (t - 1))) := by ring
         have high_bound : ∀ y : ℝ,
             2 + ((N % 2 : ℕ) : ℝ) ≤ y →
             y * finiteSourceLayer 1 2 N y ≤
@@ -240,26 +262,7 @@ theorem lemma132_finiteLayerHatUniform_slack
             ⟨hFinInt, hFinTail⟩
           rcases shiftedHatTail_le_weightedHat hH N y hN2 hy with
             ⟨hShiftInt, hShiftTail⟩
-          have hpoint : ∀ t ∈ Ioi y,
-              finiteSourceLayer 1 2 (N - 1) (t - 1) ≤
-                C * ((t - 1) *
-                  H.T (ErrorSign.ofDepth N).opposite (t - 1)) := by
-            intro t ht
-            have htdom := pred_parityDomain_of_exact_threshold N hN2 hy ht
-            have hIH := ih (N - 1) (by omega) (t - 1) hpred htdom
-            rw [hsignPred] at hIH
-            have ht1 : 0 < t - 1 := by
-              have hmod0 : (0 : ℝ) ≤ ((N % 2 : ℕ) : ℝ) := Nat.cast_nonneg _
-              change y < t at ht
-              linarith
-            apply le_of_mul_le_mul_left _ ht1
-            calc
-              (t - 1) * finiteSourceLayer 1 2 (N - 1) (t - 1) ≤
-                  C * (t - 1) ^ 2 *
-                    H.T (ErrorSign.ofDepth N).opposite (t - 1) := hIH
-              _ = (t - 1) *
-                  (C * ((t - 1) *
-                    H.T (ErrorSign.ofDepth N).opposite (t - 1))) := by ring
+          have hpoint := predecessor_bound y hy
           have hIntegral :
               (∫ t in Ioi y, finiteSourceLayer 1 2 (N - 1) (t - 1)) ≤
                 ∫ t in Ioi y,
@@ -299,26 +302,7 @@ theorem lemma132_finiteLayerHatUniform_slack
                 (by rw [hmod]; norm_num) with ⟨hFinInt3, hFinTail3⟩
             rcases lemma132_weightedHat_plus_three_endpoint_slack hH with
               ⟨hShiftInt3, hShiftEq3, hWeightEq3⟩
-            have hpoint3 : ∀ t ∈ Ioi (3 : ℝ),
-                finiteSourceLayer 1 2 (N - 1) (t - 1) ≤
-                  C * ((t - 1) *
-                    H.T (ErrorSign.ofDepth N).opposite (t - 1)) := by
-              intro t ht
-              have htdom := pred_parityDomain_of_exact_threshold N hN2
-                (by rw [hmod]; norm_num) ht
-              have hIH := ih (N - 1) (by omega) (t - 1) hpred htdom
-              rw [hsignPred] at hIH
-              have ht1 : 0 < t - 1 := by
-                change (3 : ℝ) < t at ht
-                linarith
-              apply le_of_mul_le_mul_left _ ht1
-              calc
-                (t - 1) * finiteSourceLayer 1 2 (N - 1) (t - 1) ≤
-                    C * (t - 1) ^ 2 *
-                      H.T (ErrorSign.ofDepth N).opposite (t - 1) := hIH
-                _ = (t - 1) *
-                    (C * ((t - 1) *
-                      H.T (ErrorSign.ofDepth N).opposite (t - 1))) := by ring
+            have hpoint3 := predecessor_bound 3 (by rw [hmod]; norm_num)
             have hIntegral3 :
                 (∫ t in Ioi (3 : ℝ), finiteSourceLayer 1 2 (N - 1) (t - 1)) ≤
                   ∫ t in Ioi (3 : ℝ),

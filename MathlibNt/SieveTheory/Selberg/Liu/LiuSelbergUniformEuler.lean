@@ -38,10 +38,7 @@ theorem summable_liuUniversalAbsEulerDeviation :
 
 theorem liuSelbergAbsPrimeDeviation_two_nonneg (p : Nat.Primes) :
     0 ≤ liuSelbergAbsPrimeDeviation 2 p := by
-  unfold liuSelbergAbsPrimeDeviation
-  have hs := summable_abs_liuSelbergCorrection_prime_pow 2 p.2
-  have hle := hs.le_tsum 0 (fun e he => abs_nonneg _)
-  simpa [liuSelbergCorrection_one] using sub_nonneg.mpr hle
+  exact liuSelbergAbsPrimeDeviation_nonneg_core (by norm_num) p
 
 theorem liuUniversalAbsEulerFactor_nonneg (p : Nat.Primes) :
     0 ≤ liuUniversalAbsEulerFactor p := by
@@ -88,10 +85,7 @@ noncomputable def liuPrimeDivisorKernel (N : ℕ) (p : Nat.Primes) : ℝ :=
 theorem liuSelbergAbsPrimeDeviation_nonneg
     {N : ℕ} (_hNeven : Even N) (p : Nat.Primes) :
     0 ≤ liuSelbergAbsPrimeDeviation N p := by
-  unfold liuSelbergAbsPrimeDeviation
-  have hs := summable_abs_liuSelbergCorrection_prime_pow N p.2
-  have hle := hs.le_tsum 0 (fun e he => abs_nonneg _)
-  simpa [liuSelbergCorrection_one] using sub_nonneg.mpr hle
+  exact liuSelbergAbsPrimeDeviation_nonneg_core _hNeven p
 
 theorem liuAbsoluteEulerFactor_one_le
     {N : ℕ} (hNeven : Even N) (p : Nat.Primes) :
@@ -344,13 +338,7 @@ theorem liuPrimeDivisorProduct_pos (N : ℕ) :
 
 theorem one_add_liuBaseDeviation_le_one (p : ℕ) :
     1 + liuBaseDeviation p ≤ 1 := by
-  unfold liuBaseDeviation
-  split_ifs with hp
-  · have hsq : 0 ≤ ((p : ℝ) - 1) ^ 2 := sq_nonneg _
-    have hdiv : 0 ≤ 1 / ((p : ℝ) - 1) ^ 2 := div_nonneg (by norm_num) hsq
-    rw [neg_div]
-    linarith
-  · norm_num
+  exact MathlibNt.SieveTheory.SingularSeries.one_add_liuBaseDeviation_le_one p
 
 theorem liuUniversalProduct_le_one : liuUniversalProduct ≤ 1 := by
   unfold liuUniversalProduct
@@ -685,14 +673,8 @@ theorem liuSquarefreeDivisorKernelFunction_isMultiplicative
     · rintro ⟨hm, hn⟩
       exact (Nat.coprime_iff_isRelPrime.mp hmn).mul_dvd hm hn
   have hmem : m * n ∈ N.divisors ↔ m ∈ N.divisors ∧ n ∈ N.divisors := by
-    constructor
-    · intro h
-      have hd := (Nat.mem_divisors.mp h).1
-      exact ⟨Nat.mem_divisors.mpr ⟨(hdiv.mp hd).1, hN.ne'⟩,
-        Nat.mem_divisors.mpr ⟨(hdiv.mp hd).2, hN.ne'⟩⟩
-    · rintro ⟨hm, hn⟩
-      exact Nat.mem_divisors.mpr
-        ⟨hdiv.mpr ⟨(Nat.mem_divisors.mp hm).1, (Nat.mem_divisors.mp hn).1⟩, hN.ne'⟩
+    simp only [Nat.mem_divisors, hdiv]
+    tauto
   have hsq := Nat.squarefree_mul hmn
   by_cases hm : m ∈ N.divisors ∧ Squarefree m <;>
     by_cases hn : n ∈ N.divisors ∧ Squarefree n
@@ -1032,33 +1014,11 @@ theorem liuSelbergAbsoluteLogMoment_le_uniform
     _ ≤ liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
           liuUniversalAbsEuler *
             (liuPrimeDivisorProduct N * liuPrimeDivisorLogSum N) := by
-      have hmass :
-          (∑' n : ℕ, |liuSelbergCorrection 2 n|) ≤ liuUniversalAbsEuler :=
-        (tsum_abs_liuSelbergCorrection_two_eq_liuUniversalAbsEuler).le
-      have hkernel_nonneg :
-          0 ≤ ∑' n : ℕ, liuSquarefreeDivisorKernel N n * Real.log n := by
-        apply tsum_nonneg
-        intro n
-        exact mul_nonneg (liuSquarefreeDivisorKernel_nonneg N n)
-          (Real.log_natCast_nonneg n)
-      calc
-        liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
-              (∑' n : ℕ, |liuSelbergCorrection 2 n|) *
-                (∑' n : ℕ, liuSquarefreeDivisorKernel N n * Real.log n) ≤
-            liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
-              liuUniversalAbsEuler *
-                (∑' n : ℕ, liuSquarefreeDivisorKernel N n * Real.log n) :=
-          by
-            have h := mul_le_mul_of_nonneg_right hmass hkernel_nonneg
-            linarith
-        _ ≤ liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
-              liuUniversalAbsEuler *
-                (liuPrimeDivisorProduct N * liuPrimeDivisorLogSum N) :=
-          by
-            have h := mul_le_mul_of_nonneg_left
-              (tsum_liuSquarefreeDivisorKernel_mul_log_le hN)
-              liuUniversalAbsEuler_nonneg
-            linarith
+      rw [tsum_abs_liuSelbergCorrection_two_eq_liuUniversalAbsEuler]
+      exact add_le_add le_rfl
+        (mul_le_mul_of_nonneg_left
+          (tsum_liuSquarefreeDivisorKernel_mul_log_le hN)
+          liuUniversalAbsEuler_nonneg)
     _ = liuPrimeDivisorProduct N *
         (liuUniversalAbsLogMoment +
           liuUniversalAbsEuler * liuPrimeDivisorLogSum N) := by ring

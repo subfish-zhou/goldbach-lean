@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17KernelBounds
+import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma3LFourthMoment
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17BromwichSum
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
@@ -27,7 +28,8 @@ open scoped BigOperators ArithmeticFunction Topology
 
 namespace AnalyticNumberTheory.LargeSieve
 
-private theorem one_lt_of_mem_conductorBlock
+/-- Conductors in a positive-level Chen block are greater than one. -/
+theorem chen1973Lemma6ConductorBlock_one_lt
     {x L level d : ℕ} (hlevel : 1 ≤ level)
     (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
     1 < d := by
@@ -36,14 +38,16 @@ private theorem one_lt_of_mem_conductorBlock
   · simp [chen1973Lemma6ConductorBlock, hzero, chen1973Lemma6DyadicShell] at hd
     omega
 
+private theorem one_lt_of_mem_conductorBlock
+    {x L level d : ℕ} (hlevel : 1 ≤ level)
+    (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
+    1 < d := by
+  exact AnalyticNumberTheory.LargeSieve.chen1973Lemma6ConductorBlock_one_lt hlevel hd
+
 private theorem primitiveCharacter_ne_one_of_one_lt
     {d : ℕ} [NeZero d] (hd : 1 < d) (χ : PrimitiveCharacter d) :
     χ.1 ≠ 1 := by
-  intro hχ
-  have hprim := χ.2
-  rw [DirichletCharacter.IsPrimitive, hχ,
-    DirichletCharacter.conductor_one] at hprim
-  omega
+  exact AnalyticNumberTheory.LargeSieve.chen1973_primitive_ne_one hd χ
 
 private theorem one_lt_alpha {x : ℕ} (hx : 3 ≤ x) :
     1 < chen1973Lemma6Alpha x := by
@@ -124,23 +128,8 @@ private theorem norm_scaled_mellinKernel_le_inv_one_add_sq
   have hstep :
       A ^ (n + 1) / (‖z‖ * ‖η‖ ^ (n + 1)) ≤
         A ^ (n + 1) / (σ * (1 + t ^ 2)) := by
-    have hηpow0 : 0 ≤ ‖η‖ ^ (n + 1) := pow_nonneg (norm_nonneg _) _
-    have hz0 : 0 ≤ ‖z‖ := norm_nonneg _
-    have hleft :
-        A ^ (n + 1) / (‖z‖ * ‖η‖ ^ (n + 1)) ≤
-          A ^ (n + 1) / (σ * ‖η‖ ^ (n + 1)) := by
-      apply div_le_div_of_nonneg_left
-      · exact pow_nonneg (zero_le_one.trans hA) _
-      · positivity
-      · gcongr
-    have hright :
-        A ^ (n + 1) / (σ * ‖η‖ ^ (n + 1)) ≤
-          A ^ (n + 1) / (σ * (1 + t ^ 2)) := by
-      apply div_le_div_of_nonneg_left
-      · exact pow_nonneg (zero_le_one.trans hA) _
-      · positivity
-      · gcongr
-    exact hleft.trans hright
+    apply div_le_div_of_nonneg_left (pow_nonneg hApos.le _) (by positivity)
+    exact mul_le_mul hzge hηpow (by positivity) (norm_nonneg _)
   calc
     ‖(X : ℂ) ^ z * chen1973MellinKernel (x : ℝ) z‖ =
         X ^ σ * ‖chen1973MellinKernel (x : ℝ) z‖ := by
@@ -336,7 +325,6 @@ theorem chen1973Lemma6ActualPhi_eq_negLogDerivIntegral_alpha
       (n : ℂ) ^ (α + t * I) * kernel t
   have hX : 0 < X := by positivity
   have hα : 1 < α := one_lt_alpha hx
-  have hα2 : α ≤ 2 := alpha_le_two hx
   have hkernel : Integrable kernel := by
     simpa [kernel, α, X] using integrable_scaled_mellinKernel_alpha (x := x) hx hX
   have hcoeff : Summable coeff := by
@@ -381,18 +369,12 @@ theorem chen1973Lemma6ActualPhi_eq_negLogDerivIntegral_alpha
       simpa [F] using hkernel.bdd_mul hmeas (ae_of_all _ hbd)
   have hF_sum :
       Summable (fun n : ℕ => ∫ t : ℝ, ‖F n t‖) := by
-    let K : ℝ := ∫ t : ℝ, ‖kernel t‖
-    have hK : 0 ≤ K := integral_nonneg fun _ => norm_nonneg _
-    refine Summable.of_nonneg_of_le
-      (fun n => integral_nonneg fun _ => norm_nonneg _)
-      (fun n => ?_) ((hcoeff.mul_right K))
-    calc
-      ∫ t : ℝ, ‖F n t‖ ≤ ∫ t : ℝ, coeff n * ‖kernel t‖ := by
-        exact integral_mono_ae (hF_int n).norm (hkernel.norm.const_mul (coeff n))
-          (ae_of_all _ fun t => by
-            dsimp [F]
-            rw [norm_mul, hnorm_eq n t])
-      _ = coeff n * K := by rw [integral_const_mul]
+    have hnorm_integral (n : ℕ) :
+        (∫ t : ℝ, ‖F n t‖) = coeff n * ∫ t : ℝ, ‖kernel t‖ := by
+      simp_rw [F, norm_mul, hnorm_eq]
+      exact integral_const_mul _ _
+    simpa only [hnorm_integral] using
+      hcoeff.mul_right (∫ t : ℝ, ‖kernel t‖)
   calc
     chen1973Lemma6ActualPhi x d χ pp =
         ∑' n : ℕ,

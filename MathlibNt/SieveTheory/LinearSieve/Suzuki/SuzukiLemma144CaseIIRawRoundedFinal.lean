@@ -18,7 +18,8 @@ open SwitchingPrinciple.SuzukiLemma144KappaOne
 
 set_option maxHeartbeats 3000000
 
-private theorem sourceParityIndices_eq_actualParityCarrier (n : ℕ) :
+/-- The source parity indices coincide with the actual recurrence carrier. -/
+theorem sourceParityIndices_eq_actualParityCarrier (n : ℕ) :
     sourceParityIndices n = suzukiActualParityCarrier n := by
   ext m
   simp [sourceParityIndices, suzukiActualParityCarrier]
@@ -30,35 +31,11 @@ private theorem caseII_raw_cubic_scale
     CarrierQuotientThresholdGeometry
       (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (3 : ℝ))⌉₊)
       D Dmin (sourceSigma (D : ℝ) d) 3 := by
-  intro p hp
-  have hp' := hp
-  simp only [sigmaOneCarrier, Finset.mem_filter] at hp'
-  have hD1 : (1 : ℝ) ≤ (D : ℝ) := by
-    exact_mod_cast (show 1 ≤ D by nlinarith)
-  have hrootOrder : (D : ℝ) ^ (1 / (3 : ℝ)) ≤
-      (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    rpow_one_div_mono_of_le hD1 (by norm_num) (by norm_num)
-  have hpRoot : (p : ℝ) < (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    hp'.2.2.trans_le hrootOrder
-  have hsquareR : (p : ℝ) ^ (2 : ℕ) < (D : ℝ) := by
-    have hiff := Real.lt_rpow_inv_iff_of_pos
-      (x := (p : ℝ)) (y := (D : ℝ)) (z := (2 : ℝ))
-      (by positivity) (by positivity) (by norm_num)
-    norm_num [one_div] at hiff hpRoot ⊢
-    exact hiff.mp hpRoot
-  have hsquare : p ^ 2 < D := by exact_mod_cast hsquareR
-  by_cases hminp : Dmin ≤ p
-  · calc
-      Dmin * p ≤ p * p := Nat.mul_le_mul_right p hminp
-      _ = p ^ 2 := by ring
-      _ ≤ D := Nat.le_of_lt hsquare
-  · have hpmin : p < Dmin := Nat.lt_of_not_ge hminp
-    calc
-      Dmin * p ≤ Dmin * Dmin := Nat.mul_le_mul_left Dmin (Nat.le_of_lt hpmin)
-      _ = Dmin ^ 2 := by ring
-      _ ≤ D := hD
+  exact MathlibNt.SieveTheory.caseII_cubic_carrier_quotient_scale
+    (D := D) (Dmin := Dmin) (d := d) S hDmin hD
 
-private theorem caseII_raw_inherited_gt_two
+/-- A prime below the cubic cutoff has inherited logarithmic coordinate above two. -/
+theorem caseII_raw_inherited_gt_two
     {D p : ℕ} (hp : 2 ≤ p) (hD : 1 < D)
     (hupper : (p : ℝ) < (D : ℝ) ^ (1 / (3 : ℝ))) :
     2 < inheritedCoordinate D p := by

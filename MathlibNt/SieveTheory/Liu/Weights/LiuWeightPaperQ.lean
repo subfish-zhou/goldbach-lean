@@ -106,7 +106,8 @@ def paperQStylePrimes (N w : ℕ) : Finset ℕ :=
 def paperQStyleModulus (N w : ℕ) : ℕ :=
   (paperQStylePrimes N w).prod id
 
-private theorem primeFactors_prod_eq_self_paperQ {S : Finset ℕ}
+/-- The prime factors of a product over a finite prime set recover that set. -/
+theorem primeFactors_prod_eq_self_paperQ {S : Finset ℕ}
     (hS : ∀ p ∈ S, p.Prime) : (S.prod id).primeFactors = S := by
   induction S using Finset.induction_on with
   | empty => simp [Nat.primeFactors_one]
@@ -573,15 +574,11 @@ theorem liuSourceR1RectangularPairReciprocalSum_eq_mul (N d : ℕ) :
     liuSourceR1P₂IntervalReciprocalSum
   rw [Finset.sum_mul]
   apply Finset.sum_congr rfl
-  intro p₁ hp₁
+  intro p₁ _
   rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
-  intro p₂ hp₂
-  have hp₁pos : (0 : ℝ) < p₁ := by
-    exact_mod_cast ((Finset.mem_filter.mp hp₁).2.1.pos)
-  have hp₂pos : (0 : ℝ) < p₂ := by
-    exact_mod_cast ((Finset.mem_filter.mp hp₂).2.1.pos)
-  field_simp [ne_of_gt hp₁pos, ne_of_gt hp₂pos]
+  intro p₂ _
+  exact (one_div_mul_one_div _ _).symm
 
 /-- The second-coordinate reciprocal interval sum is nonnegative. -/
 lemma liuSourceR1P₂IntervalReciprocalSum_nonneg (N : ℕ) :
@@ -780,20 +777,12 @@ theorem paperQStyleSourceR1ReciprocalSum_eq_weighted_pair_sums
   classical
   unfold paperQStyleSourceR1ReciprocalSum paperQStyleR1PairReciprocalSum
   apply Finset.sum_congr rfl
-  intro d hd
-  rw [paperQStyleR1Divisors, Finset.mem_filter] at hd
-  have hdpos : 0 < d := Nat.pos_of_dvd_of_pos
-    (Nat.mem_divisors.mp hd.1).1
-    (Nat.pos_of_ne_zero (paperQStyleModulus_ne_zero N w))
-  have htot : (0 : ℝ) < Nat.totient d := by
-    exact_mod_cast Nat.totient_pos.mpr hdpos
+  intro d _
   rw [Finset.mul_sum, Finset.mul_sum]
   apply Finset.sum_congr rfl
-  intro p hp
-  have hpairs : p ∈ liuWeightPairs N z y := (Finset.mem_filter.mp hp).1
-  have hprod : (0 : ℝ) < (p.1 : ℝ) * p.2 := by
-    exact_mod_cast liuWeightPairs_product_pos hpairs
-  field_simp [ne_of_gt hprod, ne_of_gt htot]
+  intro p _
+  simp only [div_eq_mul_inv, mul_inv_rev]
+  ring
 
 /-- A transparent uniform upper bound for every per-modulus pair reciprocal
 sum in the exact truncated divisor index. -/
@@ -1076,9 +1065,7 @@ theorem paperQStyleEulerFactor_le_mertensFactor_inv_cube
 private lemma paperQStyleMertensFactor_pos
     {p : ℕ} (hp : p.Prime) :
     0 < (1 : ℝ) - 1 / (p : ℝ) := by
-  have hpR : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
-  rw [sub_pos, div_lt_iff₀ (by positivity : (0 : ℝ) < (p : ℝ))]
-  simpa using hpR
+  exact AnalyticNumberTheory.Mertens.primeFactor_pos hp
 
 /-- For `w ≤ N`, enlarging from the primes defining the paper-Q-style modulus
 to every prime at most `N` bounds the full divisor sum by the reciprocal cube
@@ -1159,10 +1146,8 @@ theorem paperQStyleDivisorWeightLogConstant_nonneg :
 
 private lemma mertensPrimeProduct_pos (N : ℕ) :
     0 < MertensTheorem.primeProduct N := by
-  unfold MertensTheorem.primeProduct
-  apply Finset.prod_pos
-  intro p hp
-  exact paperQStyleMertensFactor_pos (Finset.mem_filter.mp hp).2
+  rw [MertensTheorem.primeProduct_eq_analyticNumberTheory]
+  exact AnalyticNumberTheory.Mertens.primeProduct_pos N
 
 /-- The corrected full divisor weight is `O((log N)^3)`, uniformly for
 `w ≤ N`, with an explicit choice-defined constant and threshold `N ≥ 3`. -/

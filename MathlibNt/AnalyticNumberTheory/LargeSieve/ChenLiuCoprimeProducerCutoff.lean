@@ -91,7 +91,9 @@ theorem shortCutoff_le_x {x : ℕ} {B R : ℝ}
     (hRD : R ≤ upperConductor x B) : shortCutoff R ≤ x := by
   apply Nat.floor_le_of_le
   have hRs := hRD.trans (upperConductor_le_sqrt hx hB)
-  nlinarith [Real.sq_sqrt (Nat.cast_nonneg x)]
+  calc
+    R ^ 2 ≤ (Real.sqrt x) ^ 2 := pow_le_pow_left₀ hR hRs 2
+    _ = (x : ℝ) := Real.sq_sqrt (Nat.cast_nonneg x)
 
 theorem shortCutoff_lt_height {x : ℕ} {B R : ℝ}
     (hx : 2 ≤ Real.log x) (hB : 0 ≤ B) (hR : 0 ≤ R)
@@ -148,8 +150,12 @@ theorem chosen_short_contour_uniform :
   refine ⟨16 * Real.exp 1, by positivity, X₀, ?_⟩
   intro x hx B j q χ m y A₁ A₂ k f hB hRD hf hy hyx hAy
   have hlog := hX x hx
+  have hlog1 : 1 ≤ Real.log (x : ℝ) := le_trans (by norm_num : (1 : ℝ) ≤ 2) hlog
+  have hRadius : 0 ≤ conductorRadius x B j :=
+    zero_le_one.trans (conductorRadius_ge_one j hlog1 hB)
+  have hCutoff : shortCutoff (conductorRadius x B j) ≤ x :=
+    shortCutoff_le_x hlog1 hB hRadius hRD
   exact pan223_source_inverse_square f hf m _ y A₁ A₂ k χ hlog hy hyx hAy
-    (shortCutoff_le_x (by linarith) hB
-      (by have := conductorRadius_ge_one j (by linarith) hB; linarith) hRD)
+    hCutoff
 
 end AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducer

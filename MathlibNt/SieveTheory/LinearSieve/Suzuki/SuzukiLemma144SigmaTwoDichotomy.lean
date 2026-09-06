@@ -47,29 +47,23 @@ theorem lemma144_sigmaTwo_evenNarrow_or_zero
       suzukiSigmaTwo S N D z
         ((D : ℝ) ^ (1 / lemma144RealTau D s)) = 0 := by
   classical
-  by_cases hN : Even N
-  · by_cases hnarrow :
-      (D : ℝ) ^ (1 / lemma144RealTau D s) < (z : ℝ)
-    · exact Or.inl ⟨hN, hnarrow⟩
-    · right
-      unfold suzukiSigmaTwo
-      apply Finset.sum_eq_zero
-      intro p hp
-      have hp' := Finset.mem_filter.mp hp
-      have hpz : p < z := (Finset.mem_filter.mp hp'.1).2
-      have hpzR : (p : ℝ) < (z : ℝ) := by exact_mod_cast hpz
-      have hzp : (z : ℝ) ≤ (p : ℝ) :=
-        (le_of_not_gt hnarrow).trans hp'.2
-      exact False.elim ((not_le_of_gt hpzR) hzp)
-  · right
+  have hzero (hupper : (z : ℝ) ≤ (D : ℝ) ^ (1 / lemma144RealTau D s)) :
+      suzukiSigmaTwo S N D z
+        ((D : ℝ) ^ (1 / lemma144RealTau D s)) = 0 := by
     unfold suzukiSigmaTwo
     apply Finset.sum_eq_zero
     intro p hp
     have hp' := Finset.mem_filter.mp hp
     have hpz : p < z := (Finset.mem_filter.mp hp'.1).2
     have hpzR : (p : ℝ) < (z : ℝ) := by exact_mod_cast hpz
-    have hzp : (z : ℝ) ≤ (p : ℝ) := (hoddEmpty hN).trans hp'.2
+    have hzp : (z : ℝ) ≤ (p : ℝ) := hupper.trans hp'.2
     exact False.elim ((not_le_of_gt hpzR) hzp)
+  by_cases hN : Even N
+  · by_cases hnarrow :
+      (D : ℝ) ^ (1 / lemma144RealTau D s) < (z : ℝ)
+    · exact Or.inl ⟨hN, hnarrow⟩
+    · exact Or.inr (hzero (le_of_not_gt hnarrow))
+  · exact Or.inr (hzero (hoddEmpty hN))
 
 
 end MathlibNt.SieveTheory

@@ -80,23 +80,9 @@ theorem lambdaCharacterPrefixMaxAmplitude_le_nonprincipalPrefixAmplitude
   intro z hz
   rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
   have hyN : y ≤ N := by simpa [Finset.mem_range] using hy
-  have hsquare := norm_lambdaCharacterPrefix_sq_le_characterPrefixMaxSquare
-    N y q hyN χ
-  unfold nonprincipalPrefixAmplitude
-  have hmax0 : 0 ≤ characterPrefixMaxSquare χ vonMangoldtIntegerCoeff 0 N := by
-    unfold characterPrefixMaxSquare
-    have hm := Finset.le_max'
-      ((Finset.range (N + 1)).image
-        (fun t => characterPrefixSquare χ vonMangoldtIntegerCoeff 0 t))
-      (characterPrefixSquare χ vonMangoldtIntegerCoeff 0 0)
-      (Finset.mem_image.mpr ⟨0, by simp, rfl⟩)
-    have hprefix0 :
-        0 ≤ characterPrefixSquare χ vonMangoldtIntegerCoeff 0 0 := by
-      unfold characterPrefixSquare
-      positivity
-    exact hprefix0.trans hm
-  nlinarith [Real.sq_sqrt hmax0, norm_nonneg (lambdaCharacterPrefix y q χ),
-    Real.sqrt_nonneg (characterPrefixMaxSquare χ vonMangoldtIntegerCoeff 0 N)]
+  -- Pass from the squared-prefix bound to the square-root amplitude directly.
+  exact Real.le_sqrt_of_sq_le
+    (norm_lambdaCharacterPrefix_sq_le_characterPrefixMaxSquare N y q hyN χ)
 
 /-- The literal lambda nonprincipal mean is bounded by the all-character mean
 already consumed by the conductor theorem. -/

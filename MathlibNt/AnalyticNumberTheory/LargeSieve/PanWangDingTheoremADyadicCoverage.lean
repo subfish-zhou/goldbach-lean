@@ -209,6 +209,14 @@ theorem panDyadicCells_pairwise (R Q : ℕ) (_hR : 0 < R) :
     have : 2 * (R * 2 ^ j) ≤ R * 2 ^ i := by nlinarith
     omega
 
+/-- Sum over the exact dyadic partition, before taking any norms. -/
+private theorem sum_Ioc_eq_sum_panDyadicCells {α : Type*} [AddCommMonoid α]
+    (f : ℕ → α) (R Q : ℕ) (hR : 0 < R) :
+    ∑ x ∈ Finset.Ioc R Q, f x =
+      ∑ j ∈ Finset.range (panDyadicDepth R Q), ∑ x ∈ panDyadicCell R Q j, f x := by
+  rw [← panDyadicCells_cover R Q hR,
+    Finset.sum_biUnion (panDyadicCells_pairwise R Q hR)]
+
 /-- The clipped `(j,k)` block used to state the exact finite form of (2.13).
 The norm remains outside the complete source sum in its `k`-cell. -/
 def panIymDyadicCoveredBlock
@@ -227,9 +235,7 @@ theorem panSourceCharacterAmplitude_eq_sum_dyadicCells
         panSourceCharacterAmplitude g d y
           (A₁ * 2 ^ k) (min (2 * (A₁ * 2 ^ k)) A₂) χ := by
   unfold panSourceCharacterAmplitude
-  rw [← panDyadicCells_cover A₁ A₂ hA₁,
-    Finset.sum_biUnion (panDyadicCells_pairwise A₁ A₂ hA₁)]
-  simp only [panDyadicCell]
+  exact sum_Ioc_eq_sum_panDyadicCells _ A₁ A₂ hA₁
 
 /-- **Equation (2.13), complete finite dyadic block inequality.**
 
@@ -244,8 +250,7 @@ theorem panIymHigh_le_sum_dyadicCoveredBlocks
         ∑ k ∈ Finset.range (panDyadicDepth A₁ A₂),
           panIymDyadicCoveredBlock g d y D₁ D A₁ A₂ j k := by
   unfold panIymHigh panIymDyadicCoveredBlock
-  rw [← panDyadicCells_cover D₁ D hD₁,
-    Finset.sum_biUnion (panDyadicCells_pairwise D₁ D hD₁)]
+  rw [sum_Ioc_eq_sum_panDyadicCells _ D₁ D hD₁]
   apply Finset.sum_le_sum
   intro j hj
   calc

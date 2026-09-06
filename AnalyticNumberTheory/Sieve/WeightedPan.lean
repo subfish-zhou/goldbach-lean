@@ -86,19 +86,10 @@ theorem lcmPairCount (d : ℕ) (hsq : Squarefree d) :
   rw [hω, ← Nat.card_pair_lcm_eq hsq]
 
 /-- The lcm of two divisors of squarefree `Q` still divides `Q`,
-expressed through factorization. -/
+by the defining divisibility property of the lcm. -/
 private theorem lcm_dvd_of_squarefree {Q d₁ d₂ : ℕ} (hQ : Squarefree Q)
     (h₁ : d₁ ∣ Q) (h₂ : d₂ ∣ Q) : Nat.lcm d₁ d₂ ∣ Q := by
-  have hQ0 : Q ≠ 0 := hQ.ne_zero
-  have hQpos : 0 < Q := Nat.pos_of_ne_zero hQ0
-  have hd₁0 : d₁ ≠ 0 := ne_of_gt (Nat.pos_of_dvd_of_pos h₁ hQpos)
-  have hd₂0 : d₂ ≠ 0 := ne_of_gt (Nat.pos_of_dvd_of_pos h₂ hQpos)
-  have hlcm0 : Nat.lcm d₁ d₂ ≠ 0 := Nat.lcm_ne_zero hd₁0 hd₂0
-  rw [← Nat.factorization_le_iff_dvd hlcm0 hQ0]
-  rw [Nat.factorization_lcm hd₁0 hd₂0]
-  rw [← Nat.factorization_le_iff_dvd hd₁0 hQ0] at h₁
-  rw [← Nat.factorization_le_iff_dvd hd₂0 hQ0] at h₂
-  exact sup_le h₁ h₂
+  exact Nat.lcm_dvd h₁ h₂
 
 /-- **Grouping the Selberg double sum**: for squarefree `Q`,
 `Σ_{d|Q} 3^{ω(d)}·f(d) = Σ_{d₁|Q} Σ_{d₂|Q} f([d₁,d₂])`.
@@ -205,33 +196,7 @@ absent from `d` or present with one of two choices counted
 by `2^{ω(d)}`. -/
 private theorem sum_powerset_pow_two {α : Type*} [DecidableEq α] (t : Finset α) :
     ∑ u ∈ t.powerset, (2 : ℕ) ^ u.card = 3 ^ t.card := by
-  classical
-  induction t using Finset.induction with
-  | empty => simp
-  | insert a s ha ih =>
-      rw [Finset.powerset_insert (s := s) (a := a)]
-      have hdisj : Disjoint s.powerset (s.powerset.image (insert a)) := by
-        rw [Finset.disjoint_left]
-        intro u hu hiu
-        have hnu : a ∉ u := fun hx => ha ((Finset.mem_powerset.mp hu) hx)
-        rcases Finset.mem_image.mp hiu with ⟨w, hw, rfl⟩
-        have hau : a ∈ insert a w := Finset.mem_insert_self a w
-        exact hnu hau
-      have hinj : Set.InjOn (insert a) (s.powerset : Set (Finset α)) := by
-        intro u hu w hw h
-        have hua : a ∉ u := fun hx => ha ((Finset.mem_powerset.mp hu) hx)
-        have hwa : a ∉ w := fun hx => ha ((Finset.mem_powerset.mp hw) hx)
-        have h' := congrArg (fun v : Finset α => v.erase a) h
-        simpa [hua, hwa] using h'
-      rw [Finset.sum_union hdisj, Finset.sum_image hinj]
-      have hcard : (∑ u ∈ s.powerset, (2 : ℕ) ^ (insert a u).card) =
-          ∑ u ∈ s.powerset, (2 : ℕ) ^ u.card * 2 := by
-        apply Finset.sum_congr rfl
-        intro u hu
-        have hua : a ∉ u := fun hx => ha ((Finset.mem_powerset.mp hu) hx)
-        rw [Finset.card_insert_of_notMem hua, pow_succ]
-      rw [hcard, ← Finset.sum_mul, ih, Finset.card_insert_of_notMem ha, pow_succ]
-      ring
+  simpa using (Finset.sum_pow_mul_eq_add_pow (2 : ℕ) 1 t)
 
 /-- **Pan weight decomposition** (Pan 1963; see also the weighted
 form of Halberstam--Richert 1974 Lemma 10.3):

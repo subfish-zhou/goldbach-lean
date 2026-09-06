@@ -1,5 +1,6 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146ShortInterval
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceClaim146AssemblyNext
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDDEAsymptoticClosure
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaGeometryEventually
 
 open scoped Classical BigOperators Interval
@@ -51,29 +52,6 @@ private lemma hasDerivAt_lambdaNeg
     ring
   rw [heq]
   simpa only [Pi.neg_apply, perturbationSlope] using h
-
-private lemma qD_eq_dde_main
-    {H : Section13HatLayers} {D d Δ t : ℝ} (sign : ErrorSign)
-    (hlog : 0 < Real.log D) (ht : 1 < t) :
-    qD H sign.opposite D d Δ t =
-      (perturbation D d 0 t * (t * H.T sign.opposite (t - 1)) /
-          (1 + t ^ d / Real.log D)) *
-        ((t - 1) / t) ^ (1 - Δ) := by
-  have ht0 : 0 < t := zero_lt_one.trans ht
-  have htm0 : 0 < t - 1 := sub_pos.mpr ht
-  have hbase : 0 < 1 + t ^ d / Real.log D := by
-    have : 0 ≤ t ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg ht0.le _) hlog.le
-    linarith
-  simp only [qD, Section13HatLayers.kappaHat, perturbation]
-  norm_num [Real.rpow_one]
-  rw [show t / (t - 1) = ((t - 1) / t)⁻¹ by rw [inv_div],
-      Real.inv_rpow (div_pos htm0 ht0).le, ← Real.rpow_neg (div_pos htm0 ht0).le]
-  rw [Real.rpow_sub_one hbase.ne']
-  rw [show 1 - Δ = 1 + (-Δ) by ring,
-      Real.rpow_add (div_pos htm0 ht0), Real.rpow_one]
-  field_simp [hbase.ne', ne_of_gt ht0, ne_of_gt htm0]
-  <;> ring
 
 private lemma qD_le_lambdaNegDeriv_mul_weight
     {H : Section13HatLayers} {β D d Δ t : ℝ}
@@ -149,38 +127,7 @@ private lemma continuousOn_qD_tail
     (hH : Section13HatContract H β) (sign : ErrorSign)
     (hD : 1 < D) (hs : 1 < s) :
     ContinuousOn (qD H sign D d Δ) (Icc s σ) := by
-  unfold qD
-  have hlog : 0 < Real.log D := Real.log_pos hD
-  have htpos : ∀ t ∈ Icc s σ, 0 < t := fun t ht => (zero_lt_one.trans hs).trans_le ht.1
-  have htmpos : ∀ t ∈ Icc s σ, 0 < t - 1 := fun t ht => sub_pos.mpr (hs.trans_le ht.1)
-  have htpow : ContinuousOn (fun t : ℝ => t ^ d) (Icc s σ) :=
-    continuousOn_id.rpow continuousOn_const (fun t ht => Or.inl (ne_of_gt (htpos t ht)))
-  have hbase : ContinuousOn (fun t : ℝ => 1 + t ^ d / Real.log D) (Icc s σ) :=
-    continuousOn_const.add (htpow.div_const _)
-  have hbasePos : ∀ t ∈ Icc s σ, 0 < 1 + t ^ d / Real.log D := by
-    intro t ht
-    have : 0 ≤ t ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg (htpos t ht).le _) hlog.le
-    linarith
-  have houter : ContinuousOn
-      (fun t : ℝ => (1 + t ^ d / Real.log D) ^ (t - 1)) (Icc s σ) :=
-    hbase.rpow (continuousOn_id.sub continuousOn_const)
-      (fun t ht => Or.inl (ne_of_gt (hbasePos t ht)))
-  have hshift : ContinuousOn (fun t : ℝ => (t - 1) ^ (H.kappaHat - 1 + 1))
-      (Icc s σ) :=
-    (continuousOn_id.sub continuousOn_const).rpow continuousOn_const
-      (fun t ht => Or.inl (ne_of_gt (htmpos t ht)))
-  have hratio : ContinuousOn (fun t : ℝ => t / (t - 1)) (Icc s σ) :=
-    continuousOn_id.div (continuousOn_id.sub continuousOn_const)
-      (fun t ht => ne_of_gt (htmpos t ht))
-  have hratioPow : ContinuousOn (fun t : ℝ => (t / (t - 1)) ^ Δ) (Icc s σ) :=
-    hratio.rpow continuousOn_const (fun t ht =>
-      Or.inl (ne_of_gt (div_pos (htpos t ht) (htmpos t ht))))
-  have hTshift : ContinuousOn (fun t : ℝ => H.T sign (t - 1)) (Icc s σ) :=
-    (hH.continuous sign).comp (continuousOn_id.sub continuousOn_const) (by
-      intro t ht
-      exact sub_pos.mpr (hs.trans_le ht.1))
-  exact ((houter.mul hshift).mul hTshift).mul hratioPow
+  exact continuousOn_qD_Icc_of_contract hH sign hD hs
 
 /-- The large-`s` moving tail from pp. 90--91.  The split point is fixed as
 `M=t₀+2`; the conclusion is derived by differential domination and FTC, never
@@ -314,59 +261,19 @@ private lemma slope_le_log
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d) (ht : 0 < t) :
     perturbationSlope D d 0 t ≤
       (d + 1) * Real.log (1 + t ^ d / Real.log D) := by
-  let z : ℝ := t ^ d / Real.log D
-  have hz0 : 0 ≤ z := div_nonneg (Real.rpow_nonneg ht.le _) hlog.le
-  have hb : 0 < 1 + z := by linarith
-  have hzlog : z / (1 + z) ≤ Real.log (1 + z) := by
-    have hi := Real.log_le_sub_one_of_pos (inv_pos.mpr hb)
-    rw [Real.log_inv] at hi
-    have heq : z / (1 + z) = 1 - (1 + z)⁻¹ := by
-      field_simp [hb.ne']
-      ring
-    rw [heq]
-    linarith
-  have htpow : t * t ^ (d - 1) = t ^ d := by
-    calc
-      t * t ^ (d - 1) = t ^ (1 : ℝ) * t ^ (d - 1) := by rw [Real.rpow_one]
-      _ = t ^ ((1 : ℝ) + (d - 1)) := (Real.rpow_add ht _ _).symm
-      _ = t ^ d := by ring_nf
-  have hterm : t * (d * t ^ (d - 1) / Real.log D) /
-        (1 + t ^ d / Real.log D) = d * (z / (1 + z)) := by
-    dsimp [z]
-    rw [show t * (d * t ^ (d - 1) / Real.log D) =
-      d * (t * t ^ (d - 1)) / Real.log D by ring, htpow]
-    ring
-  rw [perturbationSlope]
-  simp only [add_zero]
-  rw [hterm]
-  calc
-    Real.log (1 + z) + d * (z / (1 + z)) ≤
-        Real.log (1 + z) + d * Real.log (1 + z) := by gcongr
-    _ = (d + 1) * Real.log (1 + z) := by ring
+  exact moving_perturbationSlope_le_log hlog hd ht
 
 private lemma below_cutoff_z_le_one
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 < d) (ht : 0 < t)
     (hcut : t ≤ (Real.log D) ^ (1 / d)) :
     t ^ d / Real.log D ≤ 1 := by
-  have hp := Real.rpow_le_rpow ht.le hcut hd.le
-  have hc : ((Real.log D) ^ (1 / d)) ^ d = Real.log D := by
-    rw [← Real.rpow_mul hlog.le]
-    have : (1 / d) * d = 1 := by field_simp
-    rw [this, Real.rpow_one]
-  rw [hc] at hp
-  exact (div_le_one hlog).2 hp
+  exact moving_below_cutoff_z_le_one hlog hd ht hcut
 
 private lemma above_cutoff_one_lt_z
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 < d)
     (hcut : (Real.log D) ^ (1 / d) < t) :
     1 < t ^ d / Real.log D := by
-  have hp := Real.rpow_lt_rpow (Real.rpow_nonneg hlog.le _) hcut hd
-  have hc : ((Real.log D) ^ (1 / d)) ^ d = Real.log D := by
-    rw [← Real.rpow_mul hlog.le]
-    have : (1 / d) * d = 1 := by field_simp
-    rw [this, Real.rpow_one]
-  rw [hc] at hp
-  exact (one_lt_div hlog).2 hp
+  exact moving_above_cutoff_one_lt_z hlog hd hcut
 
 /-- The source delayed/current ratio proves the moving differential certificate
 by splitting at `(log D)^(1/d)` exactly as on pp. 90--91. -/

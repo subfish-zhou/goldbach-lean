@@ -200,28 +200,7 @@ theorem one_div_totient_mul_prime_le (p₁ p₂ : ℕ) (hp₁ : p₁.Prime) (hp�
 /-- z = max 2 ⌊N^{1/10}⌋ ≥ N^{1/10}/2 for N > 2^110. -/
 theorem correctedChenZ_ge_root_half (N : ℕ) (hNbig : 2 ^ 110 < N) :
     (N : ℝ) ^ (1 / 10 : ℝ) / 2 ≤ correctedChenZ N := by
-  let x : ℝ := (N : ℝ) ^ (1 / 10 : ℝ)
-  have hx2 : (2 : ℝ) ≤ x := by
-    have hNcast : ((2 ^ 110 : ℕ) : ℝ) < (N : ℝ) := by exact_mod_cast hNbig
-    have hpow := Real.rpow_lt_rpow (by positivity : 0 ≤ ((2 ^ 110 : ℕ) : ℝ)) hNcast
-      (by norm_num : 0 < (1 / 10 : ℝ))
-    have hval : ((2 ^ 110 : ℕ) : ℝ) ^ (1 / 10 : ℝ) = (2 : ℝ) ^ 11 := by
-      norm_num [Real.rpow_natCast, Real.rpow_mul, Real.rpow_one]
-    dsimp [x]
-    rw [hval] at hpow
-    have h2 : (2 : ℝ) ≤ (2 : ℝ) ^ 11 := by norm_num
-    linarith
-  have hfloor_ge : x - 1 ≤ (Nat.floor x : ℝ) := by
-    have hlt := Nat.lt_floor_add_one x
-    linarith
-  have hzhalf : x / 2 ≤ (correctedChenZ N : ℝ) := by
-    have h1 : x / 2 ≤ x - 1 := by linarith
-    have h2 : x - 1 ≤ (Nat.floor x : ℝ) := hfloor_ge
-    have h3 : (Nat.floor x : ℝ) ≤ (correctedChenZ N : ℝ) := by
-      unfold correctedChenZ
-      exact_mod_cast (le_max_right 2 (Nat.floor x))
-    linarith
-  simpa [x] using hzhalf
+  exact Internal.chenZ_ge_root_half N hNbig
 
 /-- log N ≥ 110·log 2 for N > 2^110. -/
 theorem log_ge_110_log_two {N : ℕ} (hNbig : 2 ^ 110 < N) :
@@ -307,16 +286,6 @@ theorem correctedChenY_log_le (N : ℕ) (hN : 1 ≤ N) :
 theorem correctedChenY_log_ge (N : ℕ) (hN : 1 ≤ N) :
     (1 / 3 : ℝ) * log (N : ℝ) ≤ log (correctedChenY N : ℝ) := by
   have hcube := correctedChen_cube_scale N
-  have hypos : 0 < (correctedChenY N : ℝ) := by
-    have hle : (1 : ℝ) ≤ (correctedChenY N : ℝ) := by
-      have h13 : (1 : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ) :=
-        Real.one_le_rpow (by exact_mod_cast hN) (by norm_num)
-      calc
-        (1 : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ) := h13
-        _ ≤ (correctedChenY N : ℝ) := by
-          unfold correctedChenY
-          exact Nat.le_ceil ((N : ℝ) ^ (1 / 3 : ℝ))
-    linarith
   have hlog : log (N : ℝ) ≤ log ((correctedChenY N : ℝ) ^ 3) := by
     exact Real.log_le_log (by exact_mod_cast (by omega : 0 < N)) hcube
   have hrew : log ((correctedChenY N : ℝ) ^ 3) = 3 * log (correctedChenY N : ℝ) := by
@@ -398,60 +367,23 @@ theorem hTripleMain_log_y_div_log_z_le (N : ℕ) (hNbig : 2 ^ 110 < N) :
   have hlogy := correctedChenY_log_le N hN1n
   have hlogz := correctedChenZ_log_ge_logN_div_twenty N hNbig
   have hlogN := log_ge_110_log_two hNbig
-  have hz3 : 3 ≤ correctedChenZ N := by
-    have h59049 : 59049 ≤ N := by
-      have : 59049 < 2 ^ 110 := by norm_num
-      exact le_trans (le_of_lt this) (le_of_lt hNbig)
-    exact correctedChenZ_ge_three h59049
-  have hz1 : (1 : ℝ) < correctedChenZ N := by
-    have hz3r : (3 : ℝ) ≤ correctedChenZ N := by exact_mod_cast hz3
-    linarith
-  have hlogzpos : 0 < log (correctedChenZ N : ℝ) := Real.log_pos hz1
-  have hN1 : (1 : ℝ) < N := by
-    have hN2 : 2 ≤ N := by
-      have : 2 < 2 ^ 110 := by norm_num
-      omega
-    exact_mod_cast (show 1 < N by omega)
-  have hlogNpos : 0 < log (N : ℝ) := Real.log_pos hN1
-  have hlog2le : log 2 ≤ (1 / 110 : ℝ) * log (N : ℝ) := by nlinarith [hlogN]
-  have hlogyle : log (correctedChenY N : ℝ) ≤ (113 / 330 : ℝ) * log (N : ℝ) := by
-    have : log 2 + (1 / 3 : ℝ) * log (N : ℝ) ≤ (113 / 330 : ℝ) * log (N : ℝ) := by
-      nlinarith [hlog2le]
-    linarith
-  have h1logz : (1 : ℝ) / log (correctedChenZ N : ℝ) ≤ 20 / log (N : ℝ) :=
-    hTripleMain_one_div_log_z_le N hNbig
-  calc
-    log (correctedChenY N : ℝ) / log (correctedChenZ N : ℝ)
-        = log (correctedChenY N : ℝ) * (1 / log (correctedChenZ N : ℝ)) := by ring
-    _ ≤ (113 / 330 : ℝ) * log (N : ℝ) * (20 / log (N : ℝ)) := by
-          have h3 : 0 ≤ (1 : ℝ) / log (correctedChenZ N : ℝ) := by positivity
-          have h4 : 0 ≤ (113 / 330 : ℝ) * log (N : ℝ) := by positivity
-          exact mul_le_mul hlogyle h1logz h3 h4
-    _ = (113 / 330 : ℝ) * 20 := by
-          field_simp [hlogNpos.ne']
-    _ ≤ 7 := by norm_num
+  have hlog2pos : 0 < log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hlogzpos : 0 < log (correctedChenZ N : ℝ) := by
+    linarith only [hlogz, hlogN, hlog2pos]
+  rw [div_le_iff₀ hlogzpos]
+  linarith only [hlogy, hlogz, hlogN, hlog2pos]
 
-/-- log N/log y ≤ 3 for N ≥ 1. -/
+/-- log N/log y ≤ 3 for N ≥ 8. -/
 theorem hTripleMain_log_N_div_log_y_le (N : ℕ) (hN : 8 ≤ N) :
     log (N : ℝ) / log (correctedChenY N : ℝ) ≤ 3 := by
   have hN1n : 1 ≤ N := by omega
   have hlogy := correctedChenY_log_ge N hN1n
+  have hlogNpos : 0 < log (N : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
   have hypos : 0 < log (correctedChenY N : ℝ) := by
-    have hN8 : (8 : ℝ) ≤ N := by exact_mod_cast hN
-    have hpow := Real.rpow_le_rpow (by norm_num : 0 ≤ (8 : ℝ)) hN8
-      (by norm_num : 0 ≤ (1 / 3 : ℝ))
-    have hval : (8 : ℝ) ^ (1 / 3 : ℝ) = 2 := by
-      norm_num [Real.rpow_natCast, Real.rpow_mul, Real.rpow_one]
-    have h13 : (2 : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ) := by rwa [hval] at hpow
-    have hle : (2 : ℝ) ≤ correctedChenY N := by
-      calc
-        (2 : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ) := h13
-        _ ≤ (correctedChenY N : ℝ) := by
-          unfold correctedChenY
-          exact Nat.le_ceil ((N : ℝ) ^ (1 / 3 : ℝ))
-    exact Real.log_pos (by linarith : (1 : ℝ) < (correctedChenY N : ℝ))
+    linarith only [hlogy, hlogNpos]
   rw [div_le_iff₀ hypos]
-  nlinarith [hlogy]
+  linarith only [hlogy]
 /-! ## 6. Main theorem: `hTripleMain` -/
 
 /-- Pairwise bound: in the z-region, the input implies the upper bound
@@ -478,9 +410,6 @@ theorem hTripleMain_pair_bound {C : ℝ} {N p₁ p₂ : ℕ} (hC : 0 ≤ C)
   have hapos : 0 < (a : ℝ) := by
     dsimp [a]
     exact_mod_cast (Nat.mul_pos hp₁.pos hp₂.pos)
-  have hφpos : 0 < (Nat.totient a : ℝ) := by
-    dsimp [a]
-    exact_mod_cast (Nat.totient_pos.mpr (Nat.mul_pos hp₁.pos hp₂.pos))
   have hlogNpos : 0 < log (N : ℝ) := by
     have hN2 : 2 ≤ N := by
       have hz2n : 2 ≤ correctedChenZ N := by
@@ -509,40 +438,17 @@ theorem hTripleMain_pair_bound {C : ℝ} {N p₁ p₂ : ℕ} (hC : 0 ≤ C)
       have hz2r : (2 : ℝ) ≤ z := by exact_mod_cast hz2
       linarith
     exact Real.log_pos harg
-  have hφ : (a : ℝ) ≤ 4 * (Nat.totient a : ℝ) := by
-    dsimp [a]
-    have ht := totient_mul_prime_ge_quarter hp₁ hp₂
-    rw [Nat.cast_mul]
-    nlinarith [ht]
   have hlogzle : log (z : ℝ) ≤ log ((N : ℝ) / (a : ℝ)) :=
     Real.log_le_log (by positivity : 0 < (z : ℝ)) hNa
-  have hprod : (a : ℝ) * log (z : ℝ) ≤ 4 * (Nat.totient a : ℝ) * log ((N : ℝ) / (a : ℝ)) := by
-    have h1 : (a : ℝ) * log (z : ℝ) ≤ (a : ℝ) * log ((N : ℝ) / (a : ℝ)) :=
-      mul_le_mul_of_nonneg_left hlogzle (by positivity : 0 ≤ (a : ℝ))
-    have h2 : (a : ℝ) * log ((N : ℝ) / (a : ℝ)) ≤
-        4 * (Nat.totient a : ℝ) * log ((N : ℝ) / (a : ℝ)) :=
-      mul_le_mul_of_nonneg_right hφ (le_of_lt hlogNa_pos)
-    linarith
   have hmain : C * (N : ℝ) / (Nat.totient a : ℝ) /
       (log (N : ℝ) * log ((N : ℝ) / (a : ℝ))) ≤
       C * (4 / (a : ℝ)) * ((N : ℝ) / (log (N : ℝ) * log (z : ℝ))) := by
-    have hNpos : 0 < (N : ℝ) := by
-      have hN2 : 2 ≤ N := by
-        have hz2n : 2 ≤ correctedChenZ N := by
-          unfold correctedChenZ
-          exact le_max_left _ _
-        have h2a : 2 * a ≤ N := by
-          dsimp [a]
-          exact le_trans (Nat.mul_le_mul_right (p₁ * p₂) hz2n) hza
-        omega
-      exact_mod_cast (by omega : 0 < N)
     calc
       C * (N : ℝ) / (Nat.totient a : ℝ) / (log (N : ℝ) * log ((N : ℝ) / (a : ℝ)))
           = (C * (N : ℝ)) * ((1 : ℝ) / (Nat.totient a : ℝ)) * (1 / log ((N : ℝ) / (a : ℝ))) * (1 / log (N : ℝ)) := by ring
       _ ≤ (C * (N : ℝ)) * (4 / (a : ℝ)) * (1 / log (z : ℝ)) * (1 / log (N : ℝ)) := by
             have hφinv : (1 : ℝ) / (Nat.totient a : ℝ) ≤ 4 / (a : ℝ) := by
-              rw [div_le_div_iff₀ hφpos hapos]
-              nlinarith [hφ]
+              simpa [a, Nat.cast_mul] using one_div_totient_mul_prime_le p₁ p₂ hp₁ hp₂
             have hloginv : (1 : ℝ) / log ((N : ℝ) / (a : ℝ)) ≤ 1 / log (z : ℝ) := by
               rw [div_le_div_iff₀ hlogNa_pos hlogzpos]
               simpa using hlogzle
@@ -550,7 +456,8 @@ theorem hTripleMain_pair_bound {C : ℝ} {N p₁ p₂ : ℕ} (hC : 0 ≤ C)
                 (4 / (a : ℝ)) * (1 / log (z : ℝ)) := by
               exact mul_le_mul hφinv hloginv (by positivity) (by positivity)
             have hnonneg : 0 ≤ (C * (N : ℝ)) * (1 / log (N : ℝ)) := by positivity
-            nlinarith [mul_le_mul_of_nonneg_right hprod2 hnonneg]
+            simpa only [mul_assoc, mul_left_comm, mul_comm] using
+              mul_le_mul_of_nonneg_right hprod2 hnonneg
       _ = C * (4 / (a : ℝ)) * ((N : ℝ) / (log (N : ℝ) * log (z : ℝ))) := by ring
   exact le_trans hin (by simpa [a, z] using hmain)
 

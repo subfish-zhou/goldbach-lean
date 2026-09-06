@@ -133,6 +133,21 @@ theorem upperSourcePairing_eq_of_integralDDE
       ((hgz.mono Ioi_subset_Ici_self).stronglyMeasurableAtFilter_nhdsWithin
         measurableSet_Ioi z)
       ((hgz z (by simp)).mono Ioi_subset_Ici_self)
+  have hwindow_eq (s : ℝ) (hs2 : 2 ≤ s) :
+      G s - G (s - 1) = ∫ t in (s - 1)..s, g t := by
+    dsimp only [G]
+    have h1 : IntervalIntegrable g volume 1 (s - 1) :=
+      (hgOn.mono (by
+        intro t ht
+        rw [uIcc_of_le (by linarith [hs2] : (1 : ℝ) ≤ s - 1)] at ht
+        exact ht.1)).intervalIntegrable
+    have h2 : IntervalIntegrable g volume (s - 1) s :=
+      (hgOn.mono (by
+        intro t ht
+        rw [uIcc_of_le (by linarith : s - 1 ≤ s)] at ht
+        exact (show (1 : ℝ) ≤ t by linarith [hs2, ht.1]))).intervalIntegrable
+    have hadd := intervalIntegral.integral_add_adjacent_intervals h1 h2
+    linarith
   have hpair_right (z : ℝ) (hz : 2 ≤ z) :
       HasDerivWithinAt (upperSourcePairingFor P p) 0 (Ici z) z := by
     have hpz : HasDerivWithinAt p (-p (z + 1) / z) (Ici z) z :=
@@ -148,25 +163,8 @@ theorem upperSourcePairing_eq_of_integralDDE
     rw [mul_one] at hGshift0
     change HasDerivWithinAt (fun s => G (s - 1)) (g (z - 1)) (Ici z) z at hGshift0
     have hwindow := hGz.sub hGshift0
-    have hwindow_eq : ∀ s ∈ Ici z,
-        G s - G (s - 1) = ∫ t in (s - 1)..s, g t := by
-      intro s hs
-      have hs2 : 2 ≤ s := hz.trans hs
-      dsimp only [G]
-      have h1 : IntervalIntegrable g volume 1 (s - 1) :=
-        (hgOn.mono (by
-          intro t ht
-          rw [uIcc_of_le (by linarith [hs2] : (1 : ℝ) ≤ s - 1)] at ht
-          exact ht.1)).intervalIntegrable
-      have h2 : IntervalIntegrable g volume (s - 1) s :=
-        (hgOn.mono (by
-          intro t ht
-          rw [uIcc_of_le (by linarith : s - 1 ≤ s)] at ht
-          exact (show (1 : ℝ) ≤ t by linarith [hs2, ht.1]))).intervalIntegrable
-      have hadd := intervalIntegral.integral_add_adjacent_intervals h1 h2
-      linarith
     have hwindow' := hwindow.congr
-      (fun s hs => (hwindow_eq s hs).symm) (hwindow_eq z (by simp)).symm
+      (fun s hs => (hwindow_eq s (hz.trans hs)).symm) (hwindow_eq z hz).symm
     have hraw := hfirst.add hwindow'
     have hz0 : z ≠ 0 := by linarith
     have hzero :
@@ -215,23 +213,9 @@ theorem upperSourcePairing_eq_of_integralDDE
     have hs2 : 2 ≤ s := hx.trans hs.1
     unfold upperSourcePairingFor
     rw [show s * p s * P s = p s * (s * P s) by ring]
-    have h1 : IntervalIntegrable g volume 1 (s - 1) :=
-      (hgOn.mono (by
-        intro t ht
-        rw [uIcc_of_le (by linarith [hs2] : (1 : ℝ) ≤ s - 1)] at ht
-        exact ht.1)).intervalIntegrable
-    have h2 : IntervalIntegrable g volume (s - 1) s :=
-      (hgOn.mono (by
-        intro t ht
-        rw [uIcc_of_le (by linarith : s - 1 ≤ s)] at ht
-        exact (show (1 : ℝ) ≤ t by linarith [hs2, ht.1]))).intervalIntegrable
-    have hw := intervalIntegral.integral_add_adjacent_intervals h1 h2
-    have hw' : (∫ t in (s - 1)..s, g t) = G s - G (s - 1) := by
-      dsimp only [G]
-      linarith
     change p s * (s * P s) + (∫ t in (s - 1)..s, g t) =
       p s * (s * P s) + (G s - G (s - 1))
-    rw [hw']
+    rw [hwindow_eq s hs2]
   have hconst := constant_of_has_deriv_right_zero hpair_cont (fun z hz =>
     hpair_right z (hx.trans hz.1))
   exact hconst y ⟨hxy, le_rfl⟩

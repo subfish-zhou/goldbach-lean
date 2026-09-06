@@ -102,10 +102,7 @@ theorem exists_weighted_sum_nu_div_one_sub_le_integral_add_screened
     fun i => f (upperRosserFixedDepthMeshLeft c m i) + L * h
   have hleftMem : ∀ i : Fin (m + 1),
       upperRosserFixedDepthMeshLeft c m i ∈ Set.Icc c 1 := by
-    intro i
-    exact ⟨(upperRosserFixedDepthMeshLeft_mem hc1 m i).1,
-      (upperRosserFixedDepthMeshLeft_le_right hc1 m i).trans
-        (upperRosserFixedDepthMeshRight_le_one hc1 m i)⟩
+    exact upperRosserFixedDepthMeshLeft_mem hc1 m
   have hcell : ∀ p ∈ T,
       Real.log p / Real.log z ∈ Set.Icc
         (upperRosserFixedDepthMeshLeft c m (cell p))
@@ -284,10 +281,7 @@ theorem
     fun i => f (upperRosserFixedDepthMeshLeft c m i) + ε
   have hleftMem : ∀ i : Fin (m + 1),
       upperRosserFixedDepthMeshLeft c m i ∈ Set.Icc c 1 := by
-    intro i
-    exact ⟨(upperRosserFixedDepthMeshLeft_mem hc1 m i).1,
-      (upperRosserFixedDepthMeshLeft_le_right hc1 m i).trans
-        (upperRosserFixedDepthMeshRight_le_one hc1 m i)⟩
+    exact upperRosserFixedDepthMeshLeft_mem hc1 m
   have hcell : ∀ p ∈ T,
       Real.log p / Real.log z ∈ Set.Icc
         (upperRosserFixedDepthMeshLeft c m (cell p))
@@ -935,39 +929,23 @@ theorem exists_weighted_sum_nu_div_one_sub_le_logRatio_integral_add
     rw [heq]
     exact ⟨(div_le_div_iff_of_pos_right hRpos).2 hx.1,
       (div_le_one hRpos).2 hx.2⟩
-  have hF : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, 0 ≤ F t := by
+  have hscaledMem : ∀ t ∈ Set.Icc (1 / R : ℝ) 1,
+      R * t ∈ Set.Icc (1 : ℝ) R := by
     intro t ht
-    apply hf
-    change 1 ≤ R * t ∧ R * t ≤ R
     constructor
     · have := mul_le_mul_of_nonneg_left ht.1 hRpos.le
       field_simp [hRpos.ne'] at this
       exact this
     · simpa using mul_le_mul_of_nonneg_left ht.2 hRpos.le
-  have hFB : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, F t ≤ B := by
-    intro t ht
-    apply hfB
-    constructor
-    · have := mul_le_mul_of_nonneg_left ht.1 hRpos.le
-      field_simp [hRpos.ne'] at this
-      exact this
-    · simpa using mul_le_mul_of_nonneg_left ht.2 hRpos.le
+  have hF : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, 0 ≤ F t :=
+    fun t ht => hf _ (hscaledMem t ht)
+  have hFB : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, F t ≤ B :=
+    fun t ht => hfB _ (hscaledMem t ht)
   have hFLip : ∀ x ∈ Set.Icc (1 / R : ℝ) 1,
       ∀ y ∈ Set.Icc (1 / R : ℝ) 1,
         |F x - F y| ≤ (L * R) * |x - y| := by
     intro x hx y hy
-    have hxy := hfLip (R * x) (by
-        constructor
-        · have := mul_le_mul_of_nonneg_left hx.1 hRpos.le
-          field_simp [hRpos.ne'] at this
-          exact this
-        · simpa using mul_le_mul_of_nonneg_left hx.2 hRpos.le)
-      (R * y) (by
-        constructor
-        · have := mul_le_mul_of_nonneg_left hy.1 hRpos.le
-          field_simp [hRpos.ne'] at this
-          exact this
-        · simpa using mul_le_mul_of_nonneg_left hy.2 hRpos.le)
+    have hxy := hfLip (R * x) (hscaledMem x hx) (R * y) (hscaledMem y hy)
     calc
       |F x - F y| = |f (R * x) - f (R * y)| := rfl
       _ ≤ L * |R * x - R * y| := hxy
@@ -1089,39 +1067,23 @@ theorem exists_weighted_sum_nu_div_one_sub_le_logRatio_integral_Ioo_add
     rw [hscaleEq]
     exact ⟨(div_le_div_iff_of_pos_right hRpos).2 (hcoord p hp).1,
       (div_le_div_iff_of_pos_right hRpos).2 (hcoord p hp).2⟩
-  have hF : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, 0 ≤ F t := by
+  have hscaledMem : ∀ t ∈ Set.Icc (1 / R : ℝ) 1,
+      R * t ∈ Set.Icc (1 : ℝ) R := by
     intro t ht
-    apply hf
-    change 1 ≤ R * t ∧ R * t ≤ R
     constructor
     · have := mul_le_mul_of_nonneg_left ht.1 hRpos.le
       field_simp [hRpos.ne'] at this
       exact this
     · simpa using mul_le_mul_of_nonneg_left ht.2 hRpos.le
-  have hFB : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, F t ≤ B := by
-    intro t ht
-    apply hfB
-    constructor
-    · have := mul_le_mul_of_nonneg_left ht.1 hRpos.le
-      field_simp [hRpos.ne'] at this
-      exact this
-    · simpa using mul_le_mul_of_nonneg_left ht.2 hRpos.le
+  have hF : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, 0 ≤ F t :=
+    fun t ht => hf _ (hscaledMem t ht)
+  have hFB : ∀ t ∈ Set.Icc (1 / R : ℝ) 1, F t ≤ B :=
+    fun t ht => hfB _ (hscaledMem t ht)
   have hFLip : ∀ x ∈ Set.Icc (1 / R : ℝ) 1,
       ∀ y ∈ Set.Icc (1 / R : ℝ) 1,
         |F x - F y| ≤ (L * R) * |x - y| := by
     intro x hx y hy
-    have hxy := hfLip (R * x) (by
-        constructor
-        · have := mul_le_mul_of_nonneg_left hx.1 hRpos.le
-          field_simp [hRpos.ne'] at this
-          exact this
-        · simpa using mul_le_mul_of_nonneg_left hx.2 hRpos.le)
-      (R * y) (by
-        constructor
-        · have := mul_le_mul_of_nonneg_left hy.1 hRpos.le
-          field_simp [hRpos.ne'] at this
-          exact this
-        · simpa using mul_le_mul_of_nonneg_left hy.2 hRpos.le)
+    have hxy := hfLip (R * x) (hscaledMem x hx) (R * y) (hscaledMem y hy)
     calc
       |F x - F y| = |f (R * x) - f (R * y)| := rfl
       _ ≤ L * |R * x - R * y| := hxy

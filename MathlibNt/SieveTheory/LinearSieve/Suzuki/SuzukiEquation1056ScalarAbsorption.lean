@@ -149,7 +149,7 @@ lemma normalized_kernel_le
       have hh := h.div_const (-m)
       have hc : (Real.exp (-m * (t - (s - 1))) * (-m * 1)) / (-m) =
           Real.exp (-m * (t - (s - 1))) := by
-        field_simp [ne_of_gt hm']
+        rw [mul_one, mul_div_cancel_right₀ _ (neg_ne_zero.mpr (ne_of_gt hm'))]
       simpa only [id_eq] using hh.congr_deriv hc
     rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv
       ((Real.continuous_exp.comp
@@ -246,8 +246,8 @@ lemma xi_unit_increment_le
     apply (div_le_div_iff₀ hdenpos hu0).2
     nlinarith
   have hfrac : 2 / u ≤ 2 / (s - 1) := by
-    apply (div_le_div_iff₀ hu0 (by linarith [hs])).2
-    nlinarith [hu.1]
+    exact div_le_div_of_nonneg_left (by norm_num)
+      (sub_pos.mpr (lt_of_lt_of_le (by norm_num) hs)) hu.1.le
   rw [hdu] at hdle
   have hslope := hdle.trans hfrac
   have hpos : 0 < s - (s - 1) := by linarith

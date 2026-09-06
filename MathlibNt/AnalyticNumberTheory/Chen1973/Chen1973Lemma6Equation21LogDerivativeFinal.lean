@@ -46,11 +46,6 @@ theorem chen1973Lemma6_eq21_termVertical_integrable_of_logDerivative_bound
   have hy0 : 0 < y := hy
   have hcpow : ‖(y : ℂ) ^ ((σ : ℂ) + t * I)‖ = y ^ σ := by
     simpa using Complex.norm_cpow_eq_rpow_re_of_pos hy0 ((σ : ℂ) + t * I)
-  have hweight : 0 ≤ (1 + Real.log ((d : ℝ) * (1 + |t|))) ^ r := by
-    have hlog : 0 ≤ Real.log ((d : ℝ) * (1 + |t|)) := by
-      apply Real.log_nonneg
-      nlinarith [abs_nonneg t]
-    positivity
   dsimp [F, chen1973VerticalSection, chen1973Lemma6Eq21TermShiftIntegrand,
     chen1973Lemma6Eq21ShiftIntegrand]
   change ‖χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) *

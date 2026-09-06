@@ -28,8 +28,8 @@ indexing type, so repeated zeros are retained. -/
 def finiteZeroContribution {ι : Type*} (zeros : ι → ℂ) (S : Finset ι) (σ : ℝ) : ℝ :=
   ∑ ρ ∈ S, zeroKernel σ (zeros ρ)
 
-/-- The global zero contribution.  Every theorem using this definition carries
-a genuine `Summable` hypothesis. -/
+/-- The global zero contribution, indexed with multiplicity.  Identifying it
+with a convergent sum requires `Summable`; nonnegativity holds without it. -/
 def zeroContribution {ι : Type*} (zeros : ι → ℂ) (σ : ℝ) : ℝ :=
   ∑' ρ, zeroKernel σ (zeros ρ)
 
@@ -132,13 +132,7 @@ theorem second_zero_separation
     1 / (B - 1 / (σ - β₁)) ≤ σ - β₂ := by
   have hpos : 0 < σ - β₂ := sub_pos.mpr hβ₂
   have hrecip : 1 / (σ - β₂) ≤ B - 1 / (σ - β₁) := by linarith
-  apply (div_le_iff₀ hbudget).2
-  calc
-    1 = (1 / (σ - β₂)) * (σ - β₂) := by
-      field_simp [ne_of_gt hpos]
-    _ ≤ (B - 1 / (σ - β₁)) * (σ - β₂) :=
-      mul_le_mul_of_nonneg_right hrecip hpos.le
-    _ = (σ - β₂) * (B - 1 / (σ - β₁)) := by ring
+  exact (one_div_le hbudget hpos).2 hrecip
 
 /-- Final algebraic value-at-one lower-bound step after integration.  It is
 stated for the three non-zeta factors: once the integrated explicit formula

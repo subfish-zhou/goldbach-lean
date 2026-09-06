@@ -62,7 +62,7 @@ theorem delta_quarter_le_norm_LFunction_anchor {q : ℕ} [NeZero q]
   have hid : K ^ 3 * (δ / 4) ^ 4 * K = 1 := by
     dsimp [K]
     field_simp
-  linarith
+  exact (not_lt_of_ge hmajor) (hsmall.trans_eq hid)
 
 /-- Interior derivative bound from a real-part oscillation at a nearby anchor. -/
 theorem norm_deriv_le_small_disk
@@ -103,12 +103,16 @@ theorem norm_deriv_le_small_disk
       _ = 2 * ‖w - a‖ / (3 * δ / 2 - ‖w - a‖) * A := by ring
       _ ≤ 10 * A := hrat
   have hquarter : 0 < δ / 4 := by positivity
+  -- The Cauchy disk stays within the radius controlled by Borel–Carathéodory.
+  have hdist : ∀ w ∈ closedBall z (δ / 4), dist w a ≤ 5 * δ / 4 := by
+    intro w hw
+    calc
+      dist w a ≤ dist w z + dist z a := dist_triangle w z a
+      _ ≤ δ / 4 + δ := add_le_add (mem_closedBall.mp hw) hz
+      _ = 5 * δ / 4 := by ring
   have hsub : closedBall z (δ / 4) ⊆ ball a (3 * δ / 2) := by
     intro w hw
-    have hwz : dist w z ≤ δ / 4 := mem_closedBall.mp hw
-    have hwa := dist_triangle w z a
-    rw [mem_ball]
-    linarith
+    exact mem_ball.mpr ((hdist w hw).trans_lt (by linarith))
   let F : ℂ → ℂ := fun w ↦ h w - h a
   have hFd : DifferentiableOn ℂ F (ball a (3 * δ / 2)) := hh.sub (differentiableOn_const _)
   have hcont : DiffContOnCl ℂ F (ball z (δ / 4)) := by
@@ -117,10 +121,7 @@ theorem norm_deriv_le_small_disk
     exact hFd.continuousOn.mono hsub
   have hcircle : ∀ w ∈ sphere z (δ / 4), ‖F w‖ ≤ 10 * A := by
     intro w hw
-    apply hBC
-    have hwz : dist w z = δ / 4 := mem_sphere.mp hw
-    have hwa := dist_triangle w z a
-    linarith
+    exact hBC w (hdist w (mem_closedBall.mpr (mem_sphere.mp hw).le))
   have hc := Complex.norm_deriv_le_of_forall_mem_sphere_norm_le hquarter hcont hcircle
   have hd : deriv F z = deriv h z := deriv_sub_const _
   rw [hd] at hc
@@ -195,11 +196,9 @@ theorem norm_LFunction_le_on_anchor_disk {q : ℕ} [NeZero q]
   have hwnorm : ‖w‖ ≤ 2 + |t| := by
     have ht : ‖w‖ ≤ ‖w - ((1 + δ / 2 : ℝ) + I * t)‖ +
         ‖((1 + δ / 2 : ℝ) : ℂ) + I * t‖ := by
-      calc
-        _ = ‖(w - (((1 + δ / 2 : ℝ) : ℂ) + I * t)) +
-            (((1 + δ / 2 : ℝ) : ℂ) + I * t)‖ := by rw [sub_add_cancel]
-        _ ≤ _ := norm_add_le _ _
-    linarith
+      simpa only [sub_add_cancel] using
+        norm_add_le (w - ((1 + δ / 2 : ℝ) + I * t)) ((1 + δ / 2 : ℝ) + I * t)
+    linarith only [ht, hn, ha, hδ1]
   have hdiv : ‖w‖ / w.re ≤ 2 * ‖w‖ := by
     apply (div_le_iff₀ hwpos).2
     nlinarith [norm_nonneg w]

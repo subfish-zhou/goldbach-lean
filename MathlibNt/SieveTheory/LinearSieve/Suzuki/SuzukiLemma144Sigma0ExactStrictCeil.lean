@@ -76,37 +76,9 @@ theorem suzukiSigmaZero_sourceSigma_eventually_strict
   rcases claim145_sourceSigma_endpoint_internal S H hΔ0 hΔ1 hd hK hC145
       hlocal hH with ⟨D₀, hD₀, hendpoint⟩
   have hsigma : ∀ᶠ D : ℝ in atTop, 3 ≤ sourceSigma D d := by
-    have hloglog : Tendsto (fun D : ℝ => Real.log (Real.log D)) atTop atTop :=
-      Real.tendsto_log_atTop.comp Real.tendsto_log_atTop
-    filter_upwards [eventually_ge_atTop (2 : ℝ),
-        Real.tendsto_log_atTop.eventually_ge_atTop 1,
-        hloglog.eventually_ge_atTop 3] with D hD hlogD hq
-    have hDpos : 0 < D := by linarith
-    have hlogDpos : 0 < Real.log D := by linarith
-    have hlog27D : Real.log (27 * D) = Real.log 27 + Real.log D := by
-      rw [Real.log_mul (by norm_num : (27 : ℝ) ≠ 0) (ne_of_gt hDpos)]
-    have hinner : Real.log D ≤ Real.log (27 * D) := by
-      rw [hlog27D]
-      exact le_add_of_nonneg_left (Real.log_nonneg (by norm_num))
-    have hell : Real.log (Real.log D) ≤ Real.log (Real.log (27 * D)) :=
-      Real.log_le_log hlogDpos hinner
-    have hfactor : 1 ≤ (Real.log D) ^ (1 / d) := by
-      have hβ : 0 < 1 - Δ := sub_pos.mpr hΔ1
-      have hd7 : 7 < d := by
-        have hfrac : 7 ≤ 7 / (1 - Δ) := by
-          rw [le_div_iff₀ hβ]
-          nlinarith
-        exact hfrac.trans_lt hd
-      simpa only [Real.one_rpow] using
-        Real.rpow_le_rpow (by norm_num : (0 : ℝ) ≤ 1) hlogD (by positivity)
-    have hell0 : 0 ≤ Real.log (Real.log (27 * D)) := by
-      linarith [hq.trans hell]
-    rw [sourceSigma]
-    calc
-      3 ≤ Real.log (Real.log D) := hq
-      _ ≤ Real.log (Real.log (27 * D)) := hell
-      _ ≤ (Real.log D) ^ (1 / d) * Real.log (Real.log (27 * D)) := by
-        nlinarith
+    filter_upwards [claim145_sourceSigma_allS_scalar_eventually
+      (C := (0 : ℝ)) (M := (3 : ℝ)) S hΔ0 hΔ1 hd hK hC145 hlocal] with D hscalar
+    exact (hscalar (sourceSigma D d) le_rfl).2.1
   rcases eventually_atTop.1 hsigma with ⟨D₁, hD₁⟩
   refine ⟨max D₀ D₁, hD₀.trans_le (le_max_left _ _), ?_⟩
   intro D N z hD hN hz

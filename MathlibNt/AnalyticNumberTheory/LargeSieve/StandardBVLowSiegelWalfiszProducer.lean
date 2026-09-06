@@ -94,6 +94,39 @@ theorem lowConductorArithmeticMass_le_explicit (N Q C : ℕ) :
         exact Finset.mem_Icc.mpr ⟨(Finset.mem_Icc.mp hdI).1.trans' (by omega), hdR⟩
       · simp
 
+private lemma one_le_log_of_eight_le {N : ℕ} (hN : 8 ≤ N) :
+    1 ≤ Real.log (N : ℝ) := by
+  have h8 : (1 : ℝ) < Real.log 8 := by
+    rw [show (8 : ℝ) = 2 ^ 3 by norm_num, Real.log_pow]
+    norm_num
+    nlinarith [Real.log_two_gt_d9]
+  exact h8.le.trans (Real.strictMonoOn_log.monotoneOn
+    (show (8 : ℝ) ∈ Set.Ioi 0 by norm_num)
+    (show (N : ℝ) ∈ Set.Ioi 0 by
+      change 0 < (N : ℝ)
+      exact_mod_cast (by omega : 0 < N)) (by exact_mod_cast hN))
+
+private lemma principalLambdaPrefixMaxError_one_nonneg (N : ℕ) :
+    0 ≤ principalLambdaPrefixMaxError N 1 := by
+  unfold principalLambdaPrefixMaxError
+  exact (norm_nonneg (principalLambdaMainError 0 1)).trans
+    (Finset.le_max'
+      ((Finset.range (N + 1)).image (fun y => ‖principalLambdaMainError y 1‖)) _
+      (Finset.mem_image.mpr
+        ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
+
+private lemma globalChebyshevToLiSourcePrefixMaxError_nonneg (N : ℕ) :
+    0 ≤ globalChebyshevToLiSourcePrefixMaxError N := by
+  unfold globalChebyshevToLiSourcePrefixMaxError
+  have hsource0 : 0 ≤ globalChebyshevToLiSourceError 0 := by
+    unfold globalChebyshevToLiSourceError
+    exact abs_nonneg _
+  exact hsource0.trans
+    (Finset.le_max'
+      ((Finset.range (N + 1)).image globalChebyshevToLiSourceError) _
+      (Finset.mem_image.mpr
+        ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
+
 /-- The two modulus-one terms, after summing `1/φ(q)`, cost only the proved
 finite reciprocal-totient mass. -/
 theorem principalGlobal_add_chebyshevToLi_le_qOne
@@ -104,43 +137,16 @@ theorem principalGlobal_add_chebyshevToLi_le_qOne
   unfold principalGlobalPhysical chebyshevToLiPhysical globalPartialSummationSource
   rw [← Finset.sum_mul, ← Finset.sum_mul]
   have hsum := sum_inv_totient_le_harmonic_sq Q
-  have hprincipal : 0 ≤ principalLambdaPrefixMaxError N 1 := by
-    unfold principalLambdaPrefixMaxError
-    exact (norm_nonneg (principalLambdaMainError 0 1)).trans
-      (Finset.le_max'
-        ((Finset.range (N + 1)).image (fun y => ‖principalLambdaMainError y 1‖)) _
-        (Finset.mem_image.mpr
-          ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
-  have hcheb : 0 ≤ globalChebyshevToLiSourcePrefixMaxError N := by
-    unfold globalChebyshevToLiSourcePrefixMaxError
-    have hsource0 : 0 ≤ globalChebyshevToLiSourceError 0 := by
-      unfold globalChebyshevToLiSourceError
-      exact abs_nonneg _
-    exact hsource0.trans
-      (Finset.le_max'
-        ((Finset.range (N + 1)).image globalChebyshevToLiSourceError) _
-        (Finset.mem_image.mpr
-          ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
-  have habel : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-    have h0 : 0 ≤ discreteAbelAmplifier 0 := by unfold discreteAbelAmplifier; positivity
-    exact h0.trans (Finset.le_max' _ _ (Finset.mem_image.mpr
-        ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
+  have hprincipal := principalLambdaPrefixMaxError_one_nonneg N
+  have hcheb := globalChebyshevToLiSourcePrefixMaxError_nonneg N
+  have habel := discreteAbelAmplifierPrefixMax_nonneg N
   nlinarith [mul_nonneg habel hprincipal]
 
 private theorem panModulusCutoff_le_self_eventually (B : ℕ) :
     ∀ᶠ N : ℕ in Filter.atTop,
       MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ) ≤ N := by
   filter_upwards [eventually_ge_atTop (8 : ℕ)] with N hN
-  have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have h8 : (1 : ℝ) < Real.log 8 := by
-      rw [show (8 : ℝ) = 2 ^ 3 by norm_num, Real.log_pow]
-      norm_num
-      nlinarith [Real.log_two_gt_d9]
-    exact h8.le.trans (Real.strictMonoOn_log.monotoneOn
-      (show (8 : ℝ) ∈ Set.Ioi 0 by norm_num)
-      (show (N : ℝ) ∈ Set.Ioi 0 by
-        change 0 < (N : ℝ)
-        exact_mod_cast (by omega : 0 < N)) (by exact_mod_cast hN))
+  have hlog : 1 ≤ Real.log (N : ℝ) := one_le_log_of_eight_le hN
   have hden : 1 ≤ Real.log (N : ℝ) ^ (B : ℝ) :=
     Real.one_le_rpow hlog (by positivity)
   have hsqrt : Real.sqrt (N : ℝ) ≤ N := by
@@ -162,16 +168,7 @@ private theorem low_scalar_envelopes (C B : ℕ) :
   filter_upwards [panModulusCutoff_le_self_eventually B,
     eventually_ge_atTop (8 : ℕ)] with N hQN hN
   let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have h8 : (1 : ℝ) < Real.log 8 := by
-      rw [show (8 : ℝ) = 2 ^ 3 by norm_num, Real.log_pow]
-      norm_num
-      nlinarith [Real.log_two_gt_d9]
-    exact h8.le.trans (Real.strictMonoOn_log.monotoneOn
-      (show (8 : ℝ) ∈ Set.Ioi 0 by norm_num)
-      (show (N : ℝ) ∈ Set.Ioi 0 by
-        change 0 < (N : ℝ)
-        exact_mod_cast (by omega : 0 < N)) (by exact_mod_cast hN))
+  have hlog : 1 ≤ Real.log (N : ℝ) := one_le_log_of_eight_le hN
   have hlogQ : Real.log (Q : ℝ) ≤ Real.log (N : ℝ) := by
     by_cases hQ : Q = 0
     · rw [hQ, Nat.cast_zero, Real.log_zero]
@@ -208,16 +205,7 @@ theorem standardBVLowSiegelWalfiszSource_of_nonprincipalPrimitivePsi
     eventually_ge_atTop (8 : ℕ)] with N hS hP henv hN
   dsimp only at henv ⊢
   let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have h8 : (1 : ℝ) < Real.log 8 := by
-      rw [show (8 : ℝ) = 2 ^ 3 by norm_num, Real.log_pow]
-      norm_num
-      nlinarith [Real.log_two_gt_d9]
-    exact h8.le.trans (Real.strictMonoOn_log.monotoneOn
-      (show (8 : ℝ) ∈ Set.Ioi 0 by norm_num)
-      (show (N : ℝ) ∈ Set.Ioi 0 by
-        change 0 < (N : ℝ)
-        exact_mod_cast (by omega : 0 < N)) (by exact_mod_cast hN))
+  have hlog : 1 ≤ Real.log (N : ℝ) := one_le_log_of_eight_le hN
   have hlog0 : 0 < Real.log (N : ℝ) := lt_of_lt_of_le zero_lt_one hlog
   have hX0 : 0 ≤ KS * (N : ℝ) / Real.log N ^ (A + C + 5) := by positivity
   have hlowPoint : ∀ d ∈ lowConductorSet N Q C, ∀ ψ : PrimitiveCharacter d,
@@ -237,31 +225,10 @@ theorem standardBVLowSiegelWalfiszSource_of_nonprincipalPrimitivePsi
     rw [← Real.rpow_natCast]
     norm_num
   have hglobal0 : 0 ≤ globalPartialSummationSource N := by
-    unfold globalPartialSummationSource
-    have hp : 0 ≤ principalLambdaPrefixMaxError N 1 := by
-      unfold principalLambdaPrefixMaxError
-      exact (norm_nonneg (principalLambdaMainError 0 1)).trans
-        (Finset.le_max'
-          ((Finset.range (N + 1)).image (fun y => ‖principalLambdaMainError y 1‖)) _
-          (Finset.mem_image.mpr
-            ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
-    have hc : 0 ≤ globalChebyshevToLiSourcePrefixMaxError N := by
-      unfold globalChebyshevToLiSourcePrefixMaxError
-      have hsource0 : 0 ≤ globalChebyshevToLiSourceError 0 := by
-        unfold globalChebyshevToLiSourceError
-        exact abs_nonneg _
-      exact hsource0.trans
-        (Finset.le_max'
-          ((Finset.range (N + 1)).image globalChebyshevToLiSourceError) _
-          (Finset.mem_image.mpr
-            ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
-    have habel0 : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-      have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-        unfold discreteAbelAmplifier
-        positivity
-      exact h0.trans (Finset.le_max' _ _ (Finset.mem_image.mpr
-        ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))
-    exact add_nonneg (mul_nonneg habel0 hp) hc
+    exact add_nonneg
+      (mul_nonneg (discreteAbelAmplifierPrefixMax_nonneg N)
+        (principalLambdaPrefixMaxError_one_nonneg N))
+      (globalChebyshevToLiSourcePrefixMaxError_nonneg N)
   have habel4 : discreteAbelAmplifierPrefixMax N ≤ 4 := by
     refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_
     have hlt : (1 / 2 : ℝ) < Real.log 2 := Real.log_two_gt_d9.trans' (by norm_num)

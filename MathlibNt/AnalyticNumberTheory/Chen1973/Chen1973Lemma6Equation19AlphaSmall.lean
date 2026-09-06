@@ -115,9 +115,8 @@ theorem eq19Alpha_source_weight_budget :
   obtain ⟨X₃, hX₃⟩ := eq19Alpha_loglog_eventually
   refine ⟨max X₁ (max X₂ X₃), ?_⟩
   intro x hx L B lastD level k P hQ
-  have hx₁ := (le_max_left X₁ (max X₂ X₃)).trans hx
-  have hx₂ := (le_max_left X₂ X₃).trans ((le_max_right X₁ (max X₂ X₃)).trans hx)
-  have hx₃ := (le_max_right X₂ X₃).trans ((le_max_right X₁ (max X₂ X₃)).trans hx)
+  obtain ⟨hx₁, hx₂₃⟩ := max_le_iff.mp hx
+  obtain ⟨hx₂, hx₃⟩ := max_le_iff.mp hx₂₃
   have hI := (eq19Alpha_I_log90 P.hlog_one (hX₃ x hx₃ level).2).2
   refine ⟨?_, ?_⟩
   · calc
@@ -172,9 +171,8 @@ lemma eq19Alpha_printedHeight_logs {x L B lastD level k : ℕ}
     ring
   have hT1 : 1 ≤ T := by
     rw [hTeq]
-    calc
-      1 = (1 : ℝ) * 1 * 1 := by norm_num
-      _ ≤ R * u^100 * J := by gcongr; exact one_le_pow₀ hu
+    exact one_le_mul_of_one_le_of_one_le
+      (one_le_mul_of_one_le_of_one_le hR1 (one_le_pow₀ hu)) hJ1
   have hT0 : 0 < T := lt_of_lt_of_le zero_lt_one hT1
   have hTlog : Real.log T ≤ 108*u := by
     rw [hTeq, Real.log_mul (by positivity) hJ0.ne', Real.log_mul hR0.ne' (by positivity),
@@ -198,9 +196,10 @@ lemma eq19Alpha_printedHeight_logs {x L B lastD level k : ℕ}
     have hT2 : 2 ≤ T := by
       dsimp [T, chen1973Lemma6Eq19PrintedHeightReal]
       have hpow : 1 ≤ Real.log (x : ℝ)^(200 : ℕ) := one_le_pow₀ P.hlog_one
-      have := mul_le_mul_of_nonneg_right hp (show 0 ≤ Real.log (x : ℝ)^(200 : ℕ) by positivity)
-      have := mul_le_mul_of_nonneg_left hJ1 (show 0 ≤ (2 : ℝ)^level * Real.log (x : ℝ)^(200 : ℕ) by positivity)
-      nlinarith
+      calc
+        2 ≤ (2 : ℝ)^level * Real.log (x : ℝ)^(200 : ℕ) :=
+          hp.trans (le_mul_of_one_le_right (by positivity) hpow)
+        _ ≤ _ := le_mul_of_one_le_right (by positivity) hJ1
     have hh : (2 : ℝ) ≤ chen1973Lemma6Eq19PrintedHeight x level := hT2.trans (Nat.le_ceil T)
     exact_mod_cast hh
   refine ⟨hH2, by change 1 + _ ≤ 120*u; linarith, ?_⟩
@@ -255,15 +254,17 @@ lemma eq19Alpha_budget_scalar {u W D Q H t n p ell a : ℝ}
   have hu0 : 0 < u := lt_of_lt_of_le zero_lt_one hu
   have ht0 : 0 ≤ t := by linarith
   have hC : 0 ≤ chen1973Lemma6Eq14DyadicConstant := chen1973Lemma6Eq14DyadicConstant_pos.le
+  have hdecay {c : ℝ} {n : ℕ} (hc : 0 ≤ c) (hn : 80 ≤ n) :
+      c / u^n ≤ c / u^80 :=
+    div_le_div_of_nonneg_left hc (pow_pos hu0 80) (pow_le_pow_right₀ hu hn)
   have hmain' : W^2*(2*chen1973Lemma6Eq14DyadicConstant*(Q/H+1/D)*ell^5) ≤
       (10*chen1973Lemma6Eq14DyadicConstant*120^5)/u^80*t^2 := by
     calc
       _ = 2*chen1973Lemma6Eq14DyadicConstant*(W^2*(Q/H+1/D))*ell^5 := by ring
       _ ≤ 2*chen1973Lemma6Eq14DyadicConstant*(5/u^90)*(120*u)^5 := by gcongr
       _ = (10*chen1973Lemma6Eq14DyadicConstant*120^5)/u^85 := by field_simp; ring
-      _ ≤ (10*chen1973Lemma6Eq14DyadicConstant*120^5)/u^80 := by
-        apply div_le_div_of_nonneg_left (by positivity) (pow_pos hu0 80)
-        exact pow_le_pow_right₀ hu (by omega)
+      _ ≤ (10*chen1973Lemma6Eq14DyadicConstant*120^5)/u^80 :=
+        hdecay (by positivity) (by norm_num)
       _ ≤ _ := le_mul_of_one_le_right (by positivity) (one_le_pow₀ ht)
   have hrem' : W^2*(2*Q*(40*n*Real.sqrt Q*p*a*ell)^2) ≤
       (2*(40*2*4*120)^2)/u^80*t^2 := by
@@ -274,10 +275,8 @@ lemma eq19Alpha_budget_scalar {u W D Q H t n p ell a : ℝ}
         field_simp
       _ ≤ 2*(40*2*4*120)^2*t^2*u^4*(1/u^200) := by gcongr
       _ = (2*(40*2*4*120)^2)/u^196*t^2 := by field_simp
-      _ ≤ (2*(40*2*4*120)^2)/u^80*t^2 := by
-        apply mul_le_mul_of_nonneg_right _ (sq_nonneg t)
-        apply div_le_div_of_nonneg_left (by positivity) (pow_pos hu0 80)
-        exact pow_le_pow_right₀ hu (by omega)
+      _ ≤ (2*(40*2*4*120)^2)/u^80*t^2 :=
+        mul_le_mul_of_nonneg_right (hdecay (by positivity) (by norm_num)) (sq_nonneg t)
   calc
     _ = W^2*(2*chen1973Lemma6Eq14DyadicConstant*(Q/H+1/D)*ell^5) +
         W^2*(2*Q*(40*n*Real.sqrt Q*p*a*ell)^2) := by ring

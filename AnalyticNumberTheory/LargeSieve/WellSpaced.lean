@@ -105,77 +105,28 @@ theorem distToInt_le_fract (a b : ℝ) :
 
 /-- Distance modulo 1 is even: `‖−w‖ = ‖w‖`. -/
 theorem distToInt_neg (w : ℝ) : distToInt (-w) = distToInt w := by
-  dsimp [distToInt]
+  unfold distToInt
   by_cases hw : Int.fract w = 0
-  · have hfn : Int.fract (-w) = 0 := by
-      rw [Int.fract_eq_iff]
-      refine ⟨by norm_num, by norm_num, ⟨-(⌊w⌋), ?_⟩⟩
-      have hz : -w - 0 = -(⌊w⌋ : ℝ) := by
-        have hw' : w = Int.fract w + (⌊w⌋ : ℝ) := (Int.fract_add_floor w).symm
-        calc
-          -w - 0 = -w := by ring
-          _ = -(Int.fract w + (⌊w⌋ : ℝ)) := by
-            nth_rewrite 1 [hw']
-            rfl
-          _ = -(⌊w⌋ : ℝ) := by rw [hw]; ring
-      rw [hz]
-      norm_num
-    rw [hfn, hw]
-  · have hf : Int.fract (-w) = 1 - Int.fract w := by
-      rw [Int.fract_eq_iff]
-      have hfpos : 0 < Int.fract w := lt_of_le_of_ne (Int.fract_nonneg w) (Ne.symm hw)
-      refine ⟨by linarith [Int.fract_lt_one w], by linarith, ⟨-(⌊w⌋ + 1), ?_⟩⟩
-      have hz : -w - (1 - Int.fract w) = -((⌊w⌋ : ℝ) + 1) := by
-        have hw' : w = Int.fract w + (⌊w⌋ : ℝ) := (Int.fract_add_floor w).symm
-        calc
-          -w - (1 - Int.fract w) = -w - 1 + Int.fract w := by ring
-          _ = -(Int.fract w + (⌊w⌋ : ℝ)) - 1 + Int.fract w := by
-            nth_rewrite 1 [hw']
-            rfl
-          _ = -((⌊w⌋ : ℝ) + 1) := by ring
-      rw [hz]
-      norm_num
-    rw [hf]
-    have hmin : min (1 - Int.fract w) (1 - (1 - Int.fract w)) =
-        min (Int.fract w) (1 - Int.fract w) := by
-      have h1 : 1 - (1 - Int.fract w) = Int.fract w := by ring
-      rw [h1]
-      rw [min_comm]
-    exact hmin
+  · rw [Int.fract_neg_eq_zero.mpr hw, hw]
+  · rw [Int.fract_neg hw, sub_sub_cancel, min_comm]
 
 /-- Symmetry of distance modulo 1: `‖a−b‖ = ‖b−a‖`. -/
 theorem distToInt_sub_comm (a b : ℝ) : distToInt (a - b) = distToInt (b - a) := by
-  have h1 := distToInt_neg (b - a)
-  have hsub : -(b - a) = a - b := by ring
-  rw [hsub] at h1
-  exact h1
+  simpa only [neg_sub] using distToInt_neg (b - a)
 
 /-- `distToInt z = 0` if and only if `z ∈ ℤ`. -/
 theorem distToInt_eq_zero_iff (z : ℝ) : distToInt z = 0 ↔ ∃ k : ℤ, (k : ℝ) = z := by
-  constructor
-  · intro h
-    dsimp [distToInt] at h
-    by_cases hf : Int.fract z ≤ 1 - Int.fract z
-    · have hf0 : Int.fract z = 0 := by
-        have hmin : min (Int.fract z) (1 - Int.fract z) = Int.fract z := min_eq_left hf
-        linarith
-      refine ⟨⌊z⌋, ?_⟩
-      rw [← Int.fract_add_floor z, hf0]
-      norm_num
-    · have hf1 : 1 - Int.fract z = 0 := by
-        have hmin : min (Int.fract z) (1 - Int.fract z) = 1 - Int.fract z :=
-          min_eq_right (le_of_not_ge hf)
-        linarith
-      exact False.elim (by linarith [Int.fract_lt_one z])
-  · rintro ⟨k, hk⟩
-    dsimp [distToInt]
-    rw [← hk]
-    have hf : Int.fract (k : ℝ) = 0 := by
-      rw [Int.fract_eq_iff]
-      refine ⟨by norm_num, by norm_num, ⟨k, ?_⟩⟩
-      simp
-    rw [hf]
-    norm_num
+  have hfract : distToInt z = 0 ↔ Int.fract z = 0 := by
+    unfold distToInt
+    rw [min_eq_iff]
+    have hright : 0 < 1 - Int.fract z := sub_pos.mpr (Int.fract_lt_one z)
+    constructor
+    · rintro (⟨h, _⟩ | ⟨h, _⟩)
+      · exact h
+      · linarith
+    · intro h
+      exact Or.inl ⟨h, h.le.trans hright.le⟩
+  exact hfract.trans Int.fract_eq_zero_iff
 
 /-- Distinct points of a well-spaced set have real distance at least `δ`:
 separation modulo 1 implies separation on the real line. -/
@@ -207,66 +158,65 @@ theorem sepCard_le_interval (a L : ℝ) {δ : ℝ} (hδ : 0 < δ) (hL : 0 ≤ L)
         nlinarith
     | succ n ih =>
         intro S hcard L' hL' hS' hsep'
-        by_cases hSempty : S = ∅
-        · subst hSempty
+        have hne : S.Nonempty := Finset.card_pos.mp (by omega)
+        let m : ℝ := S.max' hne
+        let S' : Finset ℝ := S.erase m
+        have hm : m ∈ S := S.max'_mem hne
+        have hcard' : S'.card + 1 = S.card := by
+          dsimp [S']
+          exact Finset.card_erase_add_one hm
+        have hcardS' : S'.card = n := by omega
+        have hS'' : ∀ x ∈ S', a ≤ x ∧ x ≤ m - δ := by
+          intro x hx
+          have hxS : x ∈ S := (Finset.erase_subset m S) hx
+          have hxm : x ≤ m := by
+            dsimp [m]
+            exact S.le_max' x hxS
+          have hxne : x ≠ m := (Finset.mem_erase.mp hx).1
+          have hδx : δ ≤ m - x := by
+            simpa only [abs_of_nonneg (sub_nonneg.mpr hxm)] using hsep' hm hxS hxne.symm
+          exact ⟨(hS' x hxS).1, by linarith⟩
+        have hsep'' : ∀ ⦃x : ℝ⦄, x ∈ S' → ∀ ⦃y : ℝ⦄, y ∈ S' → x ≠ y → δ ≤ |x - y| := by
+          intro x hx y hy hxy
+          exact hsep' (Finset.erase_subset m S hx) (Finset.erase_subset m S hy) hxy
+        by_cases hS'empty : S' = ∅
+        · have hS'card0 : S'.card = 0 := by
+            simpa using congrArg Finset.card hS'empty
+          have hcardS : S.card = 1 := by omega
+          have hc1 : (S.card : ℝ) = 1 := by exact_mod_cast hcardS
+          rw [hc1]
           have h1 : 0 ≤ L' / δ := div_nonneg hL' (le_of_lt hδ)
-          simp
           nlinarith
-        · have hne : S.Nonempty := Finset.nonempty_iff_ne_empty.mpr hSempty
-          let m : ℝ := S.max' hne
-          let S' : Finset ℝ := S.erase m
-          have hm : m ∈ S := S.max'_mem hne
-          have hcard' : S'.card + 1 = S.card := by
-            dsimp [S']
-            exact Finset.card_erase_add_one hm
-          have hcardS' : S'.card = n := by omega
-          have hS'' : ∀ x ∈ S', a ≤ x ∧ x ≤ m - δ := by
-            intro x hx
-            have hxS : x ∈ S := (Finset.erase_subset m S) hx
-            have hxm : x ≤ m := by
-              dsimp [m]
-              exact S.le_max' x hxS
-            have hxne : x ≠ m := (Finset.mem_erase.mp hx).1
-            have hxlt : x < m := lt_of_le_of_ne hxm hxne
-            have hδx : δ ≤ |m - x| := by
-              simpa [abs_sub_comm] using hsep' hxS hm hxne
-            have habs : |m - x| = m - x := abs_of_pos (sub_pos.mpr hxlt)
-            have hδx' : δ ≤ m - x := by simpa [habs] using hδx
-            exact ⟨(hS' x hxS).1, by linarith⟩
-          have hsep'' : ∀ ⦃x : ℝ⦄, x ∈ S' → ∀ ⦃y : ℝ⦄, y ∈ S' → x ≠ y → δ ≤ |x - y| := by
-            intro x hx y hy hxy
-            exact hsep' (Finset.erase_subset m S hx) (Finset.erase_subset m S hy) hxy
-          by_cases hS'empty : S' = ∅
-          · have hS'card0 : S'.card = 0 := by
-              simpa using congrArg Finset.card hS'empty
-            have hcardS : S.card = 1 := by omega
-            have hc1 : (S.card : ℝ) = 1 := by exact_mod_cast hcardS
-            rw [hc1]
-            have h1 : 0 ≤ L' / δ := div_nonneg hL' (le_of_lt hδ)
-            nlinarith
-          · have hS'ne : S'.Nonempty := Finset.nonempty_iff_ne_empty.mpr hS'empty
-            rcases hS'ne with ⟨w, hw⟩
-            have hw1 : a ≤ w := (hS'' w hw).1
-            have hw2 : w ≤ m - δ := (hS'' w hw).2
-            have hL'' : 0 ≤ m - δ - a := by linarith
-            have hIH := ih S' hcardS' (m - δ - a) hL''
-              (by
-                intro x hx
-                have hx' := hS'' x hx
-                exact ⟨hx'.1, by linarith [hx'.2]⟩) hsep''
-            have hmle : m ≤ a + L' := (hS' m hm).2
-            calc
-              (S.card : ℝ) = (S'.card : ℝ) + 1 := by
-                exact_mod_cast hcard'.symm
-              _ ≤ ((m - δ - a) / δ + 1) + 1 := by linarith [hIH]
-              _ = (m - a) / δ + 1 := by
-                field_simp [hδ.ne']
-                ring
-              _ ≤ L' / δ + 1 := by
-                have hma : m - a ≤ L' := by linarith
-                have hd : (m - a) / δ ≤ L' / δ := div_le_div_of_nonneg_right hma (le_of_lt hδ)
-                linarith
+        · have hS'ne : S'.Nonempty := Finset.nonempty_iff_ne_empty.mpr hS'empty
+          rcases hS'ne with ⟨w, hw⟩
+          have hw1 : a ≤ w := (hS'' w hw).1
+          have hw2 : w ≤ m - δ := (hS'' w hw).2
+          have hL'' : 0 ≤ m - δ - a := by linarith
+          have hIH := ih S' hcardS' (m - δ - a) hL''
+            (by
+              intro x hx
+              have hx' := hS'' x hx
+              exact ⟨hx'.1, by linarith [hx'.2]⟩) hsep''
+          have hmle : m ≤ a + L' := (hS' m hm).2
+          calc
+            (S.card : ℝ) = (S'.card : ℝ) + 1 := by
+              exact_mod_cast hcard'.symm
+            _ ≤ ((m - δ - a) / δ + 1) + 1 := by linarith [hIH]
+            _ = (m - a) / δ + 1 := by
+              field_simp [hδ.ne']
+              ring
+            _ ≤ L' / δ + 1 := by
+              have hma : m - a ≤ L' := by linarith
+              have hd : (m - a) / δ ≤ L' / δ := div_le_div_of_nonneg_right hma (le_of_lt hδ)
+              linarith
   exact hmain S.card S rfl L hL hS hsep
+
+/-- Translation and reflection preserve the lower bound on distance modulo one. -/
+private lemma distToInt_sub_le_fract_sub (x y z : ℝ) :
+    distToInt (y - z) ≤ |Int.fract (x - y) - Int.fract (x - z)| := by
+  have h := distToInt_le_fract (x - y) (x - z)
+  rw [show (x - y) - (x - z) = -(y - z) by ring, distToInt_neg] at h
+  exact h
 
 /-- **Left-arc count**: at most `r/δ + 1` well-spaced points satisfy
 `fract(x−y) ≤ r`. -/
@@ -283,11 +233,7 @@ theorem wellSpaced_fract_left_card_le (X : Finset ℝ) {δ : ℝ} (hδ : 0 < δ)
     have hyX : y ∈ X := (Finset.mem_filter.mp hy).1
     have hzX : z ∈ X := (Finset.mem_filter.mp hz).1
     have hδyz : δ ≤ distToInt (y - z) := hws hyX hzX hyz
-    have hle : distToInt (y - z) ≤ |Int.fract (x - y) - Int.fract (x - z)| := by
-      have h1 := distToInt_le_fract (x - y) (x - z)
-      have h2 : (x - y) - (x - z) = -(y - z) := by ring
-      rw [h2, distToInt_neg] at h1
-      exact h1
+    have hle := distToInt_sub_le_fract_sub x y z
     have hdiff : |Int.fract (x - y) - Int.fract (x - z)| = 0 := by
       have hfz' : Int.fract (x - y) = Int.fract (x - z) := by simpa using hfz
       rw [hfz']
@@ -308,11 +254,7 @@ theorem wellSpaced_fract_left_card_le (X : Finset ℝ) {δ : ℝ} (hδ : 0 < δ)
       apply htu
       congr
     have hδyz : δ ≤ distToInt (y - z) := hws hyX hzX hyz
-    have hle : distToInt (y - z) ≤ |Int.fract (x - y) - Int.fract (x - z)| := by
-      have h1 := distToInt_le_fract (x - y) (x - z)
-      have h2 : (x - y) - (x - z) = -(y - z) := by ring
-      rw [h2, distToInt_neg] at h1
-      exact h1
+    have hle := distToInt_sub_le_fract_sub x y z
     linarith
   have hcardT : (T.card : ℝ) ≤ r / δ + 1 :=
     sepCard_le_interval 0 r hδ hr T (by simpa using hT) hTsep
@@ -335,11 +277,7 @@ theorem wellSpaced_fract_right_card_le (X : Finset ℝ) {δ : ℝ} (hδ : 0 < δ
     have hyX : y ∈ X := (Finset.mem_filter.mp hy).1
     have hzX : z ∈ X := (Finset.mem_filter.mp hz).1
     have hδyz : δ ≤ distToInt (y - z) := hws hyX hzX hyz
-    have hle : distToInt (y - z) ≤ |Int.fract (x - y) - Int.fract (x - z)| := by
-      have h1 := distToInt_le_fract (x - y) (x - z)
-      have h2 : (x - y) - (x - z) = -(y - z) := by ring
-      rw [h2, distToInt_neg] at h1
-      exact h1
+    have hle := distToInt_sub_le_fract_sub x y z
     have hdiff : |Int.fract (x - y) - Int.fract (x - z)| = 0 := by
       have hfz' : Int.fract (x - y) = Int.fract (x - z) := by simpa using hfz
       rw [hfz']
@@ -361,11 +299,7 @@ theorem wellSpaced_fract_right_card_le (X : Finset ℝ) {δ : ℝ} (hδ : 0 < δ
       apply htu
       congr
     have hδyz : δ ≤ distToInt (y - z) := hws hyX hzX hyz
-    have hle : distToInt (y - z) ≤ |Int.fract (x - y) - Int.fract (x - z)| := by
-      have h1 := distToInt_le_fract (x - y) (x - z)
-      have h2 : (x - y) - (x - z) = -(y - z) := by ring
-      rw [h2, distToInt_neg] at h1
-      exact h1
+    have hle := distToInt_sub_le_fract_sub x y z
     linarith
   have hcardT : (T.card : ℝ) ≤ r / δ + 1 :=
     sepCard_le_interval (1 - r) r hδ hr T (by simpa [sub_add_cancel] using hT) hTsep
@@ -411,39 +345,19 @@ theorem charReal_zero : charReal 0 = 1 := by
 
 /-- The interval exponential sum at zero: `Σ_{M<n≤M+N} e(n·0) = N`. -/
 theorem charRealSubIcc_zero (M : ℤ) (N : ℕ) : charRealSubIcc M N 0 = (N : ℂ) := by
-  induction N with
-  | zero =>
-      dsimp [charRealSubIcc]
-      simp
-  | succ N ih =>
-      rw [charRealSubIcc_succ, ih]
-      have hc : charReal 0 = 1 := charReal_zero
-      simp [hc]
+  simp [charRealSubIcc_eq_shift, charReal_zero]
 
 /-- Conjugation of the interval kernel:
 `Σ_n e(n·(−z)) = conj(Σ_n e(nz))`. -/
 theorem charRealSubIcc_neg (M : ℤ) (N : ℕ) (z : ℝ) :
     charRealSubIcc M N (-z) = star (charRealSubIcc M N z) := by
-  dsimp [charRealSubIcc]
-  calc
-    (∑ n ∈ Finset.Icc (M + 1) (M + N), charReal ((n : ℝ) * -z))
-        = ∑ n ∈ Finset.Icc (M + 1) (M + N), star (charReal ((n : ℝ) * z)) := by
-          apply Finset.sum_congr rfl
-          intro n hn
-          have harg : (n : ℝ) * -z = -((n : ℝ) * z) := by ring
-          rw [harg, charReal_neg]
-    _ = star (∑ n ∈ Finset.Icc (M + 1) (M + N), charReal ((n : ℝ) * z)) := by
-          exact (map_sum (starRingEnd ℂ) (fun n : ℤ => charReal ((n : ℝ) * z))
-            (Finset.Icc (M + 1) (M + N))).symm
+  simp only [charRealSubIcc, mul_neg, charReal_neg, star_sum]
 
 /-- Kernel norm symmetry:
 `|Σ_n e(n(x−y))| = |Σ_n e(n(y−x))|`. -/
 theorem charRealSubIcc_norm_sym (M : ℤ) (N : ℕ) (x y : ℝ) :
     ‖charRealSubIcc M N (x - y)‖ = ‖charRealSubIcc M N (y - x)‖ := by
-  have hsub : -(x - y) = y - x := by ring
-  calc
-    ‖charRealSubIcc M N (x - y)‖ = ‖charRealSubIcc M N (y - x)‖ := by
-      rw [← hsub, charRealSubIcc_neg, norm_star]
+  rw [show y - x = -(x - y) from (neg_sub x y).symm, charRealSubIcc_neg, norm_star]
 
 /-- Pointwise shell bound: if `0 < ρ ≤ 1/2` and `(1/2)^J < ρ`, then
 `1/(2ρ) ≤ Σ_{2≤j≤J} 2^{j-1}·1_{ρ ≤ (1/2)^{j-1}}`.
@@ -561,65 +475,23 @@ noncomputable def largeSieveBound (N : ℕ) (δ : ℝ) : ℝ :=
 
 theorem largeSieveBound_nonneg (N : ℕ) {δ : ℝ} (hδ : 0 < δ) :
     0 ≤ largeSieveBound N δ := by
-  dsimp [largeSieveBound]
-  have hc : 0 ≤ (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) := by
-    exact_mod_cast Nat.zero_le _
-  have hnum : 0 ≤ 2 * (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) + 12 := by nlinarith
-  have hdiv : 0 ≤ (2 * (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) + 12) / δ :=
-    div_nonneg hnum (le_of_lt hδ)
-  have hN : 0 ≤ (N : ℝ) := by exact_mod_cast Nat.zero_le N
-  linarith
+  unfold largeSieveBound
+  positivity
 
 /-- `K := ⌈log₂(1/δ)⌉` satisfies `(1/2)^{K+1} < δ` for `0 < δ ≤ 1`. -/
 theorem log2_ceil_half_lt {δ : ℝ} (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
     (1 / 2 : ℝ) ^ (Nat.ceil (Real.log (1 / δ) / Real.log 2) + 1) < δ := by
-  let a : ℝ := Real.log (1 / δ) / Real.log 2
-  let K : ℕ := Nat.ceil a
-  have hlog2pos : 0 < Real.log 2 := Real.log_pos (by norm_num : 1 < (2 : ℝ))
-  have ha0 : 0 ≤ a := by
-    dsimp [a]
-    have h1d : 1 ≤ 1 / δ := one_le_one_div hδ hδ1
-    have hlog : 0 ≤ Real.log (1 / δ) := Real.log_nonneg h1d
-    exact div_nonneg hlog (le_of_lt hlog2pos)
-  have hKa : a ≤ (K : ℝ) := by
-    dsimp [K]
-    exact Nat.le_ceil a
-  have hlog1 : Real.log (1 / δ) = -Real.log δ := by
-    have hh : Real.log ((δ : ℝ)⁻¹) = -Real.log δ := Real.log_inv δ
-    simpa [one_div] using hh
-  have htarget : -(K + 1 : ℝ) * Real.log 2 < Real.log δ := by
-    have h1 : Real.log (1 / δ) < (K + 1 : ℝ) * Real.log 2 := by
-      have hle : Real.log (1 / δ) ≤ (K : ℝ) * Real.log 2 := by
-        have hKa' : Real.log (1 / δ) / Real.log 2 ≤ (K : ℝ) := by
-          dsimp [a] at hKa
-          exact hKa
-        exact (div_le_iff₀ hlog2pos).mp hKa'
-      have hlt : (K : ℝ) * Real.log 2 < (K + 1 : ℝ) * Real.log 2 := by
-        have hKlt : (K : ℝ) < (K + 1 : ℝ) := by norm_num
-        exact mul_lt_mul_of_pos_right hKlt hlog2pos
-      exact lt_of_le_of_lt hle hlt
-    have hh : -Real.log δ < (K + 1 : ℝ) * Real.log 2 := by
-      simpa [hlog1] using h1
-    nlinarith
-  have hmain : Real.log ((1 / 2 : ℝ) ^ (K + 1)) < Real.log δ := by
-    have hlog12 : Real.log (1 / 2) = -Real.log 2 := by
-      have hh : Real.log ((2 : ℝ)⁻¹) = -Real.log 2 := Real.log_inv 2
-      simpa [one_div] using hh
-    calc
-      Real.log ((1 / 2 : ℝ) ^ (K + 1)) = (K + 1 : ℝ) * Real.log (1 / 2) :=
-        by simpa [Nat.cast_add] using Real.log_pow (1 / 2) (K + 1)
-      _ = -(K + 1 : ℝ) * Real.log 2 := by
-        rw [hlog12]
-        ring
-      _ < Real.log δ := htarget
-  have hpos : 0 < (1 / 2 : ℝ) ^ (K + 1) := pow_pos (by norm_num) (K + 1)
-  have hE : Real.exp (Real.log ((1 / 2 : ℝ) ^ (K + 1))) < Real.exp (Real.log δ) :=
-    (Real.exp_lt_exp).mpr hmain
-  calc
-    (1 / 2 : ℝ) ^ (K + 1) = Real.exp (Real.log ((1 / 2 : ℝ) ^ (K + 1))) :=
-      (Real.exp_log hpos).symm
-    _ < Real.exp (Real.log δ) := hE
-    _ = δ := Real.exp_log hδ
+  -- Compare logarithms; the extra step above the ceiling makes the bound strict.
+  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hceil : Real.log (1 / δ) / Real.log 2 <
+      (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) + 1 := by
+    have hle := Nat.le_ceil (Real.log (1 / δ) / Real.log 2)
+    linarith
+  have hlog := (div_lt_iff₀ hlog2).mp hceil
+  apply (Real.log_lt_log_iff (pow_pos (by norm_num) _) hδ).mp
+  rw [Real.log_pow]
+  simp only [Nat.cast_add, Nat.cast_one, one_div, Real.log_inv] at hlog ⊢
+  nlinarith
 
 /-- `K := ⌈log₂(1/δ)⌉` satisfies `2^K < 2/δ` for `0 < δ ≤ 1`. -/
 theorem log2_ceil_two_pow_lt {δ : ℝ} (hδ : 0 < δ) (hδ1 : δ ≤ 1) :
@@ -865,59 +737,19 @@ theorem wellSpacedRowSum (M : ℤ) (N : ℕ) {δ : ℝ} (hδ : 0 < δ) (X : Fins
             linarith
       _ = largeSieveBound N δ := by
             dsimp [largeSieveBound, K]
-  · have hcard : X.card ≤ 1 := by
-      apply Finset.card_le_one.mpr
-      intro y hy z hz
-      by_contra hyz
-      have hδyz : δ ≤ distToInt (y - z) := hws hy hz hyz
-      have hdz : distToInt (y - z) ≤ 1 / 2 := distToInt_le_half (y - z)
-      linarith
-    have hX : ∀ y ∈ X, y = x := by
+  · -- Spacing greater than one half forces X to consist of the selected point.
+    have hX : X = {x} := by
+      apply Finset.eq_singleton_iff_unique_mem.mpr
+      refine ⟨hx, ?_⟩
       intro y hy
       by_contra hyx
-      have hδyx : δ ≤ distToInt (y - x) := hws hy hx hyx
-      have hd : distToInt (y - x) ≤ 1 / 2 := distToInt_le_half (y - x)
+      have hsep := hws hy hx hyx
+      have hhalf := distToInt_le_half (y - x)
       linarith
-    have hrow : (∑ y ∈ X, ‖charRealSubIcc M N (x - y)‖) ≤ (N : ℝ) := by
-      calc
-        (∑ y ∈ X, ‖charRealSubIcc M N (x - y)‖)
-            = ∑ y ∈ X, ‖charRealSubIcc M N (x - x)‖ := by
-              apply Finset.sum_congr rfl
-              intro y hy
-              congr 1
-              rw [hX y hy]
-        _ = (N : ℝ) * X.card := by
-              have hval : ∀ y ∈ X, ‖charRealSubIcc M N (0 : ℝ)‖ = (N : ℝ) := by
-                intro y hy
-                have hz : charRealSubIcc M N 0 = (N : ℂ) := charRealSubIcc_zero M N
-                rw [hz]
-                norm_num
-              calc
-                (∑ y ∈ X, ‖charRealSubIcc M N (x - x)‖)
-                    = ∑ y ∈ X, ‖charRealSubIcc M N (0 : ℝ)‖ := by
-                      apply Finset.sum_congr rfl
-                      intro y hy
-                      rw [show x - x = 0 by ring]
-                _ = ∑ y ∈ X, (N : ℝ) := by
-                      apply Finset.sum_congr rfl
-                      intro y hy
-                      exact hval y hy
-                _ = (N : ℝ) * X.card := by
-                      rw [Finset.sum_const]
-                      simp [nsmul_eq_mul, mul_comm]
-        _ ≤ (N : ℝ) * 1 := by
-              have hN : 0 ≤ (N : ℝ) := by exact_mod_cast Nat.zero_le N
-              exact mul_le_mul_of_nonneg_left (by exact_mod_cast hcard) hN
-        _ = (N : ℝ) := by ring
     have hbound : (N : ℝ) ≤ largeSieveBound N δ := by
-      dsimp [largeSieveBound]
-      have hc : 0 ≤ (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) := by
-        exact_mod_cast Nat.zero_le _
-      have hnum : 0 ≤ 2 * (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) + 12 := by nlinarith
-      have hdiv : 0 ≤ (2 * (Nat.ceil (Real.log (1 / δ) / Real.log 2) : ℝ) + 12) / δ :=
-        div_nonneg hnum (le_of_lt hδ)
-      linarith
-    exact le_trans hrow hbound
+      unfold largeSieveBound
+      exact le_add_of_nonneg_right (by positivity)
+    simpa [hX, charRealSubIcc_zero] using hbound
 
 /-! ## 4. The Schur test and the additive large sieve -/
 
@@ -1003,31 +835,8 @@ theorem quadraticFormBound {ι : Type*} (s : Finset ι) (K : ι → ι → ℂ) 
             intro x hx
             ring
   have hcs : (∑ p ∈ s ×ˢ s, u p * v p) ≤
-      Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) * Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2) := by
-    have h1 : (∑ p ∈ s ×ˢ s, u p * v p) ^ 2 ≤
-        (∑ p ∈ s ×ˢ s, u p ^ 2) * (∑ p ∈ s ×ˢ s, v p ^ 2) :=
-      realCauchySchwarz (s ×ˢ s) u v
-    have hnonneg1 : 0 ≤ ∑ p ∈ s ×ˢ s, u p * v p := by
-      apply Finset.sum_nonneg
-      intro p hp
-      exact mul_nonneg (mul_nonneg (norm_nonneg _) (Real.sqrt_nonneg _))
-        (mul_nonneg (norm_nonneg _) (Real.sqrt_nonneg _))
-    have hnonneg2 : 0 ≤ Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) *
-        Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2) :=
-      mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-    have hsq2 : (∑ p ∈ s ×ˢ s, u p * v p) ^ 2 ≤
-        (Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) * Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2)) ^ 2 := by
-        nlinarith [h1, Real.sq_sqrt (Finset.sum_nonneg (s := s ×ˢ s) (fun p hp => sq_nonneg (u p))),
-          Real.sq_sqrt (Finset.sum_nonneg (s := s ×ˢ s) (fun p hp => sq_nonneg (v p)))]
-    have hsq2' : |∑ p ∈ s ×ˢ s, u p * v p| ≤
-        |Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) * Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2)| :=
-      sq_le_sq.mp hsq2
-    have h1' : |∑ p ∈ s ×ˢ s, u p * v p| = ∑ p ∈ s ×ˢ s, u p * v p :=
-      abs_of_nonneg hnonneg1
-    have h2' : |Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) * Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2)| =
-        Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) * Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2) :=
-      abs_of_nonneg hnonneg2
-    rwa [h1', h2'] at hsq2'
+      Real.sqrt (∑ p ∈ s ×ˢ s, u p ^ 2) * Real.sqrt (∑ p ∈ s ×ˢ s, v p ^ 2) :=
+    Real.sum_mul_le_sqrt_mul_sqrt (s ×ˢ s) u v
   have htri2 : ‖∑ x ∈ s, ∑ y ∈ s, b x * star (b y) * K x y‖ ≤
       ∑ p ∈ s ×ˢ s, u p * v p := by
     calc
@@ -1092,14 +901,6 @@ theorem largeSieveDual_wellSpaced (M : ℤ) (N : ℕ) {δ : ℝ} (hδ : 0 < δ)
     have hm1 := star_sum (s := Finset.Icc (M + 1) (M + N))
       (fun n : ℤ => charReal ((n : ℝ) * (x - y)))
     exact hm1.symm
-  have hK : (∑ x ∈ X, ∑ y ∈ X, b x * star (b y) *
-        (∑ n ∈ Finset.Icc (M + 1) (M + N), star (charReal ((n : ℝ) * (x - y))))) =
-      (∑ x ∈ X, ∑ y ∈ X, b x * star (b y) * star (charRealSubIcc M N (x - y))) := by
-    apply Finset.sum_congr rfl
-    intro x hx
-    apply Finset.sum_congr rfl
-    intro y hy
-    rw [hinner x y]
   have hqb := quadraticFormBound X (fun x y => star (charRealSubIcc M N (x - y))) b
     (largeSieveBound_nonneg N hδ)
     (by

@@ -99,21 +99,11 @@ theorem exists_sourceSigma_doubleRounded_geometry_threshold
     (le_max_left Dσ Dsize).trans hDD0
   have hDsizeD : Dsize ≤ (D : ℝ) :=
     (le_max_right Dσ Dsize).trans hDD0
-  have hD8R : (8 : ℝ) ≤ (D : ℝ) :=
-    (le_max_left (8 : ℝ) (max (Real.exp 1) (max Elog Ed))).trans hDsizeD
+  change max 8 (max (Real.exp 1) (max Elog Ed)) ≤ (D : ℝ) at hDsizeD
+  simp only [max_le_iff] at hDsizeD
+  rcases hDsizeD with ⟨hD8R, hExpOne, hElog, hEd⟩
   have hD8 : 8 ≤ D := by exact_mod_cast hD8R
   have hDpos : 0 < D := by omega
-  have hExpOne : Real.exp 1 ≤ (D : ℝ) :=
-    ((le_max_left (Real.exp 1) (max Elog Ed)).trans
-      (le_max_right (8 : ℝ) _)).trans hDsizeD
-  have hElog : Elog ≤ (D : ℝ) :=
-    (le_max_left Elog Ed).trans <|
-      (le_max_right (Real.exp 1) (max Elog Ed)).trans <|
-        (le_max_right (8 : ℝ) (max (Real.exp 1) (max Elog Ed))).trans hDsizeD
-  have hEd : Ed ≤ (D : ℝ) :=
-    (le_max_right Elog Ed).trans <|
-      (le_max_right (Real.exp 1) (max Elog Ed)).trans <|
-        (le_max_right (8 : ℝ) (max (Real.exp 1) (max Elog Ed))).trans hDsizeD
   have hDrealpos : 0 < (D : ℝ) := by exact_mod_cast hDpos
   have hDlarge : 2 * Real.log 2 ≤ Real.log (D : ℝ) := by
     apply (Real.le_log_iff_exp_le hDrealpos).2

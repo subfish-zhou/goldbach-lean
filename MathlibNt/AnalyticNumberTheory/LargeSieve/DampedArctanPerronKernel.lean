@@ -90,25 +90,8 @@ theorem dampedArctanPerronKernel_eq_half_add_integral
 /-- On the nonnegative half-line, `arctan` lies below the identity. -/
 theorem arctan_le_self_of_nonneg {z : ℝ} (hz : 0 ≤ z) :
     Real.arctan z ≤ z := by
-  have hderiv : ∀ y ∈ Set.uIcc (0 : ℝ) z,
-      HasDerivAt Real.arctan (1 / (1 + y ^ 2)) y := by
-    intro y _
-    exact Real.hasDerivAt_arctan y
-  have hint : IntervalIntegrable (fun y : ℝ => 1 / (1 + y ^ 2)) volume 0 z := by
-    apply Continuous.intervalIntegrable
-    exact continuous_const.div (continuous_const.add (continuous_id.pow 2))
-      (fun y => by nlinarith [sq_nonneg y])
-  have hfund := intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint
-  rw [Real.arctan_zero, sub_zero] at hfund
-  rw [← hfund]
-  calc
-    (∫ y in (0 : ℝ)..z, 1 / (1 + y ^ 2)) ≤ ∫ _y in (0 : ℝ)..z, 1 := by
-      apply intervalIntegral.integral_mono_on hz hint
-        ((continuous_const : Continuous (fun _ : ℝ => (1 : ℝ))).intervalIntegrable 0 z)
-      intro y _
-      have hden : 1 ≤ 1 + y ^ 2 := by nlinarith [sq_nonneg y]
-      exact (div_le_one (lt_of_lt_of_le zero_lt_one hden)).2 hden
-    _ = z := by simp
+  simpa only [Real.tan_arctan] using
+    Real.le_tan (Real.arctan_nonneg.mpr hz) (Real.arctan_lt_pi_div_two z)
 
 /-- Reflection exchanges the two sides of the damped step kernel. -/
 theorem dampedArctanPerronKernel_neg (ε x : ℝ) :

@@ -30,47 +30,16 @@ Expand `(1+2)^{|t|}` over subsets: each element is independently
 included with weight 2 or excluded with weight 1. -/
 theorem sum_powerset_two_pow_eq_three_pow {α : Type*} [DecidableEq α] (t : Finset α) :
     (∑ u ∈ t.powerset, (2 : ℝ) ^ u.card) = (3 : ℝ) ^ t.card := by
-  classical
-  induction t using Finset.induction with
-  | empty => simp
-  | insert a s ha ih =>
-      rw [Finset.powerset_insert (s := s) (a := a)]
-      have hdisj : Disjoint s.powerset (s.powerset.image (insert a)) := by
-        rw [Finset.disjoint_left]
-        intro u hu hiu
-        have hnu : a ∉ u := fun hx => ha ((Finset.mem_powerset.mp hu) hx)
-        rcases Finset.mem_image.mp hiu with ⟨w, hw, rfl⟩
-        have hau : a ∈ insert a w := Finset.mem_insert_self a w
-        exact hnu hau
-      have hinj : Set.InjOn (insert a) (s.powerset : Set (Finset α)) := by
-        intro u hu w hw h
-        have hua : a ∉ u := fun hx => ha ((Finset.mem_powerset.mp hu) hx)
-        have hwa : a ∉ w := fun hx => ha ((Finset.mem_powerset.mp hw) hx)
-        have h' := congrArg (fun v : Finset α => v.erase a) h
-        simpa [hua, hwa] using h'
-      rw [Finset.sum_union hdisj, Finset.sum_image hinj]
-      have hcard : (∑ u ∈ s.powerset, (2 : ℝ) ^ (insert a u).card) =
-          ∑ u ∈ s.powerset, (2 : ℝ) ^ u.card * 2 := by
-        apply Finset.sum_congr rfl
-        intro u hu
-        have hua : a ∉ u := fun hx => ha ((Finset.mem_powerset.mp hu) hx)
-        rw [Finset.card_insert_of_notMem hua, pow_succ]
-      rw [hcard, ← Finset.sum_mul, ih, Finset.card_insert_of_notMem ha, pow_succ]
-      ring
+  simpa only [Finset.prod_const, show (1 : ℝ) + 2 = 3 by norm_num] using
+    (Finset.prod_one_add (f := fun _ : α => (2 : ℝ)) t).symm
 
 /-- Every divisor of squarefree `q` is squarefree, so
 `divisors.filter Squarefree` removes no terms. -/
 theorem divisors_squarefree_filter_eq_self {q : ℕ} (hq : Squarefree q) :
     q.divisors.filter Squarefree = q.divisors := by
   classical
-  apply Finset.ext
-  intro d
-  rw [Finset.mem_filter]
-  constructor
-  · intro h
-    exact h.1
-  · intro hd
-    exact ⟨hd, hq.squarefree_of_dvd (Nat.dvd_of_mem_divisors hd)⟩
+  exact Finset.filter_eq_self.mpr fun d hd =>
+    hq.squarefree_of_dvd (Nat.dvd_of_mem_divisors hd)
 
 /-- **Subset-divisor bijection**: for squarefree `q`,
 `Σ_{S⊆primeFactors q} 2^{|S|}

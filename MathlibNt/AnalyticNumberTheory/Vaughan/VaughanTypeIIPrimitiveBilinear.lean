@@ -80,25 +80,12 @@ theorem vaughanBilinearInner_eq_tensor
         (if ((e * m : ℕ) : ℤ) = t then β e * c (d * t.toNat) else 0) *
           χ.1 (t : ZMod q)) =
         (β e * c (d * (e * m))) * χ.1 ((e * m : ℕ) : ZMod q) := by
-    have hraw := Finset.sum_eq_single (s := Finset.Icc (1 : ℤ) y)
-      (f := fun t : ℤ =>
-        (if ((e * m : ℕ) : ℤ) = t then β e * c (d * t.toNat) else 0) *
-          χ.1 (t : ZMod q))
-      ((e * m : ℕ) : ℤ)
-      (by
-        intro t ht hne
-        have hne' : ((e * m : ℕ) : ℤ) ≠ t := fun h => hne h.symm
-        rw [if_neg hne']
-        simp)
-      (by
-        intro hnot
-        exact False.elim (hnot (Finset.mem_Icc.mpr
-          ⟨by exact_mod_cast hem_pos, by exact_mod_cast hem_le⟩)))
-    have hto : ((e : ℤ) * (m : ℤ)).toNat = e * m := by
-      rw [← Int.natCast_mul]
-      exact Int.toNat_natCast _
-    convert hraw using 1
-    simp [hto]
+    have hem_mem : ((e * m : ℕ) : ℤ) ∈ Finset.Icc (1 : ℤ) y :=
+      Finset.mem_Icc.mpr
+        ⟨by exact_mod_cast hem_pos, by exact_mod_cast hem_le⟩
+    simp_rw [ite_mul, zero_mul]
+    rw [Finset.sum_ite_eq, if_pos hem_mem]
+    simp only [Int.toNat_natCast, Int.cast_natCast]
   rw [hsingle]
   rw [show ((e * m : ℕ) : ZMod q) =
     (e : ZMod q) * (m : ZMod q) by simp only [Nat.cast_mul], map_mul]
@@ -164,8 +151,8 @@ theorem vaughanBilinearBlockOn_norm_sq_le
     intro d hd
     rw [norm_mul, mul_pow]
     have hχ := DirichletCharacter.norm_le_one χ.1 (d : ZMod q)
-    have hχ0 := norm_nonneg (χ.1 (d : ZMod q))
-    have hχsq : ‖χ.1 (d : ZMod q)‖ ^ 2 ≤ 1 := by nlinarith
+    have hχsq : ‖χ.1 (d : ZMod q)‖ ^ 2 ≤ 1 := by
+      simpa using pow_le_pow_left₀ (norm_nonneg _) hχ 2
     simpa using mul_le_mul_of_nonneg_left hχsq (sq_nonneg ‖α d‖)
   · positivity
 
@@ -220,28 +207,18 @@ theorem weighted_primitive_vaughanBilinearBlockOn
         intro q hq
         apply mul_le_mul_of_nonneg_left (hqBound q hq)
         positivity
-      _ = ∑ q ∈ Finset.Icc 1 Q,
-          A * (((q : ℝ) / (q.totient : ℝ)) *
-            ∑ d ∈ DS, ∑ χ : PrimitiveCharacter q, S d q χ) := by
-        apply Finset.sum_congr rfl
-        intro q hq
-        ring_nf
-      _ = A * ∑ q ∈ Finset.Icc 1 Q,
-          (((q : ℝ) / (q.totient : ℝ)) *
-            ∑ d ∈ DS, ∑ χ : PrimitiveCharacter q, S d q χ) := by
-        rw [Finset.mul_sum]
-      _ = A * ∑ q ∈ Finset.Icc 1 Q, ∑ d ∈ DS,
-          ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q, S d q χ := by
-        congr 1
-        apply Finset.sum_congr rfl
-        intro q hq
-        rw [Finset.mul_sum]
       _ = A * ∑ d ∈ DS, ∑ q ∈ Finset.Icc 1 Q,
           ((q : ℝ) / (q.totient : ℝ)) *
             ∑ χ : PrimitiveCharacter q, S d q χ := by
-        congr 1
+        simp_rw [Finset.mul_sum]
         rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro d hd
+        apply Finset.sum_congr rfl
+        intro q hq
+        apply Finset.sum_congr rfl
+        intro χ hχ
+        exact mul_left_comm _ _ _
   refine hCauchy.trans ?_
   have hLS : ∀ d ∈ DS,
       (∑ q ∈ Finset.Icc 1 Q,

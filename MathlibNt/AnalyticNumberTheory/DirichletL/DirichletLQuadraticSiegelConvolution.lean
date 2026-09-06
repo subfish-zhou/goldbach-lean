@@ -42,10 +42,7 @@ theorem quadraticSiegelConvolution_eq_divisorSum
       intro d hd
       have hd0 : d ≠ 0 := Nat.ne_of_gt (Nat.pos_of_mem_divisors hd)
       simp [toArithmeticFunction, hd0]
-    _ = ∑ d ∈ n.divisors, (χ d).re := by
-      induction n.divisors using Finset.induction_on with
-      | empty => simp
-      | @insert d s hd ih => simp [hd, ih]
+    _ = ∑ d ∈ n.divisors, (χ d).re := Complex.re_sum _ _
 
 /-- The complex convolution coefficient lies on the real axis. -/
 theorem zetaMul_im_eq_zero_of_sq_eq_one

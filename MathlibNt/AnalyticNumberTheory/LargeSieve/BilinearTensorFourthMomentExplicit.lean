@@ -63,25 +63,17 @@ private lemma bilinearTensorCharacterForm_norm_sq_le_card
     intro t ht
     ring
   rw [hform]
-  have hnorm := norm_sum_le DS (fun d => χ.1 (d : ZMod q) * R d)
-  have hsq : ‖∑ d ∈ DS, χ.1 (d : ZMod q) * R d‖ ^ 2 ≤
-      (∑ d ∈ DS, ‖χ.1 (d : ZMod q) * R d‖) ^ 2 := by
-    exact pow_le_pow_left₀ (norm_nonneg _) hnorm 2
-  have hcs : (∑ d ∈ DS, ‖χ.1 (d : ZMod q) * R d‖) ^ 2 ≤
-      (DS.card : ℝ) * ∑ d ∈ DS, ‖χ.1 (d : ZMod q) * R d‖ ^ 2 := by
-    simpa only [one_mul, one_pow, sum_const, nsmul_eq_mul, mul_one] using
-      (Finset.sum_mul_sq_le_sq_mul_sq DS
-        (fun _d => (1 : ℝ)) (fun d => ‖χ.1 (d : ZMod q) * R d‖))
-  refine hsq.trans (hcs.trans ?_)
-  apply mul_le_mul_of_nonneg_left
-  · apply Finset.sum_le_sum
-    intro d hd
-    rw [norm_mul, mul_pow]
-    have hχ := DirichletCharacter.norm_le_one χ.1 (d : ZMod q)
-    have hχ0 := norm_nonneg (χ.1 (d : ZMod q))
-    have hχsq : ‖χ.1 (d : ZMod q)‖ ^ 2 ≤ 1 := by nlinarith
-    simpa [R] using mul_le_mul_of_nonneg_right hχsq (sq_nonneg ‖R d‖)
-  · positivity
+  calc
+    ‖∑ d ∈ DS, χ.1 (d : ZMod q) * R d‖ ^ 2
+        ≤ (∑ d ∈ DS, ‖R d‖) ^ 2 := by
+      apply pow_le_pow_left₀ (norm_nonneg _)
+      exact norm_sum_le_of_le _ fun d _ => by
+        rw [norm_mul]
+        exact mul_le_of_le_one_left (norm_nonneg _)
+          (DirichletCharacter.norm_le_one χ.1 (d : ZMod q))
+    _ ≤ (DS.card : ℝ) * ∑ d ∈ DS, ‖R d‖ ^ 2 := by
+      simpa using Finset.sum_mul_sq_le_sq_mul_sq DS
+        (fun _d => (1 : ℝ)) (fun d => ‖R d‖)
 
 /-- Explicit generic nonmaximal bilinear tensor inequality.  Cauchy in `d`
 and the existing weighted primitive large sieve give exactly the rowwise scale
@@ -128,13 +120,7 @@ theorem weighted_primitive_bilinearTensor_explicit
           ((q : ℝ) / (q.totient : ℝ)) * ∑ χ : PrimitiveCharacter q, S d q χ := by
         simp_rw [Finset.mul_sum]
         rw [Finset.sum_comm]
-        apply Finset.sum_congr rfl
-        intro d hd
-        apply Finset.sum_congr rfl
-        intro q hq
-        apply Finset.sum_congr rfl
-        intro χ hχ
-        ring
+        simp only [mul_left_comm]
   refine hcauchy.trans ?_
   have hrow : ∀ d ∈ DS,
       (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
@@ -210,38 +196,7 @@ lemma vaughanCanonicalBilinearBlock_eq_bilinearTensorCharacterForm
         (vaughanCanonicalBilinearTensor b y N v l)
         (vaughanCanonicalDyadicBlock N u k)
         (vaughanCanonicalTensorLength y k) q χ := by
-  change vaughanBilinearBlockOn vaughanMoebiusCoeff vaughanMangoldtCoeff b y
-      (vaughanCanonicalDyadicBlock N u k)
-      (vaughanCanonicalDyadicBlock N v l) q χ = _
-  rw [vaughanBilinearBlockOn_eq_tensor]
-  · unfold bilinearTensorCharacterForm vaughanCanonicalBilinearTensor
-    apply Finset.sum_congr rfl
-    intro d hd
-    have hL : vaughanCanonicalTensorLength y k ≤ y :=
-      Nat.div_le_self y (2 ^ k)
-    have hsub : Finset.Icc (1 : ℤ) (vaughanCanonicalTensorLength y k) ⊆
-        Finset.Icc (1 : ℤ) y :=
-      Finset.Icc_subset_Icc_right (by exact_mod_cast hL)
-    rw [← Finset.sum_subset hsub]
-    · simp_rw [Finset.mul_sum]
-      ring
-    · intro t hty htshort
-      have htpos : 0 < t :=
-        lt_of_lt_of_le Int.zero_lt_one (Finset.mem_Icc.mp hty).1
-      have htcast : (t.toNat : ℤ) = t := Int.toNat_of_nonneg htpos.le
-      have hlt : vaughanCanonicalTensorLength y k < t.toNat := by
-        by_contra h
-        apply htshort
-        exact Finset.mem_Icc.mpr ⟨(Finset.mem_Icc.mp hty).1, by
-          rw [← htcast]
-          exact_mod_cast le_of_not_gt h⟩
-      rw [vaughanBilinearTensorCoeff_canonical_eq_zero
-        b y N u v k l d t hd hty hlt]
-      simp
-  · intro d hd
-    exact (mem_vaughanCanonicalDyadicBlock.mp hd).1
-  · intro e he
-    exact (mem_vaughanCanonicalDyadicBlock.mp he).1
+  exact vaughanCanonicalBilinearBlock_eq_shortTensorForm b y N u v k l q χ
 
 lemma vaughanCanonicalBilinearTensor_coeffEnergy_le
     (b : ℕ → ℂ) (y N u v k l : ℕ) :
@@ -251,19 +206,7 @@ lemma vaughanCanonicalBilinearTensor_coeffEnergy_le
         (vaughanCanonicalTensorLength y k) ≤
       vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff b
         y N u v k l := by
-  unfold bilinearTensorCoeffEnergy vaughanCanonicalBilinearTensor
-    vaughanCanonicalShortTensorEnergy
-  apply Finset.sum_le_sum
-  intro d hd
-  apply Finset.sum_le_sum
-  intro t ht
-  rw [norm_mul, mul_pow]
-  have hμ : ‖vaughanMoebiusCoeff d‖ ^ 2 ≤ (1 : ℝ) := by
-    rcases ArithmeticFunction.moebius_eq_or d with h | h | h <;>
-      simp [vaughanMoebiusCoeff, h]
-  simpa using mul_le_mul_of_nonneg_right hμ
-    (sq_nonneg ‖vaughanBilinearTensorCoeff vaughanMangoldtCoeff b y d
-      (vaughanCanonicalDyadicBlock N v l) t‖)
+  exact vaughanCanonicalBilinearTensor_energy_le b y N u v k l
 
 /-- Canonical Vaughan-block producer with no frozen fourth-moment hypothesis.
 This is the nonmaximal rectangle bound at the product scale, with the explicit

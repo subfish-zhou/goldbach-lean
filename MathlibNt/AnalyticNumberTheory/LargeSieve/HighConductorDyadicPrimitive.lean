@@ -41,13 +41,7 @@ def highConductorHarmonicTail (R Q : ℕ) : ℝ :=
 
 private theorem primitiveCharacter_card_le_totient (d : ℕ) (hd : 0 < d) :
     Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
-  let : NeZero d := ⟨hd.ne'⟩
-  calc
-    Fintype.card (PrimitiveCharacter d) ≤
-        Fintype.card (DirichletCharacter ℂ d) := Fintype.card_subtype_le _
-    _ = d.totient := by
-      rw [← Nat.card_eq_fintype_card]
-      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ d
+  exact primitiveCharacter_card_le_totient_basic d hd
 
 /-- At one positive conductor, character Cauchy converts the square of the
 AP-normalized `L¹` row to the primitive large-sieve weight. -/
@@ -110,11 +104,8 @@ theorem highConductorPrimitiveMean_sq_le_harmonic_mul_squareLedger
           ∑ χ : PrimitiveCharacter d, (A d χ) ^ 2 := by
       have hf : (∑ d ∈ s, (f d) ^ 2) = ∑ d ∈ s, (1 : ℝ) / d := by
         apply Finset.sum_congr rfl
-        intro d hdmem
-        have hd : 0 < d := lt_of_le_of_lt (Nat.zero_le R) (Finset.mem_Ioc.mp hdmem).1
-        dsimp [f]
-        rw [div_pow, Real.sq_sqrt (by positivity : (0 : ℝ) ≤ d)]
-        ring
+        intro d _
+        simp only [f, div_pow, one_pow, Real.sq_sqrt (Nat.cast_nonneg d)]
       rw [hf]
       apply mul_le_mul_of_nonneg_left
       · apply Finset.sum_le_sum
@@ -204,7 +195,7 @@ theorem highConductorTypeI_le
   have hs := (highConductorPrimitiveMean_sq_le_harmonic_mul_squareLedger R Q A).trans h
   have hm := highConductorPrimitiveMean_nonneg R Q A hA
   have ht : 0 ≤ K * N / Real.sqrt R := by positivity
-  nlinarith
+  exact (sq_le_sq₀ hm ht).1 hs
 
 /-- Actual Type-II row maxima reach the `Q√N` scale once their retained
 high-conductor square ledger has the parallel saving. -/
@@ -217,7 +208,7 @@ theorem highConductorTypeII_le
   have hs := (highConductorPrimitiveMean_sq_le_harmonic_mul_squareLedger R Q A).trans h
   have hm := highConductorPrimitiveMean_nonneg R Q A hA
   have ht : 0 ≤ K * Q * Real.sqrt N := by positivity
-  nlinarith
+  exact (sq_le_sq₀ hm ht).1 hs
 
 /-- A narrow conditional consumer combining two nonnegative rows.  It assumes
 the two retained square-ledger savings explicitly; in particular it does not

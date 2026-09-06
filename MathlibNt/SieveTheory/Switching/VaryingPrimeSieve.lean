@@ -1191,11 +1191,7 @@ theorem jurkatRichertSourceMediumPrimeAggregate_eq (N : ℕ) :
   intro p hp
   apply Finset.sum_congr rfl
   intro q hq
-  by_cases hprime : q.Prime
-  <;> by_cases hlower : (N : ℝ) ^ (1 / 10 : ℝ) < (q : ℝ)
-  <;> by_cases hupper : (q : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ)
-  <;> by_cases hdvd : q ∣ N - p
-  <;> simp_all
+  simp only [← ite_and, and_assoc]
 
 /-- The exact finite weighted-count identity used to consume the two sieve
 asymptotics in Chen's Lemma 9. -/

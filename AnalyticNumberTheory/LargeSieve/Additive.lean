@@ -97,77 +97,11 @@ def MontgomeryLargeSieveDual (M : ℤ) (N : ℕ) : Prop :=
 
 /-! ## 3. Duality lemma (the algebraic foundation of the large sieve) -/
 
-/-- **Real Cauchy--Schwarz** (Finset): `(Σ aᵢbᵢ)² ≤ (Σ aᵢ²)(Σ bᵢ²)`,
-proved via Lagrange's identity
-`ΣᵢΣⱼ (aᵢbⱼ − aⱼbᵢ)² = 2(Σa²)(Σb²) − 2(Σab)²`. -/
+/-- **Real Cauchy--Schwarz** (Finset): `(Σ aᵢbᵢ)² ≤ (Σ aᵢ²)(Σ bᵢ²)`.
+This is Mathlib's finite-sum Cauchy--Schwarz inequality. -/
 theorem realCauchySchwarz {ι : Type*} (s : Finset ι) (a b : ι → ℝ) :
-    (∑ i ∈ s, a i * b i) ^ 2 ≤ (∑ i ∈ s, a i ^ 2) * (∑ i ∈ s, b i ^ 2) := by
-  have hsq : 0 ≤ ∑ i ∈ s, ∑ j ∈ s, (a i * b j - a j * b i) ^ 2 := by
-    refine Finset.sum_nonneg ?_
-    intro i hi
-    exact Finset.sum_nonneg (fun j hj => sq_nonneg _)
-  have hsplit : (∑ i ∈ s, ∑ j ∈ s,
-        (a i ^ 2 * b j ^ 2 + a j ^ 2 * b i ^ 2 - 2 * ((a i * b j) * (a j * b i)))) =
-      (∑ i ∈ s, ∑ j ∈ s, a i ^ 2 * b j ^ 2) +
-        (∑ i ∈ s, ∑ j ∈ s, a j ^ 2 * b i ^ 2) -
-        (∑ i ∈ s, ∑ j ∈ s, 2 * ((a i * b j) * (a j * b i))) := by
-    calc
-      (∑ i ∈ s, ∑ j ∈ s,
-          (a i ^ 2 * b j ^ 2 + a j ^ 2 * b i ^ 2 - 2 * ((a i * b j) * (a j * b i))))
-          = ∑ i ∈ s, ((∑ j ∈ s, a i ^ 2 * b j ^ 2) +
-                (∑ j ∈ s, a j ^ 2 * b i ^ 2) - (∑ j ∈ s, 2 * ((a i * b j) * (a j * b i)))) := by
-            apply Finset.sum_congr rfl
-            intro i hi
-            rw [Finset.sum_sub_distrib, Finset.sum_add_distrib]
-      _ = (∑ i ∈ s, ∑ j ∈ s, a i ^ 2 * b j ^ 2) +
-            (∑ i ∈ s, ∑ j ∈ s, a j ^ 2 * b i ^ 2) -
-            (∑ i ∈ s, ∑ j ∈ s, 2 * ((a i * b j) * (a j * b i))) := by
-            rw [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
-  have hidsum : (∑ i ∈ s, ∑ j ∈ s, (a i * b j - a j * b i) ^ 2) =
-      2 * (∑ i ∈ s, a i ^ 2) * (∑ j ∈ s, b j ^ 2) - 2 * (∑ i ∈ s, a i * b i) ^ 2 := by
-    calc
-      (∑ i ∈ s, ∑ j ∈ s, (a i * b j - a j * b i) ^ 2)
-          = ∑ i ∈ s, ∑ j ∈ s,
-              (a i ^ 2 * b j ^ 2 + a j ^ 2 * b i ^ 2 - 2 * ((a i * b j) * (a j * b i))) := by
-            apply Finset.sum_congr rfl
-            intro i hi
-            apply Finset.sum_congr rfl
-            intro j hj
-            ring
-      _ = (∑ i ∈ s, ∑ j ∈ s, a i ^ 2 * b j ^ 2) +
-            (∑ i ∈ s, ∑ j ∈ s, a j ^ 2 * b i ^ 2) -
-            (∑ i ∈ s, ∑ j ∈ s, 2 * ((a i * b j) * (a j * b i))) := by
-            exact hsplit
-      _ = (∑ i ∈ s, a i ^ 2) * (∑ j ∈ s, b j ^ 2) +
-            (∑ i ∈ s, a i ^ 2) * (∑ j ∈ s, b j ^ 2) -
-            2 * (∑ i ∈ s, a i * b i) * (∑ j ∈ s, a j * b j) := by
-            have hT1 : (∑ i ∈ s, ∑ j ∈ s, a i ^ 2 * b j ^ 2) =
-                (∑ i ∈ s, a i ^ 2) * (∑ j ∈ s, b j ^ 2) := by
-              rw [← Finset.sum_mul_sum]
-            have hT2 : (∑ i ∈ s, ∑ j ∈ s, a j ^ 2 * b i ^ 2) =
-                (∑ i ∈ s, a i ^ 2) * (∑ j ∈ s, b j ^ 2) := by
-              rw [Finset.sum_comm]
-              rw [← Finset.sum_mul_sum]
-            have hT3 : (∑ i ∈ s, ∑ j ∈ s, 2 * ((a i * b j) * (a j * b i))) =
-                2 * (∑ i ∈ s, a i * b i) * (∑ j ∈ s, a j * b j) := by
-              calc
-                (∑ i ∈ s, ∑ j ∈ s, 2 * ((a i * b j) * (a j * b i)))
-                    = ∑ i ∈ s, ∑ j ∈ s, (a i * b i) * (2 * (a j * b j)) := by
-                      apply Finset.sum_congr rfl
-                      intro i hi
-                      apply Finset.sum_congr rfl
-                      intro j hj
-                      ring
-                _ = (∑ i ∈ s, a i * b i) * (∑ j ∈ s, 2 * (a j * b j)) := by
-                      rw [← Finset.sum_mul_sum]
-                _ = (∑ i ∈ s, a i * b i) * (2 * ∑ j ∈ s, a j * b j) := by
-                      rw [← Finset.mul_sum]
-                _ = 2 * (∑ i ∈ s, a i * b i) * (∑ j ∈ s, a j * b j) := by
-                      ring
-            rw [hT1, hT2, hT3]
-      _ = 2 * (∑ i ∈ s, a i ^ 2) * (∑ j ∈ s, b j ^ 2) - 2 * (∑ i ∈ s, a i * b i) ^ 2 := by
-            ring
-  nlinarith
+    (∑ i ∈ s, a i * b i) ^ 2 ≤ (∑ i ∈ s, a i ^ 2) * (∑ i ∈ s, b i ^ 2) :=
+  Finset.sum_mul_sq_le_sq_mul_sq s a b
 
 /-- **Complex Cauchy--Schwarz** (Finset):
 `|Σᵢ xᵢ·conj(yᵢ)| ≤ √(Σ‖xᵢ‖²)·√(Σ‖yᵢ‖²)`, proved using the triangle
@@ -175,29 +109,12 @@ inequality and real Cauchy--Schwarz. -/
 theorem complexCauchySchwarz {ι : Type*} (s : Finset ι) (x y : ι → ℂ) :
     ‖∑ i ∈ s, x i * star (y i)‖ ≤
       Real.sqrt (∑ i ∈ s, ‖x i‖ ^ 2) * Real.sqrt (∑ i ∈ s, ‖y i‖ ^ 2) := by
-  have htri : ‖∑ i ∈ s, x i * star (y i)‖ ≤ ∑ i ∈ s, ‖x i * star (y i)‖ := by
-    exact norm_sum_le s (fun i => x i * star (y i))
-  have habs : (∑ i ∈ s, ‖x i * star (y i)‖) = ∑ i ∈ s, ‖x i‖ * ‖y i‖ := by
-    apply Finset.sum_congr rfl
-    intro i hi
-    rw [norm_mul, norm_star]
-  have hA : 0 ≤ ∑ i ∈ s, ‖x i‖ ^ 2 := Finset.sum_nonneg (fun i hi => sq_nonneg _)
-  have hB : 0 ≤ ∑ i ∈ s, ‖y i‖ ^ 2 := Finset.sum_nonneg (fun i hi => sq_nonneg _)
-  have hcs : (∑ i ∈ s, ‖x i‖ * ‖y i‖) ^ 2 ≤
-      (∑ i ∈ s, ‖x i‖ ^ 2) * (∑ i ∈ s, ‖y i‖ ^ 2) := by
-    exact realCauchySchwarz s (fun i => ‖x i‖) (fun i => ‖y i‖)
-  have hcs' : (∑ i ∈ s, ‖x i‖ * ‖y i‖) ≤
-      Real.sqrt (∑ i ∈ s, ‖x i‖ ^ 2) * Real.sqrt (∑ i ∈ s, ‖y i‖ ^ 2) := by
-    have hsq : (∑ i ∈ s, ‖x i‖ * ‖y i‖) ^ 2 ≤
-        (Real.sqrt (∑ i ∈ s, ‖x i‖ ^ 2) * Real.sqrt (∑ i ∈ s, ‖y i‖ ^ 2)) ^ 2 := by
-      nlinarith [hcs, Real.sq_sqrt hA, Real.sq_sqrt hB]
-    have habs := (sq_le_sq).mp hsq
-    have hc_nonneg : 0 ≤ ∑ i ∈ s, ‖x i‖ * ‖y i‖ :=
-      Finset.sum_nonneg (fun i hi => mul_nonneg (norm_nonneg _) (norm_nonneg _))
-    have hu_nonneg : 0 ≤ Real.sqrt (∑ i ∈ s, ‖x i‖ ^ 2) * Real.sqrt (∑ i ∈ s, ‖y i‖ ^ 2) :=
-      mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-    rwa [abs_of_nonneg hc_nonneg, abs_of_nonneg hu_nonneg] at habs
-  exact le_trans (le_trans htri (le_of_eq habs)) hcs'
+  calc
+    ‖∑ i ∈ s, x i * star (y i)‖ ≤ ∑ i ∈ s, ‖x i * star (y i)‖ :=
+      norm_sum_le s _
+    _ = ∑ i ∈ s, ‖x i‖ * ‖y i‖ := by simp only [norm_mul, norm_star]
+    _ ≤ Real.sqrt (∑ i ∈ s, ‖x i‖ ^ 2) * Real.sqrt (∑ i ∈ s, ‖y i‖ ^ 2) :=
+      Real.sum_mul_le_sqrt_mul_sqrt s (fun i => ‖x i‖) (fun i => ‖y i‖)
 
 /-- **Large-sieve duality lemma** (finite matrices): for any `A : ι → κ → ℂ`
 and `C ≥ 0`, the primal bound
@@ -278,9 +195,7 @@ theorem largeSieveDuality_primalToDual {ι κ : Type*}
           Real.sqrt (∑ i ∈ s, ‖b i‖ ^ 2) * Real.sqrt (∑ i ∈ s, ‖AAb i‖ ^ 2) := hcs
       _ ≤ Real.sqrt (∑ i ∈ s, ‖b i‖ ^ 2) * Real.sqrt (C * ∑ j ∈ t, ‖bStar j‖ ^ 2) := by
             apply mul_le_mul_of_nonneg_left ?_ (Real.sqrt_nonneg _)
-            have hCD : 0 ≤ C * ∑ j ∈ t, ‖bStar j‖ ^ 2 :=
-              mul_nonneg hC (Finset.sum_nonneg (fun j hj => sq_nonneg _))
-            exact (Real.sqrt_le_sqrt_iff hCD).2 hnorm
+            exact Real.sqrt_le_sqrt hnorm
   by_cases hD0 : (∑ j ∈ t, ‖bStar j‖ ^ 2) = 0
   · rw [hD0]
     exact mul_nonneg hC (Finset.sum_nonneg (fun i hi => sq_nonneg _))
@@ -289,20 +204,9 @@ theorem largeSieveDuality_primalToDual {ι κ : Type*}
     have hS : 0 ≤ ∑ i ∈ s, ‖b i‖ ^ 2 := Finset.sum_nonneg (fun i hi => sq_nonneg _)
     have hCD : 0 ≤ C * ∑ j ∈ t, ‖bStar j‖ ^ 2 :=
       mul_nonneg hC (Finset.sum_nonneg (fun j hj => sq_nonneg _))
-    have hsq2 : (∑ j ∈ t, ‖bStar j‖ ^ 2) ^ 2 ≤
-        C * (∑ i ∈ s, ‖b i‖ ^ 2) * (∑ j ∈ t, ‖bStar j‖ ^ 2) := by
-      have hsq2' : (∑ j ∈ t, ‖bStar j‖ ^ 2) ^ 2 ≤
-          (Real.sqrt (∑ i ∈ s, ‖b i‖ ^ 2) * Real.sqrt (C * ∑ j ∈ t, ‖bStar j‖ ^ 2)) ^ 2 := by
-        have hD_nonneg : 0 ≤ ∑ j ∈ t, ‖bStar j‖ ^ 2 :=
-          Finset.sum_nonneg (fun j hj => sq_nonneg _)
-        have hu_nonneg : 0 ≤ Real.sqrt (∑ i ∈ s, ‖b i‖ ^ 2) *
-            Real.sqrt (C * ∑ j ∈ t, ‖bStar j‖ ^ 2) :=
-          mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-        have habs : |∑ j ∈ t, ‖bStar j‖ ^ 2| ≤
-            |Real.sqrt (∑ i ∈ s, ‖b i‖ ^ 2) * Real.sqrt (C * ∑ j ∈ t, ‖bStar j‖ ^ 2)| := by
-          rwa [abs_of_nonneg hD_nonneg, abs_of_nonneg hu_nonneg]
-        exact (sq_le_sq).mpr habs
-      nlinarith [hsq2', Real.sq_sqrt hS, Real.sq_sqrt hCD]
+    -- Square the nonnegative norm bound and cancel the positive dual energy.
+    have hsq2 := pow_le_pow_left₀ hDpos.le hchain 2
+    rw [mul_pow, Real.sq_sqrt hS, Real.sq_sqrt hCD] at hsq2
     nlinarith
 
 /-- **Large-sieve duality lemma**: equivalence of the primal and dual forms.

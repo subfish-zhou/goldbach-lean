@@ -5,7 +5,7 @@ open Set Function Filter Complex Real MeasureTheory
 
 namespace AnalyticNumberTheory.LargeSieve
 
-private theorem integral_lower_middle_upper
+theorem integral_lower_middle_upper
     (f : ℝ → ℂ) {T : ℝ} (hf : Integrable f) (hT : 0 ≤ T) :
     (∫ t in Iic (-T), f t) + (∫ t in Ioc (-T) T, f t) +
         (∫ t in Ici T, f t) = ∫ t, f t := by
@@ -108,15 +108,8 @@ theorem exists_dirichletLTwistedSmoothedNonquadraticErrorAssembly
       ‖VIntegral F a (-T) T + HIntegral F a b T - HIntegral F a b (-T)‖
           ≤ ‖VIntegral F a (-T) T‖ + ‖HIntegral F a b T‖ +
               ‖HIntegral F a b (-T)‖ := by
-            calc
-              _ ≤ ‖VIntegral F a (-T) T + HIntegral F a b T‖ +
-                    ‖HIntegral F a b (-T)‖ := by
-                  simpa only [sub_eq_add_neg, norm_neg] using
-                    norm_add_le (VIntegral F a (-T) T + HIntegral F a b T)
-                      (-HIntegral F a b (-T))
-              _ ≤ _ := add_le_add
-                (norm_add_le (VIntegral F a (-T) T) (HIntegral F a b T))
-                (le_refl _)
+            exact (norm_sub_le _ _).trans
+              (add_le_add (norm_add_le _ _) (le_refl _))
       _ ≤ C * A + C * B + C * B := by
         exact add_le_add (add_le_add hleft htop) hbottom
   have hfull : ‖∫ t : ℝ, F ((b : ℂ) + t * I)‖ ≤
@@ -146,25 +139,20 @@ theorem exists_dirichletLTwistedSmoothedNonquadraticErrorAssembly
       ‖∫ t : ℝ, F ((b : ℂ) + t * I)‖ := by
     rw [VerticalIntegral', VerticalIntegral, norm_smul, norm_smul, norm_I, one_mul]
     exact mul_le_of_le_one_left (norm_nonneg _) hnorm
-  have hA0 : 0 ≤ A := by
+  have hLM0 : 0 < LM := by
     have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
       simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
         four_le_dirichletLNonquadraticConductorLogCutoff hT
     have hlog : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
       Real.log_pos (by exact_mod_cast
         (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
-    dsimp only [A, LM, a]
-    dsimp only [dirichletLTwistedSmoothedConductorLogLM]
+    dsimp only [LM, dirichletLTwistedSmoothedConductorLogLM]
+    positivity
+  have hA0 : 0 ≤ A := by
+    dsimp only [A]
     positivity
   have hB0 : 0 ≤ B := by
-    have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
-      simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
-        four_le_dirichletLNonquadraticConductorLogCutoff hT
-    have hlog : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
-      Real.log_pos (by exact_mod_cast
-        (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
-    dsimp only [B, LM]
-    dsimp only [dirichletLTwistedSmoothedConductorLogLM]
+    dsimp only [B]
     positivity
   have hD0 : 0 ≤ D := by
     dsimp only [D]

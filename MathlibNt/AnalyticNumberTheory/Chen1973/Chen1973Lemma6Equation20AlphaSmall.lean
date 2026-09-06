@@ -8,6 +8,11 @@ namespace AnalyticNumberTheory.LargeSieve
 set_option maxRecDepth 4096
 set_option maxHeartbeats 1200000
 
+/-- The natural dyadic pair scale is at least one, so its real denominators are positive. -/
+private lemma eq20Alpha_pair_scale_one {B k : ℕ} (hB : 0 < B) :
+    (1 : ℝ) ≤ (B * 2^k : ℕ) := by
+  exact_mod_cast Nat.mul_pos hB (pow_pos (by decide : 0 < 2) k)
+
 lemma eq20Alpha_source_geometry {x L B lastD level k : ℕ}
     (P : Chen1973Lemma6Eq20ComplementarySourceParameters x L B lastD level k) :
     chen1973Lemma6Eq20SourceQ L level = 2 * chen1973Lemma6Eq20SourceD L level ∧
@@ -134,7 +139,7 @@ lemma eq20Alpha_height_weight {x L B lastD level k : ℕ} {ε : ℝ}
   have hx : 0 < x := by have := P.hx; omega
   have hx0 : (0 : ℝ) < x := by exact_mod_cast hx
   have hr : 0 < r := Real.rpow_pos_of_pos hx0 _
-  have hY : 0 < Y := by dsimp [Y]; exact_mod_cast Nat.mul_pos P.hB (pow_pos (by omega) k)
+  have hY : 0 < Y := lt_of_lt_of_le zero_lt_one (eq20Alpha_pair_scale_one P.hB)
   have hu0 : 0 < u := by dsimp [u]; linarith
   have hB1 : (1 : ℝ) ≤ B := by exact_mod_cast P.hB
   have hBr : r ≤ 2*B := by dsimp [r]; linarith [P.hB_upper]
@@ -248,17 +253,15 @@ lemma eq20Alpha_effective_one {x L B lastD level k : ℕ}
   have hW1 : 1 ≤ chen1973Lemma6Eq19I x L level := by
     unfold chen1973Lemma6Eq19I
     exact Finset.le_max' _ 1 (by simp)
-  have hY : (0 : ℝ) < (B*2^k : ℕ) := by
-    exact_mod_cast Nat.mul_pos P.hB (pow_pos (by omega) k)
+  have hY : (0 : ℝ) < (B*2^k : ℕ) :=
+    lt_of_lt_of_le zero_lt_one (eq20Alpha_pair_scale_one P.hB)
   have hratio : 1 ≤ (chen1973Lemma6Eq20SourceQ L level : ℝ) / (B*2^k : ℕ) := by
     apply (le_div_iff₀ hY).mpr
     simpa using (show ((B*2^k : ℕ) : ℝ) ≤ chen1973Lemma6Eq20SourceQ L level by
       exact_mod_cast (eq20Alpha_source_geometry P).2.1)
   have hs : 1 ≤ Real.sqrt ((chen1973Lemma6Eq20SourceQ L level : ℝ) / (B*2^k : ℕ)) := by
     simpa using Real.sqrt_le_sqrt hratio
-  calc
-    1 = (1 : ℝ)*1 := by norm_num
-    _ ≤ _ := mul_le_mul hW1 hs zero_le_one (by linarith)
+  exact one_le_mul_of_one_le_of_one_le hW1 hs
 
 /-- Uniform effective-weight ledger for the literal complementary maximum/ceiling. -/
 theorem eq20Alpha_source_weight_budget :
@@ -287,8 +290,8 @@ theorem eq20Alpha_source_weight_budget :
   have hWY : chen1973Lemma6Eq19I x L level ^ 2 * Real.log x ^ (90 : ℕ) ≤
       2*(B*2^k : ℕ) :=
     (mul_le_mul_of_nonneg_right hW (by positivity)).trans (eq20Alpha_I_log90_pair P hcap hu htt)
-  have hY : (0 : ℝ) < (B*2^k : ℕ) := by
-    exact_mod_cast Nat.mul_pos P.hB (pow_pos (by omega) k)
+  have hY : (0 : ℝ) < (B*2^k : ℕ) :=
+    lt_of_lt_of_le zero_lt_one (eq20Alpha_pair_scale_one P.hB)
   refine ⟨?_, ?_, eq20Alpha_height_logs P hε0 hε1 hcap htt⟩
   · rw [eq20Alpha_effective_square]
     have hh := mul_le_mul_of_nonneg_right hWY
@@ -354,9 +357,7 @@ theorem eq20Alpha_actual_numerator_small :
   have hgeom := eq20Alpha_source_geometry P
   have hQD : (Q : ℝ) = 2*(D : ℝ) := by exact_mod_cast hgeom.1
   have hrat := eq19Alpha_ratios hu hE1 hDr hHr hQD hWQ hWH
-  have hY : 1 ≤ Y := by
-    dsimp [Y]
-    exact_mod_cast (show 1 ≤ B*2^k from Nat.mul_pos P.hB (pow_pos (by omega) k))
+  have hY : 1 ≤ Y := eq20Alpha_pair_scale_one P.hB
   have hY0 : 0 < Y := lt_of_lt_of_le zero_lt_one hY
   have hQY : Y ≤ Q := by
     dsimp [Y, Q]

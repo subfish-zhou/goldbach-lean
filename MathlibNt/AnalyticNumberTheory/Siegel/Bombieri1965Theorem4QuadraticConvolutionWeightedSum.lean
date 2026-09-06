@@ -255,22 +255,26 @@ theorem IsPrimitive.abs_quadraticConvolutionWeightedSum_sub_main_sub_product_le
       _ = _ := by
         rw [mul_assoc, Real.sqrt_eq_rpow, ← Real.rpow_add hx0]
         congr 2
-  rw [IsPrimitive.quadraticConvolutionWeightedSum_eq_product_add_tail χ hprim hχ
-    hquad hβ hβ1 hx]
-  have htriangle := abs_add_le
-    (quadraticConvolutionError χ x * x ^ (-β))
-    (-(β * ∫ t in Set.Ioi x, quadraticConvolutionError χ t * t ^ (-β - 1)))
-  rw [abs_neg] at htriangle
   have htail :
       |β * ∫ t in Set.Ioi x, quadraticConvolutionError χ t * t ^ (-β - 1)| ≤
         β * (81 * q * x ^ (1 / 2 - β) / (β - 1 / 2)) := by
     rw [abs_mul, abs_of_nonneg hβ0]
     exact mul_le_mul_of_nonneg_left
       (IsPrimitive.abs_quadraticConvolutionError_tail_le χ hprim hχ hβ hx) hβ0
-  convert htriangle.trans (add_le_add hend htail) using 1
-  · rfl
-  · congr 1
-    ring
-  · ring
+  rw [IsPrimitive.quadraticConvolutionWeightedSum_eq_product_add_tail χ hprim hχ
+    hquad hβ hβ1 hx]
+  calc
+    _ = |quadraticConvolutionError χ x * x ^ (-β) -
+        β * ∫ t in Set.Ioi x, quadraticConvolutionError χ t * t ^ (-β - 1)| := by
+      congr 1
+      ring
+    _ ≤ |quadraticConvolutionError χ x * x ^ (-β)| +
+        |β * ∫ t in Set.Ioi x, quadraticConvolutionError χ t * t ^ (-β - 1)| := by
+      simpa only [sub_zero, zero_sub, abs_neg] using
+        abs_sub_le (quadraticConvolutionError χ x * x ^ (-β)) 0
+          (β * ∫ t in Set.Ioi x, quadraticConvolutionError χ t * t ^ (-β - 1))
+    _ ≤ 81 * q * x ^ (1 / 2 - β) +
+        β * (81 * q * x ^ (1 / 2 - β) / (β - 1 / 2)) := add_le_add hend htail
+    _ = _ := by ring
 
 end AnalyticNumberTheory.LargeSieve.Bombieri1965Theorem4

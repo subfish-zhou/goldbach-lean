@@ -275,18 +275,16 @@ theorem suzukiSourceV_eq_lowerRosserBoundaryLayerMass
           cases n with
           | zero => simp [lowerRosserBoundaryLayerMass, suzukiSourceV_one]
           | succ n =>
+              have hstep (prime : ℕ) :
+                  suzukiSourceV S (n + 1) (D ⌈/⌉ prime) prime =
+                    lowerRosserBoundaryLayerMass S (n + 1) (D ⌈/⌉ prime) prime :=
+                ih (n + 1) (by omega) (D ⌈/⌉ prime) prime (by omega)
               by_cases hodd : Odd (n + 2)
               · rw [suzukiSourceV_odd_succ_eq_upper_only S (by omega) hodd]
-                simp only [lowerRosserBoundaryLayerMass, if_pos hodd]
-                apply Finset.sum_congr rfl
-                intro p hp
-                rw [ih (n + 1) (by omega) (D ⌈/⌉ p) p (by omega)]
+                simp only [lowerRosserBoundaryLayerMass, if_pos hodd, hstep]
               · rw [suzukiSourceV_succ_eq_unrestricted S (by omega)
                     (fun h => (hodd h).elim)]
-                simp only [lowerRosserBoundaryLayerMass, if_neg hodd]
-                apply Finset.sum_congr rfl
-                intro p hp
-                rw [ih (n + 1) (by omega) (D ⌈/⌉ p) p (by omega)]
+                simp only [lowerRosserBoundaryLayerMass, if_neg hodd, hstep]
 
 /-- The `m`-th (one-indexed mathematically, zero-indexed here) even boundary
 layer has Suzuki depth `2(m+1)`. -/

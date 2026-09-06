@@ -38,34 +38,10 @@ private theorem caseI_carrier_scale
     (S : BoundingSieve) {D Dmin : ℕ} {σ s : ℝ}
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) (hs : 2 ≤ s) :
     CarrierQuotientThresholdGeometry S.prodPrimes.primeFactors D Dmin σ s := by
-  intro p hp
-  have hp' := hp
-  simp only [sigmaOneCarrier, Finset.mem_filter] at hp'
-  have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hp'.1
-  have hD1 : (1 : ℝ) ≤ (D : ℝ) := by
-    exact_mod_cast (show 1 ≤ D by nlinarith)
-  have hrootOrder : (D : ℝ) ^ (1 / s) ≤ (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    rpow_one_div_mono_of_le hD1 (by norm_num) hs
-  have hpRoot : (p : ℝ) < (D : ℝ) ^ (1 / (2 : ℝ)) := hp'.2.2.trans_le hrootOrder
-  have hsquareR : (p : ℝ) ^ (2 : ℕ) < (D : ℝ) := by
-    have hiff := Real.lt_rpow_inv_iff_of_pos
-      (x := (p : ℝ)) (y := (D : ℝ)) (z := (2 : ℝ))
-      (by positivity) (by positivity) (by norm_num)
-    norm_num [one_div] at hiff hpRoot ⊢
-    exact hiff.mp hpRoot
-  have hsquare : p ^ 2 < D := by exact_mod_cast hsquareR
-  by_cases hminp : Dmin ≤ p
-  · calc
-      Dmin * p ≤ p * p := Nat.mul_le_mul_right p hminp
-      _ = p ^ 2 := by ring
-      _ ≤ D := Nat.le_of_lt hsquare
-  · have hpmin : p < Dmin := Nat.lt_of_not_ge hminp
-    calc
-      Dmin * p ≤ Dmin * Dmin := Nat.mul_le_mul_left Dmin (Nat.le_of_lt hpmin)
-      _ = Dmin ^ 2 := by ring
-      _ ≤ D := hD
+  exact MathlibNt.SieveTheory.caseI_carrier_quotient_scale S hDmin hD hs
 
-private theorem caseI_inheritedCoordinate_gt
+/-- A strict Case-I prime cutoff places the inherited coordinate above `s - 1`. -/
+theorem caseI_inheritedCoordinate_gt
     {D p : ℕ} {s : ℝ}
     (hp : 2 ≤ p) (hD : 1 < D) (hs : 0 < s)
     (hupper : (p : ℝ) < (D : ℝ) ^ (1 / s)) :

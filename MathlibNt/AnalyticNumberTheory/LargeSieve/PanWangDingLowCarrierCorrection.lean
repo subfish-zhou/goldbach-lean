@@ -112,9 +112,8 @@ theorem coprimePrimePrefix_eq_Icc {q : ℕ}
       ∑ n ∈ Icc 1 y, (if n.Prime ∧ n.Coprime m then (1 : ℂ) else 0) *
         χ (n : ZMod q) := by
   have hr : range (y + 1) = insert 0 (Icc 1 y) := by
-    ext n
-    simp
-    omega
+    exact (Nat.range_succ_eq_Icc_zero y).trans
+      (by simpa using (insert_Icc_add_one_left_eq_Icc (Nat.zero_le y)).symm)
   unfold coprimePrimePrefix
   rw [hr, sum_insert (by simp)]
   simp only [Nat.not_prime_zero, false_and, ite_false, zero_add]
@@ -152,13 +151,11 @@ theorem source_prime_coprime_difference_le
     _ ≤ ∑ _a ∈ Ioc A₁ A₂, (m.primeFactors.card : ℝ) := by
       apply sum_le_sum
       intro a ha
-      rw [← mul_sub, norm_mul]
+      rw [← mul_sub]
       have hcoeff : ‖g a * χ.1 (a : ZMod q)‖ ≤ 1 := by
-        rw [norm_mul]
-        exact (mul_le_mul (hg a ha) (χ.1.norm_le_one _) (norm_nonneg _) zero_le_one).trans_eq
-          (one_mul 1)
-      exact (mul_le_mul hcoeff (norm_primePrefix_sub_coprimePrimePrefix_le χ.1 (N / a) m hm)
-        (norm_nonneg _) zero_le_one).trans_eq (one_mul _)
+        simpa only [one_mul] using norm_mul_le_of_le (hg a ha) (χ.1.norm_le_one _)
+      simpa only [one_mul] using norm_mul_le_of_le hcoeff
+        (norm_primePrefix_sub_coprimePrimePrefix_le χ.1 (N / a) m hm)
     _ = _ := by simp
 end
 end AnalyticNumberTheory.LargeSieve.PanLow

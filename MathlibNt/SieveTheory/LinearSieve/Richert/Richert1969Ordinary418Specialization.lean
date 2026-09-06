@@ -68,8 +68,7 @@ private theorem primeProduct_le_totient_ratio
       (fun p hp => hf1 p (Finset.sdiff_subset hp))
   have hprod : (∏ p ∈ T, f p) ≤ ∏ p ∈ S, f p := by
     rw [← Finset.prod_sdiff hST]
-    nlinarith [Finset.prod_nonneg (s := T \ S)
-      (fun p hp => hf0 p (Finset.sdiff_subset hp))]
+    simpa only [one_mul] using mul_le_mul_of_nonneg_right hdiff hprodS0
   have hEulerQ := Nat.totient_eq_mul_prod_factors d
   have hEulerR : (d.totient : ℝ) =
       (d : ℝ) * ∏ p ∈ d.primeFactors, (1 - (p : ℝ)⁻¹) := by
@@ -410,6 +409,23 @@ theorem eventually_sum_richertEStar_combined_le_of_ordinary418
     exact primeAPPrefixMaxError_nonneg N m
   exact hsum.trans (hordinaryN hN)
 
+/-- Every combined modulus is a medium prime times a coprime squarefree
+sifting divisor; both finite Lemma 3 payments use this same fact. -/
+private theorem chenReducedCombinedModuli_squarefree
+    {N m : ℕ} {ε : ℝ} (hm : m ∈ chenReducedCombinedModuli N ε) :
+    Squarefree m := by
+  rcases Finset.mem_biUnion.mp hm with ⟨q, hq, hmImage⟩
+  rcases Finset.mem_image.mp hmImage with ⟨d, hd, rfl⟩
+  have hqSource := (Finset.mem_filter.mp hq).1
+  have hqPrime := (Finset.mem_filter.mp hqSource).2.1
+  have hdDiv : d ∣ jurkatRichertSourceSiftingProduct N :=
+    Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd).1
+  have hdSquarefree :=
+    (jurkatRichertSourceSiftingProduct_squarefree N).squarefree_of_dvd hdDiv
+  have hcop :=
+    jurkatRichertSourceMediumPrime_coprime_siftingDivisor hqSource hdDiv
+  exact (Nat.squarefree_mul hcop).mpr ⟨hqPrime.squarefree, hdSquarefree⟩
+
 /-- Floor-safe form of Richert's Cauchy/Lemma 3 payment on Chen's exact
 combined moduli.  Its only distribution premise is the ordinary unweighted
 initial-range mass from (4.18). -/
@@ -429,19 +445,8 @@ theorem chenReducedPairWeightedEStar_sq_le_of_ordinary418_floorSafe
     intro m hm
     exact Finset.mem_range.mpr
       (Nat.lt_succ_of_le (Finset.mem_Icc.mp (hsubset hm)).2)
-  have hSquarefree : ∀ m ∈ S, Squarefree m := by
-    intro m hm
-    rcases Finset.mem_biUnion.mp hm with ⟨q, hq, hmImage⟩
-    rcases Finset.mem_image.mp hmImage with ⟨d, hd, rfl⟩
-    have hqSource := (Finset.mem_filter.mp hq).1
-    have hqPrime := (Finset.mem_filter.mp hqSource).2.1
-    have hdDiv : d ∣ jurkatRichertSourceSiftingProduct N :=
-      Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd).1
-    have hdSquarefree :=
-      (jurkatRichertSourceSiftingProduct_squarefree N).squarefree_of_dvd hdDiv
-    have hcop :=
-      jurkatRichertSourceMediumPrime_coprime_siftingDivisor hqSource hdDiv
-    exact (Nat.squarefree_mul hcop).mpr ⟨hqPrime.squarefree, hdSquarefree⟩
+  have hSquarefree : ∀ m ∈ S, Squarefree m :=
+    fun _ hm => chenReducedCombinedModuli_squarefree hm
   have hE : ∀ m ∈ S, 0 ≤ E m := by
     intro m hm
     exact primeAPPrefixMaxError_nonneg N m
@@ -617,20 +622,7 @@ private theorem chenReducedCombinedModulusFibres_pairwise_standard
             (((jurkatRichertSourceSiftingProduct N).divisors.filter
               fun d => d < jurkatRichertSourceUpperLevel N q₂ ε).image
                 fun d => q₂ * d) := by
-  intro q₁ hq₁ q₂ hq₂ hqNe
-  rw [Finset.disjoint_left]
-  intro m hm₁ hm₂
-  rcases Finset.mem_image.mp hm₁ with ⟨d₁, hd₁, rfl⟩
-  rcases Finset.mem_image.mp hm₂ with ⟨d₂, hd₂, hmul⟩
-  have hq₁' := (Finset.mem_filter.mp hq₁).1
-  have hq₂' := (Finset.mem_filter.mp hq₂).1
-  have hd₁' : d₁ ∣ jurkatRichertSourceSiftingProduct N :=
-    Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd₁).1
-  have hd₂' : d₂ ∣ jurkatRichertSourceSiftingProduct N :=
-    Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd₂).1
-  exact hqNe
-    (jurkatRichertSource_mediumPrime_mul_siftingDivisor_injective
-      hq₁' hq₂' hd₁' hd₂' hmul.symm).1
+  exact MathlibNt.SieveTheory.Richert1969.chenReducedCombinedModulusFibres_pairwise N ε
 
 /-- The exact injective `(q,d) ↦ qd` reindexing pays the `3^ω(d)` weight for
 the project's standard endpoint errors as well. -/
@@ -705,19 +697,8 @@ theorem chenReducedWeightedBVSum_sq_le_of_ordinary
     intro m hm
     exact Finset.mem_range.mpr
       (Nat.lt_succ_of_le (Finset.mem_Icc.mp (hsubset hm)).2)
-  have hSquarefree : ∀ m ∈ S, Squarefree m := by
-    intro m hm
-    rcases Finset.mem_biUnion.mp hm with ⟨q, hq, hmImage⟩
-    rcases Finset.mem_image.mp hmImage with ⟨d, hd, rfl⟩
-    have hqSource := (Finset.mem_filter.mp hq).1
-    have hqPrime := (Finset.mem_filter.mp hqSource).2.1
-    have hdDiv : d ∣ jurkatRichertSourceSiftingProduct N :=
-      Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd).1
-    have hdSquarefree :=
-      (jurkatRichertSourceSiftingProduct_squarefree N).squarefree_of_dvd hdDiv
-    have hcop :=
-      jurkatRichertSourceMediumPrime_coprime_siftingDivisor hqSource hdDiv
-    exact (Nat.squarefree_mul hcop).mpr ⟨hqPrime.squarefree, hdSquarefree⟩
+  have hSquarefree : ∀ m ∈ S, Squarefree m :=
+    fun _ hm => chenReducedCombinedModuli_squarefree hm
   have hE : ∀ m ∈ S, 0 ≤ E m := by
     intro m hm
     exact BombieriVinogradov.standardPrimeAPMaxError_nonneg N m

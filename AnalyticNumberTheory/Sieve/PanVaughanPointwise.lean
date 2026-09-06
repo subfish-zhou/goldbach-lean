@@ -32,10 +32,9 @@ The exact prime-count identity is
 `π(y;q,l) = Σ_{n≤y,n≡l(q)} Λ(n)/log n − primePowerCorrection`.
 `apLogVonMangoldt`, `apPrimePowerCorrection`, and
 `apLogVonMangoldt_eq_primesInAP_add_pp` implement this identity;
-the correction is nonnegative. The argument also proves
-`vonMangoldt_eq_log_of_prime` from Moebius inversion on a prime's divisors,
-using mathlib's divisor-pair description
-`IsPrimePow.exists_ord_compl`.
+the correction is nonnegative. The prime evaluation
+`vonMangoldt_eq_log_of_prime` reuses mathlib's
+`ArithmeticFunction.vonMangoldt_apply_prime`.
 
 The log-weighted Vaughan decomposition yields
 `panDistributionSum_eq_mainStep`, under `f 0 = 0`, and the
@@ -334,24 +333,6 @@ def PanChebyshevApprox (f : ℕ → ℝ) (u v : ℕ) : Prop :=
 
 /-! ## 6. Finite composition of the residue and truncation maxima -/
 
-/-- The residue maximum of a piece is nonnegative.
-If `q = 0`, the residue set is empty and the definition returns 0.
-This matches the private lemma in `PanAssembly`. -/
-private lemma panPieceMaxL_nonneg (y X q : ℕ) (f : ℕ → ℝ) (g : ℕ → ℕ → ℕ → ℝ) :
-    0 ≤ panPieceMaxL y X q f g := by
-  unfold panPieceMaxL
-  by_cases h : (unitResidues q).Nonempty
-  · dsimp only []
-    rw [dif_pos h]
-    rcases h with ⟨l, hl⟩
-    have hl' : |panPieceSum y X q l f g| ∈
-        (Finset.image (fun l : ℕ => |panPieceSum y X q l f g|)
-          (unitResidues q)) := by
-      exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
-    exact le_trans (abs_nonneg _) (Finset.le_max' _ _ hl')
-  · dsimp only []
-    rw [dif_neg h]
-
 /-- **Residue-max reduction**: a pointwise `(y,l)` estimate gives
 `panMaxL ≤` the sum of the three `panPieceMaxL` bounds.
 All maxima are finite and use `unitResidues q`, with zero
@@ -398,7 +379,7 @@ theorem panMaxL_le_pieces_sum (y X q : ℕ) (f : ℕ → ℝ) (g1 g2 g3 : ℕ �
           (fun l : ℕ => |panPieceSum y X q l f g3|))
         (x := |panPieceSum y X q l f g3|)
         (Finset.mem_image.mpr ⟨l, hl, rfl⟩)
-    nlinarith [hineq, h1, h2, h3]
+    exact hineq.trans (add_le_add (add_le_add h1 h2) h3)
   · simp [dif_neg hS]
 
 /-- **Truncation-max reduction**: a pointwise `(y,l)` estimate
@@ -440,7 +421,7 @@ theorem panMaxY_le_pieces_sum (X q x : ℕ) (f : ℕ → ℝ) (g1 g2 g3 : ℕ �
       (s := (Finset.range (x + 1)).image (fun y => panPieceMaxL y X q f g3))
       (x := panPieceMaxL y' X q f g3)
       (Finset.mem_image.mpr ⟨y', hy', rfl⟩)
-  nlinarith [hy y' hy', h1, h2, h3]
+  exact (hy y' hy').trans (add_le_add (add_le_add h1 h2) h3)
 
 /-! ## 7. Reduction to PanVaughanPointwiseSplit -/
 
@@ -488,38 +469,18 @@ weight; non-prime-powers contribute zero. -/
 noncomputable def apPrimePowerCorrection (y q l : ℕ) : ℝ :=
   ∑ n ∈ Finset.range (y + 1), if n ≡ l [MOD q] then (if n.Prime then 0 else Λ n / Real.log (n : ℝ)) else 0
 
-/-- For prime `p`, `Λ p = log p`, by evaluating
-`μ ∗ log = Λ` on the divisor pairs of `p`. -/
+/-- For prime `p`, `Λ p = log p`, by mathlib's prime evaluation. -/
 lemma vonMangoldt_eq_log_of_prime {p : ℕ} (hp : p.Prime) : Λ p = Real.log (p : ℝ) := by
-  have hΛ1 : Λ (1 : ℕ) = 0 := by
-    rw [ArithmeticFunction.vonMangoldt_apply]
-    have hpp : ¬ IsPrimePow (1 : ℕ) := by
-      intro h1
-      exact IsPrimePow.ne_one h1 rfl
-    simp [hpp]
-  have hsum := ArithmeticFunction.vonMangoldt_sum (n := p)
-  rw [Nat.Prime.divisors hp] at hsum
-  have hne : (1 : ℕ) ≠ p := hp.ne_one.symm
-  rw [Finset.sum_pair hne] at hsum
-  rw [hΛ1] at hsum
-  simpa [add_comm] using hsum
+  exact ArithmeticFunction.vonMangoldt_apply_prime hp
 
 /-- The von Mangoldt function is nonnegative. -/
 lemma vonMangoldt_nonneg (n : ℕ) : 0 ≤ Λ n := by
-  rw [ArithmeticFunction.vonMangoldt_apply]
-  by_cases h : IsPrimePow n
-  · rw [if_pos h]
-    have hmin : 0 < n.minFac := Nat.minFac_pos n
-    have hle : 1 ≤ (n.minFac : ℝ) := by exact_mod_cast (Nat.succ_le_of_lt hmin)
-    exact Real.log_nonneg hle
-  · rw [if_neg h]
+  exact ArithmeticFunction.vonMangoldt_nonneg
 
 /-- The real logarithm of a natural number is nonnegative,
 including the totalized value at `n = 0`. -/
 private lemma nat_log_nonneg (n : ℕ) : 0 ≤ Real.log (n : ℝ) := by
-  by_cases hn : n = 0
-  · simp [hn]
-  · exact Real.log_nonneg (by exact_mod_cast (Nat.succ_le_of_lt (Nat.pos_of_ne_zero hn)))
+  exact Real.log_natCast_nonneg n
 
 /-- The prime-power correction is nonnegative. -/
 theorem apPrimePowerCorrection_nonneg (y q l : ℕ) : 0 ≤ apPrimePowerCorrection y q l := by
@@ -533,6 +494,20 @@ theorem apPrimePowerCorrection_nonneg (y q l : ℕ) : 0 ≤ apPrimePowerCorrecti
     · simp [hp]
       exact div_nonneg (vonMangoldt_nonneg n) (nat_log_nonneg n)
   · simp [hmod]
+
+/-- The absolute weighted prime-power sum is bounded by the absolute weights,
+since each prime-power correction is nonnegative. -/
+private lemma abs_weighted_primePowerCorrection_le (y X q l : ℕ) (f : ℕ → ℝ) :
+    |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
+        f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0| ≤
+      ∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
+        |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0 := by
+  refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum ?_)
+  intro a ha
+  by_cases hcop : a.Coprime q
+  · simp only [if_pos hcop, abs_mul,
+      abs_of_nonneg (apPrimePowerCorrection_nonneg _ _ _), le_refl]
+  · simp [hcop]
 
 /-- **Exact AP Chebyshev identity**:
 `primesInAP y q l
@@ -675,20 +650,7 @@ theorem panDistributionSum_abs_le_primes_li (y X q l : ℕ) (f : ℕ → ℝ) :
     · rw [if_neg hcop, if_neg hcop, if_neg hcop]
       ring
   rw [hsplit]
-  have h1 : |(∑ a ∈ Finset.range (X + 1), if a.Coprime q then
-        f a * (primesInAPBelow y a q l : ℝ) else 0) -
-      (∑ a ∈ Finset.range (X + 1), if a.Coprime q then
-        f a * (logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0)| ≤
-      |∑ a ∈ Finset.range (X + 1), if a.Coprime q then
-        f a * (primesInAPBelow y a q l : ℝ) else 0| +
-        |∑ a ∈ Finset.range (X + 1), if a.Coprime q then
-          f a * (logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0| := by
-    have h := abs_add_le (∑ a ∈ Finset.range (X + 1), if a.Coprime q then
-        f a * (primesInAPBelow y a q l : ℝ) else 0)
-      (-(∑ a ∈ Finset.range (X + 1), if a.Coprime q then
-        f a * (logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0))
-    simpa [sub_eq_add_neg, abs_neg] using h
-  exact h1
+  exact abs_sub _ _
 
 /-! ## Exact main-step identity and its conditional reduction -/
 
@@ -795,51 +757,13 @@ theorem PanChebyshevApprox.of_mainStep {f : ℕ → ℝ} {u v : ℕ} (hf0 : f 0 
             · simp only [if_neg hcop]
               try ring
           rw [hsplit]
-          have htri : |(∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                  f a * (apLogVonMangoldt (y / a) q (natInvMod q a * l % q) -
-                    logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0) -
-              (∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                  f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)| ≤
-              |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                  f a * (apLogVonMangoldt (y / a) q (natInvMod q a * l % q) -
-                    logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0| +
-                |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                  f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0| := by
-              have h := abs_add_le (∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                  f a * (apLogVonMangoldt (y / a) q (natInvMod q a * l % q) -
-                    logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0)
-                (-(∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                  f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0))
-              simpa [sub_eq_add_neg, abs_neg] using h
-          exact htri
+          exact abs_sub _ _
     _ ≤ |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
               f a * (apLogVonMangoldt (y / a) q (natInvMod q a * l % q) -
                 logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0| +
           ∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
               |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0 := by
-          have hpp : |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0| ≤
-              ∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0 := by
-            calc
-              |∑ a ∈ Finset.Icc 1 X, (if a.Coprime q then
-                    f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)| ≤
-                  ∑ a ∈ Finset.Icc 1 X, |(if a.Coprime q then
-                    f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)| := by
-                    exact Finset.abs_sum_le_sum_abs
-                      (fun a => if a.Coprime q then f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)
-                      (Finset.Icc 1 X)
-              _ ≤ ∑ a ∈ Finset.Icc 1 X, (if a.Coprime q then
-                    |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0) := by
-                    exact Finset.sum_le_sum (fun a ha => by
-                      by_cases hcop : a.Coprime q
-                      · simp only [if_pos hcop]
-                        have hPP : 0 ≤ apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) :=
-                          apPrimePowerCorrection_nonneg (y / a) q (natInvMod q a * l % q)
-                        rw [abs_mul, abs_of_nonneg hPP]
-                      · simp only [if_neg hcop]
-                        simp)
-          linarith
+          exact add_le_add le_rfl (abs_weighted_primePowerCorrection_le y X q l f)
     _ ≤ |A| + |B| + |M| := by
           simpa [A, B, M] using hms X q y l hq hlcop
 
@@ -959,15 +883,11 @@ theorem panDistributionSum_abs_le_logPieces_mainBlock (y X q l : ℕ) (f : ℕ �
               f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0| := by
           have htri : ∀ x y z w : ℝ, |x + y - z - w| ≤ |x| + |y| + |z| + |w| := by
             intro x y z w
-            have h1 : |x + y - z - w| ≤ |x + y| + |z + w| := by
-              have h := abs_add_le (x + y) (-(z + w))
-              rw [abs_neg] at h
-              have heq : x + y - z - w = x + y - (z + w) := by ring
-              rw [heq]
-              simpa [sub_eq_add_neg] using h
-            have h2 : |x + y| ≤ |x| + |y| := abs_add_le x y
-            have h3 : |z + w| ≤ |z| + |w| := abs_add_le z w
-            linarith
+            calc
+              |x + y - z - w| ≤ |x + y - z| + |w| := abs_sub _ _
+              _ ≤ (|x + y| + |z|) + |w| := add_le_add (abs_sub _ _) le_rfl
+              _ ≤ |x| + |y| + |z| + |w| :=
+                add_le_add (add_le_add (abs_add_le _ _) le_rfl) le_rfl
           exact htri _ _ _ _
     _ ≤ |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then f a * apV1Log (y / a) q (natInvMod q a * l % q) u else 0| +
           |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then f a * apV3Log (y / a) q (natInvMod q a * l % q) u v else 0| +
@@ -977,29 +897,7 @@ theorem panDistributionSum_abs_le_logPieces_mainBlock (y X q l : ℕ) (f : ℕ �
                 logarithmicIntegral ((y : ℝ) / a) / Nat.totient q) else 0| +
           ∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
               |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0 := by
-          have hpp : |∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0| ≤
-              ∑ a ∈ Finset.Icc 1 X, if a.Coprime q then
-                |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0 := by
-            calc
-              |∑ a ∈ Finset.Icc 1 X, (if a.Coprime q then
-                    f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)| ≤
-                  ∑ a ∈ Finset.Icc 1 X, |(if a.Coprime q then
-                    f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)| := by
-                    exact Finset.abs_sum_le_sum_abs
-                      (fun a => if a.Coprime q then f a * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0)
-                      (Finset.Icc 1 X)
-              _ ≤ ∑ a ∈ Finset.Icc 1 X, (if a.Coprime q then
-                    |f a| * apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) else 0) := by
-                    exact Finset.sum_le_sum (fun a ha => by
-                      by_cases hcop : a.Coprime q
-                      · simp only [if_pos hcop]
-                        have hPP : 0 ≤ apPrimePowerCorrection (y / a) q (natInvMod q a * l % q) :=
-                          apPrimePowerCorrection_nonneg (y / a) q (natInvMod q a * l % q)
-                        rw [abs_mul, abs_of_nonneg hPP]
-                      · simp only [if_neg hcop]
-                        simp)
-          linarith
+          exact add_le_add le_rfl (abs_weighted_primePowerCorrection_le y X q l f)
 
 /-! ## 9. The corrected signed middle/small and li block
 
@@ -1179,11 +1077,9 @@ private lemma log_four_eq_two_log_two : Real.log 4 = 2 * Real.log 2 := by
   rw [show (4 : ℝ) = (2 : ℝ) ^ 2 by norm_num, Real.log_pow]
   norm_num
 
-/-- `Λ 0 = 0`, with the same proof as in `PanTypeIIBoundAudit`
-to avoid adding an import. -/
+/-- The von Mangoldt arithmetic function vanishes at zero. -/
 private lemma vonMangoldt_zero : Λ 0 = 0 := by
-  rw [ArithmeticFunction.vonMangoldt_apply]
-  simp [not_isPrimePow_zero]
+  simp only [ArithmeticFunction.map_zero]
 
 /-- `Λ 4 = log 2` (4 = 2², `vonMangoldt_apply_pow`). -/
 private lemma vonMangoldt_four : Λ 4 = Real.log 2 := by
@@ -1629,23 +1525,7 @@ theorem abs_panSignedCorrectionSum_le
     (y X q l : ℕ) (f : ℕ → ℝ) :
     |panSignedCorrectionSum y X q l f| ≤
       panSignedCorrectionBound y X q l f := by
-  unfold panSignedCorrectionSum panSignedCorrectionBound
-  calc
-    |∑ a ∈ Finset.Icc 1 X, (if a.Coprime q then
-        f a * panSignedCorrectionKernel y a q l else 0)| ≤
-        ∑ a ∈ Finset.Icc 1 X, |if a.Coprime q then
-          f a * panSignedCorrectionKernel y a q l else 0| :=
-      Finset.abs_sum_le_sum_abs _ _
-    _ ≤ ∑ a ∈ Finset.Icc 1 X, (if a.Coprime q then
-          |f a| * panSignedCorrectionKernel y a q l else 0) := by
-      apply Finset.sum_le_sum
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop, abs_mul]
-        have hk : 0 ≤ panSignedCorrectionKernel y a q l := by
-          exact apPrimePowerCorrection_nonneg _ _ _
-        rw [abs_of_nonneg hk]
-      · simp [hcop]
+  exact abs_weighted_primePowerCorrection_le y X q l f
 
 /-- Pointwise triangle form of the exact signed decomposition. -/
 theorem abs_panDistributionSum_le_sourceFaithfulSigned
@@ -1961,17 +1841,9 @@ theorem PanMeanValueUniform.of_sourceFaithfulSignedInputs
           w q * (pI q + pII q + pM q) := by
       apply Finset.sum_le_sum
       intro q hq
-      by_cases hq0 : q = 0
-      · subst q
-        have hμ : (μ 0 : ℤ) = 0 :=
-          ArithmeticFunction.moebius_eq_zero_of_not_squarefree
-            (not_squarefree_zero)
-        simp [w, hμ]
-      · exact mul_le_mul_of_nonneg_left
-          (by simpa [pI, pII, pM] using
-            (panMaxY_le_sourceFaithfulSigned X q
-              (Nat.floor (x X)) f u v hf0))
-          (hw q)
+      exact mul_le_mul_of_nonneg_left
+        (panMaxY_le_sourceFaithfulSigned X q (Nat.floor (x X)) f u v hf0)
+        (hw q)
     _ = (∑ q ∈ Finset.range (Q + 1), w q * pI q) +
           (∑ q ∈ Finset.range (Q + 1), w q * pII q) +
           (∑ q ∈ Finset.range (Q + 1), w q * pM q) := by

@@ -185,14 +185,7 @@ theorem switchingSieveNu_isMultiplicative : switchingSieveNu.IsMultiplicative :=
   constructor
   · simp [switchingSieveNu]
   · intro m n hcop
-    by_cases hm : m = 0
-    · subst m
-      simp [switchingSieveNu]
-    · by_cases hn : n = 0
-      · subst n
-        simp [switchingSieveNu]
-      · simp [switchingSieveNu, hm, hn]
-        field_simp [hm, hn]
+    simp [switchingSieveNu, one_div, mul_inv_rev, mul_comm]
 
 /-- Sifting product for the switching sieve: the product of all primes below `z`. -/
 noncomputable def switchingSiftingProduct (z : ℕ) : ℕ :=
@@ -206,70 +199,18 @@ theorem switchingSiftingProduct_ne_zero (z : ℕ) : switchingSiftingProduct z �
 /-- The prime factors of a product of a set of primes are exactly that set. -/
 private lemma primeFactors_prod_of_prime_set (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime) :
     (S.prod id).primeFactors = S := by
-  induction S using Finset.induction_on with
-  | empty => simp [Nat.primeFactors_one]
-  | insert p S hpS ih =>
-      rw [Finset.prod_insert hpS]
-      change (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self p S)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : (S.prod id) ≠ 0 := ne_of_gt <| Finset.prod_pos
-        (fun q hq => Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq)))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-        ih (fun q hq => hS q (Finset.mem_insert_of_mem hq))]
-      rw [Finset.insert_eq]
+  exact Internal.primeFactors_prod_eq_self hS
 
 /-- The switching sifting product is squarefree, being a product of distinct primes. -/
 theorem switchingSiftingProduct_squarefree (z : ℕ) : Squarefree (switchingSiftingProduct z) := by
   unfold switchingSiftingProduct
-  let S : Finset ℕ := (Finset.range z).filter Nat.Prime
-  have hS : ∀ p ∈ S, p.Prime := by
-    intro p hp
-    exact (Finset.mem_filter.mp hp).2
-  change Squarefree (S.prod id)
-  have hmain : ∀ (S : Finset ℕ), (∀ p ∈ S, p.Prime) → Squarefree (S.prod id) := by
-    intro S hS
-    induction S using Finset.induction_on with
-    | empty => simp
-    | insert p S hpS ih =>
-      have hprim : p.Prime := hS p (Finset.mem_insert_self p S)
-      have hsq_p : Squarefree p := by
-        unfold Squarefree
-        intro b hb
-        have hbd : b ∣ p := by
-          rcases hb with ⟨k, hk⟩
-          refine ⟨b * k, ?_⟩
-          calc
-            p = b * b * k := hk
-            _ = b * (b * k) := by ring
-        rcases hprim.eq_one_or_self_of_dvd b hbd with hb1 | hbp
-        · rw [hb1]
-          simp
-        · exfalso
-          have hpp : p * p ∣ p := by
-            rw [hbp] at hb
-            exact hb
-          have hp1 : p ∣ 1 := by
-            rcases hpp with ⟨k, hk⟩
-            have hmain : p * (p * k) = p * 1 := by
-              calc
-                p * (p * k) = (p * p) * k := by ring
-                _ = p := hk.symm
-                _ = p * 1 := by ring
-            -- p·(p·k) = p ⟹ p·k = 1 (p > 0)
-            refine ⟨k, ?_⟩
-            exact (Nat.mul_left_cancel (Nat.Prime.pos hprim) hmain).symm
-          exact (hprim.ne_one) (Nat.dvd_one.mp hp1)
-      have hcop : p.Coprime (S.prod id) := by
-        rw [Nat.coprime_prod_right_iff]
-        intro q hq
-        exact (Nat.coprime_primes hprim (hS q (Finset.mem_insert.mpr (Or.inr hq)))).mpr (by
-          intro hpq
-          apply hpS
-          rwa [hpq])
-      rw [Finset.prod_insert hpS]
-      exact (Nat.squarefree_mul hcop).mpr ⟨hsq_p, ih (fun q hq => hS q (Finset.mem_insert_of_mem hq))⟩
-  exact hmain ((Finset.range z).filter Nat.Prime) hS
+  refine Finset.squarefree_prod_of_pairwise_isCoprime ?_ ?_
+  · rintro p hp q hq hpq
+    exact Nat.coprime_iff_isRelPrime.mp
+      ((Nat.coprime_primes (Finset.mem_filter.mp hp).2
+        (Finset.mem_filter.mp hq).2).mpr hpq)
+  · intro p hp
+    exact (Finset.mem_filter.mp hp).2.squarefree
 
 /-- **Sieve problem on the switched set**: support `{p₃ ≤ x}`, where `x = N/a`; sieve out
 multiples of primes `q < z`, with density `ν(d) = 1/d` and total mass equal to the support cardinality.

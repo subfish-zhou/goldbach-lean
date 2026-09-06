@@ -24,9 +24,7 @@ noncomputable def globalPrimePowerCorrection (y : ℕ) : ℝ :=
   ∑ n ∈ range (y + 1), if n.Prime then 0 else Λ n / Real.log (n : ℝ)
 
 private theorem nat_log_nonneg (n : ℕ) : 0 ≤ Real.log (n : ℝ) := by
-  rcases n with _ | n
-  · simp
-  exact Real.log_nonneg (by norm_num)
+  exact Real.log_natCast_nonneg n
 
 private theorem globalPrimePowerCorrection_term_le (n : ℕ) :
     (if n.Prime then 0 else Λ n / Real.log (n : ℝ)) ≤
@@ -58,10 +56,7 @@ theorem apPrimePowerCorrection_le_global (y q l : ℕ) :
 /-- Modulo one the progression restriction disappears exactly. -/
 theorem apPrimePowerCorrection_mod_one (y l : ℕ) :
     apPrimePowerCorrection y 1 l = globalPrimePowerCorrection y := by
-  unfold apPrimePowerCorrection globalPrimePowerCorrection
-  apply sum_congr rfl
-  intro n hn
-  by_cases hp : n.Prime <;> simp [hp, Nat.modEq_one]
+  simp [apPrimePowerCorrection, globalPrimePowerCorrection, Nat.modEq_one]
 
 /-- The zero-modulus term in Liu's outer average is killed by its squared
 Möbius weight, independently of the residue convention modulo zero. -/
@@ -217,12 +212,8 @@ theorem liuPanPrimePowerPairSqrtMass_sq_le (N : ℕ) :
         (fun p => Real.sqrt (N / (p.1 * p.2) : ℕ))
     _ = (P.card : ℝ) *
         ∑ p ∈ P, ((N / (p.1 * p.2) : ℕ) : ℝ) := by
-      congr 1
-      · simp
-      · apply sum_congr rfl
-        intro p hp
-        rw [Real.sq_sqrt]
-        positivity
+      simp only [one_pow, sum_const, nsmul_eq_mul, mul_one,
+        Real.sq_sqrt (Nat.cast_nonneg _)]
     _ ≤ (P.card : ℝ) *
         ∑ p ∈ P, (N : ℝ) / (p.1 * p.2 : ℕ) := by
       apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg _)
@@ -296,11 +287,7 @@ theorem liuPanSignedCorrectionBound_le_sqrtSupport
       intro a ha
       exact mul_le_mul_of_nonneg_left (hglobal (y / a)) (abs_nonneg _)
     _ = C * liuPanPrimePowerSqrtSupport y X f := by
-      unfold liuPanPrimePowerSqrtSupport
-      rw [mul_sum]
-      apply sum_congr rfl
-      intro a ha
-      ring
+      simp only [liuPanPrimePowerSqrtSupport, mul_sum, mul_left_comm]
 
 theorem liuPanAPPrimePowerCorrectionMaxL_le_sqrtSupport
     {C : ℝ} (hC : 0 ≤ C)
@@ -402,11 +389,7 @@ theorem liuMainPanAPPrimePowerCorrection_average_le_sqrtSupport
         (liuPanAPPrimePowerCorrectionMaxY_le_sqrtSupport
           hC hglobal N q N f) (panTypeI_weight_nonneg q)
     _ = C * liuMainPanPrimePowerSqrtSupport N f B := by
-      unfold liuMainPanPrimePowerSqrtSupport
-      rw [mul_sum]
-      apply sum_congr rfl
-      intro q hq
-      ring
+      simp only [liuMainPanPrimePowerSqrtSupport, mul_sum, mul_left_comm]
 
 /-- An explicit bound for the remaining finite support functional is exactly
 the additional input needed to close the existing fixed-`N` correction bound. -/

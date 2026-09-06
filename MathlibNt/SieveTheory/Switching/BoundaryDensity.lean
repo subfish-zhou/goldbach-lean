@@ -999,21 +999,8 @@ theorem exists_upperRosserBoundaryChains_fixed_length_atom_le
   intro p hp
   have hpP : p ∈ P := hl'.2.2.1 (by simpa using hp)
   have hpS : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hpP).1
-  have hpcoord :
-      c < Real.log p / Real.log z := by
-    simpa [c] using
-      (hsupport.2 (Real.log p / Real.log z)
-        (by
-          apply List.mem_map.mpr
-          exact ⟨p, hp, rfl⟩)).1
-  have hpLower : z ^ c ≤ (p : ℝ) := by
-    calc
-      z ^ c ≤ z ^ (Real.log p / Real.log z) :=
-        (Real.rpow_lt_rpow_of_exponent_lt hz1 hpcoord).le
-      _ = (p : ℝ) := by
-        simpa [Real.logb] using
-          (Real.rpow_logb (x := (p : ℝ)) hzpos (ne_of_gt hz1)
-            (by exact_mod_cast (Nat.prime_of_mem_primeFactors hpS).pos))
+  have hpLower : z ^ c ≤ (p : ℝ) :=
+    hqLower.trans (by exact_mod_cast (Finset.mem_filter.mp hpP).2.le)
   exact hatom S z p hz hlocal hpS hpLower
 
 /-- On depth-`2k` boundary carriers, every local-product correction is at most
@@ -1216,7 +1203,8 @@ theorem upperRosserTailFactor_le_logCoordinate
     have heq : K / Real.log q =
         K / ((Real.log q / Real.log z) * Real.log z) := by
       field_simp [hlogz.ne']
-    linarith [hKmono, herror]
+    rw [← heq] at herror
+    exact add_le_add le_rfl (hKmono.trans herror)
   have hsecondNonneg :
       0 ≤ 1 + K / Real.log ((q : ℝ) + 1) := by
     positivity
@@ -1250,11 +1238,7 @@ theorem upperRosserBoundaryPathTerm_le
   intro p hp
   have hp' : p ∈ S.prodPrimes.primeFactors :=
     (Finset.mem_filter.mp (hs hp)).1
-  have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hp'
-  have hpdvd : p ∣ S.prodPrimes :=
-    (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hp' |>.2
-  exact div_nonneg (S.nu_pos_of_prime p hpPrime hpdvd).le
-    (sub_nonneg.mpr (S.nu_lt_one_of_prime p hpPrime hpdvd).le)
+  exact nu_div_one_sub_nonneg_of_mem hp'
 
 /-- Quantitative reduction of a normalized boundary mass to the selected
 Rosser chains.  This removes all skipped primes using only the local-product
@@ -1333,10 +1317,7 @@ theorem upperRosserSetDensityRatio_le_one_add_boundaryChains
   intro q hq
   apply mul_le_mul_of_nonneg_left
     (upperRosserBoundaryDensity_div_eulerProduct_le hlocal hcut hq)
-  have hpdvd : q ∣ S.prodPrimes :=
-    (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hq |>.2
-  exact div_nonneg (S.nu_pos_of_prime q (hprime q hq) hpdvd).le
-    (sub_nonneg.mpr (S.nu_lt_one_of_prime q (hprime q hq) hpdvd).le)
+  exact nu_div_one_sub_nonneg_of_mem hq
 
 /-- The normalized density bound grouped by the even length of each canonical
 decreasing Rosser boundary chain.  This exposes exactly the finite depth

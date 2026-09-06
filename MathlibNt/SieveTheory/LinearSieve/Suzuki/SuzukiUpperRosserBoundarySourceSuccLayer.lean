@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserFiniteToContinuousProducer
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132ExactParityTail
 
 namespace MathlibNt.SieveTheory.LinearSieve
 
@@ -736,10 +737,9 @@ theorem upperRosserBoundarySourceIntegral_succ_second_change_variables
     field_simp [htpos.ne', hwpos.ne'] at htw
     nlinarith [hspos]
 
-/-- On the upper fundamental-lemma window, the reciprocal image of the cubic
-outer face is exactly the lower endpoint in the odd Suzuki recursion. -/
-theorem div_min_one_div_three_eq_recursionLower_odd
-    (k : ℕ) {s : ℝ} (hs : 3 / 2 ≤ s) (hshi : s ≤ 4) :
+private theorem recursion_endpoint
+  (k : ℕ) {s : ℝ} (hs : 3 / 2 ≤ s)
+  (hssupp : s ≤ 2 + (2 * (k + 1) + 1 : ℕ)) :
     s / min 1 (s / 3) = recursionLower 2 s (2 * (k + 1) + 1) := by
   have hspos : 0 < s := by linarith
   have heps : sourceEpsilon (2 * (k + 1) + 1) = 1 := by
@@ -749,9 +749,7 @@ theorem div_min_one_div_three_eq_recursionLower_odd
   have hcap : max s (2 + (1 : ℕ)) ≤ 2 + (2 * (k + 1) + 1 : ℕ) := by
     rw [max_le_iff]
     constructor
-    · norm_num [Nat.cast_add, Nat.cast_mul]
-      have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
-      linarith
+    · exact hssupp
     · norm_num [Nat.cast_add, Nat.cast_mul]
       have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
       linarith
@@ -770,6 +768,16 @@ theorem div_min_one_div_three_eq_recursionLower_odd
       exact h3s
     rw [min_eq_left hone]
     simp
+
+/-- On the upper fundamental-lemma window, the reciprocal image of the cubic
+outer face is exactly the lower endpoint in the odd Suzuki recursion. -/
+theorem div_min_one_div_three_eq_recursionLower_odd
+    (k : ℕ) {s : ℝ} (hs : 3 / 2 ≤ s) (hshi : s ≤ 4) :
+    s / min 1 (s / 3) = recursionLower 2 s (2 * (k + 1) + 1) := by
+  apply recursion_endpoint k hs
+  norm_num [Nat.cast_add, Nat.cast_mul]
+  have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
+  linarith
 
 /-- The second reciprocal substitution with its lower endpoint written in the
 literal first `suzukiLayer_succ_succ` form.  The only remaining difference from
@@ -810,75 +818,13 @@ theorem suzukiLayer_one_two_odd_succ_two_step_kernel
     mul_one, Nat.cast_mul]
   norm_num
 
-private theorem recursion_endpoint
-    (k : ℕ) {s : ℝ} (hs : 3 / 2 ≤ s)
-    (hssupp : s ≤ 2 + (2 * (k + 1) + 1 : ℕ)) :
-    s / min 1 (s / 3) = recursionLower 2 s (2 * (k + 1) + 1) := by
-  have hspos : 0 < s := by linarith
-  have heps : sourceEpsilon (2 * (k + 1) + 1) = 1 := by
-    unfold sourceEpsilon
-    omega
-  rw [recursionLower, heps]
-  have hcap : max s (2 + (1 : ℕ)) ≤ 2 + (2 * (k + 1) + 1 : ℕ) := by
-    rw [max_le_iff]
-    constructor
-    · exact hssupp
-    · norm_num [Nat.cast_add, Nat.cast_mul]
-      have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
-      linarith
-  rw [min_eq_left hcap]
-  norm_num only [Nat.cast_one]
-  by_cases hs3 : s ≤ 3
-  · rw [max_eq_right hs3]
-    have hsdiv : s / 3 ≤ 1 := (div_le_one (by norm_num : (0 : ℝ) < 3)).2 hs3
-    rw [min_eq_right hsdiv]
-    field_simp [hspos.ne']
-  · have h3s : 3 ≤ s := le_of_not_ge hs3
-    rw [max_eq_left h3s]
-    have hone : 1 ≤ s / 3 := by
-      rw [le_div_iff₀ (by norm_num : (0 : ℝ) < 3)]
-      norm_num
-      exact h3s
-    rw [min_eq_left hone]
-    simp
-
 private theorem compact_tail_integral
     {f : ℝ → ℝ} {x B : ℝ}
     (hcont : ContinuousOn f (Icc x B))
     (hzero : ∀ t, B ≤ t → f t = 0) :
     IntegrableOn f (Ioi x) ∧
       (∫ t in Ioi x, f t) = ∫ t in min x B..B, f t := by
-  by_cases hxb : x ≤ B
-  · have hIcc : IntegrableOn f (Icc x B) := hcont.integrableOn_Icc
-    have hIoc : IntegrableOn f (Ioc x B) :=
-      hIcc.mono_set Ioc_subset_Icc_self
-    have heq : (Ioi x).indicator f = (Ioc x B).indicator f := by
-      funext t
-      by_cases hxt : x < t
-      · by_cases htB : t ≤ B
-        · simp [Set.indicator, hxt, htB]
-        · have hz : f t = 0 := hzero t (le_of_not_ge htB)
-          simp [Set.indicator, hxt, htB, hz]
-      · simp [Set.indicator, hxt]
-    have hInd : Integrable ((Ioi x).indicator f) :=
-      (hIoc.integrable_indicator measurableSet_Ioc).congr
-        (Filter.Eventually.of_forall fun t => congrFun heq.symm t)
-    refine ⟨(integrable_indicator_iff measurableSet_Ioi).mp hInd, ?_⟩
-    rw [min_eq_left hxb, intervalIntegral.integral_of_le hxb,
-      ← integral_indicator measurableSet_Ioi,
-      ← integral_indicator measurableSet_Ioc, heq]
-  · have hBx : B ≤ x := le_of_not_ge hxb
-    have hzIoi : EqOn f 0 (Ioi x) := by
-      intro t ht
-      exact hzero t (hBx.trans ht.le)
-    have hInt : IntegrableOn f (Ioi x) :=
-      (integrableOn_zero : IntegrableOn (fun _ : ℝ => (0 : ℝ)) (Ioi x)).congr_fun
-        (fun t ht => (hzIoi ht).symm) measurableSet_Ioi
-    refine ⟨hInt, ?_⟩
-    rw [min_eq_right hBx, intervalIntegral.integral_same]
-    exact integral_eq_zero_of_ae (by
-      filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-      exact hzIoi ht)
+  exact MathlibNt.SieveTheory.compact_tail_integral hcont hzero
 
 private theorem sourceIntegral_succ_eq_of_div_three_le_upper
     (k : ℕ) {s b c : ℝ} (hs : 0 ≤ s)

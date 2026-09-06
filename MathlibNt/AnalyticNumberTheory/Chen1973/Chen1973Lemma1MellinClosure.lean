@@ -35,6 +35,22 @@ lemma test_int_gamma {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
   congr 1
   ring
 
+/-- The Gamma tail is a shifted Laplace moment, including its factorial normalization. -/
+private lemma gammaTail_eq_laplaceMoment (q : ℂ) (n : ℕ) (u : ℝ) :
+    Complex.exp (-q * u) *
+        ((Real.exp (-u) * u ^ n / (n.factorial : ℝ) : ℝ) : ℂ) =
+      chenLaplaceMoment (q + 1) n u / (n.factorial : ℂ) := by
+  simp only [chenLaplaceMoment, Complex.ofReal_div, Complex.ofReal_mul,
+    Complex.ofReal_exp, Complex.ofReal_neg, Complex.ofReal_pow,
+    Complex.ofReal_natCast]
+  have hexp : Complex.exp (-(q + 1) * (u : ℂ)) =
+      Complex.exp (-q * (u : ℂ)) * Complex.exp (-(u : ℂ)) := by
+    rw [← Complex.exp_add]
+    congr 1
+    ring
+  rw [hexp]
+  ring
+
 lemma test_int_gamma_value {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
     ∫ u : ℝ in Ioi 0, Complex.exp (-q * u) * (chenGammaCDF n u : ℂ) =
       1 / (q * (1 + q) ^ (n + 1)) := by
@@ -72,22 +88,9 @@ lemma test_int_gamma_value {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
           Complex.exp (-q * u) *
             ((Real.exp (-u) * u ^ (n + 1) / ((n + 1).factorial : ℝ) : ℝ) : ℂ))
           (Ioi 0) := by
-        have hm := (integrableOn_chenLaplaceMoment hq1 (n + 1)).div_const
+        simp_rw [gammaTail_eq_laplaceMoment]
+        exact (integrableOn_chenLaplaceMoment hq1 (n + 1)).div_const
           ((n + 1).factorial : ℂ)
-        apply hm.congr
-        filter_upwards with u
-        simp only [chenLaplaceMoment, Complex.ofReal_div, Complex.ofReal_mul,
-          Complex.ofReal_exp, Complex.ofReal_neg, Complex.ofReal_pow,
-          Complex.ofReal_natCast]
-        rw [← mul_div_assoc]
-        congr 1
-        have hexp : Complex.exp (-(q + 1) * (u : ℂ)) =
-            Complex.exp (-q * (u : ℂ)) * Complex.exp (-(u : ℂ)) := by
-          rw [← Complex.exp_add]
-          congr 1
-          ring
-        rw [hexp]
-        ring
       rw [show (∫ u : ℝ in Ioi 0,
           Complex.exp (-q * u) * (chenGammaCDF (n + 1) u : ℂ)) =
           (∫ u : ℝ in Ioi 0,
@@ -104,26 +107,8 @@ lemma test_int_gamma_value {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
       rw [show (∫ u : ℝ in Ioi 0, Complex.exp (-q * u) *
           ((Real.exp (-u) * u ^ (n + 1) / ((n + 1).factorial : ℝ) : ℝ) : ℂ)) =
           1 / (q + 1) ^ (n + 2) by
-        have hm := integral_chenLaplaceMoment hq1 (n + 1)
-        rw [show (∫ u : ℝ in Ioi 0, Complex.exp (-q * u) *
-            ((Real.exp (-u) * u ^ (n + 1) / ((n + 1).factorial : ℝ) : ℝ) : ℂ)) =
-            (∫ u : ℝ in Ioi 0, chenLaplaceMoment (q + 1) (n + 1) u) /
-              ((n + 1).factorial : ℂ) by
-          rw [← integral_div]
-          apply setIntegral_congr_fun measurableSet_Ioi
-          intro u hu
-          simp only [chenLaplaceMoment, Complex.ofReal_div, Complex.ofReal_mul,
-            Complex.ofReal_exp, Complex.ofReal_neg, Complex.ofReal_pow,
-            Complex.ofReal_natCast]
-          rw [← mul_div_assoc]
-          congr 1
-          have hexp : Complex.exp (-(q + 1) * (u : ℂ)) =
-              Complex.exp (-q * (u : ℂ)) * Complex.exp (-(u : ℂ)) := by
-            rw [← Complex.exp_add]
-            congr 1
-            ring
-          rw [hexp]
-          ring, hm]
+        simp_rw [gammaTail_eq_laplaceMoment]
+        rw [integral_div, integral_chenLaplaceMoment hq1]
         have hf : ((n + 1).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (n + 1)
         field_simp]
       have hq0 : q ≠ 0 := by intro h; simpa [h] using hq
@@ -183,22 +168,32 @@ lemma chen_cpow_exp_neg (s : ℂ) (u : ℝ) :
   push_cast
   ring
 
+private lemma exp_neg_hasDerivWithinAt (u : ℝ) :
+    HasDerivWithinAt (fun u : ℝ => Real.exp (-u))
+      (-Real.exp (-u)) Set.univ u := by
+  exact mul_neg_one (Real.exp (-u)) ▸
+    ((Real.hasDerivAt_exp (-u)).comp u (hasDerivAt_neg u)).hasDerivWithinAt
+
+private lemma exp_neg_image_univ :
+    (fun u : ℝ => Real.exp (-u)) '' Set.univ = Set.Ioi 0 := by
+  rw [show (fun u : ℝ => Real.exp (-u)) = Real.exp ∘ Neg.neg by rfl,
+    Set.image_comp, Set.image_univ_of_surjective neg_surjective,
+    Set.image_univ, Real.range_exp]
+
+private lemma exp_neg_injOn :
+    Set.univ.InjOn (fun u : ℝ => Real.exp (-u)) := by
+  intro a _ b _ hab
+  exact neg_injective (Real.exp_injective hab)
+
 lemma mellin_eq_integral_exp_neg (f : ℝ → ℂ) (s : ℂ) :
     mellin f s = ∫ u : ℝ, Complex.exp (-s * u) * f (Real.exp (-u)) := by
   let φ : ℝ → ℝ := fun u => Real.exp (-u)
   have hderiv : ∀ u ∈ (Set.univ : Set ℝ),
       HasDerivWithinAt φ (-Real.exp (-u)) Set.univ u := by
     intro u _
-    change HasDerivWithinAt (Real.exp ∘ Neg.neg) (-Real.exp (-u)) Set.univ u
-    exact mul_neg_one (Real.exp (-u)) ▸
-      ((Real.hasDerivAt_exp (-u)).comp u
-        (hasDerivAt_neg u)).hasDerivWithinAt
-  have himage : φ '' Set.univ = Set.Ioi 0 := by
-    rw [show φ = Real.exp ∘ Neg.neg by rfl, Set.image_comp,
-      Set.image_univ_of_surjective neg_surjective, Set.image_univ, Real.range_exp]
-  have hinj : Set.univ.InjOn φ := by
-    intro a ha b hb hab
-    exact neg_injective (Real.exp_injective hab)
+    exact exp_neg_hasDerivWithinAt u
+  have himage : φ '' Set.univ = Set.Ioi 0 := exp_neg_image_univ
+  have hinj : Set.univ.InjOn φ := exp_neg_injOn
   unfold mellin
   rw [← himage]
   rw [integral_image_eq_integral_abs_deriv_smul MeasurableSet.univ hderiv hinj]
@@ -251,16 +246,9 @@ lemma mellinConvergent_chen1973GammaDensityPrimitive {x : ℝ} (hx : 1 < x)
   have hderiv : ∀ u ∈ (Set.univ : Set ℝ),
       HasDerivWithinAt φ (-Real.exp (-u)) Set.univ u := by
     intro u _
-    change HasDerivWithinAt (Real.exp ∘ Neg.neg) (-Real.exp (-u)) Set.univ u
-    exact mul_neg_one (Real.exp (-u)) ▸
-      ((Real.hasDerivAt_exp (-u)).comp u
-        (hasDerivAt_neg u)).hasDerivWithinAt
-  have himage : φ '' Set.univ = Set.Ioi 0 := by
-    rw [show φ = Real.exp ∘ Neg.neg by rfl, Set.image_comp,
-      Set.image_univ_of_surjective neg_surjective, Set.image_univ, Real.range_exp]
-  have hinj : Set.univ.InjOn φ := by
-    intro a ha b hb hab
-    exact neg_injective (Real.exp_injective hab)
+    exact exp_neg_hasDerivWithinAt u
+  have himage : φ '' Set.univ = Set.Ioi 0 := exp_neg_image_univ
+  have hinj : Set.univ.InjOn φ := exp_neg_injOn
   have hA : 0 < chen1973PerronScale x :=
     Real.rpow_pos_of_pos (Real.log_pos hx) _
   let g : ℝ → ℂ := fun u => Complex.exp (-s * u) *

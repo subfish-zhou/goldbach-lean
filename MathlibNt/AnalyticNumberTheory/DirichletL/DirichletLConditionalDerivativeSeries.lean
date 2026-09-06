@@ -50,17 +50,7 @@ lemma norm_sum_Ico_logCpowWeight_character_le
           ‖∑ k ∈ Ico m (n - 1),
             (logCpowWeight s (k + 1 : ℕ) - logCpowWeight s k) *
               (∑ j ∈ range (k + 1), χ j)‖ := by
-        calc
-          _ ≤ ‖logCpowWeight s (n - 1 : ℕ) * (∑ k ∈ range n, χ k) -
-              logCpowWeight s m * (∑ k ∈ range m, χ k)‖ +
-              ‖∑ k ∈ Ico m (n - 1),
-                (logCpowWeight s (k + 1 : ℕ) - logCpowWeight s k) *
-                  (∑ j ∈ range (k + 1), χ j)‖ := norm_sub_le _ _
-          _ ≤ _ := by
-            have h := norm_sub_le
-              (logCpowWeight s (n - 1 : ℕ) * (∑ k ∈ range n, χ k))
-              (logCpowWeight s m * (∑ k ∈ range m, χ k))
-            linarith
+      exact (norm_sub_le _ _).trans (add_le_add (norm_sub_le _ _) le_rfl)
     _ ≤ ‖logCpowWeight s (n - 1 : ℕ)‖ * q +
           ‖logCpowWeight s m‖ * q +
           ∑ k ∈ Ico m (n - 1),
@@ -151,54 +141,36 @@ lemma cauchySeq_sum_range_logCpowWeight_character
   rw [eventually_atTop] at he hb
   rcases he with ⟨Ne, hNe⟩
   rcases hb with ⟨Nb, hNb⟩
-  refine ⟨max 1 (max Ne Nb), ?_⟩
-  intro m hm n hn
-  have hm1 : 1 ≤ m := (le_max_left 1 (max Ne Nb)).trans hm
-  have hn1 : 1 ≤ n := (le_max_left 1 (max Ne Nb)).trans hn
-  have hmE : Ne ≤ m := (le_max_of_le_right (le_max_left Ne Nb)).trans hm
-  have hnE : Ne ≤ n := (le_max_of_le_right (le_max_left Ne Nb)).trans hn
-  have hmB : Nb ≤ m := (le_max_of_le_right (le_max_right Ne Nb)).trans hm
-  have hgm : ‖logCpowWeight s m‖ < δ := by
-    simpa [Real.dist_eq] using hNe m hmE
-  have hgn : ‖logCpowWeight s n‖ < δ := by
-    simpa [Real.dist_eq] using hNe n hnE
-  have hbm : logVariationBudget s m < δ := by
-    have := hNb m hmB
-    rw [Real.dist_eq, sub_zero, abs_of_nonneg (by unfold logVariationBudget; positivity)] at this
-    exact this
-  rcases lt_trichotomy m n with hmn | rfl | hnm
-  · have htail := norm_sum_Ico_logCpowWeight_character_le χ hχ s hs hm1 hmn
+  -- Estimate the increasing-index case once; the reverse case follows by symmetry.
+  have hdist (m n : ℕ) (hm : max 1 (max Ne Nb) ≤ m) (hmn : m < n) :
+      dist (∑ k ∈ range m, logCpowWeight s k * χ k)
+        (∑ k ∈ range n, logCpowWeight s k * χ k) < ε := by
+    have hm1 : 1 ≤ m := (le_max_left 1 (max Ne Nb)).trans hm
+    have hmE : Ne ≤ m := (le_max_of_le_right (le_max_left Ne Nb)).trans hm
+    have hmB : Nb ≤ m := (le_max_of_le_right (le_max_right Ne Nb)).trans hm
+    have hgm : ‖logCpowWeight s m‖ < δ := by
+      simpa [Real.dist_eq] using hNe m hmE
+    have hbm : logVariationBudget s m < δ := by
+      have := hNb m hmB
+      rw [Real.dist_eq, sub_zero, abs_of_nonneg (by unfold logVariationBudget; positivity)] at this
+      exact this
     have hpredE : Ne ≤ n - 1 := hmE.trans (Nat.le_pred_of_lt hmn)
     have hgpred : ‖logCpowWeight s (n - 1 : ℕ)‖ < δ := by
       simpa [Real.dist_eq] using hNe (n - 1) hpredE
     rw [dist_eq, ← norm_neg, neg_sub, ← Finset.sum_Ico_eq_sub _ hmn.le]
     calc
       _ ≤ q * (‖logCpowWeight s (n - 1 : ℕ)‖ + ‖logCpowWeight s m‖ +
-          logVariationBudget s m) := htail
-      _ < ε := by
-        calc
-          _ < q * (δ + δ + δ) :=
-            mul_lt_mul_of_pos_left (by linarith) hq
-          _ = ε := by dsimp [δ]; field_simp; ring
+          logVariationBudget s m) :=
+        norm_sum_Ico_logCpowWeight_character_le χ hχ s hs hm1 hmn
+      _ < q * (δ + δ + δ) :=
+        mul_lt_mul_of_pos_left (by linarith only [hgpred, hgm, hbm]) hq
+      _ = ε := by dsimp [δ]; field_simp; ring
+  refine ⟨max 1 (max Ne Nb), ?_⟩
+  intro m hm n hn
+  rcases lt_trichotomy m n with hmn | rfl | hnm
+  · exact hdist m n hm hmn
   · simp [hε]
-  · have htail := norm_sum_Ico_logCpowWeight_character_le χ hχ s hs hn1 hnm
-    have hnB : Nb ≤ n := (le_max_of_le_right (le_max_right Ne Nb)).trans hn
-    have hbn : logVariationBudget s n < δ := by
-      have := hNb n hnB
-      rw [Real.dist_eq, sub_zero, abs_of_nonneg (by unfold logVariationBudget; positivity)] at this
-      exact this
-    have hpredE : Ne ≤ m - 1 := hnE.trans (Nat.le_pred_of_lt hnm)
-    have hgpred : ‖logCpowWeight s (m - 1 : ℕ)‖ < δ := by
-      simpa [Real.dist_eq] using hNe (m - 1) hpredE
-    rw [dist_eq, ← Finset.sum_Ico_eq_sub _ hnm.le]
-    calc
-      _ ≤ q * (‖logCpowWeight s (m - 1 : ℕ)‖ + ‖logCpowWeight s n‖ +
-          logVariationBudget s n) := htail
-      _ < ε := by
-        calc
-          _ < q * (δ + δ + δ) :=
-            mul_lt_mul_of_pos_left (by linarith) hq
-          _ = ε := by dsimp [δ]; field_simp; ring
+  · simpa only [dist_comm] using hdist n m hn hnm
 
 /-- Existence of the naturally ordered conditional sum. -/
 lemma exists_tendsto_sum_range_logCpowWeight_character

@@ -145,53 +145,48 @@ theorem rawLandauSiegelLowerBound_of_atMostOneEventualEffectiveException
   apply DirichletCharacter.quadratic_LFunction_one_lower_of_eventual_forall_exponents
   intro η hη
   obtain ⟨Q, cEff, hcEff, hsub⟩ := hunique η hη
+  suffices hbound : ∃ c : ℝ, 0 < c ∧
+      ∀ x : PrimitiveQuadraticDatum, Q ≤ x.modulus → c * x.powerScale η ≤ x.value by
+    obtain ⟨c, hc, hbound⟩ := hbound
+    refine ⟨Q, c, hc, ?_⟩
+    intro q _ χ hq hprimitive hquad hnonprincipal
+    let x : PrimitiveQuadraticDatum :=
+      { modulus := q
+        modulus_ne := NeZero.ne q
+        character := χ
+        isPrimitive := hprimitive
+        square_eq_one := hquad
+        ne_one := hnonprincipal }
+    simpa [x, PrimitiveQuadraticDatum.powerScale, PrimitiveQuadraticDatum.value] using hbound x hq
   by_cases hne : (tatuzawaEffectiveFailureSet η cEff Q).Nonempty
   · obtain ⟨exceptional, hexceptional⟩ := hne
     let cExceptional : ℝ := exceptional.value / exceptional.powerScale η
     have hcExceptional : 0 < cExceptional :=
       div_pos (PrimitiveQuadraticDatum.value_pos exceptional)
         (PrimitiveQuadraticDatum.powerScale_pos η exceptional)
-    refine ⟨Q, min cEff cExceptional, lt_min hcEff hcExceptional, ?_⟩
-    intro q _ χ hq hprimitive hquad hnonprincipal
-    let x : PrimitiveQuadraticDatum :=
-      { modulus := q
-        modulus_ne := NeZero.ne q
-        character := χ
-        isPrimitive := hprimitive
-        square_eq_one := hquad
-        ne_one := hnonprincipal }
-    have hbound : min cEff cExceptional * x.powerScale η ≤ x.value := by
-      by_cases hxfail : x ∈ tatuzawaEffectiveFailureSet η cEff Q
-      · have hxeq : x = exceptional := hsub hxfail hexceptional
-        rw [hxeq]
-        calc
-          min cEff cExceptional * exceptional.powerScale η ≤
-              cExceptional * exceptional.powerScale η :=
-            mul_le_mul_of_nonneg_right (min_le_right cEff cExceptional)
-              (PrimitiveQuadraticDatum.powerScale_pos η exceptional).le
-          _ = exceptional.value := by
-            exact div_mul_cancel₀ exceptional.value
-              (ne_of_gt (PrimitiveQuadraticDatum.powerScale_pos η exceptional))
-      · have hnotlt : ¬ x.value < cEff * x.powerScale η := by
-          intro hlt
-          exact hxfail ⟨hq, hlt⟩
-        exact (mul_le_mul_of_nonneg_right (min_le_left cEff cExceptional)
-          (PrimitiveQuadraticDatum.powerScale_pos η x).le).trans (not_lt.mp hnotlt)
-    simpa [x, PrimitiveQuadraticDatum.powerScale, PrimitiveQuadraticDatum.value] using hbound
-  · refine ⟨Q, cEff, hcEff, ?_⟩
-    intro q _ χ hq hprimitive hquad hnonprincipal
-    let x : PrimitiveQuadraticDatum :=
-      { modulus := q
-        modulus_ne := NeZero.ne q
-        character := χ
-        isPrimitive := hprimitive
-        square_eq_one := hquad
-        ne_one := hnonprincipal }
-    have hbound : cEff * x.powerScale η ≤ x.value := by
-      apply not_lt.mp
-      intro hlt
-      exact hne ⟨x, hq, hlt⟩
-    simpa [x, PrimitiveQuadraticDatum.powerScale, PrimitiveQuadraticDatum.value] using hbound
+    refine ⟨min cEff cExceptional, lt_min hcEff hcExceptional, ?_⟩
+    intro x hxQ
+    by_cases hxfail : x ∈ tatuzawaEffectiveFailureSet η cEff Q
+    · have hxeq : x = exceptional := hsub hxfail hexceptional
+      rw [hxeq]
+      calc
+        min cEff cExceptional * exceptional.powerScale η ≤
+            cExceptional * exceptional.powerScale η :=
+          mul_le_mul_of_nonneg_right (min_le_right cEff cExceptional)
+            (PrimitiveQuadraticDatum.powerScale_pos η exceptional).le
+        _ = exceptional.value := by
+          exact div_mul_cancel₀ exceptional.value
+            (ne_of_gt (PrimitiveQuadraticDatum.powerScale_pos η exceptional))
+    · have hnotlt : ¬ x.value < cEff * x.powerScale η := by
+        intro hlt
+        exact hxfail ⟨hxQ, hlt⟩
+      exact (mul_le_mul_of_nonneg_right (min_le_left cEff cExceptional)
+        (PrimitiveQuadraticDatum.powerScale_pos η x).le).trans (not_lt.mp hnotlt)
+  · refine ⟨cEff, hcEff, ?_⟩
+    intro x hxQ
+    apply not_lt.mp
+    intro hlt
+    exact hne ⟨x, hxQ, hlt⟩
 
 /-- The Tatuzawa route to the raw Landau--Siegel lower bound with a genuinely
 analytic final source: quantitative separation of the values of any two

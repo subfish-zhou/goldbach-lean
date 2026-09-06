@@ -98,16 +98,7 @@ theorem coprimeLambdaPrefix_one_eq_add_badMass (y q : ℕ) :
 private lemma lambda_norm_le_log_of_le_global
     {n N : ℕ} (hn : n ≤ N) (hN : 2 ≤ N) :
     ‖lambdaNatCoeff n‖ ≤ Real.log (N : ℝ) := by
-  by_cases hnz : n = 0
-  · subst n
-    have hN1 : (1 : ℝ) ≤ (N : ℝ) := by exact_mod_cast (show 1 ≤ N by omega)
-    simp [lambdaNatCoeff, Real.log_nonneg hN1]
-  have hΛ0 := ArithmeticFunction.vonMangoldt_nonneg (n := n)
-  have hnpos : (0 : ℝ) < n := by exact_mod_cast Nat.pos_of_ne_zero hnz
-  have hNpos : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
-  rw [lambdaNatCoeff, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hΛ0]
-  exact ArithmeticFunction.vonMangoldt_le_log.trans
-    (Real.strictMonoOn_log.monotoneOn hnpos hNpos (by exact_mod_cast hn))
+  exact AnalyticNumberTheory.LargeSieve.lambda_norm_le_log_of_le hn hN
 
 /-- Explicit `ω(q)` bound for the deleted mass. -/
 theorem norm_principalBadLambdaMass_le_omega
@@ -217,24 +208,7 @@ theorem sum_principalLambdaPrefixMaxError_le_global
       gcongr
       rw [Nat.log2_eq_log_two, Nat.log2_eq_log_two]
       exact_mod_cast Nat.log_mono_right (Finset.mem_Icc.mp hq).2
-    _ = ((Finset.Icc 1 Q).card : ℝ) *
-        (principalLambdaPrefixMaxError N 1 +
-          (Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by
-      rw [Finset.sum_const, nsmul_eq_mul]
-    _ ≤ (Q : ℝ) *
-        (principalLambdaPrefixMaxError N 1 +
-          (Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by
-      apply mul_le_mul_of_nonneg_right
-      · norm_cast
-        simp
-      · exact add_nonneg (by
-          unfold principalLambdaPrefixMaxError
-          exact (norm_nonneg (principalLambdaMainError 0 1)).trans (Finset.le_max'
-            ((Finset.range (N + 1)).image
-              (fun y => ‖principalLambdaMainError y 1‖)) _
-            (Finset.mem_image.mpr
-              ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩))) (by positivity)
-    _ = _ := by rw [mul_add]
+    _ = _ := by simp [mul_add]
 
 /-- In a `Q ≤ √N/log^B N` range, the complete bad-prime-power aggregate is
 paid once the displayed scalar (with `Q` eliminated) fits the target budget. -/
@@ -256,14 +230,8 @@ theorem sum_principal_badCorrection_BVRange_payable
       gcongr
       rw [Nat.log2_eq_log_two, Nat.log2_eq_log_two]
       exact_mod_cast Nat.log_mono_right (Finset.mem_Icc.mp hq).2
-    _ = ((Finset.Icc 1 Q).card : ℝ) *
+    _ = (Q : ℝ) *
         ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by simp
-    _ ≤ (Q : ℝ) *
-        ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by
-      apply mul_le_mul_of_nonneg_right
-      · norm_cast
-        simp
-      · positivity
     _ ≤ (Real.sqrt N / Real.log (N : ℝ) ^ B) *
         ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) :=
       mul_le_mul_of_nonneg_right hQ (by positivity)
@@ -317,11 +285,6 @@ theorem globalSourceContract_to_all_moduli_primeAPBridge
   intro hN q hq
   refine (standardPrimeAPPrefixMaxError_le_global_principal_bridge hq hN).trans ?_
   have hφ : 0 ≤ (q.totient : ℝ)⁻¹ := inv_nonneg.mpr (by positivity)
-  have hA0 : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-    have h0 : 0 ≤ discreteAbelAmplifier 0 := by unfold discreteAbelAmplifier; positivity
-    exact h0.trans (by
-      unfold discreteAbelAmplifierPrefixMax
-      exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
   have hglobal' := hglobal hN
   calc
     _ = discreteAbelAmplifierPrefixMax N *

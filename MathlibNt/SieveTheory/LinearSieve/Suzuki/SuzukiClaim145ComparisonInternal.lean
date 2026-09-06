@@ -114,87 +114,6 @@ theorem claim14_5Scale_lower_of_proposition131ii
       (mul_le_mul_of_nonneg_left hT (mul_nonneg hpowbase hs.le)) hfront)
     htail
 
-/-- Pointwise closure of Lemma 14.3 against the explicit Proposition-13.1(ii)
-lower profile.  The final numerical premise is stated entirely in elementary
-real functions and contains neither `Claim14_5Bound`, `claim14_5Scale`, nor the
-discrete object.  It is the scalar large-logarithm inequality to be discharged
-by the eventual asymptotic calculation. -/
-theorem suzukiLemma14_3_le_claim145Scale_of_scalar
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {N D : ℕ} {d Δ σ K C M C145 : ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hD : 2 ≤ D) (hσ : 2 ≤ σ) (hM : M ≤ σ)
-    (hKpos : 0 < K) (hC145 : 0 ≤ C145)
-    (hprop : ∀ (sign : ErrorSign) (t : ℝ), M ≤ t →
-      proposition131iiLowerProfile C t ≤ H.T sign t)
-    (hsourceLarge : Real.exp 1 * suzukiSourceL (D : ℝ) K ≤ σ - 2)
-    (hscalar :
-      Real.exp
-          (suzukiSourceL (D : ℝ) K +
-            (σ - 2) *
-              (1 + Real.log (suzukiSourceL (D : ℝ) K) - Real.log (σ - 2))) ≤
-        C145 *
-          (claim14_5VProduct S (D : ℝ) *
-            (Real.exp (Real.sqrt K) / (Real.log (D : ℝ) * σ)) *
-            ((1 + σ ^ d / Real.log (D : ℝ)) ^ σ * σ *
-              proposition131iiLowerProfile C σ) *
-            (Real.log (D : ℝ)) ^ (-Δ))) :
-    suzukiActualT S N D ⌈(D : ℝ) ^ (1 / σ)⌉₊ ≤
-      C145 * claim14_5Scale S H N (D : ℝ) d Δ σ K σ := by
-  let z : ℕ := ⌈(D : ℝ) ^ (1 / σ)⌉₊
-  let LD : ℝ := suzukiSourceL (D : ℝ) K
-  let Lz : ℝ := suzukiSourceL (z : ℝ) K
-  have hD1 : 1 < D := by omega
-  have hLzle : Lz ≤ LD := by
-    simpa [z, Lz, LD] using suzukiSourceL_natCeil_rpow_le (D := D) (s := σ) (K := K) hD hσ
-  have hLz0 : 0 < Lz := by
-    have hz2 : 2 ≤ z := by
-      have hp : (1 : ℝ) < (D : ℝ) ^ (1 / σ) :=
-        Real.one_lt_rpow (by exact_mod_cast hD1)
-          (one_div_pos.mpr (by linarith))
-      have hz1nat : 1 < z := by
-        dsimp [z]
-        apply (Nat.lt_ceil).mpr
-        simpa using hp
-      omega
-    have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
-    have hlogz : Real.log 2 ≤ Real.log (z : ℝ) := by
-      exact Real.strictMonoOn_log.monotoneOn (by norm_num)
-        (show (0 : ℝ) < (z : ℝ) by positivity) (by exact_mod_cast hz2)
-    have hfirst : 0 ≤ Real.log (Real.log (z : ℝ) / Real.log 2) := by
-      apply Real.log_nonneg
-      exact (le_div_iff₀ hlog2).2 (by simpa using hlogz)
-    have hsecond : 0 < Real.log (1 + K / Real.log 2) := by
-      apply Real.log_pos
-      have : 0 < K / Real.log 2 := div_pos hKpos hlog2
-      linarith
-    dsimp [Lz, suzukiSourceL]
-    linarith
-  have hlargeZ : Real.exp 1 * Lz ≤ σ - 2 :=
-    (mul_le_mul_of_nonneg_left hLzle (Real.exp_pos 1).le).trans hsourceLarge
-  have htail := suzukiLemma14_3_natCeil_uniform_explicit
-    (S := S) (N := N) (D := D) (z := z) (s := σ) (K := K)
-    hlocal hD1 hσ rfl
-  have hlog := floorTail_le_claim145_logExponent hLz0 hlargeZ htail
-  have hlogmono :
-      Real.exp
-          (Lz + (σ - 2) * (1 + Real.log Lz - Real.log (σ - 2))) ≤
-        Real.exp
-          (LD + (σ - 2) * (1 + Real.log LD - Real.log (σ - 2))) := by
-    apply Real.exp_le_exp.mpr
-    have hLD0 : 0 < LD := hLz0.trans_le hLzle
-    have hlogs : Real.log Lz ≤ Real.log LD :=
-      Real.strictMonoOn_log.monotoneOn hLz0 hLD0 hLzle
-    have hsnonneg : 0 ≤ σ - 2 := sub_nonneg.mpr hσ
-    nlinarith [mul_le_mul_of_nonneg_left hlogs hsnonneg]
-  have hlower := claim14_5Scale_lower_of_proposition131ii
-    S H (N := N) (D := (D : ℝ)) (d := d) (Δ := Δ) (σ := σ)
-      (K := K) (C := C) (M := M) (s := σ)
-      (by exact_mod_cast hD1) (by linarith) (by linarith) hM hprop
-  change suzukiActualT S N D z ≤ _
-  exact hlog.trans (hlogmono.trans (hscalar.trans
-    (mul_le_mul_of_nonneg_left hlower hC145)))
-
 /-- Two-parameter Case-B closure of Lemma 14.3.  Here `σ` is Suzuki's
 `(log D)^(1/d) log log (27D)` (and remains in the denominator of (14.6)),
 whereas `s` is an arbitrary coordinate with `s ≥ σ`.  The former endpoint
@@ -277,6 +196,36 @@ theorem suzukiLemma14_3_le_claim145Scale_of_scalar_at
   exact hlog.trans (hlogmono.trans (hscalar.trans
     (mul_le_mul_of_nonneg_left hlower hC145)))
 
+/-- Pointwise closure of Lemma 14.3 against the explicit Proposition-13.1(ii)
+lower profile.  The final numerical premise is stated entirely in elementary
+real functions and contains neither `Claim14_5Bound`, `claim14_5Scale`, nor the
+discrete object.  It is the scalar large-logarithm inequality to be discharged
+by the eventual asymptotic calculation. -/
+theorem suzukiLemma14_3_le_claim145Scale_of_scalar
+    (S : BoundingSieve) (H : Section13HatLayers)
+    {N D : ℕ} {d Δ σ K C M C145 : ℝ}
+    (hlocal : HasDimensionOneLocalProductBound S K)
+    (hD : 2 ≤ D) (hσ : 2 ≤ σ) (hM : M ≤ σ)
+    (hKpos : 0 < K) (hC145 : 0 ≤ C145)
+    (hprop : ∀ (sign : ErrorSign) (t : ℝ), M ≤ t →
+      proposition131iiLowerProfile C t ≤ H.T sign t)
+    (hsourceLarge : Real.exp 1 * suzukiSourceL (D : ℝ) K ≤ σ - 2)
+    (hscalar :
+      Real.exp
+          (suzukiSourceL (D : ℝ) K +
+            (σ - 2) *
+              (1 + Real.log (suzukiSourceL (D : ℝ) K) - Real.log (σ - 2))) ≤
+        C145 *
+          (claim14_5VProduct S (D : ℝ) *
+            (Real.exp (Real.sqrt K) / (Real.log (D : ℝ) * σ)) *
+            ((1 + σ ^ d / Real.log (D : ℝ)) ^ σ * σ *
+              proposition131iiLowerProfile C σ) *
+            (Real.log (D : ℝ)) ^ (-Δ))) :
+    suzukiActualT S N D ⌈(D : ℝ) ^ (1 / σ)⌉₊ ≤
+      C145 * claim14_5Scale S H N (D : ℝ) d Δ σ K σ := by
+  exact suzukiLemma14_3_le_claim145Scale_of_scalar_at (s := σ)
+    S H hlocal hD (by linarith only [hσ]) hσ hM hKpos hC145 hprop hsourceLarge hscalar
+
 /-- The same comparison with the quantifier over the discrete depth moved after
 all analytic data.  In particular one scalar estimate and one Proposition
 13.1(ii) pair of signwise bounds work for every `N`. -/
@@ -307,5 +256,127 @@ theorem suzukiLemma14_3_le_claim145Scale_uniformN_of_scalar
   exact suzukiLemma14_3_le_claim145Scale_of_scalar S H hlocal hD hσ hM
     hKpos hC145 hprop hsourceLarge hscalar
 
+
+/-! ## Shared scalar comparisons for the endpoint and all-coordinate estimates -/
+
+/-- The dimension-one local-product contract gives the needed lower edge for
+Claim 14.5's finite Euler product. -/
+theorem claim14_5VProduct_lower_of_localProduct
+    {S : BoundingSieve} {D K : ℝ} (hD : 2 ≤ D)
+    (hlocal : HasDimensionOneLocalProductBound S K) :
+    1 ≤ claim14_5VProduct S D *
+      ((Real.log D / Real.log 2) * (1 + K / Real.log 2)) := by
+  have hraw := hlocal 2 D (by norm_num) hD
+  have hsets :
+      S.prodPrimes.primeFactors.filter
+          (fun p : ℕ => (2 : ℝ) ≤ (p : ℝ) ∧ (p : ℝ) < D) =
+        S.prodPrimes.primeFactors.filter (fun p : ℕ => (p : ℝ) < D) := by
+    ext p
+    simp only [Finset.mem_filter]
+    constructor
+    · rintro ⟨hp, _hp2, hpD⟩
+      exact ⟨hp, hpD⟩
+    · rintro ⟨hp, hpD⟩
+      have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hp
+      exact ⟨hp, by exact_mod_cast hpprime.two_le, hpD⟩
+  have hrewrite : suzukiLocalRatio S 2 D =
+      (claim14_5VProduct S D)⁻¹ := by
+    unfold suzukiLocalRatio claim14_5VProduct
+    rw [hsets, Finset.prod_inv_distrib]
+  have hraw' : (claim14_5VProduct S D)⁻¹ ≤
+      (Real.log D / Real.log 2) * (1 + K / Real.log 2) := by
+    rw [← hrewrite]
+    exact hlocal 2 D (by norm_num) hD
+  have hVpos : 0 < claim14_5VProduct S D := by
+    unfold claim14_5VProduct
+    apply Finset.prod_pos
+    intro p hp
+    have hpS : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hp).1
+    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
+    have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
+    exact sub_pos.mpr (S.nu_lt_one_of_prime p hpprime hpdiv)
+  have hmul := mul_le_mul_of_nonneg_left hraw' hVpos.le
+  rw [mul_inv_cancel₀ (ne_of_gt hVpos)] at hmul
+  simpa [mul_assoc] using hmul
+
+/-- The scalar comparison in the literal Case-B variables.  Unlike the endpoint
+specialization above, the harmless terms are absorbed directly at the actual
+coordinate `s`; this is what permits every `s ≥ sourceSigma D d`. -/
+theorem claim145_caseB_scalar_exponent_comparison
+    {x q L s b C Q : ℝ}
+    (hx : 0 < x) (hq : 0 < q) (hL : 1 ≤ L) (hs : 4 ≤ s)
+    (hQ : 0 < Q) (hqlog : q = Real.log x)
+    (habsorb : L + 2 * Real.log s + 3 * q + |Real.log Q| ≤ s)
+    (hgap : Real.log L + Real.log (Real.log (3 * s)) + C + 2 + Real.log 2 ≤
+      Real.log b) :
+    Real.exp
+        (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) ≤
+      Q / x ^ 3 *
+        Real.exp (s * Real.log b - s * Real.log s -
+          s * Real.log (Real.log (3 * s)) - C * s) := by
+  have hs0 : 0 < s := by linarith
+  have hsHalf : s / 2 ≤ s - 2 := by linarith
+  have hlogL0 : 0 ≤ Real.log L := Real.log_nonneg hL
+  have hlog2 : 0 ≤ Real.log 2 := (Real.log_pos (by norm_num)).le
+  have hlogHalf : Real.log s - Real.log 2 ≤ Real.log (s - 2) := by
+    rw [← Real.log_div (ne_of_gt hs0) (by norm_num : (2 : ℝ) ≠ 0)]
+    exact Real.log_le_log (by positivity) hsHalf
+  have hleft :
+      L + (s - 2) * (1 + Real.log L - Real.log (s - 2)) ≤
+        L + s * (1 + Real.log L - Real.log s + Real.log 2) +
+          2 * Real.log s := by
+    have hmul := mul_le_mul_of_nonneg_left
+      (sub_le_sub_left hlogHalf (1 + Real.log L))
+      (sub_nonneg.mpr (by linarith : 2 ≤ s))
+    nlinarith
+  have hmain :
+      L + s * (1 + Real.log L - Real.log s + Real.log 2) +
+          2 * Real.log s + 3 * q - Real.log Q ≤
+        s * Real.log b - s * Real.log s -
+          s * Real.log (Real.log (3 * s)) - C * s := by
+    have hgap' := mul_le_mul_of_nonneg_left hgap (show 0 ≤ s by linarith)
+    have hlogQ : -Real.log Q ≤ |Real.log Q| := neg_le_abs _
+    nlinarith
+  have hexp :
+      Real.exp
+          (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) ≤
+        Real.exp
+          (s * Real.log b - s * Real.log s -
+            s * Real.log (Real.log (3 * s)) - C * s - 3 * q + Real.log Q) := by
+    apply Real.exp_le_exp.mpr
+    linarith
+  calc
+    _ ≤ Real.exp (s * Real.log b - s * Real.log s -
+          s * Real.log (Real.log (3 * s)) - C * s - 3 * q + Real.log Q) := hexp
+    _ = Q / x ^ 3 *
+        Real.exp (s * Real.log b - s * Real.log s -
+          s * Real.log (Real.log (3 * s)) - C * s) := by
+      rw [Real.exp_add, Real.exp_log hQ]
+      rw [show s * Real.log b - s * Real.log s -
+          s * Real.log (Real.log (3 * s)) - C * s - 3 * q =
+          -3 * q + (s * Real.log b - s * Real.log s -
+            s * Real.log (Real.log (3 * s)) - C * s) by ring]
+      rw [Real.exp_add, hqlog]
+      rw [show -3 * Real.log x = -Real.log x + (-Real.log x + -Real.log x) by ring,
+        Real.exp_add, Real.exp_add, Real.exp_neg, Real.exp_log hx]
+      field_simp
+
+/-- Elementary logarithmic comparison used after all moving quantities have
+been bounded.  It keeps the decisive negative `-s log s` term on both sides. -/
+theorem claim145_scalar_exponent_comparison
+    {x q L s b C Q : ℝ}
+    (hx : 0 < x) (hq : 0 < q) (hL : 1 ≤ L) (hs : 4 ≤ s)
+    (hQ : 0 < Q) (hqlog : q = Real.log x)
+    (hLsq : L ≤ q ^ 2) (hlogs : Real.log s ≤ 3 * q)
+    (habsorb : q ^ 2 + 9 * q + |Real.log Q| ≤ s)
+    (hgap : Real.log L + Real.log (Real.log (3 * s)) + C + 2 + Real.log 2 ≤
+      Real.log b) :
+    Real.exp
+        (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) ≤
+      Q / x ^ 3 *
+        Real.exp (s * Real.log b - s * Real.log s -
+          s * Real.log (Real.log (3 * s)) - C * s) := by
+  apply claim145_caseB_scalar_exponent_comparison hx hq hL hs hQ hqlog ?_ hgap
+  linarith only [hLsq, hlogs, habsorb]
 
 end MathlibNt.SieveTheory

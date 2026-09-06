@@ -57,11 +57,7 @@ theorem vaughanIdentity_typeI_typeII_small (n u v : ℕ) :
     unfold Sieve.vaughanSecond Sieve.vaughanMiddle
     rw [← Finset.sum_filter_add_sum_filter_not
       (s := n.divisors) (p := fun d => u < d)]
-    have hfilter : n.divisors.filter (fun d => ¬ u < d) =
-        n.divisors.filter (fun d => d ≤ u) := by
-      ext d
-      simp [not_lt]
-    rw [hfilter]
+    simp only [not_lt]
   have hsecond : Sieve.vaughanSecond n u v =
       vaughanSmall n v - Sieve.vaughanMiddle n u v := by
     have hfull := Sieve.vaughanFullSecondSum n v
@@ -239,31 +235,18 @@ theorem weighted_vaughan_prefix_large_sieve_ledger
     (vaughanTypeIICoeff b u v) 0 N Q hQ
   have hSmall := weighted_primitive_prefix_maximal
     (vaughanSmallCoeff b v) 0 N Q hQ
-  have hI' := hI
-  have hII' := hII
-  have hSmall' := hSmall
-  simp only [zero_add] at hI' hII' hSmall'
-  have hledger :
-      (∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ : PrimitiveCharacter q,
-            primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-        3 * K *
-          ((∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeICoeff b u v n‖ ^ 2) +
-            (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-            (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-    calc
-      _ ≤ 3 * (_ + _ + _) := hred
-      _ ≤ 3 * (K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖vaughanTypeICoeff b u v n‖ ^ 2) +
-          K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-          K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-        dsimp [K]
-        gcongr
-      _ = 3 * K * (_ + _ + _) := by ring
-  simpa [K, mul_assoc] using hledger
+  simp only [zero_add] at hI hII hSmall
+  calc
+    _ ≤ 3 * (_ + _ + _) := hred
+    _ ≤ 3 * (K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
+          ‖vaughanTypeICoeff b u v n‖ ^ 2) +
+        K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
+          ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
+        K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
+          ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
+      exact mul_le_mul_of_nonneg_left (add_le_add (add_le_add hI hII) hSmall)
+        (by norm_num)
+    _ = _ := by dsimp [K]; ring
 
 end
 

@@ -396,17 +396,10 @@ theorem liuSourceMainIntegral_eq_setIntegral :
       ∫ x in liuLogSourceRegion, liuLogIntegrand x := by
   rw [liuSourceMainIntegral_eq_iteratedSetIntegral]
   let F : ℝ × ℝ → ℝ := liuLogSourceRegion.indicator liuLogIntegrand
-  have hF : Integrable F := by
-    refine (integrableOn_iff_integrable_of_support_subset
-      (μ := volume) (f := F) (s := liuLogSourceRegion) ?_).mp ?_
-    · intro x hx
-      by_contra hxs
-      exact (Function.mem_support.1 hx) (by simp [F, hxs])
-    · apply (integrableOn_liuLogIntegrand measurableSet_liuLogSourceRegion
-        liuLogSourceRegion_subset_ambientBox).congr_fun
-      · intro x hx
-        simp [F, hx]
-      · exact measurableSet_liuLogSourceRegion
+  have hF : Integrable F :=
+    (integrableOn_liuLogIntegrand measurableSet_liuLogSourceRegion
+      liuLogSourceRegion_subset_ambientBox).integrable_indicator
+        measurableSet_liuLogSourceRegion
   have hinner (α : ℝ) :
       (∫ β, F (α, β)) =
         (Ioc (1 / 10 : ℝ) (1 / 3)).indicator
@@ -466,15 +459,7 @@ noncomputable def liuLogGridUpperIntegrand (n : ℕ) (x : ℝ × ℝ) : ℝ :=
 lemma integrable_indicator_of_integrableOn {f : ℝ × ℝ → ℝ} {s : Set (ℝ × ℝ)}
     (hs : MeasurableSet s) (hf : IntegrableOn f s) :
     Integrable (s.indicator f) := by
-  refine (integrableOn_iff_integrable_of_support_subset
-    (μ := volume) (f := s.indicator f) (s := s) ?_).mp ?_
-  · intro x hx
-    by_contra hxs
-    exact (Function.mem_support.1 hx) (by simp [hxs])
-  · apply hf.congr_fun
-    · intro x hx
-      simp [hx]
-    · exact hs
+  exact hf.integrable_indicator hs
 
 lemma liuLogGridCell_subset_ambientBox {n : ℕ} (hn : 0 < n)
     {q : Fin n × Fin n} (hq : q ∈ liuLogGridCells n) :
@@ -527,6 +512,28 @@ lemma liuLogGridUpperIntegrand_nonneg {n : ℕ} (hn : 0 < n)
       exact liuLogDensity_nonneg (liuLogGridCell_subset_ambientBox hn hq hx)
     · rw [Set.indicator_of_notMem hx]
 
+/-- At a point of a selected cell, pairwise disjointness reduces the upper
+integrand to that cell's single summand. -/
+lemma liuLogGridUpperIntegrand_eq_of_mem {n : ℕ} (hn : 0 < n)
+    {q : Fin n × Fin n} (hq : q ∈ liuLogGridCells n)
+    {x : ℝ × ℝ} (hx : x ∈ liuLogGridCell n q) :
+    liuLogGridUpperIntegrand n x =
+      (1 / (1 - liuAlphaGridPoint n (q.1 + 1) -
+        liuBetaGridPoint n (q.2 + 1))) * liuLogDensity x := by
+  classical
+  unfold liuLogGridUpperIntegrand
+  rw [Finset.sum_eq_single q]
+  · rw [Set.indicator_of_mem hx]
+  · intro r hr hrq
+    have hnot : x ∉ liuLogGridCell n r := by
+      intro hxr
+      have hd : Disjoint (liuLogGridCell n q) (liuLogGridCell n r) :=
+        liuLogGridCell_pairwiseDisjoint hn
+          (Set.mem_univ q) (Set.mem_univ r) hrq.symm
+      exact Set.disjoint_left.1 hd hx hxr
+    rw [Set.indicator_of_notMem hnot, mul_zero]
+  · exact fun h => (h hq).elim
+
 lemma liuLogIntegrand_le_liuLogGridUpperIntegrand {n : ℕ} (hn : 0 < n)
     {x : ℝ × ℝ} (hx : x ∈ liuLogSourceRegion) :
     liuLogIntegrand x ≤ liuLogGridUpperIntegrand n x := by
@@ -538,9 +545,6 @@ lemma liuLogIntegrand_le_liuLogGridUpperIntegrand {n : ℕ} (hn : 0 < n)
   have hdenUpper : 0 < 1 - liuAlphaGridPoint n (q.1 + 1) -
       liuBetaGridPoint n (q.2 + 1) := by
     linarith [liuLogGridCell_upperCorner_lt_one hn hq]
-  have hdenX : 0 < 1 - x.1 - x.2 := by
-    have hxbox := liuLogGridCell_subset_ambientBox hn hq hxq
-    linarith [hxbox.1.2, hxbox.2.2]
   have hden : 1 - liuAlphaGridPoint n (q.1 + 1) -
       liuBetaGridPoint n (q.2 + 1) ≤ 1 - x.1 - x.2 := by
     linarith [hxq.1.2, hxq.2.2]
@@ -552,30 +556,8 @@ lemma liuLogIntegrand_le_liuLogGridUpperIntegrand {n : ℕ} (hn : 0 < n)
     exact one_div_le_one_div_of_le hdenUpper hden
   have hdensity : 0 ≤ liuLogDensity x :=
     liuLogDensity_nonneg (liuLogGridCell_subset_ambientBox hn hq hxq)
-  have hterm :
-      liuLogIntegrand x ≤
-        (1 / (1 - liuAlphaGridPoint n (q.1 + 1) -
-          liuBetaGridPoint n (q.2 + 1))) *
-          (liuLogGridCell n q).indicator liuLogDensity x := by
-    rw [Set.indicator_of_mem hxq]
-    unfold liuLogIntegrand
-    exact mul_le_mul_of_nonneg_right hkernel hdensity
-  refine hterm.trans ?_
-  unfold liuLogGridUpperIntegrand
-  refine Finset.single_le_sum
-    (f := fun r =>
-      (1 / (1 - liuAlphaGridPoint n (r.1 + 1) -
-        liuBetaGridPoint n (r.2 + 1))) *
-        (liuLogGridCell n r).indicator liuLogDensity x)
-    (fun r hr => by
-      apply mul_nonneg
-      · apply one_div_nonneg.mpr
-        linarith [liuLogGridCell_upperCorner_lt_one hn hr]
-      · by_cases hxr : x ∈ liuLogGridCell n r
-        · rw [Set.indicator_of_mem hxr]
-          exact liuLogDensity_nonneg (liuLogGridCell_subset_ambientBox hn hr hxr)
-        · rw [Set.indicator_of_notMem hxr])
-    hq
+  rw [liuLogGridUpperIntegrand_eq_of_mem hn hq hxq]
+  exact mul_le_mul_of_nonneg_right hkernel hdensity
 
 theorem liuSourceMainIntegral_le_liuLogGridUpperSum (n : ℕ) (hn : 0 < n) :
     liuSourceMainIntegral ≤ liuLogGridUpperSum n := by
@@ -693,28 +675,6 @@ lemma liuLogGrid_upperKernel_le_five {n : ℕ} (hn : 0 < n)
     linarith
   rw [div_le_iff₀ (by linarith [hden])]
   nlinarith
-
-/-- At a point of a selected cell, pairwise disjointness reduces the upper
-integrand to that cell's single summand. -/
-lemma liuLogGridUpperIntegrand_eq_of_mem {n : ℕ} (hn : 0 < n)
-    {q : Fin n × Fin n} (hq : q ∈ liuLogGridCells n)
-    {x : ℝ × ℝ} (hx : x ∈ liuLogGridCell n q) :
-    liuLogGridUpperIntegrand n x =
-      (1 / (1 - liuAlphaGridPoint n (q.1 + 1) -
-        liuBetaGridPoint n (q.2 + 1))) * liuLogDensity x := by
-  classical
-  unfold liuLogGridUpperIntegrand
-  rw [Finset.sum_eq_single q]
-  · rw [Set.indicator_of_mem hx]
-  · intro r hr hrq
-    have hnot : x ∉ liuLogGridCell n r := by
-      intro hxr
-      have hd : Disjoint (liuLogGridCell n q) (liuLogGridCell n r) :=
-        liuLogGridCell_pairwiseDisjoint hn
-          (Set.mem_univ q) (Set.mem_univ r) hrq.symm
-      exact Set.disjoint_left.1 hd hx hxr
-    rw [Set.indicator_of_notMem hnot, mul_zero]
-  · exact fun h => (h hq).elim
 
 /-- The upper integrand vanishes off the selected grid region. -/
 lemma liuLogGridUpperIntegrand_eq_zero_of_notMem {n : ℕ}

@@ -212,15 +212,12 @@ theorem section13HatAsymptoticContract_of_atThree_cutoff
       | plus => exact le_max_left _ _
       | minus => exact le_max_right _ _
     have hcut1 : Q.cutoff ≤ M + 1 := hQS.trans htail
-    have hcut2 : Q.cutoff ≤ M + 2 := hcut1.trans (by linarith)
     have hEA : E ≤ A := by
       cases sign with
       | plus => exact le_max_left _ _
       | minus => exact le_max_right _ _
     have hE0 : 0 ≤ E := mul_nonneg (sq_nonneg _) (zero_le_one.trans Q.one_le_A)
-    have h1 := section13Hat_unitShift_after_cutoff sign B Q hcut1
-    have h2 := section13Hat_unitShift_after_cutoff sign B Q hcut2
-    have hTM1 : 0 ≤ H.T sign (M + 1) := (hH.positive sign (M + 1) (by linarith)).le
+    have htwo := section13Hat_twoStep_after_cutoff sign B Q hcut1
     have hlog1 : Real.log (Real.exp 1 * M) ≤ Real.log (Real.exp 1 * (M + 1)) :=
       Real.log_le_log (by positivity) (by gcongr; linarith)
     have hlog2 : Real.log (Real.exp 1 * M) ≤ Real.log (Real.exp 1 * (M + 2)) :=
@@ -231,38 +228,26 @@ theorem section13HatAsymptoticContract_of_atThree_cutoff
     have hd2 : M * Real.log (Real.exp 1 * M) ≤
         (M + 2) * Real.log (Real.exp 1 * (M + 2)) :=
       mul_le_mul (by linarith) hlog2 hL.le (by linarith)
-    have hc1 : E / ((M + 1) * Real.log (Real.exp 1 * (M + 1))) ≤ A / (M * Real.log (Real.exp 1 * M)) := by
+    have hden : (M * Real.log (Real.exp 1 * M)) ^ 2 ≤
+        ((M + 1) * Real.log (Real.exp 1 * (M + 1))) *
+          ((M + 2) * Real.log (Real.exp 1 * (M + 2))) := by
+      simpa only [pow_two] using
+        mul_le_mul hd1 hd2 hd0.le (hd0.le.trans hd1)
+    have hsq : E ^ 2 ≤ A ^ 2 := by
+      simpa only [pow_two] using mul_le_mul hEA hEA hE0 (hE0.trans hEA)
+    have hcoeff : E ^ 2 /
+        (((M + 1) * Real.log (Real.exp 1 * (M + 1))) *
+          ((M + 2) * Real.log (Real.exp 1 * (M + 2)))) ≤
+        (A / (M * Real.log (Real.exp 1 * M))) ^ 2 := by
       calc
-        _ ≤ E / (M * Real.log (Real.exp 1 * M)) := div_le_div_of_nonneg_left hE0 hd0 hd1
-        _ ≤ _ := div_le_div_of_nonneg_right hEA hd0.le
-    have hc2 : E / ((M + 2) * Real.log (Real.exp 1 * (M + 2))) ≤ A / (M * Real.log (Real.exp 1 * M)) := by
-      calc
-        _ ≤ E / (M * Real.log (Real.exp 1 * M)) := div_le_div_of_nonneg_left hE0 hd0 hd2
-        _ ≤ _ := div_le_div_of_nonneg_right hEA hd0.le
-    have hc0 : 0 ≤ A / (M * Real.log (Real.exp 1 * M)) :=
-      div_nonneg (zero_le_one.trans hA1) hd0.le
-    have h1Q : H.T sign (M + 1) ≤
-        E / ((M + 1) * Real.log (Real.exp 1 * (M + 1))) * H.T sign M := by
-      change H.T sign (M + 1) ≤
-        (B.K ^ 2 * Q.A) / ((M + 1) * Real.log (Real.exp 1 * (M + 1))) * H.T sign M
-      convert h1 using 1 <;> ring_nf
-    have h2Q : H.T sign (M + 2) ≤
-        E / ((M + 2) * Real.log (Real.exp 1 * (M + 2))) * H.T sign (M + 1) := by
-      change H.T sign (M + 2) ≤
-        (B.K ^ 2 * Q.A) / ((M + 2) * Real.log (Real.exp 1 * (M + 2))) * H.T sign (M + 1)
-      convert h2 using 1 <;> ring_nf
-    have h1' : H.T sign (M + 1) ≤ (A / (M * Real.log (Real.exp 1 * M))) * H.T sign M := by
-      exact h1Q.trans (mul_le_mul_of_nonneg_right hc1 hTM0.le)
-    have h2' : H.T sign (M + 2) ≤ (A / (M * Real.log (Real.exp 1 * M))) * H.T sign (M + 1) := by
-      exact h2Q.trans (mul_le_mul_of_nonneg_right hc2 hTM1)
+        _ ≤ E ^ 2 / (M * Real.log (Real.exp 1 * M)) ^ 2 :=
+          div_le_div_of_nonneg_left (sq_nonneg E) (sq_pos_of_pos hd0) hden
+        _ ≤ A ^ 2 / (M * Real.log (Real.exp 1 * M)) ^ 2 :=
+          div_le_div_of_nonneg_right hsq (sq_nonneg _)
+        _ = _ := (div_pow _ _ 2).symm
     have hchain : H.T sign (M + 2) ≤
-        (A / (M * Real.log (Real.exp 1 * M))) ^ 2 * H.T sign M := by
-      calc
-        _ ≤ (A / (M * Real.log (Real.exp 1 * M))) * H.T sign (M + 1) := h2'
-        _ ≤ (A / (M * Real.log (Real.exp 1 * M))) *
-            ((A / (M * Real.log (Real.exp 1 * M))) * H.T sign M) :=
-          mul_le_mul_of_nonneg_left h1' hc0
-        _ = _ := by ring
+        (A / (M * Real.log (Real.exp 1 * M))) ^ 2 * H.T sign M :=
+      htwo.trans (mul_le_mul_of_nonneg_right hcoeff hTM0.le)
     have hratio : (M + 2) ^ 2 ≤ 3 * M ^ 2 := by nlinarith
     have hweighted := mul_le_mul_of_nonneg_left hchain (sq_nonneg (M + 2))
     have htailfinal : weightedHat H sign (M + 2) ≤

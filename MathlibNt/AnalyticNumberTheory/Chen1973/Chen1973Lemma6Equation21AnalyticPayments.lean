@@ -79,16 +79,7 @@ private lemma three_pow_primeFactors_card_le_two_mul
 
 private lemma primitiveCharacter_card_le_totient (d : ℕ) (hd : 0 < d) :
     Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
-  let _ : NeZero d := ⟨Nat.ne_of_gt hd⟩
-  calc
-    Fintype.card (PrimitiveCharacter d) ≤
-        Fintype.card (DirichletCharacter ℂ d) :=
-      @Fintype.card_subtype_le (DirichletCharacter ℂ d) _
-        (fun χ => χ.IsPrimitive) _
-    _ = d.totient := by
-      have h := DirichletCharacter.sum_char_inv_mul_char_eq ℂ
-        (a := (1 : ZMod d)) isUnit_one (1 : ZMod d)
-      simpa using h
+  exact primitiveCharacter_card_le_totient_basic d hd
 
 /-- Low-conductor weighted primitive-character mass. -/
 def chen1973Lemma6Eq21ConductorMass (x L : ℕ) : ℝ :=
@@ -152,11 +143,10 @@ theorem chen1973Lemma6_eq21_conductorMass_le_log200
     chen1973Lemma6Eq21ConductorMass x L ≤
       2 * Real.log x ^ (200 : ℕ) := by
   refine (chen1973Lemma6_eq21_conductorMass_le x L).trans ?_
-  have hL0 : (0 : ℝ) ≤ L := by positivity
-  have hlog100 : 0 ≤ Real.log x ^ (100 : ℕ) := by positivity
-  have hsquare := mul_self_le_mul_self hL0 P.hL_lower
   calc
-    2 * (L : ℝ) ^ 2 ≤ 2 * (Real.log x ^ (100 : ℕ)) ^ 2 := by nlinarith
+    2 * (L : ℝ) ^ 2 ≤ 2 * (Real.log x ^ (100 : ℕ)) ^ 2 := by
+      gcongr
+      exact P.hL_lower
     _ = 2 * Real.log x ^ (200 : ℕ) := by ring
 
 /-- The actual contour majorant is bounded by the actual prime-region sum.
@@ -438,9 +428,9 @@ theorem chen1973Lemma6_eq21_primePointwiseDecay
         Real.log y + (-Real.sqrt (Real.log (x : ℝ)) / 3) by ring]
       rw [Real.exp_add, Real.exp_log hy0]
 
-/-- Explicit exponential decay of the actual prime-pair sum.  All prime
-counting is unconditional (Mertens); `hpoint` is the remaining elementary
-rpow/geometric normalization on the literal source region. -/
+/-- Explicit exponential decay of the actual prime-pair sum.  The reciprocal
+mass bound is supplied by Mertens; the pointwise decay is proved internally
+from the geometry of the literal source region. -/
 theorem chen1973Lemma6_eq21_primeSum_exponential_decay
     (Cpair : ℝ)
     (hmertens : ∀ x : ℕ, 3 ≤ x →

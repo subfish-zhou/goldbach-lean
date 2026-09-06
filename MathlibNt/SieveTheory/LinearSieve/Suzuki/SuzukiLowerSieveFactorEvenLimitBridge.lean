@@ -145,6 +145,28 @@ theorem mul_suzukiLayer_one_two_even_eq_integral
   have hs0 : s ≠ 0 := ne_of_gt (by linarith)
   norm_num [dPowDensity, Real.rpow_one, hs0]
 
+private theorem shifted_odd_layer_continuousOn_Icc (k : ℕ) (b : ℝ) :
+    ContinuousOn (fun t : ℝ => suzukiLayer 1 2 (2 * k + 1) (t - 1))
+      (Set.Icc (2 : ℝ) b) := by
+  have hc : ContinuousOn (suzukiLayer 1 2 (2 * k + 1))
+      (SuzukiFiniteContinuousLayers.KappaOneModel.closedDomain 2 (2 * k + 1)) := by
+    exact (SuzukiFiniteContinuousLayers.KappaOneModel.regular
+        (β := (2 : ℝ)) (by norm_num) (2 * k + 1)).continuous.congr
+      (fun u _ =>
+        (SuzukiFiniteContinuousLayers.KappaOneModel.layer_eq_suzukiLayer
+          2 (2 * k + 1) u).symm)
+  change ContinuousOn
+    ((fun u => suzukiLayer 1 2 (2 * k + 1) u) ∘ fun t => t - 1)
+    (Set.Icc (2 : ℝ) b)
+  apply hc.comp (continuous_id.sub continuous_const).continuousOn
+  intro t ht
+  unfold SuzukiFiniteContinuousLayers.KappaOneModel.closedDomain
+  simp only [Set.mem_Ici, SuzukiFiniteContinuousLayers.KappaOneModel.eps]
+  have hodd : (2 * k + 1) % 2 = 1 := by omega
+  rw [hodd]
+  norm_num
+  linarith [ht.1]
+
 /-- Moving the lower endpoint from `2` to `s` gives one exact finite
 conservation step. -/
 theorem mul_suzukiLayer_one_two_even_eq_at_two_sub_integral
@@ -159,25 +181,8 @@ theorem mul_suzukiLayer_one_two_even_eq_at_two_sub_integral
     have hk0 : (0 : ℝ) ≤ (k : ℝ) := Nat.cast_nonneg k
     norm_num [Nat.cast_add, Nat.cast_mul]
     linarith
-  have hcont : ContinuousOn f (Set.Icc (2 : ℝ) b) := by
-    have hc : ContinuousOn (suzukiLayer 1 2 (2 * k + 1))
-        (SuzukiFiniteContinuousLayers.KappaOneModel.closedDomain 2 (2 * k + 1)) := by
-      exact (SuzukiFiniteContinuousLayers.KappaOneModel.regular
-          (β := (2 : ℝ)) (by norm_num) (2 * k + 1)).continuous.congr
-        (fun u _ =>
-          (SuzukiFiniteContinuousLayers.KappaOneModel.layer_eq_suzukiLayer
-            2 (2 * k + 1) u).symm)
-    change ContinuousOn
-      ((fun u => suzukiLayer 1 2 (2 * k + 1) u) ∘ fun t => t - 1)
-      (Set.Icc (2 : ℝ) b)
-    apply hc.comp (continuous_id.sub continuous_const).continuousOn
-    intro t ht
-    unfold SuzukiFiniteContinuousLayers.KappaOneModel.closedDomain
-    simp only [Set.mem_Ici, SuzukiFiniteContinuousLayers.KappaOneModel.eps]
-    have hodd : (2 * k + 1) % 2 = 1 := by omega
-    rw [hodd]
-    norm_num
-    linarith [ht.1]
+  have hcont : ContinuousOn f (Set.Icc (2 : ℝ) b) :=
+    shifted_odd_layer_continuousOn_Icc k b
   have hInt2b : IntervalIntegrable f MeasureTheory.volume 2 b :=
     by
       apply ContinuousOn.intervalIntegrable
@@ -213,24 +218,7 @@ theorem suzuki_even_partial_finite_conservation
     intro k _hk
     apply ContinuousOn.intervalIntegrable
     rw [Set.uIcc_of_le hs2]
-    have hc : ContinuousOn (suzukiLayer 1 2 (2 * k + 1))
-        (SuzukiFiniteContinuousLayers.KappaOneModel.closedDomain 2 (2 * k + 1)) := by
-      exact (SuzukiFiniteContinuousLayers.KappaOneModel.regular
-          (β := (2 : ℝ)) (by norm_num) (2 * k + 1)).continuous.congr
-        (fun u _ =>
-          (SuzukiFiniteContinuousLayers.KappaOneModel.layer_eq_suzukiLayer
-            2 (2 * k + 1) u).symm)
-    change ContinuousOn
-      ((fun u => suzukiLayer 1 2 (2 * k + 1) u) ∘ fun t => t - 1)
-      (Set.Icc (2 : ℝ) s)
-    apply hc.comp (continuous_id.sub continuous_const).continuousOn
-    intro t ht
-    unfold SuzukiFiniteContinuousLayers.KappaOneModel.closedDomain
-    simp only [Set.mem_Ici, SuzukiFiniteContinuousLayers.KappaOneModel.eps]
-    have hodd : (2 * k + 1) % 2 = 1 := by omega
-    rw [hodd]
-    norm_num
-    linarith [ht.1]
+    exact shifted_odd_layer_continuousOn_Icc k s
   rw [← intervalIntegral.integral_finsetSum hInts]
   have hsumfun : (fun t : ℝ => ∑ k ∈ Finset.range m,
       suzukiLayer 1 2 (2 * k + 1) (t - 1)) =

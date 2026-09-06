@@ -32,8 +32,10 @@ lemma eq20_derivative_height_algebra
     dsimp [M, m, T]
     nlinarith [mul_nonneg ha (abs_nonneg v), mul_nonneg hr (abs_nonneg v)]
   have hQT : Q*(1+M) ≤ (Q*(1+m))*T := by
-    have hinner : 1+M ≤ (1+m)*T := by nlinarith
-    nlinarith [mul_le_mul_of_nonneg_left hinner (show 0 ≤ Q by linarith)]
+    have hinner : 1+M ≤ (1+m)*T := by nlinarith only [hMT, hT]
+    calc
+      _ ≤ Q*((1+m)*T) := mul_le_mul_of_nonneg_left hinner (by linarith)
+      _ = _ := by ring
   have hbase : 1 ≤ Q*(1+m) := by nlinarith
   have hc : 1 ≤ c := by
     dsimp [c]
@@ -52,6 +54,7 @@ lemma eq20_derivative_height_algebra
   have hlog0 : 0 ≤ 1 + Real.log (Q*(1+M)) := by
     have hbaseM : 1 ≤ Q*(1+M) := by nlinarith
     linarith [Real.log_nonneg hbaseM]
+  -- Combine the quadratic size bound with the fourth-power logarithmic bound.
   have hp : M^2 * (1 + Real.log (Q*(1+M)))^4 ≤
       (m*T)^2 * (c*(2*Real.sqrt T))^4 := by gcongr
   have hs : (Real.sqrt T)^2 = T := Real.sq_sqrt (by linarith)
@@ -63,7 +66,7 @@ lemma eq20_derivative_height_algebra
   have hmult := mul_le_mul_of_nonneg_left hp'
     (show 0 ≤ W * 21000000 * Q^2 / (D*r^4) by positivity)
   dsimp [m, T, M, c] at hmult
-  convert hmult using 1 <;> (try simp only [div_eq_mul_inv, mul_inv_rev]) <;> first | rfl | ring
+  simpa only [div_eq_mul_inv, mul_inv_rev, mul_assoc, mul_comm, mul_left_comm] using hmult
 
 def chen1973Lemma6Eq20BetaDerivativeCoefficient (x L level D Q : ℕ) : ℝ :=
   let β := chen1973Lemma6Beta x
@@ -198,6 +201,9 @@ theorem eq20_corrected_linear_integrable_and_bound
     chen1973Lemma6_eq17_correctedKernel_pos (by omega) (by linarith)
   have hmajor : IntegrableOn (fun v : ℝ => (K*6)*(1+(v/A)^2)⁻¹) (Ioi 0) :=
     (eq20_scaled_cauchy_integrable hA).const_mul (K*6)
+  have hnonneg (v : ℝ) (hv : v ∈ Ioi (0:ℝ)) :
+      0 ≤ F v / chen1973Lemma6Eq17CorrectedKernel x (σ+v*I) :=
+    div_nonneg (hF0 v hv) (hk v).le
   have hpoint (v : ℝ) (hv : v ∈ Ioi (0:ℝ)) :
       F v / chen1973Lemma6Eq17CorrectedKernel x (σ+v*I) ≤
         (K*6)*(1+(v/A)^2)⁻¹ := by
@@ -217,8 +223,9 @@ theorem eq20_corrected_linear_integrable_and_bound
         fun_prop
       · exact fun v => (hk v).ne'
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with v hv
-      rw [Real.norm_eq_abs, abs_of_nonneg (div_nonneg (hF0 v hv) (hk v).le)]
+      rw [Real.norm_eq_abs, abs_of_nonneg (hnonneg v hv)]
       exact hpoint v hv
+  -- Integrate the same majorant used to establish integrability.
   refine ⟨hint, ?_⟩
   calc
     _ ≤ ∫ v in Ioi (0:ℝ), (K*6)*(1+(v/A)^2)⁻¹ :=

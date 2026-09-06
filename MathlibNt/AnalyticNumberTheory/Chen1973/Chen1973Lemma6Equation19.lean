@@ -11,8 +11,9 @@ import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equations14And15Sca
 
 This file isolates the finite Cauchy--Schwarz/Hölder step in (19).  All four
 moments below are moments of the literal pair polynomial, `1-LS`, `S`, and
-`L'`; no free `Phi` occurs.  The height scale records the printed choice
-`H = 2^l (log x)^200 I_{l,x}` by an honest natural ceiling.
+`L'`; no free `Phi` occurs.  The legacy height uses a natural ceiling
+with the finite conductor maximum W; the printed exponential cutoff
+`H = 2^l (log x)^200 I_{l,x}` is treated in SourceWeightHeight.
 -/
 
 noncomputable section
@@ -119,33 +120,23 @@ theorem chen1973Lemma6A_le_moment_product
       Real.sqrt (chen1973Lemma6Eq19PairSecondMoment x L level B k m s) *
       Real.sqrt (chen1973Lemma6Eq19OneSubSecondMoment x L level H s) := by
   unfold chen1973Lemma6A chen1973Lemma6Eq19PairSecondMoment
-    chen1973Lemma6Eq19OneSubSecondMoment eq19PairPolynomial
+    chen1973Lemma6Eq19OneSubSecondMoment
   let S := chen1973Lemma6ConductorBlock x L level
   let P : ℕ → ℝ := fun d => Real.sqrt (eq19Weight d) *
-    Real.sqrt (∑ χ : PrimitiveCharacter d,
-      ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-        χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) /
-          ((pp.1 * pp.2 : ℂ) ^ s * Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖ ^ 2)
+    Real.sqrt (∑ χ : PrimitiveCharacter d, ‖eq19PairPolynomial x B k m s χ‖ ^ 2)
   let Q : ℕ → ℝ := fun d => Real.sqrt (eq19Weight d) *
     Real.sqrt (∑ χ : PrimitiveCharacter d, ‖chen1973Lemma6OneSubLS H s χ‖ ^ 2)
+  -- First apply Cauchy--Schwarz over the primitive characters at each conductor.
   have hpoint : ∀ d ∈ S,
       eq19Weight d * ∑ χ : PrimitiveCharacter d,
-        ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-          χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) /
-            ((pp.1 * pp.2 : ℂ) ^ s * Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖ *
+        ‖eq19PairPolynomial x B k m s χ‖ *
           ‖chen1973Lemma6OneSubLS H s χ‖ ≤ P d * Q d := by
     intro d hd
-    let AP : ℝ := ∑ χ : PrimitiveCharacter d,
-      ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-        χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) /
-          ((pp.1 * pp.2 : ℂ) ^ s * Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖ ^ 2
+    let AP : ℝ := ∑ χ : PrimitiveCharacter d, ‖eq19PairPolynomial x B k m s χ‖ ^ 2
     let AQ : ℝ := ∑ χ : PrimitiveCharacter d,
       ‖chen1973Lemma6OneSubLS H s χ‖ ^ 2
     have hc := sum_norm_mul_le_sqrt
-      (fun χ : PrimitiveCharacter d =>
-        ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-          χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) /
-            ((pp.1 * pp.2 : ℂ) ^ s * Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖)
+      (fun χ : PrimitiveCharacter d => ‖eq19PairPolynomial x B k m s χ‖)
       (fun χ : PrimitiveCharacter d => ‖chen1973Lemma6OneSubLS H s χ‖)
       (fun _ => norm_nonneg _) (fun _ => norm_nonneg _)
     change _ ≤ Real.sqrt AP * Real.sqrt AQ at hc
@@ -161,6 +152,7 @@ theorem chen1973Lemma6A_le_moment_product
             (Real.sqrt (eq19Weight d) * Real.sqrt AQ) =
             Real.sqrt (eq19Weight d) ^ 2 * (Real.sqrt AP * Real.sqrt AQ) by ring,
           Real.sq_sqrt (eq19Weight_nonneg d)]
+  -- Then apply Cauchy--Schwarz over the conductor block.
   calc
     _ ≤ ∑ d ∈ S, P d * Q d := Finset.sum_le_sum hpoint
     _ ≤ Real.sqrt (∑ d ∈ S, P d ^ 2) * Real.sqrt (∑ d ∈ S, Q d ^ 2) :=

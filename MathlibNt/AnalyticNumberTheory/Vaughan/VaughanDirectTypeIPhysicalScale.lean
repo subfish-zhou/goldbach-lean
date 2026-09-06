@@ -40,9 +40,7 @@ theorem directPrimitiveMean_summand_eq_q_mul
         ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ =
       (q : ℝ) * (((q.totient : ℝ)⁻¹) *
         ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ) := by
-  have hφ : (q.totient : ℝ) ≠ 0 := by
-    exact_mod_cast (Nat.ne_of_gt (Nat.totient_pos.mpr hq))
-  field_simp
+  rw [div_eq_mul_inv, mul_assoc]
 
 /-- Strict one-level scale counterexample: as soon as the primitive amplitude
 mass is positive and `q>1`, replacing `1/φ(q)` by `q/φ(q)` strictly enlarges
@@ -62,7 +60,8 @@ theorem directPrimitiveMean_summand_strictly_inflates
   have hbase : 0 < ((q.totient : ℝ)⁻¹) *
       ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ :=
     mul_pos (inv_pos.mpr hφ) hA
-  nlinarith [show (1 : ℝ) < q by exact_mod_cast hq]
+  simpa only [one_mul] using
+    mul_lt_mul_of_pos_right (show (1 : ℝ) < q by exact_mod_cast hq) hbase
 
 /-- Rowwise AP-normalized L¹ majorant.  For Vaughan's first lane, `S` is a
 `d`-shell; for the middle lane it is a `(d,e)` shell. -/
@@ -223,7 +222,7 @@ theorem corrected_typeI_shell_physical_of_square
       (logPay * (N + Q ^ 2 * Real.sqrt N)) ^ 2) :
     shellMean ≤ logPay * (N + Q ^ 2 * Real.sqrt N) := by
   have htarget : 0 ≤ logPay * (N + Q ^ 2 * Real.sqrt N) := by positivity
-  nlinarith
+  exact (sq_le_sq₀ hmean htarget).mp hsq
 
 end
 

@@ -43,10 +43,8 @@ theorem chen1973Lemma6_eq19_dyadic_pair_atom_sq_le
   have hY : (0 : ℝ) < (B * 2 ^ k : ℕ) := by exact_mod_cast
     (Nat.mul_pos hB (pow_pos (by omega) k))
   have hp := (Finset.mem_Ioc.mp (chen1973Lemma6_eq19_dyadic_pair_product_mem hpp)).1
-  have hprod : (0 : ℝ) < (pp.1 : ℝ) * pp.2 := by
-    have : (B * 2 ^ k : ℕ) < pp.1 * pp.2 := hp
-    have hr : ((B * 2 ^ k : ℕ) : ℝ) < (pp.1 : ℝ) * pp.2 := by exact_mod_cast this
-    exact hY.trans hr
+  have hprod : (0 : ℝ) < (pp.1 : ℝ) * pp.2 :=
+    hY.trans (by exact_mod_cast hp)
   have hlog : 0 < Real.log (x : ℝ) := Real.log_pos (by exact_mod_cast (show 1 < x by omega))
   obtain ⟨hy, hlogy⟩ := chen1973Lemma6_eq21_primeRegion_log_y hx
     (chen1973Lemma6_eq21_actualShell_subset_primeRegion x B k m hpp)
@@ -114,26 +112,7 @@ private lemma dyadic_norm_collected_sq_eq_fiber_energy
     (hg : Set.InjOn g (S : Set ι)) (y : κ) :
     ‖∑ i ∈ S, if g i = y then a i else 0‖ ^ 2 =
       ∑ i ∈ S with g i = y, ‖a i‖ ^ 2 := by
-  let T := S.filter fun i => g i = y
-  have hcard : T.card ≤ 1 := by
-    rw [Finset.card_le_one_iff]
-    intro i j hi hj
-    have hi' := Finset.mem_filter.mp hi
-    have hj' := Finset.mem_filter.mp hj
-    exact hg hi'.1 hj'.1 (hi'.2.trans hj'.2.symm)
-  rw [← Finset.sum_filter]
-  change ‖∑ i ∈ T, a i‖ ^ 2 = ∑ i ∈ T, ‖a i‖ ^ 2
-  by_cases hT : T = ∅
-  · rw [hT]
-    simp
-  · obtain ⟨i, hi⟩ := Finset.nonempty_iff_ne_empty.mpr hT
-    have hsingle : T = {i} := by
-      apply Finset.eq_singleton_iff_unique_mem.mpr
-      refine ⟨hi, ?_⟩
-      intro j hj
-      exact (Finset.card_le_one.mp hcard) j hj i hi
-    rw [hsingle]
-    simp
+  exact norm_collected_sq_eq_fiber_energy S g a hg y
 
 private lemma dyadic_pair_product_mem_int
     {x B k m : ℕ} {pp : ℕ × ℕ}
@@ -244,13 +223,7 @@ theorem chen1973Lemma6_eq19_dyadic_pair_second_moment_fixed
             ‖∑ n ∈ Icc (((B * 2 ^ k : ℕ) : ℤ) + 1) (((B * 2 ^ k : ℕ) : ℤ) + (B * 2 ^ k : ℕ)),
               chen1973Lemma6Eq19PairCoefficient x B k m s n *
                 χ.1 (n : ZMod d)‖ ^ 2 := by
-      congr 1
-      apply Finset.sum_congr rfl
-      intro d hd
-      congr 1
-      apply Finset.sum_congr rfl
-      intro χ hχ
-      rw [← chen1973Lemma6_eq19_dyadic_pairPolynomial_eq_collected]
+      simp_rw [chen1973Lemma6_eq19_dyadic_pairPolynomial_eq_collected]
     _ ≤ chen1973Lemma6Eq19I x L level *
         (chen1973Lemma6Eq19SharpConstant *
           ((Q : ℝ) + ((B * 2 ^ k : ℕ) : ℝ) / D) *

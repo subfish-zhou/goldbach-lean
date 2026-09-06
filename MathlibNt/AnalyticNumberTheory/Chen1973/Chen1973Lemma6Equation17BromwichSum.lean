@@ -80,13 +80,10 @@ theorem integrable_chen1973Lemma6BromwichVonMangoldtTerm
     have hy : 0 < (x : ℝ) / ((pp.1 : ℝ) * pp.2 * n) := by
       positivity
     exact (((integrable_chen1973BromwichIntegrand
-      (x := (x : ℝ)) (y := (x : ℝ) / ((pp.1 : ℝ) * pp.2 * n))
       (by exact_mod_cast hx) hy).const_mul
-        (((ArithmeticFunction.vonMangoldt n : ℝ) : ℂ) *
-          ((1 / (2 * Real.pi) : ℝ) : ℂ))).mul_const
-            (χ.1 (n : ZMod d))).congr (by
-              filter_upwards with t
-              ring)
+        (((1 / (2 * Real.pi) : ℝ) : ℂ))).const_mul
+          ((ArithmeticFunction.vonMangoldt n : ℝ) : ℂ)).mul_const
+            (χ.1 (n : ZMod d))
 
 /-- The complete finite von-Mangoldt Bromwich integrand is Bochner integrable. -/
 theorem integrable_chen1973Lemma6BromwichVonMangoldtIntegrand
@@ -149,12 +146,10 @@ theorem integrable_chen1973Lemma6BromwichPrimePairIntegrand
   apply integrable_finsetSum
   intro pp hpp
   obtain ⟨hp₁, hp₂⟩ := chen1973Lemma6PrimePairShell_pos hpp
-  exact (((integrable_chen1973Lemma6BromwichVonMangoldtIntegrand χ hx hp₁ hp₂).const_mul
-    (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ)).mul_const
-      (χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d))).congr (by
-        filter_upwards with t
-        push_cast
-        ring)
+  simpa only [Complex.ofReal_inv] using
+    ((integrable_chen1973Lemma6BromwichVonMangoldtIntegrand χ hx hp₁ hp₂).const_mul
+      (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ)).mul_const
+        (χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d))
 
 /-- Exact finite prime-pair/integral exchange. -/
 theorem chen1973Lemma6PrimePairSum_eq_integral_bromwichSum
@@ -174,12 +169,10 @@ theorem chen1973Lemma6PrimePairSum_eq_integral_bromwichSum
     rw [MeasureTheory.integral_mul_const, MeasureTheory.integral_const_mul]
   · intro pp hpp
     obtain ⟨hp₁, hp₂⟩ := chen1973Lemma6PrimePairShell_pos hpp
-    exact (((integrable_chen1973Lemma6BromwichVonMangoldtIntegrand χ hx hp₁ hp₂).const_mul
-      (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ)).mul_const
-        (χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d))).congr (by
-          filter_upwards with t
-          push_cast
-          ring)
+    simpa only [Complex.ofReal_inv] using
+      ((integrable_chen1973Lemma6BromwichVonMangoldtIntegrand χ hx hp₁ hp₂).const_mul
+        (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ)).mul_const
+          (χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d))
 
 /-- The complete primitive-character integrand for one conductor. -/
 def chen1973Lemma6BromwichCharacterIntegrand

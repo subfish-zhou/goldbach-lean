@@ -8,16 +8,9 @@ lemma source_two_exponent_gap_pos
   have hβ : 0 < 1 - Δ := sub_pos.mpr hΔ1
   have hq : 0 < 7 / (1 - Δ) := by positivity
   have hd0 : 0 < d := hq.trans hd
-  have hrecip : 1 / d < (1 - Δ) / 7 := by
-    have h := one_div_lt_one_div_of_lt hq hd
-    have heq : 1 / (7 / (1 - Δ)) = (1 - Δ) / 7 := by
-      field_simp [ne_of_gt hβ]
-    rw [heq] at h
-    exact h
-  have htwo : 2 / d < 2 * ((1 - Δ) / 7) := by
-    calc
-      2 / d = 2 * (1 / d) := by ring
-      _ < 2 * ((1 - Δ) / 7) := mul_lt_mul_of_pos_left hrecip (by norm_num)
+  have hseven : 7 < d * (1 - Δ) := (div_lt_iff₀ hβ).mp hd
+  apply sub_pos.mpr
+  apply (div_lt_iff₀ hd0).mpr
   linarith
 
 /-- An explicit threshold absorbing the *quadratic* source-cutoff growth into

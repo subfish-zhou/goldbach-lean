@@ -54,10 +54,14 @@ theorem modulus_mul_abs_liuMainPanCoprimeIntervalSum_le (κ : ℝ)
     _ ≤ 6 * N + liuPanLiModulusEnvelopeConstant κ * N * (1 + Real.log N) ^ 2 := by
       rw [mul_add, abs_of_nonneg (liuCoprimeIntervalCount_nonneg ..)]
       exact add_le_add hcount hmain
-    _ ≤ _ := by
-      have h := mul_le_mul_of_nonneg_left hlog2 (show (0 : ℝ) ≤ 6 * N by positivity)
+    _ ≤ 6 * N * (1 + Real.log N) ^ 2 +
+        liuPanLiModulusEnvelopeConstant κ * N * (1 + Real.log N) ^ 2 := by
+      apply add_le_add _ le_rfl
+      simpa only [mul_one] using
+        mul_le_mul_of_nonneg_left hlog2 (show (0 : ℝ) ≤ 6 * N by positivity)
+    _ = _ := by
       unfold liuActualEnvelopeConstant
-      nlinarith
+      ring
 
 theorem liuMainPanCoprimeIntervalMaxL_nonneg
     (main : ℝ → ℝ) (N A₁ A₂ q : ℕ) (f : ℕ → ℝ) :
@@ -80,15 +84,16 @@ theorem modulus_mul_liuMainPanCoprimeIntervalMaxL_le (κ : ℝ)
       N A₁ A₂ q (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) ≤
       liuActualEnvelopeConstant κ * N * (1 + Real.log N) ^ 2 := by
   classical
+  have hqR : (0 : ℝ) < q := by exact_mod_cast hq
   unfold liuMainPanCoprimeIntervalMaxL
   dsimp only
   split
   next h =>
-    apply (le_div_iff₀' (show (0 : ℝ) < q by exact_mod_cast hq)).mp
+    apply (le_div_iff₀' hqR).mp
     apply Finset.max'_le
     intro x hx
     obtain ⟨l, _, rfl⟩ := Finset.mem_image.mp hx
-    apply (le_div_iff₀' (show (0 : ℝ) < q by exact_mod_cast hq)).mpr
+    apply (le_div_iff₀' hqR).mpr
     exact modulus_mul_abs_liuMainPanCoprimeIntervalSum_le κ N A₁ A₂ q l hN hq hqN
   next =>
     simp only [mul_zero]

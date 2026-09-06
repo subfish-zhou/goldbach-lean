@@ -224,24 +224,23 @@ theorem tendsto_suzukiProposition118SourceQ_pairing_point_zero
     {H : Section13HatLayers} (hH : Section13HatSourceContract H) :
     Tendsto (fun s : ℝ => s * suzukiProposition118KappaOneSourceAdjoint s *
       suzukiProposition118SourceQ s) atTop (𝓝 0) := by
-  have hweighted := tendsto_suzukiProposition118SourceQ_weighted_zero hH
-  have hratio : Tendsto (fun s : ℝ => (s - 1) / s) atTop (𝓝 1) := by
-    have hinv : Tendsto (fun s : ℝ => (1 : ℝ) / s) atTop (𝓝 0) :=
-      tendsto_const_nhds.div_atTop tendsto_id
-    have hone : Tendsto (fun s : ℝ => 1 - 1 / s) atTop (𝓝 1) := by
-      simpa using tendsto_const_nhds.sub hinv
-    apply hone.congr'
-    filter_upwards [eventually_ge_atTop (1 : ℝ)] with s hs
-    field_simp [ne_of_gt (by linarith : 0 < s)]
-  have hmul := hratio.mul hweighted
-  have hmul' : Tendsto
-      (fun s : ℝ => (s - 1) / s *
-        (s ^ 2 * suzukiProposition118SourceQ s)) atTop (𝓝 0) := by
-    simpa using hmul
-  apply hmul'.congr'
-  filter_upwards [eventually_ge_atTop (1 : ℝ)] with s hs
-  rw [suzukiProposition118KappaOneSourceAdjoint]
-  field_simp [ne_of_gt (by linarith : 0 < s)]
+  obtain ⟨D, hD, hbound⟩ := suzukiProposition118SourceQ_weighted_eventual_bound hH
+  have hpoint : ∀ᶠ s : ℝ in atTop,
+      0 ≤ s * suzukiProposition118KappaOneSourceAdjoint s *
+        suzukiProposition118SourceQ s ∧
+      s * suzukiProposition118KappaOneSourceAdjoint s *
+        suzukiProposition118SourceQ s ≤ s ^ 2 * suzukiProposition118SourceQ s := by
+    filter_upwards [hbound, eventually_ge_atTop (2 : ℝ)] with s hbound_s hs
+    have hs0 : 0 < s := by linarith
+    have hQ0 : 0 ≤ suzukiProposition118SourceQ s :=
+      nonneg_of_mul_nonneg_right hbound_s.1 (sq_pos_of_pos hs0)
+    rw [suzukiProposition118KappaOneSourceAdjoint]
+    constructor
+    · exact mul_nonneg (mul_nonneg hs0.le (by linarith)) hQ0
+    · exact mul_le_mul_of_nonneg_right (by nlinarith : s * (s - 1) ≤ s ^ 2) hQ0
+  exact squeeze_zero' (hpoint.mono fun _ hs => hs.1)
+    (hpoint.mono fun _ hs => hs.2)
+    (tendsto_suzukiProposition118SourceQ_weighted_zero hH)
 
 /-- The genuine Proposition-11.8 source pairing tends to zero at infinity. -/
 theorem tendsto_suzukiProposition118SourceQPairing_zero

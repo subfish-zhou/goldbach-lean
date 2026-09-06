@@ -135,20 +135,9 @@ theorem chen1973_finite_rectangle_vertical_identity
         ∫ t in -T..T, chen1973VerticalSection f β t) = 0 := by
     unfold chen1973HorizontalSection chen1973VerticalSection
     linear_combination hc'
-  have hc1 : I *
-      ((∫ t in -T..T, chen1973VerticalSection f α t) -
-        ∫ t in -T..T, chen1973VerticalSection f β t) =
-      -chen1973HorizontalSection f β α T := by
-    linear_combination hc0
-  calc
-    (∫ t in -T..T, chen1973VerticalSection f α t) -
-          (∫ t in -T..T, chen1973VerticalSection f β t) =
-        (-I) * (I * ((∫ t in -T..T, chen1973VerticalSection f α t) -
-          ∫ t in -T..T, chen1973VerticalSection f β t)) := by
-            rw [← mul_assoc, neg_mul, Complex.I_mul_I]
-            ring
-    _ = (-I) * (-chen1973HorizontalSection f β α T) := by rw [hc1]
-    _ = I * chen1973HorizontalSection f β α T := by ring
+  apply mul_left_cancel₀ Complex.I_ne_zero
+  rw [← mul_assoc, Complex.I_mul_I, neg_one_mul]
+  exact eq_neg_of_add_eq_zero_right hc0
 
 private theorem tendsto_norm_le_inv_one_add_sq
     {g : ℝ → ℂ} {C : ℝ} (_hC : 0 ≤ C)
@@ -179,9 +168,8 @@ theorem chen1973_full_vertical_integral_shift
   let Vα : ℝ → ℂ := fun T => ∫ t in -T..T, chen1973VerticalSection f α t
   let Vβ : ℝ → ℂ := fun T => ∫ t in -T..T, chen1973VerticalSection f β t
   let Horiz : ℝ → ℂ := fun T => chen1973HorizontalSection f β α T
-  have hrect : ∀ T : ℝ, 0 ≤ T → Vα T - Vβ T = I * Horiz T := by
-    intro T hT
-    exact chen1973_finite_rectangle_vertical_identity hβα hhol
+  have hrect (T : ℝ) : Vα T - Vβ T = I * Horiz T :=
+    chen1973_finite_rectangle_vertical_identity hβα hhol
   have hVα : Tendsto Vα atTop (𝓝 (∫ t : ℝ, chen1973VerticalSection f α t)) := by
     simpa [Vα] using intervalIntegral_tendsto_integral hαint
       tendsto_neg_atTop_atBot tendsto_id
@@ -194,8 +182,7 @@ theorem chen1973_full_vertical_integral_shift
     have hIH : Tendsto (fun T => I * Horiz T) atTop (𝓝 0) := by
       simpa using (tendsto_const_nhds.mul hH)
     apply hIH.congr'
-    filter_upwards [eventually_ge_atTop (0 : ℝ)] with T hT
-    exact (hrect T hT).symm
+    exact Eventually.of_forall fun T => (hrect T).symm
   have hlim := hVα.sub hVβ
   have hz : (∫ t : ℝ, chen1973VerticalSection f α t) -
       (∫ t : ℝ, chen1973VerticalSection f β t) = 0 :=
@@ -220,14 +207,10 @@ theorem chen1973Lemma6_eq17_LDerivS_contour_shift
       (chen1973Lemma6Eq17ShiftIntegrand x H y χ) (chen1973Lemma6Alpha x) t) =
     ∫ t : ℝ, chen1973VerticalSection
       (chen1973Lemma6Eq17ShiftIntegrand x H y χ) (chen1973Lemma6Beta x) t := by
-  apply chen1973_full_vertical_integral_shift
-    (β := chen1973Lemma6Beta x) (α := chen1973Lemma6Alpha x) (C := C)
-  · unfold chen1973Lemma6Beta chen1973Lemma6Alpha
-    linarith
-  · exact hC
-  · exact differentiableOn_chen1973Lemma6Eq17ShiftIntegrand_strip χ hχ hx hy
-  · exact hβint
-  · exact hαint
-  · exact hhoriz
+  refine chen1973_full_vertical_integral_shift ?_ hC
+    (differentiableOn_chen1973Lemma6Eq17ShiftIntegrand_strip χ hχ hx hy)
+    hβint hαint hhoriz
+  unfold chen1973Lemma6Beta chen1973Lemma6Alpha
+  linarith
 
 end AnalyticNumberTheory.LargeSieve

@@ -169,8 +169,12 @@ theorem chen1973Lemma6_equation21_of_source_estimates
           (x : ℝ) / Real.log x ^ (20 : ℕ)) :
     chen1973Lemma6NmBlockActual x L 0 B k m ≤
       (x : ℝ) / Real.log x ^ (20 : ℕ) := by
-  exact (hshift hzeroFree).trans
-    ((mul_le_mul_of_nonneg_left hcontour hCshift).trans hprime)
+  calc
+    chen1973Lemma6NmBlockActual x L 0 B k m ≤
+        Cshift * chen1973Lemma6Eq21ContourMajorant x L B k m := hshift hzeroFree
+    _ ≤ Cshift * (Ccontour * Real.log x ^ (200 : ℕ) *
+        chen1973Lemma6Eq21PrimeSum x) := mul_le_mul_of_nonneg_left hcontour hCshift
+    _ ≤ (x : ℝ) / Real.log x ^ (20 : ℕ) := hprime
 
 /-- The exact `(19),(20),(21)` cell join for actual source objects.  Positive
 levels are dispatched by the already-proved source partition; level zero is
@@ -197,10 +201,8 @@ theorem chen1973Lemma6_equations19_20_21_actual_join
   · subst level
     exact h21 k hk
   · have hlevelPos : 1 ≤ level := Nat.one_le_iff_ne_zero.mpr hzero
-    have hlevelIcc : level ∈ Finset.Icc 1 I₁ := by
-      exact Finset.mem_Icc.mpr ⟨hlevelPos, by
-        simp only [Finset.mem_range] at hlevel
-        omega⟩
+    have hlevelIcc : level ∈ Finset.Icc 1 I₁ :=
+      Finset.mem_Icc.mpr ⟨hlevelPos, Nat.le_of_lt_succ (Finset.mem_range.mp hlevel)⟩
     rcases chen1973Lemma6_eq19_or_eq20 hlevelPos (hLast level hlevelIcc) with h | h
     · exact h19 level hlevelIcc k hk h
     · exact h20 level hlevelIcc k hk h

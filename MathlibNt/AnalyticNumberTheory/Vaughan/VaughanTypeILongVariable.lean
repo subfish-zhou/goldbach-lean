@@ -53,6 +53,21 @@ def vaughanTypeIMiddleAt (n u v : ℕ) : ℂ :=
   push_cast
   rfl
 
+/-- Truncated divisors can be viewed inside the fixed positive short range. -/
+private lemma divisors_filter_eq_shortRange
+    {n y u : ℕ} (hn : 0 < n) (hny : n ≤ y) :
+    n.divisors.filter (fun d => d ≤ u) =
+      (vaughanTypeIShortRange y u).filter (fun d => d ∣ n) := by
+  ext d
+  simp only [Finset.mem_filter, Nat.mem_divisors]
+  constructor
+  · rintro ⟨⟨hdn, _⟩, hdu⟩
+    have hdpos := Nat.pos_of_dvd_of_pos hdn hn
+    exact ⟨mem_vaughanTypeIShortRange.mpr
+      ⟨hdpos, (Nat.le_of_dvd hn hdn).trans hny, hdu⟩, hdn⟩
+  · rintro ⟨hd, hdn⟩
+    exact ⟨⟨hdn, hn.ne'⟩, (mem_vaughanTypeIShortRange.mp hd).2.2⟩
+
 /-- On `0 < n ≤ y`, the first divisor factor has a fixed short support. -/
 theorem vaughanTypeIFirstAt_eq_bounded {n y u : ℕ} (hn : 0 < n) (hny : n ≤ y) :
     vaughanTypeIFirstAt n u =
@@ -61,18 +76,7 @@ theorem vaughanTypeIFirstAt_eq_bounded {n y u : ℕ} (hn : 0 < n) (hny : n ≤ y
           (((ArithmeticFunction.moebius d : ℤ) : ℂ) * Real.log ((n / d : ℕ) : ℝ))
         else 0 := by
   unfold vaughanTypeIFirstAt
-  have hdset : n.divisors.filter (fun d => d ≤ u) =
-      (vaughanTypeIShortRange y u).filter (fun d => d ∣ n) := by
-    ext d
-    simp only [Finset.mem_filter, Nat.mem_divisors]
-    constructor
-    · rintro ⟨⟨hdn, _⟩, hdu⟩
-      have hdpos := Nat.pos_of_dvd_of_pos hdn hn
-      exact ⟨mem_vaughanTypeIShortRange.mpr
-        ⟨hdpos, (Nat.le_of_dvd hn hdn).trans hny, hdu⟩, hdn⟩
-    · rintro ⟨hd, hdn⟩
-      exact ⟨⟨hdn, hn.ne'⟩, (mem_vaughanTypeIShortRange.mp hd).2.2⟩
-  rw [hdset, Finset.sum_filter]
+  rw [divisors_filter_eq_shortRange hn hny, Finset.sum_filter]
 
 /-- On `0 < n ≤ y`, the middle factor is a fixed short `(d,e)` rectangle.
 The condition `e ∣ n/d` has become the single product condition `d*e ∣ n`. -/
@@ -85,18 +89,7 @@ theorem vaughanTypeIMiddleAt_eq_bounded {n y u v : ℕ} (hn : 0 < n) (hny : n �
               (ArithmeticFunction.vonMangoldt e : ℂ))
           else 0 := by
   unfold vaughanTypeIMiddleAt
-  have hdset : n.divisors.filter (fun d => d ≤ u) =
-      (vaughanTypeIShortRange y u).filter (fun d => d ∣ n) := by
-    ext d
-    simp only [Finset.mem_filter, Nat.mem_divisors]
-    constructor
-    · rintro ⟨⟨hdn, _⟩, hdu⟩
-      have hdpos := Nat.pos_of_dvd_of_pos hdn hn
-      exact ⟨mem_vaughanTypeIShortRange.mpr
-        ⟨hdpos, (Nat.le_of_dvd hn hdn).trans hny, hdu⟩, hdn⟩
-    · rintro ⟨hd, hdn⟩
-      exact ⟨⟨hdn, hn.ne'⟩, (mem_vaughanTypeIShortRange.mp hd).2.2⟩
-  rw [hdset, Finset.sum_filter]
+  rw [divisors_filter_eq_shortRange hn hny, Finset.sum_filter]
   apply Finset.sum_congr rfl
   intro d hd
   by_cases hdn : d ∣ n
@@ -105,19 +98,8 @@ theorem vaughanTypeIMiddleAt_eq_bounded {n y u v : ℕ} (hn : 0 < n) (hny : n �
     have hndpos : 0 < n / d := Nat.div_pos (Nat.le_of_dvd hn hdn) hdpos
     have heset : (n / d).divisors.filter (fun e => e ≤ v) =
         (vaughanTypeIShortRange y v).filter (fun e => d * e ∣ n) := by
-      ext e
-      simp only [Finset.mem_filter, Nat.mem_divisors]
-      constructor
-      · rintro ⟨⟨hed, _⟩, hev⟩
-        have hmul : d * e ∣ n := (Nat.dvd_div_iff_mul_dvd hdn).mp hed
-        have hepos : 0 < e := Nat.pos_of_dvd_of_pos hed hndpos
-        have hen : e ≤ n := Nat.le_of_dvd hn ((dvd_mul_left e d).trans hmul)
-        exact ⟨mem_vaughanTypeIShortRange.mpr
-          ⟨hepos, hen.trans hny, hev⟩, hmul⟩
-      · rintro ⟨he, hmul⟩
-        have hed : e ∣ n / d := (Nat.dvd_div_iff_mul_dvd hdn).mpr hmul
-        exact ⟨⟨hed, hndpos.ne'⟩,
-          (mem_vaughanTypeIShortRange.mp he).2.2⟩
+      rw [divisors_filter_eq_shortRange hndpos ((Nat.div_le_self n d).trans hny)]
+      simp_rw [Nat.dvd_div_iff_mul_dvd hdn]
     rw [heset, Finset.sum_filter]
   · have hde : ∀ e : ℕ, ¬ d * e ∣ n := by
       intro e h

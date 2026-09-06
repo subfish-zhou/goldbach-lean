@@ -29,8 +29,12 @@ theorem tendsto_log_floor_rpow_div_log (beta : ℝ) (hbeta : 0 < beta) :
       Tendsto (fun N : ℕ => beta - Real.log 2 / Real.log (N : ℝ))
         atTop (𝓝 beta) := by
     simpa using tendsto_const_nhds.sub (tendsto_const_nhds.div_atTop hlog)
-  apply hlower.squeeze' tendsto_const_nhds
-  · filter_upwards [hpow.eventually (eventually_ge_atTop (2 : ℝ)),
+  -- Use the same floor bounds and positivity facts for both sides of the squeeze.
+  have hbounds : ∀ᶠ N : ℕ in atTop,
+      beta - Real.log 2 / Real.log (N : ℝ) ≤
+          Real.log (Nat.floor ((N : ℝ) ^ beta)) / Real.log (N : ℝ) ∧
+        Real.log (Nat.floor ((N : ℝ) ^ beta)) / Real.log (N : ℝ) ≤ beta := by
+    filter_upwards [hpow.eventually (eventually_ge_atTop (2 : ℝ)),
       hlog.eventually (eventually_gt_atTop (0 : ℝ))] with N hNpow hlogN
     have hNne : N ≠ 0 := by
       intro h
@@ -46,34 +50,25 @@ theorem tendsto_log_floor_rpow_div_log (beta : ℝ) (hbeta : 0 < beta) :
     have hfloorpos : (0 : ℝ) < Nat.floor ((N : ℝ) ^ beta) :=
       lt_of_lt_of_le
         (div_pos (lt_of_lt_of_le (by norm_num) hNpow) (by norm_num)) hfloor
-    have hloglower := Real.strictMonoOn_log.monotoneOn
-      (div_pos (Real.rpow_pos_of_pos hNpos beta) (by norm_num))
-      hfloorpos hfloor
-    rw [Real.log_div (Real.rpow_pos_of_pos hNpos beta).ne' (by norm_num),
-      Real.log_rpow hNpos] at hloglower
-    apply (le_div_iff₀ hlogN).2
-    calc
-      (beta - Real.log 2 / Real.log (N : ℝ)) * Real.log (N : ℝ) =
-          beta * Real.log (N : ℝ) - Real.log 2 := by
-            field_simp [hlogN.ne']
-      _ ≤ Real.log (Nat.floor ((N : ℝ) ^ beta)) := hloglower
-  · filter_upwards [hpow.eventually (eventually_ge_atTop (2 : ℝ)),
-      hlog.eventually (eventually_gt_atTop (0 : ℝ))] with N hNpow hlogN
-    have hNne : N ≠ 0 := by
-      intro h
-      simp [h, Real.zero_rpow hbeta.ne'] at hNpow
-      norm_num at hNpow
-    have hNpos : (0 : ℝ) < N := by
-      exact_mod_cast Nat.pos_of_ne_zero hNne
-    have hfloor := Nat.floor_le (Real.rpow_nonneg hNpos.le beta)
-    have hfloorpos : (0 : ℝ) < Nat.floor ((N : ℝ) ^ beta) := by
-      exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1)
-        (le_trans (by linarith : (1 : ℝ) ≤ (N : ℝ) ^ beta - 1)
-          (Nat.sub_one_lt_floor ((N : ℝ) ^ beta)).le)
-    have hlogupper := Real.strictMonoOn_log.monotoneOn hfloorpos
-      (Real.rpow_pos_of_pos hNpos beta) hfloor
-    rw [Real.log_rpow hNpos] at hlogupper
-    exact (div_le_iff₀ hlogN).2 hlogupper
+    constructor
+    · have hloglower := Real.strictMonoOn_log.monotoneOn
+        (div_pos (Real.rpow_pos_of_pos hNpos beta) (by norm_num))
+        hfloorpos hfloor
+      rw [Real.log_div (Real.rpow_pos_of_pos hNpos beta).ne' (by norm_num),
+        Real.log_rpow hNpos] at hloglower
+      apply (le_div_iff₀ hlogN).2
+      calc
+        (beta - Real.log 2 / Real.log (N : ℝ)) * Real.log (N : ℝ) =
+            beta * Real.log (N : ℝ) - Real.log 2 := by
+              field_simp [hlogN.ne']
+        _ ≤ Real.log (Nat.floor ((N : ℝ) ^ beta)) := hloglower
+    · have hlogupper := Real.strictMonoOn_log.monotoneOn hfloorpos
+        (Real.rpow_pos_of_pos hNpos beta)
+        (Nat.floor_le (Real.rpow_nonneg hNpos.le beta))
+      rw [Real.log_rpow hNpos] at hlogupper
+      exact (div_le_iff₀ hlogN).2 hlogupper
+  exact hlower.squeeze' tendsto_const_nhds
+    (hbounds.mono fun _ h => h.1) (hbounds.mono fun _ h => h.2)
 
 /-- The paper's moving cutoff has logarithmic scale `1/4 - epsilon/2`. -/
 theorem tendsto_log_paperQSourceCutoff_div_log (epsilon : ℝ)

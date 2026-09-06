@@ -81,7 +81,8 @@ theorem vaughanSmallCoeff_energy_eq_support (b : ℤ → ℂ) (N v : ℕ) :
       rw [← Finset.sum_filter]
       rfl
 
-private theorem vonMangoldt_le_log_v_succ {n : ℤ} {v : ℕ}
+/-- The von Mangoldt coefficient on the positive small range is bounded by `log(v+1)`. -/
+theorem vonMangoldt_le_log_v_succ {n : ℤ} {v : ℕ}
     (hn : 1 ≤ n) (hnv : n.toNat ≤ v) :
     ArithmeticFunction.vonMangoldt n.toNat ≤ Real.log ((v + 1 : ℕ) : ℝ) := by
   have hn0 : 0 ≤ n := by omega
@@ -119,34 +120,27 @@ theorem vaughanSmallCoeff_energy_le_v_mul_log_sq
     (hb : ∀ n ∈ vaughanSmallSupport N v, ‖b n‖ ≤ B) :
     (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2) ≤
       (v : ℝ) * B ^ 2 * Real.log ((v + 1 : ℕ) : ℝ) ^ 2 := by
-  rw [vaughanSmallCoeff_energy_eq_support]
-  have hlog0 : 0 ≤ Real.log ((v + 1 : ℕ) : ℝ) := by
-    exact Real.log_nonneg (by exact_mod_cast Nat.succ_le_succ (Nat.zero_le v))
+  have hsupport : (∑ n ∈ vaughanSmallSupport N v, ‖b n‖ ^ 2) ≤
+      (v : ℝ) * B ^ 2 := by
+    calc
+      (∑ n ∈ vaughanSmallSupport N v, ‖b n‖ ^ 2) ≤
+          ∑ _n ∈ vaughanSmallSupport N v, B ^ 2 := by
+        apply Finset.sum_le_sum
+        intro n hn
+        exact (sq_le_sq₀ (norm_nonneg _) hB).2 (hb n hn)
+      _ = ((vaughanSmallSupport N v).card : ℝ) * B ^ 2 := by simp
+      _ ≤ (v : ℝ) * B ^ 2 := by
+        exact mul_le_mul_of_nonneg_right
+          (by exact_mod_cast card_vaughanSmallSupport_le N v) (sq_nonneg B)
   calc
-    (∑ n ∈ vaughanSmallSupport N v,
-        ‖b n‖ ^ 2 * ArithmeticFunction.vonMangoldt n.toNat ^ 2) ≤
-        ∑ _n ∈ vaughanSmallSupport N v,
-          B ^ 2 * Real.log ((v + 1 : ℕ) : ℝ) ^ 2 := by
-      apply Finset.sum_le_sum
-      intro n hn
-      rw [mem_vaughanSmallSupport] at hn
-      have hb' := hb n (mem_vaughanSmallSupport.mpr hn)
-      have hΛ := vonMangoldt_le_log_v_succ hn.1 hn.2.2
-      have hΛ0 := ArithmeticFunction.vonMangoldt_nonneg (n := n.toNat)
-      have hbSq : ‖b n‖ ^ 2 ≤ B ^ 2 := by nlinarith [norm_nonneg (b n)]
-      have hΛSq : ArithmeticFunction.vonMangoldt n.toNat ^ 2 ≤
-          Real.log ((v + 1 : ℕ) : ℝ) ^ 2 := by nlinarith
-      exact (mul_le_mul_of_nonneg_right hbSq (sq_nonneg _)).trans
-        (mul_le_mul_of_nonneg_left hΛSq (sq_nonneg B))
-    _ = ((vaughanSmallSupport N v).card : ℝ) * B ^ 2 *
-        Real.log ((v + 1 : ℕ) : ℝ) ^ 2 := by
-      simp
-      ring
-    _ ≤ (v : ℝ) * B ^ 2 * Real.log ((v + 1 : ℕ) : ℝ) ^ 2 := by
-      have hcard : ((vaughanSmallSupport N v).card : ℝ) ≤ v := by
-        exact_mod_cast card_vaughanSmallSupport_le N v
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_right hcard (sq_nonneg B)) (sq_nonneg _)
+    (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2) ≤
+        Real.log ((v + 1 : ℕ) : ℝ) ^ 2 *
+          ∑ n ∈ vaughanSmallSupport N v, ‖b n‖ ^ 2 :=
+      vaughanSmallCoeff_energy_le_log_support b N v
+    _ ≤ Real.log ((v + 1 : ℕ) : ℝ) ^ 2 * ((v : ℝ) * B ^ 2) :=
+      mul_le_mul_of_nonneg_left hsupport (sq_nonneg _)
+    _ = (v : ℝ) * B ^ 2 * Real.log ((v + 1 : ℕ) : ℝ) ^ 2 :=
+      mul_comm _ _
 
 /-- The existing Vaughan prefix ledger with its final opaque lane replaced by
 the proved small-support energy.  This remains a coefficient-energy ledger,

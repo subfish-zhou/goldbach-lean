@@ -111,10 +111,10 @@ theorem reducedFareyPoint_mem_rationalPoints {Q : ℕ} {qa : ℕ × ℕ}
     (hqa : qa ∈ reducedFareyIndices Q) :
     reducedFareyPoint qa ∈ rationalPoints Q := by
   rcases qa with ⟨q, a⟩
-  rw [mem_reducedFareyIndices] at hqa
+  obtain ⟨hq, hqQ, haq, _⟩ := mem_reducedFareyIndices.mp hqa
   rw [reducedFareyPoint_pair]
-  refine Finset.mem_biUnion.mpr ⟨q, Finset.mem_Icc.mpr ⟨hqa.1, hqa.2.1⟩, ?_⟩
-  exact Finset.mem_image.mpr ⟨a, Finset.mem_range.mpr hqa.2.2.1, rfl⟩
+  refine Finset.mem_biUnion.mpr ⟨q, Finset.mem_Icc.mpr ⟨hq, hqQ⟩, ?_⟩
+  exact Finset.mem_image.mpr ⟨a, Finset.mem_range.mpr haq, rfl⟩
 
 /-- Reduced canonical fractions have unique numerator and denominator.
 This is the no-multiplicity fact missing from the unreduced `rationalPoints`
@@ -124,20 +124,22 @@ theorem reducedFareyPoint_injOn (Q : ℕ) :
   rintro ⟨q₁, a₁⟩ h₁ ⟨q₂, a₂⟩ h₂ hpoint
   change (q₁, a₁) ∈ reducedFareyIndices Q at h₁
   change (q₂, a₂) ∈ reducedFareyIndices Q at h₂
-  rw [mem_reducedFareyIndices] at h₁ h₂
-  have hq₁0 : (q₁ : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt h₁.1)
-  have hq₂0 : (q₂ : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt h₂.1)
+  obtain ⟨hq₁, _, _, hcop₁⟩ := mem_reducedFareyIndices.mp h₁
+  obtain ⟨hq₂, _, _, hcop₂⟩ := mem_reducedFareyIndices.mp h₂
+  have hq₁0 : (q₁ : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hq₁)
+  have hq₂0 : (q₂ : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hq₂)
   have hcrossR : (a₁ : ℝ) * (q₂ : ℝ) = (a₂ : ℝ) * (q₁ : ℝ) :=
     (div_eq_div_iff hq₁0 hq₂0).mp hpoint
   have hcross : a₁ * q₂ = a₂ * q₁ := by exact_mod_cast hcrossR
+  -- Coprimality turns cross-multiplication into divisibility of both denominators.
   have hq₁dvdq₂ : q₁ ∣ q₂ := by
-    apply h₁.2.2.2.symm.dvd_of_dvd_mul_left
+    apply hcop₁.symm.dvd_of_dvd_mul_left
     refine ⟨a₂, ?_⟩
     calc
       a₁ * q₂ = a₂ * q₁ := hcross
       _ = q₁ * a₂ := Nat.mul_comm _ _
   have hq₂dvdq₁ : q₂ ∣ q₁ := by
-    apply h₂.2.2.2.symm.dvd_of_dvd_mul_left
+    apply hcop₂.symm.dvd_of_dvd_mul_left
     refine ⟨a₁, ?_⟩
     calc
       a₂ * q₁ = a₁ * q₂ := hcross.symm
@@ -145,7 +147,7 @@ theorem reducedFareyPoint_injOn (Q : ℕ) :
   have hq : q₁ = q₂ := Nat.dvd_antisymm hq₁dvdq₂ hq₂dvdq₁
   subst q₂
   have ha : a₁ = a₂ :=
-    Nat.mul_right_cancel h₁.1 hcross
+    Nat.mul_right_cancel hq₁ hcross
   subst a₂
   rfl
 

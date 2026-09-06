@@ -40,13 +40,7 @@ open scoped ArithmeticFunction.Moebius
 by `Nat.totient_le`. At `q = 0`, totalized division gives a
 left side of 0, so the inequality is trivial. -/
 theorem totient_div_self_le_one (q : ℕ) : (Nat.totient q : ℝ) / (q : ℝ) ≤ 1 := by
-  by_cases hq : q = 0
-  · subst q
-    simp
-  · have hle : Nat.totient q ≤ q := Nat.totient_le q
-    have hle' : (Nat.totient q : ℝ) ≤ (q : ℝ) := by exact_mod_cast hle
-    have hqpos : (0 : ℝ) < (q : ℝ) := by exact_mod_cast (Nat.pos_of_ne_zero hq)
-    exact (div_le_one hqpos).2 hle'
+  exact div_le_one_of_le₀ (by exact_mod_cast Nat.totient_le q) (Nat.cast_nonneg q)
 
 /-! ## 2. The weighted expression panTypeIWeight3 and lemma A -/
 
@@ -91,30 +85,8 @@ theorem panTypeIWeight3_le_sqfree_three_pow (Q : ℕ) :
             ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card := by
           exact Finset.sum_le_sum (fun q hq => panTypeIWeight3_term_le q)
     _ = ∑ q ∈ (Finset.range (Q + 1)).filter Squarefree, (3 : ℝ) ^ q.primeFactors.card := by
-          calc
-            (∑ q ∈ Finset.range (Q + 1),
-                ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card)
-            = ∑ q ∈ Finset.range (Q + 1),
-                (if Squarefree q then
-                  ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card
-                else 0) := by
-                apply Finset.sum_congr rfl
-                intro q hq
-                by_cases h : Squarefree q
-                · simp [h]
-                · simp [h, ArithmeticFunction.moebius_eq_zero_of_not_squarefree h]
-            _ = ∑ q ∈ (Finset.range (Q + 1)).filter Squarefree,
-                ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card := by
-                rw [Finset.sum_filter]
-            _ = ∑ q ∈ (Finset.range (Q + 1)).filter Squarefree, (3 : ℝ) ^ q.primeFactors.card := by
-                apply Finset.sum_congr rfl
-                intro q hq
-                have hsq : Squarefree q := (Finset.mem_filter.mp hq).2
-                have hmu : ((μ q : ℤ) : ℝ) ^ 2 = 1 := by
-                  rw [← Int.cast_pow, ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq]
-                  norm_num
-                rw [hmu]
-                simp
+          simp only [Finset.sum_filter, ← Int.cast_pow, ArithmeticFunction.moebius_sq,
+            Int.cast_ite, Int.cast_one, Int.cast_zero, ite_mul, one_mul, zero_mul]
 
 
 /-! ## 3. Exchanging sums and counting multiples -/
@@ -125,21 +97,11 @@ private lemma sqfree_divisors_subset_sqfree_range (Q : ℕ) {q : ℕ}
     (hq : q ∈ (Finset.range (Q + 1)).filter Squarefree) :
     q.divisors.filter Squarefree ⊆ (Finset.range (Q + 1)).filter Squarefree := by
   intro d hd
-  have hdmem := Finset.mem_filter.mp hd
-  have hdvd : d ∣ q := Nat.dvd_of_mem_divisors hdmem.1
-  have hqmem : q ∈ Finset.range (Q + 1) := (Finset.mem_filter.mp hq).1
-  have hqSq : Squarefree q := (Finset.mem_filter.mp hq).2
-  have hq_ne : q ≠ 0 := by
-    intro hq0
-    rw [hq0] at hqSq
-    exact not_squarefree_zero hqSq
-  have hdle : d ≤ q := Nat.le_of_dvd (Nat.pos_of_ne_zero hq_ne) hdvd
-  rw [Finset.mem_filter]
-  constructor
-  · rw [Finset.mem_range]
-    have hq_le : q ≤ Q := Nat.lt_succ_iff.mp (Finset.mem_range.mp hqmem)
-    omega
-  · exact hdmem.2
+  rcases Finset.mem_filter.mp hd with ⟨hdmem, hdsq⟩
+  rcases Finset.mem_filter.mp hq with ⟨hqmem, hqsq⟩
+  exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr
+    (lt_of_le_of_lt (Nat.le_of_dvd (Nat.pos_of_ne_zero hqsq.ne_zero)
+      (Nat.dvd_of_mem_divisors hdmem)) (Finset.mem_range.mp hqmem)), hdsq⟩
 
 /-- **Double-sum bound**: for nonnegative `g`,
 `Σ_{q≤Q, squarefree} Σ_{d|q, squarefree} g(d)
@@ -163,24 +125,12 @@ private lemma sqfreeDoubleSum_le (Q : ℕ) (g : ℕ → ℝ) (hg : ∀ d, 0 ≤ 
           apply Finset.sum_congr rfl
           intro q hq
           rw [← Finset.sum_filter]
-          congr 1
-          apply Finset.ext
-          intro d
-          constructor
-          · intro hd
-            exact Finset.mem_filter.mpr ⟨sqfree_divisors_subset_sqfree_range Q hq hd, hd⟩
-          · intro hd
-            exact (Finset.mem_filter.mp hd).2
+          rw [Finset.filter_mem_eq_inter,
+            Finset.inter_eq_right.mpr (sqfree_divisors_subset_sqfree_range Q hq)]
     _ = ∑ q ∈ (Finset.range (Q + 1)).filter Squarefree,
           ∑ d ∈ (Finset.range (Q + 1)).filter Squarefree,
             g d * (if d ∈ q.divisors.filter Squarefree then (1 : ℝ) else 0) := by
-          apply Finset.sum_congr rfl
-          intro q hq
-          apply Finset.sum_congr rfl
-          intro d hd
-          by_cases h : d ∈ q.divisors.filter Squarefree
-          · simp [h]
-          · simp [h]
+          simp only [mul_ite, mul_one, mul_zero]
     _ = ∑ d ∈ (Finset.range (Q + 1)).filter Squarefree,
           ∑ q ∈ (Finset.range (Q + 1)).filter Squarefree,
             g d * (if d ∈ q.divisors.filter Squarefree then (1 : ℝ) else 0) := by
@@ -201,52 +151,25 @@ private lemma sqfreeDoubleSum_le (Q : ℕ) (g : ℕ → ℝ) (hg : ∀ d, 0 ≤ 
     _ ≤ ∑ d ∈ (Finset.range (Q + 1)).filter Squarefree, g d * ((Q : ℝ) / (d : ℝ)) := by
           apply Finset.sum_le_sum
           intro d hd
-          have hsqd : Squarefree d := (Finset.mem_filter.mp hd).2
-          have hd_ne0 : d ≠ 0 := by
-            intro hd0
-            rw [hd0] at hsqd
-            exact not_squarefree_zero hsqd
-          have hd1 : 1 ≤ d := Nat.succ_le_of_lt (Nat.pos_of_ne_zero hd_ne0)
-          have hcnt1 : (((Finset.range (Q + 1)).filter Squarefree).filter
-                (fun q => d ∈ q.divisors.filter Squarefree)).card ≤
-              (((Finset.range (Q + 1)).filter Squarefree).filter (fun q => d ∣ q)).card := by
-            exact Finset.card_le_card (by
-              intro q hq
-              rcases Finset.mem_filter.mp hq with ⟨hqS, hdq⟩
-              exact Finset.mem_filter.mpr ⟨hqS,
-                Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hdq).1⟩)
-          have hcnt2 : (((Finset.range (Q + 1)).filter Squarefree).filter (fun q => d ∣ q)).card ≤
-              ((Finset.Icc 1 Q).filter (fun q => d ∣ q)).card := by
-            exact Finset.card_le_card (by
-              intro q hq
-              rcases Finset.mem_filter.mp hq with ⟨hqS, hdq⟩
-              rw [Finset.mem_filter]
-              constructor
-              · rw [Finset.mem_Icc]
-                constructor
-                · have hqSq : Squarefree q := (Finset.mem_filter.mp hqS).2
-                  have hq_ne0 : q ≠ 0 := by
-                    intro hq0
-                    rw [hq0] at hqSq
-                    exact not_squarefree_zero hqSq
-                  exact Nat.succ_le_of_lt (Nat.pos_of_ne_zero hq_ne0)
-                · have hqmem : q ∈ Finset.range (Q + 1) := (Finset.mem_filter.mp hqS).1
-                  exact Nat.lt_succ_iff.mp (Finset.mem_range.mp hqmem)
-              · exact hdq)
-          have hcnt3 : ((Finset.Icc 1 Q).filter (fun q => d ∣ q)).card = Q / d :=
-            v3_card_multiples_Icc Q d hd1
+          have hd1 : 1 ≤ d := Nat.pos_of_ne_zero (Finset.mem_filter.mp hd).2.ne_zero
+          have hsubset : ((Finset.range (Q + 1)).filter Squarefree).filter
+                (fun q => d ∈ q.divisors.filter Squarefree) ⊆
+              (Finset.Icc 1 Q).filter (fun q => d ∣ q) := by
+            intro q hq
+            rcases Finset.mem_filter.mp hq with ⟨hqS, hdq⟩
+            rcases Finset.mem_filter.mp hqS with ⟨hqmem, hqsq⟩
+            exact Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr
+              ⟨Nat.pos_of_ne_zero hqsq.ne_zero, Nat.lt_succ_iff.mp (Finset.mem_range.mp hqmem)⟩,
+              Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hdq).1⟩
           have hcount : (((Finset.range (Q + 1)).filter Squarefree).filter
                 (fun q => d ∈ q.divisors.filter Squarefree)).card ≤ (Q : ℝ) / (d : ℝ) := by
             calc
               (((Finset.range (Q + 1)).filter Squarefree).filter
                   (fun q => d ∈ q.divisors.filter Squarefree)).card
                   ≤ (((Finset.Icc 1 Q).filter (fun q => d ∣ q)).card : ℝ) := by
-                    exact_mod_cast (le_trans hcnt1 hcnt2)
-              _ ≤ (Q : ℝ) / (d : ℝ) := by
-                    calc
-                      (((Finset.Icc 1 Q).filter (fun q => d ∣ q)).card : ℝ) = ((Q / d : ℕ) : ℝ) := by
-                        rw [hcnt3]
-                      _ ≤ (Q : ℝ) / (d : ℝ) := Nat.cast_div_le
+                    exact_mod_cast Finset.card_le_card hsubset
+              _ = ((Q / d : ℕ) : ℝ) := by rw [v3_card_multiples_Icc Q d hd1]
+              _ ≤ (Q : ℝ) / (d : ℝ) := Nat.cast_div_le
           exact mul_le_mul_of_nonneg_left hcount (hg d)
 
 /-- Restore the Moebius-square weight:
@@ -259,32 +182,8 @@ private lemma sqfreeTwoPowSum_eq_sumTwoPowWeighted (Q : ℕ) :
       sumTwoPowWeighted Q := by
   classical
   unfold sumTwoPowWeighted
-  symm
-  calc
-    (∑ d ∈ Finset.range (Q + 1),
-        ((μ d : ℤ) : ℝ) ^ 2 * (2 : ℝ) ^ d.primeFactors.card / (d : ℝ))
-    = ∑ d ∈ Finset.range (Q + 1),
-        if Squarefree d then
-          ((μ d : ℤ) : ℝ) ^ 2 * (2 : ℝ) ^ d.primeFactors.card / (d : ℝ)
-        else 0 := by
-        apply Finset.sum_congr rfl
-        intro d hd
-        by_cases h : Squarefree d
-        · simp [h]
-        · simp [h, ArithmeticFunction.moebius_eq_zero_of_not_squarefree h]
-    _ = ∑ d ∈ (Finset.range (Q + 1)).filter Squarefree,
-          ((μ d : ℤ) : ℝ) ^ 2 * (2 : ℝ) ^ d.primeFactors.card / (d : ℝ) := by
-          rw [Finset.sum_filter]
-    _ = ∑ d ∈ (Finset.range (Q + 1)).filter Squarefree,
-          (2 : ℝ) ^ d.primeFactors.card / (d : ℝ) := by
-          apply Finset.sum_congr rfl
-          intro d hd
-          have hsq : Squarefree d := (Finset.mem_filter.mp hd).2
-          have hmu : ((μ d : ℤ) : ℝ) ^ 2 = 1 := by
-            rw [← Int.cast_pow, ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq]
-            norm_num
-          rw [hmu]
-          norm_num
+  simp only [Finset.sum_filter, ← Int.cast_pow, ArithmeticFunction.moebius_sq,
+    Int.cast_ite, Int.cast_one, Int.cast_zero, ite_mul, one_mul, zero_mul, ite_div, zero_div]
 
 /-- **W1 assembly**: `panTypeIWeight3 Q ≤ Q·sumTwoPowWeighted Q`
 for every `Q`, by lemma A, the termwise expansion in lemma B,

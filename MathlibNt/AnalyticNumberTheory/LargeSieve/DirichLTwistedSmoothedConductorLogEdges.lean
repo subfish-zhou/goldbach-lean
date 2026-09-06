@@ -8,7 +8,7 @@ namespace AnalyticNumberTheory.LargeSieve
 open DirichletLGlobalConductorLogValueBound
 open DirichletLGlobalConductorLogDerivativeBound
 
-/-- The final edge width, one quarter of the accepted `2^42` width. -/
+/-- The accepted `2^42` width; the final left edge uses one quarter of it. -/
 noncomputable def dirichletLTwistedSmoothedConductorLogEdgeWidth
     (q : ℕ) (T : ℝ) : ℝ :=
   1 / (4398046511104 * (dirichletLTwistedSmoothedConductorLogLM q T) ^ 9)
@@ -303,18 +303,20 @@ theorem norm_logDeriv_LFunction_le_on_conductorLogEdgeRectangle
   have hσtwo : σ ≤ 2 := by
     dsimp only [dirichletLTwistedSmoothedConductorLogRight] at hσright
     linarith
-  have hnearσ : 1 - 1 / Real.log m ≤ σ := by
-    have ha_near : 1 - 1 / Real.log m ≤ a := by
-      dsimp only [a]
-      linarith
-    exact ha_near.trans (ha_def ▸ hσleft)
-  have hderiv : ‖deriv χ.LFunction (σ + I * η)‖ ≤ 64 * LM ^ 2 := by
+  have ha_near : 1 - 1 / Real.log m ≤ a := by
+    dsimp only [a]
+    linarith
+  -- One derivative estimate covers both the endpoint and its anchoring segment.
+  have hderivOnSegment (u : ℝ) (hau : a ≤ u) (huσ : u ≤ σ) :
+      ‖deriv χ.LFunction (u + I * η)‖ ≤ 64 * LM ^ 2 := by
     have hd := norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
-      χ hχ (σ := σ) (t := η) (ha_half.trans (ha_def ▸ hσleft)) hσtwo
-      (by simpa only [m] using hnearσ)
+      χ hχ (σ := u) (t := η) (ha_half.trans hau) (huσ.trans hσtwo)
+      (by simpa only [m] using ha_near.trans hau)
     calc
       _ ≤ 64 * Lm ^ 2 := by simpa only [Lm, m] using hd
       _ ≤ 64 * LM ^ 2 := by gcongr
+  have hderiv : ‖deriv χ.LFunction (σ + I * η)‖ ≤ 64 * LM ^ 2 :=
+    hderivOnSegment σ (ha_def ▸ hσleft) le_rfl
   by_cases hbranch : σ ≤ 1 + w / 4
   · have haσ : a ≤ σ := by simpa only [ha_def] using hσleft
     have hdist : σ - a ≤ w / 2 := by dsimp only [a] at *; linarith
@@ -330,18 +332,7 @@ theorem norm_logDeriv_LFunction_le_on_conductorLogEdgeRectangle
       · rw [_root_.abs_of_nonneg (sub_nonneg.mpr haσ)]
       · intro u hu
         rw [uIoc_of_le haσ, mem_Ioc] at hu
-        have hunear : 1 - 1 / Real.log m ≤ u := by
-          have ha_near : 1 - 1 / Real.log m ≤ a := by
-            dsimp only [a]
-            linarith
-          exact ha_near.trans hu.1.le
-        have huupper : u ≤ 2 := hu.2.trans hσtwo
-        have hd := norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
-          χ hχ (σ := u) (t := η) (ha_half.trans hu.1.le) huupper
-          (by simpa only [m] using hunear)
-        calc
-          _ ≤ 64 * Lm ^ 2 := by simpa only [Lm, m] using hd
-          _ ≤ 64 * LM ^ 2 := by gcongr
+        exact hderivOnSegment u hu.1.le hu.2
     have hdiff' : ‖χ.LFunction (σ + I * η) - χ.LFunction (a + I * η)‖ ≤
         32 * LM ^ 2 * w := by
       calc

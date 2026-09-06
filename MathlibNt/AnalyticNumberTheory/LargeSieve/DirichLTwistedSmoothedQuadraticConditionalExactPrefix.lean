@@ -9,26 +9,7 @@ private theorem quadratic_integral_lower_middle_upper
     (f : ℝ → ℂ) {T : ℝ} (hf : Integrable f) (hT : 0 ≤ T) :
     (∫ t in Iic (-T), f t) + (∫ t in Ioc (-T) T, f t) +
         (∫ t in Ici T, f t) = ∫ t, f t := by
-  have h₁ := integral_add_compl (μ := volume) (s := Iic (-T)) measurableSet_Iic hf
-  have h₂ := integral_add_compl (μ := volume.restrict (Ioi (-T)))
-    (s := Iic T) measurableSet_Iic hf.integrableOn
-  rw [integral_Ici_eq_integral_Ioi]
-  simp only [compl_Iic] at h₁ h₂
-  have hi : Iic T ∩ Ioi (-T) = Ioc (-T) T := by
-    ext x
-    simp only [mem_inter_iff, mem_Iic, mem_Ioi, mem_Ioc]
-    tauto
-  have hc : Ioi T ∩ Ioi (-T) = Ioi T := by
-    ext x
-    simp only [mem_inter_iff, mem_Ioi]
-    constructor
-    · exact fun hx => hx.1
-    · intro hx
-      exact ⟨hx, by linarith⟩
-  rw [Measure.restrict_restrict measurableSet_Iic,
-    Measure.restrict_restrict measurableSet_Ioi] at h₂
-  rw [hi, hc] at h₂
-  linear_combination h₁ + h₂
+  exact AnalyticNumberTheory.LargeSieve.integral_lower_middle_upper f hf hT
 
 /-- Raw quadratic Siegel data select a single contour scale and give the full
 smoothed Perron error.  The three displayed terms pay respectively the left
@@ -192,14 +173,8 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalErrorAssembly
     rw [heq]
     calc
       _ ≤ ‖VIntegral F a (-T) T‖ + ‖HIntegral F a b T‖ +
-          ‖HIntegral F a b (-T)‖ := by
-        calc
-          _ ≤ ‖VIntegral F a (-T) T + HIntegral F a b T‖ +
-              ‖HIntegral F a b (-T)‖ := by
-            simpa only [sub_eq_add_neg, norm_neg] using
-              norm_add_le (VIntegral F a (-T) T + HIntegral F a b T)
-                (-HIntegral F a b (-T))
-          _ ≤ _ := add_le_add (norm_add_le _ _) (le_refl _)
+          ‖HIntegral F a b (-T)‖ :=
+        (norm_sub_le _ _).trans (add_le_add (norm_add_le _ _) (le_refl _))
       _ ≤ C * Eleft + C * Ehoriz + C * Ehoriz :=
         add_le_add (add_le_add hleft htop) hbottom
   have hfull : ‖∫ t : ℝ, F ((b : ℂ) + t * I)‖ ≤

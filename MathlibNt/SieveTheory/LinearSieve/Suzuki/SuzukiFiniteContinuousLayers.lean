@@ -162,16 +162,9 @@ theorem suzukiLayerNumerator_eq_zero_of_le (κ β : ℝ) (n : ℕ) {s : ℝ}
           rw [suzukiLayerNumerator_one, baseLower_eq_upper hs']
           exact intervalIntegral.integral_same
       | succ n =>
-          have hcast : ((n + 2 : ℕ) : ℝ) = (n : ℝ) + 2 := by
-            push_cast
-            ring
-          have hs' : β + ((n : ℝ) + 2) ≤ s := by
-            rw [← hcast]
-            simpa [Nat.add_assoc] using hs
           have hlower : recursionLower β s (n + 2) = β + ((n : ℝ) + 2) := by
-            unfold recursionLower
-            rw [hcast]
-            exact min_eq_right (hs'.trans (le_max_left _ _))
+            simpa only [Nat.cast_add, Nat.cast_ofNat] using
+              (recursionLower_eq_upper (β := β) (s := s) (n := n + 2) hs)
           rw [suzukiLayerNumerator_succ_succ, hlower]
           exact intervalIntegral.integral_same
 
@@ -208,13 +201,8 @@ theorem suzukiLayerNumerator_succ_succ_nonneg
     0 ≤ suzukiLayerNumerator κ β (n + 2) s := by
   rw [suzukiLayerNumerator_succ_succ]
   apply intervalIntegral.integral_nonneg
-  · show recursionLower β s (n + 2) ≤ β + ((n : ℝ) + 2)
-    have hcast : ((n + 2 : ℕ) : ℝ) = (n : ℝ) + 2 := by
-      push_cast
-      ring
-    unfold recursionLower
-    rw [← hcast]
-    exact min_le_right _ _
+  · simpa only [recursionLower, Nat.cast_add, Nat.cast_ofNat] using
+      (min_le_right (max s (β + sourceEpsilon (n + 2))) (β + (n + 2 : ℕ)))
   · intro t ht
     exact mul_nonneg (hprev t ht)
       (dPowDensity_nonneg hκ (by

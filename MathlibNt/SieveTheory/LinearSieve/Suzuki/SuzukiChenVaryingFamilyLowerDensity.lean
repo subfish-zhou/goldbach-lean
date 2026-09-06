@@ -29,17 +29,7 @@ theorem HasDimensionOneLocalProductBound.mono_constant
     {S : BoundingSieve} {K K' : ℝ}
     (h : HasDimensionOneLocalProductBound S K) (hKK' : K ≤ K') :
     HasDimensionOneLocalProductBound S K' := by
-  intro z₁ z₂ hz₁ hz₁₂
-  have hlog₁ : 0 < Real.log z₁ := Real.log_pos (by linarith)
-  have hlog₂ : 0 ≤ Real.log z₂ := Real.log_nonneg (by linarith)
-  have hratio : 0 ≤ Real.log z₂ / Real.log z₁ := div_nonneg hlog₂ hlog₁.le
-  calc
-    _ ≤ Real.log z₂ / Real.log z₁ * (1 + K / Real.log z₁) :=
-      h z₁ z₂ hz₁ hz₁₂
-    _ ≤ Real.log z₂ / Real.log z₁ * (1 + K' / Real.log z₁) := by
-      apply mul_le_mul_of_nonneg_left _ hratio
-      simpa [add_comm] using
-        add_le_add_left (div_le_div_of_nonneg_right hKK' hlog₁.le) 1
+  exact MathlibNt.SieveTheory.hasDimensionOneLocalProductBound_mono_K h hKK'
 
 /-- The floor in Chen's level makes the Suzuki cutoff strictly larger even when
 a source prime lies exactly at the real tenth-power endpoint. -/

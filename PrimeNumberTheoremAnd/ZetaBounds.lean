@@ -206,17 +206,12 @@ theorem deriv_eqOn_of_eqOn_punctured (f g : ℂ → ℂ) (U : Set ℂ) (p : ℂ)
 theorem analytic_deriv_bounded_near_point
     (f : ℂ → ℂ) {U : Set ℂ} {p : ℂ} (hU : IsOpen U) (hp : p ∈ U) (hf : HolomorphicOn f U) :
     (deriv f) =O[𝓝[≠] p] (1 : ℂ → ℂ) := by
-  have U_in_filter : U ∈ 𝓝 p := by
-    exact IsOpen.mem_nhds hU hp
-  have T := (analyticOn_iff_differentiableOn hU).mpr hf
-  have T2 : ContDiffOn ℂ 1 f U :=
-      DifferentiableOn.contDiffOn hf hU
-  have T3 : ContinuousOn (fun x ↦ ((deriv f) x)) U := by
-    apply T2.continuousOn_deriv_of_isOpen hU (by simp)
-  have T4 := T3.continuousAt U_in_filter
-  have T5 : (deriv f) =O[𝓝 p] (1 : ℂ → ℂ) :=
-    T4.norm.isBoundedUnder_le.isBigO_one ℂ
-  exact Asymptotics.IsBigO.mono T5 inf_le_left
+  have hf_smooth : ContDiffOn ℂ 1 f U := hf.contDiffOn hU
+  have hderiv_cont : ContinuousOn (deriv f) U :=
+    hf_smooth.continuousOn_deriv_of_isOpen hU (by simp)
+  have hderiv_bounded : (deriv f) =O[𝓝 p] (1 : ℂ → ℂ) :=
+    (hderiv_cont.continuousAt (hU.mem_nhds hp)).norm.isBoundedUnder_le.isBigO_one ℂ
+  exact hderiv_bounded.mono inf_le_left
 
 theorem derivative_const_plus_product {g : ℂ → ℂ} (A p x : ℂ) (hg : DifferentiableAt ℂ g x) :
     deriv ((fun _ ↦ A) + g * fun s ↦ s - p) x = deriv g x * (x - p) + g x := by
@@ -1070,26 +1065,14 @@ lemma ZetaBnd_aux1p (N : ℕ) (Npos : 1 ≤ N) {σ : ℝ} (hσ : σ ∈ Ioc 0 2)
       ‖(σ + t * I) * ∫ x in Ioi (N : ℝ), (⌊x⌋ + 1 / 2 - x) / (x : ℂ) ^ ((σ + t * I) + 1)‖)
     =O[Filter.principal {t | 2 ≤ |t|}] fun t ↦ |t| * N ^ (-σ) / σ := by
   rw [Asymptotics.IsBigO_def]
-  use 2
+  refine ⟨2, ?_⟩
   rw [Asymptotics.isBigOWith_principal]
   intro t ht
-  simp only [mem_setOf_eq] at ht
-  rw [norm_norm, norm_mul, mul_div_assoc, norm_mul]
-  have : 2 * (‖|t|‖ * ‖↑N ^ (-σ) / σ‖) = (2 * |t|) * ((N : ℝ) ^ (-σ) / σ) := by
-    simp only [Real.norm_eq_abs, _root_.abs_abs, norm_div]
-    have : σ ≠ 0 := by linarith [hσ.1]
-    field_simp
-    rw [abs_of_pos hσ.1]
-    have : 0 < (N : ℝ) ^ (-σ) := by
-      refine Real.rpow_pos_of_pos ?_ _
-      positivity
-    rw [abs_of_pos this]
-    ring
-  rw [this]
-  apply mul_le_mul ?_ (ZetaBnd_aux1b N Npos hσ.1) (norm_nonneg _) (by positivity)
-  refine le_trans (by apply norm_add_le) ?_
-  simp only [norm_real, norm_mul, norm_I, mul_one, Complex.norm_of_nonneg hσ.1.le, Real.norm_eq_abs]
-  linarith [hσ.2]
+  have hbound_nonneg : 0 ≤ |t| * N ^ (-σ) / σ :=
+    div_nonneg (mul_nonneg (abs_nonneg t) (Real.rpow_nonneg (Nat.cast_nonneg N) _)) hσ.1.le
+  -- Keep the explicit constant from the pointwise estimate.
+  rw [norm_norm, Real.norm_of_nonneg hbound_nonneg]
+  simpa only [mul_div_assoc, mul_assoc] using ZetaBnd_aux1 N Npos hσ ht
 
 lemma isOpen_aux : IsOpen {z : ℂ | z ≠ 1 ∧ 0 < z.re} := by
   refine IsOpen.inter isOpen_ne ?_
@@ -2472,25 +2455,11 @@ lemma ZetaLowerBound3 :
   (latexEnv := "lemma")]
 lemma ZetaInvBound1 {σ t : ℝ} (σ_gt : 1 < σ) :
     1 / ‖ζ (σ + t * I)‖ ≤ ‖ζ σ‖ ^ ((3 : ℝ) / 4) * ‖ζ (σ + 2 * t * I)‖ ^ ((1 : ℝ) / 4) := by
-  apply (div_le_iff₀ ?_).mpr
-  · apply (Real.rpow_le_rpow_iff (z := 4) (by norm_num) ?_ (by norm_num)).mp
-    · simp only [Real.one_rpow]
-      rw [Real.mul_rpow, Real.mul_rpow, ← Real.rpow_mul, ← Real.rpow_mul]
-      · simp only [isUnit_iff_ne_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true,
-          IsUnit.div_mul_cancel, Real.rpow_one]
-        conv => rw [mul_assoc]; rhs; rhs; rw [mul_comm]
-        rw [← mul_assoc]
-        have := norm_zeta_product_ge_one (x := σ - 1) (by linarith) t
-        simp_rw [ge_iff_le, norm_mul, norm_pow, ofReal_sub, ofReal_one, add_sub_cancel, ← Real.rpow_natCast] at this
-        convert this using 3 <;> ring_nf
-      any_goals ring_nf
-      any_goals apply norm_nonneg
-      any_goals apply Real.rpow_nonneg <| norm_nonneg _
-      apply mul_nonneg <;> apply Real.rpow_nonneg <| norm_nonneg _
-    · refine mul_nonneg (mul_nonneg ?_ ?_) ?_ <;> simp [Real.rpow_nonneg]
-  · have s_ne_one : σ + t * I ≠ 1 := by
-      contrapose! σ_gt; apply le_of_eq; apply And.left; simpa [Complex.ext_iff] using σ_gt
-    simpa using riemannZeta_ne_zero_of_one_le_re (by simp [σ_gt.le])
+  have hproduct := ZetaLowerBound1 (t := t) σ_gt
+  -- The positive product bound also supplies the nonzero denominator.
+  have hzeta_pos : 0 < ‖ζ (σ + t * I)‖ :=
+    pos_of_mul_pos_right (zero_lt_one.trans_le hproduct) (by positivity)
+  exact (div_le_iff₀ hzeta_pos).mpr hproduct
 
 lemma Ioi_union_Iio_mem_cocompact {a : ℝ} (ha : 0 ≤ a) : Ioi (a : ℝ) ∪ Iio (-a : ℝ) ∈ cocompact ℝ := by
   simp only [Filter.mem_cocompact]

@@ -24,7 +24,7 @@ theorem mem_active_conductorCell {x q : ℕ} {B : ℝ}
       conductorRadius x B j ≤ upperConductor x B ∧
         q ∈ conductorCell (conductorRadius x B j) := by
   have hL := lowConductor_ge_one hx hB
-  have hL0 : 0 ≤ lowConductor x B := by linarith
+  have hL0 : 0 ≤ lowConductor x B := zero_le_one.trans hL
   have hD0 : 0 ≤ upperConductor x B := by
     unfold upperConductor
     positivity
@@ -34,14 +34,14 @@ theorem mem_active_conductorCell {x q : ℕ} {B : ℝ}
   have hxpos : 0 < x := source_pos_of_log hx
   have hxone : (1 : ℝ) ≤ x := by exact_mod_cast hxpos
   have hsqrt : Real.sqrt (x : ℝ) ≤ x := by
-    nlinarith [Real.sq_sqrt (Nat.cast_nonneg x), Real.sqrt_nonneg (x : ℝ)]
+    exact (Real.sqrt_le_iff).2 ⟨Nat.cast_nonneg x, by nlinarith only [hxone]⟩
   have hqx : (q : ℝ) ≤ x :=
     hqu'.trans ((upperConductor_le_sqrt hx hB).trans hsqrt)
   have hlast : (q : ℝ) ≤ 2 ^ (Nat.log 2 x + 1) * lowConductor x B := by
     have hp : (x : ℝ) < 2 ^ (Nat.log 2 x + 1) := by
       exact_mod_cast Nat.lt_pow_succ_log_self (by norm_num : 1 < 2) x
-    have hp0 : (0 : ℝ) ≤ 2 ^ (Nat.log 2 x + 1) := by positivity
-    nlinarith
+    exact hqx.trans (hp.le.trans
+      (le_mul_of_one_le_right (by positivity) hL))
   have hex : ∃ j : ℕ, (q : ℝ) ≤ 2 ^ (j + 1) * lowConductor x B :=
     ⟨Nat.log 2 x, hlast⟩
   let j := Nat.find hex
@@ -58,7 +58,7 @@ theorem mem_active_conductorCell {x q : ℕ} {B : ℝ}
       simpa [conductorRadius, hj0] using lt_of_not_ge hn
   refine ⟨j, mem_range.mpr (by omega), hl.le.trans hqu', ?_⟩
   exact (mem_conductorCell_iff
-    (by have := conductorRadius_ge_one j hx hB; linarith) q).mpr ⟨hl, hu⟩
+    (zero_le_one.trans (conductorRadius_ge_one j hx hB)) q).mpr ⟨hl, hu⟩
 
 theorem source_depth_le {x A₁ A₂ : ℕ} (hA : A₂ ≤ x) :
     panDyadicDepth A₁ A₂ ≤ Nat.log 2 x + 1 := by

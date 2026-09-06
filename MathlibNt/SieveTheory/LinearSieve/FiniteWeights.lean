@@ -461,24 +461,7 @@ private theorem sum_lowerRosserSetWeight_nonpos
   have hqS : q ∈ S := Finset.min'_mem S hS
   have hqT : q ∉ T := by simp [T]
   have hST : insert q T = S := Finset.insert_erase hqS
-  have hdis : Disjoint T.powerset (T.powerset.image (insert q)) := by
-    rw [Finset.disjoint_left]
-    intro s hs hsi
-    have hqnot : q ∉ s :=
-      fun hqs ↦ hqT (Finset.mem_powerset.mp hs hqs)
-    obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp hsi
-    exact hqnot (Finset.mem_insert_self q u)
-  have hinj :
-      Set.InjOn (insert q) (↑T.powerset : Set (Finset ℕ)) := by
-    intro s hs u hu hsu
-    have hqs : q ∉ s :=
-      fun h ↦ hqT (Finset.mem_powerset.mp hs h)
-    have hqu : q ∉ u :=
-      fun h ↦ hqT (Finset.mem_powerset.mp hu h)
-    have heq := congrArg (fun v : Finset ℕ ↦ v.erase q) hsu
-    simpa [Finset.erase_insert, hqs, hqu] using heq
-  rw [← hST, Finset.powerset_insert, Finset.sum_union hdis,
-    Finset.sum_image hinj, ← Finset.sum_add_distrib]
+  rw [← hST, Finset.sum_powerset_insert hqT, ← Finset.sum_add_distrib]
   apply Finset.sum_nonpos
   intro s hs
   have hsubT : s ⊆ T := Finset.mem_powerset.mp hs
@@ -688,24 +671,8 @@ theorem lowerRosserSetDensitySum_insert_min
       (1 - nu q) * lowerRosserSetDensitySum nu D P -
         nu q * ∑ s ∈ P.powerset.filter (LowerRosserBoundarySet D q),
           ∏ p ∈ s, nu p := by
-  have hdis : Disjoint P.powerset (P.powerset.image (insert q)) := by
-    rw [Finset.disjoint_left]
-    intro s hs hsi
-    have hqnot : q ∉ s :=
-      fun h ↦ hqP (Finset.mem_powerset.mp hs h)
-    obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp hsi
-    exact hqnot (Finset.mem_insert_self q u)
-  have hinj : Set.InjOn (insert q) (↑P.powerset : Set (Finset ℕ)) := by
-    intro s hs u hu hsu
-    have hqs : q ∉ s :=
-      fun h ↦ hqP (Finset.mem_powerset.mp hs h)
-    have hqu : q ∉ u :=
-      fun h ↦ hqP (Finset.mem_powerset.mp hu h)
-    have heq := congrArg (fun v : Finset ℕ ↦ v.erase q) hsu
-    simpa [Finset.erase_insert, hqs, hqu] using heq
   unfold lowerRosserSetDensitySum
-  rw [Finset.powerset_insert, Finset.sum_union hdis,
-    Finset.sum_image hinj, ← Finset.sum_add_distrib]
+  rw [Finset.sum_powerset_insert hqP, ← Finset.sum_add_distrib]
   calc
     _ = ∑ s ∈ P.powerset,
         (((1 - nu q) * lowerRosserSetWeight D s -
@@ -789,11 +756,7 @@ theorem lowerRosserSetRelativeDensity_insert_min
       lowerRosserSetRelativeDensity nu D P -
         (nu q / (1 - nu q)) *
           lowerRosserBoundaryRelativeDensity nu D q P := by
-  rw [lowerRosserSetRelativeDensity, lowerRosserSetRelativeDensity,
-    lowerRosserBoundaryRelativeDensity,
-    lowerRosserSetDensitySum_insert_min nu hqP hqprime hqD hqmin,
-    Finset.prod_insert hqP]
-  field_simp
+  exact lowerRosserSetDensityRatio_insert_min nu hqP hqprime hqD hqmin hqFactor hPFactor
 
 /-- A finite lower boundary has nonnegative relative density under the local
 sieve bounds `0 ≤ nu p < 1`. -/

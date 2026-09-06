@@ -16,25 +16,6 @@ open SwitchingPrinciple.SuzukiLemma144KappaOne
 
 set_option maxHeartbeats 3000000
 
-private theorem caseII_sameCAt_to_literal_moving
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {M D : ℕ} {d Δ C K s : ℝ}
-    (h : Lemma144CaseIISameCAt S H M D d Δ C K s) :
-    suzukiActualT S M D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-      suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
-        (finiteSourceLayer 1 2 M s +
-          C * Real.exp (Real.sqrt K) * errorEnvelope H M (D : ℝ) d s *
-            (Real.log (D : ℝ)) ^ (-Δ)) := by
-  dsimp [Lemma144CaseIISameCAt] at h
-  rw [suzukiActualT_eq_parity_sum]
-  have hcarrier : suzukiActualParityCarrier M =
-      (Finset.Icc 1 M).filter (fun n => n % 2 = M % 2) := by
-    ext n
-    simp [suzukiActualParityCarrier]
-    omega
-  rw [hcarrier]
-  exact h
-
 /-- Literal all-depth, cutoff-two Suzuki bound under the printed source
 parameters, with the omitted source-small odd strip supplied by the separately
 named low-strip extension.  All constants precede `K`, depth, `D`, and `s`. -/
@@ -79,28 +60,15 @@ theorem exists_lemma14_4_literal_allDepth_with_lowStrip_extension
     (max (lemma144BaseOneGlobalConstant Δ)
       (max (claim145UniformNormalizationConstant C145 d)
         (claim145UniformNormalizationConstant Clow d)))))
-  have hC3 : 3 ≤ C := le_max_left _ _
-  have hCstrict : max 3 CBstrict ≤ C := by
-    apply max_le hC3
-    exact (le_max_left CBstrict _).trans (le_max_right 3 _)
-  have hCeven : max 3 CBeven ≤ C := by
-    apply max_le hC3
-    exact (le_max_left CBeven _).trans
-      ((le_max_right CBstrict _).trans (le_max_right 3 _))
-  have hCbase : lemma144BaseOneGlobalConstant Δ ≤ C := by
-    exact (le_max_left (lemma144BaseOneGlobalConstant Δ) _).trans
-      ((le_max_right CBeven _).trans
-        ((le_max_right CBstrict _).trans (le_max_right 3 _)))
-  have hCnorm : claim145UniformNormalizationConstant C145 d ≤ C := by
-    exact (le_max_left (claim145UniformNormalizationConstant C145 d) _).trans
-      ((le_max_right (lemma144BaseOneGlobalConstant Δ) _).trans
-        ((le_max_right CBeven _).trans
-          ((le_max_right CBstrict _).trans (le_max_right 3 _))))
-  have hClowNorm : claim145UniformNormalizationConstant Clow d ≤ C := by
-    exact (le_max_right (claim145UniformNormalizationConstant C145 d) _).trans
-      ((le_max_right (lemma144BaseOneGlobalConstant Δ) _).trans
-        ((le_max_right CBeven _).trans
-          ((le_max_right CBstrict _).trans (le_max_right 3 _))))
+  have hCparts := (show
+      max 3 (max CBstrict (max CBeven
+        (max (lemma144BaseOneGlobalConstant Δ)
+          (max (claim145UniformNormalizationConstant C145 d)
+            (claim145UniformNormalizationConstant Clow d))))) ≤ C from le_rfl)
+  simp only [max_le_iff] at hCparts
+  rcases hCparts with ⟨hC3, hCBstrict, hCBeven, hCbase, hCnorm, hClowNorm⟩
+  have hCstrict : max 3 CBstrict ≤ C := max_le hC3 hCBstrict
+  have hCeven : max 3 CBeven ≤ C := max_le hC3 hCBeven
   refine ⟨C145, Clow, C, hC145, hClow, hC3, ?_⟩
   intro K hK hlocal
   apply lemma14_4_noDmin_allDepth_of_sourceLarge_strict_even S H

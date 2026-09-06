@@ -95,38 +95,7 @@ theorem one_le_lowStrip_localFactor_mul_claimV
     (hlocal : HasDimensionOneLocalProductBound S K) (hD : 2 ≤ D) :
     1 ≤ ((Real.log (D : ℝ) / Real.log 2) * (1 + K / Real.log 2)) *
       claim14_5VProduct S (D : ℝ) := by
-  have hratio := hlocal 2 (D : ℝ) (by norm_num) (by exact_mod_cast hD)
-  have hfilter :
-      S.prodPrimes.primeFactors.filter
-          (fun p : ℕ => (2 : ℝ) ≤ (p : ℝ) ∧ (p : ℝ) < (D : ℝ)) =
-        S.prodPrimes.primeFactors.filter (fun p : ℕ => (p : ℝ) < (D : ℝ)) := by
-    ext p
-    simp only [Finset.mem_filter]
-    constructor
-    · rintro ⟨hp, _, hpD⟩
-      exact ⟨hp, hpD⟩
-    · rintro ⟨hp, hpD⟩
-      exact ⟨hp, by exact_mod_cast (Nat.prime_of_mem_primeFactors hp).two_le, hpD⟩
-  have hprod : suzukiLocalRatio S 2 (D : ℝ) * claim14_5VProduct S (D : ℝ) = 1 := by
-    unfold suzukiLocalRatio claim14_5VProduct
-    rw [hfilter, ← Finset.prod_mul_distrib]
-    apply Finset.prod_eq_one
-    intro p hp
-    have hpS := (Finset.mem_filter.mp hp).1
-    have hne : 1 - S.nu p ≠ 0 := by
-      linarith [S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hpS)
-        (Nat.mem_primeFactors.mp hpS).2.1]
-    exact inv_mul_cancel₀ hne
-  have hV : 0 ≤ claim14_5VProduct S (D : ℝ) := by
-    unfold claim14_5VProduct
-    apply Finset.prod_nonneg
-    intro p hp
-    have hpS := (Finset.mem_filter.mp hp).1
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p
-      (Nat.prime_of_mem_primeFactors hpS) (Nat.mem_primeFactors.mp hpS).2.1).le
-  calc
-    1 = suzukiLocalRatio S 2 (D : ℝ) * claim14_5VProduct S (D : ℝ) := hprod.symm
-    _ ≤ _ := mul_le_mul_of_nonneg_right hratio hV
+  exact MathlibNt.SieveTheory.one_le_claim145_local_factor_mul_vProduct S hlocal hD
 
 /-- Pointwise Claim 14.5 on `1 < s ≤ 2`, reduced only to the
 uniform scalar domination above.  In particular no finite scan, Claim 14.5

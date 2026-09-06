@@ -50,35 +50,24 @@ theorem norm_deriv_holomorphicLog_le
     have hbc := borelCaratheodory_zero hA hHd hHre hR hzball hH0
     rw [hznorm] at hbc
     convert hbc using 1 <;> field_simp <;> ring
-  have hcont : DiffContOnCl ℂ H (ball 0 (R / 2)) := by
-    refine ⟨?_, ?_⟩
-    · exact hHd.mono (ball_subset_ball (by linarith))
-    · apply ContinuousOn.sub
-      · exact (hh.continuousOn.comp (continuousOn_const.add continuousOn_id)
-          (by
-            intro z hz
-            have hz' : z ∈ closedBall 0 (R / 2) := by
-              rw [← closure_ball 0 hhalf.ne']
-              exact hz
-            have hzle : ‖z‖ ≤ R / 2 := by
-              simpa [mem_closedBall] using hz'
-            simpa [mem_ball, dist_eq_norm] using hzle.trans_lt (half_lt_self hR)))
-      · exact continuousOn_const
+  -- The closed half-radius disk stays inside the holomorphicity domain.
+  have hclosure : closure (ball (0 : ℂ) (R / 2)) ⊆ ball 0 R := by
+    rw [closure_ball 0 hhalf.ne']
+    exact closedBall_subset_ball (half_lt_self hR)
+  have hcont : DiffContOnCl ℂ H (ball 0 (R / 2)) :=
+    ⟨hHd.mono (ball_subset_ball (half_lt_self hR).le),
+      hHd.continuousOn.mono hclosure⟩
   have hcauchy : ‖deriv H 0‖ ≤ (2 * A) / (R / 2) :=
     Complex.norm_deriv_le_of_forall_mem_sphere_norm_le hhalf hcont hcircle
+  -- Translation and subtraction of a constant preserve the center derivative.
   have hderiv : deriv H 0 = deriv h c := by
-    change deriv (fun z ↦ h (c + z) - h c) 0 = deriv h c
-    rw [deriv_sub_const]
-    change deriv (h ∘ fun z : ℂ ↦ c + z) 0 = deriv h c
-    have hinner : DifferentiableAt ℂ (fun z : ℂ ↦ c + z) 0 := by fun_prop
-    have houter : DifferentiableAt ℂ h ((fun z : ℂ ↦ c + z) 0) := by
-      simpa using (hh c (mem_ball_self hR)).differentiableAt
-        (isOpen_ball.mem_nhds (mem_ball_self hR))
-    calc
-      deriv (h ∘ fun z : ℂ ↦ c + z) 0 =
-          deriv h ((fun z : ℂ ↦ c + z) 0) * deriv (fun z : ℂ ↦ c + z) 0 :=
-        deriv_comp 0 houter hinner
-      _ = deriv h c := by simp [deriv_const_add]
+    have houter : HasDerivAt h (deriv h c) (c + 0) := by
+      simpa using ((hh c (mem_ball_self hR)).differentiableAt
+        (isOpen_ball.mem_nhds (mem_ball_self hR))).hasDerivAt
+    have hH : HasDerivAt H (deriv h c) 0 := by
+      simpa [H] using
+        (houter.comp 0 ((hasDerivAt_id (0 : ℂ)).const_add c)).sub_const (h c)
+    exact hH.deriv
   rw [hderiv] at hcauchy
   convert hcauchy using 1 <;> field_simp <;> ring
 

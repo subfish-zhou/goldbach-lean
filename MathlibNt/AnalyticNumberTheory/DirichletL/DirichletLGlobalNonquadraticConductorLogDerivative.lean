@@ -17,6 +17,31 @@ open DirichletLGlobalConductorLogValueBound
 open DirichletLGlobalConductorLogDerivativeBound
 open DirichletLWeakStripDifferenceBound
 
+/-- The quantitative strip width lies in both ranges needed by the derivative bound. -/
+private lemma nonquadraticConductorLogWidth_bounds {m : ℕ}
+    (hlogm : 0 < Real.log (m : ℝ)) :
+    let L : ℝ := 1 + Real.log m
+    let x : ℝ := 1 / (4398046511104 * L ^ 9)
+    0 < x ∧ x ≤ 1 / 2 ∧ x ≤ 1 / Real.log m := by
+  let L : ℝ := 1 + Real.log m
+  have hL : 1 < L := by dsimp only [L]; linarith only [hlogm]
+  have hL0 : 0 < L := lt_trans zero_lt_one hL
+  have hLpow : 1 ≤ L ^ 9 := one_le_pow₀ hL.le
+  have hden : L ≤ 4398046511104 * L ^ 9 := by
+    calc
+      L = L ^ 1 := by ring
+      _ ≤ L ^ 9 := pow_le_pow_right₀ hL.le (by norm_num)
+      _ ≤ 4398046511104 * L ^ 9 :=
+        le_mul_of_one_le_left (pow_nonneg hL0.le 9) (by norm_num)
+  refine ⟨by positivity, ?_, ?_⟩
+  · apply one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2)
+    change 2 ≤ 4398046511104 * L ^ 9
+    linarith only [hLpow]
+  · apply one_div_le_one_div_of_le hlogm
+    change Real.log (m : ℝ) ≤ 4398046511104 * L ^ 9
+    have hlogL : Real.log (m : ℝ) ≤ L := by dsimp only [L]; linarith
+    exact hlogL.trans hden
+
 /-- Quantitative nonquadratic lower bound in the sharp conductor-log strip. -/
 theorem norm_LFunction_lower_of_nonquadratic_conductorLog
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχsq : χ ^ 2 ≠ 1)
@@ -41,28 +66,10 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
     simpa only [m] using log_conductorHeightCutoff_pos χ hχ t
   have hL : 1 < L := by dsimp only [L]; linarith
   have hL0 : 0 < L := lt_trans zero_lt_one hL
-  have hx : 0 < x := by dsimp only [x]; positivity
-  have hxhalf : x ≤ 1 / 2 := by
-    dsimp only [x]
-    rw [div_le_iff₀ (show 0 < 4398046511104 * L ^ 9 by positivity)]
-    have hLpow : 1 ≤ L ^ 9 := one_le_pow₀ hL.le
-    nlinarith
-  have hxlog : x ≤ 1 / Real.log m := by
-    have hlogL : Real.log (m : ℝ) < L := by dsimp only [L]; linarith
-    calc
-      x ≤ 1 / L := by
-        rw [le_div_iff₀ hL0]
-        dsimp only [x]
-        rw [div_mul_eq_mul_div,
-          div_le_iff₀ (show 0 < 4398046511104 * L ^ 9 by positivity)]
-        norm_num only [one_mul]
-        calc
-          L = L ^ 1 := by ring
-          _ ≤ L ^ 9 := pow_le_pow_right₀ hL.le (by norm_num)
-          _ ≤ 4398046511104 * L ^ 9 := by
-            have : 0 ≤ L ^ 9 := pow_nonneg hL0.le 9
-            nlinarith
-      _ ≤ 1 / Real.log m := one_div_le_one_div_of_le hlogm hlogL.le
+  have hwidth := nonquadraticConductorLogWidth_bounds hlogm
+  have hx : 0 < x := hwidth.1
+  have hxhalf : x ≤ 1 / 2 := hwidth.2.1
+  have hxlog : x ≤ 1 / Real.log m := hwidth.2.2
   have hσ : 1 < 1 + x := by linarith
   have hσtwo : 1 + x ≤ 2 := by linarith
   have hχsqvalue :
@@ -223,32 +230,14 @@ theorem norm_logDeriv_LFunction_le_of_nonquadratic_conductorLog
     simpa only [m] using log_conductorHeightCutoff_pos χ hχ t
   have hL : 1 < L := by dsimp only [L]; linarith
   have hL0 : 0 < L := lt_trans zero_lt_one hL
-  have hx : 0 < x := by dsimp only [x]; positivity
-  have hxhalf : x ≤ 1 / 2 := by
-    dsimp only [x]
-    rw [div_le_iff₀ (show 0 < 4398046511104 * L ^ 9 by positivity)]
-    have hLpow : 1 ≤ L ^ 9 := one_le_pow₀ hL.le
-    nlinarith
+  have hwidth := nonquadraticConductorLogWidth_bounds hlogm
+  have hx : 0 < x := hwidth.1
+  have hxhalf : x ≤ 1 / 2 := hwidth.2.1
+  have hxlog : x ≤ 1 / Real.log m := hwidth.2.2
   have hβlower : 1 / 2 ≤ β := by
     have hleft : 1 - x ≤ β := by simpa only [x, L, m] using hβ.1
     linarith
   have hnear : 1 - 1 / Real.log m ≤ β := by
-    have hxlog : x ≤ 1 / Real.log m := by
-      have hlogL : Real.log (m : ℝ) < L := by dsimp only [L]; linarith
-      calc
-        x ≤ 1 / L := by
-          rw [le_div_iff₀ hL0]
-          dsimp only [x]
-          rw [div_mul_eq_mul_div,
-            div_le_iff₀ (show 0 < 4398046511104 * L ^ 9 by positivity)]
-          norm_num only [one_mul]
-          calc
-            L = L ^ 1 := by ring
-            _ ≤ L ^ 9 := pow_le_pow_right₀ hL.le (by norm_num)
-            _ ≤ 4398046511104 * L ^ 9 := by
-              have : 0 ≤ L ^ 9 := pow_nonneg hL0.le 9
-              nlinarith
-        _ ≤ 1 / Real.log m := one_div_le_one_div_of_le hlogm hlogL.le
     have hleft : 1 - x ≤ β := by simpa only [x, L, m] using hβ.1
     linarith
   have hderiv : ‖deriv χ.LFunction (β + I * t)‖ ≤ 64 * L ^ 2 := by

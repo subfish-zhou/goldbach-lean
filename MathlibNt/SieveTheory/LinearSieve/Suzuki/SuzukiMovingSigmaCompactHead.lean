@@ -27,12 +27,11 @@ noncomputable def compactHeadMargin (Δ M : ℝ) : ℝ :=
   compactHeadCoefficient Δ M - (1 - 1 / M) ^ (1 - Δ)
 
 lemma corrected_deltaGap_pos {Δ : ℝ} (hΔ : Δ < 1) : 0 < (1 : ℝ) - Δ := by
-  linarith
+  exact sub_pos.mpr hΔ
 
 lemma compactHeadTheta_pos {Δ : ℝ} (hΔ : Δ < 1) :
     0 < compactHeadTheta Δ := by
-  simp only [compactHeadTheta]
-  linarith
+  exact div_pos (corrected_deltaGap_pos hΔ) (by norm_num)
 
 /-- The corrected sign gives a genuinely positive, completely explicit margin
 at every fixed `M > 1`. -/
@@ -42,16 +41,12 @@ theorem compactHeadMargin_pos
   have hM0 : 0 < M := zero_lt_one.trans hM
   have hb0 : 0 < 1 - 1 / M :=
     sub_pos.mpr ((div_lt_one hM0).mpr hM)
-  have hb1 : 1 - 1 / M < 1 := by
-    have : 0 < 1 / M := one_div_pos.mpr hM0
-    linarith
+  have hb1 : 1 - 1 / M < 1 := sub_lt_self _ (one_div_pos.mpr hM0)
   have hgap : 0 < (1 : ℝ) - Δ := corrected_deltaGap_pos hΔ
-  have htheta_lt : compactHeadTheta Δ < 1 - Δ := by
-    simp only [compactHeadTheta]
-    linarith
+  have htheta_lt : compactHeadTheta Δ < 1 - Δ :=
+    div_lt_self hgap (by norm_num)
   have hp := Real.rpow_lt_rpow_of_exponent_gt hb0 hb1 htheta_lt
-  dsimp only [compactHeadMargin, compactHeadCoefficient]
-  linarith
+  exact sub_pos.mpr hp
 
 /-- Direct Lemma-13.3 witness with the corrected positive exponent.  This is
 the strict compactness input behind the quantitative margin. -/

@@ -17,7 +17,7 @@ record.  The terminal theorem takes separately named hypotheses with the exact
 roles of displayed equations (12), (19), (20), and (21), plus the final
 logarithmic absorption.  All finite carrier identities are proved here.
 
-The source's finite Dirichlet polynomial is represented by `Finset.range H`
+The source's finite Dirichlet polynomial is represented by `Finset.Icc 1 H`
 (in natural order).  This matters on the `β = 1/2 + 1/log x` line: no
 conditionally convergent infinite reordering is introduced.
 
@@ -247,34 +247,36 @@ theorem chen1973Lemma6M2_le_twoPointZeroOne
       (((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) *
         (x / Real.log x ^ 20)) ≤ x / Real.log x ^ (2.01 : ℝ)) :
     chen1973Lemma5M2 x D ≤ x / Real.log x ^ (2.01 : ℝ) := by
-  apply h12.trans
-  apply le_trans (mul_le_mul_of_nonneg_left ?_ (by positivity)) hAbsorb
-  unfold chen1973Lemma6DyadicMajorant
+  have hcellBound : ∀ level ∈ Finset.range (I1 + 1), ∀ k ∈ Finset.range (I2 + 1),
+      chen1973Lemma6NmBlock x L level B k m Phi ≤ x / Real.log x ^ 20 := by
+    intro level hlevel k hk
+    by_cases hl0 : level = 0
+    · simpa [hl0] using h21 k hk
+    · have hlI : level ∈ Finset.Icc 1 I1 := by
+        simp only [Finset.mem_range] at hlevel
+        simp only [Finset.mem_Icc]
+        omega
+      rcases chen1973Lemma6_eq19_or_eq20 (x := x) (B := B)
+          (Finset.mem_Icc.mp hlI).1 (hLast level hlI) with hcell | hcell
+      · exact h19 level hlI k hk hcell
+      · exact h20 level hlI k hk hcell
+  have hmajorant : chen1973Lemma6DyadicMajorant x L I1 B I2 m Phi ≤
+      ((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) * (x / Real.log x ^ 20) := by
+    unfold chen1973Lemma6DyadicMajorant
+    calc
+      (∑ level ∈ Finset.range (I1 + 1),
+        ∑ k ∈ Finset.range (I2 + 1), chen1973Lemma6NmBlock x L level B k m Phi) ≤
+          ∑ level ∈ Finset.range (I1 + 1),
+            ∑ _k ∈ Finset.range (I2 + 1), x / Real.log x ^ 20 :=
+        Finset.sum_le_sum fun level hlevel => Finset.sum_le_sum (hcellBound level hlevel)
+      _ = ((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) * (x / Real.log x ^ 20) := by
+        simp [mul_assoc]
   calc
-    (∑ level ∈ Finset.range (I1 + 1),
-      ∑ k ∈ Finset.range (I2 + 1), chen1973Lemma6NmBlock x L level B k m Phi) ≤
-        ∑ level ∈ Finset.range (I1 + 1),
-          ∑ _k ∈ Finset.range (I2 + 1), x / Real.log x ^ 20 := by
-      apply Finset.sum_le_sum
-      intro level hlevel
-      apply Finset.sum_le_sum
-      intro k hk
-      by_cases hl0 : level = 0
-      · simpa [hl0] using h21 k hk
-      · have hlI : level ∈ Finset.Icc 1 I1 := by
-          simp only [Finset.mem_range] at hlevel
-          simp only [Finset.mem_Icc]
-          omega
-        have hlevel1 : 1 ≤ level := by
-          simp only [Finset.mem_Icc] at hlI
-          exact hlI.1
-        rcases chen1973Lemma6_eq19_or_eq20 (x := x) (B := B)
-            (D := D) (L := L) (k := k) (level := level)
-            hlevel1 (hLast level hlI) with hcell | hcell
-        · exact h19 level hlI k hk hcell
-        · exact h20 level hlI k hk hcell
-    _ = (((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) *
-        (x / Real.log x ^ 20)) := by
-      simp [mul_assoc]
+    chen1973Lemma5M2 x D ≤
+        Real.log x ^ 6 * chen1973Lemma6DyadicMajorant x L I1 B I2 m Phi := h12
+    _ ≤ Real.log x ^ 6 *
+        (((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) * (x / Real.log x ^ 20)) :=
+      mul_le_mul_of_nonneg_left hmajorant (by positivity)
+    _ ≤ x / Real.log x ^ (2.01 : ℝ) := hAbsorb
 
 end AnalyticNumberTheory.LargeSieve

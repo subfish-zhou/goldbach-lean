@@ -61,25 +61,15 @@ theorem primeLogExponent_mem_interval_iff {N p : ℕ} (hN : 1 < N) (hp : 0 < p)
   have hpReal : (0 : ℝ) < p := by exact_mod_cast hp
   have hlogN : 0 < Real.log (N : ℝ) :=
     Real.log_pos (by exact_mod_cast hN)
-  constructor
-  · rintro ⟨hlower, hupper⟩
-    constructor
-    · rw [primeLogExponent, lt_div_iff₀ hlogN] at hlower
-      rw [Real.rpow_def_of_pos hNpos, ← Real.exp_log hpReal, Real.exp_lt_exp]
-      simpa [mul_comm] using hlower
-    · rw [primeLogExponent, div_le_iff₀ hlogN] at hupper
-      rw [← Real.exp_log hpReal, Real.rpow_def_of_pos hNpos, Real.exp_le_exp]
-      simpa [mul_comm] using hupper
-  · rintro ⟨hlower, hupper⟩
-    constructor
-    · rw [Real.rpow_def_of_pos hNpos, ← Real.exp_log hpReal,
-        Real.exp_lt_exp] at hlower
-      rw [primeLogExponent, lt_div_iff₀ hlogN]
-      simpa [mul_comm] using hlower
-    · rw [← Real.exp_log hpReal, Real.rpow_def_of_pos hNpos,
-        Real.exp_le_exp] at hupper
-      rw [primeLogExponent, div_le_iff₀ hlogN]
-      simpa [mul_comm] using hupper
+  have hlower : a₀ < primeLogExponent N p ↔ (N : ℝ) ^ a₀ < (p : ℝ) := by
+    rw [primeLogExponent, lt_div_iff₀ hlogN, Real.rpow_def_of_pos hNpos,
+      ← Real.exp_log hpReal, Real.exp_lt_exp]
+    simp only [Real.log_exp, mul_comm]
+  have hupper : primeLogExponent N p ≤ a₁ ↔ (p : ℝ) ≤ (N : ℝ) ^ a₁ := by
+    rw [primeLogExponent, div_le_iff₀ hlogN, Real.rpow_def_of_pos hNpos,
+      ← Real.exp_log hpReal, Real.exp_le_exp]
+    simp only [Real.log_exp, mul_comm]
+  exact and_congr hlower hupper
 
 /-- Exact logarithmic change of variables for every Liu source pair. -/
 theorem log_div_pair_eq_log_mul_one_sub_exponents
@@ -303,19 +293,16 @@ theorem liuPairLogKernelSum_le_sum_rectangleMajorants_of_cover
         apply Finset.sum_le_sum
         intro p hp
         obtain ⟨i, hi, hip⟩ := hcover p hp
-        have hsingle : ({i} : Finset ι) ⊆ s := by simpa using hi
         have hle :
-            (∑ j ∈ ({i} : Finset ι), if LiuPairInLogRectangle
-                N (a₀ j) (a₁ j) (b₀ j) (b₁ j) p then
+            (if LiuPairInLogRectangle N (a₀ i) (a₁ i) (b₀ i) (b₁ i) p then
               liuPairLogKernel N p else 0) ≤
               ∑ j ∈ s, if LiuPairInLogRectangle
                   N (a₀ j) (a₁ j) (b₀ j) (b₁ j) p then
-                liuPairLogKernel N p else 0 :=
-          Finset.sum_le_sum_of_subset_of_nonneg hsingle (fun j hj _ => by
-            split_ifs
-            · exact liuPairLogKernel_nonneg hN hp
-            · exact le_rfl)
-        simpa [hip] using hle
+                liuPairLogKernel N p else 0 := by
+          apply Finset.single_le_sum _ hi
+          intro j _
+          exact ite_nonneg (liuPairLogKernel_nonneg hN hp) le_rfl
+        simpa only [if_pos hip] using hle
       _ = ∑ i ∈ s, liuPairLogKernelRectangleContribution
           N (a₀ i) (a₁ i) (b₀ i) (b₁ i) := by
         rw [Finset.sum_comm]

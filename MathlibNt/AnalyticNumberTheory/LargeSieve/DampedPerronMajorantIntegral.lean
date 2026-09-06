@@ -87,13 +87,7 @@ lemma dampedPerronMajorant_integrableOn_tail {ε L : ℝ} (hε : 0 < ε) (hL : 0
 /-- Integrability on the positive half-line, obtained without any unproved limiting assertion. -/
 theorem dampedPerronMajorant_integrableOn_Ioi {ε L : ℝ} (hε : 0 < ε) (hL : 0 ≤ L) :
     IntegrableOn (dampedPerronMajorantIntegrand ε L) (Ioi (0 : ℝ)) := by
-  rw [show Ioi (0 : ℝ) = Ioc 0 1 ∪ Ioi 1 by
-    ext t
-    simp only [mem_Ioi, mem_union, mem_Ioc]
-    constructor
-    · intro h
-      by_cases ht : t ≤ 1 <;> aesop
-    · rintro (h | h) <;> linarith]
+  rw [← Ioc_union_Ioi_eq_Ioi (zero_le_one : (0 : ℝ) ≤ 1)]
   exact (dampedPerronMajorant_integrableOn_head hL hε.le).union (dampedPerronMajorant_integrableOn_tail hε hL)
 
 /-- The `(0,1]` contribution. -/
@@ -148,49 +142,20 @@ theorem dampedPerronMajorant_integral_tail_le_one {ε L : ℝ} (hε : 0 < ε) (h
 theorem dampedPerronMajorant_integral_Ioi_le {ε L : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1) (hL : 0 ≤ L) :
     (∫ t in Ioi (0 : ℝ), dampedPerronMajorantIntegrand ε L t) ≤ L + Real.log (1 / ε) + 1 := by
   have hb : 1 ≤ ε⁻¹ := (one_le_inv₀ hε).mpr hε1
-  let s₀ : Set ℝ := Ioc 0 1
-  let s₁ : Set ℝ := Ioc 1 ε⁻¹
-  let s₂ : Set ℝ := Ioi ε⁻¹
-  have hs : Ioi (0 : ℝ) = s₀ ∪ (s₁ ∪ s₂) := by
-    ext t
-    simp only [s₀, s₁, s₂, mem_Ioi, mem_union, mem_Ioc]
-    constructor
-    · intro ht
-      by_cases h₀ : t ≤ 1
-      · exact Or.inl ⟨ht, h₀⟩
-      · by_cases h₁ : t ≤ ε⁻¹
-        · exact Or.inr (Or.inl ⟨lt_of_not_ge h₀, h₁⟩)
-        · exact Or.inr (Or.inr (lt_of_not_ge h₁))
-    · rintro (ht | ht | ht) <;> linarith
   have hi := dampedPerronMajorant_integrableOn_Ioi hε hL
-  have hi₀ : IntegrableOn (dampedPerronMajorantIntegrand ε L) s₀ :=
-    hi.mono (by intro t ht; exact ht.1) le_rfl
-  have hi₁ : IntegrableOn (dampedPerronMajorantIntegrand ε L) s₁ :=
-    hi.mono (by intro t ht; exact zero_lt_one.trans ht.1) le_rfl
-  have hi₂ : IntegrableOn (dampedPerronMajorantIntegrand ε L) s₂ :=
-    hi.mono (by intro t ht; exact (inv_pos.mpr hε).trans ht) le_rfl
-  have hd₁₂ : Disjoint s₁ s₂ := Set.disjoint_left.2 (by
-    intro t ht₁ ht₂
-    exact (not_lt_of_ge ht₁.2) ht₂)
-  have hd₀ : Disjoint s₀ (s₁ ∪ s₂) := Set.disjoint_left.2 (by
-    intro t ht₀ ht
-    rcases ht with ht₁ | ht₂
-    · exact (not_lt_of_ge ht₀.2) ht₁.1
-    · exact (not_lt_of_ge (ht₀.2.trans hb)) ht₂)
+  have hi₁ := hi.mono_set (Ioi_subset_Ioi (zero_le_one : (0 : ℝ) ≤ 1))
+  have hi₂ := hi.mono_set (Ioi_subset_Ioi (inv_pos.mpr hε).le)
+  -- Split at 1 and 1/ε, matching the head, logarithmic middle, and damped tail bounds.
   have hsplit :
       (∫ t in Ioi (0 : ℝ), dampedPerronMajorantIntegrand ε L t) =
-        (∫ t in s₀, dampedPerronMajorantIntegrand ε L t) +
-          (∫ t in s₁, dampedPerronMajorantIntegrand ε L t) + (∫ t in s₂, dampedPerronMajorantIntegrand ε L t) := by
-    rw [hs, setIntegral_union hd₀ (measurableSet_Ioc.union measurableSet_Ioi) hi₀
-      (hi₁.union hi₂), setIntegral_union hd₁₂ measurableSet_Ioi hi₁ hi₂, add_assoc]
-  rw [hsplit]
-  have h₀ := dampedPerronMajorant_integral_head_le hε hL
-  have h₁ := dampedPerronMajorant_integral_middle_le hε hε1 hL
-  have h₂ := dampedPerronMajorant_integral_tail_le_one hε hL
-  change (∫ t in s₀, dampedPerronMajorantIntegrand ε L t) ≤ L at h₀
-  change (∫ t in s₁, dampedPerronMajorantIntegrand ε L t) ≤ Real.log ε⁻¹ at h₁
-  change (∫ t in s₂, dampedPerronMajorantIntegrand ε L t) ≤ 1 at h₂
-  rw [one_div]
-  linarith
+        (∫ t in Ioc (0 : ℝ) 1, dampedPerronMajorantIntegrand ε L t) +
+          (∫ t in Ioc (1 : ℝ) ε⁻¹, dampedPerronMajorantIntegrand ε L t) +
+            (∫ t in Ioi ε⁻¹, dampedPerronMajorantIntegrand ε L t) := by
+    rw [← integral_interval_add_Ioi hi hi₁, ← integral_interval_add_Ioi hi₁ hi₂,
+      integral_of_le zero_le_one, integral_of_le hb, add_assoc]
+  rw [hsplit, one_div]
+  exact add_le_add (add_le_add (dampedPerronMajorant_integral_head_le hε hL)
+    (dampedPerronMajorant_integral_middle_le hε hε1 hL))
+    (dampedPerronMajorant_integral_tail_le_one hε hL)
 
 end AnalyticNumberTheory.LargeSieve

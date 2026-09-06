@@ -35,14 +35,12 @@ noncomputable section
 /-! ## 1. Distance to the nearest integer -/
 
 /-- The fractional part `x − ⌊x⌋ ∈ [0,1)` is nonnegative. -/
-theorem fract_nonneg (x : ℝ) : 0 ≤ Int.fract x := by
-  rw [← Int.self_sub_floor x]
-  exact sub_nonneg.mpr (Int.floor_le x)
+theorem fract_nonneg (x : ℝ) : 0 ≤ Int.fract x :=
+  Int.fract_nonneg x
 
 /-- The fractional part is less than 1. -/
-theorem fract_lt_one (x : ℝ) : Int.fract x < 1 := by
-  rw [← Int.self_sub_floor x]
-  exact sub_lt_iff_lt_add.mpr (by rw [add_comm]; exact Int.lt_floor_add_one x)
+theorem fract_lt_one (x : ℝ) : Int.fract x < 1 :=
+  Int.fract_lt_one x
 
 /-- Distance to the nearest integer:
 `‖x‖ = min(x − ⌊x⌋, 1 − (x − ⌊x⌋))`. -/
@@ -50,7 +48,7 @@ noncomputable def distToInt (x : ℝ) : ℝ := min (Int.fract x) (1 - Int.fract 
 
 theorem distToInt_nonneg (x : ℝ) : 0 ≤ distToInt x := by
   dsimp [distToInt]
-  exact le_min (fract_nonneg x) (by linarith [fract_lt_one x])
+  exact le_min (fract_nonneg x) (sub_nonneg.mpr (fract_lt_one x).le)
 
 theorem distToInt_le_half (x : ℝ) : distToInt x ≤ 1 / 2 := by
   dsimp [distToInt]
@@ -64,6 +62,11 @@ theorem distToInt_le_half (x : ℝ) : distToInt x ≤ 1 / 2 := by
 /-- `e(x) = exp(2πix)`: the additive character parametrized by `ℝ`. -/
 noncomputable def charReal (x : ℝ) : ℂ :=
   Complex.exp ((2 * Real.pi * (x : ℂ)) * Complex.I)
+
+/-- The additive character has unit norm. -/
+private lemma norm_charReal (x : ℝ) : ‖charReal x‖ = 1 := by
+  dsimp [charReal]
+  simpa using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
 
 /-- `e(nx) = e(x)^n` (`n : ℕ`), by `Complex.exp_nsmul`. -/
 theorem charReal_nat_mul (n : ℕ) (x : ℝ) : charReal (n * x) = (charReal x) ^ n := by
@@ -126,18 +129,10 @@ theorem geomSum_exp_eq_geomSeries (N : ℕ) {x : ℝ} (hz : charReal x ≠ 1) :
 /-- **Trivial bound**: `|Σ_{n<N} e(nx)| ≤ N`, since every term has norm 1. -/
 theorem geomSum_exp_bound_trivial (N : ℕ) (x : ℝ) :
     ‖∑ n ∈ Finset.range N, charReal (n * x)‖ ≤ N := by
-  have hz : ∀ n : ℕ, ‖charReal (n * x)‖ = 1 := by
-    intro n
-    dsimp [charReal]
-    simpa using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * (n * x : ℝ))
   calc
-    ‖∑ n ∈ Finset.range N, charReal (n * x)‖ ≤ ∑ n ∈ Finset.range N, ‖charReal (n * x)‖ := by
-      exact norm_sum_le (Finset.range N) (fun n => charReal (n * x))
-    _ = ∑ n ∈ Finset.range N, (1 : ℝ) := by
-      apply Finset.sum_congr rfl
-      intro n hn
-      rw [hz n]
-    _ = N := by simp
+    ‖∑ n ∈ Finset.range N, charReal (n * x)‖ ≤ ∑ n ∈ Finset.range N, ‖charReal (n * x)‖ :=
+      norm_sum_le _ _
+    _ = N := by simp only [norm_charReal, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
 
 /-! ## 3. Trigonometric identities -/
 
@@ -190,34 +185,22 @@ theorem abs_charReal_sub_one (x : ℝ) :
 `sin(πt) = sin(π(1−t))` on `[1/2,1]`. -/
 theorem abs_sin_pi_mul_ge_two_min (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     2 * min t (1 - t) ≤ |Real.sin (Real.pi * t)| := by
+  -- Prove the chord bound on the first half, then reflect the second half.
+  have hsmall (u : ℝ) (hu0 : 0 ≤ u) (hu1 : u ≤ 1 / 2) :
+      2 * u ≤ Real.sin (Real.pi * u) := by
+    have hangle0 : 0 ≤ Real.pi * u := mul_nonneg Real.pi_pos.le hu0
+    have hangle1 : Real.pi * u ≤ Real.pi / 2 := by nlinarith [Real.pi_pos]
+    have hsin := Real.mul_le_sin hangle0 hangle1
+    field_simp [Real.pi_ne_zero] at hsin ⊢
+    exact hsin
   by_cases ht : t ≤ 1 / 2
-  · have hmin : min t (1 - t) = t := min_eq_left (by linarith)
-    have hpt0 : 0 ≤ Real.pi * t := mul_nonneg Real.pi_pos.le ht0
-    have hpt1 : Real.pi * t ≤ Real.pi / 2 := by nlinarith [Real.pi_pos, ht]
-    have hs : 2 / Real.pi * (Real.pi * t) ≤ Real.sin (Real.pi * t) :=
-      Real.mul_le_sin hpt0 hpt1
-    have h2t : 2 * t ≤ Real.sin (Real.pi * t) := by
-      field_simp [Real.pi_ne_zero] at hs ⊢
-      exact hs
-    have hnonneg : 0 ≤ Real.sin (Real.pi * t) := le_trans (by nlinarith [ht0]) h2t
-    rw [hmin, abs_of_nonneg hnonneg]
-    exact h2t
-  · have hmin : min t (1 - t) = 1 - t := min_eq_right (by linarith)
-    have hs0 : 0 ≤ 1 - t := by linarith
-    have hs1 : 1 - t ≤ 1 / 2 := by linarith
-    have hpt0 : 0 ≤ Real.pi * (1 - t) := mul_nonneg Real.pi_pos.le hs0
-    have hpt1 : Real.pi * (1 - t) ≤ Real.pi / 2 := by nlinarith [Real.pi_pos, hs1]
-    have hs : 2 / Real.pi * (Real.pi * (1 - t)) ≤ Real.sin (Real.pi * (1 - t)) :=
-      Real.mul_le_sin hpt0 hpt1
-    have h2s : 2 * (1 - t) ≤ Real.sin (Real.pi * (1 - t)) := by
-      field_simp [Real.pi_ne_zero] at hs ⊢
-      exact hs
+  · rw [min_eq_left (by linarith : t ≤ 1 - t)]
+    exact (hsmall t ht0 ht).trans (le_abs_self _)
+  · rw [min_eq_right (by linarith : 1 - t ≤ t)]
     have hreflect : Real.sin (Real.pi * t) = Real.sin (Real.pi * (1 - t)) := by
-      rw [show Real.pi * t = Real.pi - Real.pi * (1 - t) by ring]
-      rw [Real.sin_pi_sub]
-    have hnonneg : 0 ≤ Real.sin (Real.pi * (1 - t)) := le_trans (by nlinarith [hs0]) h2s
-    rw [hmin, hreflect, abs_of_nonneg hnonneg]
-    exact h2s
+      rw [show Real.pi * t = Real.pi - Real.pi * (1 - t) by ring, Real.sin_pi_sub]
+    rw [hreflect]
+    exact (hsmall (1 - t) (sub_nonneg.mpr ht1) (by linarith)).trans (le_abs_self _)
 
 /-! ## 4. Nontrivial bound -/
 
@@ -225,12 +208,7 @@ theorem abs_sin_pi_mul_ge_two_min (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
 `|e(x)−1| = 2|sin(π·fract x)| > 0`. -/
 theorem charReal_ne_one_of_not_int {x : ℝ} (hx : ¬ ∃ k : ℤ, (k : ℝ) = x) :
     charReal x ≠ 1 := by
-  have hx' : Int.fract x ≠ 0 := by
-    intro hf
-    apply hx
-    refine ⟨⌊x⌋, ?_⟩
-    rw [← Int.fract_add_floor x, hf]
-    norm_num
+  have hx' : Int.fract x ≠ 0 := Int.fract_ne_zero_iff.mpr hx
   have hpos : 0 < ‖charReal x - 1‖ := by
     rw [charReal_eq_charReal_fract, abs_charReal_sub_one]
     have ht0 : 0 < Int.fract x := lt_of_le_of_ne (fract_nonneg x) (Ne.symm hx')
@@ -250,18 +228,7 @@ and `|sin(πt)| ≥ 2·min(t,1−t)`. -/
 theorem geomSum_exp_bound_far (N : ℕ) {x : ℝ} (hx : ¬ ∃ k : ℤ, (k : ℝ) = x) :
     ‖∑ n ∈ Finset.range N, charReal (n * x)‖ ≤ 1 / (2 * distToInt x) := by
   have hz : charReal x ≠ 1 := charReal_ne_one_of_not_int hx
-  have hx' : Int.fract x ≠ 0 := by
-    intro hf
-    apply hx
-    refine ⟨⌊x⌋, ?_⟩
-    rw [← Int.fract_add_floor x, hf]
-    norm_num
-  have hs : 0 < |Real.sin (Real.pi * Int.fract x)| := by
-    have ht0 : 0 < Int.fract x := lt_of_le_of_ne (fract_nonneg x) (Ne.symm hx')
-    have hs' : 0 < Real.sin (Real.pi * Int.fract x) :=
-      Real.sin_pos_of_pos_of_lt_pi (mul_pos Real.pi_pos ht0)
-        (by nlinarith [fract_lt_one x, Real.pi_pos])
-    exact abs_pos.mpr (ne_of_gt hs')
+  have hx' : Int.fract x ≠ 0 := Int.fract_ne_zero_iff.mpr hx
   have hd : 0 < 2 * distToInt x := by
     have hd0 : 0 < distToInt x := by
       dsimp [distToInt]
@@ -271,6 +238,7 @@ theorem geomSum_exp_bound_far (N : ℕ) {x : ℝ} (hx : ¬ ∃ k : ℤ, (k : ℝ
   have hsin : 2 * distToInt x ≤ |Real.sin (Real.pi * Int.fract x)| := by
     dsimp [distToInt]
     exact abs_sin_pi_mul_ge_two_min (Int.fract x) (fract_nonneg x) (le_of_lt (fract_lt_one x))
+  have hs : 0 < |Real.sin (Real.pi * Int.fract x)| := hd.trans_le hsin
   calc
     ‖∑ n ∈ Finset.range N, charReal (n * x)‖
         = ‖(charReal (N * x) - 1) / (charReal x - 1)‖ := by
@@ -278,16 +246,9 @@ theorem geomSum_exp_bound_far (N : ℕ) {x : ℝ} (hx : ¬ ∃ k : ℤ, (k : ℝ
     _ = ‖charReal (N * x) - 1‖ / ‖charReal x - 1‖ := by rw [norm_div]
     _ ≤ 2 / ‖charReal x - 1‖ := by
           have htop : ‖charReal (N * x) - 1‖ ≤ 2 := by
-            have htop' : ‖charReal (N * x) - 1‖ ≤ ‖charReal (N * x)‖ + ‖(1 : ℂ)‖ :=
-              norm_sub_le _ _
-            have hN1 : ‖charReal (N * x)‖ = 1 := by
-              dsimp [charReal]
-              simpa using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * (N * x : ℝ))
-            have hone : ‖(1 : ℂ)‖ = 1 := by norm_num
-            nlinarith [htop', hN1, hone]
-          have hb : 0 < ‖charReal x - 1‖ := by
-            exact norm_pos_iff.mpr (sub_ne_zero.mpr hz)
-          exact div_le_div_of_nonneg_right htop (le_of_lt hb)
+            simpa only [norm_charReal, norm_one, one_add_one_eq_two] using
+              norm_sub_le (charReal (N * x)) (1 : ℂ)
+          exact div_le_div_of_nonneg_right htop (norm_nonneg _)
     _ = 1 / |Real.sin (Real.pi * Int.fract x)| := by
           have hz1' : ‖charReal x - 1‖ = 2 * |Real.sin (Real.pi * Int.fract x)| := by
             rw [charReal_eq_charReal_fract x, abs_charReal_sub_one]
@@ -381,36 +342,16 @@ theorem charRealSubIcc_eq_shift (M : ℤ) (N : ℕ) (x : ℝ) :
 `|Σ_{M<n≤M+N} e(nx)| ≤ N`. -/
 theorem geomSum_exp_bound_Icc_trivial (M : ℤ) (N : ℕ) (x : ℝ) :
     ‖charRealSubIcc M N x‖ ≤ N := by
-  rw [charRealSubIcc_eq_shift]
-  have hunit : ‖charReal (((M + 1 : ℤ) : ℝ) * x)‖ = 1 := by
-    dsimp [charReal]
-    simpa using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * (((M + 1 : ℤ) : ℝ) * x))
-  calc
-    ‖charReal (((M + 1 : ℤ) : ℝ) * x) *
-        ∑ k ∈ Finset.range N, charReal ((k : ℝ) * x)‖
-        ≤ ‖charReal (((M + 1 : ℤ) : ℝ) * x)‖ *
-            ‖∑ k ∈ Finset.range N, charReal ((k : ℝ) * x)‖ := by
-          exact norm_mul_le _ _
-    _ = ‖∑ k ∈ Finset.range N, charReal ((k : ℝ) * x)‖ := by rw [hunit, one_mul]
-    _ ≤ N := by
-          simpa using geomSum_exp_bound_trivial N x
+  rw [charRealSubIcc_eq_shift, norm_mul, norm_charReal, one_mul]
+  exact geomSum_exp_bound_trivial N x
 
 /-- **Interval exponential sum (nontrivial bound)**: for `x ∉ ℤ`,
   `|Σ_{M<n≤M+N} e(nx)| ≤ 1/(2‖x‖)`. -/
 theorem geomSum_exp_bound_Icc_far (M : ℤ) (N : ℕ) {x : ℝ}
     (hx : ¬ ∃ k : ℤ, (k : ℝ) = x) :
     ‖charRealSubIcc M N x‖ ≤ 1 / (2 * distToInt x) := by
-  rw [charRealSubIcc_eq_shift]
-  have hunit : ‖charReal (((M + 1 : ℤ) : ℝ) * x)‖ = 1 := by
-    dsimp [charReal]
-    simpa using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * (((M + 1 : ℤ) : ℝ) * x))
-  calc
-    ‖charReal (((M + 1 : ℤ) : ℝ) * x) *
-        ∑ k ∈ Finset.range N, charReal ((k : ℝ) * x)‖
-        ≤ 1 * ‖∑ k ∈ Finset.range N, charReal ((k : ℝ) * x)‖ := by
-          rw [norm_mul, hunit]
-    _ ≤ 1 / (2 * distToInt x) := by
-          simpa using geomSum_exp_bound_far N hx
+  rw [charRealSubIcc_eq_shift, norm_mul, norm_charReal, one_mul]
+  exact geomSum_exp_bound_far N hx
 
 /-- **Interval geometric-sum bound**: the two components of
 `|Σ_{M<n≤M+N} e(nx)| ≤ min(N, 1/(2‖x‖))`, with the nontrivial

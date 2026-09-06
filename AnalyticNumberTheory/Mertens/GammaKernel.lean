@@ -115,33 +115,13 @@ theorem complex_scaled_integral_log_exp_eq_neg_eulerMascheroni
           (Real.log (ε * t) : ℂ) * (Real.exp (-(ε * t)) : ℂ)) by rfl]
     rw [hscaled]
     simpa using complex_integral_log_exp_eq_neg_eulerMascheroni
-  have hlogScaled : IntegrableOn
-      (fun t : ℝ =>
-        (Real.log (ε * t) : ℂ) * (Real.exp (-(ε * t)) : ℂ)) (Ioi 0) := by
-    exact (integrableOn_Ioi_comp_mul_left_iff
-      (fun u : ℝ => (Real.log u : ℂ) * (Real.exp (-u) : ℂ)) 0 hε).mpr
-        (by simpa using integrableOn_complex_log_mul_exp_neg)
-  have hexpBase : IntegrableOn
-      (fun u : ℝ => (Real.exp (-u) : ℂ)) (Ioi 0) := by
-    exact (integrableOn_exp_neg_Ioi 0).ofReal
   have hexpScaled : IntegrableOn
-      (fun t : ℝ => (Real.exp (-(ε * t)) : ℂ)) (Ioi 0) := by
-    exact (integrableOn_Ioi_comp_mul_left_iff
-      (fun u : ℝ => (Real.exp (-u) : ℂ)) 0 hε).mpr (by simpa using hexpBase)
+      (fun t : ℝ => (Real.exp (-(ε * t)) : ℂ)) (Ioi 0) :=
+    integrableOn_complex_exp_neg_mul ε hε
   have hlogDesired : IntegrableOn
       (fun t : ℝ =>
-        (Real.log t : ℂ) * (Real.exp (-(ε * t)) : ℂ)) (Ioi 0) := by
-    have hsub := hlogScaled.sub
-      (hexpScaled.const_mul (Real.log ε : ℂ))
-    refine hsub.congr_fun ?_ measurableSet_Ioi
-    intro t ht
-    change
-      (Real.log (ε * t) : ℂ) * (Real.exp (-(ε * t)) : ℂ) -
-          (Real.log ε : ℂ) * (Real.exp (-(ε * t)) : ℂ) =
-        (Real.log t : ℂ) * (Real.exp (-(ε * t)) : ℂ)
-    rw [Real.log_mul hε.ne' (ne_of_gt ht)]
-    push_cast
-    ring
+        (Real.log t : ℂ) * (Real.exp (-(ε * t)) : ℂ)) (Ioi 0) :=
+    integrableOn_complex_log_mul_exp_neg_mul ε hε
   have hsplit :
       (∫ t : ℝ in Ioi 0,
           (Real.log (ε * t) : ℂ) * (Real.exp (-(ε * t)) : ℂ)) =
@@ -162,19 +142,8 @@ theorem complex_scaled_integral_log_exp_eq_neg_eulerMascheroni
     ring
   have hexpIntegral :
       (ε : ℂ) * (∫ t : ℝ in Ioi 0,
-        (Real.exp (-(ε * t)) : ℂ)) = 1 := by
-    have hscale := integral_comp_mul_left_Ioi'
-      (fun u : ℝ => (Real.exp (-u) : ℂ)) 0 hε
-    have hscale' :
-        ε • (∫ t : ℝ in Ioi 0, (Real.exp (-(ε * t)) : ℂ)) =
-          ∫ u : ℝ in Ioi 0, (Real.exp (-u) : ℂ) := by
-      simpa only [mul_zero] using hscale
-    rw [show (ε : ℂ) * _ = ε •
-        (∫ t : ℝ in Ioi 0, (Real.exp (-(ε * t)) : ℂ)) by rfl]
-    rw [hscale']
-    rw [integral_complex_ofReal]
-    norm_cast
-    exact integral_exp_neg_Ioi_zero
+        (Real.exp (-(ε * t)) : ℂ)) = 1 :=
+    complex_scaled_integral_exp_eq_one ε hε
   rw [hsplit] at hscaled'
   calc
     (ε : ℂ) *

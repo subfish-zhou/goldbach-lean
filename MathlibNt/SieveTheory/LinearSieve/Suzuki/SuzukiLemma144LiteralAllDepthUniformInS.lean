@@ -62,15 +62,7 @@ private theorem caseII_sameCAt_to_literal_moving_uniform
         (finiteSourceLayer 1 2 M s +
           C * Real.exp (Real.sqrt K) * errorEnvelope H M (D : ℝ) d s *
             (Real.log (D : ℝ)) ^ (-Δ)) := by
-  dsimp [Lemma144CaseIISameCAt] at h
-  rw [suzukiActualT_eq_parity_sum]
-  have hcarrier : suzukiActualParityCarrier M =
-      (Finset.Icc 1 M).filter (fun n => n % 2 = M % 2) := by
-    ext n
-    simp [suzukiActualParityCarrier]
-    omega
-  rw [hcarrier]
-  exact h
+  exact caseII_sameCAt_to_literal_moving S H h
 
 /-- Literal all-depth, cutoff-two Lemma 14.4 uniformly in the bounding sieve.
 

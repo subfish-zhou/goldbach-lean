@@ -229,9 +229,9 @@ theorem vaughanTypeIICanonicalBilinearBlock_norm_sq_le_rowPrefixMax
     apply Finset.sum_le_sum
     intro d hd
     rw [norm_mul, mul_pow]
-    have hχ := DirichletCharacter.norm_le_one χ.1 (d : ZMod q)
-    have hχ0 := norm_nonneg (χ.1 (d : ZMod q))
-    have hχsq : ‖χ.1 (d : ZMod q)‖ ^ 2 ≤ 1 := by nlinarith
+    have hχsq : ‖χ.1 (d : ZMod q)‖ ^ 2 ≤ 1 := by
+      simpa only [one_pow] using pow_le_pow_left₀ (norm_nonneg _)
+        (DirichletCharacter.norm_le_one χ.1 (d : ZMod q)) 2
     simpa using mul_le_mul_of_nonneg_left hχsq
       (sq_nonneg ‖vaughanMoebiusCoeff d‖)
   · unfold vaughanCanonicalTensorPrefixMaxEnergy
@@ -297,16 +297,8 @@ theorem vaughanTypeIIFullPrefix_eq_sum_active_canonical
           y N u v kl.1 kl.2 q χ := by
   rw [vaughanTypeIIFullPrefix_eq_sum_canonical_bilinear
     (fun _ => 1) y N u v q χ hyN]
-  have hall :
-      (∑ kl ∈ vaughanCanonicalDyadicRectangles N u v,
-        vaughanTypeIICanonicalBilinearBlock (fun _ => 1)
-          y N u v kl.1 kl.2 q χ) =
-      ∑ k ∈ vaughanCanonicalDyadicBases N u,
-        ∑ l ∈ vaughanCanonicalDyadicBases N v,
-          vaughanTypeIICanonicalBilinearBlock (fun _ => 1)
-            y N u v k l q χ := by
-    rw [vaughanCanonicalDyadicRectangles, Finset.sum_product]
-  rw [← hall]
+  rw [← Finset.sum_product (f := fun kl : ℕ × ℕ =>
+    vaughanTypeIICanonicalBilinearBlock (fun _ => 1) y N u v kl.1 kl.2 q χ)]
   rw [vaughanTypeIIActiveCanonicalRectangles, Finset.sum_filter]
   apply Finset.sum_congr rfl
   intro kl hkl

@@ -316,16 +316,19 @@ theorem claim145_caseB_uniform_in_S
       hx1 ha.le
   have hxale : x ^ a ≤ x := by
     simpa only [Real.rpow_one] using Real.rpow_le_rpow_of_exponent_le hx1 ha1
+  -- Normalize the moving endpoint before transporting its bounds to `s ≥ σ`.
   have hσdef : σ = x ^ a * ell := by rfl
   have hσLower : x ^ a * q ≤ σ := by
     rw [hσdef]
     exact mul_le_mul_of_nonneg_left hellLower (Real.rpow_nonneg hx.le _)
   have hσUpper : σ ≤ 2 * x * q := by
     rw [hσdef]
-    nlinarith [mul_le_mul hxale hellUpper hell.le hx.le]
+    calc
+      x ^ a * ell ≤ x * (2 * q) := mul_le_mul hxale hellUpper hell.le hx.le
+      _ = 2 * x * q := by ring
   have hσ4 : 4 ≤ σ := by
     calc 4 ≤ q := hq4
-      _ ≤ x ^ a * q := by nlinarith
+      _ ≤ x ^ a * q := le_mul_of_one_le_left hq.le hxa1
       _ ≤ σ := hσLower
   have hσpos : 0 < σ := by linarith
   have hsigma : σ ≤ s := by simpa [σ] using hsigma
@@ -353,29 +356,36 @@ theorem claim145_caseB_uniform_in_S
   have hLsq : L ≤ q ^ 2 := by
     rw [hLdef]
     have hBabs : B ≤ |B| := le_abs_self B
-    nlinarith [sq_nonneg (q - 2)]
+    nlinarith only [hqB, hBabs, sq_nonneg (q - 1)]
   have hdomx : 2 * q ^ 2 ≤ x ^ a := by
     simpa [q] using hX x hxX
   have habsorbσ : q ^ 2 + 9 * q + |Real.log Q| ≤ σ := by
     have htail : 9 * q + |Real.log Q| ≤ q ^ 2 := by
       have habs : 0 ≤ |Real.log Q| := abs_nonneg _
-      nlinarith
+      nlinarith only [hqQ, hq4, habs]
     have hxa_le_σ : x ^ a ≤ σ := by
-      calc x ^ a ≤ x ^ a * q := by nlinarith [Real.rpow_nonneg hx.le a]
+      calc
+        x ^ a ≤ x ^ a * q :=
+          le_mul_of_one_le_right (Real.rpow_nonneg hx.le a) (by linarith only [hq4])
         _ ≤ σ := hσLower
-    linarith
+    calc
+      q ^ 2 + 9 * q + |Real.log Q| ≤ 2 * q ^ 2 := by linarith only [htail]
+      _ ≤ x ^ a := hdomx
+      _ ≤ σ := hxa_le_σ
   have hsourceσ : Real.exp 1 * L ≤ σ - 2 := by
     have hsigStrong : Real.exp 1 * q ^ 2 + 2 ≤ 2 * q ^ 3 := by
       have hepos := Real.exp_pos 1
-      nlinarith [sq_nonneg q, mul_nonneg (sq_nonneg q) (sub_nonneg.mpr hqe)]
+      nlinarith only [hq4, hepos, sq_nonneg q,
+        mul_nonneg (sq_nonneg q) (sub_nonneg.mpr hqe)]
     have htwoq3 : 2 * q ^ 3 ≤ σ := by
       have hmul := mul_le_mul_of_nonneg_right hdomx hq.le
       calc
         2 * q ^ 3 = (2 * q ^ 2) * q := by ring
         _ ≤ x ^ a * q := hmul
         _ ≤ σ := hσLower
-    nlinarith [mul_le_mul_of_nonneg_left hLsq (Real.exp_pos 1).le]
-  have hsource : Real.exp 1 * L ≤ s - 2 := by linarith
+    linarith only [hsigStrong, htwoq3,
+      mul_le_mul_of_nonneg_left hLsq (Real.exp_pos 1).le]
+  have hsource : Real.exp 1 * L ≤ s - 2 := by linarith only [hsourceσ, hsigma]
   have hlogsσ : Real.log σ ≤ 3 * q := by
     have hboundpos : 0 < 2 * x * q := by positivity
     have h := Real.log_le_log hσpos hσUpper
@@ -388,7 +398,7 @@ theorem claim145_caseB_uniform_in_S
     linarith
   have hloglog3σ : Real.log (Real.log (3 * σ)) ≤ 2 * Real.log q := by
     have h3σ : 0 < 3 * σ := by positivity
-    have h6xq : 3 * σ ≤ 6 * x * q := by nlinarith [hσUpper]
+    have h6xq : 3 * σ ≤ 6 * x * q := by linarith only [hσUpper]
     have h6pos : 0 < 6 * x * q := by positivity
     have hlogfirst := Real.log_le_log h3σ h6xq
     rw [Real.log_mul (by positivity : (6 * x : ℝ) ≠ 0) (ne_of_gt hq),
@@ -398,11 +408,11 @@ theorem claim145_caseB_uniform_in_S
         dsimp [q, x]
         exact (le_max_left _ _).trans hq_q0
       exact (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 6)).trans (by linarith)
-    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (by linarith)
+    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (sub_le_self q zero_le_one)
     have hinner : Real.log (3 * σ) ≤ 3 * q := by
       dsimp [q] at hlog6le
       linarith
-    have hinnerpos : 0 < Real.log (3 * σ) := Real.log_pos (by nlinarith [hσ4])
+    have hinnerpos : 0 < Real.log (3 * σ) := Real.log_pos (by linarith only [hσ4])
     have h3qpos : 0 < 3 * q := by positivity
     have hsecond := Real.log_le_log hinnerpos hinner
     have hlog3le : Real.log 3 ≤ Real.log q :=
@@ -420,9 +430,10 @@ theorem claim145_caseB_uniform_in_S
     dsimp [r0] at ht
     field_simp [ne_of_gt hd4] at ht
     linarith
+  -- The uniform threshold has supplied the same endpoint bounds as in CaseBAllS.
   have habsorb : L + 2 * Real.log s + 3 * q + |Real.log Q| ≤ s := by
     have hbase : L + 2 * Real.log σ + 3 * q + |Real.log Q| ≤ σ := by
-      linarith [hLsq, hlogsσ, habsorbσ]
+      linarith only [hLsq, hlogsσ, habsorbσ]
     rw [hlogsSplit]
     have hlogtransport : 2 * Real.log u ≤ 2 * (u - 1) :=
       mul_le_mul_of_nonneg_left hlogu_le (by norm_num)
@@ -434,7 +445,7 @@ theorem claim145_caseB_uniform_in_S
         2 * Real.log u ≤ 2 * (u - 1) := hlogtransport
         _ ≤ σ * (u - 1) := hscale
         _ = s - σ := by rw [hsu]; ring
-    linarith
+    linarith only [hbase, htransport]
   have hqσ : q ≤ σ := by
     have hm := mul_le_mul_of_nonneg_right hxa1 hq.le
     have hm' : q ≤ x ^ a * q := by simpa [mul_comm] using hm
@@ -461,7 +472,7 @@ theorem claim145_caseB_uniform_in_S
       _ = u * Real.log (3 * σ) := by ring
   have hloglog3s :
       Real.log (Real.log (3 * s)) ≤ 2 * Real.log q + Real.log u := by
-    have hleftpos : 0 < Real.log (3 * s) := Real.log_pos (by nlinarith [hs4])
+    have hleftpos : 0 < Real.log (3 * s) := Real.log_pos (by linarith only [hs4])
     have hrightpos : 0 < u * Real.log (3 * σ) := mul_pos hupos (lt_of_lt_of_le zero_lt_one hAlog)
     have hh := Real.log_le_log hleftpos hlog3s_le
     rw [Real.log_mul (ne_of_gt hupos)

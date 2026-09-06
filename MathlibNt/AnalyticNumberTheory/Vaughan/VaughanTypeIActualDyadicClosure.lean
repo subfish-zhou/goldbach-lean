@@ -30,36 +30,9 @@ private theorem apNormalizedVaughanTypeIMean_le_complete_rows
   intro q hq
   rw [← mul_add]
   apply mul_le_mul_of_nonneg_left
-  · calc
-      (∑ χ : PrimitiveCharacter q,
-          primitivePrefixAmplitude
-            (vaughanTypeICoeff vaughanUnitIntegerCoeff u v) N q χ) ≤
-          ∑ χ : PrimitiveCharacter q,
-            ((∑ d ∈ Finset.Icc 1 u,
-                ‖(((ArithmeticFunction.moebius d : ℤ) : ℂ))‖ *
-                  Real.sqrt (primitiveCharacterPrefixMaxSquare
-                    (vaughanTypeIFirstRowCoeff (fun _ => 1) d) 0 (N / d) q χ)) +
-              ∑ de ∈ Finset.Icc 1 u ×ˢ Finset.Icc 1 v,
-                ‖(((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
-                  (ArithmeticFunction.vonMangoldt de.2 : ℂ))‖ *
-                  Real.sqrt (primitiveCharacterPrefixMaxSquare
-                    (vaughanTypeIMiddlePairRowCoeff (fun _ => 1) de) 0
-                      (N / (de.1 * de.2)) q χ)) := by
-            apply Finset.sum_le_sum
-            intro χ hχ
-            exact primitivePrefixAmplitude_vaughanTypeI_le_rows N u v q χ
-      _ =
-          (∑ χ : PrimitiveCharacter q, ∑ d ∈ Finset.Icc 1 u,
-            ‖(((ArithmeticFunction.moebius d : ℤ) : ℂ))‖ *
-              Real.sqrt (primitiveCharacterPrefixMaxSquare
-                (vaughanTypeIFirstRowCoeff (fun _ => 1) d) 0 (N / d) q χ)) +
-          ∑ χ : PrimitiveCharacter q,
-            ∑ de ∈ Finset.Icc 1 u ×ˢ Finset.Icc 1 v,
-              ‖(((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
-                (ArithmeticFunction.vonMangoldt de.2 : ℂ))‖ *
-                Real.sqrt (primitiveCharacterPrefixMaxSquare
-                  (vaughanTypeIMiddlePairRowCoeff (fun _ => 1) de) 0
-                    (N / (de.1 * de.2)) q χ) := Finset.sum_add_distrib
+  · rw [← Finset.sum_add_distrib]
+    exact Finset.sum_le_sum fun χ _ =>
+      primitivePrefixAmplitude_vaughanTypeI_le_rows N u v q χ
   · positivity
 
 /-- The first shell means sum exactly to the complete first-row mean. -/
@@ -130,16 +103,7 @@ cardinality is bounded by Euler's totient without any additional hypothesis. -/
 theorem card_primitiveCharacter_le_totient (q : ℕ) :
     0 < q → Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
   intro hq
-  letI : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) :=
-      @Fintype.card_subtype_le (DirichletCharacter ℂ q) _
-        (fun χ => χ.IsPrimitive) _
-    _ = q.totient := by
-      have h := DirichletCharacter.sum_char_inv_mul_char_eq ℂ
-        (a := (1 : ZMod q)) isUnit_one (1 : ZMod q)
-      simpa using h
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 /-- Unconditional direct AP-normalized Type-I input.  The physical shell
 bounds are assembled against the proved exact first/middle long-variable shell
@@ -162,19 +126,26 @@ theorem vaughanDirectAPNormalizedTypeIInput_actual_dyadic
       simpa [mul_comm] using (by
         exact_mod_cast Nat.mul_le_mul_left N hshort :
           (N : ℝ) * vaughanTypeIShortScale u v ≤ (N : ℝ) * Q ^ 2)
-    have harg0 : 0 ≤ (N : ℝ) * vaughanTypeIShortScale u v := by positivity
-    have hx : Real.sqrt ((N : ℝ) * vaughanTypeIShortScale u v) ^ 2 =
-        (N : ℝ) * vaughanTypeIShortScale u v := Real.sq_sqrt harg0
-    have hy : ((Q : ℝ) * Real.sqrt N) ^ 2 = (Q : ℝ) ^ 2 * N := by
-      rw [mul_pow, Real.sq_sqrt (by positivity)]
-    have hright : 0 ≤ (Q : ℝ) * Real.sqrt N := by positivity
-    nlinarith [Real.sqrt_nonneg ((N : ℝ) * vaughanTypeIShortScale u v),
-      Real.sqrt_nonneg (N : ℝ)]
+    calc
+      Real.sqrt ((N : ℝ) * vaughanTypeIShortScale u v) ≤
+          Real.sqrt ((Q : ℝ) ^ 2 * N) := Real.sqrt_le_sqrt hprod
+      _ = (Q : ℝ) * Real.sqrt N := by
+        rw [Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by positivity)]
   have hphysicalScale : (N : ℝ) + (Q : ℝ) *
         Real.sqrt ((N : ℝ) * vaughanTypeIShortScale u v) ≤
       (N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N := by
-    have := mul_le_mul_of_nonneg_left hsqrtScale (by positivity : (0 : ℝ) ≤ Q)
-    nlinarith
+    simpa only [← mul_assoc, ← pow_two] using
+      add_le_add_right
+        (mul_le_mul_of_nonneg_left hsqrtScale (by positivity : (0 : ℝ) ≤ Q))
+        (N : ℝ)
+  -- Both shell families use this same comparison with the common short scale.
+  have hshellScale (k : ℕ) (hD : 2 ^ k ≤ vaughanTypeIShortScale u v) :
+      (N : ℝ) + (Q : ℝ) * Real.sqrt ((N : ℝ) * (2 ^ k : ℕ)) ≤
+        (N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N := by
+    calc
+      _ ≤ (N : ℝ) + (Q : ℝ) *
+          Real.sqrt ((N : ℝ) * vaughanTypeIShortScale u v) := by gcongr
+      _ ≤ _ := hphysicalScale
   have hfirst : ∀ k ∈ Finset.range (Nat.log2 u + 1),
       apNormalizedVaughanTypeIFirstShellMean
           (vaughanTypeIFirstDyadicShell u k) N Q ≤
@@ -199,16 +170,8 @@ theorem vaughanDirectAPNormalizedTypeIInput_actual_dyadic
           (fun j _ => vaughanTypeIFirstDyadicLogPay_nonneg u j N Q) hk).trans
             (le_add_of_nonneg_right (Finset.sum_nonneg fun j _ =>
               vaughanTypeIMiddleProductDyadicLogPay_nonneg u v j N Q))
-      have hscale : (N : ℝ) + (Q : ℝ) *
-            Real.sqrt ((N : ℝ) * (2 ^ k : ℕ)) ≤
-          (N : ℝ) + (Q : ℝ) *
-            Real.sqrt ((N : ℝ) * vaughanTypeIShortScale u v) := by
-        gcongr
-      exact (mul_le_mul hpay hscale
-        (by positivity)
-        (vaughanTypeIActualDyadicLogPay_nonneg N Q u v)).trans
-          (mul_le_mul_of_nonneg_left hphysicalScale
-            (vaughanTypeIActualDyadicLogPay_nonneg N Q u v))
+      exact mul_le_mul hpay (hshellScale k hD) (by positivity)
+        (vaughanTypeIActualDyadicLogPay_nonneg N Q u v)
   have hmiddle : ∀ k ∈ Finset.range (Nat.log2 (u * v) + 1),
       apNormalizedVaughanTypeIMiddleProductShellMean
           (vaughanTypeIMiddleProductDyadicShell u v k) N Q ≤
@@ -235,16 +198,8 @@ theorem vaughanDirectAPNormalizedTypeIInput_actual_dyadic
           (fun j _ => vaughanTypeIMiddleProductDyadicLogPay_nonneg u v j N Q) hk).trans
             (le_add_of_nonneg_left (Finset.sum_nonneg fun j _ =>
               vaughanTypeIFirstDyadicLogPay_nonneg u j N Q))
-      have hscale : (N : ℝ) + (Q : ℝ) *
-            Real.sqrt ((N : ℝ) * (2 ^ k : ℕ)) ≤
-          (N : ℝ) + (Q : ℝ) *
-            Real.sqrt ((N : ℝ) * vaughanTypeIShortScale u v) := by
-        gcongr
-      exact (mul_le_mul hpay hscale
-        (by positivity)
-        (vaughanTypeIActualDyadicLogPay_nonneg N Q u v)).trans
-          (mul_le_mul_of_nonneg_left hphysicalScale
-            (vaughanTypeIActualDyadicLogPay_nonneg N Q u v))
+      exact mul_le_mul hpay (hshellScale k hD) (by positivity)
+        (vaughanTypeIActualDyadicLogPay_nonneg N Q u v)
   simpa only [Finset.card_range] using
     vaughanDirectAPNormalizedTypeIInput_of_shells
       (Finset.range (Nat.log2 u + 1))

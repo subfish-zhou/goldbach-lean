@@ -317,13 +317,13 @@ theorem liuGenuineLiRemainderSum_isLittleO (kappa : ℝ) :
     linarith [le_max_left (2 : ℝ) X]
   have hlogX : ∀ᶠ n : ℕ in atTop, 3 * Real.log X' ≤ Real.log (n : ℝ) := by
     apply (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-    exact eventually_atTop.mpr ⟨3 * Real.log X', fun b hb => hb⟩
+    exact eventually_ge_atTop _
   obtain ⟨N₁, hN₁⟩ := eventually_atTop.mp hlogX
   let B : ℝ := liuWeightP₁ReciprocalBound * liuSourceR1P₂ReciprocalBound
   intro eta heta
   have hlogeta : ∀ᶠ n : ℕ in atTop, 9 * C * B / eta ≤ Real.log (n : ℝ) := by
     apply (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-    exact eventually_atTop.mpr ⟨9 * C * B / eta, fun b hb => hb⟩
+    exact eventually_ge_atTop _
   obtain ⟨N₂, hN₂⟩ := eventually_atTop.mp hlogeta
   refine ⟨max 8 (max N₁ N₂), fun N hN => ?_⟩
   have hN8 : 8 ≤ N := le_trans (le_max_left _ _) hN
@@ -335,6 +335,25 @@ theorem liuGenuineLiRemainderSum_isLittleO (kappa : ℝ) :
   have hlogetaN : 9 * C * B / eta ≤ Real.log (N : ℝ) := hN₂ N hN₂bound
   have hlogN : 0 < Real.log (N : ℝ) :=
     Real.log_pos (by exact_mod_cast (by omega : 1 < N))
+  -- The threshold N₁ makes the pointwise remainder estimate uniform over all pairs.
+  have hpair : ∀ p ∈ liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N),
+      |liuLogarithmicIntegralRemainder kappa ((N : ℝ) / (p.1 * p.2))| ≤
+        9 * C * (N : ℝ) / (((p.1 : ℝ) * p.2) * Real.log N ^ 2) := by
+    intro p hp
+    apply liuLogarithmicIntegralRemainder_pair_le kappa C hC N hN8 p hp
+    have hxp : 0 < (N : ℝ) / ((p.1 : ℝ) * p.2) := by
+      have hp_pos : (0 : ℝ) < (p.1 : ℝ) * p.2 := by
+        exact_mod_cast liuWeightPairs_product_pos hp
+      positivity
+    have hlogxp : Real.log X' ≤ Real.log ((N : ℝ) / (p.1 * p.2)) := by
+      have hpLog := one_third_mul_log_le_log_div_of_mem_liuWeightPairs hN8 hp
+      linarith
+    have hXxp : X' ≤ (N : ℝ) / (p.1 * p.2) :=
+      (Real.log_le_log_iff hX'pos hxp).mp hlogxp
+    exact hX ((N : ℝ) / (p.1 * p.2))
+      (le_trans (le_max_right 2 X) hXxp)
+      (two_le_div_of_mem_liuWeightPairs hN8 hp)
+  -- Sum the uniform estimate, then bound the exact reciprocal pair mass.
   have hsum : |liuGenuineLiRemainderSum kappa N| ≤
       9 * C * B * (N : ℝ) / Real.log N ^ 2 := by
     unfold liuGenuineLiRemainderSum
@@ -346,25 +365,7 @@ theorem liuGenuineLiRemainderSum_isLittleO (kappa : ℝ) :
         Finset.abs_sum_le_sum_abs _ _
       _ ≤ ∑ p ∈ liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N),
           9 * C * (N : ℝ) / (((p.1 : ℝ) * p.2) * Real.log N ^ 2) := by
-        apply Finset.sum_le_sum
-        intro p hp
-        apply liuLogarithmicIntegralRemainder_pair_le kappa C hC N hN8 p hp
-        have hxp : 0 < (N : ℝ) / ((p.1 : ℝ) * p.2) := by
-          have hp_pos : (0 : ℝ) < (p.1 : ℝ) * p.2 := by
-            exact_mod_cast liuWeightPairs_product_pos hp
-          positivity
-        have hlogxp : Real.log X' ≤ Real.log ((N : ℝ) / (p.1 * p.2)) := by
-          have hpLog := one_third_mul_log_le_log_div_of_mem_liuWeightPairs hN8 hp
-          linarith
-        have hXxp : X' ≤ (N : ℝ) / (p.1 * p.2) := by
-          calc
-            X' = Real.exp (Real.log X') := by rw [Real.exp_log hX'pos]
-            _ ≤ Real.exp (Real.log ((N : ℝ) / (p.1 * p.2))) :=
-              Real.exp_le_exp.mpr hlogxp
-            _ = (N : ℝ) / (p.1 * p.2) := Real.exp_log hxp
-        exact hX ((N : ℝ) / (p.1 * p.2))
-          (le_trans (le_max_right 2 X) hXxp)
-          (two_le_div_of_mem_liuWeightPairs hN8 hp)
+        exact Finset.sum_le_sum hpair
       _ = (9 * C * (N : ℝ) / Real.log N ^ 2) * liuWeightPairReciprocalSum N :=
         liuGenuineLiRemainderSum_factor C N
       _ ≤ (9 * C * (N : ℝ) / Real.log N ^ 2) * B :=
@@ -372,8 +373,7 @@ theorem liuGenuineLiRemainderSum_isLittleO (kappa : ℝ) :
       _ = 9 * C * B * (N : ℝ) / Real.log N ^ 2 := by ring
   unfold LiuGenuineLiRemainderSumBound
   have hcoef : 9 * C * B ≤ eta * Real.log (N : ℝ) := by
-    have h := (div_le_iff₀ heta).mp hlogetaN
-    nlinarith
+    simpa only [mul_comm] using (div_le_iff₀ heta).mp hlogetaN
   have hnum : 9 * C * B * (N : ℝ) ≤
       (eta * Real.log (N : ℝ)) * (N : ℝ) :=
     mul_le_mul_of_nonneg_right hcoef (by positivity)

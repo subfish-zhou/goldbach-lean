@@ -24,13 +24,7 @@ noncomputable section
 Cauchy estimates. -/
 theorem card_primitiveCharacter_le_totient (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  letI : NeZero q := ⟨hq.ne'⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _
-    _ = q.totient := by
-      rw [← Nat.card_eq_fintype_card]
-      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ q
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 /-- Double Cauchy for one actual collected shell.  The first Cauchy is over
 primitive characters at fixed modulus; the second uses `q⁻¹/²`, producing the
@@ -221,17 +215,30 @@ theorem apNormalizedVaughanActualCollectedShellMean_physical
     rw [div_pow, Real.sq_sqrt hU.le]
     field_simp
   have htail : D * (Q : ℝ) ^ 2 * (N : ℝ) ≤ 2 * T ^ 2 := by
-    have hp : 0 ≤ (2 * (N : ℝ) - D * U) * ((Q : ℝ) ^ 2 * (N : ℝ)) := by
-      exact mul_nonneg (sub_nonneg.mpr hDN) (by positivity)
-    have hU0 : 0 < U := hU
-    nlinarith
+    apply (mul_le_mul_iff_left₀ hU).mp
+    calc
+      (D * (Q : ℝ) ^ 2 * (N : ℝ)) * U =
+          (D * U) * ((Q : ℝ) ^ 2 * (N : ℝ)) := by ring
+      _ ≤ (2 * (N : ℝ)) * ((Q : ℝ) ^ 2 * (N : ℝ)) :=
+        mul_le_mul_of_nonneg_right hDN (by positivity)
+      _ = (2 * T ^ 2) * U := by rw [mul_assoc 2 (T ^ 2) U, hTid]; ring
   have hpoly :
       ((N : ℝ) + D * (C * (Q : ℝ) ^ 2)) * (N : ℝ) ≤
         (1 + 2 * C) * ((N : ℝ) + T) ^ 2 := by
-    have hNT : 0 ≤ (N : ℝ) + T := by positivity
-    have hcross : 0 ≤ 2 * (N : ℝ) * T := by positivity
-    have hcTail := mul_le_mul_of_nonneg_left htail hC
-    nlinarith [sq_nonneg ((N : ℝ) + T), mul_nonneg hC (sq_nonneg ((N : ℝ) + T))]
+    have hNsq : (N : ℝ) ^ 2 ≤ ((N : ℝ) + T) ^ 2 := by
+      gcongr
+      exact le_add_of_nonneg_right hT
+    have hTsq : T ^ 2 ≤ ((N : ℝ) + T) ^ 2 := by
+      gcongr
+      exact le_add_of_nonneg_left (Nat.cast_nonneg N)
+    calc
+      _ = (N : ℝ) ^ 2 + C * (D * (Q : ℝ) ^ 2 * (N : ℝ)) := by ring
+      _ ≤ (N : ℝ) ^ 2 + 2 * C * T ^ 2 := by
+        simpa only [mul_left_comm, mul_assoc] using
+          add_le_add_right (mul_le_mul_of_nonneg_left htail hC) ((N : ℝ) ^ 2)
+      _ ≤ ((N : ℝ) + T) ^ 2 + 2 * C * ((N : ℝ) + T) ^ 2 :=
+        add_le_add hNsq (mul_le_mul_of_nonneg_left hTsq (by positivity))
+      _ = _ := by ring
   have hlen : vaughanCanonicalTensorLength N k ≤ N :=
     Nat.div_le_self N (2 ^ k)
   have hlog2nat : Nat.log2 (vaughanCanonicalTensorLength N k) ≤ Nat.log2 N := by

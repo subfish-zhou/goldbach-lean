@@ -6,6 +6,16 @@ namespace MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne
 noncomputable def perturbation (D d ε t : ℝ) : ℝ :=
   (1 + (t + ε) ^ d / Real.log D) ^ t
 
+/-- For fixed exponent and point, the zero-shift perturbation tends to one. -/
+lemma tendsto_fixed_perturbation
+    (d t : ℝ) :
+    Tendsto (fun D : ℝ => perturbation D d 0 t) atTop (𝓝 1) := by
+  have hdiv : Tendsto (fun D : ℝ => t ^ d / Real.log D) atTop (𝓝 0) :=
+    Real.tendsto_log_atTop.const_div_atTop (t ^ d)
+  have hbase : Tendsto (fun D : ℝ => 1 + t ^ d / Real.log D) atTop (𝓝 1) := by
+    simpa using tendsto_const_nhds.add hdiv
+  simpa [perturbation] using hbase.rpow_const (Or.inl one_ne_zero)
+
 noncomputable def perturbationSlope (D d ε t : ℝ) : ℝ :=
   Real.log (1 + (t + ε) ^ d / Real.log D) +
     t * (d * (t + ε) ^ (d - 1) / Real.log D) /

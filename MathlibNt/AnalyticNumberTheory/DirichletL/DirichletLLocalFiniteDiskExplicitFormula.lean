@@ -75,11 +75,14 @@ theorem localFiniteDisk_zeroFactorization
     apply hz₀
     rw [hzero]
     rfl
+  -- Nontriviality rules out infinite zero order at every point.
+  have hfiniteOrder : ∀ z, analyticOrderAt f z ≠ ⊤ := fun z ↦
+    (AnalyticOnNhd.analyticOrderAt_eq_top_iff_eq_zero (𝕜 := ℂ) (f := f)
+      z (fun w ↦ hf.analyticAt w)).not.mpr hfne
   have horder : ∀ u : U, meromorphicOrderAt f u ≠ ⊤ := by
     intro u
     rw [(hf.analyticAt u).meromorphicOrderAt_eq, ne_eq, ENat.map_eq_top_iff]
-    exact (AnalyticOnNhd.analyticOrderAt_eq_top_iff_eq_zero (𝕜 := ℂ) (f := f)
-      u (fun z ↦ hf.analyticAt z)).not.mpr hfne
+    exact hfiniteOrder u
   obtain ⟨g, hg, hg0, hfg⟩ :=
     hfa.meromorphicOn.extract_zeros_poles horder hDfin
   let P : ℂ → ℂ := ∏ᶠ ρ, (· - ρ) ^ D₀ ρ
@@ -130,9 +133,7 @@ theorem localFiniteDisk_zeroFactorization
       rw [hfa.meromorphicOn.divisor_apply hzU,
         (hf.analyticAt z).meromorphicOrderAt_eq]
       have hne0 := (hf.analyticAt z).analyticOrderAt_ne_zero.mpr hfz
-      have hnetop := (AnalyticOnNhd.analyticOrderAt_eq_top_iff_eq_zero
-        (𝕜 := ℂ) (f := f) z (fun w ↦ hf.analyticAt w)).not.mpr hfne
-      simp [WithTop.untop₀_eq_zero, ENat.map_eq_top_iff, hne0, hnetop]
+      simp [WithTop.untop₀_eq_zero, ENat.map_eq_top_iff, hne0, hfiniteOrder z]
   · intro z hz
     exact hg0 ⟨z, hz⟩
   · intro z hz
@@ -168,16 +169,19 @@ theorem localFiniteDisk_explicitFormula
     rw [hsr]
     exact (hzeros ρ).mp hρ |>.2
   let Pfun : ℂ → ℂ := fun z ↦ ∏ ρ ∈ S, (z - ρ) ^ (D ρ).toNat
-  have hlog := logDeriv_mul (f := Pfun) (g := g) s hPs hgs
-    (by dsimp [Pfun]; fun_prop) (hg s hs).differentiableAt
   have hev : f =ᶠ[𝓝 s] (fun z ↦ Pfun z * g z) := by
     filter_upwards [isOpen_ball.mem_nhds hs] with z hz
     exact hfactor z hz
-  have hlogf : logDeriv f s = logDeriv (fun z ↦ Pfun z * g z) s := by
-    rw [logDeriv_apply, logDeriv_apply, hev.deriv_eq, hev.self_of_nhds]
-  rw [← hlogf] at hlog
-  simpa only [Pfun, logDeriv_finite_zeroProduct S (fun ρ ↦ (D ρ).toNat) s hsρ]
-    using hlog
+  -- Differentiate the local factorization, then expand the finite zero product.
+  calc
+    logDeriv f s = logDeriv (fun z ↦ Pfun z * g z) s := by
+      rw [logDeriv_apply, logDeriv_apply, hev.deriv_eq, hev.self_of_nhds]
+    _ = logDeriv Pfun s + logDeriv g s :=
+      logDeriv_mul (f := Pfun) (g := g) s hPs hgs
+        (by dsimp [Pfun]; fun_prop) (hg s hs).differentiableAt
+    _ = ∑ ρ ∈ S, ((D ρ).toNat : ℂ) / (s - ρ) + logDeriv g s :=
+      congrArg (· + logDeriv g s)
+        (logDeriv_finite_zeroProduct S (fun ρ ↦ (D ρ).toNat) s hsρ)
 
 /-- Cauchy control of the nonvanishing remainder from one circle value
 bound and one interior lower bound.  This is the local replacement for the

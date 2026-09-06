@@ -116,10 +116,8 @@ def chen1973Lemma5SelbergLambda (x R d : ℕ) : ℝ :=
 theorem chen1973Lemma5SelbergLambda_eq_zero_of_cutoff
     {x R d : ℕ} (hR : 1 ≤ R) (hd : R < d) :
     chen1973Lemma5SelbergLambda x R d = 0 := by
-  by_cases hd1 : d = 1
-  · subst d
-    omega
-  · simp [chen1973Lemma5SelbergLambda, hd1, hd]
+  have hd1 : d ≠ 1 := by omega
+  simp [chen1973Lemma5SelbergLambda, hd1, hd]
 
 /-- The finite `n≤x/(p₁p₂)` carrier used after switching `p₃` to `Λ(n)`. -/
 def chen1973Lemma5NCarrier (x : ℕ) (pp : ℕ × ℕ) : Finset ℕ :=
@@ -239,11 +237,7 @@ theorem chen1973Lemma5OmegaSmoothed_eq_switched (x z4 : ℕ) :
       apply Finset.sum_congr rfl
       intro n hn
       by_cases hle : n ≤ x / (pp.1 * pp.2)
-      · by_cases hp : n.Prime
-        · by_cases hcop : Nat.Coprime (x - pp.1 * pp.2 * n) (chen1973Lemma5Q z4)
-          · simp [hle, hp]
-          · simp [hle, hp]
-        · simp [hle, hp]
+      · by_cases hp : n.Prime <;> simp [hle, hp]
       · simp [hle]
 
 /-- The actual smoothed `Ω` mass is bounded by the actual Selberg square.  The
@@ -263,14 +257,11 @@ theorem chen1973Lemma5OmegaSmoothed_le_SelbergSquare
   intro pp hpp
   apply Finset.sum_le_sum
   intro n hn
-  by_cases hp : n.Prime
-  · by_cases hcop : Nat.Coprime (x - pp.1 * pp.2 * n) (chen1973Lemma5Q z4)
-    · rw [if_pos ⟨hp, hcop⟩,
-        chen1973Lemma5DivisorSum_eq_one_of_coprime hlambda hcop]
-      simp
-    · rw [if_neg (fun h => hcop h.2)]
-      exact mul_nonneg (hw pp hpp n hn) (sq_nonneg _)
-  · rw [if_neg (fun h => hp h.1)]
+  by_cases h : n.Prime ∧
+      Nat.Coprime (x - pp.1 * pp.2 * n) (chen1973Lemma5Q z4)
+  · rw [if_pos h, chen1973Lemma5DivisorSum_eq_one_of_coprime hlambda h.2]
+    simp
+  · rw [if_neg h]
     exact mul_nonneg (hw pp hpp n hn) (sq_nonneg _)
 
 /-- A separate, honest cardinal bridge.  It applies when the retained smoothed
@@ -282,9 +273,6 @@ theorem chen1973Lemma5Omega_le_OmegaSmoothed
       (1 : ℝ) ≤ chen1973Lemma5SmoothedWeight x t.1 t.2) :
     (chen1973Lemma5Omega x z4 : ℝ) ≤ chen1973Lemma5OmegaSmoothed x z4 := by
   unfold chen1973Lemma5Omega chen1973Lemma5OmegaSmoothed
-  have hcard : ((chen1973Lemma5OmegaCarrier x z4).card : ℝ) =
-      ∑ _t ∈ chen1973Lemma5OmegaCarrier x z4, (1 : ℝ) := by simp
-  rw [hcard]
   simpa only [Finset.sum_const, nsmul_eq_mul, mul_one] using
     Finset.sum_le_sum hw1
 

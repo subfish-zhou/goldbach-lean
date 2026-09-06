@@ -845,29 +845,14 @@ theorem upperRosserBoundaryChainsFixedDepthDensity_mono
   unfold upperRosserBoundaryChainsFixedDepthDensity
   apply Finset.sum_le_sum
   intro l hl
+  -- Every entry of the chain belongs to the same ambient prime set.
+  obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp (Finset.mem_filter.mp hl).1
+  have huP : u ⊆ P := Finset.mem_powerset.mp (Finset.mem_filter.mp hu).1
   apply List.prod_map_le_prod_map₀
   · intro p hp
-    apply hf p
-    have hchain := Finset.mem_filter.mp hl |>.1
-    obtain ⟨u, hu, hsort⟩ := Finset.mem_image.mp hchain
-    have hlu : l.toFinset = u := by
-      rw [← hsort]
-      simp
-    have huP : u ⊆ P := Finset.mem_powerset.mp (Finset.mem_filter.mp hu).1
-    apply huP
-    rw [← hlu]
-    simpa using hp
+    exact hf p (huP (by simpa using hp))
   · intro p hp
-    apply hfg p
-    have hchain := Finset.mem_filter.mp hl |>.1
-    obtain ⟨u, hu, hsort⟩ := Finset.mem_image.mp hchain
-    have hlu : l.toFinset = u := by
-      rw [← hsort]
-      simp
-    have huP : u ⊆ P := Finset.mem_powerset.mp (Finset.mem_filter.mp hu).1
-    apply huP
-    rw [← hlu]
-    simpa using hp
+    exact hfg p (huP (by simpa using hp))
 
 /-- A fixed-depth selected boundary density vanishes once twice the depth
 exceeds the number of available ambient primes. -/
@@ -1617,51 +1602,12 @@ private theorem upperRosserSetWeight_pair_nonneg
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s) (hqprime : q.Prime)
     (hqD : q < D) (hqmin : ∀ p ∈ s, q ≤ p) :
     0 ≤ upperRosserSetWeight D s + upperRosserSetWeight D (insert q s) := by
-  have hcard : (insert q s).card = s.card + 1 :=
-    Finset.card_insert_of_notMem hqs
-  by_cases heven : Even s.card
-  · have hodd : ¬Even (insert q s).card := by
-      rw [hcard, Nat.even_add_one]
-      exact not_not_intro heven
-    have hback :
-        (insert q s).prod id < D ∧
-            UpperRosserAdmissibleSet D (insert q s) →
-          s.prod id < D ∧ UpperRosserAdmissibleSet D s := by
-      intro hins
-      refine ⟨?_, upperRosserAdmissibleSet_of_insert_min hqs hqmin hins.2⟩
-      exact lt_of_le_of_lt (by
-        rw [Finset.prod_insert hqs]
-        exact Nat.le_mul_of_pos_left (s.prod id) hqprime.pos) hins.1
-    by_cases hbase :
-        s.prod id < D ∧ UpperRosserAdmissibleSet D s
-    · unfold upperRosserSetWeight
-      rw [if_pos hbase, if_pos heven]
-      split <;> norm_num
-    · have hins :
-          ¬((insert q s).prod id < D ∧
-            UpperRosserAdmissibleSet D (insert q s)) :=
-        fun h ↦ hbase (hback h)
-      unfold upperRosserSetWeight
-      rw [if_neg hbase, if_neg hins]
-      norm_num
-  · have hinsEven : Even (insert q s).card := by
-      rw [hcard, Nat.even_add_one]
-      exact heven
-    by_cases hbase :
-        s.prod id < D ∧ UpperRosserAdmissibleSet D s
-    · have hins :
-          (insert q s).prod id < D ∧
-            UpperRosserAdmissibleSet D (insert q s) :=
-        ⟨prod_insert_min_lt_of_upperRosserAdmissibleSet_odd
-            hqs hqprime hqD hqmin hbase.2 heven,
-          upperRosserAdmissibleSet_insert_min_of_odd
-            hqs hqmin hbase.2 heven⟩
-      unfold upperRosserSetWeight
-      rw [if_pos hbase, if_pos hins, if_neg heven, if_pos hinsEven]
-      norm_num
-    · unfold upperRosserSetWeight
-      rw [if_neg hbase]
-      split <;> norm_num
+  -- Specialize the Euler-factor identity to unit density: only the boundary remains.
+  have hpair := upperRosserSetWeight_pair_eq_euler_add_boundary
+    hqs hqprime hqD hqmin (1 : ℝ)
+  simp only [one_mul, sub_self, zero_mul, zero_add] at hpair
+  rw [hpair]
+  split_ifs <;> norm_num
 
 private theorem sum_upperRosserSetWeight_nonneg
     {D : ℕ} {S : Finset ℕ} (hS : S.Nonempty)

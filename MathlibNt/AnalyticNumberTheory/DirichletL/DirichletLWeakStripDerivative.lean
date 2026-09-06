@@ -18,12 +18,7 @@ namespace DirichletLWeakStripDerivative
 variable {q : ℕ} [NeZero q]
 
 lemma character_norm_le_one (χ : DirichletCharacter ℂ q) (n : ℕ) : ‖χ n‖ ≤ 1 := by
-  by_cases h : IsUnit (n : ZMod q)
-  · rcases h with ⟨u, hu⟩
-    rw [← hu]
-    exact le_of_eq (χ.unit_norm_eq_one u)
-  · rw [MulChar.map_nonunit χ h]
-    norm_num
+  exact DirichletCharacter.norm_le_one χ (n : ZMod q)
 
 lemma sum_one_period_eq_zero (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) :
     ∑ n ∈ range q, χ n = 0 := by

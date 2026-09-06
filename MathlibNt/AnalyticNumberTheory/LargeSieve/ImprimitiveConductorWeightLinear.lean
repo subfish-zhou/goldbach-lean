@@ -28,6 +28,15 @@ theorem conductorHarmonicFactor_nonneg (R : ℕ) :
   unfold conductorHarmonicFactor
   positivity
 
+/-- Enlarging the finite harmonic range can only increase its sum. -/
+private theorem conductorHarmonicFactor_mono : Monotone conductorHarmonicFactor := by
+  intro R S hRS
+  unfold conductorHarmonicFactor
+  apply Finset.sum_le_sum_of_subset_of_nonneg
+  · exact Finset.Icc_subset_Icc_right hRS
+  · intro e _ _
+    positivity
+
 private theorem harmonic_step (k : ℕ) (hk : 0 < k) :
     (((k + 1 : ℕ) : ℝ)⁻¹) ≤
       Real.log ((k + 1 : ℕ) : ℝ) - Real.log (k : ℝ) := by
@@ -135,7 +144,6 @@ theorem sum_totientRatio_le_linear_harmonic (R : ℕ) :
     _ ≤ ∑ e ∈ Finset.Icc 1 R, (R : ℝ) * (e : ℝ)⁻¹ := by
         apply Finset.sum_le_sum
         intro e he
-        have hepos : (0 : ℝ) < e := by exact_mod_cast (Finset.mem_Icc.mp he).1
         rw [← div_eq_mul_inv]
         exact Nat.cast_div_le
     _ = (R : ℝ) * conductorHarmonicFactor R := by
@@ -192,6 +200,58 @@ theorem imprimitiveConductorWeight_le_linear_harmonic
         exact sum_totientRatio_le_linear_harmonic (Q / d)
     _ = _ := by ring
 
+/-- Linear-harmonic conductor transport for an arbitrary nonnegative family.
+The existing prefix theorem is a specialization of this finite inequality. -/
+theorem imprimitive_conductor_window_le_weighted_primitive_linear
+    (F : (d : ℕ) → PrimitiveCharacter d → ℝ)
+    (hF : ∀ d ψ, 0 ≤ F d ψ) (Q C : ℕ) (hC : 0 < C) :
+    (∑ d ∈ Finset.Icc C (2 * C),
+      imprimitiveConductorWeight Q d * ∑ ψ : PrimitiveCharacter d, F d ψ) ≤
+      ((Q / C : ℕ) : ℝ) * conductorHarmonicFactor (Q / C) *
+        ∑ d ∈ Finset.Icc 1 (2 * C),
+          ((d : ℝ) / (d.totient : ℝ)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
+  have hsum (d : ℕ) : 0 ≤ ∑ ψ : PrimitiveCharacter d, F d ψ :=
+    Finset.sum_nonneg fun ψ _ => hF d ψ
+  calc
+    _ ≤ ∑ d ∈ Finset.Icc C (2 * C),
+        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
+          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
+      apply Finset.sum_le_sum
+      intro d hd
+      have hd0 : 0 < d := hC.trans_le (Finset.mem_Icc.mp hd).1
+      have hdiv : Q / d ≤ Q / C :=
+        Nat.div_le_div_left (Finset.mem_Icc.mp hd).1 hC
+      have hharm : conductorHarmonicFactor (Q / d) ≤ conductorHarmonicFactor (Q / C) := by
+        unfold conductorHarmonicFactor
+        apply Finset.sum_le_sum_of_subset_of_nonneg
+        · exact Finset.Icc_subset_Icc_right hdiv
+        · intro e he hnot
+          positivity
+      have hharm0 : 0 ≤ conductorHarmonicFactor (Q / d) :=
+        conductorHarmonicFactor_nonneg _
+      apply mul_le_mul_of_nonneg_right _ (hsum d)
+      refine (imprimitiveConductorWeight_le_linear_harmonic Q d hd0).trans ?_
+      gcongr
+    _ ≤ ∑ d ∈ Finset.Icc 1 (2 * C),
+        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
+          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
+      apply Finset.sum_le_sum_of_subset_of_nonneg
+      · intro d hd
+        exact Finset.mem_Icc.mpr ⟨hC.trans_le (Finset.mem_Icc.mp hd).1,
+          (Finset.mem_Icc.mp hd).2⟩
+      · intro d hd hnot
+        have hd0 : 0 < d := (Finset.mem_Icc.mp hd).1
+        have hφ0 : (0 : ℝ) < d.totient := by
+          exact_mod_cast Nat.totient_pos.mpr hd0
+        exact mul_nonneg
+          (mul_nonneg (mul_nonneg (div_nonneg (by positivity) hφ0.le) (by positivity))
+            (conductorHarmonicFactor_nonneg _)) (hsum d)
+    _ = _ := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro d hd
+      ring
+
 /-- Logarithmic presentation of the strong imprimitive conductor bound. -/
 theorem imprimitiveConductorWeight_le_linear_log
     (Q d : ℕ) (hd : 0 < d) :
@@ -230,12 +290,8 @@ theorem imprimitive_conductor_window_prefix_le_linear
         have hdiv : Q / d ≤ Q / D :=
           Nat.div_le_div_left (Finset.mem_Icc.mp hdmem).1 hD
         have hharm : conductorHarmonicFactor (Q / d) ≤
-            conductorHarmonicFactor (Q / D) := by
-          unfold conductorHarmonicFactor
-          apply Finset.sum_le_sum_of_subset_of_nonneg
-          · exact Finset.Icc_subset_Icc_right hdiv
-          · intro e he _
-            positivity
+            conductorHarmonicFactor (Q / D) :=
+          conductorHarmonicFactor_mono hdiv
         have hsum : 0 ≤ ∑ ψ : PrimitiveCharacter d,
             primitiveCharacterPrefixMaxSquare b M N d ψ :=
           Finset.sum_nonneg fun ψ _ =>
@@ -302,12 +358,8 @@ theorem dyadic_linear_multiplicity_mul_modulus_sq_le
       4 * (Q : ℝ) ^ 2 * conductorHarmonicFactor Q := by
   have hnat : (Q / D) * D ≤ Q := by simpa [mul_comm] using Nat.mul_div_le Q D
   have hreal : ((Q / D : ℕ) : ℝ) * (D : ℝ) ≤ Q := by exact_mod_cast hnat
-  have hharm : conductorHarmonicFactor (Q / D) ≤ conductorHarmonicFactor Q := by
-    unfold conductorHarmonicFactor
-    apply Finset.sum_le_sum_of_subset_of_nonneg
-    · exact Finset.Icc_subset_Icc_right (Nat.div_le_self Q D)
-    · intro e he _
-      positivity
+  have hharm : conductorHarmonicFactor (Q / D) ≤ conductorHarmonicFactor Q :=
+    conductorHarmonicFactor_mono (Nat.div_le_self Q D)
   have hQD : (D : ℝ) ≤ Q := by exact_mod_cast hDQ
   calc
     ((Q / D : ℕ) : ℝ) * conductorHarmonicFactor (Q / D) * (((2 * D : ℕ) : ℝ) ^ 2)
@@ -316,15 +368,13 @@ theorem dyadic_linear_multiplicity_mul_modulus_sq_le
         ring
     _ ≤ 4 * (Q : ℝ) * D * conductorHarmonicFactor (Q / D) := by
       apply mul_le_mul_of_nonneg_right _ (conductorHarmonicFactor_nonneg _)
-      nlinarith [hreal]
-    _ ≤ 4 * (Q : ℝ) * Q * conductorHarmonicFactor Q := by
-      calc
-        4 * (Q : ℝ) * D * conductorHarmonicFactor (Q / D) ≤
-            4 * (Q : ℝ) * Q * conductorHarmonicFactor (Q / D) := by
-          apply mul_le_mul_of_nonneg_right _ (conductorHarmonicFactor_nonneg _)
-          nlinarith
-        _ ≤ 4 * (Q : ℝ) * Q * conductorHarmonicFactor Q := by
-          exact mul_le_mul_of_nonneg_left hharm (by positivity)
+      exact mul_le_mul_of_nonneg_right
+        (mul_le_mul_of_nonneg_left hreal (by positivity)) (by positivity)
+    _ ≤ 4 * (Q : ℝ) * Q * conductorHarmonicFactor (Q / D) := by
+      apply mul_le_mul_of_nonneg_right _ (conductorHarmonicFactor_nonneg _)
+      exact mul_le_mul_of_nonneg_left hQD (by positivity)
+    _ ≤ 4 * (Q : ℝ) * Q * conductorHarmonicFactor Q :=
+      mul_le_mul_of_nonneg_left hharm (by positivity)
     _ = 4 * (Q : ℝ) ^ 2 * conductorHarmonicFactor Q := by ring
 
 end

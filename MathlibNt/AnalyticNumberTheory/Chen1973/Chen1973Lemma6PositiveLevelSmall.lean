@@ -53,13 +53,10 @@ theorem chen1973Lemma6_positive_level_actual_cell_small
   refine ⟨max C₁ C₂, hC₁.trans_le (le_max_left _ _),
     max (max X₁ X₂) (max 3 (Real.exp 3)), ?_⟩
   intro x hx L B lastD level k m hL hB hlevel hLl hLu hBl hBu hLast hcut
-  have hx₁ := (le_max_left X₁ X₂).trans ((le_max_left (max X₁ X₂) _).trans hx)
-  have hx₂ := (le_max_right X₁ X₂).trans ((le_max_left (max X₁ X₂) _).trans hx)
-  have hx3 : 3 ≤ x := by
-    exact_mod_cast (le_max_left (3:ℝ) (Real.exp 3)).trans
-      ((le_max_right (max X₁ X₂) _).trans hx)
-  have hxexp : Real.exp 3 ≤ (x:ℝ) :=
-    (le_max_right (3:ℝ) (Real.exp 3)).trans ((le_max_right (max X₁ X₂) _).trans hx)
+  rcases max_le_iff.mp hx with ⟨hx₁₂, hxlarge⟩
+  rcases max_le_iff.mp hx₁₂ with ⟨hx₁, hx₂⟩
+  rcases max_le_iff.mp hxlarge with ⟨hx3real, hxexp⟩
+  have hx3 : 3 ≤ x := by exact_mod_cast hx3real
   have hlog3 : (3:ℝ) ≤ Real.log x := by
     simpa using Real.log_le_log (Real.exp_pos _) hxexp
   have hlog1 : (1:ℝ) ≤ Real.log x := by linarith
@@ -67,16 +64,18 @@ theorem chen1973Lemma6_positive_level_actual_cell_small
     unfold chen1973PerronOrder
     have hf : 3 ≤ ⌊Real.log (x:ℝ)⌋₊ := Nat.le_floor hlog3
     omega
+  have budget_mono : Monotone (fun C : ℝ => C*x/Real.log x^20) := by
+    intro C D hCD
+    exact div_le_div_of_nonneg_right
+      (mul_le_mul_of_nonneg_right hCD (Nat.cast_nonneg x)) (by positivity)
   rcases chen1973Lemma6_eq19_or_eq20 (x := x) hlevel hLast with h19 | h20
   · let P : Chen1973Lemma6Eq19SourceParameters x L B lastD level k :=
       ⟨hx3, hL, hB, hlevel, hlog1, hLl, hLu, hBl, hBu, h19⟩
     have hh := hX₁ x hx₁ L B lastD level k m P hcut hLast
-    exact hh.trans (div_le_div_of_nonneg_right
-      (mul_le_mul_of_nonneg_right (le_max_left C₁ C₂) (Nat.cast_nonneg x)) (by positivity))
+    exact hh.trans (budget_mono (le_max_left C₁ C₂))
   · let P : Chen1973Lemma6Eq20ComplementarySourceParameters x L B lastD level k :=
       ⟨hx3, horder, hL, hB, hlevel, hlog1, hLl, hLu, hBl, hBu, h20⟩
     have hh := hX₂ x hx₂ L B lastD level k m P hcut
-    exact hh.trans (div_le_div_of_nonneg_right
-      (mul_le_mul_of_nonneg_right (le_max_right C₁ C₂) (Nat.cast_nonneg x)) (by positivity))
+    exact hh.trans (budget_mono (le_max_right C₁ C₂))
 
 end AnalyticNumberTheory.LargeSieve

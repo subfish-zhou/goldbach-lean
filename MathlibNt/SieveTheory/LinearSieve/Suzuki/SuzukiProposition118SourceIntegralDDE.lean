@@ -30,33 +30,7 @@ private theorem weighted_suzukiLayer_eq_integral_to_upper
     (hs : β + sourceEpsilon n ≤ s) :
     s * suzukiLayer 1 β n s =
       ∫ t in s..(β + n), suzukiLayer 1 β (n - 1) (t - 1) := by
-  have hs0 : 0 < s := by
-    have heps : (0 : ℝ) ≤ sourceEpsilon n := Nat.cast_nonneg _
-    linarith
-  rw [show s * suzukiLayer 1 β n s = suzukiLayerNumerator 1 β n s by
-    simpa using rpow_mul_suzukiLayer 1 β n hs0]
-  rw [SwitchingPrinciple.suzukiLayerNumerator_eq_sourceRecursion_of_two_le β s hn]
-  have hlower : recursionLower β s n = min s (β + n) := by
-    unfold recursionLower
-    rw [max_eq_left (by simpa [sourceEpsilon] using hs)]
-  rw [hlower]
-  by_cases hsb : s ≤ β + n
-  · rw [min_eq_left hsb]
-  · have hbs : β + n ≤ s := le_of_not_ge hsb
-    rw [min_eq_right hbs]
-    rw [intervalIntegral.integral_same]
-    symm
-    calc
-      (∫ t in s..(β + n), suzukiLayer 1 β (n - 1) (t - 1)) =
-          ∫ _t in s..(β + n), (0 : ℝ) := by
-        apply intervalIntegral.integral_congr
-        intro t ht
-        apply suzukiLayer_eq_zero_of_le
-        have hnsub : ((n - 1 : ℕ) : ℝ) + 1 = (n : ℝ) := by
-          exact_mod_cast Nat.sub_add_cancel (by omega : 1 ≤ n)
-        rw [Set.uIcc_of_ge hbs] at ht
-        linarith [ht.1, hnsub]
-      _ = 0 := intervalIntegral.integral_zero
+  exact suzukiLayer_weighted_eq_integral_to_upper hβ hn hs
 
 /-- Termwise finite-layer integral recurrence on a common parity threshold. -/
 private theorem weighted_suzukiLayer_sub
@@ -518,10 +492,6 @@ private theorem suzukiProposition118SourceQ_weighted_sub_of_three_le
       (fun t => suzukiProposition118SourceTPlus (t - 1))
       (volume.restrict (Set.uIoc x y)) := by
     exact AEStronglyMeasurable.tsum (fun k => hlayer (2 * k + 1))
-  have hmmeas : AEStronglyMeasurable
-      (fun t => suzukiProposition118SourceTMinus (t - 1))
-      (volume.restrict (Set.uIoc x y)) := by
-    exact AEStronglyMeasurable.tsum (fun k => hlayer (2 * (k + 1)))
   have hpint : IntervalIntegrable
       (fun t => suzukiProposition118SourceTPlus (t - 1)) volume x y := by
     apply hQi.mono_fun hpmeas
@@ -539,19 +509,13 @@ private theorem suzukiProposition118SourceQ_weighted_sub_of_three_le
     linarith
   have hmint : IntervalIntegrable
       (fun t => suzukiProposition118SourceTMinus (t - 1)) volume x y := by
-    apply hQi.mono_fun hmmeas
+    apply (hQi.sub hpint).congr_ae
     filter_upwards [ae_restrict_mem measurableSet_uIoc] with t ht
     rw [Set.mem_uIoc] at ht
     have ht2 : 2 ≤ t - 1 := by rcases ht with ht | ht <;> linarith
-    have hp0 : 0 ≤ suzukiProposition118SourceTPlus (t - 1) := by
-      rw [suzukiProposition118SourceTPlus]
-      exact tsum_nonneg (suzukiLayer_one_two_odd_nonneg (by linarith : 1 < t - 1))
-    have hm0 : 0 ≤ suzukiProposition118SourceTMinus (t - 1) := by
-      rw [suzukiProposition118SourceTMinus]
-      exact tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg ht2 k)
-    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hm0]
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr ht2), abs_of_nonneg (add_nonneg hp0 hm0)]
-    linarith
+    change suzukiProposition118SourceQ (t - 1) -
+      suzukiProposition118SourceTPlus (t - 1) = suzukiProposition118SourceTMinus (t - 1)
+    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr ht2), add_sub_cancel_left]
   have hQeq : ∀ t ∈ Set.uIcc x y,
       suzukiProposition118SourceQ (t - 1) =
         suzukiProposition118SourceTPlus (t - 1) +

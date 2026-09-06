@@ -18,6 +18,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Analysis.SpecialFunctions.Exp
 import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
+import AnalyticNumberTheory.Sieve.SelbergUpperBound
 
 /-!
 # MathlibNt.SieveTheory.SelbergUpperBound
@@ -491,96 +492,7 @@ theorem mainSum_cauchy_schwarz_lower_bound
     (S : BoundingSieve) (w : ℕ → ℝ) (hw : w 1 = 1) :
     (S.prodPrimes.divisors.sum (fun l => S.selbergTerms l))⁻¹ ≤
       S.mainSum (BoundingSieve.lambdaSquared w) := by
-  -- Helper: Σ_{l ∈ d.divisors} (μ l : ℝ) = [d = 1]
-  -- This follows from (ζ * μ)(d) = 1(d) via Möbius inversion
-  have hMoebiusSum : ∀ d ∈ S.prodPrimes.divisors,
-      ∑ l ∈ d.divisors, (μ l : ℝ) = if d = 1 then (1 : ℝ) else 0 := by
-    intro d hd
-    have h := ArithmeticFunction.coe_zeta_mul_coe_moebius (R := ℝ)
-    have hkey : (ζ * (μ : ArithmeticFunction ℝ)) d = (1 : ArithmeticFunction ℝ) d := by rw [h]
-    rw [ArithmeticFunction.coe_zeta_mul_apply, ArithmeticFunction.one_apply] at hkey
-    simp only [ArithmeticFunction.intCoe_apply] at hkey
-    exact hkey
-  -- Möbius inversion: Σ_l (μ l : ℝ) * x_l = 1
-  -- where x_l = Σ_{d ∈ D} [l|d] ν(d) w(d)
-  have hMoebiusInv : ∑ l ∈ S.prodPrimes.divisors,
-      (μ l : ℝ) * (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0) = 1 := by
-    calc ∑ l ∈ S.prodPrimes.divisors,
-          (μ l : ℝ) * (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0)
-        = ∑ l ∈ S.prodPrimes.divisors,
-            ∑ d ∈ S.prodPrimes.divisors,
-              (μ l : ℝ) * (if l ∣ d then S.nu d * w d else 0) := by simp_rw [mul_sum]
-      _ = ∑ d ∈ S.prodPrimes.divisors,
-            ∑ l ∈ S.prodPrimes.divisors,
-              (μ l : ℝ) * (if l ∣ d then S.nu d * w d else 0) := by rw [sum_comm]
-      _ = ∑ d ∈ S.prodPrimes.divisors,
-            S.nu d * w d * (∑ l ∈ d.divisors, (μ l : ℝ)) := by
-        refine sum_congr rfl fun d hd => ?_
-        have hdvd : d ∣ S.prodPrimes := (Nat.mem_divisors.mp hd).1
-        simp_rw [mul_ite, mul_zero]
-        rw [← sum_filter, Nat.divisors_filter_dvd_of_dvd S.prodPrimes_ne_zero hdvd, mul_sum]
-        exact sum_congr rfl (fun l _ => mul_comm _ _)
-      _ = ∑ d ∈ S.prodPrimes.divisors,
-            S.nu d * w d * (if d = 1 then (1 : ℝ) else 0) := by
-        refine sum_congr rfl fun d hd => ?_
-        rw [hMoebiusSum d hd]
-      _ = S.nu 1 * w 1 := by
-        have h1mem : (1 : ℕ) ∈ S.prodPrimes.divisors :=
-          Nat.mem_divisors.mpr ⟨one_dvd S.prodPrimes, S.prodPrimes_ne_zero⟩
-        simp_rw [mul_ite, mul_one, mul_zero]
-        rw [Finset.sum_ite_eq_of_mem' _ _ _ h1mem]
-      _ = 1 := by
-        have h_nu1 : S.nu 1 = 1 := S.nu_mult.map_one
-        rw [h_nu1, hw]
-        norm_num
-  -- Titu's lemma (Sedrakyan's lemma / Engel form of Cauchy-Schwarz)
-  -- Applied with f_l = (μ l : ℝ) * x_l, g_l = selbergTerms l * (μ l : ℝ)²
-  have hTitu :
-      (∑ l ∈ S.prodPrimes.divisors,
-        (μ l : ℝ) * (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0)) ^ 2 /
-      ∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l * (μ l : ℝ) ^ 2 ≤
-      ∑ l ∈ S.prodPrimes.divisors,
-        ((μ l : ℝ) * (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0)) ^ 2 /
-        (S.selbergTerms l * (μ l : ℝ) ^ 2) := by
-    apply sq_sum_div_le_sum_sq_div
-    intro l hl
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes hl
-    have hpos := S.selbergTerms_pos ((Nat.mem_divisors.mp hl).1)
-    have hμsq : (μ l : ℝ) ^ 2 = 1 := by exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    rw [hμsq, mul_one]
-    exact hpos
-  -- Simplify denominator: Σ selbergTerms l * μ(l)² = Σ selbergTerms l
-  -- (since all l | P are squarefree, μ(l)² = 1)
-  have hDenom : ∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l * (μ l : ℝ) ^ 2 =
-      ∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l := by
-    refine sum_congr rfl fun l hl => ?_
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes hl
-    have hμsq : (μ l : ℝ) ^ 2 = 1 := by exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    rw [hμsq, mul_one]
-  -- Simplify RHS: Σ ((μ l) * x_l)² / (selbergTerms l * μ(l)²) = Σ selbergTerms(l)⁻¹ * x_l²
-  have hRHS : ∑ l ∈ S.prodPrimes.divisors,
-        ((μ l : ℝ) * (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0)) ^ 2 /
-        (S.selbergTerms l * (μ l : ℝ) ^ 2) =
-      ∑ l ∈ S.prodPrimes.divisors,
-        (S.selbergTerms l)⁻¹ *
-        (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0) ^ 2 := by
-    refine sum_congr rfl fun l hl => ?_
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes hl
-    have hμsq : (μ l : ℝ) ^ 2 = 1 := by exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    rw [hμsq, mul_one, mul_pow, hμsq, one_mul, div_eq_inv_mul]
-  -- Diagonalization (Mathlib: mainSum_lambdaSquared_eq_sum_mul_sum_sq)
-  have h_diag : S.mainSum (BoundingSieve.lambdaSquared w) =
-      ∑ l ∈ S.prodPrimes.divisors,
-        (S.selbergTerms l)⁻¹ *
-        (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * w d else 0) ^ 2 :=
-    S.mainSum_lambdaSquared_eq_sum_mul_sum_sq w
-  -- Chain everything together
-  rw [hMoebiusInv, hDenom] at hTitu
-  simp only [one_pow] at hTitu
-  rw [hRHS] at hTitu
-  rw [one_div] at hTitu
-  rw [h_diag]
-  exact hTitu
+  exact AnalyticNumberTheory.Sieve.mainSum_cauchy_schwarz_lower_bound S w hw
 
 /-! ## 7. Auxiliary definition: π(x; a, q, l) -/
 
@@ -1344,24 +1256,10 @@ private lemma primeFactors_card_eq_cardDistinctFactors (d : ℕ) :
 private lemma chenDivisorWeight_mul (A : ℝ) {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0)
     (hmn : m.Coprime n) :
     chenDivisorWeight A (m * n) = chenDivisorWeight A m * chenDivisorWeight A n := by
-  unfold chenDivisorWeight
-  change A ^ (m * n).primeFactors.card / ↑(m * n).totient =
-    (A ^ m.primeFactors.card / ↑m.totient) * (A ^ n.primeFactors.card / ↑n.totient)
-  have hω : (m * n).primeFactors.card = m.primeFactors.card + n.primeFactors.card := by
-    rw [primeFactors_card_eq_cardDistinctFactors, primeFactors_card_eq_cardDistinctFactors,
-      primeFactors_card_eq_cardDistinctFactors]
-    exact ArithmeticFunction.cardDistinctFactors_mul hmn
-  have hφ : Nat.totient (m * n) = Nat.totient m * Nat.totient n := Nat.totient_mul hmn
-  have hφm : Nat.totient m ≠ 0 := by
-    have : 0 < Nat.totient m := (Nat.totient_pos).2 (Nat.pos_of_ne_zero hm)
-    exact ne_of_gt this
-  have hφn : Nat.totient n ≠ 0 := by
-    have : 0 < Nat.totient n := (Nat.totient_pos).2 (Nat.pos_of_ne_zero hn)
-    exact ne_of_gt this
-  rw [hω, hφ, pow_add]
-  field_simp [hφm, hφn]
-  rw [Nat.cast_mul]
-  ring
+  -- Both public weight definitions have the same arithmetic-function values.
+  change divisorWeight A (m * n) = divisorWeight A m * divisorWeight A n
+  exact (divisorWeight_multiplicative A).2 hmn
+
 
 private lemma chenDivisorWeight_isMultiplicative (A : ℝ) :
     (chenDivisorWeight A).IsMultiplicative := by

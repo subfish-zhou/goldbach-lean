@@ -80,12 +80,7 @@ theorem lambdaCharacterPrefix_one (y q : ℕ) :
   intro n hn
   change lambdaNatCoeff n * (if IsUnit (n : ZMod q) then 1 else 0) =
     if n.Coprime q then lambdaNatCoeff n else 0
-  by_cases hcop : n.Coprime q
-  · have hu : IsUnit (n : ZMod q) := (ZMod.isUnit_iff_coprime n q).2 hcop
-    simp [hcop, hu]
-  · have hnu : ¬ IsUnit (n : ZMod q) := by
-      simpa [ZMod.isUnit_iff_coprime] using hcop
-    simp [hcop, hnu]
+  simp only [ZMod.isUnit_iff_coprime, mul_ite, mul_one, mul_zero]
 
 /-- The principal contribution to the character average. -/
 def principalLambdaContribution (y q : ℕ) : ℂ :=
@@ -186,34 +181,29 @@ theorem lambdaAPPrefixMaxError_le_character_majorant
         (principalLambdaPrefixMaxError N q +
           ∑ χ ∈ nonprincipalCharacters q,
             lambdaCharacterPrefixMaxAmplitude N q χ) := by
+  have hprincipal (y : ℕ) (hy : y ∈ Finset.range (N + 1)) :
+      ‖principalLambdaMainError y q‖ ≤ principalLambdaPrefixMaxError N q := by
+    unfold principalLambdaPrefixMaxError
+    exact Finset.le_max'
+      ((Finset.range (N + 1)).image (fun y => ‖principalLambdaMainError y q‖)) _
+      (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
+  have hcharacter (y : ℕ) (hy : y ∈ Finset.range (N + 1))
+      (χ : DirichletCharacter ℂ q) :
+      ‖lambdaCharacterPrefix y q χ‖ ≤ lambdaCharacterPrefixMaxAmplitude N q χ := by
+    unfold lambdaCharacterPrefixMaxAmplitude
+    exact Finset.le_max'
+      ((Finset.range (N + 1)).image (fun y => ‖lambdaCharacterPrefix y q χ‖)) _
+      (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
   unfold lambdaAPPrefixMaxError
   apply Finset.max'_le
   intro z hz
   simp only [Finset.mem_insert, Finset.mem_image] at hz
   rcases hz with rfl | ⟨p, hp, rfl⟩
-  · have hφ0 : (0 : ℝ) ≤ q.totient := by positivity
-    have hP0 : 0 ≤ principalLambdaPrefixMaxError N q := by
-      have hle : ‖principalLambdaMainError 0 q‖ ≤ principalLambdaPrefixMaxError N q := by
-        unfold principalLambdaPrefixMaxError
-        exact Finset.le_max'
-          ((Finset.range (N + 1)).image
-            (fun y => ‖principalLambdaMainError y q‖))
-          ‖principalLambdaMainError 0 q‖
-          (Finset.mem_image.mpr
-            ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩)
-      exact (norm_nonneg _).trans hle
-    exact mul_nonneg (inv_nonneg.mpr hφ0)
-      (add_nonneg hP0 (Finset.sum_nonneg fun χ _ => by
-        have hle : ‖lambdaCharacterPrefix 0 q χ‖ ≤
-            lambdaCharacterPrefixMaxAmplitude N q χ := by
-          unfold lambdaCharacterPrefixMaxAmplitude
-          exact Finset.le_max'
-            ((Finset.range (N + 1)).image
-              (fun y => ‖lambdaCharacterPrefix y q χ‖))
-            ‖lambdaCharacterPrefix 0 q χ‖
-            (Finset.mem_image.mpr
-              ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ N), rfl⟩)
-        exact (norm_nonneg _).trans hle))
+  · have hzero : 0 ∈ Finset.range (N + 1) := by simp
+    exact mul_nonneg (inv_nonneg.mpr (by positivity))
+      (add_nonneg ((norm_nonneg _).trans (hprincipal 0 hzero))
+        (Finset.sum_nonneg fun χ _ =>
+          (norm_nonneg _).trans (hcharacter 0 hzero χ)))
   · rcases Finset.mem_product.mp hp with ⟨hyN, haq⟩
     have haCoprime : p.2.Coprime q := by
       have h := haq
@@ -221,23 +211,9 @@ theorem lambdaAPPrefixMaxError_le_character_majorant
       exact h.2
     refine (norm_lambdaAPMainError_le_principal_add_nonprincipal
       hq haCoprime p.1).trans ?_
-    have hp : ‖principalLambdaMainError p.1 q‖ ≤
-        principalLambdaPrefixMaxError N q := by
-      unfold principalLambdaPrefixMaxError
-      exact Finset.le_max'
-        ((Finset.range (N + 1)).image
-          (fun y => ‖principalLambdaMainError y q‖)) _
-        (Finset.mem_image.mpr ⟨p.1, hyN, rfl⟩)
-    have hc (χ : DirichletCharacter ℂ q) :
-        ‖lambdaCharacterPrefix p.1 q χ‖ ≤
-          lambdaCharacterPrefixMaxAmplitude N q χ := by
-      unfold lambdaCharacterPrefixMaxAmplitude
-      exact Finset.le_max'
-        ((Finset.range (N + 1)).image
-          (fun y => ‖lambdaCharacterPrefix y q χ‖)) _
-        (Finset.mem_image.mpr ⟨p.1, hyN, rfl⟩)
     apply mul_le_mul_of_nonneg_left
-    · exact add_le_add hp (Finset.sum_le_sum fun χ hχ => hc χ)
+    · exact add_le_add (hprincipal p.1 hyN)
+        (Finset.sum_le_sum fun χ _ => hcharacter p.1 hyN χ)
     · exact inv_nonneg.mpr (by positivity)
 
 end

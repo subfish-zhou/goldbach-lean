@@ -44,22 +44,18 @@ noncomputable def primeReciprocalSum (x : ℕ) : ℝ :=
 noncomputable def primeProduct (x : ℕ) : ℝ :=
   (primesUpTo x).prod fun p => 1 - 1 / (p : ℝ)
 
-@[simp]
-theorem primeReciprocalSum_zero : primeReciprocalSum 0 = 0 := by
-  unfold primeReciprocalSum
-  rw [primesUpTo_eq_empty_of_le_one (by omega)]
-  simp
-
-@[simp]
-theorem primeReciprocalSum_one : primeReciprocalSum 1 = 0 := by
-  unfold primeReciprocalSum
-  rw [primesUpTo_eq_empty_of_le_one (by omega)]
-  simp
-
 /-- There are no reciprocal-prime terms below `2`. -/
 theorem primeReciprocalSum_eq_zero_of_le_one {x : ℕ} (hx : x ≤ 1) :
     primeReciprocalSum x = 0 := by
-  interval_cases x <;> simp
+  simp [primeReciprocalSum, primesUpTo_eq_empty_of_le_one hx]
+
+@[simp]
+theorem primeReciprocalSum_zero : primeReciprocalSum 0 = 0 :=
+  primeReciprocalSum_eq_zero_of_le_one (by decide)
+
+@[simp]
+theorem primeReciprocalSum_one : primeReciprocalSum 1 = 0 :=
+  primeReciprocalSum_eq_zero_of_le_one le_rfl
 
 theorem primeReciprocalSum_nonneg (x : ℕ) : 0 ≤ primeReciprocalSum x := by
   unfold primeReciprocalSum
@@ -89,17 +85,12 @@ theorem primeProduct_one : primeProduct 1 = 1 := by
 theorem primeFactor_pos {p : ℕ} (hp : p.Prime) :
     0 < 1 - 1 / (p : ℝ) := by
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
-  have hp0 : (0 : ℝ) < p := by positivity
-  have hdiv : 1 / (p : ℝ) < 1 := by
-    rw [div_lt_iff₀ hp0]
-    linarith
-  linarith
+  exact sub_pos.mpr ((div_lt_one (zero_lt_one.trans hp1)).mpr hp1)
 
 /-- Every Euler factor indexed by a prime is at most one. -/
 theorem primeFactor_le_one {p : ℕ} (_hp : p.Prime) :
     1 - 1 / (p : ℝ) ≤ 1 := by
-  have hrecip : 0 ≤ 1 / (p : ℝ) := by positivity
-  linarith
+  exact sub_le_self _ (by positivity)
 
 theorem primeProduct_pos (x : ℕ) : 0 < primeProduct x := by
   unfold primeProduct
@@ -145,26 +136,17 @@ theorem abs_log_one_sub_add_le {t : ℝ} (ht0 : 0 < t) (htle : t ≤ 1 / 2) :
     have h := Real.log_le_sub_one_of_pos hpos
     linarith
   have hlb : -t - 2 * t ^ 2 ≤ log (1 - t) := by
-    have hrec : 0 < 1 / (1 - t) := by positivity
-    have hle := Real.log_le_sub_one_of_pos hrec
-    have hloginv : log (1 / (1 - t)) = -log (1 - t) := by
-      rw [one_div, Real.log_inv]
-    have hstep : 1 / (1 - t) - 1 = t / (1 - t) := by
-      field_simp [hne]
-      ring
-    have hle' : -log (1 - t) ≤ t / (1 - t) := by
-      rwa [hloginv, hstep] at hle
     have hrec2 : 1 / (1 - t) ≤ 1 + 2 * t := by
       rw [div_le_iff₀ hpos]
       nlinarith
     have hmul : t / (1 - t) ≤ t * (1 + 2 * t) := by
       simpa [div_eq_mul_inv] using
         mul_le_mul_of_nonneg_left hrec2 (le_of_lt ht0)
-    have hge : -(t / (1 - t)) ≤ log (1 - t) := by linarith
     calc
       -t - 2 * t ^ 2 = -(t * (1 + 2 * t)) := by ring
       _ ≤ -(t / (1 - t)) := neg_le_neg hmul
-      _ ≤ log (1 - t) := hge
+      _ = 1 - (1 - t)⁻¹ := by field_simp [hne]; ring
+      _ ≤ log (1 - t) := Real.one_sub_inv_le_log_of_pos hpos
   rw [abs_le]
   constructor <;> nlinarith
 
@@ -176,8 +158,7 @@ theorem abs_log_primeFactor_add_le {p : ℕ} (hp : p.Prime) :
   have htle : 1 / (p : ℝ) ≤ 1 / 2 := by
     exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2)
       (by exact_mod_cast hp.two_le)
-  have h := abs_log_one_sub_add_le ht0 htle
-  have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp.ne_zero
-  convert h using 1 <;> field_simp [hp0]
+  simpa only [div_pow, one_pow, mul_one_div] using
+    abs_log_one_sub_add_le ht0 htle
 
 end AnalyticNumberTheory.Mertens

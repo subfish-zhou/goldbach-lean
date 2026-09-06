@@ -176,12 +176,8 @@ theorem suzukiActualT_all_supported_depths_eq_lowerRosserBoundaryAccum
     (S : BoundingSieve) (D z : ℕ) (hzD : z ≤ D) :
     suzukiActualT S (2 * ((suzukiSupportedBelow S z).card + 1)) D z =
       lowerRosserBoundaryAccum S.nu D ∅ (suzukiSupportedBelowList S z) := by
-  rw [suzukiActualT_even_eq_sum_lowerRosserEvenBoundaryLayerMass]
-  apply Eq.symm
-  rw [lowerRosserBoundaryAccum_supportedBelow_eq_sum_unnormalizedLayers]
-  apply Finset.sum_congr rfl
-  intro k hk
-  exact (lowerRosserEvenBoundaryLayerMass_eq_unnormalizedLayer S D z k hzD).symm
+  rw [suzukiActualT_even_eq_euler_mul_sum_normalizedLayers S D z _ hzD,
+    lowerRosserBoundaryAccum_supportedBelow_eq_euler_mul_sum_normalizedLayers]
 
 
 end MathlibNt.SieveTheory

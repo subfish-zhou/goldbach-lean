@@ -27,68 +27,6 @@ end Internal
 
 open Internal
 
-/-- The explicit logarithmic kernel remains uniformly Lipschitz when extended
-by zero below its ordered region. -/
-theorem abs_upperRosserBoundaryLogKernel_sub_le_of_one_sixth_le
-    {s a x y : ℝ} (ha : 1 / 6 ≤ a) :
-    |LinearSieve.upperRosserBoundaryLogKernel s a x -
-        LinearSieve.upperRosserBoundaryLogKernel s a y| ≤
-      12 * |x - y| := by
-  have hzero : ∀ {t : ℝ}, t ≤ a →
-      LinearSieve.upperRosserBoundaryLogKernel s a t = 0 := by
-    intro t ht
-    rw [LinearSieve.upperRosserBoundaryLogKernel, if_neg]
-    intro hactive
-    exact (not_lt_of_ge ht) ((le_max_left _ _).trans_lt hactive)
-  by_cases hx : a ≤ x
-  · by_cases hy : a ≤ y
-    · have h :=
-        LinearSieve.abs_upperRosserBoundaryLogKernel_sub_le
-          (s := s) (t := s) ha hx ha hy
-      calc
-        |LinearSieve.upperRosserBoundaryLogKernel s a x -
-            LinearSieve.upperRosserBoundaryLogKernel s a y| ≤
-            6 * (2 * |x - y| + |s - s| + 4 * |a - a|) := h
-        _ = 12 * |x - y| := by simp; ring
-    · have hy' : y ≤ a := (le_of_not_ge hy)
-      have h :=
-        LinearSieve.abs_upperRosserBoundaryLogKernel_sub_le
-          (s := s) (t := s) ha hx ha (le_refl a)
-      have hdist : |x - a| ≤ |x - y| := by
-        rw [abs_of_nonneg (sub_nonneg.mpr hx),
-          abs_of_nonneg (sub_nonneg.mpr (hy'.trans hx))]
-        linarith
-      rw [hzero hy']
-      calc
-        |LinearSieve.upperRosserBoundaryLogKernel s a x - 0| =
-            |LinearSieve.upperRosserBoundaryLogKernel s a x -
-              LinearSieve.upperRosserBoundaryLogKernel s a a| := by
-                rw [hzero (le_refl a)]
-        _ ≤ 6 * (2 * |x - a| + |s - s| + 4 * |a - a|) := h
-        _ = 12 * |x - a| := by simp; ring
-        _ ≤ 12 * |x - y| := mul_le_mul_of_nonneg_left hdist (by norm_num)
-  · have hx' : x ≤ a := le_of_not_ge hx
-    by_cases hy : a ≤ y
-    · have h :=
-        LinearSieve.abs_upperRosserBoundaryLogKernel_sub_le
-          (s := s) (t := s) ha (le_refl a) ha hy
-      have hdist : |a - y| ≤ |x - y| := by
-        rw [abs_of_nonpos (sub_nonpos.mpr hy),
-          abs_of_nonpos (sub_nonpos.mpr (hx'.trans hy))]
-        linarith
-      rw [hzero hx']
-      calc
-        |0 - LinearSieve.upperRosserBoundaryLogKernel s a y| =
-            |LinearSieve.upperRosserBoundaryLogKernel s a a -
-              LinearSieve.upperRosserBoundaryLogKernel s a y| := by
-                rw [hzero (le_refl a)]
-        _ ≤ 6 * (2 * |a - y| + |s - s| + 4 * |a - a|) := h
-        _ = 12 * |a - y| := by simp; ring
-        _ ≤ 12 * |x - y| := mul_le_mul_of_nonneg_left hdist (by norm_num)
-    · have hy' : y ≤ a := le_of_not_ge hy
-      rw [hzero hx', hzero hy', sub_self, abs_zero]
-      positivity
-
 /-- The logarithm is Lipschitz above an arbitrary positive lower screen. -/
 theorem abs_log_sub_log_le_inv_of_lower
     {c x y : ℝ} (hc : 0 < c) (hx : c ≤ x) (hy : c ≤ y) :
@@ -292,6 +230,18 @@ theorem abs_upperRosserBoundaryLogKernel_sub_le_of_screen
     · have hy' : y ≤ a := le_of_not_ge hy
       rw [hzero hx', hzero hy', sub_self, abs_zero]
       positivity
+
+/-- The explicit logarithmic kernel remains uniformly Lipschitz when extended
+by zero below its ordered region. -/
+theorem abs_upperRosserBoundaryLogKernel_sub_le_of_one_sixth_le
+    {s a x y : ℝ} (ha : 1 / 6 ≤ a) :
+    |LinearSieve.upperRosserBoundaryLogKernel s a x -
+        LinearSieve.upperRosserBoundaryLogKernel s a y| ≤
+      12 * |x - y| := by
+  have h := abs_upperRosserBoundaryLogKernel_sub_le_of_screen
+    (c := (1 / 6 : ℝ)) (s := s) (x := x) (y := y) (by norm_num) ha
+  norm_num at h
+  exact h
 
 /-- Uniform two-stage Stieltjes transfer for the first positive residual depth.
 The distinguished prime is screened away from zero, while the exact inherited

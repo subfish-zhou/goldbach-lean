@@ -59,12 +59,8 @@ theorem Proposition1020Xi.hasDerivAt
     hd.exp.sub_const 1
   have hright : HasDerivAt (fun u : ℝ => u * ξ u)
       (ξ s + s * deriv ξ s) s := by
-    have hprod := (hasDerivAt_id s).mul hd
-    have hfun : id * ξ = (fun u : ℝ => u * ξ u) := by
-      funext u
-      simp only [Pi.mul_apply, id_eq]
-    rw [hfun] at hprod
-    simpa only [id_eq, one_mul] using hprod
+    simpa only [Pi.mul_def, id_eq, one_mul] using
+      (hasDerivAt_id s).mul hd
   have hderivEq : Real.exp (ξ s) * deriv ξ s = ξ s + s * deriv ξ s := by
     exact hleft.unique (hright.congr_of_eventuallyEq heq)
   have hsourceEq := hξ.equation s hs
@@ -74,7 +70,6 @@ theorem Proposition1020Xi.hasDerivAt
     linear_combination hderivEq
   have hdenEq : s * ξ s - (s - 1) = ξ s * (s - (s - 1) / ξ s) := by
     field_simp [hne]
-    <;> ring
   have hdenNe : s * ξ s - (s - 1) ≠ 0 := by
     rw [hdenEq]
     exact mul_ne_zero hne hqne
@@ -84,7 +79,6 @@ theorem Proposition1020Xi.hasDerivAt
   apply hd.congr_deriv
   rw [hdform]
   field_simp [hne, hqne, hdenNe]
-  <;> ring
 
 /-- The Proposition 10.20 derivative is positive. -/
 theorem Proposition1020Xi.deriv_pos
@@ -135,10 +129,7 @@ theorem proposition1020_secant_nonneg
       (fun u hu => (hξ.differentiableAt u (by linarith [hu.1, ht])).hasDerivAt)
     have hcPos : 0 < deriv ξ c := hξ.deriv_pos (by linarith [hc.1, ht])
     rw [hcderiv] at hcPos
-    rcases div_pos_iff.mp hcPos with hgood | hbad
-    · exact hgood.1.le
-    · exfalso
-      linarith [hbad.2, sub_pos.mpr hlt]
+    exact ((div_pos_iff_of_pos_right (sub_pos.mpr hlt)).mp hcPos).le
 
 /-- Uniform unit-interval form of the common majorant. -/
 theorem proposition1020_unitIntervalError
@@ -160,10 +151,7 @@ noncomputable def xiPhase (ξ : ℝ → ℝ) (s : ℝ) : ℝ :=
 theorem xiPhase_hasDerivAt
     {ξ : ℝ → ℝ} (hξ : Proposition1020Xi ξ) (s : ℝ) :
     HasDerivAt (xiPhase ξ) (ξ s) s := by
-  exact intervalIntegral.integral_hasDerivAt_right
-    (hξ.continuous.intervalIntegrable 1 s)
-    hξ.continuous.aestronglyMeasurable.stronglyMeasurableAtFilter
-    hξ.continuous.continuousAt
+  exact (hξ.continuous.integral_hasStrictDerivAt 1 s).hasDerivAt
 
 /-- Logarithm of the decreasing weighted envelope from Lemma 10.28. -/
 noncomputable def logEnvelopeMinus
@@ -188,13 +176,7 @@ theorem lemma1028_logEnvelopeMinus_hasDerivAt
       (-(2 * R s + R (s - 1)) / s) / R s + ξ s - c =
         -R (s - 1) / (s * R s) + ξ s - c - 2 / s := by
     field_simp [ne_of_gt hs, ne_of_gt hR]
-    <;> ring
-  have hfun :
-      ((fun y : ℝ => Real.log (R y)) + xiPhase ξ - fun u : ℝ => c * u) =
-        logEnvelopeMinus R ξ c := by
-    funext u
-    rfl
-  rw [hfun] at hsum
+    ring
   exact hsum.congr_deriv hcoeff
 
 /-- Equation (10.44) after multiplication by the positive `s R(s)`.  This is
@@ -213,7 +195,7 @@ theorem lemma1028_commonMajorantSlope_of_deriv_nonpos
       -(R (s - 1)) + s * (ξ s - c - 2 / s) * R s =
         (s * R s) * (-R (s - 1) / (s * R s) + ξ s - c - 2 / s) := by
     field_simp [ne_of_gt hs, ne_of_gt hR]
-    <;> ring
+    ring
   rw [heq]
   exact mul_nonpos_of_nonneg_of_nonpos hscale.le hslope
 

@@ -177,32 +177,26 @@ theorem variableLengthPrimitivePrefixBudget_le_physicalScale
   let K : ℝ :=
     (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
       (Q : ℝ) ^ 2
+  have hK : 0 ≤ K := by
+    dsimp [K]
+    positivity
   calc
-    (∑ r ∈ S, (((Nat.log2 (L r) + 1 : ℕ) : ℝ) ^ 2) *
-        ((L r : ℝ) + K) *
-          ∑ m ∈ Finset.Icc ((0 : ℤ) + 1) ((0 : ℤ) + L r), ‖c r m‖ ^ 2) =
-      ∑ r ∈ S, ((L r : ℝ) + K) *
-        ((((Nat.log2 (L r) + 1 : ℕ) : ℝ) ^ 2) *
-          ∑ m ∈ Finset.Icc ((0 : ℤ) + 1) ((0 : ℤ) + L r), ‖c r m‖ ^ 2) := by
-            apply Finset.sum_congr rfl
-            intro r hr
-            ring
+    _ ≤ ∑ r ∈ S, ((L r : ℝ) + K) := by
+      apply Finset.sum_le_sum
+      intro r hr
+      -- Apply the RM-weighted energy bound before comparing row lengths.
+      calc
+        _ = ((L r : ℝ) + K) *
+            ((((Nat.log2 (L r) + 1 : ℕ) : ℝ) ^ 2) *
+              ∑ m ∈ Finset.Icc ((0 : ℤ) + 1) ((0 : ℤ) + L r), ‖c r m‖ ^ 2) := by
+          ring
+        _ ≤ (L r : ℝ) + K :=
+          mul_le_of_le_one_right (add_nonneg (Nat.cast_nonneg _) hK) (henergy r hr)
     _ ≤ ∑ _r ∈ S, ((Lmax : ℝ) + K) := by
       apply Finset.sum_le_sum
       intro r hr
-      have hLK : (L r : ℝ) + K ≤ (Lmax : ℝ) + K := by
-        gcongr
-        exact_mod_cast hL r hr
-      have hfactor0 : 0 ≤ (L r : ℝ) + K := by
-        dsimp [K]
-        positivity
-      calc
-        ((L r : ℝ) + K) *
-            ((((Nat.log2 (L r) + 1 : ℕ) : ℝ) ^ 2) *
-              ∑ m ∈ Finset.Icc ((0 : ℤ) + 1) ((0 : ℤ) + L r), ‖c r m‖ ^ 2)
-          ≤ ((L r : ℝ) + K) * 1 :=
-            mul_le_mul_of_nonneg_left (henergy r hr) hfactor0
-        _ ≤ ((Lmax : ℝ) + K) := by simpa using hLK
+      have hlength : (L r : ℝ) ≤ (Lmax : ℝ) := by exact_mod_cast hL r hr
+      exact add_le_add hlength le_rfl
     _ = (S.card : ℝ) * (Lmax : ℝ) + (S.card : ℝ) * K := by
       simp
     _ ≤ (N : ℝ) + (S.card : ℝ) * K := by
@@ -221,45 +215,7 @@ theorem imprimitive_conductor_window_family_le_linear_typeI
       ((Q / C : ℕ) : ℝ) * conductorHarmonicFactor (Q / C) *
         ∑ d ∈ Finset.Icc 1 (2 * C),
           ((d : ℝ) / (d.totient : ℝ)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-  calc
-    _ ≤ ∑ d ∈ Finset.Icc C (2 * C),
-        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
-          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_le_sum
-      intro d hdmem
-      have hd : 0 < d := hC.trans_le (Finset.mem_Icc.mp hdmem).1
-      have hdiv : Q / d ≤ Q / C :=
-        Nat.div_le_div_left (Finset.mem_Icc.mp hdmem).1 hC
-      have hharm : conductorHarmonicFactor (Q / d) ≤
-          conductorHarmonicFactor (Q / C) := by
-        unfold conductorHarmonicFactor
-        apply Finset.sum_le_sum_of_subset_of_nonneg
-        · exact Finset.Icc_subset_Icc_right hdiv
-        · intro e he hnot
-          positivity
-      have hsum : 0 ≤ ∑ ψ : PrimitiveCharacter d, F d ψ :=
-        Finset.sum_nonneg fun ψ _ => hF d ψ
-      apply mul_le_mul_of_nonneg_right _ hsum
-      refine (imprimitiveConductorWeight_le_linear_harmonic Q d hd).trans ?_
-      gcongr
-      exact conductorHarmonicFactor_nonneg _
-    _ ≤ ∑ d ∈ Finset.Icc 1 (2 * C),
-        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
-          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_le_sum_of_subset_of_nonneg
-      · intro d hd
-        exact Finset.mem_Icc.mpr
-          ⟨hC.trans_le (Finset.mem_Icc.mp hd).1, (Finset.mem_Icc.mp hd).2⟩
-      · intro d hd hnot
-        exact mul_nonneg
-          (mul_nonneg (mul_nonneg (div_nonneg (by positivity) (by positivity))
-            (by positivity)) (conductorHarmonicFactor_nonneg _))
-          (Finset.sum_nonneg fun ψ _ => hF d ψ)
-    _ = _ := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro d hd
-      ring
+  exact imprimitive_conductor_window_le_weighted_primitive_linear F hF Q C hC
 
 /-- Linear-harmonic imprimitive conductor transport applied *before* the
 variable row lengths are forgotten.  This is the connector used on every

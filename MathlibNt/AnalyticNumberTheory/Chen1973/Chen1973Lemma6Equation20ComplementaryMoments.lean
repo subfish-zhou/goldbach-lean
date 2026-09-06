@@ -1,4 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19DyadicPairEnergy
+import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6AggregateDerivativeMoment
 import Mathlib.Algebra.Order.Chebyshev
 
@@ -18,7 +19,7 @@ def chen1973Lemma6Eq20MobiusSecondMoment
     chen1973Lemma6Eq19Weight d * ∑ χ : PrimitiveCharacter d,
       ‖chen1973Lemma6NaturalMobiusPolynomial H s χ‖ ^ 2
 
-private lemma eq20_sum_int_nat (H : ℕ) (f : ℤ → ℂ) :
+private lemma eq20_sum_int_nat {α : Type*} [AddCommMonoid α] (H : ℕ) (f : ℤ → α) :
     (∑ z ∈ Icc (1 : ℤ) (H : ℤ), f z) = ∑ n ∈ Icc 1 H, f (n : ℤ) := by
   symm
   apply Finset.sum_bij (fun (n : ℕ) _ => (n : ℤ))
@@ -80,20 +81,7 @@ private lemma eq20_sum_int_nat (H : ℕ) (f : ℤ → ℂ) :
       exact Finset.sum_le_sum fun z hz =>
         chen1973Lemma6_eq20_mobius_atom_energy s hs (mem_Icc.mp hz).1
     _ = liuHarmonic H := by
-      unfold liuHarmonic
-      symm
-      apply Finset.sum_bij (fun (n : ℕ) _ => (n : ℤ))
-      · intro n hn
-        exact mem_Icc.mpr ⟨by exact_mod_cast (mem_Icc.mp hn).1,
-          by exact_mod_cast (mem_Icc.mp hn).2⟩
-      · intro a ha b hb hab
-        exact_mod_cast hab
-      · intro z hz
-        have hzdata := mem_Icc.mp hz
-        have hz0 : 0 ≤ z := by have := (mem_Icc.mp hz).1; omega
-        refine ⟨z.toNat, mem_Icc.mpr ⟨by omega, by omega⟩, Int.toNat_of_nonneg hz0⟩
-      · intro n hn
-        simp
+      simpa [liuHarmonic] using eq20_sum_int_nat H (fun z => (z : ℝ)⁻¹)
     _ ≤ _ := liuHarmonic_le_one_add_log H
 
 /-- Fresh sharp LS on M=0,N=H. Valid for every imaginary height. -/
@@ -152,8 +140,13 @@ private lemma eq20_sum_mul_le_sqrt
       Real.sqrt (∑ i, f i ^ 2) * Real.sqrt (∑ i, g i ^ 2) := by
   simpa using Real.sum_mul_le_sqrt_mul_sqrt (Finset.univ : Finset ι) f g
 
-private lemma eq20_sqrt_mono {a b : ℝ} (_ha : 0 ≤ a) (hab : a ≤ b) :
-    Real.sqrt a ≤ Real.sqrt b := Real.sqrt_le_sqrt hab
+/-- Weighted Cauchy–Schwarz, shared by the two conductor-level reductions. -/
+private lemma eq20_weighted_sqrt_sum_le
+    {ι : Type*} (S : Finset ι) (w P R : ι → ℝ)
+    (hw : ∀ i, 0 ≤ w i) (hP : ∀ i, 0 ≤ P i) (hR : ∀ i, 0 ≤ R i) :
+    (∑ i ∈ S, w i * (Real.sqrt (P i) * Real.sqrt (R i))) ≤
+      Real.sqrt (∑ i ∈ S, w i * P i) * Real.sqrt (∑ i ∈ S, w i * R i) := by
+  exact eq19_weighted_sum_sqrt_mul_sqrt_le S w P R hw hP hR
 
 /-- Source equation-(20) Holder allocation: S², pair⁴, derivative⁴. -/
 theorem chen1973Lemma6B_le_eq20_moment_product
@@ -201,29 +194,8 @@ theorem chen1973Lemma6B_le_eq20_moment_product
   have houter :
       (∑ d ∈ S, w d * (Real.sqrt (P d) * Real.sqrt (R d))) ≤
         Real.sqrt (∑ d ∈ S, w d * P d) *
-          Real.sqrt (∑ d ∈ S, w d * R d) := by
-    calc
-      _ = ∑ d ∈ S,
-          (Real.sqrt (w d) * Real.sqrt (P d)) *
-            (Real.sqrt (w d) * Real.sqrt (R d)) := by
-          apply Finset.sum_congr rfl
-          intro d hd
-          rw [show (Real.sqrt (w d) * Real.sqrt (P d)) *
-              (Real.sqrt (w d) * Real.sqrt (R d)) =
-              Real.sqrt (w d) ^ 2 *
-                (Real.sqrt (P d) * Real.sqrt (R d)) by ring,
-            Real.sq_sqrt (hw d)]
-      _ ≤ Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (P d)) ^ 2) *
-          Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (R d)) ^ 2) :=
-        Real.sum_mul_le_sqrt_mul_sqrt S _ _
-      _ = _ := by
-        congr 1 <;> apply congrArg Real.sqrt <;>
-          apply Finset.sum_congr rfl <;> intro d hd <;>
-          rw [mul_pow, Real.sq_sqrt (hw d)]
-        · rw [Real.sq_sqrt (hP d)]
-        · rw [Real.sq_sqrt (hR d)]
+          Real.sqrt (∑ d ∈ S, w d * R d) :=
+    eq20_weighted_sqrt_sum_le S w P R hw hP hR
   have hprod :
       (∑ d ∈ S, w d * R d) ≤
         Real.sqrt (∑ d ∈ S, w d * D4 d) *
@@ -233,27 +205,7 @@ theorem chen1973Lemma6B_le_eq20_moment_product
         apply Finset.sum_le_sum
         intro d hd
         exact mul_le_mul_of_nonneg_left (hRpoint d) (hw d)
-      _ = ∑ d ∈ S,
-          (Real.sqrt (w d) * Real.sqrt (D4 d)) *
-            (Real.sqrt (w d) * Real.sqrt (M4 d)) := by
-        apply Finset.sum_congr rfl
-        intro d hd
-        rw [show (Real.sqrt (w d) * Real.sqrt (D4 d)) *
-            (Real.sqrt (w d) * Real.sqrt (M4 d)) =
-            Real.sqrt (w d) ^ 2 *
-              (Real.sqrt (D4 d) * Real.sqrt (M4 d)) by ring,
-          Real.sq_sqrt (hw d)]
-      _ ≤ Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (D4 d)) ^ 2) *
-          Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (M4 d)) ^ 2) :=
-        Real.sum_mul_le_sqrt_mul_sqrt S _ _
-      _ = _ := by
-        congr 1 <;> apply congrArg Real.sqrt <;>
-          apply Finset.sum_congr rfl <;> intro d hd <;>
-          rw [mul_pow, Real.sq_sqrt (hw d)]
-        · rw [Real.sq_sqrt (hD4 d)]
-        · rw [Real.sq_sqrt (hM4 d)]
+      _ ≤ _ := eq20_weighted_sqrt_sum_le S w D4 M4 hw hD4 hM4
   have hfirst : chen1973Lemma6B x L level B k m H s ≤
         ∑ d ∈ S, w d * (Real.sqrt (P d) * Real.sqrt (R d)) := by
     unfold chen1973Lemma6B
@@ -273,7 +225,7 @@ theorem chen1973Lemma6B_le_eq20_moment_product
           (Real.sqrt (∑ d ∈ S, w d * D4 d) *
             Real.sqrt (∑ d ∈ S, w d * M4 d)) := by
       exact mul_le_mul_of_nonneg_left
-        (eq20_sqrt_mono (Finset.sum_nonneg fun d hd => mul_nonneg (hw d) (hR d)) hprod)
+        (Real.sqrt_le_sqrt hprod)
         (Real.sqrt_nonneg _)
     _ = _ := by
       rfl

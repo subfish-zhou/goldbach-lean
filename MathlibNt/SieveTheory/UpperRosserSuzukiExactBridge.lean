@@ -19,6 +19,15 @@ def UpperRosserSuzukiExactBridge : Prop :=
       AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S +
         suzukiActualT S (2 * S.prodPrimes.primeFactors.card + 1) D z
 
+/-- Every supported prime contributes a nonzero Euler factor. -/
+private theorem upper_euler_factor_ne_zero
+    (S : BoundingSieve) {p : ℕ} (hp : p ∈ S.prodPrimes.primeFactors) :
+    1 - S.nu p ≠ 0 := by
+  have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hp
+  have hpdiv : p ∣ S.prodPrimes :=
+    (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hp |>.2
+  exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime p hpprime hpdiv))
+
 private theorem upper_euler_product_split_at
     (S : BoundingSieve) {q : ℕ} (hq : q ∈ S.prodPrimes.primeFactors) :
     (∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p)) =
@@ -66,21 +75,13 @@ private theorem upper_relative_depth_mul_fullEuler
       S.nu q * sourceDiscreteEuler S q *
         upperRosserBoundaryChainsFixedDepthDensity S.nu D q
           (S.prodPrimes.primeFactors.filter (fun p => q < p)) k := by
-  have hqprime : q.Prime := Nat.prime_of_mem_primeFactors hq
-  have hqdiv : q ∣ S.prodPrimes :=
-    (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hq |>.2
-  have hqfactor : 1 - S.nu q ≠ 0 :=
-    ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime q hqprime hqdiv))
+  have hqfactor : 1 - S.nu q ≠ 0 := upper_euler_factor_ne_zero S hq
   have htailfactor :
       (∏ p ∈ S.prodPrimes.primeFactors.filter (fun p => q < p),
         (1 - S.nu p)) ≠ 0 := by
     apply Finset.prod_ne_zero_iff.mpr
     intro p hp
-    have hpP := (Finset.mem_filter.mp hp).1
-    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpP
-    have hpdiv : p ∣ S.prodPrimes :=
-      (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpP |>.2
-    exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime p hpprime hpdiv))
+    exact upper_euler_factor_ne_zero S (Finset.mem_filter.mp hp).1
   unfold upperRosserBoundaryChainsFixedDepthRelativeDensity
   rw [upper_euler_product_split_at S hq]
   field_simp [hqfactor, htailfactor]
@@ -120,11 +121,8 @@ theorem mainSum_upperRosserWeight_eq_sieveProduct_add_suzukiActualT
   let V := ∏ p ∈ P, (1 - S.nu p)
   have hprime : ∀ p ∈ P, p.Prime :=
     fun p hp => Nat.prime_of_mem_primeFactors hp
-  have hfactor : ∀ p ∈ P, 1 - S.nu p ≠ 0 := by
-    intro p hp
-    have hpdiv : p ∣ S.prodPrimes :=
-      (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hp |>.2
-    exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime p (hprime p hp) hpdiv))
+  have hfactor : ∀ p ∈ P, 1 - S.nu p ≠ 0 :=
+    fun _ hp => upper_euler_factor_ne_zero S hp
   have hV : V ≠ 0 := Finset.prod_ne_zero_iff.mpr hfactor
   have hratio :=
     LinearSieve.upperRosserSetDensityRatio_eq_one_add_sum_relativeBoundaryDepths

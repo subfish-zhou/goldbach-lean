@@ -1,6 +1,7 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVElementaryPayments
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
 import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
 
 /-!
@@ -61,7 +62,7 @@ theorem apNormalizedPrimitiveMeanOn_vaughanSmall_le_explicit
               (Fintype.card (PrimitiveCharacter q) : ℝ) ≤ 1 := by
             rw [inv_mul_le_one₀ hφ0]
             exact hcard
-          nlinarith
+          simpa only [← mul_assoc] using mul_le_mul_of_nonneg_right hratio hV
         _ = _ := by ring
     _ = (S.card : ℝ) * ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ)) := by simp
 
@@ -103,26 +104,8 @@ lemma natLog2_cast_le_two_log {n : ℕ} (hn : 2 ≤ n) :
 
 lemma natSqrt_cast_le_realSqrt (n : ℕ) :
     (n.sqrt : ℝ) ≤ Real.sqrt n := by
-  have hsq : ((n.sqrt : ℝ) : ℝ) ^ 2 ≤ (n : ℝ) := by
-    exact_mod_cast (show n.sqrt ^ 2 ≤ n by simpa [pow_two] using Nat.sqrt_le n)
-  have hrsq : Real.sqrt (n : ℝ) ^ 2 = (n : ℝ) := Real.sq_sqrt (by positivity)
-  nlinarith [Real.sqrt_nonneg (n : ℝ), (show (0 : ℝ) ≤ n.sqrt by positivity)]
-
-/-- Mathlib's polynomial-versus-log little-o theorem, specialized to the
-square-root scale needed in BV scalar payments. -/
-theorem log_pow_le_sqrt_eventually (k : ℕ) :
-    ∀ᶠ N : ℕ in Filter.atTop,
-      Real.log (N : ℝ) ^ k ≤ Real.sqrt N := by
-  have hR := (Real.isLittleO_pow_log_id_atTop (n := 2 * k)).eventuallyLE
-  have hN := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hR
-  filter_upwards [hN, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-  have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-    exact_mod_cast (show 1 ≤ N by omega))
-  have hs : Real.sqrt (N : ℝ) ^ 2 = (N : ℝ) := Real.sq_sqrt (by positivity)
-  simp only [id, Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-    abs_of_nonneg (by positivity : (0 : ℝ) ≤ N)] at hlog
-  rw [mul_comm, pow_mul] at hlog
-  nlinarith [Real.sqrt_nonneg (N : ℝ), pow_nonneg hlog0 k]
+  apply Real.le_sqrt_of_sq_le
+  exact_mod_cast (show n.sqrt ^ 2 ≤ n by simpa [pow_two] using Nat.sqrt_le n)
 
 /-- The exact `Q ≤ sqrt N / log^(A+k) N` calculation.  This is the reusable
 polynomial-versus-log payment lemma for every elementary lane below. -/
@@ -131,8 +114,7 @@ theorem Q_sqrt_log_payable (A k : ℕ) :
       (Q : ℝ) ≤ Real.sqrt N / Real.log N ^ (A + k) →
       (Q : ℝ) * (Real.sqrt N + 1) * Real.log N ^ k ≤
         2 * (N : ℝ) / Real.log N ^ A := by
-  filter_upwards [log_pow_le_sqrt_eventually k,
-    eventually_ge_atTop (3 : ℕ)] with N hk hN Q hQ
+  filter_upwards [eventually_ge_atTop (3 : ℕ)] with N hN Q hQ
   have hlog : 0 < Real.log (N : ℝ) := Real.log_pos (by
     exact_mod_cast (show 1 < N by omega))
   have hs1 : 1 ≤ Real.sqrt (N : ℝ) := Real.one_le_sqrt.mpr (by
@@ -323,10 +305,9 @@ theorem StandardBVPayload_payable (A : ℕ) :
   have hsqrt0 : 0 ≤ Real.sqrt (N : ℝ) := Real.sqrt_nonneg _
   have hcut : Real.sqrt N / Real.log N ^ (A + 3) ≤ Real.sqrt N :=
     div_le_self hsqrt0 hden
-  have hsquare : Real.sqrt (N : ℝ) ^ 2 = (N : ℝ) := Real.sq_sqrt (by positivity)
-  have hsqrtN : Real.sqrt (N : ℝ) ≤ N := by
-    have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast (show 1 ≤ N by omega)
-    nlinarith
+  have hsqrtN : Real.sqrt (N : ℝ) ≤ N :=
+    Real.sqrt_le_self_iff.mpr (Or.inr (by
+      exact_mod_cast (show 1 ≤ N by omega)))
   have hQNreal : (Q : ℝ) ≤ N := hQ.trans (hcut.trans hsqrtN)
   have hQN : Q ≤ N := by exact_mod_cast hQNreal
   calc

@@ -42,7 +42,7 @@ noncomputable def suzukiProposition118SourceQTerminalPairingResidual
     suzukiProposition118KappaOneSourceAdjoint s *
       suzukiProposition118SourceQTerminal m s
 
-private theorem weighted_suzukiLayer_eq_integral_to_upper
+theorem suzukiLayer_weighted_eq_integral_to_upper
     {β s : ℝ} {n : ℕ} (hβ : 1 < β) (hn : 2 ≤ n)
     (hs : β + sourceEpsilon n ≤ s) :
     s * suzukiLayer 1 β n s =
@@ -137,7 +137,7 @@ theorem hasDerivAt_weighted_suzukiLayer_of_threshold_lt
   have hevent : (fun u => u * suzukiLayer 1 β n u) =ᶠ[𝓝 s]
       (fun u => ∫ t in u..(β + n), suzukiLayer 1 β (n - 1) (t - 1)) := by
     filter_upwards [Ioi_mem_nhds hs] with u hu
-    exact weighted_suzukiLayer_eq_integral_to_upper hβ hn hu.le
+    exact suzukiLayer_weighted_eq_integral_to_upper hβ hn hu.le
   exact hleft.congr_of_eventuallyEq hevent
 
 

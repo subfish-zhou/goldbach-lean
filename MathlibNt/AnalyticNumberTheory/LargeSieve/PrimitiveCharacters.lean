@@ -1,6 +1,7 @@
 
 
 import AnalyticNumberTheory.LargeSieve.Multiplicative
+import AnalyticNumberTheory.LargeSieve.BombieriDavenport
 import Mathlib.NumberTheory.DirichletCharacter.GaussSum
 
 /-!
@@ -38,6 +39,17 @@ abbrev PrimitiveCharacter (q : ℕ) :=
 /-- The primitive characters of a fixed modulus form a finite type. -/
 noncomputable instance (q : ℕ) : Fintype (PrimitiveCharacter q) :=
   Fintype.ofFinite _
+
+/-- A positive modulus has at most its totient many primitive characters. -/
+theorem primitiveCharacter_card_le_totient_basic (q : ℕ) (hq : 0 < q) :
+    Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
+  letI : NeZero q := ⟨hq.ne'⟩
+  calc
+    Fintype.card (PrimitiveCharacter q) ≤
+        Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _
+    _ = q.totient := by
+      rw [← Nat.card_eq_fintype_card]
+      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ q
 
 /-- Primitive characters as a filtered finset of all characters modulo `q`.
 This form is useful when applying an all-character estimate. -/
@@ -131,8 +143,7 @@ private lemma primitiveGaussRoot_isPrimitiveRoot (q : ℕ) (hq : q ≠ 0) :
 
 private lemma primitiveGaussRoot_pow (q : ℕ) (hq : q ≠ 0) :
     primitiveGaussRoot q ^ q = 1 :=
-  (IsPrimitiveRoot.iff_def (primitiveGaussRoot q) q).mp
-    (primitiveGaussRoot_isPrimitiveRoot q hq) |>.1
+  (primitiveGaussRoot_isPrimitiveRoot q hq).pow_eq_one
 
 /-- The standard primitive additive character `x ↦ exp(2πix/q)` on `ZMod q`. -/
 noncomputable def primitiveGaussAddChar (q : ℕ) [NeZero q] : AddChar (ZMod q) ℂ :=
@@ -144,7 +155,7 @@ theorem primitiveGaussAddChar_apply (q : ℕ) [NeZero q] (a : ZMod q) :
   rw [primitiveGaussAddChar, AddChar.zmodChar_apply, primitiveGaussRoot]
   rw [← charReal_nat_mul a.val (1 / (q : ℝ))]
   congr 1
-  field_simp [show (q : ℝ) ≠ 0 by exact_mod_cast (NeZero.ne q)]
+  exact mul_one_div (a.val : ℝ) (q : ℝ)
 
 /-- The standard additive character on `ZMod q` is primitive. -/
 theorem primitiveGaussAddChar_isPrimitive (q : ℕ) [NeZero q] :
@@ -155,18 +166,7 @@ theorem primitiveGaussAddChar_isPrimitive (q : ℕ) [NeZero q] :
 private theorem charReal_eq_of_int_modEq {q : ℕ} (hq : 0 < q) {m n : ℤ}
     (hmn : m ≡ n [ZMOD (q : ℤ)]) :
     charReal ((m : ℝ) / (q : ℝ)) = charReal ((n : ℝ) / (q : ℝ)) := by
-  rcases (Int.modEq_iff_add_fac.mp hmn) with ⟨t, ht⟩
-  have hm : m = n - (q : ℤ) * t := by omega
-  calc
-    charReal ((m : ℝ) / (q : ℝ)) =
-        charReal (((n : ℝ) / (q : ℝ)) + (-(t : ℝ))) := by
-      congr 1
-      rw [hm]
-      norm_num
-      field_simp [show (q : ℝ) ≠ 0 by exact_mod_cast hq.ne']
-      ring
-    _ = charReal ((n : ℝ) / (q : ℝ)) := by
-      simpa using charReal_periodic_int ((n : ℝ) / (q : ℝ)) (-t)
+  exact charReal_periodic_zmod hq hmn
 
 private theorem primitiveGaussAddChar_mulShift_apply (q : ℕ) [NeZero q]
     (n : ℤ) (x : ZMod q) :
@@ -191,19 +191,7 @@ private theorem primitiveGaussAddChar_mulShift_apply (q : ℕ) [NeZero q]
 theorem sum_zmod_eq_sum_range {q : ℕ} [NeZero q] {M : Type*} [AddCommMonoid M]
     (f : ZMod q → M) :
     (∑ a : ZMod q, f a) = ∑ r ∈ Finset.range q, f (r : ZMod q) := by
-  refine Finset.sum_bij (s := Finset.univ) (t := Finset.range q)
-    (fun a _ => a.val) ?_ ?_ ?_ ?_
-  · intro a _
-    exact Finset.mem_range.mpr (ZMod.val_lt a)
-  · intro a₁ _ a₂ _ h
-    rw [← ZMod.natCast_zmod_val a₁, ← ZMod.natCast_zmod_val a₂]
-    exact congrArg (fun v : ℕ => (v : ZMod q)) h
-  · intro r hr
-    refine ⟨(r : ZMod q), Finset.mem_univ _, ?_⟩
-    rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp hr)]
-  · intro a _
-    congr 1
-    exact (ZMod.natCast_zmod_val a).symm
+  exact zmod_sum_range f
 
 /-- Finite Fourier energy identity on `ZMod q`, specialized to the additive
 character convention used by Gauss sums. -/
@@ -212,68 +200,13 @@ theorem zmod_fourier_energy {q : ℕ} [NeZero q] (z : ZMod q → ℂ) :
         ‖∑ x : ZMod q,
           charReal ((a.val : ℝ) * (x.val : ℝ) / (q : ℝ)) * z x‖ ^ 2) =
       (q : ℝ) * ∑ x : ZMod q, ‖z x‖ ^ 2 := by
-  let z' : ℕ → ℂ := fun r => z (r : ZMod q)
-  have hL :
-      (∑ a : ZMod q,
-          ‖∑ x : ZMod q,
-            charReal ((a.val : ℝ) * (x.val : ℝ) / (q : ℝ)) * z x‖ ^ 2) =
-        ∑ a ∈ Finset.range q,
-          ‖∑ r ∈ Finset.range q,
-            charReal ((a : ℝ) * (r : ℝ) / (q : ℝ)) * z' r‖ ^ 2 := by
-    rw [sum_zmod_eq_sum_range]
-    apply Finset.sum_congr rfl
-    intro a ha
-    have haq : (a : ZMod q).val = a := by
-      rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp ha)]
-    rw [haq]
-    congr 1
-    rw [sum_zmod_eq_sum_range]
-    congr 1
-    apply Finset.sum_congr rfl
-    intro r hr
-    have hrq : (r : ZMod q).val = r := by
-      rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp hr)]
-    rw [hrq]
-  have hR :
-      (q : ℝ) * ∑ x : ZMod q, ‖z x‖ ^ 2 =
-        (q : ℝ) * ∑ r ∈ Finset.range q, ‖z' r‖ ^ 2 := by
-    congr 1
-    rw [sum_zmod_eq_sum_range]
-  have hP := zmodParseval (NeZero.pos q) z'
-  have hP2 :
-      (∑ a ∈ Finset.range q,
-          ‖∑ r ∈ Finset.range q,
-            charReal ((a : ℝ) * (r : ℝ) / (q : ℝ)) * z' r‖ ^ 2) =
-        (q : ℝ) * ∑ r ∈ Finset.range q, ‖z' r‖ ^ 2 := by
-    apply Complex.ofReal_inj.mp
-    simpa [map_sum] using hP
-  exact hL.trans (hP2.trans hR.symm)
+  exact zmodParseval_zmod z
 
 /-- The squared `L²` mass of a complex Dirichlet character is `φ(q)`. -/
 theorem dirichletCharacter_sum_norm_sq {q : ℕ} [NeZero q]
     (χ : DirichletCharacter ℂ q) :
     (∑ a : ZMod q, ‖χ a‖ ^ 2) = (q.totient : ℝ) := by
-  calc
-    (∑ a : ZMod q, ‖χ a‖ ^ 2) =
-        ∑ a : ZMod q, if IsUnit a then (1 : ℝ) else 0 := by
-      apply Finset.sum_congr rfl
-      intro a _
-      by_cases ha : IsUnit a
-      · have hnorm : ‖χ a‖ = 1 := DirichletCharacter.unit_norm_eq_one χ ha.unit
-        simp [ha, hnorm]
-      · simp [ha, χ.map_nonunit ha]
-    _ = (q.totient : ℝ) := by
-      rw [Finset.sum_boole]
-      have hcard :
-          (Finset.univ.filter (fun a : ZMod q => IsUnit a)).card = q.totient := by
-        rw [← Fintype.card_subtype]
-        refine (Fintype.card_congr ?_).trans (ZMod.card_units_eq_totient q)
-        exact
-          { toFun := fun x => x.2.unit
-            invFun := fun u => ⟨(u : ZMod q), ⟨u, rfl⟩⟩
-            left_inv := fun x => Subtype.ext x.2.unit_spec.symm
-            right_inv := fun u => by ext; rfl }
-      simp [hcard]
+  exact charNormSq_sum χ
 
 /-- The Gauss sum against a shifted standard additive character is its explicit
 finite Fourier sum. -/
@@ -346,11 +279,8 @@ theorem primitive_gaussSum_norm_sq {q : ℕ} [NeZero q]
 theorem primitive_gaussSum_norm {q : ℕ} [NeZero q]
     (χ : PrimitiveCharacter q) :
     ‖gaussSum χ.1 (primitiveGaussAddChar q)‖ = Real.sqrt q := by
-  have hsq := primitive_gaussSum_norm_sq χ
-  have hsqrt : (Real.sqrt (q : ℝ)) ^ 2 = (q : ℝ) :=
-    Real.sq_sqrt (by positivity)
-  nlinarith [norm_nonneg (gaussSum χ.1 (primitiveGaussAddChar q)),
-    Real.sqrt_nonneg (q : ℝ)]
+  rw [← primitive_gaussSum_norm_sq χ, Real.sqrt_sq (norm_nonneg _)]
+
 
 
 end

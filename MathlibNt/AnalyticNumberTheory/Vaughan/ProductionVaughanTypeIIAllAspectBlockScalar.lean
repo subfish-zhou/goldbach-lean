@@ -189,7 +189,7 @@ theorem vaughanTypeIIRectangularRexp_le_expanded_allAspect
     rw [show x = rx ^ 2 by rw [hrx2]]
     nlinarith [mul_nonneg hc0 hq0, sq_nonneg (c - 1)]
   have hcore : d * x * (d + c * q ^ 2) * (t + c * q ^ 2) ≤ B ^ 2 := by
-    have htmaj : t + c * q ^ 2 ≤ x + c * q ^ 2 := by linarith
+    have htmaj : t + c * q ^ 2 ≤ x + c * q ^ 2 := add_le_add htx le_rfl
     calc
       _ ≤ d * x * (d + c * q ^ 2) * (x + c * q ^ 2) := by gcongr
       _ ≤ d * x * (rd + c * q) ^ 2 * (rx + c * q) ^ 2 := by gcongr
@@ -213,7 +213,7 @@ theorem vaughanTypeIIRectangularRexp_le_expanded_allAspect
     calc
       _ = 27 * z * (d * x * (d + c * q ^ 2) * (t + c * q ^ 2)) := by ring
       _ ≤ 27 * z * B ^ 2 := mul_le_mul_of_nonneg_left hcore (by positivity)
-  nlinarith
+  exact le_of_sq_le_sq hsq hrhs
 
 private lemma allAspect_root_log_le
     (N u v k l : ℕ) (hN : 9 ≤ N)
@@ -408,7 +408,7 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
     have hsquares : (rd * rx) ^ 2 ≤ (Real.sqrt N) ^ 2 := by
       rw [mul_pow, hrd2, hrx2, Real.sq_sqrt (by positivity)]
       exact hDX
-    nlinarith [Real.sqrt_nonneg (N : ℝ), mul_nonneg hrd0 hrx0]
+    nlinarith only [hsquares, Real.sqrt_nonneg (N : ℝ), mul_nonneg hrd0 hrx0]
   have hsharp := allAspect_sharpTerm_le N Q C u v k l i G hN hi hcell hactive
   have hsqrtN3 : 3 ≤ Real.sqrt (N : ℝ) := by
     have hh := Real.sqrt_le_sqrt (by exact_mod_cast hN : (9 : ℝ) ≤ N)
@@ -437,20 +437,12 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
       · positivity
       · positivity
     · calc
-        c ^ 2 * (2 * (i : ℝ)) ^ 2 * rd * rx ≤
-            (15 * L) ^ 2 * (2 * (i : ℝ)) ^ 2 * rd * rx := by
-              calc
-                _ = c ^ 2 * ((2 * (i : ℝ)) ^ 2 * rd * rx) := by ring
-                _ ≤ (15 * L) ^ 2 * ((2 * (i : ℝ)) ^ 2 * rd * rx) :=
-                  mul_le_mul_of_nonneg_right hc2 (by positivity)
-                _ = _ := by ring
-        _ ≤ (15 * L) ^ 2 * (4 * (i : ℝ) ^ 2) * Real.sqrt N := by
-          rw [show (2 * (i : ℝ)) ^ 2 = 4 * (i : ℝ) ^ 2 by ring]
-          calc
-            _ = ((15 * L) ^ 2 * (4 * (i : ℝ) ^ 2)) * (rd * rx) := by ring
-            _ ≤ ((15 * L) ^ 2 * (4 * (i : ℝ) ^ 2)) * Real.sqrt N :=
-              mul_le_mul_of_nonneg_left hprodroot (by positivity)
-            _ = _ := by ring
+        c ^ 2 * (2 * (i : ℝ)) ^ 2 * rd * rx =
+            (c ^ 2 * (2 * (i : ℝ)) ^ 2) * (rd * rx) := by ring
+        _ ≤ ((15 * L) ^ 2 * (2 * (i : ℝ)) ^ 2) * Real.sqrt N :=
+          mul_le_mul (mul_le_mul_of_nonneg_right hc2 (sq_nonneg _))
+            hprodroot (mul_nonneg hrd0 hrx0) (by positivity)
+        _ = (15 * L) ^ 2 * (4 * (i : ℝ) ^ 2) * Real.sqrt N := by ring
   have hmain :
       (1 / (i : ℝ)) *
         ((1 / 2 + (14 * Real.log ((2 * N : ℕ) : ℝ) + 4) / Real.pi) *
@@ -517,7 +509,7 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
     _ ≤ 1000000 * L ^ 15 *
         ((N : ℝ) / i + (N : ℝ) / Real.sqrt (u + 1 : ℕ) +
           (N : ℝ) / Real.sqrt (v + 1 : ℕ) + (i : ℝ) * Real.sqrt N) := by
-      have hL1 : 1 ≤ L := by linarith
+      have hL1 : 1 ≤ L := le_trans (by norm_num) hL2
       have hpow6 : L ^ 6 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
       have hpow5 : L ^ 5 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
       have hpow4 : L ^ 4 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
@@ -525,14 +517,16 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
       have hsharpB : 32 * (i : ℝ) * L ^ 3 ≤ 32 * L ^ 3 * B := by
         have hiB : (i : ℝ) ≤ B := by
           have hii : (i : ℝ) ≤ (i : ℝ) * Real.sqrt N := by
-            nlinarith [mul_nonneg (show (0 : ℝ) ≤ i by positivity)
-              (sub_nonneg.mpr hsqrtN3)]
+            exact le_mul_of_one_le_right (by positivity)
+              (le_trans (by norm_num) hsqrtN3)
           dsimp [B]
           have h1 : 0 ≤ (N : ℝ) / i := by positivity
           have h2 : 0 ≤ (N : ℝ) / Real.sqrt (u + 1 : ℕ) := by positivity
           have h3 : 0 ≤ (N : ℝ) / Real.sqrt (v + 1 : ℕ) := by positivity
-          linarith
-        nlinarith [mul_nonneg (pow_nonneg hL0 3) (sub_nonneg.mpr hiB)]
+          linarith only [hii, h1, h2, h3]
+        calc
+          _ = (32 * L ^ 3) * i := by ring
+          _ ≤ (32 * L ^ 3) * B := mul_le_mul_of_nonneg_left hiB (by positivity)
       have hn0 : 0 ≤ (N : ℝ) / i := by positivity
       have huq0 : 0 ≤ (N : ℝ) / Real.sqrt (u + 1 : ℕ) := by positivity
       have hvq0 : 0 ≤ (N : ℝ) / Real.sqrt (v + 1 : ℕ) := by positivity
@@ -559,7 +553,7 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
               (sub_nonneg.mpr hiB), sub_nonneg.mpr hsharpB]
         _ ≤ 1000000 * L ^ 15 * B := by
           apply mul_le_mul_of_nonneg_right _ hB0
-          nlinarith [hpow3, hpow4, hpow5, hpow6, pow_nonneg hL0 15]
+          linarith only [hpow3, hpow4, hpow5, hpow6, pow_nonneg hL0 15]
         _ = _ := by rfl
 
 /-- Summing the all-aspect estimate over every active canonical rectangle keeps

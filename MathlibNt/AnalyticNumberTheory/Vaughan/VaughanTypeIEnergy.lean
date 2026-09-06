@@ -93,9 +93,7 @@ private lemma card_filter_le_succ (s : Finset ℕ) (k : ℕ) :
     (s.filter fun x => x ≤ k).card ≤ (Finset.range (k + 1)).card := by
       apply Finset.card_le_card
       intro x hx
-      rw [Finset.mem_filter] at hx
-      rw [Finset.mem_range]
-      omega
+      exact Finset.mem_range.mpr (Nat.lt_succ_of_le (Finset.mem_filter.mp hx).2)
     _ = k + 1 := Finset.card_range _
 
 /-- A coarser version of the structured energy in which the two truncated
@@ -136,13 +134,9 @@ theorem vaughanTypeICoeff_norm_sq_le (b : ℤ → ℂ) (u v : ℕ) (n : ℤ) :
     ‖vaughanTypeICoeff b u v n‖ ^ 2 ≤
       ‖b n‖ ^ 2 * vaughanTypeIStructuredEnergy n.toNat u v := by
   rw [vaughanTypeICoeff, norm_mul, Complex.norm_real, Real.norm_eq_abs,
-    mul_pow]
-  have h := vaughanTypeI_sq_le_structuredEnergy n.toNat u v
-  have hb : 0 ≤ ‖b n‖ ^ 2 := sq_nonneg _
-  have hr : |vaughanTypeI n.toNat u v| ^ 2 =
-      vaughanTypeI n.toNat u v ^ 2 := sq_abs _
-  rw [hr]
-  exact mul_le_mul_of_nonneg_left h hb
+    mul_pow, sq_abs]
+  exact mul_le_mul_of_nonneg_left
+    (vaughanTypeI_sq_le_structuredEnergy n.toNat u v) (sq_nonneg _)
 
 /-- Pointwise version with the literal cutoff factors `u+1` and `v+1`. -/
 theorem vaughanTypeICoeff_norm_sq_le_cutoff (b : ℤ → ℂ) (u v : ℕ) (n : ℤ) :

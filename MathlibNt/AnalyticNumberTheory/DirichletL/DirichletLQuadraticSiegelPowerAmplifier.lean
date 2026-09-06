@@ -95,16 +95,12 @@ theorem zetaMul_le_quadraticSiegelPowerCoefficient_succ
   have hmem : (1, n) ∈ n.divisorsAntidiagonal := by
     rw [Nat.mem_divisorsAntidiagonal]
     simp [hn]
-  have hterm :
-      quadraticSiegelPowerCoefficient χ r (1, n).1 * χ.zetaMul (1, n).2 =
-        χ.zetaMul n := by
-    simp [quadraticSiegelPowerCoefficient_one]
-  rw [← hterm]
-  exact Finset.single_le_sum
-    (s := n.divisorsAntidiagonal)
-    (f := fun x => quadraticSiegelPowerCoefficient χ r x.1 * χ.zetaMul x.2)
-    (fun x _ => mul_nonneg (quadraticSiegelPowerCoefficient_nonneg χ hquad r x.1)
-      (zetaMul_nonneg hquad x.2)) hmem
+  simpa only [quadraticSiegelPowerCoefficient_one, one_mul] using
+    (Finset.single_le_sum
+      (s := n.divisorsAntidiagonal)
+      (f := fun x => quadraticSiegelPowerCoefficient χ r x.1 * χ.zetaMul x.2)
+      (fun x _ => mul_nonneg (quadraticSiegelPowerCoefficient_nonneg χ hquad r x.1)
+        (zetaMul_nonneg hquad x.2)) hmem)
 
 /-- Every nonzero even perfect power has high-convolution coefficient at
 least one.  The exponent is quantified; no finite scan is involved. -/
@@ -164,23 +160,19 @@ theorem le_quadraticSiegelPowerSummatory_pow
     exact Finset.sum_image (s := Icc 1 M)
       (f := fun n => (quadraticSiegelPowerCoefficient χ (r + 1) n).re)
       (Nat.pow_left_injective (Nat.ne_of_gt hepos)).injOn
-  have hlower :
-      (M : ℝ) ≤ ∑ m ∈ Icc 1 M,
+  calc
+    (M : ℝ) = ∑ _m ∈ Icc 1 M, (1 : ℝ) := by simp
+    _ ≤ ∑ m ∈ Icc 1 M,
         (quadraticSiegelPowerCoefficient χ (r + 1) (m ^ e)).re := by
-    calc
-      (M : ℝ) = ∑ _m ∈ Icc 1 M, (1 : ℝ) := by simp
-      _ ≤ ∑ m ∈ Icc 1 M,
-          (quadraticSiegelPowerCoefficient χ (r + 1) (m ^ e)).re := by
-        apply Finset.sum_le_sum
-        intro m hm
-        rw [Finset.mem_Icc] at hm
-        have hcomplex := one_le_quadraticSiegelPowerCoefficient_evenPow
-          χ hquad r (Nat.ne_of_gt hm.1) heven
-        rw [RCLike.le_iff_re_im] at hcomplex
-        exact hcomplex.1
-  rw [quadraticSiegelPowerSummatory]
-  rw [himage] at hsmall
-  exact hlower.trans hsmall
+      apply Finset.sum_le_sum
+      intro m hm
+      rw [Finset.mem_Icc] at hm
+      have hcomplex := one_le_quadraticSiegelPowerCoefficient_evenPow
+        χ hquad r (Nat.ne_of_gt hm.1) heven
+      rw [RCLike.le_iff_re_im] at hcomplex
+      exact hcomplex.1
+    _ = ∑ n ∈ S, (quadraticSiegelPowerCoefficient χ (r + 1) n).re := himage.symm
+    _ ≤ quadraticSiegelPowerSummatory χ (r + 1) (M ^ e) := hsmall
 
 /-- The requested scan-free `X^(1/r)` specialization: at even positive depth
 `r`, the summatory function through the perfect `r`-th power `M^r` is at

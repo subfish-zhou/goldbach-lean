@@ -122,7 +122,7 @@ def PanVaughanPointwiseSplit (x : ℕ → ℝ) (f : ℕ → ℝ) (u v : ℕ) : P
 
 /-- The piece's `l`-maximum is nonnegative; when `q = 0` the residue
 set is empty and its value is 0. This mirrors `panMaxL_nonneg`. -/
-private lemma panPieceMaxL_nonneg (y X q : ℕ) (f : ℕ → ℝ) (g : ℕ → ℕ → ℕ → ℝ) :
+lemma panPieceMaxL_nonneg (y X q : ℕ) (f : ℕ → ℝ) (g : ℕ → ℕ → ℕ → ℝ) :
     0 ≤ panPieceMaxL y X q f g := by
   unfold panPieceMaxL
   by_cases h : (unitResidues q).Nonempty
@@ -179,23 +179,9 @@ private lemma panAssembly_pointwise (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ)
     have hμ : (μ 0 : ℤ) = 0 := by
       exact ArithmeticFunction.moebius_eq_zero_of_not_squarefree (not_squarefree_zero)
     simp [hμ]
-  · have hq : 0 < q := Nat.pos_of_ne_zero hq0
-    have hw : 0 ≤ ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card :=
-      panTypeI_weight_nonneg q
-    calc
-      ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card * panMaxY X q x f
-          ≤ ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              (panPieceMaxY X q x f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
-                panPieceMaxY X q x f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-                panPieceMaxY X q x f (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)) := by
-            exact mul_le_mul_of_nonneg_left (hsplit X q x hq) hw
-      _ = ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              panPieceMaxY X q x f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
-            ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              panPieceMaxY X q x f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-            ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              panPieceMaxY X q x f (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q) := by
-            ring
+  · simpa only [mul_add] using
+      mul_le_mul_of_nonneg_left (hsplit X q x (Nat.pos_of_ne_zero hq0))
+        (panTypeI_weight_nonneg q)
 
 /-- **Enlarging a sum**: if `Q ≤ Q'` and `w` is nonnegative, then
 `Σ_{q ≤ Q} w q ≤ Σ_{q ≤ Q'} w q`. -/
@@ -254,177 +240,78 @@ theorem PanVaughanSplitCrude.of_analyticInputs
     exact Real.sqrt_nonneg _
   let B : ℝ := max B1 (max B2 B3)
   let Q : ℕ := Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B)
-  have hB₁ : B1 ≤ B := by
-    dsimp [B]
-    exact le_max_left _ _
-  have hB₂ : B2 ≤ B := by
-    dsimp [B]
-    exact le_trans (le_max_left _ _) (le_max_right _ _)
-  have hB₃ : B3 ≤ B := by
-    dsimp [B]
-    exact le_trans (le_max_right _ _) (le_max_right _ _)
-  have hQ1 : Q ≤ Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B1) := by
-    dsimp [Q, B]
-    exact panAssembly_floor_le ((x X) ^ (1 / 2 : ℝ)) (Real.log (x X))
-      (max B1 (max B2 B3)) B1 hsqrt hL hB₁
-  have hQ2 : Q ≤ Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B2) := by
-    dsimp [Q, B]
-    exact panAssembly_floor_le ((x X) ^ (1 / 2 : ℝ)) (Real.log (x X))
-      (max B1 (max B2 B3)) B2 hsqrt hL hB₂
-  have hQ3 : Q ≤ Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B3) := by
-    dsimp [Q, B]
-    exact panAssembly_floor_le ((x X) ^ (1 / 2 : ℝ)) (Real.log (x X))
-      (max B1 (max B2 B3)) B3 hsqrt hL hB₃
-  have hI2 :
-      (∑ q ∈ Finset.range (Q + 1),
-          ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-            panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV1 y q l u / Real.log (y : ℝ)))
-        ≤ C1 * x X / (Real.log (x X)) ^ A := by
-    calc
-      (∑ q ∈ Finset.range (Q + 1),
-          ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-            panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV1 y q l u / Real.log (y : ℝ)))
-          ≤ ∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B1) + 1),
-              ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) := by
-            exact panAssembly_sum_le_sum Q
-              (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B1))
-              (fun q => ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV1 y q l u / Real.log (y : ℝ)))
-              hQ1 (fun q => mul_nonneg (panTypeI_weight_nonneg q)
-                (panPieceMaxY_nonneg X q (Nat.floor (x X)) f
-                  (fun y q l => apV1 y q l u / Real.log (y : ℝ))))
-      _ ≤ C1 * x X / (Real.log (x X)) ^ A := hI1 X hX₁
-  have hII2 :
-      (∑ q ∈ Finset.range (Q + 1),
-          ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-            panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)))
-        ≤ C2 * x X / (Real.log (x X)) ^ A := by
-    calc
-      (∑ q ∈ Finset.range (Q + 1),
-          ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-            panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)))
-          ≤ ∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B2) + 1),
-              ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) := by
-            exact panAssembly_sum_le_sum Q
-              (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B2))
-              (fun q => ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)))
-              hQ2 (fun q => mul_nonneg (panTypeI_weight_nonneg q)
-                (panPieceMaxY_nonneg X q (Nat.floor (x X)) f
-                  (fun y q l => apV3 y q l u v / Real.log (y : ℝ))))
-      _ ≤ C2 * x X / (Real.log (x X)) ^ A := hII1 X hX₂
-  have hM2 :
-      (∑ q ∈ Finset.range (Q + 1),
-          ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-            panPieceMaxY X q (Nat.floor (x X)) f
-              (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q))
-        ≤ C3 * x X * (Real.log (x X)) ^ (A + 7) := by
-    calc
-      (∑ q ∈ Finset.range (Q + 1),
-          ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-            panPieceMaxY X q (Nat.floor (x X)) f
-              (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q))
-          ≤ ∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B3) + 1),
-              ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f
-                  (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q) := by
-            exact panAssembly_sum_le_sum Q
-              (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B3))
-              (fun q => ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f
-                  (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q))
-              hQ3 (fun q => mul_nonneg (panTypeI_weight_nonneg q)
-                (panPieceMaxY_nonneg X q (Nat.floor (x X)) f
-                  (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)))
-      _ ≤ C3 * x X * (Real.log (x X)) ^ (A + 7) := hM1 X hX₃
+  have hQ1 : Q ≤ Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B1) :=
+    panAssembly_floor_le _ _ _ _ hsqrt hL (le_max_left _ _)
+  have hQ2 : Q ≤ Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B2) :=
+    panAssembly_floor_le _ _ _ _ hsqrt hL
+      (le_trans (le_max_left _ _) (le_max_right _ _))
+  have hQ3 : Q ≤ Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B3) :=
+    panAssembly_floor_le _ _ _ _ hsqrt hL
+      (le_trans (le_max_right _ _) (le_max_right _ _))
+  -- Name the same three weighted pieces as in the signed assembly below.
+  let w : ℕ → ℝ := fun q =>
+    ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card
+  let pI : ℕ → ℝ := fun q =>
+    panPieceMaxY X q (Nat.floor (x X)) f
+      (fun y q l => apV1 y q l u / Real.log (y : ℝ))
+  let pII : ℕ → ℝ := fun q =>
+    panPieceMaxY X q (Nat.floor (x X)) f
+      (fun y q l => apV3 y q l u v / Real.log (y : ℝ))
+  let pM : ℕ → ℝ := fun q =>
+    panPieceMaxY X q (Nat.floor (x X)) f
+      (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)
+  have hw : ∀ q, 0 ≤ w q := fun q => panTypeI_weight_nonneg q
+  have hInn : ∀ q, 0 ≤ pI q := fun q => panPieceMaxY_nonneg _ _ _ _ _
+  have hIInn : ∀ q, 0 ≤ pII q := fun q => panPieceMaxY_nonneg _ _ _ _ _
+  have hMnn : ∀ q, 0 ≤ pM q := fun q => panPieceMaxY_nonneg _ _ _ _ _
+  have hI2 : (∑ q ∈ Finset.range (Q + 1), w q * pI q) ≤
+      C1 * x X / (Real.log (x X)) ^ A :=
+    (panAssembly_sum_le_sum Q _ (fun q => w q * pI q) hQ1
+      (fun q => mul_nonneg (hw q) (hInn q))).trans (hI1 X hX₁)
+  have hII2 : (∑ q ∈ Finset.range (Q + 1), w q * pII q) ≤
+      C2 * x X / (Real.log (x X)) ^ A :=
+    (panAssembly_sum_le_sum Q _ (fun q => w q * pII q) hQ2
+      (fun q => mul_nonneg (hw q) (hIInn q))).trans (hII1 X hX₂)
+  have hM2 : (∑ q ∈ Finset.range (Q + 1), w q * pM q) ≤
+      C3 * x X * (Real.log (x X)) ^ (A + 7) :=
+    (panAssembly_sum_le_sum Q _ (fun q => w q * pM q) hQ3
+      (fun q => mul_nonneg (hw q) (hMnn q))).trans (hM1 X hX₃)
+  -- The Type I bound has a nonnegative left side, so x X is nonnegative.
+  -- This does not follow from log(x X) ≥ 1 alone: Real.log uses |x X|.
+  have hlogAge1 : 1 ≤ (Real.log (x X)) ^ A := Real.one_le_rpow hL hA.le
+  have hxXnn : 0 ≤ x X := by
+    have hle0 : 0 ≤ C1 * x X / (Real.log (x X)) ^ A :=
+      (Finset.sum_nonneg (fun q _ => mul_nonneg (hw q) (hInn q))).trans hI2
+    have hC1x : 0 ≤ C1 * x X :=
+      nonneg_of_mul_nonneg_left hle0 (inv_pos.mpr (zero_lt_one.trans_le hlogAge1))
+    have hxC1 : 0 ≤ x X * C1 := by simpa [mul_comm] using hC1x
+    exact nonneg_of_mul_nonneg_left hxC1 hC1
+  have hcoef : ((Real.log (x X)) ^ A)⁻¹ ≤ (Real.log (x X)) ^ (A + 7) :=
+    (inv_le_one_of_one_le₀ hlogAge1).trans
+      (Real.one_le_rpow hL (by positivity : 0 ≤ A + 7))
+  -- Promote only the Type I/II bounds; the main term already has this scale.
+  have hpromote (c : ℝ) (hc : 0 ≤ c) :
+      c * x X / (Real.log (x X)) ^ A ≤ c * x X * (Real.log (x X)) ^ (A + 7) := by
+    simpa only [div_eq_mul_inv] using
+      mul_le_mul_of_nonneg_left hcoef (mul_nonneg hc hxXnn)
   calc
-    (∑ q ∈ Finset.range (Q + 1),
-        ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card * panMaxY X q (Nat.floor (x X)) f)
+    (∑ q ∈ Finset.range (Q + 1), w q * panMaxY X q (Nat.floor (x X)) f)
         ≤ ∑ q ∈ Finset.range (Q + 1),
-            (((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
-              ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-              ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                panPieceMaxY X q (Nat.floor (x X)) f
-                  (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)) := by
-          apply Finset.sum_le_sum
-          intro q hq
-          exact panAssembly_pointwise X q (Nat.floor (x X)) f u v hsplit
-    _ = (∑ q ∈ Finset.range (Q + 1),
-            ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV1 y q l u / Real.log (y : ℝ))) +
-        (∑ q ∈ Finset.range (Q + 1),
-            ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              panPieceMaxY X q (Nat.floor (x X)) f (fun y q l => apV3 y q l u v / Real.log (y : ℝ))) +
-        (∑ q ∈ Finset.range (Q + 1),
-            ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-              panPieceMaxY X q (Nat.floor (x X)) f
-                (fun y q l => logarithmicIntegral (y : ℝ) / Nat.totient q)) := by
-          rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
+            (w q * pI q + w q * pII q + w q * pM q) := by
+          exact Finset.sum_le_sum (fun q _ =>
+            panAssembly_pointwise X q (Nat.floor (x X)) f u v hsplit)
+    _ = (∑ q ∈ Finset.range (Q + 1), w q * pI q) +
+          (∑ q ∈ Finset.range (Q + 1), w q * pII q) +
+          (∑ q ∈ Finset.range (Q + 1), w q * pM q) := by
+            rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
     _ ≤ C1 * x X / (Real.log (x X)) ^ A + C2 * x X / (Real.log (x X)) ^ A +
-          C3 * x X * (Real.log (x X)) ^ (A + 7) := by
-        apply add_le_add
-        · apply add_le_add
-          · exact hI2
-          · exact hII2
-        · exact hM2
-    _ ≤ (C1 + C2 + C3) * x X * (Real.log (x X)) ^ (A + 7) := by
-        -- Termwise, Cᵢx/log^A ≤ Cᵢx·log^{A+7}, since log(xX) ≥ 1 and xX ≥ 0, and
-        -- C₃x·log^{A+7} ≤ (C1+C2+C3)x·log^{A+7}, since the coefficients are nonnegative.
-        have hxXnn : 0 ≤ x X := by
-          -- The right side of hI1 is nonnegative because Σ₁ ≥ 0, hence xX ≥ 0.
-          have hsum1nn : (0 : ℝ) ≤
-              (∑ q ∈ Finset.range (Nat.floor ((x X) ^ (1 / 2 : ℝ) / (Real.log (x X)) ^ B1) + 1),
-                ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
-                  panPieceMaxY X q (Nat.floor (x X)) f
-                    (fun y q l => apV1 y q l u / Real.log (y : ℝ))) := by
-            exact Finset.sum_nonneg (fun q hq => mul_nonneg (panTypeI_weight_nonneg q)
-              (panPieceMaxY_nonneg X q (Nat.floor (x X)) f
-                (fun y q l => apV1 y q l u / Real.log (y : ℝ))))
-          have hle0 : (0 : ℝ) ≤ C1 * x X / (Real.log (x X)) ^ A := le_trans hsum1nn (hI1 X hX₁)
-          have hLpos : 0 < (Real.log (x X)) ^ A :=
-            lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (Real.one_le_rpow hL (le_of_lt hA))
-          have hC1x : 0 ≤ C1 * x X := nonneg_of_mul_nonneg_left hle0 (inv_pos.mpr hLpos)
-          have hxC1 : 0 ≤ x X * C1 := by simpa [mul_comm] using hC1x
-          exact nonneg_of_mul_nonneg_left hxC1 hC1
-        have hlogAge1 : 1 ≤ (Real.log (x X)) ^ A := Real.one_le_rpow hL (le_of_lt hA)
-        have hlogA7ge1 : 1 ≤ (Real.log (x X)) ^ (A + 7) :=
-          Real.one_le_rpow hL (by positivity : 0 ≤ A + 7)
-        have hcoef1 : ((Real.log (x X)) ^ A)⁻¹ ≤ (Real.log (x X)) ^ (A + 7) := by
-          calc
-            ((Real.log (x X)) ^ A)⁻¹ ≤ 1 := inv_le_one_of_one_le₀ hlogAge1
-            _ ≤ (Real.log (x X)) ^ (A + 7) := hlogA7ge1
-        have hc1 : C1 * x X / (Real.log (x X)) ^ A ≤ C1 * x X * (Real.log (x X)) ^ (A + 7) := by
-          calc
-            C1 * x X / (Real.log (x X)) ^ A = C1 * x X * ((Real.log (x X)) ^ A)⁻¹ := by ring
-            _ ≤ C1 * x X * (Real.log (x X)) ^ (A + 7) := by
-              exact mul_le_mul_of_nonneg_left hcoef1 (mul_nonneg (le_of_lt hC1) hxXnn)
-        have hc2 : C2 * x X / (Real.log (x X)) ^ A ≤ C2 * x X * (Real.log (x X)) ^ (A + 7) := by
-          calc
-            C2 * x X / (Real.log (x X)) ^ A = C2 * x X * ((Real.log (x X)) ^ A)⁻¹ := by ring
-            _ ≤ C2 * x X * (Real.log (x X)) ^ (A + 7) := by
-              exact mul_le_mul_of_nonneg_left hcoef1 (mul_nonneg (le_of_lt hC2) hxXnn)
-        have hc3 : C3 * x X * (Real.log (x X)) ^ (A + 7) ≤
-            (C1 + C2 + C3) * x X * (Real.log (x X)) ^ (A + 7) := by
-          have hsum12 : 0 ≤ C1 + C2 := by linarith
-          have hLnn : 0 ≤ Real.log (x X) := by linarith
-          have hnonneg : 0 ≤ (C1 + C2) * x X * (Real.log (x X)) ^ (A + 7) := by
-            exact mul_nonneg (mul_nonneg hsum12 hxXnn) (Real.rpow_nonneg hLnn (A + 7))
-          calc
-            C3 * x X * (Real.log (x X)) ^ (A + 7)
-                ≤ C3 * x X * (Real.log (x X)) ^ (A + 7) +
-                    (C1 + C2) * x X * (Real.log (x X)) ^ (A + 7) := by linarith
-            _ = (C1 + C2 + C3) * x X * (Real.log (x X)) ^ (A + 7) := by ring
-        calc
-          C1 * x X / (Real.log (x X)) ^ A + C2 * x X / (Real.log (x X)) ^ A +
-              C3 * x X * (Real.log (x X)) ^ (A + 7)
-              ≤ C1 * x X * (Real.log (x X)) ^ (A + 7) + C2 * x X * (Real.log (x X)) ^ (A + 7) +
-                  C3 * x X * (Real.log (x X)) ^ (A + 7) := by
-                exact add_le_add (add_le_add hc1 hc2) (le_rfl)
-            _ = (C1 + C2 + C3) * x X * (Real.log (x X)) ^ (A + 7) := by ring
+          C3 * x X * (Real.log (x X)) ^ (A + 7) :=
+      add_le_add (add_le_add hI2 hII2) hM2
+    _ ≤ C1 * x X * (Real.log (x X)) ^ (A + 7) +
+          C2 * x X * (Real.log (x X)) ^ (A + 7) +
+          C3 * x X * (Real.log (x X)) ^ (A + 7) :=
+      add_le_add (add_le_add (hpromote C1 hC1.le) (hpromote C2 hC2.le)) le_rfl
+    _ = (C1 + C2 + C3) * x X * (Real.log (x X)) ^ (A + 7) := by ring
 
 /-- The coarse pure-`li` split yields only the polylogarithmic
 `PanMeanValueUniformCrude`, not the classical Pan theorem. -/

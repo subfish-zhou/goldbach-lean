@@ -76,17 +76,10 @@ lemma panTypeIIV3CharSum_norm_le_primitive {q m u v : ℕ} [NeZero q]
       simp [hc, hz]
   have hnorm1 : ‖panTypeIIV3CharSum q m u v χ‖ ≤
       ‖panTypeIIV3CharSum χ.conductor m u v ψ‖ + ‖S_not‖ := by
-    calc
-      ‖panTypeIIV3CharSum q m u v χ‖
-          = ‖panTypeIIV3CharSum χ.conductor m u v ψ +
-              (panTypeIIV3CharSum q m u v χ - panTypeIIV3CharSum χ.conductor m u v ψ)‖ := by
-              congr 1
-              abel
-      _ ≤ ‖panTypeIIV3CharSum χ.conductor m u v ψ‖ +
-            ‖panTypeIIV3CharSum q m u v χ - panTypeIIV3CharSum χ.conductor m u v ψ‖ := by
-            exact norm_add_le _ _
-      _ = ‖panTypeIIV3CharSum χ.conductor m u v ψ‖ + ‖S_not‖ := by
-            rw [hdiff, norm_neg]
+    simpa only [hdiff, norm_neg] using
+      (norm_le_norm_add_norm_sub'
+        (panTypeIIV3CharSum q m u v χ)
+        (panTypeIIV3CharSum χ.conductor m u v ψ))
   have hnorm2 : ‖S_not‖ ≤ panTypeII_nonCoprimeDensity q m u v := by
     calc
       ‖S_not‖
@@ -140,15 +133,11 @@ lemma panTypeIIV3CharSum_sq_le_primitive {q m u v : ℕ} [NeZero q]
   have hnorm : ‖V‖ ≤ ‖W‖ + D := by
     simpa [V, W, D] using (panTypeIIV3CharSum_norm_le_primitive (q := q) (m := m) (u := u) (v := v) χ)
   have hnonneg : 0 ≤ ‖W‖ + D := add_nonneg (norm_nonneg _) (panTypeII_nonCoprimeDensity_nonneg q m u v)
-  have hs : ‖V‖ ^ 2 ≤ (‖W‖ + D) ^ 2 := by
-    simpa [pow_two] using mul_le_mul hnorm hnorm (norm_nonneg _) hnonneg
-  have hsq : (‖W‖ + D) ^ 2 ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := by
-    nlinarith [sq_nonneg (‖W‖ - D)]
-  have hfin : ‖V‖ ^ 2 ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := by
-    calc
-      ‖V‖ ^ 2 ≤ (‖W‖ + D) ^ 2 := hs
-      _ ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := hsq
-  simpa [V, W, D] using hfin
+  change ‖V‖ ^ 2 ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2
+  calc
+    ‖V‖ ^ 2 ≤ (‖W‖ + D) ^ 2 := (sq_le_sq₀ (norm_nonneg _) hnonneg).2 hnorm
+    _ ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := by
+      simpa only [mul_add] using (add_sq_le (a := ‖W‖) (b := D))
 
 /-- Fiber bound at level `q'`: the contribution of characters modulo `q`
 with conductor `q'` to the primitive-character square sum is at most
@@ -255,6 +244,7 @@ theorem panTypeII_sqSum_primitiveDecomposition (q m u v : ℕ) (hq : 0 < q) :
               simp [panTypeI_liftPrimitive]
             rw [hfiber_cast]
             exact panTypeII_primitiveFiberSqSum_le (q := q) (q' := q') (m := m) (u := u) (v := v) hq
-  nlinarith [h1, h2]
+  apply h1.trans
+  exact add_le_add (mul_le_mul_of_nonneg_left h2 (show (0 : ℝ) ≤ 2 by norm_num)) le_rfl
 
 end

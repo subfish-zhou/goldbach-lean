@@ -57,39 +57,25 @@ lemma least_downward_crossing
   by_contra hnot
   have hxL : g x ≤ L := le_of_not_gt hnot
   have hGS : L < g S := hboost S le_rfl hinit
+  have hcont_Icc (y : ℝ) : ContinuousOn g (Icc S y) :=
+    hcont.mono (fun u hu => (sub_le_self S zero_le_one).trans hu.1)
   have hcross : ∃ z ∈ Icc S x, g z = L := by
-    have himage := intermediate_value_Icc' hx
-      (hcont.mono (by intro u hu; exact le_trans (by linarith [hu.1]) hu.1))
+    have himage := intermediate_value_Icc' hx (hcont_Icc x)
     have hLI : L ∈ Icc (g x) (g S) := ⟨hxL, hGS.le⟩
     rcases himage hLI with ⟨z, hz, hzeq⟩
     exact ⟨z, hz, hzeq⟩
-  let G : ℝ → ℝ := fun u => g (max (S - 1) u)
-  let B : Set ℝ := Icc S x ∩ {u | G u = L}
+  let B : Set ℝ := Icc S x ∩ g ⁻¹' {L}
   have hBne : B.Nonempty := by
     rcases hcross with ⟨z, hz, hzeq⟩
-    refine ⟨z, hz, ?_⟩
-    dsimp only [G]
-    change g (max (S - 1) z) = L
-    rw [max_eq_right (by linarith [hz.1])]
-    exact hzeq
-  have hG : Continuous (fun u : ℝ => g (max (S - 1) u)) := by
-    change Continuous (g ∘ fun u : ℝ => max (S - 1) u)
-    apply continuousOn_univ.mp
-    exact hcont.comp
-      (continuous_const.max continuous_id).continuousOn
-      (by intro u _; simp)
-  have hbadClosed : IsClosed {u : ℝ | G u = L} := by
-    exact isClosed_eq hG continuous_const
-  have hBcompact : IsCompact B := isCompact_Icc.inter_right hbadClosed
+    exact ⟨z, hz, hzeq⟩
+  have hBclosed : IsClosed B :=
+    (hcont_Icc x).preimage_isClosed_of_isClosed isClosed_Icc isClosed_singleton
+  have hBcompact : IsCompact B :=
+    isCompact_Icc.of_isClosed_subset hBclosed inter_subset_left
   obtain ⟨z, hzleast⟩ := hBcompact.exists_isLeast hBne
   have hzB := hzleast.1
   have hzS : S ≤ z := hzB.1.1
-  have hzg : g z = L := by
-    have := hzB.2
-    dsimp only [G] at this
-    change g (max (S - 1) z) = L at this
-    rw [max_eq_right (by linarith [hzS])] at this
-    exact this
+  have hzg : g z = L := hzB.2
   have hwindow : ∀ t ∈ Icc (z - 1) z, L ≤ g t := by
     intro t ht
     by_cases htS : t < S
@@ -101,16 +87,11 @@ lemma least_downward_crossing
       · have htz' : t < z := lt_of_le_of_ne ht.2 htz
         by_contra htbad
         have htbad' : g t < L := lt_of_not_ge htbad
-        have himage := intermediate_value_Icc' htS'
-          (hcont.mono (by intro u hu; exact le_trans (by linarith [hu.1]) hu.1))
+        have himage := intermediate_value_Icc' htS' (hcont_Icc t)
         have hLI : L ∈ Icc (g t) (g S) := ⟨htbad'.le, hGS.le⟩
         rcases himage hLI with ⟨y, hy, hyeq⟩
-        have hyB : y ∈ B := by
-          refine ⟨⟨hy.1, le_trans hy.2 (le_trans ht.2 hzB.1.2)⟩, ?_⟩
-          dsimp only [G]
-          change g (max (S - 1) y) = L
-          rw [max_eq_right (by linarith [hy.1])]
-          exact hyeq
+        have hyB : y ∈ B :=
+          ⟨⟨hy.1, hy.2.trans (ht.2.trans hzB.1.2)⟩, hyeq⟩
         have hzy := hzleast.2 hyB
         linarith [hy.2]
   exact (not_lt_of_ge hzg.le) (hboost z hzS hwindow)

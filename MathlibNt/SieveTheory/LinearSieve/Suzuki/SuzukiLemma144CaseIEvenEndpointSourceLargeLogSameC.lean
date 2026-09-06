@@ -9,6 +9,7 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeilUnif
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11EvenEndpoint
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsSourceLargeLogUniform
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEndpointScalarBounds
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -111,25 +112,7 @@ theorem evenEndpoint_pointwiseContract_of_movingIH_sourceLargeConsumer
 private theorem finiteSourceLayer_continuousOn_closedDomain_even
     {β : ℝ} (hβ : 1 < β) (N : ℕ) :
     ContinuousOn (finiteSourceLayer 1 β N) (KappaOneModel.closedDomain β N) := by
-  classical
-  unfold finiteSourceLayer
-  induction Finset.Icc 1 N using Finset.induction_on with
-  | empty => simpa using
-      (continuousOn_const : ContinuousOn (fun _ : ℝ => (0 : ℝ)) _)
-  | @insert n u hn ih =>
-      simp only [Finset.sum_insert hn]
-      by_cases hpar : n % 2 = N % 2
-      · simp only [hpar, if_true]
-        have hclosed : KappaOneModel.closedDomain β n =
-            KappaOneModel.closedDomain β N := by
-          unfold KappaOneModel.closedDomain KappaOneModel.eps
-          rw [hpar]
-        have hreg := (KappaOneModel.regular hβ n).continuous
-        rw [hclosed] at hreg
-        exact (hreg.congr fun s _ =>
-          (KappaOneModel.layer_eq_suzukiLayer β n s).symm).add ih
-      · simp only [hpar, if_false]
-        exact continuousOn_const.add ih
+  exact MathlibNt.SieveTheory.finiteSourceLayer_continuousOn_closedDomain hβ N
 
 /-- The uniform Lemma-13.2 finite-layer estimate extends to the closed odd
 predecessor endpoint by one-sided continuity. -/
@@ -223,12 +206,8 @@ private lemma evenEndpoint_sigma11_normalization
     (hscalar : K ^ 2 * σ ^ 3 * logσ * logLog ≤ logD ^ (1 - Δ))
     (hpowe : logD ^ (-Δ) * logD = logD ^ (1 - Δ)) :
     K ^ 2 * σ ^ 2 * logσ / logD ≤ logD ^ (-Δ) / (logLog * σ) := by
-  apply (div_le_div_iff₀ hlog (mul_pos hll hσ)).2
-  calc
-    K ^ 2 * σ ^ 2 * logσ * (logLog * σ) =
-        K ^ 2 * σ ^ 3 * logσ * logLog := by ring
-    _ ≤ logD ^ (1 - Δ) := hscalar
-    _ = logD ^ (-Δ) * logD := hpowe.symm
+  exact MathlibNt.SieveTheory.caseI_endpoint_sigma11_normalization
+    K σ logσ logD logLog Δ hlog hll hσ hscalar hpowe
 
 private lemma evenEndpoint_sigma12_algebra
     (q V K R σ logσ E0 logLog logD : ℝ)
@@ -293,12 +272,12 @@ theorem caseI1423EndpointSourceBounds_evenEndpoint_explicit
   let E0 := errorEnvelope H M (D : ℝ) d 2
   have hD : 1 < (D : ℝ) := by exact_mod_cast (show 1 < D by omega)
   have hlog : 0 < Real.log (D : ℝ) := Real.log_pos hD
-  have hll : 0 < Real.log (Real.log (D : ℝ)) := by
-    apply Real.log_pos
+  have hlog1 : 1 < Real.log (D : ℝ) := by
     have he : Real.exp 1 < (D : ℝ) := by
       calc Real.exp 1 < 3 := by linarith [Real.exp_one_lt_d9]
            _ ≤ (D : ℝ) := by exact_mod_cast (show 3 ≤ D by omega)
     exact (Real.lt_log_iff_exp_lt (by positivity : 0 < (D : ℝ))).2 he
+  have hll : 0 < Real.log (Real.log (D : ℝ)) := Real.log_pos hlog1
   have hσ0 : 0 < σ := by dsimp [σ]; linarith
   have hlogσ : 0 < Real.log (Real.exp 1 * σ) := by
     rw [Real.log_mul (Real.exp_ne_zero 1) (ne_of_gt hσ0), Real.log_exp]
@@ -372,15 +351,10 @@ theorem caseI1423EndpointSourceBounds_evenEndpoint_explicit
         mul_le_mul_of_nonneg_right hfac hE0
       _ = 2 * R * (σ * Real.log (Real.exp 1 * σ)) * E0 := by ring
 
-  have hlog1 : 1 ≤ Real.log (D : ℝ) := by
-    have he : Real.exp 1 < (D : ℝ) := by
-      calc Real.exp 1 < 3 := by linarith [Real.exp_one_lt_d9]
-           _ ≤ (D : ℝ) := by exact_mod_cast (show 3 ≤ D by omega)
-    exact ((Real.lt_log_iff_exp_lt (by positivity : 0 < (D : ℝ))).2 he).le
   have hpowden : (Real.log (D : ℝ)) ^ (1 - Δ) ≤ Real.log (D : ℝ) := by
     calc
       (Real.log (D : ℝ)) ^ (1 - Δ) ≤ (Real.log (D : ℝ)) ^ (1 : ℝ) :=
-        Real.rpow_le_rpow_of_exponent_le hlog1 (by linarith)
+        Real.rpow_le_rpow_of_exponent_le hlog1.le (by linarith)
       _ = Real.log (D : ℝ) := by norm_num
   have hpowe : (Real.log (D : ℝ)) ^ (-Δ) * Real.log (D : ℝ) =
       (Real.log (D : ℝ)) ^ (1 - Δ) := by
@@ -436,17 +410,9 @@ theorem caseI1423EndpointSourceBounds_evenEndpoint_explicit
       (mul_nonneg (mul_nonneg (mul_nonneg hC.le hE.le)
         (suzukiVProduct_pos S (z : ℝ)).le)
         (Real.rpow_nonneg hlog.le (-Δ)))
-    have hscalar12 : K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
-        Real.log (Real.log (D : ℝ)) / Real.log (D : ℝ) ≤ 1 := by
-      calc
-        _ ≤ K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
-            Real.log (Real.log (D : ℝ)) /
-              (Real.log (D : ℝ)) ^ (1 - Δ) := by
-          apply div_le_div_of_nonneg_left (by positivity) (by positivity) hpowden
-        _ ≤ 1 := by simpa [σ] using hscalar
     have hscalar12Mul : K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
         Real.log (Real.log (D : ℝ)) ≤ Real.log (D : ℝ) :=
-      (div_le_one hlog).mp hscalar12
+      hscalarMul.trans hpowden
     field_simp [ne_of_gt hlog, ne_of_gt hll, ne_of_gt hσ0] at hfront ⊢
     exact evenEndpoint_sigma12_algebra
       (qD H (ErrorSign.ofDepth M).opposite (D : ℝ) d Δ 2)

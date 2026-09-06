@@ -41,20 +41,17 @@ theorem jr1965DelaySum_initial {u : ℝ} (hu : u ≤ 2) :
 theorem jr1965DelaySum_integral_recurrence (a b : ℝ) (ha : 2 ≤ a) (hab : a ≤ b) :
     b * jr1965DelaySum b - a * jr1965DelaySum a =
       ∫ t in a..b, jr1965DelaySum (t - 1) := by
-  have hiF : IntervalIntegrable (fun t => jr1965F (t - 1)) volume a b := by
-    apply ContinuousOn.intervalIntegrable
-    apply continuousOn_jr1965F.comp (continuousOn_id.sub continuousOn_const)
+  have hshift : MapsTo (fun t : ℝ => t - 1) (uIcc a b) (Ioi 0) := by
     intro t ht
     rw [uIcc_of_le hab] at ht
     change 0 < t - 1
-    linarith [ht.1]
-  have hif : IntervalIntegrable (fun t => jr1965f (t - 1)) volume a b := by
-    apply ContinuousOn.intervalIntegrable
-    apply continuousOn_jr1965f.comp (continuousOn_id.sub continuousOn_const)
-    intro t ht
-    rw [uIcc_of_le hab] at ht
-    change 0 < t - 1
-    linarith [ht.1]
+    linarith only [ha, ht.1]
+  have hiF : IntervalIntegrable (fun t => jr1965F (t - 1)) volume a b :=
+    (continuousOn_jr1965F.comp
+      (continuousOn_id.sub continuousOn_const) hshift).intervalIntegrable
+  have hif : IntervalIntegrable (fun t => jr1965f (t - 1)) volume a b :=
+    (continuousOn_jr1965f.comp
+      (continuousOn_id.sub continuousOn_const) hshift).intervalIntegrable
   simp only [jr1965DelaySum, intervalIntegral.integral_add hiF hif]
   linarith [jr1965F_integral_recurrence ha hab, jr1965f_integral_recurrence ha hab]
 
@@ -67,6 +64,10 @@ theorem norm_jr1965DelaySum_le {u : ℝ} (hu : 1 ≤ u) :
 
 theorem jr1965DelaySum_adjoint_pairing_two :
     upperSourcePairingFor jr1965DelaySum suzukiStandardUpperAdjoint 2 = 2 := by
+  have hpos : ∀ t ∈ uIcc (1 : ℝ) 2, 0 < t := by
+    intro t ht
+    rw [uIcc_of_le (by norm_num : (1 : ℝ) ≤ 2)] at ht
+    linarith only [ht.1]
   have hpcont : ContinuousOn suzukiStandardUpperAdjoint (Ioi 0) :=
     fun _ hs => (suzukiStandardUpperAdjoint_hasDerivAt_dde hs).continuousAt.continuousWithinAt
   have hint : IntervalIntegrable
@@ -75,18 +76,13 @@ theorem jr1965DelaySum_adjoint_pairing_two :
     apply ContinuousOn.div
     · apply hpcont.comp (continuousOn_id.add continuousOn_const)
       intro t ht
-      rw [uIcc_of_le (by norm_num : (1 : ℝ) ≤ 2)] at ht
-      change 0 < t + 1
-      linarith [ht.1]
+      exact add_pos (hpos t ht) zero_lt_one
     · exact continuousOn_id
     · intro t ht
-      rw [uIcc_of_le (by norm_num : (1 : ℝ) ≤ 2)] at ht
-      linarith [ht.1]
+      exact (hpos t ht).ne'
   have heval := integral_upperAdjoint_shift_div_eq_sub
-    (p := suzukiStandardUpperAdjoint) (fun t ht =>
-      suzukiStandardUpperAdjoint_hasDerivAt_dde (by
-        rw [uIcc_of_le (by norm_num : (1 : ℝ) ≤ 2)] at ht
-        linarith [ht.1])) hint
+    (p := suzukiStandardUpperAdjoint)
+    (fun t ht => suzukiStandardUpperAdjoint_hasDerivAt_dde (hpos t ht)) hint
   have hi :
       (∫ t in (1 : ℝ)..2, suzukiStandardUpperAdjoint (t + 1) * jr1965DelaySum t) =
         jr1965DelayConstant * (suzukiStandardUpperAdjoint 1 -

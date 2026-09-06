@@ -37,42 +37,23 @@ theorem tendsto_suzukiProposition118Source_parity_zero
     {H : Section13HatLayers} (hH : Section13HatSourceContract H) :
     Tendsto suzukiProposition118SourceTPlus atTop (𝓝 0) ∧
       Tendsto suzukiProposition118SourceTMinus atTop (𝓝 0) := by
-  obtain ⟨C, hC, hseries⟩ := suzukiProposition118SourceParitySeries_le_hat hH
-  rcases hH.t5 .plus with ⟨Cp, hCp, hp⟩
-  rcases hH.t5 .minus with ⟨Cm, hCm, hm⟩
-  constructor
-  · apply squeeze_zero'
-    · filter_upwards [eventually_ge_atTop (2 : ℝ)] with s hs
-      exact tsum_nonneg (suzukiLayer_one_two_odd_nonneg (by linarith))
-    · filter_upwards [eventually_ge_atTop (2 : ℝ), hp] with s hs hhat
-      have hT := (hseries s hs).1
-      have hs0 : 0 ≤ s := by linarith
-      have hhat0 := (hH.positive .plus s (by linarith : 0 < s)).le
-      calc
-        suzukiProposition118SourceTPlus s ≤ C * s * H.T .plus s := hT
-        _ ≤ C * s * (Cp * Real.exp (-s)) :=
-          mul_le_mul_of_nonneg_left
-            (by simpa [abs_of_nonneg hhat0] using hhat)
-            (mul_nonneg hC hs0)
-        _ = (C * Cp) * (s ^ 1 * Real.exp (-s)) := by ring
-    · simpa using
-        (Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 1).const_mul (C * Cp)
-  · apply squeeze_zero'
-    · filter_upwards [eventually_ge_atTop (2 : ℝ)] with s hs
-      exact tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg hs k)
-    · filter_upwards [eventually_ge_atTop (2 : ℝ), hm] with s hs hhat
-      have hT := (hseries s hs).2
-      have hs0 : 0 ≤ s := by linarith
-      have hhat0 := (hH.positive .minus s (by linarith : 0 < s)).le
-      calc
-        suzukiProposition118SourceTMinus s ≤ C * s * H.T .minus s := hT
-        _ ≤ C * s * (Cm * Real.exp (-s)) :=
-          mul_le_mul_of_nonneg_left
-            (by simpa [abs_of_nonneg hhat0] using hhat)
-            (mul_nonneg hC hs0)
-        _ = (C * Cm) * (s ^ 1 * Real.exp (-s)) := by ring
-    · simpa using
-        (Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 1).const_mul (C * Cm)
+  have hnonneg : ∀ᶠ s : ℝ in atTop,
+      0 ≤ suzukiProposition118SourceTPlus s ∧
+        0 ≤ suzukiProposition118SourceTMinus s := by
+    filter_upwards [eventually_ge_atTop (2 : ℝ)] with s hs
+    exact ⟨tsum_nonneg (suzukiLayer_one_two_odd_nonneg (by linarith)),
+      tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg hs k)⟩
+  have hbound : ∀ᶠ s : ℝ in atTop,
+      suzukiProposition118SourceTPlus s ≤ suzukiProposition118SourceQ s ∧
+        suzukiProposition118SourceTMinus s ≤ suzukiProposition118SourceQ s := by
+    filter_upwards [eventually_ge_atTop (2 : ℝ), hnonneg] with s hs hsign
+    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr hs)]
+    exact ⟨le_add_of_nonneg_right hsign.2, le_add_of_nonneg_left hsign.1⟩
+  have hQ := tendsto_suzukiProposition118SourceQ_zero hH
+  exact ⟨squeeze_zero' (hnonneg.mono fun _ hs => hs.1)
+      (hbound.mono fun _ hs => hs.1) hQ,
+    squeeze_zero' (hnonneg.mono fun _ hs => hs.2)
+      (hbound.mono fun _ hs => hs.2) hQ⟩
 
 /-- On the closed series range the history-defined upper source agrees with
 `2 + T⁺ - T⁻`.  The endpoint uses the already proved source-pairing consequence

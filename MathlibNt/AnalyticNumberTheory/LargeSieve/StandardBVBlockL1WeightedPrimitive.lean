@@ -191,6 +191,14 @@ lemma standardBVBlockL1_loss_le_C (A loss : ℕ) :
 lemma standardBVBlockL1_loss_le_B (A loss : ℕ) :
     A + loss ≤ standardBVBlockL1ModulusExponent A loss := le_max_right _ _
 
+private lemma blockL1_two_le_log {N : ℕ} (hN : 9 ≤ N) :
+    2 ≤ Real.log (N : ℝ) := by
+  have h9 : Real.exp 2 < (9 : ℝ) := by
+    rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.exp_add]
+    nlinarith [Real.exp_one_lt_d9, Real.exp_pos (1 : ℝ)]
+  exact ((Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
+    (h9.trans_le (by exact_mod_cast hN))).le
+
 private theorem blockL1_logPower_le_threshold_eventually (A loss : ℕ) :
     ∀ᶠ N : ℕ in Filter.atTop,
       Real.log (N : ℝ) ^ (A + loss) ≤
@@ -198,19 +206,8 @@ private theorem blockL1_logPower_le_threshold_eventually (A loss : ℕ) :
   filter_upwards [eventually_ge_atTop (9 : ℕ)] with N hN
   let x : ℝ := Real.log (N : ℝ)
   let t : ℕ := A + loss
-  have hx2 : 2 ≤ x := by
-    dsimp [x]
-    have h9 : Real.exp 2 < (9 : ℝ) := by
-      rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.exp_add]
-      nlinarith [Real.exp_one_lt_d9, Real.exp_pos (1 : ℝ)]
-    exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-      (h9.trans_le (by exact_mod_cast hN)) |>.le
+  have hx2 : 2 ≤ x := blockL1_two_le_log hN
   have hx0 : 0 ≤ x := by linarith
-  have hbig : 2 ≤ x ^ (2 * (t + 1)) := by
-    have hxpow2 : 2 ≤ x ^ 2 := by nlinarith [sq_nonneg (x - 2)]
-    rw [show 2 * (t + 1) = 2 * t + 2 by omega, pow_add]
-    have hb : 1 ≤ x ^ (2 * t) := one_le_pow₀ (by linarith)
-    nlinarith [pow_nonneg hx0 (2 * t)]
   have hfloor := Nat.sub_one_lt_floor (x ^ (2 * (t + 1)))
   have hhalf : x ^ t ≤ x ^ (2 * (t + 1)) - 1 := by
     have hxt : 1 ≤ x ^ t := one_le_pow₀ (by linarith)
@@ -261,14 +258,7 @@ theorem standardBVBlockL1_scales_payable (A loss : ℕ) :
   have hB : A + loss ≤ B := by
     dsimp [B]
     exact standardBVBlockL1_loss_le_B A loss
-  have hlog1 : 1 ≤ x := by
-    have : 2 ≤ x := by
-      have h9 : Real.exp 2 < (9 : ℝ) := by
-        rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.exp_add]
-        nlinarith [Real.exp_one_lt_d9, Real.exp_pos (1 : ℝ)]
-      exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-        (h9.trans_le (by exact_mod_cast hN)) |>.le
-    linarith
+  have hlog1 : 1 ≤ x := le_trans (by norm_num) (blockL1_two_le_log hN)
   have hQ : (Q : ℝ) ≤ Real.sqrt N / x ^ (A + loss) := by
     calc
       (Q : ℝ) ≤ (N : ℝ) ^ (1 / 2 : ℝ) / Real.log N ^ (B : ℝ) := by
@@ -392,6 +382,17 @@ def StandardBVProductionBlockL1WeightedSource (loss : ℕ) : Prop :=
             ProductionTypeIBlockMeanValue N (u N) (v N) loss P K₁ G ∧
               ProductionTypeIIBlockMeanValue N (u N) (v N) loss P K₂ G
 
+private lemma blockL1_envelope_nonneg (N Q : ℕ) :
+    0 ≤ 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 := by
+  have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
+    have h0 : 0 ≤ discreteAbelAmplifier 0 := by
+      unfold discreteAbelAmplifier
+      positivity
+    exact h0.trans (by
+      unfold discreteAbelAmplifierPrefixMax
+      exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
+  positivity
+
 /-- Compatibility assembler for the former degenerate `v = min N 1` source.
 New production code must use
 `standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted`. -/
@@ -412,29 +413,11 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted_legacy
   let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
   have hR : 0 < logConductorThreshold N C := by
     unfold logConductorThreshold
-    have hlog : 1 < Real.log (N : ℝ) := by
-      have h9 : Real.exp 1 < (9 : ℝ) := by
-        nlinarith [Real.exp_one_lt_d9]
-      exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-        (h9.trans_le (by exact_mod_cast hN9))
-    have hpow : 1 < Real.log (N : ℝ) ^ C := by
-      have hC : 0 < C := by
-        dsimp [C, standardBVBlockL1ConductorExponent]
-        omega
-      exact one_lt_pow₀ hlog hC.ne'
-    exact Nat.floor_pos.mpr hpow.le
+    exact Nat.floor_pos.mpr (one_le_pow₀
+      (le_trans (by norm_num) (blockL1_two_le_log hN9)))
   let G := productionConductorBlockGeometry N Q C hR
   rcases hN hR with ⟨hIblock, hIIblock⟩
-  have hP : 0 ≤ P := by
-    dsimp [P]
-    have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-      have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-        unfold discreteAbelAmplifier
-        positivity
-      exact h0.trans (by
-        unfold discreteAbelAmplifierPrefixMax
-        exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
-    positivity
+  have hP : 0 ≤ P := blockL1_envelope_nonneg N Q
   have hI := productionTypeI_blockWeighted_to_highMean
     N Q C (u N) (v N) loss P K₁ G hP hK₁.le hIblock
   have hII := productionTypeII_blockWeighted_to_highMean
@@ -487,13 +470,7 @@ private lemma highConductorSet_eq_interval_blockL1 (N Q C : ℕ)
     (hR : 1 ≤ logConductorThreshold N C) :
     highConductorSet N Q C =
       Finset.Icc (logConductorThreshold N C + 1) Q := by
-  ext d
-  simp only [highConductorSet, Finset.mem_filter, Finset.mem_Icc]
-  constructor
-  · rintro ⟨⟨-, hdQ⟩, hRd⟩
-    exact ⟨Nat.add_one_le_iff.mpr hRd, hdQ⟩
-  · rintro ⟨hRd, hdQ⟩
-    exact ⟨⟨by omega, hdQ⟩, Nat.add_one_le_iff.mp hRd⟩
+  exact highConductorSet_eq_interval N Q C hR
 
 /-- Production block-L¹ chosen assembler.  Type-I and Type-II use one shared
 pair `u,v`, with `v = standardBVBalancedSmallCutoff`; their block first moments
@@ -519,29 +496,11 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted
   let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
   have hR : 0 < R := by
     dsimp [R, logConductorThreshold]
-    have hlog : 1 < Real.log (N : ℝ) := by
-      have h9 : Real.exp 1 < (9 : ℝ) := by
-        nlinarith [Real.exp_one_lt_d9]
-      exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-        (h9.trans_le (by exact_mod_cast hN9))
-    have hpow : 1 < Real.log (N : ℝ) ^ C := by
-      have hC : 0 < C := by
-        dsimp [C, standardBVBlockL1ConductorExponent]
-        omega
-      exact one_lt_pow₀ hlog hC.ne'
-    exact Nat.floor_pos.mpr hpow.le
+    exact Nat.floor_pos.mpr (one_le_pow₀
+      (le_trans (by norm_num) (blockL1_two_le_log hN9)))
   let G := productionConductorBlockGeometry N Q C hR
   rcases hN hR with ⟨hIblock, hIIblock⟩
-  have hP : 0 ≤ P := by
-    dsimp [P]
-    have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-      have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-        unfold discreteAbelAmplifier
-        positivity
-      exact h0.trans (by
-        unfold discreteAbelAmplifierPrefixMax
-        exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
-    positivity
+  have hP : 0 ≤ P := blockL1_envelope_nonneg N Q
   have hI := productionTypeI_blockWeighted_to_highMean
     N Q C (u N) (v N) loss P K₁ G hP hK₁.le hIblock
   have hII := productionTypeII_blockWeighted_to_highMean
@@ -613,7 +572,8 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted
               (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
               (highConductorSet N Q C) :=
           mul_nonneg hharmNonneg hledgerNonneg
-        nlinarith [sq_nonneg P]
+        apply mul_le_mul_of_nonneg_left _ (sq_nonneg P)
+        nlinarith only [hcore]
       _ ≤ (K₀ * ((N : ℝ) / Real.log N ^ A)) ^ 2 := by
         simpa only [hv, Nat.add_zero] using hsmallPay
   have hlogPos : 0 < Real.log (N : ℝ) :=
@@ -681,10 +641,8 @@ theorem productionAbelConductorEnvelope_le_logPow_five (B : ℕ) :
         _ ≤ 4 * 3 * (2 * Real.log (N : ℝ)) ^ 2 := by
           gcongr
         _ = 48 * Real.log (N : ℝ) ^ 2 := by ring
-    have hpows : Real.log (N : ℝ) ^ 2 ≤ Real.log (N : ℝ) ^ 5 := by
-      rw [show 5 = 2 + 3 by omega, pow_add]
-      exact le_mul_of_one_le_right (pow_nonneg (by positivity) 2)
-        (one_le_pow₀ hlog)
+    have hpows : Real.log (N : ℝ) ^ 2 ≤ Real.log (N : ℝ) ^ 5 :=
+      pow_le_pow_right₀ hlog (by norm_num)
     exact hPquad.trans (mul_le_mul_of_nonneg_left hpows (by norm_num))
 
 /-- Canonical bare block source.  Its analytic hypotheses contain no
@@ -704,6 +662,26 @@ def StandardBVProductionBlockL1BareSource (loss : ℕ) : Prop :=
             ProductionTypeIBlockMeanValueBare N (u N) (v N) loss K₁ G ∧
               ProductionTypeIIBlockMeanValueBare N (u N) (v N) loss K₂ G
 
+/-- The same five-log envelope payment applies to either production coefficient. -/
+private lemma blockWeightedPrimitiveMean_mul_le_logPow_five
+    (a : ℤ → ℂ) (N i loss : ℕ) (S : Finset ℕ) (P K : ℝ)
+    (hP : P ≤ 48 * Real.log (N : ℝ) ^ 5)
+    (hbare : blockWeightedPrimitiveMean a N S ≤
+      K * Real.log (N : ℝ) ^ loss *
+        ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N)) :
+    P * blockWeightedPrimitiveMean a N S ≤
+      (48 * K) * Real.log (N : ℝ) ^ (loss + 5) *
+        ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N) := by
+  calc
+    P * blockWeightedPrimitiveMean a N S ≤
+        (48 * Real.log (N : ℝ) ^ 5) * blockWeightedPrimitiveMean a N S :=
+      mul_le_mul_of_nonneg_right hP (blockWeightedPrimitiveMean_nonneg a N S)
+    _ ≤ (48 * Real.log (N : ℝ) ^ 5) *
+        (K * Real.log (N : ℝ) ^ loss *
+          ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N)) :=
+      mul_le_mul_of_nonneg_left hbare (by positivity)
+    _ = _ := by rw [pow_add]; ring
+
 /-- Multiplying a bare Type-I block estimate by an envelope bounded by five
 logarithms shifts the loss by exactly five. -/
 theorem productionTypeIBlockMeanValue_of_bare_logPow_five
@@ -713,22 +691,8 @@ theorem productionTypeIBlockMeanValue_of_bare_logPow_five
     (hbare : ProductionTypeIBlockMeanValueBare N u v loss K G) :
     ProductionTypeIBlockMeanValue N u v (loss + 5) P (48 * K) G := by
   intro i hi
-  have hW0 := blockWeightedPrimitiveMean_nonneg
-    (vaughanTypeICoeff vaughanUnitIntegerCoeff u v) N (G.cell i)
-  calc
-    P * blockWeightedPrimitiveMean
-        (vaughanTypeICoeff vaughanUnitIntegerCoeff u v) N (G.cell i) ≤
-      (48 * Real.log (N : ℝ) ^ 5) * blockWeightedPrimitiveMean
-        (vaughanTypeICoeff vaughanUnitIntegerCoeff u v) N (G.cell i) :=
-      mul_le_mul_of_nonneg_right hP hW0
-    _ ≤ (48 * Real.log (N : ℝ) ^ 5) *
-        (K * Real.log (N : ℝ) ^ loss *
-          ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N)) :=
-      mul_le_mul_of_nonneg_left (hbare i hi) (by positivity)
-    _ = (48 * K) * Real.log (N : ℝ) ^ (loss + 5) *
-        ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N) := by
-      rw [pow_add]
-      ring
+  exact blockWeightedPrimitiveMean_mul_le_logPow_five
+    _ N i loss (G.cell i) P K hP (hbare i hi)
 
 /-- Type-II version of the fixed five-log consumer payment. -/
 theorem productionTypeIIBlockMeanValue_of_bare_logPow_five
@@ -738,22 +702,8 @@ theorem productionTypeIIBlockMeanValue_of_bare_logPow_five
     (hbare : ProductionTypeIIBlockMeanValueBare N u v loss K G) :
     ProductionTypeIIBlockMeanValue N u v (loss + 5) P (48 * K) G := by
   intro i hi
-  have hW0 := blockWeightedPrimitiveMean_nonneg
-    (vaughanTypeIICoeff vaughanUnitIntegerCoeff u v) N (G.cell i)
-  calc
-    P * blockWeightedPrimitiveMean
-        (vaughanTypeIICoeff vaughanUnitIntegerCoeff u v) N (G.cell i) ≤
-      (48 * Real.log (N : ℝ) ^ 5) * blockWeightedPrimitiveMean
-        (vaughanTypeIICoeff vaughanUnitIntegerCoeff u v) N (G.cell i) :=
-      mul_le_mul_of_nonneg_right hP hW0
-    _ ≤ (48 * Real.log (N : ℝ) ^ 5) *
-        (K * Real.log (N : ℝ) ^ loss *
-          ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N)) :=
-      mul_le_mul_of_nonneg_left (hbare i hi) (by positivity)
-    _ = (48 * K) * Real.log (N : ℝ) ^ (loss + 5) *
-        ((N : ℝ) + (2 * (i : ℝ)) ^ 2 * Real.sqrt N) := by
-      rw [pow_add]
-      ring
+  exact blockWeightedPrimitiveMean_mul_le_logPow_five
+    _ N i loss (G.cell i) P K hP (hbare i hi)
 
 /-- Consumer-side bridge: a canonical bare source becomes the balanced weighted
 source after the fixed loss translation. -/

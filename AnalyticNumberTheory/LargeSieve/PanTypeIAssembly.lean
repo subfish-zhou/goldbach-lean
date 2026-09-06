@@ -205,14 +205,6 @@ lemma dirichletChar_eq_primitiveCharacter_of_coprime {q : ℕ} [NeZero q]
     (χ.primitiveCharacter_apply_of_isCoprime (a := (n : ℤ))
       (Nat.isCoprime_iff_coprime.mpr hcop)).symm
 
-/-- `|χ(a)| ≤ 1`: the norm is 1 on units and 0 on nonunits. -/
-lemma dirichletChar_norm_le_one (q : ℕ) (χ : DirichletCharacter ℂ q) (a : ZMod q) : ‖χ a‖ ≤ 1 := by
-  by_cases ha : IsUnit a
-  · rw [dirichletChar_norm_unit χ ha]
-  · have hz : χ a = 0 := MulChar.map_nonunit χ ha
-    rw [hz]
-    norm_num
-
 /-- **S2a**: each character `χ mod q` is induced by its unique primitive
 character `χ.primitiveCharacter mod χ.conductor` (uniqueness follows from
 injectivity of `changeLevel`). The pointwise equality holds for `(n,q)=1`;
@@ -279,17 +271,10 @@ lemma panTypeIV1CharSum_norm_le_primitive {q m u : ℕ} [NeZero q]
       simp [hc, hz]
   have hnorm1 : ‖panTypeIV1CharSum q m u χ‖ ≤
       ‖panTypeIV1CharSum χ.conductor m u ψ‖ + ‖S_not‖ := by
-    calc
-      ‖panTypeIV1CharSum q m u χ‖
-          = ‖panTypeIV1CharSum χ.conductor m u ψ +
-              (panTypeIV1CharSum q m u χ - panTypeIV1CharSum χ.conductor m u ψ)‖ := by
-              congr 1
-              abel
-      _ ≤ ‖panTypeIV1CharSum χ.conductor m u ψ‖ +
-            ‖panTypeIV1CharSum q m u χ - panTypeIV1CharSum χ.conductor m u ψ‖ := by
-            exact norm_add_le _ _
-      _ = ‖panTypeIV1CharSum χ.conductor m u ψ‖ + ‖S_not‖ := by
-            rw [hdiff, norm_neg]
+    simpa only [hdiff, norm_neg] using
+      (norm_le_norm_add_norm_sub'
+        (panTypeIV1CharSum q m u χ)
+        (panTypeIV1CharSum χ.conductor m u ψ))
   have hnorm2 : ‖S_not‖ ≤ panTypeI_nonCoprimeDensity q m u := by
     calc
       ‖S_not‖
@@ -380,15 +365,11 @@ lemma panTypeIV1CharSum_sq_le_primitive {q m u : ℕ} [NeZero q]
   have hnorm : ‖V‖ ≤ ‖W‖ + D := by
     simpa [V, W, D] using (panTypeIV1CharSum_norm_le_primitive (q := q) (m := m) (u := u) χ)
   have hnonneg : 0 ≤ ‖W‖ + D := add_nonneg (norm_nonneg _) (panTypeI_nonCoprimeDensity_nonneg q m u)
-  have hs : ‖V‖ ^ 2 ≤ (‖W‖ + D) ^ 2 := by
-    simpa [pow_two] using mul_le_mul hnorm hnorm (norm_nonneg _) hnonneg
-  have hsq : (‖W‖ + D) ^ 2 ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := by
-    nlinarith [sq_nonneg (‖W‖ - D)]
-  have hfin : ‖V‖ ^ 2 ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := by
-    calc
-      ‖V‖ ^ 2 ≤ (‖W‖ + D) ^ 2 := hs
-      _ ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := hsq
-  simpa [V, W, D] using hfin
+  change ‖V‖ ^ 2 ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2
+  calc
+    ‖V‖ ^ 2 ≤ (‖W‖ + D) ^ 2 := (sq_le_sq₀ (norm_nonneg _) hnonneg).2 hnorm
+    _ ≤ 2 * ‖W‖ ^ 2 + 2 * D ^ 2 := by
+      simpa only [mul_add] using (add_sq_le (a := ‖W‖) (b := D))
 
 /-- Fiber bound at level `q'`: the contribution of characters modulo `q`
 with conductor `q'` is at most `φ(q)·P_{q'}(m)`. The fiber has cardinality
@@ -495,7 +476,8 @@ theorem panTypeI_sqSum_primitiveDecomposition (q m u : ℕ) (hq : 0 < q) :
               simp [panTypeI_liftPrimitive]
             rw [hfiber_cast]
             exact panTypeI_primitiveFiberSqSum_le (q := q) (q' := q') (m := m) (u := u) hq
-  nlinarith [h1, h2]
+  apply h1.trans
+  exact add_le_add (mul_le_mul_of_nonneg_left h2 (show (0 : ℝ) ≤ 2 by norm_num)) le_rfl
 
 /-! ### S2c: Structural non-coprime density bound -/
 

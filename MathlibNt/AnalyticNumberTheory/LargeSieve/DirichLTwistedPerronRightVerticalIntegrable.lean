@@ -24,21 +24,20 @@ theorem twistedSmoothedPerronIntegrand_integrable_right
     {σ : ℝ} (σ_gt : 1 < σ) (σ_le : σ ≤ 2) :
     Integrable (fun t : ℝ =>
       twistedSmoothedPerronIntegrand χ ν ε X (σ + t * I)) := by
+  have right_re (t : ℝ) : ((σ : ℂ) + t * I).re = σ := by simp
+  have σ_pos : 0 < σ := zero_lt_one.trans σ_gt
   let term : ℕ → ℝ → ℂ := fun n t =>
     twistedVonMangoldtCoeff χ n / (n : ℂ) ^ (σ + t * I) *
       𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + t * I) *
         (X : ℂ) ^ (σ + t * I)
-  have abs_two : ∀ t : ℝ, ∀ n : ℕ,
+  have nnnorm_natCast_cpow_right : ∀ t : ℝ, ∀ n : ℕ,
       ‖(n : ℂ) ^ ((σ : ℂ) + t * I)‖₊ = n ^ σ := by
     intro t n
     simp_rw [← norm_toNNReal]
     rw [norm_natCast_cpow_of_re_ne_zero _ (by
-      simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im,
-        mul_one, sub_self, add_zero, ne_eq]
-      linarith)]
-    simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im,
-      mul_one, sub_self, add_zero,
-      Real.toNNReal_of_nonneg <| rpow_nonneg (y := σ) (x := n) (by linarith)]
+      rw [right_re]
+      exact σ_pos.ne'), right_re,
+      Real.toNNReal_of_nonneg (rpow_nonneg (Nat.cast_nonneg n) σ)]
     norm_cast
   have cont_mellin_smooth : Continuous fun a : ℝ ↦
       𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + a * I) := by
@@ -49,9 +48,10 @@ theorem twistedSmoothedPerronIntegrand_integrable_right
       exact (Smooth1MellinDifferentiable diffν suppν ⟨εpos, ε_lt_one⟩
         νpos mass_one hz).continuousAt
     · fun_prop
-    · simp only [mapsTo_univ_iff, mem_ofPred_eq, add_re, ofReal_re, mul_re, I_re,
-        mul_zero, ofReal_im, I_im, mul_one, sub_self, add_zero, forall_const]
-      linarith
+    · intro t _
+      change 0 < ((σ : ℂ) + t * I).re
+      rw [right_re]
+      exact σ_pos
   have X_ne : X ≠ 0 := ne_of_gt X_pos
   have hmeas : AEStronglyMeasurable (fun t : ℝ => ∑' n : ℕ, term n t) := by
     apply AEStronglyMeasurable.tsum
@@ -64,9 +64,8 @@ theorem twistedSmoothedPerronIntegrand_integrable_right
   have hmajor :
       ∫⁻ t : ℝ, ∑' n : ℕ, ‖term n t‖ₑ < ⊤ := by
     simp_rw [term, enorm_mul, enorm_eq_nnnorm, nnnorm_div, ← norm_toNNReal,
-      Complex.norm_cpow_eq_rpow_re_of_pos X_pos, norm_toNNReal, abs_two]
-    simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im,
-      I_im, mul_one, sub_self, add_zero]
+      Complex.norm_cpow_eq_rpow_re_of_pos X_pos, norm_toNNReal, nnnorm_natCast_cpow_right]
+    simp only [right_re]
     simp_rw [ENNReal.tsum_mul_right]
     rw [MeasureTheory.lintegral_mul_const'
       (r := ↑(X ^ σ).toNNReal) (hr := ENNReal.coe_ne_top)]
@@ -111,9 +110,7 @@ theorem twistedSmoothedPerronIntegrand_integrable_right
   dsimp [twistedSmoothedPerronIntegrand, term]
   rw [neg_logDeriv_LFunction_eq_tsum_twistedVonMangoldtCoeff χ]
   · rw [← tsum_mul_right, ← tsum_mul_right]
-  · simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im,
-      mul_one, sub_self, add_zero]
-    exact σ_gt
+  · simpa only [right_re] using σ_gt
 
 /-- The right vertical integral is the sum of its lower tail, the finite
 vertical segment from `-T` to `T`, and its upper tail. -/

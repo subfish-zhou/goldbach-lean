@@ -1,7 +1,7 @@
 """Regression tests for the source scanner and the axiom-report acceptance gate."""
 import unittest
 
-from check import EXPECTED, check_axiom_output, code_only
+from check import EXPECTED, check_axiom_output, code_only, count_code_lines
 
 
 class SourceMaskTests(unittest.TestCase):
@@ -25,6 +25,21 @@ class SourceMaskTests(unittest.TestCase):
     def test_unterminated_comment(self):
         with self.assertRaises(ValueError):
             code_only("/- unfinished")
+
+
+class CodeLineCountTests(unittest.TestCase):
+    def test_comments_and_blank_lines(self):
+        self.assertEqual(count_code_lines(
+            "\n/- outer\n/- inner -/\n-/\n-- comment\ndef answer := 42 -- tail\n"), 1)
+
+    def test_strings_are_code(self):
+        self.assertEqual(count_code_lines('def text :=\n  "-- /- not a comment -/"\n'), 2)
+
+    def test_escaped_quotes(self):
+        self.assertEqual(count_code_lines('def text := "escaped \\" -- text" -- tail\n'), 1)
+
+    def test_code_after_block_comment(self):
+        self.assertEqual(count_code_lines('/- doc -/ theorem ok : True := by trivial\n'), 1)
 
 
 class AxiomReportTests(unittest.TestCase):

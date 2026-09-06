@@ -5,6 +5,7 @@ Authors: Nous Research
 -/
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17CorrectedKernel
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final
+import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19FixedPowerEnvelopes
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19UniformMoments
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6M2Bound
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -99,15 +100,10 @@ private theorem eq20CorrectedLinearDecayWeight_integrable :
             (2 * v) / (v ^ ((21 : ℝ) / 10)) := by
           exact div_le_div₀ (by positivity) hnum hvq0 hden
         _ = 2 * v ^ (-(11 : ℝ) / 10) := by
-          rw [div_eq_mul_inv, ← Real.rpow_neg hv0.le]
           calc
-            2 * v * v ^ (-((21 : ℝ) / 10)) =
-                2 * (v ^ (1 : ℝ) * v ^ (-((21 : ℝ) / 10))) := by
-              rw [Real.rpow_one]
-              ring
-            _ = 2 * v ^ ((1 : ℝ) + (-((21 : ℝ) / 10))) := by
-              rw [← Real.rpow_add hv0]
-            _ = 2 * v ^ (-(11 : ℝ) / 10) := by norm_num
+            _ = 2 * (v ^ (1 : ℝ) / v ^ ((21 : ℝ) / 10)) := by
+              rw [Real.rpow_one, mul_div_assoc]
+            _ = _ := by rw [← Real.rpow_sub hv0]; norm_num
 
 private def eq20CorrectedQuadraticDecayWeight (v : ℝ) : ℝ :=
   (1 + v) ^ (2 : ℕ) / (1 + |v| ^ (4 : ℕ))
@@ -153,14 +149,9 @@ private theorem eq20CorrectedQuadraticDecayWeight_integrable :
             (4 * v ^ (2 : ℕ)) / (v ^ (4 : ℕ)) := by
           exact div_le_div₀ (by positivity) hnum (by positivity) hden
         _ = 4 * v ^ (-2 : ℝ) := by
-          rw [← Real.rpow_natCast v 2, ← Real.rpow_natCast v 4]
-          rw [div_eq_mul_inv, ← Real.rpow_neg hv0.le]
-          calc
-            4 * v ^ (2 : ℝ) * v ^ (-(4 : ℝ)) =
-                4 * (v ^ (2 : ℝ) * v ^ (-(4 : ℝ))) := by ring
-            _ = 4 * v ^ ((2 : ℝ) + (-(4 : ℝ))) := by
-              rw [← Real.rpow_add hv0]
-            _ = 4 * v ^ (-2 : ℝ) := by norm_num
+          rw [mul_div_assoc, ← Real.rpow_natCast v 2, ← Real.rpow_natCast v 4,
+            ← Real.rpow_sub hv0]
+          norm_num
 
 /-- Corrected-source first half-line integral on the alpha line. -/
 def chen1973Lemma6Eq20CorrectedFirstIntegral
@@ -272,32 +263,7 @@ private theorem eq20_corrected_inv_le_linearDecay
     (chen1973Lemma6Eq17CorrectedKernel x (σ + v * I))⁻¹ ≤
       (2 * Real.log x ^ ((231 : ℝ) / 100) / σ) /
         (1 + |v| ^ ((21 : ℝ) / 10)) := by
-  have hfac := chen1973Lemma6_eq17_correctedFactor_vertical_inv_le_21_div_10
-    hx σ v horder
-  have hnorm : σ ≤ ‖((σ : ℂ) + (v : ℂ) * I)‖ := by
-    calc
-      σ = |((σ : ℂ) + (v : ℂ) * I).re| := by simp [abs_of_pos hσ]
-      _ ≤ ‖((σ : ℂ) + (v : ℂ) * I)‖ := Complex.abs_re_le_norm _
-  have hcalc :
-      ‖((σ : ℂ) + (v : ℂ) * I)‖⁻¹ *
-          (1 + (‖((σ : ℂ) + (v : ℂ) * I)‖ /
-            chen1973PerronScale (x : ℝ)) ^
-              (chen1973PerronOrder (x : ℝ) + 1))⁻¹ ≤
-      σ⁻¹ * (2 * Real.log x ^ ((231 : ℝ) / 100) /
-        (1 + |v| ^ ((21 : ℝ) / 10))) := by
-    have hfac0 : 0 ≤
-        (1 + (‖((σ : ℂ) + (v : ℂ) * I)‖ /
-          chen1973PerronScale (x : ℝ)) ^
-            (chen1973PerronOrder (x : ℝ) + 1))⁻¹ := by
-      apply inv_nonneg.mpr
-      have hscale : 0 < chen1973PerronScale (x : ℝ) :=
-        chen1973Lemma6_eq17_perronScale_pos (by omega)
-      linarith [pow_nonneg
-        (div_nonneg (norm_nonneg ((σ : ℂ) + (v : ℂ) * I)) hscale.le)
-        (chen1973PerronOrder (x : ℝ) + 1)]
-    exact mul_le_mul (inv_anti₀ hσ hnorm) hfac hfac0 (inv_nonneg.mpr hσ.le)
-  simpa [chen1973Lemma6Eq17CorrectedKernel, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
-    using hcalc
+  exact chen1973Lemma6_eq17_correctedKernel_inv_le_linearDecay hx hσ horder
 
 private theorem eq20_corrected_inv_le_quadraticDecay
     {x : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (hσ : 0 < σ)
@@ -456,39 +422,19 @@ theorem chen1973Lemma6_equation20_corrected_complementary_cell
       (chen1973Lemma6Equation20H x level k ε)) :
     chen1973Lemma6NmBlockActual x L level B k m ≤
       2 * (C₁ + C₂) * (x : ℝ) / Real.log x ^ 20 := by
-  have hlevel : 1 ≤ level := hcell20.1
-  have hHfirst := chen1973Lemma6Equation20H_first_le x level k ε
-  have hHsecond := chen1973Lemma6Equation20H_second_le x level k ε
   have hx0 : (0 : ℝ) < x := by exact_mod_cast (show 0 < x by omega)
+  have hlog : 0 < Real.log (x : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < x by omega))
   have hα : 1 ≤ chen1973Lemma6Alpha x := by
     unfold chen1973Lemma6Alpha
-    have hlog : 0 < Real.log (x : ℝ) :=
-      Real.log_pos (by exact_mod_cast (show 1 < x by omega))
     linarith [one_div_pos.mpr hlog]
   have hβ : 0 < chen1973Lemma6Beta x := by
     unfold chen1973Lemma6Beta
-    have hlog : 0 < Real.log (x : ℝ) :=
-      Real.log_pos (by exact_mod_cast (show 1 < x by omega))
     linarith [one_div_pos.mpr hlog]
   have hHpos : 0 < chen1973Lemma6Equation20H x level k ε := by
-    have hfirstRPos :
-        0 < (2 : ℝ) ^ (2 * (level : ℝ) - k) *
-            (x : ℝ) ^ (-(13 : ℝ) / 30) *
-            (Real.log x) ^ 400 * chen1973Lemma6Equation20Ilx x level := by
-      have hlog : 0 < Real.log (x : ℝ) :=
-        Real.log_pos (by exact_mod_cast (show 1 < x by omega))
-      have hIlx : 0 < chen1973Lemma6Equation20Ilx x level := by
-        unfold chen1973Lemma6Equation20Ilx
-        positivity
-      positivity
-    have hsecondRPos : 0 < (x : ℝ) ^ ((1 : ℝ) / 2 - ε) :=
-      Real.rpow_pos_of_pos hx0 _
-    have hHfirstPosR : (0 : ℝ) < (chen1973Lemma6Equation20H x level k ε : ℝ) :=
-      lt_of_lt_of_le hfirstRPos hHfirst
-    have hHsecondPosR : (0 : ℝ) < (chen1973Lemma6Equation20H x level k ε : ℝ) :=
-      lt_of_lt_of_le hsecondRPos hHsecond
-    have hHposR : (0 : ℝ) < (chen1973Lemma6Equation20H x level k ε : ℝ) := by
-      simpa using (lt_min hHfirstPosR hHsecondPosR)
+    have hHposR : (0 : ℝ) < (chen1973Lemma6Equation20H x level k ε : ℝ) :=
+      (Real.rpow_pos_of_pos hx0 _).trans_le
+        (chen1973Lemma6Equation20H_second_le x level k ε)
     exact_mod_cast hHposR
   have hfirstPoint : ∀ v ∈ Ioi (0 : ℝ),
       chen1973Lemma6A x L level B k m (chen1973Lemma6Equation20H x level k ε)
@@ -592,7 +538,6 @@ theorem chen1973Lemma6_equation20_corrected_complementary_cell
           (∫ v in Ioi (0 : ℝ), eq20CorrectedQuadraticDecayWeight v) := by
         rw [MeasureTheory.integral_const_mul]
       _ ≤ _ := hpay₂
-  have hlog : 0 < Real.log (x : ℝ) := Real.log_pos (by exact_mod_cast (show 1 < x by omega))
   unfold Chen1973Equation20CorrectedContourMajorization at hcontour
   refine hcontour.trans ?_
   calc

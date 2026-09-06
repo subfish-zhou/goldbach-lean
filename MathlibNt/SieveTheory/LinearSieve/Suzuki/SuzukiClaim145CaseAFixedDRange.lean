@@ -112,6 +112,60 @@ lemma section13Hat_uniform_pos_on_compact
   | plus => exact (min_le_left _ _).trans (hp hx)
   | minus => exact (min_le_right _ _).trans (hm hx)
 
+private lemma exists_caseA_errorEnvelope_lower_for_fixed_q
+    (H : Section13HatLayers) (hH : Section13HatSourceContract H)
+    {q : ℕ} (hq : 2 ≤ q) {d : ℝ} (hd : 2 < d) :
+    ∃ e0 : ℝ, 0 < e0 ∧ ∀ (depth : ℕ) (coord : ℝ),
+      2 ≤ coord → e0 ≤ errorEnvelope H depth (q : ℝ) d coord := by
+  rcases proposition131iiUniformQuantitativeLower_of_source hH with
+    ⟨C, M0, hC, hM0, hprop⟩
+  have hgrowth := caseA_lowerProfile_eventually_one (q := q) (C := C) hq hd
+  rcases eventually_atTop.1 hgrowth with ⟨R, hR⟩
+  let M : ℝ := max M0 (max R 2)
+  have hM2 : 2 ≤ M := (le_max_right R 2).trans (le_max_right M0 (max R 2))
+  obtain ⟨e, he, heLower⟩ := section13Hat_uniform_pos_on_compact hH.toSection13HatContract hM2
+  let e0 : ℝ := min 1 (2 * e)
+  have he0 : 0 < e0 := lt_min (by norm_num) (by positivity)
+  have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
+  have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
+  refine ⟨e0, he0, ?_⟩
+  intro depth coord hcoord
+  have hcoord0 : 0 < coord := by linarith
+  have hbase : 1 ≤ 1 + coord ^ d / Real.log (q : ℝ) := by
+    have : 0 ≤ coord ^ d / Real.log (q : ℝ) := by positivity
+    linarith
+  have hbasepow : 1 ≤ (1 + coord ^ d / Real.log (q : ℝ)) ^ coord :=
+    Real.one_le_rpow hbase hcoord0.le
+  by_cases hcoordM : M ≤ coord
+  · have hprof : proposition131iiLowerProfile C coord ≤ H.T (ErrorSign.ofDepth depth) coord :=
+      hprop _ _ ((le_max_left M0 (max R 2)).trans hcoordM)
+    have hone : 1 ≤ (1 + coord ^ d / Real.log (q : ℝ)) ^ coord * coord *
+        proposition131iiLowerProfile C coord :=
+      hR coord ((le_max_left R 2).trans ((le_max_right M0 (max R 2)).trans hcoordM))
+    have hEnvelope : 1 ≤ (1 + coord ^ d / Real.log (q : ℝ)) ^ coord * coord *
+        H.T (ErrorSign.ofDepth depth) coord :=
+      hone.trans (mul_le_mul_of_nonneg_left hprof
+        (mul_nonneg (zero_le_one.trans hbasepow) hcoord0.le))
+    unfold errorEnvelope Section13HatLayers.kappaHat
+    norm_num [Real.rpow_one]
+    exact (min_le_left _ _).trans hEnvelope
+  · have hcompact : coord ∈ Set.Icc (2 : ℝ) M := ⟨hcoord, le_of_not_ge hcoordM⟩
+    have hT := heLower (ErrorSign.ofDepth depth) coord hcompact
+    have hTx : 2 * e ≤ (1 + coord ^ d / Real.log (q : ℝ)) ^ coord * coord *
+        H.T (ErrorSign.ofDepth depth) coord := by
+      have hpow0 : 0 ≤ (1 + coord ^ d / Real.log (q : ℝ)) ^ coord :=
+        zero_le_one.trans hbasepow
+      have hmul := mul_le_mul hbasepow hT he.le hpow0
+      calc
+        2 * e ≤ coord * e := mul_le_mul_of_nonneg_right hcoord he.le
+        _ ≤ coord * ((1 + coord ^ d / Real.log (q : ℝ)) ^ coord *
+            H.T (ErrorSign.ofDepth depth) coord) :=
+          mul_le_mul_of_nonneg_left (by simpa using hmul) hcoord0.le
+        _ = _ := by ring
+    unfold errorEnvelope Section13HatLayers.kappaHat
+    norm_num [Real.rpow_one]
+    exact (min_le_right _ _).trans hTx
+
 lemma exists_caseA_scalar_constant_for_fixed_q
     (S : BoundingSieve) (H : Section13HatLayers) (hH : Section13HatSourceContract H)
     {q : ℕ} (hq : 2 ≤ q) {d Δ K : ℝ} (hd : 2 < d) (hK : 0 < K) :
@@ -122,15 +176,8 @@ lemma exists_caseA_scalar_constant_for_fixed_q
           Real.exp (suzukiSourceL (p : ℝ) K) ≤
         A * claim14_5Scale S H n (q : ℝ) d Δ
           (sourceSigma (q : ℝ) d) K x := by
-  rcases proposition131iiUniformQuantitativeLower_of_source hH with
-    ⟨C, M0, hC, hM0, hprop⟩
-  have hgrowth := caseA_lowerProfile_eventually_one (q := q) (C := C) hq hd
-  rcases eventually_atTop.1 hgrowth with ⟨R, hR⟩
-  let M : ℝ := max M0 (max R 2)
-  have hM2 : 2 ≤ M := (le_max_right R 2).trans (le_max_right M0 (max R 2))
-  obtain ⟨e, he, heLower⟩ := section13Hat_uniform_pos_on_compact hH.toSection13HatContract hM2
-  let e0 : ℝ := min 1 (2 * e)
-  have he0 : 0 < e0 := lt_min (by norm_num) (by positivity)
+  obtain ⟨e0, he0, hEnvelopeLower⟩ :=
+    exists_caseA_errorEnvelope_lower_for_fixed_q H hH hq hd
   have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
   have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
   have hsigma : 0 < sourceSigma (q : ℝ) d := sourceSigma_pos_of_nat_two_le hq
@@ -183,42 +230,8 @@ lemma exists_caseA_scalar_constant_for_fixed_q
         mul_le_mul_of_nonneg_right hterm (Real.exp_pos Lp).le
       _ = Real.exp (2 * Lp) := by rw [← Real.exp_add]; congr 1; ring
       _ ≤ Real.exp (2 * Lq) := Real.exp_le_exp.mpr (by linarith)
-  have hEnvelope : e0 ≤ errorEnvelope H n (q : ℝ) d x := by
-    have hbase : 1 ≤ 1 + x ^ d / Real.log (q : ℝ) := by
-      have : 0 ≤ x ^ d / Real.log (q : ℝ) := by positivity
-      linarith
-    have hbasepow : 1 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x :=
-      Real.one_le_rpow hbase hx0.le
-    by_cases hxM : M ≤ x
-    · have hprof : proposition131iiLowerProfile C x ≤ H.T (ErrorSign.ofDepth n) x :=
-        hprop _ _ ((le_max_left M0 (max R 2)).trans hxM)
-      have hone : 1 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x * x *
-          proposition131iiLowerProfile C x :=
-        hR x ((le_max_left R 2).trans ((le_max_right M0 (max R 2)).trans hxM))
-      have hT0 : 0 ≤ H.T (ErrorSign.ofDepth n) x :=
-        (hH.toSection13HatContract.positive _ x hx0).le
-      have : 1 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x * x *
-          H.T (ErrorSign.ofDepth n) x :=
-        hone.trans (mul_le_mul_of_nonneg_left hprof (mul_nonneg (zero_le_one.trans hbasepow) hx0.le))
-      unfold errorEnvelope Section13HatLayers.kappaHat
-      norm_num [Real.rpow_one]
-      exact (min_le_left _ _).trans this
-    · have hxcompact : x ∈ Set.Icc (2 : ℝ) M := ⟨hx, le_of_not_ge hxM⟩
-      have hT := heLower (ErrorSign.ofDepth n) x hxcompact
-      have hTx : 2 * e ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x * x *
-          H.T (ErrorSign.ofDepth n) x := by
-        have hpow0 : 0 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x :=
-          zero_le_one.trans hbasepow
-        have hmul := mul_le_mul hbasepow hT he.le hpow0
-        calc
-          2 * e ≤ x * e := mul_le_mul_of_nonneg_right hx he.le
-          _ ≤ x * ((1 + x ^ d / Real.log (q : ℝ)) ^ x *
-              H.T (ErrorSign.ofDepth n) x) :=
-            mul_le_mul_of_nonneg_left (by simpa using hmul) hx0.le
-          _ = _ := by ring
-      unfold errorEnvelope Section13HatLayers.kappaHat
-      norm_num [Real.rpow_one]
-      exact (min_le_right _ _).trans hTx
+  have hEnvelope : e0 ≤ errorEnvelope H n (q : ℝ) d x :=
+    hEnvelopeLower n x hx
   have hscale : B ≤ claim14_5Scale S H n (q : ℝ) d Δ
       (sourceSigma (q : ℝ) d) K x := by
     unfold claim14_5Scale
@@ -246,16 +259,8 @@ lemma exists_caseA_scalar_constant_for_fixed_q_uniform_in_S
           Real.exp (suzukiSourceL (p : ℝ) K) ≤
         A * claim14_5Scale S H n (q : ℝ) d Δ
           (sourceSigma (q : ℝ) d) K x := by
-  rcases proposition131iiUniformQuantitativeLower_of_source hH with
-    ⟨C, M0, hC, hM0, hprop⟩
-  have hgrowth := caseA_lowerProfile_eventually_one (q := q) (C := C) hq hd
-  rcases eventually_atTop.1 hgrowth with ⟨R0, hR0⟩
-  let M : ℝ := max M0 (max R0 2)
-  have hM2 : 2 ≤ M := (le_max_right R0 2).trans (le_max_right M0 (max R0 2))
-  obtain ⟨e, he, heLower⟩ :=
-    section13Hat_uniform_pos_on_compact hH.toSection13HatContract hM2
-  let e0 : ℝ := min 1 (2 * e)
-  have he0 : 0 < e0 := lt_min (by norm_num) (by positivity)
+  obtain ⟨e0, he0, hEnvelopeLower⟩ :=
+    exists_caseA_errorEnvelope_lower_for_fixed_q H hH hq hd
   have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
   have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
   have hsigma : 0 < sourceSigma (q : ℝ) d := sourceSigma_pos_of_nat_two_le hq
@@ -306,43 +311,8 @@ lemma exists_caseA_scalar_constant_for_fixed_q_uniform_in_S
         mul_le_mul_of_nonneg_right hterm (Real.exp_pos Lp).le
       _ = Real.exp (2 * Lp) := by rw [← Real.exp_add]; congr 1; ring
       _ ≤ Real.exp (2 * Lq) := Real.exp_le_exp.mpr (by linarith)
-  have hEnvelope : e0 ≤ errorEnvelope H n (q : ℝ) d x := by
-    have hbase : 1 ≤ 1 + x ^ d / Real.log (q : ℝ) := by
-      have : 0 ≤ x ^ d / Real.log (q : ℝ) := by positivity
-      linarith
-    have hbasepow : 1 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x :=
-      Real.one_le_rpow hbase hx0.le
-    by_cases hxM : M ≤ x
-    · have hprof : proposition131iiLowerProfile C x ≤ H.T (ErrorSign.ofDepth n) x :=
-        hprop _ _ ((le_max_left M0 (max R0 2)).trans hxM)
-      have hone : 1 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x * x *
-          proposition131iiLowerProfile C x :=
-        hR0 x ((le_max_left R0 2).trans ((le_max_right M0 (max R0 2)).trans hxM))
-      have hT0 : 0 ≤ H.T (ErrorSign.ofDepth n) x :=
-        (hH.toSection13HatContract.positive _ x hx0).le
-      have : 1 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x * x *
-          H.T (ErrorSign.ofDepth n) x :=
-        hone.trans (mul_le_mul_of_nonneg_left hprof
-          (mul_nonneg (zero_le_one.trans hbasepow) hx0.le))
-      unfold errorEnvelope Section13HatLayers.kappaHat
-      norm_num [Real.rpow_one]
-      exact (min_le_left _ _).trans this
-    · have hxcompact : x ∈ Set.Icc (2 : ℝ) M := ⟨hx, le_of_not_ge hxM⟩
-      have hT := heLower (ErrorSign.ofDepth n) x hxcompact
-      have hTx : 2 * e ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x * x *
-          H.T (ErrorSign.ofDepth n) x := by
-        have hpow0 : 0 ≤ (1 + x ^ d / Real.log (q : ℝ)) ^ x :=
-          zero_le_one.trans hbasepow
-        have hmul := mul_le_mul hbasepow hT he.le hpow0
-        calc
-          2 * e ≤ x * e := mul_le_mul_of_nonneg_right hx he.le
-          _ ≤ x * ((1 + x ^ d / Real.log (q : ℝ)) ^ x *
-              H.T (ErrorSign.ofDepth n) x) :=
-            mul_le_mul_of_nonneg_left (by simpa using hmul) hx0.le
-          _ = _ := by ring
-      unfold errorEnvelope Section13HatLayers.kappaHat
-      norm_num [Real.rpow_one]
-      exact (min_le_right _ _).trans hTx
+  have hEnvelope : e0 ≤ errorEnvelope H n (q : ℝ) d x :=
+    hEnvelopeLower n x hx
   have hVlower : 1 / Rq ≤ claim14_5VProduct S (q : ℝ) := by
     apply (div_le_iff₀ hRq).2
     simpa [Rq, mul_comm, mul_left_comm, mul_assoc] using

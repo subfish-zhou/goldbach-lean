@@ -32,11 +32,10 @@ theorem chen1973Lemma6_equation14_dyadic_log_power
         2 * ‖F d χ‖ ^ 2 + 2 * ‖R d χ‖ ^ 2 := by
     rw [chen1973Lemma6_oneSubLS_eq_CH_sub_remainder hHpos]
     change ‖F d χ - R d χ‖ ^ 2 ≤ _
-    have hn := norm_sub_le (F d χ) (R d χ)
-    have hsquare : ‖F d χ - R d χ‖ ^ 2 ≤
-        (‖F d χ‖ + ‖R d χ‖) ^ 2 :=
-      pow_le_pow_left₀ (norm_nonneg _) hn 2
-    nlinarith [sq_nonneg (‖F d χ‖ - ‖R d χ‖)]
+    calc
+      _ ≤ (‖F d χ‖ + ‖R d χ‖) ^ 2 :=
+        pow_le_pow_left₀ (norm_nonneg _) (norm_sub_le _ _) 2
+      _ ≤ _ := by nlinarith only [sq_nonneg (‖F d χ‖ - ‖R d χ‖)]
   have hfinite := chen1973Lemma6_CH_polynomial_moment_fixed_log_five H D Q s hH hD hs
   have hR := chen1973Lemma6_equation14_remainderMoment_final_scalar
     H D Q s hHpos hD hDQ hs
@@ -57,8 +56,7 @@ theorem chen1973Lemma6_equation14_dyadic_log_power
           ∑ χ : PrimitiveCharacter d, ‖R d χ‖ ^ 2)
       simp_rw [Finset.sum_add_distrib, mul_add, ← Finset.mul_sum]
       rw [Finset.sum_add_distrib]
-      have hmul (a b : ℝ) : a * (2 * b) = 2 * (a * b) := by ring
-      simp_rw [hmul]
+      simp_rw [mul_left_comm (1 / _) (2 : ℝ)]
       rw [← Finset.mul_sum, ← Finset.mul_sum]
     _ ≤ 2 * (chen1973Lemma6Eq14DyadicConstant *
         ((Q : ℝ) / H + 1 / D) * (1 + Real.log (H + 1 : ℕ)) ^ 5) +

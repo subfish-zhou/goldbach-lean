@@ -151,6 +151,21 @@ lemma one_le_div_log {x : ℝ} (hx : 2 ≤ x) :
   have hlog := Real.log_le_sub_one_of_pos hxpos
   linarith
 
+/-- Bound the density by its value at the lower endpoint `2`. -/
+private lemma liuLogarithmicIntegral_integral_le_sub_div_log_two
+    {x : ℝ} (hx : 2 ≤ x) :
+    (∫ t in (2 : ℝ)..x, 1 / Real.log t) ≤ (x - 2) / Real.log 2 := by
+  calc
+    (∫ t in (2 : ℝ)..x, 1 / Real.log t) ≤
+        ∫ _t in (2 : ℝ)..x, 1 / Real.log 2 := by
+      apply intervalIntegral.integral_mono_on hx
+        (liuLogarithmicIntegrand_intervalIntegrable hx) intervalIntegrable_const
+      intro t ht
+      exact one_div_le_one_div_of_le (Real.log_pos (by norm_num))
+        (Real.log_le_log (by norm_num) ht.1)
+    _ = (x - 2) / Real.log 2 := by
+      simp [intervalIntegral.integral_const, smul_eq_mul, div_eq_mul_inv]
+
 /-- Explicit global bound for the integral part.  For `x ≥ 4`, split at `√x`:
 the first interval is bounded by `√x / log 2`, and on the second interval
 `log t ≥ log x / 2`.  The range `2 ≤ x < 4` is handled directly. -/
@@ -174,14 +189,8 @@ lemma liuLogarithmicIntegral_integral_le {x : ℝ} (hx : 2 ≤ x) :
     have hfirst : (∫ t in (2 : ℝ)..√x, 1 / Real.log t) ≤
         √x / Real.log 2 := by
       calc
-        (∫ t in (2 : ℝ)..√x, 1 / Real.log t) ≤
-            ∫ _t in (2 : ℝ)..√x, 1 / Real.log 2 := by
-          apply intervalIntegral.integral_mono_on hsqrt2 hint₁ intervalIntegrable_const
-          intro t ht
-          exact one_div_le_one_div_of_le hlog2
-            (Real.log_le_log (by norm_num) ht.1)
-        _ = (√x - 2) / Real.log 2 := by
-          simp [intervalIntegral.integral_const, smul_eq_mul, div_eq_mul_inv]
+        (∫ t in (2 : ℝ)..√x, 1 / Real.log t) ≤ (√x - 2) / Real.log 2 :=
+          liuLogarithmicIntegral_integral_le_sub_div_log_two hsqrt2
         _ ≤ √x / Real.log 2 := by
           exact (div_le_div_iff_of_pos_right hlog2).2 (by linarith)
     have hsecond : (∫ t in √x..x, 1 / Real.log t) ≤
@@ -228,7 +237,6 @@ lemma liuLogarithmicIntegral_integral_le {x : ℝ} (hx : 2 ≤ x) :
           2 * x / Real.log x := add_le_add hsqrt_bound (le_refl _)
       _ = (2 / Real.log 2 + 2) * (x / Real.log x) := by ring
   · have hx4' : x ≤ 4 := le_of_not_ge hx4
-    have hint := liuLogarithmicIntegrand_intervalIntegrable hx
     have hlogx_le : Real.log x ≤ 2 * Real.log 2 := by
       calc
         Real.log x ≤ Real.log 4 := Real.log_le_log hxpos hx4'
@@ -236,17 +244,7 @@ lemma liuLogarithmicIntegral_integral_le {x : ℝ} (hx : 2 ≤ x) :
           rw [show (4 : ℝ) = 2 * 2 by norm_num,
             Real.log_mul (by norm_num) (by norm_num)]
           ring
-    have hrough : (∫ t in (2 : ℝ)..x, 1 / Real.log t) ≤
-        (x - 2) / Real.log 2 := by
-      calc
-        (∫ t in (2 : ℝ)..x, 1 / Real.log t) ≤
-            ∫ _t in (2 : ℝ)..x, 1 / Real.log 2 := by
-          apply intervalIntegral.integral_mono_on hx hint intervalIntegrable_const
-          intro t ht
-          exact one_div_le_one_div_of_le hlog2
-            (Real.log_le_log (by norm_num) ht.1)
-        _ = (x - 2) / Real.log 2 := by
-          simp [intervalIntegral.integral_const, smul_eq_mul, div_eq_mul_inv]
+    have hrough := liuLogarithmicIntegral_integral_le_sub_div_log_two hx
     have hsmall : (x - 2) / Real.log 2 ≤ 2 * x / Real.log x := by
       apply (div_le_div_iff₀ hlog2 hlogx).2
       calc

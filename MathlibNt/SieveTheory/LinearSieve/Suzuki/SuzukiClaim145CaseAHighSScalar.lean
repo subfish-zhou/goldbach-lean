@@ -50,17 +50,11 @@ theorem claim145_caseA_highS_sourceL_le_logK
     have hh := Real.log_le_log hbpos hbaseK
     rw [Real.log_pow] at hh
     simpa using hh
-  have hlogC1 : Real.log C1 ≤ |Real.log C1| * Real.log K := by
-    calc
-      Real.log C1 ≤ |Real.log C1| := le_abs_self _
-      _ ≤ |Real.log C1| * Real.log K := by
-        nlinarith [abs_nonneg (Real.log C1)]
+  have hlogC1 : Real.log C1 ≤ |Real.log C1| * Real.log K :=
+    (le_abs_self _).trans (le_mul_of_one_le_right (abs_nonneg _) hlogK1)
   have hloglog2 : -Real.log (Real.log 2) ≤
-      |Real.log (Real.log 2)| * Real.log K := by
-    calc
-      -Real.log (Real.log 2) ≤ |Real.log (Real.log 2)| := neg_le_abs _
-      _ ≤ |Real.log (Real.log 2)| * Real.log K := by
-        nlinarith [abs_nonneg (Real.log (Real.log 2))]
+      |Real.log (Real.log 2)| * Real.log K :=
+    (neg_le_abs _).trans (le_mul_of_one_le_right (abs_nonneg _) hlogK1)
   unfold suzukiSourceL
   rw [Real.log_div (ne_of_gt hlogD) (ne_of_gt hlog2)]
   nlinarith
@@ -94,7 +88,7 @@ theorem claim145_caseA_highS_sourceSigma_le_Kbound
         rw [Real.mul_rpow hC1.le (Real.rpow_nonneg hK0.le _),
           ← Real.rpow_mul hK0.le]
         congr 2
-        field_simp [hd.ne']
+        exact mul_one_div Θ d
   have hlog27D_eq : Real.log (27 * D) = Real.log 27 + Real.log D := by
     rw [Real.log_mul (by norm_num : (27 : ℝ) ≠ 0) (ne_of_gt hD0)]
   have hlogD2 : Real.log 2 ≤ Real.log D :=
@@ -127,22 +121,10 @@ theorem claim145_caseA_highS_sourceSigma_le_Kbound
   have hlogterm :
       Real.log (Real.log (27 * D)) ≤
         (Θ + |Real.log C1| + |Real.log (Real.log 2)| + |Real.log R|) * Real.log K := by
-    have hlogC1 : Real.log C1 ≤ |Real.log C1| * Real.log K := by
-      calc
-        Real.log C1 ≤ |Real.log C1| := le_abs_self _
-        _ ≤ |Real.log C1| * Real.log K := by
-          nlinarith [abs_nonneg (Real.log C1)]
-    have hlogR : Real.log R ≤ |Real.log R| * Real.log K := by
-      calc
-        Real.log R ≤ |Real.log R| := le_abs_self _
-        _ ≤ |Real.log R| * Real.log K := by
-          nlinarith [abs_nonneg (Real.log R)]
-    have hloglog2 : -Real.log (Real.log 2) ≤
-        |Real.log (Real.log 2)| * Real.log K := by
-      calc
-        -Real.log (Real.log 2) ≤ |Real.log (Real.log 2)| := neg_le_abs _
-        _ ≤ |Real.log (Real.log 2)| * Real.log K := by
-          nlinarith [abs_nonneg (Real.log (Real.log 2))]
+    have hlogC1 : Real.log C1 ≤ |Real.log C1| * Real.log K :=
+      (le_abs_self _).trans (le_mul_of_one_le_right (abs_nonneg _) hlogK1)
+    have hlogR : Real.log R ≤ |Real.log R| * Real.log K :=
+      (le_abs_self _).trans (le_mul_of_one_le_right (abs_nonneg _) hlogK1)
     have hbonus : 0 ≤ |Real.log (Real.log 2)| * Real.log K := by positivity
     nlinarith [hll, hloglogD]
   unfold sourceSigma
@@ -150,8 +132,8 @@ theorem claim145_caseA_highS_sourceSigma_le_Kbound
     (Real.log D) ^ (1 / d) * Real.log (Real.log (27 * D)) ≤
         (C1 ^ (1 / d) * K ^ (Θ / d)) *
           ((Θ + |Real.log C1| + |Real.log (Real.log 2)| + |Real.log R|) * Real.log K) := by
-      gcongr
-      exact (Real.log_pos hlog27D_one).le
+      exact mul_le_mul hpow' hlogterm (Real.log_pos hlog27D_one).le
+        (mul_nonneg hC1pow.le (Real.rpow_nonneg hK0.le _))
     _ = _ := by
       dsimp [R]
       ring
@@ -247,7 +229,8 @@ theorem claim145_caseA_highS_log_gain_with_constant_eventually
       exact (div_le_one (by positivity : 0 < B + 1)).2 (by linarith)
     calc
       B * (Real.log t) ^ (2 * Θ + 3) ≤
-          (B * (1 / (B + 1))) * t ^ (d - 2 * Θ) := by nlinarith
+          (B * (1 / (B + 1))) * t ^ (d - 2 * Θ) := by
+        simpa only [mul_assoc] using hscaled
       _ ≤ 1 * t ^ (d - 2 * Θ) := mul_le_mul_of_nonneg_right hfrac hpow
       _ = _ := one_mul _
   rcases eventually_atTop.1 hS with ⟨S0, hS0⟩
@@ -579,13 +562,11 @@ theorem claim145_caseA_highS_front_factor_eventually_uniform_in_S
             nlinarith [hmain]
           _ ≤ _ := by nlinarith [hCterm, hΘterm]
       have hCscale : 3 * |Real.log C1| ≤
-          3 * |Real.log C1| * Real.log K := by
-        nlinarith [mul_le_mul_of_nonneg_left hlogK1
-          (show 0 ≤ 3 * |Real.log C1| by positivity)]
+          3 * |Real.log C1| * Real.log K :=
+        le_mul_of_one_le_right (by positivity) hlogK1
       have hAscale : |Real.log (Real.log 2)| ≤
-          |Real.log (Real.log 2)| * Real.log K := by
-        nlinarith [mul_le_mul_of_nonneg_left hlogK1
-          (abs_nonneg (Real.log (Real.log 2)))]
+          |Real.log (Real.log 2)| * Real.log K :=
+        le_mul_of_one_le_right (abs_nonneg _) hlogK1
       have hsimple : (2 + Δ) * Real.log (Real.log D) +
           Real.log (1 + K / Real.log 2) - Real.log (Real.log 2) ≤
           Q * Real.log K := by

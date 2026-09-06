@@ -12,7 +12,7 @@ theorem chen1973Lemma6_eq21_one_le_perronScale {x : ℕ} (hx : 3 ≤ x) :
   exact Real.one_le_rpow (chen1973Lemma6_eq17_one_le_log_and_order hx).1 (by norm_num)
 
 /-- Discarding only the smoothing factor, not changing the actual kernel. -/
-private theorem eq21_kernel_le_inv {x : ℕ} (hx : 1 < x) {σ t b : ℝ}
+theorem eq21_kernel_le_inv {x : ℕ} (hx : 1 < x) {σ t b : ℝ}
     (hσ : 0 ≤ σ) (hb : 0 < b) (hbs : b ≤ ‖(σ : ℂ) + t * I‖) :
     ‖chen1973MellinKernel (x : ℝ) ((σ : ℂ) + t * I)‖ ≤ b⁻¹ := by
   have hp := chen1973Lemma6_eq17_one_le_norm_one_add_div
@@ -92,16 +92,12 @@ theorem chen1973Lemma6_eq21_weightedKernel_head_middle
     exact (hmid t ht).2
   refine ⟨hfH, hfM, ?_, ?_⟩
   · calc
-      _ ≤ ∫ t in Ioc (0 : ℝ) 1, σ⁻¹ * D ^ r := by
-        apply integral_mono_ae hfH hH
-        filter_upwards [ae_restrict_mem measurableSet_Ioc] with t ht
-        exact (hhead t ht).2
+      _ ≤ ∫ t in Ioc (0 : ℝ) 1, σ⁻¹ * D ^ r :=
+        setIntegral_mono_on hfH hH measurableSet_Ioc (fun t ht => (hhead t ht).2)
       _ = _ := by simp [D, a]
   · calc
-      _ ≤ ∫ t in Ioc (1 : ℝ) a, t⁻¹ * D ^ r := by
-        apply integral_mono_ae hfM hM
-        filter_upwards [ae_restrict_mem measurableSet_Ioc] with t ht
-        exact (hmid t ht).2
+      _ ≤ ∫ t in Ioc (1 : ℝ) a, t⁻¹ * D ^ r :=
+        setIntegral_mono_on hfM hM measurableSet_Ioc (fun t ht => (hmid t ht).2)
       _ = _ := by
         rw [integral_mul_const, ← intervalIntegral.integral_of_le ha1,
           integral_inv_of_pos zero_lt_one ha]

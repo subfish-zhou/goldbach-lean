@@ -110,11 +110,7 @@ theorem continuousOn_jr1965HatPlus : ContinuousOn jr1965HatPlus (Ioi 0) := by
     · intro x hx
       exact mul_ne_zero (ne_of_gt delayConstant_pos) (by
         change 3 ≤ x at hx; linarith)
-  · rw [jr1965F_eq_of_le_three (by norm_num), jr1965f_initial (by norm_num)]
-    change 1 / (3 : ℝ) ^ 2 =
-      (jr1965DelayConstant / 3 - 0) / (jr1965DelayConstant * 3)
-    field_simp [ne_of_gt delayConstant_pos]
-    ring
+  · simpa [jr1965HatPlus] using (jr1965HatPlus_eq (s := 3) (by norm_num))
 
 theorem continuousOn_jr1965HatMinus : ContinuousOn jr1965HatMinus (Ioi 0) := by
   apply continuousOn_hat_piecewise
@@ -128,11 +124,7 @@ theorem continuousOn_jr1965HatMinus : ContinuousOn jr1965HatMinus (Ioi 0) := by
     · intro x hx
       exact mul_ne_zero (ne_of_gt delayConstant_pos) (by
         change 2 ≤ x at hx; linarith)
-  · rw [jr1965F_eq_of_le_three (by norm_num), jr1965f_initial (by norm_num)]
-    change 2 / (2 : ℝ) ^ 2 =
-      (jr1965DelayConstant / (2 - 1) - 0) / (jr1965DelayConstant * 2)
-    field_simp [ne_of_gt delayConstant_pos]
-    ring
+  · simpa [jr1965HatMinus] using (jr1965HatMinus_eq (s := 2) (by norm_num))
 
 theorem hasDerivAt_jr1965F_hat {s : ℝ} (hs : 0 < s) :
     HasDerivAt jr1965F (-jr1965DelayConstant * jr1965HatPlus s) s := by

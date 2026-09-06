@@ -372,24 +372,13 @@ theorem LiuPanWangDingCorollary230.to_coprimeRBound
   rcases exists_liuSourceDEpsilon_le_panModulusCutoff ε (Bsrc + 1)
       hε (by linarith) with
     ⟨Nconsumer, hconsumer⟩
-  let Nbase := max Nsrc (max Ninterval (max Nstrict Nconsumer))
   have hκsrc : ∀ᶠ N : ℕ in atTop,
       liuPaperQSourceCoprimeDistributionMajorant
           (liuLogarithmicIntegral κ_src) N ε ≤
         Csrc * (N : ℝ) / Real.log N ^ A := by
-    filter_upwards [eventually_ge_atTop Nbase] with N hN
-    have hNsrc : Nsrc ≤ N := (le_max_left _ _).trans hN
-    have hNinterval : Ninterval ≤ N :=
-      (le_max_left Ninterval (max Nstrict Nconsumer)).trans
-        ((le_max_right Nsrc _).trans hN)
-    have hNstrict : Nstrict ≤ N :=
-      (le_max_left Nstrict Nconsumer).trans
-        ((le_max_right Ninterval _).trans
-          ((le_max_right Nsrc _).trans hN))
-    have hNconsumer : Nconsumer ≤ N :=
-      (le_max_right Nstrict Nconsumer).trans
-        ((le_max_right Ninterval _).trans
-          ((le_max_right Nsrc _).trans hN))
+    filter_upwards [eventually_ge_atTop Nsrc, eventually_ge_atTop Ninterval,
+      eventually_ge_atTop Nstrict, eventually_ge_atTop Nconsumer] with
+      N hNsrc hNinterval hNstrict hNconsumer
     apply liuPaperQCoprimeRBound_of_liuMainPanEndpointMeanValueAt
       (liuLogarithmicIntegral κ_src) N ε A (Bsrc + 1) Csrc
       (hconsumer N hNconsumer)
@@ -454,8 +443,7 @@ theorem LiuPanWangDingSourceMeanValue.to_coprimeRBound
     ⟨NCut, hCut⟩
   refine ⟨C, hC, B, hB, max NPan NCut, ?_⟩
   intro N hN
-  have hNPan : NPan ≤ N := (le_max_left _ _).trans hN
-  have hNCut : NCut ≤ N := (le_max_right _ _).trans hN
+  rcases max_le_iff.mp hN with ⟨hNPan, hNCut⟩
   exact liuPaperQCoprimeRBound_of_liuMainPanEndpointMeanValueAt
     (liuLogarithmicIntegral κ) N ε A B C
     (hCut N hNCut) (hPanN N hNPan)
@@ -514,13 +502,8 @@ theorem LiuPanCanonicalCoprimeTheorem.eventually_liuPaperQSourceFullDistribution
   refine ⟨Cpan + CR1, add_pos_of_pos_of_nonneg hCpan hCR1,
     max NPan (max Nscalar 8), ?_⟩
   intro N hN
-  have hNPan : NPan ≤ N := (le_max_left NPan (max Nscalar 8)).trans hN
-  have hNscalar : Nscalar ≤ N :=
-    (le_max_left Nscalar 8).trans
-      ((le_max_right NPan (max Nscalar 8)).trans hN)
-  have hN8 : 8 ≤ N :=
-    (le_max_right Nscalar 8).trans
-      ((le_max_right NPan (max Nscalar 8)).trans hN)
+  rcases max_le_iff.mp hN with ⟨hNPan, hNrest⟩
+  rcases max_le_iff.mp hNrest with ⟨hNscalar, hN8⟩
   have hNpos : (0 : ℝ) < N := by positivity
   have hlogpos : 0 < Real.log (N : ℝ) :=
     Real.log_pos (by exact_mod_cast (show 1 < N by omega))

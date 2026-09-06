@@ -66,9 +66,7 @@ theorem original_value_lower_bound_of_common_level_real_zero
   have hpow :
       (Q : ℝ) ^ (3 * a) * (Q : ℝ) ^ (24 * (1 - β)) =
         (Q : ℝ) ^ (24 * (1 - β) + 3 * a) := by
-    rw [← Real.rpow_add hQ]
-    congr 1
-    ring
+    rw [← Real.rpow_add hQ, add_comm]
   have h := (div_le_iff₀ (by positivity :
       0 < 2 * ((5000 * (Q : ℝ) ^ 3) ^ 8) ^ (1 - β))).mp
     (hlower.trans hupper)
@@ -147,6 +145,6 @@ theorem exists_fixed_witness_lower_bound
     calc
       _ ≤ (ψ.LFunction 1).re * (q : ℝ) ^ (-(24 * (1 - β) + 3 * a)) :=
         mul_le_mul_of_nonneg_right (min_le_right _ _) (Real.rpow_nonneg (Nat.cast_nonneg q) _)
-      _ ≤ (ψ.LFunction 1).re := by nlinarith
+      _ ≤ (ψ.LFunction 1).re := mul_le_of_le_one_right hL.le hp
 
 end AnalyticNumberTheory.LargeSieve.Bombieri1965Theorem4

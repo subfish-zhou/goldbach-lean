@@ -100,7 +100,7 @@ lemma finite_star_payment {x : ℕ} {y : ℝ}
     have hl := Real.log_nonneg hu2
     simp only [inv_one] at hh
     change M*(1+Real.log (u^2)) ≤ u/3 at hh
-    nlinarith [mul_nonneg hM0 hl]
+    exact (le_mul_of_one_le_right hM0 (by linarith only [hl])).trans hh
   have hσ := (finite_sigma_geometry hu).1
   have hα := (finite_sigma_geometry hu).2
   have hσα : 0 ≤ α-σ := by
@@ -132,8 +132,11 @@ lemma finite_star_payment {x : ℕ} {y : ℝ}
       apply (div_le_iff₀ (pow_pos hu0 2)).2
       calc
         _ ≤ 2*(u/3) := mul_le_mul hgap hMs hM0 (by norm_num)
-        _ ≤ 2*u^2*u^2 := by nlinarith [sq_nonneg (u-1), mul_self_le_mul_self (by positivity : 0 ≤ u) (show u ≤ u^2 by nlinarith [sq_nonneg (u-1)])]
-    linarith
+        _ ≤ 2*u^2 := by nlinarith only [hu1, sq_nonneg (u-1)]
+        _ ≤ 2*u^2*u^2 := le_mul_of_one_le_right (by positivity) hu2
+    calc
+      _ ≤ 6*u^2 + 2*u^2 := add_le_add hn hm
+      _ = _ := by ring
   have hr : 0 ≤ r := by dsimp [r, chen1973PerronScale]; positivity
   have hb0 : 0 ≤ 6*u^2/(N:ℝ)+(α-σ)*M/u^2 := by positivity
   have hright : y^α/(Real.pi*Real.log y)*r*(6*u^2/(N:ℝ)+(α-σ)*M/u^2) ≤ y^σ := by
@@ -145,7 +148,7 @@ lemma finite_star_payment {x : ℕ} {y : ℝ}
       _ = y^σ * (8*Real.exp (1+Real.sqrt u)*r*u^2) := by ring
       _ ≤ y^σ * 1 := mul_le_mul_of_nonneg_left htail (by positivity)
       _ = _ := mul_one _
-  linarith
+  simpa only [two_mul] using add_le_add hleftpay hright
 
 /-- Uniform actual-term estimate, derived only from finite raw nonvanishing. -/
 theorem chen1973Lemma6_eq21_actualTerm_two_eventually_of_finiteZeroFree :

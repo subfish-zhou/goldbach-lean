@@ -244,55 +244,33 @@ theorem sum_nonprincipal_by_conductor
       apply DirichletCharacter.changeLevel_injective hdq
       exact h
     exact congrArg (Sigma.mk d) hψ
-  refine Finset.sum_bij'
-    (fun χ hχ => ⟨χ.conductor, conductorPrimitiveCharacter χ⟩)
-    lift ?_ ?_ ?_ ?_ ?_
-  · intro χ hχ
+  have encode_mem : ∀ χ ∈ nonprincipalCharacters q,
+      (⟨χ.conductor, conductorPrimitiveCharacter χ⟩ : Σ d, PrimitiveCharacter d) ∈ T := by
+    intro χ hχ
     rw [Finset.mem_sigma]
     refine ⟨?_, Finset.mem_univ _⟩
     change χ.conductor ∈ nonprincipalConductors q
     rw [nonprincipalConductors, Finset.mem_filter]
     refine ⟨Nat.mem_divisors.mpr ⟨χ.conductor_dvd_level, hq.ne'⟩, ?_⟩
     have hc1 : χ.conductor ≠ 1 :=
-      (mem_nonprincipalCharacters_iff_conductor_ne_one.mp hχ)
+      mem_nonprincipalCharacters_iff_conductor_ne_one.mp hχ
     have hcpos : 0 < χ.conductor := Nat.pos_of_dvd_of_pos χ.conductor_dvd_level hq
     omega
-  · intro p hp
+  have lift_mem : ∀ p (hp : p ∈ T), lift p hp ∈ nonprincipalCharacters q := by
+    intro p hp
     rw [mem_nonprincipalCharacters_iff_conductor_ne_one]
-    have hdmem : p.1 ∈ nonprincipalConductors q := by
-      simpa [T] using (Finset.mem_sigma.mp hp).1
+    have hdmem : p.1 ∈ nonprincipalConductors q := (Finset.mem_sigma.mp hp).1
     have hd2 : 2 ≤ p.1 := (Finset.mem_filter.mp hdmem).2
-    simp only [lift]
-    rw [DirichletCharacter.conductor_changeLevel]
-    rw [primitive_conductor]
+    simp only [lift, DirichletCharacter.conductor_changeLevel, primitive_conductor]
     omega
+  refine Finset.sum_bij'
+    (fun χ hχ => ⟨χ.conductor, conductorPrimitiveCharacter χ⟩)
+    lift encode_mem lift_mem ?_ ?_ ?_
   · intro χ hχ
-    simp only [lift]
     exact changeLevel_conductorPrimitiveCharacter χ
   · intro p hp
-    let χ := lift p hp
-    have hχmem : χ ∈ nonprincipalCharacters q := by
-      rw [mem_nonprincipalCharacters_iff_conductor_ne_one]
-      rcases p with ⟨d, ψ⟩
-      have hdmem : d ∈ nonprincipalConductors q := (Finset.mem_sigma.mp hp).1
-      have hd2 : 2 ≤ d := (Finset.mem_filter.mp hdmem).2
-      simp only [χ, lift, DirichletCharacter.conductor_changeLevel,
-        primitive_conductor]
-      omega
-    have hencmem : (⟨χ.conductor, conductorPrimitiveCharacter χ⟩ :
-        Σ d, PrimitiveCharacter d) ∈ T := by
-      rw [Finset.mem_sigma]
-      refine ⟨?_, Finset.mem_univ _⟩
-      change χ.conductor ∈ nonprincipalConductors q
-      rw [nonprincipalConductors, Finset.mem_filter]
-      refine ⟨Nat.mem_divisors.mpr ⟨χ.conductor_dvd_level, hq.ne'⟩, ?_⟩
-      have hc1 : χ.conductor ≠ 1 :=
-        mem_nonprincipalCharacters_iff_conductor_ne_one.mp hχmem
-      have hcpos : 0 < χ.conductor :=
-        Nat.pos_of_dvd_of_pos χ.conductor_dvd_level hq
-      omega
-    apply lift_injective _ _ hencmem hp
-    exact changeLevel_conductorPrimitiveCharacter χ
+    apply lift_injective _ _ (encode_mem _ (lift_mem p hp)) hp
+    exact changeLevel_conductorPrimitiveCharacter (lift p hp)
   · intro χ hχ
     rfl
 

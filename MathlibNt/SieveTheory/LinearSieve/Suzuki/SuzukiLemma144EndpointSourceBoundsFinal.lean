@@ -3,6 +3,7 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseFi
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseI1423SigmaCubedDecay
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12QDEnvelopePointwise
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEndpointScalarBounds
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -53,14 +54,11 @@ private lemma endpoint_sigma11_normalization
     (hpowe : logD ^ (-Δ) * logD = logD ^ (1 - Δ)) :
     K ^ 2 * σ ^ 2 * logσ / logD ≤
       logD ^ (-Δ) / (logLog * σ) := by
-  apply (div_le_div_iff₀ hlog (mul_pos hll hσ)).2
-  calc
-    K ^ 2 * σ ^ 2 * logσ * (logLog * σ) =
-      K ^ 2 * σ ^ 3 * logσ * logLog := by ring
-    _ ≤ logD ^ (1 - Δ) := hscalar
-    _ = logD ^ (-Δ) * logD := hpowe.symm
+  exact MathlibNt.SieveTheory.caseI_endpoint_sigma11_normalization
+    K σ logσ logD logLog Δ hlog hll hσ hscalar hpowe
 
-private lemma endpoint_sigma11_core
+/-- Transport and normalize the sigma-eleven scalar estimate into its budget. -/
+lemma endpoint_sigma11_core
     (V K F logD σ L R logσ E0 logPow logLog C E : ℝ)
     (hlog : 0 < logD) (hσ : 0 < σ) (hC : 0 < C)
     (hE : 0 < E) (hll : 0 < logLog)
@@ -85,7 +83,8 @@ private lemma endpoint_sigma11_core
         (C * E * V * logPow * E0 / (logLog * σ)) :=
           endpoint_sigma11_budget_identity _ _ _ _ _ _ _ _ _ hC hE hll hσ
 
-private theorem endpoint_sigma11_bound
+/-- Pointwise sigma-eleven endpoint bound from transport and scalar estimates. -/
+theorem caseI1423_endpoint_sigma11_bound
     (S : BoundingSieve) (H : Section13HatLayers) (C K d Δ L R : ℝ)
     (N D : ℕ) (s : ℝ)
     (hC : 0 < C) (hD : 0 < (D : ℝ))
@@ -122,7 +121,8 @@ private theorem endpoint_sigma11_bound
     (suzukiVProduct_pos S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ)).le
     hL hR hE0 htransport hnorm
 
-private lemma endpoint_sigma12_final_algebra
+/-- Convert the sigma-twelve front estimate and scalar bound into the final budget. -/
+lemma caseI1423_endpoint_sigma12_final_algebra
     (q V K R σ logσ E0 logLog logD : ℝ)
     (hR : 0 ≤ R) (hσ : 0 < σ) (hE0 : 0 ≤ E0)
     (hV : 0 ≤ V) (hLogLog : 0 ≤ logLog)
@@ -295,7 +295,7 @@ theorem caseI1423EndpointSourceBoundsFinal
     exact (div_le_one (by positivity)).mp (by simpa [σ] using hscalar)
   constructor
   · dsimp [A11, E, z, σ]
-    exact endpoint_sigma11_bound S H C K d Δ L R N D s hC
+    exact MathlibNt.SieveTheory.caseI1423_endpoint_sigma11_bound S H C K d Δ L R N D s hC
       (by linarith : 0 < (D : ℝ)) hlog hll hσ0
       (by linarith [hL]) (by linarith [hR]) (by simpa [E0] using hE0)
       (by simpa [σ, E0] using htransport)
@@ -307,21 +307,11 @@ theorem caseI1423EndpointSourceBoundsFinal
       (mul_nonneg (mul_nonneg (mul_nonneg hC.le hE.le)
         (suzukiVProduct_pos S (z : ℝ)).le)
         (Real.rpow_nonneg hlog.le (-Δ)))
-    have hscalar12 : K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
-        Real.log (Real.log (D : ℝ)) / Real.log (D : ℝ) ≤ 1 := by
-      calc
-        K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
-            Real.log (Real.log (D : ℝ)) / Real.log (D : ℝ) ≤
-          K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
-            Real.log (Real.log (D : ℝ)) /
-              (Real.log (D : ℝ)) ^ (1 - Δ) := by
-                apply div_le_div_of_nonneg_left (by positivity) (by positivity) hpowden
-        _ ≤ 1 := hscalar
     have hscalar12Mul : K ^ 2 * σ ^ 3 * Real.log (Real.exp 1 * σ) *
         Real.log (Real.log (D : ℝ)) ≤ Real.log (D : ℝ) :=
-      (div_le_one hlog).mp hscalar12
+      hscalarMul.trans hpowden
     field_simp [ne_of_gt hlog, ne_of_gt hll, ne_of_gt hσ0] at hfront ⊢
-    exact endpoint_sigma12_final_algebra
+    exact MathlibNt.SieveTheory.caseI1423_endpoint_sigma12_final_algebra
       (qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ s)
       (suzukiVProduct S (z : ℝ)) K R σ
       (Real.log (Real.exp 1 * σ)) E0 (Real.log (Real.log (D : ℝ)))

@@ -188,12 +188,7 @@ private theorem dvd_correctedChenSiftingProduct_iff_squarefree_coprime
   constructor
   · intro hd
     refine ⟨(correctedChenSiftingProduct_squarefree N).squarefree_of_dvd hd, ?_⟩
-    have hPN : Nat.Coprime (correctedChenSiftingProduct N) N := by
-      apply Nat.coprime_of_dvd'
-      intro p hp hpP hpN
-      exact False.elim
-        (((prime_dvd_correctedChenSiftingProduct hp).mp hpP).2.2 hpN)
-    exact hPN.coprime_dvd_left hd
+    exact (coprime_siftingProduct_N N).coprime_dvd_left hd
   · rintro ⟨hsq, hcop⟩
     have hP0 : correctedChenSiftingProduct N ≠ 0 :=
       correctedChenSiftingProduct_ne_zero N
@@ -698,12 +693,8 @@ theorem q1LevelGood_modulus_le_cutoff
   have hd1pos : 0 < d1 := Nat.pos_of_dvd_of_pos hd1P hPpos
   have hd2pos : 0 < d2 := Nat.pos_of_dvd_of_pos hd2P hPpos
   have hlcmpos : 0 < Nat.lcm d1 d2 := Nat.lcm_pos hd1pos hd2pos
-  have hinner : Nat.lcm d1 d2 ≤ L ^ 2 := by
-    calc
-      Nat.lcm d1 d2 ≤ d1 * d2 := Nat.lcm_le_mul hd1pos hd2pos
-      _ ≤ L * L := Nat.mul_le_mul (mem_q1LevelCarrier.mp hd1).2
-        (mem_q1LevelCarrier.mp hd2).2
-      _ = L ^ 2 := by ring
+  have hinner : Nat.lcm d1 d2 ≤ L ^ 2 :=
+    q1LevelCarrier_lcm_le_square hd1 hd2
   calc
     Nat.lcm q (Nat.lcm d1 d2) ≤ q * Nat.lcm d1 d2 :=
       Nat.lcm_le_mul hq.pos hlcmpos
@@ -1121,19 +1112,9 @@ theorem q1LevelMainAggregate_eq_li_mul_reciprocalSum_mul_quadratic
       exact hswitch.2.1
     have hqsub : (q : ℝ) - 1 = (q - 1 : ℕ) := by
       rw [Nat.cast_sub hqprime.one_le, Nat.cast_one]
-    have hqm1 : (q : ℝ) - 1 ≠ 0 := by
-      exact sub_ne_zero.mpr (by exact_mod_cast hqprime.ne_one)
-    have hd1pos : 0 < d1 := Nat.pos_of_dvd_of_pos
-      (mem_q1LevelCarrier.mp hd1).1
-      (Nat.pos_of_ne_zero (correctedChenSiftingProduct_ne_zero N))
-    have hd2pos : 0 < d2 := Nat.pos_of_dvd_of_pos
-      (mem_q1LevelCarrier.mp hd2).1
-      (Nat.pos_of_ne_zero (correctedChenSiftingProduct_ne_zero N))
-    have hlcmpos : 0 < Nat.lcm d1 d2 := Nat.lcm_pos hd1pos hd2pos
-    have hphi : (Nat.totient (Nat.lcm d1 d2) : ℝ) ≠ 0 := by
-      exact_mod_cast ne_of_gt (Nat.totient_pos.mpr hlcmpos)
     rw [Nat.cast_mul, ← hqsub]
-    field_simp [hqm1, hphi]
+    simp only [div_eq_mul_inv, mul_inv_rev, one_mul]
+    ring
   unfold q1LevelMainAggregate q1LevelSwitchingReciprocalSum
     q1LevelSelbergQuadratic
   change (∑ q ∈ q1LevelGoodSwitchingPrimes N B L, _) =

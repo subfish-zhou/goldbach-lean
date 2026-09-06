@@ -6,21 +6,31 @@ namespace AnalyticNumberTheory.LargeSieve
 
 local notation "𝓜" => mellin
 
+/-- Positivity of the logarithmic parameter and its associated edge width. -/
+private theorem conductorLog_parameters_pos
+    {q : ℕ} [NeZero q] {T : ℝ} (hT : 3 ≤ T) :
+    0 < dirichletLTwistedSmoothedConductorLogLM q T ∧
+      0 < dirichletLTwistedSmoothedConductorLogEdgeWidth q T := by
+  have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
+    simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
+      four_le_dirichletLNonquadraticConductorLogCutoff hT
+  have hlog : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
+    Real.log_pos (by exact_mod_cast
+      (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
+  have hLM : 0 < dirichletLTwistedSmoothedConductorLogLM q T := by
+    dsimp only [dirichletLTwistedSmoothedConductorLogLM]
+    linarith
+  refine ⟨hLM, ?_⟩
+  dsimp only [dirichletLTwistedSmoothedConductorLogEdgeWidth]
+  positivity
+
 /-- The final left edge is still strictly to the right of `1/2`. -/
 private theorem one_half_lt_conductorLogFinalLeft
     {q : ℕ} [NeZero q] {T : ℝ} (hT : 3 ≤ T) :
     (1 / 2 : ℝ) < dirichletLTwistedSmoothedConductorLogFinalLeft q T := by
   have hold := one_half_lt_dirichletLTwistedSmoothedConductorLogLeftEdge
     (q := q) (T := T) hT
-  have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
-    simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
-      four_le_dirichletLNonquadraticConductorLogCutoff hT
-  have hlog : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
-  have hw : 0 < dirichletLTwistedSmoothedConductorLogEdgeWidth q T := by
-    dsimp only [dirichletLTwistedSmoothedConductorLogEdgeWidth,
-      dirichletLTwistedSmoothedConductorLogLM]
-    positivity
+  have hw := (conductorLog_parameters_pos (q := q) hT).2
   have hle : dirichletLTwistedSmoothedConductorLogLeftEdge q T ≤
       dirichletLTwistedSmoothedConductorLogFinalLeft q T := by
     change 1 - dirichletLTwistedSmoothedConductorLogEdgeWidth q T ≤
@@ -58,33 +68,16 @@ theorem exists_dirichletLTwistedSmoothedContourNormBounds
   let LM := dirichletLTwistedSmoothedConductorLogLM q T
   let a := dirichletLTwistedSmoothedConductorLogFinalLeft q T
   let b := dirichletLTwistedSmoothedConductorLogRight d
+  obtain ⟨hLM, hwidth⟩ := conductorLog_parameters_pos (q := q) hT
+  change 0 < LM at hLM
   have ha : (1 / 2 : ℝ) < a := by
     simpa only [a] using one_half_lt_conductorLogFinalLeft (q := q) hT
   have hab : a ≤ b := by
     dsimp only [a, b, dirichletLTwistedSmoothedConductorLogFinalLeft,
       dirichletLTwistedSmoothedConductorLogRight]
-    have hwidth : 0 < dirichletLTwistedSmoothedConductorLogEdgeWidth q T := by
-      dsimp only [dirichletLTwistedSmoothedConductorLogEdgeWidth,
-        dirichletLTwistedSmoothedConductorLogLM]
-      have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
-        simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
-          four_le_dirichletLNonquadraticConductorLogCutoff hT
-      have hlog : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
-        Real.log_pos (by exact_mod_cast
-          (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
-      positivity
     linarith
   have hb2 : b ≤ 2 := by
     dsimp only [b, dirichletLTwistedSmoothedConductorLogRight]
-    linarith
-  have hLM : 0 < LM := by
-    dsimp only [LM, dirichletLTwistedSmoothedConductorLogLM]
-    have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
-      simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
-        four_le_dirichletLNonquadraticConductorLogCutoff hT
-    have hlog : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
-      Real.log_pos (by exact_mod_cast
-        (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
     linarith
   have hX0 : 0 < X := lt_of_lt_of_le zero_lt_one hX
   have hT0 : 0 < T := lt_of_lt_of_le (by norm_num) hT

@@ -142,7 +142,8 @@ noncomputable def chenReducedCombinedModuli
         fun d => d < jurkatRichertSourceUpperLevel N q ε).image
           fun d => q * d
 
-private theorem chenReducedCombinedModulusFibres_pairwise
+/-- Distinct reduced medium primes have disjoint combined-modulus fibres. -/
+theorem chenReducedCombinedModulusFibres_pairwise
     (N : ℕ) (ε : ℝ) :
     ∀ q₁ ∈ (jurkatRichertSourceMediumPrimes N).filter (fun q => ¬q ∣ N),
       ∀ q₂ ∈ (jurkatRichertSourceMediumPrimes N).filter (fun q => ¬q ∣ N),
@@ -280,23 +281,9 @@ theorem chenReducedPairWeightedEStar_sq_le_of_ordinary418
   let E := primeAPPrefixMaxError N
   have hS : S ⊆ Finset.range (Q + 1) := by
     intro m hm
-    have hmIcc : m ∈ Finset.Icc 1 Q := by
-      have hmPos : 0 < m := by
-        rcases Finset.mem_biUnion.mp hm with ⟨q, hq, hmImage⟩
-        rcases Finset.mem_image.mp hmImage with ⟨d, hd, rfl⟩
-        have hqPos :=
-          (Finset.mem_filter.mp (Finset.mem_filter.mp hq).1).2.1.pos
-        have hdDiv : d ∣ jurkatRichertSourceSiftingProduct N :=
-          Nat.dvd_of_mem_divisors (Finset.mem_filter.mp hd).1
-        exact Nat.mul_pos hqPos (Nat.pos_of_dvd_of_pos hdDiv
-          (Nat.pos_of_ne_zero (jurkatRichertSourceSiftingProduct_ne_zero N)))
-      exact Finset.mem_Icc.mpr
-        ⟨hmPos, by
-          have hreal : (m : ℝ) ≤ (Q : ℝ) :=
-            (chenReducedCombinedModuli_cast_le hm).trans hcut
-          exact_mod_cast hreal⟩
-    exact Finset.mem_range.mpr
-      (Nat.lt_succ_of_le (Finset.mem_Icc.mp hmIcc).2)
+    have hmLe : m ≤ Q := by
+      exact_mod_cast (chenReducedCombinedModuli_cast_le hm).trans hcut
+    exact Finset.mem_range.mpr (Nat.lt_succ_of_le hmLe)
   have hSquarefree : ∀ m ∈ S, Squarefree m := by
     intro m hm
     rcases Finset.mem_biUnion.mp hm with ⟨q, hq, hmImage⟩
@@ -328,17 +315,11 @@ theorem chenReducedPairWeightedEStar_sq_le_of_ordinary418
     intro d hd
     exact mul_nonneg (pow_nonneg (by norm_num) _)
       (primeAPPrefixMaxError_nonneg N (q * d))
-  have hcombinedNonneg : 0 ≤ threeOmegaErrorMass S E := by
-    unfold threeOmegaErrorMass
-    apply Finset.sum_nonneg
-    intro m hm
-    exact mul_nonneg (pow_nonneg (by norm_num) _)
-      (primeAPPrefixMaxError_nonneg N m)
+  have hpair_le := chenReducedPairWeightedEStar_le_combinedMass N ε
   have hsquare :
       chenReducedPairWeightedEStar N ε ^ 2 ≤
         threeOmegaErrorMass S E ^ 2 :=
-    (sq_le_sq₀ hpairNonneg hcombinedNonneg).2
-      (chenReducedPairWeightedEStar_le_combinedMass N ε)
+    (sq_le_sq₀ hpairNonneg (hpairNonneg.trans hpair_le)).2 hpair_le
   exact hsquare.trans hmass
 
 end MathlibNt.SieveTheory.Richert1969

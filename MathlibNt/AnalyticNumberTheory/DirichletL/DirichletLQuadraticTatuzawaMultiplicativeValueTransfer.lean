@@ -71,9 +71,6 @@ theorem datum_eq_of_pairCharacter_eq_one
     (dvd_mul_right x.modulus y.modulus) x.character
   let χy := DirichletCharacter.changeLevel
     (dvd_mul_left y.modulus x.modulus) y.character
-  have hχx_sq : χx ^ 2 = 1 := by
-    dsimp [χx]
-    rw [← map_pow, x.square_eq_one, map_one]
   have hχy_sq : χy ^ 2 = 1 := by
     dsimp [χy]
     rw [← map_pow, y.square_eq_one, map_one]
@@ -90,29 +87,15 @@ theorem datum_eq_of_pairCharacter_eq_one
     DirichletCharacter.factorsThrough_gcd x.character y.character hlift
   have hyFactors : y.character.FactorsThrough (Nat.gcd x.modulus y.modulus) := by
     rcases hxFactors with ⟨hxgcd, χgcd, hxeq⟩
-    let hygcd : Nat.gcd x.modulus y.modulus ∣ y.modulus :=
-      Nat.gcd_dvd_right x.modulus y.modulus
+    let hygcd := Nat.gcd_dvd_right x.modulus y.modulus
     refine ⟨hygcd, χgcd, ?_⟩
     apply DirichletCharacter.changeLevel_injective (dvd_mul_left y.modulus x.modulus)
-    calc
-      DirichletCharacter.changeLevel (dvd_mul_left y.modulus x.modulus) y.character =
-          χy := rfl
-      _ = χx := hlift.symm
-      _ = DirichletCharacter.changeLevel (dvd_mul_right x.modulus y.modulus)
-          x.character := rfl
-      _ = DirichletCharacter.changeLevel (dvd_mul_right x.modulus y.modulus)
-          (DirichletCharacter.changeLevel hxgcd χgcd) :=
-        congrArg (DirichletCharacter.changeLevel (dvd_mul_right x.modulus y.modulus)) hxeq
-      _ = DirichletCharacter.changeLevel
-          (hxgcd.trans (dvd_mul_right x.modulus y.modulus)) χgcd :=
-        (DirichletCharacter.changeLevel_trans χgcd hxgcd
-          (dvd_mul_right x.modulus y.modulus)).symm
-      _ = DirichletCharacter.changeLevel
-          (hygcd.trans (dvd_mul_left y.modulus x.modulus)) χgcd := by rfl
-      _ = DirichletCharacter.changeLevel (dvd_mul_left y.modulus x.modulus)
-          (DirichletCharacter.changeLevel hygcd χgcd) :=
-        DirichletCharacter.changeLevel_trans χgcd hygcd
-          (dvd_mul_left y.modulus x.modulus)
+    -- Compare both factorizations at the same product level, then compose lifts.
+    change χy = _
+    rw [← hlift]
+    dsimp only [χx]
+    rw [hxeq]
+    simp only [← DirichletCharacter.changeLevel_trans]
 
   have hxy : x.modulus ∣ y.modulus := by
     have hxgcd : x.modulus ∣ Nat.gcd x.modulus y.modulus := by
@@ -214,10 +197,14 @@ theorem fourFactor_logDerivativeTerm_nonneg {q₁ q₂ : ℕ}
     ring
   simp only [LSeries.term, if_neg hn.ne', Pi.mul_apply,
     DirichletCharacter.modOne_eq_one, Pi.one_apply, one_mul]
-  rw [← ha, hterm, hterm, hterm, pairCharacter_apply]
-  rcases (MulChar.isQuadratic_iff_sq_eq_one.mpr h₁ n) with hχ₁ | hχ₁ | hχ₁ <;>
-    rcases (MulChar.isQuadratic_iff_sq_eq_one.mpr h₂ n) with hχ₂ | hχ₂ | hχ₂ <;>
-    simp [hχ₁, hχ₂, DirichletCharacter.modOne_eq_one] <;> nlinarith
+  rw [← ha, hterm, hterm, hterm]
+  -- The same Euler coefficient controls each term after multiplying by its
+  -- nonnegative von-Mangoldt weight; no new quadratic-value case split is needed.
+  have hcoefficient : 0 ≤ (1 + χ₁ n + χ₂ n + pairCharacter χ₁ χ₂ n : ℂ).re :=
+    (RCLike.le_iff_re_im.mp (fourFactorEulerCoefficient_nonneg χ₁ χ₂ h₁ h₂ n)).1
+  simpa only [Complex.add_re, Complex.one_re, Complex.zero_re,
+    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero,
+    add_mul, one_mul] using mul_nonneg hcoefficient hweight
 
 /-- The negative logarithmic derivative of
 `ζ(s)L(s,χ₁)L(s,χ₂)L(s,χ₁χ₂)` is nonnegative on the real half-line `σ > 1`.

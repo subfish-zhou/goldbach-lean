@@ -74,19 +74,12 @@ theorem sum_biUnion_le_sum_sum_nonneg
     (w : β → ℝ) (hw : ∀ x, 0 ≤ w x) :
     (∑ x ∈ s.biUnion t, w x) ≤ ∑ a ∈ s, ∑ x ∈ t a, w x := by
   classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert a s ha ih =>
-      rw [Finset.biUnion_insert, Finset.sum_insert ha]
-      calc
-        (∑ x ∈ t a ∪ s.biUnion t, w x) ≤
-            (∑ x ∈ t a, w x) + ∑ x ∈ s.biUnion t, w x := by
-          have hu := Finset.sum_union_inter (s₁ := t a) (s₂ := s.biUnion t) (f := w)
-          have hi : 0 ≤ ∑ x ∈ t a ∩ s.biUnion t, w x :=
-            Finset.sum_nonneg fun x _ => hw x
-          linarith
-        _ ≤ (∑ x ∈ t a, w x) + ∑ b ∈ s, ∑ x ∈ t b, w x := by
-          gcongr
+  -- Project the indexed fibres onto their union; repeated points only add nonnegative weight.
+  have hcover : (s.sigma t).image (fun p => p.2) = s.biUnion t := by
+    ext x
+    simp
+  rw [← hcover, Finset.sum_sigma']
+  exact Finset.sum_image_le_of_nonneg (fun x _ => hw x)
 
 /-- The bad-support coefficient energy is bounded by the sum of the energies on
 prime-multiple fibres.  This is the useful support compression before any
@@ -252,29 +245,11 @@ theorem weighted_conductorError_prefixMax_le_of_blockBound
       ((q : ℝ) / (q.totient : ℝ)) *
         ∑ χ ∈ nonprincipalCharacters q,
           conductorCorrectionBlockSquare χ b (blockStart i) (blockLength i) := by
-            calc
-              _ = ∑ q ∈ Finset.Icc 1 Q, ∑ i : ι,
-                    ∑ χ ∈ nonprincipalCharacters q,
-                      (L : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
-                        conductorCorrectionBlockSquare χ b
-                          (blockStart i) (blockLength i)) := by
-                    apply Finset.sum_congr rfl
-                    intro q hq
-                    simp only [Finset.mul_sum]
-                    rw [Finset.sum_comm]
-                    apply Finset.sum_congr rfl
-                    intro i hi
-                    apply Finset.sum_congr rfl
-                    intro χ hχ
-                    ring
-              _ = ∑ i : ι, ∑ q ∈ Finset.Icc 1 Q,
-                    ∑ χ ∈ nonprincipalCharacters q,
-                      (L : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
-                        conductorCorrectionBlockSquare χ b
-                          (blockStart i) (blockLength i)) := by
-                    rw [Finset.sum_comm]
-              _ = _ := by
-                    simp only [Finset.mul_sum]
+            simp only [Finset.mul_sum, mul_left_comm]
+            rw [Finset.sum_comm]
+            apply Finset.sum_congr rfl
+            intro q hq
+            rw [Finset.sum_comm]
     _ ≤ (L : ℝ) * (C *
         ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖b n‖ ^ 2) := by
           exact mul_le_mul_of_nonneg_left hC (by positivity)

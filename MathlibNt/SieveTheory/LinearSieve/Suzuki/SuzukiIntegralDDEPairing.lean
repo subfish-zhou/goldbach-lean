@@ -39,6 +39,15 @@ theorem sourceWeightedPairing_eq_of_integralDDE
   let A : ℝ → ℝ := fun u => ∫ t in (1 : ℝ)..u, F t
   have hF_Icc (a b : ℝ) (ha : 1 ≤ a) : ContinuousOn F (Icc a b) :=
     hF.mono (fun t ht => by exact ha.trans ht.1)
+  have hwindow_eq (s : ℝ) (hs2 : 2 ≤ s) :
+      A s - A (s - 1) = ∫ t in (s - 1)..s, F t := by
+    dsimp [A]
+    have h1 : IntervalIntegrable F volume 1 (s - 1) :=
+      (hF_Icc 1 (s - 1) (by norm_num)).intervalIntegrable_of_Icc (by linarith)
+    have h2 : IntervalIntegrable F volume (s - 1) s :=
+      (hF_Icc (s - 1) s (by linarith)).intervalIntegrable_of_Icc (by linarith)
+    have hadd := intervalIntegral.integral_add_adjacent_intervals h1 h2
+    linarith
   have hH_Ici (z : ℝ) (hz : 2 ≤ z) : ContinuousOn H (Ici z) := by
     apply ContinuousOn.div
     · exact hF.comp (continuousOn_id.sub continuousOn_const) (by
@@ -106,19 +115,8 @@ theorem sourceWeightedPairing_eq_of_integralDDE
     have hAshift := hAshift0
     have hwindow : HasDerivWithinAt (fun s => A s - A (s - 1))
         (F z - F (z - 1)) (Ici z) z := hAz.sub hAshift
-    have hwindow_eq : ∀ s ∈ Ici z,
-        A s - A (s - 1) = ∫ t in (s - 1)..s, F t := by
-      intro s hs
-      dsimp [A]
-      have hs2 : 2 ≤ s := hz.trans hs
-      have h1 : IntervalIntegrable F volume 1 (s - 1) :=
-        (hF_Icc 1 (s - 1) (by norm_num)).intervalIntegrable_of_Icc (by linarith)
-      have h2 : IntervalIntegrable F volume (s - 1) s :=
-        (hF_Icc (s - 1) s (by linarith)).intervalIntegrable_of_Icc (by linarith)
-      have hadd := intervalIntegral.integral_add_adjacent_intervals h1 h2
-      linarith
     have hwindow' := hwindow.congr
-      (fun s hs => (hwindow_eq s hs).symm) (hwindow_eq z (by simp)).symm
+      (fun s hs => (hwindow_eq s (hz.trans hs)).symm) (hwindow_eq z hz).symm
     have hraw := hfirst.sub hwindow'
     have hz1 : z - 1 ≠ 0 := by linarith
     have hcoef : 1 * F z + (z - 1) * -H z - (F z - F (z - 1)) = 0 := by
@@ -145,14 +143,7 @@ theorem sourceWeightedPairing_eq_of_integralDDE
     apply hP.congr
     intro s hs
     unfold P sourceWeightedPairing
-    have hs2 : 2 ≤ s := hx.trans hs.1
-    have h1 : IntervalIntegrable F volume 1 (s - 1) :=
-      (hF_Icc 1 (s - 1) (by norm_num)).intervalIntegrable_of_Icc (by linarith)
-    have h2 : IntervalIntegrable F volume (s - 1) s :=
-      (hF_Icc (s - 1) s (by linarith)).intervalIntegrable_of_Icc (by linarith)
-    have hadd := intervalIntegral.integral_add_adjacent_intervals h1 h2
-    dsimp [A]
-    linarith
+    rw [hwindow_eq s (hx.trans hs.1)]
   have hconst := constant_of_has_deriv_right_zero hpair_cont (fun z hz =>
     hpair_right z (hx.trans hz.1))
   exact hconst y ⟨hxy, le_rfl⟩

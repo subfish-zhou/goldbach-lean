@@ -48,17 +48,11 @@ theorem vaughanActualCanonicalCollectedShellAmplitude_eq_rectangularSharp
   unfold vaughanCanonicalCollectedPrefixMaxSquare
   unfold rectangularSharpHyperbolicPrefixMaxSquareUpTo
   congr 1
-  ext x
-  simp only [Finset.mem_image, Finset.mem_range]
-  constructor
-  · rintro ⟨Y, hY, rfl⟩
-    refine ⟨Y, hY, ?_⟩
-    rw [vaughanTypeIICanonicalBilinearBlock_eq_rectangularSharp
-      Y N u v k l q χ (by omega) hactive]
-  · rintro ⟨Y, hY, rfl⟩
-    refine ⟨Y, hY, ?_⟩
-    rw [vaughanTypeIICanonicalBilinearBlock_eq_rectangularSharp
-      Y N u v k l q χ (by omega) hactive]
+  apply Finset.image_congr
+  intro Y hY
+  dsimp only
+  rw [vaughanTypeIICanonicalBilinearBlock_eq_rectangularSharp
+    Y N u v k l q χ (Nat.le_of_lt_succ (Finset.mem_range.mp hY)) hactive]
 
 /-- The actual weighted mean is literally the ambient sharp rectangular mean. -/
 theorem vaughanActualCanonicalCollectedShellWeightedMean_eq_rectangularSharp
@@ -124,6 +118,21 @@ theorem vaughanActualCanonicalCollectedShellWeightedMean_le
     rw [Nat.cast_add, Nat.cast_sub hlDiv]
     push_cast
     ring
+  -- Normalize each rectangular interval once, then reuse its bounds below.
+  have hmBounds : ∀ m ∈ Finset.Icc ((2 ^ k : ℤ) - 1 + 1)
+      ((2 ^ k : ℤ) - 1 + (2 ^ k : ℕ)),
+      1 ≤ m ∧ m ≤ (2 : ℤ) * (2 ^ k : ℕ) - 1 := by
+    intro m hm
+    have hm' := Finset.mem_Icc.mp hm
+    rw [hmEnd] at hm'
+    omega
+  have hnBounds : ∀ n ∈ Finset.Icc ((2 ^ l : ℤ) - 1 + 1)
+      ((2 ^ l : ℤ) - 1 + (N / 2 ^ k - 2 ^ l + 1 : ℕ)),
+      1 ≤ n ∧ n ≤ (N / 2 ^ k : ℕ) := by
+    intro n hn
+    have hn' := Finset.mem_Icc.mp hn
+    rw [hnEnd] at hn'
+    omega
   apply rectangularSharpHyperbolicPrefixMaxWeightedPrimitiveMeanUpTo_le
     (vaughanTypeIIRectLeftCoeff N u k)
     (vaughanTypeIIRectRightCoeff N v l)
@@ -131,40 +140,26 @@ theorem vaughanActualCanonicalCollectedShellWeightedMean_le
     (2 ^ k) (N / 2 ^ k - 2 ^ l + 1) Q N (2 * N)
     hQ S hS (by omega) (by omega)
   · intro m hm
-    have hm' := Finset.mem_Icc.mp hm
-    rw [hmEnd] at hm'
-    omega
+    exact (hmBounds m hm).1
   · intro m hm
-    have hm' := Finset.mem_Icc.mp hm
-    rw [hmEnd] at hm'
+    have hmUpper := (hmBounds m hm).2
     have hkcast : ((2 ^ k : ℕ) : ℤ) ≤ N := by exact_mod_cast hkN
     omega
   · intro n hn
-    have hn' := Finset.mem_Icc.mp hn
-    rw [hnEnd] at hn'
-    omega
+    exact (hnBounds n hn).1
   · intro n hn
-    have hn' := Finset.mem_Icc.mp hn
-    rw [hnEnd] at hn'
+    have hnUpper := (hnBounds n hn).2
     have hdivN : N / 2 ^ k ≤ N := Nat.div_le_self _ _
     have hdivN' : ((N / 2 ^ k : ℕ) : ℤ) ≤ N := by exact_mod_cast hdivN
     omega
   · intro m hm n hn
-    have hm' := Finset.mem_Icc.mp hm
-    have hn' := Finset.mem_Icc.mp hn
-    rw [hmEnd] at hm'
-    rw [hnEnd] at hn'
-    nlinarith
+    nlinarith only [(hmBounds m hm).1, (hnBounds n hn).1]
   · intro m hm n hn
-    have hm' := Finset.mem_Icc.mp hm
-    have hn' := Finset.mem_Icc.mp hn
-    rw [hmEnd] at hm'
-    rw [hnEnd] at hn'
+    have hm' := hmBounds m hm
+    have hn' := hnBounds n hn
     have hmUpper : m ≤ (2 : ℤ) * (2 ^ k : ℕ) := by omega
-    have hnUpper : n ≤ (N / 2 ^ k : ℕ) := by
-      exact hn'.2
+    have hnUpper : n ≤ (N / 2 ^ k : ℕ) := hn'.2
     have hmulDiv : 2 ^ k * (N / 2 ^ k) ≤ N := Nat.mul_div_le N (2 ^ k)
-    have hmnonneg : 0 ≤ m := by omega
     have hnnonneg : 0 ≤ n := by omega
     calc
       m * n ≤ ((2 : ℤ) * (2 ^ k : ℕ)) * n :=

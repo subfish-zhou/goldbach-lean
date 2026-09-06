@@ -67,19 +67,13 @@ theorem tendsto_primeEulerCorrection (p : Nat.Primes) :
   have hp : 0 < (p : ℝ) := by exact_mod_cast p.prop.pos
   have hrpow : Tendsto (fun s : ℝ => (p : ℝ) ^ (-s)) (𝓝[>] 1)
       (𝓝 (1 / (p : ℝ))) := by
-    have hneg : Tendsto (fun s : ℝ => -s) (𝓝 (1 : ℝ)) (𝓝 (-1 : ℝ)) :=
-      continuousAt_neg.tendsto
-    have hpow := (Real.continuousAt_const_rpow
-      (a := (p : ℝ)) (b := (-1 : ℝ)) (ne_of_gt hp)).tendsto
-    have h := hpow.comp
-      (hneg.mono_left (show 𝓝[Set.Ioi (1 : ℝ)] 1 ≤ 𝓝 1 from nhdsWithin_le_nhds))
-    convert h using 1 <;> simp [Function.comp_def, Real.rpow_neg_one, one_div]
+    have hc : ContinuousAt (fun s : ℝ => (p : ℝ) ^ (-s)) 1 :=
+      (Real.continuousAt_const_rpow (ne_of_gt hp)).comp continuousAt_neg
+    simpa [Real.rpow_neg_one, one_div] using
+      hc.tendsto.mono_left (nhdsWithin_le_nhds (s := Set.Ioi (1 : ℝ)))
   have hpos : 0 < 1 - 1 / (p : ℝ) := by
-    have : 1 / (p : ℝ) ≤ 1 / 2 := by
-      apply one_div_le_one_div_of_le
-      · norm_num
-      · exact_mod_cast p.prop.two_le
-    linarith
+    apply sub_pos.mpr
+    exact (div_lt_one hp).2 (by exact_mod_cast p.prop.one_lt)
   have hlog : Tendsto (fun s : ℝ => log (1 - (p : ℝ) ^ (-s))) (𝓝[>] 1)
       (𝓝 (log (1 - 1 / (p : ℝ)))) :=
     (continuousAt_log hpos.ne').tendsto.comp ((tendsto_const_nhds.sub hrpow))

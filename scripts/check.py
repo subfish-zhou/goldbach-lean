@@ -20,8 +20,8 @@ EXPECTED = {
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 
-def code_only(text: str) -> str:
-    """Mask nested comments and strings, preserving offsets and line breaks.
+def code_only(text: str, *, keep_strings: bool = False) -> str:
+    """Mask nested comments and, by default, strings; preserve text offsets.
 
     This is a lexical check, not a Lean parser or a kernel verifier.
     """
@@ -41,14 +41,20 @@ def code_only(text: str) -> str:
                 continue
         elif string:
             if text[i] == "\\":
-                out[i] = " "
+                if not keep_strings:
+                    out[i] = " "
                 i += 1
                 if i < len(text):
-                    out[i] = " "
+                    if not keep_strings:
+                        out[i] = " "
                     i += 1
                 continue
             if text[i] == '"':
                 string = False
+            if not keep_strings and text[i] != "\n":
+                out[i] = " "
+            i += 1
+            continue
         elif text.startswith("/-", i):
             out[i:i + 2] = "  "
             depth = 1
@@ -62,6 +68,9 @@ def code_only(text: str) -> str:
             continue
         elif text[i] == '"':
             string = True
+            if keep_strings:
+                i += 1
+                continue
         else:
             i += 1
             continue
@@ -71,6 +80,10 @@ def code_only(text: str) -> str:
     if depth or string:
         raise ValueError("unterminated comment or string")
     return "".join(out)
+
+
+def count_code_lines(text: str) -> int:
+    return sum(bool(line.strip()) for line in code_only(text, keep_strings=True).splitlines())
 
 
 def source_files() -> list[Path]:
@@ -87,6 +100,11 @@ def release_files() -> list[Path]:
         if directory.exists():
             files.extend(p for p in directory.rglob("*")
                          if p.is_file() and "__pycache__" not in p.parts)
+    files.extend(p for p in (ROOT / "blueprint/src").glob("*")
+                 if p.is_file() and p.suffix in {".tex", ".cfg", ".py"})
+    requirements = ROOT / "blueprint/requirements.txt"
+    if requirements.exists():
+        files.append(requirements)
     return sorted(files)
 
 
@@ -128,7 +146,7 @@ def static_checks() -> dict:
         for imported in imports:
             if imported.split(".")[0] in own and imported not in graph:
                 issues.append(f"missing local module: {module} -> {imported}")
-    roots = {"Goldbach", "Goldbach.Checks", "MathlibNt", "AnalyticNumberTheory"} & graph.keys()
+    roots = {"Goldbach", "Goldbach.Checks", "Goldbach.Blueprint", "MathlibNt", "AnalyticNumberTheory"} & graph.keys()
     seen, active = set(), set()
 
     def visit(module):
@@ -147,7 +165,7 @@ def static_checks() -> dict:
         visit(module)
     unreachable = sorted(set(graph) - seen)
     if unreachable:
-        issues.append(f"source modules outside all public/check roots: {unreachable}")
+        issues.append(f"source modules outside all public/check/documentation roots: {unreachable}")
     result = {"source_modules": len(files), "reachable_modules": len(seen), "issues": issues}
     print(json.dumps(result, indent=2))
     if issues:
@@ -176,8 +194,17 @@ def check_axiom_output(text: str) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--static-only", action="store_true")
+    parser.add_argument("--count-lines", action="store_true",
+                        help="report nonblank Lean lines excluding comments, retaining strings")
     args = parser.parse_args()
     static_checks()
+    if args.count_lines:
+        counts = {name: 0 for name in (*SOURCE_DIRS, "root")}
+        for path in source_files():
+            relative = path.relative_to(ROOT)
+            area = relative.parts[0] if len(relative.parts) > 1 else "root"
+            counts[area] += count_code_lines(path.read_text(encoding="utf-8"))
+        print(json.dumps({"lean_code_lines": counts, "total": sum(counts.values())}, indent=2))
     if not args.static_only:
         result = subprocess.run(["lake", "env", "lean", "Goldbach/Checks.lean"],
                                 cwd=ROOT, text=True, stdout=subprocess.PIPE,

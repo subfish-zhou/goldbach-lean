@@ -1,5 +1,6 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053KernelExpansion
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval
@@ -349,8 +350,6 @@ theorem plusFirstCrossing_scalarRatio_le_one
         Real.exp (-psiPlus explicitKappaOneAdjointPlus xi c t))
       (Icc (w.s - 1) w.s) := by
     intro t ht
-    have hRt : 0 < R t := h.positive t (by
-      linarith [w.beta_add_one_le_s, ht.1])
     have hRc : ContinuousAt R t :=
       h.continuous.continuousAt
         (Ioi_mem_nhds (by linarith [w.beta_add_one_le_s, ht.1]))
@@ -358,16 +357,8 @@ theorem plusFirstCrossing_scalarRatio_le_one
       exact ((xiPhase_hasDerivAt canonicalXi_proposition1020 t).add
         (by simpa only [id_eq, mul_one] using
           (hasDerivAt_id t).const_mul c)).continuousAt
-    have hadjpos : 0 < explicitKappaOneAdjointPlus (t + 1) :=
-      explicitKappaOneAdjointPlus_pos (by linarith [ht.1])
-    have hadjcont : ContinuousAt
-        (fun u : ℝ => explicitKappaOneAdjointPlus (u + 1)) t := by
-      dsimp [explicitKappaOneAdjointPlus]
-      fun_prop
-    have hpsi : ContinuousAt (psiPlus explicitKappaOneAdjointPlus xi c) t :=
-      hphase.sub (hadjcont.log (ne_of_gt hadjpos))
-    exact ((hRc.mul (Real.continuous_exp.continuousAt.comp hphase)).mul
-      (Real.continuous_exp.continuousAt.comp hpsi.neg)).continuousWithinAt
+    exact (hRc.mul (Real.continuous_exp.continuousAt.comp hphase)).continuousWithinAt.mul
+      (hkernelCont t ht)
   have hprodInt : IntervalIntegrable
       (fun t => envelopePlus R xi c t *
         Real.exp (-psiPlus explicitKappaOneAdjointPlus xi c t))
@@ -419,18 +410,7 @@ def ProducesPlusFirstCrossing
 lemma normalizedMinusBase_continuousAt
     {R : ℝ → ℝ} {β s : ℝ} (h : FirstCrossingDDEApparatus R β)
     (hβs : β < s) : ContinuousAt (normalizedMinusBase R xi) s := by
-  have hsR : β - 1 < s := by linarith
-  have hsmR : β - 1 < s - 1 := by linarith
-  have hs0 : s ≠ 0 := by linarith [h.beta_ge_one]
-  have hRs : 0 < R s := h.positive s hsR
-  have hRc : ContinuousAt R s :=
-    h.continuous.continuousAt (Ioi_mem_nhds hsR)
-  have hRmc : ContinuousAt (fun u : ℝ => R (u - 1)) s :=
-    (h.continuous.continuousAt (Ioi_mem_nhds hsmR)).comp_of_eq
-      (continuousAt_id.sub continuousAt_const) (by simp)
-  exact (((hRmc.neg.div (continuousAt_id.mul hRc)
-    (mul_ne_zero hs0 (ne_of_gt hRs))).add xi_continuous.continuousAt).sub
-      (continuousAt_const.div continuousAt_id hs0))
+  exact Section10MinusFirstCrossingProducer.normalizedMinusBase_continuousAt h hβs
 
 /-- Compactness constructs the least plus crossing.  No derivative at the
 apparatus endpoint `β` is requested. -/

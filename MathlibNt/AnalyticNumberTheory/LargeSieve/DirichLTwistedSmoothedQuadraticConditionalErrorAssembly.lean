@@ -81,18 +81,18 @@ theorem twistedSmoothedPerronIntegrand_holomorphicOn_quadraticConditionalRectang
     {X ε : ℝ} (hX : 0 < X) (hε : 0 < ε) (hε1 : ε < 1) :
     HolomorphicOn (DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X)
       (dirichletLTwistedSmoothedQuadraticConditionalRectangle A c η q T) := by
+  have hleftRight : dirichletLTwistedSmoothedQuadraticConditionalLeft A c η q T ≤
+      dirichletLTwistedSmoothedQuadraticConditionalRight A c η q T := by
+    dsimp only [dirichletLTwistedSmoothedQuadraticConditionalLeft,
+      dirichletLTwistedSmoothedQuadraticConditionalRight,
+      dirichletLTwistedSmoothedQuadraticConditionalDelta]
+    linarith only [hw]
   have hsub : dirichletLTwistedSmoothedQuadraticConditionalRectangle A c η q T ⊆
       dirichletLQuadraticConditionalCrossZeroRectangle A₀ c η q T := by
     intro s hs
     rw [dirichletLTwistedSmoothedQuadraticConditionalRectangle, Complex.Rectangle,
       Complex.mem_reProdIm] at hs
     norm_num at hs
-    have hleftRight : dirichletLTwistedSmoothedQuadraticConditionalLeft A c η q T ≤
-        dirichletLTwistedSmoothedQuadraticConditionalRight A c η q T := by
-      dsimp only [dirichletLTwistedSmoothedQuadraticConditionalLeft,
-        dirichletLTwistedSmoothedQuadraticConditionalRight,
-        dirichletLTwistedSmoothedQuadraticConditionalDelta]
-      linarith
     rw [Set.uIcc_of_le hleftRight, Set.uIcc_of_le (by linarith : -T ≤ T)] at hs
     simp only [mem_Icc] at hs
     rw [dirichletLQuadraticConditionalCrossZeroRectangle, Complex.Rectangle,
@@ -111,13 +111,10 @@ theorem twistedSmoothedPerronIntegrand_holomorphicOn_quadraticConditionalRectang
       linarith
   have hlog : HolomorphicOn (fun s => -deriv χ.LFunction s / χ.LFunction s)
       (dirichletLTwistedSmoothedQuadraticConditionalRectangle A c η q T) := by
-    rw [(by ext s; simp only [Pi.neg_apply, neg_div] :
-      (fun s => -deriv χ.LFunction s / χ.LFunction s) =
-        -(fun s => deriv χ.LFunction s / χ.LFunction s))]
     have hL : Differentiable ℂ χ.LFunction :=
       DirichletCharacter.differentiable_LFunction hχ
-    exact (hL.deriv.differentiableOn.div hL.differentiableOn
-      (fun s hs => hzero s (hsub hs))).neg
+    exact hL.deriv.differentiableOn.neg.div hL.differentiableOn
+      (fun s hs => hzero s (hsub hs))
   apply DifferentiableOn.mul
   · apply DifferentiableOn.mul hlog
     intro s hs
@@ -129,13 +126,7 @@ theorem twistedSmoothedPerronIntegrand_holomorphicOn_quadraticConditionalRectang
     have hedge : 0 < dirichletLTwistedSmoothedQuadraticConditionalLeft A c η q T := by
       dsimp only [dirichletLTwistedSmoothedQuadraticConditionalLeft]
       linarith
-    have hlr : dirichletLTwistedSmoothedQuadraticConditionalLeft A c η q T ≤
-        dirichletLTwistedSmoothedQuadraticConditionalRight A c η q T := by
-      dsimp only [dirichletLTwistedSmoothedQuadraticConditionalLeft,
-        dirichletLTwistedSmoothedQuadraticConditionalRight,
-        dirichletLTwistedSmoothedQuadraticConditionalDelta]
-      linarith
-    rw [Set.uIcc_of_le hlr] at hs
+    rw [Set.uIcc_of_le hleftRight] at hs
     linarith [hs.1.1]
   · intro s _
     apply DifferentiableAt.differentiableWithinAt

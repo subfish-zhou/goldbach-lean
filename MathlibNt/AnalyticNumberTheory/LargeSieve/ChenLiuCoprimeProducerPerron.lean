@@ -137,15 +137,7 @@ theorem hyperbola_error_le_harmonic {q x y : ℕ} {T : ℝ}
       simp only [liuPanPerronProductCoefficient, hu0, hv0, or_self, if_false, norm_mul]
       exact mul_le_one₀ (mul_le_one₀ (hA u hu) (norm_nonneg _) (hB v hv))
         (norm_nonneg _) (dirichletCharacter_norm_le_one q χ _)
-    rw [show (if u * v ≤ y then liuPanPerronProductCoefficient A B χ u v else 0) -
-        liuPanPerronProductCoefficient A B χ u v *
-          liuPanTruncatedPerronKernel (panSourceSigma x) T
-            (liuPanPerronHalfStep y / (u * v : ℕ)) =
-      liuPanPerronProductCoefficient A B χ u v *
-        ((if u * v ≤ y then 1 else 0 : ℂ) -
-          liuPanTruncatedPerronKernel (panSourceSigma x) T
-            (liuPanPerronHalfStep y / (u * v : ℕ))) by split_ifs <;> ring,
-      norm_mul]
+    rw [← mul_boole, ← mul_sub, norm_mul]
     calc
       _ ≤ 1 * ((108 * (x : ℝ) ^ 3 / T) / (u * v : ℕ)) :=
         mul_le_mul hcoeff (source_kernel_error_le hx hy hyx
@@ -176,10 +168,9 @@ theorem sourceHeight_ge_pow (K : ℕ) {x : ℕ}
 
 theorem sourceHeight_floor_ge {x : ℕ} (hx : 1 ≤ Real.log x) :
     x ≤ ⌊panSourceHeight x⌋₊ := by
-  have hx1 : (1 : ℝ) ≤ x := by exact_mod_cast source_pos_of_log hx
   apply (Nat.le_floor_iff (Real.exp_pos _).le).mpr
-  exact (show (x : ℝ) ≤ (x : ℝ) ^ 2 by nlinarith).trans
-    (sourceHeight_ge_pow 2 hx (by norm_num; linarith))
+  simpa only [pow_one, panSourceHeight] using
+    sourceHeight_ge_pow 1 hx (by norm_num; linarith)
 
 /-- Uniform error at the actual height, even though the second polynomial
 contains every coordinate through `floor T`. -/

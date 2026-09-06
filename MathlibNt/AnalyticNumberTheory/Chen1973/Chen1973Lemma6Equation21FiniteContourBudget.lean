@@ -1,4 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation21FiniteContour
+import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation21FullKernelBudget
 
 noncomputable section
 open Classical Complex Finset MeasureTheory Set Filter
@@ -107,7 +108,9 @@ theorem Eq21FiniteContour_alpha_tails
         (mul_le_mul_of_nonneg_left hk (by positivity)) (by positivity)
       _ = _ := by dsimp [C, a, N]; ring
   have hplus := Eq21FiniteContour_tail_norm_bound (a := a) (C := C) hT N (Nat.succ_pos _)
-    hi.integrableOn (fun t ht => by simpa [abs_of_pos (hT.trans ht)] using hp t (by rw [abs_of_pos (hT.trans ht)]; exact hT.trans ht))
+    hi.integrableOn (fun t ht => by
+      have ht0 := hT.trans ht
+      simpa [abs_of_pos ht0] using hp t (abs_pos.mpr ht0.ne'))
   have hminus := Eq21FiniteContour_tail_norm_bound (f := fun t => F (-t)) (a := a) (C := C)
     hT N (Nat.succ_pos _) hi.comp_neg.integrableOn (fun t ht => by
       have ht0 := hT.trans ht
@@ -150,8 +153,6 @@ theorem Eq21FiniteContour_horizontal_bound
         ‖chen1973Lemma6Eq21TermShiftIntegrand x d χ pp ((v : ℂ) + t * I)‖ ≤ C := by
       intro v hv
       rw [uIoc_of_le hσα] at hv
-      have hre : ((v : ℂ) + t * I).re = v := by simp
-      have him : ((v : ℂ) + t * I).im = t := by simp
       have hD := hderiv ((v : ℂ) + t * I) (by simpa using hv.1.le)
         (by simpa using hv.2) (by simpa using ht.le)
       have hp := Eq21FiniteContour_term_norm_le χ (zero_lt_one.trans hy) hD
@@ -180,14 +181,7 @@ theorem Eq21FiniteContour_horizontal_bound
 theorem Eq21FiniteContour_kernel_le_inv {x : ℕ} (hx : 1 < x) {σ t b : ℝ}
     (hσ : 0 ≤ σ) (hb : 0 < b) (hbs : b ≤ ‖(σ : ℂ) + t * I‖) :
     ‖chen1973MellinKernel (x : ℝ) ((σ : ℂ) + t * I)‖ ≤ b⁻¹ := by
-  have hp := chen1973Lemma6_eq17_one_le_norm_one_add_div
-    (chen1973Lemma6_eq17_perronScale_pos hx)
-    (s := (σ : ℂ) + t * I) (by simpa using hσ)
-  have hpN := one_le_pow₀ (n := chen1973PerronOrder (x : ℝ) + 1) hp
-  unfold chen1973MellinKernel
-  rw [norm_div, norm_one, norm_mul, norm_pow, ← one_div]
-  apply one_div_le_one_div_of_le hb
-  exact hbs.trans (le_mul_of_one_le_right (norm_nonneg _) hpN)
+  exact eq21_kernel_le_inv hx hσ hb hbs
 
 /-- The short true kernel costs only twice (inverse real part plus log height). -/
 theorem Eq21FiniteContour_kernel_short
@@ -333,9 +327,9 @@ theorem Eq21FiniteContour_truncated_term_bound
     calc
       _ ≤ ‖V + I * H + Rminus‖ + ‖Rplus‖ := norm_add_le _ _
       _ ≤ (‖V + I * H‖ + ‖Rminus‖) + ‖Rplus‖ := by
-        gcongr; exact norm_add_le _ _
+        exact add_le_add (norm_add_le (V + I * H) Rminus) le_rfl
       _ ≤ ((‖V‖ + ‖I * H‖) + ‖Rminus‖) + ‖Rplus‖ := by
-        gcongr; exact norm_add_le _ _
+        exact add_le_add (add_le_add (norm_add_le V (I * H)) le_rfl) le_rfl
       _ = _ := by simp
   have hb := hnorm.trans (add_le_add (add_le_add (add_le_add hV hH) hRm) hRp)
   change _ / Real.log y ≤ _

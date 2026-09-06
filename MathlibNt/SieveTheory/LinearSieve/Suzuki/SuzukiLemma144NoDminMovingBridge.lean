@@ -69,43 +69,8 @@ theorem nat_cutoff_paid_by_source_log_large
 theorem claim14_5VProduct_le_suzukiVProduct
     (S : BoundingSieve) {z D : ℝ} (hzD : z ≤ D) :
     claim14_5VProduct S D ≤ suzukiVProduct S z := by
-  classical
-  let A := S.prodPrimes.primeFactors.filter (fun p : ℕ => (p : ℝ) < z)
-  let B := S.prodPrimes.primeFactors.filter (fun p : ℕ => (p : ℝ) < D)
-  have hAB : A ⊆ B := by
-    intro p hp
-    simp only [A, B, Finset.mem_filter] at hp ⊢
-    exact ⟨hp.1, hp.2.trans_le hzD⟩
-  have hfac0 : ∀ p ∈ B \ A, 0 ≤ (1 - S.nu p) := by
-    intro p hp
-    have hpS : p ∈ S.prodPrimes.primeFactors := by
-      exact (Finset.mem_sdiff.mp hp).1 |> Finset.mem_filter.mp |>.1
-    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-    have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hpprime hpdiv).le
-  have hfac1 : ∀ p ∈ B \ A, (1 - S.nu p) ≤ 1 := by
-    intro p hp
-    have hpS : p ∈ S.prodPrimes.primeFactors := by
-      exact (Finset.mem_sdiff.mp hp).1 |> Finset.mem_filter.mp |>.1
-    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-    have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
-    exact sub_le_self 1 (S.nu_pos_of_prime p hpprime hpdiv).le
-  have hdiff0 : 0 ≤ ∏ p ∈ B \ A, (1 - S.nu p) :=
-    Finset.prod_nonneg hfac0
-  have hdiff1 : (∏ p ∈ B \ A, (1 - S.nu p)) ≤ 1 :=
-    Finset.prod_le_one hfac0 hfac1
-  have hA0 : 0 ≤ ∏ p ∈ A, (1 - S.nu p) := by
-    apply Finset.prod_nonneg
-    intro p hp
-    have hpS : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hp).1
-    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-    have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hpprime hpdiv).le
-  have hsplit := Finset.prod_sdiff (f := fun p : ℕ => (1 - S.nu p)) hAB
-  unfold claim14_5VProduct suzukiVProduct
-  change (∏ p ∈ B, (1 - S.nu p)) ≤ ∏ p ∈ A, (1 - S.nu p)
-  rw [← hsplit]
-  nlinarith [mul_le_mul_of_nonneg_right hdiff1 hA0]
+  simpa only [claim14_5VProduct, suzukiVProduct] using
+    (suzukiVProduct_mono_antitone S hzD)
 
 /-- Concrete normalization from the production Claim-14.5 bound to the
 Lemma-14.4 right-hand side.  The only scalar input is the literal inequality

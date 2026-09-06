@@ -72,8 +72,7 @@ lemma abs_quadratic_shortFloorError_le
             (((X / d : ℕ) : ℝ) - (X : ℝ) / (d : ℝ)) * (χ d).re := by
         ring
       rw [heq, abs_mul]
-      nlinarith [abs_nonneg (((X / d : ℕ) : ℝ) - (X : ℝ) / (d : ℝ)),
-        abs_nonneg ((χ d).re)]
+      exact mul_le_one₀ hfloor (abs_nonneg _) hchi
     _ = ((Ico 1 m).card : ℝ) := by simp
     _ ≤ (m : ℝ) := by
       rw [Nat.card_Ico]
@@ -104,18 +103,8 @@ theorem IsPrimitive.abs_quadraticSiegelConvolutionDiscrepancy_le
         ∑ d ∈ Icc m X, ((X / d : ℕ) : ℝ) * (χ d).re := by
     rw [quadraticSiegelConvolutionDiscrepancy_eq_floorSum_sub, hunion,
       Finset.sum_union hdisj, Finset.mul_sum]
-    calc
-      (∑ x ∈ Ico 1 m, ((X / x : ℕ) : ℝ) * (χ x).re) +
-            (∑ x ∈ Icc m X, ((X / x : ℕ) : ℝ) * (χ x).re) -
-          ∑ i ∈ Ico 1 m, (X : ℝ) * ((χ i).re / (i : ℝ)) =
-          ((∑ x ∈ Ico 1 m, ((X / x : ℕ) : ℝ) * (χ x).re) -
-            ∑ i ∈ Ico 1 m, (X : ℝ) * ((χ i).re / (i : ℝ))) +
-            ∑ x ∈ Icc m X, ((X / x : ℕ) : ℝ) * (χ x).re := by ring
-      _ = (∑ d ∈ Ico 1 m,
-            (((X / d : ℕ) : ℝ) * (χ d).re -
-              (X : ℝ) * ((χ d).re / (d : ℝ)))) +
-            ∑ d ∈ Icc m X, ((X / d : ℕ) : ℝ) * (χ d).re := by
-          rw [Finset.sum_sub_distrib]
+    rw [Finset.sum_sub_distrib]
+    ring
   rw [hD]
   calc
     |(∑ d ∈ Ico 1 m,

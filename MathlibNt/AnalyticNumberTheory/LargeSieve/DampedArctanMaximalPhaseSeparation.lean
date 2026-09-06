@@ -159,58 +159,28 @@ theorem norm_dampedLogRectangularCharacterSum_le_four_rankOne
   rw [norm_mul]
   simp only [norm_div, norm_one, Complex.norm_real, Real.norm_eq_abs, abs_of_pos ht]
   apply mul_le_mul_of_nonneg_left _ (by positivity)
-  calc
-    ‖(Real.sin (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseCosTwist b t)
-            Ma Mb Na Nb q χ -
-        (Real.cos (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseCosTwist b t)
-            Ma Mb Na Nb q χ -
-        (Real.cos (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseSinTwist b t)
-            Ma Mb Na Nb q χ -
-        (Real.sin (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseSinTwist b t)
-            Ma Mb Na Nb q χ‖ ≤
-      ‖(Real.sin (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseCosTwist b t)
-            Ma Mb Na Nb q χ‖ +
-      ‖(Real.cos (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseCosTwist b t)
-            Ma Mb Na Nb q χ‖ +
-      ‖(Real.cos (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseSinTwist b t)
-            Ma Mb Na Nb q χ‖ +
-      ‖(Real.sin (t * Real.log y) : ℂ) *
-          phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseSinTwist b t)
-            Ma Mb Na Nb q χ‖ := by
-        calc
-          ‖_ - _‖ ≤ ‖(Real.sin (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseCosTwist b t)
-                Ma Mb Na Nb q χ -
-            (Real.cos (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseCosTwist b t)
-                Ma Mb Na Nb q χ -
-            (Real.cos (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseSinTwist b t)
-                Ma Mb Na Nb q χ‖ +
-            ‖(Real.sin (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseSinTwist b t)
-                Ma Mb Na Nb q χ‖ := norm_sub_le _ _
-          _ ≤ (‖(Real.sin (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseCosTwist b t)
-                Ma Mb Na Nb q χ -
-            (Real.cos (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseCosTwist b t)
-                Ma Mb Na Nb q χ‖ +
-            ‖(Real.cos (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseSinTwist b t)
-                Ma Mb Na Nb q χ‖) +
-            ‖(Real.sin (t * Real.log y) : ℂ) *
-              phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseSinTwist b t)
-                Ma Mb Na Nb q χ‖ := by gcongr; exact norm_sub_le _ _
-          _ ≤ _ := by gcongr; exact norm_sub_le _ _
-    _ = _ := by simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs]
+  have norm_four_sub_le (u v w z : ℂ) :
+      ‖u - v - w - z‖ ≤ ‖u‖ + ‖v‖ + ‖w‖ + ‖z‖ := by
+    calc
+      ‖u - v - w - z‖ ≤ ‖u - v - w‖ + ‖z‖ := norm_sub_le _ _
+      _ ≤ (‖u - v‖ + ‖w‖) + ‖z‖ :=
+        add_le_add (norm_sub_le _ _) le_rfl
+      _ ≤ ‖u‖ + ‖v‖ + ‖w‖ + ‖z‖ :=
+        add_le_add (add_le_add (norm_sub_le _ _) le_rfl) le_rfl
+  simpa only [norm_mul, Complex.norm_real, Real.norm_eq_abs] using
+    norm_four_sub_le
+      ((Real.sin (t * Real.log y) : ℂ) *
+        phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseCosTwist b t)
+          Ma Mb Na Nb q χ)
+      ((Real.cos (t * Real.log y) : ℂ) *
+        phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseCosTwist b t)
+          Ma Mb Na Nb q χ)
+      ((Real.cos (t * Real.log y) : ℂ) *
+        phaseRankOneCharacterProduct (phaseCosTwist a t) (phaseSinTwist b t)
+          Ma Mb Na Nb q χ)
+      ((Real.sin (t * Real.log y) : ℂ) *
+        phaseRankOneCharacterProduct (phaseSinTwist a t) (phaseSinTwist b t)
+          Ma Mb Na Nb q χ)
 
 /-- Uniform half-step sine bound for the separately chosen phase. -/
 theorem abs_sin_log_halfstep_le

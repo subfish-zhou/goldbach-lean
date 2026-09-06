@@ -30,6 +30,13 @@ private def dyadicLowers (R Q : ℕ) : Finset ℕ :=
 private def dyadicCell (N Q C i : ℕ) : Finset ℕ :=
   (highConductorSet N Q C).filter fun d => i < d ∧ d ≤ 2 * i
 
+private lemma exists_dyadic_exponent_of_mem {R Q i : ℕ}
+    (hi : i ∈ dyadicLowers R Q) :
+    ∃ j ∈ Finset.range (dyadicDepth R Q), R * 2 ^ j = i := by
+  by_cases hRQ : R < Q
+  · exact Finset.mem_image.mp (by simpa [dyadicLowers, hRQ] using hi)
+  · simp [dyadicLowers, hRQ] at hi
+
 private lemma sum_two_pow (k : ℕ) :
     ∑ j ∈ Finset.range k, (2 : ℕ) ^ j = 2 ^ k - 1 := by
   induction k with
@@ -95,19 +102,12 @@ private lemma dyadic_cover_aux (R Q d : ℕ) (hR : 0 < R) (hRd : R < d)
 private lemma dyadic_cells_pairwise (N Q C R : ℕ) (hR : 0 < R) :
     (↑(dyadicLowers R Q) : Set ℕ).PairwiseDisjoint (dyadicCell N Q C) := by
   intro i hi j hj hij
-  have hRQ : R < Q := by
-    by_contra h
-    simp [dyadicLowers, h] at hi
-  have hi' : i ∈ (Finset.range (dyadicDepth R Q)).image (fun j => R * 2 ^ j) := by
-    simpa [dyadicLowers, hRQ] using hi
-  have hj' : j ∈ (Finset.range (dyadicDepth R Q)).image (fun j => R * 2 ^ j) := by
-    simpa [dyadicLowers, hRQ] using hj
   change Disjoint (dyadicCell N Q C i) (dyadicCell N Q C j)
   rw [Finset.disjoint_left]
   intro d hdi hdj
   simp only [dyadicCell, Finset.mem_filter] at hdi hdj
-  rcases Finset.mem_image.mp hi' with ⟨a, ha, rfl⟩
-  rcases Finset.mem_image.mp hj' with ⟨b, hb, hab⟩
+  rcases exists_dyadic_exponent_of_mem hi with ⟨a, ha, rfl⟩
+  rcases exists_dyadic_exponent_of_mem hj with ⟨b, hb, hab⟩
   subst j
   have hab' : a ≠ b := by
     intro h
@@ -146,12 +146,7 @@ noncomputable def productionConductorBlockGeometry
       inv_lower_sum_le := ?_
       lower_sum_le := ?_ }
   · intro i hi
-    have hRQ : R < Q := by
-      by_contra h
-      simp [I, dyadicLowers, h] at hi
-    have hi' : i ∈ (Finset.range (dyadicDepth R Q)).image (fun j => R * 2 ^ j) := by
-      simpa [I, dyadicLowers, hRQ] using hi
-    rcases Finset.mem_image.mp hi' with ⟨j, hj, rfl⟩
+    rcases exists_dyadic_exponent_of_mem hi with ⟨j, hj, rfl⟩
     exact Nat.mul_pos hR (pow_pos (by norm_num) _)
   · intro i hi d hd
     exact (Finset.mem_filter.mp hd).2.1.le

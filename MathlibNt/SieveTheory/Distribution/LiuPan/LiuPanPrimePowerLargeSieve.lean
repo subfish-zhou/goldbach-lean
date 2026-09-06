@@ -321,10 +321,7 @@ theorem characterPrefixSum_eq_sum_primitive_dilations {q : ℕ} [NeZero q]
 theorem dirichletCharacter_norm_le_one (q : ℕ)
     (χ : DirichletCharacter ℂ q) (a : ZMod q) :
     ‖χ a‖ ≤ 1 := by
-  by_cases ha : IsUnit a
-  · rw [dirichletChar_norm_unit χ ha]
-  · rw [MulChar.map_nonunit χ ha]
-    norm_num
+  exact AnalyticNumberTheory.LargeSieve.dirichletChar_norm_le_one q χ a
 
 /-- The complex cast of the Möbius function has norm at most one. -/
 theorem moebius_complex_norm_le_one (e : ℕ) :
@@ -1417,19 +1414,7 @@ theorem characterPrefixSquareMax_changeLevel_primitive
     apply image_congr
     intro y hy
     exact characterPrefixSquare_changeLevel_primitive hdq ψ hψ
-  apply le_antisymm
-  · apply max'_le
-    intro z hz
-    rw [himage] at hz
-    exact le_max' _ _ hz
-  · apply max'_le
-    intro z hz
-    have hz' : z ∈ (range (M + 1)).image (fun y => characterPrefixSquare a
-        (DirichletCharacter.changeLevel hdq ψ).conductor y
-        (DirichletCharacter.changeLevel hdq ψ).primitiveCharacter) := by
-      rw [himage]
-      exact hz
-    exact le_max' _ _ hz'
+  simp only [himage]
 
 /-- Prefix-square maxima are nonnegative. -/
 theorem characterPrefixSquareMax_nonneg
@@ -2559,29 +2544,9 @@ theorem
     · exact (liuPanPrimePowerCoefficient_sq_sum_le N).trans
         (mul_le_mul_of_nonneg_left (htotal N hN) (by positivity))
     · exact largeSieveBound_nonneg _ (by positivity)
-  let F :=
-    liuPanPrimePowerH3Mass (panModulusCutoff N B) ^ 2 *
-      Real.sqrt (liuPanPrimePowerJ9Mass (panModulusCutoff N B)) *
-      ((1 + Nat.log 2 (N + 2) : ℕ) : ℝ)
-  calc
-    _ = F * Real.sqrt
-          (largeSieveBound (N + 2)
-              (1 / (panModulusCutoff N B : ℝ) ^ 2) *
-            ∑ n ∈ range (N + 1),
-              liuPanPrimePowerCoefficient N n ^ 2) := by
-        dsimp [F]
-        ring
-    _ ≤ F * Real.sqrt
-          (largeSieveBound (N + 2)
-              (1 / (panModulusCutoff N B : ℝ) ^ 2) *
-            ((1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2) *
-              (C * (N : ℝ) ^ (107 / 120 : ℝ)))) :=
-      mul_le_mul_of_nonneg_left hroot (by
-        dsimp [F]
-        positivity)
-    _ = _ := by
-      dsimp [F]
-      ring
+  exact mul_le_mul_of_nonneg_left
+    (mul_le_mul_of_nonneg_left hroot (Nat.cast_nonneg _))
+    (mul_nonneg (sq_nonneg _) (Real.sqrt_nonneg _))
 
 /-- For nonnegative logarithmic cutoff exponent, the Pan conductor range lies
 inside the square-root range. -/
@@ -2668,28 +2633,9 @@ theorem
         (C * (N : ℝ) ^ (107 / 120 : ℝ)) := by positivity
   have hroot := Real.sqrt_le_sqrt
     (mul_le_mul_of_nonneg_right hls hfactor)
-  let F :=
-    liuPanPrimePowerH3Mass (panModulusCutoff N B) ^ 2 *
-      Real.sqrt (liuPanPrimePowerJ9Mass (panModulusCutoff N B)) *
-      ((1 + Nat.log 2 (N + 2) : ℕ) : ℝ)
-  calc
-    _ = F * Real.sqrt
-          (largeSieveBound (N + 2)
-              (1 / (panModulusCutoff N B : ℝ) ^ 2) *
-            ((1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2) *
-              (C * (N : ℝ) ^ (107 / 120 : ℝ)))) := by
-        dsimp [F]
-        ring
-    _ ≤ F * Real.sqrt
-          (((17 + 4 / Real.log 2) * N * Real.log (N + 2 : ℕ)) *
-            ((1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2) *
-              (C * (N : ℝ) ^ (107 / 120 : ℝ)))) :=
-      mul_le_mul_of_nonneg_left hroot (by
-        dsimp [F]
-        positivity)
-    _ = _ := by
-      dsimp [F]
-      ring
+  exact mul_le_mul_of_nonneg_left
+    (mul_le_mul_of_nonneg_left hroot (Nat.cast_nonneg _))
+    (mul_nonneg (sq_nonneg _) (Real.sqrt_nonneg _))
 
 /-- The maximal nonprincipal residual has the source exponent `227/240`; all
 conductor, dyadic, and coefficient-multiplicity costs fit in `log(N)^20`. -/

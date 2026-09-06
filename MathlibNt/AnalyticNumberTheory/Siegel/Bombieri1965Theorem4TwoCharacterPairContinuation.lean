@@ -152,10 +152,7 @@ omit [NeZero q] in
 private theorem characterPair_factor_summable (ψ : DirichletCharacter ℂ q)
     {s : ℂ} (hs : 1 < s.re) :
     LSeriesSummable (toArithmeticFunction (ψ ·)) s := by
-  apply LSeriesSummable_of_bounded_of_one_lt_re (m := 1) _ hs
-  intro n hn
-  simpa only [toArithmeticFunction, ArithmeticFunction.coe_mk, hn, ↓reduceIte] using
-    norm_le_one ψ n
+  exact DirichletCharacter.characterArithmeticFunction_LSeriesSummable ψ hs
 
 private theorem characterPair_factor_LSeries (ψ : DirichletCharacter ℂ q)
     {s : ℂ} (hs : 1 < s.re) :
@@ -197,13 +194,13 @@ theorem LFunction_mul_eq_characterPairIntegral
   have hF : AnalyticOnNhd ℂ F U := hFdiff.analyticOnNhd hUopen
   have hG : AnalyticOnNhd ℂ G U :=
     ((ψ.differentiable_LFunction hψ).mul (η.differentiable_LFunction hη)).differentiableOn
-      |>.analyticOnNhd isOpen_univ |>.mono (subset_univ U)
+      |>.analyticOnNhd hUopen
   have hpre : IsPreconnected U := (convex_halfSpace_re_gt (1 / 2)).isPreconnected
   have htwo : (2 : ℂ) ∈ U := by norm_num [U]
   have hevent : G =ᶠ[𝓝 (2 : ℂ)] F := by
-    filter_upwards [eventually_of_mem
-      ((continuous_re.isOpen_preimage _ isOpen_Ioi).mem_nhds
-        (by norm_num : (1 : ℝ) < (2 : ℂ).re)) (fun z hz => hz)] with z hz
+    have hone : {z : ℂ | 1 < z.re} ∈ 𝓝 (2 : ℂ) :=
+      (continuous_re.isOpen_preimage _ isOpen_Ioi).mem_nhds (by norm_num)
+    filter_upwards [hone] with z hz
     exact LFunction_mul_eq_characterPairIntegral_of_one_lt_re ψ η hψ hη hz
   exact hG.eqOn_of_preconnected_of_eventuallyEq hF hpre htwo hevent hs
 

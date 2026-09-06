@@ -239,13 +239,7 @@ private lemma inner_normalizedPrimitiveCharacter_reducedCoefficient
   intro a ha
   have haval : (a : ZMod q).val = a := by
     rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp ha)]
-  rw [haval]
-  by_cases hcop : Nat.Coprime a q
-  · have hu : IsUnit (a : ZMod q) := (ZMod.isUnit_iff_coprime a q).2 hcop
-    simp [hcop, hu]
-  · have hu : ¬ IsUnit (a : ZMod q) := by
-      simpa [ZMod.isUnit_iff_coprime] using hcop
-    simp [hcop, hu]
+  simp only [haval, ZMod.isUnit_iff_coprime, ite_mul, zero_mul]
 
 private lemma reducedCoefficientVector_norm_sq {q : ℕ} [NeZero q]
     (c : ℕ → ℂ) :
@@ -257,13 +251,9 @@ private lemma reducedCoefficientVector_norm_sq {q : ℕ} [NeZero q]
   intro a ha
   have haval : (a : ZMod q).val = a := by
     rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp ha)]
-  simp only [reducedCoefficientVector, WithLp.ofLp_toLp, haval]
-  by_cases hcop : Nat.Coprime a q
-  · have hu : IsUnit (a : ZMod q) := (ZMod.isUnit_iff_coprime a q).2 hcop
-    simp [hcop, hu]
-  · have hu : ¬ IsUnit (a : ZMod q) := by
-      simpa [ZMod.isUnit_iff_coprime] using hcop
-    simp [hcop, hu]
+  simp only [reducedCoefficientVector, WithLp.ofLp_toLp, haval,
+    ZMod.isUnit_iff_coprime]
+  split_ifs <;> simp
 
 /-- Direct finite-dimensional Bessel inequality for the primitive-character
 orthonormal subfamily.  The proof never compares the primitive ledger with an
@@ -309,28 +299,18 @@ theorem weightedPrimitiveSquareLedger_le_reducedAdditive_of_directBessel
   rw [weightedPrimitiveSquareLedger_eq_reducedGauss]
   have hφ : (0 : ℝ) < (q.totient : ℝ) := by
     exact_mod_cast Nat.totient_pos.mpr (NeZero.pos q)
-  have h := hB (reducedAdditiveAmplitude q b M N)
-  dsimp [primitiveReducedGaussAmplitude] at h ⊢
+  -- Bessel writes the coefficient first; the Gauss amplitude writes it second.
+  have hgauss :
+      (∑ χ : PrimitiveCharacter q, ‖primitiveReducedGaussAmplitude b M N χ‖ ^ 2) ≤
+        (q.totient : ℝ) *
+          ∑ a ∈ reducedResidues q, ‖reducedAdditiveAmplitude q b M N a‖ ^ 2 := by
+    simpa only [primitiveReducedGaussAmplitude, mul_comm] using
+      hB (reducedAdditiveAmplitude q b M N)
   calc
-    (1 / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          ‖∑ a ∈ reducedResidues q,
-            χ.1⁻¹ (a : ZMod q) * reducedAdditiveAmplitude q b M N a‖ ^ 2 =
-      (1 / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          ‖∑ a ∈ reducedResidues q,
-            reducedAdditiveAmplitude q b M N a * χ.1⁻¹ (a : ZMod q)‖ ^ 2 := by
-              congr 1
-              apply Finset.sum_congr rfl
-              intro χ hχ
-              congr 2
-              apply Finset.sum_congr rfl
-              intro a ha
-              ring
     _ ≤ (1 / (q.totient : ℝ)) *
         ((q.totient : ℝ) *
           ∑ a ∈ reducedResidues q, ‖reducedAdditiveAmplitude q b M N a‖ ^ 2) :=
-      mul_le_mul_of_nonneg_left h (by positivity)
+      mul_le_mul_of_nonneg_left hgauss (by positivity)
     _ = _ := by field_simp
 
 /-- Reindex the complete reduced additive energy by the multiplicity-free Farey

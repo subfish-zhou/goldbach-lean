@@ -95,7 +95,17 @@ lemma claim146iiiFixedM_margin {C gap : ℝ}
   rw [div_lt_div_iff₀ (sq_pos_of_pos hMpos) (mul_pos (by norm_num) hMpos)]
   nlinarith [sq_nonneg M]
 
-private lemma lambda_pos_of_source_range
+/-- The source weight tends to one for every fixed real exponent. -/
+lemma tendsto_source_weight (gap : ℝ) :
+    Tendsto (fun σ : ℝ => (1 - 1 / σ) ^ gap) atTop (𝓝 1) := by
+  have hinv : Tendsto (fun σ : ℝ => 1 / σ) atTop (𝓝 0) := by
+    simpa [one_div] using tendsto_inv_atTop_zero
+  have hbase : Tendsto (fun σ : ℝ => 1 - 1 / σ) atTop (𝓝 1) := by
+    simpa using tendsto_const_nhds.sub hinv
+  simpa using hbase.rpow_const (Or.inl one_ne_zero)
+
+/-- The perturbed layer is positive throughout the parity-dependent source range. -/
+lemma lambda_pos_of_source_range
     {H : Section13HatLayers} (hH : Section13HatContract H 2)
     (sign : ErrorSign) {D d s : ℝ} (hD : 1 < D)
     (hs : 2 + sign.epsilon ≤ s) :

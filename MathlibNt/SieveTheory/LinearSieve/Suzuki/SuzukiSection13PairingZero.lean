@@ -28,15 +28,10 @@ private theorem pairing_tendsto_zero_of_exp_bound
       atTop (𝓝 0) := by
     have h2 : Tendsto (fun s : ℝ => Real.exp 1 * (s ^ 2 * Real.exp (-s)))
         atTop (𝓝 0) := by
-      simpa using (tendsto_const_nhds.mul
-        (Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 2) :
-          Tendsto (fun s : ℝ => Real.exp 1 * (s ^ 2 * Real.exp (-s))) atTop
-            (𝓝 (Real.exp 1 * 0)))
+      simpa only [mul_zero] using
+        (Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 2).const_mul (Real.exp 1)
     have hsum := (Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero 3).add h2
-    have hmul : Tendsto (fun s : ℝ => (C * K) *
-        (s ^ 3 * Real.exp (-s) + Real.exp 1 * (s ^ 2 * Real.exp (-s))))
-        atTop (𝓝 ((C * K) * (0 + 0))) := tendsto_const_nhds.mul hsum
-    simpa using hmul
+    simpa only [add_zero, mul_zero] using hsum.const_mul (C * K)
   apply squeeze_zero' (Eventually.of_forall fun s => norm_nonneg _)
     (show ∀ᶠ s in atTop,
       ‖section10SignedPairing 1 R q s‖ ≤

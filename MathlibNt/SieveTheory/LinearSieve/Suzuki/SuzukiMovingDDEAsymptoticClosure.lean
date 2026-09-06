@@ -21,7 +21,8 @@ def Proposition131MovingDelayedCurrentRatio
           weightedHat H sign t ≤
         t * H.T sign.opposite (t - 1)
 
-private lemma slope_le_log
+/-- Bound the moving perturbation slope by its logarithmic majorant. -/
+lemma moving_perturbationSlope_le_log
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d) (ht : 0 < t) :
     perturbationSlope D d 0 t ≤
       (d + 1) * Real.log (1 + t ^ d / Real.log D) := by
@@ -55,27 +56,25 @@ private lemma slope_le_log
         Real.log (1 + z) + d * Real.log (1 + z) := by gcongr
     _ = (d + 1) * Real.log (1 + z) := by ring
 
-private lemma below_cutoff_z_le_one
+/-- Below the moving cutoff, the normalized real power is at most one. -/
+lemma moving_below_cutoff_z_le_one
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 < d) (ht : 0 < t)
     (hcut : t ≤ (Real.log D) ^ (1 / d)) :
     t ^ d / Real.log D ≤ 1 := by
   have hp := Real.rpow_le_rpow ht.le hcut hd.le
   have hc : ((Real.log D) ^ (1 / d)) ^ d = Real.log D := by
-    rw [← Real.rpow_mul hlog.le]
-    have : (1 / d) * d = 1 := by field_simp
-    rw [this, Real.rpow_one]
+    simpa only [one_div] using Real.rpow_inv_rpow hlog.le hd.ne'
   rw [hc] at hp
   exact (div_le_one hlog).2 hp
 
-private lemma above_cutoff_one_lt_z
+/-- Above the moving cutoff, the normalized real power is strictly greater than one. -/
+lemma moving_above_cutoff_one_lt_z
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 < d)
     (hcut : (Real.log D) ^ (1 / d) < t) :
     1 < t ^ d / Real.log D := by
   have hp := Real.rpow_lt_rpow (Real.rpow_nonneg hlog.le _) hcut hd
   have hc : ((Real.log D) ^ (1 / d)) ^ d = Real.log D := by
-    rw [← Real.rpow_mul hlog.le]
-    have : (1 / d) * d = 1 := by field_simp
-    rw [this, Real.rpow_one]
+    simpa only [one_div] using Real.rpow_inv_rpow hlog.le hd.ne'
   rw [hc] at hp
   exact (one_lt_div hlog).2 hp
 
@@ -106,9 +105,8 @@ theorem movingDDEAsymptoticCertificate_of_proposition131_ratio
     have hp := Real.rpow_le_rpow (Real.rpow_nonneg (by linarith : 0 ≤ M) d)
       hMdlog (by positivity : 0 ≤ 1 / d)
     have hc : (M ^ d) ^ (1 / d) = M := by
-      rw [← Real.rpow_mul (by linarith : 0 ≤ M)]
-      have : d * (1 / d) = 1 := by field_simp
-      rw [this, Real.rpow_one]
+      simpa only [one_div] using
+        Real.rpow_rpow_inv (show 0 ≤ M by linarith) hd.ne'
     rwa [hc] at hp
   rcases hratio D hD₀D with ⟨hMσ, hratioD⟩
   refine ⟨hMσ, ?_, ?_⟩
@@ -118,7 +116,7 @@ theorem movingDDEAsymptoticCertificate_of_proposition131_ratio
     let W : ℝ := weightedHat H sign t
     let A : ℝ := t * H.T sign.opposite (t - 1)
     have hz0 : 0 ≤ z := div_nonneg (Real.rpow_nonneg ht.le _) hlog.le
-    have hz1 : z ≤ 1 := below_cutoff_z_le_one hlog hd ht hcut
+    have hz1 : z ≤ 1 := moving_below_cutoff_z_le_one hlog hd ht hcut
     have hb : 0 < 1 + z := by linarith
     have hW0 : 0 ≤ W := by
       dsimp [W, weightedHat]
@@ -137,7 +135,7 @@ theorem movingDDEAsymptoticCertificate_of_proposition131_ratio
     have hden : (d + 1) * W * (1 + z) ≤ A := by
       have hx0 : 0 ≤ (d + 1) * W := mul_nonneg (by linarith) hW0
       nlinarith
-    have hs := slope_le_log hlog hd.le ht
+    have hs := moving_perturbationSlope_le_log hlog hd.le ht
     have hlogz : Real.log (1 + z) ≤ z := by
       linarith [Real.log_le_sub_one_of_pos hb]
     have hsW : W * perturbationSlope D d 0 t ≤ (d + 1) * W * z := by
@@ -164,7 +162,7 @@ theorem movingDDEAsymptoticCertificate_of_proposition131_ratio
     let z : ℝ := t ^ d / Real.log D
     let W : ℝ := weightedHat H sign t
     let A : ℝ := t * H.T sign.opposite (t - 1)
-    have hz1 : 1 < z := by dsimp [z]; exact above_cutoff_one_lt_z hlog hd hcut
+    have hz1 : 1 < z := by dsimp [z]; exact moving_above_cutoff_one_lt_z hlog hd hcut
     have hb : 0 < 1 + z := by linarith
     have hW0 : 0 ≤ W := by
       dsimp [W, weightedHat]
@@ -186,7 +184,7 @@ theorem movingDDEAsymptoticCertificate_of_proposition131_ratio
     have hhalf : (1 / 2 : ℝ) ≤ z / (1 + z) := by
       apply (le_div_iff₀ hb).2
       linarith
-    have hs := slope_le_log hlog hd.le ht
+    have hs := moving_perturbationSlope_le_log hlog hd.le ht
     have hsW : W * perturbationSlope D d 0 t ≤
         (d + 1) * Real.log (1 + z) * W := by
       calc

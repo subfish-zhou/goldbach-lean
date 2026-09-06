@@ -327,67 +327,70 @@ private lemma liuSource_majorant_intervalIntegrable :
   · intro y hy
     linarith [hy.2]
 
+/-- Derivative certificate for the logarithmic term and polynomial majorant primitive. -/
+private lemma liuSource_majorant_hasDerivAt {y : ℝ}
+    (hy : y ∈ uIcc (0 : ℝ) (7 / 27)) :
+    HasDerivAt liuSourceLogMajorantIntegralAntideriv
+      (3 * (liuSourceLogMajorant y / (1 - 3 * y))) y := by
+  rw [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 7 / 27)] at hy
+  have hden : 1 - 3 * y ≠ 0 := by linarith [hy.2]
+  have hthree : HasDerivAt (fun z : ℝ => 3 * z) 3 y := by
+    simpa using (hasDerivAt_id y).const_mul 3
+  have hlog : HasDerivAt (fun z : ℝ => Real.log (1 - 3 * z))
+      (-3 / (1 - 3 * y)) y := (hthree.const_sub 1).log hden
+  have hpoly : HasDerivAt liuSourceLogMajorantAntideriv
+      (3 * liuSourceLogMajorant y / (1 - 3 * y) -
+        3 * (214308019 / 309180564) / (1 - 3 * y)) y := by
+    have h13 := ((hasDerivAt_id y).pow 13).const_mul (-729 / 4420 : ℝ)
+    have h12 := ((hasDerivAt_id y).pow 12).const_mul (-81 / 1360 : ℝ)
+    have h11 := ((hasDerivAt_id y).pow 11).const_mul (-1571 / 41140 : ℝ)
+    have h10 := ((hasDerivAt_id y).pow 10).const_mul (-1571 / 112200 : ℝ)
+    have h9 := ((hasDerivAt_id y).pow 9).const_mul (-3017 / 100980 : ℝ)
+    have h8 := ((hasDerivAt_id y).pow 8).const_mul (-3017 / 269280 : ℝ)
+    have h7 := ((hasDerivAt_id y).pow 7).const_mul (-223079 / 4948020 : ℝ)
+    have h6 := ((hasDerivAt_id y).pow 6).const_mul (-223079 / 12723480 : ℝ)
+    have h5 := ((hasDerivAt_id y).pow 5).const_mul (-110711 / 1272348 : ℝ)
+    have h4 := ((hasDerivAt_id y).pow 4).const_mul (-553555 / 15268176 : ℝ)
+    have h3 := ((hasDerivAt_id y).pow 3).const_mul (-8187643 / 34353396 : ℝ)
+    have h2 := ((hasDerivAt_id y).pow 2).const_mul (-8187643 / 68706792 : ℝ)
+    have h1 := (hasDerivAt_id y).const_mul (-214308019 / 103060188 : ℝ)
+    have hsum2 := h13.add h12
+    have hsum3 := hsum2.add h11
+    have hsum4 := hsum3.add h10
+    have hsum5 := hsum4.add h9
+    have hsum6 := hsum5.add h8
+    have hsum7 := hsum6.add h7
+    have hsum8 := hsum7.add h6
+    have hsum9 := hsum8.add h5
+    have hsum10 := hsum9.add h4
+    have hsum11 := hsum10.add h3
+    have hsum12 := hsum11.add h2
+    have hsum := hsum12.add h1
+    convert hsum using 1
+    all_goals try rfl
+    norm_num [id_eq, liuSourceLogMajorant]
+    field_simp [hden]
+    ring
+  have htotal : HasDerivAt
+      ((fun z : ℝ => (-214308019 / 309180564) * Real.log (1 - 3 * z)) +
+        liuSourceLogMajorantAntideriv)
+      (3 * (liuSourceLogMajorant y / (1 - 3 * y))) y :=
+    ((hlog.const_mul (-214308019 / 309180564 : ℝ)).add hpoly).congr_deriv
+      (by field_simp [hden]; ring)
+  convert htotal using 1
+  all_goals try rfl
+
 private lemma liuSource_majorant_integral_eq :
     3 * ∫ y in (0 : ℝ)..7 / 27,
         liuSourceLogMajorant y / (1 - 3 * y) =
       (214308019 / 309180564) * Real.log (9 / 2) -
         21864298677554399495239 / 39641290296069664144800 := by
-  have hderiv : ∀ y ∈ uIcc (0 : ℝ) (7 / 27),
-      HasDerivAt liuSourceLogMajorantIntegralAntideriv
-        (3 * (liuSourceLogMajorant y / (1 - 3 * y))) y := by
-    intro y hy
-    rw [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 7 / 27)] at hy
-    have hden : 1 - 3 * y ≠ 0 := by linarith [hy.2]
-    have hthree : HasDerivAt (fun z : ℝ => 3 * z) 3 y := by
-      simpa using (hasDerivAt_id y).const_mul 3
-    have hlog : HasDerivAt (fun z : ℝ => Real.log (1 - 3 * z))
-        (-3 / (1 - 3 * y)) y := (hthree.const_sub 1).log hden
-    have hpoly : HasDerivAt liuSourceLogMajorantAntideriv
-        (3 * liuSourceLogMajorant y / (1 - 3 * y) -
-          3 * (214308019 / 309180564) / (1 - 3 * y)) y := by
-      have h13 := ((hasDerivAt_id y).pow 13).const_mul (-729 / 4420 : ℝ)
-      have h12 := ((hasDerivAt_id y).pow 12).const_mul (-81 / 1360 : ℝ)
-      have h11 := ((hasDerivAt_id y).pow 11).const_mul (-1571 / 41140 : ℝ)
-      have h10 := ((hasDerivAt_id y).pow 10).const_mul (-1571 / 112200 : ℝ)
-      have h9 := ((hasDerivAt_id y).pow 9).const_mul (-3017 / 100980 : ℝ)
-      have h8 := ((hasDerivAt_id y).pow 8).const_mul (-3017 / 269280 : ℝ)
-      have h7 := ((hasDerivAt_id y).pow 7).const_mul (-223079 / 4948020 : ℝ)
-      have h6 := ((hasDerivAt_id y).pow 6).const_mul (-223079 / 12723480 : ℝ)
-      have h5 := ((hasDerivAt_id y).pow 5).const_mul (-110711 / 1272348 : ℝ)
-      have h4 := ((hasDerivAt_id y).pow 4).const_mul (-553555 / 15268176 : ℝ)
-      have h3 := ((hasDerivAt_id y).pow 3).const_mul (-8187643 / 34353396 : ℝ)
-      have h2 := ((hasDerivAt_id y).pow 2).const_mul (-8187643 / 68706792 : ℝ)
-      have h1 := (hasDerivAt_id y).const_mul (-214308019 / 103060188 : ℝ)
-      have hsum2 := h13.add h12
-      have hsum3 := hsum2.add h11
-      have hsum4 := hsum3.add h10
-      have hsum5 := hsum4.add h9
-      have hsum6 := hsum5.add h8
-      have hsum7 := hsum6.add h7
-      have hsum8 := hsum7.add h6
-      have hsum9 := hsum8.add h5
-      have hsum10 := hsum9.add h4
-      have hsum11 := hsum10.add h3
-      have hsum12 := hsum11.add h2
-      have hsum := hsum12.add h1
-      convert hsum using 1
-      all_goals try rfl
-      norm_num [id_eq, liuSourceLogMajorant]
-      field_simp [hden]
-      ring
-    have htotal : HasDerivAt
-        ((fun z : ℝ => (-214308019 / 309180564) * Real.log (1 - 3 * z)) +
-          liuSourceLogMajorantAntideriv)
-        (3 * (liuSourceLogMajorant y / (1 - 3 * y))) y :=
-      ((hlog.const_mul (-214308019 / 309180564 : ℝ)).add hpoly).congr_deriv
-        (by field_simp [hden]; ring)
-    convert htotal using 1
-    all_goals try rfl
   have hint : IntervalIntegrable
       (fun y : ℝ => 3 * (liuSourceLogMajorant y / (1 - 3 * y)))
       volume 0 (7 / 27) := by
     exact liuSource_majorant_intervalIntegrable.const_mul (3 : ℝ)
-  have heval := intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint
+  have heval := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun _ hy => liuSource_majorant_hasDerivAt hy) hint
   rw [← intervalIntegral.integral_const_mul]
   rw [heval]
   have hloginv : -Real.log (2 / 9 : ℝ) = Real.log (9 / 2 : ℝ) := by

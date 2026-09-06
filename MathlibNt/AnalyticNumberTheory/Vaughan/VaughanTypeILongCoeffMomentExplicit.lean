@@ -23,19 +23,15 @@ noncomputable section
 
 private lemma moebius_cast_abs_le_one (d : ℕ) :
     |((ArithmeticFunction.moebius d : ℤ) : ℝ)| ≤ 1 := by
-  rcases ArithmeticFunction.moebius_eq_or d with h | h | h <;> simp [h]
+  exact_mod_cast (ArithmeticFunction.abs_moebius_le_one (n := d))
 
 private lemma abs_sum_bi_le_card_mul
     {α : Type*} (s : Finset α) (f : α → ℝ) (L : ℝ)
     (hf : ∀ a ∈ s, |f a| ≤ L) :
     |∑ a ∈ s, f a| ≤ (s.card : ℝ) * L := by
   calc
-    |∑ a ∈ s, f a| = ‖∑ a ∈ s, f a‖ := by simp [Real.norm_eq_abs]
-    _ ≤ ∑ a ∈ s, ‖f a‖ := norm_sum_le _ _
-    _ ≤ ∑ _a ∈ s, L := by
-      apply Finset.sum_le_sum
-      intro a ha
-      simpa [Real.norm_eq_abs] using hf a ha
+    |∑ a ∈ s, f a| ≤ ∑ a ∈ s, |f a| := Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ _a ∈ s, L := Finset.sum_le_sum hf
     _ = (s.card : ℝ) * L := by simp
 
 private lemma log_nat_le_log_succ
@@ -168,7 +164,6 @@ theorem vaughanTypeILongCoeff_norm_sq_le_divisor_sq
     exact_mod_cast hcast.trans_le (Finset.mem_Icc.mp hn).2
   have hI := vaughanTypeI_abs_le_two_divisors_mul_log
     (n := n.toNat) (N := N) (u := u) (v := v) hntpos hntN
-  have hb0 : 0 ≤ B := (norm_nonneg (b n)).trans hB
   unfold vaughanTypeILongCoeff
   rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, mul_pow]
   have hb2 := pow_le_pow_left₀ (norm_nonneg (b n)) hB 2

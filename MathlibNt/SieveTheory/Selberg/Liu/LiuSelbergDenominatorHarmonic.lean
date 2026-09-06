@@ -100,77 +100,37 @@ theorem summable_abs_liuSelbergCorrection_mul_log_nat
 theorem summable_liuSelbergCorrectionTail
     {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :
     Summable (liuSelbergCorrectionTail N x) := by
-  apply Summable.of_norm
-  apply Summable.of_nonneg_of_le
-      (fun d => norm_nonneg _) (fun d => ?_)
-      (summable_abs_liuSelbergCorrection hNeven hN)
-  by_cases hd : x < d <;>
-    simp [liuSelbergCorrectionTail, Set.indicator, hd, Real.norm_eq_abs]
+  have hs : Summable (liuSelbergCorrection N) := by
+    apply Summable.of_norm
+    simpa only [Real.norm_eq_abs] using
+      summable_abs_liuSelbergCorrection hNeven hN
+  exact hs.indicator _
 
 theorem summable_liuSelbergCorrectionAbsTail
     {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :
     Summable (liuSelbergCorrectionAbsTail N x) := by
-  apply Summable.of_nonneg_of_le
-      (fun d => by
-        by_cases hd : x < d <;>
-          simp [liuSelbergCorrectionAbsTail, Set.indicator, hd])
-      (fun d => ?_)
-      (summable_abs_liuSelbergCorrection hNeven hN)
-  by_cases hd : x < d <;>
-    simp [liuSelbergCorrectionAbsTail, Set.indicator, hd]
+  exact (summable_abs_liuSelbergCorrection hNeven hN).indicator _
 
 theorem liuSelbergCorrection_sum_Icc_add_tail
     {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :
     (∑ d ∈ Finset.Icc 1 x, liuSelbergCorrection N d) +
         ∑' d : ℕ, liuSelbergCorrectionTail N x d =
       ∑' d : ℕ, liuSelbergCorrection N d := by
-  let head : ℕ → ℝ := fun d =>
-    if d ∈ Finset.Icc 1 x then liuSelbergCorrection N d else 0
-  have hhead : Summable head := by
-    apply summable_of_ne_finset_zero (s := Finset.Icc 1 x)
-    intro d hd
-    change (if d ∈ Finset.Icc 1 x then liuSelbergCorrection N d else 0) = 0
-    rw [if_neg hd]
-  have htail := summable_liuSelbergCorrectionTail (x := x) hNeven hN
-  have hpoint (d : ℕ) :
-      head d + liuSelbergCorrectionTail N x d = liuSelbergCorrection N d := by
-    by_cases hd0 : d = 0
-    · subst d
-      simp [head, liuSelbergCorrectionTail, Set.indicator]
-    by_cases hdx : d ≤ x
-    · have hdI : d ∈ Finset.Icc 1 x :=
-        Finset.mem_Icc.mpr ⟨Nat.one_le_iff_ne_zero.mpr hd0, hdx⟩
-      have hdTail : d ∉ {d : ℕ | x < d} := by
-        simpa using not_lt_of_ge hdx
-      simp only [head, liuSelbergCorrectionTail, Set.indicator]
-      rw [if_pos hdI, if_neg hdTail]
-      simp
-    · have hdI : d ∉ Finset.Icc 1 x := by
-        simp [Finset.mem_Icc, hdx]
-      have hlt : x < d := Nat.lt_of_not_ge hdx
-      have hdTail : d ∈ {d : ℕ | x < d} := by simpa
-      simp only [head, liuSelbergCorrectionTail, Set.indicator]
-      rw [if_neg hdI, if_pos hdTail]
-      simp
-  calc
-    (∑ d ∈ Finset.Icc 1 x, liuSelbergCorrection N d) +
-          ∑' d : ℕ, liuSelbergCorrectionTail N x d =
-        (∑' d : ℕ, head d) +
-          ∑' d : ℕ, liuSelbergCorrectionTail N x d := by
-            congr 1
-            rw [tsum_eq_sum (s := Finset.Icc 1 x)]
-            · apply Finset.sum_congr rfl
-              intro d hd
-              change liuSelbergCorrection N d =
-                if d ∈ Finset.Icc 1 x then liuSelbergCorrection N d else 0
-              rw [if_pos hd]
-            · intro d hd
-              change (if d ∈ Finset.Icc 1 x then
-                liuSelbergCorrection N d else 0) = 0
-              rw [if_neg hd]
-    _ = ∑' d : ℕ, (head d + liuSelbergCorrectionTail N x d) :=
-      (hhead.tsum_add htail).symm
-    _ = ∑' d : ℕ, liuSelbergCorrection N d := tsum_congr hpoint
+  have hs : Summable (liuSelbergCorrection N) := by
+    apply Summable.of_norm
+    simpa only [Real.norm_eq_abs] using
+      summable_abs_liuSelbergCorrection hNeven hN
+  rw [← hs.sum_add_tsum_subtype_compl (Finset.Icc 1 x)]
+  congr 1
+  refine Eq.trans ?_
+    (_root_.tsum_subtype {d : ℕ | d ∉ Finset.Icc 1 x} (liuSelbergCorrection N)).symm
+  apply tsum_congr
+  intro d
+  by_cases hd0 : d = 0
+  · subst d
+    simp [liuSelbergCorrectionTail, Set.indicator]
+  have hdpos : 1 ≤ d := Nat.one_le_iff_ne_zero.mpr hd0
+  simp [liuSelbergCorrectionTail, Set.indicator, Finset.mem_Icc, hdpos, not_le]
 
 /-- Exact separation of the logarithmic main term, the signed correction tail,
 the logarithmic moment, and the elementary harmonic residual. -/
@@ -225,8 +185,6 @@ theorem abs_liuSelbergArithmetic_sum_Icc_sub_log_main_le
         (∑' d : ℕ, |liuSelbergCorrection N d| * Real.log d) +
         ∑' d : ℕ, |liuSelbergCorrection N d| := by
   have hxlog : 0 ≤ Real.log (x : ℝ) := Real.log_natCast_nonneg x
-  have htail := summable_liuSelbergCorrectionTail
-    (x := x) hNeven hN
   have habstail := summable_liuSelbergCorrectionAbsTail
     (x := x) hNeven hN
   have habs := summable_abs_liuSelbergCorrection hNeven hN
@@ -234,20 +192,13 @@ theorem abs_liuSelbergArithmetic_sum_Icc_sub_log_main_le
   have htail_norm :
       |∑' d : ℕ, liuSelbergCorrectionTail N x d| ≤
         ∑' d : ℕ, liuSelbergCorrectionAbsTail N x d := by
-    have hnorm := norm_tsum_le_tsum_norm (f := liuSelbergCorrectionTail N x) (by
-      apply habstail.congr
-      intro d
+    have hnorm (d : ℕ) :
+        ‖liuSelbergCorrectionTail N x d‖ = liuSelbergCorrectionAbsTail N x d := by
       by_cases hd : x < d <;>
         simp [liuSelbergCorrectionTail, liuSelbergCorrectionAbsTail,
-          Set.indicator, hd, Real.norm_eq_abs])
-    rw [show (∑' d : ℕ, ‖liuSelbergCorrectionTail N x d‖) =
-        ∑' d : ℕ, liuSelbergCorrectionAbsTail N x d by
-      apply tsum_congr
-      intro d
-      by_cases hd : x < d <;>
-        simp [liuSelbergCorrectionTail, liuSelbergCorrectionAbsTail,
-          Set.indicator, hd, Real.norm_eq_abs]] at hnorm
-    simpa only [Real.norm_eq_abs] using hnorm
+          Set.indicator, hd, Real.norm_eq_abs]
+    simpa only [hnorm, Real.norm_eq_abs] using
+      norm_tsum_le_tsum_norm (habstail.congr fun d => (hnorm d).symm)
   have hmoment :
       |∑ d ∈ Finset.Icc 1 x,
           liuSelbergCorrection N d * Real.log d| ≤
@@ -305,13 +256,8 @@ theorem abs_liuSelbergArithmetic_sum_Icc_sub_log_main_le
     ring
   rw [heq]
   calc
-    |A + B + C| ≤ |A| + |B| + |C| := by
-      calc
-        |A + B + C| ≤ |A + B| + |C| := abs_add_le _ _
-        _ ≤ (|A| + |B|) + |C| := by
-          gcongr
-          exact abs_add_le A B
-        _ = |A| + |B| + |C| := rfl
+    |A + B + C| ≤ |A| + |B| + |C| :=
+      (abs_add_le _ _).trans (add_le_add (abs_add_le A B) le_rfl)
     _ ≤ Real.log x * (∑' d : ℕ, liuSelbergCorrectionAbsTail N x d) +
           (∑' d : ℕ, |liuSelbergCorrection N d| * Real.log d) +
           ∑' d : ℕ, |liuSelbergCorrection N d| := by

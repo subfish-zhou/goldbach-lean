@@ -47,14 +47,15 @@ theorem norm_primitive_logDeriv_le_sqrt_budget
   have hu : 0 < u := by linarith
   have hr : 0 < Real.sqrt u := Real.sqrt_pos.2 hu
   have hrsq := Real.sq_sqrt hu.le
-  have hr8 : 8 ≤ Real.sqrt u := by nlinarith [Real.sqrt_nonneg u]
+  have hr8 : 8 ≤ Real.sqrt u :=
+    Real.le_sqrt_of_sq_le (by norm_num; exact hu64)
   have hδ : 0 < 2 / Real.sqrt u := by positivity
   have hδ1 : 2 / Real.sqrt u ≤ 1 / 4 := by
     apply (div_le_iff₀ hr).2
     linarith
   have hα : 1 / u ≤ 2 / Real.sqrt u := by
     apply (div_le_div_iff₀ hu hr).2
-    nlinarith
+    nlinarith only [hrsq, hr8]
   have hlo : 1 - (2 / Real.sqrt u) / 2 ≤ s.re := by
     convert hslo using 1; ring
   have h := norm_primitive_logDeriv_le_of_zeroFree_rectangle hq χ hδ hδ1
@@ -101,7 +102,8 @@ theorem sqrt_budget_le_uniform {q : ℕ} (hq : 1 < q)
       calc
         _ ≤ 16 * u ^ (100 : ℕ) * (2 * u ^ 2) * Real.sqrt u := by
           gcongr
-          nlinarith [sq_nonneg (u - 1)]
+          have hu2 : 1 ≤ u ^ 2 := one_le_pow₀ hu
+          linarith only [hu2]
         _ = _ := by ring
     _ = Real.log 32 + (205 / 2 : ℝ) * Real.log u := by
       rw [Real.log_mul (by positivity) hr.ne',

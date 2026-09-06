@@ -159,6 +159,19 @@ theorem primePrefix_siegelWalfisz (C D : ℕ) :
       add_le_add (mul_le_mul_of_nonneg_left (hSWN hN q hq χ hχ) hB.le) hPPN
     _ = (B * K + J) * (N : ℝ) / Real.log (N : ℝ) ^ D := by ring
 
+/-- The logarithm is eventually large enough for exponent monotonicity. -/
+private theorem eventually_one_le_log_natCast :
+    ∀ᶠ N : ℕ in atTop, 1 ≤ Real.log (N : ℝ) :=
+  (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
+    (eventually_ge_atTop 1)
+
+/-- Round a real exponent upward, for either the conductor or the saving. -/
+private theorem log_rpow_le_pow_natCeil {N : ℕ}
+    (hL : 1 ≤ Real.log (N : ℝ)) (a : ℝ) :
+    Real.log (N : ℝ) ^ a ≤ Real.log (N : ℝ) ^ ⌈a⌉₊ := by
+  simpa only [Real.rpow_natCast] using
+    Real.rpow_le_rpow_of_exponent_le hL (Nat.le_ceil a)
+
 /-- The same endpoint with an arbitrary fixed real logarithmic conductor exponent. -/
 theorem primePrefix_siegelWalfisz_real_conductor (b : ℝ) (D : ℕ) :
     ∃ K : ℝ, 0 < K ∧ ∀ᶠ N : ℕ in atTop,
@@ -167,16 +180,11 @@ theorem primePrefix_siegelWalfisz_real_conductor (b : ℝ) (D : ℕ) :
           ‖primePrefix χ.1 N‖ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ D := by
   obtain ⟨K, hK, hSW⟩ := primePrefix_siegelWalfisz ⌈b⌉₊ D
   refine ⟨K, hK, ?_⟩
-  have hlog : ∀ᶠ N : ℕ in atTop, 1 ≤ Real.log (N : ℝ) :=
-    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-      (eventually_ge_atTop 1)
-  filter_upwards [hSW, hlog, eventually_ge_atTop (2 : ℕ)] with N hS hL hN
+  filter_upwards [hSW, eventually_one_le_log_natCast, eventually_ge_atTop (2 : ℕ)] with N hS hL hN
   intro q hq hqb χ hχ
   apply hS hN q (mem_Icc.mpr ⟨hq, ?_⟩) χ hχ N le_rfl
   apply Nat.le_floor
-  exact hqb.trans (by
-    simpa only [Real.rpow_natCast] using
-      Real.rpow_le_rpow_of_exponent_le hL (Nat.le_ceil b))
+  exact hqb.trans (log_rpow_le_pow_natCeil hL b)
 
 /-- Endpoint-only version with real saving exponent, in the paper's notation. -/
 theorem primePrefix_siegelWalfisz_endpoint (b A : ℝ) :
@@ -185,20 +193,16 @@ theorem primePrefix_siegelWalfisz_endpoint (b A : ℝ) :
         ∀ χ : PrimitiveCharacter q, χ.1 ≠ 1 →
           ‖primePrefix χ.1 N‖ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
   obtain ⟨K, hK, hSW⟩ := primePrefix_siegelWalfisz_real_conductor b ⌈A⌉₊
-  have hlog : ∀ᶠ N : ℕ in atTop, 1 ≤ Real.log (N : ℝ) :=
-    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-      (eventually_ge_atTop 1)
   have hbound : ∀ᶠ N : ℕ in atTop,
       ∀ q : ℕ, 2 ≤ q → (q : ℝ) ≤ Real.log (N : ℝ) ^ b →
         ∀ χ : PrimitiveCharacter q, χ.1 ≠ 1 →
           ‖primePrefix χ.1 N‖ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-    filter_upwards [hSW, hlog] with N hS hL
+    filter_upwards [hSW, eventually_one_le_log_natCast] with N hS hL
     intro q hq hqb χ hχ
     refine (hS q hq hqb χ hχ).trans ?_
     apply div_le_div_of_nonneg_left (by positivity)
       (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hL) A)
-    simpa only [Real.rpow_natCast] using
-      Real.rpow_le_rpow_of_exponent_le hL (Nat.le_ceil A)
+    exact log_rpow_le_pow_natCeil hL A
   exact ⟨K, hK, eventually_atTop.mp hbound⟩
 
 end

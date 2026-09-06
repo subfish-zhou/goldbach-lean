@@ -36,9 +36,7 @@ theorem quadratic_harmonic_sum_im_eq_zero_of_sq_eq_one
     dsimp [S]
     simpa using
       (conj_sum_range_cpowWeight_character_of_sq_eq_one χ hquad (1 : ℂ) m)
-  have him := congrArg Complex.im hstar
-  rw [Complex.conj_im] at him
-  linarith
+  exact Complex.conj_eq_iff_im.mp hstar
 
 /-- Abel truncation at the real point `1`: the error in approximating a
 nonprincipal Dirichlet L-value by its first `m` natural terms is at most

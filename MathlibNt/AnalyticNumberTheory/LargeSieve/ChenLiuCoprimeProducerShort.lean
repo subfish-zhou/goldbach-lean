@@ -199,19 +199,15 @@ private theorem sqrt_moments_le {U V C R N H L : ℝ}
       U * V ≤ (2 * C * (R + N / R) * L) * (4 * C * R * L) :=
         mul_le_mul hUb hVb' hV (by positivity)
       _ = _ := by field_simp; ring
-  have hUs := Real.sq_sqrt hU
-  have hVs := Real.sq_sqrt hV
-  have hRs := Real.sq_sqrt (by positivity : 0 ≤ R ^ 2 + N)
-  have hlhs : (Real.sqrt U * Real.sqrt V) ^ 2 = U * V := by
-    rw [mul_pow, hUs, hVs]
-  have hrhs : (4 * C * Real.sqrt (R ^ 2 + N) * L) ^ 2 =
-      16 * C ^ 2 * (R ^ 2 + N) * L ^ 2 := by
-    calc
-      _ = 16 * C ^ 2 * (Real.sqrt (R ^ 2 + N)) ^ 2 * L ^ 2 := by ring
-      _ = _ := by rw [hRs]
-  have hnonneg : 0 ≤ 4 * C * Real.sqrt (R ^ 2 + N) * L := by positivity
-  have hscale : 0 ≤ C ^ 2 * (R ^ 2 + N) * L ^ 2 := by positivity
-  nlinarith
+  -- Combine the square roots, then compare with the square of the desired bound.
+  rw [← Real.sqrt_mul hU, Real.sqrt_le_iff]
+  refine ⟨by positivity, ?_⟩
+  calc
+    U * V ≤ 8 * C ^ 2 * (R ^ 2 + N) * L ^ 2 := hprod
+    _ ≤ 16 * C ^ 2 * (R ^ 2 + N) * L ^ 2 := by gcongr; norm_num
+    _ = (4 * C * Real.sqrt (R ^ 2 + N) * L) ^ 2 := by
+      rw [mul_pow, mul_pow, Real.sq_sqrt (by positivity : 0 ≤ R ^ 2 + N)]
+      ring
 
 /-- A general bounded-coefficient version of the short-polynomial estimate.
 The square-root saving comes from the conductor mean, not pointwise bounds. -/
@@ -228,10 +224,8 @@ theorem polynomial_product_mean_le (S T : Finset ℕ) (c d : ℕ → ℂ)
   have hlog : 0 ≤ 1 + Real.log x := by
     have : 0 ≤ Real.log (x : ℝ) := Real.log_nonneg (by exact_mod_cast hx)
     linarith
-  have hSx : S ⊆ Icc 1 x := fun n hn =>
-    mem_Icc.mpr ⟨(mem_Icc.mp (hS hn)).1, (mem_Icc.mp (hS hn)).2.trans hNx⟩
-  have hTx : T ⊆ Icc 1 x := fun n hn =>
-    mem_Icc.mpr ⟨(mem_Icc.mp (hT hn)).1, (mem_Icc.mp (hT hn)).2.trans hHx⟩
+  have hSx : S ⊆ Icc 1 x := hS.trans (Icc_subset_Icc le_rfl hNx)
+  have hTx : T ⊆ Icc 1 x := hT.trans (Icc_subset_Icc le_rfl hHx)
   have hC := chen1973Lemma6_eq19SharpConstant_pos.le
   have hU := (polynomial_second_moment S c N hS hc hR s hs).trans
     (mul_le_mul_of_nonneg_left (harmonic_energy_le_log S x hSx)

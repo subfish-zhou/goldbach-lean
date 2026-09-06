@@ -235,27 +235,11 @@ theorem liuSelbergSquareCount_eq_switchedCount
             (fun p => d1 ∣ N - a * p ∧ d2 ∣ N - a * p),
           liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
             lambda d1 * lambda d2 := by
-      conv_lhs =>
-        simp only [P, Finset.sum_filter]
-      conv_rhs =>
-        simp only [P, Finset.sum_filter]
-      change
-        (∑ p ∈ range (N + 1),
-          if p.Prime ∧ a * p ≤ N then
-            liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-              ((if d1 ∣ N - a * p then lambda d1 else 0) *
-                if d2 ∣ N - a * p then lambda d2 else 0)
-          else 0) =
-        ∑ p ∈ range (N + 1),
-          if p.Prime ∧ a * p ≤ N then
-            (if d1 ∣ N - a * p ∧ d2 ∣ N - a * p then
-              liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-                lambda d1 * lambda d2
-            else 0)
-          else 0
+      conv_rhs => rw [Finset.sum_filter]
       apply Finset.sum_congr rfl
       intro p _
-      split_ifs <;> simp_all [mul_assoc]
+      by_cases hd1 : d1 ∣ N - a * p <;>
+        by_cases hd2 : d2 ∣ N - a * p <;> simp [hd1, hd2, mul_assoc]
     _ = lambda d1 * lambda d2 *
           (liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
             (AnalyticNumberTheory.Sieve.primesInAPBelow

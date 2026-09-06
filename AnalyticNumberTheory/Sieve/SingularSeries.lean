@@ -63,21 +63,11 @@ noncomputable def localFactor (p N : ℕ) : ℝ :=
 
 /-- The factor at 2 is 2 for even `N`. -/
 theorem localFactor_two (hN : Even N) : localFactor 2 N = 2 := by
-  unfold localFactor
-  rw [if_pos rfl]
-  obtain ⟨k, hk⟩ := hN
-  rw [if_pos ⟨k, by omega⟩]
+  simp [localFactor, hN.two_dvd]
 
 /-- The factor at 2 is 1 for odd `N`. -/
 theorem localFactor_two_odd (hN : Odd N) : localFactor 2 N = 1 := by
-  unfold localFactor
-  rw [if_pos rfl]
-  have h : ¬ (2 : ℕ) ∣ N := by
-    rintro ⟨k, hk⟩
-    rw [hk] at hN
-    obtain ⟨m, hm⟩ := hN
-    omega
-  rw [if_neg h]
+  simp [localFactor, hN.not_two_dvd_nat]
 
 /-- For a prime `p > 2` dividing `N`, the factor is `p/(p-1)`. -/
 theorem localFactor_of_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
@@ -96,10 +86,7 @@ theorem localFactor_of_not_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : �
 theorem localFactor_pos {p N : ℕ} (hp : p.Prime) : 0 < localFactor p N := by
   by_cases h2 : p = 2
   · simp [localFactor, h2]; split_ifs <;> linarith
-  · have hp2 : 2 < p := by
-      rcases hp.eq_two_or_odd' with h | h
-      · omega
-      · have : 2 ≤ p := hp.two_le; omega
+  · have hp2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm h2)
     by_cases hpdvd : p ∣ N
     · rw [localFactor_of_dvd hp hp2 hpdvd]
       have hp2le : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
@@ -107,11 +94,9 @@ theorem localFactor_pos {p N : ℕ} (hp : p.Prime) : 0 < localFactor p N := by
     · rw [localFactor_of_not_dvd hp hp2 hpdvd]
       have hp_pos : (0 : ℝ) < p := by exact_mod_cast hp.pos
       have hp2_pos : (0 : ℝ) < p - 2 := by
-        have : (2 : ℝ) < p := by exact_mod_cast hp2
-        linarith
+        exact sub_pos.mpr (by exact_mod_cast hp2)
       have hp1_pos : (0 : ℝ) < p - 1 := by
-        have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
-        linarith
+        exact sub_pos.mpr (by exact_mod_cast hp.one_lt)
       exact div_pos (mul_pos hp_pos hp2_pos) (sq_pos_of_pos hp1_pos)
 
 /-! ## 3. Truncated singular series -/
@@ -173,30 +158,21 @@ theorem localFactor_dvd_le {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p �
   have hp1 : (0 : ℝ) < p - 1 := by
     have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
     linarith
-  have : (p : ℝ) / (p - 1) ≤ 3 / 2 := by
-    field_simp
-    have : (2 : ℝ) * p ≤ 3 * (p - 1) := by
-      have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      nlinarith
-    linarith
-  exact this
+  apply (div_le_iff₀ hp1).2
+  have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+  linarith
 
 /-- For a prime `p > 2` not dividing `N`,
 `p(p-2)/(p-1)² < 1`, since `p ≥ 3`. -/
 theorem localFactor_not_dvd_lt_one {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N < 1 := by
   rw [localFactor_of_not_dvd hp hp2 hpn]
-  have hp3 : 3 ≤ p := by omega
   have hp1_pos : (0 : ℝ) < p - 1 := by
     have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
     linarith
-  have : (p : ℝ) * (p - 2) / ((p - 1) ^ 2) < 1 := by
-    field_simp
-    have h : (p : ℝ) * (p - 2) < (p - 1) * (p - 1) := by
-      have hp_cast : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      nlinarith
-    linarith
-  exact this
+  -- The positive denominator exceeds the numerator by exactly one.
+  apply (div_lt_one (sq_pos_of_pos hp1_pos)).2
+  nlinarith
 
 /-! ## 7. Elementary singular-series bounds -/
 
@@ -219,7 +195,7 @@ private lemma localFactor_ge_square {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
     nlinarith
 
 /-- Telescoping product A: `∏_{k<n} (k+1)/(k+2) = 1/(n+1)`. -/
-private lemma telescope_a (n : ℕ) :
+lemma telescope_a (n : ℕ) :
     (Finset.range n).prod (fun k : ℕ => ((k : ℝ) + 1) / ((k : ℝ) + 2)) =
       1 / ((n : ℝ) + 1) := by
   induction n with
@@ -233,7 +209,7 @@ private lemma telescope_a (n : ℕ) :
       ring
 
 /-- Telescoping product B: `∏_{k<n} (k+3)/(k+2) = (n+2)/2`. -/
-private lemma telescope_b (n : ℕ) :
+lemma telescope_b (n : ℕ) :
     (Finset.range n).prod (fun k : ℕ => ((k : ℝ) + 3) / ((k : ℝ) + 2)) =
       ((n : ℝ) + 2) / 2 := by
   induction n with
@@ -247,7 +223,7 @@ private lemma telescope_b (n : ℕ) :
 
 /-- Telescoping product:
 `∏_{n=2}^{N-1} (1-1/n²) = N/(2(N-1))` for `N ≥ 2`. -/
-private lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
+lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
     (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) =
       (N : ℝ) / (2 * ((N : ℝ) - 1)) := by
   rw [Finset.prod_Ico_eq_prod_range (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) 2 N]
@@ -288,7 +264,7 @@ private lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
 /-- The prime-indexed product is at least the full integer product:
 `∏_{3≤p≤N, p prime} (1-1/(p-1)²)
  ≥ ∏_{n=2}^{N-1} (1-1/n²)`. -/
-private lemma prime_square_product_ge_int (N : ℕ) :
+lemma prime_square_product_ge_int (N : ℕ) :
     (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) ≤
       ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
         (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := by
@@ -356,17 +332,9 @@ private lemma localFactor_le_two {p N : ℕ} (hp : p.Prime) : localFactor p N �
   · subst h2
     unfold localFactor
     split_ifs <;> norm_num
-  · have hp2 : 2 < p := by
-      rcases hp.eq_two_or_odd' with h | h
-      · exact absurd h h2
-      · have : 2 ≤ p := hp.two_le
-        omega
+  · have hp2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm h2)
     by_cases hpdvd : p ∣ N
-    · rw [localFactor_of_dvd hp hp2 hpdvd]
-      have hp2' : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
-      have hp1 : (0 : ℝ) < (p : ℝ) - 1 := by linarith
-      field_simp [ne_of_gt hp1]
-      nlinarith
+    · exact (localFactor_dvd_le hp hp2 hpdvd).trans (by norm_num)
     · exact le_trans (le_of_lt (localFactor_not_dvd_lt_one hp hp2 hpdvd)) (by norm_num)
 
 /-- If the prime `p` does not divide `N`, its local factor is at most 1. -/
@@ -376,11 +344,7 @@ private lemma localFactor_le_one_of_not_dvd {p N : ℕ} (hp : p.Prime) (hpn : ¬
   · subst h2
     unfold localFactor
     simp [hpn]
-  · have hp2 : 2 < p := by
-      rcases hp.eq_two_or_odd' with h | h
-      · exact absurd h h2
-      · have : 2 ≤ p := hp.two_le
-        omega
+  · have hp2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm h2)
     exact le_of_lt (localFactor_not_dvd_lt_one hp hp2 hpn)
 
 /-- **Positive lower bound for even N**: the finite proxy is at
@@ -407,30 +371,12 @@ theorem singularSeries_bounded_below :
   have hfilter_eq : A \ {2} = (range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p) := by
     rw [hA_def]
     ext p
+    simp only [mem_sdiff, mem_filter, mem_singleton]
     constructor
-    · intro hp
-      rw [mem_sdiff, mem_filter] at hp
-      rcases hp with ⟨hp_mem, hp_ne⟩
-      rcases hp_mem with ⟨hp_range, hp_prime⟩
-      rw [mem_filter]
-      refine ⟨hp_range, hp_prime, ?_⟩
-      have hp_ne' : p ≠ 2 := by
-        intro h
-        exact hp_ne (by simp [h])
-      rcases hp_prime.eq_two_or_odd' with h2 | hodd
-      · exact absurd h2 hp_ne'
-      · have : 2 ≤ p := hp_prime.two_le
-        omega
-    · intro hp
-      rw [mem_filter] at hp
-      rcases hp with ⟨hp_range, hp_props⟩
-      rcases hp_props with ⟨hp_prime, hp2⟩
-      rw [mem_sdiff, mem_filter]
-      constructor
-      · exact ⟨hp_range, hp_prime⟩
-      · intro hp_mem2
-        have hp_eq2 : p = 2 := by simpa using hp_mem2
-        omega
+    · rintro ⟨⟨hp_range, hp⟩, hp_ne⟩
+      exact ⟨hp_range, hp, lt_of_le_of_ne hp.two_le (Ne.symm hp_ne)⟩
+    · rintro ⟨hp_range, hp, hp2⟩
+      exact ⟨⟨hp_range, hp⟩, ne_of_gt hp2⟩
   rw [hfilter_eq]
   have hfac : ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
         (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) ≤
@@ -608,30 +554,12 @@ theorem singularSeriesTruncated_ge_half (N z : ℕ) (hz : 2 ≤ z) :
   have hfilter_eq : A \ {2} = (range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p) := by
     rw [hA_def]
     ext p
+    simp only [mem_sdiff, mem_filter, mem_singleton]
     constructor
-    · intro hp
-      rw [mem_sdiff, mem_filter] at hp
-      rcases hp with ⟨hp_mem, hp_ne⟩
-      rcases hp_mem with ⟨hp_range, hp_prime⟩
-      rw [mem_filter]
-      refine ⟨hp_range, hp_prime, ?_⟩
-      have hp_ne' : p ≠ 2 := by
-        intro h
-        exact hp_ne (by simp [h])
-      rcases hp_prime.eq_two_or_odd' with h2 | hodd
-      · exact absurd h2 hp_ne'
-      · have : 2 ≤ p := hp_prime.two_le
-        omega
-    · intro hp
-      rw [mem_filter] at hp
-      rcases hp with ⟨hp_range, hp_props⟩
-      rcases hp_props with ⟨hp_prime, hp2⟩
-      rw [mem_sdiff, mem_filter]
-      constructor
-      · exact ⟨hp_range, hp_prime⟩
-      · intro hp_mem2
-        have hp_eq2 : p = 2 := by simpa using hp_mem2
-        omega
+    · rintro ⟨⟨hp_range, hp⟩, hp_ne⟩
+      exact ⟨hp_range, hp, lt_of_le_of_ne hp.two_le (Ne.symm hp_ne)⟩
+    · rintro ⟨hp_range, hp, hp2⟩
+      exact ⟨⟨hp_range, hp⟩, ne_of_gt hp2⟩
   -- Odd-prime product comparison: ∏(1-1/(p-1)²) ≤ ∏ localFactor(p,N).
   have hfac : ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
         (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) ≤

@@ -184,11 +184,10 @@ theorem halfStep_source_power_le {x y : ℕ} (hx : 1 ≤ Real.log x)
 theorem halfStep_source_height_ge_fifth {x : ℕ} (hx : 4 ≤ Real.log x) :
     (x : ℝ) ^ 5 ≤ panSourceHeight x := by
   have hx0 : (0 : ℝ) < x := by
-    by_contra h
-    have hz : x = 0 := by
-      exact_mod_cast (le_antisymm (le_of_not_gt h) (Nat.cast_nonneg x))
-    norm_num [hz] at hx
-  have hh : 5 * Real.log (x : ℝ) ≤ 2 * (Real.log x) ^ 2 := by nlinarith
+    have hxne : x ≠ 0 := by rintro rfl; norm_num at hx
+    exact_mod_cast Nat.pos_of_ne_zero hxne
+  have hh : 5 * Real.log (x : ℝ) ≤ 2 * (Real.log x) ^ 2 := by
+    nlinarith only [hx]
   have he := Real.exp_le_exp.mpr hh
   rw [mul_comm (5 : ℝ), Real.exp_mul, Real.exp_log hx0] at he
   rw [← Real.rpow_natCast (x : ℝ) 5]
@@ -256,15 +255,8 @@ theorem halfStepShortIntegral_source_inverse_square {q x : ℕ} (f : ℕ → ℂ
     linarith [Real.one_le_pi_div_two]
   unfold halfStepShortIntegral
   rw [← mul_sub, norm_mul]
-  calc
-    _ ≤ 1 * ‖(∫ t in -(panSourceHeight x)..panSourceHeight x,
-        halfStepShortKernel f m H y A₁ A₂ k χ (liuPanPerronLine (panSourceSigma x) t)) -
-      (∫ t in -(panSourceHeight x)..panSourceHeight x,
-        halfStepShortKernel f m H y A₁ A₂ k χ (liuPanPerronLine (1 / 2) t))‖ :=
-      mul_le_mul_of_nonneg_right hnorm (norm_nonneg _)
-    _ ≤ _ := by
-      rw [one_mul]
-      exact halfStepShortKernel_source_inverse_square f hf m H y A₁ A₂ k χ
-        hx hy hyx hAy hHx
+  exact (mul_le_of_le_one_left (norm_nonneg _) hnorm).trans
+    (halfStepShortKernel_source_inverse_square f hf m H y A₁ A₂ k χ
+      hx hy hyx hAy hHx)
 
 end AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducer

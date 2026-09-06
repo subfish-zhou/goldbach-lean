@@ -84,18 +84,10 @@ theorem standardPrimeAPMaxError_le_prefixMaxError (x q : ℕ) :
 the explicitly defined zero endpoint. -/
 theorem standardPrimeAPMaxError_nonneg (x q : ℕ) :
     0 ≤ standardPrimeAPMaxError x q := by
-  unfold standardPrimeAPMaxError
-  dsimp only
   by_cases hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty
-  · rw [dif_pos hS]
-    let M := (AnalyticNumberTheory.Sieve.unitResidues q).image
-      (fun l => |standardPrimeAPError x q l|)
-    have hmem : M.max' (Finset.image_nonempty.mpr hS) ∈ M :=
-      Finset.max'_mem M _
-    rcases Finset.mem_image.mp hmem with ⟨l, _, hl⟩
-    rw [← hl]
-    exact abs_nonneg _
-  · rw [dif_neg hS]
+  · obtain ⟨l, hl⟩ := hS
+    exact (abs_nonneg _).trans (abs_standardPrimeAPError_le_max hl)
+  · simp [standardPrimeAPMaxError, hS]
 
 /-- The prefix maximum is nonnegative, since every endpoint maximum is. -/
 theorem standardPrimeAPPrefixMaxError_nonneg (x q : ℕ) :
@@ -117,19 +109,8 @@ theorem primesInAP_modEq_N_eq (N d : ℕ) :
     primesInAP N d (N % d) =
       ((Finset.range (N + 1)).filter
         (fun p => p.Prime ∧ p ≡ N [MOD d])).card := by
-  unfold primesInAP
-  congr 1
-  ext p
-  simp only [Finset.mem_filter]
-  constructor
-  · rintro ⟨hRange, hp, hmod⟩
-    refine ⟨hRange, hp, ?_⟩
-    rw [Nat.ModEq] at hmod ⊢
-    simpa [Nat.mod_mod] using hmod
-  · rintro ⟨hRange, hp, hmod⟩
-    refine ⟨hRange, hp, ?_⟩
-    rw [Nat.ModEq] at hmod ⊢
-    simpa [Nat.mod_mod] using hmod
+  simp only [primesInAP, Nat.ModEq, Nat.mod_mod]
+  rfl
 
 /-- The genuine logarithmic integral dominates the historical elementary
 proxy. -/

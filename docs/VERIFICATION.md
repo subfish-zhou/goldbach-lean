@@ -17,7 +17,9 @@ lake env leanchecker --verbose Goldbach.Theorem
    Lean files for missing local imports, import cycles, source reachability,
    proof placeholders, custom axiom declarations, trusted native decision calls,
    unsafe declarations, and the kernel-check bypass option. It also checks the
-   release text for untranslated CJK content and private machine paths.
+   release text for untranslated CJK content and private machine paths, including
+   Blueprint source and renderer configuration. The isolated `Goldbach.Blueprint`
+   documentation root is checked separately from the public import closure.
 3. **Literal target and axiom dependency:** `python3 scripts/check.py` performs
    the source checks and elaborates `Goldbach/Checks.lean`. The check module
    expands the public specification, verifies the original implementation
@@ -31,6 +33,10 @@ lake env leanchecker --verbose Goldbach.Theorem
 5. **Isolated reconstruction:** extract the source archive into an independent
    directory, fetch the pinned dependencies, and run the same commands. Do not
    copy project `.olean` files from the development tree.
+
+`python3 scripts/check.py --static-only --count-lines` additionally reports
+nonblank Lean source lines with nested comments removed and string literals
+retained. This is the release-note size convention, not a proof verification gate.
 
 ## What these checks do not mean
 

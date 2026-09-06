@@ -70,8 +70,7 @@ private lemma four_mul_min_div_q_le_norm_stdAddChar_natCast_sub_one
         nlinarith
       have hfracπ := mul_le_mul_of_nonneg_left hfrac Real.pi_pos.le
       simpa [x, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using hfracπ
-    have hxabs : |x| ≤ π / 2 := by simpa [abs_of_nonneg hx0] using hxle
-    have hjordan := Real.mul_abs_le_abs_sin hxabs
+    have hjordan := Real.mul_le_sin hx0 hxle
     have hsin0 : 0 ≤ Real.sin x := by
       apply Real.sin_nonneg_of_nonneg_of_le_pi hx0
       linarith [hxle, Real.pi_pos]
@@ -80,10 +79,7 @@ private lemma four_mul_min_div_q_le_norm_stdAddChar_natCast_sub_one
       simpa [Nat.cast_sub hnq.le] using hhalfNatR
     rw [hden, Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (by positivity) hsin0),
       min_eq_left hhalfR]
-    have h2j : 2 * (2 / π * |x|) ≤ 2 * |Real.sin x| := by
-      gcongr
-    rw [abs_of_nonneg hx0, abs_of_nonneg hsin0] at h2j
-    have h2j' := h2j
+    have h2j' := mul_le_mul_of_nonneg_left hjordan (show (0 : ℝ) ≤ 2 by norm_num)
     dsimp [x] at h2j' ⊢
     field_simp [Real.pi_ne_zero, ne_of_gt hqpos] at h2j'
     ring_nf at h2j'
@@ -103,8 +99,7 @@ private lemma four_mul_min_div_q_le_norm_stdAddChar_natCast_sub_one
         nlinarith
       have hfracπ := mul_le_mul_of_nonneg_left hfrac Real.pi_pos.le
       simpa [y, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using hfracπ
-    have hyabs : |y| ≤ π / 2 := by simpa [abs_of_nonneg hy0] using hyle
-    have hjordan := Real.mul_abs_le_abs_sin hyabs
+    have hjordan := Real.mul_le_sin hy0 hyle
     have hsin0 : 0 ≤ Real.sin y := by
       apply Real.sin_nonneg_of_nonneg_of_le_pi hy0
       linarith [hyle, Real.pi_pos]
@@ -120,10 +115,7 @@ private lemma four_mul_min_div_q_le_norm_stdAddChar_natCast_sub_one
       simpa [Nat.cast_sub hnq.le] using hhalfNatR
     rw [hden, Real.norm_eq_abs, hxy, Real.sin_pi_sub,
       abs_of_nonneg (mul_nonneg (by positivity) hsin0), min_eq_right hhalfR]
-    have h2j : 2 * (2 / π * |y|) ≤ 2 * |Real.sin y| := by
-      gcongr
-    rw [abs_of_nonneg hy0, abs_of_nonneg hsin0] at h2j
-    have h2j' := h2j
+    have h2j' := mul_le_mul_of_nonneg_left hjordan (show (0 : ℝ) ≤ 2 by norm_num)
     dsimp [y] at h2j' ⊢
     field_simp [Real.pi_ne_zero, ne_of_gt hqpos] at h2j'
     ring_nf at h2j'
@@ -141,16 +133,7 @@ private lemma norm_sum_range_stdAddChar_natCast_le_q_div_min
   let z : ℂ := stdAddChar (n : ZMod q)
   have hzne : z ≠ 1 := by
     simpa [z] using stdAddChar_natCast_ne_one (q := q) hn1 hnq
-  have hz1 : ‖z‖ = 1 := by
-    dsimp [z]
-    have hcoe : stdAddChar (n : ZMod q) =
-        Complex.exp (2 * π * I * ((n : ℤ) : ℂ) / (q : ℂ)) := by
-      simpa using (ZMod.stdAddChar_coe (N := q) (n : ℤ))
-    rw [hcoe]
-    have harg : (2 * π * I * ((n : ℤ) : ℂ) / (q : ℂ)) =
-        I * (((2 * π * (n : ℝ)) / q : ℝ) : ℂ) := by
-      norm_num [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
-    rw [harg, Complex.norm_exp_I_mul_ofReal]
+  have hz1 : ‖z‖ = 1 := Circle.norm_coe (ZMod.toCircle (n : ZMod q))
   have hsum :
       (∑ m ∈ range M, stdAddChar ((n : ZMod q) * (m : ZMod q))) =
         ∑ m ∈ range M, z ^ m := by
@@ -161,9 +144,6 @@ private lemma norm_sum_range_stdAddChar_natCast_le_q_div_min
     calc
       ‖z ^ M - 1‖ ≤ ‖z ^ M‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
       _ = 2 := by rw [norm_pow, hz1]; norm_num
-  have hdenpos : 0 < ‖z - 1‖ := by
-    refine norm_pos_iff.mpr ?_
-    exact sub_ne_zero.mpr (by simpa [eq_comm] using hzne)
   have hdenlower :
       2 * (min n (q - n) : ℝ) / q ≤ ‖z - 1‖ := by
     have hmin0 : 0 ≤ (min n (q - n) : ℝ) := by
@@ -195,14 +175,11 @@ private lemma norm_sum_range_stdAddChar_natCast_le_q_div_min
         = ‖∑ m ∈ range M, z ^ m‖ := by rw [hsum]
     _ = ‖(z ^ M - 1) / (z - 1)‖ := by rw [geom_sum_eq hzne M]
     _ = ‖z ^ M - 1‖ / ‖z - 1‖ := by rw [norm_div]
-    _ ≤ 2 / ‖z - 1‖ := by
-      rw [div_le_div_iff₀ hdenpos hdenpos]
-      nlinarith
+    _ ≤ 2 / ‖z - 1‖ := div_le_div_of_nonneg_right hnum (norm_nonneg _)
     _ ≤ 2 / (2 * (min n (q - n) : ℝ) / q) := by
       have hmindivpos : 0 < 2 * (min n (q - n) : ℝ) / q := by
         exact div_pos (by nlinarith [hminpos]) hqpos
-      rw [div_le_div_iff₀ hdenpos hmindivpos]
-      nlinarith
+      exact div_le_div_of_nonneg_left (by norm_num) hmindivpos hdenlower
     _ = (q : ℝ) / min n (q - n) := by
       rw [Nat.cast_min, Nat.cast_sub hnq.le]
       let mR : ℝ := min (n : ℝ) (q - n)
@@ -221,11 +198,11 @@ private lemma q_div_min_le_q_mul_inv_add_inv {n : ℕ} (hn1 : 1 ≤ n) (hnq : n 
   · rw [Nat.min_eq_left h, div_eq_mul_inv]
     refine mul_le_mul_of_nonneg_left ?_ hq0
     have : 0 ≤ (((q - n : ℕ) : ℝ)⁻¹) := by positivity
-    linarith
+    exact le_add_of_nonneg_right this
   · rw [Nat.min_eq_right (le_of_not_ge h), div_eq_mul_inv]
     refine mul_le_mul_of_nonneg_left ?_ hq0
     have : 0 ≤ ((n : ℝ)⁻¹) := by positivity
-    linarith
+    exact le_add_of_nonneg_left this
 
 private lemma sum_univ_zmod_eq_sum_range (f : ZMod q → ℝ) :
     (∑ j : ZMod q, f j) = ∑ n ∈ range q, f (n : ZMod q) := by
@@ -265,20 +242,8 @@ theorem IsPrimitive.norm_weighted_fourierKernel_sum_le_four_mul_q_mul_one_add_lo
         Finset.sum_range_reflect (fun n : ℕ => (((n + 1 : ℕ) : ℝ)⁻¹)) (q - 1)
   have hsplit :
       ∑ n ∈ range q, F (n : ZMod q) = F 0 + ∑ n ∈ range (q - 1), F ((n + 1 : ℕ) : ZMod q) := by
-    have hsplit0 :
-        ∑ n ∈ range q, F (n : ZMod q) =
-          ∑ n ∈ range (q - 1), F ((n + 1 : ℕ) : ZMod q) + F ((0 : ℕ) : ZMod q) := by
-      have hq' : q - 1 + 1 = q := Nat.sub_add_cancel (Nat.one_le_of_lt hq)
-      simpa [hq'] using
-        (Finset.sum_range_succ' (f := fun n : ℕ => F (n : ZMod q)) (q - 1))
-    have hsplit0' :
-        ∑ n ∈ range q, F (n : ZMod q) =
-          ∑ n ∈ range (q - 1), F ((n + 1 : ℕ) : ZMod q) + F (0 : ZMod q) := by
-      simpa only [Nat.cast_zero] using hsplit0
-    calc
-      ∑ n ∈ range q, F (n : ZMod q)
-      _ = ∑ n ∈ range (q - 1), F ((n + 1 : ℕ) : ZMod q) + F 0 := hsplit0'
-      _ = F 0 + ∑ n ∈ range (q - 1), F ((n + 1 : ℕ) : ZMod q) := by ring
+    simpa only [Nat.sub_add_cancel (Nat.one_le_of_lt hq), Nat.cast_zero, add_comm] using
+      (Finset.sum_range_succ' (f := fun n : ℕ => F (n : ZMod q)) (q - 1))
   calc
     ∑ j : ZMod q, F j = ∑ n ∈ range q, F (n : ZMod q) := sum_univ_zmod_eq_sum_range (q := q) F
     _ = F 0 + ∑ n ∈ range (q - 1), F ((n + 1 : ℕ) : ZMod q) := hsplit
@@ -369,9 +334,8 @@ theorem IsPrimitive.norm_LFunction_one_sub_harmonic_sum_le_eight_mul_sqrt_q_mul_
   have htail :=
     norm_LFunction_one_sub_harmonic_sum_le_of_prefix_bound
       χ hχne (4 * Real.sqrt q * (1 + Real.log q)) hprefix hm
-  ring_nf at htail
-  simpa [div_eq_mul_inv, mul_add, add_mul, mul_assoc, mul_left_comm, mul_comm,
-    add_comm, add_left_comm, add_assoc] using htail
+  convert htail using 1
+  ring
 
 /-- Real quadratic truncation form of the same explicit harmonic-tail bound. -/
 theorem IsPrimitive.abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_eight_mul_sqrt_q_mul_one_add_log_div
@@ -385,8 +349,7 @@ theorem IsPrimitive.abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_eigh
   have htail :=
     abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_of_prefix_bound
       χ hχne (4 * Real.sqrt q * (1 + Real.log q)) hprefix hm
-  ring_nf at htail
-  simpa [div_eq_mul_inv, mul_add, add_mul, mul_assoc, mul_left_comm, mul_comm,
-    add_comm, add_left_comm, add_assoc] using htail
+  convert htail using 1
+  ring
 
 end DirichletCharacter

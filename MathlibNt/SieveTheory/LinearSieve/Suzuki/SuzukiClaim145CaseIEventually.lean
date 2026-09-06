@@ -45,37 +45,9 @@ theorem lemma8_7_qD_of_claim14_6_i_ii_direct_iii
       (1 - 1 / σ) ^ (1 - Δ) * errorEnvelope H N D d s +
         (6 * K ^ 2 * qD H (ErrorSign.ofDepth N).opposite D d Δ τ /
           Real.log w) * (τ / s) := by
-  let sign := ErrorSign.ofDepth N
-  have h87 := lemma8_7_qD_of_claim14_6_ii (S := S) (H := H) (sign := sign)
-    hH hD hz2 hv2 hw2 hwv hvz hz hv hw hτ hτσ hK hlocal hii
-  have hτdom : τ ∈ Icc (H.betaHat + sign.epsilon) σ := ⟨hτ.le, hτσ⟩
-  have hsdom : s ∈ Icc (H.betaHat + sign.epsilon) σ :=
-    ⟨hβs, hsτ.trans hτσ⟩
-  have hlam : lambda H sign D d 0 τ ≤ lambda H sign D d 0 s :=
-    hi sign 0 (Or.inl rfl) hsdom hτdom hsτ
-  have hσ1 : 1 < σ := by
-    have heps : 0 ≤ sign.epsilon := by cases sign <;> simp [ErrorSign.epsilon]
-    rw [hH.betaHat_eq] at hτ
-    linarith [hH.beta_gt_one]
-  have hcut0 : 0 ≤ (1 - 1 / σ) ^ (1 - Δ) := by
-    apply Real.rpow_nonneg
-    have hσ0 : 0 < σ := zero_lt_one.trans hσ1
-    exact (sub_pos.mpr ((div_lt_one hσ0).mpr hσ1)).le
-  have hint : (∫ t in τ..σ, qD H sign.opposite D d Δ t) <
-      (1 - 1 / σ) ^ (1 - Δ) * lambda H sign D d 0 s :=
-    hiiiτ.trans_le (mul_le_mul_of_nonneg_left hlam hcut0)
-  have hscaled := mul_lt_mul_of_pos_left hint (one_div_pos.mpr hs)
-  have hscaled' : (1 / s) * (∫ t in τ..σ, qD H sign.opposite D d Δ t) <
-      (1 - 1 / σ) ^ (1 - Δ) * errorEnvelope H N D d s := by
-    calc
-      (1 / s) * (∫ t in τ..σ, qD H sign.opposite D d Δ t) <
-          (1 / s) * ((1 - 1 / σ) ^ (1 - Δ) * lambda H sign D d 0 s) := hscaled
-      _ = (1 - 1 / σ) ^ (1 - Δ) * errorEnvelope H N D d s := by
-        dsimp [sign]
-        rw [← one_div_mul_lambda_eq_errorEnvelope H hs]
-        ring
-  dsimp [sign] at h87 hscaled' ⊢
-  exact h87.trans_lt (by nlinarith [hscaled'])
+  exact lemma8_7_qD_of_claim14_6_i_ii_iii
+    hH hD hz2 hv2 hw2 hwv hvz hz hv hw
+    hτ hβs hsτ hτσ hs hK hlocal hi hii hiiiτ
 
 /-- Eventual Case-I form of (14.18), with no Claim 14.6 premise.  All sieve
 geometry and the dimension-one local Euler-product hypothesis remain explicit

@@ -148,7 +148,7 @@ theorem liuMainPanCoprimeSum_eq_sourceFaithfulSigned
       liuPanSignedCorrectionSum y X q l f =
         panSignedCorrectionSum y X q l f := rfl
   rw [hdiff, hproxy, hcorr]
-  linarith [hmain]
+  linarith only [hmain]
 
 theorem abs_liuPanSignedCorrectionSum_le
     (y X q l : ℕ) (f : ℕ → ℝ) :
@@ -188,15 +188,11 @@ theorem abs_liuMainPanCoprimeSum_le_sourceFaithfulSigned
       |a + b + c - d| ≤ |a| + |b| + (|c| + |d|) := by
     intro a b c d
     calc
-      |a + b + c - d| ≤ |a + b| + |c - d| := by
-        have heq : a + b + c - d = (a + b) + (c - d) := by ring
-        rw [heq]
-        exact abs_add_le _ _
-      _ ≤ (|a| + |b|) + (|c| + |d|) := by
-        gcongr
-        · exact abs_add_le _ _
-        · simpa [sub_eq_add_neg, abs_neg] using abs_add_le c (-d)
-      _ = |a| + |b| + (|c| + |d|) := by ring
+      |a + b + c - d| = |(a + b) + (c - d)| := by rw [add_sub_assoc]
+      _ ≤ |a + b| + |c - d| := abs_add_le _ _
+      _ ≤ |a| + |b| + (|c| + |d|) := by
+        simpa only [sub_eq_add_neg, abs_neg] using
+          add_le_add (abs_add_le a b) (abs_add_le c (-d))
   exact (htri _ _ _ _).trans (by
     gcongr
     exact abs_liuPanSignedCorrectionSum_le y X q l f)
@@ -291,7 +287,7 @@ private theorem liuPanScoreMaxL_le_three
     have h₃ := Finset.le_max'
       ((unitResidues q).image t₃) (t₃ l)
       (Finset.mem_image.mpr ⟨l, hl, rfl⟩)
-    linarith [h l hcop]
+    exact (h l hcop).trans (add_le_add (add_le_add h₁ h₂) h₃)
   · simp [hS]
 
 private theorem liuPanScoreMaxY_le_three
@@ -315,7 +311,7 @@ private theorem liuPanScoreMaxY_le_three
   have h₃ := Finset.le_max'
     ((range (x + 1)).image (fun y => liuPanScoreMaxL q (t₃ y)))
     (liuPanScoreMaxL q (t₃ y)) (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
-  linarith
+  exact hpoint.trans (add_le_add (add_le_add h₁ h₂) h₃)
 
 /-- Maximal pointwise signed decomposition for the arbitrary distribution main. -/
 theorem liuMainPanMaxY_le_sourceFaithfulSigned
@@ -466,17 +462,11 @@ theorem LiuMainPanMeanValueUniform.of_sourceFaithfulSignedInputs
         ∑ q ∈ range (Q + 1), w q * (pI q + pII q + pM q) := by
       apply Finset.sum_le_sum
       intro q hq
-      by_cases hq0 : q = 0
-      · subst q
-        have hμ : (ArithmeticFunction.moebius 0 : ℤ) = 0 :=
-          ArithmeticFunction.moebius_eq_zero_of_not_squarefree
-            not_squarefree_zero
-        simp [w, hμ]
-      · exact mul_le_mul_of_nonneg_left
-          (by simpa [pI, pII, pM] using
-            (liuMainPanMaxY_le_sourceFaithfulSigned
-              distMain X q (Nat.floor (x X)) f u v hf0))
-          (hw q)
+      exact mul_le_mul_of_nonneg_left
+        (by simpa [pI, pII, pM] using
+          (liuMainPanMaxY_le_sourceFaithfulSigned
+            distMain X q (Nat.floor (x X)) f u v hf0))
+        (hw q)
     _ = (∑ q ∈ range (Q + 1), w q * pI q) +
           (∑ q ∈ range (Q + 1), w q * pII q) +
           (∑ q ∈ range (Q + 1), w q * pM q) := by
@@ -556,16 +546,10 @@ theorem liuMainPanMeanValueAt_of_concreteSignedInputs
           w q * (pI q + pII q + pM q) := by
       apply Finset.sum_le_sum
       intro q hq
-      by_cases hq0 : q = 0
-      · subst q
-        have hμ : (ArithmeticFunction.moebius 0 : ℤ) = 0 :=
-          ArithmeticFunction.moebius_eq_zero_of_not_squarefree
-            not_squarefree_zero
-        simp [w, hμ]
-      · exact mul_le_mul_of_nonneg_left
-          (by simpa [pI, pII, pM] using
-            (liuMainPanMaxY_le_sourceFaithfulSigned distMain N q N f u v hf0))
-          (hw q)
+      exact mul_le_mul_of_nonneg_left
+        (by simpa [pI, pII, pM] using
+          (liuMainPanMaxY_le_sourceFaithfulSigned distMain N q N f u v hf0))
+        (hw q)
     _ = (∑ q ∈ range (panModulusCutoff N B + 1), w q * pI q) +
           (∑ q ∈ range (panModulusCutoff N B + 1), w q * pII q) +
           (∑ q ∈ range (panModulusCutoff N B + 1), w q * pM q) := by

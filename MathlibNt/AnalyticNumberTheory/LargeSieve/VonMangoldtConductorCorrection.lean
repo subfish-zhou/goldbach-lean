@@ -128,31 +128,20 @@ theorem vonMangoldt_changeLevelError_norm_le
       have := (Finset.mem_Icc.mp hn).1
       omega
     have hnpos : 0 < n.toNat := by
-      rw [Nat.pos_iff_ne_zero]
-      intro hz
-      have hncast := Int.toNat_of_nonneg hn0
-      rw [hz] at hncast
       have hn1 := (Finset.mem_Icc.mp hn).1
       omega
     have hnN : n.toNat ≤ N := Int.toNat_le.mpr (Finset.mem_Icc.mp hn).2
     have hΛ0 := ArithmeticFunction.vonMangoldt_nonneg (n := n.toNat)
     have hΛN : ArithmeticFunction.vonMangoldt n.toNat ≤ Real.log (N : ℝ) := by
-      apply ArithmeticFunction.vonMangoldt_le_log.trans
-      apply Real.strictMonoOn_log.monotoneOn
-      · simp only [Set.mem_Ioi]
-        exact_mod_cast hnpos
-      · simp only [Set.mem_Ioi]
-        exact_mod_cast (show 0 < N by
-          have h1 := (Finset.mem_Icc.mp hn).1
-          have h2 := (Finset.mem_Icc.mp hn).2
-          omega)
-      · exact_mod_cast hnN
+      exact ArithmeticFunction.vonMangoldt_le_log.trans
+        (Real.log_le_log (by exact_mod_cast hnpos) (by exact_mod_cast hnN))
     have he := conductorChangeLevelError_norm_sq_le χ vonMangoldtIntegerCoeff n
     have hb : ‖vonMangoldtIntegerCoeff n‖ =
         ArithmeticFunction.vonMangoldt n.toNat := by
       simp [vonMangoldtIntegerCoeff, abs_of_nonneg hΛ0]
     rw [hb] at he
-    nlinarith [norm_nonneg (conductorChangeLevelError χ vonMangoldtIntegerCoeff n)]
+    nlinarith only [he, hΛ0, hΛN,
+      norm_nonneg (conductorChangeLevelError χ vonMangoldtIntegerCoeff n)]
   · rw [if_neg hbad]
     have hm := Finset.mem_Icc.mp hn
     simp only [mem_vonMangoldtBadSupport, hm.1, hm.2, true_and] at hbad
@@ -323,7 +312,7 @@ theorem weighted_allCharacter_nonprincipal_vonMangoldt_prefix_ledger
           ring_nf
         _ = _ := by rw [hgroup]
     _ ≤ _ := by
-      nlinarith [herr]
+      nlinarith only [herr]
 
 end
 

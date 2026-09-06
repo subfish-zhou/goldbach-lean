@@ -92,30 +92,10 @@ only on the compact interval actually traversed. -/
 lemma continuousOn_integral_to_const {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (hf : ContinuousOn f (Set.Icc a b)) :
     ContinuousOn (fun x => ∫ t in x..b, f t) (Set.Icc a b) := by
-  have hInt : IntegrableOn f (Set.Icc a b) := hf.integrableOn_Icc
-  have hp := intervalIntegral.continuousOn_primitive hInt
-  have hprim : ContinuousOn (fun x => ∫ t in a..x, f t) (Set.Icc a b) := by
-    apply hp.congr
-    intro x hx
-    change (∫ t in a..x, f t) = ∫ t in Set.Ioc a x, f t
-    rw [intervalIntegral.integral_of_le hx.1]
-  have htotal : ContinuousOn (fun _x : ℝ => ∫ t in a..b, f t) (Set.Icc a b) :=
-    continuousOn_const
-  apply (htotal.sub hprim).congr
-  intro x hx
-  have habInt : IntervalIntegrable f MeasureTheory.volume a b := by
-    apply ContinuousOn.intervalIntegrable
-    rwa [Set.uIcc_of_le hab]
-  have haxInt : IntervalIntegrable f MeasureTheory.volume a x :=
-    habInt.mono_set (by
-      rw [Set.uIcc_of_le hab, Set.uIcc_of_le hx.1]
-      exact Set.Icc_subset_Icc_right hx.2)
-  change (∫ t in x..b, f t) = (∫ t in a..b, f t) - ∫ t in a..x, f t
-  rw [eq_sub_iff_add_eq]
-  simpa [add_comm] using intervalIntegral.integral_add_adjacent_intervals haxInt
-    (habInt.mono_set (by
-      rw [Set.uIcc_of_le hab, Set.uIcc_of_le hx.2]
-      exact Set.Icc_subset_Icc_left hx.1))
+  have hInt : IntegrableOn f (Set.uIcc a b) := by
+    simpa only [Set.uIcc_of_le hab] using hf.integrableOn_Icc
+  simpa only [Set.uIcc_of_le hab] using
+    intervalIntegral.continuousOn_primitive_interval_left hInt
 
 structure Regular (β : ℝ) (n : ℕ) : Prop where
   continuous : ContinuousOn (layer β n) (closedDomain β n)

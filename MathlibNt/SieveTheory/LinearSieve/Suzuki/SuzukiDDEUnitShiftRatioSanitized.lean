@@ -133,8 +133,7 @@ theorem section13Hat_unitShift_forward
   have hβ : 2 + sign.epsilon ≤ 3 := by
     cases sign <;> norm_num [ErrorSign.epsilon]
   have hsβ : 2 + sign.epsilon ≤ s := hβ.trans (by linarith)
-  have hsmβ : 2 + sign.epsilon ≤ s - 1 := by
-    cases sign <;> norm_num [ErrorSign.epsilon] <;> linarith
+  have hsmβ : 2 + sign.epsilon ≤ s - 1 := hβ.trans (by linarith)
   have hq := section10_unitShift_forward (s := s) B.dde Q hβ (by linarith)
   have hK0 : 0 ≤ B.K := zero_le_one.trans B.one_le_K
   have hcoef0 : 0 ≤ Q.A / (s * Real.log (Real.exp 1 * s)) :=
@@ -202,35 +201,20 @@ theorem section13HatAsymptoticContract_of_section10
   have hTM1 : 0 ≤ H.T sign (M + 1) :=
     (hH.positive sign (M + 1) (by linarith)).le
   have hL : 0 < Real.log (Real.exp 1 * M) := log_e_mul_pos (by linarith)
-  have hlog1 : Real.log (Real.exp 1 * M) ≤
-      Real.log (Real.exp 1 * (M + 1)) := by
-    exact Real.log_le_log (by positivity) (by gcongr; linarith)
-  have hlog2 : Real.log (Real.exp 1 * M) ≤
-      Real.log (Real.exp 1 * (M + 2)) := by
-    exact Real.log_le_log (by positivity) (by gcongr; linarith)
-  have hd1 : M * Real.log (Real.exp 1 * M) ≤
-      (M + 1) * Real.log (Real.exp 1 * (M + 1)) :=
-    mul_le_mul (by linarith) hlog1 hL.le (by linarith)
-  have hd2 : M * Real.log (Real.exp 1 * M) ≤
-      (M + 2) * Real.log (Real.exp 1 * (M + 2)) :=
-    mul_le_mul (by linarith) hlog2 hL.le (by linarith)
   have hd0 : 0 < M * Real.log (Real.exp 1 * M) := mul_pos hM0 hL
-  have hc1 : E / ((M + 1) * Real.log (Real.exp 1 * (M + 1))) ≤
-      A / (M * Real.log (Real.exp 1 * M)) := by
-    calc
-      E / ((M + 1) * Real.log (Real.exp 1 * (M + 1))) ≤
-          E / (M * Real.log (Real.exp 1 * M)) :=
-        div_le_div_of_nonneg_left hE0 hd0 hd1
-      _ ≤ A / (M * Real.log (Real.exp 1 * M)) :=
-        div_le_div_of_nonneg_right hEA hd0.le
-  have hc2 : E / ((M + 2) * Real.log (Real.exp 1 * (M + 2))) ≤
-      A / (M * Real.log (Real.exp 1 * M)) := by
-    calc
-      E / ((M + 2) * Real.log (Real.exp 1 * (M + 2))) ≤
-          E / (M * Real.log (Real.exp 1 * M)) :=
-        div_le_div_of_nonneg_left hE0 hd0 hd2
-      _ ≤ A / (M * Real.log (Real.exp 1 * M)) :=
-        div_le_div_of_nonneg_right hEA hd0.le
+  have hcoef (shifted : ℝ) (hshift : M ≤ shifted) :
+      E / (shifted * Real.log (Real.exp 1 * shifted)) ≤
+        A / (M * Real.log (Real.exp 1 * M)) := by
+    have hlog : Real.log (Real.exp 1 * M) ≤ Real.log (Real.exp 1 * shifted) :=
+      Real.log_le_log (by positivity)
+        (mul_le_mul_of_nonneg_left hshift (Real.exp_pos 1).le)
+    have hden : M * Real.log (Real.exp 1 * M) ≤
+        shifted * Real.log (Real.exp 1 * shifted) :=
+      mul_le_mul hshift hlog hL.le (hM0.le.trans hshift)
+    exact (div_le_div_of_nonneg_left hE0 hd0 hden).trans
+      (div_le_div_of_nonneg_right hEA hd0.le)
+  have hc1 := hcoef (M + 1) (by linarith)
+  have hc2 := hcoef (M + 2) (by linarith)
   have hc0 : 0 ≤ A / (M * Real.log (Real.exp 1 * M)) := div_nonneg hA0 hd0.le
   have h1' : H.T sign (M + 1) ≤
       (A / (M * Real.log (Real.exp 1 * M))) * H.T sign M :=

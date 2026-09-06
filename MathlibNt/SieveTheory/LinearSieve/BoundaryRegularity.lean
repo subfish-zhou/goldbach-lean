@@ -248,6 +248,39 @@ theorem integrableOn_upperRosserBoundaryMassAux_compactBox
   exact upperRosserBoundaryMassAux_le_of_lower_bound
     k hc hp.1.2.1 hp.2.2
 
+/-- Uniform norm bound for the inner integral, shared by integrability and
+dominated-convergence arguments. -/
+private theorem norm_integral_inv_mul_upperRosserBoundaryMassAux_le
+    (k : ℕ) {s a x₀ : ℝ} (ha : 0 < a) (hx₀ : x₀ ≤ 1) :
+    ‖∫ x₁ in Set.Ioo a x₀,
+        x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁‖ ≤
+      a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
+  calc
+    ‖∫ x₁ in Set.Ioo a x₀,
+        x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁‖ ≤
+        (a⁻¹ * (a⁻¹ * a⁻¹) ^ k) *
+          MeasureTheory.volume.real (Set.Ioo a x₀) := by
+      apply MeasureTheory.norm_setIntegral_le_of_norm_le_const_ae
+      · rw [Real.volume_Ioo]
+        exact ENNReal.ofReal_lt_top
+      · filter_upwards
+          [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
+        have hx₁pos : 0 < x₁ := ha.trans hx₁.1
+        have hx₁inv : x₁⁻¹ ≤ a⁻¹ :=
+          (inv_le_inv₀ hx₁pos ha).2 hx₁.1.le
+        have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow k
+          (s := s - x₀ - x₁) ha (hx₁.2.le.trans hx₀)
+        rw [Real.norm_eq_abs, abs_of_nonneg
+          (mul_nonneg (inv_nonneg.mpr hx₁pos.le)
+            (upperRosserBoundaryMassAux_nonneg k ha.le))]
+        exact mul_le_mul hx₁inv hmass
+          (upperRosserBoundaryMassAux_nonneg k ha.le) (inv_nonneg.mpr ha.le)
+    _ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k :=
+      mul_le_of_le_one_right
+        (mul_nonneg (inv_nonneg.mpr ha.le)
+          (pow_nonneg (mul_nonneg (inv_nonneg.mpr ha.le)
+            (inv_nonneg.mpr ha.le)) k)) (volume_Ioo_real_le_one ha hx₀)
+
 /-- The complete outer integrand in one recursive Rosser step is integrable on
 every positive screened interval. -/
 theorem integrableOn_outer_integrand_upperRosserBoundaryMassAux
@@ -278,40 +311,8 @@ theorem integrableOn_outer_integrand_upperRosserBoundaryMassAux
   have hx₀pos : 0 < x₀ := ha.trans hx₀.1
   have hx₀inv : x₀⁻¹ ≤ a⁻¹ := (inv_le_inv₀ hx₀pos ha).2 hx₀.1.le
   have hx₀upper : x₀ ≤ 1 := hx₀.2.le.trans hb
-  have hinnerNorm :
-      ‖∫ x₁ in Set.Ioo a x₀,
-          x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁‖ ≤
-        a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
-    calc
-      ‖∫ x₁ in Set.Ioo a x₀,
-          x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁‖ ≤
-          (a⁻¹ * (a⁻¹ * a⁻¹) ^ k) *
-            MeasureTheory.volume.real (Set.Ioo a x₀) := by
-        apply MeasureTheory.norm_setIntegral_le_of_norm_le_const_ae
-        · rw [Real.volume_Ioo]
-          exact ENNReal.ofReal_lt_top
-        · filter_upwards
-            [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
-          have hx₁pos : 0 < x₁ := ha.trans hx₁.1
-          have hx₁inv : x₁⁻¹ ≤ a⁻¹ := (inv_le_inv₀ hx₁pos ha).2 hx₁.1.le
-          have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow k
-            (s := s - x₀ - x₁) (a := a) (b := x₁) ha
-            (hx₁.2.le.trans hx₀upper)
-          rw [Real.norm_eq_abs, abs_of_nonneg
-            (mul_nonneg (inv_nonneg.mpr hx₁pos.le)
-              (upperRosserBoundaryMassAux_nonneg k ha.le))]
-          exact (mul_le_mul_of_nonneg_right hx₁inv
-            (upperRosserBoundaryMassAux_nonneg k ha.le)).trans
-            (mul_le_mul_of_nonneg_left hmass (inv_nonneg.mpr ha.le))
-      _ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
-        have hvol : MeasureTheory.volume.real (Set.Ioo a x₀) ≤ 1 := by
-          rw [MeasureTheory.Measure.real_def, Real.volume_Ioo,
-            ENNReal.toReal_ofReal (sub_nonneg.mpr hx₀.1.le)]
-          linarith
-        exact mul_le_of_le_one_right
-          (mul_nonneg (inv_nonneg.mpr ha.le)
-            (pow_nonneg (mul_nonneg (inv_nonneg.mpr ha.le)
-              (inv_nonneg.mpr ha.le)) k)) hvol
+  have hinnerNorm :=
+    norm_integral_inv_mul_upperRosserBoundaryMassAux_le k (s := s) ha hx₀upper
   rw [Real.norm_eq_abs, abs_mul, abs_of_pos (inv_pos.mpr hx₀pos)]
   calc
     x₀⁻¹ * ‖∫ x₁ in Set.Ioo a x₀,
@@ -329,41 +330,7 @@ theorem integral_inv_mul_upperRosserBoundaryMassAux_le
     (∫ x₁ in Set.Ioo a x₀,
      x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁) ≤
      a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
-  have hnorm :
-     ‖∫ x₁ in Set.Ioo a x₀,
-         x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁‖ ≤
-       a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
-    calc
-     ‖∫ x₁ in Set.Ioo a x₀,
-         x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁‖ ≤
-         (a⁻¹ * (a⁻¹ * a⁻¹) ^ k) *
-           MeasureTheory.volume.real (Set.Ioo a x₀) := by
-       apply MeasureTheory.norm_setIntegral_le_of_norm_le_const_ae
-       · rw [Real.volume_Ioo]
-         exact ENNReal.ofReal_lt_top
-       · filter_upwards
-           [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
-         have hx₁pos : 0 < x₁ := ha.trans hx₁.1
-         have hx₁inv : x₁⁻¹ ≤ a⁻¹ :=
-           (inv_le_inv₀ hx₁pos ha).2 hx₁.1.le
-         have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow k
-           (s := s - x₀ - x₁) ha (hx₁.2.le.trans hx₀)
-         rw [Real.norm_eq_abs, abs_of_nonneg
-           (mul_nonneg (inv_nonneg.mpr hx₁pos.le)
-             (upperRosserBoundaryMassAux_nonneg k ha.le))]
-         exact mul_le_mul hx₁inv hmass
-           (upperRosserBoundaryMassAux_nonneg k ha.le) (inv_nonneg.mpr ha.le)
-     _ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
-       have hvol : MeasureTheory.volume.real (Set.Ioo a x₀) ≤ 1 := by
-         rw [MeasureTheory.Measure.real_def, Real.volume_Ioo]
-         by_cases hsub : 0 ≤ x₀ - a
-         · rw [ENNReal.toReal_ofReal hsub]
-           linarith
-         · simp [ENNReal.ofReal_eq_zero.mpr (not_le.mp hsub).le]
-       exact mul_le_of_le_one_right
-         (mul_nonneg (inv_nonneg.mpr ha.le)
-           (pow_nonneg (mul_nonneg (inv_nonneg.mpr ha.le)
-             (inv_nonneg.mpr ha.le)) k)) hvol
+  have hnorm := norm_integral_inv_mul_upperRosserBoundaryMassAux_le k (s := s) ha hx₀
   rw [Real.norm_eq_abs] at hnorm
   exact (le_abs_self _).trans hnorm
 
@@ -794,35 +761,8 @@ theorem continuousAt_upperRosserBoundaryMassAux_succ_level_of_ae
         have hx₀inv : x₀⁻¹ ≤ a⁻¹ := (inv_le_inv₀ hx₀pos ha).2 hx₀.1.le
         have hx₀upper : x₀ ≤ 1 := hx₀.2.le.trans hb
         have hinnerNorm :
-            ‖inner t x₀‖ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k := by
-          dsimp [inner]
-          calc
-            ‖∫ x₁ in Set.Ioo a x₀,
-                x₁⁻¹ * upperRosserBoundaryMassAux k (t - x₀ - x₁) a x₁‖ ≤
-                (a⁻¹ * (a⁻¹ * a⁻¹) ^ k) *
-                  MeasureTheory.volume.real (Set.Ioo a x₀) := by
-              apply MeasureTheory.norm_setIntegral_le_of_norm_le_const_ae
-              · rw [Real.volume_Ioo]
-                exact ENNReal.ofReal_lt_top
-              · filter_upwards
-                  [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
-                have hx₁pos : 0 < x₁ := ha.trans hx₁.1
-                have hx₁inv : x₁⁻¹ ≤ a⁻¹ :=
-                  (inv_le_inv₀ hx₁pos ha).2 hx₁.1.le
-                have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow k
-                  (s := t - x₀ - x₁) ha (hx₁.2.le.trans hx₀upper)
-                rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg
-                  (inv_nonneg.mpr hx₁pos.le)
-                  (upperRosserBoundaryMassAux_nonneg k ha.le))]
-                exact mul_le_mul hx₁inv hmass
-                  (upperRosserBoundaryMassAux_nonneg k ha.le)
-                  (inv_nonneg.mpr ha.le)
-            _ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k :=
-              mul_le_of_le_one_right
-                (mul_nonneg (inv_nonneg.mpr ha.le)
-                  (pow_nonneg (mul_nonneg (inv_nonneg.mpr ha.le)
-                    (inv_nonneg.mpr ha.le)) k))
-                (volume_Ioo_real_le_one ha hx₀upper)
+            ‖inner t x₀‖ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k :=
+          norm_integral_inv_mul_upperRosserBoundaryMassAux_le k (s := t) ha hx₀upper
         rw [Real.norm_eq_abs, abs_mul, abs_of_pos (inv_pos.mpr hx₀pos)]
         calc
           x₀⁻¹ * ‖inner t x₀‖ ≤

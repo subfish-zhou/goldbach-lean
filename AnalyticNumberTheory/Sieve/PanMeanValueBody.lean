@@ -205,21 +205,8 @@ theorem panDistributionSum_eq_weighted (y X q l : ℕ) (f : ℕ → ℝ) :
   unfold panDistributionSum
   have hrange : Finset.range (X + 1) = insert 0 (Finset.Icc 1 X) := by
     ext a
-    constructor
-    · intro ha
-      rw [Finset.mem_insert]
-      by_cases ha0 : a = 0
-      · exact Or.inl ha0
-      · have hpos : 0 < a := Nat.pos_of_ne_zero ha0
-        have haX : a ≤ X := Nat.lt_succ_iff.mp (Finset.mem_range.mp ha)
-        exact Or.inr (Finset.mem_Icc.mpr ⟨hpos, haX⟩)
-    · intro ha
-      rw [Finset.mem_insert] at ha
-      rcases ha with rfl | haIcc
-      · simp
-      · have hmem := Finset.mem_Icc.mp haIcc
-        rw [Finset.mem_range]
-        exact Nat.lt_succ_of_le hmem.2
+    simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Icc]
+    omega
   rw [hrange, Finset.sum_insert (by simp)]
   congr 1
   apply Finset.sum_congr rfl
@@ -481,65 +468,29 @@ for unit `l`, directly from `charSum_ap`. -/
 theorem apV1_charSum {q y u : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod q)) :
     (apV1 y q l u : ℂ) = (Nat.totient q : ℂ)⁻¹ *
       ∑ χ : DirichletCharacter ℂ q, star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ := by
-  unfold apV1 panTypeIV1CharSum
-  have hcast : ((∑ n ∈ Finset.range (y + 1),
-        (if n ≡ l [MOD q] then vaughanFirst n u else 0) : ℝ) : ℂ) =
-      ∑ n ∈ Finset.range (y + 1),
-        (vaughanFirst n u : ℂ) * (if n ≡ l [MOD q] then 1 else 0) := by
-    calc
-      ((∑ n ∈ Finset.range (y + 1),
-          (if n ≡ l [MOD q] then vaughanFirst n u else 0) : ℝ) : ℂ)
-          = ∑ n ∈ Finset.range (y + 1),
-              ((if n ≡ l [MOD q] then vaughanFirst n u else 0 : ℝ) : ℂ) := by
-            exact map_sum Complex.ofRealHom
-              (fun n => (if n ≡ l [MOD q] then vaughanFirst n u else 0 : ℝ)) (Finset.range (y + 1))
-      _ = ∑ n ∈ Finset.range (y + 1),
-            (vaughanFirst n u : ℂ) * (if n ≡ l [MOD q] then 1 else 0) := by
-          apply Finset.sum_congr rfl
-          intro n hn
-          by_cases hmod : n ≡ l [MOD q] <;> simp [hmod]
-  rw [hcast]
-  exact AnalyticNumberTheory.LargeSieve.charSum_ap hq hl (fun n : ℕ => (vaughanFirst n u : ℂ)) y
+  simpa only [apV1, panTypeIV1CharSum, Complex.ofReal_sum, apply_ite,
+    Complex.ofReal_zero, mul_ite, mul_one, mul_zero] using
+    AnalyticNumberTheory.LargeSieve.charSum_ap hq hl
+      (fun n : ℕ => (vaughanFirst n u : ℂ)) y
 
 /-- Pointwise bound for unit `l`:
 `|apV1 y q l u| ≤ φ(q)⁻¹·Σ_χ ‖V_χ(y,u)‖`. -/
 theorem apV1_abs_le {q y u : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod q)) :
     |apV1 y q l u| ≤ (Nat.totient q : ℝ)⁻¹ *
       ∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum q y u χ‖ := by
-  have hnorm : ‖(apV1 y q l u : ℂ)‖ = |apV1 y q l u| := by
-    exact RCLike.norm_ofReal (apV1 y q l u)
-  rw [← hnorm]
-  rw [apV1_charSum hq hl]
+  have hnorm : ‖(apV1 y q l u : ℂ)‖ = |apV1 y q l u| :=
+    RCLike.norm_ofReal _
+  rw [← hnorm, apV1_charSum hq hl, norm_mul, norm_inv, Complex.norm_natCast]
   calc
-    ‖(Nat.totient q : ℂ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
+    (Nat.totient q : ℝ)⁻¹ * ‖∑ χ : DirichletCharacter ℂ q,
         star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ‖
-        ≤ ‖(Nat.totient q : ℂ)⁻¹‖ * ‖∑ χ : DirichletCharacter ℂ q,
-            star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ‖ := by
-          exact norm_mul_le _ _
-    _ = (Nat.totient q : ℝ)⁻¹ * ‖∑ χ : DirichletCharacter ℂ q,
-            star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ‖ := by
-          congr 1
-          rw [norm_inv, Complex.norm_natCast]
-    _ ≤ (Nat.totient q : ℝ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
-          ‖star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ‖ := by
-          exact mul_le_mul_of_nonneg_left (norm_sum_le _ _)
-            (inv_nonneg.mpr (Nat.cast_nonneg (Nat.totient q)))
-    _ ≤ (Nat.totient q : ℝ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
-          ‖panTypeIV1CharSum q y u χ‖ := by
-          exact mul_le_mul_of_nonneg_left
-            (by
-              apply Finset.sum_le_sum
-              intro χ hχ
-              calc
-                ‖star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ‖
-                    ≤ ‖star (χ (l : ZMod q))‖ * ‖panTypeIV1CharSum q y u χ‖ := norm_mul_le _ _
-                _ = ‖χ (l : ZMod q)‖ * ‖panTypeIV1CharSum q y u χ‖ := by
-                      congr 1
-                      simpa using (Complex.norm_conj (χ (l : ZMod q)))
-                _ = ‖panTypeIV1CharSum q y u χ‖ := by
-                      rw [charValue_norm_eq_one hl]
-                      simp)
-            (inv_nonneg.mpr (Nat.cast_nonneg (Nat.totient q)))
+        ≤ (Nat.totient q : ℝ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
+            ‖star (χ (l : ZMod q)) * panTypeIV1CharSum q y u χ‖ :=
+          mul_le_mul_of_nonneg_left (norm_sum_le _ _)
+            (inv_nonneg.mpr (Nat.cast_nonneg _))
+    _ = (Nat.totient q : ℝ)⁻¹ *
+          ∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum q y u χ‖ := by
+          simp only [norm_mul, norm_star, charValue_norm_eq_one hl, one_mul]
 
 /-- The inverse representative of a unit `a` times a unit `l`
 is again a unit modulo `q`, as needed for the pointwise `apV1` bound. -/
@@ -1053,65 +1004,29 @@ for unit `l`, directly from `charSum_ap`. -/
 theorem apV3_charSum {q y u v : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod q)) :
     (apV3 y q l u v : ℂ) = (Nat.totient q : ℂ)⁻¹ *
       ∑ χ : DirichletCharacter ℂ q, star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ := by
-  unfold apV3 panTypeIIV3CharSum
-  have hcast : ((∑ n ∈ Finset.range (y + 1),
-        (if n ≡ l [MOD q] then vaughanThird n u v else 0) : ℝ) : ℂ) =
-      ∑ n ∈ Finset.range (y + 1),
-        (vaughanThird n u v : ℂ) * (if n ≡ l [MOD q] then 1 else 0) := by
-    calc
-      ((∑ n ∈ Finset.range (y + 1),
-          (if n ≡ l [MOD q] then vaughanThird n u v else 0) : ℝ) : ℂ)
-          = ∑ n ∈ Finset.range (y + 1),
-              ((if n ≡ l [MOD q] then vaughanThird n u v else 0 : ℝ) : ℂ) := by
-            exact map_sum Complex.ofRealHom
-              (fun n => (if n ≡ l [MOD q] then vaughanThird n u v else 0 : ℝ)) (Finset.range (y + 1))
-      _ = ∑ n ∈ Finset.range (y + 1),
-            (vaughanThird n u v : ℂ) * (if n ≡ l [MOD q] then 1 else 0) := by
-          apply Finset.sum_congr rfl
-          intro n hn
-          by_cases hmod : n ≡ l [MOD q] <;> simp [hmod]
-  rw [hcast]
-  exact AnalyticNumberTheory.LargeSieve.charSum_ap hq hl (fun n : ℕ => (vaughanThird n u v : ℂ)) y
+  simpa only [apV3, panTypeIIV3CharSum, Complex.ofReal_sum, apply_ite,
+    Complex.ofReal_zero, mul_ite, mul_one, mul_zero] using
+    AnalyticNumberTheory.LargeSieve.charSum_ap hq hl
+      (fun n : ℕ => (vaughanThird n u v : ℂ)) y
 
 /-- Pointwise bound for unit `l`:
 `|apV3 y q l u v| ≤ φ(q)⁻¹·Σ_χ ‖V_χ(y,u,v)‖`. -/
 theorem apV3_abs_le {q y u v : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod q)) :
     |apV3 y q l u v| ≤ (Nat.totient q : ℝ)⁻¹ *
       ∑ χ : DirichletCharacter ℂ q, ‖panTypeIIV3CharSum q y u v χ‖ := by
-  have hnorm : ‖(apV3 y q l u v : ℂ)‖ = |apV3 y q l u v| := by
-    exact RCLike.norm_ofReal (apV3 y q l u v)
-  rw [← hnorm]
-  rw [apV3_charSum hq hl]
+  have hnorm : ‖(apV3 y q l u v : ℂ)‖ = |apV3 y q l u v| :=
+    RCLike.norm_ofReal _
+  rw [← hnorm, apV3_charSum hq hl, norm_mul, norm_inv, Complex.norm_natCast]
   calc
-    ‖(Nat.totient q : ℂ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
+    (Nat.totient q : ℝ)⁻¹ * ‖∑ χ : DirichletCharacter ℂ q,
         star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ‖
-        ≤ ‖(Nat.totient q : ℂ)⁻¹‖ * ‖∑ χ : DirichletCharacter ℂ q,
-            star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ‖ := by
-          exact norm_mul_le _ _
-    _ = (Nat.totient q : ℝ)⁻¹ * ‖∑ χ : DirichletCharacter ℂ q,
-            star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ‖ := by
-          congr 1
-          rw [norm_inv, Complex.norm_natCast]
-    _ ≤ (Nat.totient q : ℝ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
-          ‖star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ‖ := by
-          exact mul_le_mul_of_nonneg_left (norm_sum_le _ _)
-            (inv_nonneg.mpr (Nat.cast_nonneg (Nat.totient q)))
-    _ ≤ (Nat.totient q : ℝ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
-          ‖panTypeIIV3CharSum q y u v χ‖ := by
-          exact mul_le_mul_of_nonneg_left
-            (by
-              apply Finset.sum_le_sum
-              intro χ hχ
-              calc
-                ‖star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ‖
-                    ≤ ‖star (χ (l : ZMod q))‖ * ‖panTypeIIV3CharSum q y u v χ‖ := norm_mul_le _ _
-                _ = ‖χ (l : ZMod q)‖ * ‖panTypeIIV3CharSum q y u v χ‖ := by
-                      congr 1
-                      simpa using (Complex.norm_conj (χ (l : ZMod q)))
-                _ = ‖panTypeIIV3CharSum q y u v χ‖ := by
-                      rw [charValue_norm_eq_one hl]
-                      simp)
-            (inv_nonneg.mpr (Nat.cast_nonneg (Nat.totient q)))
+        ≤ (Nat.totient q : ℝ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
+            ‖star (χ (l : ZMod q)) * panTypeIIV3CharSum q y u v χ‖ :=
+          mul_le_mul_of_nonneg_left (norm_sum_le _ _)
+            (inv_nonneg.mpr (Nat.cast_nonneg _))
+    _ = (Nat.totient q : ℝ)⁻¹ *
+          ∑ χ : DirichletCharacter ℂ q, ‖panTypeIIV3CharSum q y u v χ‖ := by
+          simp only [norm_mul, norm_star, charValue_norm_eq_one hl, one_mul]
 
 /-- **Type II character-mean expression**: for each `y`, the
 a-absorbed weighted piece reduces to
@@ -1397,7 +1312,7 @@ theorem panTypeIIMeanValueMaxY_le_charSqrtMeanMaxY (X q x : ℕ) (f : ℕ → �
 /-- Nonnegative weight: `μ²(q)·3^{ω(q)} ≥ 0`. -/
 theorem panTypeII_weight_nonneg (q : ℕ) :
     0 ≤ ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card := by
-  exact mul_nonneg (sq_nonneg _) (pow_nonneg (by norm_num) _)
+  exact AnalyticNumberTheory.Sieve.panTypeI_weight_nonneg q
 
 /-- Weighted per-modulus reduction:
 `w_q·M_q ≤ w_q·√φ(q)·W_q`; the weight is zero at `q = 0`. -/

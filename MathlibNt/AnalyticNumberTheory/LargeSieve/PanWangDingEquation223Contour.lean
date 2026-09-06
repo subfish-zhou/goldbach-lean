@@ -7,6 +7,8 @@ open Classical Complex Finset MeasureTheory Set Filter
 open scoped BigOperators Topology
 namespace AnalyticNumberTheory.LargeSieve
 
+/-! ## Source coefficients and the literal kernel -/
+
 /-- Equation (2.8), with the original coprimality restriction. -/
 def panSourceG (f : ℕ → ℂ) (m n : ℕ) : ℂ :=
   if Nat.Coprime n m then f n else 0
@@ -29,6 +31,8 @@ def panDyadicG {q : ℕ} (f : ℕ → ℂ) (m A₁ A₂ k : ℕ)
 def pan223Kernel {q : ℕ} (f : ℕ → ℂ) (m H y A₁ A₂ k : ℕ)
     (χ : PrimitiveCharacter q) (s : ℂ) : ℂ :=
   panDyadicG f m A₁ A₂ k χ s * panShortF₁ m H χ s * (y : ℂ) ^ s / s
+
+/-! ## Analyticity and the oriented rectangle identity -/
 
 theorem panFinitePolynomial_differentiable (S : Finset ℕ) (c : ℕ → ℂ)
     (hS : ∀ n ∈ S, 0 < n) :
@@ -58,10 +62,11 @@ theorem pan223Kernel_differentiableOn {q : ℕ} (f : ℕ → ℂ)
   intro s hs
   have hs0 : s ≠ 0 := by intro h; simp [h] at hs
   have hy0 : (y : ℂ) ≠ 0 := by exact_mod_cast hy.ne'
-  exact (((panDyadicG_differentiable f m A₁ A₂ k χ s).mul
-    (panShortF₁_differentiable m H χ s)).mul
-    (differentiableAt_id.const_cpow (Or.inl hy0))).div
-    differentiableAt_id hs0 |>.differentiableWithinAt
+  have hG := panDyadicG_differentiable f m A₁ A₂ k χ s
+  have hF := panShortF₁_differentiable m H χ s
+  have hpow : DifferentiableAt ℂ (fun z : ℂ => (y : ℂ) ^ z) s :=
+    differentiableAt_id.const_cpow (Or.inl hy0)
+  exact (((hG.mul hF).mul hpow).div differentiableAt_id hs0).differentiableWithinAt
 
 /-- Exact finite shift with actual `ds = i dt`. The top edge is traversed
 left-to-right and the bottom edge right-to-left in the difference. -/
@@ -76,11 +81,14 @@ theorem pan223_oriented_rectangle {q : ℕ} (f : ℕ → ℂ)
     (∫ u in (1 / 2 : ℝ)..α, pan223Kernel f m H y A₁ A₂ k χ (u + (-T) * I)) := by
   have hf := (pan223Kernel_differentiableOn f m H y A₁ A₂ k χ hy).mono
     (show {s : ℂ | 1 / 2 ≤ s.re ∧ s.re ≤ α ∧ |s.im| ≤ T} ⊆
-      {s : ℂ | 0 < s.re} from fun s hs => by dsimp; linarith [hs.1])
+      {s : ℂ | 0 < s.re} from
+        fun s hs => lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 2) hs.1)
   have hc := Eq21FiniteContour_rectangle_vertical_identity hα hT hf
   have hc' := congrArg (fun z : ℂ => I * z) hc
   rw [← mul_assoc, I_mul_I] at hc'
   simpa [mul_sub, chen1973HorizontalSection, sub_eq_add_neg, add_comm, mul_add] using hc'
+
+/-! ## Coefficient, half-sum, and horizontal pointwise bounds -/
 
 theorem panSourceG_norm_le (f : ℕ → ℂ) (hf : ∀ n, ‖f n‖ ≤ 1) (m n : ℕ) :
     ‖panSourceG f m n‖ ≤ 1 := by
@@ -164,6 +172,7 @@ theorem pan223_horizontal_pointwise {q : ℕ} (f : ℕ → ℂ) (hf : ∀ n, ‖
   have hF := panShortF₁_norm_le m H χ (u + t * I) (by simpa using hu)
   have hHN := panHalfSum_nonneg H
   have hAN := panHalfSum_nonneg A₂
+  have hGF := mul_le_mul hG hF (norm_nonneg _) hAN
   unfold pan223Kernel
   rw [norm_div, norm_mul, norm_mul, show (y : ℂ) = ((y : ℝ) : ℂ) by simp,
     Complex.norm_cpow_eq_rpow_re_of_pos hy0, hs]
@@ -171,13 +180,15 @@ theorem pan223_horizontal_pointwise {q : ℕ} (f : ℕ → ℂ) (hf : ∀ n, ‖
     _ ≤ (panHalfSum A₂ * panHalfSum H * (y : ℝ) ^ α) / T := by
       apply div_le_div₀ (by positivity)
       · apply mul_le_mul
-        · exact mul_le_mul hG hF (norm_nonneg _) (panHalfSum_nonneg _)
+        · exact hGF
         · exact Real.rpow_le_rpow_of_exponent_le hy1 huα
         · positivity
         · positivity
       · exact hT
       · exact hn
     _ = _ := by ring
+
+/-! ## Integrability and the finite-shift estimate -/
 
 /-- Both vertical sections are genuine finite integrals. -/
 theorem pan223_vertical_integrable {q : ℕ} (f : ℕ → ℂ)
@@ -188,8 +199,7 @@ theorem pan223_vertical_integrable {q : ℕ} (f : ℕ → ℂ)
   apply Eq21FiniteContour_vertical_intervalIntegrable hT hv
   apply (pan223Kernel_differentiableOn f m H y A₁ A₂ k χ hy).continuousOn.mono
   intro s hs
-  dsimp at hs ⊢
-  linarith [hs.1]
+  exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 2) hs.1
 
 /-- Both horizontal integrals exist independently of the contour identity. -/
 theorem pan223_horizontal_integrable {q : ℕ} (f : ℕ → ℂ)
@@ -200,8 +210,7 @@ theorem pan223_horizontal_integrable {q : ℕ} (f : ℕ → ℂ)
   apply Eq21FiniteContour_horizontal_intervalIntegrable hα (le_refl |t|)
   apply (pan223Kernel_differentiableOn f m H y A₁ A₂ k χ hy).continuousOn.mono
   intro s hs
-  dsimp at hs ⊢
-  linarith [hs.1]
+  exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 2) hs.1
 
 /-- Each horizontal edge separately has the original half-sum bound. -/
 theorem pan223_horizontal_integral_bound {q : ℕ} (f : ℕ → ℂ)

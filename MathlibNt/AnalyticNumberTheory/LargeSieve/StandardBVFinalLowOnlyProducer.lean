@@ -33,20 +33,19 @@ theorem standardBombieriVinogradov_of_lowSiegelWalfiszSource
   filter_upwards [hN, eventually_ge_atTop (3 : ℕ)] with N hBN hN3
   intro _hN2
   have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have he1 : Real.exp 1 < (3 : ℝ) :=
-      Real.exp_one_lt_d9.trans (by norm_num)
-    exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-      (he1.trans_le (by exact_mod_cast hN3)) |>.le
+    exact ((Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
+      (Real.exp_one_lt_three.trans_le (by exact_mod_cast hN3))).le
   have hAceil : A ≤ (An : ℝ) := Nat.le_ceil A
   have hpow : Real.log (N : ℝ) ^ A ≤ Real.log (N : ℝ) ^ An := by
     rw [← Real.rpow_natCast]
     exact Real.rpow_le_rpow_of_exponent_le hlog hAceil
-  have htarget :
-      K * (N : ℝ) / Real.log (N : ℝ) ^ An ≤
-        K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-    exact div_le_div_of_nonneg_left (mul_nonneg hK.le (by positivity))
-      (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hlog) A) hpow
-  simpa using hBN.trans htarget
+  -- The natural-exponent estimate implies the requested real-exponent bound:
+  -- increasing the exponent enlarges the positive denominator because log N ≥ 1.
+  calc
+    _ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ An := hBN
+    _ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ A :=
+      div_le_div_of_nonneg_left (mul_nonneg hK.le (by positivity))
+        (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hlog) A) hpow
 
 /-- Final source-level low-only producer.  There is no historical Vaughan-row
 premise: the high source is `standardBVHighChosenUnconditional`. -/

@@ -83,17 +83,10 @@ theorem IsPrimitive.re_zeta_mul_LFunction_pos_of_small_value
     norm_num [x]
   have hmain :
       (χ.LFunction 1).re * x ^ ε / ε ≤ 1 / 4 := by
+    have hp : 0 < x ^ ε := Real.rpow_pos_of_pos hx0 ε
+    rw [← hpower, le_div_iff₀ (by positivity : 0 < 4 * x ^ ε)] at hsmall
     rw [div_le_iff₀ hε]
-    have h := mul_le_mul_of_nonneg_right hsmall (Real.rpow_nonneg hx0.le ε)
-    rw [hpower] at h
-    have hp : 0 < (648 * (q : ℝ)) ^ (4 * ε) := by
-      rw [← hpower]
-      exact Real.rpow_pos_of_pos hx0 _
-    have heq : (ε / (4 * (648 * (q : ℝ)) ^ (4 * ε))) *
-        (648 * (q : ℝ)) ^ (4 * ε) = ε / 4 := by
-      rw [div_mul_eq_div_div, div_mul_cancel₀ _ hp.ne']
-    rw [heq] at h
-    simpa [hpower, div_eq_mul_inv, mul_comm] using h
+    nlinarith only [hsmall]
   have hweight := one_le_quadraticConvolutionWeightedSum χ hquad (1 - ε) hx
   have herr := IsPrimitive.abs_quadraticConvolutionWeightedSum_sub_main_sub_product_le
     χ hprim hχ hquad (β := 1 - ε) (by linarith) (by linarith) hx

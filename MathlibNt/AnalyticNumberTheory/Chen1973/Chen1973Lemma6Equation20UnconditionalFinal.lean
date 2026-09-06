@@ -93,11 +93,10 @@ theorem chen1973Lemma6_eq20_conductorBlock_subset_source_Icc
     chen1973Lemma6ConductorBlock x L level ⊆
       Finset.Icc 2 (chen1973Lemma6Eq20SourceQ L level) := by
   intro d hd
-  have h := chen1973Lemma6_eq20_conductorBlock_subset_source_Ioc P hd
-  exact Finset.mem_Icc.mpr ⟨by
-    have hD := chen1973Lemma6Eq20SourceD_pos P
-    exact Nat.succ_le_iff.mpr (lt_of_le_of_lt hD (Finset.mem_Ioc.mp h).1),
-    (Finset.mem_Ioc.mp h).2⟩
+  obtain ⟨hDd, hdQ⟩ := Finset.mem_Ioc.mp
+    (chen1973Lemma6_eq20_conductorBlock_subset_source_Ioc P hd)
+  have hd1 : 1 < d := lt_of_le_of_lt (chen1973Lemma6Eq20SourceD_pos P) hDd
+  exact Finset.mem_Icc.mpr ⟨Nat.succ_le_iff.mpr hd1, hdQ⟩
 
 /-- Explicit alpha half-line bound; there is no caller-supplied growth,
 continuity, or integral-payment premise. -/
@@ -217,9 +216,7 @@ theorem chen1973Lemma6_eq20_first_integral_unconditional
       · exact (continuous_const.sub (hL.mul hS)).norm
     · unfold chen1973Lemma6Eq17CorrectedKernel
       fun_prop
-    · intro v
-      exact (chen1973Lemma6_eq17_correctedKernel_pos
-        (x := x) (v := v) (show 1 < x by omega) (lt_of_lt_of_le zero_lt_one hα)).ne'
+    · exact fun v => (hkpos v).ne'
   have hint : IntegrableOn (fun v : ℝ =>
       chen1973Lemma6A x L level B k m H (chen1973Lemma6Alpha x + v * I) /
         chen1973Lemma6Eq17CorrectedKernel x (chen1973Lemma6Alpha x + v * I)) (Ioi 0) := by
@@ -330,9 +327,7 @@ theorem chen1973Lemma6_eq20_second_integral_unconditional
       · exact (hL'.mul hS).norm
     · unfold chen1973Lemma6Eq17CorrectedKernel
       fun_prop
-    · intro v
-      exact (chen1973Lemma6_eq17_correctedKernel_pos
-        (x := x) (v := v) (show 1 < x by omega) hβ).ne'
+    · exact fun v => (hkpos v).ne'
   have hint : IntegrableOn (fun v : ℝ =>
       chen1973Lemma6B x L level B k m H (chen1973Lemma6Beta x + v * I) /
         chen1973Lemma6Eq17CorrectedKernel x (chen1973Lemma6Beta x + v * I)) (Ioi 0) := by
@@ -352,10 +347,11 @@ theorem chen1973Lemma6_eq20_second_integral_unconditional
   exact hraw
 
 /-- Final corrected equation-(20) complementary-cell estimate.  All former
-continuity, growth, scalar-payment, and contour parameters are absent.  The two
-max-cutoff branches are instantiated explicitly, and the upstream
-contour inequality is supplied by the unconditional corrected equation-(17)
-assembly. -/
+continuity, growth, scalar-payment, and contour parameters are absent. Cutoff
+positivity follows from the second max-cutoff branch, and the upstream contour
+inequality is supplied by the unconditional corrected equation-(17) assembly.
+The Cauchy radius and beta-domain premises remain explicit here; they are
+discharged in `chen1973Lemma6_equation20_corrected_actual_budget` below. -/
 theorem chen1973Lemma6_equation20_unconditional_final
     {x L B lastD level k m : ℕ} {ε r : ℝ}
     (P : Chen1973Lemma6Eq20ComplementarySourceParameters x L B lastD level k)
@@ -377,21 +373,11 @@ theorem chen1973Lemma6_equation20_unconditional_final
   let H := chen1973Lemma6Equation20H x level k ε
   let D := chen1973Lemma6Eq20SourceD L level
   let Q := chen1973Lemma6Eq20SourceQ L level
-  have hHfirst := chen1973Lemma6Equation20H_first_le x level k ε
-  have hHsecond := chen1973Lemma6Equation20H_second_le x level k ε
-  have hxOne : 1 < x := lt_of_lt_of_le (by omega) P.hx
-  have hxNat : 0 < x := lt_trans (by omega) hxOne
-  have hx0 : (0 : ℝ) < x := by exact_mod_cast hxNat
-  have hfirstPos : 0 < (2 : ℝ) ^ (2 * (level : ℝ) - k) *
-      (x : ℝ) ^ (-(13 : ℝ) / 30) * Real.log x ^ 400 *
-        chen1973Lemma6Equation20Ilx x level := by
-    have hl : 0 < Real.log (x : ℝ) := Real.log_pos (by exact_mod_cast hxOne)
-    unfold chen1973Lemma6Equation20Ilx
-    positivity
-  have hsecondPos : 0 < (x : ℝ) ^ ((1 : ℝ) / 2 - ε) := Real.rpow_pos_of_pos hx0 _
+  have hx0 : (0 : ℝ) < x := by
+    exact_mod_cast (show 0 < x from lt_of_lt_of_le (by decide) P.hx)
   have hHposR : (0 : ℝ) < H := by
-    dsimp [H]
-    exact lt_of_lt_of_le (lt_max_of_lt_left hfirstPos) (max_le hHfirst hHsecond)
+    exact (Real.rpow_pos_of_pos hx0 ((1 : ℝ) / 2 - ε)).trans_le
+      (chen1973Lemma6Equation20H_second_le x level k ε)
   have hH : 0 < H := by exact_mod_cast hHposR
   have hD : 0 < D := chen1973Lemma6Eq20SourceD_pos P
   have hQ : 2 ≤ Q := chen1973Lemma6Eq20SourceQ_ge_two P

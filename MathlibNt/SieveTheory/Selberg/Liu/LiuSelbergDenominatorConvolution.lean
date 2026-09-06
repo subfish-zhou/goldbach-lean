@@ -100,29 +100,16 @@ theorem liuSelbergDenominator_eq_sum_Icc
     exact Finset.mem_Icc.mpr ⟨Nat.one_le_iff_ne_zero.mpr hn0, hn.2⟩
   have hterm : ∀ n ∈ C, liuSelbergTerm n = liuSelbergArithmetic N n := by
     intro n hn
-    have hd := (mem_liuSelbergLambdaSourceCarrier.mp hn).1
-    have hsc := dvd_liuPaperQModulus_iff_squarefree_coprime
-      (mem_liuSelbergLambdaSourceCarrier.mp hn).2
-    have hn0 : n ≠ 0 := by
-      intro hn0
-      apply (liuPaperQModulus_squarefree N epsilon).ne_zero
-      exact zero_dvd_iff.mp (hn0 ▸ hd)
-    symm
-    exact liuSelbergArithmetic_eq_prod
-      hn0
-      (hsc.mp hd).1 (hsc.mp hd).2
+    obtain ⟨hd, hcutoff⟩ := mem_liuSelbergLambdaSourceCarrier.mp hn
+    obtain ⟨hs, hc⟩ := (dvd_liuPaperQModulus_iff_squarefree_coprime hcutoff).mp hd
+    exact (liuSelbergArithmetic_eq_prod hs.ne_zero hs hc).symm
   have hzero : ∀ n ∈ I, n ∉ C → liuSelbergArithmetic N n = 0 := by
     intro n hnI hnC
-    by_contra hne
-    have hn0 : n ≠ 0 := by
-      intro hn0
-      subst n
-      simp at hne
-    by_cases hsc : Squarefree n ∧ Nat.Coprime n N
-    · exact hnC (mem_liuSelbergLambdaSourceCarrier.mpr
-        ⟨(dvd_liuPaperQModulus_iff_squarefree_coprime
-          (Finset.mem_Icc.mp hnI).2).mpr hsc, (Finset.mem_Icc.mp hnI).2⟩)
-    · simp [liuSelbergArithmetic, hn0, hsc] at hne
+    apply liuSelbergArithmetic_eq_zero_of_not_squarefree_or_not_coprime
+    intro hsc
+    have hcutoff := (Finset.mem_Icc.mp hnI).2
+    exact hnC (mem_liuSelbergLambdaSourceCarrier.mpr
+      ⟨(dvd_liuPaperQModulus_iff_squarefree_coprime hcutoff).mpr hsc, hcutoff⟩)
   calc
     ∑ l ∈ C, liuSelbergTerm l = ∑ l ∈ C, liuSelbergArithmetic N l := by
       apply Finset.sum_congr rfl
@@ -215,19 +202,12 @@ theorem liuSelbergArithmeticFunction_isMultiplicative (N : ℕ) :
       change liuSelbergArithmetic N (m * n) =
         liuSelbergArithmetic N m * liuSelbergArithmetic N n
       simp [liuSelbergArithmetic, hm, hn, hprod, hsn]
-  · by_cases hsn : Squarefree n ∧ Nat.Coprime n N
-    · have hprod : ¬(Squarefree (m * n) ∧ Nat.Coprime (m * n) N) := by
-        intro h
-        exact hsm ⟨(hsmn.mp h.1).1, (hcmn.mp h.2).1⟩
-      change liuSelbergArithmetic N (m * n) =
-        liuSelbergArithmetic N m * liuSelbergArithmetic N n
-      simp [liuSelbergArithmetic, hm, hn, hprod, hsm]
-    · have hprod : ¬(Squarefree (m * n) ∧ Nat.Coprime (m * n) N) := by
-        intro h
-        exact hsm ⟨(hsmn.mp h.1).1, (hcmn.mp h.2).1⟩
-      change liuSelbergArithmetic N (m * n) =
-        liuSelbergArithmetic N m * liuSelbergArithmetic N n
-      simp [liuSelbergArithmetic, hm, hn, hprod, hsm, hsn]
+  · have hprod : ¬(Squarefree (m * n) ∧ Nat.Coprime (m * n) N) := by
+      intro h
+      exact hsm ⟨(hsmn.mp h.1).1, (hcmn.mp h.2).1⟩
+    change liuSelbergArithmetic N (m * n) =
+      liuSelbergArithmetic N m * liuSelbergArithmetic N n
+    simp [liuSelbergArithmetic, hm, hn, hprod, hsm]
 
 theorem liuReciprocal_isMultiplicative :
     liuReciprocal.IsMultiplicative := by

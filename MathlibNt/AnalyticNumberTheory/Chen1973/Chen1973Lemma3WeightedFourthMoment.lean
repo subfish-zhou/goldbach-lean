@@ -14,14 +14,7 @@ def primitiveWeightedFourthMoment (Q : ℕ) (s : ℂ) : ℝ :=
 
 lemma primitive_card_le_totient (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  letI : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  calc
-    _ ≤ Fintype.card (DirichletCharacter ℂ q) :=
-      @Fintype.card_subtype_le (DirichletCharacter ℂ q) _ (fun χ => χ.IsPrimitive) _
-    _ = q.totient := by
-      have h := DirichletCharacter.sum_char_inv_mul_char_eq ℂ
-        (a := (1 : ZMod q)) isUnit_one (1 : ZMod q)
-      simpa using h
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 lemma weighted_polynomial_fourth_le
     (h2 : Chen1973Lemma2EquationTwo) (N Q : ℕ) (s : ℂ)
@@ -123,20 +116,7 @@ lemma weighted_fourth_finite_assembly
           ‖chen1973PrimitivePolynomialValue q N s χ‖ ^ 4) +
         8 * ∑ q ∈ Icc 1 Q, ((q : ℝ) / q.totient) * ∑ χ : PrimitiveCharacter q,
           ‖chen1973PrimitiveLValue q s χ - chen1973PrimitivePolynomialValue q N s χ‖ ^ 4 := by
-      simp_rw [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum]
-      simp_rw [mul_add, Finset.sum_add_distrib]
-      simp only [Finset.mul_sum]
-      apply congrArg₂ (· + ·)
-      · apply Finset.sum_congr rfl
-        intro q hq
-        apply Finset.sum_congr rfl
-        intro χ hχ
-        ring
-      · apply Finset.sum_congr rfl
-        intro q hq
-        apply Finset.sum_congr rfl
-        intro χ hχ
-        ring
+      simp only [mul_add, Finset.sum_add_distrib, Finset.mul_sum, mul_left_comm]
     _ ≤ _ := by
       have h := weighted_polynomial_fourth_le h2 N Q s hs
       linarith

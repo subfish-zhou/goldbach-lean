@@ -45,50 +45,33 @@ set_option maxHeartbeats 4000000
 `k` or is `p` times a divisor of `k`. -/
 lemma prime_mul_divisors_card_le {p k : ℕ} (hp : p.Prime) :
     (p * k).divisors.card ≤ 2 * k.divisors.card := by
-  have hp0 : 0 < p := hp.pos
   have hsub : (p * k).divisors ⊆ k.divisors ∪ (Finset.image (fun d : ℕ => p * d) k.divisors) := by
     intro d hd
-    rw [Nat.mem_divisors] at hd
-    rcases hd with ⟨hdvd, hpk0⟩
+    rcases Nat.mem_divisors.mp hd with ⟨hdvd, hpk0⟩
+    have hk0 : k ≠ 0 := by
+      intro hk
+      apply hpk0
+      simp [hk]
     by_cases hpd : p ∣ d
-    · rw [Finset.mem_union]
+    · -- If p divides d, cancel p to obtain a divisor of k.
+      rw [Finset.mem_union]
       right
-      rw [Finset.mem_image]
-      rcases hpd with ⟨c, hc⟩
-      refine ⟨c, ?_, ?_⟩
-      · rw [Nat.mem_divisors]
-        constructor
-        · rw [hc] at hdvd
-          exact (Nat.mul_dvd_mul_iff_left hp.pos).mp hdvd
-        · have hk0 : k ≠ 0 := by
-            intro hk0
-            apply hpk0
-            rw [hk0]
-            exact mul_zero p
-          exact hk0
-      · rw [hc]
-    · rw [Finset.mem_union]
+      rcases hpd with ⟨c, rfl⟩
+      refine Finset.mem_image.mpr ⟨c, ?_, rfl⟩
+      exact Nat.mem_divisors.mpr ⟨(Nat.mul_dvd_mul_iff_left hp.pos).mp hdvd, hk0⟩
+    · -- Otherwise d is coprime to p, so d itself divides k.
+      rw [Finset.mem_union]
       left
-      rw [Nat.mem_divisors]
-      constructor
-      · have hcp : d.Coprime p := (Nat.coprime_comm.mp ((hp.coprime_iff_not_dvd).2 hpd))
-        exact hcp.dvd_of_dvd_mul_right (by simpa [mul_comm] using hdvd)
-      · exact (by
-          intro hk0
-          apply hpk0
-          rw [hk0]
-          exact mul_zero p)
-  have hcard1 : (k.divisors ∪ Finset.image (fun d : ℕ => p * d) k.divisors).card ≤
-      k.divisors.card + (Finset.image (fun d : ℕ => p * d) k.divisors).card := by
-    exact Finset.card_union_le _ _
-  have hcard2 : (Finset.image (fun d : ℕ => p * d) k.divisors).card ≤ k.divisors.card := by
-    exact Finset.card_image_le
+      have hcp : d.Coprime p := Nat.coprime_comm.mp ((hp.coprime_iff_not_dvd).2 hpd)
+      exact Nat.mem_divisors.mpr
+        ⟨hcp.dvd_of_dvd_mul_right (by simpa [mul_comm] using hdvd), hk0⟩
   calc
-    (p * k).divisors.card ≤ (k.divisors ∪ Finset.image (fun d : ℕ => p * d) k.divisors).card := by
-          exact Finset.card_le_card hsub
-    _ ≤ k.divisors.card + (Finset.image (fun d : ℕ => p * d) k.divisors).card := hcard1
-    _ ≤ k.divisors.card + k.divisors.card := by
-          omega
+    (p * k).divisors.card ≤ (k.divisors ∪ Finset.image (fun d : ℕ => p * d) k.divisors).card :=
+      Finset.card_le_card hsub
+    _ ≤ k.divisors.card + (Finset.image (fun d : ℕ => p * d) k.divisors).card :=
+      Finset.card_union_le _ _
+    _ ≤ k.divisors.card + k.divisors.card :=
+      add_le_add le_rfl Finset.card_image_le
     _ = 2 * k.divisors.card := by ring
 
 /-- log(p·k+1) ≤ log(k+1) + log(p+1). -/

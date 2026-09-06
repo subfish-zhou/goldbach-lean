@@ -42,8 +42,7 @@ theorem liuPanLiEnvelopeConstant_pos (κ : ℝ) :
 
 theorem liuPanLiEnvelopeConstant_nonneg (κ : ℝ) :
     0 ≤ liuPanLiEnvelopeConstant κ :=
-  div_nonneg (liuLogarithmicIntegralUpperConstant_nonneg κ)
-    (Real.log_nonneg (by norm_num))
+  (liuPanLiEnvelopeConstant_pos κ).le
 
 /-- The genuine integral is evaluated only on its supported domain. -/
 theorem abs_liuWeight_mul_logarithmicIntegral_le (κ : ℝ) (N z y a : ℕ) :
@@ -97,23 +96,20 @@ theorem abs_liuPanLi_mainTerm_finset_le (κ : ℝ) (N q : ℕ) (S : Finset ℕ) 
     |∑ a ∈ S, liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
         liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| ≤
       liuPanLiEnvelopeConstant κ * N * (1 + Real.log N) / q.totient := by
+  rw [← sum_div, abs_div,
+    abs_of_nonneg (show (0 : ℝ) ≤ (q.totient : ℝ) from Nat.cast_nonneg _)]
+  apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
   calc
     _ ≤ ∑ a ∈ S, |liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-        liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| :=
-      abs_sum_le_sum_abs _ _
-    _ ≤ ∑ a ∈ S, ((liuPanLiEnvelopeConstant κ * N) *
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a / a)) / q.totient := by
-      apply sum_le_sum
-      intro a _
-      rw [abs_div, abs_of_nonneg (show (0 : ℝ) ≤ (q.totient : ℝ) from Nat.cast_nonneg _)]
-      exact div_le_div_of_nonneg_right
-        (abs_liuWeight_mul_logarithmicIntegral_le κ N _ _ a) (Nat.cast_nonneg _)
-    _ = ((liuPanLiEnvelopeConstant κ * N) *
-        (∑ a ∈ S, liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a / a)) /
-          q.totient := by rw [← sum_div, ← mul_sum]
-    _ ≤ _ := by
-      apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
-      exact mul_le_mul_of_nonneg_left (sum_liuWeight_div_finset_le_one_add_log N S)
+        liuLogarithmicIntegral κ ((N : ℝ) / a)| := abs_sum_le_sum_abs _ _
+    _ ≤ ∑ a ∈ S, (liuPanLiEnvelopeConstant κ * N) *
+        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a / a) :=
+      sum_le_sum fun a _ => abs_liuWeight_mul_logarithmicIntegral_le κ N _ _ a
+    _ = (liuPanLiEnvelopeConstant κ * N) *
+        (∑ a ∈ S, liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a / a) :=
+      (mul_sum _ _ _).symm
+    _ ≤ _ :=
+      mul_le_mul_of_nonneg_left (sum_liuWeight_div_finset_le_one_add_log N S)
         (mul_nonneg (liuPanLiEnvelopeConstant_nonneg κ) (Nat.cast_nonneg _))
 
 /-- Uniform interval version, with no upper restriction on A₂. -/
@@ -156,11 +152,7 @@ theorem modulus_mul_abs_liuPanLi_mainTerm_finset_le (κ : ℝ)
   have hphi := Richert1969.reciprocal_totient_le_richertConstant_log_div hN hq hqN
   have hratio : (q : ℝ) / q.totient ≤
       Richert1969.richertReciprocalTotientConstant * Real.log N := by
-    have h := mul_le_mul_of_nonneg_left hphi hqR.le
-    calc
-      (q : ℝ) / q.totient = q * (1 / (q.totient : ℝ)) := by ring
-      _ ≤ q * (Richert1969.richertReciprocalTotientConstant * Real.log N / q) := h
-      _ = _ := by field_simp
+    simpa only [mul_one_div] using (le_div_iff₀' hqR).mp hphi
   have hbase : 0 ≤ liuPanLiEnvelopeConstant κ * (N : ℝ) * (1 + Real.log N) := by
     positivity
   calc

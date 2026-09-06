@@ -123,7 +123,7 @@ theorem lower_sub_squareful_sub_conditioned_le_weightedLowerObject
   rw [Finset.sum_sub_distrib, Finset.sum_const, nsmul_eq_mul,
     ← Finset.mul_sum, weighted_divisor_sum_eq]
   have hscale := mul_le_mul_of_nonneg_left hweighted hlambda
-  nlinarith
+  linarith only [hscale]
 
 /-- Equation (3.5) for the literal interval and logarithmic weight of
 Theorem 1.  The later analytic estimates (3.6)--(3.11) are separate inputs. -/

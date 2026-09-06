@@ -97,26 +97,12 @@ theorem chen1973DirichletPolynomial_sq_eq_pair_sum
       ∑ ab ∈ (Icc 1 N).product (Icc 1 N),
         ((ab.1 : ℂ) ^ (-s) * (ab.2 : ℂ) ^ (-s)) *
           χ.1 ((ab.1 * ab.2 : ℕ) : ZMod q) := by
-  rw [pow_two]
-  unfold chen1973DirichletPolynomial
-  rw [Finset.sum_mul]
-  simp_rw [Finset.mul_sum]
-  calc
-    (∑ a ∈ Icc 1 N, ∑ b ∈ Icc 1 N,
-        ((a : ℂ) ^ (-s) * χ.1 (a : ZMod q)) *
-          ((b : ℂ) ^ (-s) * χ.1 (b : ZMod q))) =
-      ∑ ab ∈ (Icc 1 N).product (Icc 1 N),
-        (((ab.1 : ℂ) ^ (-s) * χ.1 (ab.1 : ZMod q)) *
-          ((ab.2 : ℂ) ^ (-s) * χ.1 (ab.2 : ZMod q))) := by
-        exact (Finset.sum_product (Icc 1 N) (Icc 1 N)
-          (fun ab => (((ab.1 : ℂ) ^ (-s) * χ.1 (ab.1 : ZMod q)) *
-            ((ab.2 : ℂ) ^ (-s) * χ.1 (ab.2 : ZMod q))))).symm
-    _ = _ := by
-      apply Finset.sum_congr rfl
-      intro ab hab
-      rw [show ((ab.1 * ab.2 : ℕ) : ZMod q) =
-        (ab.1 : ZMod q) * (ab.2 : ZMod q) by norm_num, map_mul]
-      ring
+  rw [pow_two, chen1973DirichletPolynomial, Finset.sum_mul_sum,
+    ← Finset.sum_product']
+  apply Finset.sum_congr rfl
+  intro ab hab
+  rw [Nat.cast_mul, map_mul]
+  ring
 
 /-- Every product of two integers in `[1,N]` lies in `[1,N²]`. -/
 lemma chen1973_pair_product_mem {N a b : ℕ}
@@ -163,19 +149,8 @@ theorem chen1973DirichletPolynomial_norm_four_eq_pair_norm_sq
     ‖chen1973DirichletPolynomial N s χ‖ ^ 4 =
       ‖∑ m ∈ Icc (1 : ℤ) (N * N : ℕ),
         chen1973PairCoefficient N s m * χ.1 (m : ZMod q)‖ ^ 2 := by
-  have hsq := chen1973DirichletPolynomial_sq_eq_pair_sum N s χ
-  have hcollect := chen1973_pairCoefficient_character_sum_eq N s χ
-  calc
-    ‖chen1973DirichletPolynomial N s χ‖ ^ 4 =
-        ‖chen1973DirichletPolynomial N s χ ^ 2‖ ^ 2 := by
-      rw [norm_pow]
-      ring
-    _ = ‖∑ ab ∈ (Icc 1 N).product (Icc 1 N),
-        ((ab.1 : ℂ) ^ (-s) * (ab.2 : ℂ) ^ (-s)) *
-          χ.1 ((ab.1 * ab.2 : ℕ) : ZMod q)‖ ^ 2 := by rw [hsq]
-    _ = ‖∑ m ∈ Icc (1 : ℤ) (N * N : ℕ),
-        chen1973PairCoefficient N s m * χ.1 (m : ZMod q)‖ ^ 2 := by
-      rw [hcollect]
+  rw [chen1973_pairCoefficient_character_sum_eq,
+    ← chen1973DirichletPolynomial_sq_eq_pair_sum, norm_pow, ← pow_mul]
 
 /-! ## The printed truncation sentence -/
 
@@ -524,12 +499,7 @@ theorem chen1973Lemma2_source_call_on_pairCoefficient
         (∑ q ∈ Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter q,
             ‖chen1973PrimitiveAmplitude aI 0 (N * N) q χ‖ ^ 2)) := by
-      simp_rw [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum]
-      simp_rw [mul_add]
-      rw [Finset.sum_add_distrib]
-      have hmul (a b : ℝ) : a * (2 * b) = 2 * (a * b) := by ring
-      simp_rw [hmul]
-      rw [← Finset.mul_sum, ← Finset.mul_sum]
+      simp only [mul_add, Finset.sum_add_distrib, Finset.mul_sum, mul_left_comm]
     _ ≤ 2 * ((((Q : ℝ) ^ 2 + Real.pi * ((N * N : ℕ) : ℝ)) *
           chen1973CoefficientEnergy aR 0 (N * N)) +
         (((Q : ℝ) ^ 2 + Real.pi * ((N * N : ℕ) : ℝ)) *
@@ -663,9 +633,12 @@ lemma norm_four_le_eight_add_norm_sub_four (z w : ℂ) :
     calc
       ‖z‖ = ‖w + (z - w)‖ := congrArg norm hz
       _ ≤ ‖w‖ + ‖z - w‖ := norm_add_le w (z - w)
-  have hpow := pow_le_pow_left₀ (norm_nonneg _) h 4
-  nlinarith [sq_nonneg (‖w‖ - ‖z - w‖),
-    sq_nonneg (‖w‖ ^ 2 - ‖z - w‖ ^ 2)]
+  calc
+    ‖z‖ ^ 4 ≤ (‖w‖ + ‖z - w‖) ^ 4 := pow_le_pow_left₀ (norm_nonneg _) h 4
+    _ ≤ 8 * (‖w‖ ^ 4 + ‖z - w‖ ^ 4) := by
+      have hsplit := add_pow_le (norm_nonneg w) (norm_nonneg (z - w)) 4
+      norm_num at hsplit
+      exact hsplit
 
 /-- The exact final finite assembly before Chen's last scalar simplification.
 It keeps the truncation-error fourth powers explicit, so no endpoint or family
@@ -839,16 +812,7 @@ lemma chen1973Lemma3_truncation_pointwise_scalar
 
 private lemma chen1973_card_primitive_le_totient (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  let _ : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) :=
-      @Fintype.card_subtype_le (DirichletCharacter ℂ q) _
-        (fun χ => χ.IsPrimitive) _
-    _ = q.totient := by
-      have h := DirichletCharacter.sum_char_inv_mul_char_eq ℂ
-        (a := (1 : ZMod q)) isUnit_one (1 : ZMod q)
-      simpa using h
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 theorem chen1973Lemma3_truncation_error_sum_scalar
     {Q : ℕ} {s : ℂ} (hQ : 2 ≤ Q)

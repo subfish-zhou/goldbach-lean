@@ -13,6 +13,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
+import AnalyticNumberTheory.Sieve.SingularSeries
 
 /-!
 # MathlibNt.SieveTheory.SingularSeries
@@ -64,21 +65,11 @@ noncomputable def localFactor (p N : ℕ) : ℝ :=
 
 /-- The factor at p = 2 is 2 for even N. -/
 theorem localFactor_two (hN : Even N) : localFactor 2 N = 2 := by
-  unfold localFactor
-  rw [if_pos rfl]
-  obtain ⟨k, hk⟩ := hN
-  rw [if_pos ⟨k, by omega⟩]
+  simp [localFactor, even_iff_two_dvd.mp hN]
 
 /-- The factor at p = 2 is 1 for odd N. -/
 theorem localFactor_two_odd (hN : Odd N) : localFactor 2 N = 1 := by
-  unfold localFactor
-  rw [if_pos rfl]
-  have h : ¬ (2 : ℕ) ∣ N := by
-    rintro ⟨k, hk⟩
-    rw [hk] at hN
-    obtain ⟨m, hm⟩ := hN
-    omega
-  rw [if_neg h]
+  simp [localFactor, hN.not_two_dvd_nat]
 
 /-- For a prime p > 2 with p | N, the factor is p/(p-1). -/
 theorem localFactor_of_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
@@ -170,29 +161,19 @@ theorem localFactor_dvd_le {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p �
   have hp1 : (0 : ℝ) < p - 1 := by
     have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
     linarith
-  have : (p : ℝ) / (p - 1) ≤ 3 / 2 := by
-    field_simp
-    have : (2 : ℝ) * p ≤ 3 * (p - 1) := by
-      have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      nlinarith
-    linarith
-  exact this
+  apply (div_le_iff₀ hp1).2
+  have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+  linarith
 
 /-- For a prime p > 2 with p ∤ N, the factor p(p-2)/(p-1)² < 1, since p ≥ 3. -/
 theorem localFactor_not_dvd_lt_one {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N < 1 := by
   rw [localFactor_of_not_dvd hp hp2 hpn]
-  have hp3 : 3 ≤ p := by omega
   have hp1_pos : (0 : ℝ) < p - 1 := by
     have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
     linarith
-  have : (p : ℝ) * (p - 2) / ((p - 1) ^ 2) < 1 := by
-    field_simp
-    have h : (p : ℝ) * (p - 2) < (p - 1) * (p - 1) := by
-      have hp_cast : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      nlinarith
-    linarith
-  exact this
+  apply (div_lt_one₀ (sq_pos_of_pos hp1_pos)).2
+  nlinarith
 
 /-! ## 7. Bounds for the singular series (elementary proofs) -/
 
@@ -213,71 +194,11 @@ private lemma localFactor_ge_square {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
     field_simp [ne_of_gt hp1_pos]
     nlinarith
 
-/-- Telescoping product (A): ∏_{k<n} (k+1)/(k+2) = 1/(n+1). -/
-private lemma telescope_a (n : ℕ) :
-    (Finset.range n).prod (fun k : ℕ => ((k : ℝ) + 1) / ((k : ℝ) + 2)) =
-      1 / ((n : ℝ) + 1) := by
-  induction n with
-  | zero => norm_num
-  | succ n ih =>
-      rw [Finset.prod_range_succ, ih]
-      have hn1 : (n : ℝ) + 1 ≠ 0 := by positivity
-      have hn2 : (n : ℝ) + 2 ≠ 0 := by positivity
-      norm_num [Nat.cast_add]
-      field_simp [hn1, hn2]
-      ring
-
-/-- Telescoping product (B): ∏_{k<n} (k+3)/(k+2) = (n+2)/2. -/
-private lemma telescope_b (n : ℕ) :
-    (Finset.range n).prod (fun k : ℕ => ((k : ℝ) + 3) / ((k : ℝ) + 2)) =
-      ((n : ℝ) + 2) / 2 := by
-  induction n with
-  | zero => norm_num
-  | succ n ih =>
-      rw [Finset.prod_range_succ, ih]
-      have hn2 : (n : ℝ) + 2 ≠ 0 := by positivity
-      norm_num [Nat.cast_add]
-      field_simp [hn2]
-      ring
-
 /-- Telescoping product: ∏_{n=2}^{N-1} (1 - 1/n²) = N / (2(N-1)) for N ≥ 2. -/
 private lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
     (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) =
       (N : ℝ) / (2 * ((N : ℝ) - 1)) := by
-  rw [Finset.prod_Ico_eq_prod_range (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) 2 N]
-  have hfac : ∀ k : ℕ,
-      1 - 1 / ((2 + k : ℕ) : ℝ) ^ 2 =
-        (((k : ℝ) + 1) / ((k : ℝ) + 2)) * (((k : ℝ) + 3) / ((k : ℝ) + 2)) := by
-    intro k
-    have hk2 : (k : ℝ) + 2 ≠ 0 := by
-      have hk0 : (0 : ℝ) ≤ k := by exact_mod_cast Nat.zero_le k
-      nlinarith
-    norm_num [Nat.cast_add]
-    field_simp [hk2]
-    ring
-  rw [Finset.prod_congr rfl (fun k hk => hfac k)]
-  rw [Finset.prod_mul_distrib]
-  have h1 : (Finset.range (N - 2)).prod (fun k : ℕ => ((k : ℝ) + 1) / ((k : ℝ) + 2)) =
-      1 / ((N : ℝ) - 1) := by
-    rw [telescope_a (N - 2)]
-    have hcast : (((N - 2 : ℕ) : ℝ) + 1) = (N : ℝ) - 1 := by
-      rw [Nat.cast_sub hN]
-      ring
-    rw [hcast]
-  have h2 : (Finset.range (N - 2)).prod (fun k : ℕ => ((k : ℝ) + 3) / ((k : ℝ) + 2)) =
-      (N : ℝ) / 2 := by
-    rw [telescope_b (N - 2)]
-    have hcast : (((N - 2 : ℕ) : ℝ) + 2) = (N : ℝ) := by
-      rw [Nat.cast_sub hN]
-      ring
-    rw [hcast]
-  rw [h1, h2]
-  have hN1 : (N : ℝ) - 1 ≠ 0 := by
-    have : (1 : ℝ) ≤ (N : ℝ) - 1 := by
-      have : (2 : ℝ) ≤ N := by exact_mod_cast hN
-      linarith
-    linarith
-  field_simp [hN1]
+  exact AnalyticNumberTheory.Sieve.int_square_product N hN
 
 /-- The product over primes dominates the product over all integers:
 ∏_{3 ≤ p ≤ N, p prime} (1 - 1/(p-1)²) ≥ ∏_{n=2}^{N-1} (1 - 1/n²). -/
@@ -285,63 +206,7 @@ private lemma prime_square_product_ge_int (N : ℕ) :
     (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) ≤
       ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
         (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := by
-  classical
-  let T : Finset ℕ := (Finset.Ico 2 N).filter (fun n => (n + 1).Prime)
-  have hsubset : T ⊆ Finset.Ico 2 N := Finset.filter_subset _ _
-  have h_int_le_T :
-      (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) ≤
-        T.prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) := by
-    exact Finset.prod_le_prod_of_subset_of_le_one hsubset
-      (by
-        intro n hn
-        have hn2 : (2 : ℝ) ≤ n := by
-          exact_mod_cast (mem_Ico.mp hn).1
-        have hn1 : (1 : ℝ) ≤ n ^ 2 := by nlinarith
-        have hdiv : (1 : ℝ) / (n : ℝ) ^ 2 ≤ 1 :=
-          div_le_one_of_le₀ hn1 (by exact_mod_cast (sq_nonneg n) : (0 : ℝ) ≤ n ^ 2)
-        linarith)
-      (by
-        intro n hn hnT
-        have hsq : (0 : ℝ) ≤ 1 / (n : ℝ) ^ 2 := div_nonneg zero_le_one (sq_nonneg _)
-        linarith)
-  have hreindex :
-      T.prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) =
-        ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-          (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := by
-    symm
-    refine Finset.prod_bij (fun p hp => p - 1) ?_ ?_ ?_ ?_
-    · intro p hp
-      rw [mem_filter] at hp
-      rcases hp with ⟨hp_range, hp_prime, hp2⟩
-      have hp_lt : p < N + 1 := mem_range.mp hp_range
-      have hp1 : p - 1 + 1 = p := Nat.sub_add_cancel (by omega : 1 ≤ p)
-      have hp1_ge2 : 2 ≤ p - 1 := by omega
-      have hp1_lt : p - 1 < N := by omega
-      have hp1_prime : (p - 1 + 1).Prime := by rwa [hp1]
-      simp [T, mem_filter, hp1_ge2, hp1_lt, hp1_prime]
-    · intro p hp
-      intro p' hp' hpp'
-      rw [mem_filter] at hp hp'
-      rcases hp with ⟨_, _, hp2⟩
-      rcases hp' with ⟨_, _, hp2'⟩
-      omega
-    · intro n hn
-      rw [mem_filter] at hn
-      rcases hn with ⟨hn_Ico, hn_prime⟩
-      have hn2 : 2 ≤ n := (mem_Ico.mp hn_Ico).1
-      have hnlt : n < N := (mem_Ico.mp hn_Ico).2
-      refine ⟨n + 1, ?_, ?_⟩
-      · rw [mem_filter]
-        exact ⟨mem_range.mpr (by omega), hn_prime, by omega⟩
-      · omega
-    · intro p hp
-      rw [mem_filter] at hp
-      rcases hp with ⟨_, _, hp2⟩
-      have hcast : ((p - 1 : ℕ) : ℝ) = (p : ℝ) - 1 := by
-        rw [Nat.cast_sub (by omega : 1 ≤ p)]
-        norm_num
-      rw [hcast]
-  exact le_trans h_int_le_T hreindex.le
+  exact AnalyticNumberTheory.Sieve.prime_square_product_ge_int N
 
 /-- The local factor is at most 2 for every prime p. -/
 private lemma localFactor_le_two {p N : ℕ} (hp : p.Prime) : localFactor p N ≤ 2 := by
@@ -355,11 +220,7 @@ private lemma localFactor_le_two {p N : ℕ} (hp : p.Prime) : localFactor p N �
       · have : 2 ≤ p := hp.two_le
         omega
     by_cases hpdvd : p ∣ N
-    · rw [localFactor_of_dvd hp hp2 hpdvd]
-      have hp2' : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
-      have hp1 : (0 : ℝ) < (p : ℝ) - 1 := by linarith
-      field_simp [ne_of_gt hp1]
-      nlinarith
+    · exact (localFactor_dvd_le hp hp2 hpdvd).trans (by norm_num)
     · exact le_trans (le_of_lt (localFactor_not_dvd_lt_one hp hp2 hpdvd)) (by norm_num)
 
 /-- The local factor is at most 1 when the prime p does not divide N. -/
@@ -476,6 +337,7 @@ theorem singularSeries_bounded_above :
   intro N hN
   unfold singularSeries singularSeriesTruncated
   set A := (range (N + 1)).filter Nat.Prime with hA_def
+  have prime_of_mem_A {p : ℕ} (hp : p ∈ A) : p.Prime := (mem_filter.mp hp).2
   have hsplit := Finset.prod_filter_mul_prod_filter_not A (fun p => p ∣ N)
     (fun p => localFactor p N)
   -- First part (p | N): each of the ω(N) factors is at most 2.
@@ -488,16 +350,12 @@ theorem singularSeries_bounded_above :
               · intro p hp
                 rw [mem_filter] at hp
                 have hpA : p ∈ A := hp.1
-                have hpPrime : p.Prime := by
-                  rw [mem_filter] at hpA
-                  exact hpA.2
+                have hpPrime : p.Prime := prime_of_mem_A hpA
                 exact le_of_lt (localFactor_pos hpPrime)
               · intro p hp
                 rw [mem_filter] at hp
                 have hpA : p ∈ A := hp.1
-                have hpPrime : p.Prime := by
-                  rw [mem_filter] at hpA
-                  exact hpA.2
+                have hpPrime : p.Prime := prime_of_mem_A hpA
                 exact localFactor_le_two hpPrime
       _ = (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by
               rw [Finset.prod_const]
@@ -507,16 +365,12 @@ theorem singularSeries_bounded_above :
     · intro p hp
       rw [mem_filter] at hp
       have hpA : p ∈ A := hp.1
-      have hpPrime : p.Prime := by
-        rw [mem_filter] at hpA
-        exact hpA.2
+      have hpPrime : p.Prime := prime_of_mem_A hpA
       exact le_of_lt (localFactor_pos hpPrime)
     · intro p hp
       rw [mem_filter] at hp
       have hpA : p ∈ A := hp.1
-      have hpPrime : p.Prime := by
-        rw [mem_filter] at hpA
-        exact hpA.2
+      have hpPrime : p.Prime := prime_of_mem_A hpA
       exact localFactor_le_one_of_not_dvd hpPrime hp.2
   -- 2^ω(N) ≤ N
   have hpow : (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card ≤ (N : ℝ) := by
@@ -562,9 +416,7 @@ theorem singularSeries_bounded_above :
                 intro p hp
                 rw [mem_filter] at hp
                 have hpA : p ∈ A := hp.1
-                have hpPrime : p.Prime := by
-                  rw [mem_filter] at hpA
-                  exact hpA.2
+                have hpPrime : p.Prime := prime_of_mem_A hpA
                 exact le_of_lt (localFactor_pos hpPrime)
               have h4 : (0 : ℝ) ≤ (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by positivity
               exact mul_le_mul h1 h2 h3 h4

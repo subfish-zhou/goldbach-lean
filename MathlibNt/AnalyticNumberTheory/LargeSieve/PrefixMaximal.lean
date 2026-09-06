@@ -1,6 +1,7 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
  # Prefix-maximal weighted primitive-character large sieve
@@ -58,16 +59,43 @@ theorem norm_finset_sum_sq_le_card_mul_sum_norm_sq
     {ι : Type*} [DecidableEq ι] (s : Finset ι) (z : ι → ℂ) :
     ‖∑ i ∈ s, z i‖ ^ 2 ≤
       (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by
-  have hnorm : ‖∑ i ∈ s, z i‖ ≤ ∑ i ∈ s, ‖z i‖ := norm_sum_le s z
-  have hsq : ‖∑ i ∈ s, z i‖ ^ 2 ≤ (∑ i ∈ s, ‖z i‖) ^ 2 :=
-    pow_le_pow_left₀ (norm_nonneg _) hnorm 2
   calc
-    ‖∑ i ∈ s, z i‖ ^ 2 ≤ (∑ i ∈ s, ‖z i‖) ^ 2 := hsq
-    _ = (∑ i ∈ s, ‖z i‖ * 1) ^ 2 := by simp
-    _ ≤ (∑ i ∈ s, ‖z i‖ ^ 2) * ∑ _i ∈ s, (1 : ℝ) ^ 2 :=
-      Finset.sum_mul_sq_le_sq_mul_sq s (fun i => ‖z i‖) (fun _ => 1)
-    _ = (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by
-      simp [mul_comm]
+    ‖∑ i ∈ s, z i‖ ^ 2 ≤ (∑ i ∈ s, ‖z i‖) ^ 2 :=
+      pow_le_pow_left₀ (norm_nonneg _) (norm_sum_le s z) 2
+    _ ≤ (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by
+      simpa [mul_comm] using
+        Finset.sum_mul_sq_le_sq_mul_sq s (fun i => ‖z i‖) (fun _ => (1 : ℝ))
+
+open scoped ComplexConjugate in
+/-- Exact finite complex Cauchy--Schwarz, with no intervening `norm_sum_le`. -/
+theorem finiteComplexCauchy
+    {ι : Type*} [DecidableEq ι] (s : Finset ι) (a b : ι → ℂ) :
+    ‖∑ i ∈ s, a i * b i‖ ^ 2 ≤
+      (∑ i ∈ s, ‖a i‖ ^ 2) * (∑ i ∈ s, ‖b i‖ ^ 2) := by
+  let x : EuclideanSpace ℂ ↥s := WithLp.toLp 2 (fun i => conj (a i.1))
+  let y : EuclideanSpace ℂ ↥s := WithLp.toLp 2 (fun i => b i.1)
+  have hi : inner ℂ x y = ∑ i ∈ s, a i * b i := by
+    rw [PiLp.inner_apply]
+    simp only [x, y, RCLike.inner_apply]
+    rw [Finset.sum_subtype s (fun i => by rfl)]
+    apply Finset.sum_congr rfl
+    intro i hi
+    simp
+    ring
+  have hx : ‖x‖ ^ 2 = ∑ i ∈ s, ‖a i‖ ^ 2 := by
+    rw [EuclideanSpace.norm_sq_eq]
+    change (∑ i : ↥s, ‖conj (a i.1)‖ ^ 2) = _
+    simp only [Complex.norm_conj]
+    rw [Finset.sum_subtype s (fun i => by rfl)]
+  have hy : ‖y‖ ^ 2 = ∑ i ∈ s, ‖b i‖ ^ 2 := by
+    rw [EuclideanSpace.norm_sq_eq]
+    change (∑ i : ↥s, ‖b i.1‖ ^ 2) = _
+    rw [Finset.sum_subtype s (fun i => by rfl)]
+  have h := norm_inner_le_norm (𝕜 := ℂ) x y
+  rw [hi] at h
+  have hsq := pow_le_pow_left₀ (norm_nonneg (∑ i ∈ s, a i * b i)) h 2
+  rw [mul_pow, hx, hy] at hsq
+  exact hsq
 
 /-- Prefix square for one primitive character. -/
 def primitiveCharacterPrefixSquare (b : ℤ → ℂ) (M : ℤ) (y q : ℕ)
@@ -90,6 +118,18 @@ theorem primitiveCharacterPrefixSquare_le_max (b : ℤ → ℂ) (M : ℤ)
   unfold primitiveCharacterPrefixMaxSquare
   apply Finset.le_max'
   exact Finset.mem_image.mpr ⟨y, by simpa [Finset.mem_range] using hy, rfl⟩
+
+/-- Primitive prefix maxima are nonnegative. -/
+theorem primitiveCharacterPrefixMaxSquare_nonneg
+    (b : ℤ → ℂ) (M : ℤ) (N d : ℕ) (ψ : PrimitiveCharacter d) :
+    0 ≤ primitiveCharacterPrefixMaxSquare b M N d ψ := by
+  unfold primitiveCharacterPrefixMaxSquare
+  have h := Finset.le_max'
+    ((Finset.range (N + 1)).image
+      (fun y => primitiveCharacterPrefixSquare b M y d ψ))
+    (primitiveCharacterPrefixSquare b M 0 d ψ)
+    (Finset.mem_image.mpr ⟨0, by simp, rfl⟩)
+  simpa [primitiveCharacterPrefixSquare] using h
 
 /-- **Finite Rademacher--Menshov transfer for primitive characters.**
 
@@ -201,28 +241,13 @@ theorem weighted_primitive_prefix_maximal_of_interval_decomposition
               ‖∑ n ∈ Finset.Icc (blockStart i + 1)
                 (blockStart i + blockLength i),
                   b n * χ.1 (n : ZMod q)‖ ^ 2 := by
-        calc
-          _ = ∑ q ∈ Finset.Icc 1 Q, (L : ℝ) * ∑ i : ι,
-                ((q : ℝ) / (q.totient : ℝ)) *
-                  ∑ χ : PrimitiveCharacter q,
-                    ‖∑ n ∈ Finset.Icc (blockStart i + 1)
-                      (blockStart i + blockLength i),
-                        b n * χ.1 (n : ZMod q)‖ ^ 2 := by
-              apply Finset.sum_congr rfl
-              intro q hq
-              simp_rw [Finset.mul_sum]
-              rw [Finset.sum_comm]
-              ring_nf
-          _ = (L : ℝ) * ∑ q ∈ Finset.Icc 1 Q, ∑ i : ι,
-                ((q : ℝ) / (q.totient : ℝ)) *
-                  ∑ χ : PrimitiveCharacter q,
-                    ‖∑ n ∈ Finset.Icc (blockStart i + 1)
-                      (blockStart i + blockLength i),
-                        b n * χ.1 (n : ZMod q)‖ ^ 2 := by
-              rw [Finset.mul_sum]
-          _ = _ := by
-              congr 1
-              rw [Finset.sum_comm]
+        -- Distribute the unchanged weights, then exchange the finite block sums.
+        simp_rw [Finset.mul_sum]
+        rw [Finset.sum_comm (s := Finset.univ) (t := Finset.Icc 1 Q)]
+        apply Finset.sum_congr rfl
+        intro q hq
+        rw [Finset.sum_comm]
+        simp only [mul_left_comm]
     _ ≤ (L : ℝ) * (primitiveLargeSieveConstant N Q *
           ∑ i : ι, ∑ n ∈ Finset.Icc (blockStart i + 1)
             (blockStart i + blockLength i), ‖b n‖ ^ 2) := by

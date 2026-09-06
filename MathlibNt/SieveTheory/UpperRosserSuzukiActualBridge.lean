@@ -22,15 +22,7 @@ noncomputable def upperSuzukiUnnormalizedLayer
 private theorem upper_ceilDiv_ceilDiv_eq
     {D a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
     (D ⌈/⌉ a) ⌈/⌉ b = D ⌈/⌉ (a * b) := by
-  apply Nat.le_antisymm
-  · apply (ceilDiv_le_iff_le_mul hb).2
-    apply (ceilDiv_le_iff_le_mul ha).2
-    rw [← mul_assoc]
-    exact (ceilDiv_le_iff_le_mul (Nat.mul_pos ha hb)).1 le_rfl
-  · apply (ceilDiv_le_iff_le_mul (Nat.mul_pos ha hb)).2
-    rw [mul_assoc]
-    exact (ceilDiv_le_iff_le_mul ha).1
-      ((ceilDiv_le_iff_le_mul hb).1 le_rfl)
+  exact MathlibNt.SieveTheory.ceilDiv_ceilDiv_eq ha hb
 
 private theorem upperSuzukiUnnormalizedLayer_succ
     (S : BoundingSieve) (D z k : ℕ) :
@@ -145,6 +137,7 @@ private theorem upperSuzukiUnnormalizedLayer_succ
           simp_rw [Finset.mul_sum]
           apply Finset.sum_congr rfl
           intro p₀ hp₀
+          have hp₀z : p₀ < z := (Finset.mem_filter.mp hp₀).2
           by_cases hcut : p₀ ^ 3 < D
           · rw [if_pos hcut]
             apply Finset.sum_congr
@@ -154,9 +147,11 @@ private theorem upperSuzukiUnnormalizedLayer_succ
               · rintro ⟨⟨hp₁S, hp₁z⟩, hp₁p₀, _⟩
                 exact ⟨hp₁S, hp₁p₀⟩
               · rintro ⟨hp₁S, hp₁p₀⟩
-                exact ⟨⟨hp₁S, hp₁p₀.trans (Finset.mem_filter.mp hp₀).2⟩,
+                exact ⟨⟨hp₁S, hp₁p₀.trans hp₀z⟩,
                   hp₁p₀, hcut⟩
             · intro p₁ hp₁
+              have hp₁p₀ : p₁ < p₀ := (Finset.mem_filter.mp hp₁).2
+              have hp₁z : p₁ < z := hp₁p₀.trans hp₀z
               apply Finset.sum_congr
               · ext q
                 simp only [Z, suzukiSupportedBelow, Finset.mem_filter]
@@ -164,8 +159,7 @@ private theorem upperSuzukiUnnormalizedLayer_succ
                 · rintro ⟨⟨hqS, hqz⟩, hqp₁⟩
                   exact ⟨hqS, hqp₁⟩
                 · rintro ⟨hqS, hqp₁⟩
-                  exact ⟨⟨hqS, hqp₁.trans
-                    (Finset.mem_filter.mp hp₁).2 |>.trans (Finset.mem_filter.mp hp₀).2⟩,
+                  exact ⟨⟨hqS, hqp₁.trans hp₁z⟩,
                     hqp₁⟩
               · intro q hq
                 have hcarrier :
@@ -177,9 +171,7 @@ private theorem upperSuzukiUnnormalizedLayer_succ
                   · rintro ⟨⟨⟨hpS, hpz⟩, hqp⟩, hpp₁⟩
                     exact ⟨⟨hpS, hpp₁⟩, hqp⟩
                   · rintro ⟨⟨hpS, hpp₁⟩, hqp⟩
-                    exact ⟨⟨⟨hpS, hpp₁.trans
-                      ((Finset.mem_filter.mp hp₁).2.trans
-                        (Finset.mem_filter.mp hp₀).2)⟩, hqp⟩, hpp₁⟩
+                    exact ⟨⟨⟨hpS, hpp₁.trans hp₁z⟩, hqp⟩, hpp₁⟩
                 rw [hcarrier]
                 ring
           · rw [if_neg hcut]
@@ -202,60 +194,58 @@ theorem suzukiSourceV_odd_eq_upperSuzukiUnnormalizedLayer
     (S : BoundingSieve) (D z k : ℕ) (hD : 1 < D) :
     suzukiSourceV S (2 * k + 1) D z =
       upperSuzukiUnnormalizedLayer S D z k := by
-  induction k using Nat.strong_induction_on generalizing D z with
-  | h k ih =>
-      cases k with
-      | zero =>
-          classical
-          rw [show 2 * 0 + 1 = 1 by omega, suzukiSourceV_one]
-          change (∑ q ∈ (suzukiSupportedBelow S z).filter (fun q => D ≤ q ^ 3),
-              S.nu q * sourceDiscreteEuler S q) =
-            ∑ q ∈ suzukiSupportedBelow S z,
-              S.nu q * sourceDiscreteEuler S q *
-                upperRosserBoundaryChainsFixedDepthDensity S.nu D q
-                  ((suzukiSupportedBelow S z).filter (fun p => q < p)) 0
-          rw [Finset.sum_filter]
-          apply Finset.sum_congr rfl
-          intro q hq
-          have hqprime : q.Prime :=
-            Nat.prime_of_mem_primeFactors (Finset.mem_filter.mp hq).1
-          rw [upperRosserBoundaryChainsFixedDepthDensity_zero S.nu hD
-            (by simp) hqprime]
-          · by_cases hcube : D ≤ q ^ 3 <;> simp [hcube]
-          · intro p hp
-            exact (Finset.mem_filter.mp hp).2.le
-      | succ k =>
-          rw [show 2 * (k + 1) + 1 = (2 * k + 2) + 1 by omega,
-            suzukiSourceV_odd_succ_eq_upper_only S (by omega)
-              (show Odd (2 * k + 3) from ⟨k + 1, by omega⟩)]
-          rw [upperSuzukiUnnormalizedLayer_succ]
-          apply Finset.sum_congr rfl
-          intro p₀ hp₀
-          apply congrArg (fun x : ℝ => S.nu p₀ * x)
-          rw [suzukiSourceV_succ_eq_unrestricted S (by omega)
-            (by
-              intro hodd
-              exact (Nat.not_odd_iff_even.mpr
-                (show Even (2 * k + 2) from ⟨k + 1, by omega⟩) hodd).elim)]
-          apply Finset.sum_congr rfl
-          intro p₁ hp₁
-          have hp₀pos : 0 < p₀ := (Nat.prime_of_mem_primeFactors
-            (Finset.mem_filter.mp (Finset.mem_filter.mp hp₀).1).1).pos
-          have hp₁prime : p₁.Prime := Nat.prime_of_mem_primeFactors
-            (Finset.mem_filter.mp hp₁).1
-          have hDres : 1 < (D ⌈/⌉ p₀) ⌈/⌉ p₁ := by
-            have hcut : p₀ ^ 3 < D := (Finset.mem_filter.mp hp₀).2
-            have hp₁p₀ : p₁ < p₀ := (Finset.mem_filter.mp hp₁).2
-            have hle : p₀ ≤ (D ⌈/⌉ p₀) ⌈/⌉ p₁ := by
-              by_contra hn
-              have hc : (D ⌈/⌉ p₀) ⌈/⌉ p₁ < p₀ := Nat.lt_of_not_ge hn
-              have hmul₁ := (ceilDiv_le_iff_le_mul hp₁prime.pos).1 hc.le
-              have hmul₀ := (ceilDiv_le_iff_le_mul hp₀pos).1 hmul₁
-              have hp₁le : p₁ ≤ p₀ := hp₁p₀.le
-              nlinarith [hp₁prime.two_le]
-            exact hp₁prime.one_lt.trans_le (hp₁p₀.le.trans hle)
-          rw [ih k (Nat.lt_succ_self k) ((D ⌈/⌉ p₀) ⌈/⌉ p₁) p₁ hDres,
-            upper_ceilDiv_ceilDiv_eq hp₀pos hp₁prime.pos]
+  induction k generalizing D z with
+  | zero =>
+      classical
+      rw [show 2 * 0 + 1 = 1 by omega, suzukiSourceV_one]
+      change (∑ q ∈ (suzukiSupportedBelow S z).filter (fun q => D ≤ q ^ 3),
+          S.nu q * sourceDiscreteEuler S q) =
+        ∑ q ∈ suzukiSupportedBelow S z,
+          S.nu q * sourceDiscreteEuler S q *
+            upperRosserBoundaryChainsFixedDepthDensity S.nu D q
+              ((suzukiSupportedBelow S z).filter (fun p => q < p)) 0
+      rw [Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro q hq
+      have hqprime : q.Prime :=
+        Nat.prime_of_mem_primeFactors (Finset.mem_filter.mp hq).1
+      rw [upperRosserBoundaryChainsFixedDepthDensity_zero S.nu hD
+        (by simp) hqprime]
+      · by_cases hcube : D ≤ q ^ 3 <;> simp [hcube]
+      · intro p hp
+        exact (Finset.mem_filter.mp hp).2.le
+  | succ k ih =>
+      rw [show 2 * (k + 1) + 1 = (2 * k + 2) + 1 by omega,
+        suzukiSourceV_odd_succ_eq_upper_only S (by omega)
+          (show Odd (2 * k + 3) from ⟨k + 1, by omega⟩)]
+      rw [upperSuzukiUnnormalizedLayer_succ]
+      apply Finset.sum_congr rfl
+      intro p₀ hp₀
+      apply congrArg (fun x : ℝ => S.nu p₀ * x)
+      rw [suzukiSourceV_succ_eq_unrestricted S (by omega)
+        (by
+          intro hodd
+          exact (Nat.not_odd_iff_even.mpr
+            (show Even (2 * k + 2) from ⟨k + 1, by omega⟩) hodd).elim)]
+      apply Finset.sum_congr rfl
+      intro p₁ hp₁
+      have hp₀pos : 0 < p₀ := (Nat.prime_of_mem_primeFactors
+        (Finset.mem_filter.mp (Finset.mem_filter.mp hp₀).1).1).pos
+      have hp₁prime : p₁.Prime := Nat.prime_of_mem_primeFactors
+        (Finset.mem_filter.mp hp₁).1
+      have hDres : 1 < (D ⌈/⌉ p₀) ⌈/⌉ p₁ := by
+        have hcut : p₀ ^ 3 < D := (Finset.mem_filter.mp hp₀).2
+        have hp₁p₀ : p₁ < p₀ := (Finset.mem_filter.mp hp₁).2
+        have hle : p₀ ≤ (D ⌈/⌉ p₀) ⌈/⌉ p₁ := by
+          by_contra hn
+          have hc : (D ⌈/⌉ p₀) ⌈/⌉ p₁ < p₀ := Nat.lt_of_not_ge hn
+          have hmul₁ := (ceilDiv_le_iff_le_mul hp₁prime.pos).1 hc.le
+          have hmul₀ := (ceilDiv_le_iff_le_mul hp₀pos).1 hmul₁
+          have hp₁le : p₁ ≤ p₀ := hp₁p₀.le
+          nlinarith [hp₁prime.two_le]
+        exact hp₁prime.one_lt.trans_le (hp₁p₀.le.trans hle)
+      rw [ih ((D ⌈/⌉ p₀) ⌈/⌉ p₁) p₁ hDres,
+        upper_ceilDiv_ceilDiv_eq hp₀pos hp₁prime.pos]
 
 /-- The actual odd Suzuki parity aggregate is the finite sum of the first `m`
 production upper-boundary pair layers. -/

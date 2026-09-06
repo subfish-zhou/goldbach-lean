@@ -1,6 +1,7 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedNonquadraticErrorAssembly
 import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedPsiClose
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
 
 open Set Function Filter Complex Real MeasureTheory
 
@@ -215,7 +216,7 @@ theorem eventually_nonquadraticPointwiseSW_leftEdge
     _ ≤ (N : ℝ) * (Real.log (N : ℝ) ^ E)⁻¹ := by gcongr
     _ = (N : ℝ) / Real.log (N : ℝ) ^ E := by rw [div_eq_mul_inv]
 
-private theorem rpow_one_add_inv_log_nat (N : ℕ) (hN : 1 < N) :
+theorem rpow_one_add_inv_log_nat (N : ℕ) (hN : 1 < N) :
     (N : ℝ) ^ (1 + (Real.log (N : ℝ))⁻¹) = Real.exp 1 * N := by
   have hNr : (0 : ℝ) < N := by exact_mod_cast (Nat.zero_lt_of_lt hN)
   have hlog : Real.log (N : ℝ) ≠ 0 := (Real.log_pos (by exact_mod_cast hN)).ne'
@@ -383,6 +384,12 @@ theorem exists_nonquadraticExactPrefix_of_four_payments
     _ ≤ 3 * K₀ * R + C₀ * R := add_le_add hsmoothed hremove
     _ ≤ K * R := by dsimp only [K]; nlinarith
 
+/-- A fixed logarithmic power is eventually bounded by the square root.
+This scalar estimate is independent of the conductor and character. -/
+private theorem eventually_log_pow_le_sqrt_nat (k : ℕ) :
+    ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ k ≤ Real.sqrt N := by
+  exact log_pow_le_sqrt_eventually k
+
 /-- At the strengthened loss `P = D + 20`, the prescribed polylogarithmic
 height, reciprocal-log displacement, and smoothing width pay all four contour
 terms against the common target `N / log(N)^D`, uniformly in the conductor. -/
@@ -411,19 +418,7 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
   have hpoly := hlogtop.eventually
     (eventually_ge_atTop (max (Real.exp 1) (max (A ^ 11) 4)))
-  have hsqrtReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * (P + 4))).eventuallyLE
-  have hsqrtNat := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtReal
-  have hsqrt : ∀ᶠ N : ℕ in atTop,
-      Real.log (N : ℝ) ^ (P + 4) ≤ Real.sqrt N := by
-    filter_upwards [hsqrtNat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * (P + 4) = (P + 4) * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
+  have hsqrt := eventually_log_pow_le_sqrt_nat (P + 4)
   filter_upwards [hleft, hpoly, hsqrt, eventually_ge_atTop (4 : ℕ)] with
       N hleft hLlarge hsqrt hN
   intro q _inst hq
@@ -438,6 +433,7 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
     hexpL
   have hA : 0 ≤ A := by dsimp only [A]; positivity
   have hA11 : A ^ 11 ≤ L := (le_max_left _ _).trans ((le_max_right _ _).trans hLlarge)
+  have h4L : (4 : ℝ) ≤ L := (le_max_right _ _).trans ((le_max_right _ _).trans hLlarge)
   have hlogL : Real.log L ≤ L := Real.log_le_self hLpos.le
   have hLM0 := dirichletLTwistedSmoothedConductorLogLM_le_loglog_pointwise
     C P N q hexpL hq
@@ -498,7 +494,6 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
         field_simp
         dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]
         ring_nf
-        have h4L : (4 : ℝ) ≤ L := (le_max_right _ _).trans ((le_max_right _ _).trans hLlarge)
         calc
           L ^ 35 * L ^ (D * 2) * 4 ≤ L ^ 35 * L ^ (D * 2) * L := by gcongr
           _ ≤ L ^ 140 * L ^ (D * 4) := by
@@ -530,7 +525,6 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
         field_simp
         dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]
         ring_nf
-        have h4L : (4 : ℝ) ≤ L := (le_max_right _ _).trans ((le_max_right _ _).trans hLlarge)
         have h8L2 : (8 : ℝ) ≤ L ^ 2 := by
           calc
             (8 : ℝ) ≤ 4 ^ 2 := by norm_num
@@ -549,7 +543,6 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
     exact pow_le_pow_right₀ hL1 (by omega)
   have hT3 : 3 ≤ T := by
     rw [hT]
-    have h4L : (4 : ℝ) ≤ L := (le_max_right _ _).trans ((le_max_right _ _).trans hLlarge)
     have hLB : L ≤ L ^ B := by
       simpa only [pow_one] using pow_le_pow_right₀ hL1 (show 1 ≤ B by
         dsimp only [B, nonquadraticPointwiseSWHeightExponent]; omega)
@@ -566,8 +559,7 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
     have hsqrtpos : 0 < Real.sqrt (N : ℝ) := Real.sqrt_pos.2 (by positivity)
     rw [← div_eq_mul_inv]
     apply (lt_div_iff₀ (pow_pos hLpos _)).2
-    have h2L : (2 : ℝ) ≤ L := (show (2 : ℝ) ≤ 4 by norm_num).trans
-      ((le_max_right _ _).trans ((le_max_right _ _).trans hLlarge))
+    have h2L : (2 : ℝ) ≤ L := (show (2 : ℝ) ≤ 4 by norm_num).trans h4L
     calc
       2 * L ^ (P + 3) ≤ L * L ^ (P + 3) :=
         mul_le_mul_of_nonneg_right h2L (pow_nonneg hLpos.le _)
@@ -600,34 +592,9 @@ theorem exists_nonquadraticPointwiseSiegelWalfisz_uniform
   let K : ℝ := K₀ + 2 * c
   refine ⟨K, by dsimp only [K, c]; positivity, ?_⟩
   have hpay := eventually_nonquadraticPointwiseSW_four_payments C D
-  have hsqrtReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * D)).eventuallyLE
-  have hsqrtNat := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtReal
-  have hsqrt : ∀ᶠ N : ℕ in atTop,
-      Real.log (N : ℝ) ^ D ≤ Real.sqrt N := by
-    filter_upwards [hsqrtNat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * D = D * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
+  have hsqrt := eventually_log_pow_le_sqrt_nat D
   let P := D + 20
-  have hsqrtStrongReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * (P + 4))).eventuallyLE
-  have hsqrtStrongNat :=
-    (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtStrongReal
-  have hsqrtStrong : ∀ᶠ N : ℕ in atTop,
-      Real.log (N : ℝ) ^ (P + 4) ≤ Real.sqrt N := by
-    filter_upwards [hsqrtStrongNat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * (P + 4) = (P + 4) * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
+  have hsqrtStrong := eventually_log_pow_le_sqrt_nat (P + 4)
   have hlogtop : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
   have hlog4ev := hlogtop.eventually (eventually_ge_atTop (4 : ℝ))

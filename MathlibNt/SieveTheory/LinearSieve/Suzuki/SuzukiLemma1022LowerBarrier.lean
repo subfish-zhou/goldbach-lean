@@ -187,21 +187,15 @@ theorem lemma10_22_lower_barrier_eventually_of_kernel
             c * Real.log (s + Real.exp 1))) *
               Real.exp ((∫ t in b..s, xi (t / b)) +
                 c * Real.log (s + Real.exp 1)) = L := by
-        let A : ℝ := (∫ t in b..s, xi (t / b)) +
+        let phase : ℝ := (∫ t in b..s, xi (t / b)) +
           c * Real.log (s + Real.exp 1)
         have hneg : -(∫ t in b..s, xi (t / b)) -
-            c * Real.log (s + Real.exp 1) = -A := by
-          dsimp [A]
+            c * Real.log (s + Real.exp 1) = -phase := by
+          dsimp [phase]
           ring
         rw [hneg]
-        change (L * Real.exp (-A)) * Real.exp A = L
-        calc
-          (L * Real.exp (-A)) * Real.exp A =
-              L * (Real.exp (-A) * Real.exp A) := by ring
-          _ = L * Real.exp (-A + A) := by
-            congr 1
-            exact (Real.exp_add (-A) A).symm
-          _ = L := by rw [neg_add_cancel, Real.exp_zero, mul_one]
+        change (L * Real.exp (-phase)) * Real.exp phase = L
+        rw [mul_assoc, ← Real.exp_add, neg_add_cancel, Real.exp_zero, mul_one]
       rw [hcancel]
       exact hbar
     exact lt_of_mul_lt_mul_right hmul hepos.le

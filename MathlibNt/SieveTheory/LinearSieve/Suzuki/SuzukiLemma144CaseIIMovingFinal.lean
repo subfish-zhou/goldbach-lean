@@ -14,63 +14,14 @@ open SwitchingPrinciple.SuzukiLemma144KappaOne
 
 set_option maxHeartbeats 3000000
 
-private theorem sourceParityIndices_eq_actualParityCarrier (n : ℕ) :
-    sourceParityIndices n = suzukiActualParityCarrier n := by
-  ext m
-  simp [sourceParityIndices, suzukiActualParityCarrier]
-  omega
-
 private theorem caseII_raw_cubic_scale
     (S : BoundingSieve) {D Dmin : ℕ} {d : ℝ}
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
     CarrierQuotientThresholdGeometry
       (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (3 : ℝ))⌉₊)
       D Dmin (sourceSigma (D : ℝ) d) 3 := by
-  intro p hp
-  have hp' := hp
-  simp only [sigmaOneCarrier, Finset.mem_filter] at hp'
-  have hD1 : (1 : ℝ) ≤ (D : ℝ) := by
-    exact_mod_cast (show 1 ≤ D by nlinarith)
-  have hrootOrder : (D : ℝ) ^ (1 / (3 : ℝ)) ≤
-      (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    rpow_one_div_mono_of_le hD1 (by norm_num) (by norm_num)
-  have hpRoot : (p : ℝ) < (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    hp'.2.2.trans_le hrootOrder
-  have hsquareR : (p : ℝ) ^ (2 : ℕ) < (D : ℝ) := by
-    have hiff := Real.lt_rpow_inv_iff_of_pos
-      (x := (p : ℝ)) (y := (D : ℝ)) (z := (2 : ℝ))
-      (by positivity) (by positivity) (by norm_num)
-    norm_num [one_div] at hiff hpRoot ⊢
-    exact hiff.mp hpRoot
-  have hsquare : p ^ 2 < D := by exact_mod_cast hsquareR
-  by_cases hminp : Dmin ≤ p
-  · calc
-      Dmin * p ≤ p * p := Nat.mul_le_mul_right p hminp
-      _ = p ^ 2 := by ring
-      _ ≤ D := Nat.le_of_lt hsquare
-  · have hpmin : p < Dmin := Nat.lt_of_not_ge hminp
-    calc
-      Dmin * p ≤ Dmin * Dmin := Nat.mul_le_mul_left Dmin (Nat.le_of_lt hpmin)
-      _ = Dmin ^ 2 := by ring
-      _ ≤ D := hD
-
-private theorem caseII_raw_inherited_gt_two
-    {D p : ℕ} (hp : 2 ≤ p) (hD : 1 < D)
-    (hupper : (p : ℝ) < (D : ℝ) ^ (1 / (3 : ℝ))) :
-    2 < inheritedCoordinate D p := by
-  have hpR : (0 : ℝ) < (p : ℝ) := by positivity
-  have hDR : (0 : ℝ) < (D : ℝ) := by positivity
-  have hlogp : 0 < Real.log (p : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < p by omega))
-  have hloglt := Real.strictMonoOn_log (show (p : ℝ) ∈ Set.Ioi 0 by exact hpR)
-    (show (D : ℝ) ^ (1 / (3 : ℝ)) ∈ Set.Ioi 0 by
-      exact Real.rpow_pos_of_pos hDR _)
-    hupper
-  rw [Real.log_rpow hDR] at hloglt
-  unfold inheritedCoordinate
-  rw [lt_sub_iff_add_lt, lt_div_iff₀ hlogp]
-  norm_num [one_div] at hloglt ⊢
-  nlinarith
+  exact MathlibNt.SieveTheory.caseII_cubic_carrier_quotient_scale
+    (D := D) (Dmin := Dmin) (d := d) S hDmin hD
 
 /-- The genuine large-parameter raw rounded Case-II producer.  Its cutoff is
 chosen before `D`, `N`, and `s`; the only recursive input left at a particular

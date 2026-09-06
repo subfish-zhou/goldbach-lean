@@ -57,25 +57,19 @@ lemma blockWeightedPrimitiveSquareLedger_nonneg
 private theorem primitiveCharacter_card_le_totient_typeIIBlock
     (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  letI : NeZero q := ⟨hq.ne'⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _
-    _ = q.totient := by
-      rw [← Nat.card_eq_fintype_card]
-      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ q
+  exact primitiveCharacter_card_le_totient_basic q hq
 
-/-- Honest block Cauchy.  The `Q²` is conductor/character mass; there is no
-conductor-local diagonal saving in this statement. -/
-theorem typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
-    (a : ℤ → ℂ) (N Q : ℕ) (S : Finset ℕ)
+/-- The two finite Cauchy steps depend only on the conductor/character
+mass, so the same square ledger serves prefix amplitudes and collected shells. -/
+private theorem blockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
+    (F : (q : ℕ) → PrimitiveCharacter q → ℝ) (Q : ℕ) (S : Finset ℕ)
     (hS : S ⊆ Finset.Icc 1 Q) :
-    typeIIBlockWeightedPrimitiveMean a N S ^ 2 ≤
-      (Q : ℝ) ^ 2 * blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S := by
+    (∑ q ∈ S, ((q : ℝ) / (q.totient : ℝ)) *
+      ∑ χ : PrimitiveCharacter q, F q χ) ^ 2 ≤
+      (Q : ℝ) ^ 2 * blockWeightedPrimitiveSquareLedger F S := by
   let X : ℕ → ℝ := fun q =>
     ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ
+      ∑ χ : PrimitiveCharacter q, F q χ
   have houter : (∑ q ∈ S, X q) ^ 2 ≤
       (S.card : ℝ) * ∑ q ∈ S, X q ^ 2 := by
     simpa [mul_comm] using Finset.sum_mul_sq_le_sq_mul_sq
@@ -85,7 +79,7 @@ theorem typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
   have hpoint : ∀ q ∈ S, X q ^ 2 ≤
       (Q : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
         ∑ χ : PrimitiveCharacter q,
-          primitivePrefixAmplitude a N q χ ^ 2) := by
+          F q χ ^ 2) := by
     intro q hqmem
     have hqfull := hS hqmem
     have hq : 0 < q := (Finset.mem_Icc.mp hqfull).1
@@ -93,38 +87,38 @@ theorem typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
     have hφnat : 0 < q.totient := Nat.totient_pos.mpr hq
     have hφ : 0 < (q.totient : ℝ) := by exact_mod_cast hφnat
     have hcs : (∑ χ : PrimitiveCharacter q,
-        primitivePrefixAmplitude a N q χ) ^ 2 ≤
+        F q χ) ^ 2 ≤
         (Fintype.card (PrimitiveCharacter q) : ℝ) *
           ∑ χ : PrimitiveCharacter q,
-            primitivePrefixAmplitude a N q χ ^ 2 := by
+            F q χ ^ 2 := by
       simpa [mul_comm] using Finset.sum_mul_sq_le_sq_mul_sq
         (Finset.univ : Finset (PrimitiveCharacter q))
-        (fun χ => primitivePrefixAmplitude a N q χ) (fun _ => (1 : ℝ))
+        (fun χ => F q χ) (fun _ => (1 : ℝ))
     have hcard : (Fintype.card (PrimitiveCharacter q) : ℝ) ≤ q.totient := by
       exact_mod_cast primitiveCharacter_card_le_totient_typeIIBlock q hq
     have hsum : 0 ≤ ∑ χ : PrimitiveCharacter q,
-        primitivePrefixAmplitude a N q χ ^ 2 :=
+        F q χ ^ 2 :=
       Finset.sum_nonneg fun _ _ => sq_nonneg _
     have hcs' : (∑ χ : PrimitiveCharacter q,
-        primitivePrefixAmplitude a N q χ) ^ 2 ≤
+        F q χ) ^ 2 ≤
         (q.totient : ℝ) * ∑ χ : PrimitiveCharacter q,
-          primitivePrefixAmplitude a N q χ ^ 2 :=
+          F q χ ^ 2 :=
       hcs.trans (mul_le_mul_of_nonneg_right hcard hsum)
     dsimp [X]
     rw [mul_pow]
     calc
       ((q : ℝ) / (q.totient : ℝ)) ^ 2 *
-          (∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ) ^ 2 ≤
+          (∑ χ : PrimitiveCharacter q, F q χ) ^ 2 ≤
         ((q : ℝ) / (q.totient : ℝ)) ^ 2 *
           ((q.totient : ℝ) * ∑ χ : PrimitiveCharacter q,
-            primitivePrefixAmplitude a N q χ ^ 2) :=
+            F q χ ^ 2) :=
         mul_le_mul_of_nonneg_left hcs' (sq_nonneg _)
       _ = (q : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter q,
-            primitivePrefixAmplitude a N q χ ^ 2) := by field_simp
+            F q χ ^ 2) := by field_simp
       _ ≤ (Q : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter q,
-            primitivePrefixAmplitude a N q χ ^ 2) := by gcongr
+            F q χ ^ 2) := by gcongr
   change (∑ q ∈ S, X q) ^ 2 ≤ _
   calc
     (∑ q ∈ S, X q) ^ 2 ≤ (S.card : ℝ) * ∑ q ∈ S, X q ^ 2 := houter
@@ -132,22 +126,43 @@ theorem typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
     _ ≤ (Q : ℝ) * ∑ q ∈ S,
         (Q : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter q,
-            primitivePrefixAmplitude a N q χ ^ 2) := by
+            F q χ ^ 2) := by
       gcongr with q hq
       exact hpoint q hq
     _ = (Q : ℝ) ^ 2 * blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S := by
+        (fun q χ => F q χ) S := by
       unfold blockWeightedPrimitiveSquareLedger
       calc
         _ = ∑ q ∈ S, (Q : ℝ) ^ 2 *
             (((q : ℝ) / (q.totient : ℝ)) *
               ∑ χ : PrimitiveCharacter q,
-                primitivePrefixAmplitude a N q χ ^ 2) := by
+                F q χ ^ 2) := by
           rw [Finset.mul_sum]
           apply Finset.sum_congr rfl
           intro q hq
           ring
         _ = _ := by rw [Finset.mul_sum]
+
+private theorem blockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
+    (F : (q : ℕ) → PrimitiveCharacter q → ℝ) (Q : ℕ) (S : Finset ℕ)
+    (hS : S ⊆ Finset.Icc 1 Q) :
+    (∑ q ∈ S, ((q : ℝ) / (q.totient : ℝ)) *
+      ∑ χ : PrimitiveCharacter q, F q χ) ≤
+      (Q : ℝ) * Real.sqrt (blockWeightedPrimitiveSquareLedger F S) := by
+  apply le_of_sq_le_sq _ (by positivity)
+  rw [mul_pow, Real.sq_sqrt (blockWeightedPrimitiveSquareLedger_nonneg F S)]
+  exact blockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger F Q S hS
+
+/-- Honest block Cauchy.  The `Q²` is conductor/character mass; there is no
+conductor-local diagonal saving in this statement. -/
+theorem typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
+    (a : ℤ → ℂ) (N Q : ℕ) (S : Finset ℕ)
+    (hS : S ⊆ Finset.Icc 1 Q) :
+    typeIIBlockWeightedPrimitiveMean a N S ^ 2 ≤
+      (Q : ℝ) ^ 2 * blockWeightedPrimitiveSquareLedger
+        (fun q χ => primitivePrefixAmplitude a N q χ) S := by
+  exact blockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
+    (fun q χ => primitivePrefixAmplitude a N q χ) Q S hS
 
 /-- Unsquared form of block Cauchy. -/
 theorem typeIIBlockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
@@ -156,29 +171,8 @@ theorem typeIIBlockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
     typeIIBlockWeightedPrimitiveMean a N S ≤
       (Q : ℝ) * Real.sqrt (blockWeightedPrimitiveSquareLedger
         (fun q χ => primitivePrefixAmplitude a N q χ) S) := by
-  have hs := typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger a N Q S hS
-  have hm := typeIIBlockWeightedPrimitiveMean_nonneg a N S
-  have hl := blockWeightedPrimitiveSquareLedger_nonneg
-    (fun q χ => primitivePrefixAmplitude a N q χ) S
-  have ht0 : 0 ≤ (Q : ℝ) * Real.sqrt
-      (blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S) := by positivity
-  have ht : ((Q : ℝ) * Real.sqrt
-      (blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S)) ^ 2 =
-      (Q : ℝ) ^ 2 * blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S := by
-    rw [mul_pow, Real.sq_sqrt hl]
-  by_contra hn
-  have hlt := lt_of_not_ge hn
-  have hmeanpos : 0 < typeIIBlockWeightedPrimitiveMean a N S := ht0.trans_lt hlt
-  have hsq_lt : ((Q : ℝ) * Real.sqrt
-      (blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S)) ^ 2 <
-      typeIIBlockWeightedPrimitiveMean a N S ^ 2 := by
-    nlinarith
-  rw [ht] at hsq_lt
-  exact (not_lt_of_ge hs) hsq_lt
+  exact blockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
+    (fun q χ => primitivePrefixAmplitude a N q χ) Q S hS
 
 /-- Exact production collected-shell weighted first moment on a finite conductor
 block. -/
@@ -305,116 +299,14 @@ theorem blockWeightedVaughanActualCollectedShellMean_le_ordinaryLS
     exact Finset.mem_Icc.mpr ⟨by omega, h.2⟩
   have hsquare := blockWeightedVaughanActualCollectedShell_squareLedger_le
     N u v k l R hR S hS
-  have hmeanSq : blockWeightedVaughanActualCollectedShellMean N u v k l S ^ 2 ≤
-      ((2 * R : ℕ) : ℝ) ^ 2 *
-        (∑ q ∈ S, ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ : PrimitiveCharacter q,
-            vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) := by
-    -- Same two finite Cauchy steps as the generic theorem, specialized to
-    -- `sqrt collectedPrefixMaxSquare`.
-    let X : ℕ → ℝ := fun q => ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q,
-        Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ)
-    have houter : (∑ q ∈ S, X q) ^ 2 ≤
-        (S.card : ℝ) * ∑ q ∈ S, X q ^ 2 := by
-      simpa [mul_comm] using Finset.sum_mul_sq_le_sq_mul_sq S X (fun _ => (1 : ℝ))
-    have hcardS : (S.card : ℝ) ≤ (2 * R : ℕ) := by
-      exact_mod_cast (Finset.card_le_card hcap).trans (by simp)
-    have hpoint : ∀ q ∈ S, X q ^ 2 ≤
-        ((2 * R : ℕ) : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ : PrimitiveCharacter q,
-            vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) := by
-      intro q hqmem
-      have hqfull := hcap hqmem
-      have hq : 0 < q := (Finset.mem_Icc.mp hqfull).1
-      have hqQ : q ≤ 2 * R := (Finset.mem_Icc.mp hqfull).2
-      have hφnat : 0 < q.totient := Nat.totient_pos.mpr hq
-      have hφ : 0 < (q.totient : ℝ) := by exact_mod_cast hφnat
-      have hcs := Finset.sum_mul_sq_le_sq_mul_sq
-        (Finset.univ : Finset (PrimitiveCharacter q))
-        (fun χ => Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ))
-        (fun _ => (1 : ℝ))
-      have hsum0 : 0 ≤ ∑ χ : PrimitiveCharacter q,
-          vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ :=
-        Finset.sum_nonneg fun χ hχ =>
-          vaughanCanonicalCollectedPrefixMaxSquare_nonneg N u v k l q χ
-      have hchars : (∑ χ : PrimitiveCharacter q,
-          Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ)) ^ 2 ≤
-          (q.totient : ℝ) * ∑ χ : PrimitiveCharacter q,
-            vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ := by
-        calc
-          _ ≤ (Fintype.card (PrimitiveCharacter q) : ℝ) *
-              ∑ χ : PrimitiveCharacter q,
-                (Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare
-                  N u v k l q χ)) ^ 2 := by simpa [mul_comm] using hcs
-          _ = (Fintype.card (PrimitiveCharacter q) : ℝ) *
-              ∑ χ : PrimitiveCharacter q,
-                vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ := by
-            congr 1
-            apply Finset.sum_congr rfl
-            intro χ hχ
-            rw [Real.sq_sqrt]
-            exact vaughanCanonicalCollectedPrefixMaxSquare_nonneg N u v k l q χ
-          _ ≤ (q.totient : ℝ) * ∑ χ : PrimitiveCharacter q,
-              vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ := by
-            gcongr
-            exact_mod_cast primitiveCharacter_card_le_totient_typeIIBlock q hq
-      dsimp [X]
-      rw [mul_pow]
-      calc
-        ((q : ℝ) / (q.totient : ℝ)) ^ 2 *
-            (∑ χ : PrimitiveCharacter q,
-              Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ)) ^ 2 ≤
-          ((q : ℝ) / (q.totient : ℝ)) ^ 2 *
-            ((q.totient : ℝ) * ∑ χ : PrimitiveCharacter q,
-              vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) :=
-          mul_le_mul_of_nonneg_left hchars (sq_nonneg _)
-        _ = (q : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q,
-              vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) := by field_simp
-        _ ≤ ((2 * R : ℕ) : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q,
-              vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) := by gcongr
-    change (∑ q ∈ S, X q) ^ 2 ≤ _
-    calc
-      _ ≤ (S.card : ℝ) * ∑ q ∈ S, X q ^ 2 := houter
-      _ ≤ ((2 * R : ℕ) : ℝ) * ∑ q ∈ S, X q ^ 2 := by gcongr
-      _ ≤ ((2 * R : ℕ) : ℝ) * ∑ q ∈ S,
-          ((2 * R : ℕ) : ℝ) * (((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q,
-              vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) := by
-        gcongr with q hq
-        exact hpoint q hq
-      _ = _ := by
-        calc
-          _ = ∑ q ∈ S, (((2 * R : ℕ) : ℝ) ^ 2) *
-              (((q : ℝ) / (q.totient : ℝ)) *
-                ∑ χ : PrimitiveCharacter q,
-                  vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ) := by
-            rw [Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro q hq
-            ring
-          _ = _ := by rw [Finset.mul_sum]
-  have hsq := hmeanSq.trans (mul_le_mul_of_nonneg_left hsquare (sq_nonneg _))
-  have hm : 0 ≤ blockWeightedVaughanActualCollectedShellMean N u v k l S := by
-    unfold blockWeightedVaughanActualCollectedShellMean
-    positivity
-  have hb := vaughanTypeIIOrdinaryShellSquareBound_nonneg N u v k l R
-  have ht0 : 0 ≤ ((2 * R : ℕ) : ℝ) * Real.sqrt
-      (vaughanTypeIIOrdinaryShellSquareBound N u v k l R) := by positivity
-  have ht : (((2 * R : ℕ) : ℝ) * Real.sqrt
-      (vaughanTypeIIOrdinaryShellSquareBound N u v k l R)) ^ 2 =
-      ((2 * R : ℕ) : ℝ) ^ 2 * vaughanTypeIIOrdinaryShellSquareBound N u v k l R := by
-    rw [mul_pow, Real.sq_sqrt hb]
-  by_contra hn
-  have hlt := lt_of_not_ge hn
-  have hpos := ht0.trans_lt hlt
-  have : (((2 * R : ℕ) : ℝ) * Real.sqrt
-      (vaughanTypeIIOrdinaryShellSquareBound N u v k l R)) ^ 2 <
-      blockWeightedVaughanActualCollectedShellMean N u v k l S ^ 2 := by nlinarith
-  rw [ht] at this
-  exact (not_lt_of_ge hsq) this
+  have hmean := blockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
+    (fun q χ => Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare N u v k l q χ))
+    (2 * R) S hcap
+  -- The common Cauchy ledger retains the actual collected square at each (q, χ).
+  simp only [blockWeightedPrimitiveSquareLedger,
+    Real.sq_sqrt (vaughanCanonicalCollectedPrefixMaxSquare_nonneg N u v k l _ _)] at hmean
+  exact hmean.trans (mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt hsquare)
+    (Nat.cast_nonneg (2 * R)))
 
 /-- Fully explicit ordinary-LS block bound, shell by shell. -/
 def vaughanTypeIIBlockOrdinaryLSBound (N u v R : ℕ) : ℝ :=

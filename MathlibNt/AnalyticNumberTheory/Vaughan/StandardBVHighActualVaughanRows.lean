@@ -127,50 +127,32 @@ theorem actualVaughanRowsChosenSquareLedgerSource_of_componentwise
   rcases hN with ⟨hI, hII⟩
   have hKsq : K₁ ^ 2 + K₂ ^ 2 + K₀ ^ 2 ≤ (K₁ + K₂ + K₀) ^ 2 := by
     nlinarith [mul_pos hK₁ hK₂, mul_pos hK₁ hK₀, mul_pos hK₂ hK₀]
-  unfold actualVaughanRowsSquareLedger
+  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+  let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
+  let X := (N : ℝ) / Real.log N ^ (A + κ)
+  let L (a : ℤ → ℂ) := P ^ 2 *
+    (3 * highConductorHarmonicFactor Q (logConductorThreshold N C) *
+      primitivePrefixSquareLedgerOn a N (highConductorSet N Q C))
+  have hlanes :
+      L (vaughanTypeICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
+        L (vaughanTypeIICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
+        L (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) ≤
+      (K₁ * X) ^ 2 + (K₂ * X) ^ 2 + (K₀ * X) ^ 2 := by
+    simpa only [L, P, Q, X, hv] using add_le_add (add_le_add hI hII) hsmall
   calc
-    _ = (4 * discreteAbelAmplifierPrefixMax N *
-            conductorHarmonicFactor
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)) ^ 2) ^ 2 *
-          (3 * highConductorHarmonicFactor
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
-              (logConductorThreshold N C) *
-            primitivePrefixSquareLedgerOn
-              (vaughanTypeICoeff vaughanUnitIntegerCoeff (u N) (v N)) N
-              (highConductorSet N
-                (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)) C)) +
-        (4 * discreteAbelAmplifierPrefixMax N *
-            conductorHarmonicFactor
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)) ^ 2) ^ 2 *
-          (3 * highConductorHarmonicFactor
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
-              (logConductorThreshold N C) *
-            primitivePrefixSquareLedgerOn
-              (vaughanTypeIICoeff vaughanUnitIntegerCoeff (u N) (v N)) N
-              (highConductorSet N
-                (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)) C)) +
-        (4 * discreteAbelAmplifierPrefixMax N *
-            conductorHarmonicFactor
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)) ^ 2) ^ 2 *
-          (3 * highConductorHarmonicFactor
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
-              (logConductorThreshold N C) *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-              (highConductorSet N
-                (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)) C)) := by ring
-    _ ≤ (K₁ * ((N : ℝ) / Real.log N ^ (A + κ))) ^ 2 +
-          (K₂ * ((N : ℝ) / Real.log N ^ (A + κ))) ^ 2 +
-          (K₀ * ((N : ℝ) / Real.log N ^ (A + κ))) ^ 2 := by
-      simpa only [hv] using
-        add_le_add (add_le_add hI hII) hsmall
-    _ = (K₁ ^ 2 + K₂ ^ 2 + K₀ ^ 2) *
-          ((N : ℝ) / Real.log N ^ (A + κ)) ^ 2 := by ring
-    _ ≤ (K₁ + K₂ + K₀) ^ 2 *
-          ((N : ℝ) / Real.log N ^ (A + κ)) ^ 2 :=
-      mul_le_mul_of_nonneg_right hKsq (sq_nonneg _)
-    _ = ((K₁ + K₂ + K₀) * (N : ℝ) /
-          Real.log N ^ (A + κ)) ^ 2 := by ring
+    _ = L (vaughanTypeICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
+          L (vaughanTypeIICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
+          L (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) := by
+      dsimp [L, P, Q, actualVaughanRowsSquareLedger]
+      ring
+    _ ≤ (K₁ * X) ^ 2 + (K₂ * X) ^ 2 + (K₀ * X) ^ 2 := hlanes
+    _ = (K₁ ^ 2 + K₂ ^ 2 + K₀ ^ 2) * X ^ 2 := by ring
+    _ ≤ (K₁ + K₂ + K₀) ^ 2 * X ^ 2 :=
+      mul_le_mul_of_nonneg_right hKsq (sq_nonneg X)
+    _ = ((K₁ + K₂ + K₀) * (N : ℝ) / Real.log N ^ (A + κ)) ^ 2 := by
+      dsimp [X]
+      ring
+
 
 /-- Compatibility adapter: the old uniformly quantified square source is
 strictly stronger than the canonical chosen-cutoff source. -/
@@ -181,7 +163,7 @@ theorem actualVaughanRowsChosenSquareLedgerSource_of_legacy
   refine ⟨A + 3, 1, le_rfl, ?_⟩
   exact hrows A 1 (A + 3)
 
-private lemma highConductorSet_eq_interval (N Q C : ℕ)
+lemma highConductorSet_eq_interval (N Q C : ℕ)
     (hR : 1 ≤ logConductorThreshold N C) :
     highConductorSet N Q C =
       Finset.Icc (logConductorThreshold N C + 1) Q := by
@@ -245,21 +227,26 @@ theorem highConductorVaughanHybrid_sq_le_actualRowsLedger
       mul_le_mul_of_nonneg_left hadd (by norm_num)
     _ = 3 * highConductorHarmonicFactor Q R * (_ + _ + _) := by ring
 
-/-- A chosen-cutoff square-ledger theorem for the actual Vaughan rows, with one
-fixed polylogarithmic reserve `κ`, inhabits the canonical chosen high source. -/
-theorem standardBVHighTypeITypeIIHybridChosenSource_of_actualRows
-    {κ : ℕ} (hrows : ActualVaughanRowsChosenSquareLedgerSource κ) :
-    StandardBVHighTypeITypeIIHybridChosenSource := by
-  intro A
-  obtain ⟨B, C, hAB, u, v, K, hK, hrowsN⟩ := hrows A
-  refine ⟨B, C, hAB, u, v, K, hK, ?_⟩
-  filter_upwards [hrowsN, eventually_ge_atTop (3 : ℕ)] with N hledger hN
-  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+/-- Pointwise square-root extraction and reserve weakening, shared by the
+chosen-cutoff and legacy source adapters.  The hypothesis retains the actual
+three rows and all Abel/conductor weights. -/
+private lemma actualVaughanRows_highMean_le_of_squareLedger
+    (N Q C u v A κ : ℕ) (K : ℝ) (hK : 0 < K) (hN : 3 ≤ N)
+    (hledger :
+      (4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2) ^ 2 *
+        (3 * highConductorHarmonicFactor Q (logConductorThreshold N C) *
+          actualVaughanRowsSquareLedger N Q C u v) ≤
+        (K * (N : ℝ) / Real.log N ^ (A + κ)) ^ 2) :
+    (4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2) *
+        (highConductorVaughanTypeIMean N Q C u v +
+          highConductorVaughanTypeIIMean N Q C u v +
+          highConductorVaughanSmallMean N Q C v) ≤
+      K * (N : ℝ) / Real.log N ^ A := by
   let R := logConductorThreshold N C
   let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-  let H := highConductorVaughanTypeIMean N Q C (u N) (v N) +
-    highConductorVaughanTypeIIMean N Q C (u N) (v N) +
-    highConductorVaughanSmallMean N Q C (v N)
+  let H := highConductorVaughanTypeIMean N Q C u v +
+    highConductorVaughanTypeIIMean N Q C u v +
+    highConductorVaughanSmallMean N Q C v
   have hP : 0 ≤ P := by
     dsimp [P]
     have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
@@ -285,28 +272,22 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_actualRows
           exact Finset.sum_nonneg fun d hd =>
             mul_nonneg (inv_nonneg.mpr (by positivity))
               (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _))
-  have hRpos : 1 ≤ R := by
-    dsimp [R, logConductorThreshold]
-    have hlog0 : 1 ≤ Real.log (N : ℝ) := by
-      have he1 : Real.exp 1 < (3 : ℝ) :=
-        Real.exp_one_lt_d9.trans (by norm_num)
-      exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-        (he1.trans_le (by exact_mod_cast hN)) |>.le
-    have hp : ((1 : ℕ) : ℝ) ≤ Real.log (N : ℝ) ^ C := by simpa using one_le_pow₀ hlog0
-    exact Nat.le_floor hp
-  have hsqH := highConductorVaughanHybrid_sq_le_actualRowsLedger
-    N Q C (u N) (v N) (by simpa [R] using hRpos)
-  have hsq : (P * H) ^ 2 ≤
-      (K * (N : ℝ) / Real.log N ^ (A + κ)) ^ 2 := by
-    rw [mul_pow]
-    exact (mul_le_mul_of_nonneg_left hsqH (sq_nonneg P)).trans (by
-      simpa [Q, R, P] using hledger)
   have hlog : 1 ≤ Real.log (N : ℝ) := by
     have he1 : Real.exp 1 < (3 : ℝ) :=
       Real.exp_one_lt_d9.trans (by norm_num)
     have hexp : Real.exp 1 < (N : ℝ) :=
       he1.trans_le (by exact_mod_cast hN)
     exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2 hexp |>.le
+  have hRpos : 1 ≤ R := by
+    dsimp [R, logConductorThreshold]
+    exact Nat.le_floor (by simpa using (one_le_pow₀ hlog : (1 : ℝ) ≤ Real.log N ^ C))
+  have hsqH := highConductorVaughanHybrid_sq_le_actualRowsLedger
+    N Q C u v (by simpa [R] using hRpos)
+  have hsq : (P * H) ^ 2 ≤
+      (K * (N : ℝ) / Real.log N ^ (A + κ)) ^ 2 := by
+    rw [mul_pow]
+    exact (mul_le_mul_of_nonneg_left hsqH (sq_nonneg P)).trans (by
+      simpa [R, P] using hledger)
   have hden : 0 < Real.log (N : ℝ) ^ (A + κ) :=
     pow_pos (lt_of_lt_of_le (by norm_num) hlog) _
   have htarget0 : 0 ≤ K * (N : ℝ) / Real.log N ^ (A + κ) := by positivity
@@ -322,6 +303,19 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_actualRows
       (pow_pos (by positivity) A) hpow
   exact hroot.trans hweaken
 
+/-- A chosen-cutoff square-ledger theorem for the actual Vaughan rows, with one
+fixed polylogarithmic reserve `κ`, inhabits the canonical chosen high source. -/
+theorem standardBVHighTypeITypeIIHybridChosenSource_of_actualRows
+    {κ : ℕ} (hrows : ActualVaughanRowsChosenSquareLedgerSource κ) :
+    StandardBVHighTypeITypeIIHybridChosenSource := by
+  intro A
+  obtain ⟨B, C, hAB, u, v, K, hK, hrowsN⟩ := hrows A
+  refine ⟨B, C, hAB, u, v, K, hK, ?_⟩
+  filter_upwards [hrowsN, eventually_ge_atTop (3 : ℕ)] with N hledger hN
+  exact actualVaughanRows_highMean_le_of_squareLedger N
+    (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
+    C (u N) (v N) A κ K hK hN hledger
+
 /-- Legacy compatibility endpoint.  New production code should use
 `standardBVHighTypeITypeIIHybridChosenSource_of_actualRows`; this wrapper keeps
 the old all-`B,C` API callable without making it canonical. -/
@@ -332,73 +326,9 @@ theorem standardBVHighTypeITypeIIHybridMovingSource_of_actualRowsSquareLedger
   obtain ⟨u, v, K, hK, hrowsN⟩ := hrows A C B
   refine ⟨u, v, K, hK, ?_⟩
   filter_upwards [hrowsN, eventually_ge_atTop (3 : ℕ)] with N hledger hN
-  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  let R := logConductorThreshold N C
-  let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-  let H := highConductorVaughanTypeIMean N Q C (u N) (v N) +
-    highConductorVaughanTypeIIMean N Q C (u N) (v N) +
-    highConductorVaughanSmallMean N Q C (v N)
-  have hP : 0 ≤ P := by
-    dsimp [P]
-    have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-      have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-        unfold discreteAbelAmplifier
-        positivity
-      exact h0.trans (by
-        unfold discreteAbelAmplifierPrefixMax
-        exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
-    positivity
-  have hH : 0 ≤ H := by
-    dsimp [H]
-    exact add_nonneg (add_nonneg
-      (by unfold highConductorVaughanTypeIMean apNormalizedPrimitiveMeanOn
-          exact Finset.sum_nonneg fun d hd =>
-            mul_nonneg (inv_nonneg.mpr (by positivity))
-              (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _))
-      (by unfold highConductorVaughanTypeIIMean apNormalizedPrimitiveMeanOn
-          exact Finset.sum_nonneg fun d hd =>
-            mul_nonneg (inv_nonneg.mpr (by positivity))
-              (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _)))
-      (by unfold highConductorVaughanSmallMean apNormalizedPrimitiveMeanOn
-          exact Finset.sum_nonneg fun d hd =>
-            mul_nonneg (inv_nonneg.mpr (by positivity))
-              (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _))
-  have hRpos : 1 ≤ R := by
-    dsimp [R, logConductorThreshold]
-    have hlog0 : 1 ≤ Real.log (N : ℝ) := by
-      have he1 : Real.exp 1 < (3 : ℝ) :=
-        Real.exp_one_lt_d9.trans (by norm_num)
-      exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-        (he1.trans_le (by exact_mod_cast hN)) |>.le
-    have hp : ((1 : ℕ) : ℝ) ≤ Real.log (N : ℝ) ^ C := by simpa using one_le_pow₀ hlog0
-    exact Nat.le_floor hp
-  have hsqH := highConductorVaughanHybrid_sq_le_actualRowsLedger
-    N Q C (u N) (v N) (by simpa [R] using hRpos)
-  have hsq : (P * H) ^ 2 ≤
-      (K * (N : ℝ) / Real.log N ^ (A + κ)) ^ 2 := by
-    rw [mul_pow]
-    exact (mul_le_mul_of_nonneg_left hsqH (sq_nonneg P)).trans (by
-      simpa [Q, R, P] using hledger)
-  have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have he1 : Real.exp 1 < (3 : ℝ) :=
-      Real.exp_one_lt_d9.trans (by norm_num)
-    have hexp : Real.exp 1 < (N : ℝ) :=
-      he1.trans_le (by exact_mod_cast hN)
-    exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2 hexp |>.le
-  have hden : 0 < Real.log (N : ℝ) ^ (A + κ) :=
-    pow_pos (lt_of_lt_of_le (by norm_num) hlog) _
-  have htarget0 : 0 ≤ K * (N : ℝ) / Real.log N ^ (A + κ) := by positivity
-  have hroot : P * H ≤ K * (N : ℝ) / Real.log N ^ (A + κ) :=
-    (sq_le_sq₀ (mul_nonneg hP hH) htarget0).mp hsq
-  have hpow : Real.log (N : ℝ) ^ A ≤ Real.log N ^ (A + κ) := by
-    rw [pow_add]
-    exact le_mul_of_one_le_right (pow_nonneg (by positivity) A)
-      (one_le_pow₀ hlog)
-  have hweaken : K * (N : ℝ) / Real.log N ^ (A + κ) ≤
-      K * (N : ℝ) / Real.log N ^ A := by
-    exact div_le_div_of_nonneg_left (mul_nonneg hK.le (by positivity))
-      (pow_pos (by positivity) A) hpow
-  exact hroot.trans hweaken
+  exact actualVaughanRows_highMean_le_of_squareLedger N
+    (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
+    C (u N) (v N) A κ K hK hN hledger
 
 end
 end AnalyticNumberTheory.LargeSieve

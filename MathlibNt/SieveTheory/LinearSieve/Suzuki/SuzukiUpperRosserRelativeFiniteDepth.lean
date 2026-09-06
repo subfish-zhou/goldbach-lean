@@ -105,13 +105,15 @@ theorem exists_upperRosserAlternatingPairDiscreteRelativeIterate_finiteDepth_geo
   | succ k ih =>
       intro q r z P hQq hqPrime hlocal hr hqz hP hqP hzP
       have hQ₀q : Q₀ ≤ (q : ℝ) := (le_max_left _ _).trans hQq
-      have hfactor : ∀ p ∈ P, 1 - S.nu p ≠ 0 := by
+      have hfactor_pos : ∀ p ∈ P, 0 < 1 - S.nu p := by
         intro p hp
         have hpS := hP hp
         have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpS
         have hpDvd : p ∣ S.prodPrimes :=
           (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
-        exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime p hpPrime hpDvd))
+        exact sub_pos.mpr (S.nu_lt_one_of_prime p hpPrime hpDvd)
+      have hfactor : ∀ p ∈ P, 1 - S.nu p ≠ 0 :=
+        fun p hp => ne_of_gt (hfactor_pos p hp)
       rw [show k + 1 = k.succ by rfl,
         upperRosserAlternatingPairDiscreteRelativeIterate_succ S.nu hfactor]
       let A : ℝ := (101 / 100 : ℝ) *
@@ -225,19 +227,11 @@ theorem exists_upperRosserAlternatingPairDiscreteRelativeIterate_finiteDepth_geo
           have hres : 0 ≤ ∏ p ∈ P.filter (fun p => p₀ < p), (1 - S.nu p) := by
             apply Finset.prod_nonneg
             intro p hp
-            have hpS := hP (Finset.mem_filter.mp hp).1
-            have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-            have hpDvd : p ∣ S.prodPrimes :=
-              (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
-            exact (sub_pos.mpr (S.nu_lt_one_of_prime p hpPrime hpDvd)).le
+            exact (hfactor_pos p (Finset.mem_filter.mp hp).1).le
           have hamb : 0 ≤ ∏ p ∈ P, (1 - S.nu p) := by
             apply Finset.prod_nonneg
             intro p hp
-            have hpS := hP hp
-            have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-            have hpDvd : p ∣ S.prodPrimes :=
-              (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
-            exact (sub_pos.mpr (S.nu_lt_one_of_prime p hpPrime hpDvd)).le
+            exact (hfactor_pos p hp).le
           exact div_nonneg (mul_nonneg (mul_nonneg hnu₀ hnu₁) hres) hamb
         calc
           upperRosserAlternatingPairDiscreteRelativeTransition S.nu P p₀ p₁ *

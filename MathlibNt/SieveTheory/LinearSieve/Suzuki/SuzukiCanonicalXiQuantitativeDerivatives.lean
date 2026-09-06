@@ -40,14 +40,16 @@ lemma xiSlope_hasDerivAt {s : ℝ} (hs : 1 < s) :
   field_simp [hx0]
   ring
 
+lemma xiSlope_pos {s : ℝ} (hs : 1 < s) : 0 < xiSlope s := by
+  dsimp only [xiSlope]
+  linarith [xi_etaSlopeLower hs]
+
 /-- Exact second implicit-derivative formula for the canonical inverse. -/
 lemma xi_hasDerivAt_deriv {s : ℝ} (hs : 1 < s) :
     HasDerivAt (deriv xi)
       (-(1 - 1 / xi s + (s - 1) * (xiSlope s)⁻¹ / (xi s) ^ 2) /
         (xiSlope s) ^ 2) s := by
-  have hD : xiSlope s ≠ 0 := by
-    dsimp only [xiSlope]
-    linarith [xi_etaSlopeLower hs]
+  have hD : xiSlope s ≠ 0 := (xiSlope_pos hs).ne'
   have hi := (xiSlope_hasDerivAt hs).inv hD
   have hevent : deriv xi =ᶠ[𝓝 s] fun u => (xiSlope u)⁻¹ := by
     filter_upwards [Ioi_mem_nhds hs] with u hu
@@ -85,6 +87,9 @@ lemma log_lt_xi {s : ℝ} (hs : Real.exp 1 ≤ s) : Real.log s < xi s := by
   have hexp : s < Real.exp (xi s) := by nlinarith
   exact Real.exp_lt_exp.mp (by simpa only [Real.exp_log hspos] using hexp)
 
+private lemma one_lt_of_exp_two_le {s : ℝ} (hs : Real.exp 2 ≤ s) : 1 < s :=
+  (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)).trans_le hs
+
 lemma two_le_log {s : ℝ} (hs : Real.exp 2 ≤ s) : 2 ≤ Real.log s := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
   rw [← Real.exp_log hspos] at hs
@@ -93,10 +98,6 @@ lemma two_le_log {s : ℝ} (hs : Real.exp 2 ≤ s) : 2 ≤ Real.log s := by
 lemma two_lt_xi {s : ℝ} (hs : Real.exp 2 ≤ s) : 2 < xi s := by
   have he21 : Real.exp 1 ≤ Real.exp 2 := Real.exp_le_exp.mpr (by norm_num)
   exact lt_of_le_of_lt (two_le_log hs) (log_lt_xi (he21.trans hs))
-
-lemma xiSlope_pos {s : ℝ} (hs : 1 < s) : 0 < xiSlope s := by
-  dsimp only [xiSlope]
-  linarith [xi_etaSlopeLower hs]
 
 lemma xiSlope_eq {s : ℝ} (hs : 1 < s) :
     xiSlope s = (s * (xi s - 1) + 1) / xi s := by
@@ -123,8 +124,7 @@ lemma xi_deriv_sub_reciprocal_eq {s : ℝ} (hs : 1 < s) :
 theorem xi_deriv_asymptotic {s : ℝ} (hs : Real.exp 2 ≤ s) :
     |deriv xi s - 1 / s| ≤ 2 / (s * Real.log s) := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have hs1 : 1 < s := lt_of_lt_of_le
-    (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
+  have hs1 : 1 < s := one_lt_of_exp_two_le hs
   have hlog : 2 ≤ Real.log s := two_le_log hs
   have hlogpos : 0 < Real.log s := by linarith
   have hxlog : Real.log s < xi s := by
@@ -142,8 +142,7 @@ theorem xi_deriv_asymptotic {s : ℝ} (hs : Real.exp 2 ≤ s) :
 
 lemma xiSlope_ge_half {s : ℝ} (hs : Real.exp 2 ≤ s) : s / 2 ≤ xiSlope s := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have hs1 : 1 < s := lt_of_lt_of_le
-    (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
+  have hs1 : 1 < s := one_lt_of_exp_two_le hs
   have hx2 : 2 < xi s := two_lt_xi hs
   rw [xiSlope_eq hs1]
   apply (le_div_iff₀ (by linarith : 0 < xi s)).2
@@ -156,8 +155,7 @@ lemma xi_deriv_nonneg {s : ℝ} (hs : 1 < s) : 0 ≤ deriv xi s := by
 lemma xi_deriv_le_two_div {s : ℝ} (hs : Real.exp 2 ≤ s) :
     deriv xi s ≤ 2 / s := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have hs1 : 1 < s := lt_of_lt_of_le
-    (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
+  have hs1 : 1 < s := one_lt_of_exp_two_le hs
   rw [xi_deriv hs1]
   rw [inv_eq_one_div]
   apply (div_le_div_iff₀ (xiSlope_pos hs1) hspos).2
@@ -168,8 +166,7 @@ noncomputable def xiCurvatureFactor (s : ℝ) : ℝ :=
 
 lemma xiCurvatureFactor_nonneg {s : ℝ} (hs : Real.exp 2 ≤ s) :
     0 ≤ xiCurvatureFactor s := by
-  have hs1 : 1 < s := lt_of_lt_of_le
-    (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
+  have hs1 : 1 < s := one_lt_of_exp_two_le hs
   have hx2 : 2 < xi s := two_lt_xi hs
   have hxi_inv : 0 ≤ 1 / xi s := by positivity
   have hterm : 0 ≤ (s - 1) * (xiSlope s)⁻¹ / (xi s) ^ 2 := by
@@ -182,8 +179,7 @@ lemma xiCurvatureFactor_nonneg {s : ℝ} (hs : Real.exp 2 ≤ s) :
 lemma xiCurvatureFactor_le_three_halves {s : ℝ} (hs : Real.exp 2 ≤ s) :
     xiCurvatureFactor s ≤ 3 / 2 := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have hs1 : 1 < s := lt_of_lt_of_le
-    (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
+  have hs1 : 1 < s := one_lt_of_exp_two_le hs
   have hx2 : 2 < xi s := two_lt_xi hs
   have hdinv0 : 0 ≤ (xiSlope s)⁻¹ := inv_nonneg.mpr (xiSlope_pos hs1).le
   have hdinv : (xiSlope s)⁻¹ ≤ 2 / s := by
@@ -207,8 +203,7 @@ lemma xiCurvatureFactor_le_three_halves {s : ℝ} (hs : Real.exp 2 ≤ s) :
 theorem xi_secondDeriv_asymptotic {s : ℝ} (hs : Real.exp 2 ≤ s) :
     |deriv (deriv xi) s| ≤ 6 / s ^ 2 := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have hs1 : 1 < s := lt_of_lt_of_le
-    (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
+  have hs1 : 1 < s := one_lt_of_exp_two_le hs
   have hDpos := xiSlope_pos hs1
   have hE0 := xiCurvatureFactor_nonneg hs
   have hE := xiCurvatureFactor_le_three_halves hs
@@ -232,21 +227,14 @@ theorem xi_deriv_asymptotic_unitWindow {s t : ℝ} (hs : Real.exp 2 ≤ s)
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
   have htpos : 0 < t := lt_of_lt_of_le hspos ht.1
   have hlogs : 0 < Real.log s := lt_of_lt_of_le (by norm_num) (two_le_log hs)
-  have hlogt : 0 < Real.log t := Real.log_pos (by
-    have : 1 < s := lt_of_lt_of_le
-      (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)) hs
-    exact lt_of_lt_of_le this ht.1)
-  have hlogmono : Real.log s ≤ Real.log t := by
-    apply Real.exp_le_exp.mp
-    simpa only [Real.exp_log hspos, Real.exp_log htpos] using ht.1
+  have hlogmono : Real.log s ≤ Real.log t := Real.log_le_log hspos ht.1
   have hprod : s * Real.log s ≤ t * Real.log t :=
     mul_le_mul ht.1 hlogmono hlogs.le htpos.le
   calc
     |deriv xi t - 1 / t| ≤ 2 / (t * Real.log t) :=
       xi_deriv_asymptotic (hs.trans ht.1)
-    _ ≤ 2 / (s * Real.log s) := by
-      apply (div_le_div_iff₀ (mul_pos htpos hlogt) (mul_pos hspos hlogs)).2
-      nlinarith
+    _ ≤ 2 / (s * Real.log s) :=
+      div_le_div_of_nonneg_left (by norm_num) (mul_pos hspos hlogs) hprod
 
 /-- Second-derivative estimate uniformly on the unit window `[s,s+1]`. -/
 theorem xi_secondDeriv_asymptotic_unitWindow {s t : ℝ} (hs : Real.exp 2 ≤ s)
@@ -254,12 +242,10 @@ theorem xi_secondDeriv_asymptotic_unitWindow {s t : ℝ} (hs : Real.exp 2 ≤ s)
     |deriv (deriv xi) t| ≤ 6 / s ^ 2 := by
   have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
   have htpos : 0 < t := lt_of_lt_of_le hspos ht.1
-  have hsq : s ^ 2 ≤ t ^ 2 := by
-    nlinarith [mul_self_le_mul_self hspos.le ht.1]
+  have hsq : s ^ 2 ≤ t ^ 2 := (sq_le_sq₀ hspos.le htpos.le).2 ht.1
   calc
     |deriv (deriv xi) t| ≤ 6 / t ^ 2 := xi_secondDeriv_asymptotic (hs.trans ht.1)
-    _ ≤ 6 / s ^ 2 := by
-      apply (div_le_div_iff₀ (sq_pos_of_pos htpos) (sq_pos_of_pos hspos)).2
-      nlinarith
+    _ ≤ 6 / s ^ 2 :=
+      div_le_div_of_nonneg_left (by norm_num) (sq_pos_of_pos hspos) hsq
 
 end Section10CanonicalXi

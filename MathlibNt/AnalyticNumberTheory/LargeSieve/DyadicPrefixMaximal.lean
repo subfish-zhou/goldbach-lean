@@ -9,21 +9,17 @@ lemma sum_Ioc_nat_eq_sum_Icc_int (M : ℤ) (a b : ℕ) (f : ℤ → ℂ) :
     (∑ n ∈ Finset.Ioc a b, f (M + n)) = ∑ n ∈ Finset.Icc (M + a + 1) (M + b), f n := by
   refine Finset.sum_bij (fun (n : ℕ) _ => M + (n : ℤ)) ?_ ?_ ?_ ?_
   · intro n hn
-    have hn1 : a < n := Finset.mem_Ioc.mp hn |>.1
-    have hn2 : n ≤ b := Finset.mem_Ioc.mp hn |>.2
+    obtain ⟨han, hnb⟩ := Finset.mem_Ioc.mp hn
     rw [Finset.mem_Icc]
     omega
   · intro n1 _ n2 _ h
     omega
   · intro n hn
-    have hn1 : M + a + 1 ≤ n := Finset.mem_Icc.mp hn |>.1
-    have hn2 : n ≤ M + b := Finset.mem_Icc.mp hn |>.2
-    use (n - M).toNat
-    have H : (n - M).toNat ∈ Finset.Ioc a b := by
-      rw [Finset.mem_Ioc]
+    obtain ⟨han, hnb⟩ := Finset.mem_Icc.mp hn
+    refine ⟨(n - M).toNat, ?_, ?_⟩
+    · rw [Finset.mem_Ioc]
       omega
-    use H
-    omega
+    · omega
   · intro n hn
     rfl
 
@@ -95,15 +91,8 @@ lemma decomp_eq (y N : ℕ) (hy : y ≤ N) (f : ℕ → ℂ) :
   rw [hk2, hk3]
 
 lemma decomp_j_lt (y N k : ℕ) (hy : y ≤ N) : 2 * (y / 2^(k+1)) < N + 1 := by
-  have H1 : y / 2^(k+1) ≤ N / 2 := by
-    have : y / 2^(k+1) ≤ N / 2^(k+1) := Nat.div_le_div_right hy
-    have H2 : N / 2^(k+1) = (N / 2^k) / 2 := by
-      rw [pow_succ, ← Nat.div_div_eq_div_mul]
-    rw [H2] at this
-    have H3 : N / 2^k ≤ N := Nat.div_le_self N (2^k)
-    have H4 : (N / 2^k) / 2 ≤ N / 2 := Nat.div_le_div_right H3
-    exact le_trans this H4
-  have H5 : (N / 2) * 2 ≤ N := Nat.div_mul_le_self N 2
+  have hbit := div_mod_two_eq y k
+  have hquotient := Nat.div_le_self y (2^k)
   omega
 
 lemma Ioc_disjoint (a b c d : ℤ) (h : b ≤ c) : Disjoint (Finset.Ioc a b) (Finset.Ioc c d) := by
@@ -117,8 +106,7 @@ lemma Ioc_disjoint (a b c d : ℤ) (h : b ≤ c) : Disjoint (Finset.Ioc a b) (Fi
 lemma sum_biUnion_le {ι : Type*} [DecidableEq ι] (s : Finset ι) (S : ι → Finset ℤ) (h_disj : ∀ i ∈ s, ∀ j ∈ s, i ≠ j → Disjoint (S i) (S j))
     (T : Finset ℤ) (h_sub : ∀ i ∈ s, S i ⊆ T) (c : ℤ → ℝ) (hc : ∀ n ∈ T, 0 ≤ c n) :
     (∑ i ∈ s, ∑ n ∈ S i, c n) ≤ ∑ n ∈ T, c n := by
-  have H : ∑ i ∈ s, ∑ n ∈ S i, c n = ∑ n ∈ s.biUnion S, c n := (Finset.sum_biUnion h_disj).symm
-  rw [H]
+  rw [← Finset.sum_biUnion h_disj]
   apply Finset.sum_le_sum_of_subset_of_nonneg
   · intro x hx
     have ⟨i, hi, hxi⟩ := Finset.mem_biUnion.mp hx
@@ -153,9 +141,7 @@ theorem weighted_primitive_prefix_maximal
     intro y hy f
     have hy2 : y ≤ N := by rw [Finset.mem_range] at hy; omega
     have H1 : (∑ n ∈ Finset.Icc (M + 1) (M + y), f n) = ∑ n ∈ Finset.Ioc 0 y, f (M + n) := by
-      have := sum_Ioc_nat_eq_sum_Icc_int M 0 y f
-      simp only [Nat.cast_zero, add_zero] at this
-      exact this.symm
+      simpa only [Nat.cast_zero, add_zero] using (sum_Ioc_nat_eq_sum_Icc_int M 0 y f).symm
     rw [H1]
     have H2 := decomp_eq y N hy2 (fun n => f (M + n))
     rw [H2]
@@ -168,27 +154,19 @@ theorem weighted_primitive_prefix_maximal
       have hk1 : (y / 2^k) % 2 = 1 := Finset.mem_filter.mp hk |>.2
       have hk2 : 2 * (y / 2^(k+1)) * 2^k + 2^k ≤ N := by
         have H : y / 2^k = 2 * (y / 2^(k+1)) + 1 := by
-          calc
-            y / 2^k = 2 * (y / 2^(k+1)) + (y / 2^k) % 2 := div_mod_two_eq y k
-            _ = 2 * (y / 2^(k+1)) + 1 := by rw [hk1]
+          simpa only [hk1] using div_mod_two_eq y k
         have H2_eq : 2 * (y / 2^(k+1)) * 2^k + 2^k = (y / 2^k) * 2^k := by
           calc
             2 * (y / 2^(k+1)) * 2^k + 2^k = (2 * (y / 2^(k+1)) + 1) * 2^k := by ring
             _ = (y / 2^k) * 2^k := by rw [← H]
         rw [H2_eq]
-        have H3 : (y / 2^k) * 2^k ≤ y := Nat.div_mul_le_self y (2^k)
-        omega
+        exact (Nat.div_mul_le_self y (2^k)).trans hy2
       dsimp [blockStart, blockLength]
       rw [if_pos hk2]
-      have h_sum := sum_Ioc_nat_eq_sum_Icc_int M (2 * (y / 2 ^ (k + 1)) * 2 ^ k) (2 * (y / 2 ^ (k + 1)) * 2 ^ k + 2 ^ k) f
-      have H3 : (M + ↑(2 * (y / 2 ^ (k + 1)) * 2 ^ k) + 1) = M + 2 * ↑(y / 2 ^ (k + 1)) * 2 ^ k + 1 := by
-        push_cast
-        ring
-      have H4 : M + ↑(2 * (y / 2 ^ (k + 1)) * 2 ^ k + 2 ^ k) = M + 2 * ↑(y / 2 ^ (k + 1)) * 2 ^ k + ↑(2 ^ k) := by
-        push_cast
-        ring
-      rw [H3, H4] at h_sum
-      exact h_sum
+      have h_sum := sum_Ioc_nat_eq_sum_Icc_int M (2 * (y / 2 ^ (k + 1)) * 2 ^ k)
+        (2 * (y / 2 ^ (k + 1)) * 2 ^ k + 2 ^ k) f
+      push_cast at h_sum
+      simpa only [Nat.cast_pow, Nat.cast_ofNat, add_assoc] using h_sum
     · intro ⟨a, ha⟩ _ ⟨b, hb⟩ _ hab
       injection hab with h_eq
       injection h_eq with h_eq2
@@ -220,6 +198,13 @@ theorem weighted_primitive_prefix_maximal
       ∑ k : Fin (Nat.log2 N + 1), ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖b n‖ ^ 2 := by
       apply Finset.sum_le_sum
       intro k _
+      -- At a fixed scale, the end of an earlier aligned block precedes the next start.
+      have hblockEnd_le_start (a b : ℕ) (hab : a < b) :
+          (a : ℤ) * 2 ^ k.val + 2 ^ k.val ≤ (b : ℤ) * 2 ^ k.val := by
+        have hsucc : a + 1 ≤ b := hab
+        have hscaled := Nat.mul_le_mul_right (2 ^ k.val) hsucc
+        exact_mod_cast (show a * 2 ^ k.val + 2 ^ k.val ≤ b * 2 ^ k.val by
+          simpa only [Nat.add_mul, one_mul] using hscaled)
       apply sum_biUnion_le (Finset.univ) (fun j => Finset.Icc (blockStart (k, j) + 1) (blockStart (k, j) + blockLength (k, j)))
       · intro j1 _ j2 _ hneq
         dsimp [blockStart, blockLength]
@@ -233,27 +218,10 @@ theorem weighted_primitive_prefix_maximal
             omega
           cases hlt with
           | inl h_lt =>
-            have : j1.val + 1 ≤ j2.val := h_lt
-            have H_le : j1.val * 2 ^ k.val + 2 ^ k.val ≤ j2.val * 2 ^ k.val := by
-              calc
-                j1.val * 2 ^ k.val + 2 ^ k.val = (j1.val + 1) * 2 ^ k.val := by ring
-                _ ≤ j2.val * 2 ^ k.val := Nat.mul_le_mul_right _ this
-            have H_le_z : (j1.val * 2 ^ k.val + 2 ^ k.val : ℕ) ≤ j2.val * 2 ^ k.val := H_le
-            have H_le_int :
-                (j1.val : ℤ) * (2 ^ k.val : ℤ) + (2 ^ k.val : ℤ) ≤
-                  (j2.val : ℤ) * (2 ^ k.val : ℤ) := by
-              exact_mod_cast H_le_z
+            have hsep := hblockEnd_le_start j1.val j2.val h_lt
             omega
           | inr h_lt =>
-            have : j2.val + 1 ≤ j1.val := h_lt
-            have H_le : j2.val * 2 ^ k.val + 2 ^ k.val ≤ j1.val * 2 ^ k.val := by
-              calc
-                j2.val * 2 ^ k.val + 2 ^ k.val = (j2.val + 1) * 2 ^ k.val := by ring
-                _ ≤ j1.val * 2 ^ k.val := Nat.mul_le_mul_right _ this
-            have H_le_int :
-                (j2.val : ℤ) * (2 ^ k.val : ℤ) + (2 ^ k.val : ℤ) ≤
-                  (j1.val : ℤ) * (2 ^ k.val : ℤ) := by
-              exact_mod_cast H_le
+            have hsep := hblockEnd_le_start j2.val j1.val h_lt
             omega
         · omega
         · omega
@@ -265,9 +233,8 @@ theorem weighted_primitive_prefix_maximal
           rw [Finset.mem_Icc] at hx ⊢
           push_cast at hx
           have h1 : 0 ≤ (j.val : ℤ) * (2 ^ k.val : ℤ) := by positivity
-          have h2 : (j.val * 2 ^ k.val + 2 ^ k.val : ℕ) ≤ N := h
           have h2z : (j.val : ℤ) * (2 ^ k.val : ℤ) + (2 ^ k.val : ℤ) ≤ (N : ℤ) := by
-            exact_mod_cast h2
+            exact_mod_cast h
           omega
         · intro x hx
           rw [Finset.mem_Icc] at hx

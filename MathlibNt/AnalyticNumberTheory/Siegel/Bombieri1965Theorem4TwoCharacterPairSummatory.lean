@@ -106,33 +106,16 @@ theorem norm_sum_Ioc_character_le_min [NeZero q]
       _ ≤ ∑ _n ∈ Ioc 0 N, (1 : ℝ) :=
         sum_le_sum fun n _ => norm_le_one χ n
       _ = N := by simp
-  · have hz : χ (0 : ZMod q) = 0 := by
-      by_contra h
-      have hq : q = 1 := by
-        have hu : IsUnit (0 : ZMod q) := by
-          by_contra hu
-          exact h (MulChar.map_nonunit χ hu)
-        have h01 : (0 : ZMod q) = 1 := hu.mul_left_cancel (by simp)
-        exact ZMod.subsingleton_iff.mp ⟨fun a b => by
-          calc a = a * 0 := by rw [h01, mul_one]
-               _ = b * 0 := by simp
-               _ = b := by rw [h01, mul_one]⟩
-      subst q
-      exact hχ (Subsingleton.elim _ _)
+  · have hz : χ (0 : ZMod q) = 0 :=
+      χ.map_zero' (fun hq => hχ (χ.level_one' hq))
     have hsum : (∑ n ∈ Ioc 0 N, χ n) = ∑ n ∈ range (N + 1), χ n := by
-      apply sum_subset
-      · intro n hn
-        simp only [mem_Ioc, mem_range] at hn ⊢
-        omega
-      · intro n hn hn'
-        have hn0 : n = 0 := by
-          simp only [mem_Ioc, mem_range] at hn hn'
-          omega
-        simpa [hn0] using hz
+      simpa only [Nat.range_succ_eq_Icc_zero, Nat.cast_zero, hz, add_zero] using
+        (sum_Ioc_add_eq_sum_Icc (f := fun n : ℕ => χ n) (Nat.zero_le N))
     rw [hsum]
     exact DirichletLWeakStripDerivative.norm_sum_range_character_le_modulus χ hχ (N + 1)
 
-private lemma sum_Ioc_characterArithmeticFunction
+/-- Character arithmetic-function sums agree with character sums on positive indices. -/
+lemma sum_Ioc_characterArithmeticFunction
     (χ : DirichletCharacter ℂ q) (N : ℕ) :
     (∑ n ∈ Ioc 0 N, toArithmeticFunction (χ ·) n) =
       ∑ n ∈ Ioc 0 N, χ n :=
@@ -198,11 +181,7 @@ theorem norm_sum_Icc_character_pair_convolution_le_three_mul_sqrt [NeZero q]
     ‖∑ n ∈ Icc 1 N,
       (toArithmeticFunction (ψ ·) * toArithmeticFunction (η ·)) n‖ ≤
       3 * (q : ℝ) * Real.sqrt N := by
-  have hI : Icc 1 N = Ioc 0 N := by
-    ext n
-    simp only [mem_Icc, mem_Ioc]
-    omega
-  rw [hI]
+  rw [show Icc 1 N = Ioc 0 N from Icc_succ_left_eq_Ioc _ _]
   refine (norm_sum_Ioc_character_pair_convolution_le_three_mul_nat_sqrt
     ψ η hψ hη N).trans ?_
   apply mul_le_mul_of_nonneg_left _ (by positivity)

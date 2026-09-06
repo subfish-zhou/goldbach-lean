@@ -1,4 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19UniformMoments
+import MathlibNt.AnalyticNumberTheory.LargeSieve.PrefixMaximal
 import Mathlib.Algebra.Order.Chebyshev
 
 noncomputable section
@@ -161,16 +162,8 @@ def eq14DyadicShell (H j : ℕ) : Finset ℤ :=
 private lemma eq14_sum_Ioc_split {A : Type*} [AddCommMonoid A]
     (f : ℤ → A) {a b c : ℤ} (hab : a ≤ b) (hbc : b ≤ c) :
     (∑ n ∈ Ioc a b, f n) + (∑ n ∈ Ioc b c, f n) = ∑ n ∈ Ioc a c, f n := by
-  have hd : Disjoint (Ioc a b) (Ioc b c) := by
-    apply Finset.disjoint_left.mpr
-    intro n hn hm
-    simp only [Finset.mem_Ioc] at hn hm
-    omega
-  rw [← Finset.sum_union hd]
-  congr 1
-  ext n
-  simp only [Finset.mem_union, Finset.mem_Ioc]
-  omega
+  rw [← Finset.sum_union (Finset.Ioc_disjoint_Ioc_of_le le_rfl),
+    Finset.Ioc_union_Ioc_eq_Ioc hab hbc]
 
 /-- Exact disjoint shell recombination, valid for any finite additive sum. -/
 theorem eq14_sum_dyadicShell {A : Type*} [AddCommMonoid A]
@@ -222,8 +215,8 @@ private lemma eq14_sum_truncate {A : Type*} [AddCommMonoid A]
 
 private lemma eq14_norm_sum_sq {ι : Type*} (S : Finset ι) (f : ι → ℂ) :
     ‖∑ i ∈ S, f i‖ ^ 2 ≤ (S.card : ℝ) * ∑ i ∈ S, ‖f i‖ ^ 2 := by
-  exact (pow_le_pow_left₀ (norm_nonneg _) (norm_sum_le S f) 2).trans
-    (sq_sum_le_card_mul_sum_sq)
+  classical
+  exact norm_finset_sum_sq_le_card_mul_sum_norm_sq S f
 
 /-- Sharp LS is freshly applied to each shell; its length is H*2^j,
 not H². The upper bound pays the shell's own weighted energy. -/
@@ -267,7 +260,7 @@ theorem eq14_dyadicShell_moment (c : ℤ → ℂ) (H j D Q : ℕ)
     rw [one_div, mul_comm, ← div_eq_mul_inv]
     exact div_le_div_of_nonneg_right (by exact_mod_cast hnY.le) hDr.le
   have hfac : (Q : ℝ) + Y / D ≤ ((Q : ℝ) / H + 1 / D) * n.toNat := by
-    nlinarith
+    simpa only [add_mul] using add_le_add h1 h2
   have hh := mul_le_mul_of_nonneg_left
     (mul_le_mul_of_nonneg_right hfac (sq_nonneg ‖c n‖))
     chen1973Lemma6_eq19SharpConstant_pos.le

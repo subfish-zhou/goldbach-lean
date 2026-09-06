@@ -74,11 +74,11 @@ private lemma suzukiLayerNumerator_eq_sourceRecursion_of_two_le
     suzukiLayerNumerator 1 β n s =
       ∫ t in recursionLower β s n..(β + n),
         suzukiLayer 1 β (n - 1) (t - 1) := by
-  obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := ⟨n - 2, by omega⟩
-  simpa [dPowDensity, Nat.cast_add, Nat.cast_ofNat] using
-    suzukiLayerNumerator_succ_succ (1 : ℝ) β s k
+  exact SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
+    β s hn
 
-private lemma compact_tail_integral
+/-- A continuous function vanishing beyond an endpoint has an integrable compact tail. -/
+lemma compact_tail_integral
     {f : ℝ → ℝ} {x B : ℝ}
     (hcont : ContinuousOn f (Icc x B))
     (hzero : ∀ t, B ≤ t → f t = 0) :
@@ -201,21 +201,8 @@ theorem Lemma132FiniteTailIdentity_exactRecursionThreshold :
     rw [hnpar]
     exact hx
   have hsumInt : IntegrableOn
-      (fun t => ∑ n ∈ S, suzukiLayer 1 2 (n - 1) (t - 1)) (Ioi x) := by
-    classical
-    have hsumInt' : IntegrableOn
-        (∑ n ∈ S, fun t => suzukiLayer 1 2 (n - 1) (t - 1)) (Ioi x) := by
-      apply Finset.sum_induction (s := S)
-          (fun n t => suzukiLayer 1 2 (n - 1) (t - 1))
-          (fun f => IntegrableOn f (Ioi x) volume)
-      · intro f g hf hg
-        exact hf.add hg
-      · exact integrableOn_zero
-      · intro n hn
-        exact (hterm n hn).1
-    apply hsumInt'.congr_fun_ae
-    filter_upwards [] with t
-    simp
+      (fun t => ∑ n ∈ S, suzukiLayer 1 2 (n - 1) (t - 1)) (Ioi x) :=
+    integrable_finsetSum S (fun n hn => (hterm n hn).1)
   have hfun : (fun t => ∑ n ∈ S, suzukiLayer 1 2 (n - 1) (t - 1)) =
       (fun t => finiteSourceLayer 1 2 (N - 1) (t - 1)) := by
     funext t

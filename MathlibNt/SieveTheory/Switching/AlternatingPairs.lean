@@ -927,6 +927,46 @@ theorem upperRosserAlternatingPairDiscreteRelativeTransition_le_localProduct
           (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
         exact (S.nu_pos_of_prime p₁ hpPrime hpDvd).le))
 
+/-- The ordered reverse-pair condition keeps the renormalized residual ratio
+above three.  Both geometric inductions use this same admissibility step. -/
+private lemma upperRosserAlternatingPairDiscrete_nextRatio_ge_three
+    {q p₀ p₁ : ℕ} {r : ℝ}
+    (hqPrime : q.Prime) (hp₀Prime : p₀.Prime) (hp₁Prime : p₁.Prime)
+    (hqp₁ : q < p₁) (h10 : p₁ < p₀)
+    (hpair : 2 * (Real.log p₀ / Real.log q) < Real.log p₁ / Real.log q + r) :
+    3 ≤ (r + Real.log p₁ / Real.log q + Real.log p₀ / Real.log q) /
+      (Real.log p₀ / Real.log q) := by
+  have hqpos : (0 : ℝ) < q := by exact_mod_cast hqPrime.pos
+  have hp₀pos : (0 : ℝ) < p₀ := by exact_mod_cast hp₀Prime.pos
+  have hp₁pos : (0 : ℝ) < p₁ := by exact_mod_cast hp₁Prime.pos
+  have hlogq : 0 < Real.log q :=
+    Real.log_pos (by exact_mod_cast hqPrime.one_lt)
+  have hy :
+      Real.log p₁ / Real.log q ∈ Set.Ioo (1 : ℝ) r := by
+    have hqy :
+        Real.log q < Real.log p₁ :=
+      (Real.strictMonoOn_log.lt_iff_lt hqpos hp₁pos).2
+        (by exact_mod_cast hqp₁)
+    have hyx :
+        Real.log p₁ / Real.log q <
+          Real.log p₀ / Real.log q := by
+      apply (div_lt_div_iff_of_pos_right hlogq).2
+      exact (Real.strictMonoOn_log.lt_iff_lt hp₁pos hp₀pos).2
+        (by exact_mod_cast h10)
+    refine ⟨(lt_div_iff₀ hlogq).2 ?_, ?_⟩
+    · simpa using hqy
+    · linarith [hpair, hyx]
+  have hx :
+      Real.log p₀ / Real.log q ∈
+        Set.Ioo (Real.log p₁ / Real.log q)
+          ((Real.log p₁ / Real.log q + r) / 2) := by
+    constructor
+    · apply (div_lt_div_iff_of_pos_right hlogq).2
+      exact (Real.strictMonoOn_log.lt_iff_lt hp₁pos hp₀pos).2
+        (by exact_mod_cast h10)
+    · linarith [hpair]
+  exact (LinearSieve.upperRosserAlternatingPair_nextRatio_gt_three hy hx).le
+
 /-- Iterating the uniform discrete reverse-pair contraction gives a geometric
 depth bound.  This is the quantitative tail estimate for reverse-built Rosser
 chains whose terminal prime is above the uniform local-product cutoff. -/
@@ -981,43 +1021,9 @@ theorem exists_upperRosserAlternatingPairDiscreteIterate_le
         have hp₁' := Finset.mem_filter.mp hp₁
         have hp₀Prime : p₀.Prime :=
           Nat.prime_of_mem_primeFactors (hP hp₀)
-        have hp₁Prime : p₁.Prime :=
-          Nat.prime_of_mem_primeFactors (hP hp₁'.1)
-        have hqpos : (0 : ℝ) < q := by exact_mod_cast hqPrime.pos
-        have hp₀pos : (0 : ℝ) < p₀ := by exact_mod_cast hp₀Prime.pos
-        have hp₁pos : (0 : ℝ) < p₁ := by exact_mod_cast hp₁Prime.pos
-        have hlogq : 0 < Real.log q :=
-          Real.log_pos (by exact_mod_cast hqPrime.one_lt)
-        have hy :
-            Real.log p₁ / Real.log q ∈ Set.Ioo (1 : ℝ) r := by
-          have hqy :
-              Real.log q < Real.log p₁ :=
-            (Real.strictMonoOn_log.lt_iff_lt hqpos hp₁pos).2
-              (by exact_mod_cast hqP p₁ hp₁'.1)
-          have hyx :
-              Real.log p₁ / Real.log q <
-                Real.log p₀ / Real.log q := by
-            apply (div_lt_div_iff_of_pos_right hlogq).2
-            exact (Real.strictMonoOn_log.lt_iff_lt hp₁pos hp₀pos).2
-              (by exact_mod_cast hp₁'.2.1)
-          refine ⟨(lt_div_iff₀ hlogq).2 ?_, ?_⟩
-          · simpa using hqy
-          · linarith [hp₁'.2.2, hyx]
-        have hx :
-            Real.log p₀ / Real.log q ∈
-              Set.Ioo (Real.log p₁ / Real.log q)
-                ((Real.log p₁ / Real.log q + r) / 2) := by
-          constructor
-          · apply (div_lt_div_iff_of_pos_right hlogq).2
-            exact (Real.strictMonoOn_log.lt_iff_lt hp₁pos hp₀pos).2
-              (by exact_mod_cast hp₁'.2.1)
-          · linarith [hp₁'.2.2]
-        have hnext :
-            3 ≤
-              (r + Real.log p₁ / Real.log q +
-                  Real.log p₀ / Real.log q) /
-                (Real.log p₀ / Real.log q) :=
-          (LinearSieve.upperRosserAlternatingPair_nextRatio_gt_three hy hx).le
+        have hnext := upperRosserAlternatingPairDiscrete_nextRatio_ge_three
+          hqPrime hp₀Prime (Nat.prime_of_mem_primeFactors (hP hp₁'.1))
+          (hqP p₁ hp₁'.1) hp₁'.2.1 hp₁'.2.2
         have hiter := ih p₀
           ((r + Real.log p₁ / Real.log q +
               Real.log p₀ / Real.log q) /
@@ -1183,43 +1189,9 @@ theorem exists_upperRosserAlternatingPairDiscreteIterate_shifted_le
         have hp₁' := Finset.mem_filter.mp hp₁
         have hp₀Prime : p₀.Prime :=
           Nat.prime_of_mem_primeFactors (hP hp₀)
-        have hp₁Prime : p₁.Prime :=
-          Nat.prime_of_mem_primeFactors (hP hp₁'.1)
-        have hqpos : (0 : ℝ) < q := by exact_mod_cast hqPrime.pos
-        have hp₀pos : (0 : ℝ) < p₀ := by exact_mod_cast hp₀Prime.pos
-        have hp₁pos : (0 : ℝ) < p₁ := by exact_mod_cast hp₁Prime.pos
-        have hlogq : 0 < Real.log q :=
-          Real.log_pos (by exact_mod_cast hqPrime.one_lt)
-        have hy :
-            Real.log p₁ / Real.log q ∈ Set.Ioo (1 : ℝ) r := by
-          have hqy :
-              Real.log q < Real.log p₁ :=
-            (Real.strictMonoOn_log.lt_iff_lt hqpos hp₁pos).2
-              (by exact_mod_cast hqP p₁ hp₁'.1)
-          have hyx :
-              Real.log p₁ / Real.log q <
-                Real.log p₀ / Real.log q := by
-            apply (div_lt_div_iff_of_pos_right hlogq).2
-            exact (Real.strictMonoOn_log.lt_iff_lt hp₁pos hp₀pos).2
-              (by exact_mod_cast hp₁'.2.1)
-          refine ⟨(lt_div_iff₀ hlogq).2 ?_, ?_⟩
-          · simpa using hqy
-          · linarith [hp₁'.2.2, hyx]
-        have hx :
-            Real.log p₀ / Real.log q ∈
-              Set.Ioo (Real.log p₁ / Real.log q)
-                ((Real.log p₁ / Real.log q + r) / 2) := by
-          constructor
-          · apply (div_lt_div_iff_of_pos_right hlogq).2
-            exact (Real.strictMonoOn_log.lt_iff_lt hp₁pos hp₀pos).2
-              (by exact_mod_cast hp₁'.2.1)
-          · linarith [hp₁'.2.2]
-        have hnext :
-            3 ≤
-              (r + Real.log p₁ / Real.log q +
-                  Real.log p₀ / Real.log q) /
-                (Real.log p₀ / Real.log q) :=
-          (LinearSieve.upperRosserAlternatingPair_nextRatio_gt_three hy hx).le
+        have hnext := upperRosserAlternatingPairDiscrete_nextRatio_ge_three
+          hqPrime hp₀Prime (Nat.prime_of_mem_primeFactors (hP hp₁'.1))
+          (hqP p₁ hp₁'.1) hp₁'.2.1 hp₁'.2.2
         have hqp₁ : q < p₁ := hqP p₁ hp₁'.1
         have hp₁p₀ : p₁ < p₀ := hp₁'.2.1
         have hp₀ge : q + 2 ≤ p₀ := by omega

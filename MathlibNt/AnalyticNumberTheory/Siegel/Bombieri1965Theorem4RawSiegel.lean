@@ -48,10 +48,9 @@ theorem fourFactor_log_cube_absorption {Q η : ℝ} (hQ : 1 ≤ Q) (hη : 0 < η
   have he : 0 < η/6 := by positivity
   have hpow : 1 ≤ Q^(η/6) := Real.one_le_rpow hQ he.le
   have hl := Real.log_le_rpow_div hQ0.le he
-  have hlin : 1 + Real.log Q ≤ (1+6/η)*Q^(η/6) := by
-    have heq : Q^(η/6)/(η/6) = (6/η)*Q^(η/6) := by ring
-    rw [heq] at hl
-    nlinarith
+  have hlin : 1 + Real.log Q ≤ (1+6/η)*Q^(η/6) := calc
+    _ ≤ Q^(η/6) + Q^(η/6)/(η/6) := add_le_add hpow hl
+    _ = _ := by ring
   have hlog : 0 ≤ 1+Real.log Q := by linarith [Real.log_nonneg hQ]
   calc
     _ ≤ ((1+6/η)*Q^(η/6))^3 := pow_le_pow_left₀ hlog hlin _
@@ -109,8 +108,8 @@ theorem fourFactor_fixed_zero_value_lower
   have hp : 0 < ((5000*Q^3)^8)^(1-β) := by positivity
   have hraw : 1-β ≤ 64 * (((5000*Q^3)^8)^(1-β) * (1+Real.log Q)^3) * x.value*y.value := by
     have hh := (div_le_iff₀ (show 0 < 2*((5000*Q^3)^8)^(1-β) by positivity)).mp (hl.trans hu)
-    dsimp [Q] at *
-    nlinarith [hh]
+    dsimp [Q] at hh ⊢
+    nlinarith only [hh]
   have hden := fourFactor_denominator_bound hQ hη hdη
   have hraw' : 1-β ≤ (64*(5000:ℝ)^(8*(1-β))*(1+6/η)^3*x.value) * Q^η * y.value := by
     calc

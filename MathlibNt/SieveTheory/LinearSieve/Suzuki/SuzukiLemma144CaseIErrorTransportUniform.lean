@@ -125,7 +125,8 @@ theorem exists_caseI_errorEnvelope_transport_quotient_cutoff
   exact ⟨Dmin, hDmin, fun D N s => hall S D N s⟩
 
 
-private theorem caseI_carrier_quotient_scale
+/-- A square global cutoff puts every Case-I carrier quotient above the threshold. -/
+theorem caseI_carrier_quotient_scale
     (S : BoundingSieve) {D Dmin : ℕ} {σ s : ℝ}
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) (hs : 2 ≤ s) :
     CarrierQuotientThresholdGeometry S.prodPrimes.primeFactors D Dmin σ s := by

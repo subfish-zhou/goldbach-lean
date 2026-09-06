@@ -85,8 +85,6 @@ theorem one_modulus_character_cauchy
   have hφ : (0 : ℝ) < q.totient := by exact_mod_cast hφnat
   let A : ℝ := ∑ χ ∈ nonprincipalCharacters q,
     nonprincipalPrefixAmplitude b N q χ
-  have hA0 : 0 ≤ A := Finset.sum_nonneg fun χ _ =>
-    nonprincipalPrefixAmplitude_nonneg b N q χ
   have hsqE : E ^ 2 ≤ (((q.totient : ℝ)⁻¹) * A) ^ 2 :=
     pow_le_pow_left₀ hE0 hchar 2
   have hcauchy : A ^ 2 ≤ ((nonprincipalCharacters q).card : ℝ) *
@@ -114,11 +112,7 @@ theorem one_modulus_character_cauchy
         ∑ χ ∈ nonprincipalCharacters q,
           nonprincipalPrefixAmplitude b N q χ ^ 2 := by
       field_simp
-    _ = _ := by
-      apply congrArg (fun x : ℝ => ((q : ℝ) / (q.totient : ℝ)) * x)
-      apply Finset.sum_congr rfl
-      intro χ hχ
-      exact nonprincipalPrefixAmplitude_sq b N q χ
+    _ = _ := by simp_rw [nonprincipalPrefixAmplitude_sq]
 
 /-- Exact Cauchy conversion on an arbitrary modulus block.  If every modulus
 in `S` is at least `R`, then
@@ -184,11 +178,9 @@ theorem modulus_block_square_threshold
     ∑ q ∈ S, E q ≤ T := by
   have hRr : (0 : ℝ) < R := by exact_mod_cast hR
   have hs := modulus_block_square_to_L1 b N R S E hR hlevels hE0 hchar
-  have hsquares : (∑ q ∈ S, E q) ^ 2 ≤ T ^ 2 := by
-    have h := hs.trans hthreshold
-    nlinarith
-  have hsum0 : 0 ≤ ∑ q ∈ S, E q := Finset.sum_nonneg hE0
-  nlinarith
+  have hsquares : (∑ q ∈ S, E q) ^ 2 ≤ T ^ 2 :=
+    (mul_le_mul_iff_right₀ hRr).mp (hs.trans hthreshold)
+  exact (sq_le_sq₀ (Finset.sum_nonneg hE0) hT).mp hsquares
 
 /-- If a conductor regrouping splits the square ledger into `J.card` cells,
 this is the exact per-cell threshold.  The conductor-block cardinality is
@@ -309,9 +301,8 @@ theorem existingTypeIPrefixWindowScale_has_N_sq_log5
       existingTypeIPrefixWindowScale N Q C B := by
   unfold existingTypeIPrefixWindowScale primitiveLargeSieveConstant
   have hRM : (1 : ℝ) ≤ (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) := by
-    have hbase : (1 : ℝ) ≤ ((Nat.log2 N + 1 : ℕ) : ℝ) := by
-      exact_mod_cast Nat.succ_le_succ (Nat.zero_le (Nat.log2 N))
-    nlinarith
+    apply one_le_pow₀
+    exact_mod_cast Nat.succ_le_succ (Nat.zero_le (Nat.log2 N))
   have hLS : (N : ℝ) ≤ (N : ℝ) +
       (2 * (Nat.ceil (Real.log (((2 * C : ℕ) : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
         ((2 * C : ℕ) : ℝ) ^ 2 := by

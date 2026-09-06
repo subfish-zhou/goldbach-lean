@@ -56,15 +56,7 @@ theorem character_mul_product_apply
   apply Finset.sum_congr rfl
   intro x hx
   have hxprod := (Nat.mem_divisorsAntidiagonal.mp hx).1
-  have hn := (Nat.mem_divisorsAntidiagonal.mp hx).2
-  have hx1 : x.1 ≠ 0 := by
-    intro h
-    simp [h] at hxprod
-    exact hn hxprod.symm
-  have hx2 : x.2 ≠ 0 := by
-    intro h
-    simp [h] at hxprod
-    exact hn hxprod.symm
+  obtain ⟨hx1, hx2⟩ := Nat.ne_zero_of_mem_divisorsAntidiagonal hx
   simp only [toArithmeticFunction, coe_mk, hx1, hx2, ↓reduceIte,
     natCoe_apply, zeta_apply_ne hx1, Nat.cast_one, one_mul, MulChar.mul_apply]
   rw [← hxprod, Nat.cast_mul, map_mul]
@@ -171,7 +163,7 @@ theorem twoCharacterConvolution_re_nonneg
   rw [RCLike.le_iff_re_im] at h
   exact h.1
 
-private lemma characterArithmeticFunction_LSeriesSummable
+lemma characterArithmeticFunction_LSeriesSummable
     (χ : DirichletCharacter ℂ q) {s : ℂ} (hs : 1 < s.re) :
     LSeriesSummable (toArithmeticFunction (χ ·)) s := by
   apply LSeriesSummable_of_bounded_of_one_lt_re (m := 1) _ hs

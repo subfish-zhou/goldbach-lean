@@ -59,13 +59,7 @@ lemma topConductorDelta_nonneg (Q d : ℕ) : 0 ≤ topConductorDelta Q d := by
 entirely at its top conductor, so its high-conductor mass is still exactly one. -/
 theorem sum_topConductorDelta_high (Q R : ℕ) (hRQ : R < Q) :
     (∑ d ∈ Finset.Icc (R + 1) Q, topConductorDelta Q d) = 1 := by
-  rw [show Finset.Icc (R + 1) Q = insert Q (Finset.Ico (R + 1) Q) by
-    ext d
-    simp only [Finset.mem_Icc, Finset.mem_insert, Finset.mem_Ico]
-    omega]
-  rw [Finset.sum_insert]
-  · simp [topConductorDelta]
-  · simp
+  simp [topConductorDelta, Finset.sum_ite_eq', Nat.succ_le_iff.mpr hRQ]
 
 /-- Consequently no universal `high mass ≤ full mass / R` inequality follows
 from positivity and the cutoff alone when `R>1`. -/
@@ -79,14 +73,13 @@ theorem no_inverse_cutoff_gain_from_restriction
     exact hRreal
   exact not_le_of_gt hinv
 
-/-- Restricting Type I to high conductors uses only positivity and therefore
-retains the full-conductor right-hand side. -/
-theorem highConductorVaughanTypeIMean_le_full
-    (N Q C u v : ℕ) :
-    highConductorVaughanTypeIMean N Q C u v ≤
-      apNormalizedVaughanTypeIMean N Q u v := by
-  unfold highConductorVaughanTypeIMean apNormalizedVaughanTypeIMean
-    apNormalizedPrimitiveMeanOn apNormalizedPrimitiveMean
+/-- Positivity restricts either Vaughan coefficient family to high conductors
+without improving the full-conductor bound. -/
+private theorem highConductor_primitiveMean_le_full
+    (a : ℤ → ℂ) (N Q C : ℕ) :
+    apNormalizedPrimitiveMeanOn a N (highConductorSet N Q C) ≤
+      apNormalizedPrimitiveMean a N Q := by
+  unfold apNormalizedPrimitiveMeanOn apNormalizedPrimitiveMean
   apply Finset.sum_le_sum_of_subset_of_nonneg
   · intro d hd
     simp only [highConductorSet, Finset.mem_filter] at hd
@@ -95,6 +88,14 @@ theorem highConductorVaughanTypeIMean_le_full
     exact mul_nonneg (by positivity)
       (Finset.sum_nonneg fun ψ _ => primitivePrefixAmplitude_nonneg _ _ _ _)
 
+/-- Restricting Type I to high conductors uses only positivity and therefore
+retains the full-conductor right-hand side. -/
+theorem highConductorVaughanTypeIMean_le_full
+    (N Q C u v : ℕ) :
+    highConductorVaughanTypeIMean N Q C u v ≤
+      apNormalizedVaughanTypeIMean N Q u v := by
+  exact highConductor_primitiveMean_le_full _ N Q C
+
 /-- The identical monotonicity restriction for Type II.  This is the strongest
 automatic bridge from the current full-range physical producer; it gives no
 factor depending on the lower conductor cutoff. -/
@@ -102,15 +103,7 @@ theorem highConductorVaughanTypeIIMean_le_full
     (N Q C u v : ℕ) :
     highConductorVaughanTypeIIMean N Q C u v ≤
       apNormalizedVaughanTypeIIMean N Q u v := by
-  unfold highConductorVaughanTypeIIMean apNormalizedVaughanTypeIIMean
-    apNormalizedPrimitiveMeanOn apNormalizedPrimitiveMean
-  apply Finset.sum_le_sum_of_subset_of_nonneg
-  · intro d hd
-    simp only [highConductorSet, Finset.mem_filter] at hd
-    exact Finset.mem_Icc.mpr ⟨by omega, (Finset.mem_Icc.mp hd.1).2⟩
-  · intro d hd hnot
-    exact mul_nonneg (by positivity)
-      (Finset.sum_nonneg fun ψ _ => primitivePrefixAmplitude_nonneg _ _ _ _)
+  exact highConductor_primitiveMean_le_full _ N Q C
 
 /-- Narrowest honest missing analytic contract.  It asks only for the exact
 post-conductor-transport high Vaughan hybrid, not for a BV conclusion.  The

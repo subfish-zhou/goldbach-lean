@@ -38,14 +38,9 @@ theorem primitivePrefixAmplitude_le_of_pointwise_integerPrefix
       simpa [Finset.mem_range] using hy
     unfold primitiveCharacterPrefixSquare
     simp only [zero_add]
-    have hyB := hpointwise y hyN
-    nlinarith [norm_nonneg
-      (∑ n ∈ Finset.Icc (1 : ℤ) (y : ℤ),
-        a n * ψ.1 (n : ZMod q))]
-  have hamp : 0 ≤ primitivePrefixAmplitude a N q ψ :=
-    primitivePrefixAmplitude_nonneg a N q ψ
-  have hsquare := primitivePrefixAmplitude_sq a N q ψ
-  nlinarith [mul_nonneg hamp hB]
+    exact pow_le_pow_left₀ (norm_nonneg _) (hpointwise y hyN) 2
+  exact (sq_le_sq₀ (primitivePrefixAmplitude_nonneg a N q ψ) hB).mp
+    ((primitivePrefixAmplitude_sq a N q ψ).trans_le hmax)
 
 /-- A uniform pointwise bound for the natural-number Chebyshev twists bounds
 the primitive prefix amplitude.  The conversion uses `Λ(0) = 0`, the exact

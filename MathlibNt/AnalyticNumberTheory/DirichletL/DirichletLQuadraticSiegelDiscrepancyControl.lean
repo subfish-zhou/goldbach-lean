@@ -17,12 +17,6 @@ namespace DirichletCharacter
 
 variable {q : ℕ} [NeZero q]
 
-private lemma re_sum_eq_sum_re {s : Finset ℕ} (F : ℕ → ℂ) :
-    (∑ n ∈ s, F n).re = ∑ n ∈ s, (F n).re := by
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert n s hn ih => rw [sum_insert hn, sum_insert hn, Complex.add_re, ih]
-
 /-- Finite Abel summation with a nonnegative decreasing weight.  This is the
 form used below for `w(d)=⌊X/d⌋`; only interval-prefix cancellation is paid. -/
 lemma abs_sum_range_mul_le_of_prefix
@@ -61,16 +55,7 @@ lemma abs_sum_range_mul_le_of_prefix
               mul_le_mul_of_nonneg_left (hpref (i + 1) (by omega))
                 (sub_nonneg.mpr hmono)
         _ = B * w 0 := by
-          have htel : ∑ i ∈ range k, (w i - w (i + 1)) = w 0 - w k := by
-            calc
-              _ = ∑ i ∈ range k, -(w (i + 1) - w i) := by
-                apply sum_congr rfl
-                intro i hi
-                ring
-              _ = -(∑ i ∈ range k, (w (i + 1) - w i)) := by
-                rw [Finset.sum_neg_distrib]
-              _ = w 0 - w k := by rw [Finset.sum_range_sub]; ring
-          rw [← Finset.mul_sum, htel]
+          rw [← Finset.mul_sum, Finset.sum_range_sub']
           ring
 
  /-- Reindex the divisor double sum by the divisor.  The multiplicity of `d` is
@@ -129,14 +114,7 @@ theorem quadraticHarmonicTruncation_eq_Ico
       ∑ d ∈ Ico 1 m, (χ d).re / (d : ℝ) := by
   classical
   unfold quadraticHarmonicTruncation
-  have hre :
-      (∑ n ∈ range m, cpowWeight (1 : ℂ) n * χ n).re =
-        ∑ n ∈ range m, (cpowWeight (1 : ℂ) n * χ n).re := by
-    induction range m using Finset.induction_on with
-    | empty => simp
-    | @insert d s hd ih =>
-        rw [sum_insert hd, sum_insert hd, Complex.add_re, ih]
-  rw [hre]
+  rw [Complex.re_sum]
   have hsub : Ico 1 m ⊆ range m := by
     intro d hd
     exact mem_range.mpr (mem_Ico.mp hd).2
@@ -162,8 +140,7 @@ theorem IsPrimitive.abs_sum_Ico_character_re_le_eight_mul_sqrt_q_mul_one_add_log
     (a b : ℕ) :
     |∑ n ∈ Ico a b, (χ n).re| ≤ 8 * Real.sqrt q * (1 + Real.log q) := by
   by_cases hab : a ≤ b
-  · have hre := re_sum_eq_sum_re (s := Ico a b) (fun n => χ n)
-    rw [← hre]
+  · rw [← Complex.re_sum]
     refine (Complex.abs_re_le_norm _).trans ?_
     rw [Finset.sum_Ico_eq_sub (f := fun n => χ n) hab]
     calc

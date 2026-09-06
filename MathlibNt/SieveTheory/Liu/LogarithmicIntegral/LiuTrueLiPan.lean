@@ -244,16 +244,10 @@ theorem liuMainPanMaxL_nonneg
   dsimp only
   by_cases hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty
   · rw [dif_pos hS]
-    have hmem :
-        ((AnalyticNumberTheory.Sieve.unitResidues q).image
-            (fun l => |liuMainPanCoprimeSum main Y X q l f|)).max'
-              (Finset.image_nonempty.mpr hS) ∈
-          (AnalyticNumberTheory.Sieve.unitResidues q).image
-            (fun l => |liuMainPanCoprimeSum main Y X q l f|) :=
-      Finset.max'_mem _ _
-    rcases Finset.mem_image.mp hmem with ⟨l, _, hl⟩
-    rw [← hl]
-    exact abs_nonneg _
+    rcases hS with ⟨l, hl⟩
+    apply (abs_nonneg (liuMainPanCoprimeSum main Y X q l f)).trans
+    apply Finset.le_max'
+    exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
   · rw [dif_neg hS]
 
 theorem liuMainPanMaxY_nonneg
@@ -281,6 +275,15 @@ theorem abs_liuMainPanCoprimeSum_le_maxL
   apply Finset.le_max'
   exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
 
+/-- A source endpoint in range is bounded by the source-parameter maximum. -/
+private theorem liuMainPanMaxL_le_maxY
+    (main : ℝ → ℝ) (Y X q N : ℕ) (f : ℕ → ℝ) (hY : Y ≤ N) :
+    liuMainPanMaxL main Y X q f ≤ liuMainPanMaxY main X q N f := by
+  unfold liuMainPanMaxY
+  apply Finset.le_max'
+  exact Finset.mem_image.mpr
+    ⟨Y, Finset.mem_range.mpr (Nat.lt_succ_of_le hY), rfl⟩
+
 /-- A canonical reduced residue and a source parameter in range are bounded by
 the two nested Pan maxima. -/
 theorem abs_liuMainPanCoprimeSum_le_maxY
@@ -289,20 +292,8 @@ theorem abs_liuMainPanCoprimeSum_le_maxY
     (hl : l ∈ AnalyticNumberTheory.Sieve.unitResidues q) :
     |liuMainPanCoprimeSum main Y X q l f| ≤
       liuMainPanMaxY main X q N f := by
-  have hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty := ⟨l, hl⟩
-  have hleL :
-      |liuMainPanCoprimeSum main Y X q l f| ≤
-        liuMainPanMaxL main Y X q f := by
-    unfold liuMainPanMaxL
-    dsimp only
-    rw [dif_pos hS]
-    apply Finset.le_max'
-    exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
-  apply hleL.trans
-  unfold liuMainPanMaxY
-  apply Finset.le_max'
-  exact Finset.mem_image.mpr
-    ⟨Y, Finset.mem_range.mpr (by omega), rfl⟩
+  exact (abs_liuMainPanCoprimeSum_le_maxL main Y X q l f hl).trans
+    (liuMainPanMaxL_le_maxY main Y X q N f hY)
 
 /-- The source-faithful endpoint structural bridge: Pan's weighted estimate at
 `Y = N` already controls the only prefix used by Liu's source-`Q` coprime
@@ -409,92 +400,17 @@ theorem liuPaperQCoprimeRBound_of_liuMainPanMeanValueAt
     (hpan : LiuMainPanMeanValueAt main N
       (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C) :
     LiuPaperQCoprimeRBound main N ε A C := by
-  classical
-  have hQsq : Squarefree (liuPaperQModulus N ε) := by
-    rw [liuPaperQModulus_eq_paperQStyleModulus]
-    exact paperQStyleModulus_squarefree N (paperQSourceCutoff N ε)
-  have hQN : Nat.Coprime (liuPaperQModulus N ε) N := by
-    apply Nat.coprime_of_dvd'
-    intro r hr hrQ hrN
-    rw [liuPaperQModulus_eq_paperQStyleModulus] at hrQ
-    exact False.elim (((prime_dvd_paperQStyleModulus hr).mp hrQ).2 hrN)
-  unfold LiuPaperQCoprimeRBound
-    liuPaperQSourceCoprimeDistributionMajorant
-  calc
-    (∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-        (fun d => d ≤ liuSourceDEpsilon N ε),
-        (3 : ℝ) ^ d.primeFactors.card *
-          |liuMainCoprimeSum main N N d (N % d)
-            (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))|) ≤
-        ∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-          (fun d => d ≤ liuSourceDEpsilon N ε),
-          (((ArithmeticFunction.moebius d : ℤ) : ℝ) ^ 2) *
-            (3 : ℝ) ^ d.primeFactors.card *
-              liuMainPanMaxY main N d N
-                (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) := by
-      apply Finset.sum_le_sum
-      intro d hd
-      rw [Finset.mem_filter] at hd
-      have hdvd : d ∣ liuPaperQModulus N ε :=
-        Nat.dvd_of_mem_divisors hd.1
-      have hdsq : Squarefree d := hQsq.squarefree_of_dvd hdvd
-      have hmu :
-          (((ArithmeticFunction.moebius d : ℤ) : ℝ) ^ 2) = 1 := by
-        rw [← Int.cast_pow]
-        exact_mod_cast
-          ArithmeticFunction.moebius_sq_eq_one_of_squarefree hdsq
-      have hdN : Nat.Coprime d N :=
-        Nat.Coprime.coprime_dvd_left hdvd hQN
-      have hmodcop : (N % d).Coprime d := by
-        apply Nat.coprime_of_dvd'
-        intro r hr hrmod hrd
-        have hrN : r ∣ N := by
-          have hsum : r ∣ d * (N / d) + N % d :=
-            Nat.dvd_add
-              (by simpa [mul_comm] using
-                (dvd_mul_of_dvd_right hrd (N / d)))
-              hrmod
-          have hNdef : d * (N / d) + N % d = N := by
-            simpa [Nat.add_comm] using (Nat.mod_add_div N d)
-          rw [← hNdef]
-          exact hsum
-        exact False.elim
-          (Nat.not_coprime_of_dvd_of_dvd
-            (Nat.Prime.one_lt hr) hrd hrN hdN)
-      have hres :
-          N % d ∈ AnalyticNumberTheory.Sieve.unitResidues d := by
-        rw [AnalyticNumberTheory.Sieve.unitResidues]
-        exact Finset.mem_filter.mpr
-          ⟨Finset.mem_range.mpr
-              (Nat.mod_lt N (Nat.pos_of_mem_divisors hd.1)),
-            hmodcop⟩
-      have hinner :
-          |liuMainCoprimeSum main N N d (N % d)
-              (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))| ≤
-            liuMainPanMaxY main N d N
-              (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) := by
-        rw [← liuMainPanCoprimeSum_eq_liuMainCoprimeSum]
-        exact abs_liuMainPanCoprimeSum_le_maxY
-          main N N d N (N % d)
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))
-          (le_refl N) hres
-      rw [hmu, one_mul]
-      exact mul_le_mul_of_nonneg_left hinner (by positivity)
-    _ ≤ ∑ q ∈ range (panModulusCutoff N B + 1),
-          (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-            (3 : ℝ) ^ q.primeFactors.card *
-              liuMainPanMaxY main N q N
-                (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) := by
-      apply Finset.sum_le_sum_of_subset_of_nonneg
-      · intro d hd
-        rw [Finset.mem_filter] at hd
-        exact Finset.mem_range.mpr (by omega)
-      · intro d _ _
-        exact mul_nonneg
-          (mul_nonneg (sq_nonneg _) (by positivity))
-          (liuMainPanMaxY_nonneg main N d N
-            (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)))
-    _ ≤ C * N / Real.log N ^ A := hpan
+  apply liuPaperQCoprimeRBound_of_liuMainPanEndpointMeanValueAt
+    main N ε A B C hcut
+  -- The endpoint estimate follows by bounding each endpoint by its prefix maximum.
+  apply le_trans _ hpan
+  unfold liuMainPanEndpointWeightedSum liuMainPanWeightedSum
+  apply Finset.sum_le_sum
+  intro q hq
+  exact mul_le_mul_of_nonneg_left
+    (liuMainPanMaxL_le_maxY main N N q N
+      (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) le_rfl)
+    (mul_nonneg (sq_nonneg _) (by positivity))
 
 /-- The genuine logarithmic-integral specialization retains both the analytic
 fixed-`N` Pan predicate and the cutoff inclusion as explicit hypotheses. -/

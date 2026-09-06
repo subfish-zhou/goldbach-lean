@@ -83,11 +83,7 @@ theorem liuBetaSupport_card_le_three (N z y n : ℕ) :
           liuBetaSupport_complement_mem_primeFactors ha)
           (liuBetaSupport_complement_injective N z y n)
       _ ≤ ({p₁, p₂, p₃} : Finset ℕ).card := Finset.card_le_card hsub
-      _ ≤ 3 := by
-        calc
-          _ ≤ ({p₂, p₃} : Finset ℕ).card + 1 := Finset.card_insert_le _ _
-          _ ≤ (({p₃} : Finset ℕ).card + 1) + 1 := Nat.add_le_add_right (Finset.card_insert_le _ _) 1
-          _ = 3 := by simp
+      _ ≤ 3 := Finset.card_le_three
   · rw [Finset.not_nonempty_iff_eq_empty.mp h]
     simp
 

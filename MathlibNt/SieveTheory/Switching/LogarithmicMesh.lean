@@ -1366,214 +1366,51 @@ theorem upperRosserDepthTwoMesh_darbouxSum_le_integral_add
             upperRosserDepthTwoMeshLeft m i - 1)) ≤
       (∫ x in Set.Ioo (1 / 6) 1, x⁻¹ * f x) +
         (12 * L + 36 * B) * upperRosserDepthTwoMeshWidth m := by
-  let h := upperRosserDepthTwoMeshWidth m
-  let C := 12 * L + 36 * B
-  let g : ℝ → ℝ := fun x => x⁻¹ * f x
-  have hh : 0 < h := upperRosserDepthTwoMeshWidth_pos m
-  have hC : 0 ≤ C := by dsimp [C]; positivity
-  have hcell : ∀ i : Fin (m + 1),
-      (f (upperRosserDepthTwoMeshLeft m i) + L * h) *
-          (upperRosserDepthTwoMeshRight m i /
-            upperRosserDepthTwoMeshLeft m i - 1) ≤
-        (∫ x in Set.Ioo (upperRosserDepthTwoMeshLeft m i)
-            (upperRosserDepthTwoMeshRight m i), g x) + C * h ^ 2 := by
+  have hwidth : upperRosserFixedDepthMeshWidth (1 / 6) m =
+      upperRosserDepthTwoMeshWidth m := by
+    norm_num [upperRosserFixedDepthMeshWidth, upperRosserDepthTwoMeshWidth]
+  have hleft : ∀ i : Fin (m + 1),
+      upperRosserFixedDepthMeshLeft (1 / 6) m i =
+        upperRosserDepthTwoMeshLeft m i := by
     intro i
-    let u := upperRosserDepthTwoMeshLeft m i
-    let v := upperRosserDepthTwoMeshRight m i
-    have hu : 0 < u := upperRosserDepthTwoMeshLeft_pos m i
-    have huv : u ≤ v := upperRosserDepthTwoMeshLeft_le_right m i
-    have huLower : (1 / 6 : ℝ) ≤ u := by
-      dsimp [u, upperRosserDepthTwoMeshLeft]
-      have hi : (0 : ℝ) ≤ (i : ℝ) := by positivity
-      nlinarith
-    have hvUpper : v ≤ 1 := upperRosserDepthTwoMeshRight_le_one m i
-    have hvsub : v - u = h := by
-      dsimp [u, v, upperRosserDepthTwoMeshRight]
-      ring
-    have huMem : u ∈ Set.Icc (1 / 6 : ℝ) 1 :=
-      ⟨huLower, huv.trans hvUpper⟩
-    have hgCell : MeasureTheory.IntegrableOn g (Set.Ioo u v) :=
-      hint.mono_set (by
-        intro x hx
-        exact ⟨huLower.trans_lt hx.1, hx.2.trans_le hvUpper⟩)
-    have hpoint : ∀ x ∈ Set.Ioo u v, (f u + L * h) / u ≤ g x + C * h := by
-      intro x hx
-      have hxMem : x ∈ Set.Icc (1 / 6 : ℝ) 1 :=
-        ⟨huLower.trans (hx.1.le), hx.2.le.trans hvUpper⟩
-      have hxu : |x - u| ≤ h := by
-        rw [abs_of_nonneg (sub_nonneg.mpr hx.1.le)]
-        exact (sub_le_sub_right hx.2.le u).trans_eq hvsub
-      have hux : |u - x| ≤ h := by simpa [abs_sub_comm] using hxu
-      have hfdiff : |f u - f x| ≤ L * h :=
-        (hfLip u huMem x hxMem).trans
-          (mul_le_mul_of_nonneg_left hux hL)
-      have huInv : |u⁻¹| ≤ 6 := by
-        rw [abs_of_pos (inv_pos.mpr hu)]
-        calc
-          u⁻¹ ≤ (1 / 6 : ℝ)⁻¹ :=
-            (inv_le_inv₀ hu (by norm_num)).2 huLower
-          _ = 6 := by norm_num
-      have hinvDiff : |u⁻¹ - x⁻¹| ≤ 36 * h :=
-        (LinearSieve.abs_inv_sub_inv_le_thirty_six_of_one_sixth_le
-          huLower hxMem.1).trans
-          (mul_le_mul_of_nonneg_left hux (by norm_num))
-      have hfxAbs : |f x| ≤ B := by
-        rw [abs_of_nonneg (hf x hxMem)]
-        exact hfB x hxMem
-      have hdiff :
-          |u⁻¹ * f u - x⁻¹ * f x| ≤ 6 * (L * h) + (36 * h) * B := by
-        calc
-          |u⁻¹ * f u - x⁻¹ * f x| =
-              |u⁻¹ * (f u - f x) + (u⁻¹ - x⁻¹) * f x| := by
-                congr 1
-                ring
-          _ ≤ |u⁻¹| * |f u - f x| + |u⁻¹ - x⁻¹| * |f x| := by
-            simpa only [abs_mul] using
-              abs_add_le (u⁻¹ * (f u - f x)) ((u⁻¹ - x⁻¹) * f x)
-          _ ≤ 6 * (L * h) + (36 * h) * B :=
-            add_le_add
-              (mul_le_mul huInv hfdiff (abs_nonneg _) (by norm_num))
-              (mul_le_mul hinvDiff hfxAbs (abs_nonneg _)
-                (mul_nonneg (by norm_num) hh.le))
-      have hmain :
-          u⁻¹ * f u ≤ x⁻¹ * f x + (6 * L + 36 * B) * h := by
-        have hone := (le_abs_self (u⁻¹ * f u - x⁻¹ * f x)).trans hdiff
-        nlinarith
-      have hLinvu : u⁻¹ * (L * h) ≤ 6 * L * h := by
-        have hnonneg : 0 ≤ L * h := mul_nonneg hL hh.le
-        exact (mul_le_mul_of_nonneg_right
-          (by simpa [abs_of_pos (inv_pos.mpr hu)] using huInv) hnonneg).trans_eq
-            (by ring)
-      dsimp [g, C]
-      rw [div_eq_inv_mul]
-      nlinarith
-    have hconst : MeasureTheory.IntegrableOn
-        (fun _ : ℝ => C * h) (Set.Ioo u v) :=
-      MeasureTheory.integrableOn_const (by
-        rw [Real.volume_Ioo]
-        exact ENNReal.ofReal_ne_top)
-    have hmono :
-        (∫ _x in Set.Ioo u v, (f u + L * h) / u) ≤
-          ∫ x in Set.Ioo u v, g x + C * h := by
-      apply MeasureTheory.setIntegral_mono_on
-        (MeasureTheory.integrableOn_const (by
-          rw [Real.volume_Ioo]
-          exact ENNReal.ofReal_ne_top))
-        (hgCell.add hconst) measurableSet_Ioo
-      exact hpoint
-    calc
-      (f (upperRosserDepthTwoMeshLeft m i) + L * h) *
-          (upperRosserDepthTwoMeshRight m i /
-            upperRosserDepthTwoMeshLeft m i - 1) =
-          (∫ _x in Set.Ioo u v, (f u + L * h) / u) := by
-        change (f u + L * h) * (v / u - 1) =
-          ∫ _x in Set.Ioo u v, (f u + L * h) / u
-        rw [MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-          Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr huv)]
-        rw [hvsub]
-        rw [show v = u + h by linarith [hvsub]]
-        simp only [smul_eq_mul]
-        field_simp [hu.ne']
-        ring
-      _ ≤ ∫ x in Set.Ioo u v, g x + C * h := hmono
-      _ = (∫ x in Set.Ioo u v, g x) + C * h ^ 2 := by
-        rw [MeasureTheory.integral_add hgCell hconst,
-          MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-          Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr huv)]
-        rw [hvsub]
-        ring
-  have hdecomp :
-      (∑ i : Fin (m + 1),
-          ∫ x in Set.Ioo (upperRosserDepthTwoMeshLeft m i)
-            (upperRosserDepthTwoMeshRight m i), g x) =
-        ∫ x in Set.Ioo (1 / 6) 1, g x := by
-    let a : ℕ → ℝ := fun k => 1 / 6 + (k : ℝ) * h
-    have ha : ∀ (k : ℕ) (hk : k < m + 1),
-        upperRosserDepthTwoMeshLeft m ⟨k, hk⟩ = a k ∧
-          upperRosserDepthTwoMeshRight m ⟨k, hk⟩ = a (k + 1) := by
-      intro k hk
-      constructor
-      · simp [a, upperRosserDepthTwoMeshLeft, h]
-      · simp [a, upperRosserDepthTwoMeshRight,
-          upperRosserDepthTwoMeshLeft, h, Nat.cast_add, Nat.cast_one]
-        ring
-    have hintCells : ∀ k < m + 1,
-        IntervalIntegrable g MeasureTheory.volume (a k) (a (k + 1)) := by
-      intro k hk
-      have hk' := ha k hk
-      rw [← hk'.1, ← hk'.2]
-      apply (intervalIntegrable_iff_integrableOn_Ioo_of_le
-        (upperRosserDepthTwoMeshLeft_le_right m ⟨k, hk⟩)).2
-      exact hint.mono_set (by
-        intro x hx
-        exact ⟨(by
-          have hleft : (1 / 6 : ℝ) ≤
-              upperRosserDepthTwoMeshLeft m ⟨k, hk⟩ := by
-            dsimp [upperRosserDepthTwoMeshLeft]
-            have hk0 : (0 : ℝ) ≤ (k : ℝ) := by positivity
-            nlinarith
-          exact hleft.trans_lt hx.1),
-          hx.2.trans_le (upperRosserDepthTwoMeshRight_le_one m ⟨k, hk⟩)⟩)
-    calc
-      (∑ i : Fin (m + 1),
-          ∫ x in Set.Ioo (upperRosserDepthTwoMeshLeft m i)
-            (upperRosserDepthTwoMeshRight m i), g x) =
-          ∑ i : Fin (m + 1), ∫ x in a i..a (i + 1), g x := by
-        apply Finset.sum_congr rfl
-        intro i hi
-        rw [(ha i i.isLt).1, (ha i i.isLt).2,
-          intervalIntegral.integral_of_le
-            (by
-              dsimp [a]
-              have := hh
-              push_cast
-              nlinarith),
-          MeasureTheory.integral_Ioc_eq_integral_Ioo]
-      _ = ∑ k ∈ Finset.range (m + 1), ∫ x in a k..a (k + 1), g x := by
-        rw [Fin.sum_univ_eq_sum_range
-          (fun k => ∫ x in a k..a (k + 1), g x) (m + 1)]
-      _ = ∫ x in a 0..a (m + 1), g x :=
-        intervalIntegral.sum_integral_adjacent_intervals hintCells
-      _ = ∫ x in Set.Ioo (1 / 6) 1, g x := by
-        have ha0 : a 0 = 1 / 6 := by simp [a]
-        have han : a (m + 1) = 1 := by
-          dsimp [a, h, upperRosserDepthTwoMeshWidth]
-          have hm1 : (0 : ℝ) < (m : ℝ) + 1 := by positivity
-          push_cast
-          field_simp
-          ring_nf
-        rw [ha0, han, intervalIntegral.integral_of_le (by norm_num),
-          MeasureTheory.integral_Ioc_eq_integral_Ioo]
-  calc
-    (∑ i : Fin (m + 1),
-        (f (upperRosserDepthTwoMeshLeft m i) + L * h) *
-          (upperRosserDepthTwoMeshRight m i /
-            upperRosserDepthTwoMeshLeft m i - 1)) ≤
-        ∑ i : Fin (m + 1),
-          ((∫ x in Set.Ioo (upperRosserDepthTwoMeshLeft m i)
-              (upperRosserDepthTwoMeshRight m i), g x) + C * h ^ 2) :=
-      Finset.sum_le_sum fun i _ => hcell i
-    _ = (∫ x in Set.Ioo (1 / 6) 1, g x) +
-        ((m : ℝ) + 1) * (C * h ^ 2) := by
-      rw [Finset.sum_add_distrib, hdecomp]
-      simp
-    _ ≤ (∫ x in Set.Ioo (1 / 6) 1, g x) + C * h := by
-      have htotal : ((m : ℝ) + 1) * h = 5 / 6 := by
-        dsimp [h, upperRosserDepthTwoMeshWidth]
-        field_simp
-      have herr : ((m : ℝ) + 1) * (C * h ^ 2) ≤ C * h := by
-        calc
-          ((m : ℝ) + 1) * (C * h ^ 2) =
-              (C * h) * (((m : ℝ) + 1) * h) := by ring
-          _ ≤ (C * h) * 1 := by
-            apply mul_le_mul_of_nonneg_left
-            · linarith [htotal]
-            · exact mul_nonneg hC hh.le
-          _ = C * h := by ring
-      linarith
-    _ = (∫ x in Set.Ioo (1 / 6) 1, x⁻¹ * f x) +
-        (12 * L + 36 * B) * upperRosserDepthTwoMeshWidth m := by
-      rfl
+    simp only [upperRosserFixedDepthMeshLeft, upperRosserDepthTwoMeshLeft, hwidth]
+  have hright : ∀ i : Fin (m + 1),
+      upperRosserFixedDepthMeshRight (1 / 6) m i =
+        upperRosserDepthTwoMeshRight m i := by
+    intro i
+    simp only [upperRosserFixedDepthMeshRight, upperRosserDepthTwoMeshRight,
+      hleft, hwidth]
+  let h := upperRosserDepthTwoMeshWidth m
+  have hh : 0 < h := upperRosserDepthTwoMeshWidth_pos m
+  have hmajorant : ∀ i : Fin (m + 1), ∀ x ∈
+      Set.Ioo (upperRosserFixedDepthMeshLeft (1 / 6) m i)
+        (upperRosserFixedDepthMeshRight (1 / 6) m i),
+      f (upperRosserDepthTwoMeshLeft m i) + L * h ≤ f x + 2 * L * h := by
+    intro i x hx
+    have huMem := upperRosserFixedDepthMeshLeft_mem (by norm_num : (1 / 6 : ℝ) < 1) m i
+    have hvUpper := upperRosserFixedDepthMeshRight_le_one
+      (by norm_num : (1 / 6 : ℝ) < 1) m i
+    rw [hleft] at huMem
+    rw [hleft, hright] at hx
+    rw [hright] at hvUpper
+    have hxMem : x ∈ Set.Icc (1 / 6 : ℝ) 1 :=
+      ⟨huMem.1.trans hx.1.le, hx.2.le.trans hvUpper⟩
+    have hdist : |upperRosserDepthTwoMeshLeft m i - x| ≤ h := by
+      rw [abs_of_nonpos (sub_nonpos.mpr hx.1.le)]
+      have hxRight := hx.2.le
+      change x ≤ upperRosserDepthTwoMeshLeft m i + h at hxRight
+      linarith only [hxRight]
+    have hdiff := (hfLip _ huMem x hxMem).trans
+      (mul_le_mul_of_nonneg_left hdist hL)
+    linarith only [hdiff, le_abs_self (f (upperRosserDepthTwoMeshLeft m i) - f x)]
+  have hbound := upperRosserFixedDepthMesh_darbouxSum_le_integral_add
+    m (c := (1 / 6 : ℝ)) (ε := 2 * L * h) (B := B) (f := f)
+    (M := fun i => f (upperRosserDepthTwoMeshLeft m i) + L * h)
+    (by norm_num) (by norm_num) (by positivity) hB hfB hmajorant hint
+  simp only [hleft, hright, hwidth] at hbound
+  convert hbound using 1
+  dsimp [h]
+  ring
 
 /-- Every canonical boundary chain in the normalized density expansion lands in
 the real Rosser region, with all coordinates in the compact interval between

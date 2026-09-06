@@ -78,14 +78,7 @@ theorem vaughanIdentity (n u v : ℕ) :
     simp only [ArithmeticFunction.intCoe_apply, ArithmeticFunction.log_apply]
   rw [hΛ]
   rw [← Finset.sum_filter_add_sum_filter_not (s := n.divisors) (p := fun d => d ≤ u)]
-  have hsplit_not : (∑ d ∈ n.divisors.filter (fun d => ¬ d ≤ u),
-        ((μ d : ℤ) : ℝ) * Real.log ((n / d : ℕ) : ℝ)) =
-      ∑ d ∈ n.divisors.filter (fun d => u < d),
-        ((μ d : ℤ) : ℝ) * Real.log ((n / d : ℕ) : ℝ) := by
-    congr 1
-    ext d
-    simp [not_le]
-  rw [hsplit_not]
+  simp only [not_le]
   -- In the u < d part, replace log(n/d) by Σ_{e|n/d} Λ e.
   have hlog : (∑ d ∈ n.divisors.filter (fun d => u < d),
         ((μ d : ℤ) : ℝ) * Real.log ((n / d : ℕ) : ℝ)) =
@@ -106,11 +99,7 @@ theorem vaughanIdentity (n u v : ℕ) :
     intro d hd
     rw [Finset.mul_sum]
     rw [← Finset.sum_filter_add_sum_filter_not (s := (n / d).divisors) (p := fun e => e ≤ v)]
-    have hfil : (n / d).divisors.filter (fun e => ¬ e ≤ v) =
-        (n / d).divisors.filter (fun e => v < e) := by
-      ext e
-      simp [not_le]
-    rw [hfil]
+    simp only [not_le]
   rw [hsplitE]
   abel
 
@@ -130,9 +119,7 @@ theorem moebiusDivisorSum_eq_ite (m : ℕ) :
 private theorem div_eq_one_iff_eq {n e : ℕ} (he : e ∣ n) (hn : n ≠ 0) :
     n / e = 1 ↔ e = n := by
   constructor
-  · intro h
-    have hprod : e * (n / e) = n := Nat.mul_div_cancel' he
-    simpa [h] using hprod
+  · exact Nat.eq_of_dvd_of_div_eq_one he
   · intro rfl
     exact Nat.div_self (Nat.pos_of_ne_zero hn)
 
@@ -145,14 +132,7 @@ theorem vaughanDoubleSum_swap (n v : ℕ) :
         ((μ d : ℤ) : ℝ) * Λ e) =
       ∑ e ∈ n.divisors.filter (fun e => e ≤ v),
         Λ e * (∑ d ∈ (n / e).divisors, ((μ d : ℤ) : ℝ)) := by
-  have hrhs : (∑ e ∈ n.divisors.filter (fun e => e ≤ v),
-        Λ e * (∑ d ∈ (n / e).divisors, ((μ d : ℤ) : ℝ))) =
-      ∑ e ∈ n.divisors.filter (fun e => e ≤ v),
-        ∑ d ∈ (n / e).divisors, Λ e * ((μ d : ℤ) : ℝ) := by
-    apply Finset.sum_congr rfl
-    intro e he
-    rw [Finset.mul_sum]
-  rw [hrhs]
+  simp_rw [Finset.mul_sum]
   rw [← Finset.sum_sigma (s := n.divisors) (t := fun d => (n / d).divisors.filter (fun e => e ≤ v))
     (f := fun x => ((μ x.1 : ℤ) : ℝ) * Λ x.2)]
   rw [← Finset.sum_sigma (s := n.divisors.filter (fun e => e ≤ v)) (t := fun e => (n / e).divisors)
@@ -174,12 +154,8 @@ theorem vaughanDoubleSum_swap (n v : ℕ) :
       · exact hev
     · rw [Nat.mem_divisors]
       constructor
-      · have hden_mul : x.2 * x.1 ∣ n := by
-          rcases hden with ⟨k, hk⟩
-          refine ⟨k, ?_⟩
-          rw [← Nat.mul_div_cancel' hdn, hk]
-          ring
-        exact (Nat.dvd_div_iff_mul_dvd hen).2 hden_mul
+      · exact (Nat.dvd_div_iff_mul_dvd hen).2
+          (by simpa [Nat.mul_comm] using (Nat.dvd_div_iff_mul_dvd hdn).1 hden)
       · exact Nat.ne_of_gt (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hn0) hen)
           (Nat.pos_of_dvd_of_pos hen (Nat.pos_of_ne_zero hn0)))
   · intro a ha b hb h
@@ -206,12 +182,8 @@ theorem vaughanDoubleSum_swap (n v : ℕ) :
       constructor
       · rw [Nat.mem_divisors]
         constructor
-        · have hden_mul : b.1 * b.2 ∣ n := by
-            rcases hden with ⟨k, hk⟩
-            refine ⟨k, ?_⟩
-            rw [← Nat.mul_div_cancel' hen, hk]
-            ring
-          exact (Nat.dvd_div_iff_mul_dvd hdn).2 (by simpa [Nat.mul_comm] using hden_mul)
+        · exact (Nat.dvd_div_iff_mul_dvd hdn).2
+            (by simpa [Nat.mul_comm] using (Nat.dvd_div_iff_mul_dvd hen).1 hden)
         · exact Nat.ne_of_gt (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hn0) hdn)
             (Nat.pos_of_dvd_of_pos hdn (Nat.pos_of_ne_zero hn0)))
       · exact hev
@@ -224,48 +196,32 @@ theorem vaughanFullSecondSum (n v : ℕ) :
     (∑ d ∈ n.divisors, ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v),
         ((μ d : ℤ) : ℝ) * Λ e) = if n ≤ v then Λ n else 0 := by
   rw [vaughanDoubleSum_swap]
-  have hsum : (∑ e ∈ n.divisors.filter (fun e => e ≤ v),
-        Λ e * (∑ d ∈ (n / e).divisors, ((μ d : ℤ) : ℝ))) =
-      if n ≤ v then Λ n else 0 := by
-    rw [Finset.sum_congr rfl (by
-      intro e he
-      rw [moebiusDivisorSum_eq_ite, mul_ite, mul_one, mul_zero])]
-    rw [← Finset.sum_filter (s := n.divisors.filter (fun e => e ≤ v))
-      (p := fun e => n / e = 1)]
-    have hfilt : (n.divisors.filter (fun e => e ≤ v)).filter (fun e => n / e = 1) =
-        n.divisors.filter (fun e => e = n ∧ n ≤ v) := by
-      ext e
-      by_cases hn0 : n = 0
-      · subst n
-        simp
-      · simp only [Finset.mem_filter, Nat.mem_divisors]
-        constructor
-        · rintro ⟨⟨⟨hed, hn0'⟩, hev⟩, hdiv⟩
-          have heeq : e = n := (div_eq_one_iff_eq hed hn0').1 hdiv
-          subst e
-          simp [hn0', hev]
-        · rintro ⟨⟨hed, hn0'⟩, ⟨heq, hnv⟩⟩
-          subst e
-          simp [hn0', hnv, Nat.div_self (Nat.pos_of_ne_zero hn0')]
-    rw [hfilt]
-    by_cases hnv : n ≤ v
-    · rw [if_pos hnv]
-      by_cases hn0 : n = 0
-      · subst n
-        simp
-      · have hmem : n ∈ n.divisors.filter (fun e => e = n ∧ n ≤ v) := by
-          rw [Finset.mem_filter, Nat.mem_divisors]
-          exact ⟨⟨dvd_refl n, hn0⟩, ⟨rfl, hnv⟩⟩
-        rw [Finset.sum_eq_single_of_mem n hmem]
-        intro e he hen
-        rw [Finset.mem_filter] at he
-        exact False.elim (hen he.2.1)
-    · rw [if_neg hnv]
-      apply Finset.sum_eq_zero
-      intro e he
-      rw [Finset.mem_filter] at he
-      exact False.elim (hnv he.2.2)
-  exact hsum
+  rw [Finset.sum_congr rfl (by
+    intro e he
+    rw [moebiusDivisorSum_eq_ite, mul_ite, mul_one, mul_zero])]
+  rw [← Finset.sum_filter (s := n.divisors.filter (fun e => e ≤ v))
+    (p := fun e => n / e = 1)]
+  have hfilt : (n.divisors.filter (fun e => e ≤ v)).filter (fun e => n / e = 1) =
+      n.divisors.filter (fun e => e = n ∧ n ≤ v) := by
+    ext e
+    by_cases hn0 : n = 0
+    · subst n
+      simp
+    · simp only [Finset.mem_filter, Nat.mem_divisors]
+      constructor
+      · rintro ⟨⟨⟨hed, hn0'⟩, hev⟩, hdiv⟩
+        have heeq : e = n := (div_eq_one_iff_eq hed hn0').1 hdiv
+        subst e
+        simp [hn0', hev]
+      · rintro ⟨⟨hed, hn0'⟩, ⟨heq, hnv⟩⟩
+        subst e
+        simp [hn0', hnv, Nat.div_self (Nat.pos_of_ne_zero hn0')]
+  rw [hfilt]
+  by_cases hn0 : n = 0
+  · subst n
+    simp
+  · by_cases hnv : n ≤ v <;>
+      simp [Finset.sum_filter, Nat.mem_divisors, hn0, hnv]
 
 /-- **Vaughan's identity, classical three-term form**: for `n > v`,
 `Λ n = vaughanFirst n u − vaughanMiddle n u v + vaughanThird n u v`.
@@ -282,10 +238,7 @@ theorem vaughanIdentity_threeTerm (n u v : ℕ) (hnv : v < n) :
         (∑ d ∈ n.divisors.filter (fun d => d ≤ u),
           ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v), ((μ d : ℤ) : ℝ) * Λ e) := by
     rw [← Finset.sum_filter_add_sum_filter_not (s := n.divisors) (p := fun d => u < d)]
-    have hfil : n.divisors.filter (fun d => ¬ u < d) = n.divisors.filter (fun d => d ≤ u) := by
-      ext d
-      simp [not_lt]
-    rw [hfil]
+    simp only [not_lt]
   have hsecond : vaughanSecond n u v = -vaughanMiddle n u v := by
     unfold vaughanSecond vaughanMiddle
     have hfull : (∑ d ∈ n.divisors, ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v),

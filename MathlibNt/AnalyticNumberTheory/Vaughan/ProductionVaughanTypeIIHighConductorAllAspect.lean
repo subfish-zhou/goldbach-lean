@@ -50,18 +50,16 @@ theorem apNormalizedVaughanTypeIIMeanOn_le_active_collected_shells
           primitivePrefixAmplitude_vaughanTypeII_le_active_collected_shells
             N u v q χ
       · positivity
-    _ = _ := by
-      calc
-        _ = ∑ q ∈ S,
-            ∑ kl ∈ vaughanTypeIIActiveCanonicalRectangles N u v,
-              ((q.totient : ℝ)⁻¹) *
-                ∑ χ : PrimitiveCharacter q,
-                  Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare
-                    N u v kl.1 kl.2 q χ) := by
-              apply Finset.sum_congr rfl
-              intro q hq
-              rw [Finset.sum_comm, Finset.mul_sum]
-        _ = _ := by rw [Finset.sum_comm]
+    _ = ∑ q ∈ S,
+        ∑ kl ∈ vaughanTypeIIActiveCanonicalRectangles N u v,
+          ((q.totient : ℝ)⁻¹) *
+            ∑ χ : PrimitiveCharacter q,
+              Real.sqrt (vaughanCanonicalCollectedPrefixMaxSquare
+                N u v kl.1 kl.2 q χ) := by
+      apply Finset.sum_congr rfl
+      intro q hq
+      rw [Finset.sum_comm, Finset.mul_sum]
+    _ = _ := by rw [Finset.sum_comm]
 
 /-- A complete production cell, with its literal full Vaughan Type-II
 coefficient, satisfies the all-aspect scalar estimate. -/
@@ -108,6 +106,7 @@ theorem apNormalizedVaughanTypeIIMeanOn_highConductor_le_allAspect_aggregate
   have hA0 : 0 ≤ A := by dsimp [A]; positivity
   have hAK0 : 0 ≤ A * K := mul_nonneg hA0 hK0
   have hQ2 : 2 * Q ≤ N := by omega
+  -- Empty cells contribute zero; an occupied cell supplies the upper-endpoint bound.
   have hcell (i : ℕ) (hi : i ∈ G.index) :
       apNormalizedVaughanTypeIIMeanOn N u v (G.cell i) ≤
         A * K * ((N : ℝ) / i + U + V + (i : ℝ) * Real.sqrt N) := by
@@ -129,6 +128,7 @@ theorem apNormalizedVaughanTypeIIMeanOn_highConductor_le_allAspect_aggregate
         apNormalizedVaughanTypeIIMeanOn_productionCell_le_allAspect
           N Q C u v i G hi hIoc hN (G.lower_pos i hi) h2i hu hv using 1 <;>
         dsimp [A, K, U, V] <;> ring
+  -- Reindex the exact high-conductor carrier, without adding conductors.
   have hreindex :
       apNormalizedVaughanTypeIIMeanOn N u v (highConductorSet N Q C) =
         ∑ i ∈ G.index,
@@ -161,7 +161,10 @@ theorem apNormalizedVaughanTypeIIMeanOn_highConductor_le_allAspect_aggregate
       have hinv : (∑ i ∈ G.index, ((i : ℝ)⁻¹)) ≤ 2 / R := by
         simpa [G, R] using G.inv_lower_sum_le
       have hsum : (∑ i ∈ G.index, (i : ℝ)) ≤ 2 * (Q : ℝ) := G.lower_sum_le
-      gcongr
+      -- Only the endpoint sums change; the two middle terms keep the index cardinality.
+      exact add_le_add
+        (add_le_add (mul_le_mul_of_nonneg_left hinv (Nat.cast_nonneg N)) le_rfl)
+        (mul_le_mul_of_nonneg_right hsum (Real.sqrt_nonneg N))
     _ = ((vaughanTypeIIActiveCanonicalRectangles N u v).card : ℝ) *
         (1000000 * Real.log (4 * N + 4 : ℕ) ^ 15) *
           (2 * (N : ℝ) / logConductorThreshold N C +

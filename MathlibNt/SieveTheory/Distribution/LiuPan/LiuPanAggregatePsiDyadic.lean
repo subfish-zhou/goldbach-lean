@@ -420,76 +420,18 @@ theorem norm_liuPanPrimitiveDilationLogLambdaHyperbola_le_envelope
       liuPanPrimitiveDilationLogLambdaHyperbolaNormEnvelope y X q f χ := by
   unfold liuPanPrimitiveDilationLogLambdaHyperbola
     liuPanPrimitiveDilationLogLambdaHyperbolaNormEnvelope
-  calc
-    ‖∑ e ∈ (q / χ.conductor).divisors,
-        ((ArithmeticFunction.moebius e : ℂ) *
-          χ.primitiveCharacter (e : ZMod χ.conductor)) *
-        ∑ u ∈ range (X / e + 1),
-          (liuPanSourceZeroExtension f (e * u) *
-            χ.primitiveCharacter (u : ZMod χ.conductor)) *
-          ∑ r ∈ (q / χ.conductor).divisors,
-            ((ArithmeticFunction.moebius r : ℂ) *
-              χ.primitiveCharacter (r : ZMod χ.conductor)) *
-            liuPanPrimitiveLogLambdaDilationPrefix
-              (y / (e * u)) r χ.conductor χ.primitiveCharacter‖ ≤
-      ∑ e ∈ (q / χ.conductor).divisors,
-        ‖((ArithmeticFunction.moebius e : ℂ) *
-          χ.primitiveCharacter (e : ZMod χ.conductor)) *
-          ∑ u ∈ range (X / e + 1),
-            (liuPanSourceZeroExtension f (e * u) *
-              χ.primitiveCharacter (u : ZMod χ.conductor)) *
-            ∑ r ∈ (q / χ.conductor).divisors,
-              ((ArithmeticFunction.moebius r : ℂ) *
-                χ.primitiveCharacter (r : ZMod χ.conductor)) *
-              liuPanPrimitiveLogLambdaDilationPrefix
-                (y / (e * u)) r χ.conductor χ.primitiveCharacter‖ :=
-      norm_sum_le _ _
-    _ ≤ _ := by
-      apply sum_le_sum
-      intro e he
-      rw [norm_mul]
-      apply mul_le_mul_of_nonneg_left
-      · calc
-          ‖∑ u ∈ range (X / e + 1),
-              (liuPanSourceZeroExtension f (e * u) *
-                χ.primitiveCharacter (u : ZMod χ.conductor)) *
-              ∑ r ∈ (q / χ.conductor).divisors,
-                ((ArithmeticFunction.moebius r : ℂ) *
-                  χ.primitiveCharacter (r : ZMod χ.conductor)) *
-                liuPanPrimitiveLogLambdaDilationPrefix
-                  (y / (e * u)) r χ.conductor χ.primitiveCharacter‖ ≤
-            ∑ u ∈ range (X / e + 1),
-              ‖(liuPanSourceZeroExtension f (e * u) *
-                χ.primitiveCharacter (u : ZMod χ.conductor)) *
-                ∑ r ∈ (q / χ.conductor).divisors,
-                  ((ArithmeticFunction.moebius r : ℂ) *
-                    χ.primitiveCharacter (r : ZMod χ.conductor)) *
-                  liuPanPrimitiveLogLambdaDilationPrefix
-                    (y / (e * u)) r χ.conductor χ.primitiveCharacter‖ :=
-            norm_sum_le _ _
-          _ ≤ _ := by
-            apply sum_le_sum
-            intro u hu
-            rw [norm_mul]
-            apply mul_le_mul_of_nonneg_left
-            · calc
-                ‖∑ r ∈ (q / χ.conductor).divisors,
-                    ((ArithmeticFunction.moebius r : ℂ) *
-                      χ.primitiveCharacter (r : ZMod χ.conductor)) *
-                    liuPanPrimitiveLogLambdaDilationPrefix
-                      (y / (e * u)) r χ.conductor χ.primitiveCharacter‖ ≤
-                  ∑ r ∈ (q / χ.conductor).divisors,
-                    ‖((ArithmeticFunction.moebius r : ℂ) *
-                      χ.primitiveCharacter (r : ZMod χ.conductor)) *
-                      liuPanPrimitiveLogLambdaDilationPrefix
-                        (y / (e * u)) r χ.conductor χ.primitiveCharacter‖ :=
-                  norm_sum_le _ _
-                _ = _ := by
-                  apply sum_congr rfl
-                  intro r hr
-                  rw [norm_mul]
-            · exact norm_nonneg _
-      · exact norm_nonneg _
+  apply norm_sum_le_of_le
+  intro e he
+  rw [norm_mul]
+  apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+  apply norm_sum_le_of_le
+  intro u hu
+  rw [norm_mul]
+  apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+  apply norm_sum_le_of_le
+  intro r hr
+  rw [norm_mul]
+  exact le_rfl
 
 /-- The source/Lambda envelope after the pointwise short/long split at each
 actual reduced prefix. -/
@@ -2533,16 +2475,9 @@ theorem liuPanSourceDilationDyadicEnergy_le_card (N e j : ℕ) :
     _ ≤ ∑ _u ∈ Icc 1 (N / e) ∩ liuPanDyadicShell j, (1 : ℝ) := by
       apply sum_le_sum
       intro u hu
-      by_cases heu : e * u = 0
-      · simp [liuPanSourceZeroExtension, heu]
-      · rw [liuPanSourceZeroExtension, if_neg heu, Complex.norm_real,
-          Real.norm_eq_abs]
-        have h :
-            |liuWeight N (liuSourceZ10 N) (liuSourceY3 N) (e * u)| ≤ 1 := by
-          by_cases ha :
-              LiuWeightSupport N (liuSourceZ10 N) (liuSourceY3 N) (e * u) <;>
-            simp [liuWeight, ha]
-        simpa using (sq_le_sq₀ (abs_nonneg _) zero_le_one).2 h
+      rw [norm_liuPanSourceZeroExtension_source_eq]
+      simpa using (sq_le_sq₀ (liuWeight_nonneg _ _ _ _) zero_le_one).2
+        (liuWeight_le_one N (liuSourceZ10 N) (liuSourceY3 N) (e * u))
     _ = _ := by simp
 
 /-- The Lambda energy of a fixed dilated shell is bounded by its cardinality. -/

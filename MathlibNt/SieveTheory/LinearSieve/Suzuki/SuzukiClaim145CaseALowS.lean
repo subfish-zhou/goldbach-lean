@@ -49,76 +49,11 @@ def Claim145CaseALowSBigOScalarTarget (C1 ΘK : ℝ) : Prop :=
           (-s * Real.log s + s * Real.log (Real.log (3 * K)) +
             A * (Real.log K + s))
 
-private theorem pow_le_exp_mul_factorial : ∀ n : ℕ,
-    (n : ℝ) ^ n ≤ Real.exp (n : ℝ) * (n.factorial : ℝ) := by
-  intro n
-  induction n with
-  | zero => norm_num
-  | succ n ih =>
-      by_cases hn : n = 0
-      · subst n
-        norm_num
-      · have hn0 : (0 : ℝ) < n := by exact_mod_cast (Nat.pos_of_ne_zero hn)
-        have hbase : (0 : ℝ) < 1 + (1 : ℝ) / (n : ℝ) := by
-          have : 0 < (1 : ℝ) / (n : ℝ) := div_pos one_pos hn0
-          linarith
-        have hlog : Real.log (1 + (1 : ℝ) / (n : ℝ)) ≤ (1 : ℝ) / (n : ℝ) :=
-          by simpa only [add_sub_cancel_left] using Real.log_le_sub_one_of_pos hbase
-        have hpow : (1 + (1 : ℝ) / (n : ℝ)) ^ n ≤ Real.exp 1 := by
-          rw [← Real.exp_log (show 0 < (1 + (1 : ℝ) / (n : ℝ)) ^ n by positivity),
-            Real.log_pow]
-          apply Real.exp_le_exp.mpr
-          have hnR : (n : ℝ) ≠ 0 := ne_of_gt hn0
-          calc
-            (n : ℝ) * Real.log (1 + (1 : ℝ) / n) ≤ (n : ℝ) * ((1 : ℝ) / n) :=
-              mul_le_mul_of_nonneg_left hlog hn0.le
-            _ = 1 := by field_simp
-        have hfactorial : ((n + 1).factorial : ℝ) = (n + 1 : ℝ) * (n.factorial : ℝ) := by
-          simp [Nat.factorial_succ]
-        have hbaseMul : (1 + (1 : ℝ) / (n : ℝ)) * (n : ℝ) = (n + 1 : ℝ) := by
-          field_simp
-        have hrewrite : ((n + 1 : ℕ) : ℝ) ^ (n + 1) =
-            (1 + (1 : ℝ) / n) ^ n * ((n : ℝ) ^ n) * (n + 1 : ℝ) := by
-          rw [pow_succ, ← mul_pow, hbaseMul]
-          norm_num
-        rw [hrewrite]
-        calc
-          (1 + (1 : ℝ) / ↑n) ^ n * ↑n ^ n * (↑n + 1) ≤
-              Real.exp 1 * (Real.exp (n : ℝ) * (n.factorial : ℝ)) * (↑n + 1) := by
-            gcongr
-          _ = Real.exp ((n + 1 : ℕ) : ℝ) * ((n + 1).factorial : ℝ) := by
-            rw [hfactorial, Nat.cast_add, Nat.cast_one, Real.exp_add]
-            ring
-
 private theorem pow_div_factorial_exp_le
     {L : ℝ} {m : ℕ} (hL : 0 < L) (hm : 0 < m) :
     L ^ m / (m.factorial : ℝ) * Real.exp L ≤
       Real.exp (L + (m : ℝ) * (1 + Real.log L - Real.log (m : ℝ))) := by
-  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
-  have hfac : (0 : ℝ) < (m.factorial : ℝ) := by positivity
-  have hpowfac := pow_le_exp_mul_factorial m
-  have hpowm : ((m : ℝ) ^ m) = Real.exp ((m : ℝ) * Real.log (m : ℝ)) := by
-    rw [← Real.exp_log (show 0 < (m : ℝ) ^ m by positivity), Real.log_pow]
-  have hpowL : L ^ m = Real.exp ((m : ℝ) * Real.log L) := by
-    rw [← Real.exp_log (show 0 < L ^ m by positivity), Real.log_pow]
-  rw [hpowm] at hpowfac
-  have hfacLower : Real.exp ((m : ℝ) * Real.log (m : ℝ) - (m : ℝ)) ≤
-      (m.factorial : ℝ) := by
-    rw [Real.exp_sub]
-    exact (div_le_iff₀ (Real.exp_pos (m : ℝ))).2 (by simpa [mul_comm] using hpowfac)
-  rw [hpowL]
-  rw [div_mul_eq_mul_div, div_le_iff₀ hfac]
-  have hmul := mul_le_mul_of_nonneg_left hfacLower
-    (Real.exp_pos (L + (m : ℝ) * (1 + Real.log L - Real.log (m : ℝ)))).le
-  calc
-    Real.exp ((m : ℝ) * Real.log L) * Real.exp L =
-        Real.exp (L + (m : ℝ) * Real.log L) := by rw [← Real.exp_add]; congr 1 <;> ring
-    _ = Real.exp (L + (m : ℝ) * (1 + Real.log L - Real.log (m : ℝ))) *
-          Real.exp ((m : ℝ) * Real.log (m : ℝ) - (m : ℝ)) := by
-      rw [← Real.exp_add]
-      congr 1
-      ring
-    _ ≤ _ := hmul
+  exact pow_div_factorial_mul_exp_le_logExponent hL hm le_rfl
 
 private theorem lowS_exponent_comparison
     {L m s q r B : ℝ}
@@ -159,7 +94,9 @@ private theorem lowS_exponent_comparison
     have := mul_le_mul_of_nonneg_left hlogdiff hm.le
     calc
       m * (Real.log s - Real.log m) ≤ m * (s / m - 1) := this
-      _ = s - m := by field_simp
+      _ = s - m := by
+        simp only [mul_sub, div_eq_mul_inv, mul_left_comm m s,
+          mul_inv_cancel₀ hm.ne', mul_one]
   have hfirstGap : (s - m) * Real.log s ≤ 2 * s := by
     have hlogs : Real.log s ≤ s :=
       (Real.log_le_sub_one_of_pos hs0).trans (by linarith)
@@ -173,11 +110,9 @@ private theorem lowS_exponent_comparison
         (s - m) * Real.log s + m * (Real.log s - Real.log m) := by ring
     rw [hdecomp]
     linarith
-  have hLcoarse : L ≤ B * (r + s) := by
-    calc
-      L ≤ B * q := hLB
-      _ ≤ B * (r + 2) := by gcongr
-      _ ≤ B * (r + s) := by gcongr
+  have hLcoarse : L ≤ B * (r + s) :=
+    hLB.trans (mul_le_mul_of_nonneg_left
+      (hqr.trans (add_le_add le_rfl hs)) hB0.le)
   have hA : 0 ≤ B + Real.log B + 10 := by linarith
   have habsorb : L + s * (1 + Real.log B) + 3 * s ≤
       (B + Real.log B + 10) * (r + s) := by
@@ -264,9 +199,8 @@ theorem claim145_caseA_lowS_bigOScalarTarget (C1 ΘK : ℝ) :
           rw [Real.log_mul (ne_of_gt hC1) (ne_of_gt (Real.rpow_pos_of_pos hKpos ΘK)),
             Real.log_rpow hKpos ΘK]
     have hsecondArg : 1 + K / Real.log 2 ≤ K * (1 + 1 / Real.log 2) := by
-      have := hKone
-      field_simp
-      nlinarith [hlog2]
+      rw [mul_add, mul_one, mul_one_div]
+      exact add_le_add hKone le_rfl
     have hconstpos : 0 < 1 + 1 / Real.log 2 := by positivity
     have hsecond : Real.log (1 + K / Real.log 2) ≤
         Real.log K + Real.log (1 + 1 / Real.log 2) := by

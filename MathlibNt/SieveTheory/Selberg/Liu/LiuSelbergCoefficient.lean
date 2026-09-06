@@ -33,13 +33,12 @@ theorem SelbergWeights.liuSelbergLambdaAdmissible
     LiuSelbergLambdaAdmissible N epsilon SW.lambda := by
   refine ⟨?_, SW.lambda_bounded⟩
   intro d hd
-  have hsupport :
-      ¬(d > paperQSourceCutoff N epsilon ∨ ¬d ∣ selbergQ N epsilon) := by
-    intro h
-    exact hd (SW.lambda_support d h)
   rw [← selbergQ_eq_liuPaperQModulus]
-  exact ⟨not_not.mp (not_or.mp hsupport).2, by
-    simpa [paperQSourceCutoff] using (not_lt.mp (not_or.mp hsupport).1)⟩
+  constructor
+  · by_contra hdiv
+    exact hd (SW.lambda_support d (Or.inr hdiv))
+  · by_contra hcutoff
+    exact hd (SW.lambda_support d (Or.inl (lt_of_not_ge hcutoff)))
 
 /-- The source normalization is separate from admissibility because the latter
 is exactly the support-and-size interface needed by the remainder argument. -/

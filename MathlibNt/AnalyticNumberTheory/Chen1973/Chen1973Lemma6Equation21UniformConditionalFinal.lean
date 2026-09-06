@@ -64,45 +64,21 @@ theorem chen1973Lemma6_eq21_actual_le_contourMajorant
         apply Finset.sum_le_sum
         intro χ hχ
         rw [norm_mul, norm_star]
-        have hxχ := DirichletCharacter.norm_le_one χ.1 (x : ZMod d)
-        calc
-          ‖χ.1 (x : ZMod d)‖ *
-              ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-                (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                  chen1973Lemma6ActualPhi x d χ pp *
-                    χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d)‖ ≤
-            1 * ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-                (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                  chen1973Lemma6ActualPhi x d χ pp *
-                    χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d)‖ := by gcongr
-          _ = ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-                (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                  chen1973Lemma6Eq21VerticalIntegral x d χ pp‖ := by
-            rw [one_mul]
-            have hsum :
-                (∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-                  (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                    chen1973Lemma6ActualPhi x d χ pp *
-                      χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d)) =
-                -(∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-                  (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                    chen1973Lemma6Eq21VerticalIntegral x d χ pp) := by
-              rw [← Finset.sum_neg_distrib]
-              apply Finset.sum_congr rfl
-              intro pp hpp
-              have hs := hshift d hd χ pp hpp (hline d hd χ)
-              calc
-                (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                    chen1973Lemma6ActualPhi x d χ pp *
-                      χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) =
-                  (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                    (chen1973Lemma6ActualPhi x d χ pp *
-                      χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d)) := by ring
-                _ = (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                    (-chen1973Lemma6Eq21VerticalIntegral x d χ pp) := by rw [hs]
-                _ = -((((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
-                    chen1973Lemma6Eq21VerticalIntegral x d χ pp) := by ring
-            rw [hsum, norm_neg]
+        have hsum :
+            (∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
+              (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
+                chen1973Lemma6ActualPhi x d χ pp *
+                  χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d)) =
+            -(∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
+              (((Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))⁻¹ : ℝ) : ℂ) *
+                chen1973Lemma6Eq21VerticalIntegral x d χ pp) := by
+          rw [← Finset.sum_neg_distrib]
+          apply Finset.sum_congr rfl
+          intro pp hpp
+          rw [mul_assoc, hshift d hd χ pp hpp (hline d hd χ), mul_neg]
+        rw [hsum, norm_neg]
+        exact mul_le_of_le_one_left (norm_nonneg _)
+          (DirichletCharacter.norm_le_one χ.1 (x : ZMod d))
   · positivity
 
 /-- For each fixed vertical-estimate constant, one cutoff precedes all source

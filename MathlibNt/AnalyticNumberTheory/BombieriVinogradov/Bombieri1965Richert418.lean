@@ -185,27 +185,23 @@ theorem sum_primeAPPrefixMaxError_le_standard_add (N Q : ℕ) :
         have hphiNat : 1 ≤ q.totient :=
           Nat.succ_le_iff.mpr (Nat.totient_pos.mpr hqPos)
         have hphi : (1 : ℝ) ≤ q.totient := by exact_mod_cast hphiNat
-        have hphiPos : (0 : ℝ) < q.totient := lt_of_lt_of_le zero_lt_one hphi
-        rw [div_eq_mul_inv]
-        calc
-          (2 / Real.log 2) * (q.totient : ℝ)⁻¹ ≤
-              (2 / Real.log 2) * 1 := by
-            gcongr
-            exact (inv_le_one₀ hphiPos).mpr hphi
-          _ = 2 / Real.log 2 := by ring
+        exact div_le_self (by positivity) hphi
     _ = (∑ q ∈ Finset.Icc 1 Q,
           BombieriVinogradov.standardPrimeAPPrefixMaxError N q) +
           (Q : ℝ) * (2 / Real.log 2) := by simp
+
+private theorem one_le_log_of_three_le {N : ℕ} (hN : 3 ≤ N) :
+    1 ≤ Real.log (N : ℝ) := by
+  have he1 : Real.exp 1 < (3 : ℝ) :=
+    Real.exp_one_lt_d9.trans (by norm_num)
+  exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
+    (he1.trans_le (by exact_mod_cast hN)) |>.le
 
 private theorem panModulusCutoff_add_one_le
     (N : ℕ) (B : ℝ) (hN : 3 ≤ N) :
     LiuWeight.panModulusCutoff N (B + 1) ≤
       LiuWeight.panModulusCutoff N B := by
-  have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have he1 : Real.exp 1 < (3 : ℝ) :=
-      Real.exp_one_lt_d9.trans (by norm_num)
-    exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-      (he1.trans_le (by exact_mod_cast hN)) |>.le
+  have hlog : 1 ≤ Real.log (N : ℝ) := one_le_log_of_three_le hN
   have hlogPos : 0 < Real.log (N : ℝ) := lt_of_lt_of_le zero_lt_one hlog
   have hpow :
       Real.log (N : ℝ) ^ B ≤ Real.log (N : ℝ) ^ (B + 1) :=
@@ -218,11 +214,7 @@ private theorem panModulusCutoff_add_one_le
 private theorem panModulusCutoff_cast_le_sqrt
     (N : ℕ) (B : ℝ) (hN : 3 ≤ N) (hB : 0 ≤ B) :
     (LiuWeight.panModulusCutoff N B : ℝ) ≤ Real.sqrt N := by
-  have hlog : 1 ≤ Real.log (N : ℝ) := by
-    have he1 : Real.exp 1 < (3 : ℝ) :=
-      Real.exp_one_lt_d9.trans (by norm_num)
-    exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
-      (he1.trans_le (by exact_mod_cast hN)) |>.le
+  have hlog : 1 ≤ Real.log (N : ℝ) := one_le_log_of_three_le hN
   have hden : 1 ≤ Real.log (N : ℝ) ^ B :=
     Real.one_le_rpow hlog hB
   unfold LiuWeight.panModulusCutoff
@@ -302,15 +294,13 @@ theorem richert418_of_standardBombieriVinogradov
     exact panModulusCutoff_cast_le_sqrt N (B + 1) hN (by linarith)
   have hlogPos : 0 < Real.log (N : ℝ) :=
     Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hsqrtSq : Real.sqrt (N : ℝ) ^ 2 = (N : ℝ) :=
-    Real.sq_sqrt (by positivity)
   have hsqrtPay :
       Real.sqrt N ≤ (N : ℝ) / Real.log N ^ U := by
     apply (le_div_iff₀ (Real.rpow_pos_of_pos hlogPos U)).2
     calc
-      Real.sqrt N * Real.log N ^ U ≤ Real.sqrt N * Real.sqrt N := by
-        gcongr
-      _ = (N : ℝ) := by nlinarith
+      Real.sqrt N * Real.log N ^ U ≤ Real.sqrt N * Real.sqrt N :=
+        mul_le_mul_of_nonneg_left hlogSqrt (Real.sqrt_nonneg _)
+      _ = (N : ℝ) := Real.mul_self_sqrt (by positivity)
   have hkappaNonneg : 0 ≤ kappa := by
     dsimp [kappa]
     positivity

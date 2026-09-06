@@ -861,38 +861,34 @@ theorem q1CandidateAPMainEvenPart_nonpos (N q : ℕ) (hN : Even N) (hN2 : 2 ≤ 
 
 /-! # 5. Möbius Euler-product factorization: Σ_{d|P} μ(d)/φ(d) = ∏_{p|P} (1 − 1/(p−1)) -/
 
+/-- The common Möbius Euler-product evaluation for either squarefree divisor lane. -/
+private theorem q1Sum_nu_squarefree {M : ℕ} (hM : Squarefree M) :
+    (∑ d ∈ M.divisors, q1Mu d * (1 / (Nat.totient d : ℝ))) =
+      ∏ p ∈ M.primeFactors, (1 - 1 / ((p : ℝ) - 1)) := by
+  have hEP := ArithmeticFunction.IsMultiplicative.prodPrimeFactors_one_sub_of_squarefree
+    correctedChenNu AnalyticNumberTheory.Sieve.goldbachNu_isMultiplicative hM
+  calc
+    (∑ d ∈ M.divisors, q1Mu d * (1 / (Nat.totient d : ℝ))) =
+        ∑ d ∈ M.divisors, q1Mu d * correctedChenNu d := by
+      apply Finset.sum_congr rfl
+      intro d hd
+      have hdsq := hM.squarefree_of_dvd (Nat.mem_divisors.mp hd).1
+      rw [show correctedChenNu d = 1 / (Nat.totient d : ℝ) from
+        AnalyticNumberTheory.Sieve.goldbachNu_squarefree_eq_inv_totient hdsq]
+    _ = ∏ p ∈ M.primeFactors, (1 - correctedChenNu p) := by
+      simpa [q1Mu] using hEP.symm
+    _ = ∏ p ∈ M.primeFactors, (1 - 1 / ((p : ℝ) - 1)) := by
+      apply Finset.prod_congr rfl
+      intro p hp
+      exact congrArg (fun x : ℝ => 1 - x)
+        (AnalyticNumberTheory.Sieve.goldbachNu_apply_prime
+          (Nat.prime_of_mem_primeFactors hp))
+
 /-- Möbius Euler product for P: `Σ_{d | P} μ(d)/φ(d) = q1SieveProduct N`. -/
 theorem q1Sum_nu_sifting (N : ℕ) :
     (∑ d ∈ (correctedChenSiftingProduct N).divisors,
         q1Mu d * (1 / (Nat.totient d : ℝ))) = q1SieveProduct N := by
-  have hEP := ArithmeticFunction.IsMultiplicative.prodPrimeFactors_one_sub_of_squarefree
-    correctedChenNu (AnalyticNumberTheory.Sieve.goldbachNu_isMultiplicative)
-    (correctedChenSiftingProduct_squarefree N)
-  have hsum : (∑ d ∈ (correctedChenSiftingProduct N).divisors,
-        q1Mu d * (1 / (Nat.totient d : ℝ))) =
-      (∑ d ∈ (correctedChenSiftingProduct N).divisors, q1Mu d * correctedChenNu d) := by
-    apply Finset.sum_congr rfl
-    intro d hd
-    by_cases hsq : Squarefree d
-    · have hnu := AnalyticNumberTheory.Sieve.goldbachNu_squarefree_eq_inv_totient hsq
-      unfold q1Mu correctedChenNu
-      rw [← hnu]
-    · have hmu : q1Mu d = 0 := by
-        have hz : ArithmeticFunction.moebius d = 0 :=
-          ArithmeticFunction.moebius_eq_zero_of_not_squarefree hsq
-        simp [q1Mu, hz]
-      simp [hmu]
-  calc
-    (∑ d ∈ (correctedChenSiftingProduct N).divisors,
-        q1Mu d * (1 / (Nat.totient d : ℝ)))
-        = (∑ d ∈ (correctedChenSiftingProduct N).divisors, q1Mu d * correctedChenNu d) := hsum
-    _ = ∏ p ∈ (correctedChenSiftingProduct N).primeFactors, (1 - correctedChenNu p) := by
-          simpa [q1Mu] using hEP.symm
-    _ = q1SieveProduct N := by
-          unfold q1SieveProduct correctedChenNu
-          apply Finset.prod_congr rfl
-          intro p hp
-          rw [AnalyticNumberTheory.Sieve.goldbachNu_apply_prime (Nat.prime_of_mem_primeFactors hp)]
+  exact q1Sum_nu_squarefree (correctedChenSiftingProduct_squarefree N)
 
 /-- Möbius Euler product for Fodd:
 `Σ_{e | Fodd} μ(e)/φ(e) = q1ForbiddenOddProduct N`. -/
@@ -905,33 +901,7 @@ theorem q1Sum_nu_forbiddenOddPart (N : ℕ) (hz3 : 3 ≤ correctedChenZ N) :
     unfold correctedChenForbiddenOddPart
     exact (correctedChenForbiddenProduct_squarefree N).squarefree_of_dvd
       (Nat.div_dvd_of_dvd h2F)
-  have hEP := ArithmeticFunction.IsMultiplicative.prodPrimeFactors_one_sub_of_squarefree
-    correctedChenNu (AnalyticNumberTheory.Sieve.goldbachNu_isMultiplicative) hsqFodd
-  have hsum : (∑ e ∈ (correctedChenForbiddenOddPart N).divisors,
-        q1Mu e * (1 / (Nat.totient e : ℝ))) =
-      (∑ e ∈ (correctedChenForbiddenOddPart N).divisors, q1Mu e * correctedChenNu e) := by
-    apply Finset.sum_congr rfl
-    intro e he
-    by_cases hsq : Squarefree e
-    · have hnu := AnalyticNumberTheory.Sieve.goldbachNu_squarefree_eq_inv_totient hsq
-      unfold q1Mu correctedChenNu
-      rw [← hnu]
-    · have hmu : q1Mu e = 0 := by
-        have hz : ArithmeticFunction.moebius e = 0 :=
-          ArithmeticFunction.moebius_eq_zero_of_not_squarefree hsq
-        simp [q1Mu, hz]
-      simp [hmu]
-  calc
-    (∑ e ∈ (correctedChenForbiddenOddPart N).divisors,
-        q1Mu e * (1 / (Nat.totient e : ℝ)))
-        = (∑ e ∈ (correctedChenForbiddenOddPart N).divisors, q1Mu e * correctedChenNu e) := hsum
-    _ = ∏ p ∈ (correctedChenForbiddenOddPart N).primeFactors, (1 - correctedChenNu p) := by
-          simpa [q1Mu] using hEP.symm
-    _ = q1ForbiddenOddProduct N := by
-          unfold q1ForbiddenOddProduct correctedChenNu
-          apply Finset.prod_congr rfl
-          intro p hp
-          rw [AnalyticNumberTheory.Sieve.goldbachNu_apply_prime (Nat.prime_of_mem_primeFactors hp)]
+  exact q1Sum_nu_squarefree hsqFodd
 
 
 /-- **Factorization of the odd double sum**:
@@ -1130,22 +1100,8 @@ theorem q1MainTermSum_le (N : ℕ) (hN : Even N) (hN2 : 2 ≤ N) (hz3 : 3 ≤ co
     have hN1r : (1 : ℝ) < N := by exact_mod_cast (by omega : 1 < N)
     exact div_nonneg (by positivity : 0 ≤ (N : ℝ)) (le_of_lt (Real.log_pos hN1r))
   have hgp0 : 0 ≤ MertensTheorem.goldbachSieveProduct N (correctedChenZ N) := by
-    unfold MertensTheorem.goldbachSieveProduct
-    apply Finset.prod_nonneg
-    intro p hp
-    rcases Finset.mem_filter.mp hp with ⟨_, hc⟩
-    have hpp : p.Prime := hc.1
-    have hp2 : 2 ≤ p := hpp.two_le
-    have hpos : 0 < (p : ℝ) - 1 := by
-      have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-      linarith
-    have hle : 1 / ((p : ℝ) - 1) ≤ 1 := by
-      rw [div_le_iff₀ hpos]
-      have : (1 : ℝ) ≤ (p : ℝ) - 1 := by
-        have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-        linarith
-      linarith
-    linarith
+    rw [← q1SieveProduct_eq_goldbachSieveProduct N hN]
+    exact q1SieveProduct_nonneg N
   calc
     (∑ q ∈ (Finset.range (correctedChenY N)).filter (fun q => q.Prime ∧ correctedChenZ N ≤ q),
         q1CandidateAPMain N q)
@@ -1325,10 +1281,6 @@ theorem q1_log_z_sub_one_lower (N : ℕ) (hN40 : 2 ^ 40 ≤ N) :
 theorem chenSingularSeriesTruncated_eq_ant (N z : ℕ) :
     SingularSeries.singularSeriesTruncated N z =
       AnalyticNumberTheory.Sieve.singularSeriesTruncated N z := by
-  unfold SingularSeries.singularSeriesTruncated AnalyticNumberTheory.Sieve.singularSeriesTruncated
-  apply Finset.prod_congr rfl
-  intro p hp
-  unfold SingularSeries.localFactor AnalyticNumberTheory.Sieve.localFactor
   rfl
 
 
@@ -1397,22 +1349,8 @@ theorem q1MainTermAbsorption_holds : q1MainTermAbsorption := by
     exact AnalyticNumberTheory.Sieve.singularSeriesTruncated_pos N (correctedChenZ N - 1) hz1
   have h𝔖0 : 0 ≤ 𝔖 := le_of_lt h𝔖pos
   have hgp0 : 0 ≤ MertensTheorem.goldbachSieveProduct N (correctedChenZ N) := by
-    unfold MertensTheorem.goldbachSieveProduct
-    apply Finset.prod_nonneg
-    intro p hp
-    rcases Finset.mem_filter.mp hp with ⟨_, hc⟩
-    have hpp : p.Prime := hc.1
-    have hp2 : 2 ≤ p := hpp.two_le
-    have hpos : 0 < (p : ℝ) - 1 := by
-      have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-      linarith
-    have hle : 1 / ((p : ℝ) - 1) ≤ 1 := by
-      rw [div_le_iff₀ hpos]
-      have : (1 : ℝ) ≤ (p : ℝ) - 1 := by
-        have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-        linarith
-      linarith
-    linarith
+    rw [← q1SieveProduct_eq_goldbachSieveProduct N hEven]
+    exact q1SieveProduct_nonneg N
   calc
     q1MainTermSum N ≤ liN * MertensTheorem.goldbachSieveProduct N (correctedChenZ N) * qsum := hmain
     _ = liN * (pp * 𝔖) * qsum := by rw [hgp]

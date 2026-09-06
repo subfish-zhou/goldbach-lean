@@ -141,22 +141,11 @@ theorem source_cell_perron_shift {q x y : ℕ} (f : ℕ → ℂ)
     (hHx.trans (sourceHeight_floor_ge (x := x) (by linarith)))] at hp
   have hc := halfStepShortIntegral_source_inverse_square f hf m H y A₁ A₂ k χ
     hx hy hyx hAy hHx
+  refine (norm_sub_le_norm_sub_add_norm_sub _
+    (halfStepShortIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x) +
+      halfStepLongIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x)) _).trans ?_
+  rw [add_sub_add_right_eq_sub]
   calc
-    _ ≤ ‖panSourceCharacterAmplitude (panSourceG f m) (panSourceD m) y
-        (2 ^ k * A₁) (min (2 ^ (k + 1) * A₁) A₂) χ -
-      (halfStepShortIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x) +
-        halfStepLongIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x))‖ +
-      ‖halfStepShortIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x) -
-        halfStepShortIntegral f m H y A₁ A₂ k χ (1 / 2) (panSourceHeight x)‖ := by
-      convert norm_add_le
-        (panSourceCharacterAmplitude (panSourceG f m) (panSourceD m) y
-          (2 ^ k * A₁) (min (2 ^ (k + 1) * A₁) A₂) χ -
-          (halfStepShortIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x) +
-            halfStepLongIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x)))
-        (halfStepShortIntegral f m H y A₁ A₂ k χ (panSourceSigma x) (panSourceHeight x) -
-          halfStepShortIntegral f m H y A₁ A₂ k χ (1 / 2) (panSourceHeight x)) using 1
-      congr 1
-      ring
     _ ≤ 324 * ((x : ℝ) ^ 2)⁻¹ + 64 / (x : ℝ) ^ 2 := add_le_add hp hc
     _ = _ := by ring
 

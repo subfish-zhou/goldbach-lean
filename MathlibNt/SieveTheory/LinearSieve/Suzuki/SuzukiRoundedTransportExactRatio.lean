@@ -133,6 +133,12 @@ theorem caseII_rounded_transportErr_le_positiveDelta_relative_packet_sourceLarge
             _ ≤ 3 * E := mul_le_mul_of_nonneg_left hE (by norm_num)
         nlinarith
       _ = P * E * ((σ * (216 * K ^ 2 * (1 + 3 * K / Real.log (D : ℝ)) * ((3 : ℝ) / 2) ^ Δ) / Real.log (D : ℝ)) * (Real.log (D : ℝ)) ^ (-Δ)) := by ring
+  have hlog_cancel :
+      (Real.log (D : ℝ)) ^ (Δ - 1) * (Real.log (D : ℝ)) ^ (-Δ) =
+        (Real.log (D : ℝ))⁻¹ := by
+    rw [← Real.rpow_neg_one, ← Real.rpow_add hlog]
+    congr 1
+    ring
   have hbracket :
       (3 / s) * (K / Real.log yr) * finiteSourceLayer 1 2 N 3 +
           (3 / s) * (1 + K / Real.log yr) * caseIIEndpointSigma11 K N (D : ℝ) σ +
@@ -159,20 +165,10 @@ theorem caseII_rounded_transportErr_le_positiveDelta_relative_packet_sourceLarge
         P * E * (Real.log (D : ℝ)) ^ (-Δ) * caseIIEndpointRelativeCoeffSourceLarge N (D : ℝ) Δ σ K -
         P * E * (Real.log (D : ℝ)) ^ (-Δ) * (27 * K * (Real.log (D : ℝ)) ^ (Δ - 1)) := by
       unfold caseIIEndpointRelativeCoeffSourceLarge caseIIAlgebraicEndpointCoeffSourceLarge
-      have hlog_cancel : (Real.log (D : ℝ)) ^ (Δ - 1) * (Real.log (D : ℝ)) ^ (-Δ) = (Real.log (D : ℝ))⁻¹ := by
-        rw [← Real.rpow_neg_one, ← Real.rpow_add hlog]
-        congr 1
-        ring
       simp only [div_eq_mul_inv]
       rw [← hlog_cancel]
       ring
     linarith [hmain, h11, hqend, ht]
-  have hlog_cancel :
-      (Real.log (D : ℝ)) ^ (Δ - 1) * (Real.log (D : ℝ)) ^ (-Δ) =
-        (Real.log (D : ℝ))⁻¹ := by
-    rw [← Real.rpow_neg_one, ← Real.rpow_add hlog]
-    congr 1
-    ring
   have hsource :
       K * 3 ^ 2 / (s * Real.log (D : ℝ)) ≤
         P * E * (Real.log (D : ℝ)) ^ (-Δ) *

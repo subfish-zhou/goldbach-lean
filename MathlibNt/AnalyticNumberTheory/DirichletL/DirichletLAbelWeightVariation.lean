@@ -224,17 +224,14 @@ lemma hasDerivAt_logVariationBudget (s : ℂ) (hs : 0 < s.re) {x : ℝ} (hx : 0 
 lemma norm_logCpowWeight_succ_sub_le (s : ℂ) (hs : 0 < s.re) {k : ℕ} (hk : 1 ≤ k) :
     ‖logCpowWeight s (k + 1) - logCpowWeight s k‖ ≤
       logVariationBudget s k - logVariationBudget s (k + 1) := by
-  have hk0 : (0 : ℝ) < k := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hk)
   have hkle : (k : ℝ) ≤ (k : ℝ) + 1 := by linarith
-  have hpos : ∀ x ∈ uIcc (k : ℝ) (k + 1 : ℝ), 0 < x := by
-    intro x hx
-    rw [Set.uIcc_of_le hkle] at hx
-    exact hk0.trans_le hx.1
   have hone : ∀ x ∈ uIcc (k : ℝ) (k + 1 : ℝ), 1 ≤ x := by
     intro x hx
     rw [Set.uIcc_of_le hkle] at hx
     have hk1 : (1 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
     exact hk1.trans hx.1
+  have hpos : ∀ x ∈ uIcc (k : ℝ) (k + 1 : ℝ), 0 < x :=
+    fun x hx => zero_lt_one.trans_le (hone x hx)
   have hder : ∀ x ∈ uIcc (k : ℝ) (k + 1 : ℝ),
       HasDerivAt (logCpowWeight s) (logCpowWeightDeriv s x) x :=
     fun x hx => hasDerivAt_logCpowWeight s (hpos x hx)
@@ -252,6 +249,14 @@ lemma norm_logCpowWeight_succ_sub_le (s : ℂ) (hs : 0 < s.re) {k : ℕ} (hk : 1
     rw [heq]
     exact (((continuousAt_const.mul hlog).sub continuousAt_const).mul hpow).continuousWithinAt
   have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt hder hint
+  have hi : IntervalIntegrable
+      (fun x : ℝ => (1 + ‖s‖ * Real.log x) * x ^ (-s.re - 1))
+      volume (k : ℝ) (k + 1 : ℝ) := by
+    apply ContinuousOn.intervalIntegrable
+    intro x hx
+    exact ((continuousAt_const.add (continuousAt_const.mul
+      (Real.hasDerivAt_log (hpos x hx).ne').continuousAt)).mul
+      (Real.hasDerivAt_rpow_const (Or.inl (hpos x hx).ne')).continuousAt).continuousWithinAt
   have hmajor :
       ‖∫ x in (k : ℝ)..(k + 1 : ℝ), logCpowWeightDeriv s x‖ ≤
         ∫ x in (k : ℝ)..(k + 1 : ℝ),
@@ -259,14 +264,7 @@ lemma norm_logCpowWeight_succ_sub_le (s : ℂ) (hs : 0 < s.re) {k : ℕ} (hk : 1
     refine (intervalIntegral.norm_integral_le_integral_norm hkle).trans ?_
     apply intervalIntegral.integral_mono_on hkle
     · exact hint.norm
-    · apply ContinuousOn.intervalIntegrable
-      intro x hx
-      have hx' : x ∈ uIcc (k : ℝ) (k + 1 : ℝ) := by
-        rw [Set.uIcc_of_le hkle] at hx ⊢
-        exact hx
-      exact ((continuousAt_const.add (continuousAt_const.mul
-        (Real.hasDerivAt_log (hpos x hx').ne').continuousAt)).mul
-        (Real.hasDerivAt_rpow_const (Or.inl (hpos x hx').ne')).continuousAt).continuousWithinAt
+    · exact hi
     · intro x hx
       apply norm_logCpowWeightDeriv_le s
       apply hone x
@@ -287,14 +285,6 @@ lemma norm_logCpowWeight_succ_sub_le (s : ℂ) (hs : 0 < s.re) {k : ℕ} (hk : 1
       change HasDerivAt (-logVariationBudget s)
         (-(-(1 + ‖s‖ * Real.log x) * x ^ (-s.re - 1))) x
       exact hneg
-    have hi : IntervalIntegrable
-        (fun x : ℝ => (1 + ‖s‖ * Real.log x) * x ^ (-s.re - 1))
-        volume (k : ℝ) (k + 1 : ℝ) := by
-      apply ContinuousOn.intervalIntegrable
-      intro x hx
-      exact ((continuousAt_const.add (continuousAt_const.mul
-        (Real.hasDerivAt_log (hpos x hx).ne').continuousAt)).mul
-        (Real.hasDerivAt_rpow_const (Or.inl (hpos x hx).ne')).continuousAt).continuousWithinAt
     convert intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi using 1 <;> ring
   rw [← hFTC]
   exact hmajor.trans_eq hprim

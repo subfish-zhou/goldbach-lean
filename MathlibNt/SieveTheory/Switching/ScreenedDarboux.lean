@@ -1272,105 +1272,37 @@ theorem exists_weighted_sum_nu_div_one_sub_le_upperRosserDepthTwoMesh
                   upperRosserDepthTwoMeshLeft m i *
                 (1 + K / (upperRosserDepthTwoMeshLeft m i * Real.log z)) - 1)) +
               ρ := by
-  let ρface := ρ / (B + 1)
-  have hB1 : 0 < B + 1 := by linarith
-  have hρface : 0 < ρface := div_pos hρ hB1
-  obtain ⟨zA, hzA, hfaces⟩ :=
-    exists_rpow_partition_right_faces_mass_le
-        (Fin (m + 1)) K ρface (1 / 6) hK hρface (by norm_num)
-  let z₀ := max zA ((2 : ℝ) ^ (6 : ℝ))
-  refine ⟨z₀, hzA.trans (le_max_left _ _), ?_⟩
+  obtain ⟨z₀, hz₀, hpartition⟩ :=
+    exists_weighted_sum_nu_div_one_sub_le_rpow_partition_Icc_add
+      (Fin (m + 1)) K ρ B (1 / 6) hK hρ hB (by norm_num)
+  refine ⟨z₀, hz₀, ?_⟩
   intro S z T w M hz hlocal hT hcoord hM hw hwB
-  have hzA_le : zA ≤ z := (le_max_left _ _).trans hz
-  have hz2pow : (2 : ℝ) ^ (6 : ℝ) ≤ z :=
-    (le_max_right _ _).trans hz
-  have hz2 : 2 ≤ z := hzA.trans hzA_le
-  have hz1 : 1 < z := by linarith
-  have hzpos : 0 < z := by linarith
+  have hz1 : 1 < z := lt_of_lt_of_le (by norm_num) (hz₀.trans hz)
   let cell : ℕ → Fin (m + 1) :=
     fun p => upperRosserDepthTwoMeshCell m (Real.log p / Real.log z)
   let u : Fin (m + 1) → ℝ := upperRosserDepthTwoMeshLeft m
   let v : Fin (m + 1) → ℝ := upperRosserDepthTwoMeshRight m
+  have hleft : ∀ i, (1 / 6 : ℝ) ≤ u i := by
+    intro i
+    dsimp [u, upperRosserDepthTwoMeshLeft]
+    exact le_add_of_nonneg_right
+      (mul_nonneg (by positivity) (upperRosserDepthTwoMeshWidth_pos m).le)
   have hinterval : ∀ p ∈ T,
-        z ^ (u (cell p)) ≤ (p : ℝ) ∧ (p : ℝ) ≤ z ^ (v (cell p)) := by
+      z ^ (u (cell p)) ≤ (p : ℝ) ∧ (p : ℝ) ≤ z ^ (v (cell p)) := by
     intro p hp
-    have hpS := hT hp
-    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpS
+    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors (hT hp)
     have hpPos : (0 : ℝ) < p := by exact_mod_cast hpPrime.pos
     have hbounds := upperRosserDepthTwoMeshCell_bounds m (hcoord p hp)
     have heq : z ^ (Real.log p / Real.log z) = (p : ℝ) := by
-        simpa [Real.logb] using
-          (Real.rpow_logb (x := (p : ℝ)) hzpos (ne_of_gt hz1) hpPos)
+      simpa [Real.logb] using
+        (Real.rpow_logb (x := (p : ℝ)) (lt_trans (by norm_num) hz1)
+          (ne_of_gt hz1) hpPos)
     constructor
-    · calc
-          z ^ (u (cell p)) ≤ z ^ (Real.log p / Real.log z) :=
-            Real.rpow_le_rpow_of_exponent_le hz1.le hbounds.1
-          _ = (p : ℝ) := heq
-    · calc
-          (p : ℝ) = z ^ (Real.log p / Real.log z) := heq.symm
-          _ ≤ z ^ (v (cell p)) :=
-            Real.rpow_le_rpow_of_exponent_le hz1.le hbounds.2
-  have hzc : 2 ≤ z ^ (1 / 6 : ℝ) := by
-    calc
-        (2 : ℝ) = ((2 : ℝ) ^ (6 : ℝ)) ^ (1 / 6 : ℝ) := by
-          rw [← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2)]
-          norm_num
-        _ ≤ z ^ (1 / 6 : ℝ) :=
-          Real.rpow_le_rpow (by positivity) hz2pow (by norm_num)
-  have hfaceMass :
-        ∑ p ∈ T.filter (fun p : ℕ => ¬(p : ℝ) < z ^ (v (cell p))),
-            S.nu p / (1 - S.nu p) ≤ ρface := by
-    exact hfaces S z T cell v hzA_le hlocal hT
-        (fun p hp => (Real.rpow_le_rpow_of_exponent_le hz1.le (by
-            dsimp [u, upperRosserDepthTwoMeshLeft]
-            have hi : (0 : ℝ) ≤ (upperRosserDepthTwoMeshCell m
-                (Real.log p / Real.log z) : ℝ) := by positivity
-            have hh := upperRosserDepthTwoMeshWidth_pos m
-            nlinarith)).trans (hinterval p hp).1)
-        (fun p hp => (hinterval p hp).2)
-  have hweightedFaces :
-        ∑ p ∈ T.filter (fun p : ℕ => ¬(p : ℝ) < z ^ (v (cell p))),
-            w p * (S.nu p / (1 - S.nu p)) ≤ ρ := by
-    calc
-        ∑ p ∈ T.filter (fun p : ℕ => ¬(p : ℝ) < z ^ (v (cell p))),
-            w p * (S.nu p / (1 - S.nu p)) ≤
-            ∑ p ∈ T.filter (fun p : ℕ => ¬(p : ℝ) < z ^ (v (cell p))),
-              B * (S.nu p / (1 - S.nu p)) := by
-          apply Finset.sum_le_sum
-          intro p hp
-          apply mul_le_mul_of_nonneg_right
-            (hwB p (Finset.mem_filter.mp hp).1)
-          exact nu_div_one_sub_nonneg_of_mem (hT (Finset.mem_filter.mp hp).1)
-        _ = B * ∑ p ∈ T.filter
-            (fun p : ℕ => ¬(p : ℝ) < z ^ (v (cell p))),
-              S.nu p / (1 - S.nu p) := by rw [Finset.mul_sum]
-        _ ≤ B * ρface := mul_le_mul_of_nonneg_left hfaceMass hB
-        _ ≤ ρ := by
-          calc
-            B * ρface ≤ (B + 1) * ρface :=
-              mul_le_mul_of_nonneg_right (by linarith) hρface.le
-            _ = ρ := by
-              dsimp [ρface]
-              field_simp
-  apply weighted_sum_nu_div_one_sub_le_rpow_partition_Icc_add_global_atoms
-    (S := S) (K := K) (z := z) (T := T) (cell := cell)
-    (a := u) (b := v) (M := M) (w := w) hlocal hz1
-  · intro i
-    exact upperRosserDepthTwoMeshLeft_pos m i
-  · intro i
-    exact upperRosserDepthTwoMeshLeft_le_right m i
-  · intro i
-    exact hzc.trans
-        (Real.rpow_le_rpow_of_exponent_le hz1.le (by
-          dsimp [u, upperRosserDepthTwoMeshLeft]
-          have hi : (0 : ℝ) ≤ (i : ℝ) := by positivity
-          have hh := upperRosserDepthTwoMeshWidth_pos m
-          nlinarith))
-  · exact hT
-  · exact hinterval
-  · exact hM
-  · exact hw
-  · exact hweightedFaces
+    · exact (Real.rpow_le_rpow_of_exponent_le hz1.le hbounds.1).trans_eq heq
+    · exact heq.symm.trans_le
+        (Real.rpow_le_rpow_of_exponent_le hz1.le hbounds.2)
+  exact hpartition S z T w cell u v M hz hlocal hleft
+    (fun i => upperRosserDepthTwoMeshLeft_le_right m i) hT hinterval hM hw hwB
 
 /-- The same fixed-mesh comparison with both the closed-face loss and every
 `K / log z` correction absorbed into one prescribed error.  Its main term is

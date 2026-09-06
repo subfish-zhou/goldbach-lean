@@ -192,32 +192,15 @@ theorem vaughanAspectSafe_union_residualCellShells
     vaughanAspectSafeCellShells N Q C u v H G ∪
         vaughanAspectResidualCellShells N Q C u v H G =
       G.index ×ˢ vaughanTypeIIActiveCanonicalRectangles N u v := by
-  ext ikl
-  rw [Finset.mem_union, Finset.mem_product]
-  constructor
-  · rintro (hsafe | hresidual)
-    · exact ⟨(mem_vaughanAspectSafeCellShells.mp hsafe).1,
-        (mem_vaughanAspectSafeCellShells.mp hsafe).2.1⟩
-    · exact ⟨(mem_vaughanAspectResidualCellShells.mp hresidual).1,
-        (mem_vaughanAspectResidualCellShells.mp hresidual).2.1⟩
-  · rintro ⟨hi, hkl⟩
-    by_cases hp :
-        (vaughanTypeIIRectangularD ikl.2.1 : ℝ) +
-            (vaughanTypeIIRectangularX N ikl.2.1 : ℝ) ≤
-          H * (((N : ℝ) / ((2 * ikl.1 : ℕ) : ℝ) ^ 2) +
-            (((2 * ikl.1 : ℕ) : ℝ) ^ 2))
-    · exact Or.inl (mem_vaughanAspectSafeCellShells.mpr ⟨hi, hkl, hp⟩)
-    · exact Or.inr (mem_vaughanAspectResidualCellShells.mpr ⟨hi, hkl, hp⟩)
+  simp only [vaughanAspectSafeCellShells, vaughanAspectResidualCellShells,
+    Finset.filter_union_right, or_not, Finset.filter_true]
 
 /-- The two finite compiler filters are disjoint. -/
 theorem disjoint_vaughanAspectSafe_residualCellShells
     (N Q C u v : ℕ) (H : ℝ) (G : ProductionConductorBlockGeometry N Q C) :
     Disjoint (vaughanAspectSafeCellShells N Q C u v H G)
       (vaughanAspectResidualCellShells N Q C u v H G) := by
-  refine Finset.disjoint_left.mpr ?_
-  intro ikl hsafe hresidual
-  exact (mem_vaughanAspectResidualCellShells.mp hresidual).2.2
-    (mem_vaughanAspectSafeCellShells.mp hsafe).2.2
+  exact Finset.disjoint_filter_filter_not _ _ _
 
 end
 end AnalyticNumberTheory.LargeSieve

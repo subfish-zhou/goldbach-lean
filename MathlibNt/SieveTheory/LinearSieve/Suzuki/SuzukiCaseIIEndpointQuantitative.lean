@@ -69,16 +69,14 @@ theorem qD_opposite_three_eq_of_odd
 theorem one_div_log_cubic_endpoint
     {D y : ℝ} (hD : 1 < D) (hy : y = D ^ (1 / (3 : ℝ))) :
     1 / Real.log y = 3 / Real.log D := by
-  rw [SuzukiPowerCoordinates.log_upper_endpoint hD (by norm_num) hy]
-  field_simp [ne_of_gt (Real.log_pos hD)]
+  rw [SuzukiPowerCoordinates.log_upper_endpoint hD (by norm_num) hy, one_div_div]
 
 /-- Exact reciprocal logarithm at the lower `σ` power coordinate. -/
 theorem one_div_log_sigma_endpoint
     {D w σ : ℝ} (hD : 1 < D) (hσ : 0 < σ)
     (hw : w = D ^ (1 / σ)) :
     1 / Real.log w = σ / Real.log D := by
-  rw [SuzukiPowerCoordinates.log_lower_endpoint hD hσ hw]
-  field_simp [ne_of_gt (Real.log_pos hD), ne_of_gt hσ]
+  rw [SuzukiPowerCoordinates.log_lower_endpoint hD hσ hw, one_div_div]
 
 /-- Cubic perturbation is quantitatively `1 + O(3^d / log D)`. -/
 theorem perturbation_three_le_one_add_seven_ratio
@@ -92,12 +90,13 @@ theorem perturbation_three_le_one_add_seven_ratio
   have hx1 : x ≤ 1 := by
     dsimp [x]
     exact (div_le_one hlog).2 hsmall
-  have hx2 : x ^ 2 ≤ x := by nlinarith [mul_nonneg hx0 (sub_nonneg.mpr hx1)]
+  have hx2 : x ^ 2 ≤ x := by
+    simpa only [pow_two, mul_one] using mul_le_mul_of_nonneg_left hx1 hx0
   have hx3 : x ^ 3 ≤ x := by
     calc
-      x ^ 3 = x ^ 2 * x := by ring
+      x ^ 3 = x ^ 2 * x := pow_succ x 2
       _ ≤ x * x := mul_le_mul_of_nonneg_right hx2 hx0
-      _ ≤ x := by nlinarith
+      _ ≤ x := by simpa only [pow_two] using hx2
   rw [perturbation]
   norm_num [Real.rpow_natCast]
   change (1 + x) ^ 3 ≤ 1 + 7 * x

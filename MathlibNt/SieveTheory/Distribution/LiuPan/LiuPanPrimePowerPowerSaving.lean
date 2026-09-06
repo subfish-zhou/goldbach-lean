@@ -234,26 +234,20 @@ theorem liuMainPanAverage_le_of_primePowerPowerSavingInputsAt
           w q * (pI q + pII q + pMain q + pPP q) := by
       apply Finset.sum_le_sum
       intro q hq
-      by_cases hq0 : q = 0
-      · subst q
-        have hmu : (ArithmeticFunction.moebius 0 : ℤ) = 0 :=
-          ArithmeticFunction.moebius_eq_zero_of_not_squarefree
-            not_squarefree_zero
-        simp [w, hmu]
-      · apply mul_le_mul_of_nonneg_left _ (hw q)
-        calc
-          liuMainPanMaxY distMain N q N f ≤
-              pI q + pII q +
-                liuPanSignedResidualMaxY distMain N q N f u v := by
-            simpa [pI, pII] using
-              liuMainPanMaxY_le_sourceFaithfulSigned
-                distMain N q N f u v hf0
-          _ ≤ pI q + pII q + (pMain q + pPP q) := by
-            simpa [pMain, pPP, add_assoc, add_comm, add_left_comm] using
-              add_le_add_left
-                (liuPanSignedResidualMaxY_le_split
-                  distMain N q N f u v) (pI q + pII q)
-          _ = pI q + pII q + pMain q + pPP q := by ring
+      apply mul_le_mul_of_nonneg_left _ (hw q)
+      calc
+        liuMainPanMaxY distMain N q N f ≤
+            pI q + pII q +
+              liuPanSignedResidualMaxY distMain N q N f u v := by
+          simpa [pI, pII] using
+            liuMainPanMaxY_le_sourceFaithfulSigned
+              distMain N q N f u v hf0
+        _ ≤ pI q + pII q + (pMain q + pPP q) := by
+          simpa [pMain, pPP, add_assoc, add_comm, add_left_comm] using
+            add_le_add_left
+              (liuPanSignedResidualMaxY_le_split
+                distMain N q N f u v) (pI q + pII q)
+        _ = pI q + pII q + pMain q + pPP q := by ring
     _ = (∑ q ∈ range (panModulusCutoff N B + 1), w q * pI q) +
           (∑ q ∈ range (panModulusCutoff N B + 1), w q * pII q) +
           (∑ q ∈ range (panModulusCutoff N B + 1), w q * pMain q) +

@@ -1,6 +1,6 @@
-# Chen's theorem in Lean
+# goldbach-lean
 
-A Lean 4 formalization of **Chen's 1+2 theorem**:
+A Lean 4 formalization of **Chen's 1+2 theorem**, preparing for **v1.0.0**:
 
 every sufficiently large even natural number is the sum of a prime and either
 a prime or a product of two primes. The two factors may be equal.
@@ -8,6 +8,35 @@ a prime or a product of two primes. The two factors may be equal.
 This is the version-one release candidate. It does **not** assert the binary
 Goldbach conjecture, an explicit numerical threshold, or the separate 1+1.9
 result.
+
+See the [release notes](docs/RELEASE_NOTES.md) for the comparison with v1.0.0-rc1:
+233,282 to 221,487 nonblank, comment-free Lean source lines, including Blueprint
+metadata. No cross-machine build-time comparison is claimed.
+
+| Read the mathematics | Explore the proof | Check the result |
+|---|---|---|
+| [Theorems and normalization](docs/THEOREMS.md) | [Architecture and source map](docs/ARCHITECTURE.md) | [Verification and trust boundary](docs/VERIFICATION.md) |
+
+## Proof at a glance
+
+```mermaid
+flowchart BT
+  distribution["Prime distribution and analytic estimates"] --> lower["Weighted lower sieve"]
+  comparison["Jurkat-Richert functions and Suzuki comparison"] --> lower
+  distribution --> upper["Switched-source Selberg upper sieve"]
+  lower --> counting["Finite counting: lower bound minus triple penalty"]
+  upper --> counting
+  counting --> quantitative["Quantitative representation bound"]
+  quantitative --> chen["Chen's theorem: prime + at most two primes"]
+```
+
+This is a mathematical roadmap: arrows point from an input to the result it
+supports, and may summarize several modules. The [source map](docs/ARCHITECTURE.md)
+separates this view from direct imports and compiled declaration dependencies.
+
+The [interactive Blueprint](docs/ARCHITECTURE.md#interactive-blueprint) renders
+selected declaration dependencies from LeanArchitect, with links to their Lean
+source. CI provides the generated site as the `goldbach-blueprint` artifact.
 
 ## Main results
 

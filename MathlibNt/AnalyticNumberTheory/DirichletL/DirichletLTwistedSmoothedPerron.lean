@@ -72,7 +72,7 @@ lemma twistedSmoothedPerron_aux_tsum_integral
     · simp only [mapsTo_univ_iff, mem_ofPred_eq, add_re, ofReal_re, mul_re, I_re,
         mul_zero, ofReal_im, I_im, mul_one, sub_self, add_zero, forall_const]
       linarith
-  have abs_two : ∀ a : ℝ, ∀ n : ℕ,
+  have norm_nat_cpow_vertical : ∀ a : ℝ, ∀ n : ℕ,
       ‖(n : ℂ) ^ ((σ : ℂ) + a * I)‖₊ = n ^ σ := by
     intro a n
     simp_rw [← norm_toNNReal]
@@ -84,6 +84,7 @@ lemma twistedSmoothedPerron_aux_tsum_integral
       mul_one, sub_self, add_zero,
       Real.toNNReal_of_nonneg <| rpow_nonneg (y := σ) (x := n) (by linarith)]
     norm_cast
+  -- Absolute integrability separates into the coefficient series and Mellin decay.
   rw [MeasureTheory.integral_tsum]
   · have X_ne : X ≠ 0 := ne_of_gt X_pos
     intro n
@@ -93,7 +94,7 @@ lemma twistedSmoothedPerron_aux_tsum_integral
       fun_prop (disch := simp [hn, X_ne])
   · rw [← lt_top_iff_ne_top]
     simp_rw [enorm_mul, enorm_eq_nnnorm, nnnorm_div, ← norm_toNNReal,
-      Complex.norm_cpow_eq_rpow_re_of_pos X_pos, norm_toNNReal, abs_two]
+      Complex.norm_cpow_eq_rpow_re_of_pos X_pos, norm_toNNReal, norm_nat_cpow_vertical]
     simp only [add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im,
       I_im, mul_one, sub_self, add_zero]
     simp_rw [MeasureTheory.lintegral_mul_const' (r := ↑(X ^ σ).toNNReal) (hr := by simp),
@@ -190,7 +191,9 @@ theorem twistedSmoothedPerron
     _ = 1 / (2 * π) * (∑' n : ℕ, twistedVonMangoldtCoeff χ n *
         ∫ t : ℝ, 𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + t * I) *
           (X / (n : ℂ)) ^ (σ + t * I)) := by
-      conv => rw [← mul_assoc, div_mul]; lhs; lhs; rhs; simp
+      rw [← mul_assoc]
+      congr 1
+      field_simp
     _ = ∑' n : ℕ, twistedVonMangoldtCoeff χ n *
         (1 / (2 * π) * ∫ t : ℝ,
           𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + t * I) *
@@ -209,8 +212,7 @@ theorem twistedSmoothedPerron
           ((n : ℂ) / X) ^ ((-1 : ℂ) * (σ + t * I)) =
             (((n : ℂ) / X) ^ (-1 : ℂ)) ^ (σ + t * I) := by
         rw [cpow_mul] <;> rw [him n] <;> simp [Real.pi_pos, Real.pi_nonneg]
-      conv => rhs; lhs; intro n; rhs; rhs; rhs; intro t; rhs
-              rw [ht t, hpow n t]; lhs; rw [hninv]
+      simp_rw [ht, hpow, hninv]
     _ = _ := by
       congr 1
       ext n

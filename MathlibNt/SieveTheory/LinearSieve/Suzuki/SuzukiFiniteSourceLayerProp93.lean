@@ -10,6 +10,16 @@ open KappaOneModel
 
 noncomputable section
 
+/-- Every source layer of index at least two is its normalized predecessor integral. -/
+theorem suzukiLayerNumerator_eq_sourceRecursion_of_two_le
+    (β s : ℝ) {n : ℕ} (hn : 2 ≤ n) :
+    suzukiLayerNumerator 1 β n s =
+      ∫ t in recursionLower β s n..(β + n),
+        suzukiLayer 1 β (n - 1) (t - 1) := by
+  obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := ⟨n - 2, by omega⟩
+  simpa [dPowDensity, Nat.cast_add, Nat.cast_ofNat] using
+    suzukiLayerNumerator_succ_succ (1 : ℝ) β s k
+
 private lemma parityDomain_eq_of_mod_eq {β : ℝ} {m n : ℕ}
     (h : m % 2 = n % 2) : parityDomain β m = parityDomain β n := by
   simp only [parityDomain, h]
@@ -69,13 +79,7 @@ theorem finiteSourceLayer_continuousOn_parityDomain {β : ℝ} (hβ : 1 < β)
     (N : ℕ) : ContinuousOn (finiteSourceLayer 1 β N) (parityDomain β N) := by
   classical
   unfold finiteSourceLayer
-  induction Finset.Icc 1 N using Finset.induction_on with
-  | empty =>
-      simp only [Finset.sum_empty]
-      exact continuousOn_const
-  | @insert n S hn ih =>
-      simp only [Finset.sum_insert hn]
-      exact (sourceTerm_continuousOn hβ N n).add ih
+  exact continuousOn_finsetSum _ fun n _ => sourceTerm_continuousOn hβ N n
 
 /-- Proposition 9.3, κ=1: finite source layers are nonnegative on their exact
 Suzuki parity domains. -/

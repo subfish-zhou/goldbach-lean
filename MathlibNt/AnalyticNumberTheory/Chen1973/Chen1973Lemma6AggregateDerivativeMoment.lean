@@ -86,20 +86,18 @@ theorem primitive_LDeriv_fourth_block_cauchy
         1 + Real.log ((Q : ℝ) * (1 + M)) := by
       have hm := Real.log_le_log (by positivity : 0 < (Q : ℝ) * (1 + ‖z‖))
         (show (Q : ℝ) * (1 + ‖z‖) ≤ (Q : ℝ) * (1 + M) by gcongr; exact hnorm z hz)
-      linarith
-    have hfinal : (∑ q ∈ Ioc D Q, (1 / (q.totient : ℝ)) * ∑ χ : PrimitiveCharacter q,
-        ‖chen1973PrimitiveLValue q z χ‖ ^ 4) ≤ B := by
-      calc
-        _ ≤ primitiveWeightedFourthMoment Q z / D := hblock
-        _ ≤ (21000000 * (Q : ℝ) ^ 2 * ‖z‖ ^ 2 *
-            Real.log ((Q : ℝ) * (1 + ‖z‖)) ^ 4) / D := by gcongr
-        _ ≤ B := by
-          dsimp [B]
-          gcongr
-          exact hnorm z hz
+      exact hm.trans (le_add_of_nonneg_left zero_le_one)
     change (∑ j : J, w j * ‖chen1973PrimitiveLValue j.1.1 z j.2‖ ^ 4) ≤ B
     rw [hflatten (fun q χ => ‖chen1973PrimitiveLValue q z χ‖ ^ 4)]
-    exact hfinal
+    calc
+      _ ≤ primitiveWeightedFourthMoment Q z / D := hblock
+      _ ≤ (21000000 * (Q : ℝ) ^ 2 * ‖z‖ ^ 2 *
+          Real.log ((Q : ℝ) * (1 + ‖z‖)) ^ 4) / D :=
+        div_le_div_of_nonneg_right hbound (Nat.cast_nonneg D)
+      _ ≤ B := by
+        dsimp [B]
+        gcongr
+        exact hnorm z hz
   have h := aggregate_weighted_cauchy_fourth F w (fun j => by dsimp [w]; positivity)
     s r B hr (by dsimp [B]; positivity)
     (fun j => primitiveLValue_differentiable j.1.1 j.2) hcircle

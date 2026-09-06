@@ -95,8 +95,8 @@ lemma canonical_value_tail_le_fixed_log
   have hmnegP : (m : ℝ) ^ (-σ) ≤ P :=
     Real.rpow_le_rpow_of_exponent_le hmone (by linarith)
   have hm_mul_neg : (m : ℝ) * (m : ℝ) ^ (-σ) = P := by
-    dsimp only [P]
-    rw [show 1 - σ = 1 + (-σ) by ring, Real.rpow_add hmpos, Real.rpow_one]
+    simpa only [P, sub_eq_add_neg, add_comm, mul_comm] using
+      (Real.rpow_add_one hmpos.ne' (-σ)).symm
   have hnormneg : ‖(σ + t * I : ℂ)‖ * (m : ℝ) ^ (-σ) ≤ 3 * P := by
     calc
       _ ≤ (3 * (m : ℝ)) * (m : ℝ) ^ (-σ) :=
@@ -151,15 +151,11 @@ theorem norm_LFunction_le_fixed_log
       mul_zero, mul_one, sub_self, add_zero] using htail'
   rw [← hseries]
   calc
-    ‖orderedValueSeries χ hχ (σ + t * I) hsre‖ =
-        ‖(∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n) +
-          (orderedValueSeries χ hχ (σ + t * I) hsre -
-            ∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n)‖ := by
-              congr 1
-              abel
-    _ ≤ ‖∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ +
+    ‖orderedValueSeries χ hχ (σ + t * I) hsre‖ ≤
+        ‖∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ +
           ‖orderedValueSeries χ hχ (σ + t * I) hsre -
-            ∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ := norm_add_le _ _
+            ∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ :=
+      norm_le_norm_add_norm_sub' _ _
     _ ≤ Real.exp A * 2 * Real.log |t| +
           Real.exp A * (50 * q) * Real.log |t| :=
       add_le_add hfinite htailBound
@@ -223,12 +219,8 @@ theorem exists_principal_norm_LFunctionTrivChar_le_log :
   rcases ZetaUpperBnd with ⟨A, hA, C, hC, hzeta⟩
   refine ⟨A, hA, C, hC, ?_⟩
   intro q _ σ t ht hσ
-  have hσpos : 0 < σ := by
-    have hlog : 1 < Real.log |t| := logt_gt_one ht.le
-    have hratio : A / Real.log |t| < 1 / 2 := by
-      rw [div_lt_iff₀ (by linarith)]
-      nlinarith [hA.2]
-    linarith [hσ.1]
+  have hσpos : 0 < σ :=
+    lt_trans (by norm_num) (one_half_lt_sigma hA ht hσ.1)
   have hsne : (σ + t * I : ℂ) ≠ 1 := by
     intro hs
     have him := congrArg Complex.im hs

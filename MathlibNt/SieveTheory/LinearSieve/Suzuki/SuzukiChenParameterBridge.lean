@@ -93,14 +93,16 @@ theorem chenS_le_sourceSigma_sixteen
   have hlogD : B ≤ Real.log D := by
     apply (Real.le_log_iff_exp_le hDpos).2
     simpa [chenSigmaThreshold, B] using hD
+  have hlogDpos : 0 < Real.log D := hBpos.trans_le hlogD
   have hfivepow : (5 : ℝ) ^ (16 : ℕ) ≤ Real.log D :=
     (le_max_left _ _).trans hlogD
   have hroot : (5 : ℝ) ≤ (Real.log D) ^ (1 / (16 : ℝ)) := by
     rw [show (1 / (16 : ℝ)) = (16 : ℝ)⁻¹ by ring]
-    rw [Real.le_rpow_inv_iff_of_pos (by norm_num) (Real.log_pos
-      ((Real.one_lt_exp_iff.mpr hBpos).trans_le hD)).le (by norm_num)]
+    rw [Real.le_rpow_inv_iff_of_pos (by norm_num) hlogDpos.le (by norm_num)]
     simpa [Real.rpow_natCast] using hfivepow
-  have hDle : D ≤ 27 * D := by nlinarith
+  have hDle : D ≤ 27 * D := by
+    simpa only [one_mul] using
+      mul_le_mul_of_nonneg_right (by norm_num : (1 : ℝ) ≤ 27) hDpos.le
   have hlogmono : Real.log D ≤ Real.log (27 * D) :=
     Real.strictMonoOn_log.monotoneOn hDpos (mul_pos (by norm_num) hDpos) hDle
   have hexp_le_inner : Real.exp 1 ≤ Real.log (27 * D) :=
@@ -110,9 +112,10 @@ theorem chenS_le_sourceSigma_sixteen
     exact hexp_le_inner
   have hs5 : chenS ε ≤ 5 := by unfold chenS; linarith
   unfold sourceSigma
-  have hroot0 : 0 ≤ (Real.log D) ^ (1 / (16 : ℝ)) := Real.rpow_nonneg (Real.log_pos
-    ((Real.one_lt_exp_iff.mpr hBpos).trans_le hD)).le _
-  exact hs5.trans (hroot.trans (by nlinarith))
+  have hroot0 : 0 ≤ (Real.log D) ^ (1 / (16 : ℝ)) :=
+    Real.rpow_nonneg hlogDpos.le _
+  apply hs5.trans (hroot.trans _)
+  simpa only [one_mul, mul_comm] using mul_le_mul_of_nonneg_right hloglog hroot0
 
 /-- Eventual Chen-to-Suzuki coordinate gate, with a concrete natural threshold
 and the source-valid fixed choice `d=16` (for example `16 > 7/(1-1/2)`). -/

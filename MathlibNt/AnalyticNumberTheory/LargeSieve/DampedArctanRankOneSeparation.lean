@@ -94,66 +94,18 @@ theorem rectangularKernelCharacterSum_eq_rankOne
             leftCosTwist a y t m * χ.1 (m : ZMod q)) *
           (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
             rightSinTwist b t n * χ.1 (n : ZMod q))) := by
-  have hSC :
-      (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-          leftSinTwist a y t m * χ.1 (m : ZMod q)) *
-        (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-          rightCosTwist b t n * χ.1 (n : ZMod q)) =
-      ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-        ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-          (leftSinTwist a y t m * χ.1 (m : ZMod q)) *
-            (rightCosTwist b t n * χ.1 (n : ZMod q)) := by
-    rw [Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro m hmm
-    rw [Finset.mul_sum]
-  have hCS :
-      (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-          leftCosTwist a y t m * χ.1 (m : ZMod q)) *
-        (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-          rightSinTwist b t n * χ.1 (n : ZMod q)) =
-      ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-        ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-          (leftCosTwist a y t m * χ.1 (m : ZMod q)) *
-            (rightSinTwist b t n * χ.1 (n : ZMod q)) := by
-    rw [Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro m hmm
-    rw [Finset.mul_sum]
   unfold rectangularKernelCharacterSum
-  calc
-    (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-        ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-          a m * b n * χ.1 ((m * n : ℤ) : ZMod q) *
-            (truncatedPerronIntegrand (Real.log (y / ((m * n : ℤ) : ℝ))) t : ℂ)) =
-      ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-        ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-          (1 / (t : ℂ)) *
-            ((leftSinTwist a y t m * χ.1 (m : ZMod q)) *
-                (rightCosTwist b t n * χ.1 (n : ZMod q)) -
-              (leftCosTwist a y t m * χ.1 (m : ZMod q)) *
-                (rightSinTwist b t n * χ.1 (n : ZMod q))) := by
-      apply Finset.sum_congr rfl
-      intro m hmm
-      apply Finset.sum_congr rfl
-      intro n hnn
-      rw [truncatedPerronIntegrand_log_div_int_mul_eq_rankOne
-        hy (hm m hmm) (hn n hnn) ht]
-      simp only [leftSinTwist, leftCosTwist, rightSinTwist, rightCosTwist]
-      rw [Int.cast_mul, map_mul]
-      push_cast
-      ring
-    _ = (1 / (t : ℂ)) *
-        ((∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-            ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-              (leftSinTwist a y t m * χ.1 (m : ZMod q)) *
-                (rightCosTwist b t n * χ.1 (n : ZMod q))) -
-          (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-            ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-              (leftCosTwist a y t m * χ.1 (m : ZMod q)) *
-                (rightSinTwist b t n * χ.1 (n : ZMod q)))) := by
-      simp only [mul_sub, Finset.mul_sum, Finset.sum_sub_distrib]
-    _ = _ := by rw [← hSC, ← hCS]
+  simp only [Finset.sum_mul]
+  simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro m hmm
+  apply Finset.sum_congr rfl
+  intro n hnn
+  rw [truncatedPerronIntegrand_log_div_int_mul_eq_rankOne
+    hy (hm m hmm) (hn n hnn) ht]
+  simp only [leftSinTwist, leftCosTwist, rightSinTwist, rightCosTwist]
+  rw [Int.cast_mul, map_mul]
+  ring
 
 /-- A sine twist costs the square of `min 1 (L*|t|)` when the logarithmic
 coordinate has absolute value at most `L`. -/
@@ -210,24 +162,9 @@ theorem sum_norm_sq_rightSinTwist_le
     (hL : 0 ≤ L) (hlog : ∀ n ∈ s, |Real.log (n : ℝ)| ≤ L) :
     ∑ n ∈ s, ‖rightSinTwist b t n‖ ^ 2 ≤
       (min 1 (L * |t|)) ^ 2 * ∑ n ∈ s, ‖b n‖ ^ 2 := by
-  rw [Finset.mul_sum]
-  apply Finset.sum_le_sum
-  intro n hn
-  simp only [rightSinTwist, norm_mul, Complex.norm_real, Real.norm_eq_abs, mul_pow]
-  have hs1 : |Real.sin (t * Real.log (n : ℝ))| ≤ 1 := Real.abs_sin_le_one _
-  have hsL : |Real.sin (t * Real.log (n : ℝ))| ≤ L * |t| := by
-    calc
-      |Real.sin (t * Real.log (n : ℝ))| ≤ |t * Real.log (n : ℝ)| :=
-        Real.abs_sin_le_abs
-      _ = |t| * |Real.log (n : ℝ)| := abs_mul _ _
-      _ ≤ |t| * L := mul_le_mul_of_nonneg_left (hlog n hn) (abs_nonneg t)
-      _ = L * |t| := by ring
-  have hs : |Real.sin (t * Real.log (n : ℝ))| ≤ min 1 (L * |t|) := le_min hs1 hsL
-  have hmin : 0 ≤ min 1 (L * |t|) :=
-    le_min (by norm_num) (mul_nonneg hL (abs_nonneg t))
-  have hs2 : |Real.sin (t * Real.log (n : ℝ))| ^ 2 ≤ min 1 (L * |t|) ^ 2 :=
-    (sq_le_sq₀ (abs_nonneg _) hmin).2 hs
-  simpa [mul_comm] using mul_le_mul_of_nonneg_left hs2 (sq_nonneg ‖b n‖)
+  -- At `y = 1`, the left sine twist differs only by a sign.
+  simpa [leftSinTwist, rightSinTwist, mul_neg, Real.sin_neg] using
+    sum_norm_sq_leftSinTwist_le b 1 t L s hL (by simpa using hlog)
 
 /-- Nonnegative-frequency right sine-energy form. -/
 theorem sum_norm_sq_rightSinTwist_le_of_nonneg
@@ -241,13 +178,9 @@ theorem sum_norm_sq_rightSinTwist_le_of_nonneg
 theorem sum_norm_sq_rightCosTwist_le
     (b : ℤ → ℂ) (t : ℝ) (s : Finset ℤ) :
     ∑ n ∈ s, ‖rightCosTwist b t n‖ ^ 2 ≤ ∑ n ∈ s, ‖b n‖ ^ 2 := by
-  apply Finset.sum_le_sum
-  intro n hn
-  simp only [rightCosTwist, norm_mul, Complex.norm_real, Real.norm_eq_abs, mul_pow]
-  have hc := Real.abs_cos_le_one (t * Real.log (n : ℝ))
-  have hc2 : |Real.cos (t * Real.log (n : ℝ))| ^ 2 ≤ 1 := by
-    nlinarith [abs_nonneg (Real.cos (t * Real.log (n : ℝ)))]
-  simpa using mul_le_mul_of_nonneg_left hc2 (sq_nonneg ‖b n‖)
+  -- Cosine is even, so the left twist at `y = 1` is the right twist.
+  simpa [leftCosTwist, rightCosTwist, mul_neg, Real.cos_neg] using
+    sum_norm_sq_leftCosTwist_le b 1 t s
 
 /-- On positive integer support `n ≤ M`, the right logarithmic coordinate is
 bounded by `log M`. -/

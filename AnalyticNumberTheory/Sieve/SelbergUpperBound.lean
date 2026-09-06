@@ -314,7 +314,7 @@ noncomputable def optimalSelbergWeight (S : BoundingSieve) : ℕ → ℝ :=
     else 0
 
 /-- Standard Moebius sum: `Σ_{d|n} μ(d) = [n=1]`. -/
-private lemma sum_moebius_eq_one {n : ℕ} :
+lemma sum_moebius_eq_one {n : ℕ} :
     (∑ d ∈ n.divisors, (μ d : ℝ)) = if n = 1 then (1 : ℝ) else 0 := by
   have h := ArithmeticFunction.coe_zeta_mul_coe_moebius (R := ℝ)
   have hkey : (ζ * (μ : ArithmeticFunction ℝ)) n = (1 : ArithmeticFunction ℝ) n := by rw [h]
@@ -325,74 +325,30 @@ private lemma sum_moebius_eq_one {n : ℕ} :
 `l|d ↔ e/d | e/l`. This quotient form converts divisibility
 by `l` into divisibility of `e/l` for reindexing a restricted
 Moebius sum. -/
-private lemma dvd_iff_div_dvd {e l d : ℕ} (he : e ≠ 0) (hd : d ∣ e) (hl : l ∣ e) :
+lemma dvd_iff_div_dvd {e l d : ℕ} (he : e ≠ 0) (hd : d ∣ e) (hl : l ∣ e) :
     l ∣ d ↔ e / d ∣ e / l := by
   constructor
-  · intro hld
-    rcases hld with ⟨k, rfl⟩
-    have hl0 : 0 < l := Nat.pos_of_dvd_of_pos hl (Nat.pos_of_ne_zero he)
-    have hkl : k ∣ e / l := by
-      have heq : e = l * (e / l) := by
-        rw [mul_comm, Nat.div_mul_cancel hl]
-      rw [heq] at hd
-      exact (Nat.mul_dvd_mul_iff_left hl0).mp hd
-    have hq : e / (l * k) = (e / l) / k := (Nat.div_div_eq_div_mul e l k).symm
-    rw [hq]
-    exact Nat.div_dvd_of_dvd hkl
+  · exact Nat.div_dvd_div_left hd
   · intro hdl
-    rcases hdl with ⟨j, hj⟩
-    have heq1 : e = l * (e / l) := by
-      rw [mul_comm, Nat.div_mul_cancel hl]
-    have heq2 : d * (e / d) = e := by
-      rw [mul_comm, Nat.div_mul_cancel hd]
-    have hdq : 0 < e / d :=
-      Nat.pos_of_dvd_of_pos (Nat.div_dvd_of_dvd hd) (Nat.pos_of_ne_zero he)
-    have hmain : d * (e / d) = l * j * (e / d) := by
-      calc
-        d * (e / d) = e := heq2
-        _ = l * (e / l) := heq1
-        _ = l * (j * (e / d)) := by
-          rw [hj]
-          ring
-        _ = l * j * (e / d) := by ring
-    refine ⟨j, ?_⟩
-    exact Nat.mul_right_cancel hdq hmain
+    have h := Nat.div_dvd_div_left (Nat.div_dvd_of_dvd hl) hdl
+    simpa only [Nat.div_div_self hl he, Nat.div_div_self hd he] using h
 
 /-- Restricted Moebius sum: for `l|e` and `e ≠ 0`,
 `Σ_{d|e, l|d} μ(e/d) = [e=l]`. -/
-private lemma sum_moebius_quotient_of_dvd {e l : ℕ} (he : e ≠ 0) (hle : l ∣ e) :
+lemma sum_moebius_quotient_of_dvd {e l : ℕ} (he : e ≠ 0) (hle : l ∣ e) :
     (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
       if e = l then (1 : ℝ) else 0 := by
   -- Reindex d ↦ e/d: the condition [l|d] becomes [e/d | e/l].
   have hbij :
       (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
         ∑ d ∈ e.divisors, if d ∣ e / l then (μ d : ℝ) else 0 := by
-    refine Finset.sum_bij (fun d _ => e / d) ?_ ?_ ?_ ?_
-    · intro d hd
-      have hdvd : d ∣ e := (Nat.mem_divisors.mp hd).1
-      exact Nat.mem_divisors.mpr ⟨Nat.div_dvd_of_dvd hdvd, he⟩
-    · intro a ha b hb hab
-      have havd : a ∣ e := (Nat.mem_divisors.mp ha).1
-      have hbvd : b ∣ e := (Nat.mem_divisors.mp hb).1
-      calc
-        a = e / (e / a) := (Nat.div_div_self havd he).symm
-        _ = e / (e / b) := by rw [hab]
-        _ = b := Nat.div_div_self hbvd he
-    · intro d hd
-      have hdvd : d ∣ e := (Nat.mem_divisors.mp hd).1
-      refine ⟨e / d, ?_, ?_⟩
-      · exact Nat.mem_divisors.mpr ⟨Nat.div_dvd_of_dvd hdvd, he⟩
-      · exact Nat.div_div_self hdvd he
-    · intro d hd
-      have hdvd : d ∣ e := (Nat.mem_divisors.mp hd).1
-      by_cases hld : l ∣ d
-      · have hdld : e / d ∣ e / l := (dvd_iff_div_dvd he hdvd hle).mp hld
-        simp [hld, hdld]
-      · have hndld : ¬ e / d ∣ e / l := by
-          intro h
-          apply hld
-          exact (dvd_iff_div_dvd he hdvd hle).mpr h
-        simp [hld, hndld]
+    calc
+      (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0)
+          = ∑ d ∈ e.divisors, if e / d ∣ e / l then (μ (e / d) : ℝ) else 0 := by
+              refine Finset.sum_congr rfl fun d hd => ?_
+              simp only [dvd_iff_div_dvd he (Nat.mem_divisors.mp hd).1 hle]
+      _ = ∑ d ∈ e.divisors, if d ∣ e / l then (μ d : ℝ) else 0 :=
+        Nat.sum_div_divisors e (fun d => if d ∣ e / l then (μ d : ℝ) else 0)
   rw [hbij]
   -- The sum is now Σ_{d|e, d|e/l} μ(d); since e/l divides e, its index set is (e/l).divisors.
   have hfilter : e.divisors.filter (fun d => d ∣ e / l) = (e / l).divisors :=
@@ -678,20 +634,7 @@ For a `SieveProblem`, the product is `sieveProduct`
 theorem selbergMainTerm_eq_prod_one_sub_nu (S : BoundingSieve) :
     (∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l)⁻¹ =
       ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p) := by
-  calc
-    (∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l)⁻¹
-        = (∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p)⁻¹)⁻¹ := by
-            rw [selbergSum_eq_prod_inv]
-    _ = ∏ p ∈ S.prodPrimes.primeFactors, ((1 - S.nu p)⁻¹)⁻¹ := by
-            rw [← Finset.prod_inv_distrib]
-    _ = ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p) := by
-            apply Finset.prod_congr rfl
-            intro p hp
-            have hp_p : p.Prime := Nat.prime_of_mem_primeFactors hp
-            have hp_dvd : p ∣ S.prodPrimes := Nat.dvd_of_mem_primeFactors hp
-            have hne : (1 - S.nu p) ≠ 0 := by
-              linarith [S.nu_lt_one_of_prime p hp_p hp_dvd]
-            exact inv_inv (1 - S.nu p)
+  rw [selbergSum_eq_prod_inv, Finset.prod_inv_distrib, inv_inv]
 
 /-- For a classical `SieveProblem`,
 `(Σ_{d|P} selbergTerms d)⁻¹ = sieveProduct`. -/
@@ -809,11 +752,7 @@ private lemma sum_nu_mul_moebius_factors (S : BoundingSieve) (m : ℕ) (hm : Squ
   intro q hq
   have hq_p : q.Prime := Nat.prime_of_mem_primeFactors hq
   have hμq : ((μ q : ℤ) : ℝ) = -1 := by
-    rw [ArithmeticFunction.moebius_apply_of_squarefree hq_p.squarefree]
-    have hΩ : ArithmeticFunction.cardFactors q = 1 :=
-      ArithmeticFunction.cardFactors_apply_prime hq_p
-    rw [hΩ]
-    norm_num
+    exact_mod_cast ArithmeticFunction.moebius_apply_prime hq_p
   simp [F, hμq]
   ring
 
@@ -896,47 +835,16 @@ theorem sum_nu_mul_moebius_over_supersets (S : BoundingSieve) (l : ℕ) (hl : l 
 `mainSum(Λ²μ) = (Σ_{d|P} selbergTerms d)⁻¹`. -/
 theorem mainSum_lambdaSquared_moebius_eq (S : BoundingSieve) :
     S.mainSum (BoundingSieve.lambdaSquared (fun d => (μ d : ℝ))) = selbergMainTerm S := by
-  rw [mainSum_diag_via_mathlib]
-  have hx : ∀ l ∈ S.prodPrimes.divisors,
-      (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * (μ d : ℝ) else 0) =
-        optimalSelbergX S l := by
-    intro l hl
-    exact sum_nu_mul_moebius_over_supersets S l ((Nat.mem_divisors.mp hl).1)
-  have hsum1 : (∑ l ∈ S.prodPrimes.divisors,
-        (S.selbergTerms l)⁻¹ *
-          (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * (μ d : ℝ) else 0) ^ 2) =
-      ∑ l ∈ S.prodPrimes.divisors, (S.selbergTerms l)⁻¹ * (optimalSelbergX S l) ^ 2 := by
-    apply Finset.sum_congr rfl
-    intro l hl
-    rw [← hx l hl]
-  rw [hsum1]
-  have hsum2 : (∑ l ∈ S.prodPrimes.divisors,
-        (S.selbergTerms l)⁻¹ * (optimalSelbergX S l) ^ 2) =
-      (selbergMainTerm S) ^ 2 * (∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l) := by
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro l hl
-    have hg : S.selbergTerms l ≠ 0 := (S.selbergTerms_pos ((Nat.mem_divisors.mp hl).1)).ne'
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes hl
-    have hμsq : ((μ l : ℝ) ^ 2) = 1 := by
-      exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    unfold optimalSelbergX
-    have hx2 : (S.selbergTerms l * (μ l : ℝ) * selbergMainTerm S) ^ 2 =
-        (S.selbergTerms l) ^ 2 * ((μ l : ℝ) ^ 2) * (selbergMainTerm S) ^ 2 := by ring
-    rw [hx2, hμsq]
-    field_simp [hg]
-  rw [hsum2]
-  unfold selbergMainTerm
-  have hsum_ne : (∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l) ≠ 0 := by
-    have h1mem : (1 : ℕ) ∈ S.prodPrimes.divisors :=
-      Nat.mem_divisors.mpr ⟨one_dvd S.prodPrimes, S.prodPrimes_ne_zero⟩
-    have hpos1 : 0 < S.selbergTerms 1 := by
-      rw [BoundingSieve.selbergTerms_apply]
-      have hν1 : S.nu 1 = 1 := S.nu_mult.map_one
-      simp [hν1]
-    exact ne_of_gt (Finset.sum_pos
-      (fun l hl => S.selbergTerms_pos ((Nat.mem_divisors.mp hl).1)) ⟨1, h1mem⟩)
-  field_simp [hsum_ne]
+  calc
+    S.mainSum (BoundingSieve.lambdaSquared (fun d => (μ d : ℝ)))
+        = S.mainSum (BoundingSieve.lambdaSquared (optimalSelbergWeight S)) := by
+          rw [mainSum_diag_via_mathlib, mainSum_diag_via_mathlib]
+          refine Finset.sum_congr rfl fun l hl => ?_
+          have hldvd := (Nat.mem_divisors.mp hl).1
+          rw [sum_nu_mul_moebius_over_supersets S l hldvd,
+            ← optimalSelbergX_eq_sum_nu_mul_weight S l hldvd]
+          rfl
+    _ = selbergMainTerm S := optimalSelbergMainSum_eq S
 
 /-- **Moebius-weight Selberg upper bound**: with `w=μ`,
 `siftedSum ≤ totalMass·(Σ selbergTerms)⁻¹ + errSum(Λ²μ)`;

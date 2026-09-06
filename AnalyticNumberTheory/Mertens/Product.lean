@@ -37,13 +37,13 @@ theorem logarithmicCorrection_eq_sum_range (x : ℕ) :
   unfold logarithmicCorrection primesUpTo logarithmicCorrectionTerm
   rw [Finset.sum_filter]
 
-/-- The zero-extended logarithmic correction is absolutely summable. -/
-theorem summable_logarithmicCorrectionTerm : Summable logarithmicCorrectionTerm := by
-  have hsq : Summable (fun p : ℕ => 2 / (p : ℝ) ^ 2) := by
-    simpa [div_eq_mul_inv] using
-      ((Real.summable_one_div_nat_pow (p := 2)).2 (by norm_num : (1 : ℕ) < 2)).mul_left 2
-  refine hsq.of_norm_bounded ?_
-  intro p
+/-- The same reciprocal-square majorant controls convergence and every shifted tail. -/
+private theorem summable_two_div_nat_sq : Summable (fun p : ℕ => 2 / (p : ℝ) ^ 2) := by
+  simpa [div_eq_mul_inv] using
+    ((Real.summable_one_div_nat_pow (p := 2)).2 (by norm_num : (1 : ℕ) < 2)).mul_left 2
+
+private theorem norm_logarithmicCorrectionTerm_le (p : ℕ) :
+    ‖logarithmicCorrectionTerm p‖ ≤ 2 / (p : ℝ) ^ 2 := by
   unfold logarithmicCorrectionTerm
   split_ifs with hp
   · rw [Real.norm_eq_abs]
@@ -54,6 +54,10 @@ theorem summable_logarithmicCorrectionTerm : Summable logarithmicCorrectionTerm 
       _ ≤ 2 / (p : ℝ) ^ 2 := abs_log_primeFactor_add_le hp
   · simp only [norm_zero]
     positivity
+
+/-- The zero-extended logarithmic correction is absolutely summable. -/
+theorem summable_logarithmicCorrectionTerm : Summable logarithmicCorrectionTerm :=
+  summable_two_div_nat_sq.of_norm_bounded norm_logarithmicCorrectionTerm_le
 
 /-- The finite correction converges to its absolutely convergent series. -/
 theorem tendsto_logarithmicCorrection :
@@ -90,29 +94,10 @@ theorem logarithmicCorrection_tail_norm_le (x : ℕ) :
       ∑' n : ℕ, 2 / ((n + (x + 1) : ℕ) : ℝ) ^ 2 := by
   rw [logarithmicCorrectionLimit_sub_eq_tail]
   apply tsum_of_norm_bounded
-  · exact
-      ((summable_nat_add_iff
-        (f := fun p : ℕ => 2 / (p : ℝ) ^ 2) (x + 1)).2
-        (by
-          simpa [div_eq_mul_inv] using
-            ((Real.summable_one_div_nat_pow (p := 2)).2
-              (by norm_num : (1 : ℕ) < 2)).mul_left 2)).hasSum
+  · exact ((summable_nat_add_iff (f := fun p : ℕ => 2 / (p : ℝ) ^ 2) (x + 1)).2
+      summable_two_div_nat_sq).hasSum
   · intro n
-    unfold logarithmicCorrectionTerm
-    split_ifs with hp
-    · rw [Real.norm_eq_abs]
-      calc
-        |-log (1 - 1 / ((n + (x + 1) : ℕ) : ℝ)) -
-            1 / ((n + (x + 1) : ℕ) : ℝ)| =
-            |-(log (1 - 1 / ((n + (x + 1) : ℕ) : ℝ)) +
-              1 / ((n + (x + 1) : ℕ) : ℝ))| := by
-                congr 1 <;> ring
-        _ = |log (1 - 1 / ((n + (x + 1) : ℕ) : ℝ)) +
-              1 / ((n + (x + 1) : ℕ) : ℝ)| := abs_neg _
-        _ ≤ 2 / ((n + (x + 1) : ℕ) : ℝ) ^ 2 :=
-          abs_log_primeFactor_add_le hp
-    · simp only [norm_zero]
-      positivity
+    exact norm_logarithmicCorrectionTerm_le (n + (x + 1))
 
 /-- Integral comparison for the shifted reciprocal-square tail. -/
 theorem shifted_reciprocal_square_tail_le (x : ℕ) (hx : 1 ≤ x) :

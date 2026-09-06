@@ -52,11 +52,11 @@ private theorem sourceRatio_monotoneOn {d : ℝ} (hd : 1 < d) :
     have h := one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 1) hd
     norm_num at h ⊢
     linarith
+  have hstart1 : 1 < sourceRatioStart d := by
+    unfold sourceRatioStart
+    exact Real.one_lt_exp_iff.mpr (div_pos (by norm_num) hb)
   apply monotoneOn_of_deriv_nonneg (convex_Ici _)
   · intro x hx
-    have hstart1 : 1 < sourceRatioStart d := by
-      unfold sourceRatioStart
-      exact Real.one_lt_exp_iff.mpr (div_pos (by norm_num) hb)
     have hx0 : 0 < x := zero_lt_one.trans (hstart1.trans_le hx)
     have hx1 : 1 < x := hstart1.trans_le hx
     have hlog : Real.log (Real.log 27 + x) ≠ 0 := by
@@ -72,9 +72,6 @@ private theorem sourceRatio_monotoneOn {d : ℝ} (hd : 1 < d) :
       apply ne_of_gt
       apply Real.log_pos
       have : 0 < Real.log (27 : ℝ) := Real.log_pos (by norm_num)
-      have hstart1 : 1 < sourceRatioStart d := by
-        unfold sourceRatioStart
-        exact Real.one_lt_exp_iff.mpr (div_pos (by norm_num) hb)
       have hx1 : 1 < x := hstart1.trans hx
       linarith
     exact (sourceRatio_hasDerivAt hx0 hlogne).differentiableAt.differentiableWithinAt
@@ -87,9 +84,6 @@ private theorem sourceRatio_monotoneOn {d : ℝ} (hd : 1 < d) :
     have hlogpos : 0 < Real.log (Real.log 27 + x) := by
       apply Real.log_pos
       have : 0 < Real.log (27 : ℝ) := Real.log_pos (by norm_num)
-      have hstart1 : 1 < sourceRatioStart d := by
-        unfold sourceRatioStart
-        exact Real.one_lt_exp_iff.mpr (div_pos (by norm_num) hb)
       have hx1 : 1 < x := hstart1.trans hx
       linarith
     have hderiv := sourceRatio_hasDerivAt (d := d) hx0 (ne_of_gt hlogpos)
@@ -221,19 +215,10 @@ theorem recursiveCoordinate_le_quotient_sourceSigma
     have hlog27 : 0 < Real.log (27 : ℝ) := Real.log_pos (by norm_num)
     linarith
   have hloglogD : 0 < Real.log (Real.log 27 + Real.log (D : ℝ)) := by
-    apply Real.log_pos
+    apply hloglogq.trans_le
+    apply Real.log_le_log _ (add_le_add_right hlogOrder _)
     have hlog27 : 0 < Real.log (27 : ℝ) := Real.log_pos (by norm_num)
-    have : 1 < Real.log (q : ℝ) := by
-      have hstart1 : 1 < sourceRatioStart d := by
-        unfold sourceRatioStart
-        exact Real.one_lt_exp_iff.mpr (by
-          have hb : 0 < 1 - 1 / d := by
-            have h := one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 1) hd
-            norm_num at h ⊢
-            linarith
-          positivity)
-      linarith
-    linarith
+    linarith only [hlog27, hlogqStart, hstart0]
   have hmono : sourceRatio d (Real.log (q : ℝ)) ≤
       sourceRatio d (Real.log (D : ℝ)) :=
     sourceRatio_monotoneOn hd hlogqStart.le

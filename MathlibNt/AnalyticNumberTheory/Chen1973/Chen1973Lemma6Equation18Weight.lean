@@ -76,7 +76,10 @@ lemma eventually_aux : ∀ᶠ t : ℝ in atTop,
     rw [← Real.exp_add]
     congr 1
     ring
-  nlinarith
+  calc
+    t * Real.exp (t / 2) ≤
+        (1 / 4 * Real.exp (1 / 2 * t)) * Real.exp (t / 2) := hm
+    _ = Real.exp t / 4 := by rw [mul_assoc, he]; ring
 
 /-- The uniform form of Chen's equation (18); the threshold precedes n. -/
 theorem uniform_prime_factor_bound : ∃ R₀ : ℝ, ∀ R : ℝ, R₀ ≤ R →
@@ -100,13 +103,14 @@ theorem uniform_prime_factor_bound : ∃ R₀ : ℝ, ∀ R : ℝ, R₀ ≤ R →
   have hc := card_primeFactors_mul_log_le hn hnR hK
   rw [Real.log_exp] at hc
   rw [hexpt] at htaux
+  -- Splitting at K = exp (t / 2) and using the cutoff bounds the number of factors.
   have hclog : (n.primeFactors.card : ℝ) * t ≤ (9 / 4 : ℝ) * Real.log R := by
-    nlinarith
+    nlinarith only [hc, htaux]
   have hlog3pos : 0 ≤ Real.log 3 := Real.log_nonneg (by norm_num)
   have hweighted : (n.primeFactors.card : ℝ) * Real.log 3 * t ≤ 3 * Real.log R := by
     have h1 := mul_le_mul_of_nonneg_left hclog hlog3pos
     have h2 := mul_le_mul_of_nonneg_right log_three_lt_four_thirds.le hlogpos.le
-    nlinarith
+    nlinarith only [h1, h2]
   have hfinal : (n.primeFactors.card : ℝ) * Real.log 3 ≤ 3 * Real.log R / t :=
     (le_div_iff₀ htpos).mpr hweighted
   calc

@@ -1560,49 +1560,35 @@ noncomputable def liuPanAggregatePsiConductorSum
     liuPanAggregatePsiConductorSum t A 1 l f = 0 := by
   simp [liuPanAggregatePsiConductorSum]
 
+/-- Every nonprincipal character has conductor in `[2,q]`, so any complex
+character summand can be regrouped exactly by conductor. -/
+private theorem sum_liuPanNonprincipalCharacters_by_conductor
+    {q : ℕ} (hq : 0 < q) (G : DirichletCharacter ℂ q → ℂ) :
+    (∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q, G χ) =
+      ∑ d ∈ Icc 2 q,
+        ∑ χ ∈ (liuPanPrimePowerNonprincipalCharacters q).filter
+            (fun χ => χ.conductor = d), G χ := by
+  classical
+  let _ : NeZero q := ⟨hq.ne'⟩
+  refine (sum_fiberwise_of_maps_to ?_ G).symm
+  intro χ hχ
+  have hχne : χ ≠ 1 := by
+    simpa [liuPanPrimePowerNonprincipalCharacters] using hχ
+  have hdne : χ.conductor ≠ 1 := fun hd =>
+    hχne (DirichletCharacter.eq_one_iff_conductor_eq_one.mpr hd)
+  have hdpos : 0 < χ.conductor := Nat.pos_of_ne_zero χ.conductor_ne_zero
+  exact mem_Icc.mpr ⟨by omega, Nat.le_of_dvd hq χ.conductor_dvd_level⟩
+
 /-- Exact regrouping of the nonprincipal aggregate by conductor, before any
 absolute value or Cauchy--Schwarz inequality. -/
 theorem liuPanAggregateNonprincipalPsiTerm_eq_conductorSum
     {t A q l : ℕ} (f : ℕ → ℝ) (hq : 0 < q) :
     liuPanAggregateNonprincipalPsiTerm t A q l f =
       liuPanAggregatePsiConductorSum t A q l f := by
-  classical
-  let _ : NeZero q := ⟨Nat.ne_of_gt hq⟩
   unfold liuPanAggregateNonprincipalPsiTerm
     liuPanAggregatePsiConductorSum liuPanAggregatePsiCharacterProduct
-  congr 1
-  calc
-    (∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q,
-        star (χ (l : ZMod q)) * liuPanSourceCharacterPrefix A q f χ *
-          liuPanLambdaCharacterPrefix t q χ) =
-        ∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q,
-          ∑ d ∈ Icc 2 q, if χ.conductor = d then
-            star (χ (l : ZMod q)) * liuPanSourceCharacterPrefix A q f χ *
-              liuPanLambdaCharacterPrefix t q χ else 0 := by
-      apply sum_congr rfl
-      intro χ hχ
-      have hχne : χ ≠ 1 := by
-        simpa [liuPanPrimePowerNonprincipalCharacters] using hχ
-      have hdne : χ.conductor ≠ 1 := fun hd =>
-        hχne (DirichletCharacter.eq_one_iff_conductor_eq_one.mpr hd)
-      have hdpos : 0 < χ.conductor :=
-        Nat.pos_of_ne_zero χ.conductor_ne_zero
-      have hdle : χ.conductor ≤ q :=
-        Nat.le_of_dvd hq χ.conductor_dvd_level
-      have hdmem : χ.conductor ∈ Icc 2 q := by
-        rw [mem_Icc]
-        omega
-      simp [hdmem]
-    _ = ∑ d ∈ Icc 2 q,
-        ∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q,
-          if χ.conductor = d then
-            star (χ (l : ZMod q)) * liuPanSourceCharacterPrefix A q f χ *
-              liuPanLambdaCharacterPrefix t q χ else 0 := by
-      rw [sum_comm]
-    _ = _ := by
-      apply sum_congr rfl
-      intro d hd
-      rw [sum_filter]
+  exact congrArg ((Nat.totient q : ℂ)⁻¹ * ·)
+    (sum_liuPanNonprincipalCharacters_by_conductor hq _)
 
 /-- The conductor sum reindexed by the unique primitive character inducing each
 nonprincipal character. -/
@@ -2773,45 +2759,11 @@ theorem liuPanAggregateNonprincipalLogLambdaHyperbola_eq_conductorSum
     {y X q l : ℕ} (f : ℕ → ℝ) (hq : 0 < q) :
     liuPanAggregateNonprincipalLogLambdaHyperbola y X q l f =
       liuPanAggregateLogLambdaConductorSum y X q l f := by
-  classical
-  let _ : NeZero q := ⟨Nat.ne_of_gt hq⟩
   unfold liuPanAggregateNonprincipalLogLambdaHyperbola
     liuPanAggregateLogLambdaConductorSum
   rw [if_neg hq.ne', if_neg hq.ne']
-  congr 1
-  calc
-    (∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q,
-        star (χ (l : ZMod q)) *
-          liuPanSourceLogLambdaCharacterHyperbola y X q f χ) =
-      ∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q,
-        ∑ d ∈ Icc 2 q, if χ.conductor = d then
-          star (χ (l : ZMod q)) *
-            liuPanSourceLogLambdaCharacterHyperbola y X q f χ
-        else 0 := by
-          apply sum_congr rfl
-          intro χ hχ
-          have hχne : χ ≠ 1 := by
-            simpa [liuPanPrimePowerNonprincipalCharacters] using hχ
-          have hdne : χ.conductor ≠ 1 := fun hd =>
-            hχne (DirichletCharacter.eq_one_iff_conductor_eq_one.mpr hd)
-          have hdmem : χ.conductor ∈ Icc 2 q := by
-            rw [mem_Icc]
-            exact ⟨by
-              have := Nat.pos_of_ne_zero χ.conductor_ne_zero
-              omega,
-              Nat.le_of_dvd hq χ.conductor_dvd_level⟩
-          simp [hdmem]
-    _ = ∑ d ∈ Icc 2 q,
-        ∑ χ ∈ liuPanPrimePowerNonprincipalCharacters q,
-          if χ.conductor = d then
-            star (χ (l : ZMod q)) *
-              liuPanSourceLogLambdaCharacterHyperbola y X q f χ
-          else 0 := by
-            rw [sum_comm]
-    _ = _ := by
-      apply sum_congr rfl
-      intro d hd
-      rw [sum_filter]
+  exact congrArg ((Nat.totient q : ℂ)⁻¹ * ·)
+    (sum_liuPanNonprincipalCharacters_by_conductor hq _)
 
 /-- The conductor-grouped logarithmic hyperbola reindexed by primitive
 characters and their unique lifts to level `q`. -/

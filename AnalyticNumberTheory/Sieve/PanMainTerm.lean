@@ -122,7 +122,7 @@ theorem mainTermInnerSumMax_nonneg (X x : ℕ) : 0 ≤ mainTermInnerSumMax X x :
 /-- Nonnegative weight: `μ²(q)·3^{ω(q)} ≥ 0`. -/
 theorem panMain_weight_nonneg (q : ℕ) :
     0 ≤ ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card := by
-  exact mul_nonneg (sq_nonneg _) (pow_nonneg (by norm_num) _)
+  exact AnalyticNumberTheory.Sieve.panTypeI_weight_nonneg q
 
 /-- **Termwise triangle reduction**: remove the coprimality indicator
 and use `|f| ≤ 1`, starting from
@@ -433,24 +433,9 @@ theorem mainTermInnerSum_le (X y : ℕ) :
           intro a ha
           ring
     _ ≤ (y : ℝ) * (1 + Real.log (X : ℝ)) / Real.log 2 := by
-          have hfac : (∑ a ∈ Finset.Icc 1 X, 1 / (a : ℝ)) = (harmonic X : ℝ) := by
-            have hq' : harmonic X = ∑ a ∈ Finset.Icc 1 X, (1 : ℚ) / (a : ℚ) := by
-              simpa [one_div] using harmonic_eq_sum_Icc (n := X)
-            have hcast : (↑(∑ a ∈ Finset.Icc 1 X, (1 : ℚ) / (a : ℚ)) : ℝ) =
-                ∑ a ∈ Finset.Icc 1 X, (1 : ℝ) / (a : ℝ) := by
-              rw [Rat.cast_sum]
-              apply Finset.sum_congr rfl
-              intro a ha
-              rw [Rat.cast_div, Rat.cast_one, Rat.cast_natCast]
-            calc
-              (∑ a ∈ Finset.Icc 1 X, 1 / (a : ℝ)) =
-                  (↑(∑ a ∈ Finset.Icc 1 X, (1 : ℚ) / (a : ℚ)) : ℝ) := by
-                rw [hcast]
-              _ = (harmonic X : ℝ) := by
-                rw [hq']
           have hle : (∑ a ∈ Finset.Icc 1 X, 1 / (a : ℝ)) ≤ 1 + Real.log (X : ℝ) := by
-            rw [hfac]
-            exact harmonic_le_one_add_log X
+            simpa only [harmonic_eq_sum_Icc, Rat.cast_sum, Rat.cast_inv,
+              Rat.cast_natCast, one_div] using harmonic_le_one_add_log X
           have hy : (0 : ℝ) ≤ (y : ℝ) := by positivity
           exact div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hle hy)
             (le_of_lt (Real.log_pos (by norm_num : (1 : ℝ) < 2)))
@@ -471,7 +456,7 @@ theorem mainTermInnerSumMax_le (X x : ℕ) :
       simp [Real.log_zero]
     · have hX1 : 1 ≤ X := Nat.succ_le_of_lt (Nat.pos_of_ne_zero hX)
       have hlog : (0 : ℝ) ≤ Real.log (X : ℝ) := Real.log_nonneg (by exact_mod_cast hX1)
-      linarith
+      exact add_nonneg zero_le_one hlog
   calc
     mainTermInnerSum y X ≤ (y : ℝ) / Real.log 2 * (1 + Real.log (X : ℝ)) :=
       mainTermInnerSum_le X y
@@ -496,46 +481,13 @@ prime-factor sets; and `Σ 1/(p-1) ≤ 2Σ 1/p`, followed by Mertens.
 
 private lemma squarefree_eq_prod_primeFactors {n : ℕ} (hn : Squarefree n) :
     n = ∏ p ∈ n.primeFactors, p := by
-  have hn0 : n ≠ 0 := by
-    rintro rfl
-    exact not_squarefree_zero hn
-  have hprod : n = ∏ p ∈ n.primeFactors, p ^ n.factorization p :=
-    Nat.prod_primeFactors_pow_factorization hn0
-  have hsq : ∀ p ∈ n.primeFactors, n.factorization p = 1 := by
-    intro p hp
-    exact Nat.factorization_eq_one_of_squarefree hn (Nat.prime_of_mem_primeFactors hp)
-      (Nat.dvd_of_mem_primeFactors hp)
-  have hpow : (∏ p ∈ n.primeFactors, p ^ n.factorization p) = ∏ p ∈ n.primeFactors, p := by
-    apply Finset.prod_congr rfl
-    intro p hp
-    rw [hsq p hp, pow_one]
-  exact hprod.trans hpow
+  exact (Nat.prod_primeFactors_of_squarefree hn).symm
 
 /-- Subset expansion:
 `∏_{x∈s} (1+g x) = Σ_{t⊆s} ∏_{x∈t} g x`. -/
 private lemma sum_powerset_prod {α : Type*} [DecidableEq α] (s : Finset α) (g : α → ℝ) :
     (∑ t ∈ s.powerset, ∏ x ∈ t, g x) = ∏ x ∈ s, (1 + g x) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | insert a s ha ih =>
-      calc
-        (∑ t ∈ (insert a s).powerset, ∏ x ∈ t, g x)
-            = (∑ t ∈ s.powerset, ∏ x ∈ t, g x) + ∑ t ∈ s.powerset, ∏ x ∈ insert a t, g x := by
-              rw [Finset.sum_powerset_insert ha]
-        _ = (∑ t ∈ s.powerset, ∏ x ∈ t, g x) + ∑ t ∈ s.powerset, (g a * ∏ x ∈ t, g x) := by
-              congr 1
-              apply Finset.sum_congr rfl
-              intro t ht
-              have hat : a ∉ t := by
-                intro hat'
-                exact ha ((Finset.mem_powerset.mp ht) hat')
-              rw [Finset.prod_insert hat]
-        _ = (∑ t ∈ s.powerset, ∏ x ∈ t, g x) + g a * (∑ t ∈ s.powerset, ∏ x ∈ t, g x) := by
-              rw [← Finset.mul_sum]
-        _ = (1 + g a) * (∑ t ∈ s.powerset, ∏ x ∈ t, g x) := by ring
-        _ = (1 + g a) * (∏ x ∈ s, (1 + g x)) := by rw [ih]
-        _ = ∏ x ∈ insert a s, (1 + g x) := by rw [Finset.prod_insert ha]
+  exact (Finset.prod_one_add s).symm
 
 /-- Main-term weight for squarefree `q`:
 `μ²(q)·3^{ω(q)}/φ(q) = ∏_{p|q} 3/(p-1)`. -/
@@ -666,11 +618,9 @@ since its summands are nonnegative. -/
 theorem panMainTotientWeightedSum_mono : Monotone panMainTotientWeightedSum := by
   intro Q₁ Q₂ hQ
   unfold panMainTotientWeightedSum
-  apply Finset.sum_le_sum_of_subset_of_nonneg
-  · intro q hq
-    exact Finset.mem_range.mpr (lt_of_lt_of_le (Finset.mem_range.mp hq) (by omega : Q₁ + 1 ≤ Q₂ + 1))
-  · intro q hq hnq
-    exact panMainTotientWeight_term_nonneg q
+  exact Finset.sum_le_sum_of_subset_of_nonneg
+    (Finset.range_mono (Nat.succ_le_succ hQ))
+    (fun q _ _ => panMainTotientWeight_term_nonneg q)
 
 /-- **Polylogarithmic q-factor bound**:
 `Σ_{q≤Q} μ²(q)·3^{ω(q)}/φ(q) ≤ C·log⁶(Q+2)`.
@@ -773,34 +723,19 @@ theorem panMainTotientWeightedSum_le_polylog :
       exact Real.rpow_le_rpow hlogQnn
         (Real.log_le_log (by positivity : (0 : ℝ) < (Q : ℝ)) (by exact_mod_cast (by omega : Q ≤ Q + 2)))
         (by norm_num : (0 : ℝ) ≤ (6 : ℝ))
-    let u : ℕ → ℝ := fun p => if 2 ≤ p then (3 : ℝ) / ((p : ℝ) - 1) else 0
-    have hu_nonneg : ∀ p : ℕ, 0 ≤ u p := by
-      intro p
-      by_cases h : 2 ≤ p
-      · have hp1 : (0 : ℝ) < (p : ℝ) - 1 := by
-          have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast h
-          linarith
-        simp [u, h, div_nonneg (by norm_num : (0 : ℝ) ≤ 3) (le_of_lt hp1)]
-      · simp [u, h]
-    have hu_eq : ∀ p ∈ primesUpTo Q, u p = (3 : ℝ) / ((p : ℝ) - 1) := by
-      intro p hp
-      have hp2 : 2 ≤ p := (mem_primesUpTo.mp hp).1.two_le
-      simp [u, hp2]
-    have hsum_u : (∑ p ∈ primesUpTo Q, u p) = ∑ p ∈ primesUpTo Q, (3 : ℝ) / ((p : ℝ) - 1) := by
-      apply Finset.sum_congr rfl
-      intro p hp
-      exact hu_eq p hp
     calc
       panMainTotientWeightedSum Q ≤ ∏ p ∈ primesUpTo Q, (1 + (3 : ℝ) / ((p : ℝ) - 1)) :=
             panMainTotientWeightedSum_le_prod_one_add Q
-      _ = ∏ p ∈ primesUpTo Q, (1 + u p) := by
-            apply Finset.prod_congr rfl
-            intro p hp
-            rw [hu_eq p hp]
-      _ ≤ rexp (∑ p ∈ primesUpTo Q, u p) := by
-            exact Real.prod_one_add_le_exp_sum (primesUpTo Q) hu_nonneg
-      _ = rexp (∑ p ∈ primesUpTo Q, (3 : ℝ) / ((p : ℝ) - 1)) := by
-            rw [hsum_u]
+      _ ≤ rexp (∑ p ∈ primesUpTo Q, (3 : ℝ) / ((p : ℝ) - 1)) := by
+            -- Nonnegativity is needed only for primes in the product.
+            rw [Real.exp_sum]
+            apply Finset.prod_le_prod
+            · intro p hp
+              have hp1 : (1 : ℝ) ≤ p := by
+                exact_mod_cast (mem_primesUpTo.mp hp).1.one_lt.le
+              exact add_nonneg zero_le_one (div_nonneg (by norm_num) (sub_nonneg.mpr hp1))
+            · intro p hp
+              simpa only [add_comm] using Real.add_one_le_exp ((3 : ℝ) / ((p : ℝ) - 1))
       _ ≤ rexp (6 * primeReciprocalSum Q) := by
             exact Real.exp_le_exp.mpr hsum
       _ ≤ rexp (6 * (log (log (Q : ℝ)) + K)) := by
@@ -808,24 +743,8 @@ theorem panMainTotientWeightedSum_le_polylog :
               have h6 : (0 : ℝ) ≤ 6 := by norm_num
               exact mul_le_mul_of_nonneg_left hpRS h6)
       _ = rexp (6 * K) * (log (Q : ℝ)) ^ (6 : ℝ) := by
-            have h1 : rexp (6 * (log (log (Q : ℝ)) + K)) =
-                rexp (6 * K) * (log (Q : ℝ)) ^ (6 : ℝ) := by
-              calc
-                rexp (6 * (log (log (Q : ℝ)) + K)) = rexp (6 * log (log (Q : ℝ)) + 6 * K) := by
-                  congr 1
-                  ring
-                _ = rexp (6 * log (log (Q : ℝ))) * rexp (6 * K) := by rw [Real.exp_add]
-                _ = (log (Q : ℝ)) ^ (6 : ℝ) * rexp (6 * K) := by
-                  have h2 : rexp (6 * log (log (Q : ℝ))) = (log (Q : ℝ)) ^ (6 : ℝ) := by
-                    calc
-                      rexp (6 * log (log (Q : ℝ))) = rexp (log (log (Q : ℝ)) * 6) := by
-                        congr 1
-                        ring
-                      _ = rexp (log (log (Q : ℝ))) ^ (6 : ℝ) := by rw [Real.exp_mul]
-                      _ = (log (Q : ℝ)) ^ (6 : ℝ) := by rw [Real.exp_log hlogQ]
-                  rw [h2]
-                _ = rexp (6 * K) * (log (Q : ℝ)) ^ (6 : ℝ) := by ring
-            exact h1
+            rw [mul_add, Real.exp_add, mul_comm 6 (log (log (Q : ℝ))),
+              Real.exp_mul, Real.exp_log hlogQ, mul_comm]
       _ ≤ C * (Real.log (Q + 2)) ^ (6 : ℝ) := by
             exact mul_le_mul (le_max_right (4 / (log 2) ^ (6 : ℝ)) (rexp (6 * K))) hlogle
               (Real.rpow_nonneg hlogQnn (6 : ℝ)) (le_of_lt hCpos)

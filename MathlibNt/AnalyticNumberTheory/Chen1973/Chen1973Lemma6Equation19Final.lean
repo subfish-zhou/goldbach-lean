@@ -28,8 +28,22 @@ private lemma eq19_sum_mul_le_sqrt
       Real.sqrt (∑ i, f i ^ 2) * Real.sqrt (∑ i, g i ^ 2) := by
   simpa using Real.sum_mul_le_sqrt_mul_sqrt (Finset.univ : Finset ι) f g
 
-private lemma eq19_sqrt_mono {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b) :
-    Real.sqrt a ≤ Real.sqrt b := Real.sqrt_le_sqrt hab
+/-- Weighted Cauchy-Schwarz for nonnegative conductor weights and factors. -/
+lemma eq19_weighted_sum_sqrt_mul_sqrt_le
+    {ι : Type*} (S : Finset ι) (w f g : ι → ℝ)
+    (hw : ∀ i, 0 ≤ w i) (hf : ∀ i, 0 ≤ f i) (hg : ∀ i, 0 ≤ g i) :
+    (∑ i ∈ S, w i * (Real.sqrt (f i) * Real.sqrt (g i))) ≤
+      Real.sqrt (∑ i ∈ S, w i * f i) * Real.sqrt (∑ i ∈ S, w i * g i) := by
+  convert Real.sum_sqrt_mul_sqrt_le S
+    (fun i => mul_nonneg (hw i) (hf i))
+    (fun i => mul_nonneg (hw i) (hg i)) using 1
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Real.sqrt_mul (hw i), Real.sqrt_mul (hw i)]
+  calc
+    _ = Real.sqrt (w i) ^ 2 * (Real.sqrt (f i) * Real.sqrt (g i)) := by
+      rw [Real.sq_sqrt (hw i)]
+    _ = _ := by ring
 
 /-- The second displayed Hölder step in (19).  All factors are the literal
 pair polynomial, natural Möbius polynomial, and totalized primitive `L'` from
@@ -89,28 +103,7 @@ theorem chen1973Lemma6B_le_moment_product
       (∑ d ∈ S, w d * (Real.sqrt (P d) * Real.sqrt (R d))) ≤
         Real.sqrt (∑ d ∈ S, w d * P d) *
           Real.sqrt (∑ d ∈ S, w d * R d) := by
-    calc
-      _ = ∑ d ∈ S,
-          (Real.sqrt (w d) * Real.sqrt (P d)) *
-            (Real.sqrt (w d) * Real.sqrt (R d)) := by
-          apply Finset.sum_congr rfl
-          intro d hd
-          rw [show (Real.sqrt (w d) * Real.sqrt (P d)) *
-              (Real.sqrt (w d) * Real.sqrt (R d)) =
-              Real.sqrt (w d) ^ 2 *
-                (Real.sqrt (P d) * Real.sqrt (R d)) by ring,
-            Real.sq_sqrt (hw d)]
-      _ ≤ Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (P d)) ^ 2) *
-          Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (R d)) ^ 2) :=
-        Real.sum_mul_le_sqrt_mul_sqrt S _ _
-      _ = _ := by
-        congr 1 <;> apply congrArg Real.sqrt <;>
-          apply Finset.sum_congr rfl <;> intro d hd <;>
-          rw [mul_pow, Real.sq_sqrt (hw d)]
-        · rw [Real.sq_sqrt (hP d)]
-        · rw [Real.sq_sqrt (hR d)]
+    exact eq19_weighted_sum_sqrt_mul_sqrt_le S w P R hw hP hR
   have hprod :
       (∑ d ∈ S, w d * R d) ≤
         Real.sqrt (∑ d ∈ S, w d * D4 d) *
@@ -120,27 +113,9 @@ theorem chen1973Lemma6B_le_moment_product
         apply Finset.sum_le_sum
         intro d hd
         exact mul_le_mul_of_nonneg_left (hRpoint d) (hw d)
-      _ = ∑ d ∈ S,
-          (Real.sqrt (w d) * Real.sqrt (D4 d)) *
-            (Real.sqrt (w d) * Real.sqrt (M4 d)) := by
-        apply Finset.sum_congr rfl
-        intro d hd
-        rw [show (Real.sqrt (w d) * Real.sqrt (D4 d)) *
-            (Real.sqrt (w d) * Real.sqrt (M4 d)) =
-            Real.sqrt (w d) ^ 2 *
-              (Real.sqrt (D4 d) * Real.sqrt (M4 d)) by ring,
-          Real.sq_sqrt (hw d)]
-      _ ≤ Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (D4 d)) ^ 2) *
-          Real.sqrt (∑ d ∈ S,
-            (Real.sqrt (w d) * Real.sqrt (M4 d)) ^ 2) :=
-        Real.sum_mul_le_sqrt_mul_sqrt S _ _
-      _ = _ := by
-        congr 1 <;> apply congrArg Real.sqrt <;>
-          apply Finset.sum_congr rfl <;> intro d hd <;>
-          rw [mul_pow, Real.sq_sqrt (hw d)]
-        · rw [Real.sq_sqrt (hD4 d)]
-        · rw [Real.sq_sqrt (hM4 d)]
+      _ ≤ Real.sqrt (∑ d ∈ S, w d * D4 d) *
+          Real.sqrt (∑ d ∈ S, w d * M4 d) :=
+        eq19_weighted_sum_sqrt_mul_sqrt_le S w D4 M4 hw hD4 hM4
   unfold chen1973Lemma6B
   change (∑ d ∈ S, w d * ∑ χ : PrimitiveCharacter d,
       _ * ‖chen1973PrimitiveLDeriv d s χ *
@@ -168,7 +143,7 @@ theorem chen1973Lemma6B_le_moment_product
           (Real.sqrt (∑ d ∈ S, w d * D4 d) *
             Real.sqrt (∑ d ∈ S, w d * M4 d)) := by
       exact mul_le_mul_of_nonneg_left
-        (eq19_sqrt_mono (Finset.sum_nonneg fun d hd => mul_nonneg (hw d) (hR d)) hprod)
+        (Real.sqrt_le_sqrt hprod)
         (Real.sqrt_nonneg _)
     _ = _ := by
       simp only [chen1973Lemma6Eq19PairSecondMoment,

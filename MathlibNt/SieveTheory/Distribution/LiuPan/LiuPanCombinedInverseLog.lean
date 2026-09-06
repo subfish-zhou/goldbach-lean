@@ -132,36 +132,19 @@ theorem liuPanCombinedInverseLogMaxL_nonneg
   dsimp only
   by_cases hS : (unitResidues q).Nonempty
   · rw [dif_pos hS]
-    let l := hS.choose
-    have hl : l ∈ unitResidues q := hS.choose_spec
-    have hle :
-        liuPanCombinedInverseLogDiscrepancy main y X q l f u v ≤
-          ((unitResidues q).image (fun l =>
-            liuPanCombinedInverseLogDiscrepancy main y X q l f u v)).max'
-              (Finset.image_nonempty.mpr hS) :=
-      Finset.le_max'
-        ((unitResidues q).image (fun l : ℕ =>
-          liuPanCombinedInverseLogDiscrepancy main y X q l f u v))
-        (liuPanCombinedInverseLogDiscrepancy main y X q l f u v)
-        (Finset.mem_image.mpr ⟨l, hl, rfl⟩)
-    exact (liuPanCombinedInverseLogDiscrepancy_nonneg main y X q l f u v).trans hle
+    obtain ⟨l, hl⟩ := hS
+    apply (liuPanCombinedInverseLogDiscrepancy_nonneg main y X q l f u v).trans
+    apply Finset.le_max'
+    exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
   · simp [hS]
 
 theorem liuPanCombinedInverseLogMaxY_nonneg
     (main : ℝ → ℝ) (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
     0 ≤ liuPanCombinedInverseLogMaxY main X q x f u v := by
   unfold liuPanCombinedInverseLogMaxY
-  have hle :
-      liuPanCombinedInverseLogMaxL main 0 X q f u v ≤
-        ((range (x + 1)).image (fun y =>
-          liuPanCombinedInverseLogMaxL main y X q f u v)).max'
-            (Finset.image_nonempty.mpr ⟨0, by simp⟩) :=
-    Finset.le_max'
-      ((range (x + 1)).image (fun y : ℕ =>
-        liuPanCombinedInverseLogMaxL main y X q f u v))
-      (liuPanCombinedInverseLogMaxL main 0 X q f u v)
-      (Finset.mem_image.mpr ⟨0, by simp, rfl⟩)
-  exact (liuPanCombinedInverseLogMaxL_nonneg main 0 X q f u v).trans hle
+  apply (liuPanCombinedInverseLogMaxL_nonneg main 0 X q f u v).trans
+  apply Finset.le_max'
+  exact Finset.mem_image.mpr ⟨0, by simp, rfl⟩
 
 /-! ## Exact correction separation and maxima -/
 
@@ -174,30 +157,10 @@ theorem abs_liuMainPanCoprimeSum_le_combinedInverseLog_add_primePower
       liuPanCombinedInverseLogDiscrepancy main y X q l f u v +
         liuPanSignedCorrectionBound y X q l f := by
   rw [liuMainPanCoprimeSum_eq_sourceFaithfulSigned main y X q l f u v hf0]
-  calc
-    |panPieceSum y X q l f
-          (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
-        panPieceSum y X q l f
-          (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-        liuPanSignedMainSum main y X q l f u v -
-        liuPanSignedCorrectionSum y X q l f| ≤
-        |panPieceSum y X q l f
-            (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
-          panPieceSum y X q l f
-            (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-          liuPanSignedMainSum main y X q l f u v| +
-          |liuPanSignedCorrectionSum y X q l f| := by
-      simpa [sub_eq_add_neg, abs_neg] using
-        abs_add_le
-          (panPieceSum y X q l f
-              (fun y q l => apV1 y q l u / Real.log (y : ℝ)) +
-            panPieceSum y X q l f
-              (fun y q l => apV3 y q l u v / Real.log (y : ℝ)) +
-            liuPanSignedMainSum main y X q l f u v)
-          (-liuPanSignedCorrectionSum y X q l f)
-    _ ≤ liuPanCombinedInverseLogDiscrepancy main y X q l f u v +
-          liuPanSignedCorrectionBound y X q l f := by
-      exact add_le_add le_rfl (abs_liuPanSignedCorrectionSum_le y X q l f)
+  rw [sub_eq_add_neg]
+  refine (abs_add_le _ _).trans ?_
+  simp only [abs_neg]
+  exact add_le_add le_rfl (abs_liuPanSignedCorrectionSum_le y X q l f)
 
 /-- The canonical residue maximum inherits the exact combined-plus-correction
 bound. -/
@@ -486,12 +449,9 @@ theorem tendsto_liuPaperQSourceFullDistributionMajorant_div_mainScale_of_combine
       intro q hq
       positivity) hscale.le
   · filter_upwards [hbound', eventually_ge_atTop (2 : ℕ)] with N hboundN hN
-    have hscale :
-        0 ≤ (N : ℝ) / Real.log N ^ (2 : ℝ) := by
-      have hNpos : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
-      have hlogpos : 0 < Real.log (N : ℝ) :=
-        Real.log_pos (by exact_mod_cast (by omega : 1 < N))
-      exact (div_pos hNpos (Real.rpow_pos_of_pos hlogpos 2)).le
+    have hscale : 0 ≤ (N : ℝ) / Real.log N ^ (2 : ℝ) := by
+      rw [Real.rpow_two]
+      positivity
     exact div_le_div_of_nonneg_right hboundN hscale
   · exact hupper
 
@@ -513,20 +473,14 @@ theorem tendsto_abs_liuSelbergRemainder_div_mainScale_of_combinedInverseLog
       kappa epsilon u v hepsilon hcombined
   apply squeeze_zero'
   · filter_upwards [eventually_ge_atTop (2 : ℕ)] with N hN
-    have hscale :
-        0 ≤ (N : ℝ) / Real.log N ^ (2 : ℝ) := by
-      have hNpos : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
-      have hlogpos : 0 < Real.log (N : ℝ) :=
-        Real.log_pos (by exact_mod_cast (by omega : 1 < N))
-      exact (div_pos hNpos (Real.rpow_pos_of_pos hlogpos 2)).le
+    have hscale : 0 ≤ (N : ℝ) / Real.log N ^ (2 : ℝ) := by
+      rw [Real.rpow_two]
+      positivity
     exact div_nonneg (abs_nonneg _) hscale
   · filter_upwards [hlambda, eventually_ge_atTop (2 : ℕ)] with N hlambdaN hN
-    have hscale :
-        0 ≤ (N : ℝ) / Real.log N ^ (2 : ℝ) := by
-      have hNpos : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
-      have hlogpos : 0 < Real.log (N : ℝ) :=
-        Real.log_pos (by exact_mod_cast (by omega : 1 < N))
-      exact (div_pos hNpos (Real.rpow_pos_of_pos hlogpos 2)).le
+    have hscale : 0 ≤ (N : ℝ) / Real.log N ^ (2 : ℝ) := by
+      rw [Real.rpow_two]
+      positivity
     exact div_le_div_of_nonneg_right
       (abs_liuSelbergRemainder_le_fullDistributionMajorant
         (liuLogarithmicIntegral kappa) N epsilon (lambda N)

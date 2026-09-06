@@ -41,17 +41,12 @@ lemma orderedLogDerivativeSeries_proof_irrel
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (s : ℂ)
     (hs ht : 0 < s.re) :
     orderedLogDerivativeSeries χ hχ s hs = orderedLogDerivativeSeries χ hχ s ht := by
-  have hp : hs = ht := Subsingleton.elim _ _
-  cases hp
   rfl
 
 lemma orderedDerivativeFunction_eq (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     (s : ℂ) (hs : 0 < s.re) :
     orderedDerivativeFunction χ hχ s = orderedLogDerivativeSeries χ hχ s hs := by
-  unfold orderedDerivativeFunction
-  split
-  · exact orderedLogDerivativeSeries_proof_irrel χ hχ s _ hs
-  · contradiction
+  simp only [orderedDerivativeFunction, dif_pos hs]
 
 private lemma norm_logCpowWeight_le {δ : ℝ}
     {s : ℂ} (hre : δ ≤ s.re) {n : ℕ} (hn : 1 ≤ n) :
@@ -78,14 +73,10 @@ private lemma logVariationBudget_le {δ M : ℝ} (hδ : 0 < δ) (hM : 0 ≤ M)
     Real.rpow_le_rpow_of_exponent_le hn1 (neg_le_neg hre)
   have hinv : 1 / s.re ≤ 1 / δ := by
     exact one_div_le_one_div_of_le hδ hre
-  have hinv2 : 1 / s.re ^ 2 ≤ 1 / δ ^ 2 := by
-    apply one_div_le_one_div_of_le (sq_pos_of_pos hδ)
-    nlinarith
   have hnormdiv : ‖s‖ / s.re ≤ M / δ := by
     exact div_le_div₀ hM hnorm hδ hre
-  have hnormdiv2 : ‖s‖ / s.re ^ 2 ≤ M / δ ^ 2 := by
-    apply div_le_div₀ hM hnorm (sq_pos_of_pos hδ)
-    nlinarith
+  have hnormdiv2 : ‖s‖ / s.re ^ 2 ≤ M / δ ^ 2 :=
+    div_le_div₀ hM hnorm (sq_pos_of_pos hδ) ((sq_le_sq₀ hδ.le hre0.le).2 hre)
   rw [logVariationBudget]
   have hid : Real.log (n : ℝ) / (n : ℝ) ^ δ =
       Real.log (n : ℝ) * (n : ℝ) ^ (-δ) := by
@@ -138,7 +129,7 @@ private lemma compact_uniform_tail
   rw [Metric.tendstoUniformlyOn_iff]
   intro ε hε
   have hmaj := (tendsto_compactTailMajorant q hδ (M := M)).eventually
-    (Metric.ball_mem_nhds (x := (0 : ℝ)) hε)
+    (gt_mem_nhds hε)
   rw [eventually_atTop] at hmaj
   obtain ⟨N, hN⟩ := hmaj
   filter_upwards [eventually_ge_atTop (max 1 N)] with n hn
@@ -158,12 +149,7 @@ private lemma compact_uniform_tail
     unfold compactTailMajorant
     apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg q)
     simpa only [add_assoc] using add_le_add hweight hbudget
-  have hnon : 0 ≤ compactTailMajorant q δ M n := by
-    unfold compactTailMajorant
-    positivity
-  exact hbound.trans_lt (by
-    have := hN n hnN
-    simpa [Real.dist_eq, abs_of_nonneg hnon] using this)
+  exact hbound.trans_lt (hN n hnN)
 
 /-- The natural partial sums converge locally uniformly throughout `re s > 0`. -/
 theorem tendstoLocallyUniformlyOn_derivativePartialSum
@@ -214,9 +200,8 @@ theorem orderedLogDerivativeSeries_eq_deriv_LFunction_of_re_pos
   have hpre : IsPreconnected U := (convex_halfSpace_re_gt 0).isPreconnected
   have htwo : (2 : ℂ) ∈ U := by norm_num [U, rightHalfPlane]
   have hevent : orderedDerivativeFunction χ hχ =ᶠ[𝓝 (2 : ℂ)] deriv χ.LFunction := by
-    filter_upwards [eventually_of_mem
-      ((continuous_re.isOpen_preimage _ isOpen_Ioi).mem_nhds (by norm_num : (1 : ℝ) < (2 : ℂ).re))
-      (fun z hz => hz)] with z hz
+    filter_upwards [(continuous_re.isOpen_preimage _ isOpen_Ioi).mem_nhds
+      (by norm_num : (1 : ℝ) < (2 : ℂ).re)] with z hz
     rw [orderedDerivativeFunction_eq χ hχ z (lt_trans zero_lt_one hz)]
     exact orderedLogDerivativeSeries_eq_deriv_LFunction χ hχ z hz
   have hall := hF.eqOn_of_preconnected_of_eventuallyEq hL hpre htwo hevent

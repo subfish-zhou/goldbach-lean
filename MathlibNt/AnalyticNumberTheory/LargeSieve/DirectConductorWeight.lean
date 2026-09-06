@@ -204,8 +204,9 @@ theorem directConductorWeight_le (Q d : ℕ) :
         exact sum_inv_totient_le_harmonic_sq (Q / d)
     _ ≤ ((d.totient : ℝ)⁻¹) * conductorHarmonicFactor Q ^ 2 := by
         apply mul_le_mul_of_nonneg_left
-        · exact sq_le_sq₀ (conductorHarmonicFactor_nonneg _) (conductorHarmonicFactor_nonneg _) |>.2
-            (conductorHarmonicFactor_mono (Nat.div_le_self Q d))
+        · exact (sq_le_sq₀
+            (conductorHarmonicFactor_nonneg _) (conductorHarmonicFactor_nonneg _)).2
+              (conductorHarmonicFactor_mono (Nat.div_le_self Q d))
         · positivity
     _ = conductorHarmonicFactor Q ^ 2 / (d.totient : ℝ) := by
         rw [div_eq_mul_inv]
@@ -226,7 +227,8 @@ theorem directConductorWeight_le_compatibility_majorant (Q d : ℕ) :
     exact_mod_cast (Nat.one_le_iff_ne_zero.mpr hd)
   have hinv : 0 ≤ (d.totient : ℝ)⁻¹ := by positivity
   have hH : 0 ≤ conductorHarmonicFactor Q ^ 2 := sq_nonneg _
-  nlinarith [mul_nonneg (sub_nonneg.mpr hd1) hinv]
+  -- Only this compatibility bound enlarges the primitive weight by a factor of d.
+  exact mul_le_mul_of_nonneg_left (le_mul_of_one_le_left hinv hd1) hH
 
 end
 

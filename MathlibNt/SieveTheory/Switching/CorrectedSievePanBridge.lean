@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.Switching.Weights
+import MathlibNt.SieveTheory.Liu.Weights.LiuWeightPaperQ
 
 /-!
 # The corrected sieve and the Pan counting bridge
@@ -81,18 +82,7 @@ namespace Internal
 those primes. -/
 theorem primeFactors_prod_eq_self {S : Finset ℕ}
     (hS : ∀ p ∈ S, p.Prime) : (S.prod id).primeFactors = S := by
-  induction S using Finset.induction_on with
-  | empty => simp [Nat.primeFactors_one]
-  | insert p S hp ih =>
-      rw [Finset.prod_insert hp]
-      show (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self _ _)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : S.prod id ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-        ih fun q hq => hS q (Finset.mem_insert_of_mem hq)]
-      rfl
+  exact MathlibNt.SieveTheory.LiuWeight.primeFactors_prod_eq_self_paperQ hS
 
 end Internal
 
@@ -1026,20 +1016,7 @@ theorem moebius_sq_eq_one_of_squarefree {d : ℕ} (hd : Squarefree d) :
 /-- `panMaxL` is nonnegative: it is a maximum of absolute values, or zero. -/
 theorem panMaxL_nonneg (y X q : ℕ) (f : ℕ → ℝ) :
     0 ≤ AnalyticNumberTheory.Sieve.panMaxL y X q f := by
-  unfold AnalyticNumberTheory.Sieve.panMaxL
-  dsimp only
-  by_cases hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty
-  · rw [dif_pos hS]
-    have hmem : (Finset.image (fun l => |AnalyticNumberTheory.Sieve.panDistributionSum y X q l f|)
-          (AnalyticNumberTheory.Sieve.unitResidues q)).max'
-          (Finset.image_nonempty.mpr hS) ∈
-        (Finset.image (fun l => |AnalyticNumberTheory.Sieve.panDistributionSum y X q l f|)
-          (AnalyticNumberTheory.Sieve.unitResidues q)) :=
-      Finset.max'_mem _ _
-    rcases Finset.mem_image.mp hmem with ⟨l, hl, heq⟩
-    rw [← heq]
-    exact abs_nonneg _
-  · rw [dif_neg hS]
+  exact AnalyticNumberTheory.Sieve.panMaxL_nonneg y X q f
 
 /-- `panMaxY` is nonnegative. -/
 theorem panMaxY_nonneg (X q x : ℕ) (f : ℕ → ℝ) :
@@ -1168,24 +1145,12 @@ theorem correctedChenPanSum_reduction (N : ℕ) (hN : 1000 ≤ N) (B : ℝ) :
         (3 : ℝ) ^ d.primeFactors.card * (|Δ' d| + |(correctedChenBoundingSieve N).rem d - Δ' d|) := by
     intro d hd
     have hle : |(correctedChenBoundingSieve N).rem d| ≤ |Δ' d| + |(correctedChenBoundingSieve N).rem d - Δ' d| := by
-      have hsub : (correctedChenBoundingSieve N).rem d = Δ' d + ((correctedChenBoundingSieve N).rem d - Δ' d) := by
-        ring
-      nth_rewrite 1 [hsub]
-      rw [abs_le]
-      constructor
-      · have h1 : -|Δ' d| ≤ Δ' d := by
-          have h := neg_le_abs (Δ' d)
-          linarith
-        have h2 : -|(correctedChenBoundingSieve N).rem d - Δ' d| ≤
-            (correctedChenBoundingSieve N).rem d - Δ' d := by
-          have h := neg_le_abs ((correctedChenBoundingSieve N).rem d - Δ' d)
-          linarith
-        linarith
-      · have h1 : Δ' d ≤ |Δ' d| := le_abs_self (Δ' d)
-        have h2 : (correctedChenBoundingSieve N).rem d - Δ' d ≤
-            |(correctedChenBoundingSieve N).rem d - Δ' d| :=
-          le_abs_self ((correctedChenBoundingSieve N).rem d - Δ' d)
-        linarith
+      calc
+        |(correctedChenBoundingSieve N).rem d|
+            = |Δ' d + ((correctedChenBoundingSieve N).rem d - Δ' d)| := by
+                congr 1
+                ring
+        _ ≤ |Δ' d| + |(correctedChenBoundingSieve N).rem d - Δ' d| := abs_add_le _ _
     exact mul_le_mul_of_nonneg_left hle (by positivity : 0 ≤ (3 : ℝ) ^ d.primeFactors.card)
   have hsum1 : (∑ d ∈ (correctedChenSiftingProduct N).divisors,
       (3 : ℝ) ^ d.primeFactors.card * |(correctedChenBoundingSieve N).rem d|) ≤
@@ -1198,19 +1163,7 @@ theorem correctedChenPanSum_reduction (N : ℕ) (hN : 1000 ≤ N) (B : ℝ) :
       (3 : ℝ) ^ d.primeFactors.card * |Δ' d|) +
     (∑ d ∈ (correctedChenSiftingProduct N).divisors,
       (3 : ℝ) ^ d.primeFactors.card * |(correctedChenBoundingSieve N).rem d - Δ' d|) := by
-    calc
-      (∑ d ∈ (correctedChenSiftingProduct N).divisors,
-          (3 : ℝ) ^ d.primeFactors.card * (|Δ' d| + |(correctedChenBoundingSieve N).rem d - Δ' d|))
-          = (∑ d ∈ (correctedChenSiftingProduct N).divisors,
-              ((3 : ℝ) ^ d.primeFactors.card * |Δ' d| +
-                (3 : ℝ) ^ d.primeFactors.card * |(correctedChenBoundingSieve N).rem d - Δ' d|)) := by
-            apply Finset.sum_congr rfl
-            intro d hd
-            ring
-      _ = (∑ d ∈ (correctedChenSiftingProduct N).divisors, (3 : ℝ) ^ d.primeFactors.card * |Δ' d|) +
-            (∑ d ∈ (correctedChenSiftingProduct N).divisors,
-              (3 : ℝ) ^ d.primeFactors.card * |(correctedChenBoundingSieve N).rem d - Δ' d|) := by
-            rw [Finset.sum_add_distrib]
+    simp_rw [mul_add, Finset.sum_add_distrib]
   have hcov : (∑ d ∈ covered, (3 : ℝ) ^ d.primeFactors.card * |Δ' d|) ≤
       (∑ q ∈ Finset.range (D + 1),
         ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
@@ -1278,7 +1231,7 @@ theorem correctedChenPanSum_reduction (N : ℕ) (hN : 1000 ≤ N) (B : ℝ) :
             (3 : ℝ) ^ d.primeFactors.card * |Δ' d|)) +
           (∑ d ∈ (correctedChenSiftingProduct N).divisors,
             (3 : ℝ) ^ d.primeFactors.card * |(correctedChenBoundingSieve N).rem d - Δ' d|) := by
-            nlinarith [hcov]
+            exact add_le_add (add_le_add hcov le_rfl) le_rfl
     _ = (∑ q ∈ Finset.range (D + 1), ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card *
               AnalyticNumberTheory.Sieve.panMaxY N q (Nat.floor (N : ℝ)) chenPanWeightOne) +
           (∑ d ∈ (correctedChenSiftingProduct N).divisors,

@@ -54,12 +54,7 @@ with its natural ceiling. -/
 theorem suzukiVProduct_natCeil_real_eq
     (S : BoundingSieve) {x : ℝ} {z : ℕ} (hz : z = ⌈x⌉₊) :
     suzukiVProduct S (z : ℝ) = suzukiVProduct S x := by
-  classical
-  unfold suzukiVProduct
-  congr 1
-  ext p
-  simp only [Finset.mem_filter]
-  rw [Nat.cast_lt, nat_lt_natCeil_iff hz]
+  exact suzukiVProduct_natCeil_eq S hz
 
 /-- At the real cubic coordinate, the product-ratio coefficient has the exact
 `1 + 3K/log D` form. -/

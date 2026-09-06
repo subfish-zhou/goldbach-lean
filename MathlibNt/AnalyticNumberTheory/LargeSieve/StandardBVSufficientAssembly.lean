@@ -132,7 +132,7 @@ theorem highConductorPhysical_le_vaughanHybrid
     (sq_nonneg (conductorHarmonicFactor Q))
   unfold highConductorVaughanTypeIMean highConductorVaughanTypeIIMean
     highConductorVaughanSmallMean
-  nlinarith
+  nlinarith only [hv]
 
 /-- Closed finite sufficient assembly.  The connector is a theorem, and the
 only third budget is the already-proved `StandardBVPayload`. -/
@@ -173,8 +173,8 @@ theorem standardBV_sufficient_at_closed
             (lowConductorPhysical N Q C + highConductorPhysical N Q C) +
           discreteAbelAmplifierPrefixMax N *
             (2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q) := by
-    have := mul_le_mul_of_nonneg_left hconnector habel
-    nlinarith
+    have hscaled := mul_le_mul_of_nonneg_left hconnector habel
+    nlinarith only [hscaled]
   have hhigh' :
       2 * discreteAbelAmplifierPrefixMax N * highConductorPhysical N Q C ≤
         KH * (N : ℝ) / Real.log N ^ A := by
@@ -185,12 +185,7 @@ theorem standardBV_sufficient_at_closed
           (highConductorVaughanTypeIMean N Q C u v +
             highConductorVaughanTypeIIMean N Q C u v +
             highConductorVaughanSmallMean N Q C v)) ≤ _
-    have hh := hhigh
-    change 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 *
-        (highConductorVaughanTypeIMean N Q C u v +
-          highConductorVaughanTypeIIMean N Q C u v +
-          highConductorVaughanSmallMean N Q C v) ≤ _ at hh
-    convert hh using 1 <;> ring
+    nlinarith only [hhigh]
   have htotal :
       (concreteStandardBVPhysicalTerms N Q).total
           (discreteAbelAmplifierPrefixMax N) ≤
@@ -204,7 +199,7 @@ theorem standardBV_sufficient_at_closed
           discreteAbelAmplifierPrefixMax N *
             (principalBadPhysical N Q + primePowerPhysical N Q +
               2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q) := by
-        nlinarith
+        nlinarith only [hnon]
       _ ≤ KL * (N : ℝ) / Real.log N ^ A +
           KH * (N : ℝ) / Real.log N ^ A +
           180 * (N : ℝ) / Real.log N ^ A :=
@@ -236,7 +231,6 @@ theorem standardBV_of_lowSW_highTypeITypeII
   let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
   have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
     exact_mod_cast (show 1 ≤ N by omega))
-  have hden0 : 0 ≤ Real.log (N : ℝ) ^ (A + 3) := pow_nonneg hlog0 _
   have hcut : (Q : ℝ) ≤ Real.sqrt N / Real.log N ^ (A + 3) := by
     calc
       (Q : ℝ) =

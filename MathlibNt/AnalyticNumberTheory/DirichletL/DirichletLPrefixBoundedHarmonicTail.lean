@@ -126,37 +126,11 @@ theorem norm_LFunction_one_sub_harmonic_sum_le_of_prefix_bound
     {m : ℕ} (hm : 1 ≤ m) :
     ‖χ.LFunction 1 - ∑ k ∈ range m, cpowWeight (1 : ℂ) k * χ k‖ ≤
       2 * P / (m : ℝ) := by
-  let V := orderedValueSeries χ hχ (1 : ℂ) (by norm_num)
-  let S : ℕ → ℂ := fun n => ∑ k ∈ range n, cpowWeight (1 : ℂ) k * χ k
-  have hS : Tendsto S atTop (𝓝 V) := by
-    simpa only [S, V] using
-      tendsto_sum_range_orderedValueSeries χ hχ (1 : ℂ) (by norm_num)
-  have hleft : Tendsto (fun n => ‖S (n + 1) - S m‖) atTop (𝓝 ‖V - S m‖) :=
-    ((hS.comp (tendsto_add_atTop_nat 1)).sub_const (S m)).norm
-  have hwm : ‖cpowWeight (1 : ℂ) m‖ = (m : ℝ)⁻¹ := by
-    have hm0 : (0 : ℝ) < m := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hm)
-    rw [cpowWeight, Complex.norm_cpow_eq_rpow_re_of_pos hm0]
-    simp [Real.rpow_neg_one]
-  have hright : Tendsto
-      (fun n : ℕ => P * (‖cpowWeight (1 : ℂ) n‖ + (m : ℝ)⁻¹ + (m : ℝ)⁻¹))
-      atTop (𝓝 (2 * P / (m : ℝ))) := by
-    convert ((tendsto_norm_cpowWeight_nat_atTop (1 : ℂ) (by norm_num)).add_const
-      ((m : ℝ)⁻¹ + (m : ℝ)⁻¹)).const_mul P using 1
-    · funext n
-      ring
-    · ring
-  have hlim : ‖V - S m‖ ≤ 2 * P / (m : ℝ) := by
-    refine le_of_tendsto_of_tendsto hleft hright ?_
-    filter_upwards [eventually_ge_atTop m] with n hn
-    have hmn : m < n + 1 := Nat.lt_succ_of_le hn
-    have ht := norm_sum_Ico_cpowWeight_character_le_of_prefix_bound
-      χ (1 : ℂ) (by norm_num) P hP hm hmn
-    rw [Finset.sum_Ico_eq_sub _ hmn.le] at ht
-    simpa only [S, Nat.add_sub_cancel, hwm, norm_one, one_div, Real.rpow_neg_one,
-      Complex.one_re, inv_one, div_one, one_mul] using ht
-  dsimp only [V, S] at hlim
-  rw [orderedValueSeries_eq_LFunction_of_re_pos χ hχ (1 : ℂ) (by norm_num)] at hlim
-  exact hlim
+  calc
+    _ ≤ P * ((m : ℝ)⁻¹ + (m : ℝ)⁻¹) := by
+      simpa only [Complex.one_re, norm_one, div_one, one_mul, Real.rpow_neg_one] using
+        norm_LFunction_sub_sum_le_of_prefix_bound χ hχ (1 : ℂ) (by norm_num) P hP hm
+    _ = 2 * P / (m : ℝ) := by ring
 
 /-- Real quadratic form of the prefix-bounded harmonic tail. -/
 theorem abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_of_prefix_bound

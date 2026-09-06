@@ -107,28 +107,23 @@ private theorem baseOne_localError_le_uniformEnvelope
     (mul_le_mul_of_nonneg_left hE (mul_nonneg hC0 hexp0.le))
     (Real.rpow_nonneg hlog.le _))
 
-/-- The genuine depth-one, odd low-strip base at every `D ≥ 2`.  Unlike the
-previous eventual theorem, this has no `Dmin` and no abstract Case-II premise:
-the explicit `K,Δ`-uniform constant absorbs the local-product loss. -/
-theorem lemma14_4_base_one_odd_low_allD
+private theorem baseOne_lowStrip_le_uniformEnvelope
     {S : BoundingSieve} {H : Section13HatLayers}
     (hH : Section13HatContract H 2)
     {d Δ C K : ℝ} (hΔ1 : Δ < 1)
     (hC : lemma144BaseOneUniformConstant K Δ ≤ C)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K) :
-    ∀ (D : ℕ) (s : ℝ),
-      2 ≤ D → s ∈ KappaOneModel.parityDomain 2 1 →
-      2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ → ¬ 2 ≤ s →
-      suzukiActualT S 1 D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-        suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
-          (finiteSourceLayer 1 2 1 s +
-            C * Real.exp (Real.sqrt K) * errorEnvelope H 1 (D : ℝ) d s *
-              (Real.log (D : ℝ)) ^ (-Δ)) := by
-  intro D s hD hs hz2 hs2
+    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K)
+    (D : ℕ) (s : ℝ) (hD : 2 ≤ D)
+    (hs : s ∈ KappaOneModel.parityDomain 2 1) (hs3 : s ≤ 3)
+    (hz2 : 2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊) :
+    suzukiActualT S 1 D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
+      suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
+        (finiteSourceLayer 1 2 1 s +
+          C * Real.exp (Real.sqrt K) * errorEnvelope H 1 (D : ℝ) d s *
+            (Real.log (D : ℝ)) ^ (-Δ)) := by
   have hs1 : 1 < s := by
     norm_num [KappaOneModel.parityDomain] at hs ⊢
     exact hs
-  have hs3 : s ≤ 3 := by linarith [le_of_not_ge hs2]
   have hs0 : 0 < s := zero_lt_one.trans hs1
   have hD1 : (1 : ℝ) < (D : ℝ) := by exact_mod_cast (show 1 < D by omega)
   by_cases hroot : 2 ≤ (D : ℝ) ^ (1 / s)
@@ -163,6 +158,27 @@ theorem lemma14_4_base_one_odd_low_allD
         positivity
       exact hconst0.trans hC
     exact add_nonneg hmain (by positivity)
+
+/-- The genuine depth-one, odd low-strip base at every `D ≥ 2`.  Unlike the
+previous eventual theorem, this has no `Dmin` and no abstract Case-II premise:
+the explicit `K,Δ`-uniform constant absorbs the local-product loss. -/
+theorem lemma14_4_base_one_odd_low_allD
+    {S : BoundingSieve} {H : Section13HatLayers}
+    (hH : Section13HatContract H 2)
+    {d Δ C K : ℝ} (hΔ1 : Δ < 1)
+    (hC : lemma144BaseOneUniformConstant K Δ ≤ C)
+    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K) :
+    ∀ (D : ℕ) (s : ℝ),
+      2 ≤ D → s ∈ KappaOneModel.parityDomain 2 1 →
+      2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ → ¬ 2 ≤ s →
+      suzukiActualT S 1 D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
+        suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
+          (finiteSourceLayer 1 2 1 s +
+            C * Real.exp (Real.sqrt K) * errorEnvelope H 1 (D : ℝ) d s *
+              (Real.log (D : ℝ)) ^ (-Δ)) := by
+  intro D s hD hs hz2 hs2
+  exact baseOne_lowStrip_le_uniformEnvelope hH hΔ1 hC hK hlocal D s hD hs
+    (by linarith [le_of_not_ge hs2]) hz2
 
 /-- `K`-uniform version of the odd low-strip base. -/
 theorem lemma14_4_base_one_odd_low_allD_global
@@ -200,43 +216,9 @@ theorem lemma14_4_base_one_lowStrip_global_allD
             C * Real.exp (Real.sqrt K) * errorEnvelope H 1 (D : ℝ) d s *
               (Real.log (D : ℝ)) ^ (-Δ)) := by
   intro D s hD hs hs3 hz2
-  have hs1 : 1 < s := by
-    norm_num [KappaOneModel.parityDomain] at hs ⊢
-    exact hs
-  have hs0 : 0 < s := zero_lt_one.trans hs1
-  have hD1 : (1 : ℝ) < (D : ℝ) := by exact_mod_cast (show 1 < D by omega)
-  by_cases hroot : 2 ≤ (D : ℝ) ^ (1 / s)
-  · have hdom : s ∈ suzukiParityDomainOne 2 1 := by
-      simpa [suzukiParityDomainOne] using hs
-    have hbase := lemma14_4_base_one_natCeil
-      (S := S) (D := D) (z := ⌈(D : ℝ) ^ (1 / s)⌉₊)
-      (s := s) (K := K) rfl hD1 hdom hs3 hroot
-      (le_trans (by norm_num) hK) hlocal
-    have habs := baseOne_localError_le_uniformEnvelope
-      (d := d) hH hD hΔ1
-      ((lemma144BaseOneUniformConstant_le_global (by linarith : 0 ≤ K)).trans hC)
-      hK hs1 hs3
-    exact hbase.trans (mul_le_mul_of_nonneg_left
-      (add_le_add (le_refl _) habs) (suzukiVProduct_nonneg S _))
-  · have hrootlt : (D : ℝ) ^ (1 / s) < 2 := lt_of_not_ge hroot
-    have hzEq : ⌈(D : ℝ) ^ (1 / s)⌉₊ = 2 := by
-      have hzle : ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤ 2 := Nat.ceil_le.mpr hrootlt.le
-      omega
-    rw [suzukiActualT_one]
-    rw [suzukiSourceV_one_eq_zero_of_cube_lt_below S (by
-      intro p hp
-      rw [hzEq] at hp
-      interval_cases p <;> norm_num <;> omega)]
-    apply mul_nonneg (suzukiVProduct_nonneg S _)
-    have hmain : 0 ≤ finiteSourceLayer 1 2 1 s := by
-      rw [finiteSourceLayer_one_eq_lowStrip hs3]
-      positivity
-    have hE : 0 ≤ errorEnvelope H 1 (D : ℝ) d s :=
-      errorEnvelope_nonneg H 1 hD1 hs0.le (hH.positive _ s hs0).le
-    have hC0 : 0 ≤ C := by
-      exact (by unfold lemma144BaseOneGlobalConstant; positivity :
-        0 ≤ lemma144BaseOneGlobalConstant Δ) |>.trans hC
-    exact add_nonneg hmain (by positivity)
+  exact baseOne_lowStrip_le_uniformEnvelope hH hΔ1
+    ((lemma144BaseOneUniformConstant_le_global (by linarith : 0 ≤ K)).trans hC)
+    hK hlocal D s hD hs hs3 hz2
 
 
 end MathlibNt.SieveTheory

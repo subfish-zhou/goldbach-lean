@@ -75,13 +75,14 @@ theorem eq21_horizontal_weightedKernel_bound
     have hb := mul_le_mul hkernel_small hw' (pow_nonneg hw.1 r) (inv_nonneg.mpr hσ.le)
     apply hb.trans
     apply (le_div_iff₀ hden).mpr
-    have ht2 : t ^ 2 ≤ 1 := by
-      have hab := abs_le.mp ht
-      nlinarith [hab.1, hab.2]
-    have hc : 0 ≤ (2 * d) ^ r := by positivity
-    have hi : 0 ≤ σ⁻¹ := by positivity
-    have haN : 0 ≤ a ^ N := by positivity
-    nlinarith [mul_nonneg haN hc, mul_nonneg hi hc]
+    have ht2 : t ^ 2 ≤ 1 := (sq_le_one_iff_abs_le_one t).mpr ht
+    calc
+      _ ≤ σ⁻¹ * (2 * d) ^ r * 2 :=
+        mul_le_mul_of_nonneg_left (by linarith) (by positivity)
+      _ ≤ (σ⁻¹ + a ^ N) * (2 * d) ^ r * 2 := by
+        gcongr
+        exact le_add_of_nonneg_right (pow_nonneg ha.le _)
+      _ = _ := by ring
   · have ht1 : 1 ≤ |t| := (lt_of_not_ge ht).le
     have ht0 : 0 < |t| := zero_lt_one.trans_le ht1
     have hkernel : ‖chen1973MellinKernel (x : ℝ) ((u : ℂ) + t * I)‖ ≤ a ^ N / |t| ^ (N + 1) := by
@@ -112,15 +113,17 @@ theorem eq21_horizontal_weightedKernel_bound
       _ ≤ (a ^ N * (2 * d) ^ r) * (1 / t ^ 2) :=
         mul_le_mul_of_nonneg_left hcancel (by positivity)
       _ ≤ _ := by
-        have ht2 : 1 ≤ t ^ 2 := by nlinarith [sq_abs t, sq_nonneg (|t| - 1)]
-        have ht2pos : 0 < t ^ 2 := by linarith
+        have ht2 : 1 ≤ t ^ 2 := (one_le_sq_iff_one_le_abs t).mpr ht1
+        have ht2pos : 0 < t ^ 2 := zero_lt_one.trans_le ht2
         rw [mul_one_div]
         apply (div_le_div_iff₀ ht2pos hden).mpr
-        have hc : 0 ≤ (2 * d) ^ r := by positivity
-        have hi : 0 ≤ σ⁻¹ := by positivity
-        have haN : 0 ≤ a ^ N := by positivity
-        nlinarith [mul_nonneg (mul_nonneg hi hc) (sq_nonneg t),
-          mul_nonneg (mul_nonneg haN hc) (sub_nonneg.mpr ht2)]
+        calc
+          _ ≤ (a ^ N * (2 * d) ^ r) * (2 * t ^ 2) :=
+            mul_le_mul_of_nonneg_left (by linarith) (by positivity)
+          _ ≤ (σ⁻¹ + a ^ N) * (2 * d) ^ r * (2 * t ^ 2) := by
+            gcongr
+            exact le_add_of_nonneg_left (inv_nonneg.mpr hσ.le)
+          _ = _ := by ring
 
 /-- Actual integrand pointwise decay on the whole strip. The character
 coefficient is bounded by one, never silently deleted. -/

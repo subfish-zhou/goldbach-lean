@@ -52,11 +52,9 @@ lemma norm_sigma_add_tI_le_abs_add_two {A σ t : ℝ}
     ‖(σ + t * I : ℂ)‖ ≤ |t| + 2 := by
   have hσpos : 0 < σ := lt_trans (by norm_num) (one_half_lt_sigma hA ht hσ)
   calc
-    ‖(σ + t * I : ℂ)‖ ≤ ‖(σ : ℂ)‖ + ‖(t : ℂ) * I‖ := norm_add_le _ _
-    _ = ‖(σ : ℂ)‖ + ‖(t : ℂ)‖ := by rw [norm_mul, norm_I, mul_one]
-    _ = |σ| + |t| := by
-      rw [Complex.norm_real, Complex.norm_real, Real.norm_eq_abs, Real.norm_eq_abs]
-    _ = σ + |t| := by rw [abs_of_pos hσpos]
+    ‖(σ + t * I : ℂ)‖ ≤ σ + |t| := by
+      simpa [abs_of_pos hσpos] using
+        Complex.norm_le_abs_re_add_abs_im (σ + t * I)
     _ ≤ |t| + 2 := by linarith
 
 /-- The logarithm of the canonical cutoff costs at most twice `log |t|`. -/
@@ -152,15 +150,11 @@ theorem norm_deriv_LFunction_le_truncation_add_tail
   change ‖deriv χ.LFunction (σ + t * I)‖ ≤ _
   rw [← hseries]
   calc
-    ‖orderedLogDerivativeSeries χ hχ (σ + t * I) hsre‖ =
-        ‖(∑ n ∈ range m, logCpowWeight (σ + t * I) n * χ n) +
-          (orderedLogDerivativeSeries χ hχ (σ + t * I) hsre -
-            ∑ n ∈ range m, logCpowWeight (σ + t * I) n * χ n)‖ := by
-              congr 1
-              abel
-    _ ≤ ‖∑ n ∈ range m, logCpowWeight (σ + t * I) n * χ n‖ +
+    ‖orderedLogDerivativeSeries χ hχ (σ + t * I) hsre‖ ≤
+        ‖∑ n ∈ range m, logCpowWeight (σ + t * I) n * χ n‖ +
           ‖orderedLogDerivativeSeries χ hχ (σ + t * I) hsre -
-            ∑ n ∈ range m, logCpowWeight (σ + t * I) n * χ n‖ := norm_add_le _ _
+            ∑ n ∈ range m, logCpowWeight (σ + t * I) n * χ n‖ :=
+      norm_le_norm_add_norm_sub' _ _
     _ ≤ Real.exp A * C * (Real.log |t|) ^ 2 +
           q * (‖logCpowWeight (σ + t * I) m‖ +
             logVariationBudget (σ + t * I) m) := by
@@ -207,8 +201,8 @@ theorem canonical_tail_le_fixed_log_sq
   have hmnegP : (m : ℝ) ^ (-σ) ≤ P := by
     exact Real.rpow_le_rpow_of_exponent_le hmone (by linarith)
   have hm_mul_neg : (m : ℝ) * (m : ℝ) ^ (-σ) = P := by
-    dsimp only [P]
-    rw [show 1 - σ = 1 + (-σ) by ring, Real.rpow_add hmpos, Real.rpow_one]
+    simpa only [P, sub_eq_add_neg, add_comm, mul_comm] using
+      (Real.rpow_add_one hmpos.ne' (-σ)).symm
   have hnorm_neg : ‖s‖ * (m : ℝ) ^ (-σ) ≤ 3 * P := by
     calc
       ‖s‖ * (m : ℝ) ^ (-σ) ≤ (3 * (m : ℝ)) * (m : ℝ) ^ (-σ) :=

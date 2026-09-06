@@ -62,7 +62,7 @@ theorem fourierIntegral_self_add_deriv_deriv (f : W21) (u : ℝ) :
     (1 + u ^ 2) * 𝓕 (f : ℝ → ℂ) u =
       𝓕 (fun u : ℝ => (f u - (1 / (4 * π ^ 2)) * deriv^[2] f u : ℂ)) u := by
   have l1 : Integrable (fun x => (((π : ℂ) ^ 2)⁻¹ * 4⁻¹) * deriv (deriv f) x) := by
-    apply Integrable.const_mul ; simpa [iteratedDeriv_succ] using f.integrable le_rfl
+    exact f.hf''.const_mul _
   have l4 : Differentiable ℝ f := f.differentiable
   have l5 : Differentiable ℝ (deriv f) := f.deriv.differentiable
   simp [f.hf, l1, add_mul, Real.fourier_deriv f.hf' l5 f.hf'', Real.fourier_deriv f.hf l4 f.hf']
@@ -112,49 +112,13 @@ lemma norm_fourier_le_integral_deriv_div
   have hleft :
       ((2 * Real.pi) * |w|) * ‖𝓕 g w‖ =
         ‖(2 * Real.pi * Complex.I * (w : ℂ)) * 𝓕 g w‖ := by
-    have htwopi : ‖(2 * ↑Real.pi : ℂ)‖ = 2 * Real.pi := by
-      rw [norm_mul, Complex.norm_two, Complex.norm_of_nonneg Real.pi_pos.le]
-    have hwc : ‖(w : ℂ)‖ = |w| := by rw [norm_real, Real.norm_eq_abs]
-    rw [norm_mul, norm_mul, norm_mul, htwopi, norm_I, hwc]
-    ring
+    simp [Real.norm_eq_abs, abs_of_pos Real.pi_pos]
   have hmain : ((2 * Real.pi) * |w|) * ‖𝓕 g w‖ ≤ ∫ x, ‖deriv g x‖ ∂volume := by
     rw [hleft, ← hmul]
     exact h_fourier
   have hpos : 0 < (2 * Real.pi) * |w| := by
     positivity
   exact (le_div_iff₀ hpos).mpr (by simpa [mul_comm, mul_left_comm, mul_assoc] using hmain)
-
-/-- The oscillatory-integral form of the decay bound: for `0 < T`,
-`‖∫ g y · exp(T·i·y)‖ ≤ (∫ ‖deriv g x‖) / T`. -/
-lemma norm_oscillatory_integral_le_integral_deriv_div
-    (g : ℝ → ℂ) (hg : Integrable g) (hdiff : Differentiable ℝ g)
-    (hg' : Integrable (deriv g)) {T : ℝ} (hT : 0 < T) :
-    ‖∫ y, g y * exp ((T : ℂ) * Complex.I * (y : ℂ)) ∂volume‖ ≤
-      (∫ x, ‖deriv g x‖ ∂volume) / T := by
-  have hw : -T / (2 * Real.pi) ≠ 0 := by
-    exact div_ne_zero (neg_ne_zero.mpr hT.ne') (mul_ne_zero two_ne_zero Real.pi_ne_zero)
-  have hfourier := norm_fourier_le_integral_deriv_div g hg hdiff hg' hw
-  have heq :
-      (∫ y, g y * exp ((T : ℂ) * Complex.I * (y : ℂ)) ∂volume) =
-        𝓕 g (-T / (2 * Real.pi)) := by
-    rw [Real.fourier_real_eq_integral_exp_smul]
-    apply integral_congr_ae
-    filter_upwards with y
-    rw [smul_eq_mul]
-    rw [mul_comm (g y)]
-    congr 1
-    congr 1
-    push_cast
-    field_simp [Real.pi_ne_zero]
-  rw [heq]
-  refine hfourier.trans_eq ?_
-  congr 1
-  have hden : (2 * Real.pi) * |-T / (2 * Real.pi)| = T := by
-    have htwopi_pos : 0 < 2 * Real.pi := by positivity
-    have hneg : -T / (2 * Real.pi) < 0 := div_neg_of_neg_of_pos (neg_neg_of_pos hT) htwopi_pos
-    rw [abs_of_neg hneg]
-    field_simp [Real.pi_ne_zero]
-  rw [hden]
 
 /-- The `|T|` variant of the oscillatory-integral decay bound: for `T ≠ 0`,
 `‖∫ g y · exp(T·i·y)‖ ≤ (∫ ‖deriv g x‖) / |T|`. -/
@@ -186,3 +150,13 @@ lemma norm_oscillatory_integral_le_integral_deriv_div_abs
     rw [abs_div, abs_neg, abs_of_pos htwopi_pos]
     field_simp [Real.pi_ne_zero]
   rw [hden]
+
+/-- The oscillatory-integral form of the decay bound: for `0 < T`,
+`‖∫ g y · exp(T·i·y)‖ ≤ (∫ ‖deriv g x‖) / T`. -/
+lemma norm_oscillatory_integral_le_integral_deriv_div
+    (g : ℝ → ℂ) (hg : Integrable g) (hdiff : Differentiable ℝ g)
+    (hg' : Integrable (deriv g)) {T : ℝ} (hT : 0 < T) :
+    ‖∫ y, g y * exp ((T : ℂ) * Complex.I * (y : ℂ)) ∂volume‖ ≤
+      (∫ x, ‖deriv g x‖ ∂volume) / T := by
+  simpa [abs_of_pos hT] using
+    norm_oscillatory_integral_le_integral_deriv_div_abs g hg hdiff hg' hT.ne'

@@ -141,6 +141,11 @@ private theorem einNatKernel_eq_quotient {n : ℕ} {u : ℝ} (hu : u ≠ 0) :
     einNatKernel n u = (1 - Real.exp (-(n : ℝ) * u)) / u := by
   simp [einNatKernel, hu]
 
+private theorem gapKernel_eq_quotient {n : ℕ} {u : ℝ} (hu : u ≠ 0) :
+    gapKernel n u = (Real.exp (-(n : ℝ) * u) - (1 - u) ^ n) / u := by
+  rw [gapKernel, harmonicKernel_eq_quotient hu, einNatKernel_eq_quotient hu]
+  ring
+
 private theorem gapKernel_nonneg {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ Icc (0 : ℝ) 1) :
     0 ≤ gapKernel n u := by
   rcases eq_or_ne u 0 with rfl | hu0
@@ -155,15 +160,8 @@ private theorem gapKernel_nonneg {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ 
     convert hpow using 1
     field_simp [hn0]
     ring
-  rw [gapKernel, harmonicKernel_eq_quotient hu0, einNatKernel_eq_quotient hu0]
-  have hrewrite :
-      (1 - (1 - u) ^ n) / u - (1 - Real.exp (-(n : ℝ) * u)) / u =
-        (Real.exp (-(n : ℝ) * u) - (1 - u) ^ n) / u := by
-    field_simp [hu0]
-    ring
-  rw [hrewrite]
-  refine div_nonneg ?_ hu.1
-  linarith
+  rw [gapKernel_eq_quotient hu0]
+  exact div_nonneg (sub_nonneg.mpr hmain) hu.1
 
 private theorem gapKernel_le_aux {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ Icc (0 : ℝ) 1) :
     gapKernel n u ≤ (n : ℝ) * u * Real.exp (-((n - 1 : ℕ) : ℝ) * u) := by
@@ -209,17 +207,11 @@ private theorem gapKernel_le_aux {n : ℕ} (hn : 1 ≤ n) {u : ℝ} (hu : u ∈ 
             exact mul_le_mul_of_nonneg_left hyxpow (pow_nonneg (by positivity : 0 ≤ x) _)
       _ = (n : ℝ) * x ^ (n - 1) := by
             simpa [S, x, mul_comm, mul_left_comm, mul_assoc] using (geom_sum₂_self x n)
-  rw [gapKernel, harmonicKernel_eq_quotient hu0, einNatKernel_eq_quotient hu0]
-  have hrewrite :
-      (1 - (1 - u) ^ n) / u - (1 - Real.exp (-(n : ℝ) * u)) / u =
-        (x ^ n - y ^ n) / u := by
-    have hxpow : x ^ n = Real.exp (-(n : ℝ) * u) := by
-      simp [x, ← Real.exp_nat_mul, mul_comm, mul_assoc]
-    have hypow : y ^ n = (1 - u) ^ n := by simp [y]
-    rw [← hxpow, ← hypow]
-    field_simp [hu0]
-    ring
-  rw [hrewrite]
+  have hxpow : x ^ n = Real.exp (-(n : ℝ) * u) := by
+    simp [x, ← Real.exp_nat_mul, mul_comm, mul_assoc]
+  rw [gapKernel_eq_quotient hu0, ← hxpow]
+  change (x ^ n - y ^ n) / u ≤
+    (n : ℝ) * u * Real.exp (-((n - 1 : ℕ) : ℝ) * u)
   have hquot :
       (x ^ n - y ^ n) / u = ((x - y) / u) * S := by
     rw [hfactor]

@@ -61,11 +61,7 @@ theorem highConductorPrimitiveRowMean_le_of_conductorLocal
   let X : ℝ := (N : ℝ) / Real.sqrt R
   let Y : ℝ := (Q : ℝ) * Real.sqrt N
   have hRR : (0 : ℝ) < R := by exact_mod_cast hR
-  have hsR : 0 < Real.sqrt (R : ℝ) := Real.sqrt_pos.2 hRR
   have hNN : (0 : ℝ) ≤ N := by positivity
-  have hE0 : 0 ≤ E := by
-    dsimp [E, conductorLocalRowEnergy]
-    positivity
   have hJ0 : 0 ≤ J := by dsimp [J]; positivity
   have hX0 : 0 ≤ X := by dsimp [X]; positivity
   have hY0 : 0 ≤ Y := by dsimp [Y]; positivity
@@ -96,7 +92,7 @@ theorem highConductorPrimitiveRowMean_le_of_conductorLocal
         gcongr
       _ ≤ K ^ 2 * J ^ 2 * (X + Y) ^ 2 := by
         gcongr
-        nlinarith
+        nlinarith only [mul_nonneg hX0 hY0]
       _ = _ := by ring
   have hsq :
       (highConductorPrimitiveMean R Q
@@ -105,8 +101,7 @@ theorem highConductorPrimitiveRowMean_le_of_conductorLocal
         (K * J * (X + Y)) ^ 2 := by
     exact hsquare.trans (hlocal.trans (by simpa [E, J] using htarget))
   have ht0 : 0 ≤ K * J * (X + Y) := by positivity
-  have := (sq_le_sq₀ hmean0 ht0).mp hsq
-  simpa [J, X, Y] using this
+  simpa [J, X, Y] using (sq_le_sq₀ hmean0 ht0).mp hsq
 
 end
 end AnalyticNumberTheory.LargeSieve

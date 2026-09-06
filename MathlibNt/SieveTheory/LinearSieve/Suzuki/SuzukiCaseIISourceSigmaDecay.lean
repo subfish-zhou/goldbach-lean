@@ -89,13 +89,8 @@ theorem exists_sourceSigma_positive_delta_decay_threshold
     (le_max_right (Real.log 27) (C ^ (1 / a))).trans (le_max_right 2 _)
   have hCrootx : C ^ (1 / a) ≤ x := hCrootX.trans hx
   have hxaC : C ≤ x ^ a := by
-    have hr := Real.rpow_le_rpow (Real.rpow_nonneg hCpos.le _) hCrootx ha.le
-    have hpow : (C ^ (1 / a)) ^ a = C := by
-      rw [← Real.rpow_mul hCpos.le]
-      have : (1 / a) * a = 1 := by field_simp
-      rw [this, Real.rpow_one]
-    rw [hpow] at hr
-    exact hr
+    apply (Real.rpow_inv_le_iff_of_pos hCpos.le hxpos.le ha).mp
+    simpa only [one_div] using hCrootx
   have hxpowγ : x ^ (Δ - 1) * x ^ (1 / d) = x ^ (-γ) := by
     rw [← Real.rpow_add hxpos]
     congr 1

@@ -267,15 +267,8 @@ private theorem sievedPrimeDisjoint_ab_c (N : ℕ) :
     Disjoint (((Finset.range (correctedChenZ N)).filter (fun p => p.Prime ∧ p = 2)) ∪
       ((Finset.range (correctedChenZ N)).filter (fun p => p.Prime ∧ 2 < p ∧ p ∣ N)))
       ((Finset.range (correctedChenZ N)).filter (fun p => p.Prime ∧ 2 < p ∧ ¬ p ∣ N)) := by
-  rw [Finset.disjoint_left]
-  intro p hp1 hp2
-  rcases Finset.mem_union.mp hp1 with hpa | hpb
-  · rcases Finset.mem_filter.mp hpa with ⟨_, _, hpeq⟩
-    rcases Finset.mem_filter.mp hp2 with ⟨_, _, hplt, _⟩
-    omega
-  · rcases Finset.mem_filter.mp hpb with ⟨_, _, _, hpd⟩
-    rcases Finset.mem_filter.mp hp2 with ⟨_, _, _, hpn⟩
-    exact hpn hpd
+  exact Finset.disjoint_union_left.mpr
+    ⟨sievedPrimeDisjoint_a_c N, sievedPrimeDisjoint_b_c N⟩
 
 /-- Local factor at `p = 2` equals `p/(p-1)` for even `N`. -/
 private theorem localFactor_eq_mertensTypeFactor_p2 (N : ℕ) (hN : Even N) :
@@ -432,13 +425,8 @@ theorem correctedChenSelbergSum_mul_singularSeriesTruncated (N : ℕ) (hN : Even
 
 /-- Positivity of the Mertens prime product: `∏_{p ≤ x}(1 - 1/p) > 0`. -/
 theorem primeProduct_pos (x : ℕ) : 0 < MertensTheorem.primeProduct x := by
-  unfold MertensTheorem.primeProduct
-  exact Finset.prod_pos (fun p hp => by
-    have hpP : p.Prime := (Finset.mem_filter.mp hp).2
-    have hp0 : (0 : ℝ) < p := by exact_mod_cast hpP.pos
-    have hle : (1 : ℝ) < p := by exact_mod_cast hpP.one_lt
-    have hlt1 : 1 / (p : ℝ) < 1 := (div_lt_iff₀ hp0).mpr (by simpa using hle)
-    linarith)
+  rw [MertensTheorem.primeProduct_eq_analyticNumberTheory]
+  exact AnalyticNumberTheory.Mertens.primeProduct_pos x
 
 /-- `selbergSum = 1 / V(N)`: invert the "one-minus" factorization of the Selberg divisor sum. -/
 theorem correctedChenSelbergSum_eq_sieveProduct_inv (N : ℕ) :
@@ -1080,33 +1068,11 @@ theorem correctedChenSelbergSum_asymptotic_order :
         c₂ * log ((correctedChenZ N - 1 : ℕ) : ℝ) /
         AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) := by
   obtain ⟨c₁₀, c₂₀, hc₁₀, hPP⟩ := MertensTheorem.primeProduct_asymptotic_order
-  have hP2 : MertensTheorem.primeProduct 2 = (1 / 2 : ℝ) := by
-    unfold MertensTheorem.primeProduct
-    have hf : (Finset.range 3).filter Nat.Prime = {2} := by
-      ext p
-      simp only [mem_filter, mem_range, mem_singleton]
-      constructor
-      · intro hp
-        rcases hp with ⟨hp3, hpp⟩
-        interval_cases p
-        · exact absurd hpp Nat.not_prime_zero
-        · exact absurd hpp Nat.not_prime_one
-        · rfl
-      · intro hp
-        subst p
-        simp [Nat.prime_two]
-    rw [hf]
-    norm_num
   have hc₂₀ : 0 < c₂₀ := by
-    have hb := hPP 2 (by norm_num)
-    have hP2pos : 0 < MertensTheorem.primeProduct 2 := by
-      rw [hP2]
-      norm_num
     have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-    have hpos : 0 < c₂₀ / log 2 := lt_of_lt_of_le hP2pos hb.2
-    have hmul : 0 < (c₂₀ / log 2) * log 2 := mul_pos hpos hlog2
-    have hcancel : (c₂₀ / log 2) * log 2 = c₂₀ := by field_simp [hlog2.ne']
-    rwa [hcancel] at hmul
+    have hpos : 0 < c₂₀ / log 2 :=
+      (primeProduct_pos 2).trans_le (hPP 2 (by norm_num)).2
+    exact (div_pos_iff_of_pos_right hlog2).mp hpos
   refine ⟨1 / c₂₀, 1 / c₁₀, one_div_pos.mpr hc₂₀, ?_⟩
   intro N hN _hN4 hz3
   let z := correctedChenZ N
@@ -1121,14 +1087,7 @@ theorem correctedChenSelbergSum_asymptotic_order :
     AnalyticNumberTheory.Sieve.singularSeriesTruncated_pos N x hx1
   have hSne : AnalyticNumberTheory.Sieve.singularSeriesTruncated N x ≠ 0 := ne_of_gt hSpos
   have hP := hPP x hx2
-  have hPpos : 0 < MertensTheorem.primeProduct x := by
-    unfold MertensTheorem.primeProduct
-    exact Finset.prod_pos (fun p hp => by
-      have hpP : p.Prime := (Finset.mem_filter.mp hp).2
-      have hp0 : (0 : ℝ) < p := by exact_mod_cast hpP.pos
-      have hle : (1 : ℝ) < p := by exact_mod_cast hpP.one_lt
-      have hlt1 : 1 / (p : ℝ) < 1 := (div_lt_iff₀ hp0).mpr (by simpa using hle)
-      linarith)
+  have hPpos : 0 < MertensTheorem.primeProduct x := primeProduct_pos x
   have hid := correctedChenSelbergSum_mul_singularSeriesTruncated N hN
   have hSel : (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
         (correctedChenBoundingSieve N).selbergTerms d) =
@@ -1140,15 +1099,11 @@ theorem correctedChenSelbergSum_asymptotic_order :
   have hrec_lo : log (x : ℝ) / c₂₀ ≤ (MertensTheorem.primeProduct x)⁻¹ := by
     have h1 : (c₂₀ / log (x : ℝ))⁻¹ ≤ (MertensTheorem.primeProduct x)⁻¹ :=
       (inv_le_inv₀ (div_pos hc₂₀ hlog) hPpos).mpr hP.2
-    have hrew : (c₂₀ / log (x : ℝ))⁻¹ = log (x : ℝ) / c₂₀ := by
-      field_simp [hc₂₀.ne', hlog.ne']
-    rwa [hrew] at h1
+    simpa only [inv_div] using h1
   have hrec_up : (MertensTheorem.primeProduct x)⁻¹ ≤ log (x : ℝ) / c₁₀ := by
     have h1 : (MertensTheorem.primeProduct x)⁻¹ ≤ (c₁₀ / log (x : ℝ))⁻¹ :=
       (inv_le_inv₀ hPpos (div_pos hc₁₀ hlog)).mpr hP.1
-    have hrew : (c₁₀ / log (x : ℝ))⁻¹ = log (x : ℝ) / c₁₀ := by
-      field_simp [hc₁₀.ne', hlog.ne']
-    rwa [hrew] at h1
+    simpa only [inv_div] using h1
   have hA : log (x : ℝ) / c₂₀ * (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹ ≤
       (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
         (correctedChenBoundingSieve N).selbergTerms d) := by

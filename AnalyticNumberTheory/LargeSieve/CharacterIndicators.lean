@@ -51,8 +51,7 @@ noncomputable section
 theorem charOrthSum_unit {q : ℕ} (hq : 0 < q) {a b : ZMod q} (ha : IsUnit a) (hb : IsUnit b) :
     (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b)) =
       if a = b then (Nat.totient q : ℂ) else 0 := by
-  rw [charOrthSum hq a b]
-  by_cases hab : a = b <;> simp [hab, ha, hb]
+  simpa only [ha, hb, true_and] using charOrthSum hq a b
 
 /-- **Indicator form (ZMod)**: for units `a b`,
   `Σ_χ χ(a)·star(χ(b)) = φ(q)·1_{a=b}`. -/
@@ -72,14 +71,7 @@ Equality in `ZMod` is equivalent to congruence modulo `q`
 theorem charIndicator {q : ℕ} (hq : 0 < q) {n l : ℕ} (hn : IsUnit (n : ZMod q)) (hl : IsUnit (l : ZMod q)) :
     (∑ χ : DirichletCharacter ℂ q, χ (n : ZMod q) * star (χ (l : ZMod q))) =
       if n ≡ l [MOD q] then (Nat.totient q : ℂ) else 0 := by
-  rw [charOrthSum_unit hq (a := (n : ZMod q)) (b := (l : ZMod q)) hn hl]
-  by_cases hmod : n ≡ l [MOD q]
-  · have heq : (n : ZMod q) = (l : ZMod q) := (ZMod.natCast_eq_natCast_iff n l q).mpr hmod
-    simp [heq, hmod]
-  · have hne : ¬ (n : ZMod q) = (l : ZMod q) := by
-      intro h
-      exact hmod ((ZMod.natCast_eq_natCast_iff n l q).mp h)
-    simp [hne, hmod]
+  simpa only [ZMod.natCast_eq_natCast_iff] using charOrthSum_unit hq hn hl
 
 /-- Multiplicative indicator form:
 `Σ_χ χ(n)·star(χ(l)) = φ(q)·1_{n≡l}`. -/
@@ -99,28 +91,20 @@ theorem charIndicator_ap {q : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod
     (if n ≡ l [MOD q] then (1 : ℂ) else 0) =
       (Nat.totient q : ℂ)⁻¹ * ∑ χ : DirichletCharacter ℂ q,
         χ (n : ZMod q) * star (χ (l : ZMod q)) := by
+  rw [charOrthSum hq]
   by_cases hmod : n ≡ l [MOD q]
-  · have hn : IsUnit (n : ZMod q) := by
-      have heq : (n : ZMod q) = (l : ZMod q) := (ZMod.natCast_eq_natCast_iff n l q).mpr hmod
-      simpa [heq] using hl
+  · have heq : (n : ZMod q) = (l : ZMod q) :=
+      (ZMod.natCast_eq_natCast_iff n l q).mpr hmod
+    -- Congruence to the unit l supplies the remaining unit condition.
+    have hn : IsUnit (n : ZMod q) := by simpa [heq] using hl
     have hφ : (Nat.totient q : ℂ) ≠ 0 := by
       exact_mod_cast (Nat.totient_pos.mpr hq).ne'
-    have hsum : ∑ χ : DirichletCharacter ℂ q, χ (n : ZMod q) * star (χ (l : ZMod q)) =
-        (Nat.totient q : ℂ) := by
-      simpa [hmod] using charIndicator hq hn hl
-    rw [if_pos hmod, hsum]
+    rw [if_pos hmod, if_pos ⟨hn, hl, heq⟩]
     exact (inv_mul_cancel₀ hφ).symm
-  · by_cases hn : IsUnit (n : ZMod q)
-    · have hsum : ∑ χ : DirichletCharacter ℂ q, χ (n : ZMod q) * star (χ (l : ZMod q)) = 0 := by
-        simpa [hmod] using charIndicator hq hn hl
-      rw [if_neg hmod, hsum]
-      simp
-    · have hsum0 : (∑ χ : DirichletCharacter ℂ q, χ (n : ZMod q) * star (χ (l : ZMod q))) = 0 := by
-        apply Finset.sum_eq_zero
-        intro χ hχ
-        rw [χ.map_nonunit hn, zero_mul]
-      rw [if_neg hmod, hsum0]
-      simp
+  · -- Away from the progression, orthogonality vanishes whether n is a unit or not.
+    have hne : (n : ZMod q) ≠ (l : ZMod q) :=
+      fun heq => hmod ((ZMod.natCast_eq_natCast_iff n l q).mp heq)
+    simp [hmod, hne]
 
 /-- **Arithmetic-progression sums as character sums** (the Parseval
 interface for Type I/II estimates): for a unit `l`,

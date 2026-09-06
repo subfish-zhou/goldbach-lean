@@ -55,9 +55,8 @@ theorem truncatedPerronIntegrand_neg_left (x t : ℝ) :
 /-- Continuity in the integration variable, including at the removable point `t = 0`. -/
 theorem continuous_truncatedPerronIntegrand_right (x : ℝ) :
     Continuous (truncatedPerronIntegrand x) := by
-  rw [show truncatedPerronIntegrand x = fun t ↦ x * Real.sinc (t * x) by
-    funext t
-    exact truncatedPerronIntegrand_eq_mul_sinc x t]
+  change Continuous (fun t ↦ truncatedPerronIntegrand x t)
+  simp_rw [truncatedPerronIntegrand_eq_mul_sinc]
   fun_prop
 
 /-- Continuity in the Perron spatial variable. -/
@@ -69,10 +68,8 @@ theorem continuous_truncatedPerronIntegrand_left (t : ℝ) :
 /-- Joint continuity of the removable sine kernel. -/
 theorem continuous_truncatedPerronIntegrand_uncurry :
     Continuous (Function.uncurry truncatedPerronIntegrand) := by
-  rw [show Function.uncurry truncatedPerronIntegrand =
-      fun p : ℝ × ℝ ↦ p.1 * Real.sinc (p.2 * p.1) by
-    funext p
-    exact truncatedPerronIntegrand_eq_mul_sinc p.1 p.2]
+  change Continuous (fun p : ℝ × ℝ ↦ truncatedPerronIntegrand p.1 p.2)
+  simp_rw [truncatedPerronIntegrand_eq_mul_sinc]
   fun_prop
 
 /-- The sine kernel is integrable on every finite interval. -/
@@ -92,19 +89,8 @@ theorem truncatedPerronKernel_zero (T : ℝ) :
 /-- Reflection in the spatial variable exchanges the two sides of the kernel. -/
 theorem truncatedPerronKernel_neg (T x : ℝ) :
     truncatedPerronKernel T (-x) = 1 - truncatedPerronKernel T x := by
-  rw [truncatedPerronKernel, truncatedPerronKernel]
-  have hIntegral :
-      (∫ t in 0..T, truncatedPerronIntegrand (-x) t) =
-        -(∫ t in 0..T, truncatedPerronIntegrand x t) := by
-    calc
-      (∫ t in 0..T, truncatedPerronIntegrand (-x) t) =
-          ∫ t in 0..T, -truncatedPerronIntegrand x t := by
-            apply intervalIntegral.integral_congr
-            intro t _
-            exact truncatedPerronIntegrand_neg_left x t
-      _ = -(∫ t in 0..T, truncatedPerronIntegrand x t) :=
-        intervalIntegral.integral_neg
-  rw [hIntegral]
+  simp_rw [truncatedPerronKernel, truncatedPerronIntegrand_neg_left,
+    intervalIntegral.integral_neg]
   ring
 
 /-- For fixed truncation height, the kernel is continuous in `x`. -/
@@ -122,12 +108,8 @@ theorem continuous_truncatedPerronKernel_right (x : ℝ) :
   unfold truncatedPerronKernel
   apply Continuous.add continuous_const
   apply Continuous.const_mul
-  have hf : Continuous (Function.uncurry (fun (_ : ℝ) t ↦ truncatedPerronIntegrand x t)) :=
-    (continuous_truncatedPerronIntegrand_right x).comp continuous_snd
-  simpa using
-    (intervalIntegral.continuous_parametric_intervalIntegral_of_continuous
-      (f := fun (_ : ℝ) t ↦ truncatedPerronIntegrand x t) hf (s := fun T : ℝ ↦ T)
-      continuous_id)
+  exact intervalIntegral.continuous_primitive
+    (intervalIntegrable_truncatedPerronIntegrand x) 0
 
 /-- Triangle inequality for the defining integral. -/
 theorem abs_truncatedPerronKernel_sub_half_le_integral_abs {T x : ℝ} (hT : 0 ≤ T) :

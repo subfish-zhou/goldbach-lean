@@ -107,19 +107,18 @@ private theorem central_parameters
     have hAp1 : A * (q : ℝ) ^ (-2 * η) ≤ 1 := by
       have hp1 : (q : ℝ) ^ (-2 * η) ≤ 1 := by
         simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
-      exact (mul_le_mul_of_nonneg_right hAhalf hp.le).trans (by nlinarith)
+      calc
+        A * (q : ℝ) ^ (-2 * η) ≤ (1 / 2 : ℝ) * 1 :=
+          mul_le_mul hAhalf hp1 hp.le (by norm_num)
+        _ ≤ 1 := by norm_num
     calc
       A * (q : ℝ) ^ (-2 * η) *
           (1 + Real.log (dirichletLNonquadraticConductorLogCutoff q T)) ≤
           1 * (1 + Real.log (dirichletLNonquadraticConductorLogCutoff q T)) :=
             mul_le_mul_of_nonneg_right hAp1 (zero_le_one.trans hH₀)
       _ ≤ H ^ 12 := by
-        have hH11 : 1 ≤ H ^ 11 := one_le_pow₀ hH
         have hHpow : H ≤ H ^ 12 := by
-          calc
-            H = H * 1 := by ring
-            _ ≤ H * H ^ 11 := mul_le_mul_of_nonneg_left hH11 (zero_le_one.trans hH)
-            _ = H ^ 12 := by ring
+          simpa only [pow_one] using (pow_le_pow_right₀ hH (by norm_num : 1 ≤ 12))
         simpa only [one_mul] using hH₀H.trans hHpow
       _ = 1 * H ^ 12 := by ring
   simpa only [dirichletLQuadraticConditionalCentralH,
@@ -268,8 +267,7 @@ theorem exists_LFunction_ne_zero_on_quadraticConditionalCrossZeroRectangle
   by_cases hcentral : |s.im| ≤ τ
   · have hz := LFunction_ne_zero_centralBand χ hquad hχ hA hAc hAhalf hc hη hT hSiegel
       hrect.1.1 hrelt (by simpa only [τ] using hcentral)
-    rw [← Complex.re_add_im s]
-    convert hz using 1 <;> ring
+    simpa only [mul_comm I, Complex.re_add_im] using hz
   · have hτabs : τ ≤ |s.im| := le_of_not_ge hcentral
     have hzero : ∀ (β t : ℝ),
         β ∈ Ico

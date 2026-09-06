@@ -130,51 +130,12 @@ lemma xi_le_coarse_phase {s : ℝ} (hs : phaseThreshold ≤ s) :
 lemma coarse_phase_uniform_on_Icc {s t : ℝ} (hs : phaseThreshold ≤ s)
     (ht : t ∈ Icc 1 s) :
     xi t ≤ Real.log s + Real.log (Real.log (3 * s)) + phaseConstant := by
-  have hspos : 0 < s := lt_of_lt_of_le (by
+  have hxA0 : 0 ≤ xi phaseThreshold := (xi_pos (by
     dsimp [phaseThreshold]
-    exact Real.exp_pos 2) hs
-  have h3spos : 0 < 3 * s := mul_pos (by norm_num) hspos
-  have hlogs : 2 ≤ Real.log s := by
-    rw [← Real.exp_log hspos] at hs
-    dsimp [phaseThreshold] at hs
-    exact Real.exp_le_exp.mp hs
-  have hlog3s : 0 < Real.log (3 * s) := by
-    have := Real.strictMonoOn_log.monotoneOn hspos h3spos (by nlinarith : s ≤ 3 * s)
-    linarith
-  by_cases htA : t < phaseThreshold
-  · have hmono := xi_monotone htA.le
-    dsimp [phaseConstant]
-    have hLlog : 0 < Real.log phaseLogConstant := Real.log_pos phaseLogConstant_gt_one
-    have hll : 0 < Real.log (Real.log (3 * s)) := Real.log_pos (by
-      have hm : Real.log s ≤ Real.log (3 * s) :=
-        Real.strictMonoOn_log.monotoneOn hspos h3spos (by nlinarith)
-      linarith)
-    linarith
-  · have htA' : phaseThreshold ≤ t := le_of_not_gt htA
-    have htpos : 0 < t := lt_of_lt_of_le (by
-      dsimp [phaseThreshold]
-      exact Real.exp_pos 2) htA'
-    have h3tpos : 0 < 3 * t := mul_pos (by norm_num) htpos
-    have hlogt : Real.log t ≤ Real.log s :=
-      Real.strictMonoOn_log.monotoneOn htpos hspos ht.2
-    have hlog3t : Real.log (3 * t) ≤ Real.log (3 * s) :=
-      Real.strictMonoOn_log.monotoneOn h3tpos h3spos
-        (mul_le_mul_of_nonneg_left ht.2 (by norm_num))
-    have hinnerpos : 0 < Real.log (3 * t) := by
-      have htl : 2 ≤ Real.log t := by
-        rw [← Real.exp_log htpos] at htA'
-        dsimp [phaseThreshold] at htA'
-        exact Real.exp_le_exp.mp htA'
-      have hm := Real.strictMonoOn_log.monotoneOn htpos h3tpos (by nlinarith : t ≤ 3 * t)
-      linarith
-    have hloglog : Real.log (Real.log (3 * t)) ≤ Real.log (Real.log (3 * s)) :=
-      Real.strictMonoOn_log.monotoneOn hinnerpos hlog3s hlog3t
-    have hpt := xi_le_coarse_phase htA'
-    dsimp [phaseConstant]
-    have hxA0 : 0 ≤ xi phaseThreshold := (xi_pos (by
-      dsimp [phaseThreshold]
-      exact Real.one_lt_exp_iff.mpr (by norm_num))).le
-    linarith
+    exact Real.one_lt_exp_iff.mpr (by norm_num))).le
+  have hbound := (xi_monotone ht.2).trans (xi_le_coarse_phase hs)
+  dsimp [phaseConstant]
+  linarith
 
 /-- Proposition 10.23, coarse phase-integral upper bound for `κ=b=1`.
 The bound is proved for the canonical `xi`; no phase estimate is a premise. -/

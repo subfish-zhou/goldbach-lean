@@ -65,8 +65,8 @@ theorem liuPanSquarefreeCarrier_subset {N : ℕ} {B : ℝ}
     (hN : 1 ≤ N) (hlog : 1 ≤ Real.log (N : ℝ)) (hB : 0 ≤ B) :
     liuPanSquarefreeCarrier N B ⊆ range (N + 1) := by
   intro q hq
-  have := panSourceStrictModulusCutoff_mem_le hN hlog hB (mem_filter.mp hq).1
-  exact mem_range.mpr (by omega)
+  have hq_le := panSourceStrictModulusCutoff_mem_le hN hlog hB (mem_filter.mp hq).1
+  exact mem_range.mpr (Nat.lt_succ_of_le hq_le)
 
 theorem liuPanSquarefreeErrorSum_le_unweighted (κ : ℝ) (N : ℕ) (B : ℝ) :
     (∑ q ∈ liuPanSquarefreeCarrier N B, liuPanActualError κ N B q) ≤
@@ -90,7 +90,9 @@ theorem exists_liuPanWeightedSum_sq_le_unweighted :
   let S := liuPanSquarefreeCarrier N B
   let E := liuPanActualError κ N B
   let X := liuActualEnvelopeConstant κ * N * (1 + Real.log N) ^ 2
-  have hX : 0 ≤ X := by dsimp [X]; positivity [liuActualEnvelopeConstant_pos κ]
+  have hX : 0 ≤ X := by
+    dsimp [X]
+    positivity [liuActualEnvelopeConstant_pos κ]
   have hsq : ∀ q ∈ S, Squarefree q := fun q hq => (mem_filter.mp hq).2
   have hpos : ∀ q ∈ S, 0 < q := by
     intro q hq
@@ -100,26 +102,32 @@ theorem exists_liuPanWeightedSum_sq_le_unweighted :
     intro q hq
     exact modulus_mul_liuMainPanCoprimeIntervalMaxL_le κ N _ _ q hN (hpos q hq)
       (panSourceStrictModulusCutoff_mem_le (by omega) hlog hB (mem_filter.mp hq).1)
-  have hc := Richert1969.weightedError_sq_le_lemma3Mass_mul_ordinary S
+  -- Finite Cauchy squares the 3^ω weight; its moment is the 9^ω mass.
+  have hCauchy := Richert1969.weightedError_sq_le_lemma3Mass_mul_ordinary S
     (fun q => (3 : ℝ) ^ q.primeFactors.card) E X hpos hE henv
-  have hm : (∑ q ∈ S, ((3 : ℝ) ^ q.primeFactors.card) ^ 2 / q) =
+  have hweightMoment : (∑ q ∈ S, ((3 : ℝ) ^ q.primeFactors.card) ^ 2 / q) =
       Richert1969.lemma3NineOmegaMass S := by
     unfold Richert1969.lemma3NineOmegaMass
     apply sum_congr rfl
     intro q _
     rw [pow_two, ← mul_pow]
     norm_num
-  rw [hm] at hc
+  rw [hweightMoment] at hCauchy
+  -- Nonnegativity lets us enlarge the squarefree error sum to the full unweighted sum.
+  have hordinary : X * (∑ q ∈ S, E q) ≤ X * liuPanUnweightedTheorem2Sum κ N B :=
+    mul_le_mul_of_nonneg_left (liuPanSquarefreeErrorSum_le_unweighted κ N B) hX
+  have hmomentFactor_nonneg : 0 ≤ C₉ * Real.log (N + 2) ^ (9 : ℝ) := by
+    have hlog_nonneg : 0 ≤ Real.log (N + 2) :=
+      Real.log_nonneg (by exact_mod_cast (show 1 ≤ N + 2 by omega))
+    exact mul_nonneg hC₉.le (Real.rpow_nonneg hlog_nonneg _)
   rw [liuPanWeightedSum_eq_squarefree]
   calc
     Richert1969.threeOmegaErrorMass S E ^ 2 ≤
-        Richert1969.lemma3NineOmegaMass S * (X * ∑ q ∈ S, E q) := hc
+        Richert1969.lemma3NineOmegaMass S * (X * ∑ q ∈ S, E q) := hCauchy
     _ ≤ (C₉ * Real.log (N + 2) ^ (9 : ℝ)) * (X * ∑ q ∈ S, E q) :=
       mul_le_mul_of_nonneg_right
         (hmoment N S (liuPanSquarefreeCarrier_subset (by omega) hlog hB) hsq)
         (mul_nonneg hX (sum_nonneg hE))
-    _ ≤ _ := mul_le_mul_of_nonneg_left
-      (mul_le_mul_of_nonneg_left (liuPanSquarefreeErrorSum_le_unweighted κ N B) hX)
-      (mul_nonneg hC₉.le (Real.rpow_nonneg (Real.log_nonneg (by exact_mod_cast (show 1 ≤ N + 2 by omega))) _))
+    _ ≤ _ := mul_le_mul_of_nonneg_left hordinary hmomentFactor_nonneg
 
 end MathlibNt.SieveTheory.LiuWeight

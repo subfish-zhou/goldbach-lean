@@ -60,19 +60,15 @@ theorem weighted_allCharacter_nonprincipal_vaughan_analytic_ledger (N Q u v : �
               (vaughanTypeIICoeff vaughanUnitIntegerCoeff u v) N Q +
           vaughanConductorPrefixLane
               (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N Q) := by
+    have hcoeff : vaughanLambdaCoeff vaughanUnitIntegerCoeff = vonMangoldtIntegerCoeff :=
+      funext vaughanLambdaCoeff_unit_eq
     unfold vaughanConductorPrefixLane
     calc
       _ = ∑ d ∈ Finset.Icc 2 Q, imprimitiveConductorWeight Q d *
           ∑ ψ : PrimitiveCharacter d,
             primitiveCharacterPrefixMaxSquare
               (vaughanLambdaCoeff vaughanUnitIntegerCoeff) 0 N d ψ := by
-          apply Finset.sum_congr rfl
-          intro d hd
-          congr 2
-          funext ψ
-          congr 1
-          funext n
-          exact (vaughanLambdaCoeff_unit_eq n).symm
+          rw [hcoeff]
       _ ≤ ∑ d ∈ Finset.Icc 2 Q, imprimitiveConductorWeight Q d *
           ∑ ψ : PrimitiveCharacter d,
             (3 * (primitiveCharacterPrefixMaxSquare
@@ -97,61 +93,7 @@ theorem weighted_allCharacter_nonprincipal_vaughan_analytic_ledger (N Q u v : �
     _ ≤ 2 * vaughanConductorPrefixLane vonMangoldtIntegerCoeff N Q +
         vaughanLambdaConductorCorrectionScale N Q := by
       simpa [vaughanConductorPrefixLane, vaughanLambdaConductorCorrectionScale] using hall
-    _ ≤ _ := by nlinarith
-
-/-- Linear-harmonic conductor transport for an arbitrary nonnegative family.
-The existing prefix theorem is a specialization of this finite inequality. -/
-theorem imprimitive_conductor_window_le_weighted_primitive_linear
-    (F : (d : ℕ) → PrimitiveCharacter d → ℝ)
-    (hF : ∀ d ψ, 0 ≤ F d ψ) (Q C : ℕ) (hC : 0 < C) :
-    (∑ d ∈ Finset.Icc C (2 * C),
-      imprimitiveConductorWeight Q d * ∑ ψ : PrimitiveCharacter d, F d ψ) ≤
-      ((Q / C : ℕ) : ℝ) * conductorHarmonicFactor (Q / C) *
-        ∑ d ∈ Finset.Icc 1 (2 * C),
-          ((d : ℝ) / (d.totient : ℝ)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-  calc
-    _ ≤ ∑ d ∈ Finset.Icc C (2 * C),
-        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
-          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_le_sum
-      intro d hd
-      have hd0 : 0 < d := hC.trans_le (Finset.mem_Icc.mp hd).1
-      have hdiv : Q / d ≤ Q / C :=
-        Nat.div_le_div_left (Finset.mem_Icc.mp hd).1 hC
-      have hharm : conductorHarmonicFactor (Q / d) ≤ conductorHarmonicFactor (Q / C) := by
-        unfold conductorHarmonicFactor
-        apply Finset.sum_le_sum_of_subset_of_nonneg
-        · exact Finset.Icc_subset_Icc_right hdiv
-        · intro e he hnot
-          positivity
-      have hsum : 0 ≤ ∑ ψ : PrimitiveCharacter d, F d ψ :=
-        Finset.sum_nonneg fun ψ _ => hF d ψ
-      have hharm0 : 0 ≤ conductorHarmonicFactor (Q / d) :=
-        conductorHarmonicFactor_nonneg _
-      apply mul_le_mul_of_nonneg_right _ hsum
-      refine (imprimitiveConductorWeight_le_linear_harmonic Q d hd0).trans ?_
-      gcongr
-    _ ≤ ∑ d ∈ Finset.Icc 1 (2 * C),
-        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
-          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_le_sum_of_subset_of_nonneg
-      · intro d hd
-        exact Finset.mem_Icc.mpr ⟨hC.trans_le (Finset.mem_Icc.mp hd).1,
-          (Finset.mem_Icc.mp hd).2⟩
-      · intro d hd hnot
-        have hd0 : 0 < d := (Finset.mem_Icc.mp hd).1
-        have hφ0 : (0 : ℝ) < d.totient := by
-          exact_mod_cast Nat.totient_pos.mpr hd0
-        have hsum : 0 ≤ ∑ ψ : PrimitiveCharacter d, F d ψ :=
-          Finset.sum_nonneg fun ψ _ => hF d ψ
-        exact mul_nonneg
-          (mul_nonneg (mul_nonneg (div_nonneg (by positivity) hφ0.le) (by positivity))
-            (conductorHarmonicFactor_nonneg _)) hsum
-    _ = _ := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro d hd
-      ring
+    _ ≤ _ := by linarith only [hsplit]
 
 /-- The exact endpoint-only Type-II scale delivered by the current producers on
 one conductor window `C ≤ conductor ≤ 2C` and one Vaughan outer shell `2^k`.
@@ -212,7 +154,8 @@ theorem weighted_imprimitive_vaughanTypeII_endpoint_window_unconditional
             (mul_le_mul_of_nonneg_right hmu hls0) ht0
       _ ≤ ((2 ^ k : ℕ) : ℝ) * vaughanBilinearLargeSieveConstant N (2 * C) *
           (27 * (B : ℝ) ^ 2 * (N : ℝ) * Real.log (N + 1 : ℕ) ^ 5) := by
-          gcongr
+          exact mul_le_mul (mul_le_mul_of_nonneg_right hcard hls0) htensor ht0
+            (mul_nonneg (Nat.cast_nonneg _) hls0)
   refine htransport.trans ?_
   unfold existingTypeIIEndpointWindowScale
   rw [vaughanBilinearLargeSieveConstant_eq_explicit N (2 * C)
@@ -265,9 +208,7 @@ theorem existingTypeIIEndpointWindowScale_not_BV_saving
     have hle : Real.log (N + 1 : ℕ) ≤ 1 := le_of_not_gt h
     have hnonneg : 0 ≤ Real.log (N + 1 : ℕ) :=
       Real.log_nonneg (by exact_mod_cast Nat.succ_le_succ (Nat.zero_le N))
-    have : Real.log (N + 1 : ℕ) ^ A ≤ 1 := by
-      exact pow_le_one₀ hnonneg hle
-    linarith
+    exact (not_le_of_gt hlog) (pow_le_one₀ hnonneg hle)
   intro hBV
   have hscale :
       27 * (B : ℝ) ^ 2 * (N : ℝ) ^ 2 * Real.log (N + 1 : ℕ) ^ 5 ≤
@@ -301,7 +242,8 @@ theorem existingTypeIIEndpointWindowScale_not_BV_saving
           positivity
         have hadd : (N : ℝ) ^ 2 ≤ (N : ℝ) ^ 2 + (N : ℝ) *
             ((2 * (Nat.ceil (Real.log (((2 * C : ℕ) : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-              ((2 * C : ℕ) : ℝ) ^ 2) := by nlinarith
+              ((2 * C : ℕ) : ℝ) ^ 2) :=
+          le_add_of_nonneg_right (mul_nonneg hN0 hmod0)
         have hh := mul_le_mul_of_nonneg_left hadd hP0
         dsimp [P] at hh
         convert hh using 1 <;> first | rfl | ring
@@ -311,12 +253,12 @@ theorem existingTypeIIEndpointWindowScale_not_BV_saving
     (sq_pos_of_pos (by exact_mod_cast hN))
   have hright : (B : ℝ) ^ 2 * (N : ℝ) ^ 2 /
       Real.log (N + 1 : ℕ) ^ A < (B : ℝ) ^ 2 * (N : ℝ) ^ 2 := by
-    exact (div_lt_iff₀ hden).2 (by nlinarith)
+    exact div_lt_self hBN hlog
   have hleft : (B : ℝ) ^ 2 * (N : ℝ) ^ 2 <
       27 * (B : ℝ) ^ 2 * (N : ℝ) ^ 2 * Real.log (N + 1 : ℕ) ^ 5 := by
     have hL5 : 1 < Real.log (N + 1 : ℕ) ^ 5 := one_lt_pow₀ hL (by decide)
     nlinarith
-  linarith
+  exact (not_lt_of_ge hupper) (hright.trans hleft)
 
 /-- Minimal missing Type-II interface.  Unlike the proved endpoint theorem, this
 contract retains the maximum over every prefix before summing over characters

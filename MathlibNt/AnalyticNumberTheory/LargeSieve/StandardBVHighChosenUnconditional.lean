@@ -46,10 +46,6 @@ private theorem chosenTypeII_logPower_le_threshold_eventually (A : ℕ) :
     exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2 hexp |>.le
   have hx0 : 0 ≤ x := hx2.trans' (by norm_num)
   have hxpow2 : 2 ≤ x ^ 2 := by nlinarith [sq_nonneg (x - 2)]
-  have hp2 : 2 ≤ x ^ (2 * (t + 1)) := by
-    rw [show 2 * (t + 1) = 2 * t + 2 by omega, pow_add]
-    have hbase : 1 ≤ x ^ (2 * t) := one_le_pow₀ (by linarith)
-    nlinarith [pow_nonneg hx0 (2 * t)]
   have hfloor := Nat.sub_one_lt_floor (x ^ (2 * (t + 1)))
   have hhalf : x ^ (2 * t) ≤ x ^ (2 * (t + 1)) - 1 := by
     rw [show 2 * (t + 1) = 2 * t + 2 by omega, pow_add]
@@ -71,6 +67,13 @@ theorem standardBVHighChosenUnconditionalTypeII_activeCard_le (A N : ℕ) :
     card_vaughanTypeIIActiveCanonicalRectangles_le N
       (standardBVHighChosenUnconditionalTypeIICutoff A N)
       (standardBVHighChosenUnconditionalTypeIICutoff A N)
+
+private theorem chosen_discreteAbelAmplifierPrefixMax_le_three (N : ℕ) :
+    discreteAbelAmplifierPrefixMax N ≤ 3 := by
+  refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_
+  have htwo : (2 / 3 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
+  rw [mul_inv_le_iff₀ (Real.log_pos (by norm_num : (1 : ℝ) < 2))]
+  linarith
 
 /-- Unconditional closure of exactly the chosen-parameter Type-II
 high-conductor contribution. -/
@@ -117,7 +120,7 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
       congr 1
       omega
     have hp0 : 0 ≤ x ^ (A + 49) := pow_nonneg hx0.le _
-    nlinarith
+    exact (sq_le_sq₀ hp0 hsRpos.le).mp (by simpa only [hp, hsRsq] using hRpow)
   have hQone : 1 ≤ Q := by
     dsimp [Q, MathlibNt.SieveTheory.LiuWeight.panModulusCutoff]
     have hden : 0 < x ^ B := pow_pos hx0 _
@@ -138,19 +141,11 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
       _ ≤ N := hQsq
   have hQleHalf : Q ≤ N / 2 := by
     apply (Nat.le_div_iff_mul_le (by norm_num : 0 < 2)).2
-    have hQreal : (Q : ℝ) ≤ Real.sqrt N := by
-      have hQsqR : ((Q : ℝ) ^ 2) ≤ (N : ℝ) := by exact_mod_cast hQsq
-      have hsSq : Real.sqrt N ^ 2 = (N : ℝ) := Real.sq_sqrt (by positivity)
-      nlinarith [show (0 : ℝ) ≤ Q by positivity, Real.sqrt_nonneg (N : ℝ)]
-    have hsN : Real.sqrt N ≤ (N : ℝ) / 2 := by
-      have hsSq : Real.sqrt N ^ 2 = (N : ℝ) := Real.sq_sqrt (by positivity)
-      have hsNonneg := Real.sqrt_nonneg (N : ℝ)
-      have hs9 : 3 ≤ Real.sqrt N := by
-        nlinarith [show (9 : ℝ) ≤ N by exact_mod_cast hN]
-      nlinarith
-    have htwo : (2 : ℝ) * Q ≤ N := by nlinarith [hQreal.trans hsN]
-    have htwoNat : 2 * Q ≤ N := by exact_mod_cast htwo
-    simpa [mul_comm] using htwoNat
+    by_cases hQsmall : Q ≤ 1
+    · omega
+    · calc
+        Q * 2 ≤ Q * Q := Nat.mul_le_mul_left Q (by omega)
+        _ ≤ N := by simpa only [pow_two] using hQsq
   have hRltN : R < N := by
     have hRreal : (R : ℝ) ≤ Real.sqrt N := by
       calc
@@ -205,11 +200,8 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
       dsimp [x]
       exact Real.log_le_log (by exact_mod_cast hQpos) (by exact_mod_cast hQleN)
     exact (conductorHarmonicFactor_le Q).trans (by linarith)
-  have habel : discreteAbelAmplifierPrefixMax N ≤ 3 := by
-    refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_
-    have htwo : (2 / 3 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
-    rw [mul_inv_le_iff₀ (Real.log_pos (by norm_num : (1 : ℝ) < 2))]
-    linarith
+  have habel : discreteAbelAmplifierPrefixMax N ≤ 3 :=
+    chosen_discreteAbelAmplifierPrefixMax_le_three N
   have hQpay : (Q : ℝ) * Real.sqrt N ≤ (N : ℝ) / x ^ B := by
     have hq : (Q : ℝ) ≤ Real.sqrt N / x ^ B := by
       calc
@@ -219,7 +211,8 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
           rw [Real.sqrt_eq_rpow, Real.rpow_natCast]
     have hs : Real.sqrt N ^ 2 = (N : ℝ) := Real.sq_sqrt (by positivity)
     calc
-      (Q : ℝ) * Real.sqrt N ≤ (Real.sqrt N / x ^ B) * Real.sqrt N := by gcongr
+      (Q : ℝ) * Real.sqrt N ≤ (Real.sqrt N / x ^ B) * Real.sqrt N :=
+        mul_le_mul_of_nonneg_right hq (Real.sqrt_nonneg _)
       _ = (Real.sqrt N * Real.sqrt N) / x ^ B := by ring
       _ = (N : ℝ) / x ^ B := by rw [← pow_two, hs]
   have hRinv : (N : ℝ) / R ≤ (N : ℝ) / x ^ (A + 49) := by
@@ -237,17 +230,17 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
             ((N : ℝ) / Real.sqrt (R + 1 : ℕ) + (N : ℝ) / Real.sqrt (R + 1 : ℕ)) +
           2 * (Q : ℝ) * Real.sqrt N ≤
         10 * (N : ℝ) / x ^ (A + 48) := by
-    have hpow38 : x ^ (A + 48) ≤ x ^ (A + 49) :=
+    have hpow48 : x ^ (A + 48) ≤ x ^ (A + 49) :=
       pow_le_pow_right₀ hx1 (by omega)
-    have hden39 : 0 < x ^ (A + 49) := pow_pos hx0 _
-    have hden38 : 0 < x ^ (A + 48) := pow_pos hx0 _
+    have hden49 : 0 < x ^ (A + 49) := pow_pos hx0 _
+    have hden48 : 0 < x ^ (A + 48) := pow_pos hx0 _
     have hsmall : (N : ℝ) / x ^ (A + 49) ≤ (N : ℝ) / x ^ (A + 48) :=
-      div_le_div_of_nonneg_left (by positivity) hden38 hpow38
+      div_le_div_of_nonneg_left (by positivity) hden48 hpow48
     have hBden : x ^ (A + 48) ≤ x ^ B := by
       dsimp [B]
       exact pow_le_pow_right₀ hx1 (by omega)
     have hqsmall : (N : ℝ) / x ^ B ≤ (N : ℝ) / x ^ (A + 48) :=
-      div_le_div_of_nonneg_left (by positivity) hden38 hBden
+      div_le_div_of_nonneg_left (by positivity) hden48 hBden
     let T : ℝ := (N : ℝ) / x ^ (A + 48)
     have hfirst : 2 * (N : ℝ) / R ≤ 2 * T := by
       dsimp [T]
@@ -257,7 +250,7 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
           mul_le_mul_of_nonneg_left (hRinv.trans hsmall) (by norm_num)
     have hsum : (N : ℝ) / Real.sqrt (R + 1 : ℕ) +
         (N : ℝ) / Real.sqrt (R + 1 : ℕ) ≤ 2 * ((N : ℝ) / x ^ (A + 49)) := by
-      nlinarith [hRsqrt]
+      exact add_le_add hRsqrt hRsqrt |>.trans_eq (by ring)
     have hmiddle0 :
         (((productionConductorBlockGeometry N Q C hRpos).index.card : ℕ) : ℝ) *
           ((N : ℝ) / Real.sqrt (R + 1 : ℕ) + (N : ℝ) / Real.sqrt (R + 1 : ℕ)) ≤
@@ -448,11 +441,8 @@ theorem standardBVHighChosenUnconditional_typeI (A : ℕ) :
         have hlogQN := Real.log_le_log hQposR hQleNR
         dsimp [x] at *
         linarith)
-  have habel : discreteAbelAmplifierPrefixMax N ≤ 3 := by
-    refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_
-    have htwo : (2 / 3 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
-    rw [mul_inv_le_iff₀ (Real.log_pos (by norm_num : (1 : ℝ) < 2))]
-    linarith
+  have habel : discreteAbelAmplifierPrefixMax N ≤ 3 :=
+    chosen_discreteAbelAmplifierPrefixMax_le_three N
   have houter : 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
       48 * x ^ 2 := by
     have hH0 : 0 ≤ conductorHarmonicFactor Q := conductorHarmonicFactor_nonneg Q
@@ -521,15 +511,9 @@ private lemma highConductorSet_eq_interval_highChosenUnconditional (N Q C : ℕ)
     (hR : 1 ≤ logConductorThreshold N C) :
     highConductorSet N Q C =
       Finset.Icc (logConductorThreshold N C + 1) Q := by
-  ext d
-  simp only [highConductorSet, Finset.mem_filter, Finset.mem_Icc]
-  constructor
-  · rintro ⟨⟨-, hdQ⟩, hRd⟩
-    exact ⟨Nat.add_one_le_iff.mpr hRd, hdQ⟩
-  · rintro ⟨hRd, hdQ⟩
-    exact ⟨⟨by omega, hdQ⟩, Nat.add_one_le_iff.mp hRd⟩
+  exact highConductorSet_eq_interval N Q C hR
 
-/-- Unconditional closure of exactly the small Vaughan lane at the chosen
+/-- Unconditional closure of exactly the small Vaughan lane at the
 chosen parameters `B=3*A+200`, `C=2*(A+50)`, and
 `v(N)=logConductorThreshold N C`. -/
 theorem standardBVHighChosenUnconditional_small (A : ℕ) :
@@ -624,7 +608,8 @@ theorem standardBVHighChosenUnconditional_small (A : ℕ) :
               (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
               (highConductorSet N Q C) :=
           mul_nonneg hharmNonneg hledgerNonneg
-        nlinarith [sq_nonneg P]
+        apply mul_le_mul_of_nonneg_left _ (sq_nonneg P)
+        nlinarith only [hcore]
       _ ≤ (K₀ * ((N : ℝ) / Real.log N ^ A)) ^ 2 := by
         simpa only [Nat.add_zero] using hsmallPay
   have hlogPos : 0 < Real.log (N : ℝ) :=

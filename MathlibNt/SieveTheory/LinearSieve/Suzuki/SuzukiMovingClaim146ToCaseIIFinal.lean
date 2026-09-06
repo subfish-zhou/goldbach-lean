@@ -111,15 +111,10 @@ theorem claim14_5_caseII_natEventual_of_movingClaim146
   let D₀ : ℝ := max Dg (max D12 (max D3 Db))
   refine ⟨D₀, hDg.trans_le (le_max_left _ _), ?_⟩
   intro D hD
-  have hDgD : Dg ≤ (D : ℝ) := (le_max_left Dg _).trans hD
-  have hD12D : D12 ≤ (D : ℝ) :=
-    (le_max_left D12 _).trans ((le_max_right Dg _).trans hD)
-  have hD3D : D3 ≤ (D : ℝ) :=
-    (le_max_left D3 Db).trans ((le_max_right D12 _).trans
-      ((le_max_right Dg _).trans hD))
-  have hDbD : Db ≤ (D : ℝ) :=
-    (le_max_right D3 Db).trans ((le_max_right D12 _).trans
-      ((le_max_right Dg _).trans hD))
+  have hthresholds : Dg ≤ (D : ℝ) ∧ D12 ≤ (D : ℝ) ∧
+      D3 ≤ (D : ℝ) ∧ Db ≤ (D : ℝ) := by
+    simpa only [D₀, max_le_iff] using hD
+  rcases hthresholds with ⟨hDgD, hD12D, hD3D, hDbD⟩
   let z : ℕ := ⌈(D : ℝ) ^ (1 / s)⌉₊
   have hg := hgeom S D hDgD s hs1 hs3
   have h12D := h12 (D : ℝ) hD12D

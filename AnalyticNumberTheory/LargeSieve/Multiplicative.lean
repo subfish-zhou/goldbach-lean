@@ -1189,52 +1189,11 @@ theorem zmod_dvd_sub_iff {q a b : ℕ} (hq : 0 < q) (ha : a < q) (hb : b < q) :
     ((q : ℤ) ∣ ((a : ℤ) - (b : ℤ))) ↔ a = b := by
   constructor
   · intro hd
-    rcases hd with ⟨m, hm⟩
-    have hm' : (a : ℤ) - (b : ℤ) = m * (q : ℤ) := by
-      simpa [mul_comm] using hm
-    have hlt1 : (a : ℤ) - (b : ℤ) < (q : ℤ) := by
-      have ha' : (a : ℤ) < (q : ℤ) := by exact_mod_cast ha
-      have hb0 : 0 ≤ (b : ℤ) := by exact_mod_cast (Nat.zero_le b)
-      linarith
-    have hlt2 : -(q : ℤ) < (a : ℤ) - (b : ℤ) := by
-      have hb' : (b : ℤ) < (q : ℤ) := by exact_mod_cast hb
-      have ha0 : 0 ≤ (a : ℤ) := by exact_mod_cast (Nat.zero_le a)
-      linarith
-    have habs : |(a : ℤ) - (b : ℤ)| < (q : ℤ) := (abs_lt).2 ⟨hlt2, hlt1⟩
-    have hm0 : m = 0 := by
-      by_contra hmne
-      have hmm1 : (1 : ℝ) ≤ |(m : ℝ)| := by
-        have hz : m.natAbs ≠ 0 := Int.natAbs_ne_zero.mpr hmne
-        have hmm1' : (1 : ℝ) ≤ (m.natAbs : ℝ) := by
-          exact_mod_cast (Nat.succ_le_of_lt (Nat.pos_of_ne_zero hz))
-        have hcast : |(m : ℝ)| = ((m.natAbs : ℕ) : ℝ) := by
-          rw [← Int.cast_abs]
-          congr 1
-          exact Int.abs_eq_natAbs m
-        rwa [hcast]
-      have hcast2 : (a : ℝ) - (b : ℝ) = (m : ℝ) * (q : ℝ) := by exact_mod_cast hm'
-      have habsR : |(a : ℝ) - (b : ℝ)| < (q : ℝ) := by exact_mod_cast habs
-      have hqR : 0 < (q : ℝ) := by exact_mod_cast hq
-      have hbig : |(a : ℝ) - (b : ℝ)| = |(m : ℝ)| * (q : ℝ) := by
-        rw [hcast2, abs_mul, abs_of_nonneg (le_of_lt hqR)]
-      have hmq : |(m : ℝ)| * (q : ℝ) < (q : ℝ) := by
-        rw [← hbig]
-        exact habsR
-      have hltm : |(m : ℝ)| < 1 := by
-        by_contra hge
-        have h1 : (1 : ℝ) ≤ |(m : ℝ)| := le_of_not_gt hge
-        have h2 : (1 : ℝ) * (q : ℝ) ≤ |(m : ℝ)| * (q : ℝ) :=
-          mul_le_mul_of_nonneg_right h1 (le_of_lt hqR)
-        have h3 : |(m : ℝ)| * (q : ℝ) < (1 : ℝ) * (q : ℝ) := by simpa using hmq
-        have hbad : (1 : ℝ) * (q : ℝ) < (1 : ℝ) * (q : ℝ) := lt_of_le_of_lt h2 h3
-        exact (lt_irrefl ((1 : ℝ) * (q : ℝ))) hbad
-      have hbad : (1 : ℝ) < (1 : ℝ) := lt_of_le_of_lt hmm1 hltm
-      exact (lt_irrefl (1 : ℝ)) hbad
-    have habz : (a : ℤ) - (b : ℤ) = 0 := by
-      rw [hm', hm0]
-      norm_num
-    have habn : a = b := by omega
-    exact habn
+    -- Divisibility gives congruence; representatives in [0,q) are unique.
+    -- Int.modEq_iff_dvd uses the difference a - b for b ≡ a.
+    have hmodZ : (b : ℤ) ≡ (a : ℤ) [ZMOD (q : ℤ)] := Int.modEq_iff_dvd.mpr hd
+    have hmod : b ≡ a [MOD q] := Int.natCast_modEq_iff.mp hmodZ
+    exact (hmod.eq_of_lt_of_lt hb ha).symm
   · intro hab
     subst hab
     simp

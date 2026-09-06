@@ -246,36 +246,15 @@ theorem sum_vaughanTypeIFirstDyadicShell
     (∑ k ∈ Finset.range (Nat.log2 u + 1),
       ∑ d ∈ vaughanTypeIFirstDyadicShell u k, f d) =
       ∑ d ∈ Finset.Icc 1 u, f d := by
-  let K := Nat.log2 u + 1
-  let g : ℕ → Fin K := fun d =>
-    ⟨Nat.log2 d % K, Nat.mod_lt _ (by dsimp [K]; omega)⟩
-  rw [← Fin.sum_univ_eq_sum_range
-    (fun k => ∑ d ∈ vaughanTypeIFirstDyadicShell u k, f d) K]
-  calc
-    (∑ k : Fin K, ∑ d ∈ vaughanTypeIFirstDyadicShell u k, f d) =
-        ∑ k : Fin K, ∑ d ∈ (Finset.Icc 1 u).filter (fun d => g d = k), f d := by
-      apply Finset.sum_congr rfl
-      intro k hk
-      apply Finset.sum_congr
-      · ext d
-        by_cases hd : d ∈ Finset.Icc 1 u
-        · have hd' := Finset.mem_Icc.mp hd
-          have hidx : Nat.log2 d < K := by
-            dsimp [K]
-            exact firstDyadicShell_index_lt
-              (mem_own_vaughanTypeIFirstDyadicShell (by omega) hd'.2)
-          have hmod : Nat.log2 d % K = Nat.log2 d := Nat.mod_eq_of_lt hidx
-          simp [vaughanTypeIFirstDyadicShell, g, hd, hmod]
-          constructor
-          · intro h
-            apply Fin.ext
-            exact h
-          · intro h
-            exact congrArg Fin.val h
-        · simp [vaughanTypeIFirstDyadicShell, hd]
-      · intro d hd
-        rfl
-    _ = _ := Finset.sum_fiberwise (Finset.Icc 1 u) g f
+  -- Group each short index by its actual dyadic exponent, without a `Fin` encoding.
+  have hindex : ∀ d ∈ Finset.Icc 1 u,
+      Nat.log2 d ∈ Finset.range (Nat.log2 u + 1) := by
+    intro d hd
+    obtain ⟨hdpos, hdu⟩ := Finset.mem_Icc.mp hd
+    exact Finset.mem_range.mpr (firstDyadicShell_index_lt
+      (mem_own_vaughanTypeIFirstDyadicShell hdpos hdu))
+  simpa only [vaughanTypeIFirstDyadicShell] using
+    Finset.sum_fiberwise_of_maps_to hindex f
 
 /-- Product-dyadic shells partition the complete positive `(d,e)` rectangle
 exactly, with the shell selected by the actual product `d*e`. -/
@@ -284,42 +263,17 @@ theorem sum_vaughanTypeIMiddleProductDyadicShell
     (∑ k ∈ Finset.range (Nat.log2 (u * v) + 1),
       ∑ de ∈ vaughanTypeIMiddleProductDyadicShell u v k, f de) =
       ∑ de ∈ Finset.Icc 1 u ×ˢ Finset.Icc 1 v, f de := by
-  let K := Nat.log2 (u * v) + 1
-  let g : ℕ × ℕ → Fin K := fun de =>
-    ⟨Nat.log2 (de.1 * de.2) % K, Nat.mod_lt _ (by dsimp [K]; omega)⟩
-  rw [← Fin.sum_univ_eq_sum_range
-    (fun k => ∑ de ∈ vaughanTypeIMiddleProductDyadicShell u v k, f de) K]
-  calc
-    (∑ k : Fin K, ∑ de ∈ vaughanTypeIMiddleProductDyadicShell u v k, f de) =
-        ∑ k : Fin K,
-          ∑ de ∈ (Finset.Icc 1 u ×ˢ Finset.Icc 1 v).filter (fun de => g de = k),
-            f de := by
-      apply Finset.sum_congr rfl
-      intro k hk
-      apply Finset.sum_congr
-      · ext de
-        by_cases hde : de ∈ Finset.Icc 1 u ×ˢ Finset.Icc 1 v
-        · have hde' := Finset.mem_product.mp hde
-          have hd := Finset.mem_Icc.mp hde'.1
-          have he := Finset.mem_Icc.mp hde'.2
-          have hidx : Nat.log2 (de.1 * de.2) < K := by
-            dsimp [K]
-            exact middleProductDyadicShell_index_lt
-              (mem_own_vaughanTypeIMiddleProductDyadicShell
-                (by omega) hd.2 (by omega) he.2)
-          have hmod : Nat.log2 (de.1 * de.2) % K =
-              Nat.log2 (de.1 * de.2) := Nat.mod_eq_of_lt hidx
-          simp [vaughanTypeIMiddleProductDyadicShell, g, hde, hmod]
-          constructor
-          · intro h
-            apply Fin.ext
-            exact h
-          · intro h
-            exact congrArg Fin.val h
-        · simp [vaughanTypeIMiddleProductDyadicShell, hde]
-      · intro de hde
-        rfl
-    _ = _ := Finset.sum_fiberwise (Finset.Icc 1 u ×ˢ Finset.Icc 1 v) g f
+  -- The fiber is indexed by `log2 (d * e)`, not by separate exponents of `d` and `e`.
+  have hindex : ∀ de ∈ Finset.Icc 1 u ×ˢ Finset.Icc 1 v,
+      Nat.log2 (de.1 * de.2) ∈ Finset.range (Nat.log2 (u * v) + 1) := by
+    intro de hde
+    obtain ⟨hd, he⟩ := Finset.mem_product.mp hde
+    obtain ⟨hdpos, hdu⟩ := Finset.mem_Icc.mp hd
+    obtain ⟨hepos, hev⟩ := Finset.mem_Icc.mp he
+    exact Finset.mem_range.mpr (middleProductDyadicShell_index_lt
+      (mem_own_vaughanTypeIMiddleProductDyadicShell hdpos hdu hepos hev))
+  simpa only [vaughanTypeIMiddleProductDyadicShell] using
+    Finset.sum_fiberwise_of_maps_to hindex f
 
 end
 

@@ -51,15 +51,9 @@ theorem claim14_13_pointwise_of_log_coordinates
   have htpow : (s - 1) ^ (d - 1) ≤ s ^ (d - 1) :=
     Real.rpow_le_rpow ht.le (by linarith) hd0
   have ht_d : (s - 1) ^ d = (s - 1) ^ (d - 1) * (s - 1) := by
-    calc
-      (s - 1) ^ d = (s - 1) ^ ((d - 1) + 1) := by congr 1; ring
-      _ = (s - 1) ^ (d - 1) * (s - 1) ^ (1 : ℝ) := Real.rpow_add ht _ _
-      _ = (s - 1) ^ (d - 1) * (s - 1) := by rw [Real.rpow_one]
+    simpa only [sub_add_cancel] using Real.rpow_add_one ht.ne' (d - 1)
   have hs_d : s ^ d = s ^ (d - 1) * s := by
-    calc
-      s ^ d = s ^ ((d - 1) + 1) := by congr 1; ring
-      _ = s ^ (d - 1) * s ^ (1 : ℝ) := Real.rpow_add hs0 _ _
-      _ = s ^ (d - 1) * s := by rw [Real.rpow_one]
+    simpa only [sub_add_cancel] using Real.rpow_add_one hs0.ne' (d - 1)
   have hquot :
       (s - 1) ^ d / Real.log x ≤ s ^ d / Real.log D := by
     rw [div_le_div_iff₀ hlogx0 hlogD0, ht_d, hs_d, hlogD, hlogx]

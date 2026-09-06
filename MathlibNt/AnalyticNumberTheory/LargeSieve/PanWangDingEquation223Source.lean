@@ -44,17 +44,14 @@ theorem panSourceSigma_power_le {x y : ℕ} (hx : 1 ≤ Real.log x)
     (hy : 1 ≤ y) (hyx : y ≤ x) :
     (y : ℝ) ^ panSourceSigma x ≤ Real.exp 1 * y := by
   have hy0 : (0 : ℝ) < y := by exact_mod_cast hy
-  have hx0 : (0 : ℝ) < x := hy0.trans_le (by exact_mod_cast hyx)
-  have hlog : Real.log (y : ℝ) ≤ Real.log x :=
-    Real.log_le_log hy0 (by exact_mod_cast hyx)
-  have hp : 0 < Real.log x := by linarith
-  have hratio : Real.log (y : ℝ) * (1 / Real.log x) ≤ 1 := by
-    rw [mul_one_div, div_le_one hp]
-    exact hlog
-  unfold panSourceSigma
-  rw [Real.rpow_add hy0, Real.rpow_one, Real.rpow_def_of_pos hy0]
+  have hexponent : 0 ≤ (Real.log (x : ℝ))⁻¹ := inv_nonneg.mpr (by linarith)
+  rw [panSourceSigma, Real.rpow_add hy0, Real.rpow_one, one_div]
   calc
-    _ ≤ (y : ℝ) * Real.exp 1 := mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr hratio) hy0.le
+    _ ≤ (y : ℝ) * (x : ℝ) ^ (Real.log (x : ℝ))⁻¹ :=
+      mul_le_mul_of_nonneg_left
+        (Real.rpow_le_rpow hy0.le (by exact_mod_cast hyx) hexponent) hy0.le
+    _ ≤ (y : ℝ) * Real.exp 1 :=
+      mul_le_mul_of_nonneg_left Real.rpow_inv_log_le_exp_one hy0.le
     _ = _ := mul_comm _ _
 
 /-- The original height dominates `x^4` once `log x ≥ 2`; no change of T. -/

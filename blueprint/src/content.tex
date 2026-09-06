@@ -1,0 +1,36 @@
+\input{../../.lake/build/blueprint/library/Goldbach.tex}
+
+\chapter{The public proof boundary}
+
+Chen's theorem asserts that every sufficiently large even natural number is
+a prime plus either a prime or a product of two primes. This does not assert
+the binary Goldbach conjecture or an explicit numerical threshold.
+
+This blueprint shows seven selected declarations, not every lemma in the
+project. Its six displayed edges are inferred by LeanArchitect from the compiled
+endpoint declarations. The first three input nodes are explicit graph boundaries:
+their upstream proof dependencies are omitted from this view, not from Lean.
+The prose summaries accompany, rather than replace, the exact Lean statements.
+Both endpoint routes consume the same proved distribution input; the public
+existence theorem does not directly call the public quantitative theorem.
+
+\section{Distribution and conditional assembly}
+\inputleannode{thm:liu-pan}
+\inputleannode{thm:conditional-count}
+\inputleannode{thm:conditional-chen}
+
+\section{Unconditional endpoints}
+\inputleannode{thm:count-internal}
+\inputleannode{thm:chen-internal}
+
+\section{Public results}
+\inputleannode{thm:representation}
+\inputleannode{thm:chen}
+
+\chapter{Sources and verification}
+
+The source repository includes the literal specification, the full proof,
+release notes, attribution, and instructions for rebuilding and checking the
+public theorem. A graph is an inspection aid, not an independent proof check.
+
+\url{https://github.com/subfish-zhou/goldbach-lean}

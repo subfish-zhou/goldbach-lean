@@ -1631,66 +1631,8 @@ theorem correctedChenPrimePowerProperCountBound (N : ℕ) (hNbig : 2 ^ 110 < N)
     have hN13 : (1 : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ) :=
       Real.one_le_rpow (by exact_mod_cast (by omega : 1 ≤ N)) (by norm_num)
     linarith
-  have hzle_y : correctedChenZ N ≤ correctedChenY N := by
-    have hzr : (correctedChenZ N : ℝ) ≤ (correctedChenY N : ℝ) := by
-      have hzle10 : (correctedChenZ N : ℝ) ≤ (N : ℝ) ^ (1 / 10 : ℝ) + 1 := by
-        unfold correctedChenZ
-        have hfl : (Nat.floor ((N : ℝ) ^ (1 / 10 : ℝ)) : ℝ) ≤ (N : ℝ) ^ (1 / 10 : ℝ) :=
-          Nat.floor_le (by positivity)
-        rw [Nat.cast_max]
-        apply max_le_iff.mpr
-        constructor
-        · have hx1 : (1 : ℝ) ≤ (N : ℝ) ^ (1 / 10 : ℝ) :=
-            Real.one_le_rpow (by exact_mod_cast (by omega : 1 ≤ N)) (by norm_num)
-          linarith
-        · linarith
-      have hyge : (N : ℝ) ^ (1 / 3 : ℝ) ≤ (correctedChenY N : ℝ) := by
-        unfold correctedChenY
-        exact Nat.le_ceil _
-      have h1 : (N : ℝ) ^ (1 / 10 : ℝ) + 1 ≤ 2 * (N : ℝ) ^ (1 / 10 : ℝ) := by
-        have hN10 : (1 : ℝ) ≤ (N : ℝ) ^ (1 / 10 : ℝ) :=
-          Real.one_le_rpow (by exact_mod_cast (by omega : 1 ≤ N)) (by norm_num)
-        linarith
-      have h2 : 2 * (N : ℝ) ^ (1 / 10 : ℝ) ≤ (N : ℝ) ^ (1 / 3 : ℝ) := by
-        have hbig : (2 : ℝ) ≤ (N : ℝ) ^ (7 / 30 : ℝ) := by
-          have hNbigr : (2 : ℝ) ^ (110 : ℝ) ≤ (N : ℝ) := by
-            have hc : ((2 ^ 110 : ℕ) : ℝ) = (2 : ℝ) ^ (110 : ℝ) := by
-              norm_num [Real.rpow_natCast]
-            rw [← hc]
-            exact_mod_cast (le_of_lt hNbig)
-          have hpow : ((2 : ℝ) ^ (110 : ℝ)) ^ (7 / 30 : ℝ) ≤ (N : ℝ) ^ (7 / 30 : ℝ) := by
-            apply Real.rpow_le_rpow (by positivity : (0 : ℝ) ≤ (2 : ℝ) ^ (110 : ℝ))
-            · exact hNbigr
-            · norm_num
-          have hval : ((2 : ℝ) ^ (30 / 7 : ℝ)) ^ (7 / 30 : ℝ) = (2 : ℝ) ^ (1 : ℝ) := by
-            rw [← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2) (30 / 7 : ℝ) (7 / 30 : ℝ)]
-            norm_num
-          have hbase : (2 : ℝ) ^ (30 / 7 : ℝ) ≤ (2 : ℝ) ^ (110 : ℝ) := by
-            exact Real.rpow_le_rpow_of_exponent_le (by norm_num : (1 : ℝ) ≤ 2)
-              (by norm_num : (30 / 7 : ℝ) ≤ 110)
-          calc
-            (2 : ℝ) = (2 : ℝ) ^ (1 : ℝ) := by rw [Real.rpow_one]
-            _ = ((2 : ℝ) ^ (30 / 7 : ℝ)) ^ (7 / 30 : ℝ) := hval.symm
-            _ ≤ ((2 : ℝ) ^ (110 : ℝ)) ^ (7 / 30 : ℝ) := by
-              apply Real.rpow_le_rpow (by positivity : (0 : ℝ) ≤ (2 : ℝ) ^ (30 / 7 : ℝ))
-              · exact hbase
-              · norm_num
-            _ ≤ (N : ℝ) ^ (7 / 30 : ℝ) := hpow
-        have hNpos : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
-        have h10 : (N : ℝ) ^ (1 / 10 : ℝ) * 2 ≤ (N : ℝ) ^ (1 / 10 : ℝ) *
-            (N : ℝ) ^ (7 / 30 : ℝ) := by
-          exact mul_le_mul_of_nonneg_left hbig
-            (Real.rpow_nonneg (by exact_mod_cast (by omega : 0 ≤ N)) _)
-        have hsum : (N : ℝ) ^ (1 / 10 : ℝ) * (N : ℝ) ^ (7 / 30 : ℝ) =
-            (N : ℝ) ^ ((1 / 10 : ℝ) + (7 / 30 : ℝ)) := by
-          rw [← Real.rpow_add hNpos]
-        have h10' : (N : ℝ) ^ (1 / 10 : ℝ) * 2 ≤ (N : ℝ) ^ ((1 / 10 : ℝ) + (7 / 30 : ℝ)) := by
-          exact le_trans h10 (le_of_eq hsum)
-        have hfrac : (1 / 10 : ℝ) + 7 / 30 = 1 / 3 := by norm_num
-        rw [← hfrac]
-        simpa [mul_comm] using h10'
-      linarith
-    exact_mod_cast hzr
+  have hzle_y : correctedChenZ N ≤ correctedChenY N :=
+    (correctedChen_cutoffValid_of_nine_le (by omega : 9 ≤ N)).1.le
   have hper : ∀ q ∈ Q, ((correctedChenCandidates N).filter (fun p => q ^ 2 ∣ N - p)).card ≤
       N / q ^ 2 + 1 := by
     intro q hq

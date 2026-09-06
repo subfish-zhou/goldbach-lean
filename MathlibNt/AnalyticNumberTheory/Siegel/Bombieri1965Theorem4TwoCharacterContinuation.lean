@@ -61,16 +61,14 @@ theorem norm_twoCharacterError_le
       (norm_nonneg _) (by norm_num)).trans (by simp)
   have hp : (⌊t⌋₊ : ℝ) ^ (3 / 4 : ℝ) ≤ t ^ (3 / 4 : ℝ) :=
     Real.rpow_le_rpow (Nat.cast_nonneg _) hf (by norm_num)
-  have hp1 : 1 ≤ t ^ (3 / 4 : ℝ) := by
-    simpa using Real.rpow_le_rpow (by norm_num : (0 : ℝ) ≤ 1) ht
-      (by norm_num : (0 : ℝ) ≤ 3 / 4)
+  have hp1 : 1 ≤ t ^ (3 / 4 : ℝ) := Real.one_le_rpow ht (by norm_num)
   have hq : (1 : ℝ) ≤ q := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
-  have hqq : (q : ℝ) ^ 2 ≤ (q : ℝ) ^ 3 := by
-    nlinarith [mul_nonneg (sq_nonneg (q : ℝ)) (sub_nonneg.mpr hq)]
+  have hqq : (q : ℝ) ^ 2 ≤ (q : ℝ) ^ 3 := pow_le_pow_right₀ hq (by norm_num)
   have hn :
       ‖twoCharacterSummatory χ ψ ⌊t⌋₊ - (⌊t⌋₊ : ℂ) * twoCharacterResidue χ ψ‖ ≤
         300 * (q : ℝ) ^ 2 * (⌊t⌋₊ : ℝ) ^ (3 / 4 : ℝ) := by
-    have hI : Finset.Icc 1 ⌊t⌋₊ = Finset.Ioc 0 ⌊t⌋₊ := by ext n; simp; omega
+    have hI : Finset.Icc 1 ⌊t⌋₊ = Finset.Ioc 0 ⌊t⌋₊ :=
+      Finset.Icc_add_one_left_eq_Ioc 0 ⌊t⌋₊
     simpa only [twoCharacterSummatory, hI] using
       norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le χ ψ hχ hχquad hψ hprod ⌊t⌋₊
   calc
@@ -271,8 +269,7 @@ theorem twoCharacter_regularized_product_eq_errorIntegral
   have hG : AnalyticOnNhd ℂ G U :=
     (((differentiable_riemannZeta₁.mul (χ.differentiable_LFunction hχ)).mul
       (ψ.differentiable_LFunction hψ)).mul
-        ((χ * ψ).differentiable_LFunction hprod)).differentiableOn.analyticOnNhd
-          isOpen_univ |>.mono (subset_univ U)
+        ((χ * ψ).differentiable_LFunction hprod)).differentiableOn.analyticOnNhd hUopen
   have hpre : IsPreconnected U := (convex_halfSpace_re_gt (3 / 4)).isPreconnected
   have htwo : (2 : ℂ) ∈ U := by norm_num [U]
   have hevent : G =ᶠ[𝓝 (2 : ℂ)] F := by

@@ -174,30 +174,18 @@ private lemma row_indicator_sum
     intro t ht
     exact Finset.mem_Icc.mpr ⟨(Finset.mem_Icc.mp ht).1,
       (Finset.mem_Icc.mp ht).2.trans (by exact_mod_cast Nat.div_le_self y d)⟩
+  -- On the positive integer interval, the physical row support is exactly `t ≤ y/d`.
+  have hsupport (t : ℤ) (ht : t ∈ Finset.Icc (1 : ℤ) y) :
+      d * t.toNat ≤ y ↔ t ∈ Finset.Icc (1 : ℤ) (y / d : ℕ) := by
+    rw [mul_comm, ← Nat.le_div_iff_mul_le hd, Finset.mem_Icc]
+    have htLower := (Finset.mem_Icc.mp ht).1
+    omega
   rw [← Finset.sum_subset hsub]
   · apply Finset.sum_congr rfl
     intro t ht
-    rw [if_pos]
-    have htpos : 0 < t := lt_of_lt_of_le Int.zero_lt_one (Finset.mem_Icc.mp ht).1
-    have ht0 : 0 ≤ t := by omega
-    have htcast : (t.toNat : ℤ) = t := Int.toNat_of_nonneg ht0
-    have hcast : (t.toNat : ℤ) ≤ (y / d : ℕ) := htcast.trans_le (Finset.mem_Icc.mp ht).2
-    have htnat : t.toNat ≤ y / d := by exact_mod_cast hcast
-    simpa [mul_comm] using (Nat.le_div_iff_mul_le hd).mp htnat
+    rw [if_pos ((hsupport t (hsub ht)).mpr ht)]
   · intro t htY htSmall
-    rw [if_neg]
-    intro hdt
-    have htpos : 0 < t := lt_of_lt_of_le Int.zero_lt_one (Finset.mem_Icc.mp htY).1
-    have hle : t.toNat ≤ y / d :=
-      (Nat.le_div_iff_mul_le hd).mpr (by simpa [mul_comm] using hdt)
-    have ht0 : 0 ≤ t := htpos.le
-    have htcast : (t.toNat : ℤ) = t := Int.toNat_of_nonneg ht0
-    have hlower : (1 : ℤ) ≤ t := by omega
-    have hupper : t ≤ (y / d : ℕ) := by
-      calc
-        t = (t.toNat : ℤ) := htcast.symm
-        _ ≤ (y / d : ℕ) := by exact_mod_cast hle
-    exact (htSmall (Finset.mem_Icc.mpr ⟨hlower, hupper⟩)).elim
+    rw [if_neg (fun hdt => htSmall ((hsupport t htY).mp hdt))]
 
 /-- Finite combinatorial rearrangement: after summing over all `(d,t)`, the
 actual tensor coefficient energy is bounded by a sum of divisor-square moments

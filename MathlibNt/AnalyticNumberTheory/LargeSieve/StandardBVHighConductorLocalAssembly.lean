@@ -39,17 +39,12 @@ private theorem logPower_le_logConductorThreshold_eventually (A κ : ℕ) :
       nlinarith
     have hexp : Real.exp 2 < (N : ℝ) := h9.trans_le (by exact_mod_cast hN)
     exact (Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2 hexp |>.le
-  have hx0 : 0 ≤ x := hx2.trans' (by norm_num)
   have hxpow2 : 2 ≤ x ^ 2 := by nlinarith [sq_nonneg (x - 2)]
-  have hp2 : 2 ≤ x ^ (2 * (t + 1)) := by
-    rw [show 2 * (t + 1) = 2 * t + 2 by omega, pow_add]
-    have hbase : 1 ≤ x ^ (2 * t) := one_le_pow₀ (by linarith)
-    nlinarith [pow_nonneg hx0 (2 * t)]
   have hfloor := Nat.sub_one_lt_floor (x ^ (2 * (t + 1)))
   have hhalf : x ^ (2 * t) ≤ x ^ (2 * (t + 1)) - 1 := by
     rw [show 2 * (t + 1) = 2 * t + 2 by omega, pow_add]
     have hbase : 1 ≤ x ^ (2 * t) := one_le_pow₀ (by linarith)
-    nlinarith [pow_nonneg hx0 (2 * t)]
+    nlinarith only [hxpow2, hbase]
   have hcast : x ^ (2 * t) ≤ (Nat.floor (x ^ (2 * (t + 1))) : ℝ) :=
     hhalf.trans hfloor.le
   simpa [logConductorThreshold, conductorLocalPanConductorExponent, x, t,
@@ -84,10 +79,9 @@ theorem conductorLocal_high_scales_pan_payable (A κ : ℕ) :
   have hRpos : (0 : ℝ) < R := lt_of_lt_of_le (pow_pos hx _) hR'
   have hsRpos : 0 < Real.sqrt (R : ℝ) := Real.sqrt_pos.2 hRpos
   have hsR : x ^ (A + κ) ≤ Real.sqrt (R : ℝ) := by
-    have hsRsq : Real.sqrt (R : ℝ) ^ 2 = R := Real.sq_sqrt hRpos.le
-    have hp : (x ^ (A + κ)) ^ 2 = x ^ (2 * (A + κ)) := by rw [← pow_mul]; congr 1; omega
-    have hpow0 : 0 ≤ x ^ (A + κ) := (pow_nonneg hx.le _)
-    nlinarith
+    apply Real.le_sqrt_of_sq_le
+    rw [← pow_mul, Nat.mul_comm]
+    exact hR'
   have hQ : (Q : ℝ) ≤ Real.sqrt N / x ^ (A + κ) := by
     calc
       (Q : ℝ) =

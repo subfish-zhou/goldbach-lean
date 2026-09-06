@@ -248,25 +248,10 @@ theorem siftedSum_eq_filter (SP : SieveProblem) (hweights : ∀ n, SP.weights n 
     SP.siftedSum =
       (SP.support.filter (fun a => ∀ p : ℕ, p.Prime → (p : ℝ) < SP.z → ¬ p ∣ a)).sum (fun _ => (1 : ℝ)) := by
   -- The primeFactors of a product of distinct primes equal the original prime set.
-  have h_pf : ∀ (S : Finset ℕ), (∀ p ∈ S, p.Prime) → (S.prod id).primeFactors = S := by
-    intro S hS
-    induction S using Finset.induction_on with
-    | empty => simp [Nat.primeFactors_one]
-    | insert p S hp ih =>
-      rw [Finset.prod_insert hp]
-      -- id p reduces definitionally to p; use show to align the target.
-      show (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self _ _)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : (S.prod id) ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-          ih fun q hq => hS q (Finset.mem_insert_of_mem hq)]
-      rfl
   -- By prodPrimes_eq, the prime factors are exactly (range ⌈z⌉₊).filter Prime.
   have h_ppf : SP.prodPrimes.primeFactors = (Finset.range ⌈SP.z⌉₊).filter Nat.Prime := by
-    rw [SP.prodPrimes_eq, h_pf]
-    intro p hp; simp at hp; exact hp.2
+    rw [SP.prodPrimes_eq]
+    exact Nat.primeFactors_prod (fun p hp => (Finset.mem_filter.mp hp).2)
   -- For a prime p, p ∣ prodPrimes if and only if (p : ℝ) < z.
   --   (⇒) p ∣ prodPrimes ⇒ p ∈ primeFactors = (range ⌈z⌉₊).filter Prime ⇒ p < ⌈z⌉₊ ⇒ (p:ℝ) < z.
   --   (⇐) (p:ℝ) < z ⇒ p < ⌈z⌉₊ (Nat.lt_ceil) ⇒ p ∈ range ⇒ p ∣ prod (Finset.dvd_prod_of_mem).
@@ -329,28 +314,10 @@ theorem sieveProduct_eq_prod_one_sub_nu (SP : SieveProblem) :
     sieveProduct SP =
       ∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p) := by
   -- The primeFactors of the product of a prime set equal that set.
-  -- Induct on S using Finset.induction_on.
-  -- Base case: S = ∅, ∏ id = 1, and primeFactors 1 = ∅.
-  -- Inductive step: S = {p} ∪ S', so ∏ id = p * (∏ S' id).
-  --         primeFactors(p * prod) = {p} ∪ primeFactors(prod) = {p} ∪ S' = S ✓
-  have h_pf : ∀ (S : Finset ℕ), (∀ p ∈ S, p.Prime) → (S.prod id).primeFactors = S := by
-    intro S hS
-    induction S using Finset.induction_on with
-    | empty => simp [Nat.primeFactors_one]
-    | insert p S hp ih =>
-      rw [Finset.prod_insert hp]
-      show (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self _ _)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : (S.prod id) ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-          ih fun q hq => hS q (Finset.mem_insert_of_mem hq)]
-      rfl
   -- Apply this to obtain SP.prodPrimes.primeFactors = (range ⌈z⌉).filter Prime.
   have h_eq : SP.prodPrimes.primeFactors = (Finset.range ⌈SP.z⌉₊).filter Nat.Prime := by
-    rw [SP.prodPrimes_eq, h_pf]
-    intro p hp; simp at hp; exact hp.2
+    rw [SP.prodPrimes_eq]
+    exact Nat.primeFactors_prod (fun p hp => (Finset.mem_filter.mp hp).2)
   rw [sieveProduct, h_eq]
 
 /-- **Selberg-term bridge**:
@@ -379,17 +346,7 @@ theorem sieveProduct_mul_selbergTerms_eq_nu (SP : SieveProblem) :
   -- = A * B * A⁻¹ = B * A * A⁻¹ = B * 1 = B
   have h_A_ne_zero : (∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p)) ≠ 0 :=
     Finset.prod_ne_zero_iff.mpr (fun p hp => h_nz p hp)
-  rw [← mul_assoc, mul_comm _ (SP.nu SP.prodPrimes), mul_assoc]
-  -- Align the bound variables to remove the alpha-renaming difference.
-  show SP.nu SP.prodPrimes *
-      ((∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p)) *
-        (∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p))⁻¹) =
-    SP.nu SP.prodPrimes
-  -- Prove A * A⁻¹ = 1 first, then rewrite, avoiding a Finset.prod pattern mismatch.
-  have h_inv : (∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p)) *
-               (∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p))⁻¹ = 1 :=
-    mul_inv_cancel₀ h_A_ne_zero
-  rw [h_inv, mul_one]
+  rw [mul_left_comm, mul_inv_cancel₀ h_A_ne_zero, mul_one]
 
 /-- **Quotient bridge**:
 `sieveProduct = ν(prodPrimes)/selbergTerms(prodPrimes)`. -/

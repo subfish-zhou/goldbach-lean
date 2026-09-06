@@ -1334,15 +1334,7 @@ lemma verticalIntegral_split_three_finite' {s a b e σ : ℝ} {f : ℂ → ℂ}
     (1 : ℂ) / (2 * π * I) * (VIntegral f σ s a) +
     (1 : ℂ) / (2 * π * I) * (VIntegral f σ a b) +
     (1 : ℂ) / (2 * π * I) * (VIntegral f σ b e) := by
-  have : (1 : ℂ) / (2 * π * I) * (VIntegral f σ s a) +
-      (1 : ℂ) / (2 * π * I) * (VIntegral f σ a b) +
-      (1 : ℂ) / (2 * π * I) * (VIntegral f σ b e) =
-        (1 : ℂ) / (2 * π * I) * ((VIntegral f σ s a) +
-    (VIntegral f σ a b) +
-    (VIntegral f σ b e)) := by ring
-  rw [this]
-  clear this
-  rw [← verticalIntegral_split_three_finite hf hab]
+  rw [verticalIntegral_split_three_finite hf hab, mul_add, mul_add]
 
 theorem SmoothedChebyshevPull2_aux1 {T σ₁ : ℝ} (σ₁lt : σ₁ < 1)
   (holoOn : HolomorphicOn (ζ' / ζ) (Icc σ₁ 2 ×ℂ Icc (-T) T \ {1})) :
@@ -1888,39 +1880,10 @@ theorem I1Bound
     have U : 1 < X := by linarith
     exact Real.log_pos U
 
-  have pts_re_le_one : pts_re < 2 := by
+  have pts_re_lt_two : pts_re < 2 := by
     unfold pts_re
-    have Z : Real.log 3 < Real.log X :=
-      by
-        refine log_lt_log ?_ X_large
-        simp only [Nat.ofNat_pos]
-
-    have Z01 : 1 < Real.log 3 := logt_gt_one le_rfl
-    have Zpos0 : 0 < Real.log 3 := by positivity
-    have Zpos1 : 0 < Real.log X := by calc
-      0 < Real.log 3 := Zpos0
-      _ < Real.log X := Z
-
-    have Z1 : (Real.log X)⁻¹ < (Real.log 3)⁻¹ := (inv_lt_inv₀ Zpos1 Zpos0).mpr Z
-
-    have Z02 : (Real.log 3)⁻¹ < 1 := by
-      have T01 := (inv_lt_inv₀ ?_ ?_).mpr Z01
-      · simp only [inv_one] at T01
-        exact T01
-      · exact Zpos0
-      simp only [zero_lt_one]
-
-    have Z2 : 1 + (Real.log X)⁻¹ < 1 + (Real.log 3)⁻¹ := by
-      exact (add_lt_add_iff_left 1).mpr Z1
-
-    have Z3 : 1 + (Real.log 3)⁻¹ < 2 := by
-      calc
-        1 + (Real.log 3)⁻¹ < 1 + 1 := by linarith
-        _ = 2 := by ring_nf
-
-    calc
-      1 + (Real.log X)⁻¹ < 1 + (Real.log 3)⁻¹ := Z2
-      _ < 2 := Z3
+    rw [← one_add_one_eq_two]
+    exact (add_lt_add_iff_left 1).mpr (inv_lt_one_of_one_lt₀ (logt_gt_one X_large.le))
 
   have inve : (pts_re - 1)⁻¹ = Real.log X := by
     unfold pts_re
@@ -1931,7 +1894,7 @@ theorem I1Bound
       ∀(t : ℝ), ‖ζ' (pts t) / ζ (pts t)‖ ≤ K * Real.log X := by
     intro t
     rw [←inve]
-    exact K_bounds_zeta_at_any_t' t pts_re pts_re_ge_one pts_re_le_one
+    exact K_bounds_zeta_at_any_t' t pts_re pts_re_ge_one pts_re_lt_two
 
   have pts_re_pos : pts_re > 0 := by
     unfold pts_re
@@ -1949,7 +1912,7 @@ theorem I1Bound
     · simp_all only [one_div, support_subset_iff, ne_eq, mem_Icc, mul_inv_rev, gt_iff_lt,
       Complex.norm_div, le_refl, implies_true, add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im,
       I_im, mul_one, sub_self, add_zero, EReal.coe_le_coe_iff]
-      exact le_of_lt pts_re_le_one
+      exact le_of_lt pts_re_lt_two
 
   have pts_re_ge_1 : pts_re > 1 := by
     unfold pts_re
@@ -2027,13 +1990,7 @@ theorem I1Bound
     exact final_bound_pointwise
 
   have σ₀_gt : 1 < pts_re := pts_re_ge_1
-  have σ₀_le_2 : pts_re ≤ 2 := by
-    unfold pts_re
-    -- LOL!
-    exact
-      Preorder.le_trans (1 + (Real.log X)⁻¹) (pts (SmoothingF (SmoothingF M))).re 2
-        (triv_pts_lo_bound (SmoothingF (SmoothingF M)))
-        (triv_pts_up_bound (SmoothingF (SmoothingF M)))
+  have σ₀_le_2 : pts_re ≤ 2 := pts_re_lt_two.le
 
   have f_integrable := SmoothedChebyshevPull1_aux_integrable eps_pos eps_less_one X_large σ₀_gt
     σ₀_le_2 suppSmoothingF SmoothingFnonneg mass_one ContDiffSmoothingF

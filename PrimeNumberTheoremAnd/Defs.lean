@@ -238,22 +238,22 @@ lemma admissible_bound.mono
     exact rpow_le_rpow (by positivity) hua (by positivity)
   suffices h : AntitoneOn (fun t ↦ 2 * B * log t - C * t) (Set.Ici (2 * B / C)) by
     grind [h (Set.mem_Ici.mpr this) (Set.mem_Ici.mpr (this.trans hsab)) hsab]
+  have hthreshold : 0 < 2 * B / C := div_pos (mul_pos zero_lt_two hB) hC
+  have hderiv (t : ℝ) (ht : 0 < t) :
+      HasDerivAt (fun t ↦ 2 * B * log t - C * t) (2 * B * t⁻¹ - C) t := by
+    simpa only [mul_one] using!
+      ((hasDerivAt_log ht.ne').const_mul (2 * B)).sub ((hasDerivAt_id t).const_mul C)
   apply antitoneOn_of_deriv_nonpos (convex_Ici _)
   · exact ((continuousOn_const.mul (continuousOn_log.mono fun t ht ↦
-        ne_of_gt ((div_pos (by positivity) hC).trans_le ht))).sub
-      (continuousOn_const.mul continuousOn_id))
+        (hthreshold.trans_le ht).ne')).sub (continuousOn_const.mul continuousOn_id))
   · intro t ht
     rw [interior_Ici] at ht
-    exact (((hasDerivAt_log ((div_pos (by positivity) hC).trans ht).ne').const_mul _).sub
-      ((hasDerivAt_id t).const_mul C)).differentiableAt.differentiableWithinAt
+    exact (hderiv t (hthreshold.trans ht)).differentiableAt.differentiableWithinAt
   · intro t ht
     rw [interior_Ici] at ht
-    have hdt : HasDerivAt (fun t ↦ 2 * B * log t - C * t) (2 * B * t⁻¹ - C * 1) t :=
-      ((hasDerivAt_log ((div_pos (by positivity) hC).trans ht).ne').const_mul _).sub
-        ((hasDerivAt_id t).const_mul C)
-    rw [hdt.deriv, mul_one, sub_nonpos, ← div_eq_mul_inv,
-      div_le_iff₀ ((div_pos (by positivity) hC).trans ht)]
-    linarith [(div_lt_iff₀ hC).mp ht, mul_comm C t]
+    rw [(hderiv t (hthreshold.trans ht)).deriv, sub_nonpos, ← div_eq_mul_inv,
+      div_le_iff₀ (hthreshold.trans ht)]
+    simpa only [mul_comm] using ((div_lt_iff₀ hC).mp ht).le
 
 @[blueprint
   "classical-to-numeric"

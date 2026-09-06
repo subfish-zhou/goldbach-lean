@@ -157,9 +157,8 @@ theorem longMean_le (f : ℕ → ℂ) (hf : ∀ n, ‖f n‖ ≤ 1)
   let S := Ioc L (min (2 ^ (k + 1) * A₁) A₂)
   let J := range (panDyadicDepth H ⌊T⌋₊)
   have hH : 0 < H := shortCutoff_pos hR
-  have hAL : A₁ ≤ L := by
-    dsimp [L]
-    nlinarith [show 1 ≤ (2 : ℕ) ^ k from Nat.one_le_pow k 2 (by omega)]
+  have hAL : A₁ ≤ L :=
+    Nat.le_mul_of_pos_left A₁ (pow_pos (by norm_num) k)
   have hS : S ⊆ Ioc L (2 * L) := by
     intro n hn
     rcases mem_Ioc.mp hn with ⟨hnL, hnU⟩
@@ -286,13 +285,15 @@ theorem source_reciprocal_scale_le (x y A₁ j : ℕ) {B : ℝ}
       Real.rpow_le_rpow hly.le hlogs hB
     have hp : (1 : ℝ) ≤ 2 ^ j := one_le_pow₀ (by norm_num)
     have hp0 : 0 ≤ Real.log x ^ B := Real.rpow_nonneg (by linarith) _
-    dsimp [D, R, conductorRadius, lowConductor]
-    nlinarith
+    calc
+      D ≤ Real.log x ^ B := hmono
+      _ ≤ 2 ^ j * Real.log x ^ B := le_mul_of_one_le_left hp0 hp
+      _ = R := rfl
   have hH : (0 : ℝ) < H := by exact_mod_cast shortCutoff_pos hR
   have hDH : D ^ 2 ≤ 2 * (H : ℝ) := by
-    have h := square_le_two_mul_shortCutoff hR
-    dsimp [H]
-    nlinarith
+    calc
+      D ^ 2 ≤ R ^ 2 := pow_le_pow_left₀ hD.le hDR 2
+      _ ≤ 2 * (H : ℝ) := square_le_two_mul_shortCutoff hR
   have hDA : D ^ 2 ≤ (A₁ : ℝ) := by simpa only [D, hpow] using hA
   have hApos : (0 : ℝ) < A₁ := lt_of_lt_of_le (sq_pos_of_pos hD) hDA
   have hAi : 1 / (A₁ : ℝ) ≤ 1 / D ^ 2 :=

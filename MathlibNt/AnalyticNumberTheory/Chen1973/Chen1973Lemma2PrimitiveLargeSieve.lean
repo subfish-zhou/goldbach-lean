@@ -150,63 +150,20 @@ lemma chen1973_fourier_parseval (s : Finset ℤ) (b : ℤ → ℂ) (u : ℝ) :
 lemma chen1973_fourier_parseval_shift (s : Finset ℤ) (b : ℤ → ℂ) (τ u : ℝ) :
     (∫ x in u..u + 1, ‖∑ n ∈ s, b n * charReal (((n : ℝ) - τ) * x)‖ ^ 2) =
       ∑ n ∈ s, ‖b n‖ ^ 2 := by
-  apply Complex.ofReal_inj.mp
-  rw [← intervalIntegral.integral_ofReal]
-  push_cast
-  rw [intervalIntegral.integral_congr (fun x _ =>
-    normSq_sum_eq_sum_mul_star s (fun n => b n * charReal (((n : ℝ) - τ) * x)))]
-  rw [intervalIntegral.integral_finsetSum]
-  · apply Finset.sum_congr rfl
+  -- A frequency shift is multiplication by a unit-modulus character.
+  have hmod (x : ℝ) :
+      (∑ n ∈ s, b n * charReal (((n : ℝ) - τ) * x)) =
+        charReal (-τ * x) * ∑ n ∈ s, b n * charReal ((n : ℝ) * x) := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
     intro n hn
-    rw [intervalIntegral.integral_finsetSum]
-    calc
-      (∑ m ∈ s, ∫ x in u..u + 1,
-          (b n * charReal (((n : ℝ) - τ) * x)) *
-            star (b m * charReal (((m : ℝ) - τ) * x))) =
-          ∑ m ∈ s, if n = m then ((‖b n‖ : ℂ) ^ 2) else 0 := by
-        apply Finset.sum_congr rfl
-        intro m hm
-        rw [show (fun x : ℝ =>
-            (b n * charReal (((n : ℝ) - τ) * x)) *
-              star (b m * charReal (((m : ℝ) - τ) * x))) =
-            (fun x : ℝ => (b n * star (b m)) *
-              charReal (((n - m : ℤ) : ℝ) * x)) by
-            funext x
-            rw [star_mul]
-            calc
-              b n * charReal (((n : ℝ) - τ) * x) *
-                  (star (charReal (((m : ℝ) - τ) * x)) * star (b m)) =
-                (b n * star (b m)) *
-                  (charReal (((n : ℝ) - τ) * x) *
-                    star (charReal (((m : ℝ) - τ) * x))) := by
-                      ring
-              _ = (b n * star (b m)) * charReal (((n - m : ℤ) : ℝ) * x) := by
-                    rw [← charReal_sub]
-                    congr 2
-                    push_cast
-                    ring]
-        rw [intervalIntegral.integral_const_mul, charReal_intervalIntegral_int]
-        by_cases hnm : n = m
-        · subst m
-          simp only [sub_self, if_pos, mul_one]
-          calc
-            b n * star (b n) = (Complex.normSq (b n) : ℂ) := Complex.mul_conj (b n)
-            _ = (‖b n‖ : ℂ) ^ 2 := by
-              rw [Complex.normSq_eq_norm_sq]
-              norm_cast
-        · have hsub : n - m ≠ 0 := sub_ne_zero.mpr hnm
-          simp [hsub, hnm]
-      _ = (‖b n‖ : ℂ) ^ 2 := by
-        simp [hn]
-    · intro m hm
-      apply Continuous.intervalIntegrable
-      unfold charReal
-      fun_prop
-  · intro n hn
-    refine continuous_finsetSum _ ?_ |>.intervalIntegrable u (u + 1)
-    intro m hm
-    unfold charReal
-    fun_prop
+    rw [show ((n : ℝ) - τ) * x = -τ * x + (n : ℝ) * x by ring, charReal_add]
+    ring
+  have hnorm (x : ℝ) : ‖charReal (-τ * x)‖ = 1 := by
+    rw [charReal]
+    simpa [mul_comm] using Complex.norm_exp_ofReal_mul_I (-(2 * Real.pi * (τ * x)))
+  simp_rw [hmod, norm_mul, hnorm, one_mul]
+  exact chen1973_fourier_parseval s b u
 
 private lemma chen1973ShiftedExponentialSum_eq_modulation
     (a : ℤ → ℝ) (M : ℤ) (N : ℕ) (τ α : ℝ) :
@@ -384,20 +341,12 @@ private lemma local_norm_sq_le_average_add_cross
       rw [show deriv F t = 2 * inner ℝ (f t) (Complex.I * g t) by
           dsimp [F]
           simpa using hsq.deriv]
-      rw [real_inner_eq_re_inner ℂ, RCLike.inner_apply]
-      dsimp [B]
-      rw [abs_mul, abs_of_nonneg (by norm_num)]
       calc
-        2 * |(Complex.I * g t * starRingEnd ℂ (f t)).re| ≤
-            2 * ‖Complex.I * g t * starRingEnd ℂ (f t)‖ := by
-          gcongr
-          exact Complex.abs_re_le_norm _
-        _ = 2 * (‖Complex.I * g t‖ * ‖f t‖) := by
+        ‖(2 : ℝ) * inner ℝ (f t) (Complex.I * g t)‖ ≤
+            ‖(2 : ℝ)‖ * (‖f t‖ * ‖Complex.I * g t‖) := by
           rw [norm_mul]
-          simp [mul_assoc, mul_left_comm, mul_comm]
-        _ = 2 * ‖f t‖ * ‖g t‖ := by
-          rw [norm_mul, Complex.norm_I]
-          ring
+          exact mul_le_mul_of_nonneg_left (norm_inner_le_norm _ _) (norm_nonneg _)
+        _ = B t := by simp [B, mul_assoc]
     have hdisp :=
       norm_sub_le_integral_of_norm_deriv_le_of_le huy hFcontOn hFdiffOn hFB hBiuy
     have hmono :
@@ -485,20 +434,12 @@ private lemma local_norm_sq_right_le_average_add_cross
       rw [show deriv F t = 2 * inner ℝ (f t) (Complex.I * g t) by
           dsimp [F]
           simpa using hsq.deriv]
-      rw [real_inner_eq_re_inner ℂ, RCLike.inner_apply]
-      dsimp [B]
-      rw [abs_mul, abs_of_nonneg (by norm_num)]
       calc
-        2 * |(Complex.I * g t * starRingEnd ℂ (f t)).re| ≤
-            2 * ‖Complex.I * g t * starRingEnd ℂ (f t)‖ := by
-          gcongr
-          exact Complex.abs_re_le_norm _
-        _ = 2 * (‖Complex.I * g t‖ * ‖f t‖) := by
+        ‖(2 : ℝ) * inner ℝ (f t) (Complex.I * g t)‖ ≤
+            ‖(2 : ℝ)‖ * (‖f t‖ * ‖Complex.I * g t‖) := by
           rw [norm_mul]
-          simp [mul_assoc, mul_left_comm, mul_comm]
-        _ = 2 * ‖f t‖ * ‖g t‖ := by
-          rw [norm_mul, Complex.norm_I]
-          ring
+          exact mul_le_mul_of_nonneg_left (norm_inner_le_norm _ _) (norm_nonneg _)
+        _ = B t := by simp [B, mul_assoc]
     have hdisp :=
       norm_sub_le_integral_of_norm_deriv_le_of_le hyv hFcontOn hFdiffOn hFB hByv
     have hmono :
@@ -1129,41 +1070,15 @@ theorem sum_chen1973ModulusCell
     (∑ k ∈ Finset.range (Nat.log2 ((Q - 1) / D) + 1),
         ∑ q ∈ chen1973ModulusCell D Q k, f q) =
       ∑ q ∈ Finset.Ioc D Q, f q := by
-  let K := Nat.log2 ((Q - 1) / D) + 1
-  let g : ℕ → Fin K := fun q =>
-    ⟨Nat.log2 ((q - 1) / D) % K, Nat.mod_lt _ (by dsimp [K]; omega)⟩
-  rw [← Fin.sum_univ_eq_sum_range
-    (fun k => ∑ q ∈ chen1973ModulusCell D Q k, f q) K]
-  calc
-    (∑ k : Fin K, ∑ q ∈ chen1973ModulusCell D Q k, f q) =
-        ∑ k : Fin K,
-          ∑ q ∈ (Finset.Ioc D Q).filter (fun q => g q = k), f q := by
-      apply Finset.sum_congr rfl
-      intro k hk
-      apply Finset.sum_congr
-      · ext q
-        by_cases hq : q ∈ Finset.Ioc D Q
-        · have hq' := Finset.mem_Ioc.mp hq
-          have hown : q ∈ chen1973ModulusCell D Q
-              (Nat.log2 ((q - 1) / D)) := by
-            rw [mem_chen1973ModulusCell]
-            exact ⟨hq'.1, hq'.2, rfl⟩
-          have hidx : Nat.log2 ((q - 1) / D) < K := by
-            dsimp [K]
-            exact chen1973ModulusCell_index_lt hD hown
-          have hmod : Nat.log2 ((q - 1) / D) % K =
-              Nat.log2 ((q - 1) / D) := Nat.mod_eq_of_lt hidx
-          simp [chen1973ModulusCell, g, hq, hmod]
-          constructor
-          · intro h
-            apply Fin.ext
-            exact h
-          · intro h
-            exact congrArg Fin.val h
-        · simp [chen1973ModulusCell, hq]
-      · intro q hq
-        rfl
-    _ = _ := Finset.sum_fiberwise (Finset.Ioc D Q) g f
+  -- Swap the finite sums: each modulus contributes at its unique cell index.
+  simp_rw [chen1973ModulusCell, Finset.sum_filter]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro q hq
+  have hown : q ∈ chen1973ModulusCell D Q (Nat.log2 ((q - 1) / D)) := by
+    simp [chen1973ModulusCell, hq]
+  have hidx := chen1973ModulusCell_index_lt hD hown
+  simp only [Finset.sum_ite_eq, Finset.mem_range, if_pos hidx]
 
 /-- One source dyadic cell, obtained from (2) at cutoff `2^(k+1)D` and the
 pointwise inequality `1/q ≤ 1/(2^k D)`. -/
@@ -1242,13 +1157,8 @@ theorem chen1973EquationThree_cell_le
 /-- Finite geometric identity used in Chen's dyadic summation. -/
 theorem sum_range_two_pow (K : ℕ) :
     (∑ k ∈ Finset.range K, ((2 ^ k : ℕ) : ℝ)) = (2 : ℝ) ^ K - 1 := by
-  induction K with
-  | zero => simp
-  | succ K ih =>
-      rw [Finset.sum_range_succ, ih]
-      simp only [Nat.cast_pow, Nat.cast_ofNat]
-      rw [pow_succ]
-      ring
+  simpa [show (2 : ℝ) - 1 = 1 by norm_num] using
+    geom_sum_eq (show (2 : ℝ) ≠ 1 by norm_num) K
 
 /-- The reciprocal dyadic tail has total mass at most two. -/
 theorem sum_range_inv_two_pow_le_two (K : ℕ) :
@@ -1273,65 +1183,63 @@ theorem chen1973_dyadic_scalar_sum_le (N D Q : ℕ) (hD : 0 < D) (hDQ : D < Q) :
       8 * (Q : ℝ) + 2 * Real.pi * (N : ℝ) / (D : ℝ) := by
   dsimp only
   let K := Nat.log2 ((Q - 1) / D) + 1
-  by_cases hDQ' : D < Q
-  · let r := (Q - 1) / D
-    have hr : 0 < r := by
-      dsimp [r]
-      exact Nat.div_pos (by omega) hD
-    have hlo : 2 ^ Nat.log2 r ≤ r := Nat.log2_self_le (Nat.ne_of_gt hr)
-    have hrmul : r * D ≤ Q - 1 := by
-      dsimp [r]
-      exact Nat.div_mul_le_self (Q - 1) D
-    have hpNat : 2 ^ K * D ≤ 2 * Q := by
-      have hbase : 2 ^ Nat.log2 r * D ≤ Q - 1 :=
-        (Nat.mul_le_mul_right D hlo).trans hrmul
-      calc
-        2 ^ K * D = 2 * (2 ^ Nat.log2 r * D) := by
-          dsimp [K]
-          rw [pow_succ]
-          ring
-        _ ≤ 2 * (Q - 1) := Nat.mul_le_mul_left 2 hbase
-        _ ≤ 2 * Q := by omega
-    have hp : (((2 : ℝ) ^ K) * (D : ℝ)) ≤ 2 * (Q : ℝ) := by
-      exact_mod_cast hpNat
-    have hfirst :
-        (∑ k ∈ Finset.range K, 4 * ((2 ^ k * D : ℕ) : ℝ)) ≤
-          8 * (Q : ℝ) := by
-      calc
-        _ = 4 * (D : ℝ) *
-            (∑ k ∈ Finset.range K, ((2 ^ k : ℕ) : ℝ)) := by
-              rw [Finset.mul_sum]
-              apply Finset.sum_congr rfl
-              intro k hk
-              push_cast
-              ring
-        _ = 4 * (D : ℝ) * ((2 : ℝ) ^ K - 1) := by
-              rw [sum_range_two_pow]
-        _ ≤ 4 * (D : ℝ) * (2 : ℝ) ^ K := by
-              have hDr : (0 : ℝ) ≤ D := by positivity
-              nlinarith
-        _ ≤ 8 * (Q : ℝ) := by nlinarith
-    have hsecond :
-        (∑ k ∈ Finset.range K,
-          Real.pi * (N : ℝ) / ((2 ^ k * D : ℕ) : ℝ)) ≤
-          2 * Real.pi * (N : ℝ) / (D : ℝ) := by
-      have hDr : (0 : ℝ) < D := by exact_mod_cast hD
-      calc
-        _ = (Real.pi * (N : ℝ) / (D : ℝ)) *
-            ∑ k ∈ Finset.range K, (1 / (2 : ℝ)) ^ k := by
-              rw [Finset.mul_sum]
-              apply Finset.sum_congr rfl
-              intro k hk
-              push_cast
-              rw [one_div, inv_pow]
-              field_simp
-        _ ≤ (Real.pi * (N : ℝ) / (D : ℝ)) * 2 := by
-              apply mul_le_mul_of_nonneg_left (sum_range_inv_two_pow_le_two K)
-              positivity
-        _ = _ := by ring
-    rw [Finset.sum_add_distrib]
-    exact add_le_add hfirst hsecond
-  · exact (hDQ' hDQ).elim
+  let r := (Q - 1) / D
+  have hr : 0 < r := by
+    dsimp [r]
+    exact Nat.div_pos (by omega) hD
+  have hlo : 2 ^ Nat.log2 r ≤ r := Nat.log2_self_le (Nat.ne_of_gt hr)
+  have hrmul : r * D ≤ Q - 1 := by
+    dsimp [r]
+    exact Nat.div_mul_le_self (Q - 1) D
+  have hpNat : 2 ^ K * D ≤ 2 * Q := by
+    have hbase : 2 ^ Nat.log2 r * D ≤ Q - 1 :=
+      (Nat.mul_le_mul_right D hlo).trans hrmul
+    calc
+      2 ^ K * D = 2 * (2 ^ Nat.log2 r * D) := by
+        dsimp [K]
+        rw [pow_succ]
+        ring
+      _ ≤ 2 * (Q - 1) := Nat.mul_le_mul_left 2 hbase
+      _ ≤ 2 * Q := by omega
+  have hp : (((2 : ℝ) ^ K) * (D : ℝ)) ≤ 2 * (Q : ℝ) := by
+    exact_mod_cast hpNat
+  have hfirst :
+      (∑ k ∈ Finset.range K, 4 * ((2 ^ k * D : ℕ) : ℝ)) ≤
+        8 * (Q : ℝ) := by
+    calc
+      _ = 4 * (D : ℝ) *
+          (∑ k ∈ Finset.range K, ((2 ^ k : ℕ) : ℝ)) := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro k hk
+            push_cast
+            ring
+      _ = 4 * (D : ℝ) * ((2 : ℝ) ^ K - 1) := by
+            rw [sum_range_two_pow]
+      _ ≤ 4 * (D : ℝ) * (2 : ℝ) ^ K := by
+            have hDr : (0 : ℝ) ≤ D := by positivity
+            nlinarith
+      _ ≤ 8 * (Q : ℝ) := by nlinarith
+  have hsecond :
+      (∑ k ∈ Finset.range K,
+        Real.pi * (N : ℝ) / ((2 ^ k * D : ℕ) : ℝ)) ≤
+        2 * Real.pi * (N : ℝ) / (D : ℝ) := by
+    have hDr : (0 : ℝ) < D := by exact_mod_cast hD
+    calc
+      _ = (Real.pi * (N : ℝ) / (D : ℝ)) *
+          ∑ k ∈ Finset.range K, (1 / (2 : ℝ)) ^ k := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro k hk
+            push_cast
+            rw [one_div, inv_pow]
+            field_simp
+      _ ≤ (Real.pi * (N : ℝ) / (D : ℝ)) * 2 := by
+            apply mul_le_mul_of_nonneg_left (sum_range_inv_two_pow_le_two K)
+            positivity
+      _ = _ := by ring
+  rw [Finset.sum_add_distrib]
+  exact add_le_add hfirst hsecond
 
 /-- Chen p. 114: summing the dyadic cells proves equation (3).  We exhibit the
 absolute constant `8 + 2π`; the printed `≪` only records existence of such a

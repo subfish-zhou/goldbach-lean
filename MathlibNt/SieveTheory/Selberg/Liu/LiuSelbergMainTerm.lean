@@ -107,69 +107,6 @@ theorem fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support
       exact h1 ((hlambda d1 hne).2)
     simp [h1, hzero]
 
-/-- Under the source support hypotheses and `Even N`, the Selberg coefficient
-factor is the diagonal main sum of a `BoundingSieve` with `ν(d) = 1/φ(d)`. -/
-theorem liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared
-    {N : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
-    (hNeven : Even N) (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda) :
-    (liuSelbergBoundingSieve N epsilon hNeven).mainSum
-        (BoundingSieve.lambdaSquared lambda) =
-      liuSelbergCoefficientFactor N epsilon lambda := by
-  let S := liuSelbergBoundingSieve N epsilon hNeven
-  have hQpos : 0 < liuPaperQModulus N epsilon :=
-    Nat.pos_of_ne_zero (liuPaperQModulus_squarefree N epsilon).ne_zero
-  calc
-    S.mainSum (BoundingSieve.lambdaSquared lambda) =
-        ∑ d1 ∈ (liuPaperQModulus N epsilon).divisors,
-          ∑ d2 ∈ (liuPaperQModulus N epsilon).divisors,
-            S.nu d1 * lambda d1 * S.nu d2 * lambda d2 *
-              (S.nu (d1.gcd d2))⁻¹ := by
-      simpa [S, liuSelbergBoundingSieve] using
-        (BoundingSieve.mainSum_lambdaSquared_eq_sum_sum_mul (s := S) lambda)
-    _ =
-        ∑ d1 ∈ (liuPaperQModulus N epsilon).divisors,
-          ∑ d2 ∈ (liuPaperQModulus N epsilon).divisors,
-            lambda d1 * lambda d2 / Nat.totient (Nat.lcm d1 d2) := by
-      apply Finset.sum_congr rfl
-      intro d1 hd1
-      apply Finset.sum_congr rfl
-      intro d2 hd2
-      have hd1dvd : d1 ∣ liuPaperQModulus N epsilon := (Nat.mem_divisors.mp hd1).1
-      have hd2dvd : d2 ∣ liuPaperQModulus N epsilon := (Nat.mem_divisors.mp hd2).1
-      have hd1pos : 0 < d1 := Nat.pos_of_dvd_of_pos hd1dvd hQpos
-      have hd2pos : 0 < d2 := Nat.pos_of_dvd_of_pos hd2dvd hQpos
-      have hgcd_dvd : d1.gcd d2 ∣ liuPaperQModulus N epsilon :=
-        (Nat.gcd_dvd_left d1 d2).trans hd1dvd
-      have hnu_gcd_ne : S.nu (d1.gcd d2) ≠ 0 := by
-        exact (BoundingSieve.nu_pos_of_dvd_prodPrimes (s := S) hgcd_dvd).ne'
-      have hnu_lcm :
-          S.nu (d1.lcm d2) = S.nu d1 * S.nu d2 / S.nu (d1.gcd d2) :=
-        S.nu_mult.map_lcm hnu_gcd_ne
-      have hlcm_ne : d1.lcm d2 ≠ 0 :=
-        Nat.lcm_ne_zero hd1pos.ne' hd2pos.ne'
-      have hrecip :
-          S.nu (d1.lcm d2) = 1 / Nat.totient (d1.lcm d2) := by
-        simp [S, liuSelbergBoundingSieve, liuSelbergReciprocalTotient, hlcm_ne]
-      calc
-        S.nu d1 * lambda d1 * S.nu d2 * lambda d2 * (S.nu (d1.gcd d2))⁻¹ =
-            lambda d1 * lambda d2 * (S.nu d1 * S.nu d2 / S.nu (d1.gcd d2)) := by
-          ring
-        _ = lambda d1 * lambda d2 * S.nu (d1.lcm d2) := by rw [← hnu_lcm]
-        _ = lambda d1 * lambda d2 / Nat.totient (d1.lcm d2) := by
-          simp [hrecip, div_eq_mul_inv, mul_assoc, mul_comm]
-    _ = liuSelbergCoefficientFactor N epsilon lambda :=
-      fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support hlambda.1
-
-/-- The admissible-weight specialization of the support-only carrier identity. -/
-theorem fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor
-    {N : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
-    (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda) :
-    (liuPaperQModulus N epsilon).divisors.sum (fun d1 =>
-      (liuPaperQModulus N epsilon).divisors.sum (fun d2 =>
-        lambda d1 * lambda d2 / Nat.totient (Nat.lcm d1 d2))) =
-      liuSelbergCoefficientFactor N epsilon lambda :=
-  fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support hlambda.1
-
 /-- The coefficient/diagonal-main-sum identity needs only source support, not
 the separate absolute bound used by Liu's remainder estimate. -/
 theorem liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared_of_support
@@ -224,6 +161,26 @@ theorem liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared_of_support
           simp [hrecip, div_eq_mul_inv, mul_assoc, mul_comm]
     _ = liuSelbergCoefficientFactor N epsilon lambda :=
       fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support hlambda
+
+/-- Under the source support hypotheses and `Even N`, the Selberg coefficient
+factor is the diagonal main sum of a `BoundingSieve` with `ν(d) = 1/φ(d)`. -/
+theorem liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared
+    {N : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
+    (hNeven : Even N) (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda) :
+    (liuSelbergBoundingSieve N epsilon hNeven).mainSum
+        (BoundingSieve.lambdaSquared lambda) =
+      liuSelbergCoefficientFactor N epsilon lambda :=
+  liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared_of_support hNeven hlambda.1
+
+/-- The admissible-weight specialization of the support-only carrier identity. -/
+theorem fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor
+    {N : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
+    (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda) :
+    (liuPaperQModulus N epsilon).divisors.sum (fun d1 =>
+      (liuPaperQModulus N epsilon).divisors.sum (fun d2 =>
+        lambda d1 * lambda d2 / Nat.totient (Nat.lcm d1 d2))) =
+      liuSelbergCoefficientFactor N epsilon lambda :=
+  fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support hlambda.1
 
 /-- Under the source support hypotheses and `Even N`, the Selberg coefficient
 factor is a nonnegative diagonal sum of squares. -/

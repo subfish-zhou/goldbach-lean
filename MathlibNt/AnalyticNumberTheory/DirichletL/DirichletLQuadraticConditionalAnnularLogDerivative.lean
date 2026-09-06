@@ -48,6 +48,38 @@ private theorem fixedH_annular_bounds
   exact ⟨hHone.trans hHt, (by linarith [hcond.trans hHt]),
     hpole.trans hHt, hcond.trans hHt⟩
 
+/-- The power-width lies both in the half-strip and in the logarithmic strip
+needed by the value-difference and derivative estimates. -/
+private theorem powerWidth_le_half_and_inv_log
+    {A p H L : ℝ} (hA : 0 < A) (hAhalf : A ≤ 1 / 2)
+    (hp : 0 ≤ p) (hp1 : p ≤ 1) (hH1 : 1 ≤ H)
+    (hL : 0 < L) (hLH : L ≤ H) :
+    let x := A * p / H ^ 12
+    x ≤ 1 / 2 ∧ x ≤ 1 / L := by
+  dsimp only
+  have hH : 0 < H := zero_lt_one.trans_le hH1
+  have hAp : A * p ≤ A := mul_le_of_le_one_right hA.le hp1
+  have hHpow : 1 ≤ H ^ 12 := one_le_pow₀ hH1
+  have hhalf : A * p / H ^ 12 ≤ 1 / 2 := by
+    calc
+      A * p / H ^ 12 ≤ A := by
+        rw [div_le_iff₀ (pow_pos hH 12)]
+        exact hAp.trans (le_mul_of_one_le_right hA.le hHpow)
+      _ ≤ 1 / 2 := hAhalf
+  refine ⟨hhalf, (le_div_iff₀ hL).2 ?_⟩
+  calc
+    A * p / H ^ 12 * L ≤ A * p / H ^ 12 * H :=
+      mul_le_mul_of_nonneg_left hLH (by positivity)
+    _ ≤ 1 := by
+      rw [div_mul_eq_mul_div, div_le_iff₀ (pow_pos hH 12), one_mul]
+      have hAp1 : A * p ≤ 1 := hAp.trans (hAhalf.trans (by norm_num))
+      have hHle : H ≤ H ^ 12 := by
+        calc
+          H = H * 1 := (mul_one H).symm
+          _ ≤ H * H ^ 11 := mul_le_mul_of_nonneg_left (one_le_pow₀ hH1) hH.le
+          _ = H ^ 12 := by ring
+      exact (mul_le_of_le_one_left hH.le hAp1).trans hHle
+
 /-- On a fixed nonzero-height annulus the value product supplies an explicit
 lower bound of size `H² x`, where `x` is the fixed power-width.  All factors in
 the value product are bounded by the actual principal Euler-correction and
@@ -86,52 +118,20 @@ theorem norm_LFunction_ge_on_quadraticConditionalAnnulus
     dsimp only [p]
     simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
   have hx : 0 < x := by dsimp only [x]; positivity
-  have hHpow : 1 ≤ H ^ 12 := one_le_pow₀ hH1
-  have hxhalf : x ≤ 1 / 2 := by
-    dsimp only [x]
-    calc
-      A * p / H ^ 12 ≤ A := by
-        rw [div_le_iff₀ (pow_pos hH 12)]
-        nlinarith [hHpow, mul_le_of_le_one_right hA.le hp1]
-      _ ≤ 1 / 2 := hAhalf
+  have hlogH : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
+    simpa only [H] using hb.2.2.2
+  obtain ⟨hxhalf, hxlog⟩ := powerWidth_le_half_and_inv_log
+    hA hAhalf hp.le hp1 hH1 (log_conductorHeightCutoff_pos χ hχ t)
+      (by linarith only [hlogH])
   have hx1 : x ≤ 1 := hxhalf.trans (by norm_num)
   have hβleft : 1 - x ≤ β := by
     simpa only [dirichletLQuadraticConditionalFixedLeft, x, p, H] using hβ
-  have hβhalf : 1 / 2 ≤ β := by linarith
-  have hlogpos := log_conductorHeightCutoff_pos χ hχ t
+  have hβhalf : 1 / 2 ≤ β := by linarith only [hβleft, hxhalf]
   have hnear : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
-    have hxlog : x ≤ 1 / Real.log (dirichletLConductorHeightCutoff q t) := by
-      apply (le_div_iff₀ hlogpos).2
-      have hlogH : Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-        have := hb.2.2.2
-        have : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-          simpa only [H] using this
-        linarith
-      calc
-        x * Real.log (dirichletLConductorHeightCutoff q t) ≤ x * H :=
-          mul_le_mul_of_nonneg_left hlogH hx.le
-        _ ≤ 1 := by
-          dsimp only [x]
-          rw [div_mul_eq_mul_div, div_le_iff₀ (pow_pos hH 12)]
-          have hAp : A * p ≤ 1 :=
-            (mul_le_of_le_one_right hA.le hp1).trans (hAhalf.trans (by norm_num))
-          have hHle : H ≤ H ^ 12 := by
-            have hH11 : 1 ≤ H ^ 11 := one_le_pow₀ hH1
-            calc
-              H = H * 1 := by ring
-              _ ≤ H * H ^ 11 := mul_le_mul_of_nonneg_left hH11 hH.le
-              _ = H ^ 12 := by ring
-          calc
-            A * p * H ≤ H := by simpa only [one_mul] using
-              mul_le_mul_of_nonneg_right hAp hH.le
-            _ ≤ H ^ 12 := hHle
-            _ = 1 * H ^ 12 := by ring
-    linarith
+    linarith only [hβleft, hxlog]
   have hdiff0 := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
     χ hχ (σ₁ := β) (σ₂ := 1 + x) (t := t) hβhalf hnear
       (by linarith) (by linarith [hx1] : 1 + x ≤ 2)
-  have hlogH : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-    simpa only [H] using hb.2.2.2
   have hdiff :
       ‖χ.LFunction (1 + x + I * t) - χ.LFunction (β + I * t)‖ ≤
         128 * H ^ 2 * x := by
@@ -269,64 +269,24 @@ theorem norm_logDerivative_le_on_quadraticConditionalAnnulus
   have hlower := norm_LFunction_ge_on_quadraticConditionalAnnulus
     Z hZ hzeta χ hquad hχ hA hAhalf hAsmall hη hτ hτT hβ hβone htlow htT
   dsimp only at hlower
-  have hxhalf : x ≤ 1 / 2 := by
-    have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-    have hp1 : p ≤ 1 := by
-      dsimp only [p]
-      simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
-    have hHpow : 1 ≤ H ^ 12 := one_le_pow₀ (by simpa only [H] using hb.1)
-    dsimp only [x]
-    calc
-      A * p / H ^ 12 ≤ A := by
-        rw [div_le_iff₀ (pow_pos hH 12)]
-        nlinarith [hHpow, mul_le_of_le_one_right hA.le hp1]
-      _ ≤ 1 / 2 := hAhalf
-  have hβhalf : 1 / 2 ≤ β := by
-    have hβleft : 1 - x ≤ β := by
-      simpa only [dirichletLQuadraticConditionalFixedLeft, x, p, H] using hβ
-    linarith
-  have hlogpos := log_conductorHeightCutoff_pos χ hχ t
-  have hnear : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
-    have hβleft : 1 - x ≤ β := by
-      simpa only [dirichletLQuadraticConditionalFixedLeft, x, p, H] using hβ
-    have hxlog : x ≤ 1 / Real.log (dirichletLConductorHeightCutoff q t) := by
-      apply (le_div_iff₀ hlogpos).2
-      have hlogH : Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-        have := hb.2.2.2
-        have : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-          simpa only [H] using this
-        linarith
-      calc
-        x * Real.log (dirichletLConductorHeightCutoff q t) ≤ x * H :=
-          mul_le_mul_of_nonneg_left hlogH hx.le
-        _ ≤ 1 := by
-          dsimp only [x]
-          rw [div_mul_eq_mul_div, div_le_iff₀ (pow_pos hH 12)]
-          have hH1 : 1 ≤ H := by simpa only [H] using hb.1
-          have hp1 : p ≤ 1 := by
-            have hq1 : (1 : ℝ) ≤ q := by
-              exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-            dsimp only [p]
-            simpa using Real.rpow_le_rpow_of_exponent_le hq1
-              (by linarith : -2 * η ≤ 0)
-          have hAp : A * p ≤ 1 :=
-            (mul_le_of_le_one_right hA.le hp1).trans (hAhalf.trans (by norm_num))
-          have hHle : H ≤ H ^ 12 := by
-            have hH11 : 1 ≤ H ^ 11 := one_le_pow₀ hH1
-            calc
-              H = H * 1 := by ring
-              _ ≤ H * H ^ 11 := mul_le_mul_of_nonneg_left hH11 hH.le
-              _ = H ^ 12 := by ring
-          calc
-            A * p * H ≤ H := by simpa only [one_mul] using
-              mul_le_mul_of_nonneg_right hAp hH.le
-            _ ≤ H ^ 12 := hHle
-            _ = 1 * H ^ 12 := by ring
-    linarith
-  have hderiv := norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
-    χ hχ hβhalf (hβone.trans (by norm_num)) hnear
+  have hH1 : 1 ≤ H := by simpa only [H] using hb.1
+  have hq1 : (1 : ℝ) ≤ q := by
+    exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
+  have hp1 : p ≤ 1 := by
+    dsimp only [p]
+    simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
   have hlogH : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
     simpa only [H] using hb.2.2.2
+  obtain ⟨hxhalf, hxlog⟩ := powerWidth_le_half_and_inv_log
+    hA hAhalf hp.le hp1 hH1 (log_conductorHeightCutoff_pos χ hχ t)
+      (by linarith only [hlogH])
+  have hβleft : 1 - x ≤ β := by
+    simpa only [dirichletLQuadraticConditionalFixedLeft, x, p, H] using hβ
+  have hβhalf : 1 / 2 ≤ β := by linarith only [hβleft, hxhalf]
+  have hnear : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
+    linarith only [hβleft, hxlog]
+  have hderiv := norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
+    χ hχ hβhalf (hβone.trans (by norm_num)) hnear
   rw [norm_div]
   calc
     ‖deriv χ.LFunction (β + I * t)‖ / ‖χ.LFunction (β + I * t)‖
@@ -380,16 +340,9 @@ theorem norm_logDerivative_le_on_quadraticConditionalWholeBand
   have hcentralNonneg : 0 ≤
       (128 * (dirichletLQuadraticConditionalCentralH q T) ^ 2) /
         (c * (q : ℝ) ^ (-η)) := by positivity
-  have hHfixed : 0 < dirichletLQuadraticConditionalFixedH q τ T := by
-    have hb := fixedH_annular_bounds (q := q) hτ hτT
-      (t := τ) (by simpa [abs_of_pos hτ]) (by simpa [abs_of_pos hτ] using hτT)
-    dsimp only at hb
-    exact lt_of_lt_of_le zero_lt_one hb.1
   have hannularNonneg : 0 ≤
       (dirichletLQuadraticConditionalFixedH q τ T) ^ 12 /
-        (A * (q : ℝ) ^ (-2 * η)) := by
-    exact div_nonneg (pow_nonneg hHfixed.le 12)
-      (mul_nonneg hA.le (Real.rpow_nonneg hq.le _))
+        (A * (q : ℝ) ^ (-2 * η)) := by positivity
   by_cases htcentral : |t| ≤ τ
   · have hcbd := norm_logDerivative_le_on_quadraticConditionalCentralBand
       χ hχ hA hAc hAhalf hc hη hT hSiegel hβ hβone

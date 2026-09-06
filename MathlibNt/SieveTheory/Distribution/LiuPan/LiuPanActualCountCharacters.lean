@@ -103,16 +103,13 @@ theorem liuPanActualCount_eq_characterMean (N A₁ A₂ q l : ℕ)
       apply sum_congr rfl
       intro a ha
       by_cases hc : a.Coprime q
-      · rw [if_pos hc, actual_count_characters N a q l
-          (by have := (mem_Ioc.mp ha).1; omega) hq hl]
-        rw [mul_sum]
-        simp only [mul_sum]
+      · have ha_pos : 0 < a := (Nat.zero_le A₁).trans_lt (mem_Ioc.mp ha).1
+        rw [if_pos hc, actual_count_characters N a q l ha_pos hq hl]
+        rw [mul_sum, mul_sum]
         apply sum_congr rfl
         intro χ hχ
         rw [if_pos hc]
-        simp only [mul_sum]
-        apply sum_congr rfl
-        intro p hp
+        -- Reassociate the complete prime sum without expanding its summands.
         ring
       · simp [hc]
     _ = _ := by
@@ -276,27 +273,25 @@ theorem liuPanActualCharacterAmplitude_eq_panSource
         split_ifs <;> simp
   · simp only [if_neg hc, zero_mul]
 
+private theorem characters_modulus_one :
+    (univ : Finset (DirichletCharacter ℂ 1)) = {1} := by
+  ext χ
+  simp only [mem_univ, mem_singleton, true_iff]
+  exact Subsingleton.elim _ _
+
 /-- Modulus one has no nonprincipal mass; its canonical residue is zero. -/
 @[simp] theorem liuPanActualNonprincipalMass_one
     (N A₁ A₂ : ℕ) (f : ℕ → ℝ) :
     liuPanActualNonprincipalMass N A₁ A₂ 1 f = 0 := by
-  have hu : (univ : Finset (DirichletCharacter ℂ 1)) = {1} := by
-    ext χ
-    simp only [mem_univ, mem_singleton, true_iff]
-    exact Subsingleton.elim _ _
-  simp only [liuPanActualNonprincipalMass, hu, erase_singleton, sum_empty]
+  simp only [liuPanActualNonprincipalMass, characters_modulus_one, erase_singleton, sum_empty]
 
 theorem liuMainPanCoprimeIntervalMaxL_one_eq_principal
     (main : ℝ → ℝ) (N A₁ A₂ : ℕ) (f : ℕ → ℝ) :
     liuMainPanCoprimeIntervalMaxL main N A₁ A₂ 1 f =
       |liuPanActualPrincipalRaw main N A₁ A₂ 1 f| := by
-  have hu : (univ : Finset (DirichletCharacter ℂ 1)) = {1} := by
-    ext χ
-    simp only [mem_univ, mem_singleton, true_iff]
-    exact Subsingleton.elim _ _
   have he := liuMainPanCoprimeIntervalSum_eq_actualCharacterExpansion main N A₁ A₂ 1 0 f
     (by omega) ((ZMod.isUnit_iff_coprime 0 1).mpr (by simp))
-  simp only [hu, erase_singleton, sum_empty, Nat.totient_one, Nat.cast_one,
+  simp only [characters_modulus_one, erase_singleton, sum_empty, Nat.totient_one, Nat.cast_one,
     zero_add, div_one] at he
   have hr := Complex.ofReal_injective he
   simp [liuMainPanCoprimeIntervalMaxL, hr]

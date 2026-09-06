@@ -466,53 +466,6 @@ theorem
           (hprime p₀ hp₀) hqp₀ hp₁'.2.2 (hupper p₀ hp₀)
       exact (hp₀not (Finset.mem_filter.mpr ⟨hp₀, hscreen.1.2⟩)).elim
 
-/-- Every nonzero term in the continuous depth-zero majorant left after peeling
-the first Rosser pair has its distinguished-prime coordinate above `1 / 6`.
-Unlike fixed-chain support, this applies after the discrete residual has already
-been enlarged to the continuous indicator. -/
-theorem upperRosserBoundaryMassAux_zero_ne_zero_outer_log_lower
-    {z Δ s : ℝ} {q p₀ p₁ : ℕ}
-    (hz : 1 < z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hslo : 3 / 2 ≤ s) (hp₀prime : p₀.Prime) (hp₁prime : p₁.Prime)
-    (hp₁₀ : p₁ < p₀) (hp₀cube : p₀ ^ 3 < Nat.floor Δ + 1)
-    (hmass : LinearSieve.upperRosserBoundaryMassAux 0
-      (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
-      (Real.log q / Real.log z) (Real.log p₁ / Real.log z) ≠ 0) :
-    1 / 6 < Real.log q / Real.log z := by
-  have hlogz : 0 < Real.log z := Real.log_pos hz
-  have hp₀pos : (0 : ℝ) < p₀ := by exact_mod_cast hp₀prime.pos
-  have hp₁pos : (0 : ℝ) < p₁ := by exact_mod_cast hp₁prime.pos
-  have hp₀floor : p₀ ^ 3 ≤ Nat.floor Δ := by omega
-  have hp₀Δ : (p₀ : ℝ) ^ 3 ≤ Δ := by
-    have hcast : ((p₀ ^ 3 : ℕ) : ℝ) ≤ (Nat.floor Δ : ℝ) := by
-      exact_mod_cast hp₀floor
-    norm_num at hcast
-    exact hcast.trans (Nat.floor_le hΔ.le)
-  have hlogpow : 3 * Real.log p₀ ≤ Real.log Δ := by
-    have h := Real.strictMonoOn_log.monotoneOn
-      (by change (0 : ℝ) < (p₀ : ℝ) ^ 3; exact pow_pos hp₀pos 3)
-      (by change (0 : ℝ) < Δ; exact hΔ) hp₀Δ
-    simpa [Real.log_pow] using h
-  have hx₀ : Real.log p₀ / Real.log z ≤ s / 3 := by
-    rw [hs]
-    apply (le_div_iff₀ (by norm_num : (0 : ℝ) < 3)).2
-    have hdiv :
-        (3 * Real.log p₀) / Real.log z ≤ Real.log Δ / Real.log z :=
-      (div_le_div_iff_of_pos_right hlogz).2 hlogpow
-    calc
-      Real.log p₀ / Real.log z * 3 =
-          (3 * Real.log p₀) / Real.log z := by ring
-      _ ≤ Real.log Δ / Real.log z := hdiv
-  have hx₁ :
-      Real.log p₁ / Real.log z < Real.log p₀ / Real.log z := by
-    apply (div_lt_div_iff_of_pos_right hlogz).2
-    exact (Real.strictMonoOn_log.lt_iff_lt
-      (by change (0 : ℝ) < (p₁ : ℝ); exact hp₁pos)
-      (by change (0 : ℝ) < (p₀ : ℝ); exact hp₀pos)).2
-      (by exact_mod_cast hp₁₀)
-  exact LinearSieve.upperRosserBoundaryMassAux_zero_ne_zero_outer_lower
-    hslo hx₀ hx₁ hmass
-
 /-- The lower support exposed after peeling a Rosser pair is uniform at every
 fixed residual depth.  The inherited upper bound is retained in the residual
 mass, while the lower bound depends only on that depth. -/
@@ -556,6 +509,24 @@ theorem upperRosserBoundaryMassAux_ne_zero_outer_log_lower
       (by exact_mod_cast hp₁₀)
   exact LinearSieve.upperRosserBoundaryMassAux_ne_zero_outer_lower
     k hslo hx₀ hx₁ hmass
+
+/-- Every nonzero term in the continuous depth-zero majorant left after peeling
+the first Rosser pair has its distinguished-prime coordinate above `1 / 6`.
+Unlike fixed-chain support, this applies after the discrete residual has already
+been enlarged to the continuous indicator. -/
+theorem upperRosserBoundaryMassAux_zero_ne_zero_outer_log_lower
+    {z Δ s : ℝ} {q p₀ p₁ : ℕ}
+    (hz : 1 < z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
+    (hslo : 3 / 2 ≤ s) (hp₀prime : p₀.Prime) (hp₁prime : p₁.Prime)
+    (hp₁₀ : p₁ < p₀) (hp₀cube : p₀ ^ 3 < Nat.floor Δ + 1)
+    (hmass : LinearSieve.upperRosserBoundaryMassAux 0
+      (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
+      (Real.log q / Real.log z) (Real.log p₁ / Real.log z) ≠ 0) :
+    1 / 6 < Real.log q / Real.log z := by
+  have h := upperRosserBoundaryMassAux_ne_zero_outer_log_lower
+    0 hz hΔ hs hslo hp₀prime hp₁prime hp₁₀ hp₀cube hmass
+  norm_num at h
+  exact h
 
 /-- The recursive support screen gives a uniform bound for every residual mass
 at a fixed depth.  This supplies the boundedness input for finite Darboux
@@ -641,22 +612,10 @@ theorem upperRosserBoundaryMassAux_zero_ne_zero_outer_inner_log_lower
     1 / 6 < Real.log q / Real.log z ∧
       1 / 6 < Real.log p₀ / Real.log z ∧
         1 / 6 < Real.log p₁ / Real.log z := by
-  have hq :=
-    upperRosserBoundaryMassAux_zero_ne_zero_outer_log_lower
-      hz hΔ hs hslo hp₀prime hp₁prime hp₁₀ hp₀cube hmass
-  have hlogz : 0 < Real.log z := Real.log_pos hz
-  have hqpos : (0 : ℝ) < q := by exact_mod_cast hqprime.pos
-  have hp₀pos : (0 : ℝ) < p₀ := by exact_mod_cast hp₀prime.pos
-  have hqp₀ : Real.log q / Real.log z < Real.log p₀ / Real.log z := by
-    apply (div_lt_div_iff_of_pos_right hlogz).2
-    exact (Real.strictMonoOn_log.lt_iff_lt hqpos hp₀pos).2
-      (by exact_mod_cast hq₀)
-  have hp₁pos : (0 : ℝ) < p₁ := by exact_mod_cast hp₁prime.pos
-  have hqp₁ : Real.log q / Real.log z < Real.log p₁ / Real.log z := by
-    apply (div_lt_div_iff_of_pos_right hlogz).2
-    exact (Real.strictMonoOn_log.lt_iff_lt hqpos hp₁pos).2
-      (by exact_mod_cast hq₁)
-  exact ⟨hq, hq.trans hqp₀, hq.trans hqp₁⟩
+  have h := upperRosserBoundaryMassAux_ne_zero_outer_inner_log_lower
+    0 hz hΔ hs hslo hqprime hp₀prime hp₁prime hq₀ hq₁ hp₁₀ hp₀cube hmass
+  norm_num at h
+  exact h
 
 /-- The complete discrete depth-two contribution is bounded by the two peeled
 prime sums weighted by the continuous residual depth-zero mass.  This is the exact

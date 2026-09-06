@@ -42,7 +42,7 @@ lemma rankin_pow_succ_summable (χ : DirichletCharacter ℂ q) {s : ℂ}
   induction r with
   | zero => simpa using χ.LSeriesSummable_zetaMul hs
   | succ r ih =>
-      rw [show r + 1 + 1 = (r + 1) + 1 by omega, pow_succ]
+      rw [pow_succ]
       exact ArithmeticFunction.LSeriesSummable_mul ih (χ.LSeriesSummable_zetaMul hs)
 
 lemma rankin_pow_succ_factorization (χ : DirichletCharacter ℂ q) [NeZero q]
@@ -53,7 +53,7 @@ lemma rankin_pow_succ_factorization (χ : DirichletCharacter ℂ q) [NeZero q]
   | zero =>
       simpa using (riemannZeta_mul_LFunction_eq_LSeries_zetaMul χ hs).symm
   | succ r ih =>
-      rw [show r + 1 + 1 = (r + 1) + 1 by omega, pow_succ,
+      rw [pow_succ,
         ArithmeticFunction.LSeries_mul'
           (rankin_pow_succ_summable χ hs r) (χ.LSeriesSummable_zetaMul hs),
         ih, ← riemannZeta_mul_LFunction_eq_LSeries_zetaMul χ hs, pow_succ]
@@ -105,20 +105,22 @@ theorem rankin_perfectPower_lower (χ : DirichletCharacter ℂ q) [NeZero q]
     rw [quadraticSiegelPowerSummatory, Finset.sum_div]
     apply Finset.sum_le_sum
     intro n hn
-    rw [rankin_term_re_eq χ r (Nat.ne_of_gt (Finset.mem_Icc.mp hn).1)]
+    obtain ⟨hnpos, hnX⟩ := Finset.mem_Icc.mp hn
+    rw [rankin_term_re_eq χ r (Nat.ne_of_gt hnpos)]
     apply div_le_div_of_nonneg_left
       (quadraticSiegelPowerCoefficient_re_nonneg χ hquad (r + 1) n)
-    · exact Real.rpow_pos_of_pos (by
-        exact_mod_cast (Finset.mem_Icc.mp hn).1) σ
-    · exact Real.rpow_le_rpow (by exact_mod_cast (Nat.zero_le n))
-        (by exact_mod_cast (Finset.mem_Icc.mp hn).2) (le_of_lt (zero_lt_one.trans hσ))
+    · exact Real.rpow_pos_of_pos (by exact_mod_cast hnpos) σ
+    · exact Real.rpow_le_rpow (Nat.cast_nonneg n)
+        (by exact_mod_cast hnX) (le_of_lt (zero_lt_one.trans hσ))
   calc
     (M : ℝ) / ((M ^ e : ℕ) : ℝ) ^ σ ≤
         quadraticSiegelPowerSummatory χ (r + 1) X / (X : ℝ) ^ σ := by
       apply div_le_div_of_nonneg_right
       · simpa [X] using le_quadraticSiegelPowerSummatory_pow χ hquad r hepos heven M
       · positivity
-    _ ≤ _ := hweight.trans hpartial
+    _ ≤ ∑ n ∈ Icc 1 X,
+        (LSeries.term (fun k => (χ.zetaMul ^ (r + 1)) k) (σ : ℂ) n).re := hweight
+    _ ≤ _ := hpartial
 
 /-- The exact Rankin product inequality.  This is the strongest direct output
 of perfect-power support and absolute convergence before choosing parameters. -/

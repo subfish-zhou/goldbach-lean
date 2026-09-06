@@ -101,30 +101,25 @@ private theorem central_band_parameter_bounds
             _ ≤ 1 := by norm_num
         simpa only [one_mul] using
           mul_le_mul_of_nonneg_right hprod (zero_le_one.trans hH₀)
-      _ ≤ H ^ 12 := by
-        have hH11 : 1 ≤ H ^ 11 := one_le_pow₀ hH
-        calc
-          H₀ ≤ H := hH₀H
-          _ = H * 1 := by ring
-          _ ≤ H * H ^ 11 := mul_le_mul_of_nonneg_left hH11 (zero_le_one.trans hH)
-          _ = H ^ 12 := by ring
+      _ ≤ H ^ 12 := hH₀H.trans (by
+        simpa only [pow_one] using (pow_le_pow_right₀ hH (by norm_num : 1 ≤ 12)))
       _ = 1 * H ^ 12 := by ring
   have hwInv : w ≤ 1 / H₀ := (le_div_iff₀ (lt_of_lt_of_le zero_lt_one hH₀)).2
     (by simpa [mul_comm] using hwH₀)
   simpa only [H₀, H, w, τ] using ⟨hH₀, hH₀H, hw, hwpay, hwInv⟩
 
-/-- Quantitative central-band lower bound.  It is obtained by transporting the
-raw lower bound at `1` along one vertical and one horizontal segment. -/
-theorem norm_LFunction_ge_half_siegel_on_quadraticConditionalCentralBand
+/-- Shared geometric conditions for applying the conductor-height derivative estimates. -/
+private theorem central_band_point_bounds
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     {A c η T β t : ℝ}
     (hA : 0 < A) (hAc : A ≤ c / 256) (hAhalf : A ≤ 1 / 2)
     (hc : 0 < c) (hη : 0 < η) (hT : 0 < T)
-    (hSiegel : c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re)
     (hβ : 1 - dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ β)
-    (hβone : β ≤ 1)
     (ht : |t| ≤ dirichletLQuadraticConditionalCentralHeight c η q T) :
-    c * (q : ℝ) ^ (-η) / 2 ≤ ‖χ.LFunction (β + I * t)‖ := by
+    1 / 2 ≤ β ∧
+      1 + Real.log (dirichletLConductorHeightCutoff q t) ≤
+        dirichletLQuadraticConditionalCentralH q T ∧
+      1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
   let H₀ := dirichletLQuadraticConditionalCentralH q T
   let τ := dirichletLQuadraticConditionalCentralHeight c η q T
   let w := dirichletLQuadraticConditionalCrossZeroWidth A c η q T
@@ -172,6 +167,27 @@ theorem norm_LFunction_ge_half_siegel_on_quadraticConditionalCentralBand
           exact (le_div_iff₀ (lt_of_lt_of_le zero_lt_one hp.1)).mp hp.2.2.2.2
     dsimp only [w] at hwlog hβ
     linarith
+  exact ⟨hβhalf, hlog, hnear⟩
+
+/-- Quantitative central-band lower bound.  It is obtained by transporting the
+raw lower bound at `1` along one vertical and one horizontal segment. -/
+theorem norm_LFunction_ge_half_siegel_on_quadraticConditionalCentralBand
+    {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
+    {A c η T β t : ℝ}
+    (hA : 0 < A) (hAc : A ≤ c / 256) (hAhalf : A ≤ 1 / 2)
+    (hc : 0 < c) (hη : 0 < η) (hT : 0 < T)
+    (hSiegel : c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re)
+    (hβ : 1 - dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ β)
+    (hβone : β ≤ 1)
+    (ht : |t| ≤ dirichletLQuadraticConditionalCentralHeight c η q T) :
+    c * (q : ℝ) ^ (-η) / 2 ≤ ‖χ.LFunction (β + I * t)‖ := by
+  let H₀ := dirichletLQuadraticConditionalCentralH q T
+  let τ := dirichletLQuadraticConditionalCentralHeight c η q T
+  let w := dirichletLQuadraticConditionalCrossZeroWidth A c η q T
+  have hp := central_band_parameter_bounds (q := q) hA hAc hAhalf hc hη hT
+  dsimp only at hp
+  obtain ⟨hβhalf, hlog, hnear⟩ :=
+    central_band_point_bounds χ hχ hA hAc hAhalf hc hη hT hβ ht
   have hhorizontal := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
     χ hχ hβhalf hnear hβone (by norm_num : (1 : ℝ) ≤ 2)
   have hvertical := norm_LFunction_vertical_sub_le_sixtyfour_mul_conductorHeightLogSq χ hχ t
@@ -247,50 +263,8 @@ theorem norm_logDerivative_le_on_quadraticConditionalCentralBand
     χ hχ hA hAc hAhalf hc hη hT hSiegel hβ hβone ht
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
   have hden : 0 < c * (q : ℝ) ^ (-η) := mul_pos hc (Real.rpow_pos_of_pos hq _)
-  have hp := central_band_parameter_bounds (q := q) hA hAc hAhalf hc hη hT
-  dsimp only at hp
-  have hβhalf : 1 / 2 ≤ β := by
-    have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-    have hpq1 : (q : ℝ) ^ (-2 * η) ≤ 1 := by
-      simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
-    have Hge : 1 ≤ dirichletLQuadraticConditionalFixedH q
-        (dirichletLQuadraticConditionalCentralHeight c η q T) T := hp.1.trans hp.2.1
-    have hw : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ 1 / 2 := by
-      dsimp only [dirichletLQuadraticConditionalCrossZeroWidth]
-      rw [div_le_iff₀ (pow_pos (lt_of_lt_of_le zero_lt_one Hge) 12)]
-      calc
-        A * (q : ℝ) ^ (-2 * η) ≤ 1 / 2 := by
-          calc
-            A * (q : ℝ) ^ (-2 * η) ≤ (1 / 2 : ℝ) * 1 :=
-              mul_le_mul hAhalf hpq1 (Real.rpow_nonneg (by positivity) _) (by norm_num)
-            _ = 1 / 2 := by ring
-        _ ≤ (1 / 2) * _ := by
-          simpa only [mul_one] using
-            (mul_le_mul_of_nonneg_left (one_le_pow₀ Hge) (by norm_num : (0 : ℝ) ≤ 1 / 2))
-    linarith
-  have htT : |t| ≤ T := ht.trans (min_le_left _ _)
-  have hcut := dirichletLConductorHeightCutoff_le_fixedHeightCutoff (q := q) htT
-  have hcutpos : (0 : ℝ) < dirichletLConductorHeightCutoff q t := by
-    exact_mod_cast Nat.mul_pos (NeZero.pos q) (by simp [dirichletLHeightBlock])
-  have hcutR : (dirichletLConductorHeightCutoff q t : ℝ) ≤
-      dirichletLNonquadraticConductorLogCutoff q T := by exact_mod_cast hcut
-  have hlog : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤
-      dirichletLQuadraticConditionalCentralH q T := by
-    dsimp only [dirichletLQuadraticConditionalCentralH]
-    linarith [Real.log_le_log hcutpos hcutR]
-  have hnear : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
-    have hlogpos := log_conductorHeightCutoff_pos χ hχ t
-    have hwlog : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤
-        1 / Real.log (dirichletLConductorHeightCutoff q t) := by
-      apply (le_div_iff₀ hlogpos).2
-      calc
-        dirichletLQuadraticConditionalCrossZeroWidth A c η q T *
-            Real.log (dirichletLConductorHeightCutoff q t)
-            ≤ dirichletLQuadraticConditionalCrossZeroWidth A c η q T *
-              dirichletLQuadraticConditionalCentralH q T := by
-                exact mul_le_mul_of_nonneg_left (by linarith [hlog]) hp.2.2.1.le
-        _ ≤ 1 := (le_div_iff₀ (lt_of_lt_of_le zero_lt_one hp.1)).mp hp.2.2.2.2
-    linarith
+  obtain ⟨hβhalf, hlog, hnear⟩ :=
+    central_band_point_bounds χ hχ hA hAc hAhalf hc hη hT hβ ht
   have hderiv := norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
     χ hχ hβhalf (by linarith) hnear
   rw [norm_div]

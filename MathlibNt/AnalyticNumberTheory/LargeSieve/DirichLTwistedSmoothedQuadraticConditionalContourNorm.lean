@@ -58,10 +58,11 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
     exact min_le_left _ _
   have htlow : τ ≤ |t| := by rw [ht]; exact hτT
   have htT : |t| ≤ T := ht.le
-  have hH1 : 1 ≤ H := by
-    exact (one_le_dirichletLQuadraticConditionalPowerZeroFreeH q t).trans
-      (by simpa only [H, τ] using
-        dirichletLQuadraticConditionalPowerZeroFreeH_le_fixedH hτ hτT htlow htT)
+  have hfixed : dirichletLQuadraticConditionalPowerZeroFreeH q t ≤ H := by
+    simpa only [H, τ] using
+      dirichletLQuadraticConditionalPowerZeroFreeH_le_fixedH hτ hτT htlow htT
+  have hH1 : 1 ≤ H :=
+    (one_le_dirichletLQuadraticConditionalPowerZeroFreeH q t).trans hfixed
   have hH : 0 < H := lt_of_lt_of_le zero_lt_one hH1
   have hq1 : (1 : ℝ) ≤ q := by
     exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
@@ -74,10 +75,8 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
   have hx : 0 < x := by dsimp only [x]; positivity
   have hxhalf : x ≤ 1 / 2 := by
     dsimp only [x]
-    rw [div_le_iff₀ (pow_pos hH 12)]
-    have hHp : 1 ≤ H ^ 12 := one_le_pow₀ hH1
-    have hAp : A * p ≤ A := mul_le_of_le_one_right hA.le hp1
-    nlinarith
+    exact (div_le_self (mul_nonneg hA.le hp.le) (one_le_pow₀ hH1)).trans
+      ((mul_le_of_le_one_right hA.le hp1).trans hAhalf)
   have hleft : dirichletLTwistedSmoothedQuadraticConditionalLeft A c η q T = 1 - x := by
     rfl
   have hright : dirichletLTwistedSmoothedQuadraticConditionalRight A c η q T =
@@ -97,16 +96,12 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
     have hσtwo : σ ≤ 2 := by
       rw [hright] at hσright
       linarith
-    have hnear1 : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ 1 := by
-      have hl := log_conductorHeightCutoff_pos χ hχ t
-      have hi : 0 < 1 / Real.log (dirichletLConductorHeightCutoff q t) := one_div_pos.mpr hl
-      linarith
+    have hnear1 : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ 1 :=
+      sub_le_self _ (one_div_pos.mpr (log_conductorHeightCutoff_pos χ hχ t)).le
     have hlog0 : 0 ≤ 1 + Real.log (dirichletLConductorHeightCutoff q t) := by
       linarith [log_conductorHeightCutoff_pos χ hχ t]
-    have hlogH : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-      exact (one_add_log_conductorHeightCutoff_le_quadraticH q t).trans
-        (by simpa only [H, τ] using
-          dirichletLQuadraticConditionalPowerZeroFreeH_le_fixedH hτ hτT htlow htT)
+    have hlogH : 1 + Real.log (dirichletLConductorHeightCutoff q t) ≤ H :=
+      (one_add_log_conductorHeightCutoff_le_quadraticH q t).trans hfixed
     have hlower1 : 64 * H ^ 2 * x ≤ ‖χ.LFunction (1 + I * t)‖ := by
       have h := norm_LFunction_ge_on_quadraticConditionalAnnulus
         Z hZ hzeta χ hquad hχ hA hAhalf hAsmall hη hτ hτT
@@ -135,16 +130,14 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
         (χ.LFunction (1 + I * t) - χ.LFunction (σ + I * t))
         (χ.LFunction (σ + I * t))
       rw [sub_add_cancel, norm_sub_rev] at htri
-      nlinarith
+      linarith only [hlower1, hdiff, htri]
     have hnearσ : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ σ :=
       hnear1.trans hσone'
     have hderiv :=
       norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
         χ hχ (σ := σ) (t := t) (by linarith) hσtwo hnearσ
     have hderivH : ‖deriv χ.LFunction (σ + I * t)‖ ≤ 64 * H ^ 2 :=
-      hderiv.trans (by
-        apply mul_le_mul_of_nonneg_left _ (by norm_num)
-        nlinarith [mul_nonneg (sub_nonneg.mpr hlogH) (add_nonneg hH.le hlog0)])
+      hderiv.trans (by gcongr)
     have hquot : ‖deriv χ.LFunction (σ + I * t) / χ.LFunction (σ + I * t)‖ ≤
         2 / x := by
       rw [norm_div]
@@ -207,14 +200,14 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalContourNormBounds
   have hX0 : 0 < X := lt_of_lt_of_le zero_lt_one hX
   have hT0 : 0 < T := by linarith
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
+  have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
+    exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
+      unfold dirichletLNonquadraticConductorLogCutoff
+      exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
+        unfold dirichletLNonquadraticConductorLogHeightBlock
+        omega)))
   have hcentralH : 0 < dirichletLQuadraticConditionalCentralH q T := by
     dsimp only [dirichletLQuadraticConditionalCentralH]
-    have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-      exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-        unfold dirichletLNonquadraticConductorLogCutoff
-        exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-          unfold dirichletLNonquadraticConductorLogHeightBlock
-          omega)))
     linarith [Real.log_nonneg hcut]
   have htau : 0 < dirichletLQuadraticConditionalCentralHeight c η q T := by
     dsimp only [dirichletLQuadraticConditionalCentralHeight]
@@ -223,12 +216,6 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalContourNormBounds
   have hH1 : 1 ≤ dirichletLQuadraticConditionalFixedH q
       (dirichletLQuadraticConditionalCentralHeight c η q T) T := by
     dsimp only [dirichletLQuadraticConditionalFixedH]
-    have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-      exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-        unfold dirichletLNonquadraticConductorLogCutoff
-        exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-          unfold dirichletLNonquadraticConductorLogHeightBlock
-          omega)))
     have hlog : 0 ≤ Real.log (dirichletLNonquadraticConductorLogCutoff q T) :=
       Real.log_nonneg hcut
     have hlogT : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
@@ -253,8 +240,8 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalContourNormBounds
       A * (q : ℝ) ^ (-2 * η) /
           dirichletLQuadraticConditionalFixedH q
               (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 ≤ A := by
-        rw [div_le_iff₀ (pow_pos hH 12)]
-        nlinarith [mul_le_of_le_one_right hA.le hp1]
+        exact (div_le_self (by positivity) hpow).trans
+          (mul_le_of_le_one_right hA.le hp1)
       _ ≤ 1 / 2 := hAhalf
   have ha : (1 / 2 : ℝ) ≤ a := by
     dsimp only [a, dirichletLTwistedSmoothedQuadraticConditionalLeft]
@@ -282,17 +269,8 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalContourNormBounds
     have hm' : ‖𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) (a + t * I)‖ ≤ 4 * M / ε := by
       calc
         _ ≤ M * (ε * ‖(a : ℂ) + t * I‖ ^ 2)⁻¹ := hm
-        _ ≤ M * (4 / ε) := by
-          gcongr
-          rw [mul_inv_rev]
-          have hi := inv_anti₀ (by norm_num : (0 : ℝ) < 1 / 4) hnormsq
-          calc
-            (‖(a : ℂ) + t * I‖ ^ 2)⁻¹ * ε⁻¹ ≤ 4 * ε⁻¹ := by
-              gcongr
-              norm_num at hi ⊢
-              exact hi
-            _ = 4 / ε := by rw [div_eq_mul_inv]
-        _ = 4 * M / ε := by ring
+        _ ≤ M * (ε * (1 / 4))⁻¹ := by gcongr
+        _ = 4 * M / ε := by field_simp
     have hXnorm : ‖(X : ℂ) ^ ((a : ℂ) + t * I)‖ = X ^ a := by
       rw [Complex.norm_cpow_eq_rpow_re_of_pos hX0]
       simp

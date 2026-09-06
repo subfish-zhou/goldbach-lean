@@ -19,10 +19,13 @@ theorem anchor_disk_subset_rectangle {δ T t : ℝ}
     I_im, ofReal_im, mul_zero, sub_zero, add_zero] at hre
   simp only [sub_im, add_im, ofReal_im, mul_im, I_re, zero_mul,
     I_im, ofReal_re, one_mul, zero_add] at him
-  refine ⟨(Eq21LocalLog.anchor_disk_re_lower hδ t hw).le, by linarith, ?_⟩
-  have hab : |w.im| ≤ |w.im - t| + |t| := by
-    simpa only [sub_add_cancel] using abs_add_le (w.im - t) t
-  linarith
+  refine ⟨(Eq21LocalLog.anchor_disk_re_lower hδ t hw).le, ?_, ?_⟩
+  · linarith only [hre, hn, hδ1]
+  · calc
+      |w.im| ≤ |w.im - t| + |t| := by
+        simpa only [sub_add_cancel] using abs_add_le (w.im - t) t
+      _ ≤ 3 * δ / 2 + T := add_le_add (him.trans hn.le) ht
+      _ ≤ T + 1 := by linarith only [hδ1]
 
 /-- Only finite-rectangle nonvanishing is assumed; growth, anchor and the
 holomorphic logarithm are supplied by the genuine small-disk theorem. -/
@@ -42,12 +45,16 @@ theorem norm_logDeriv_LFunction_le_of_zeroFree_rectangle
   have hz : dist ((β : ℂ) + I * t) ((1 + δ / 2 : ℝ) + I * t) ≤ δ := by
     rw [dist_add_right, dist_eq_norm, ← ofReal_sub, norm_real, Real.norm_eq_abs]
     exact abs_le.mpr ⟨by linarith, by linarith⟩
+  -- Restrict only the finite rectangle hypothesis to the anchor disk.
+  have hzero_disk : ∀ w ∈ ball ((1 + δ / 2 : ℝ) + I * t) (3 * δ / 2),
+      χ.LFunction w ≠ 0 := by
+    intro w hw
+    obtain ⟨hlo, hhi, him⟩ := anchor_disk_subset_rectangle hδ hδ1 ht hw
+    exact hzero w hlo hhi him
   have h := Eq21LocalLog.norm_logDeriv_le_small_disk χ.LFunction
     ((1 + δ / 2 : ℝ) + I * t) ((β : ℂ) + I * t) hδ
     (by positivity : 0 < δ / 4) hbB (χ.differentiable_LFunction hχ).differentiableOn
-    (fun w hw ↦ by
-      obtain ⟨hlo, hhi, him⟩ := anchor_disk_subset_rectangle hδ hδ1 ht hw
-      exact hzero w hlo hhi him)
+    hzero_disk
     (fun w hw ↦ Eq21LocalLog.norm_LFunction_le_on_anchor_disk χ hχ hδ hδ1 t hw)
     (Eq21LocalLog.delta_quarter_le_norm_LFunction_anchor χ hδ hδ1 t) hz
   have harg : (8 * (q : ℝ) * (1 + |t|)) / (δ / 4) =

@@ -57,11 +57,9 @@ theorem chen1973Lemma6_product_sum_eq_collected
     _ = ∑ ab ∈ (Icc 1 H).product (Icc 1 H),
         (A ab.1 * χ.1 (ab.1 : ZMod d)) *
           (B ab.2 * χ.1 (ab.2 : ZMod d)) := by
-      rw [Finset.sum_mul]
-      simp_rw [Finset.mul_sum]
-      exact (Finset.sum_product (Icc 1 H) (Icc 1 H)
-        (fun ab => (A ab.1 * χ.1 (ab.1 : ZMod d)) *
-          (B ab.2 * χ.1 (ab.2 : ZMod d)))).symm
+      rw [Finset.sum_mul_sum]
+      symm
+      exact Finset.sum_product _ _ _
     _ = ∑ ab ∈ (Icc 1 H).product (Icc 1 H),
         (A ab.1 * B ab.2) * χ.1 ((ab.1 * ab.2 : ℕ) : ZMod d) := by
       apply Finset.sum_congr rfl
@@ -114,11 +112,8 @@ theorem chen1973Lemma6_one_sub_finiteLS_eq_CH
   have hdelta :
       (∑ m ∈ Icc (1 : ℤ) (H * H : ℕ),
         (if m = 1 then 1 else 0) * χ.1 (m : ZMod d)) = 1 := by
-    rw [Finset.sum_eq_single 1]
-    · simp
-    · intro m hm hm1
-      simp [hm1]
-    · exact fun h => False.elim (h hone)
+    simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', if_pos hone]
+    simp
   have hprod := chen1973Lemma6_product_sum_eq_collected H
     (fun n => (n : ℂ) ^ (-s))
     (fun n => ((ArithmeticFunction.moebius n : ℤ) : ℂ) / (n : ℂ) ^ s) χ
@@ -130,9 +125,7 @@ theorem chen1973Lemma6_one_sub_finiteLS_eq_CH
       ∑ n ∈ Icc 1 H,
         (((ArithmeticFunction.moebius n : ℤ) : ℂ) / (n : ℂ) ^ s) *
           χ.1 (n : ZMod d) := by
-    apply Finset.sum_congr rfl
-    intro n hn
-    ring
+    simp_rw [mul_div_right_comm]
   rw [hmob]
   rw [hprod]
   rw [← hdelta]
@@ -237,8 +230,7 @@ theorem chen1973Lemma2_equationThree_complex_unconditional
       simp_rw [mul_add, Finset.sum_add_distrib, ← Finset.mul_sum]
       simp_rw [mul_add]
       rw [Finset.sum_add_distrib]
-      have hmul (a b : ℝ) : a * (2 * b) = 2 * (a * b) := by ring
-      simp_rw [hmul]
+      simp_rw [mul_left_comm _ (2 : ℝ)]
       rw [← Finset.mul_sum, ← Finset.mul_sum]
     _ ≤ 2 * (C * ((Q : ℝ) + (N : ℝ) / D) * chen1973CoefficientEnergy aR M N +
         C * ((Q : ℝ) + (N : ℝ) / D) * chen1973CoefficientEnergy aI M N) := by
@@ -337,8 +329,7 @@ theorem chen1973Lemma6_equation14_weighted_second_moment
           ∑ χ : PrimitiveCharacter d, ‖R d χ‖ ^ 2)
       simp_rw [Finset.sum_add_distrib, mul_add, ← Finset.mul_sum]
       rw [Finset.sum_add_distrib]
-      have hmul (a b : ℝ) : a * (2 * b) = 2 * (a * b) := by ring
-      simp_rw [hmul]
+      simp_rw [mul_left_comm _ (2 : ℝ)]
       rw [← Finset.mul_sum, ← Finset.mul_sum]
     _ ≤ 2 * (2 * C * ((Q : ℝ) + ((H * H : ℕ) : ℝ) / D) *
           ∑ m ∈ Icc (1 : ℤ) (H * H : ℕ),

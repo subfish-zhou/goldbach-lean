@@ -36,10 +36,10 @@ theorem norm_deriv_LFunction_le_modulus_mul_linear_height
     χ hχ (σ + I * t) hsre (m := 1) (by norm_num)
   have hinv : 1 / σ ≤ 2 := by
     rw [div_le_iff₀ hσpos]
-    nlinarith
+    linarith only [hσlower]
   have hinv2 : 1 / σ ^ 2 ≤ 4 := by
     rw [div_le_iff₀ (sq_pos_of_pos hσpos)]
-    nlinarith
+    nlinarith only [hσlower]
   have hbudget : logVariationBudget (σ + I * t) 1 ≤
       2 + 4 * ‖(σ + I * t : ℂ)‖ := by
     rw [logVariationBudget]
@@ -47,7 +47,7 @@ theorem norm_deriv_LFunction_le_modulus_mul_linear_height
     have hi : σ⁻¹ ≤ 2 := by simpa only [one_div] using hinv
     have hi2 : (σ ^ 2)⁻¹ ≤ 4 := by simpa only [one_div] using hinv2
     have hn : 0 ≤ ‖(σ + I * t : ℂ)‖ := norm_nonneg _
-    nlinarith
+    nlinarith only [hi, hi2, hn]
   rw [← hseries]
   rw [hprefix, sub_zero] at htail
   calc
@@ -99,7 +99,7 @@ private theorem norm_cpow_height_independent
       Real.log y * σ ≤ |Real.log y| * σ :=
         mul_le_mul_of_nonneg_right (le_abs_self _) hσ0
       _ ≤ |Real.log y| * 2 := mul_le_mul_of_nonneg_left hσ2 (abs_nonneg _)
-  linarith
+  simpa only [add_zero, mul_comm] using hlog
 
 private theorem eq17_kernel_pays_linear_growth
     {x : ℕ} (hx : 3 ≤ x) {σ t : ℝ}
@@ -115,8 +115,8 @@ private theorem eq17_kernel_pays_linear_growth
   let η : ℂ := (A + σ) + I * t
   have hx1 : 1 < x := lt_of_lt_of_le (by norm_num) hx
   have hlog1 : 1 ≤ Real.log (x : ℝ) := by
-    rw [← Real.exp_le_exp, Real.exp_log (by positivity : (0 : ℝ) < x)]
-    exact (Real.exp_one_lt_three.trans_le (by exact_mod_cast hx)).le
+    exact (Real.le_log_iff_exp_le (by positivity)).2
+      (Real.exp_one_lt_three.le.trans (by exact_mod_cast hx))
   have hA : 1 ≤ A := by
     dsimp [A, chen1973PerronScale]
     exact Real.one_le_rpow hlog1 (by norm_num)
@@ -134,25 +134,19 @@ private theorem eq17_kernel_pays_linear_growth
     dsimp [z, η]
     field_simp [hApos.ne']
     ring
-  have hnormz : β ≤ ‖z‖ := by
-    calc
-      β ≤ σ := hσlower
-      _ = |σ| := (abs_of_pos hσ).symm
-      _ ≤ ‖z‖ := by
-        simpa [z] using Complex.abs_re_le_norm z
+  have hnormz : β ≤ ‖z‖ :=
+    hσlower.trans (by simpa [z] using Complex.re_le_norm z)
   have hnormηsq : ‖η‖ ^ 2 = (A + σ) ^ 2 + t ^ 2 := by
     rw [Complex.sq_norm]
     simp [η, Complex.normSq_apply, pow_two]
-  have hηone : 1 ≤ ‖η‖ := by
-    have hs : 1 ≤ ‖η‖ ^ 2 := by
-      rw [hnormηsq]
-      nlinarith [sq_nonneg t, hA, hσ]
-    nlinarith [norm_nonneg η, sq_nonneg (‖η‖ - 1)]
+  have hηre : 1 ≤ A + σ := hA.trans (le_add_of_nonneg_right hσ.le)
+  have hηone : 1 ≤ ‖η‖ :=
+    hηre.trans (by simpa [η] using Complex.re_le_norm η)
   have hηden : 1 + t ^ 2 ≤ ‖η‖ ^ (n + 1) := by
     calc
       1 + t ^ 2 ≤ ‖η‖ ^ 2 := by
         rw [hnormηsq]
-        nlinarith [sq_nonneg (A + σ - 1), hA, hσ]
+        exact add_le_add (one_le_pow₀ hηre) le_rfl
       _ ≤ ‖η‖ ^ (n + 1) := pow_le_pow_right₀ hηone hn
   have hratio : (2 + 4 * ‖z‖) / ‖z‖ ≤ 2 / β + 4 := by
     have hzpos : 0 < ‖z‖ := hβ.trans_le hnormz
@@ -206,8 +200,8 @@ theorem norm_chen1973Lemma6Eq17ShiftIntegrand_le_inv_one_add_sq
           (2 / chen1973Lemma6Beta x + 4))) / (1 + t ^ 2) := by
   have hx1 : 1 < x := lt_of_lt_of_le (by norm_num) hx
   have hlog1 : 1 ≤ Real.log (x : ℝ) := by
-    rw [← Real.exp_le_exp, Real.exp_log (by positivity : (0 : ℝ) < x)]
-    exact (Real.exp_one_lt_three.trans_le (by exact_mod_cast hx)).le
+    exact (Real.le_log_iff_exp_le (by positivity)).2
+      (Real.exp_one_lt_three.le.trans (by exact_mod_cast hx))
   have hβpos : 0 < chen1973Lemma6Beta x := by
     unfold chen1973Lemma6Beta
     have hl : 0 < Real.log (x : ℝ) := lt_of_lt_of_le (by norm_num) hlog1
@@ -217,7 +211,7 @@ theorem norm_chen1973Lemma6Eq17ShiftIntegrand_le_inv_one_add_sq
     unfold chen1973Lemma6Alpha
     have hl : 0 < Real.log (x : ℝ) := lt_of_lt_of_le (by norm_num) hlog1
     have hi : 1 / Real.log (x : ℝ) ≤ 1 := (div_le_one hl).2 hlog1
-    linarith
+    linarith only [hi]
   have hd := norm_deriv_LFunction_le_modulus_mul_linear_height χ.1 hχ
     (σ := σ) (t := t) (by
       unfold chen1973Lemma6Beta at hσlower
@@ -242,7 +236,6 @@ theorem norm_chen1973Lemma6Eq17ShiftIntegrand_le_inv_one_add_sq
       ((d : ℝ) * M * Y * P) / (1 + t ^ 2)
   have hM : 0 ≤ M := by dsimp [M]; positivity
   have hY : 0 ≤ Y := by dsimp [Y]; positivity
-  have hlin : 0 ≤ 2 + 4 * ‖(σ + I * t : ℂ)‖ := by positivity
   calc
     _ ≤ ((d : ℝ) * (2 + 4 * ‖(σ + I * t : ℂ)‖)) * M *
         (Y * ‖chen1973MellinKernel (x : ℝ) (σ + I * t)‖) := by
@@ -250,8 +243,9 @@ theorem norm_chen1973Lemma6Eq17ShiftIntegrand_le_inv_one_add_sq
     _ = (d : ℝ) * M * Y *
         ((2 + 4 * ‖(σ + I * t : ℂ)‖) *
           ‖chen1973MellinKernel (x : ℝ) (σ + I * t)‖) := by ring
-    _ ≤ (d : ℝ) * M * Y * (P / (1 + t ^ 2)) := by
-      gcongr
+    _ ≤ (d : ℝ) * M * Y * (P / (1 + t ^ 2)) :=
+      mul_le_mul_of_nonneg_left hk
+        (mul_nonneg (mul_nonneg (Nat.cast_nonneg d) hM) hY)
     _ = ((d : ℝ) * M * Y * P) / (1 + t ^ 2) := by ring
 
 /-- Both boundary sections are Bochner integrable; in fact the same proof

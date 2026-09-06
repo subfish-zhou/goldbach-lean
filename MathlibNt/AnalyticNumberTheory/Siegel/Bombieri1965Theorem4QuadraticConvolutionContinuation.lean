@@ -168,18 +168,24 @@ theorem IsPrimitive.quadraticSiegelConvolutionSummatory_isBigO
   refine isBigO_iff.mpr ⟨79 * q + |(χ.LFunction 1).re|, ?_⟩
   filter_upwards [eventually_ge_atTop (1 : ℕ)] with n hn
   have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn
-  have hsqrt : Real.sqrt (n : ℝ) ≤ n :=
-    Real.sqrt_le_iff.mpr ⟨by positivity, by nlinarith⟩
-  have he := IsPrimitive.abs_quadratic_convolution_sub_LValue_main_le χ hprim hχ n
-  have htriangle := abs_add_le
-    (quadraticSiegelConvolutionSummatory χ n - (n : ℝ) * (χ.LFunction 1).re)
-    ((n : ℝ) * (χ.LFunction 1).re)
-  rw [sub_add_cancel, abs_mul,
-    abs_of_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ (n : ℝ))] at htriangle
+  have hsqrt : Real.sqrt (n : ℝ) ≤ n := Real.sqrt_le_self_iff.mpr (Or.inr hnR)
   simp only [Real.norm_eq_abs, Real.rpow_one,
     abs_of_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ (n : ℝ))]
-  have hbound := mul_le_mul_of_nonneg_left hsqrt (show (0 : ℝ) ≤ 79 * q by positivity)
-  nlinarith
+  calc
+    _ ≤ |quadraticSiegelConvolutionSummatory χ n - (n : ℝ) * (χ.LFunction 1).re| +
+        (n : ℝ) * |(χ.LFunction 1).re| := by
+      simpa only [sub_add_cancel, abs_mul,
+        abs_of_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ n)] using
+        abs_add_le
+          (quadraticSiegelConvolutionSummatory χ n - (n : ℝ) * (χ.LFunction 1).re)
+          ((n : ℝ) * (χ.LFunction 1).re)
+    _ ≤ 79 * q * Real.sqrt n + (n : ℝ) * |(χ.LFunction 1).re| :=
+      add_le_add
+        (IsPrimitive.abs_quadratic_convolution_sub_LValue_main_le χ hprim hχ n) le_rfl
+    _ ≤ 79 * q * n + (n : ℝ) * |(χ.LFunction 1).re| :=
+      add_le_add
+        (mul_le_mul_of_nonneg_left hsqrt (show (0 : ℝ) ≤ 79 * q by positivity)) le_rfl
+    _ = _ := by ring
 
 theorem IsPrimitive.sum_zetaMul_isBigO
     (χ : DirichletCharacter ℂ q) (hprim : χ.IsPrimitive) (hχ : χ ≠ 1)

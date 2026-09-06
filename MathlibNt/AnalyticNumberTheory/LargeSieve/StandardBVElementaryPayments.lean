@@ -1,6 +1,7 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanSmallRangeAndCharacters
 
 /-!
  # Elementary scalar payments for Standard Bombieri--Vinogradov
@@ -30,13 +31,9 @@ lemma reciprocalLogWeight_antitone_of_two_le
   simp only [reciprocalLogWeight, if_pos hm, if_pos hn]
   have hmlog : 0 < Real.log (m : ℝ) :=
     Real.log_pos (by exact_mod_cast (show 1 < m by omega))
-  have hlog : Real.log (m : ℝ) ≤ Real.log (n : ℝ) := by
-    apply Real.strictMonoOn_log.monotoneOn
-    · simp only [Set.mem_Ioi]
-      exact_mod_cast (show 0 < m by omega)
-    · simp only [Set.mem_Ioi]
-      exact_mod_cast (show 0 < n by omega)
-    · exact_mod_cast hmn
+  have hlog : Real.log (m : ℝ) ≤ Real.log (n : ℝ) :=
+    Real.log_le_log (by exact_mod_cast (show 0 < m by omega))
+      (by exact_mod_cast hmn)
   simpa only [one_div] using one_div_le_one_div_of_le hmlog hlog
 
 /-- The total variation of the reciprocal-log Abel kernel is exactly its jump
@@ -59,11 +56,10 @@ theorem discreteAbelAmplifier_eq_two_inv_log_two
       have hy0 := reciprocalLogWeight_nonneg y
       have hys0 := reciprocalLogWeight_nonneg (y + 1)
       unfold discreteAbelAmplifier at ih ⊢
-      have ih' := ih
-      rw [abs_of_nonneg hy0] at ih'
+      rw [abs_of_nonneg hy0] at ih
       rw [Finset.sum_range_succ, abs_of_nonneg hys0,
         abs_of_nonneg (sub_nonneg.mpr hmono)]
-      linarith [ih']
+      linarith only [ih]
 
 /-- Uniform explicit bound for the prefix-maximal Abel amplifier. -/
 theorem discreteAbelAmplifierPrefixMax_le_two_inv_log_two (N : ℕ) :
@@ -195,13 +191,7 @@ theorem directConductorCorrectionMean_vonMangoldt_le (N Q : ℕ) :
 private lemma vonMangoldt_toNat_le_log_v_succ {n : ℤ} {v : ℕ}
     (hn : 1 ≤ n) (hnv : n.toNat ≤ v) :
     ArithmeticFunction.vonMangoldt n.toNat ≤ Real.log ((v + 1 : ℕ) : ℝ) := by
-  have hn0 : 0 ≤ n := by omega
-  have hnpos : (0 : ℝ) < n.toNat := by
-    exact_mod_cast (show 0 < n.toNat by omega)
-  exact ArithmeticFunction.vonMangoldt_le_log.trans
-    (Real.strictMonoOn_log.monotoneOn hnpos
-      (by simp only [Set.mem_Ioi]; positivity)
-      (by exact_mod_cast hnv.trans (Nat.le_succ v)))
+  exact vonMangoldt_le_log_v_succ hn hnv
 
 /-- Every primitive-character small Vaughan prefix is bounded directly by its
 support length `v`; no large-sieve input is needed. -/
@@ -261,8 +251,7 @@ theorem vaughanSmall_primitivePrefixAmplitude_le
               simpa [S, vaughanSmallSupport] using card_vaughanSmallSupport_le y v
             exact_mod_cast hcardS
           · positivity
-    nlinarith [norm_nonneg (∑ n ∈ S,
-      vaughanSmallCoeff vaughanUnitIntegerCoeff v n * χ.1 (n : ZMod q))]
+    exact pow_le_pow_left₀ (norm_nonneg _) hnorm 2
   rw [← primitivePrefixAmplitude_sq] at hmax
   nlinarith [primitivePrefixAmplitude_nonneg
     (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N q χ]

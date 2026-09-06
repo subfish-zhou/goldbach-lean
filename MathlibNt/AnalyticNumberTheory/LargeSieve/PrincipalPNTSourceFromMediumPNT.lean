@@ -32,12 +32,7 @@ theorem principalLambdaPrefixMaxError_one_eq_psi_prefixMax (N : ℕ) :
         (fun (y : ℕ) => |Chebyshev.psi (y : ℝ) - (y : ℝ)|)).max'
           (Finset.image_nonempty.mpr ⟨0, by simp⟩) := by
   unfold principalLambdaPrefixMaxError
-  congr 1
-  ext z
-  simp only [Finset.mem_image]
-  constructor <;> rintro ⟨y, hy, rfl⟩
-  · exact ⟨y, hy, (norm_principalLambdaMainError_one_eq_psi_sub y).symm⟩
-  · exact ⟨y, hy, norm_principalLambdaMainError_one_eq_psi_sub y⟩
+  simp_rw [norm_principalLambdaMainError_one_eq_psi_sub]
 
 /-! ## Deterministic discrete-Abel versus true-li source -/
 
@@ -66,7 +61,6 @@ private lemma reciprocalLog_integral_unit_bounds (n : ℕ) (hn : 2 ≤ n) :
     MathlibNt.SieveTheory.LiuWeight.liuLogarithmicIntegrand_intervalIntegrable_of_two_le
       hnreal hnn
   have hlogn : 0 < Real.log (n : ℝ) := Real.log_pos (by linarith)
-  have hlogns : 0 < Real.log (n + 1 : ℝ) := Real.log_pos (by linarith)
   constructor
   · calc
       1 / Real.log (n + 1 : ℝ) =
@@ -126,14 +120,8 @@ theorem discreteAbelLiMain_sub_integral_bounds {y : ℕ} (hy : 2 ≤ y) :
         simp [reciprocalLogWeight, show 2 ≤ n + 1 by omega]
       rw [hw]
       constructor
-      · linarith [ih'.1, hb.2]
-      · calc
-          discreteAbelLiMain n + 1 / Real.log ((n : ℝ) + 1) -
-              ((∫ x in (2 : ℝ)..(n : ℝ), 1 / Real.log x) +
-                ∫ x in (n : ℝ)..(n : ℝ) + 1, 1 / Real.log x) ≤
-              discreteAbelLiMain n -
-                ∫ x in (2 : ℝ)..(n : ℝ), 1 / Real.log x := by linarith [hb.1]
-          _ ≤ 1 / Real.log 2 := ih'.2
+      · linarith only [ih'.1, hb.2]
+      · linarith only [ih'.2, hb.1]
 
 /-- The genuine-li discrepancy is bounded by an absolute endpoint constant. -/
 theorem globalChebyshevToLiSourceError_le_two_div_log_two
@@ -150,19 +138,8 @@ theorem globalChebyshevToLiSourceError_le_two_div_log_two
   have htwo : 0 < 2 / Real.log 2 := div_pos (by norm_num) hlog
   have hrel : 2 / Real.log 2 = 2 * (1 / Real.log 2) := by ring
   constructor
-  · calc
-      -(2 / Real.log 2) ≤
-          1 / Real.log (y : ℝ) - 2 / Real.log 2 := by
-            rw [hrel]
-            linarith [one_div_pos.mpr hlog, one_div_pos.mpr hlogy]
-      _ ≤ discreteAbelLiMain y -
-          (2 / Real.log 2 + ∫ t in (2 : ℝ)..(y : ℝ), 1 / Real.log t) := by
-            linarith [hb.1]
-  · calc
-      discreteAbelLiMain y -
-          (2 / Real.log 2 + ∫ t in (2 : ℝ)..(y : ℝ), 1 / Real.log t) ≤
-          1 / Real.log 2 - 2 / Real.log 2 := by linarith [hb.2]
-      _ ≤ 2 / Real.log 2 := by linarith [htwo]
+  · linarith only [hb.1, one_div_pos.mpr hlogy]
+  · linarith only [hb.2, hrel, htwo]
 
 /-- A uniform deterministic bound valid also at the two artificial low
 endpoints of the prefix maximum. -/
@@ -329,7 +306,6 @@ theorem principalLambdaPrefixMaxError_one_eventually_le (A : ℝ) (hA : 0 < A) :
   rw [Asymptotics.isBigO_iff'] at hmedium
   obtain ⟨M, hM, hmedium⟩ := hmedium
   let d : ℝ := c * (1 / 2 : ℝ) ^ (1 / 10 : ℝ)
-  have hd : 0 < d := by dsimp [d]; positivity
   let Ksmall : ℝ := Real.log 4 + 5
   have hKsmall : 0 < Ksmall := by dsimp [Ksmall]; positivity
   let K : ℝ := M + Ksmall
@@ -445,7 +421,6 @@ theorem globalChebyshevToLiPrincipalPNTSource :
     (eventually_sqrt_le_div_log_rpow A)
   filter_upwards [hprefix, hsqrtNat, Filter.eventually_ge_atTop 2] with N hprefix hsqrtPay hN
   intro _hNarg
-  have hNpos : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le (by norm_num : 0 < 2) hN)
   have hbudgetNonneg : 0 ≤ (N : ℝ) / Real.log N ^ A := by positivity
   have hbudgetOne : 1 ≤ (N : ℝ) / Real.log N ^ A := by
     calc

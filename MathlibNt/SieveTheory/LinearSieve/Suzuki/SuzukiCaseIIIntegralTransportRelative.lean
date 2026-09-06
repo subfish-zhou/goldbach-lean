@@ -80,7 +80,8 @@ theorem caseIIPositiveDeltaIntegralPart_source_exact_relative
     _ = ((1 + 3 * K / Real.log D) * P * L) * ((1 / s) * I) := by ring
     _ ≤ ((1 + 3 * K / Real.log D) * P * L) * ((c * R) * E) := hscaled
     _ = _ := by ring
-private lemma perturbation_three_le_one_add_seven_ratio
+/-- The cubic perturbation has linear excess when `3^d` is at most `log D`. -/
+lemma perturbation_three_le_one_add_seven_ratio
     {D d : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d)
     (hsmall : 3 ^ d ≤ Real.log D) :
     perturbation D d 0 3 ≤ 1 + 7 * (3 ^ d / Real.log D) := by

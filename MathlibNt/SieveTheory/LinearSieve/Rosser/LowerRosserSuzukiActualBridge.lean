@@ -137,13 +137,8 @@ theorem lowerRosserBoundaryMass_eq_sum_fixedPairDepth0Density
   apply Finset.sum_congr rfl
   intro l hl
   obtain ⟨k, hk, huniq⟩ := lowerRosserBoundaryChains_exists_unique_depth hl
-  have hlsub : l.toFinset ⊆ P := by
-    unfold lowerRosserBoundaryChains at hl
-    obtain ⟨s, hs, hsort⟩ := Finset.mem_image.mp hl
-    have hsub := Finset.mem_powerset.mp (Finset.mem_filter.mp hs).1
-    simpa [← hsort] using hsub
-  have hnodup : l.Nodup :=
-    (mem_lowerRosserBoundaryChains_iff hqP hqprime hqmin).mp hl |>.1
+  obtain ⟨hnodup, _, hlsub, _⟩ :=
+    (mem_lowerRosserBoundaryChains_iff hqP hqprime hqmin).mp hl
   have hlenle : l.length ≤ P.card := by
     rw [← List.toFinset_card_of_nodup hnodup]
     exact Finset.card_le_card hlsub
@@ -200,7 +195,8 @@ noncomputable def lowerSuzukiUnnormalizedLayer
   ∑ q ∈ suzukiSupportedBelow S z,
     S.nu q * sourceDiscreteEuler S q * lowerSuzukiDiscreteKernel S D z k q
 
-private theorem ceilDiv_ceilDiv_eq {D a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
+/-- Successive ceiling divisions by positive divisors equal division by their product. -/
+theorem ceilDiv_ceilDiv_eq {D a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
     (D ⌈/⌉ a) ⌈/⌉ b = D ⌈/⌉ (a * b) := by
   apply Nat.le_antisymm
   · apply (ceilDiv_le_iff_le_mul hb).2
@@ -367,23 +363,14 @@ theorem lowerRosserEvenBoundaryLayerMass_eq_unnormalizedLayer
             · apply Finset.ext
               intro p₁
               simp only [Finset.mem_filter, suzukiSupportedBelow]
+              have hcut : p₁ ^ 3 < D ⌈/⌉ p₀ ↔ p₀ * p₁ ^ 3 < D := by
+                rw [← not_le, ceilDiv_le_iff_le_mul hp₀pos]
+                omega
               constructor
-              · intro hp₁
-                rcases hp₁ with ⟨⟨hp₁S, hp₁p₀⟩, hceil⟩
-                have hprod : p₀ * p₁ ^ 3 < D := by
-                  by_contra hn
-                  have hDle : D ≤ p₀ * p₁ ^ 3 := Nat.le_of_not_gt hn
-                  have := (ceilDiv_le_iff_le_mul hp₀pos).2 hDle
-                  omega
-                exact ⟨⟨hp₁S, hp₁p₀.trans hp₀z⟩, hp₁p₀, hprod⟩
-              · intro hp₁
-                rcases hp₁ with ⟨⟨hp₁S, hp₁z⟩, hp₁p₀, hprod⟩
-                have hceil : p₁ ^ 3 < D ⌈/⌉ p₀ := by
-                  by_contra hn
-                  have hc : D ⌈/⌉ p₀ ≤ p₁ ^ 3 := Nat.le_of_not_gt hn
-                  have := (ceilDiv_le_iff_le_mul hp₀pos).1 hc
-                  omega
-                exact ⟨⟨hp₁S, hp₁p₀⟩, hceil⟩
+              · rintro ⟨⟨hp₁S, hp₁p₀⟩, hceil⟩
+                exact ⟨⟨hp₁S, hp₁p₀.trans hp₀z⟩, hp₁p₀, hcut.mp hceil⟩
+              · rintro ⟨⟨hp₁S, hp₁z⟩, hp₁p₀, hprod⟩
+                exact ⟨⟨hp₁S, hp₁p₀⟩, hcut.mpr hprod⟩
             · intro p₁ hp₁
               have hp₁p₀ : p₁ < p₀ := (Finset.mem_filter.mp hp₁).2.1
               have hp₁z : p₁ < z :=

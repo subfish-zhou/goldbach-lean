@@ -50,18 +50,9 @@ private lemma xi_sub_two_log_antitone_exp_two :
       (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)).trans_le hs'
     have hderiv : deriv (fun u : ℝ => xi u - 2 * Real.log u) s =
         deriv xi s - 2 / s := by
-      have hd := ((xi_hasDerivAt hs1).sub
-        ((Real.hasDerivAt_log (ne_of_gt hspos)).const_mul 2)).deriv
-      have hfun : (xi - fun u : ℝ => 2 * Real.log u) =
-          (fun u : ℝ => xi u - 2 * Real.log u) := by
-        funext u
-        rfl
-      have hd' : deriv (fun u : ℝ => xi u - 2 * Real.log u) s =
-          (xiSlope s)⁻¹ - 2 * s⁻¹ := by
-        rw [← hfun]
-        exact hd
-      rw [hd', ← xi_deriv hs1]
-      field_simp [ne_of_gt hspos]
+      simpa only [Pi.sub_def, xi_deriv hs1, div_eq_mul_inv] using
+        ((xi_hasDerivAt hs1).sub
+          ((Real.hasDerivAt_log (ne_of_gt hspos)).const_mul 2)).deriv
     rw [hderiv]
     exact sub_nonpos.mpr (xi_deriv_le_two_div hs')
 

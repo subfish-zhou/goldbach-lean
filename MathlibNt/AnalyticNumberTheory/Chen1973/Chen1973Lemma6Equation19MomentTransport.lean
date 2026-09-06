@@ -49,53 +49,32 @@ theorem chen1973Lemma6_eq19Weight_le_I_div_totient
     (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
     chen1973Lemma6Eq19Weight d ≤
       chen1973Lemma6Eq19I x L level / (d.totient : ℝ) := by
-  have hmem := hd
-  simp only [chen1973Lemma6ConductorBlock] at hmem
-  split at hmem
-  · rw [Finset.mem_filter] at hmem
-    have hsquare := hmem.2.2
-    have hdpos : 0 < d := by
-      have := (Finset.mem_Ioc.mp hmem.1).1
-      omega
-    have hmu : |((ArithmeticFunction.moebius d : ℤ) : ℝ)| = 1 := by
-      have hz := ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsquare
-      have hr : (((ArithmeticFunction.moebius d : ℤ) : ℝ)) ^ 2 = 1 := by
-        exact_mod_cast hz
-      rcases sq_eq_one_iff.mp hr with h | h <;> simp [h]
-    rw [chen1973Lemma6Eq19Weight, hmu, one_mul]
-    have hthree := chen1973Lemma6_threePow_le_Eq19I hd
-    have hφpos : (0 : ℝ) < d.totient := by
-      exact_mod_cast Nat.totient_pos.mpr hdpos
-    have hdR : (0 : ℝ) < d := by exact_mod_cast hdpos
-    have hφle : (d.totient : ℝ) ≤ d := by exact_mod_cast Nat.totient_le d
-    calc
-      (3 : ℝ) ^ d.primeFactors.card / d ≤
-          chen1973Lemma6Eq19I x L level / d := by gcongr
-      _ ≤ chen1973Lemma6Eq19I x L level / d.totient := by
-        exact div_le_div_of_nonneg_left
-          (chen1973Lemma6Eq19I_pos x L level).le hφpos hφle
-  · rw [Finset.mem_filter] at hmem
-    have hsquare := hmem.2.2
-    have hshell := hmem.1
-    simp only [chen1973Lemma6DyadicShell, Finset.mem_filter] at hshell
-    have hdpos : 0 < d :=
-      lt_of_le_of_lt (Nat.zero_le _) hshell.2.1
-    have hmu : |((ArithmeticFunction.moebius d : ℤ) : ℝ)| = 1 := by
-      have hz := ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsquare
-      have hr : (((ArithmeticFunction.moebius d : ℤ) : ℝ)) ^ 2 = 1 := by
-        exact_mod_cast hz
-      rcases sq_eq_one_iff.mp hr with h | h <;> simp [h]
-    rw [chen1973Lemma6Eq19Weight, hmu, one_mul]
-    have hthree := chen1973Lemma6_threePow_le_Eq19I hd
-    have hφpos : (0 : ℝ) < d.totient := by
-      exact_mod_cast Nat.totient_pos.mpr hdpos
-    have hφle : (d.totient : ℝ) ≤ d := by exact_mod_cast Nat.totient_le d
-    calc
-      (3 : ℝ) ^ d.primeFactors.card / d ≤
-          chen1973Lemma6Eq19I x L level / d := by gcongr
-      _ ≤ chen1973Lemma6Eq19I x L level / d.totient := by
-        exact div_le_div_of_nonneg_left
-          (chen1973Lemma6Eq19I_pos x L level).le hφpos hφle
+  have hdprops : 0 < d ∧ Squarefree d := by
+    have hmem := hd
+    simp only [chen1973Lemma6ConductorBlock] at hmem
+    split at hmem
+    · rw [Finset.mem_filter] at hmem
+      exact ⟨lt_of_le_of_lt (Nat.zero_le _) (Finset.mem_Ioc.mp hmem.1).1,
+        hmem.2.2⟩
+    · simp only [chen1973Lemma6DyadicShell, Finset.mem_filter] at hmem
+      exact ⟨lt_of_le_of_lt (Nat.zero_le _) hmem.1.2.1, hmem.2.2⟩
+  obtain ⟨hdpos, hsquare⟩ := hdprops
+  have hmu : |((ArithmeticFunction.moebius d : ℤ) : ℝ)| = 1 := by
+    have hz := ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsquare
+    have hr : (((ArithmeticFunction.moebius d : ℤ) : ℝ)) ^ 2 = 1 := by
+      exact_mod_cast hz
+    rcases sq_eq_one_iff.mp hr with h | h <;> simp [h]
+  rw [chen1973Lemma6Eq19Weight, hmu, one_mul]
+  have hthree := chen1973Lemma6_threePow_le_Eq19I hd
+  have hφpos : (0 : ℝ) < d.totient := by
+    exact_mod_cast Nat.totient_pos.mpr hdpos
+  have hφle : (d.totient : ℝ) ≤ d := by exact_mod_cast Nat.totient_le d
+  calc
+    (3 : ℝ) ^ d.primeFactors.card / d ≤
+        chen1973Lemma6Eq19I x L level / d := by gcongr
+    _ ≤ chen1973Lemma6Eq19I x L level / d.totient := by
+      exact div_le_div_of_nonneg_left
+        (chen1973Lemma6Eq19I_pos x L level).le hφpos hφle
 
 /-- Transport any nonnegative cell ledger to reciprocal-totient normalization. -/
 theorem chen1973Lemma6_eq19_weight_transport

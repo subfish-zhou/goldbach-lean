@@ -278,20 +278,9 @@ theorem suzukiSuffixRatio_le
     suzukiSuffixRatio S z x ≤
       Real.log z / Real.log x * (1 + K / Real.log x) := by
   have h := hlocal (x : ℝ) (z : ℝ) (by exact_mod_cast hx) (by exact_mod_cast hxz)
-  have hfilter :
-      (suzukiSupportedBelow S z).filter (fun p : ℕ => x ≤ p) =
-        S.prodPrimes.primeFactors.filter
-          (fun p : ℕ => (x : ℝ) ≤ (p : ℝ) ∧ (p : ℝ) < (z : ℝ)) := by
-    ext p
-    simp only [suzukiSupportedBelow, Finset.mem_filter]
-    constructor
-    · rintro ⟨⟨hp, hpz⟩, hxp⟩
-      exact ⟨hp, by exact_mod_cast hxp, by exact_mod_cast hpz⟩
-    · rintro ⟨hp, hxp, hpz⟩
-      exact ⟨⟨hp, by exact_mod_cast hpz⟩, by exact_mod_cast hxp⟩
-  unfold suzukiSuffixRatio
-  rw [hfilter]
-  exact h
+  change suzukiLocalRatio S x z ≤ _ at h
+  simpa only [suzukiLocalRatio_nat_right S z (Nat.cast_nonneg x), Nat.ceil_natCast]
+    using h
 
 /-- Equation (8.1) at natural endpoints, obtained without PNT or Mertens. -/
 theorem suzukiNatDimensionOneError_le
@@ -854,31 +843,10 @@ theorem suzukiFiniteErrorVariation_le
     intro x hx y hy hxy
     have hxi := hnodes x hx
     have hyi := hnodes y hy
-    have htxi := hcoord x hxi
-    have htyi := hcoord y hyi
-    have hx1 : 1 < x := hw1.trans_le hxi.1
     have hy1 : 1 < y := hw1.trans_le hyi.1
-    have hx0 : 0 < x := lt_trans zero_lt_one hx1
-    have hy0 : 0 < y := lt_trans zero_lt_one hy1
-    have hlogxy : Real.log x ≤ Real.log y :=
-      Real.strictMonoOn_log.monotoneOn hx0 hy0 hxy
-    have htytx : t y ≤ t x := by
-      dsimp [t]
-      apply (div_le_div_iff₀ (Real.log_pos hy1) (Real.log_pos hx1)).2
-      nlinarith
-    have htypos : 0 < t y := hs.trans_le htyi.1
-    have hHx0 : 0 ≤ H (t x) := hH0 _ htxi
-    have hprod : H (t x) * t x ≤ H (t y) * t y := hHt htyi htxi htytx
-    have hscale : H (t x) * t y ≤ H (t x) * t x :=
-      mul_le_mul_of_nonneg_left htytx hHx0
-    have hgxy : H (t x) ≤ H (t y) := by
-      by_contra hn
-      have hlt : H (t y) < H (t x) := lt_of_not_ge hn
-      have hmul := mul_lt_mul_of_pos_right hlt htypos
-      nlinarith [hscale.trans hprod]
-    have hinc : 0 ≤ g y - g x := by
-      dsimp [g]
-      exact sub_nonneg.mpr hgxy
+    have hinc : 0 ≤ g y - g x :=
+      sub_nonneg.mpr
+        (transformedH_monotoneOn hD hw1 hwz hcoord hH0 hHt hxi hyi hxy)
     have hy2 : 2 ≤ y := hw2.trans hyi.1
     have hEraw := suzukiDimensionOneError_le hlocal hy2 hyi.2
     have hE : E y ≤ B y := by

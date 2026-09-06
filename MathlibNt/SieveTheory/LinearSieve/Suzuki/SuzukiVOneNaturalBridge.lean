@@ -6,6 +6,16 @@ open Finset
 namespace MathlibNt.SieveTheory
 open LinearSieve SwitchingPrinciple
 
+theorem SwitchingPrinciple.suzukiVProduct_natCeil_eq
+    (S : BoundingSieve) {x : ℝ} {z : ℕ} (hz : z = ⌈x⌉₊) :
+    suzukiVProduct S (z : ℝ) = suzukiVProduct S x := by
+  classical
+  unfold suzukiVProduct
+  congr 1
+  ext p
+  simp only [Finset.mem_filter]
+  rw [Nat.cast_lt, hz, Nat.lt_ceil]
+
  theorem cube_carrier_bridge (Dnat p : ℕ) :
     Dnat ≤ p ^ 3 ↔ (Dnat : ℝ) ^ (1 / 3 : ℝ) ≤ (p : ℝ) := by
   have hcast : (Dnat : ℝ) ≤ (p : ℝ) ^ 3 ↔ Dnat ≤ p ^ 3 := by
@@ -62,8 +72,7 @@ theorem suzukiVProduct_mul_localRatio_eq_sourceDiscreteEuler
   unfold suzukiVProduct suzukiLocalRatio sourceDiscreteEuler suzukiSupportedBelow
   change (∏ q ∈ B, (1 - S.nu q)) *
       (∏ q ∈ C, (1 - S.nu q)⁻¹) = ∏ q ∈ A, (1 - S.nu q)
-  rw [Finset.prod_inv_distrib, hpartition]
-  field_simp
+  rw [Finset.prod_inv_distrib, hpartition, mul_assoc, mul_inv_cancel₀ hCne, mul_one]
 
 theorem section14ExtendedV_one_eq_suzukiVOne
     (S : BoundingSieve) {Dnat znat : ℕ} {z s : ℝ}

@@ -35,14 +35,18 @@ theorem norm_LFunction_one_le_log_add_three [NeZero q]
         simpa only [Rat.cast_sum, Rat.cast_inv, Rat.cast_natCast] using
           congrArg (fun x : ℚ => (x : ℝ)) (harmonic_eq_sum_Icc (n := q)).symm
       _ ≤ 1 + Real.log q := by exact_mod_cast harmonic_le_one_add_log q
-  have htail := norm_LFunction_one_sub_sum_Ioc_div_le χ hχ q
-  have htwo : 2 * (q : ℝ) / ((q : ℝ) + 1) ≤ 2 :=
-    (div_le_iff₀ (by positivity)).mpr (by linarith)
-  have h := norm_add_le
-    (χ.LFunction 1 - ∑ n ∈ Ioc 0 q, χ n / (n : ℂ))
-    (∑ n ∈ Ioc 0 q, χ n / (n : ℂ))
-  rw [sub_add_cancel] at h
-  linarith
+  have htail : ‖χ.LFunction 1 - ∑ n ∈ Ioc 0 q, χ n / (n : ℂ)‖ ≤ 2 :=
+    (norm_LFunction_one_sub_sum_Ioc_div_le χ hχ q).trans
+      ((div_le_iff₀ (by positivity)).mpr (by linarith))
+  calc
+    ‖χ.LFunction 1‖ ≤
+        ‖χ.LFunction 1 - ∑ n ∈ Ioc 0 q, χ n / (n : ℂ)‖ +
+          ‖∑ n ∈ Ioc 0 q, χ n / (n : ℂ)‖ := by
+      simpa only [sub_add_cancel] using norm_add_le
+        (χ.LFunction 1 - ∑ n ∈ Ioc 0 q, χ n / (n : ℂ))
+        (∑ n ∈ Ioc 0 q, χ n / (n : ℂ))
+    _ ≤ 2 + (1 + Real.log q) := add_le_add htail hsum
+    _ = Real.log q + 3 := by ring
 
 /-- Inducing any character to a nonzero common modulus has logarithmic
 Euler loss at one, including overlapping levels. -/

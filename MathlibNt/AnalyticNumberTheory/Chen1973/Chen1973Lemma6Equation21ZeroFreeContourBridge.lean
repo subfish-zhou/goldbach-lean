@@ -39,9 +39,7 @@ theorem chen1973Lemma6_eq21_sigma_ge_zeroFreeBoundary
     (hbridge : Chen1973Lemma6Eq21ZeroFreeContourBridge x L c)
     (hd : d ∈ chen1973Lemma6ConductorBlock x L 0) :
     1 - c / (d : ℝ) ^ ((1 : ℝ) / 300) ≤ chen1973Lemma6Eq21Sigma x := by
-  unfold Chen1973Lemma6Eq21ZeroFreeContourBridge at hbridge
-  unfold chen1973Lemma6Eq21Sigma
-  linarith [hbridge d hd]
+  exact sub_le_sub_left (hbridge d hd) 1
 
 /-- Consequently every point on the equation-(21) line is nonzero. -/
 theorem chen1973Lemma6_eq21_leftLine_nonvanishing
@@ -84,10 +82,9 @@ theorem chen1973Lemma6_eq21_sigma_pos {x : ℕ} (hx : 3 ≤ x) :
   have hinv : 1 / Real.sqrt (Real.log (x : ℝ)) < 1 := by
     rw [div_lt_iff₀ (by positivity : 0 < Real.sqrt (Real.log (x : ℝ)))]
     simpa using hsqrt
-  unfold chen1973Lemma6Eq21Sigma
-  linarith
+  exact sub_pos.mpr hinv
 
-/-- The left edge never exceeds the right edge `1`. -/
+/-- The printed left edge is bounded above by `1`. -/
 theorem chen1973Lemma6_eq21_sigma_le_one (x : ℕ) :
     chen1973Lemma6Eq21Sigma x ≤ 1 := by
   unfold chen1973Lemma6Eq21Sigma
@@ -103,7 +100,7 @@ theorem chen1973Lemma6_eq21_sigma_le_alpha
     unfold chen1973Lemma6Alpha
     have hlog : 0 < Real.log (x : ℝ) :=
       Real.log_pos (by exact_mod_cast (show 1 < x by omega))
-    linarith [one_div_pos.mpr hlog])
+    exact le_add_of_nonneg_right (one_div_pos.mpr hlog).le)
 
 /-- The literal logarithmic-derivative integrand shifted in equation (21), with
 `y = x/(p₁p₂)` supplied separately so positivity is visible to the analytic
@@ -113,7 +110,8 @@ def chen1973Lemma6Eq21ShiftIntegrand
   ((y : ℂ) ^ s * chen1973MellinKernel (x : ℝ) s) *
     (chen1973PrimitiveLDeriv d s χ / chen1973Lemma6PrimitiveLValue d s χ)
 
-private theorem eq21_mellinKernel_differentiableAt
+/-- Chen's Mellin kernel is differentiable in the open right half-plane. -/
+theorem eq21_mellinKernel_differentiableAt
     {x : ℕ} (hx : 3 ≤ x) {s : ℂ} (hs : 0 < s.re) :
     DifferentiableAt ℂ (chen1973MellinKernel (x : ℝ)) s := by
   have hs0 : s ≠ 0 := by
@@ -157,18 +155,21 @@ theorem differentiableOn_chen1973Lemma6Eq21ShiftIntegrand_strip
   let _ : NeZero d := ⟨Nat.ne_zero_of_lt (chen1973Lemma6_eq21_one_lt_conductor hd)⟩
   have hd1 := chen1973Lemma6_eq21_one_lt_conductor hd
   have hχ : χ.1 ≠ 1 := primitiveCharacter_ne_one hd1 χ
+  have hLglobal : Differentiable ℂ χ.1.LFunction := χ.1.differentiable_LFunction hχ
   intro s hs
   have hspos : 0 < s.re := (chen1973Lemma6_eq21_sigma_pos P.hx).trans_le hs.1
-  have hLglobal : Differentiable ℂ χ.1.LFunction := χ.1.differentiable_LFunction hχ
-  have hL : DifferentiableAt ℂ χ.1.LFunction s := hLglobal s
   have hL0 : χ.1.LFunction s ≠ 0 := by
     simpa only [chen1973Lemma6PrimitiveLValue, dif_pos hd1] using
       chen1973Lemma6_eq21_rectangle_nonvanishing hzero hbridge hd χ hs
   unfold chen1973Lemma6Eq21ShiftIntegrand
   simp only [chen1973PrimitiveLDeriv, chen1973Lemma6PrimitiveLValue, dif_pos hd1]
-  exact (((differentiableAt_id.const_cpow (Or.inl (by exact_mod_cast hy.ne'))).mul
-    (eq21_mellinKernel_differentiableAt P.hx hspos)).mul
-      (hLglobal.deriv.differentiableAt.div hL hL0)).differentiableWithinAt
+  have hpower : DifferentiableAt ℂ (fun z : ℂ => (y : ℂ) ^ z) s :=
+    differentiableAt_id.const_cpow (Or.inl (by exact_mod_cast hy.ne'))
+  have hkernel := eq21_mellinKernel_differentiableAt P.hx hspos
+  have hlogDerivative : DifferentiableAt ℂ
+      (fun z => deriv χ.1.LFunction z / χ.1.LFunction z) s :=
+    hLglobal.deriv.differentiableAt.div (hLglobal s) hL0
+  exact ((hpower.mul hkernel).mul hlogDerivative).differentiableWithinAt
 
 /-- The finite equation-(21) contour shift on the actual rectangle.  This is a
 Cauchy--Goursat equality, not an assumed contour-majorization inequality. -/

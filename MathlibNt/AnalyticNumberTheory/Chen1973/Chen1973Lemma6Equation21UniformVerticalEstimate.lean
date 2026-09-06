@@ -21,7 +21,6 @@ theorem chen1973Lemma6_eq21_primeRegion_log_y
   have hx0 : (0 : ℝ) < x := by exact_mod_cast (show 0 < x by omega)
   have hx1 : (1 : ℝ) < x := by exact_mod_cast (show 1 < x by omega)
   have hlog : 0 < Real.log (x : ℝ) := Real.log_pos hx1
-  have hsqrt : 0 < Real.sqrt (Real.log (x : ℝ)) := Real.sqrt_pos.2 hlog
   have hp₁0 : (0 : ℝ) < pp.1 := by exact_mod_cast hp₁prime.pos
   have hp₂0 : (0 : ℝ) < pp.2 := by exact_mod_cast hp₂prime.pos
   let A : ℝ := (x : ℝ) ^ ((1 : ℝ) / 3)
@@ -37,11 +36,7 @@ theorem chen1973Lemma6_eq21_primeRegion_log_y
   have hp₂sq : (pp.2 : ℝ) ^ 2 ≤ (x : ℝ) / pp.1 := by
     exact (Real.le_sqrt (by positivity) (by positivity)).mp hp₂root
   have hp₁p₂sq : (pp.1 : ℝ) * (pp.2 : ℝ) ^ 2 ≤ (x : ℝ) := by
-    calc
-      (pp.1 : ℝ) * (pp.2 : ℝ) ^ 2 ≤
-          (pp.1 : ℝ) * ((x : ℝ) / pp.1) :=
-        mul_le_mul_of_nonneg_left hp₂sq (le_of_lt hp₁0)
-      _ = (x : ℝ) := by field_simp
+    simpa only [mul_comm] using (le_div_iff₀ hp₁0).mp hp₂sq
   have hp₁leA : (pp.1 : ℝ) ≤ A := by exact hp₁upper
   have hp₁p₂leA2 : (pp.1 : ℝ) * pp.2 ≤ A ^ 2 := by
     by_contra hnot
@@ -264,7 +259,7 @@ theorem chen1973Lemma6_eq21_primitiveVerticalEstimate_one_eventually_of_logDeriv
   have hpaid : M * budget ≤ Real.log y := by
     have hb := mul_le_mul_of_nonneg_left hbudget hM
     change Real.log (x : ℝ) / 3 ≤ Real.log y at hlogy
-    nlinarith
+    nlinarith only [hb, hsmall, hlogy]
   have hpi : Real.log y ≤ Real.pi * Real.log y := by
     nlinarith [Real.pi_gt_three]
   have hcoef : (M / (Real.pi * Real.log y)) * budget ≤ 1 := by

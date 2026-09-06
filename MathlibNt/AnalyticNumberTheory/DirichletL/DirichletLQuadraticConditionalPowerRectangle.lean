@@ -99,11 +99,10 @@ private theorem quadratic_fixed_parameters
   have hp : 0 < (q : ℝ) ^ (-2 * η) := Real.rpow_pos_of_pos hq _
   have hw : 0 < A * (q : ℝ) ^ (-2 * η) /
       (dirichletLQuadraticConditionalFixedH q τ T) ^ 12 := by positivity
-  refine ⟨hH, ?_, ?_⟩
-  · dsimp only [dirichletLQuadraticConditionalFixedLeft]
-    linarith
-  · dsimp only [dirichletLQuadraticConditionalFixedLeft]
-    linarith
+  have hleft : dirichletLQuadraticConditionalFixedLeft A η q τ T < 1 := by
+    dsimp only [dirichletLQuadraticConditionalFixedLeft]
+    linarith only [hw]
+  exact ⟨hH, hleft, hleft.le.trans (by norm_num)⟩
 
 private theorem LFunction_ne_zero_on_quadraticConditionalRectangle_aux
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
@@ -162,12 +161,10 @@ theorem LFunction_ne_zero_on_quadraticConditionalUpperRectangle
   norm_num at hs
   have hp := quadratic_fixed_parameters (q := q) (η := η) hA hτ hT
   rw [Set.uIcc_of_le hp.2.2, Set.uIcc_of_le hT] at hs
-  apply LFunction_ne_zero_on_quadraticConditionalRectangle_aux (q := q) χ hχ hA hτ hT hzero
-    hs.1.1 hs.1.2
-  · rw [abs_of_nonneg (hτ.le.trans hs.2.1)]
-    exact hs.2.1
-  · rw [abs_of_nonneg (hτ.le.trans hs.2.1)]
-    exact hs.2.2
+  rcases hs with ⟨⟨hreL, hreR⟩, ⟨himL, himR⟩⟩
+  have habsim : |s.im| = s.im := abs_of_nonneg (hτ.le.trans himL)
+  exact LFunction_ne_zero_on_quadraticConditionalRectangle_aux (q := q) χ hχ hA hτ hT hzero
+    hreL hreR (by simpa only [habsim] using himL) (by simpa only [habsim] using himR)
 
 /-- The analogous lower fixed rectangle is zero-free. -/
 theorem LFunction_ne_zero_on_quadraticConditionalLowerRectangle

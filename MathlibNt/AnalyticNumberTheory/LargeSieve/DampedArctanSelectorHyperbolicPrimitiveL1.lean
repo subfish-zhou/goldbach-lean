@@ -103,12 +103,7 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
       (μ : Measure ℝ), (∀ i ∈ s, Integrable (g i) μ) →
         Integrable (fun t => ∑ i ∈ s, g i t) μ := by
     intro ι s g μ hg
-    induction s using Finset.induction_on with
-    | empty => simpa using (integrable_zero ℝ μ)
-    | @insert i s hi ih =>
-        simp only [Finset.sum_insert hi]
-        exact (hg i (Finset.mem_insert_self i s)).add
-          (ih (fun j hj => hg j (Finset.mem_insert_of_mem hj)))
+    exact integrable_finsetSum s hg
   have hFint : ∀ q (χ : PrimitiveCharacter q), IntegrableOn (F q χ) (Set.Ioi 0) := by
     intro q χ
     unfold F rectangularKernelCharacterSum
@@ -265,53 +260,32 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
     unfold MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep
     have hYR : (Y q χ : ℝ) ≤ M := by exact_mod_cast hYM q χ
     linarith
+  -- Both cosine-cosine and sine-sine lanes use the same energy comparison.
+  have hphaseMean (c d : ℤ → ℂ)
+      (hc : ∑ m ∈ sM, ‖c m‖ ^ 2 ≤ ∑ m ∈ sM, ‖a m‖ ^ 2)
+      (hd : ∑ n ∈ sN, ‖d n‖ ^ 2 ≤ ∑ n ∈ sN, ‖b n‖ ^ 2) :
+      rankOneRectangularWeightedPrimitiveMean c d Ma Mb Na Nb S ≤ R := by
+    refine (rankOneRectangularWeightedPrimitiveMean_le
+      c d Ma Mb Na Nb Q hQ S hS).trans ?_
+    change
+      Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) * ∑ m ∈ sM, ‖c m‖ ^ 2) *
+        Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) * ∑ n ∈ sN, ‖d n‖ ^ 2) ≤
+      Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) * ∑ m ∈ sM, ‖a m‖ ^ 2) *
+        Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) * ∑ n ∈ sN, ‖b n‖ ^ 2)
+    apply mul_le_mul
+    · apply Real.sqrt_le_sqrt
+      exact mul_le_mul_of_nonneg_left hc (by unfold largeSieveBound; positivity)
+    · apply Real.sqrt_le_sqrt
+      exact mul_le_mul_of_nonneg_left hd (by unfold largeSieveBound; positivity)
+    · exact Real.sqrt_nonneg _
+    · exact Real.sqrt_nonneg _
   have hcc : ∀ t : ℝ, 0 < t →
       rankOneRectangularWeightedPrimitiveMean
           (phaseCosTwist a t) (phaseCosTwist b t) Ma Mb Na Nb S ≤
         R := by
     intro t ht
-    have heA := sum_norm_sq_phaseCosTwist_le a t sM
-    have heB := sum_norm_sq_phaseCosTwist_le b t sN
-    have hls := rankOneRectangularWeightedPrimitiveMean_le
-      (phaseCosTwist a t) (phaseCosTwist b t) Ma Mb Na Nb Q hQ S hS
-    let Aphase : ℝ :=
-      largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-        ∑ m ∈ sM, ‖phaseCosTwist a t m‖ ^ 2
-    let Aplain : ℝ :=
-      largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-        ∑ m ∈ sM, ‖a m‖ ^ 2
-    let Bphase : ℝ :=
-      largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-        ∑ n ∈ sN, ‖phaseCosTwist b t n‖ ^ 2
-    let Bplain : ℝ :=
-      largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-        ∑ n ∈ sN, ‖b n‖ ^ 2
-    calc
-      rankOneRectangularWeightedPrimitiveMean
-          (phaseCosTwist a t) (phaseCosTwist b t) Ma Mb Na Nb S ≤
-          Real.sqrt Aphase * Real.sqrt Bphase := by
-            simpa [Aphase, Bphase, sM, sN] using hls
-      _ ≤ Real.sqrt Aplain * Real.sqrt Bphase := by
-        exact mul_le_mul
-          (by
-            apply Real.sqrt_le_sqrt
-            dsimp [Aphase, Aplain]
-            exact mul_le_mul_of_nonneg_left heA (by
-              unfold largeSieveBound
-              positivity))
-          le_rfl (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-      _ ≤ Real.sqrt Aplain * Real.sqrt Bplain := by
-        exact mul_le_mul le_rfl
-          (by
-            apply Real.sqrt_le_sqrt
-            dsimp [Bphase, Bplain]
-            exact mul_le_mul_of_nonneg_left heB (by
-              unfold largeSieveBound
-              positivity))
-          (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-      _ ≤ R := by
-        dsimp [R, rankOneRectangularLSRHS]
-        exact le_rfl
+    exact hphaseMean (phaseCosTwist a t) (phaseCosTwist b t)
+      (sum_norm_sq_phaseCosTwist_le a t sM) (sum_norm_sq_phaseCosTwist_le b t sN)
   have hsc : ∀ t : ℝ, 0 < t →
       rankOneRectangularWeightedPrimitiveMean
           (phaseSinTwist a t) (phaseCosTwist b t) Ma Mb Na Nb S ≤
@@ -439,48 +413,8 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
           (phaseSinTwist a t) (phaseSinTwist b t) Ma Mb Na Nb S ≤
         R := by
     intro t ht
-    have heA := hsin_plain_left t
-    have heB := hsin_plain_right t
-    have hls := rankOneRectangularWeightedPrimitiveMean_le
-      (phaseSinTwist a t) (phaseSinTwist b t) Ma Mb Na Nb Q hQ S hS
-    let Aphase : ℝ :=
-      largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-        ∑ m ∈ sM, ‖phaseSinTwist a t m‖ ^ 2
-    let Aplain : ℝ :=
-      largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-        ∑ m ∈ sM, ‖a m‖ ^ 2
-    let Bphase : ℝ :=
-      largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-        ∑ n ∈ sN, ‖phaseSinTwist b t n‖ ^ 2
-    let Bplain : ℝ :=
-      largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-        ∑ n ∈ sN, ‖b n‖ ^ 2
-    calc
-      rankOneRectangularWeightedPrimitiveMean
-          (phaseSinTwist a t) (phaseSinTwist b t) Ma Mb Na Nb S ≤
-          Real.sqrt Aphase * Real.sqrt Bphase := by
-            simpa [Aphase, Bphase, sM, sN] using hls
-      _ ≤ Real.sqrt Aplain * Real.sqrt Bphase := by
-        exact mul_le_mul
-          (by
-            apply Real.sqrt_le_sqrt
-            dsimp [Aphase, Aplain]
-            exact mul_le_mul_of_nonneg_left heA (by
-              unfold largeSieveBound
-              positivity))
-          le_rfl (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-      _ ≤ Real.sqrt Aplain * Real.sqrt Bplain := by
-        exact mul_le_mul le_rfl
-          (by
-            apply Real.sqrt_le_sqrt
-            dsimp [Bphase, Bplain]
-            exact mul_le_mul_of_nonneg_left heB (by
-              unfold largeSieveBound
-              positivity))
-          (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-      _ ≤ R := by
-        dsimp [R, rankOneRectangularLSRHS]
-        exact le_rfl
+    exact hphaseMean (phaseSinTwist a t) (phaseSinTwist b t)
+      (hsin_plain_left t) (hsin_plain_right t)
   have hG :
       ∀ t ∈ Set.Ioi (0 : ℝ),
         G t ≤

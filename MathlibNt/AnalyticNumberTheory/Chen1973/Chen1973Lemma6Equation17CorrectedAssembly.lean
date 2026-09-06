@@ -36,7 +36,7 @@ private theorem eq17LinearKernel_pos {x : ℕ} (hx : 1 < x)
     intro h
     have := congrArg Complex.re h
     simp at this
-    linarith
+    exact hσ.ne' this
   exact mul_pos hs (by
     have := chen1973Lemma6_eq17_perronScale_pos hx
     positivity)
@@ -44,15 +44,7 @@ private theorem eq17LinearKernel_pos {x : ℕ} (hx : 1 < x)
 private theorem chen1973Lemma6_eq17_correctedRadialKernel_pos
     {x level : ℕ} (hx : 1 < x) {σ v : ℝ} (hσ : 0 < σ) :
     0 < chen1973Lemma6Eq17CorrectedRadialKernel x level (σ + v * I) := by
-  unfold chen1973Lemma6Eq17CorrectedRadialKernel chen1973Lemma6Eq17CorrectedKernel
-  have hs : 0 < ‖((σ : ℂ) + (v : ℂ) * I)‖ := by
-    rw [norm_pos_iff]
-    intro h
-    have := congrArg Complex.re h
-    simp at this
-    linarith
-  have hA := chen1973Lemma6_eq17_perronScale_pos hx
-  exact mul_pos hs (by positivity)
+  exact chen1973Lemma6_eq17_correctedKernel_pos hx hσ
 
 private theorem chen1973Lemma6_eq17_radialKernel_le_two_correctedRadialKernel
     {x level : ℕ} (hx : 3 ≤ x) (s : ℂ) :
@@ -74,7 +66,7 @@ private theorem chen1973Lemma6_eq17_radialKernel_le_two_correctedRadialKernel
   unfold eq17LinearKernel chen1973Lemma6Eq17CorrectedRadialKernel
     chen1973Lemma6Eq17CorrectedKernel
   dsimp [A, u, N] at hbase ⊢
-  nlinarith [mul_le_mul_of_nonneg_left hbase (norm_nonneg s)]
+  simpa only [mul_left_comm] using mul_le_mul_of_nonneg_left hbase (norm_nonneg s)
 
 private theorem chen1973Lemma6_eq17_correctedRadialKernel_inv_le_two_radialKernel_inv
     {x level : ℕ} (hx : 3 ≤ x) {s : ℂ}
@@ -95,56 +87,20 @@ private theorem chen1973Lemma6_eq17_mellinKernel_norm_le_correctedRadialKernel
     {x level : ℕ} (hx : 3 ≤ x) {s : ℂ} (hs : 0 ≤ s.re) :
     ‖chen1973MellinKernel (x : ℝ) s‖ ≤
       2 / chen1973Lemma6Eq17CorrectedRadialKernel x level s := by
-  let A := chen1973PerronScale (x : ℝ)
-  let N := chen1973PerronOrder (x : ℝ) + 1
-  have hA : 0 < A := chen1973Lemma6_eq17_perronScale_pos (by omega : 1 < x)
-  have hN : 2 ≤ N := by
-    dsimp [N]
+  have hx1 : 1 < x := by omega
+  have horder : 2 ≤ chen1973PerronOrder (x : ℝ) + 1 := by
     have := (chen1973Lemma6_eq17_one_le_log_and_order hx).2
     omega
-  by_cases hs0 : s = 0
-  · subst s
-    simp [chen1973MellinKernel, chen1973Lemma6Eq17CorrectedRadialKernel,
-      chen1973Lemma6Eq17CorrectedKernel]
-  have hsn : 0 < ‖s‖ := norm_pos_iff.mpr hs0
-  let u : ℝ := ‖s‖ / A
-  have hu : 0 ≤ u := div_nonneg (norm_nonneg _) hA.le
-  have hcomplex_one : 1 ≤ ‖1 + s / (A : ℂ)‖ :=
-    chen1973Lemma6_eq17_one_le_norm_one_add_div hA hs
-  have hcomplex_u : u ≤ ‖1 + s / (A : ℂ)‖ := by
-    have hsq : u ^ 2 ≤ ‖1 + s / (A : ℂ)‖ ^ 2 := by
-      have hnormsq : ‖1 + s / (A : ℂ)‖ ^ 2 =
-          (1 + s.re / A) ^ 2 + (s.im / A) ^ 2 := by
-        rw [Complex.sq_norm]
-        simp only [Complex.normSq_apply, Complex.add_re, Complex.one_re,
-          Complex.div_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero,
-          add_zero, Complex.add_im, Complex.one_im, zero_add, Complex.div_im,
-          pow_two]
-        field_simp [hA.ne']
-        ring
-      have hsnormsq : ‖s‖ ^ 2 = s.re ^ 2 + s.im ^ 2 := by
-        rw [Complex.sq_norm]
-        simp [Complex.normSq_apply, pow_two]
-      rw [hnormsq]
-      dsimp [u]
-      rw [div_pow, hsnormsq]
-      field_simp [hA.ne']
-      nlinarith
-    exact (sq_le_sq₀ hu (norm_nonneg _)).mp hsq
-  have honepow : (1 : ℝ) ≤ ‖1 + s / (A : ℂ)‖ ^ N := by
-    simpa using pow_le_pow_right₀ hcomplex_one (Nat.zero_le N)
-  have hupow : u ^ N ≤ ‖1 + s / (A : ℂ)‖ ^ N := by
-    exact pow_le_pow_left₀ hu hcomplex_u N
-  have hrad : 1 + u ^ N ≤ 2 * ‖1 + s / (A : ℂ)‖ ^ N := by
-    nlinarith
-  unfold chen1973MellinKernel chen1973Lemma6Eq17CorrectedRadialKernel
-  rw [norm_div, norm_one, norm_mul, norm_pow]
-  change 1 / (‖s‖ * ‖1 + s / (A : ℂ)‖ ^ N) ≤
-    2 / (‖s‖ * (1 + u ^ N))
-  have hcpos : 0 < ‖1 + s / (A : ℂ)‖ ^ N := pow_pos (zero_lt_one.trans_le hcomplex_one) _
-  have hrpos : 0 < 1 + u ^ N := by positivity
-  rw [div_le_div_iff₀ (mul_pos hsn hcpos) (mul_pos hsn hrpos)]
-  nlinarith [mul_le_mul_of_nonneg_left hrad hsn.le]
+  have hkernel := chen1973Lemma6_eq17_mellinKernel_norm_le_correctedKernel hx1 hs horder
+  have hnonneg := inv_nonneg.mpr (chen1973Lemma6_eq17_correctedKernel_nonneg hx1 s)
+  calc
+    ‖chen1973MellinKernel (x : ℝ) s‖ ≤
+        (chen1973Lemma6Eq17CorrectedKernel x s)⁻¹ := hkernel
+    _ ≤ 2 * (chen1973Lemma6Eq17CorrectedKernel x s)⁻¹ :=
+      le_mul_of_one_le_left hnonneg (by norm_num)
+    _ = 2 / chen1973Lemma6Eq17CorrectedRadialKernel x level s := by
+      rw [div_eq_mul_inv]
+      rfl
 
 private theorem chen1973Lemma6_eq17_correctedRadialKernel_inv_le_cauchy
     {x level : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (hσ : 0 < σ)
@@ -168,7 +124,7 @@ private theorem chen1973Lemma6_eq17_correctedRadialKernel_inv_le_cauchy
     omega
   have hu2 : u ^ 2 ≤ 1 + u ^ N := by
     rcases le_total u 1 with hu1 | h1u
-    · have : u ^ 2 ≤ 1 := by nlinarith [sq_nonneg u, mul_self_le_mul_self hu hu1]
+    · have : u ^ 2 ≤ 1 := by simpa only [pow_two, one_mul] using mul_self_le_mul_self hu hu1
       exact this.trans (le_add_of_nonneg_right (pow_nonneg hu _))
     · exact (pow_le_pow_right₀ h1u hN).trans (le_add_of_nonneg_left (by norm_num))
   have hvu : (v / A) ^ 2 ≤ u ^ 2 := by
@@ -201,10 +157,7 @@ private theorem chen1973Lemma6Eq17CorrectedRadialKernel_reflection
     (x level : ℕ) (a v : ℝ) :
     chen1973Lemma6Eq17CorrectedRadialKernel x level (a + (-v) * I) =
       chen1973Lemma6Eq17CorrectedRadialKernel x level (a + v * I) := by
-  unfold chen1973Lemma6Eq17CorrectedRadialKernel chen1973Lemma6Eq17CorrectedKernel
-  have hs : ‖(a : ℂ) + -(v : ℂ) * I‖ = ‖(a : ℂ) + (v : ℂ) * I‖ := by
-    simp [Complex.norm_def, Complex.normSq_apply]
-  rw [hs]
+  exact chen1973Lemma6Eq17CorrectedKernel_reflection x a v
 
 def chen1973Lemma6Eq17CorrectedRadialFirstIntegral
     (x L level B k m H : ℕ) : ℝ :=
@@ -233,15 +186,7 @@ def chen1973Lemma6Eq17CorrectedRadialSecondFullIntegral
 private theorem integral_eq_two_mul_Ioi_of_even_corrected (f : ℝ → ℝ)
     (heven : ∀ v, f (-v) = f v) :
     (∫ v : ℝ, f v) = 2 * ∫ v in Ioi (0 : ℝ), f v := by
-  have habs : f = fun v => f |v| := by
-    funext v
-    rcases le_total 0 v with hv | hv
-    · rw [abs_of_nonneg hv]
-    · rw [abs_of_nonpos hv, heven]
-  calc
-    (∫ v : ℝ, f v) = ∫ v : ℝ, f |v| :=
-      integral_congr_ae (ae_of_all _ fun v => congrFun habs v)
-    _ = 2 * ∫ v in Ioi (0 : ℝ), f v := integral_comp_abs
+  exact AnalyticNumberTheory.LargeSieve.integral_eq_two_mul_Ioi_of_even f heven
 
 set_option maxHeartbeats 800000 in
 theorem chen1973Lemma6Eq17CorrectedRadialFirstFullIntegral_eq_two_mul_half
@@ -301,19 +246,12 @@ private theorem one_lt_of_mem_conductorBlock
     {x L level d : ℕ} (hlevel : 1 ≤ level)
     (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
     1 < d := by
-  by_cases hzero : level = 0
-  · omega
-  · simp [chen1973Lemma6ConductorBlock, hzero, chen1973Lemma6DyadicShell] at hd
-    omega
+  exact AnalyticNumberTheory.LargeSieve.chen1973Lemma6ConductorBlock_one_lt hlevel hd
 
 private theorem primitiveCharacter_ne_one_of_one_lt
     {d : ℕ} [NeZero d] (hd : 1 < d) (χ : PrimitiveCharacter d) :
     χ.1 ≠ 1 := by
-  intro hχ
-  have hprim := χ.2
-  rw [DirichletCharacter.IsPrimitive, hχ,
-    DirichletCharacter.conductor_one] at hprim
-  omega
+  exact AnalyticNumberTheory.LargeSieve.chen1973_primitive_ne_one hd χ
 
 private theorem alpha_pos {x : ℕ} (hx : 3 ≤ x) :
     0 < chen1973Lemma6Alpha x := by
@@ -1697,14 +1635,8 @@ theorem chen1973Lemma6_alphaLogDerivative_le_six_mul_log_sq
         chen1973Lemma6PrimitiveLValue d
           (chen1973Lemma6Alpha x + t * I) χ‖ ≤
       6 * (Real.log x) ^ 2 := by
-  have hlog : 1 ≤ Real.log (x : ℝ) := by
-    have hxR : Real.exp 1 ≤ (x : ℝ) := by
-      have he3 : Real.exp 1 < 3 :=
-        Real.exp_one_lt_d9.trans (by norm_num)
-      exact he3.le.trans (by exact_mod_cast hx)
-    calc
-      (1 : ℝ) = Real.log (Real.exp 1) := (Real.log_exp 1).symm
-      _ ≤ Real.log (x : ℝ) := Real.log_le_log (Real.exp_pos 1) hxR
+  have hlog : 1 ≤ Real.log (x : ℝ) :=
+    (chen1973Lemma6_eq17_one_le_log_and_order hx).1
   have hlogpos : 0 < Real.log (x : ℝ) := lt_of_lt_of_le zero_lt_one hlog
   let σ : ℝ := 1 + 1 / (2 * Real.log x)
   have hσ : 1 < σ := by

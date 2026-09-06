@@ -227,16 +227,11 @@ theorem liuPanPrimePowerCoefficient_le_log_sq (N n : ℕ) :
    have hdiv : Real.log (n : ℝ) / Real.log 2 ≤
        Real.log (n + 1 : ℕ) / Real.log 2 :=
      div_le_div_of_nonneg_right hlog (Real.log_nonneg (by norm_num))
-   have hn1 : (1 : ℝ) ≤ (n + 1 : ℕ) := by
-     exact_mod_cast Nat.succ_le_succ (Nat.zero_le n)
-   have hnonneg : 0 ≤ Real.log (n + 1 : ℕ) / Real.log 2 :=
-     div_nonneg (Real.log_nonneg hn1) (Real.log_nonneg (by norm_num))
-   have hcardnonneg : 0 ≤ (n.primeFactors.card : ℝ) := Nat.cast_nonneg _
    have hsquare : (n.primeFactors.card : ℝ) ^ 2 ≤
-       (Real.log (n + 1 : ℕ) / Real.log 2) ^ 2 := by
-     nlinarith [homega.trans hdiv]
+       (Real.log (n + 1 : ℕ) / Real.log 2) ^ 2 :=
+     pow_le_pow_left₀ (Nat.cast_nonneg _) (homega.trans hdiv) 2
    exact (liuPanPrimePowerCoefficient_le_primeFactors_sq N n).trans
-     (hsquare.trans (by linarith))
+     (hsquare.trans (le_add_of_nonneg_left zero_le_one))
 
 /-- The exact `L² ≤ L∞ · L¹` reduction for Liu's collected coefficients, with
 the pointwise multiplicity supplied by the logarithmic bound above. -/
@@ -257,21 +252,18 @@ theorem liuPanPrimePowerCoefficient_sq_sum_le (N : ℕ) :
   have hc := liuPanPrimePowerCoefficient_le_log_sq N n
   have hn1 : (1 : ℝ) ≤ (n + 1 : ℕ) := by
    exact_mod_cast Nat.succ_le_succ (Nat.zero_le n)
-  have hN1 : (1 : ℝ) ≤ (N + 1 : ℕ) := by
-   exact_mod_cast Nat.succ_le_succ (Nat.zero_le N)
   have hnlog : 0 ≤ Real.log (n + 1 : ℕ) / Real.log 2 :=
    div_nonneg (Real.log_nonneg hn1) (Real.log_nonneg (by norm_num))
-  have hNlog : 0 ≤ Real.log (N + 1 : ℕ) / Real.log 2 :=
-   div_nonneg (Real.log_nonneg hN1) (Real.log_nonneg (by norm_num))
   have hsquare :
      1 + (Real.log (n + 1 : ℕ) / Real.log 2) ^ 2 ≤
-       1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2 := by
-   nlinarith
+       1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2 :=
+   add_le_add le_rfl (pow_le_pow_left₀ hnlog hdiv 2)
   calc
    liuPanPrimePowerCoefficient N n ^ 2 ≤
        (1 + (Real.log (n + 1 : ℕ) / Real.log 2) ^ 2) *
          liuPanPrimePowerCoefficient N n := by
-     nlinarith [liuPanPrimePowerCoefficient_nonneg N n]
+     simpa only [pow_two] using
+       mul_le_mul_of_nonneg_right hc (liuPanPrimePowerCoefficient_nonneg N n)
    _ ≤ (1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2) *
          liuPanPrimePowerCoefficient N n := by
      exact mul_le_mul_of_nonneg_right hsquare
@@ -452,26 +444,7 @@ private theorem liuPanPrimePower_sum_eq_ite_of_le
     (t y : ℕ) (x : ℝ) :
     (∑ n ∈ range (y + 1), if t = n then x else 0) =
       if t ≤ y then x else 0 := by
-  by_cases ht : t ≤ y
-  · rw [if_pos ht]
-    calc
-      (∑ n ∈ range (y + 1), if t = n then x else 0) =
-          if t = t then x else 0 := by
-        apply sum_eq_single t
-        · intro b hb hbt
-          simp [Ne.symm hbt]
-        · intro hnot
-          exact False.elim (hnot (mem_range.mpr (Nat.lt_succ_iff.mpr ht)))
-      _ = x := by simp
-  · rw [if_neg ht]
-    apply sum_eq_zero
-    intro n hn
-    have hnle : n ≤ y := Nat.le_of_lt_succ (mem_range.mp hn)
-    have htn : t ≠ n := by
-      intro h
-      apply ht
-      simpa [h] using hnle
-    simp [htn]
+  simp
 
 /-- Collecting the finite coefficient back into its source pairs is exact; in
 particular every product collision retains its multiplicity. -/
@@ -719,22 +692,7 @@ theorem liuPanPrimePowerNonprincipalDiscrepancy_abs_le_cauchySchwarz
     _ = (Nat.totient q : ℝ)⁻¹ *
           Real.sqrt (liuPanPrimePowerNonprincipalCharacterCount q : ℝ) *
             Real.sqrt (liuPanPrimePowerNonprincipalCharacterSquareSum N y q l) := by
-      have hcount : (S.card : ℝ) =
-          (liuPanPrimePowerNonprincipalCharacterCount q : ℝ) := by
-        simp [S, liuPanPrimePowerNonprincipalCharacterCount]
-      have hsquare :
-          (∑ χ ∈ S, g χ ^ 2) =
-            liuPanPrimePowerNonprincipalCharacterSquareSum N y q l := by
-        change
-          (∑ χ ∈ (Finset.univ.erase (1 : DirichletCharacter ℂ q)),
-              ‖star (χ (l : ZMod q)) *
-                ∑ n ∈ range (y + 1),
-                  (liuPanPrimePowerCoefficient N n : ℂ) *
-                    χ (n : ZMod q)‖ ^ 2) =
-            liuPanPrimePowerNonprincipalCharacterSquareSum N y q l
-        rfl
-      rw [hcount, hsquare]
-      ring
+      exact (mul_assoc _ _ _).symm
 
 /-- The unrestricted mass is the disjoint sum of its unit and nonunit parts. -/
 theorem liuPanPrimePowerTotal_eq_coprime_add_noncoprime

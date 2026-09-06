@@ -38,7 +38,7 @@ lemma eta_continuous : Continuous eta := by
   intro x
   by_cases hx : x = 0
   · subst x
-    rw [ContinuousAt, eta_zero]
+    rw [continuousAt_iff_punctured_nhds, eta_zero]
     have h := (Real.hasDerivAt_exp 0).tendsto_slope_zero
     have ht : Tendsto eta (𝓝[≠] (0 : ℝ)) (𝓝 1) := by
       apply tendsto_congr' _ |>.mpr
@@ -47,20 +47,7 @@ lemma eta_continuous : Continuous eta := by
       filter_upwards [self_mem_nhdsWithin] with y hy
       rw [eta_eq_div hy]
       simp only [div_eq_mul_inv, mul_comm]
-    rw [tendsto_def]
-    intro V hV
-    have hp := ht hV
-    change eta ⁻¹' V ∈ 𝓝[≠] (0 : ℝ) at hp
-    rw [mem_nhdsWithin_iff_exists_mem_nhds_inter] at hp
-    rcases hp with ⟨U, hU, hUV⟩
-    refine mem_of_superset hU ?_
-    intro y hy
-    by_cases hy0 : y = 0
-    · subst y
-      change eta 0 ∈ V
-      rw [eta_zero]
-      exact mem_of_mem_nhds hV
-    · exact hUV ⟨hy, hy0⟩
+    exact ht
   · have hevent : eta =ᶠ[𝓝 x] (fun y : ℝ => (Real.exp y - 1) / y) := by
       filter_upwards [eventually_ne_nhds hx] with y hy
       exact eta_eq_div hy

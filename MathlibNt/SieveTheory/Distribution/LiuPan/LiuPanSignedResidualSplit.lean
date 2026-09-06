@@ -87,18 +87,9 @@ theorem liuPanSignedMainMaxL_nonneg
   by_cases hS : (unitResidues q).Nonempty
   · rw [dif_pos hS]
     rcases hS with ⟨l, hl⟩
-    have hmem :
-        |liuPanSignedMainSum distMain y X q l f u v| ∈
-          (unitResidues q).image (fun l =>
-            |liuPanSignedMainSum distMain y X q l f u v|) :=
-      Finset.mem_image.mpr ⟨l, hl, rfl⟩
-    have hle :
-        |liuPanSignedMainSum distMain y X q l f u v| ≤
-          ((unitResidues q).image (fun l =>
-            |liuPanSignedMainSum distMain y X q l f u v|)).max'
-              (Finset.image_nonempty.mpr ⟨l, hl⟩) :=
-      Finset.le_max' _ _ hmem
-    exact (abs_nonneg _).trans hle
+    refine (abs_nonneg (liuPanSignedMainSum distMain y X q l f u v)).trans
+      (Finset.le_max' _ _ ?_)
+    exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
   · simp [hS]
 
 /-- The complete signed-main `y`-maximum is nonnegative. -/
@@ -106,14 +97,9 @@ theorem liuPanSignedMainMaxY_nonneg
     (distMain : ℝ → ℝ) (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
     0 ≤ liuPanSignedMainMaxY distMain X q x f u v := by
   unfold liuPanSignedMainMaxY
-  have hzero : 0 ∈ range (x + 1) := by simp
-  have hmem :
-      liuPanSignedMainMaxL distMain 0 X q f u v ∈
-        (range (x + 1)).image (fun y =>
-          liuPanSignedMainMaxL distMain y X q f u v) :=
-    Finset.mem_image.mpr ⟨0, hzero, rfl⟩
-  exact (liuPanSignedMainMaxL_nonneg distMain 0 X q f u v).trans
-    (Finset.le_max' _ _ hmem)
+  refine (liuPanSignedMainMaxL_nonneg distMain 0 X q f u v).trans
+    (Finset.le_max' _ _ ?_)
+  exact Finset.mem_image.mpr ⟨0, by simp, rfl⟩
 
 /-- The AP prime-power residue maximum is nonnegative. -/
 theorem liuPanAPPrimePowerCorrectionMaxL_nonneg
@@ -124,18 +110,9 @@ theorem liuPanAPPrimePowerCorrectionMaxL_nonneg
   by_cases hS : (unitResidues q).Nonempty
   · rw [dif_pos hS]
     rcases hS with ⟨l, hl⟩
-    have hmem :
-        liuPanSignedCorrectionBound y X q l f ∈
-          (unitResidues q).image (fun l =>
-            liuPanSignedCorrectionBound y X q l f) :=
-      Finset.mem_image.mpr ⟨l, hl, rfl⟩
-    have hle :
-        liuPanSignedCorrectionBound y X q l f ≤
-          ((unitResidues q).image (fun l =>
-            liuPanSignedCorrectionBound y X q l f)).max'
-              (Finset.image_nonempty.mpr ⟨l, hl⟩) :=
-      Finset.le_max' _ _ hmem
-    exact (liuPanSignedCorrectionBound_nonneg y X q l f).trans hle
+    refine (liuPanSignedCorrectionBound_nonneg y X q l f).trans
+      (Finset.le_max' _ _ ?_)
+    exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
   · simp [hS]
 
 /-- The AP prime-power `y`-maximum is nonnegative. -/
@@ -143,14 +120,9 @@ theorem liuPanAPPrimePowerCorrectionMaxY_nonneg
     (X q x : ℕ) (f : ℕ → ℝ) :
     0 ≤ liuPanAPPrimePowerCorrectionMaxY X q x f := by
   unfold liuPanAPPrimePowerCorrectionMaxY
-  have hzero : 0 ∈ range (x + 1) := by simp
-  have hmem :
-      liuPanAPPrimePowerCorrectionMaxL 0 X q f ∈
-        (range (x + 1)).image (fun y =>
-          liuPanAPPrimePowerCorrectionMaxL y X q f) :=
-    Finset.mem_image.mpr ⟨0, hzero, rfl⟩
-  exact (liuPanAPPrimePowerCorrectionMaxL_nonneg 0 X q f).trans
-    (Finset.le_max' _ _ hmem)
+  refine (liuPanAPPrimePowerCorrectionMaxL_nonneg 0 X q f).trans
+    (Finset.le_max' _ _ ?_)
+  exact Finset.mem_image.mpr ⟨0, by simp, rfl⟩
 
 private theorem liuPanSignedCombinedMaxL_le
     (distMain : ℝ → ℝ) (y X q : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
@@ -175,7 +147,7 @@ private theorem liuPanSignedCombinedMaxL_le
         liuPanSignedCorrectionBound y X q l f))
       (liuPanSignedCorrectionBound y X q l f)
       (Finset.mem_image.mpr ⟨l, hl, rfl⟩)
-    linarith
+    exact add_le_add hmain hpp
   · simp [hS]
 
 /-- The audited residual maximum is bounded by the sum of its two exact
@@ -203,7 +175,7 @@ theorem liuPanSignedResidualMaxY_le_split
       liuPanAPPrimePowerCorrectionMaxL y X q f))
     (liuPanAPPrimePowerCorrectionMaxL y X q f)
     (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
-  linarith
+  exact hpoint.trans (add_le_add hmain hpp)
 
 /-- Fixed-`N` bound for the complete signed-main average. This retains one
 absolute value around the entire source-faithful signed sum. -/

@@ -33,19 +33,20 @@ theorem chen1973Lemma6_all_level_actual_cell_small_of_fixedQuadraticL1
   have hxexp : Real.exp 1 ≤ (x:ℝ) := (le_max_right _ _).trans ((le_max_right _ _).trans hxR)
   have hlog : (1:ℝ) ≤ Real.log x := by
     simpa using Real.log_le_log (Real.exp_pos _) hxexp
+  -- Both level estimates use the same monotone enlargement of their constant.
+  have enlarge (a : ℝ) (ha : a ≤ max Cp 1) :
+      a*x/Real.log x^20 ≤ max Cp 1*x/Real.log x^20 :=
+    div_le_div_of_nonneg_right
+      (mul_le_mul_of_nonneg_right ha (Nat.cast_nonneg x)) (by positivity)
   by_cases hzero : level = 0
   · subst level
     have P : Chen1973Lemma6Eq21SourceParameters x L B k m k :=
       ⟨hx3, hL, hB, le_rfl, hlog, hLl, hLu, hBl, hBu⟩
-    have h := hz x hxz L B k m k P hSiegel
-    apply h.trans
-    simpa only [one_mul] using div_le_div_of_nonneg_right
-      (mul_le_mul_of_nonneg_right (le_max_right Cp 1) (Nat.cast_nonneg x))
-      (show 0 ≤ Real.log (x:ℝ)^20 by positivity)
-  · have h := hp x hxP L B lastD level k m hL hB (by omega)
+    have hsmall := hz x hxz L B k m k P hSiegel
+    exact hsmall.trans (by simpa only [one_mul] using enlarge 1 (le_max_right Cp 1))
+  · have hsmall := hp x hxP L B lastD level k m hL hB (by omega)
       hLl hLu hBl hBu hLast hcut
-    exact h.trans (div_le_div_of_nonneg_right
-      (mul_le_mul_of_nonneg_right (le_max_left Cp 1) (Nat.cast_nonneg x)) (by positivity))
+    exact hsmall.trans (enlarge Cp (le_max_left Cp 1))
 
 /-- Existing raw Landau--Siegel data suffice for the source objects at all levels.
 This consumes the input; it does not prove the raw lower bound. -/

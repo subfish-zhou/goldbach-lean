@@ -42,18 +42,12 @@ private lemma eq19_pairAtom_norm_vertical_general
     ‖chen1973Lemma6Eq19PairAtom x (σ + v * I) pp‖ =
       ‖chen1973Lemma6Eq19PairAtom x (σ : ℂ) pp‖ := by
   unfold chen1973Lemma6Eq19PairAtom
-  have hp₁ : 0 < pp.1 := by
-    simp only [chen1973Lemma6PrimePairShell, chen1973Lemma6DyadicShell,
-      Finset.mem_filter] at hpp
-    have hpair := hpp.1.1
-    rw [chen1973Lemma5PrimePairs, Finset.mem_filter] at hpair
-    exact hpair.2.1.pos
-  have hp₂ : 0 < pp.2 := by
-    simp only [chen1973Lemma6PrimePairShell, chen1973Lemma6DyadicShell,
-      Finset.mem_filter] at hpp
-    have hpair := hpp.1.1
-    rw [chen1973Lemma5PrimePairs, Finset.mem_filter] at hpair
-    exact hpair.2.2.1.pos
+  simp only [chen1973Lemma6PrimePairShell, chen1973Lemma6DyadicShell,
+    Finset.mem_filter] at hpp
+  have hpair := hpp.1.1
+  rw [chen1973Lemma5PrimePairs, Finset.mem_filter] at hpair
+  have hp₁ : 0 < pp.1 := hpair.2.1.pos
+  have hp₂ : 0 < pp.2 := hpair.2.2.1.pos
   have hcpow :
       ‖((pp.1 * pp.2 : ℂ) ^ ((σ : ℂ) + v * I))‖ =
         ‖((pp.1 * pp.2 : ℂ) ^ (σ : ℂ))‖ := by
@@ -100,14 +94,6 @@ theorem chen1973Lemma6_eq19_LDeriv_fourth_moment_sharp_cauchy
         ((Real.sqrt (Real.sqrt
           (chen1973Lemma6Eq19CircleFourthEnvelope Q s r + 1))) / r) ^ 4 := by
   let E := chen1973Lemma6Eq19CircleFourthEnvelope Q s r
-  have hE : 0 ≤ E := by
-    dsimp [E, chen1973Lemma6Eq19CircleFourthEnvelope]
-    positivity
-  have hroot : 0 ≤ Real.sqrt (Real.sqrt (E + 1)) := Real.sqrt_nonneg _
-  have hroot4 : (Real.sqrt (Real.sqrt (E + 1))) ^ 4 = E + 1 := by
-    rw [show (Real.sqrt (Real.sqrt (E + 1))) ^ 4 =
-      (Real.sqrt (Real.sqrt (E + 1)) ^ 2) ^ 2 by ring,
-      Real.sq_sqrt (Real.sqrt_nonneg _), Real.sq_sqrt (by linarith)]
   have hderiv : ∀ d ∈ chen1973Lemma6ConductorBlock x L level,
       ∀ χ : PrimitiveCharacter d,
         ‖chen1973PrimitiveLDeriv d s χ‖ ^ 4 ≤
@@ -164,14 +150,9 @@ theorem chen1973Lemma6_eq19_LDeriv_fourth_moment_sharp_cauchy
       have hvalue : chen1973PrimitiveLValue d z χ = χ.1.LFunction z := by
         simp [chen1973PrimitiveLValue, hd1]
       rw [hvalue] at hbound
-      have hy := norm_nonneg (χ.1.LFunction z)
-      have hy4 : ‖χ.1.LFunction z‖ ^ 4 ≤ E + 1 := by linarith
-      by_contra hn
-      have hlt : Real.sqrt (Real.sqrt (E + 1)) < ‖χ.1.LFunction z‖ :=
-        lt_of_not_ge hn
-      have := pow_lt_pow_left₀ hlt hroot (by norm_num : (4 : ℕ) ≠ 0)
-      rw [hroot4] at this
-      linarith
+      apply Real.le_sqrt_of_sq_le
+      apply Real.le_sqrt_of_sq_le
+      simpa only [← pow_mul] using hbound.trans (le_add_of_nonneg_right zero_le_one)
     have hdiff : DiffContOnCl ℂ χ.1.LFunction (Metric.ball s r) :=
       (χ.1.differentiable_LFunction hχ).diffContOnCl
     have hc := Complex.norm_deriv_le_of_forall_mem_sphere_norm_le hr hdiff hcircle
@@ -349,7 +330,9 @@ theorem chen1973Lemma6_eq19_first_le_fixedPower
             2 * (Q : ℝ) *
               ((40 * (|σ| + 1) * Real.sqrt Q * Real.log Q *
                 (((H + 1 : ℕ) : ℝ) ^ (-σ))) * (1 + Real.log H)) ^ 2) *
-            (1 + v) ^ 2 := by nlinarith
+            (1 + v) ^ 2 := by
+      simpa only [add_mul, mul_assoc] using
+        add_le_add (le_mul_of_one_le_right hbase ht1) hterm
     simpa only [mul_assoc] using mul_le_mul_of_nonneg_left hraw hI
   have hsqrtO :
       Real.sqrt (chen1973Lemma6Eq19OneSubSecondMoment x L level H (σ + v * I)) ≤
@@ -418,7 +401,8 @@ theorem chen1973Lemma6_eq19_linearDecay_integrable :
               rw [Real.rpow_add hv0]
             _ = 2 * v ^ (-(11 : ℝ) / 10) := by norm_num
 
-private theorem eq19_corrected_inv_le_21
+/-- The corrected Perron kernel has the fixed linear-growth decay bound. -/
+theorem chen1973Lemma6_eq17_correctedKernel_inv_le_linearDecay
     {x : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (hσ : 0 < σ)
     (horder : 3 ≤ chen1973PerronOrder (x : ℝ) + 1) :
     (chen1973Lemma6Eq17CorrectedKernel x (σ + v * I))⁻¹ ≤
@@ -449,6 +433,14 @@ private theorem eq19_corrected_inv_le_21
     exact mul_le_mul (inv_anti₀ hσ hnorm) hfac hfac0 (inv_nonneg.mpr hσ.le)
   simpa [chen1973Lemma6Eq17CorrectedKernel, div_eq_mul_inv, mul_comm, mul_left_comm,
     mul_assoc] using hcalc
+
+private theorem eq19_corrected_inv_le_21
+    {x : ℕ} (hx : 3 ≤ x) {σ v : ℝ} (hσ : 0 < σ)
+    (horder : 3 ≤ chen1973PerronOrder (x : ℝ) + 1) :
+    (chen1973Lemma6Eq17CorrectedKernel x (σ + v * I))⁻¹ ≤
+      (2 * Real.log x ^ ((231 : ℝ) / 100) / σ) /
+        (1 + |v| ^ ((21 : ℝ) / 10)) := by
+  exact chen1973Lemma6_eq17_correctedKernel_inv_le_linearDecay hx hσ horder
 
 /-- Explicit alpha-envelope integral, with no continuity or growth premise. -/
 theorem chen1973Lemma6_eq19_first_fixedPower_integrable_and_bound
@@ -565,17 +557,19 @@ private theorem eq19_circleEnvelope_le_fixedPower
     have hlog4 := pow_le_pow_left₀ hlog0 harg 4
     calc
       _ ≤ 21000000 * (Q : ℝ) ^ 2 * (A * (1 + v)) ^ 2 *
-          ((Q : ℝ) * A * (1 + v)) ^ 4 := by gcongr
+          ((Q : ℝ) * A * (1 + v)) ^ 4 :=
+        mul_le_mul (mul_le_mul_of_nonneg_left hnorm2 (by positivity)) hlog4
+          (by positivity) (by positivity)
       _ = (21000000 * (Q : ℝ) ^ 6 * A ^ 6) * (1 + v) ^ 6 := by ring
   unfold chen1973Lemma6Eq19CircleFourthEnvelope
     chen1973Lemma6Eq19SecondCircleFixedPower
   dsimp [A] at hmain ⊢
-  have ht6 : (1 : ℝ) ≤ (1 + v) ^ 6 := one_le_pow₀ ht
+
   have ht68 : (1 + v) ^ 6 ≤ (1 + v) ^ 8 := pow_le_pow_right₀ ht (by omega)
   have hc : 0 ≤ 21000000 * (Q : ℝ) ^ 6 * (1 + |σ| + r) ^ 6 := by positivity
   have hcmono := mul_le_mul_of_nonneg_left ht68 hc
   have hone : (1 : ℝ) ≤ (1 + v) ^ 8 := one_le_pow₀ ht
-  nlinarith [hmain]
+  exact (add_le_add (hmain.trans hcmono) hone).trans_eq (by ring)
 
 /-- Fixed beta-lane coefficient after genuine multiplicative `2,4,4` Hölder.
 The `L'` contribution visibly retains the nested fourth-root envelope. -/
@@ -687,7 +681,10 @@ theorem chen1973Lemma6_eq19_second_le_fixedPower
     _ ≤ Real.sqrt P *
         Real.sqrt
           ((Real.sqrt (J * (Real.sqrt (Real.sqrt K) / r) ^ 4) * (1 + v) ^ 4) *
-            Real.sqrt M) := by gcongr
+            Real.sqrt M) := by
+      exact mul_le_mul (Real.sqrt_le_sqrt hp)
+        (Real.sqrt_le_sqrt (mul_le_mul hsL' hsM (Real.sqrt_nonneg _) (by positivity)))
+        (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
     _ = Real.sqrt P *
         Real.sqrt (Real.sqrt (J * (Real.sqrt (Real.sqrt K) / r) ^ 4) * Real.sqrt M) *
           (1 + v) ^ 2 := by

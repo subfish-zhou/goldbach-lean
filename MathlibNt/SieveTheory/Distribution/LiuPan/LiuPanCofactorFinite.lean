@@ -15,7 +15,8 @@ theorem sum_divisors_eq_hyperbola (G : ℕ → ℕ → ℝ) (D : ℕ) :
     (∑ q ∈ Icc 1 D, ∑ d ∈ q.divisors, G (q / d) d) =
       ∑ m ∈ Icc 1 D, ∑ d ∈ Icc 1 (D / m), G m d := by
   rw [sum_sigma', sum_sigma']
-  refine sum_bij (fun x _ => ⟨x.1 / x.2, x.2⟩) ?_ ?_ ?_ ?_
+  refine sum_bij' (fun x _ => ⟨x.1 / x.2, x.2⟩)
+    (fun x _ => ⟨x.1 * x.2, x.2⟩) ?_ ?_ ?_ ?_ ?_
   · rintro ⟨q, d⟩ hx
     obtain ⟨hq, hd⟩ := mem_sigma.mp hx
     obtain ⟨hqpos, hqD⟩ := mem_Icc.mp hq
@@ -27,19 +28,6 @@ theorem sum_divisors_eq_hyperbola (G : ℕ → ℕ → ℝ) (D : ℕ) :
     exact (Nat.le_div_iff_mul_le hmpos).mpr (by
       rw [Nat.mul_div_cancel' hdvd]
       exact hqD)
-  · rintro ⟨q, d⟩ hx ⟨r, e⟩ hy h
-    have hdvd := (Nat.mem_divisors.mp (mem_sigma.mp hx).2).1
-    have hevd := (Nat.mem_divisors.mp (mem_sigma.mp hy).2).1
-    have hdiv : q / d = r / e := congrArg Sigma.fst h
-    have hde : d = e := congrArg Sigma.snd h
-    have hqr : q = r := by
-      calc
-        q = q / d * d := (Nat.div_mul_cancel hdvd).symm
-        _ = r / e * e := by rw [hdiv, hde]
-        _ = r := Nat.div_mul_cancel hevd
-    subst r
-    subst e
-    rfl
   · rintro ⟨m, d⟩ hy
     obtain ⟨hm, hd⟩ := mem_sigma.mp hy
     obtain ⟨hmpos, _hmD⟩ := mem_Icc.mp hm
@@ -47,8 +35,13 @@ theorem sum_divisors_eq_hyperbola (G : ℕ → ℕ → ℝ) (D : ℕ) :
     have hprodpos := Nat.mul_pos hmpos hdpos
     have hprodD : m * d ≤ D := by
       simpa [mul_comm] using (Nat.le_div_iff_mul_le hmpos).mp hdD
-    refine ⟨⟨m * d, d⟩, mem_sigma.mpr ⟨mem_Icc.mpr ⟨hprodpos, hprodD⟩,
-      Nat.mem_divisors.mpr ⟨dvd_mul_left d m, Nat.ne_of_gt hprodpos⟩⟩, ?_⟩
+    exact mem_sigma.mpr ⟨mem_Icc.mpr ⟨hprodpos, hprodD⟩,
+      Nat.mem_divisors.mpr ⟨dvd_mul_left d m, Nat.ne_of_gt hprodpos⟩⟩
+  · rintro ⟨q, d⟩ hx
+    have hdvd := (Nat.mem_divisors.mp (mem_sigma.mp hx).2).1
+    simp only [Nat.div_mul_cancel hdvd]
+  · rintro ⟨m, d⟩ hy
+    have hdpos := (mem_Icc.mp (mem_sigma.mp hy).2).1
     simp [Nat.ne_of_gt hdpos]
   · intro x _hx
     rfl

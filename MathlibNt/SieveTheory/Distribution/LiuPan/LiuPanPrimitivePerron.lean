@@ -523,6 +523,28 @@ private theorem liuPanPerronSincTail_eq_ibp
   rw [hsinc, hIBP, hint]
   ring_nf
 
+private theorem liuPanIntervalIntegralInvSq_of_pos
+    {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
+    ∫ x in a..b, (x ^ 2)⁻¹ = a⁻¹ - b⁻¹ := by
+  have hpos_uIcc : ∀ x ∈ Set.uIcc a b, 0 < x := by
+    intro x hx
+    rw [Set.uIcc_of_le hab] at hx
+    exact ha.trans_le hx.1
+  have hderiv : ∀ x ∈ Set.uIcc a b,
+      HasDerivAt (fun y : ℝ => -y⁻¹) ((x ^ 2)⁻¹) x := by
+    intro x hx
+    have h : HasDerivAt (fun y : ℝ => -y⁻¹) (-(-(x ^ 2)⁻¹)) x :=
+      (hasDerivAt_inv (hpos_uIcc x hx).ne').neg
+    rwa [neg_neg] at h
+  have hint : IntervalIntegrable (fun x : ℝ => (x ^ 2)⁻¹)
+      MeasureTheory.volume a b := by
+    apply ContinuousOn.intervalIntegrable_of_Icc hab
+    exact (continuousOn_pow 2).inv₀ fun x hx => by
+      exact pow_ne_zero 2
+        (hpos_uIcc x (by simpa [Set.uIcc_of_le hab] using hx)).ne'
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint]
+  ring
+
 private theorem norm_liuPanPerronSincTail_le
     {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
     ‖∫ x in a..b, Real.sinc x‖ ≤ 3 * a⁻¹ := by
@@ -579,17 +601,7 @@ private theorem norm_liuPanPerronSincTail_le
               _ ≤ 1 / x ^ 2 :=
                 div_le_div_of_nonneg_right (Real.abs_cos_le_one x) (sq_nonneg x)
               _ = (x ^ 2)⁻¹ := by rw [one_div]
-      _ = a⁻¹ - b⁻¹ := by
-        have hderiv : ∀ x ∈ Set.uIcc a b,
-            HasDerivAt (fun y : ℝ => -y⁻¹) ((x ^ 2)⁻¹) x := by
-          intro x hx
-          have h : HasDerivAt (fun y : ℝ => -y⁻¹) (-(-(x ^ 2)⁻¹)) x :=
-            (hasDerivAt_inv (by
-              rw [Set.uIcc_of_le hab] at hx
-              exact (ha.trans_le hx.1).ne')).neg
-          rwa [neg_neg] at h
-        rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hinvInt]
-        ring
+      _ = a⁻¹ - b⁻¹ := liuPanIntervalIntegralInvSq_of_pos ha hab
       _ ≤ a⁻¹ := sub_le_self _ (inv_nonneg.mpr hb_pos.le)
   rw [liuPanPerronSincTail_eq_ibp ha hab]
   calc
@@ -651,69 +663,79 @@ theorem LiuPanPerronSineTailBound :
     simpa [abs_of_neg haneg] using
       abs_liuPanPositivePerronSineTail_le hnegpos hT hTS
 
-/-- The finite sinc integrals form a Cauchy sequence at infinity.  This is the
-convergence part of Dirichlet's integral, independent of its normalization. -/
-theorem cauchySeq_liuPanPerronSincIntegral :
-    CauchySeq (fun A : ℝ => ∫ x in (0 : ℝ)..A, Real.sinc x) := by
+private theorem cauchySeq_intervalIntegral_of_inv_tail
+    (f : ℝ → ℝ) (C : ℝ) (hC : 0 ≤ C)
+    (hfi : ∀ a b : ℝ,
+      IntervalIntegrable f MeasureTheory.volume a b)
+    (htail : ∀ {T S : ℝ}, 0 < T → T ≤ S →
+      |∫ t in T..S, f t| ≤ C / T) :
+    CauchySeq (fun T : ℝ => ∫ t in (0 : ℝ)..T, f t) := by
   refine Metric.cauchySeq_iff.2 ?_
   intro ε hε
-  have hlim : Filter.Tendsto (fun M : ℝ => 3 * M⁻¹) Filter.atTop (nhds 0) := by
-    simpa using (tendsto_const_nhds.mul tendsto_inv_atTop_zero : Filter.Tendsto
-      (fun M : ℝ => 3 * M⁻¹) Filter.atTop (nhds (3 * 0)))
-  have hsmall : ∀ᶠ M : ℝ in Filter.atTop, 3 * M⁻¹ < ε :=
+  have hlim :
+      Filter.Tendsto (fun M : ℝ => C * M⁻¹) Filter.atTop (nhds 0) := by
+    simpa using
+      (tendsto_const_nhds.mul tendsto_inv_atTop_zero :
+        Filter.Tendsto (fun M : ℝ => C * M⁻¹) Filter.atTop
+          (nhds (C * 0)))
+  have hsmall : ∀ᶠ M : ℝ in Filter.atTop, C * M⁻¹ < ε :=
     hlim.eventually (gt_mem_nhds hε)
   have hlarge : ∀ᶠ M : ℝ in Filter.atTop, 1 ≤ M :=
     Filter.eventually_ge_atTop 1
   rcases Filter.eventually_atTop.1 (hsmall.and hlarge) with ⟨M, hM⟩
   refine ⟨M, ?_⟩
   intro A hA B hB
-  have hMsmall : 3 * M⁻¹ < ε := (hM M le_rfl).1
-  have hM_one : 1 ≤ M := (hM M le_rfl).2
-  have hM_pos : 0 < M := zero_lt_one.trans_le hM_one
-  have hA_pos : 0 < A := hM_pos.trans_le hA
-  have hB_pos : 0 < B := hM_pos.trans_le hB
+  have hMsmall : C * M⁻¹ < ε := (hM M le_rfl).1
+  have hMpos : 0 < M := zero_lt_one.trans_le (hM M le_rfl).2
   by_cases hAB : A ≤ B
   · have hsub :
-        (∫ x in (0 : ℝ)..B, Real.sinc x) -
-            (∫ x in (0 : ℝ)..A, Real.sinc x) =
-          ∫ x in A..B, Real.sinc x := by
-      exact intervalIntegral.integral_interval_sub_left
-        (Real.continuous_sinc.intervalIntegrable _ _)
-        (Real.continuous_sinc.intervalIntegrable _ _)
-    have hinv : A⁻¹ ≤ M⁻¹ := by
-      simpa [one_div] using one_div_le_one_div_of_le hM_pos hA
+        (∫ t in (0 : ℝ)..B, f t) - (∫ t in (0 : ℝ)..A, f t) =
+          ∫ t in A..B, f t :=
+      intervalIntegral.integral_interval_sub_left (hfi 0 B) (hfi 0 A)
+    have htailAB := htail (hMpos.trans_le hA) hAB
+    have hinv : C / A ≤ C / M :=
+      div_le_div_of_nonneg_left hC hMpos hA
     calc
-      dist (∫ x in (0 : ℝ)..A, Real.sinc x)
-            (∫ x in (0 : ℝ)..B, Real.sinc x) =
-          dist (∫ x in (0 : ℝ)..B, Real.sinc x)
-            (∫ x in (0 : ℝ)..A, Real.sinc x) := dist_comm _ _
-      _ = ‖(∫ x in (0 : ℝ)..B, Real.sinc x) -
-            (∫ x in (0 : ℝ)..A, Real.sinc x)‖ := by
-          rw [Real.dist_eq, Real.norm_eq_abs]
-      _ = ‖∫ x in A..B, Real.sinc x‖ := by rw [hsub]
-      _ ≤ 3 * A⁻¹ := norm_liuPanPerronSincTail_le hA_pos hAB
-      _ ≤ 3 * M⁻¹ := mul_le_mul_of_nonneg_left hinv (by norm_num)
+      dist (∫ t in (0 : ℝ)..A, f t)
+          (∫ t in (0 : ℝ)..B, f t) =
+          |(∫ t in (0 : ℝ)..B, f t) -
+            (∫ t in (0 : ℝ)..A, f t)| := by
+        rw [Real.dist_eq]
+        exact abs_sub_comm _ _
+      _ = |∫ t in A..B, f t| := by rw [hsub]
+      _ ≤ C / A := htailAB
+      _ ≤ C / M := hinv
+      _ = C * M⁻¹ := by rw [div_eq_mul_inv]
       _ < ε := hMsmall
   · have hBA : B ≤ A := le_of_not_ge hAB
     have hsub :
-        (∫ x in (0 : ℝ)..A, Real.sinc x) -
-            (∫ x in (0 : ℝ)..B, Real.sinc x) =
-          ∫ x in B..A, Real.sinc x := by
-      exact intervalIntegral.integral_interval_sub_left
-        (Real.continuous_sinc.intervalIntegrable _ _)
-        (Real.continuous_sinc.intervalIntegrable _ _)
-    have hinv : B⁻¹ ≤ M⁻¹ := by
-      simpa [one_div] using one_div_le_one_div_of_le hM_pos hB
+        (∫ t in (0 : ℝ)..A, f t) - (∫ t in (0 : ℝ)..B, f t) =
+          ∫ t in B..A, f t :=
+      intervalIntegral.integral_interval_sub_left (hfi 0 A) (hfi 0 B)
+    have htailBA := htail (hMpos.trans_le hB) hBA
+    have hinv : C / B ≤ C / M :=
+      div_le_div_of_nonneg_left hC hMpos hB
     calc
-      dist (∫ x in (0 : ℝ)..A, Real.sinc x)
-            (∫ x in (0 : ℝ)..B, Real.sinc x) =
-          ‖(∫ x in (0 : ℝ)..A, Real.sinc x) -
-            (∫ x in (0 : ℝ)..B, Real.sinc x)‖ := by
-          rw [Real.dist_eq, Real.norm_eq_abs]
-      _ = ‖∫ x in B..A, Real.sinc x‖ := by rw [hsub]
-      _ ≤ 3 * B⁻¹ := norm_liuPanPerronSincTail_le hB_pos hBA
-      _ ≤ 3 * M⁻¹ := mul_le_mul_of_nonneg_left hinv (by norm_num)
+      dist (∫ t in (0 : ℝ)..A, f t)
+          (∫ t in (0 : ℝ)..B, f t) =
+          |(∫ t in (0 : ℝ)..A, f t) -
+            (∫ t in (0 : ℝ)..B, f t)| := by
+        rw [Real.dist_eq]
+      _ = |∫ t in B..A, f t| := by rw [hsub]
+      _ ≤ C / B := htailBA
+      _ ≤ C / M := hinv
+      _ = C * M⁻¹ := by rw [div_eq_mul_inv]
       _ < ε := hMsmall
+
+/-- The finite sinc integrals form a Cauchy sequence at infinity.  This is the
+convergence part of Dirichlet's integral, independent of its normalization. -/
+theorem cauchySeq_liuPanPerronSincIntegral :
+    CauchySeq (fun A : ℝ => ∫ x in (0 : ℝ)..A, Real.sinc x) := by
+  apply cauchySeq_intervalIntegral_of_inv_tail Real.sinc 3 (by norm_num)
+    (fun a b => Real.continuous_sinc.intervalIntegrable a b)
+  intro T S hT hTS
+  simpa only [Real.norm_eq_abs, div_eq_mul_inv] using
+    norm_liuPanPerronSincTail_le hT hTS
 
 /-- The one-sided sinc integral has a finite limit. -/
 theorem exists_liuPanPerronSincIntegralLimit :
@@ -721,28 +743,6 @@ theorem exists_liuPanPerronSincIntegralLimit :
       Filter.Tendsto (fun A : ℝ => ∫ x in (0 : ℝ)..A, Real.sinc x)
         Filter.atTop (nhds L) :=
   cauchySeq_tendsto_of_complete cauchySeq_liuPanPerronSincIntegral
-
-private theorem liuPanIntervalIntegralInvSq_of_pos
-    {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
-    ∫ x in a..b, (x ^ 2)⁻¹ = a⁻¹ - b⁻¹ := by
-  have hpos_uIcc : ∀ x ∈ Set.uIcc a b, 0 < x := by
-    intro x hx
-    rw [Set.uIcc_of_le hab] at hx
-    exact ha.trans_le hx.1
-  have hderiv : ∀ x ∈ Set.uIcc a b,
-      HasDerivAt (fun y : ℝ => -y⁻¹) ((x ^ 2)⁻¹) x := by
-    intro x hx
-    have h : HasDerivAt (fun y : ℝ => -y⁻¹) (-(-(x ^ 2)⁻¹)) x :=
-      (hasDerivAt_inv (hpos_uIcc x hx).ne').neg
-    rwa [neg_neg] at h
-  have hint : IntervalIntegrable (fun x : ℝ => (x ^ 2)⁻¹)
-      MeasureTheory.volume a b := by
-    apply ContinuousOn.intervalIntegrable_of_Icc hab
-    exact (continuousOn_pow 2).inv₀ fun x hx => by
-      exact pow_ne_zero 2
-        (hpos_uIcc x (by simpa [Set.uIcc_of_le hab] using hx)).ne'
-  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint]
-  ring
 
 private theorem liuPanIntervalIntegralExpNegMulConstMulSelf
     (a R B : ℝ) :
@@ -1710,70 +1710,6 @@ theorem abs_liuPanPerronPoissonSineTail_le
     ring
   rw [heq]
   exact (abs_add_le _ _).trans (add_le_add hsin hdiff)
-
-private theorem cauchySeq_intervalIntegral_of_inv_tail
-    (f : ℝ → ℝ) (C : ℝ) (hC : 0 ≤ C)
-    (hfi : ∀ a b : ℝ,
-      IntervalIntegrable f MeasureTheory.volume a b)
-    (htail : ∀ {T S : ℝ}, 0 < T → T ≤ S →
-      |∫ t in T..S, f t| ≤ C / T) :
-    CauchySeq (fun T : ℝ => ∫ t in (0 : ℝ)..T, f t) := by
-  refine Metric.cauchySeq_iff.2 ?_
-  intro ε hε
-  have hlim :
-      Filter.Tendsto (fun M : ℝ => C * M⁻¹) Filter.atTop (nhds 0) := by
-    simpa using
-      (tendsto_const_nhds.mul tendsto_inv_atTop_zero :
-        Filter.Tendsto (fun M : ℝ => C * M⁻¹) Filter.atTop
-          (nhds (C * 0)))
-  have hsmall : ∀ᶠ M : ℝ in Filter.atTop, C * M⁻¹ < ε :=
-    hlim.eventually (gt_mem_nhds hε)
-  have hlarge : ∀ᶠ M : ℝ in Filter.atTop, 1 ≤ M :=
-    Filter.eventually_ge_atTop 1
-  rcases Filter.eventually_atTop.1 (hsmall.and hlarge) with ⟨M, hM⟩
-  refine ⟨M, ?_⟩
-  intro A hA B hB
-  have hMsmall : C * M⁻¹ < ε := (hM M le_rfl).1
-  have hMpos : 0 < M := zero_lt_one.trans_le (hM M le_rfl).2
-  by_cases hAB : A ≤ B
-  · have hsub :
-        (∫ t in (0 : ℝ)..B, f t) - (∫ t in (0 : ℝ)..A, f t) =
-          ∫ t in A..B, f t :=
-      intervalIntegral.integral_interval_sub_left (hfi 0 B) (hfi 0 A)
-    have htailAB := htail (hMpos.trans_le hA) hAB
-    have hinv : C / A ≤ C / M :=
-      div_le_div_of_nonneg_left hC hMpos hA
-    calc
-      dist (∫ t in (0 : ℝ)..A, f t)
-          (∫ t in (0 : ℝ)..B, f t) =
-          |(∫ t in (0 : ℝ)..B, f t) -
-            (∫ t in (0 : ℝ)..A, f t)| := by
-        rw [Real.dist_eq]
-        exact abs_sub_comm _ _
-      _ = |∫ t in A..B, f t| := by rw [hsub]
-      _ ≤ C / A := htailAB
-      _ ≤ C / M := hinv
-      _ = C * M⁻¹ := by rw [div_eq_mul_inv]
-      _ < ε := hMsmall
-  · have hBA : B ≤ A := le_of_not_ge hAB
-    have hsub :
-        (∫ t in (0 : ℝ)..A, f t) - (∫ t in (0 : ℝ)..B, f t) =
-          ∫ t in B..A, f t :=
-      intervalIntegral.integral_interval_sub_left (hfi 0 A) (hfi 0 B)
-    have htailBA := htail (hMpos.trans_le hB) hBA
-    have hinv : C / B ≤ C / M :=
-      div_le_div_of_nonneg_left hC hMpos hB
-    calc
-      dist (∫ t in (0 : ℝ)..A, f t)
-          (∫ t in (0 : ℝ)..B, f t) =
-          |(∫ t in (0 : ℝ)..A, f t) -
-            (∫ t in (0 : ℝ)..B, f t)| := by
-        rw [Real.dist_eq]
-      _ = |∫ t in B..A, f t| := by rw [hsub]
-      _ ≤ C / B := htailBA
-      _ ≤ C / M := hinv
-      _ = C * M⁻¹ := by rw [div_eq_mul_inv]
-      _ < ε := hMsmall
 
 private theorem abs_intervalIntegral_sub_limit_le_of_inv_tail
     (f : ℝ → ℝ) {C L T : ℝ}

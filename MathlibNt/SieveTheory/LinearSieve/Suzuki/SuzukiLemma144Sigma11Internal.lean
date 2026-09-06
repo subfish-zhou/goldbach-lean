@@ -4,6 +4,7 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursi
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaTwelveGlobalScaling
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOne
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDiscreteParityRecurrence
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaElevenPrimeSumIdentification
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set
@@ -31,28 +32,8 @@ theorem sigmaEleven_eq_lemmaEightSevenPrimeSum
       suzukiVProduct S z *
         suzukiLemmaEightSevenPrimeSum S (D : ℝ) w v (z : ℝ)
           (fun t => finiteSourceLayer 1 β (N - 1) (t - 1)) := by
-  classical
-  unfold sigmaEleven
-  apply congrArg (fun x : ℝ => suzukiVProduct S z * x)
-  unfold suzukiLemmaEightSevenPrimeSum sigmaOneCarrier
-  apply Finset.sum_congr
-  · ext p
-    simp only [suzukiSupportedBelow, Finset.mem_filter]
-    constructor
-    · rintro ⟨⟨hpS, hpz⟩, hpw, hpv⟩
-      exact ⟨hpS, by simpa [one_div, hw] using hpw,
-        by simpa [one_div, hv] using hpv⟩
-    · rintro ⟨hpS, hpw, hpv⟩
-      refine ⟨⟨hpS, ?_⟩, by simpa [one_div, hw] using hpw,
-        by simpa [one_div, hv] using hpv⟩
-      exact_mod_cast hpv.trans_le hvz
-  · intro p hp
-    have hp' := Finset.mem_filter.mp hp
-    have hpz : (p : ℝ) < (z : ℝ) := hp'.2.2.trans_le hvz
-    rw [show S.nu p * suzukiVProduct S (p : ℝ) / suzukiVProduct S (z : ℝ) =
-      S.nu p * (suzukiVProduct S (p : ℝ) / suzukiVProduct S (z : ℝ)) by ring]
-    rw [suzukiVProduct_div_eq_suffix S hpz]
-    congr 1
+  exact SuzukiLemma144Equation1410.sigmaEleven_eq_suzukiLemmaEightSevenPrimeSum
+    S β σ τ w v N D z hw hv hvz
 
 /-- Strict finite carriers, Euler products, and Lemma-8.7 suffixes are unchanged
 when the real cutoff is replaced by its natural ceiling. -/

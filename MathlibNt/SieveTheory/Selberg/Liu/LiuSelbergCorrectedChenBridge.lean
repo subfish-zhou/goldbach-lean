@@ -210,17 +210,15 @@ theorem correctedPenalty_of_strict_ordered_triple_eq_two
     ext q
     simp only [mem_filter, mem_range, mem_singleton]
     constructor
-    · rintro ⟨_, hq, _, hqy, r, s, _, _, _, _, hqrs, _, _⟩
+    · rintro ⟨_, hq, hqz, hqy, r, s, _, _, _, _, hqrs, _, _⟩
       have hqdiv : q ∣ p₁ * p₂ * p₃ := by
         rw [← hqrs]
         simp [mul_assoc]
-      rcases hq.dvd_mul.mp hqdiv with hqp₁p₂ | hqp₃
-      · rcases hq.dvd_mul.mp hqp₁p₂ with hqp₁ | hqp₂
-        · exact (Nat.prime_dvd_prime_iff_eq hq hp₁).mp hqp₁
-        · have heq := (Nat.prime_dvd_prime_iff_eq hq hp₂).mp hqp₂
-          omega
-      · have heq := (Nat.prime_dvd_prime_iff_eq hq hp₃).mp hqp₃
-        omega
+      have hqmem : q ∈ (range y).filter
+          (fun q => q.Prime ∧ z ≤ q ∧ q ∣ p₁ * p₂ * p₃) :=
+        mem_filter.mpr ⟨mem_range.mpr hqy, hq, hqz, hqdiv⟩
+      rw [hfilter] at hqmem
+      exact mem_singleton.mp hqmem
     · intro hqeq
       subst q
       refine ⟨?_, hp₁, hzp₁, hp₁y, p₂, p₃, hp₂, hp₃, hyp₂,
@@ -868,6 +866,41 @@ theorem correctedChenTripleFactorSum_le_source_add_thirteen_mul_rpow_nine_tenths
           N hN hZ2
       linarith
 
+/-- A fixed power saving is eventually bounded at any inverse-log scale.
+This step is shared by the endpoint fibres and the paper-modulus residual. -/
+private theorem eventually_mul_rpow_le_div_log_rpow
+    (C A δ : ℝ) (hC : 0 ≤ C) (hδ : 0 < δ) :
+    ∀ᶠ N : ℕ in atTop,
+      C * (N : ℝ) ^ (1 - δ) ≤ C * N / Real.log N ^ A := by
+  have hreal : ∀ᶠ x : ℝ in atTop, Real.log x ^ A ≤ x ^ δ := by
+    have hbound := (isLittleO_log_rpow_rpow_atTop A hδ).bound
+      (show 0 < (1 : ℝ) by norm_num)
+    filter_upwards [hbound, eventually_ge_atTop (1 : ℝ)] with x hx hx1
+    rw [Real.norm_of_nonneg (Real.rpow_nonneg (Real.log_nonneg hx1) A),
+      Real.norm_of_nonneg (Real.rpow_nonneg (by positivity : 0 ≤ x) δ),
+      one_mul] at hx
+    exact hx
+  have hnat : ∀ᶠ N : ℕ in atTop,
+      Real.log (N : ℝ) ^ A ≤ (N : ℝ) ^ δ :=
+    tendsto_natCast_atTop_atTop.eventually hreal
+  filter_upwards [hnat, eventually_ge_atTop (2 : ℕ)] with N hgrowth hN
+  have hNpos : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+  have hlogpos : 0 < Real.log (N : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
+  have hdenom : 0 < Real.log (N : ℝ) ^ A :=
+    Real.rpow_pos_of_pos hlogpos A
+  have hcombine : (N : ℝ) ^ (1 - δ) * Real.log N ^ A ≤ N := by
+    calc
+      (N : ℝ) ^ (1 - δ) * Real.log N ^ A ≤
+          (N : ℝ) ^ (1 - δ) * (N : ℝ) ^ δ :=
+        mul_le_mul_of_nonneg_left hgrowth (Real.rpow_nonneg hNpos.le _)
+      _ = N := by rw [← Real.rpow_add hNpos, sub_add_cancel, Real.rpow_one]
+  rw [le_div_iff₀ hdenom]
+  calc
+    (C * (N : ℝ) ^ (1 - δ)) * Real.log N ^ A =
+        C * ((N : ℝ) ^ (1 - δ) * Real.log N ^ A) := by ring
+    _ ≤ C * N := mul_le_mul_of_nonneg_left hcombine hC
+
 /-- Hence the endpoint complement is smaller than every fixed inverse-log
 scale. -/
 theorem eventually_correctedChenTripleFactorSum_le_source_add_div_log_rpow
@@ -878,60 +911,20 @@ theorem eventually_correctedChenTripleFactorSum_le_source_add_div_log_rpow
             (N - p) (correctedChenZ N) (correctedChenY N)) ≤
         liuSelbergCorrectedSourceTripleCount N +
           13 * N / Real.log N ^ A := by
-  have hreal :
-      ∀ᶠ x : ℝ in atTop, Real.log x ^ A ≤ x ^ (1 / 10 : ℝ) := by
-    have hbound :=
-      (isLittleO_log_rpow_rpow_atTop A
-        (by norm_num : (0 : ℝ) < 1 / 10)).bound
-          (show 0 < (1 : ℝ) by norm_num)
-    filter_upwards [hbound, eventually_ge_atTop (1 : ℝ)] with x hx hx1
-    rw [Real.norm_of_nonneg (Real.rpow_nonneg (Real.log_nonneg hx1) A),
-      Real.norm_of_nonneg (Real.rpow_nonneg (by positivity : 0 ≤ x) (1 / 10)),
-      one_mul] at hx
-    exact hx
-  have hnat :
-      ∀ᶠ N : ℕ in atTop,
-        Real.log (N : ℝ) ^ A ≤ (N : ℝ) ^ (1 / 10 : ℝ) :=
-    tendsto_natCast_atTop_atTop.eventually hreal
-  have hZ2 :
-      ∀ᶠ N : ℕ in atTop, 2 ≤ liuSourceZ10 N := by
+  have hscale := eventually_mul_rpow_le_div_log_rpow
+    13 A (1 / 10) (by norm_num) (by norm_num)
+  have hZ2 : ∀ᶠ N : ℕ in atTop, 2 ≤ liuSourceZ10 N := by
     simpa [liuSourceZ10,
       MathlibNt.SieveTheory.PrimeReciprocalLogScale.rpowFloor] using
       (MathlibNt.SieveTheory.PrimeReciprocalLogScale.eventually_two_le_rpowFloor
         (a := (1 / 10 : ℝ)) (by norm_num))
-  filter_upwards [hnat, hZ2, eventually_ge_atTop (2 : ℕ)] with
-      N hgrowth hZ2N hN
-  have hNpos : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
-  have hlogpos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hdenom : 0 < Real.log (N : ℝ) ^ A :=
-    Real.rpow_pos_of_pos hlogpos A
-  have hcombine :
-      (N : ℝ) ^ (9 / 10 : ℝ) * Real.log N ^ A ≤ N := by
-    calc
-      (N : ℝ) ^ (9 / 10 : ℝ) * Real.log N ^ A ≤
-          (N : ℝ) ^ (9 / 10 : ℝ) * (N : ℝ) ^ (1 / 10 : ℝ) :=
-        mul_le_mul_of_nonneg_left hgrowth (Real.rpow_nonneg hNpos.le _)
-      _ = (N : ℝ) ^ (1 : ℝ) := by
-        rw [← Real.rpow_add hNpos]
-        norm_num
-      _ = N := Real.rpow_one _
-  calc
-    (correctedChenCandidates N).sum
-          (fun p => tripleFactorCount
-            (N - p) (correctedChenZ N) (correctedChenY N)) ≤
-        liuSelbergCorrectedSourceTripleCount N +
-          13 * (N : ℝ) ^ (9 / 10 : ℝ) :=
-      correctedChenTripleFactorSum_le_source_add_thirteen_mul_rpow_nine_tenths
-        N (by omega) hZ2N
-    _ ≤ liuSelbergCorrectedSourceTripleCount N +
-          13 * N / Real.log N ^ A := by
-      apply add_le_add le_rfl
-      rw [le_div_iff₀ hdenom]
-      calc
-        (13 * (N : ℝ) ^ (9 / 10 : ℝ)) * Real.log N ^ A =
-            13 * ((N : ℝ) ^ (9 / 10 : ℝ) * Real.log N ^ A) := by ring
-        _ ≤ 13 * N := mul_le_mul_of_nonneg_left hcombine (by norm_num)
+  filter_upwards [hscale, hZ2, eventually_ge_atTop (1 : ℕ)] with
+      N hscaleN hZ2N hN
+  have hscaleN' : 13 * (N : ℝ) ^ (9 / 10 : ℝ) ≤
+      13 * N / Real.log N ^ A := by
+    convert hscaleN using 1; norm_num
+  exact (correctedChenTripleFactorSum_le_source_add_thirteen_mul_rpow_nine_tenths
+    N hN hZ2N).trans (add_le_add le_rfl hscaleN')
 
 /-- Each fixed source-pair residual injects into the prime factors of Liu's
 paper modulus via the candidate residual `N - p₁p₂p₃`. -/
@@ -1160,48 +1153,14 @@ theorem eventually_liuSelbergCorrectedSourceTripleQResidual_le_div_log_rpow
     ∀ᶠ N : ℕ in atTop,
       liuSelbergCorrectedSourceTripleQResidual N epsilon ≤
         6 * N / Real.log N ^ A := by
-  have hreal :
-      ∀ᶠ x : ℝ in atTop, Real.log x ^ A ≤ x ^ (1 / 12 : ℝ) := by
-    have hbound :=
-      (isLittleO_log_rpow_rpow_atTop A
-        (by norm_num : (0 : ℝ) < 1 / 12)).bound
-          (show 0 < (1 : ℝ) by norm_num)
-    filter_upwards [hbound, eventually_ge_atTop (1 : ℝ)] with x hx hx1
-    rw [Real.norm_of_nonneg (Real.rpow_nonneg (Real.log_nonneg hx1) A),
-      Real.norm_of_nonneg (Real.rpow_nonneg (by positivity : 0 ≤ x) (1 / 12)),
-      one_mul] at hx
-    exact hx
-  have hnat :
-      ∀ᶠ N : ℕ in atTop,
-        Real.log (N : ℝ) ^ A ≤ (N : ℝ) ^ (1 / 12 : ℝ) :=
-    tendsto_natCast_atTop_atTop.eventually hreal
-  filter_upwards [hnat, eventually_ge_atTop (2 : ℕ)] with N hgrowth hN
-  have hNpos : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
-  have hlogpos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hdenom : 0 < Real.log (N : ℝ) ^ A :=
-    Real.rpow_pos_of_pos hlogpos A
-  have hcombine :
-      (N : ℝ) ^ (11 / 12 : ℝ) * Real.log N ^ A ≤ N := by
-    calc
-      (N : ℝ) ^ (11 / 12 : ℝ) * Real.log N ^ A ≤
-          (N : ℝ) ^ (11 / 12 : ℝ) * (N : ℝ) ^ (1 / 12 : ℝ) :=
-        mul_le_mul_of_nonneg_left hgrowth (Real.rpow_nonneg hNpos.le _)
-      _ = (N : ℝ) ^ (1 : ℝ) := by
-        rw [← Real.rpow_add hNpos]
-        norm_num
-      _ = N := Real.rpow_one _
-  calc
-    liuSelbergCorrectedSourceTripleQResidual N epsilon ≤
-        6 * (N : ℝ) ^ (11 / 12 : ℝ) :=
-      liuSelbergCorrectedSourceTripleQResidual_le_six_mul_rpow_eleven_twelfths
-        N epsilon (by omega) hepsilon
-    _ ≤ 6 * N / Real.log N ^ A := by
-      rw [le_div_iff₀ hdenom]
-      calc
-        (6 * (N : ℝ) ^ (11 / 12 : ℝ)) * Real.log N ^ A =
-            6 * ((N : ℝ) ^ (11 / 12 : ℝ) * Real.log N ^ A) := by ring
-        _ ≤ 6 * N := mul_le_mul_of_nonneg_left hcombine (by norm_num)
+  have hscale := eventually_mul_rpow_le_div_log_rpow
+    6 A (1 / 12) (by norm_num) (by norm_num)
+  filter_upwards [hscale, eventually_ge_atTop (1 : ℕ)] with N hscaleN hN
+  have hscaleN' : 6 * (N : ℝ) ^ (11 / 12 : ℝ) ≤
+      6 * N / Real.log N ^ A := by
+    convert hscaleN using 1; norm_num
+  exact (liuSelbergCorrectedSourceTripleQResidual_le_six_mul_rpow_eleven_twelfths
+    N epsilon hN hepsilon).trans hscaleN'
 
 /-- Liu's square count is exactly the sum of its Selberg packets over the
 admissible source pairs and third primes. -/

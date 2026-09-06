@@ -81,11 +81,7 @@ theorem liuPanInverseLogAbelWeight_nonneg (n : ℕ) :
 
 private theorem natCast_log_nonneg (n : ℕ) :
     0 ≤ Real.log (n : ℝ) := by
-  cases n with
-  | zero => simp
-  | succ n =>
-      exact Real.log_nonneg
-        (by exact_mod_cast (Nat.succ_le_succ (Nat.zero_le n)))
+  exact Real.log_natCast_nonneg n
 
 /-- Exact finite discrete Abel summation for the AP sum of `Λ(n) / log n`.
 The exceptional terms `n = 0, 1` vanish before a logarithmic denominator is
@@ -550,14 +546,8 @@ noncomputable def liuPanAggregateInverseLogDeterministicMaxY
 @[simp] theorem liuPanAggregateInverseLogPsiMaxY_zero
     (X x : ℕ) (f : ℕ → ℝ) :
     liuPanAggregateInverseLogPsiMaxY X 0 x f = 0 := by
-  unfold liuPanAggregateInverseLogPsiMaxY
-  apply le_antisymm
-  · apply max'_le
-    intro z hz
-    rcases mem_image.mp hz with ⟨y, hy, rfl⟩
-    simp
-  · apply le_max'
-    exact mem_image.mpr ⟨0, by simp, by simp⟩
+  simp [liuPanAggregateInverseLogPsiMaxY,
+    Finset.image_const (by simp : (range (x + 1)).Nonempty)]
 
 @[simp] theorem liuPanAggregateInverseLogPsiMaxY_one
     (X x : ℕ) (f : ℕ → ℝ) :
@@ -582,14 +572,8 @@ noncomputable def liuPanAggregateInverseLogDeterministicMaxY
 @[simp] theorem liuPanAggregateInverseLogDeterministicMaxY_zero
     (kappa : ℝ) (X x : ℕ) (f : ℕ → ℝ) :
     liuPanAggregateInverseLogDeterministicMaxY kappa X 0 x f = 0 := by
-  unfold liuPanAggregateInverseLogDeterministicMaxY
-  apply le_antisymm
-  · apply max'_le
-    intro z hz
-    rcases mem_image.mp hz with ⟨y, hy, rfl⟩
-    simp
-  · apply le_max'
-    exact mem_image.mpr ⟨0, by simp, by simp⟩
+  simp [liuPanAggregateInverseLogDeterministicMaxY,
+    Finset.image_const (by simp : (range (x + 1)).Nonempty)]
 
 @[simp] theorem liuPanAggregateInverseLogDeterministicMaxY_one
     (kappa : ℝ) (X x : ℕ) (f : ℕ → ℝ) :
@@ -617,16 +601,11 @@ theorem liuPanCombinedInverseLogMaxL_le_aggregateAbel
     apply max'_le
     intro z hz
     rcases mem_image.mp hz with ⟨l, hl, rfl⟩
-    exact
-      (liuPanCombinedInverseLogDiscrepancy_le_aggregateAbel
-        kappa y X q l f u v).trans
-        (add_le_add
-          (le_max'
-            ((unitResidues q).image (fun r =>
-              |liuPanAggregateInverseLogPsiTerm y X q r f|))
-            |liuPanAggregateInverseLogPsiTerm y X q l f|
-            (mem_image.mpr ⟨l, hl, rfl⟩))
-          le_rfl)
+    refine (liuPanCombinedInverseLogDiscrepancy_le_aggregateAbel
+      kappa y X q l f u v).trans ?_
+    refine add_le_add ?_ le_rfl
+    apply le_max'
+    exact mem_image.mpr ⟨l, hl, rfl⟩
   · simp [hS]
 
 /-- The aggregate bound lifted through the canonical `y` maximum, without
@@ -639,33 +618,21 @@ theorem liuPanCombinedInverseLogMaxY_le_aggregateAbel
         liuPanAggregateInverseLogDeterministicMaxY kappa X q x f /
           Nat.totient q := by
   unfold liuPanCombinedInverseLogMaxY
-    liuPanAggregateInverseLogPsiMaxY
-    liuPanAggregateInverseLogDeterministicMaxY
   apply max'_le
   intro z hz
   rcases mem_image.mp hz with ⟨y, hy, rfl⟩
-  calc
-    liuPanCombinedInverseLogMaxL
-        (liuLogarithmicIntegral kappa) y X q f u v ≤
-      liuPanAggregateInverseLogPsiMaxL y X q f +
-        liuPanAggregateInverseLogDeterministicMaxL kappa y X q f /
-          Nat.totient q :=
-      liuPanCombinedInverseLogMaxL_le_aggregateAbel
-        kappa y X q f u v
-    _ ≤ ((range (x + 1)).image (fun t =>
-            liuPanAggregateInverseLogPsiMaxL t X q f)).max'
-            (Finset.image_nonempty.mpr ⟨0, by simp⟩) +
-          ((range (x + 1)).image (fun t =>
-            liuPanAggregateInverseLogDeterministicMaxL kappa t X q f)).max'
-              (Finset.image_nonempty.mpr ⟨0, by simp⟩) /
-            Nat.totient q := by
-      apply add_le_add
-      · apply le_max'
-        exact mem_image.mpr ⟨y, hy, rfl⟩
-      · apply div_le_div_of_nonneg_right
-        · apply le_max'
-          exact mem_image.mpr ⟨y, hy, rfl⟩
-        · positivity
+  refine (liuPanCombinedInverseLogMaxL_le_aggregateAbel
+    kappa y X q f u v).trans ?_
+  -- Lift the two terms separately, keeping the totient outside the maximum.
+  apply add_le_add
+  · unfold liuPanAggregateInverseLogPsiMaxY
+    apply le_max'
+    exact mem_image.mpr ⟨y, hy, rfl⟩
+  · apply div_le_div_of_nonneg_right
+    · unfold liuPanAggregateInverseLogDeterministicMaxY
+      apply le_max'
+      exact mem_image.mpr ⟨y, hy, rfl⟩
+    · positivity
 
 /-! ## Aggregate fixed-source and source-family bounds -/
 
@@ -726,12 +693,12 @@ theorem liuMainPanCombinedInverseLogAverage_le_aggregateAbel
   rw [← Finset.sum_add_distrib]
   apply sum_le_sum
   intro q hq
-  convert mul_le_mul_of_nonneg_left
-      (liuPanCombinedInverseLogMaxY_le_aggregateAbel
-        kappa N q N
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) u v)
-      (panTypeI_weight_nonneg q) using 1
-  all_goals ring
+  rw [← mul_add]
+  exact mul_le_mul_of_nonneg_left
+    (liuPanCombinedInverseLogMaxY_le_aggregateAbel
+      kappa N q N
+        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) u v)
+    (panTypeI_weight_nonneg q)
 
 /-- The corrected aggregate psi hypothesis together with its separately
 bounded deterministic component implies the combined inverse-log family
@@ -939,14 +906,8 @@ noncomputable def liuPanSourceWeightedPsiAbelMaxY
 @[simp] theorem liuPanSourceWeightedPsiAbelMaxY_zero
     (kappa : ℝ) (X x : ℕ) (f : ℕ → ℝ) :
     liuPanSourceWeightedPsiAbelMaxY kappa X 0 x f = 0 := by
-  unfold liuPanSourceWeightedPsiAbelMaxY
-  apply le_antisymm
-  · apply max'_le
-    intro z hz
-    rcases mem_image.mp hz with ⟨y, hy, rfl⟩
-    simp
-  · apply le_max'
-    exact mem_image.mpr ⟨0, by simp, by simp⟩
+  simp [liuPanSourceWeightedPsiAbelMaxY,
+    Finset.image_const (by simp : (range (x + 1)).Nonempty)]
 
 theorem liuPanSourceWeightedPsiAbelMaxY_one
     (kappa : ℝ) (X x : ℕ) (f : ℕ → ℝ) :

@@ -503,61 +503,10 @@ theorem upperRosserBoundaryChainsFixedDepthDensity_le_alternatingPairDiscreteIte
       upperRosserAlternatingPairDiscreteIterate
         (fun p => S.nu p / (1 - S.nu p)) k q 3
         (S.prodPrimes.primeFactors.filter (fun p => q < p)) := by
-  classical
-  let P := S.prodPrimes.primeFactors.filter (fun p => q < p)
-  let w : ℕ → ℝ := fun p => S.nu p / (1 - S.nu p)
-  let A := (LinearSieve.upperRosserBoundaryChains
-    (Nat.floor Δ + 1) q P).filter (fun l => l.length = 2 * k)
-  have hreverseInj :
-      Set.InjOn (fun l : List ℕ => l.reverse) (↑A : Set (List ℕ)) := by
-    intro l hl l' hl' heq
-    exact List.reverse_inj.mp heq
-  have hsubset :
-      A.image (fun l : List ℕ => l.reverse) ⊆
-        upperRosserAlternatingPairDiscreteChains k q 3 P := by
-    intro rl hrl
-    obtain ⟨l, hl, rfl⟩ := Finset.mem_image.mp hrl
-    have hl' := Finset.mem_filter.mp hl
-    exact
-      upperRosserBoundaryChains_reverse_mem_alternatingPairDiscreteChains
-        hz hΔ hs hcut hq (by simpa [P] using hl'.1) hl'.2
-  have himage :
-      (∑ l ∈ A, (l.map w).prod) =
-        ∑ l ∈ A.image (fun l : List ℕ => l.reverse), (l.map w).prod := by
-    rw [Finset.sum_image hreverseInj]
-    apply Finset.sum_congr rfl
-    intro l hl
-    rw [List.map_reverse, List.prod_reverse]
-  have hambient :
-      ∀ l ∈ upperRosserAlternatingPairDiscreteChains k q 3 P,
-        0 ≤ (l.map w).prod := by
-    intro l hl
-    apply List.prod_nonneg
-    intro x hx
-    obtain ⟨p, hp, rfl⟩ := List.mem_map.mp hx
-    exact nu_div_one_sub_nonneg_of_mem
-      (Finset.mem_filter.mp
-        (upperRosserAlternatingPairDiscreteChains_mem_ambient hl p hp)).1
-  have henlarge :
-      (∑ l ∈ A.image (fun l : List ℕ => l.reverse), (l.map w).prod) ≤
-        ∑ l ∈ upperRosserAlternatingPairDiscreteChains k q 3 P,
-          (l.map w).prod :=
-    Finset.sum_le_sum_of_subset_of_nonneg hsubset
-      (fun l hl hnot => hambient l hl)
-  have hqPrime : q.Prime := Nat.prime_of_mem_primeFactors hq
-  have hcarrier :=
-    sum_upperRosserAlternatingPairDiscreteChains_le_iterate w
-      (k := k) (q := q) (r := (3 : ℝ)) (P := P)
-      (by norm_num) hqPrime
-      (fun p hp =>
-        Nat.prime_of_mem_primeFactors (Finset.mem_filter.mp hp).1)
-      (fun p hp => (Finset.mem_filter.mp hp).2)
-      (fun p hp =>
-        nu_div_one_sub_nonneg_of_mem (Finset.mem_filter.mp hp).1)
-  unfold LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-  change (∑ l ∈ A, (l.map w).prod) ≤ _
-  rw [himage]
-  exact henlarge.trans hcarrier
+  exact
+    upperRosserBoundaryChainsFixedDepthDensity_le_alternatingPairDiscreteIterate_of_nonneg
+      (fun p => S.nu p / (1 - S.nu p)) hz hΔ hs hcut hq
+      (fun _ hp => nu_div_one_sub_nonneg_of_mem hp)
 
 /-- The actual fixed-depth boundary density on the relative Euler-product scale
 is dominated by the relative adaptive reverse-pair state.  This is the exact

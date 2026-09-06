@@ -11,15 +11,12 @@ lemma eq20small_root_product_fourth (A B C : ℝ) (hA : 0 ≤ A)
     (hB : 0 ≤ B) (hC : 0 ≤ C) :
     (Real.sqrt A * Real.sqrt (Real.sqrt B) * Real.sqrt (Real.sqrt C)) ^ 4 =
       A^2 * B * C := by
-  have ha := Real.sq_sqrt hA
-  have hb := Real.sq_sqrt hB
-  have hc := Real.sq_sqrt hC
-  have hb' := Real.sq_sqrt (Real.sqrt_nonneg B)
-  have hc' := Real.sq_sqrt (Real.sqrt_nonneg C)
   calc
     _ = ((Real.sqrt A)^2)^2 * (((Real.sqrt (Real.sqrt B))^2)^2) *
         (((Real.sqrt (Real.sqrt C))^2)^2) := by ring
-    _ = _ := by rw [ha, hb', hc', hb, hc]
+    _ = _ := by
+      rw [Real.sq_sqrt hA, Real.sq_sqrt (Real.sqrt_nonneg B),
+        Real.sq_sqrt (Real.sqrt_nonneg C), Real.sq_sqrt hB, Real.sq_sqrt hC]
 
 /-- A scalar algebra lemma, preserving conductor and height scales. -/
 lemma eq20small_scalar_root_bound
@@ -62,9 +59,7 @@ lemma eq20small_scalar_root_bound
         _ = _ := by ring
 
 lemma eq20small_log_nat_nonneg (H : ℕ) : 0 ≤ Real.log (H : ℝ) := by
-  by_cases hH : H = 0
-  · simp [hH]
-  · exact Real.log_nonneg (by exact_mod_cast (show 1 ≤ H by omega))
+  exact Real.log_natCast_nonneg H
 
 /-- The three actual moment factors retain `sqrt(Q²+H)`, not a polynomial
 replacement of `log Q`. The inverse radius cancels the pair logarithm. -/
@@ -87,6 +82,7 @@ theorem eq20small_actual_coefficient_bound
   have hl0 : 0 < l := by dsimp [l]; linarith
   have hQr : 0 < (Q : ℝ) := by exact_mod_cast (show 0 < Q by omega)
   have hDr : 0 < (D : ℝ) := by linarith
+  have hD_eq : (D : ℝ) = (Q : ℝ)/2 := by linarith only [hDQ]
   have hQ1 : (1:ℝ) ≤ Q := by exact_mod_cast (show 1 ≤ Q by omega)
   have hlogQ : 0 ≤ Real.log (Q : ℝ) := Real.log_nonneg hQ1
   have ht : 0 ≤ 1+Real.log (H : ℝ) := by linarith [eq20small_log_nat_nonneg H]
@@ -118,16 +114,15 @@ theorem eq20small_actual_coefficient_bound
   have hpow : (((B*2^k : ℕ) : ℝ))^(2-4*β) ≤ 1 :=
     Real.rpow_le_one_of_one_le_of_nonpos hY1 (by linarith)
   have hgeom : (Q : ℝ)+(((B*2^k : ℕ) : ℝ))^2/D ≤ 3*Q := by
-    have hD_eq : (D : ℝ) = (Q : ℝ)/2 := by linarith
     rw [hD_eq]
     field_simp
     nlinarith [sq_le_sq₀ (by positivity : (0:ℝ) ≤ ((B*2^k : ℕ) : ℝ))
       (by positivity : (0:ℝ) ≤ Q) |>.2 hYQr]
   have hgeomH : (Q : ℝ)+(H : ℝ)/D ≤ 2/(Q : ℝ)*((Q : ℝ)^2+H) := by
-    have hD_eq : (D : ℝ) = (Q : ℝ)/2 := by linarith
     rw [hD_eq]
     field_simp
     nlinarith [sq_nonneg (Q : ℝ)]
+  -- Bound the three moment factors separately before applying the scalar root estimate.
   let A := c*W*((Q : ℝ)+(H : ℝ)/D)*(1+Real.log H)
   let T := 62208*c*W/l^4*((Q : ℝ)+(((B*2^k : ℕ) : ℝ))^2/D)*
     (((B*2^k : ℕ) : ℝ))^(2-4*β)
@@ -148,7 +143,6 @@ theorem eq20small_actual_coefficient_bound
         gcongr
       _ = _ := by ring
   have hUb : U ≤ 60480000000000*W*(Q : ℝ)*l^4*(1+Real.log Q)^4 := by
-    have hD_eq : (D : ℝ) = (Q : ℝ)/2 := by linarith
     calc
       _ ≤ 16*21000000*W*(Q : ℝ)^2*3^2*(5*(1+Real.log Q))^4 /
           ((D : ℝ)*r^4) := by
@@ -228,18 +222,21 @@ lemma eq20small_source_Q0_bounds
     Real.log x ≤ eq20small_Q0 x level ∧
       eq20small_Q0 x level ≤ 2*(chen1973Lemma6Eq20SourceQ L level : ℝ) := by
   have hp : (1:ℝ) ≤ 2^level := one_le_pow₀ (by norm_num)
-  have hL : (1:ℝ) ≤ L := by exact_mod_cast P.hL
   constructor
   · calc
       _ ≤ Real.log x ^ (100:ℕ) := by
         simpa using (pow_le_pow_right₀ P.hlog_one (by norm_num : (1:ℕ) ≤ 100))
-      _ ≤ eq20small_Q0 x level := by
-        dsimp [eq20small_Q0]
-        nlinarith [pow_nonneg (by linarith [P.hlog_one] : 0 ≤ Real.log (x : ℝ)) 100]
-  · have hlog : Real.log x ^ (100:ℕ) ≤ 2*(L : ℝ) := by linarith [P.hL_upper]
+      _ ≤ eq20small_Q0 x level :=
+        le_mul_of_one_le_left (by positivity) hp
+  · have hL : (1:ℝ) ≤ L := by exact_mod_cast P.hL
+    have hlog : Real.log x ^ (100:ℕ) ≤ 2*(L : ℝ) := by
+      linarith only [P.hL_upper, hL]
     unfold eq20small_Q0 chen1973Lemma6Eq20SourceQ
     push_cast
-    nlinarith [mul_le_mul_of_nonneg_left hlog (by positivity : (0:ℝ) ≤ 2^level)]
+    calc
+      _ ≤ 2^level * (2*(L : ℝ)) :=
+        mul_le_mul_of_nonneg_left hlog (by positivity)
+      _ = _ := by ring
 
 lemma eq20small_source_Q_cut
     {x L B lastD level k : ℕ}
@@ -297,7 +294,7 @@ theorem eq20small_Ilx_subpower (η : ℝ) (hη : 0 < η) :
     (div_pos (by norm_num) hη).trans_le hden
   have hn : Real.log (eq20small_Q0 x level) ≤ Real.log (x : ℝ) := by gcongr
   have hd : 6 ≤ η*Real.log (Real.log (eq20small_Q0 x level)) := by
-    exact (div_le_iff₀ hη).mp hden |>.trans_eq (by ring)
+    simpa only [mul_comm] using (div_le_iff₀ hη).mp hden
   have hexp : 6*Real.log (eq20small_Q0 x level) /
       Real.log (Real.log (eq20small_Q0 x level)) ≤ Real.log (x : ℝ)*η := by
     apply (div_le_iff₀ hdenpos).2
@@ -319,7 +316,7 @@ lemma eq20small_log_power_absorb (a C : ℝ) (n : ℕ) (ha : 0 < a) (hC : 0 < C)
   rw [Real.norm_of_nonneg (by positivity : 0 ≤ Real.log x ^ n),
     Real.norm_of_nonneg (by positivity : 0 ≤ x^a)] at hx
   have hdiv : Real.log x ^ n ≤ x^a/C := by simpa [div_eq_mul_inv, mul_comm] using hx
-  nlinarith [(le_div_iff₀ hC).mp hdiv]
+  simpa only [mul_comm] using (le_div_iff₀ hC).mp hdiv
 
 lemma eq20small_H_first_bound
     {x L B lastD level k : ℕ}
@@ -432,7 +429,11 @@ theorem eq20small_actual_W_subpower (η : ℝ) (hη : 0 < η) :
     unfold chen1973Lemma6Eq19I
     exact Finset.le_max' _ 1 (by simp)
   have hWI : chen1973Lemma6Eq19I x L level ≤ chen1973Lemma6Equation20Ilx x level := by
-    nlinarith
+    calc
+      _ ≤ chen1973Lemma6Eq19I x L level ^ 2 := by
+        simpa only [pow_one] using
+          (pow_le_pow_right₀ hW1 (by norm_num : (1:ℕ) ≤ 2))
+      _ ≤ _ := hWsq
   exact hWI.trans hI
 
 /-- Pointwise scalar payment envelope. The input bounds here are elementary

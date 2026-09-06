@@ -61,22 +61,24 @@ theorem FourFactorLogInduction_residue_norm_le {q r Q : ℕ}
     (hprod : changeLevel hq χ * changeLevel hr ψ ≠ 1) :
     ‖twoCharacterResidue (changeLevel hq χ) (changeLevel hr ψ)‖ ≤
       32 * (1 + Real.log Q)^3 * (χ.LFunction 1).re * (ψ.LFunction 1).re := by
-  have hlog : 0 ≤ 1 + Real.log (Q : ℝ) := by
-    have := Real.log_nonneg (show (1 : ℝ) ≤ Q by exact_mod_cast (NeZero.pos Q))
-    linarith
+  have hlog : 0 ≤ 1 + Real.log (Q : ℝ) :=
+    add_nonneg zero_le_one
+      (Real.log_nonneg (by exact_mod_cast (NeZero.pos Q)))
   have hχpos := (LFunction_apply_one_re_pos_of_sq_eq_one hχquad hχ).le
   have hψpos := (LFunction_apply_one_re_pos_of_sq_eq_one hψquad hψ).le
+  -- First combine the two lift estimates; the product character is bounded separately.
+  have hlifts := mul_le_mul
+    (FourFactorLogInduction_changeLevel_one_le hq χ hχquad hχ)
+    (FourFactorLogInduction_changeLevel_one_le hr ψ hψquad hψ)
+    (norm_nonneg _) (mul_nonneg hχpos hlog)
+  have hlifts_nonneg :=
+    mul_nonneg (mul_nonneg hχpos hlog) (mul_nonneg hψpos hlog)
   rw [twoCharacterResidue, norm_mul, norm_mul]
   calc
     _ ≤ ((χ.LFunction 1).re * (1 + Real.log Q)) *
         ((ψ.LFunction 1).re * (1 + Real.log Q)) * (32 * (1 + Real.log Q)) := by
-      apply mul_le_mul
-      · exact mul_le_mul (FourFactorLogInduction_changeLevel_one_le hq χ hχquad hχ)
-          (FourFactorLogInduction_changeLevel_one_le hr ψ hψquad hψ)
-          (norm_nonneg _) (mul_nonneg hχpos hlog)
-      · exact FourFactorLogInduction_LFunction_one_le _ hprod
-      · exact norm_nonneg _
-      · exact mul_nonneg (mul_nonneg hχpos hlog) (mul_nonneg hψpos hlog)
+      exact mul_le_mul hlifts (FourFactorLogInduction_LFunction_one_le _ hprod)
+        (norm_nonneg _) hlifts_nonneg
     _ = _ := by ring
 
 end DirichletCharacter

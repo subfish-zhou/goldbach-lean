@@ -6,28 +6,18 @@ namespace DirichletCharacter
 
 private lemma primeSubsetProduct_injective (q : ℕ) :
     Set.InjOn (fun t : Finset ℕ => ∏ p ∈ t, p) q.primeFactors.powerset := by
-  intro t ht u hu htu
-  apply Finset.ext
-  intro p
-  constructor
-  · intro hp
+  have subset_of_prod_eq : ∀ t ∈ q.primeFactors.powerset,
+      ∀ u ∈ q.primeFactors.powerset, (∏ p ∈ t, p) = (∏ p ∈ u, p) → t ⊆ u := by
+    intro t ht u hu htu p hp
     have hpp : p.Prime := Nat.prime_of_mem_primeFactors (Finset.mem_powerset.mp ht hp)
-    have hpd : p ∣ ∏ a ∈ t, a := Finset.dvd_prod_of_mem id hp
-    change (∏ a ∈ t, a) = ∏ a ∈ u, a at htu
-    rw [htu] at hpd
+    have hpd : p ∣ ∏ a ∈ u, a := htu ▸ Finset.dvd_prod_of_mem id hp
     obtain ⟨a, ha, hpa⟩ := (Prime.dvd_finsetProd_iff hpp.prime id).mp hpd
     have hap : a.Prime := Nat.prime_of_mem_primeFactors (Finset.mem_powerset.mp hu ha)
     have : p = a := (Nat.dvd_prime hap).mp hpa |>.resolve_left hpp.ne_one
     simpa [this] using ha
-  · intro hp
-    have hpp : p.Prime := Nat.prime_of_mem_primeFactors (Finset.mem_powerset.mp hu hp)
-    have hpd : p ∣ ∏ a ∈ u, a := Finset.dvd_prod_of_mem id hp
-    change (∏ a ∈ t, a) = ∏ a ∈ u, a at htu
-    rw [← htu] at hpd
-    obtain ⟨a, ha, hpa⟩ := (Prime.dvd_finsetProd_iff hpp.prime id).mp hpd
-    have hap : a.Prime := Nat.prime_of_mem_primeFactors (Finset.mem_powerset.mp ht ha)
-    have : p = a := (Nat.dvd_prime hap).mp hpa |>.resolve_left hpp.ne_one
-    simpa [this] using ha
+  intro t ht u hu htu
+  exact Finset.Subset.antisymm (subset_of_prod_eq t ht u hu htu)
+    (subset_of_prod_eq u hu t ht htu.symm)
 
 /-- Expanding the squarefree Euler product injects its terms into the harmonic
 sum.  In particular this also handles `q = 1`, when both products are empty. -/
@@ -55,12 +45,7 @@ lemma prod_one_add_inv_primeFactors_le_one_add_log (q : ℕ) (hq : 1 ≤ q) :
   calc
     (∏ p ∈ q.primeFactors, (1 + ((p : ℝ)⁻¹))) =
         ∑ t ∈ q.primeFactors.powerset, ∏ p ∈ t, ((p : ℝ)⁻¹) := by
-      rw [show (∏ p ∈ q.primeFactors, (1 + ((p : ℝ)⁻¹))) =
-          ∏ p ∈ q.primeFactors, (((p : ℝ)⁻¹) + 1) by
-            apply Finset.prod_congr rfl
-            intro p hp
-            ring,
-        Finset.prod_add]
+      simp_rw [add_comm (1 : ℝ), Finset.prod_add]
       simp
     _ = ∑ n ∈ Finset.image d q.primeFactors.powerset, ((n : ℝ)⁻¹) :=
       hsumImage.symm

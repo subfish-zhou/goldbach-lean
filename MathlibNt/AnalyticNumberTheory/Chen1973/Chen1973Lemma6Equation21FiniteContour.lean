@@ -59,29 +59,7 @@ theorem Eq21FiniteContour_rectangle_vertical_identity
 theorem Eq21FiniteContour_mellinKernel_differentiableAt
     {x : ℕ} (hx : 3 ≤ x) {s : ℂ} (hs : 0 < s.re) :
     DifferentiableAt ℂ (chen1973MellinKernel (x : ℝ)) s := by
-  have hs0 : s ≠ 0 := by
-    intro h
-    subst s
-    simp at hs
-  have hlog : 0 < Real.log (x : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < x by omega))
-  have hscale : 0 < chen1973PerronScale (x : ℝ) := by
-    unfold chen1973PerronScale
-    exact Real.rpow_pos_of_pos hlog _
-  have hfac : 1 + s / chen1973PerronScale (x : ℝ) ≠ 0 := by
-    have hscale0 : chen1973PerronScale (x : ℝ) ≠ 0 := ne_of_gt hscale
-    have hre : (1 + s / chen1973PerronScale (x : ℝ)).re =
-        1 + s.re / chen1973PerronScale (x : ℝ) := by
-      simp [div_re]
-      field_simp [hscale0]
-    have hpos : 0 < (1 + s / chen1973PerronScale (x : ℝ)).re := by
-      rw [hre]
-      positivity
-    exact fun h => by rw [h] at hpos; simp at hpos
-  unfold chen1973MellinKernel
-  apply (differentiableAt_const (c := (1 : ℂ))).div
-  · fun_prop
-  · exact mul_ne_zero hs0 (pow_ne_zero _ hfac)
+  exact AnalyticNumberTheory.LargeSieve.eq21_mellinKernel_differentiableAt hx hs
 
 
 /-- Holomorphy of the actual term, using only nonvanishing on this rectangle. -/
@@ -107,10 +85,13 @@ theorem Eq21FiniteContour_term_differentiableOn
       hzero s hs.1 hs.2.1 hs.2.2
   unfold chen1973Lemma6Eq21TermShiftIntegrand chen1973Lemma6Eq21ShiftIntegrand
   simp only [chen1973PrimitiveLDeriv, chen1973Lemma6PrimitiveLValue, dif_pos hd]
+  have hpower : DifferentiableAt ℂ
+      (fun z : ℂ => (((x : ℝ) / ((pp.1 : ℝ) * pp.2) : ℝ) : ℂ) ^ z) s :=
+    differentiableAt_id.const_cpow (Or.inl (by exact_mod_cast hy.ne'))
+  have hkernel := Eq21FiniteContour_mellinKernel_differentiableAt hx hspos
+  have hlogDeriv := hLglobal.deriv.differentiableAt.div (hLglobal s) hL0
   exact ((differentiableAt_const _).mul
-    (((differentiableAt_id.const_cpow (Or.inl (by exact_mod_cast hy.ne'))).mul
-      (Eq21FiniteContour_mellinKernel_differentiableAt hx hspos)).mul
-      (hLglobal.deriv.differentiableAt.div (hLglobal s) hL0))).differentiableWithinAt
+    ((hpower.mul hkernel).mul hlogDeriv)).differentiableWithinAt
 
 /-- Every finite vertical section is integrable before Cauchy is applied. -/
 theorem Eq21FiniteContour_vertical_intervalIntegrable
@@ -170,20 +151,8 @@ theorem Eq21FiniteContour_actualPhi_eq_truncated_with_alpha_tails
   have hα := chen1973Lemma6_eq21_alphaTerm_integrable hx hd χ hy
   have hf := Eq21FiniteContour_term_differentiableOn hx hd χ hp₁ hp₂ hzero
   have hσα := chen1973Lemma6_eq21_sigma_le_alpha hx
-  have hσint := Eq21FiniteContour_vertical_intervalIntegrable hT
-    ⟨le_rfl, hσα⟩ hf.continuousOn
-  have hαint := Eq21FiniteContour_vertical_intervalIntegrable hT
-    ⟨hσα, le_rfl⟩ hf.continuousOn
-  have hbottom := Eq21FiniteContour_horizontal_intervalIntegrable hσα
-    (show |-T| ≤ T by simp [abs_of_nonneg hT]) hf.continuousOn
-  have htop := Eq21FiniteContour_horizontal_intervalIntegrable hσα
-    (show |T| ≤ T by simp [abs_of_nonneg hT]) hf.continuousOn
-  have hminus : IntegrableOn (chen1973VerticalSection
-      (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp) (chen1973Lemma6Alpha x))
-      (Iio (-T)) := hα.integrableOn
-  have hplus : IntegrableOn (chen1973VerticalSection
-      (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp) (chen1973Lemma6Alpha x))
-      (Ioi T) := hα.integrableOn
+  -- Rectangle holomorphy supplies the boundary regularity for Cauchy's identity;
+  -- full alpha-line integrability supplies both open tails in the integral split.
   have hc := Eq21FiniteContour_rectangle_vertical_identity hσα hT hf
   rw [chen1973Lemma6_eq21_actualPhi_mul_eq_alphaTerm χ hd hx hp₁ hp₂,
     Eq21FiniteContour_integral_split hα T]

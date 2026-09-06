@@ -425,9 +425,8 @@ theorem chenWeight_pos_implies_semiprime
     omega
   have hS_cases : (Sfilter n z y).sum (fun q => n.factorization q) = 0 ∨
       (Sfilter n z y).sum (fun q => n.factorization q) = 1 := by omega
-  have hT_cases : (Tfilter n z y).card = 0 ∨ (Tfilter n z y).card = 1 := by omega
-  rcases hS_cases with hS0 | hS1 <;> rcases hT_cases with hT0 | hT1
-  · -- S = 0, T = 0: all prime factors are ≥ y, and there are at most two.
+  rcases hS_cases with hS0 | hS1
+  · -- S = 0: all prime factors are ≥ y, and there are at most two.
     have hS0r : primePowerSum n z y = 0 := by
       rw [hS_cast]
       exact_mod_cast hS0
@@ -438,17 +437,8 @@ theorem chenWeight_pos_implies_semiprime
     · exact Or.inr (Or.inl hprime)
     · exact Or.inr (Or.inr ⟨p₁, p₂, hp₁, hp₂,
         le_trans (le_of_lt hy) hp₁y, le_trans (le_of_lt hy) hp₂y, hn_eq⟩)
-  · -- S = 0, T = 1: T > 0 implies S > 0, a contradiction.
-    have hT_pos : 0 < tripleFactorCount n z y := by
-      rw [hT_cast]
-      exact_mod_cast (by omega : 0 < (Tfilter n z y).card)
-    have hS_pos : 0 < primePowerSum n z y :=
-      tripleFactorCount_pos_imp_primePowerSum_pos hz hn hT_pos
-    have hS0r : primePowerSum n z y = 0 := by
-      rw [hS_cast]
-      exact_mod_cast hS0
-    linarith
-  · -- S = 1, T = 0
+  · -- S = 1 forces T = 0 because S + T ≤ 1.
+    have hT0 : (Tfilter n z y).card = 0 := by omega
     have hS1r : primePowerSum n z y = 1 := by
       rw [hS_cast]
       exact_mod_cast hS1
@@ -518,8 +508,6 @@ theorem chenWeight_pos_implies_semiprime
                 rw [hn_triple]
                 ring_nf)
           linarith
-  · -- S = 1, T = 1: S + T = 2 > 1, a contradiction.
-    omega
 
 /-! ## Definition of W(N) -/
 

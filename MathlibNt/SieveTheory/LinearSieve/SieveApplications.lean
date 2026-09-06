@@ -164,26 +164,11 @@ The two coincide when `prodPrimes` is the product of primes < z and
 theorem siftedSum_eq_filter (SP : SieveProblem) (hweights : ∀ n, SP.weights n = 1) :
     SP.siftedSum =
       (SP.support.filter (fun a => ∀ p : ℕ, p.Prime → (p : ℝ) < SP.z → ¬ p ∣ a)).sum (fun _ => (1 : ℝ)) := by
-  -- The primeFactors of a product of distinct primes is exactly that set of primes.
-  have h_pf : ∀ (S : Finset ℕ), (∀ p ∈ S, p.Prime) → (S.prod id).primeFactors = S := by
-    intro S hS
-    induction S using Finset.induction_on with
-    | empty => simp [Nat.primeFactors_one]
-    | insert p S hp ih =>
-      rw [Finset.prod_insert hp]
-      -- id p is definitionally p by beta reduction; use show to align the target.
-      show (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self _ _)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : (S.prod id) ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-          ih fun q hq => hS q (Finset.mem_insert_of_mem hq)]
-      rfl
-  -- By prodPrimes_eq, its prime-factor set is exactly (range ⌈z⌉₊).filter Prime.
+  -- A finite product of distinct primes has exactly those prime factors.
   have h_ppf : SP.prodPrimes.primeFactors = (Finset.range ⌈SP.z⌉₊).filter Nat.Prime := by
-    rw [SP.prodPrimes_eq, h_pf]
-    intro p hp; simp at hp; exact hp.2
+    rw [SP.prodPrimes_eq]
+    simpa only [id_eq] using
+      Nat.primeFactors_prod (fun p hp => (Finset.mem_filter.mp hp).2)
   -- Key equivalence for prime p: p ∣ prodPrimes ↔ (p : ℝ) < z.
   --   (⇒) p ∣ prodPrimes ⇒ p ∈ primeFactors = (range ⌈z⌉₊).filter Prime ⇒ p < ⌈z⌉₊ ⇒ (p:ℝ) < z.
   --   (⇐) (p:ℝ) < z ⇒ p < ⌈z⌉₊ (Nat.lt_ceil) ⇒ p ∈ range ⇒ p ∣ prod (Finset.dvd_prod_of_mem).
@@ -249,29 +234,10 @@ Thus, for a prime p, p | prodPrimes if and only if p < z. -/
 theorem sieveProduct_eq_prod_one_sub_nu (SP : SieveProblem) :
     sieveProduct SP =
       ∏ p ∈ SP.prodPrimes.primeFactors, (1 - SP.nu p) := by
-  -- The primeFactors of the product of a finite set of primes is that set.
-  -- Apply Finset.induction_on to S.
-  --   Base: S = ∅, ∏ id = 1, primeFactors 1 = ∅.
-  --   Step: S = {p} ∪ S', ∏ id = p * (∏ S' id).
-  --         primeFactors(p * prod) = {p} ∪ primeFactors(prod) = {p} ∪ S' = S ✓
-  have h_pf : ∀ (S : Finset ℕ), (∀ p ∈ S, p.Prime) → (S.prod id).primeFactors = S := by
-    intro S hS
-    induction S using Finset.induction_on with
-    | empty => simp [Nat.primeFactors_one]
-    | insert p S hp ih =>
-      rw [Finset.prod_insert hp]
-      show (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self _ _)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : (S.prod id) ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-          ih fun q hq => hS q (Finset.mem_insert_of_mem hq)]
-      rfl
-  -- Apply this to obtain SP.prodPrimes.primeFactors = (range ⌈z⌉).filter Prime.
   have h_eq : SP.prodPrimes.primeFactors = (Finset.range ⌈SP.z⌉₊).filter Nat.Prime := by
-    rw [SP.prodPrimes_eq, h_pf]
-    intro p hp; simp at hp; exact hp.2
+    rw [SP.prodPrimes_eq]
+    simpa only [id_eq] using
+      Nat.primeFactors_prod (fun p hp => (Finset.mem_filter.mp hp).2)
   rw [sieveProduct, h_eq]
 
 /-- **Bridge lemma 2**: sieveProduct · selbergTerms(prodPrimes) = ν(prodPrimes).
@@ -318,15 +284,8 @@ theorem sieveProduct_mul_selbergTerms_eq_nu (SP : SieveProblem) :
 /-- **Bridge corollary**: sieveProduct = ν(prodPrimes) / selbergTerms(prodPrimes). -/
 theorem sieveProduct_eq_nu_div_selbergTerms (SP : SieveProblem) :
     sieveProduct SP = SP.nu SP.prodPrimes / SP.selbergTerms SP.prodPrimes := by
-  -- By sieveProduct_mul_selbergTerms_eq_nu: sieveProduct * selbergTerms(PP) = nu(PP).
-  -- Thus sieveProduct = nu(PP) / selbergTerms(PP), since selbergTerms(PP) > 0.
-  have h := sieveProduct_mul_selbergTerms_eq_nu SP
-  -- h : sieveProduct * selbergTerms(PP) = nu(PP)
-  have h_st_pos : 0 < SP.selbergTerms SP.prodPrimes :=
-    SP.selbergTerms_pos (dvd_refl SP.prodPrimes)
-  -- eq_div_iff: a = c / b ↔ a * b = c when b ≠ 0.
-  rw [eq_div_iff h_st_pos.ne']
-  exact h
+  exact (eq_div_iff (SP.selbergTerms_pos (dvd_refl SP.prodPrimes)).ne').mpr
+    (sieveProduct_mul_selbergTerms_eq_nu SP)
 
 /-- **Distribution identity**: for d ≤ D, the counting specialization reads
 |{a ∈ A : d | a}| = ν(d) · X + R_d.

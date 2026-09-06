@@ -164,7 +164,7 @@ theorem chen1973Lemma6_eq19_pair_product_injective
       simpa [mul_comm] using hab
     omega
 
-private lemma norm_collected_sq_eq_fiber_energy
+lemma norm_collected_sq_eq_fiber_energy
     {ι κ : Type*} [DecidableEq ι] [DecidableEq κ]
     (S : Finset ι) (g : ι → κ) (a : ι → ℂ)
     (hg : Set.InjOn g (S : Set ι)) (y : κ) :
@@ -264,30 +264,23 @@ theorem chen1973Lemma6_equation15_fixed_log_power
     rw [← chen1973Lemma6_mobiusPolynomial_sq_eq_collected, norm_pow]
     ring
   rw [hident]
-  have hE :
-      (∑ z ∈ Icc ((0 : ℤ) + 1) ((0 : ℤ) + (H * H : ℕ)),
-        ‖chen1973Lemma6MobiusSquareCoefficient H s z‖ ^ 2) ≤
-      (1 + Real.log (H * H : ℕ)) ^ 4 := by
-    simpa only [Int.zero_add] using
-      chen1973Lemma6_mobiusSquareCoefficient_energy_le_log_four H s hs
-  have hLS' :
-      (∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter d,
-          ‖∑ z ∈ Icc (1 : ℤ) (H * H : ℕ),
-            chen1973Lemma6MobiusSquareCoefficient H s z *
-              χ.1 (z : ZMod d)‖ ^ 2) ≤
-        chen1973Lemma6Eq19SharpConstant *
-          ((Q : ℝ) + ((H * H : ℕ) : ℝ) / D) *
-          ∑ z ∈ Icc (1 : ℤ) (H * H : ℕ),
-            ‖chen1973Lemma6MobiusSquareCoefficient H s z‖ ^ 2 := by
-    simpa only [Int.zero_add] using hLS
-  have hE' :
-      (∑ z ∈ Icc (1 : ℤ) (H * H : ℕ),
-        ‖chen1973Lemma6MobiusSquareCoefficient H s z‖ ^ 2) ≤
-        (1 + Real.log (H * H : ℕ)) ^ 4 := by
-    simpa only [Int.zero_add] using hE
-  exact hLS'.trans (mul_le_mul_of_nonneg_left hE'
-    (mul_nonneg (chen1973Lemma6_eq19SharpConstant_pos.le) (by positivity)))
+  simp only [Int.zero_add] at hLS
+  exact hLS.trans (mul_le_mul_of_nonneg_left
+    (chen1973Lemma6_mobiusSquareCoefficient_energy_le_log_four H s hs)
+    (mul_nonneg chen1973Lemma6_eq19SharpConstant_pos.le (by positivity)))
+
+/-- Transport a nonnegative conductor sum to any containing large-sieve interval. -/
+private lemma eq19_weight_transport_to_Ioc
+    {x L level D Q : ℕ} (F : ℕ → ℝ) (hF : ∀ d, 0 ≤ F d)
+    (hcell : chen1973Lemma6ConductorBlock x L level ⊆ Ioc D Q) :
+    (∑ d ∈ chen1973Lemma6ConductorBlock x L level,
+      chen1973Lemma6Eq19Weight d * F d) ≤
+      chen1973Lemma6Eq19I x L level *
+        ∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) * F d := by
+  refine (chen1973Lemma6_eq19_weight_transport F hF).trans ?_
+  apply mul_le_mul_of_nonneg_left _ (chen1973Lemma6Eq19I_pos x L level).le
+  exact Finset.sum_le_sum_of_subset_of_nonneg hcell
+    (fun d _ _ => mul_nonneg (by positivity) (hF d))
 
 /-- The literal pair-polynomial second moment, with the global sharp constant
 and the exact ordered-pair coefficient energy.  Neither the constant nor the
@@ -315,26 +308,13 @@ theorem chen1973Lemma6_eq19_pair_second_moment_fixed
       chen1973Lemma6Eq19Weight d * _) ≤ _
   calc
     _ ≤ chen1973Lemma6Eq19I x L level *
-        ∑ d ∈ chen1973Lemma6ConductorBlock x L level,
-          (1 / (d.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter d,
-              ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
-                χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) /
-                  ((pp.1 * pp.2 : ℂ) ^ s *
-                    Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖ ^ 2 :=
-      chen1973Lemma6_eq19_weight_transport _ hnon
-    _ ≤ chen1973Lemma6Eq19I x L level *
         ∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter d,
             ‖∑ pp ∈ chen1973Lemma6PrimePairShell x B k m,
               χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) /
                 ((pp.1 * pp.2 : ℂ) ^ s *
-                  Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖ ^ 2 := by
-      apply mul_le_mul_of_nonneg_left
-      · apply Finset.sum_le_sum_of_subset_of_nonneg hcell
-        intro d hd hdnot
-        positivity
-      · exact (chen1973Lemma6Eq19I_pos x L level).le
+                  Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))‖ ^ 2 :=
+      eq19_weight_transport_to_Ioc _ hnon hcell
     _ = chen1973Lemma6Eq19I x L level *
         ∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter d,
@@ -469,20 +449,9 @@ theorem chen1973Lemma6_eq19_oneSub_second_moment_fixed
         ∑ χ : PrimitiveCharacter d, ‖chen1973Lemma6OneSubLS H s χ‖ ^ 2) ≤ _
   calc
     _ ≤ chen1973Lemma6Eq19I x L level *
-        ∑ d ∈ chen1973Lemma6ConductorBlock x L level,
-          (1 / (d.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter d, ‖chen1973Lemma6OneSubLS H s χ‖ ^ 2 := by
-      apply chen1973Lemma6_eq19_weight_transport
-      intro d
-      positivity
-    _ ≤ chen1973Lemma6Eq19I x L level *
         ∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter d, ‖chen1973Lemma6OneSubLS H s χ‖ ^ 2 := by
-      apply mul_le_mul_of_nonneg_left
-      · apply Finset.sum_le_sum_of_subset_of_nonneg hcell
-        intro d hd hdnot
-        positivity
-      · exact (chen1973Lemma6Eq19I_pos x L level).le
+      exact eq19_weight_transport_to_Ioc _ (fun d => by positivity) hcell
     _ ≤ _ := mul_le_mul_of_nonneg_left
       (chen1973Lemma6_equation14_fixed_log_power H D Q s hH hD hDQ hs)
       (chen1973Lemma6Eq19I_pos x L level).le
@@ -507,22 +476,10 @@ theorem chen1973Lemma6_eq19_mobius_fourth_moment_uniform
           ‖chen1973Lemma6NaturalMobiusPolynomial H (σ + v * I) χ‖ ^ 4) ≤ _
   calc
     _ ≤ chen1973Lemma6Eq19I x L level *
-        ∑ d ∈ chen1973Lemma6ConductorBlock x L level,
-          (1 / (d.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter d,
-              ‖chen1973Lemma6NaturalMobiusPolynomial H (σ + v * I) χ‖ ^ 4 := by
-      apply chen1973Lemma6_eq19_weight_transport
-      intro d
-      positivity
-    _ ≤ chen1973Lemma6Eq19I x L level *
         ∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter d,
             ‖chen1973Lemma6NaturalMobiusPolynomial H (σ + v * I) χ‖ ^ 4 := by
-      apply mul_le_mul_of_nonneg_left
-      · apply Finset.sum_le_sum_of_subset_of_nonneg hcell
-        intro d hd hdnot
-        positivity
-      · exact (chen1973Lemma6Eq19I_pos x L level).le
+      exact eq19_weight_transport_to_Ioc _ (fun d => by positivity) hcell
     _ ≤ _ := mul_le_mul_of_nonneg_left
       (chen1973Lemma6_equation15_fixed_log_power H D Q (σ + v * I) hD
         (by simpa using hdom v hv))

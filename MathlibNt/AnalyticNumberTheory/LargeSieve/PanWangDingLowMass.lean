@@ -42,9 +42,9 @@ theorem nonprincipalLow_le_prime_budget
       ‖panSourceCharacterAmplitude g
         (fun n => if n.Prime ∧ n.Coprime m then 1 else 0) N A₁ A₂ χ‖ ≤ M := by
     intro q hq χ
-    have hmain : ‖∑ a ∈ Ioc A₁ A₂,
-        g a * χ.1 (a : ZMod q) * primePrefix χ.1 (N / a)‖ ≤
-        B * (1 + Real.log N) := by
+    let primeSum : ℂ := ∑ a ∈ Ioc A₁ A₂,
+      g a * χ.1 (a : ZMod q) * primePrefix χ.1 (N / a)
+    have hmain : ‖primeSum‖ ≤ B * (1 + Real.log N) := by
       calc
         _ ≤ ∑ a ∈ Ioc A₁ A₂, ‖g a * χ.1 (a : ZMod q) * primePrefix χ.1 (N / a)‖ :=
           norm_sum_le _ _
@@ -56,21 +56,20 @@ theorem nonprincipalLow_le_prime_budget
             rw [norm_mul]
             exact (mul_le_mul (hg a ha) (χ.1.norm_le_one _) (norm_nonneg _) zero_le_one).trans_eq
               (one_mul _)
-          exact (mul_le_mul hc (hprefix a ha q hq χ) (norm_nonneg _) zero_le_one).trans_eq
-            (one_mul _)
+          exact (mul_le_of_le_one_left (norm_nonneg _) hc).trans (hprefix a ha q hq χ)
         _ = B * ∑ a ∈ Ioc A₁ A₂, (a : ℝ)⁻¹ := by simp [div_eq_mul_inv, mul_sum]
         _ ≤ _ := mul_le_mul_of_nonneg_left (low_harmonic_le hA) hB
     have hd := source_prime_coprime_difference_le g N A₁ A₂ m hm hg χ
     have hcard : ((Ioc A₁ A₂).card : ℝ) ≤ A₂ := by
       exact_mod_cast (show (Ioc A₁ A₂).card ≤ A₂ by simp)
-    have ht := norm_sub_le
-      (∑ a ∈ Ioc A₁ A₂, g a * χ.1 (a : ZMod q) * primePrefix χ.1 (N / a))
-      ((∑ a ∈ Ioc A₁ A₂, g a * χ.1 (a : ZMod q) * primePrefix χ.1 (N / a)) -
-        panSourceCharacterAmplitude g
-          (fun n => if n.Prime ∧ n.Coprime m then 1 else 0) N A₁ A₂ χ)
-    rw [sub_sub_cancel] at ht
+    -- Split the source amplitude into the actual-prime sum and its coprimality error.
+    have ht := norm_le_norm_sub_add
+      (panSourceCharacterAmplitude g
+        (fun n => if n.Prime ∧ n.Coprime m then 1 else 0) N A₁ A₂ χ) primeSum
+    rw [norm_sub_rev, add_comm] at ht
     exact ht.trans (add_le_add hmain (hd.trans
       (mul_le_mul_of_nonneg_right hcard (by positivity))))
+  -- The reciprocal-totient weight cancels the upper bound on primitive-character mass.
   rw [nonprincipalLow_eq_two_le]
   calc
     _ ≤ ∑ _q ∈ Icc 2 Q, M := by

@@ -85,19 +85,10 @@ theorem LFunction_one_mul_sub_characterPair_harmonic_eq
   have hsplit : characterPairIntegral ψ η 1 =
       (∫ t in Ioc (1 : ℝ) m, characterPairKernel ψ η 1 t) +
         ∫ t in Ioi (m : ℝ), characterPairKernel ψ η 1 t := by
-    have hunion : Ioc (1 : ℝ) m ∪ Ioi (m : ℝ) = Ioi (1 : ℝ) := by
-      ext t
-      simp only [Set.mem_union, Set.mem_Ioc, Set.mem_Ioi]
-      constructor
-      · rintro (h | h) <;> linarith
-      · intro ht
-        by_cases htm : t ≤ m
-        · exact Or.inl ⟨ht, htm⟩
-        · exact Or.inr (lt_of_not_ge htm)
-    have hdisj : Disjoint (Ioc (1 : ℝ) m) (Ioi (m : ℝ)) := by
-      rw [Set.disjoint_left]
-      intro t ht ht'
-      exact not_lt_of_ge ht.2 ht'
+    have hunion : Ioc (1 : ℝ) m ∪ Ioi (m : ℝ) = Ioi (1 : ℝ) :=
+      Ioc_union_Ioi_eq_Ioi hmR
+    have hdisj : Disjoint (Ioc (1 : ℝ) m) (Ioi (m : ℝ)) :=
+      Ioc_disjoint_Ioi_same
     unfold characterPairIntegral
     rw [← hunion]
     exact setIntegral_union hdisj measurableSet_Ioi
@@ -158,8 +149,11 @@ theorem norm_LFunction_one_mul_sub_characterPair_harmonic_le
         rw [div_eq_div_iff (ne_of_gt hmR) (ne_of_gt hs)]
         nlinarith [Real.sq_sqrt hmR.le]
   rw [LFunction_one_mul_sub_characterPair_harmonic_eq ψ η hψ hη hm]
-  exact (norm_sub_le _ _).trans
-    ((add_le_add (norm_integral_Ioi_characterPairKernel_one_le ψ η hψ hη hmR) hb).trans
-      (by ring_nf; rfl))
+  calc
+    _ ≤ ‖∫ t in Ioi (m : ℝ), characterPairKernel ψ η 1 t‖ +
+        ‖characterPairSummatory ψ η m / (m : ℂ)‖ := norm_sub_le _ _
+    _ ≤ 6 * q / Real.sqrt m + 3 * q / Real.sqrt m :=
+      add_le_add (norm_integral_Ioi_characterPairKernel_one_le ψ η hψ hη hmR) hb
+    _ = 9 * q / Real.sqrt m := by ring
 
 end DirichletCharacter

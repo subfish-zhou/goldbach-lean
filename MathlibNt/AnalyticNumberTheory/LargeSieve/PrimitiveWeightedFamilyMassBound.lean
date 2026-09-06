@@ -8,13 +8,7 @@ open Finset
  totient.  This is the cardinality bound coming directly from the subtype definition. -/
 private theorem primitiveCharacter_card_le_totient_mass (q : ℕ) (hq : 0 < q) :
     Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
-  letI : NeZero q := ⟨hq.ne'⟩
-  calc
-    Fintype.card (PrimitiveCharacter q) ≤
-        Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _
-    _ = q.totient := by
-      rw [← Nat.card_eq_fintype_card]
-      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ q
+  exact primitiveCharacter_card_le_totient_basic q hq
 
 private theorem sum_Icc_one_cast (Q : ℕ) :
     (∑ q ∈ Icc 1 Q, (q : ℝ)) = (Q : ℝ) * ((Q : ℝ) + 1) / 2 := by
@@ -37,11 +31,12 @@ theorem weightedPrimitiveFamilyMass_le_triangular
     have hq0 : 0 < q := by omega
     have htot : 0 < (q.totient : ℝ) := by
       exact_mod_cast Nat.totient_pos.mpr hq0
-    rw [div_mul_eq_mul_div]
-    apply (div_le_iff₀ htot).2
     have hcard : (Fintype.card (PrimitiveCharacter q) : ℝ) ≤ (q.totient : ℝ) := by
       exact_mod_cast primitiveCharacter_card_le_totient_mass q hq0
-    nlinarith
+    calc
+      _ ≤ ((q : ℝ) / (q.totient : ℝ)) * (q.totient : ℝ) :=
+        mul_le_mul_of_nonneg_left hcard (by positivity)
+      _ = (q : ℝ) := div_mul_cancel₀ _ htot.ne'
   unfold weightedPrimitiveFamilyMass
   calc
     (∑ q ∈ S, ((q : ℝ) / (q.totient : ℝ)) * Fintype.card (PrimitiveCharacter q)) ≤

@@ -31,3 +31,31 @@ jobs:
         run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - name: Replay public theorem
         run: lake env leanchecker --verbose Goldbach.Theorem
+      - name: Install blueprint renderer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz libgraphviz-dev pkg-config texlive-binaries
+          python3 -m venv .venv-blueprint
+          .venv-blueprint/bin/pip install -r blueprint/requirements.txt
+      - name: Extract and render blueprint
+        run: |
+          lake build Goldbach:blueprint
+          source .venv-blueprint/bin/activate
+          leanblueprint web 2>&1 | tee "$RUNNER_TEMP/blueprint.log"
+          ! grep -E 'ERROR:|could not be resolved|File not found:' "$RUNNER_TEMP/blueprint.log"
+          test -s blueprint/web/index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import pygraphviz
+          page = Path("blueprint/web/dep_graph_document.html").read_text()
+          graph = pygraphviz.AGraph(re.search(r"\.renderDot\(`(.*?)`\)", page, re.S).group(1))
+          assert graph.number_of_nodes() == 7 and graph.number_of_edges() == 6
+          assert "mathlib4_docs/find" not in page
+          PY
+      - name: Upload blueprint website
+        uses: actions/upload-artifact@v4
+        with:
+          name: goldbach-blueprint
+          path: blueprint/web
+          if-no-files-found: error

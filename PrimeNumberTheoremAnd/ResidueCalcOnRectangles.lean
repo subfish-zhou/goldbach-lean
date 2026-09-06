@@ -264,32 +264,8 @@ lemma RectangleIntegralHSplit {a x₀ x₁ y₀ y₁ : ℝ}
   dsimp [RectangleIntegral, HIntegral, VIntegral]
   simp only [Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re,
     Complex.I_im, mul_one, mul_zero, add_zero, zero_add, sub_self]
-  have h₁ := integral_add_adjacent_intervals f_int_x₀_a_bot f_int_a_x₁_bot
-  have h₂ := integral_add_adjacent_intervals f_int_x₀_a_top f_int_a_x₁_top
-  have h₁' :
-      (∫ (x : ℝ) in x₀..a, f (↑x + ↑y₀ * I)) +
-          ∫ (x : ℝ) in a..x₁, f (↑y₀ * I + ↑x) =
-        ∫ (x : ℝ) in x₀..x₁, f (↑x + ↑y₀ * I) := by
-    simpa [add_comm] using h₁
-  have h₂' :
-      (∫ (x : ℝ) in x₀..a, f (↑x + ↑y₁ * I)) +
-          ∫ (x : ℝ) in a..x₁, f (↑y₁ * I + ↑x) =
-        ∫ (x : ℝ) in x₀..x₁, f (↑x + ↑y₁ * I) := by
-    simpa [add_comm] using h₂
-  rw [← h₁', ← h₂']
-  have hcomm₁ :
-      ∫ (x : ℝ) in a..x₁, f (↑y₀ * I + ↑x) =
-        ∫ (x : ℝ) in a..x₁, f (↑x + ↑y₀ * I) := by
-    apply intervalIntegral.integral_congr
-    intro x _
-    exact congrArg f (by ring)
-  have hcomm₂ :
-      ∫ (x : ℝ) in a..x₁, f (↑y₁ * I + ↑x) =
-        ∫ (x : ℝ) in a..x₁, f (↑x + ↑y₁ * I) := by
-    apply intervalIntegral.integral_congr
-    intro x _
-    exact congrArg f (by ring)
-  rw [hcomm₁, hcomm₂]
+  rw [← integral_add_adjacent_intervals f_int_x₀_a_bot f_int_a_x₁_bot,
+    ← integral_add_adjacent_intervals f_int_x₀_a_top f_int_a_x₁_top]
   abel
 
 lemma RectangleIntegralHSplit' {a x₀ x₁ y₀ y₁ : ℝ}
@@ -502,10 +478,8 @@ lemma integral_self_div_sq_add_sq (hy : y ≠ 0) :
   have e2 {x} : HasDerivAt f (x / (x ^ 2 + y ^ 2)) x := by
     convert! (e1.log (sq_add_sq_ne_zero hy)).div_const 2 using 1
     field_simp
-  have e3 : deriv f = fun x => x / (x ^ 2 + y ^ 2) := funext (fun _ => e2.deriv)
-  have e4 : Continuous (deriv f) := by simpa only [e3] using continuous_self_div_sq_add_sq hy
-  simp_rw [← e2.deriv]
-  exact integral_deriv_eq_sub (fun _ _ => e2.differentiableAt) (e4.intervalIntegrable _ _)
+  exact integral_eq_sub_of_hasDerivAt (fun _ _ => e2)
+    ((continuous_self_div_sq_add_sq hy).intervalIntegrable _ _)
 
 lemma integral_const_div_sq_add_sq (hy : y ≠ 0) :
     ∫ x in x₁..x₂, y / (x ^ 2 + y ^ 2) = arctan (x₂ / y) - arctan (x₁ / y) := by
@@ -1102,40 +1076,25 @@ private lemma rectangleIntegral'_sum_div_sub {z w : ℂ} (zRe_le_wRe : z.re ≤ 
     (c : ℂ → ℂ) :
     RectangleIntegral' (fun s ↦ ∑ p ∈ S, c p / (s - p)) z w = ∑ p ∈ S, c p := by
   classical
-  have h_partial_border : ∀ (S' : Finset ℂ), S' ⊆ S → RectangleBorderIntegrable (fun s ↦ ∑ p ∈ S', c p / (s - p)) z w := by
-    intro S' hS'
-    exact sum_div_rectangleBorderIntegrable (Disjoint.mono_right hS' hS_disjoint) c
-  have h_term_integral : ∀ {p : ℂ}, p ∈ S → RectangleIntegral' (fun s ↦ c p / (s - p)) z w = c p :=
-    fun {p} hp => ResidueTheoremInRectangle zRe_le_wRe zIm_le_wIm
+  have h_border : ∀ p ∈ S, RectangleBorderIntegrable (fun s ↦ c p / (s - p)) z w := by
+    intro p hp
+    simpa using sum_div_rectangleBorderIntegrable
+      (Disjoint.mono_right (Finset.singleton_subset_iff.mpr hp) hS_disjoint) c
+  have h_sum :
+      RectangleIntegral' (fun s ↦ ∑ p ∈ S, c p / (s - p)) z w =
+        ∑ p ∈ S, RectangleIntegral' (fun s ↦ c p / (s - p)) z w := by
+    simp only [RectangleIntegral', RectangleIntegral, HIntegral, VIntegral]
+    rw [integral_finsetSum (fun p hp => (h_border p hp).1),
+      integral_finsetSum (fun p hp => (h_border p hp).2.1),
+      integral_finsetSum (fun p hp => (h_border p hp).2.2.1),
+      integral_finsetSum (fun p hp => (h_border p hp).2.2.2)]
+    simp only [smul_add, smul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib,
+      Finset.smul_sum]
+  rw [h_sum]
+  exact Finset.sum_congr rfl fun p hp =>
+    ResidueTheoremInRectangle zRe_le_wRe zIm_le_wIm
       (rectangle_mem_nhds_of_interior zRe_le_wRe zIm_le_wIm
         (hS_subset hp) (Set.disjoint_right.mp hS_disjoint hp))
-  have h_partial_integral :
-      ∀ (S' : Finset ℂ), S' ⊆ S →
-        RectangleIntegral' (fun s ↦ ∑ p ∈ S', c p / (s - p)) z w =
-          ∑ p ∈ S', c p := by
-    intro S' hS'
-    revert hS'
-    refine Finset.induction_on S' ?_ ?_
-    · intro _
-      simp [RectangleIntegral', RectangleIntegral, HIntegral, VIntegral]
-    · intro a S' ha ih hS'
-      obtain ⟨haFin, hSsub⟩ := Finset.insert_subset_iff.mp hS'
-      have hterm_border :
-          RectangleBorderIntegrable (fun s ↦ c a / (s - a)) z w :=
-        by simpa using h_partial_border ({a} : Finset ℂ) (Finset.singleton_subset_iff.mpr haFin)
-      have hfun :
-          (fun s ↦ ∑ p ∈ insert a S', c p / (s - p)) =
-            (fun s ↦ c a / (s - a)) +
-              (fun s ↦ ∑ p ∈ S', c p / (s - p)) := by
-        funext s; simp [Finset.sum_insert, ha]
-      have h_add_primed :
-          RectangleIntegral' ((fun s ↦ c a / (s - a)) + (fun s ↦ ∑ p ∈ S', c p / (s - p))) z w =
-            RectangleIntegral' (fun s ↦ c a / (s - a)) z w +
-              RectangleIntegral' (fun s ↦ ∑ p ∈ S', c p / (s - p)) z w := by
-        unfold RectangleIntegral'
-        rw [RectangleBorderIntegrable.add hterm_border (h_partial_border S' hSsub), smul_add]
-      rw [hfun, h_add_primed, h_term_integral haFin, ih hSsub, Finset.sum_insert ha]
-  exact h_partial_integral S (by intro p hp; exact hp)
 
 -- Splits the integral of `fNF` into the integral of its holomorphic part and its principal part.
 private lemma toMeromorphicNFOn_add_integral {f : ℂ → ℂ} {z w : ℂ}

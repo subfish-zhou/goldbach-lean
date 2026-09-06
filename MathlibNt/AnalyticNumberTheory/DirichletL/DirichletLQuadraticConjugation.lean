@@ -15,16 +15,7 @@ variable {q : ℕ} [NeZero q]
 /-- Complex conjugation fixes a quadratic Dirichlet character. -/
 lemma star_eq_self_of_sq_eq_one (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) :
     star χ = χ := by
-  ext x
-  change conj (χ (x : ZMod q)) = χ (x : ZMod q)
-  have hx := congrArg (fun ψ : DirichletCharacter ℂ q => ψ (x : ZMod q)) hquad
-  have hx' : χ (x : ZMod q) * χ (x : ZMod q) = 1 := by
-    simpa [pow_two] using hx
-  rcases (mul_self_eq_one_iff.mp hx') with hx | hx
-  · rw [hx]
-    simp
-  · rw [hx]
-    simp
+  rw [MulChar.star_eq_inv, (MulChar.isQuadratic_iff_sq_eq_one.mpr hquad).inv]
 
 private lemma conj_character_apply_of_sq_eq_one
     (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) (k : ℕ) :
@@ -88,9 +79,7 @@ theorem LFunction_ofReal_im_eq_zero_of_sq_eq_one
   have hs : 0 < ((β : ℂ).re) := by simpa using hβ
   have h := LFunction_conj_eq_conj_LFunction_of_sq_eq_one χ hχ hquad (β : ℂ) hs
   rw [Complex.conj_ofReal] at h
-  have hi := congrArg Complex.im h
-  rw [Complex.conj_im] at hi
-  linarith
+  exact Complex.conj_eq_iff_im.mp h.symm
 
 /-- Zeros of a nonprincipal quadratic Dirichlet L-function in `re s > 0` are
 closed under complex conjugation. -/

@@ -46,14 +46,8 @@ def directPrimitiveMean (a : ℤ → ℂ) (N Q : ℕ) : ℝ :=
 
 lemma directPrimitiveMean_nonneg (a : ℤ → ℂ) (N Q : ℕ) :
     0 ≤ directPrimitiveMean a N Q := by
-  unfold directPrimitiveMean
-  apply Finset.sum_nonneg
-  intro q hq
-  have hq0 : 0 < q := (Finset.mem_Icc.mp hq).1
-  have hφ : (0 : ℝ) < q.totient := by
-    exact_mod_cast Nat.totient_pos.mpr hq0
-  exact mul_nonneg (div_nonneg (by positivity) hφ.le)
-    (Finset.sum_nonneg fun χ _ => primitivePrefixAmplitude_nonneg a N q χ)
+  unfold directPrimitiveMean primitivePrefixAmplitude
+  positivity
 
 /-- The three genuine Vaughan means. -/
 def directVaughanTypeIMean (N Q u v : ℕ) : ℝ :=
@@ -273,12 +267,8 @@ theorem direct_conductor_sum_le_primitive
       apply Finset.sum_le_sum_of_subset_of_nonneg
       · exact Finset.Icc_subset_Icc_left (by omega)
       · intro d hd hnot
-        have hd0 : 0 < d := (Finset.mem_Icc.mp hd).1
-        have hφ : (0 : ℝ) < d.totient := by
-          exact_mod_cast Nat.totient_pos.mpr hd0
-        exact mul_nonneg (sq_nonneg _)
-          (mul_nonneg (div_nonneg (by positivity) hφ.le)
-            (Finset.sum_nonneg fun ψ _ => primitivePrefixAmplitude_nonneg a N d ψ))
+        unfold primitivePrefixAmplitude
+        positivity
     _ = _ := by rw [Finset.mul_sum]
 
 /-- Minimal missing Type-I direct mean input.  It is an inequality on the real
@@ -324,18 +314,16 @@ theorem direct_L1_vaughan_physical_assembly
       directVaughanTypeIMean N Q u v + directVaughanTypeIIMean N Q u v ≤
         2 * vaughanDirectPhysicalMajorant N Q u K logPay := by
     unfold VaughanDirectTypeIInput at hI
-    unfold VaughanDirectTypeIIInput at hII
-    unfold vaughanDirectPhysicalMajorant
-    have hbase0 : 0 ≤ (N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N := by positivity
-    have htail0 : 0 ≤ (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ) := by positivity
+    have hIphysical : directVaughanTypeIMean N Q u v ≤
+        vaughanDirectPhysicalMajorant N Q u K logPay := by
+      refine hI.trans ?_
+      unfold vaughanDirectPhysicalMajorant
+      exact mul_le_mul_of_nonneg_left (le_add_of_nonneg_right (by positivity))
+        (mul_nonneg hK hlogPay)
     calc
-      _ ≤ K * logPay * ((N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N) +
-          K * logPay * ((N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N +
-            (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ)) := add_le_add hI hII
-      _ ≤ 2 * (K * logPay * ((N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N +
-            (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ))) := by
-        have hKL : 0 ≤ K * logPay := mul_nonneg hK hlogPay
-        nlinarith [mul_nonneg hKL hbase0, mul_nonneg hKL htail0]
+      _ ≤ vaughanDirectPhysicalMajorant N Q u K logPay +
+          vaughanDirectPhysicalMajorant N Q u K logPay := add_le_add hIphysical hII
+      _ = _ := by ring
   calc
     _ ≤ directAllCharacterMean vonMangoldtIntegerCoeff N Q := hstart
     _ ≤ 2 * (∑ d ∈ Finset.Icc 2 Q, directConductorWeight Q d *
@@ -349,11 +337,11 @@ theorem direct_L1_vaughan_physical_assembly
           (2 * (directVaughanTypeIMean N Q u v +
             directVaughanTypeIIMean N Q u v + directVaughanSmallMean N Q v))) +
         2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by gcongr
-    _ ≤ _ := by
-      have hs0 : 0 ≤ directVaughanSmallMean N Q v :=
-        directPrimitiveMean_nonneg _ _ _
-      have hH0 : 0 ≤ conductorHarmonicFactor Q ^ 2 := sq_nonneg _
-      nlinarith [mul_le_mul_of_nonneg_left hlanes hH0]
+    _ ≤ 2 * (conductorHarmonicFactor Q ^ 2 *
+          (2 * (2 * vaughanDirectPhysicalMajorant N Q u K logPay +
+            directVaughanSmallMean N Q v))) +
+        2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by gcongr
+    _ = _ := by ring
 
 /-- Pure cutoff algebra.  If `u+1 ≥ R²` and `N ≤ R¹⁴`, then the Type-II tail is
 at most `Q R¹³`; choosing `R=N^(1/14)` means `u≈N^(1/7)`. -/
@@ -380,7 +368,6 @@ in the usual cutoff `Q≤√N/log^B`.  This is exponent bookkeeping only. -/
 theorem vaughan_log_exponent_payment
     (A C B : ℕ) (L : ℝ) (hL : 1 ≤ L) (hB : A + C + 2 ≤ B) :
     L ^ (C + 2) / L ^ B ≤ 1 / L ^ A := by
-  have hpow := pow_le_pow_right₀ hL (Nat.sub_le_sub_left hB A)
   have hpos : 0 < L ^ B := pow_pos (lt_of_lt_of_le zero_lt_one hL) _
   have hApos : 0 < L ^ A := pow_pos (lt_of_lt_of_le zero_lt_one hL) _
   rw [div_le_div_iff₀ hpos hApos]

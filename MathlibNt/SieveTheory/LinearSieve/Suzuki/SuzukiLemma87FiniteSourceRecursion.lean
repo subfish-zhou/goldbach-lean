@@ -174,10 +174,8 @@ theorem suzukiLayerNumerator_eq_sourceRecursion_of_two_le
     suzukiLayerNumerator 1 β n s =
       ∫ t in recursionLower β s n..(β + n),
         suzukiLayer 1 β (n - 1) (t - 1) := by
-  obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := by
-    exact ⟨n - 2, by omega⟩
-  simpa [dPowDensity, Nat.cast_add, Nat.cast_ofNat] using
-    suzukiLayerNumerator_succ_succ (1 : ℝ) β s k
+  exact SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
+    β s hn
 
 /-- Lemma 8.7 with its main term rewritten as the aggregate `(9.2)` recursion
 increment for the source indices of `T_N`. -/
@@ -337,7 +335,8 @@ private theorem one_step
       simpa [f] using hzero, mul_zero]
     exact hrhs_nonneg
 
-private theorem parityDomain_upperClosed {β : ℝ} {m : ℕ} :
+/-- The exact Suzuki parity domain is closed under increasing its real argument. -/
+theorem parityDomain_upperClosed {β : ℝ} {m : ℕ} :
     ∀ {x y : ℝ}, x ∈ KappaOneModel.parityDomain β m → x ≤ y →
       y ∈ KappaOneModel.parityDomain β m := by
   intro x y hx hxy

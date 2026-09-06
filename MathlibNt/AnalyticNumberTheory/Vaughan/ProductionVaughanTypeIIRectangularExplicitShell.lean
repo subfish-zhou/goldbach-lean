@@ -111,17 +111,6 @@ private theorem rectangular_cards
       ring
     rw [heq, Int.toNat_natCast]
 
-private theorem eright_nonneg
-    (N u v k l : ℕ)
-    (hactive : (k, l) ∈ vaughanTypeIIActiveCanonicalRectangles N u v) :
-    0 ≤ vaughanTypeIIRectangularEright N k := by
-  have hl := active_geometry N u v k l hactive
-  have hX : 1 ≤ vaughanTypeIIRectangularX N k := by
-    unfold vaughanTypeIIRectangularX
-    exact (Nat.one_le_iff_ne_zero.mpr (pow_ne_zero _ (by norm_num))).trans hl
-  unfold vaughanTypeIIRectangularEright
-  positivity
-
 /-- The rank-one term is bounded by the honest explicit weak-large-sieve
 majorant after scalarizing both coefficient energies. -/
 theorem vaughanTypeIIRectangular_rankOneRectangularLSRHS_le_Rexp
@@ -135,7 +124,6 @@ theorem vaughanTypeIIRectangular_rankOneRectangularLSRHS_le_Rexp
       vaughanTypeIIRectangularRexp N k l Q := by
   have hleft := vaughanTypeIIRectLeftCoeff_energy_le N u k
   have hright := vaughanTypeIIRectRightCoeff_energy_le N v k l
-  have hgeom := active_geometry N u v k l hactive
   have hdelta : 0 < (1 / (Q : ℝ) ^ 2) := by positivity
   have hCD : 0 ≤ largeSieveBound (2 ^ k) (1 / (Q : ℝ) ^ 2) :=
     largeSieveBound_nonneg _ hdelta
@@ -175,7 +163,6 @@ theorem vaughanTypeIIRectangular_rectangularCoefficientL1_le_L1exp
       ((N / 2 ^ k : ℕ) : ℤ),
       ‖vaughanTypeIIRectRightCoeff N v l n‖
   have hcards := rectangular_cards N u v k l hactive
-  have hA0 : 0 ≤ A := Finset.sum_nonneg fun _ _ => norm_nonneg _
   have hB0 : 0 ≤ B := Finset.sum_nonneg fun _ _ => norm_nonneg _
   have hAsq := finite_norm_sum_sq_le_card_mul_energy
     (Finset.Icc ((2 ^ k : ℕ) : ℤ) (((2 ^ (k + 1) - 1 : ℕ) : ℤ)))
@@ -187,31 +174,13 @@ theorem vaughanTypeIIRectangular_rectangularCoefficientL1_le_L1exp
   rw [hcards.2] at hBsq
   have hleft := vaughanTypeIIRectLeftCoeff_energy_le N u k
   have hright := vaughanTypeIIRectRightCoeff_energy_le N v k l
-  have hE0 := eright_nonneg N u v k l hactive
   have hAle : A ≤ Real.sqrt (((2 ^ k : ℕ) : ℝ) * ((2 ^ k : ℕ) : ℝ)) := by
-    rw [Real.le_sqrt hA0 (mul_nonneg (by positivity) (by positivity))]
-    calc
-      A ^ 2 ≤ (((2 ^ k : ℕ) : ℝ) *
-          ∑ m ∈ Finset.Icc ((2 ^ k : ℕ) : ℤ)
-            (((2 ^ (k + 1) - 1 : ℕ) : ℤ)),
-              Complex.normSq (vaughanTypeIIRectLeftCoeff N u k m)) := by
-        simpa [A] using hAsq
-      _ ≤ ((2 ^ k : ℕ) : ℝ) * ((2 ^ k : ℕ) : ℝ) := by
-        exact mul_le_mul_of_nonneg_left hleft (by positivity)
+    apply Real.le_sqrt_of_sq_le
+    exact hAsq.trans (mul_le_mul_of_nonneg_left hleft (by positivity))
   have hBle : B ≤ Real.sqrt (((N / 2 ^ k - 2 ^ l + 1 : ℕ) : ℝ) *
       vaughanTypeIIRectangularEright N k) := by
-    rw [Real.le_sqrt hB0 (mul_nonneg (by positivity) hE0)]
-    calc
-      B ^ 2 ≤ (((N / 2 ^ k - 2 ^ l + 1 : ℕ) : ℝ) *
-          ∑ n ∈ Finset.Icc ((2 ^ l : ℕ) : ℤ)
-            ((N / 2 ^ k : ℕ) : ℤ),
-              Complex.normSq (vaughanTypeIIRectRightCoeff N v l n)) := by
-        simpa [B] using hBsq
-      _ ≤ ((N / 2 ^ k - 2 ^ l + 1 : ℕ) : ℝ) *
-          vaughanTypeIIRectangularEright N k := by
-        apply mul_le_mul_of_nonneg_left _ (by positivity)
-        simpa [vaughanTypeIIRectangularEright,
-          vaughanTypeIIRectangularX] using hright
+    apply Real.le_sqrt_of_sq_le
+    exact hBsq.trans (mul_le_mul_of_nonneg_left hright (by positivity))
   unfold rectangularCoefficientL1 vaughanTypeIIRectangularL1exp
     vaughanTypeIIRectangularD vaughanTypeIIRectangularT
   rw [show (2 ^ k : ℤ) - 1 + 1 = ((2 ^ k : ℕ) : ℤ) by norm_num,

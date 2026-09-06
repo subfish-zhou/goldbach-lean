@@ -177,7 +177,7 @@ theorem weightedPrimeReciprocalLogSum_eq_sub_sub_integral
   have hlogN : log (N : ℝ) ≠ 0 := ne_of_gt (Real.log_pos hNr)
   have hscale (x : ℝ) : log ((N : ℝ) ^ x) / log N = x := by
     rw [Real.log_rpow (by positivity)]
-    field_simp [hlogN]
+    exact mul_div_cancel_right₀ x hlogN
   have hint :
       (∫ t in Set.Ioc ((N : ℝ) ^ a) ((N : ℝ) ^ b),
           deriv (fun u : ℝ => f (log u / log N)) t *
@@ -544,12 +544,7 @@ private theorem integral_div_eq_boundary_sub_integral_mul_log
     (fun x _ => hf x) hlog
     (hf'.intervalIntegrable a b)
     (ContinuousOn.intervalIntegrable_of_Icc hab hinv)
-  calc
-    (∫ x in a..b, f x / x) = ∫ x in a..b, f x * (1 / x) := by
-      apply intervalIntegral.integral_congr
-      intro x hx
-      ring
-    _ = _ := hparts
+  simpa only [mul_one_div] using hparts
 
 private theorem intervalIntegrable_mul_normalizedPrimeReciprocalPrefix
     {a b B : ℝ} (hab : a ≤ b) (g : ℝ → ℝ) (hg : Continuous g)
@@ -887,73 +882,13 @@ The inequality `log(1/(1-t)) ≤ t/(1-t)`, equivalently
 `log(1-t) ≥ -t/(1-t)`, together with t ≤ 1/2 gives the lower bound. -/
 private lemma log_one_sub_bound {t : ℝ} (ht0 : 0 < t) (htle : t ≤ 1 / 2) :
     |log (1 - t) + t| ≤ 2 * t ^ 2 := by
-  have hpos : 0 < 1 - t := by linarith
-  have hne : 1 - t ≠ 0 := ne_of_gt hpos
-  -- Upper bound: log(1 - t) ≤ -t.
-  have hub : log (1 - t) ≤ -t := by
-    have := Real.log_le_sub_one_of_pos hpos
-    linarith
-  -- Lower bound: log(1 - t) ≥ -t - 2t².
-  have hlb : -t - 2 * t ^ 2 ≤ log (1 - t) := by
-    have hrec : 0 < 1 / (1 - t) := by positivity
-    have hle := Real.log_le_sub_one_of_pos hrec
-    -- log(1/(1-t)) ≤ t/(1-t), and log(1/(1-t)) = -log(1-t).
-    have hloginv : log (1 / (1 - t)) = -log (1 - t) := by
-      rw [one_div, Real.log_inv]
-    have hle' : -log (1 - t) ≤ t / (1 - t) := by
-      have hstep : 1 / (1 - t) - 1 = t / (1 - t) := by
-        field_simp [hne]
-        ring
-      rwa [hloginv, hstep] at hle
-    have hsame : -(t / (1 - t)) = -t / (1 - t) := by
-      rw [div_eq_mul_inv, ← neg_mul, ← div_eq_mul_inv]
-    have hge0 : -t / (1 - t) ≤ log (1 - t) := by
-      have h := neg_le_neg hle'
-      simpa [hsame] using h
-    -- 1/(1-t) ≤ 1 + 2t when t ≤ 1/2.
-    have hrec2 : 1 / (1 - t) ≤ 1 + 2 * t := by
-      rw [div_le_iff₀ hpos]
-      nlinarith
-    have hmul : t / (1 - t) ≤ t * (1 + 2 * t) := by
-      have hx := mul_le_mul_of_nonneg_left hrec2 (le_of_lt ht0)
-      simpa [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using hx
-    have hneg : -t - 2 * t ^ 2 ≤ -t / (1 - t) := by
-      calc -t - 2 * t ^ 2 ≤ -t * (1 + 2 * t) := by
-            have hx : t * (1 + 2 * t) = t + 2 * t ^ 2 := by ring
-            linarith
-        _ ≤ -t / (1 - t) := by
-          have h := neg_le_neg_iff.mpr hmul
-          have hsame1 : -(t * (1 + 2 * t)) = -t * (1 + 2 * t) := by
-            rw [← neg_mul]
-          rwa [hsame1, hsame] at h
-    linarith
-  -- Combine the bounds: |log(1-t) + t| ≤ 2t².
-  have hge : -2 * t ^ 2 ≤ log (1 - t) + t := by nlinarith [hlb]
-  have hle0 : log (1 - t) + t ≤ 0 := by linarith [hub]
-  rw [abs_le]
-  constructor
-  · nlinarith
-  · nlinarith
+  exact AnalyticNumberTheory.Mertens.abs_log_one_sub_add_le ht0 htle
 
 /-- Local logarithmic correction for each prime p ≥ 2:
 |log(1 - 1/p) + 1/p| ≤ 2/p². -/
 private lemma log_one_sub_prime_bound {p : ℕ} (hp : p.Prime) :
     |log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ)| ≤ 2 / (p : ℝ) ^ 2 := by
-  let t : ℝ := 1 / (p : ℝ)
-  have ht0 : 0 < t := by
-    unfold t
-    exact div_pos one_pos (by exact_mod_cast hp.pos)
-  have htle : t ≤ 1 / 2 := by
-    unfold t
-    exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) (by exact_mod_cast hp.two_le)
-  have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp.ne_zero
-  have hsubst : |log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ)| = |log (1 - t) + t| := by
-    simp [t]
-  have hrhs : 2 * t ^ 2 = 2 / (p : ℝ) ^ 2 := by
-    unfold t
-    field_simp [hp0]
-  rw [hsubst, ← hrhs]
-  exact log_one_sub_bound ht0 htle
+  exact AnalyticNumberTheory.Mertens.abs_log_primeFactor_add_le hp
 
 /-- **Order form of Mertens' product formula**: primeProduct x = Θ(1/log x);
 there are positive constants c₁, c₂ such that
@@ -1099,15 +1034,8 @@ theorem primeProduct_asymptotic_order :
 /-! ## 3. Application: bounded prime-reciprocal sums (Lemma 1) -/
 
 /-- `primeReciprocalSum` is monotone: x ≤ y ⟹ Σ_{p ≤ x} 1/p ≤ Σ_{p ≤ y} 1/p. -/
-private lemma primeReciprocalSum_mono : Monotone primeReciprocalSum := by
-  intro a b hab
-  unfold primeReciprocalSum
-  refine Finset.sum_le_sum_of_subset_of_nonneg ?hsub ?hfn
-  · intro p hp
-    simp only [mem_filter, mem_range] at hp ⊢
-    exact ⟨by omega, hp.2⟩
-  · intro p _hp _hnot
-    exact div_nonneg zero_le_one (by positivity)
+private lemma primeReciprocalSum_mono : Monotone primeReciprocalSum :=
+  primeReciprocalSum_mono_early
 
 /-- S(u) = 0 for u ≤ 1, since no prime is at most 1. -/
 private lemma primeReciprocalSum_zero_of_le_one {u : ℕ} (hu : u ≤ 1) :
@@ -1930,26 +1858,9 @@ theorem sieveProduct_order :
       -- c₂0 ≥ 0 follows from the primeProduct upper bound.
       have hc20 : 0 ≤ c₂0 := by
         have hb := hPP 2 (by norm_num)
-        have hle1 : (0 : ℝ) ≤ primeProduct 2 := by
-          unfold primeProduct
-          have hf : (range 3).filter Nat.Prime = {2} := by
-            ext p
-            simp only [mem_filter, mem_range, mem_singleton]
-            constructor
-            · intro hp
-              rcases hp with ⟨hp3, hpp⟩
-              interval_cases p
-              · exact absurd hpp Nat.not_prime_zero
-              · exact absurd hpp Nat.not_prime_one
-              · rfl
-            · intro hp
-              subst hp
-              simp [Nat.prime_two]
-          rw [hf]
-          norm_num
-        have hle2 : primeProduct 2 ≤ c₂0 / log 2 := hb.2
         have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-        have : (0 : ℝ) ≤ c₂0 / log 2 := le_trans hle1 hle2
+        have : (0 : ℝ) ≤ c₂0 / log 2 :=
+          (div_nonneg hc₁0.le hlog2.le).trans (hb.1.trans hb.2)
         simpa using (le_div_iff₀ hlog2).mp this
       exact mul_nonneg hc20 (le_of_lt h𝔖)
     -- To get c₂0·𝔖/log(z-1) ≤ 2·c₂0·𝔖/log z, use 1/log(z-1) ≤ 2/log z,

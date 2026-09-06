@@ -1,5 +1,6 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiQuantitativeDerivatives
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral
@@ -35,27 +36,7 @@ def UniformQhatStationaryExclusion
 
 lemma canonical_log_lt_xi {s : ℝ} (hs : Real.exp 1 ≤ s) :
     Real.log s < xi s := by
-  have hspos : 0 < s := (Real.exp_pos 1).trans_le hs
-  have hs1 : 1 < s := (Real.one_lt_exp_iff.mpr (by norm_num)).trans_le hs
-  have hx1 : 1 < xi s := by
-    have hxi0 : 0 ≤ xi s := (xi_pos hs1).le
-    by_contra hn
-    have hxi1 : xi s ≤ 1 := le_of_not_gt hn
-    have hm := eta_strictMonoOn.monotoneOn hxi0
-      (by norm_num : (0 : ℝ) ≤ 1) hxi1
-    have heta : eta (xi s) = s := by rw [eta_xi, max_eq_left hs1.le]
-    have heta1 : eta 1 = Real.exp 1 - 1 := by
-      rw [eta_eq_div (by norm_num : (1 : ℝ) ≠ 0)]
-      ring
-    rw [heta, heta1] at hm
-    have he : (2 : ℝ) < Real.exp 1 := by
-      have := Real.add_one_lt_exp (by norm_num : (1 : ℝ) ≠ 0)
-      norm_num at this ⊢
-      exact this
-    linarith
-  have heq := xi_equation hs1
-  have hsexp : s < Real.exp (xi s) := by nlinarith
-  exact Real.exp_lt_exp.mp (by simpa only [Real.exp_log hspos] using hsexp)
+  exact Section10CanonicalXi.log_lt_xi hs
 
 /-- The eventual logarithmic lower bound required by the sanitized Lemma 10.28
 record, derived from the canonical inverse rather than assumed. -/

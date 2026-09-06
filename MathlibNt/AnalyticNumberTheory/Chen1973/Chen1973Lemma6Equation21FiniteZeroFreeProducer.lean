@@ -53,7 +53,8 @@ lemma log_power_absorb (C : ℝ) (n : ℕ) {r : ℝ} (hr : 0 < r) :
     _ ≤ |C| * (1 + Real.log u)^n := mul_le_mul_of_nonneg_right (le_abs_self C) (by positivity)
     _ ≤ |C| * (2 * Real.log u)^n := mul_le_mul_of_nonneg_left hs (abs_nonneg C)
     _ = (|C| * 2^n) * (Real.log u)^n := by rw [mul_pow]; ring
-    _ ≤ (|C| * 2^n) * ((1 / (|C| * 2^n + 1)) * Real.exp (r * Real.log u)) := by gcongr
+    _ ≤ (|C| * 2^n) * ((1 / (|C| * 2^n + 1)) * Real.exp (r * Real.log u)) :=
+      mul_le_mul_of_nonneg_left hp (mul_nonneg (abs_nonneg C) (pow_nonneg (by norm_num) n))
     _ ≤ Real.exp (r * Real.log u) := by
       have hc : (|C| * 2^n) / (|C| * 2^n+1) ≤ (1 : ℝ) := by
         apply (div_le_one (by positivity)).mpr; linarith
@@ -104,7 +105,7 @@ lemma fixedH_bound {u c η : ℝ} {q : ℕ} (hu : 2 ≤ u) (hc : 0 < c)
       rw [he]; linarith
   have hlog0 : 0 ≤ Real.log (2 * (u^2+1)+2) := Real.log_nonneg (by nlinarith [sq_nonneg u])
   have hLsq : L ≤ L^2 := by nlinarith
-  have hQL : L^2 ≤ Q * L^2 := by nlinarith [sq_nonneg L]
+  have hQL : L^2 ≤ Q * L^2 := le_mul_of_one_le_left (sq_nonneg L) hQ1
   have hbase : H + 1 + Real.log (2 * (u^2+1)+2) + 1 ≤ 110 * L := by
     dsimp [L] at *; linarith
   have hlarge : (128 / c) * H^2 * Q ≤ (3000000/c) * Q * L^2 := by
@@ -156,7 +157,8 @@ lemma quadratic_denominator_bound {u c η : ℝ} {q : ℕ} (hu : 2 ≤ u) (hc : 
   have hq0 : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
   have hp := pow_le_pow_left₀ hH0.le hH 12
   calc
-    _ ≤ (q : ℝ)^(2*η) * ((1000+3000000/c) * (q : ℝ)^η * (1+Real.log u)^2)^12 := by gcongr
+    _ ≤ (q : ℝ)^(2*η) * ((1000+3000000/c) * (q : ℝ)^η * (1+Real.log u)^2)^12 :=
+      mul_le_mul_of_nonneg_left hp (Real.rpow_nonneg hq0.le _)
     _ = (1000+3000000/c)^12 * ((q : ℝ)^(2*η) * ((q : ℝ)^η)^12) * (1+Real.log u)^24 := by ring
     _ = _ := by
       rw [← Real.rpow_mul_natCast hq0.le, ← Real.rpow_add hq0]

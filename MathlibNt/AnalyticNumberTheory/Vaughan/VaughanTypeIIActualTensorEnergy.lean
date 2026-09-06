@@ -1,6 +1,7 @@
 
 
 import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIPrimitiveBilinear
+import MathlibNt.AnalyticNumberTheory.LargeSieve.PrefixMaximal
 
 /-!
  # Actual tensor energy and rectangle aggregation for Vaughan Type II
@@ -77,6 +78,13 @@ theorem vaughanBilinearTensorCoeff_eq_fiber
   rw [tensor_inner_sum_eq_indicator
     (vaughanMangoldtCoeff e * b (d * t.toNat)) y d e t (hES e he)]
 
+/-- Cardinality-form Cauchy for the complex sums on fibres and rectangles. -/
+private theorem norm_sum_sq_le_card_mul_sum_norm_sq {α : Type*}
+    (s : Finset α) (f : α → ℂ) :
+    ‖∑ a ∈ s, f a‖ ^ 2 ≤ (s.card : ℝ) * ∑ a ∈ s, ‖f a‖ ^ 2 := by
+  classical
+  exact norm_finset_sum_sq_le_card_mul_sum_norm_sq s f
+
 /-- Cauchy on the actual divisor fibre.  Its two factors are the literal
 fibre multiplicity and the literal `Λ` square-energy. -/
 theorem vaughanBilinearTensorCoeff_norm_sq_le_fiber
@@ -87,29 +95,12 @@ theorem vaughanBilinearTensorCoeff_norm_sq_le_fiber
         vaughanTensorFiberMangoldtEnergy y d ES t *
           ‖b (d * t.toNat)‖ ^ 2 := by
   rw [vaughanBilinearTensorCoeff_eq_fiber b y d ES t hES]
-  let F := vaughanTensorFiber y d ES t
-  have hnorm := norm_sum_le F
-    (fun e => vaughanMangoldtCoeff e * b (d * t.toNat))
-  have hsq : ‖∑ e ∈ F, vaughanMangoldtCoeff e * b (d * t.toNat)‖ ^ 2 ≤
-      (∑ e ∈ F, ‖vaughanMangoldtCoeff e‖ * ‖b (d * t.toNat)‖) ^ 2 := by
-    refine pow_le_pow_left₀ (norm_nonneg _) ?_ 2
-    simpa [norm_mul] using hnorm
-  refine hsq.trans ?_
-  have hc := Finset.sum_mul_sq_le_sq_mul_sq F
-    (fun _e => (1 : ℝ))
-    (fun e => ‖vaughanMangoldtCoeff e‖ * ‖b (d * t.toNat)‖)
-  calc
-    (∑ e ∈ F, ‖vaughanMangoldtCoeff e‖ * ‖b (d * t.toNat)‖) ^ 2 ≤
-        (F.card : ℝ) *
-          ∑ e ∈ F, (‖vaughanMangoldtCoeff e‖ * ‖b (d * t.toNat)‖) ^ 2 := by
-            simpa using hc
-    _ = (vaughanTensorFiberMultiplicity y d ES t : ℝ) *
-        vaughanTensorFiberMangoldtEnergy y d ES t *
-          ‖b (d * t.toNat)‖ ^ 2 := by
-      simp_rw [mul_pow, ← Finset.sum_mul]
-      simp [F, vaughanTensorFiberMultiplicity,
-        vaughanTensorFiberMangoldtEnergy]
-      ring
+  rw [← Finset.sum_mul, norm_mul, mul_pow]
+  simpa [vaughanTensorFiberMultiplicity, vaughanTensorFiberMangoldtEnergy,
+    mul_assoc] using
+    mul_le_mul_of_nonneg_right
+      (norm_sum_sq_le_card_mul_sum_norm_sq
+        (vaughanTensorFiber y d ES t) vaughanMangoldtCoeff) (sq_nonneg ‖b (d * t.toNat)‖)
 
 /-- The actual tensor energy is compressed without leaving the full `(d,t)`
 sum.  No pointwise `D²E²` coefficient estimate occurs. -/
@@ -211,24 +202,8 @@ theorem weighted_primitive_vaughanCanonicalBilinear_actual
       (vaughanCanonicalDyadicBlock N v l) := by
     unfold vaughanBilinearTensorEnergy
     positivity
-  calc
-    vaughanBilinearCoeffEnergy vaughanMoebiusCoeff
-        (vaughanCanonicalDyadicBlock N u k) *
-        vaughanBilinearLargeSieveConstant y Q *
-        vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-          (vaughanCanonicalDyadicBlock N u k)
-          (vaughanCanonicalDyadicBlock N v l) ≤
-      (vaughanCanonicalDyadicBlock N u k).card *
-        vaughanBilinearLargeSieveConstant y Q *
-        vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-          (vaughanCanonicalDyadicBlock N u k)
-          (vaughanCanonicalDyadicBlock N v l) := by
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_right hμ hC0) hT0
-    _ ≤ (vaughanCanonicalDyadicBlock N u k).card *
-        vaughanBilinearLargeSieveConstant y Q * (Δ * LΛ * B) := by
-      exact mul_le_mul_of_nonneg_left hT
-        (mul_nonneg (by positivity) hC0)
+  exact mul_le_mul (mul_le_mul_of_nonneg_right hμ hC0) hT hT0
+    (mul_nonneg (by positivity) hC0)
 
 /-- Rectangle-count Cauchy, in the exact form used to reconstruct the full
 Type-II prefix. -/
@@ -241,21 +216,11 @@ theorem vaughanTypeIIFullPrefix_norm_sq_le_rectangles
             kl.1 kl.2 q χ‖ ^ 2 := by
   rw [(vaughanTypeIIFullLedger b y N u v q χ hyN).1]
   let R := vaughanCanonicalDyadicRectangles N u v
-  have hnorm := norm_sum_le R
-    (fun kl => vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ)
-  have hsq : ‖∑ kl ∈ R,
-      vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ‖ ^ 2 ≤
-      (∑ kl ∈ R,
-        ‖vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ‖) ^ 2 := by
-    refine pow_le_pow_left₀ (norm_nonneg _) ?_ 2
-    exact hnorm
-  refine hsq.trans ?_
-  have hc := Finset.sum_mul_sq_le_sq_mul_sq R (fun _ => (1 : ℝ))
-    (fun kl => ‖vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ‖)
   calc
     _ ≤ (R.card : ℝ) * ∑ kl ∈ R,
-        ‖vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ‖ ^ 2 := by
-          simpa using hc
+        ‖vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ‖ ^ 2 :=
+      norm_sum_sq_le_card_mul_sum_norm_sq R
+        (fun kl => vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ)
     _ ≤ (((Nat.log 2 N + 1 : ℕ) : ℝ) ^ 2) * ∑ kl ∈ R,
         ‖vaughanTypeIICanonicalBilinearBlock b y N u v kl.1 kl.2 q χ‖ ^ 2 := by
           apply mul_le_mul_of_nonneg_right

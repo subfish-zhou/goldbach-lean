@@ -888,27 +888,7 @@ theorem upperRosserAlternatingPairTransform_const_mul
     upperRosserAlternatingPairTransform (fun t => c * F t) r =
       c * upperRosserAlternatingPairTransform F r := by
   unfold upperRosserAlternatingPairTransform
-  calc
-    (∫ y in Set.Ioo 1 r, y⁻¹ *
-      ∫ x in Set.Ioo y ((y + r) / 2),
-        x⁻¹ * (c * F ((r + y + x) / x))) =
-      ∫ y in Set.Ioo 1 r, y⁻¹ *
-        (c * ∫ x in Set.Ioo y ((y + r) / 2),
-          x⁻¹ * F ((r + y + x) / x)) := by
-            apply MeasureTheory.integral_congr_ae
-            filter_upwards with y
-            congr 1
-            rw [← MeasureTheory.integral_const_mul]
-            apply MeasureTheory.integral_congr_ae
-            filter_upwards with x
-            ring
-    _ = c * ∫ y in Set.Ioo 1 r, y⁻¹ *
-        ∫ x in Set.Ioo y ((y + r) / 2),
-          x⁻¹ * F ((r + y + x) / x) := by
-            rw [← MeasureTheory.integral_const_mul]
-            apply MeasureTheory.integral_congr_ae
-            filter_upwards with y
-            ring
+  simp only [mul_left_comm _ c, MeasureTheory.integral_const_mul]
 
 /-- One reverse Rosser pair contracts the quadratic suffix envelope by a fixed
 factor.  The estimate is genuinely geometric: its triangular integration face

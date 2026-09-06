@@ -75,18 +75,9 @@ theorem squarefulCorrection_eq_removedCarrier_card
   have hsubset :
       squarefreeWeightedCarrier A Q P ⊆ lowerCarrier A P :=
     Finset.filter_subset _ _
-  unfold squarefulCorrection
-  calc
-    ((lowerCarrier A P).card : ℝ) -
-          ((squarefreeWeightedCarrier A Q P).card : ℝ) =
-        (((lowerCarrier A P).card -
-          (squarefreeWeightedCarrier A Q P).card : ℕ) : ℝ) := by
-      rw [Nat.cast_sub (Finset.card_le_card hsubset)]
-    _ = (((lowerCarrier A P \
-          squarefreeWeightedCarrier A Q P).card : ℕ) : ℝ) := by
-      rw [Finset.card_sdiff_of_subset hsubset]
-    _ = ((squarefulRemovedCarrier A Q P).card : ℝ) := by
-      rw [squarefulRemovedCarrier_eq_sdiff]
+  rw [squarefulCorrection, squarefulRemovedCarrier_eq_sdiff,
+    Finset.card_sdiff_of_subset hsubset,
+    Nat.cast_sub (Finset.card_le_card hsubset)]
 
 /-- The finite union bound which turns the squareful correction into the sum
 of the individual (A4) carriers. -/

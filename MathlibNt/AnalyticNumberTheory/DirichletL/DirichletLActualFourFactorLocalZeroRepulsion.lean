@@ -61,11 +61,7 @@ private lemma CharacterLocalDiskData.re_zeroSum {q : ℕ} [NeZero q]
     {χ : DirichletCharacter ℂ q} {c : ℂ} {R : ℝ}
     (d : CharacterLocalDiskData χ c R) (σ : ℝ) :
     (∑ ρ ∈ d.S, ((d.D ρ).toNat : ℂ) / ((σ : ℂ) - ρ)).re = d.zeroSum σ := by
-  rw [CharacterLocalDiskData.zeroSum]
-  induction d.S using Finset.induction_on with
-  | empty => simp
-  | insert a S ha ih =>
-      rw [sum_insert ha, sum_insert ha, add_re, ih, re_weighted_reciprocal]
+  simp only [CharacterLocalDiskData.zeroSum, Complex.re_sum, re_weighted_reciprocal]
 
 lemma CharacterLocalDiskData.zeroSum_nonneg {q : ℕ} [NeZero q]
     {χ : DirichletCharacter ℂ q} {c : ℂ} {R : ℝ}
@@ -81,24 +77,21 @@ lemma CharacterLocalDiskData.zeroKernel_le_zeroSum {q : ℕ} [NeZero q]
     (hβ : β ∈ d.S) (hmult : 1 ≤ (d.D β).toNat)
     (hstrip : ∀ ρ ∈ d.S, ρ.re ≤ σ) :
     zeroKernel σ β ≤ d.zeroSum σ := by
-  rw [CharacterLocalDiskData.zeroSum, ← sum_erase_add _ _ hβ]
   have hk : 0 ≤ zeroKernel σ β := zeroKernel_nonneg (hstrip β hβ)
-  have hterm : zeroKernel σ β ≤ (d.D β).toNat * zeroKernel σ β := by
-    have hm : (1 : ℝ) ≤ (d.D β).toNat := by exact_mod_cast hmult
-    simpa using mul_le_mul_of_nonneg_right hm hk
-  have herase : 0 ≤ ∑ ρ ∈ d.S.erase β, (d.D ρ).toNat * zeroKernel σ ρ := by
-    apply sum_nonneg
-    intro ρ hρ
-    exact mul_nonneg (Nat.cast_nonneg _)
-      (zeroKernel_nonneg (hstrip ρ (mem_of_mem_erase hρ)))
-  linarith
+  have hm : (1 : ℝ) ≤ (d.D β).toNat := by exact_mod_cast hmult
+  calc
+    zeroKernel σ β ≤ (d.D β).toNat * zeroKernel σ β := by
+      simpa using mul_le_mul_of_nonneg_right hm hk
+    _ ≤ d.zeroSum σ := by
+      rw [CharacterLocalDiskData.zeroSum]
+      exact single_le_sum (f := fun ρ ↦ ((d.D ρ).toNat : ℝ) * zeroKernel σ ρ)
+        (fun ρ hρ ↦ mul_nonneg (Nat.cast_nonneg _) (zeroKernel_nonneg (hstrip ρ hρ))) hβ
 
 private lemma symmetricCompletedLFunction_ne_zero_of_one_lt
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     {σ : ℝ} (hσ : 1 < σ) : symmetricCompletedLFunction χ σ ≠ 0 := by
   have hL : χ.LFunction (σ : ℂ) ≠ 0 :=
     χ.LFunction_ne_zero_of_one_le_re (Or.inl hχ) (by simpa using hσ.le)
-  have hγ : χ.gammaFactor (σ : ℂ) ≠ 0 := gammaFactor_ne_zero_of_pos χ (lt_trans zero_lt_one hσ)
   have hcompleted : χ.completedLFunction (σ : ℂ) ≠ 0 := by
     intro hz
     apply hL
@@ -107,6 +100,22 @@ private lemma symmetricCompletedLFunction_ne_zero_of_one_lt
     simp [hz]
   have hq : (q : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne q)
   exact mul_ne_zero (by simp [hq]) hcompleted
+
+/-- Combine one character's archimedean bridge with its actual local zero sum. -/
+private lemma CharacterLocalDiskData.negLogDerivative_re_eq
+    {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ ≠ 1)
+    {c : ℂ} {R : ℝ} (d : CharacterLocalDiskData χ c R)
+    {σ : ℝ} (hσ : 1 < σ) (hσdisk : (σ : ℂ) ∈ ball c R) :
+    (-deriv χ.LFunction σ / χ.LFunction σ).re =
+      (conductorGammaTerm χ σ).re - (d.zeroSum σ + (logDeriv d.g σ).re) := by
+  have hL : χ.LFunction (σ : ℂ) ≠ 0 :=
+    χ.LFunction_ne_zero_of_one_le_re (Or.inl hχ) (by simpa using hσ.le)
+  have hbridge := negLogDerivative_re_eq_conductorGamma_sub_completed χ hχ
+    (lt_trans zero_lt_one hσ) hL
+  rw [← logDeriv_apply, d.formula σ hσdisk
+    (symmetricCompletedLFunction_ne_zero_of_one_lt χ hχ hσ),
+    add_re, d.re_zeroSum] at hbridge
+  exact hbridge
 
 /-- The actual four-factor negative logarithmic derivative, retaining the zeta
 factor in its standard L-series form. -/
@@ -139,34 +148,10 @@ theorem actualFourFactor_localZeroIdentity
       (conductorGammaTerm (pairCharacter χ₁ χ₂) σ).re -
       d₁.zeroSum σ - d₂.zeroSum σ - dp.zeroSum σ -
       ((logDeriv d₁.g σ).re + (logDeriv d₂.g σ).re + (logDeriv dp.g σ).re) := by
-  have hL₁ : χ₁.LFunction (σ : ℂ) ≠ 0 :=
-    χ₁.LFunction_ne_zero_of_one_le_re (Or.inl hχ₁) (by simpa using hσ.le)
-  have hL₂ : χ₂.LFunction (σ : ℂ) ≠ 0 :=
-    χ₂.LFunction_ne_zero_of_one_le_re (Or.inl hχ₂) (by simpa using hσ.le)
-  have hLp : (pairCharacter χ₁ χ₂).LFunction (σ : ℂ) ≠ 0 :=
-    (pairCharacter χ₁ χ₂).LFunction_ne_zero_of_one_le_re
-      (Or.inl hpair) (by simpa using hσ.le)
-  have hf₁ := d₁.formula σ hσdisk
-    (symmetricCompletedLFunction_ne_zero_of_one_lt χ₁ hχ₁ hσ)
-  have hf₂ := d₂.formula σ hσdisk
-    (symmetricCompletedLFunction_ne_zero_of_one_lt χ₂ hχ₂ hσ)
-  have hfp := dp.formula σ hσdisk
-    (symmetricCompletedLFunction_ne_zero_of_one_lt (pairCharacter χ₁ χ₂) hpair hσ)
-  have hb₁ := negLogDerivative_re_eq_conductorGamma_sub_completed χ₁ hχ₁
-    (lt_trans zero_lt_one hσ) hL₁
-  have hb₂ := negLogDerivative_re_eq_conductorGamma_sub_completed χ₂ hχ₂
-    (lt_trans zero_lt_one hσ) hL₂
-  have hbp := negLogDerivative_re_eq_conductorGamma_sub_completed
-    (pairCharacter χ₁ χ₂) hpair (lt_trans zero_lt_one hσ) hLp
-  rw [← logDeriv_apply] at hb₁ hb₂ hbp
-  have hre₁ := congrArg Complex.re hf₁
-  have hre₂ := congrArg Complex.re hf₂
-  have hrep := congrArg Complex.re hfp
-  simp only [add_re] at hre₁ hre₂ hrep
-  rw [d₁.re_zeroSum] at hre₁
-  rw [d₂.re_zeroSum] at hre₂
-  rw [dp.re_zeroSum] at hrep
-  rw [actualFourFactorLogDerivative, hb₁, hb₂, hbp, hre₁, hre₂, hrep]
+  rw [actualFourFactorLogDerivative,
+    d₁.negLogDerivative_re_eq hχ₁ hσ hσdisk,
+    d₂.negLogDerivative_re_eq hχ₂ hσ hσdisk,
+    dp.negLogDerivative_re_eq hpair hσ hσdisk]
   ring
 
 /-- The existing Cauchy bound pays the complete three-factor remainder

@@ -76,13 +76,9 @@ theorem vaughanTypeIICoeff_norm_sq_le_divisorEnergy
     ‖vaughanTypeIICoeff b u v n‖ ^ 2 ≤
       ‖b n‖ ^ 2 * vaughanTypeIIDivisorEnergy n.toNat u v := by
   rw [vaughanTypeIICoeff, norm_mul, Complex.norm_real, Real.norm_eq_abs,
-    mul_pow]
-  have h := vaughanTypeII_sq_le_divisorEnergy n.toNat u v
-  have hb : 0 ≤ ‖b n‖ ^ 2 := sq_nonneg _
-  have hr : |vaughanTypeII n.toNat u v| ^ 2 =
-      vaughanTypeII n.toNat u v ^ 2 := sq_abs _
-  rw [hr]
-  exact mul_le_mul_of_nonneg_left h hb
+    mul_pow, sq_abs]
+  exact mul_le_mul_of_nonneg_left
+    (vaughanTypeII_sq_le_divisorEnergy n.toNat u v) (sq_nonneg _)
 
 /-- Structured finite `ℓ²` coefficient energy on `[1,N]`.  The interval keeps
 `N` literal, while each summand keeps `u`, `v`, both divisor multiplicities,
@@ -116,8 +112,8 @@ theorem weighted_vaughan_prefix_large_sieve_structured_ledger
             ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
   refine (weighted_vaughan_prefix_large_sieve_typeI_ledger b N Q u v hQ).trans ?_
   apply mul_le_mul_of_nonneg_left
-  · gcongr with n hn
-    exact vaughanTypeIICoeff_norm_sq_le_divisorEnergy b u v n
+  · exact add_le_add
+      (add_le_add le_rfl (vaughanTypeIICoeff_energy_le_divisorEnergy b N u v)) le_rfl
   · unfold primitiveLargeSieveConstant
     positivity
 

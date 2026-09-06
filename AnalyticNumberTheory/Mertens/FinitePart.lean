@@ -329,26 +329,10 @@ theorem primeAbel_integral_finitePart_identity
       push_cast
       ring
     rw [hfun]
-    change (∫ u : ℝ in Ioi 0,
-        ((Real.log u : ℂ) * K u +
-          (mertensSecondConstant : ℂ) * K u) +
-            primeAbelRemainder u * K u) = _
-    have hadd₁ : (∫ u : ℝ in Ioi 0,
-        ((Real.log u : ℂ) * K u +
-          (mertensSecondConstant : ℂ) * K u) +
-            primeAbelRemainder u * K u) =
-        (∫ u : ℝ in Ioi 0,
-          (Real.log u : ℂ) * K u +
-            (mertensSecondConstant : ℂ) * K u) +
-          ∫ u : ℝ in Ioi 0, primeAbelRemainder u * K u := by
-      exact integral_add (hlog.add hconst) hrem
-    have hadd₂ : (∫ u : ℝ in Ioi 0,
-        (Real.log u : ℂ) * K u +
-          (mertensSecondConstant : ℂ) * K u) =
-        (∫ u : ℝ in Ioi 0, (Real.log u : ℂ) * K u) +
-          ∫ u : ℝ in Ioi 0, (mertensSecondConstant : ℂ) * K u := by
-      exact integral_add hlog hconst
-    rw [hadd₁, hadd₂]
+    have hadd := integral_add (hlog.add hconst) hrem
+    have hadd' := integral_add hlog hconst
+    simp only [Pi.add_apply] at hadd hadd'
+    rw [hadd, hadd']
   rw [hdecomp, mul_add, mul_add]
   rw [show (∫ u : ℝ in Ioi 0, (mertensSecondConstant : ℂ) * K u) =
       (mertensSecondConstant : ℂ) * ∫ u : ℝ in Ioi 0, K u by

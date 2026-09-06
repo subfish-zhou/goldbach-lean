@@ -109,6 +109,15 @@ theorem primitive_integral_mean_le (S : Finset ℕ)
     apply (inv_le_one₀ (by positivity)).mpr
     have := Real.pi_gt_three
     linarith
+  have hsegment : -T ≤ T := by linarith only [hT]
+  -- This is the norm of the actual complex Perron integrand, before integration.
+  have hintegrand_norm (q : ℕ) (χ : PrimitiveCharacter q) (t : ℝ) :
+      ‖G q χ t * (Y : ℂ) ^ (liuPanPerronLine σ t) /
+        liuPanPerronLine σ t‖ = f q χ t := by
+    have hline_re : (liuPanPerronLine σ t).re = σ := by simp [liuPanPerronLine]
+    rw [norm_div, norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hY, hline_re]
+    dsimp [f, K]
+    ring
   have hpiece (q : ℕ) (χ : PrimitiveCharacter q) :
       ‖((2 * Real.pi : ℝ) : ℂ)⁻¹ *
         ∫ t in -T..T, G q χ t * (Y : ℂ) ^ (liuPanPerronLine σ t) /
@@ -120,16 +129,8 @@ theorem primitive_integral_mean_le (S : Finset ℕ)
         mul_le_of_le_one_left (norm_nonneg _) hnorm
       _ ≤ ∫ t in -T..T, ‖G q χ t * (Y : ℂ) ^ (liuPanPerronLine σ t) /
           liuPanPerronLine σ t‖ :=
-        intervalIntegral.norm_integral_le_integral_norm (by linarith)
-      _ = _ := by
-        apply intervalIntegral.integral_congr
-        intro t _
-        simp only [norm_div, norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hY]
-        simp only [liuPanPerronLine, Complex.add_re, Complex.ofReal_re,
-          Complex.mul_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-          mul_zero, zero_mul, sub_self, add_zero]
-        dsimp [f, K, liuPanPerronLine]
-        ring
+        intervalIntegral.norm_integral_le_integral_norm hsegment
+      _ = _ := intervalIntegral.integral_congr (fun t _ => hintegrand_norm q χ t)
   have hsumc (q : ℕ) (hq : q ∈ S) :
       Continuous (fun t => ∑ χ : PrimitiveCharacter q, f q χ t) := by
     fun_prop
@@ -155,18 +156,13 @@ theorem primitive_integral_mean_le (S : Finset ℕ)
       rw [intervalIntegral.integral_const_mul,
         intervalIntegral.integral_finsetSum (fun χ _ => hfi q hq χ)]
     _ ≤ ∫ t in -T..T, K t * M := by
-      apply intervalIntegral.integral_mono_on (by linarith)
+      apply intervalIntegral.integral_mono_on hsegment
         (htotalc.intervalIntegrable _ _) ((hK.mul continuous_const).intervalIntegrable _ _)
       intro t ht
       calc
         _ = K t * (∑ q ∈ S, (q.totient : ℝ)⁻¹ *
             ∑ χ : PrimitiveCharacter q, ‖G q χ t‖) := by
-          simp only [f, mul_sum]
-          apply sum_congr rfl
-          intro q _
-          apply sum_congr rfl
-          intro χ _
-          ring
+          simp only [f, mul_sum, mul_left_comm]
         _ ≤ _ := mul_le_mul_of_nonneg_left (hmean t ht) (by dsimp [K]; positivity)
     _ = (Y ^ σ * M) * (∫ t in -T..T, 1 / ‖liuPanPerronLine σ t‖) := by
       rw [← intervalIntegral.integral_const_mul]

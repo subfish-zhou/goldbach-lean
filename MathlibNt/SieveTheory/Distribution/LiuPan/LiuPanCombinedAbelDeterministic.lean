@@ -89,24 +89,8 @@ private lemma inverseLogDensity_sum_le_integral
   calc
     (∑ n ∈ Ico 3 (Nat.floor x + 1), inverseLogDensity n) =
         ∑ n ∈ Ico 2 (Nat.floor x), inverseLogDensity (n + 1) := by
-          apply sum_bij (fun n _ => n - 1)
-          · intro n hn
-            simp only [mem_Ico] at hn ⊢
-            omega
-          · intro a₁ ha₁ a₂ ha₂ h
-            simp only [mem_Ico] at ha₁ ha₂
-            omega
-          · intro b hb
-            simp only [mem_Ico] at hb
-            refine ⟨b + 1, ?_, by omega⟩
-            simp only [mem_Ico]
-            omega
-          · intro n hn
-            simp only [mem_Ico] at hn
-            have heq : n - 1 + 1 = n := by omega
-            have heqR : ((n - 1 : ℕ) : ℝ) + 1 = n := by
-              exact_mod_cast heq
-            rw [heqR]
+          simpa only [Nat.cast_add, Nat.cast_one] using
+            (sum_Ico_add' (fun n : ℕ => inverseLogDensity n) 2 (Nat.floor x) 1).symm
     _ ≤ ∫ t in (2 : ℝ)..(Nat.floor x : ℝ), inverseLogDensity t := by
       convert hsum using 1 <;> norm_num [Nat.cast_add]
     _ ≤ ∫ t in (2 : ℝ)..x, inverseLogDensity t := by
@@ -170,9 +154,7 @@ private lemma integral_le_inverseLogDensity_sum_add
               ∫ _t in (2 : ℝ)..3, 1 / Real.log 2 := by
             apply integral_mono_on (by norm_num) hint23 intervalIntegrable_const
             intro t ht
-            exact one_div_le_one_div_of_le
-              (Real.log_pos (by norm_num))
-              (Real.log_le_log (by norm_num) ht.1)
+            exact inverseLogDensity_antitoneOn (by norm_num) ht.1 ht.1
           _ = 1 / Real.log 2 := by
             rw [intervalIntegral.integral_const]
             norm_num [smul_eq_mul]
@@ -217,9 +199,7 @@ private lemma integral_le_inverseLogDensity_sum_add
           ∫ _t in (2 : ℝ)..x, 1 / Real.log 2 := by
         apply integral_mono_on hx hint intervalIntegrable_const
         intro t ht
-        exact one_div_le_one_div_of_le
-          (Real.log_pos (by norm_num))
-          (Real.log_le_log (by norm_num) ht.1)
+        exact inverseLogDensity_antitoneOn (by norm_num) ht.1 ht.1
       _ = (x - 2) / Real.log 2 := by
         rw [intervalIntegral.integral_const]
         simp only [smul_eq_mul]
@@ -511,10 +491,7 @@ theorem abs_liuPanAggregateInverseLogDeterministicTerm_source_le
     _ = liuPanInverseLogDeterministicErrorBound kappa N *
           ∑ a ∈ Icc 1 N,
             liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a := by
-      rw [mul_sum]
-      apply sum_congr rfl
-      intro a ha
-      ring
+      rw [← sum_mul, mul_comm]
     _ ≤ liuPanInverseLogDeterministicErrorBound kappa N *
           (3 * (N : ℝ) ^ (2 / 3 : ℝ)) :=
       mul_le_mul_of_nonneg_left

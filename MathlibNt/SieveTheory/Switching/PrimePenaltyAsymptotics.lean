@@ -1130,29 +1130,10 @@ theorem hPrimePower_of_q1Count_bound
   let 𝔖 : ℝ := AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1)
   let X : ℝ := (N : ℝ) / (log (N : ℝ)) ^ 2
   have hred := correctedChenPrimePowerSum_le_q1Count_add_negligible N hNbig hEven
-  have hXeq1 : Cq * 𝔖 * X =
-      Cq * AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) *
-        (N : ℝ) / (log (N : ℝ)) ^ 2 := by
-    dsimp [𝔖, X]
-    ring
-  have hXeq2 : (1 / 2 : ℝ) * 𝔖 * X =
-      (1 / 2 : ℝ) * AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) *
-        (N : ℝ) / (log (N : ℝ)) ^ 2 := by
-    dsimp [𝔖, X]
-    ring
   have hq1'' : correctedChenQ1Count N ≤ Cq * 𝔖 * X := by
-    dsimp [𝔖, X]
-    rw [hXeq1]
-    exact hq1' N hNq hEven
+    simpa only [𝔖, X, mul_div_assoc] using hq1' N hNq hEven
   have hneg'' : 60 * (N : ℝ) ^ (9 / 10 : ℝ) ≤ (1 / 2 : ℝ) * 𝔖 * X := by
-    dsimp [𝔖, X]
-    rw [hXeq2]
-    exact hneg' N hNn hEven
-  have hXeq : (Cq + 1 / 2) * 𝔖 * X =
-      (Cq + 1 / 2) * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-        (correctedChenZ N - 1) * (N : ℝ) / (log (N : ℝ)) ^ 2 := by
-    dsimp [𝔖, X]
-    ring
+    simpa only [𝔖, X, mul_div_assoc] using hneg' N hNn hEven
   calc
     (correctedChenCandidates N).sum
         (fun p => primePowerSum (N - p) (correctedChenZ N) (correctedChenY N)) ≤
@@ -1162,7 +1143,7 @@ theorem hPrimePower_of_q1Count_bound
     _ = (Cq + 1 / 2) * 𝔖 * X := by ring
     _ = (Cq + 1 / 2) * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
           (correctedChenZ N - 1) * (N : ℝ) / (log (N : ℝ)) ^ 2 := by
-          exact hXeq
+          simp only [𝔖, X, mul_div_assoc]
 
 /-- **Negligibility threshold for proper powers**: for sufficiently large even `N`,
 `60·N^{9/10} ≤ (1/2)·𝔖_trunc·N/log²N`. This follows directly from `𝔖 ≥ 1/2` and the elementary growth bound
@@ -1836,76 +1817,20 @@ theorem q1CandidateAPCount_le_main_add_error (N q : ℕ) :
     unfold q1CandidateAPDoubleSum q1CandidateAPMain q1CandidateAPErrorSigned
     simp_rw [hsplit]
     simp [mul_add, Finset.sum_add_distrib]
-  have hAbs : ∀ d e : ℕ,
-      |((ArithmeticFunction.moebius d : ℤ) : ℝ) * ((ArithmeticFunction.moebius e : ℤ) : ℝ) *
-        q1APError N (Nat.lcm (Nat.lcm q d) e)| =
-      |((ArithmeticFunction.moebius d : ℤ) : ℝ)| *
-        (|((ArithmeticFunction.moebius e : ℤ) : ℝ)| * |q1APError N (Nat.lcm (Nat.lcm q d) e)|) := by
-    intro d e
-    rw [abs_mul, abs_mul]
-    ring
   have hErrSigned_le : q1CandidateAPErrorSigned N q ≤ q1CandidateAPError N q := by
     unfold q1CandidateAPErrorSigned q1CandidateAPError
-    calc
-      (∑ d ∈ (correctedChenSiftingProduct N).divisors,
-          ((ArithmeticFunction.moebius d : ℤ) : ℝ) *
-            (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-              ((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e)))
-          ≤ ∑ d ∈ (correctedChenSiftingProduct N).divisors,
-              ∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                |((ArithmeticFunction.moebius d : ℤ) : ℝ) * ((ArithmeticFunction.moebius e : ℤ) : ℝ) *
-                  q1APError N (Nat.lcm (Nat.lcm q d) e)| := by
-            apply Finset.sum_le_sum
-            intro d hd
-            have hle1 : ((ArithmeticFunction.moebius d : ℤ) : ℝ) *
-                (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                  ((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e)) ≤
-                |((ArithmeticFunction.moebius d : ℤ) : ℝ) *
-                  (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                    ((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e))| :=
-                le_abs_self _
-            have hle2 : |((ArithmeticFunction.moebius d : ℤ) : ℝ) *
-                (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                  ((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e))| ≤
-                ∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                  |((ArithmeticFunction.moebius d : ℤ) : ℝ) * ((ArithmeticFunction.moebius e : ℤ) : ℝ) *
-                    q1APError N (Nat.lcm (Nat.lcm q d) e)| := by
-                calc
-                  |((ArithmeticFunction.moebius d : ℤ) : ℝ) *
-                      (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                        ((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e))|
-                      = |((ArithmeticFunction.moebius d : ℤ) : ℝ)| *
-                          |∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                            ((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e)| := by
-                          rw [abs_mul]
-                  _ ≤ |((ArithmeticFunction.moebius d : ℤ) : ℝ)| *
-                          (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                            |((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e)|) := by
-                          exact mul_le_mul_of_nonneg_left (Finset.abs_sum_le_sum_abs _ _) (abs_nonneg _)
-                  _ = ∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                          |((ArithmeticFunction.moebius d : ℤ) : ℝ)| *
-                            |((ArithmeticFunction.moebius e : ℤ) : ℝ) * q1APError N (Nat.lcm (Nat.lcm q d) e)| := by
-                          rw [Finset.mul_sum]
-                  _ = ∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-                          |((ArithmeticFunction.moebius d : ℤ) : ℝ) * ((ArithmeticFunction.moebius e : ℤ) : ℝ) *
-                            q1APError N (Nat.lcm (Nat.lcm q d) e)| := by
-                          apply Finset.sum_congr rfl
-                          intro e he
-                          rw [abs_mul]
-                          exact (hAbs d e).symm
-            exact le_trans hle1 hle2
-      _ = q1CandidateAPError N q := by
-            apply Finset.sum_congr rfl
-            intro d hd
-            symm
-            rw [Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro e he
-            exact (hAbs d e).symm
-  have hMainAdd : q1CandidateAPMain N q + q1CandidateAPErrorSigned N q ≤
-      q1CandidateAPMain N q + q1CandidateAPError N q := by
-    nlinarith [hErrSigned_le]
-  exact ((q1CandidateAPCount_eq_doubleSum N q).trans hsplitSum).trans_le hMainAdd
+    apply Finset.sum_le_sum
+    intro d hd
+    -- Distribute the signed outer weight before bounding each summand by its absolute value.
+    rw [Finset.mul_sum, Finset.mul_sum]
+    apply Finset.sum_le_sum
+    intro e he
+    simpa only [abs_mul] using
+      le_abs_self (((ArithmeticFunction.moebius d : ℤ) : ℝ) *
+        (((ArithmeticFunction.moebius e : ℤ) : ℝ) *
+          q1APError N (Nat.lcm (Nat.lcm q d) e)))
+  exact ((q1CandidateAPCount_eq_doubleSum N q).trans hsplitSum).trans_le
+    (add_le_add le_rfl hErrSigned_le)
 
 /-- **Finite q¹ reduction**: `q1Count ≤ q1MainTermSum + q1ErrorTermSum`, by exact algebra
 (reindexing, double Möbius expansion, and splitting the base counts). -/

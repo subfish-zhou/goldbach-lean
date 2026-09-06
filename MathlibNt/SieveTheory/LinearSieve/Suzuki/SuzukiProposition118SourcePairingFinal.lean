@@ -73,6 +73,26 @@ private theorem continuousWithinAt_sourceWeighted_Ici
     ContinuousWithinAt sourceWeighted (Ici s) s := by
   exact continuousWithinAt_id.mul (continuousWithinAt_sourceQ_Ici hH hs)
 
+private theorem sourceWeighted_intervalIntegrable_history
+    {x y : ℝ} (hx : 1 ≤ x) (hxy : x ≤ y) (hy : y ≤ 2) :
+    IntervalIntegrable sourceWeighted volume x y := by
+  have hc : IntervalIntegrable
+      (fun _ : ℝ => SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude)
+      volume x y := continuousOn_const.intervalIntegrable
+  apply hc.congr_ae
+  have hne : ∀ᵐ t : ℝ ∂volume, t ≠ 2 := by
+    rw [ae_iff]
+    simpa only [not_ne_iff, Set.ofPred_eq_eq_singleton] using
+      (measure_singleton (μ := volume) (2 : ℝ))
+  filter_upwards [ae_restrict_of_ae hne, ae_restrict_mem measurableSet_uIoc] with t ht2 ht
+  rw [uIoc_of_le hxy] at ht
+  have htlt : t < 2 := lt_of_le_of_ne (ht.2.trans hy) (fun h => ht2 h)
+  dsimp [sourceWeighted]
+  rw [suzukiProposition118SourceQ, if_pos htlt]
+  have ht0 : t ≠ 0 := ne_of_gt
+    (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (hx.trans ht.1.le))
+  field_simp [ht0]
+
 /-- The weighted source is locally interval-integrable from the closed history
 endpoint `1`.  The only possible jump, at `2`, is harmless. -/
 private theorem sourceWeighted_intervalIntegrable
@@ -80,22 +100,7 @@ private theorem sourceWeighted_intervalIntegrable
     {x y : ℝ} (hx : 1 ≤ x) (hxy : x ≤ y) :
     IntervalIntegrable sourceWeighted volume x y := by
   by_cases hy : y ≤ 2
-  · have hc : IntervalIntegrable
-        (fun _ : ℝ => SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude)
-        volume x y := continuousOn_const.intervalIntegrable
-    apply hc.congr_ae
-    have hne : ∀ᵐ t : ℝ ∂volume, t ≠ 2 := by
-      rw [ae_iff]
-      simpa only [not_ne_iff, Set.ofPred_eq_eq_singleton] using
-        (measure_singleton (μ := volume) (2 : ℝ))
-    filter_upwards [ae_restrict_of_ae hne, ae_restrict_mem measurableSet_uIoc] with t ht2 ht
-    rw [uIoc_of_le hxy] at ht
-    have htlt : t < 2 := lt_of_le_of_ne (ht.2.trans hy) (fun h => ht2 h)
-    dsimp [sourceWeighted]
-    rw [suzukiProposition118SourceQ, if_pos htlt]
-    have ht0 : t ≠ 0 := ne_of_gt
-      (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (hx.trans ht.1.le))
-    field_simp [ht0]
+  · exact sourceWeighted_intervalIntegrable_history hx hxy hy
   · have h2y : 2 ≤ y := le_of_not_ge hy
     by_cases hx2 : 2 ≤ x
     · have hc : ContinuousOn sourceWeighted (Set.uIcc x y) := by
@@ -105,23 +110,7 @@ private theorem sourceWeighted_intervalIntegrable
           (by intro s hs; exact ⟨hx2.trans hs.1, hs.2⟩)
       exact hc.intervalIntegrable
     · have hxle2 : x ≤ 2 := le_of_not_ge hx2
-      have hlo : IntervalIntegrable sourceWeighted volume x 2 := by
-        have hc : IntervalIntegrable
-            (fun _ : ℝ => SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude)
-            volume x 2 := continuousOn_const.intervalIntegrable
-        apply hc.congr_ae
-        have hne : ∀ᵐ t : ℝ ∂volume, t ≠ 2 := by
-          rw [ae_iff]
-          simpa only [not_ne_iff, Set.ofPred_eq_eq_singleton] using
-            (measure_singleton (μ := volume) (2 : ℝ))
-        filter_upwards [ae_restrict_of_ae hne, ae_restrict_mem measurableSet_uIoc] with t ht2 ht
-        rw [uIoc_of_le hxle2] at ht
-        have htlt : t < 2 := lt_of_le_of_ne ht.2 (fun h => ht2 h)
-        dsimp [sourceWeighted]
-        rw [suzukiProposition118SourceQ, if_pos htlt]
-        have ht0 : t ≠ 0 := ne_of_gt
-          (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (hx.trans ht.1.le))
-        field_simp [ht0]
+      have hlo := sourceWeighted_intervalIntegrable_history hx hxle2 le_rfl
       have hhi : IntervalIntegrable sourceWeighted volume 2 y := by
         have hc : ContinuousOn sourceWeighted (Set.uIcc (2 : ℝ) y) := by
           rw [uIcc_of_le h2y]

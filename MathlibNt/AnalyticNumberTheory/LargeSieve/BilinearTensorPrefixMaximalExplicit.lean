@@ -71,33 +71,22 @@ private lemma prefix_square_le_card_mul_row_prefix_max
     ring
   unfold bilinearTensorCharacterPrefixSquare
   rw [hform]
-  have hnorm := norm_sum_le DS (fun d => χ.1 (d : ZMod q) * R d)
-  have hsq : ‖∑ d ∈ DS, χ.1 (d : ZMod q) * R d‖ ^ 2 ≤
-      (∑ d ∈ DS, ‖χ.1 (d : ZMod q) * R d‖) ^ 2 :=
-    pow_le_pow_left₀ (norm_nonneg _) hnorm 2
-  have hcs : (∑ d ∈ DS, ‖χ.1 (d : ZMod q) * R d‖) ^ 2 ≤
-      (DS.card : ℝ) * ∑ d ∈ DS,
-        ‖χ.1 (d : ZMod q) * R d‖ ^ 2 := by
-    simpa only [one_mul, one_pow, sum_const, nsmul_eq_mul, mul_one] using
-      (Finset.sum_mul_sq_le_sq_mul_sq DS
-        (fun _d => (1 : ℝ)) (fun d => ‖χ.1 (d : ZMod q) * R d‖))
-  refine hsq.trans (hcs.trans ?_)
-  apply mul_le_mul_of_nonneg_left
-  · apply Finset.sum_le_sum
-    intro d hd
-    have hχ := DirichletCharacter.norm_le_one χ.1 (d : ZMod q)
-    have hχ0 := norm_nonneg (χ.1 (d : ZMod q))
-    have hχsq : ‖χ.1 (d : ZMod q)‖ ^ 2 ≤ 1 := by nlinarith
-    have hR : ‖R d‖ ^ 2 ≤ primitiveCharacterPrefixMaxSquare (A d) 0 M q χ := by
+  calc
+    ‖∑ d ∈ DS, χ.1 (d : ZMod q) * R d‖ ^ 2
+        ≤ (∑ d ∈ DS, ‖R d‖) ^ 2 := by
+      apply pow_le_pow_left₀ (norm_nonneg _)
+      exact norm_sum_le_of_le _ fun d _ => by
+        rw [norm_mul]
+        exact mul_le_of_le_one_left (norm_nonneg _)
+          (DirichletCharacter.norm_le_one χ.1 (d : ZMod q))
+    _ ≤ (DS.card : ℝ) * ∑ d ∈ DS, ‖R d‖ ^ 2 := by
+      simpa using Finset.sum_mul_sq_le_sq_mul_sq DS
+        (fun _d => (1 : ℝ)) (fun d => ‖R d‖)
+    _ ≤ (DS.card : ℝ) * ∑ d ∈ DS,
+        primitiveCharacterPrefixMaxSquare (A d) 0 M q χ := by
+      gcongr with d hd
       simpa [R, primitiveCharacterPrefixSquare] using
         primitiveCharacterPrefixSquare_le_max (A d) 0 hy χ
-    calc
-      ‖χ.1 (d : ZMod q) * R d‖ ^ 2
-          = ‖χ.1 (d : ZMod q)‖ ^ 2 * ‖R d‖ ^ 2 := by rw [norm_mul, mul_pow]
-      _ ≤ 1 * ‖R d‖ ^ 2 :=
-        mul_le_mul_of_nonneg_right hχsq (sq_nonneg _)
-      _ ≤ primitiveCharacterPrefixMaxSquare (A d) 0 M q χ := by simpa
-  · positivity
 
 /-- Every complete bilinear prefix maximum is bounded by outer-row Cauchy and
 the sum of the complete row-prefix maxima. -/
@@ -113,6 +102,12 @@ theorem bilinearTensorCharacterPrefixMaxSquare_le_rows
   rcases Finset.mem_image.mp hx with ⟨y, hy, rfl⟩
   exact prefix_square_le_card_mul_row_prefix_max A DS M y q
     (by simpa [Finset.mem_range] using hy) χ
+
+-- The same nonnegative rowwise scale occurs in each energy comparison below.
+private lemma prefix_rowwise_scale_nonneg (M Q : ℕ) :
+    0 ≤ (M : ℝ) + primitiveBilinearQFactor Q * (Q : ℝ) ^ 2 :=
+  add_nonneg (Nat.cast_nonneg M)
+    (mul_nonneg (primitiveBilinearQFactor_nonneg Q) (sq_nonneg _))
 
 /-- Generic explicit `t`-prefix-maximal bilinear tensor theorem.  The aligned
 dyadic decomposition is applied to each row and costs exactly
@@ -156,9 +151,7 @@ theorem weighted_primitive_bilinearTensor_prefixMax_explicit
         apply Finset.sum_congr rfl
         intro q hq
         rw [Finset.sum_comm]
-        apply Finset.sum_congr rfl
-        intro d hd
-        ring
+        simp only [mul_left_comm]
   refine htranspose.trans ?_
   have hrow : ∀ d ∈ DS,
       (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
@@ -186,9 +179,7 @@ theorem weighted_primitive_bilinearTensor_prefixMax_explicit
             ∑ t ∈ Finset.Icc (1 : ℤ) M, ‖A d t‖ ^ 2) := by
         gcongr
         exact Finset.sum_nonneg fun d _ => mul_nonneg
-          (mul_nonneg (sq_nonneg _)
-            (add_nonneg (by positivity)
-              (mul_nonneg (primitiveBilinearQFactor_nonneg Q) (sq_nonneg _))))
+          (mul_nonneg (sq_nonneg _) (prefix_rowwise_scale_nonneg M Q))
           (Finset.sum_nonneg fun t _ => sq_nonneg _)
     _ = _ := by
       unfold bilinearTensorCoeffEnergy
@@ -226,8 +217,7 @@ theorem weighted_primitive_vaughanCanonicalBilinear_prefixMax_unconditional
   · exact vaughanCanonicalBilinearTensor_coeffEnergy_le b y N u v k l
   · exact mul_nonneg
       (mul_nonneg (sq_nonneg _) (by positivity))
-      (add_nonneg (by positivity)
-        (mul_nonneg (primitiveBilinearQFactor_nonneg Q) (sq_nonneg _)))
+      (prefix_rowwise_scale_nonneg (vaughanCanonicalTensorLength y k) Q)
 
 /-- Linear-harmonic imprimitive conductor-window transport for the complete
 canonical bilinear prefix maximum. -/
@@ -275,8 +265,7 @@ theorem weighted_primitive_vaughanCanonicalBilinear_prefixMax_energy27
       b y N u v k l B 27 hB divisorSquareMomentBound_27 (by norm_num)
   · exact mul_nonneg
       (mul_nonneg (sq_nonneg _) (by positivity))
-      (add_nonneg (by positivity)
-        (mul_nonneg (primitiveBilinearQFactor_nonneg Q) (sq_nonneg _)))
+      (prefix_rowwise_scale_nonneg (vaughanCanonicalTensorLength y k) Q)
 
 /-- Algebraic audit: after writing `X=D*M`, the prefix maximal route with the
 `27`-energy still contains `X * (X + D*Q^2)`.  Thus the dyadic maximal upgrade

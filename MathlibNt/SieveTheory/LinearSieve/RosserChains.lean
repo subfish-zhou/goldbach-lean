@@ -83,6 +83,15 @@ theorem sorted_prefix_toFinset_eq_filter_ge (s : Finset ℕ) (i : ℕ)
       rw [hjx] at hrel
       exact hrel.le
 
+/-- The filtered prefix through index `i` has exactly `i + 1` entries. -/
+private theorem sorted_prefix_card_eq_filter_ge (s : Finset ℕ) (i : ℕ)
+    (hi : i < (s.sort (· ≥ ·)).length) :
+    (s.filter (fun q => (s.sort (· ≥ ·))[i] ≤ q)).card = i + 1 := by
+  rw [← sorted_prefix_toFinset_eq_filter_ge s i hi,
+    List.toFinset_card_of_nodup (Finset.sort_nodup s (· ≥ ·)).take,
+    List.length_take]
+  exact Nat.min_eq_left (by omega)
+
 /-- Product form of `sorted_prefix_toFinset_eq_filter_ge`: the filtered Rosser
 prefix is the product of the preceding entries and the entry at `i`. -/
 theorem sorted_prefix_prod_eq_filter_ge (s : Finset ℕ) (i : ℕ)
@@ -109,13 +118,8 @@ theorem upperRosserAdmissibleSet_iff_sorted_prefix_cube_lt
     let p := (s.sort (· ≥ ·))[i]
     have hp : p ∈ s :=
       (Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem hi)
-    have hcard :
-        (s.filter (fun q => p ≤ q)).card = i + 1 := by
-      rw [← sorted_prefix_toFinset_eq_filter_ge s i hi]
-      rw [List.toFinset_card_of_nodup
-          (Finset.sort_nodup s (· ≥ ·)).take,
-        List.length_take]
-      exact Nat.min_eq_left (by omega)
+    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 :=
+      sorted_prefix_card_eq_filter_ge s i hi
     have hodd : ¬Even (s.filter (fun q => p ≤ q)).card := by
       rw [hcard]
       intro h
@@ -126,13 +130,9 @@ theorem upperRosserAdmissibleSet_iff_sorted_prefix_cube_lt
   · intro hs p hp hodd
     have hpl : p ∈ s.sort (· ≥ ·) := (Finset.mem_sort (· ≥ ·)).mpr hp
     obtain ⟨i, hi, hip⟩ := List.mem_iff_getElem.mp hpl
-    have hcard :
-        (s.filter (fun q => p ≤ q)).card = i + 1 := by
-      rw [← hip, ← sorted_prefix_toFinset_eq_filter_ge s i hi]
-      rw [List.toFinset_card_of_nodup
-          (Finset.sort_nodup s (· ≥ ·)).take,
-        List.length_take]
-      exact Nat.min_eq_left (by omega)
+    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 := by
+      rw [← hip]
+      exact sorted_prefix_card_eq_filter_ge s i hi
     have heven : Even i := by
       by_contra hiOdd
       apply hodd
@@ -157,13 +157,8 @@ theorem lowerRosserAdmissibleSet_iff_sorted_prefix_cube_lt
     let p := (s.sort (· ≥ ·))[i]
     have hp : p ∈ s :=
       (Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem hi)
-    have hcard :
-        (s.filter (fun q => p ≤ q)).card = i + 1 := by
-      rw [← sorted_prefix_toFinset_eq_filter_ge s i hi]
-      rw [List.toFinset_card_of_nodup
-          (Finset.sort_nodup s (· ≥ ·)).take,
-        List.length_take]
-      exact Nat.min_eq_left (by omega)
+    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 :=
+      sorted_prefix_card_eq_filter_ge s i hi
     have heven : Even (s.filter (fun q => p ≤ q)).card := by
       rw [hcard, Nat.even_add_one]
       exact hodd
@@ -173,13 +168,9 @@ theorem lowerRosserAdmissibleSet_iff_sorted_prefix_cube_lt
   · intro hs p hp heven
     have hpl : p ∈ s.sort (· ≥ ·) := (Finset.mem_sort (· ≥ ·)).mpr hp
     obtain ⟨i, hi, hip⟩ := List.mem_iff_getElem.mp hpl
-    have hcard :
-        (s.filter (fun q => p ≤ q)).card = i + 1 := by
-      rw [← hip, ← sorted_prefix_toFinset_eq_filter_ge s i hi]
-      rw [List.toFinset_card_of_nodup
-          (Finset.sort_nodup s (· ≥ ·)).take,
-        List.length_take]
-      exact Nat.min_eq_left (by omega)
+    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 := by
+      rw [← hip]
+      exact sorted_prefix_card_eq_filter_ge s i hi
     have hodd : ¬Even i := by
       rw [hcard, Nat.even_add_one] at heven
       exact heven

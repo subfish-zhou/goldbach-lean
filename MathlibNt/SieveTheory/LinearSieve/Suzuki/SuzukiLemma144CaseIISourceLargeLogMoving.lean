@@ -14,63 +14,28 @@ open SwitchingPrinciple.SuzukiLemma144KappaOne
 
 set_option maxHeartbeats 5000000
 
-private theorem sourceParityIndices_eq_actualParityCarrier (n : ℕ) :
-    sourceParityIndices n = suzukiActualParityCarrier n := by
-  ext m
-  simp [sourceParityIndices, suzukiActualParityCarrier]
-  omega
-
 private theorem caseII_raw_cubic_scale
     (S : BoundingSieve) {D Dmin : ℕ} {d : ℝ}
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
     CarrierQuotientThresholdGeometry
       (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (3 : ℝ))⌉₊)
       D Dmin (sourceSigma (D : ℝ) d) 3 := by
-  intro p hp
-  have hp' := hp
-  simp only [sigmaOneCarrier, Finset.mem_filter] at hp'
-  have hD1 : (1 : ℝ) ≤ (D : ℝ) := by
-    exact_mod_cast (show 1 ≤ D by nlinarith)
-  have hrootOrder : (D : ℝ) ^ (1 / (3 : ℝ)) ≤
-      (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    rpow_one_div_mono_of_le hD1 (by norm_num) (by norm_num)
-  have hpRoot : (p : ℝ) < (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    hp'.2.2.trans_le hrootOrder
-  have hsquareR : (p : ℝ) ^ (2 : ℕ) < (D : ℝ) := by
-    have hiff := Real.lt_rpow_inv_iff_of_pos
-      (x := (p : ℝ)) (y := (D : ℝ)) (z := (2 : ℝ))
-      (by positivity) (by positivity) (by norm_num)
-    norm_num [one_div] at hiff hpRoot ⊢
-    exact hiff.mp hpRoot
-  have hsquare : p ^ 2 < D := by exact_mod_cast hsquareR
-  by_cases hminp : Dmin ≤ p
-  · calc
-      Dmin * p ≤ p * p := Nat.mul_le_mul_right p hminp
-      _ = p ^ 2 := by ring
-      _ ≤ D := Nat.le_of_lt hsquare
-  · have hpmin : p < Dmin := Nat.lt_of_not_ge hminp
-    calc
-      Dmin * p ≤ Dmin * Dmin := Nat.mul_le_mul_left Dmin (Nat.le_of_lt hpmin)
-      _ = Dmin ^ 2 := by ring
-      _ ≤ D := hD
+  exact MathlibNt.SieveTheory.caseII_cubic_carrier_quotient_scale
+    (D := D) (Dmin := Dmin) (d := d) S hDmin hD
 
-private theorem caseII_raw_inherited_gt_two
-    {D p : ℕ} (hp : 2 ≤ p) (hD : 1 < D)
-    (hupper : (p : ℝ) < (D : ℝ) ^ (1 / (3 : ℝ))) :
-    2 < inheritedCoordinate D p := by
-  have hpR : (0 : ℝ) < (p : ℝ) := by positivity
-  have hDR : (0 : ℝ) < (D : ℝ) := by positivity
-  have hlogp : 0 < Real.log (p : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < p by omega))
-  have hloglt := Real.strictMonoOn_log (show (p : ℝ) ∈ Set.Ioi 0 by exact hpR)
-    (show (D : ℝ) ^ (1 / (3 : ℝ)) ∈ Set.Ioi 0 by
-      exact Real.rpow_pos_of_pos hDR _)
-    hupper
-  rw [Real.log_rpow hDR] at hloglt
-  unfold inheritedCoordinate
-  rw [lt_sub_iff_add_lt, lt_div_iff₀ hlogp]
-  norm_num [one_div] at hloglt ⊢
-  nlinarith
+/-- The same-constant Case-II bound implies the literal actual recurrence bound. -/
+theorem caseII_sameCAt_to_literal_moving
+    (S : BoundingSieve) (H : Section13HatLayers)
+    {M D : ℕ} {d Δ C K s : ℝ}
+    (h : Lemma144CaseIISameCAt S H M D d Δ C K s) :
+    suzukiActualT S M D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
+      suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
+        (finiteSourceLayer 1 2 M s +
+          C * Real.exp (Real.sqrt K) * errorEnvelope H M (D : ℝ) d s *
+            (Real.log (D : ℝ)) ^ (-Δ)) := by
+  dsimp [Lemma144CaseIISameCAt] at h
+  rw [suzukiActualT_eq_parity_sum, ← sourceParityIndices_eq_actualParityCarrier]
+  exact h
 
 /-- Source-large Case-II closure with the cutoff chosen before the varying
 bounding sieve, `C1`, the same error constant `C`, `K`, the odd depth, `D`, and
@@ -145,8 +110,8 @@ theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_i
   have hDreal1 : (1 : ℝ) < (D : ℝ) := by exact_mod_cast hDnat1
   have hD0 : (0 : ℝ) < (D : ℝ) := zero_lt_one.trans hDreal1
   have hlogDlt : Real.log (D : ℝ) < (D : ℝ) := by
-    have ht := Real.log_lt_sub_one_of_pos hD0 (by linarith [hDreal1])
-    linarith
+    exact (Real.log_le_sub_one_of_pos hD0).trans_lt
+      (sub_lt_self _ zero_lt_one)
   have hCminD : C1min < (D : ℝ) := hCminlog.trans hlogDlt
   have hDg : Dg ≤ (D : ℝ) := by
     have hle : Dg ≤ C1min := by
@@ -185,7 +150,7 @@ theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_i
   have hDsqR : (Dmin ^ 2 : ℝ) ≤ (D : ℝ) := by
     have hle : (Dmin ^ 2 : ℝ) ≤ C1min := by
       dsimp [C1min]
-      nlinarith [hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
+      exact le_add_of_nonneg_left (by positivity)
     exact hle.trans hCminD.le
   have hDsq : Dmin ^ 2 ≤ D := by exact_mod_cast hDsqR
   have herrorD := herrorAt D (by exact_mod_cast hDerrR) S
@@ -365,13 +330,7 @@ theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_i
       _ ≤ C * Real.exp (Real.sqrt K) :=
         mul_le_mul_of_nonneg_left hexp (by linarith)
   have hPE : 1 ≤ C * Real.exp (Real.sqrt K) * errorEnvelope H N (D : ℝ) d s := by
-    have hexp : 1 ≤ Real.exp (Real.sqrt K) := Real.one_le_exp (Real.sqrt_nonneg K)
-    have hP3 : 3 ≤ C * Real.exp (Real.sqrt K) := by
-      calc 3 ≤ C := hC3
-           _ = C * 1 := by ring
-           _ ≤ C * Real.exp (Real.sqrt K) :=
-             mul_le_mul_of_nonneg_left hexp (by linarith)
-    nlinarith [mul_le_mul hP3 hE (by norm_num : (0 : ℝ) ≤ 1 / 3)
+    nlinarith [mul_le_mul hP hE (by norm_num : (0 : ℝ) ≤ 1 / 3)
       (by positivity : 0 ≤ C * Real.exp (Real.sqrt K))]
 
 

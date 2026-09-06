@@ -357,29 +357,30 @@ theorem exists_dirichletL_quadratic_conditional_powerZeroFree
           nlinarith [hHpow, mul_le_of_le_one_right hA.le hp1]
         _ ≤ 1 / 2 := hsmall
     linarith
+  -- Both height branches use the same conductor-log strip condition.
+  have hnear :
+      1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
+    have hlogpos := log_conductorHeightCutoff_pos χ hχ t
+    have hone : x ≤ 1 / Real.log (dirichletLConductorHeightCutoff q t) := by
+      have hlogle : Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
+        have := one_add_log_conductorHeightCutoff_le_quadraticH q t
+        linarith
+      apply (le_div_iff₀ hlogpos).2
+      calc
+        x * Real.log (dirichletLConductorHeightCutoff q t) ≤ x * H :=
+          mul_le_mul_of_nonneg_left hlogle hx.le
+        _ ≤ 1 := by
+          dsimp only [x]
+          rw [div_mul_eq_mul_div, div_le_iff₀ (pow_pos hH 12)]
+          nlinarith [hHpow, one_le_pow₀ hH1 (n := 11),
+            mul_le_of_le_one_right hA.le hp1]
+    linarith
+  have hlogH := one_add_log_conductorHeightCutoff_le_quadraticH q t
   by_cases htlow : |t| ≤ x
-  · have hnear :
-        1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ β := by
-      have hlogpos := log_conductorHeightCutoff_pos χ hχ t
-      have hone : x ≤ 1 / Real.log (dirichletLConductorHeightCutoff q t) := by
-        have hlogle : Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-          have := one_add_log_conductorHeightCutoff_le_quadraticH q t
-          linarith
-        apply (le_div_iff₀ hlogpos).2
-        calc
-          x * Real.log (dirichletLConductorHeightCutoff q t) ≤ x * H :=
-            mul_le_mul_of_nonneg_left hlogle hx.le
-          _ ≤ 1 := by
-            dsimp only [x]
-            rw [div_mul_eq_mul_div, div_le_iff₀ (pow_pos hH 12)]
-            nlinarith [hHpow, one_le_pow₀ hH1 (n := 11),
-              mul_le_of_le_one_right hA.le hp1]
-      linarith
-    have hhorizontal := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
+  · have hhorizontal := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
       χ hχ hβhalf hnear hβ.2.le (by norm_num : (1 : ℝ) ≤ 2)
     have hvertical :=
       norm_LFunction_vertical_sub_le_sixtyfour_mul_conductorHeightLogSq χ hχ t
-    have hlogH := one_add_log_conductorHeightCutoff_le_quadraticH q t
     have hBh : ‖χ.LFunction (1 + t * I) - χ.LFunction (β + t * I)‖ ≤
         64 * H ^ 2 * x := by
       calc
@@ -421,24 +422,8 @@ theorem exists_dirichletL_quadratic_conditional_powerZeroFree
       exact htlow hx.le
     have hright0 := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
       χ hχ (σ₁ := β) (σ₂ := 1 + x) (t := t) hβhalf
-      (by
-        have hlogpos := log_conductorHeightCutoff_pos χ hχ t
-        have hlogle : Real.log (dirichletLConductorHeightCutoff q t) ≤ H := by
-          have := one_add_log_conductorHeightCutoff_le_quadraticH q t
-          linarith
-        have hone : x ≤ 1 / Real.log (dirichletLConductorHeightCutoff q t) := by
-          apply (le_div_iff₀ hlogpos).2
-          calc
-            x * Real.log (dirichletLConductorHeightCutoff q t) ≤ x * H :=
-              mul_le_mul_of_nonneg_left hlogle hx.le
-            _ ≤ 1 := by
-              dsimp only [x]
-              rw [div_mul_eq_mul_div, div_le_iff₀ (pow_pos hH 12)]
-              nlinarith [hHpow, one_le_pow₀ hH1 (n := 11),
-                mul_le_of_le_one_right hA.le hp1]
-        linarith)
+      hnear
       (by linarith [hβ.2]) (by linarith [hx1] : 1 + x ≤ 2)
-    have hlogH := one_add_log_conductorHeightCutoff_le_quadraticH q t
     have htriv : ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ≤ 2 / x := by
       rw [DirichletCharacter.LFunctionTrivChar]
       calc

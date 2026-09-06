@@ -183,34 +183,20 @@ theorem vaughanBilinearBlock_norm_sq_le
     ‖vaughanBilinearBlock α β c y D E q χ‖ ^ 2 ≤
       vaughanBilinearLeftEnergy α D q χ *
         vaughanBilinearOuterEnergy β c y D E q χ := by
-  unfold vaughanBilinearBlock vaughanBilinearLeftEnergy
-    vaughanBilinearOuterEnergy vaughanBilinearInner
-  have hnorm := norm_sum_le (vaughanDyadicBlock D)
-    (fun d => (α d * χ.1 (d : ZMod q)) *
-      ∑ e ∈ vaughanDyadicBlock E,
-        (β e * χ.1 (e : ZMod q)) *
-          ∑ m ∈ Finset.Icc 1 (y / (d * e)),
-            c (d * e * m) * χ.1 (m : ZMod q))
-  have hsq : ‖∑ d ∈ vaughanDyadicBlock D,
-      (α d * χ.1 (d : ZMod q)) *
-        ∑ e ∈ vaughanDyadicBlock E,
-          (β e * χ.1 (e : ZMod q)) *
-            ∑ m ∈ Finset.Icc 1 (y / (d * e)),
-              c (d * e * m) * χ.1 (m : ZMod q)‖ ^ 2 ≤
-      (∑ d ∈ vaughanDyadicBlock D,
-        ‖α d * χ.1 (d : ZMod q)‖ *
-          ‖∑ e ∈ vaughanDyadicBlock E,
-            (β e * χ.1 (e : ZMod q)) *
-              ∑ m ∈ Finset.Icc 1 (y / (d * e)),
-                c (d * e * m) * χ.1 (m : ZMod q)‖) ^ 2 := by
-    refine pow_le_pow_left₀ (norm_nonneg _) ?_ 2
-    simpa [norm_mul] using hnorm
-  exact hsq.trans (Finset.sum_mul_sq_le_sq_mul_sq (vaughanDyadicBlock D)
-    (fun d => ‖α d * χ.1 (d : ZMod q)‖)
-    (fun d => ‖∑ e ∈ vaughanDyadicBlock E,
-      (β e * χ.1 (e : ZMod q)) *
-        ∑ m ∈ Finset.Icc 1 (y / (d * e)),
-          c (d * e * m) * χ.1 (m : ZMod q)‖))
+  -- Keep the complete `e,m` packet intact; Cauchy acts only on `d`.
+  change ‖∑ d ∈ vaughanDyadicBlock D,
+      (α d * χ.1 (d : ZMod q)) * vaughanBilinearInner β c y E q d χ‖ ^ 2 ≤
+    (∑ d ∈ vaughanDyadicBlock D, ‖α d * χ.1 (d : ZMod q)‖ ^ 2) *
+      ∑ d ∈ vaughanDyadicBlock D, ‖vaughanBilinearInner β c y E q d χ‖ ^ 2
+  calc
+    _ ≤ (∑ d ∈ vaughanDyadicBlock D,
+        ‖α d * χ.1 (d : ZMod q)‖ * ‖vaughanBilinearInner β c y E q d χ‖) ^ 2 := by
+      apply pow_le_pow_left₀ (norm_nonneg _)
+      simpa only [norm_mul] using norm_sum_le (vaughanDyadicBlock D)
+        (fun d => (α d * χ.1 (d : ZMod q)) * vaughanBilinearInner β c y E q d χ)
+    _ ≤ _ := Finset.sum_mul_sq_le_sq_mul_sq (vaughanDyadicBlock D)
+      (fun d => ‖α d * χ.1 (d : ZMod q)‖)
+      (fun d => ‖vaughanBilinearInner β c y E q d χ‖)
 
 /-- Primitive-character block-norm interface.  A future bilinear primitive
 large sieve can consume the remaining sum of outer energies directly. -/

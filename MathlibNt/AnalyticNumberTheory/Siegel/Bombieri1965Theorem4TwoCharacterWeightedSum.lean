@@ -254,22 +254,25 @@ theorem abs_twoCharacterWeightedSum_sub_main_sub_product_le
       _ = _ := by
         rw [mul_assoc, ← Real.rpow_add hx0]
         congr 2
-  rw [twoCharacterWeightedSum_eq_product_add_tail χ ψ hχ hχquad hψ hprod hβ hβ1 hx]
-  have htriangle := abs_add_le
-    ((twoCharacterError χ ψ x).re * x ^ (-β))
-    (-(β * ∫ t in Set.Ioi x, (twoCharacterError χ ψ t).re * t ^ (-β - 1)))
-  rw [abs_neg] at htriangle
   have htail :
       |β * ∫ t in Set.Ioi x, (twoCharacterError χ ψ t).re * t ^ (-β - 1)| ≤
         β * (308 * (q : ℝ) ^ 3 * x ^ (3 / 4 - β) / (β - 3 / 4)) := by
     rw [abs_mul, abs_of_nonneg hβ0]
     exact mul_le_mul_of_nonneg_left
       (abs_re_twoCharacterError_tail_le χ ψ hχ hχquad hψ hprod hβ hx) hβ0
-  convert htriangle.trans (add_le_add hend htail) using 1
-  · rfl
-  · congr 1
-    ring
-  · ring
+  rw [twoCharacterWeightedSum_eq_product_add_tail χ ψ hχ hχquad hψ hprod hβ hβ1 hx]
+  calc
+    _ = |(twoCharacterError χ ψ x).re * x ^ (-β) -
+        β * ∫ t in Set.Ioi x, (twoCharacterError χ ψ t).re * t ^ (-β - 1)| := by
+      congr 1
+      ring
+    _ ≤ |(twoCharacterError χ ψ x).re * x ^ (-β)| +
+        |β * ∫ t in Set.Ioi x, (twoCharacterError χ ψ t).re * t ^ (-β - 1)| :=
+      abs_sub _ _
+    _ ≤ 308 * (q : ℝ) ^ 3 * x ^ (3 / 4 - β) +
+        β * (308 * (q : ℝ) ^ 3 * x ^ (3 / 4 - β) / (β - 3 / 4)) :=
+      add_le_add hend htail
+    _ = _ := by ring
 
 omit [NeZero q] in
 /-- Positivity of every actual coefficient, and the coefficient at one, imply

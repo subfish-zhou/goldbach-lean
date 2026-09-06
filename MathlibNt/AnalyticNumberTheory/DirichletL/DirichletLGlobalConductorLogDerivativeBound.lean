@@ -23,43 +23,13 @@ variable {q : ℕ} [NeZero q]
 
 private lemma character_nat_zero_of_ne_one
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) : χ (0 : ℕ) = 0 := by
-  have hq1 : q ≠ 1 := by
-    intro h
-    subst q
-    exact hχ (Subsingleton.elim _ _)
-  letI : Fact (1 < q) :=
-    ⟨Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨NeZero.ne q, hq1⟩⟩
-  simpa only [Nat.cast_zero] using
-    (MulChar.map_nonunit χ (a := (0 : ZMod q)) not_isUnit_zero)
+  exact DirichletLConditionalValueSeries.character_nat_zero_of_ne_one χ hχ
 
 private lemma rpow_one_sub_le_exp_one
     {m k : ℕ} {σ : ℝ} (hm : 2 ≤ m) (hk1 : 1 ≤ k) (hkm : k ≤ m)
     (hnear : 1 - 1 / Real.log m ≤ σ) :
     (k : ℝ) ^ (1 - σ) ≤ Real.exp 1 := by
-  have hlogm : 0 < Real.log (m : ℝ) := by
-    apply Real.log_pos
-    exact_mod_cast hm
-  have hkpos : (0 : ℝ) < k := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hk1)
-  rw [Real.rpow_def_of_pos hkpos]
-  apply Real.exp_le_exp.mpr
-  have hlogk0 : 0 ≤ Real.log (k : ℝ) := Real.log_nonneg (by exact_mod_cast hk1)
-  by_cases he : 1 - σ ≤ 0
-  · nlinarith
-  · have hepos : 0 < 1 - σ := lt_of_not_ge he
-    have hlogle : Real.log (k : ℝ) ≤ Real.log (m : ℝ) := by
-      exact Real.strictMonoOn_log.monotoneOn hkpos
-        (show (0 : ℝ) < (m : ℝ) by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_two hm))
-        (by exact_mod_cast hkm)
-    have hene : 1 - σ ≤ 1 / Real.log (m : ℝ) := by linarith
-    have hfirst : Real.log (k : ℝ) * (1 - σ) ≤
-        Real.log (k : ℝ) * (1 / Real.log (m : ℝ)) :=
-      mul_le_mul_of_nonneg_left hene hlogk0
-    have hsecond : Real.log (k : ℝ) * (1 / Real.log (m : ℝ)) ≤
-        Real.log (m : ℝ) * (1 / Real.log (m : ℝ)) :=
-      mul_le_mul_of_nonneg_right hlogle (by positivity)
-    have hprod := hfirst.trans hsecond
-    rw [mul_one_div_cancel (ne_of_gt hlogm)] at hprod
-    nlinarith
+  exact DirichletLGlobalConductorLogValueBound.rpow_one_sub_le_exp_one hm hk1 hkm hnear
 
 private lemma norm_derivative_prefix_le
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) {σ t : ℝ} {m : ℕ}
@@ -113,14 +83,17 @@ private lemma norm_derivative_prefix_le
                   (mul_le_mul_of_nonneg_right hpow (by positivity))
                   (by positivity) hlogm0
           _ ≤ Real.log m * (Real.exp 1 *
-                (2 * ((k + 1 : ℕ) : ℝ)⁻¹)) := by gcongr
+                (2 * ((k + 1 : ℕ) : ℝ)⁻¹)) :=
+                mul_le_mul_of_nonneg_left
+                  (mul_le_mul_of_nonneg_left hinv (Real.exp_pos 1).le) hlogm0
           _ = 2 * Real.exp 1 * Real.log m * ((k + 1 : ℕ) : ℝ)⁻¹ := by ring
     _ = 2 * Real.exp 1 * Real.log m * (harmonic m : ℝ) := by
       simp only [harmonic, Rat.cast_sum, Rat.cast_inv, Rat.cast_natCast]
       rw [Finset.mul_sum]
     _ ≤ 2 * Real.exp 1 * Real.log m * (1 + Real.log m) := by
-      gcongr
-      exact_mod_cast harmonic_le_one_add_log m
+      exact mul_le_mul_of_nonneg_left
+        (by exact_mod_cast harmonic_le_one_add_log m)
+        (mul_nonneg (mul_nonneg (by norm_num) (Real.exp_pos 1).le) hlogm0)
 
 private lemma norm_derivative_tail_le
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) {σ t : ℝ}
@@ -142,9 +115,7 @@ private lemma norm_derivative_tail_le
   have hHpos : (0 : ℝ) < H := lt_of_lt_of_le zero_lt_one hH1
   have htH : |t| < (H : ℝ) := by simpa [H] using abs_lt_heightBlock t
   have hσpos : 0 < σ := lt_of_lt_of_le (by norm_num) hσlower
-  have hL0 : 0 ≤ L := by
-    dsimp [L]
-    exact (Real.log_pos (by exact_mod_cast hm)).le
+  have hL0 : 0 ≤ L := (log_conductorHeightCutoff_pos χ hχ t).le
   have hP0 : 0 ≤ P := by positivity
   have hP : P ≤ Real.exp 1 :=
     rpow_one_sub_le_exp_one hm (by omega) (le_refl m) (by simpa [m] using hnear)
@@ -165,16 +136,14 @@ private lemma norm_derivative_tail_le
     rw [div_le_iff₀ (sq_pos_of_pos hσpos)]
     nlinarith
   have hsre : s.re = σ := by simp [s]
-  have hfactorRaw : (q : ℝ) * (m : ℝ) ^ (-σ) =
-      (m : ℝ) ^ (1 - σ) / H := by
+  have hfactor : (q : ℝ) * (m : ℝ) ^ (-σ) = P / H := by
+    dsimp [P]
     have hqpos : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
     have hmcast : (m : ℝ) = (q : ℝ) * (H : ℝ) := by
       simp [m, H, dirichletLConductorHeightCutoff]
     rw [show -σ = (1 - σ) + (-1) by ring, Real.rpow_add (by positivity),
       Real.rpow_neg_one, hmcast, div_eq_mul_inv]
     field_simp [ne_of_gt hqpos]
-  have hfactor : (q : ℝ) * (m : ℝ) ^ (-σ) = P / H := by
-    simpa only [P] using hfactorRaw
   have hweight : (q : ℝ) * ‖logCpowWeight s m‖ ≤ P * L := by
     have hmpos : (0 : ℝ) < m := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_two hm)
     have hw : ‖logCpowWeight s m‖ = L * (m : ℝ) ^ (-σ) := by
@@ -190,9 +159,7 @@ private lemma norm_derivative_tail_le
       _ = P * L := by ring
   have hbudget : (q : ℝ) * logVariationBudget s m ≤ P * (14 + 6 * L) := by
     rw [logVariationBudget, hsre]
-    have hratio0 : 0 ≤ ‖s‖ / (H : ℝ) := by positivity
     have hinv0 : 0 ≤ 1 / σ := by positivity
-    have hinv20 : 0 ≤ 1 / σ ^ 2 := by positivity
     have hinner :
         (1 / σ) / (H : ℝ) + (‖s‖ / (H : ℝ)) * (L / σ + 1 / σ ^ 2) ≤
           14 + 6 * L := by
@@ -212,12 +179,8 @@ private lemma norm_derivative_tail_le
           (1 / σ + ‖s‖ * (L / σ + 1 / σ ^ 2))) =
           P * ((1 / σ) / (H : ℝ) +
             (‖s‖ / (H : ℝ)) * (L / σ + 1 / σ ^ 2)) := by
-              calc
-                _ = ((q : ℝ) * (m : ℝ) ^ (-σ)) *
-                    (1 / σ + ‖s‖ * (L / σ + 1 / σ ^ 2)) := by ring
-                _ = (P / H) * (1 / σ + ‖s‖ * (L / σ + 1 / σ ^ 2)) := by
-                  rw [hfactor]
-                _ = _ := by field_simp [ne_of_gt hHpos]
+              rw [← mul_assoc, hfactor]
+              ring
       _ ≤ P * (14 + 6 * L) := mul_le_mul_of_nonneg_left hinner hP0
   have htail := norm_orderedLogDerivativeSeries_sub_sum_range_le
     χ hχ s (by simpa [hsre] using hσpos) (m := m) (by omega)
@@ -242,9 +205,7 @@ theorem norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCuto
   let m := dirichletLConductorHeightCutoff q t
   let L : ℝ := Real.log m
   have hm : 2 ≤ m := two_le_conductorHeightCutoff χ hχ t
-  have hL0 : 0 ≤ L := by
-    dsimp [L]
-    exact (Real.log_pos (by exact_mod_cast hm)).le
+  have hL0 : 0 ≤ L := (log_conductorHeightCutoff_pos χ hχ t).le
   have hσpos : 0 < σ := lt_of_lt_of_le (by norm_num) hσlower
   have hseries := orderedLogDerivativeSeries_eq_deriv_LFunction_of_re_pos
     χ hχ (σ + I * t) (by simpa using hσpos)
@@ -256,24 +217,14 @@ theorem norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCuto
   calc
     _ ≤ ‖orderedLogDerivativeSeries χ hχ (σ + I * t) (by simpa using hσpos) -
           ∑ k ∈ range m, logCpowWeight (σ + I * t) k * χ k‖ +
-        ‖∑ k ∈ range m, logCpowWeight (σ + I * t) k * χ k‖ := by
-          simpa only [sub_add_cancel] using norm_add_le
-            (orderedLogDerivativeSeries χ hχ (σ + I * t) (by simpa using hσpos) -
-              ∑ k ∈ range m, logCpowWeight (σ + I * t) k * χ k)
-            (∑ k ∈ range m, logCpowWeight (σ + I * t) k * χ k)
+        ‖∑ k ∈ range m, logCpowWeight (σ + I * t) k * χ k‖ :=
+          norm_le_norm_sub_add _ _
     _ ≤ 3 * (14 + 7 * L) + 2 * Real.exp 1 * L * (1 + L) := by
       simpa [m, L] using add_le_add htail hprefix
     _ ≤ 3 * (14 + 7 * L) + 6 * L * (1 + L) := by
-      have he : Real.exp 1 < 3 := Real.exp_one_lt_three
-      have hcoef : 2 * Real.exp 1 ≤ 6 := by nlinarith
-      have hterm : 2 * Real.exp 1 * L * (1 + L) ≤ 6 * L * (1 + L) := by
-        calc
-        2 * Real.exp 1 * L * (1 + L) =
-            (2 * Real.exp 1) * (L * (1 + L)) := by ring
-        _ ≤ 6 * (L * (1 + L)) :=
-          mul_le_mul_of_nonneg_right hcoef (mul_nonneg hL0 (by linarith))
-        _ = 6 * L * (1 + L) := by ring
-      exact add_le_add_right hterm _
+      have hcoef : 2 * Real.exp 1 ≤ 6 := by
+        linarith only [Real.exp_one_lt_three]
+      gcongr
     _ ≤ 64 * (1 + L) ^ 2 := by
       nlinarith
 

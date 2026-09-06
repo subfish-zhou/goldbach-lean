@@ -20,15 +20,15 @@ theorem eq21FiniteScalar_tail_eventually (C : ℝ) (n : ℕ) (hC : 0 < C) :
     change ‖u^n‖ ≤ (1/C)*‖Real.exp ((1/2)*u)‖ at hb
     rw [Real.norm_of_nonneg (pow_nonneg hu0.le n),
       Real.norm_of_nonneg (Real.exp_nonneg _)] at hb
-    have hh := mul_le_mul_of_nonneg_left hb hC.le
-    have hc0 := hC.ne'
-    field_simp at hh
-    simpa [div_eq_mul_inv, mul_comm] using hh
+    have hh : u^n ≤ Real.exp (u/2) / C := by
+      simpa [div_eq_mul_inv, mul_comm] using hb
+    simpa only [mul_comm] using (le_div_iff₀ hC).mp hh
   have hs := Real.sq_sqrt hu0.le
   have hs0 := Real.sqrt_nonneg u
-  have hs4 : 4 ≤ Real.sqrt u := by nlinarith
+  have hs4 : 4 ≤ Real.sqrt u :=
+    Real.le_sqrt_of_sq_le (by norm_num; exact hu)
   have hsquare : 1+Real.sqrt u ≤ u/2 := by
-    nlinarith [mul_nonneg hs0 (sub_nonneg.mpr hs4)]
+    nlinarith only [hs, hs4, mul_nonneg hs0 (sub_nonneg.mpr hs4)]
   have hratio : u ^ ((11:ℝ)/10) / u^2 ≤ Real.exp (-2) := by
     have he : u^2 = Real.exp (2*Real.log u) := by
       simpa only [Real.log_pow, Nat.cast_ofNat] using (Real.exp_log (pow_pos hu0 2)).symm
@@ -82,13 +82,12 @@ theorem chen1973Lemma6_eq21_finite_left_budget_eventually :
   have hu0 : 0 < u := by dsimp [u]; linarith
   have hlu : 0 ≤ Real.log u := Real.log_nonneg hu
   have hsi : σ⁻¹ ≤ (2:ℝ) := by
-    have hh := one_div_le_one_div_of_le (by norm_num : (0:ℝ) < 1/2) hσ
-    norm_num [one_div] at hh
-    exact hh
+    simpa [one_div] using
+      one_div_le_one_div_of_le (by norm_num : (0:ℝ) < 1/2) hσ
   have hM : eq21FiniteScalarMbar u ≤ C*Real.sqrt u*(1+Real.log u) := by
     have hh : Real.log 32+(205:ℝ)/2*Real.log u ≤
         (Real.log 32+(205:ℝ)/2)*(1+Real.log u) := by
-      nlinarith [mul_nonneg h32 hlu]
+      nlinarith only [mul_nonneg h32 hlu]
     calc
       _ ≤ 20*Real.sqrt u*((Real.log 32+(205:ℝ)/2)*(1+Real.log u)) := by
         unfold eq21FiniteScalarMbar
@@ -110,6 +109,6 @@ theorem chen1973Lemma6_eq21_finite_left_budget_eventually :
   change (6*C)*u^((1:ℝ)/2)*(1+Real.log u)^2 ≤ u at hp
   rw [← Real.sqrt_eq_rpow] at hp
   change eq21FiniteScalarMbar u*(σ⁻¹+Real.log (u^2)) ≤ u/3
-  nlinarith
+  linarith only [hprod, hp]
 
 end AnalyticNumberTheory.LargeSieve

@@ -39,27 +39,23 @@ theorem nonprincipalPrimitivePsiSiegelWalfiszSource_of_rawLandauSiegelLowerBound
   refine ⟨Kn + Kq, add_pos hKn hKq, ?_⟩
   filter_upwards [hn, hq] with N hnN hqN
   intro hN2 q hqmem ψ hψ y hy
-  letI : NeZero q := ⟨by
-    have hq2 : 2 ≤ q := (Finset.mem_Icc.mp hqmem).1
-    omega⟩
-  have hthreshold : q ≤ logConductorThreshold N C :=
-    (Finset.mem_Icc.mp hqmem).2
+  obtain ⟨hq2, hthreshold⟩ := Finset.mem_Icc.mp hqmem
+  letI : NeZero q := ⟨by omega⟩
   by_cases hquad : ψ.1 ^ 2 = 1
-  · have hb := hqN q (inferInstance : NeZero q) hthreshold
-      ψ.1 ψ.2 hquad hψ y hy
-    calc
+  · calc
       ‖lambdaCharacterPrefix y q ψ.1‖ ≤
-          Kq * (N : ℝ) / Real.log (N : ℝ) ^ D := hb
+          Kq * (N : ℝ) / Real.log (N : ℝ) ^ D :=
+        hqN q (inferInstance : NeZero q) hthreshold ψ.1 ψ.2 hquad hψ y hy
       _ ≤ (Kn + Kq) * (N : ℝ) / Real.log (N : ℝ) ^ D := by
         gcongr
-        linarith [hKn]
-  · have hb := hnN q (inferInstance : NeZero q) hthreshold ψ.1 hquad y hy
-    calc
+        exact le_add_of_nonneg_left hKn.le
+  · calc
       ‖lambdaCharacterPrefix y q ψ.1‖ ≤
-          Kn * (N : ℝ) / Real.log (N : ℝ) ^ D := hb
+          Kn * (N : ℝ) / Real.log (N : ℝ) ^ D :=
+        hnN q (inferInstance : NeZero q) hthreshold ψ.1 hquad y hy
       _ ≤ (Kn + Kq) * (N : ℝ) / Real.log (N : ℝ) ^ D := by
         gcongr
-        linarith [hKq]
+        exact le_add_of_nonneg_right hKq.le
 
 /-- Honest conditional Standard Bombieri--Vinogradov headline: after the
 fixed smoothing data, the only analytic hypothesis is the raw Landau--Siegel

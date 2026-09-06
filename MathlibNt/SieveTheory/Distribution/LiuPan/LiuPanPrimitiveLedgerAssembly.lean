@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorReduction
+import MathlibNt.Analysis.LogPowerBounds
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPayment
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowEndpoint
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
@@ -23,14 +24,16 @@ theorem nonprincipalLow_eq_low_add_high (g d : ℕ → ℂ) (N A₁ A₂ D₁ D 
   have hd : Disjoint (Icc 1 D₁) (Ioc D₁ D) := by
     apply disjoint_left.mpr
     intro q hq hq'
-    simp only [mem_Icc, mem_Ioc] at hq hq'
-    omega
+    exact (not_lt_of_ge (mem_Icc.mp hq).2) (mem_Ioc.mp hq').1
   unfold nonprincipalLow panIymHigh
   rw [hs, sum_union hd]
   congr 1
   apply sum_congr rfl
   intro q hq
-  rw [nonprincipalPrimitiveCharacters_eq_univ (by have := (mem_Ioc.mp hq).1; omega)]
+  have hq_nonprincipal : 2 ≤ q := by
+    have hq_lower := (mem_Ioc.mp hq).1
+    omega
+  rw [nonprincipalPrimitiveCharacters_eq_univ hq_nonprincipal]
 end AnalyticNumberTheory.LargeSieve.PanLow
 
 namespace MathlibNt.SieveTheory.LiuWeight
@@ -48,12 +51,7 @@ theorem liuPanPrimitiveCofactorLedger_eq_source (N A₁ A₂ D m : ℕ) (f : ℕ
 /-- Elementary eventual payment, used only for powers of log versus powers of N. -/
 theorem eventually_pan_log_rpow_le_rpow (t r : ℝ) (hr : 0 < r) :
     ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ t ≤ (N : ℝ) ^ r := by
-  have h := (isLittleO_log_rpow_rpow_atTop t hr).bound (show (0 : ℝ) < 1 by norm_num)
-  have h' : ∀ᶠ x : ℝ in atTop, Real.log x ^ t ≤ x ^ r := by
-    filter_upwards [h, eventually_ge_atTop (1 : ℝ)] with x hx hx1
-    simpa only [Real.norm_of_nonneg (Real.rpow_nonneg (Real.log_nonneg hx1) _),
-      Real.norm_of_nonneg (Real.rpow_nonneg (by positivity : 0 ≤ x) _), one_mul] using hx
-  exact tendsto_natCast_atTop_atTop.eventually h'
+  exact MathlibNt.Analysis.eventually_nat_log_rpow_le_rpow t r hr
 
 theorem panModulusCutoff_eq_upper (N : ℕ) (B : ℝ) :
     panModulusCutoff N B = ⌊upperConductor N B⌋₊ := by
@@ -69,9 +67,9 @@ theorem eventually_pan_conductor_bounds (B : ℝ) (hB : 0 ≤ B) :
   filter_upwards [hl, eventually_pan_log_rpow_le_rpow (2 * B) (1 / 2) (by norm_num),
     eventually_ge_atTop (1 : ℕ)] with N hlog hp hN
   change 1 ≤ Real.log (N : ℝ) at hlog
-  have hlogpos : 0 < Real.log (N : ℝ) := by linarith
+  have hlogpos : 0 < Real.log (N : ℝ) := zero_lt_one.trans_le hlog
   have hd : 1 ≤ lowConductor N B := Real.one_le_rpow hlog hB
-  have hdp : 0 < lowConductor N B := by linarith
+  have hdp : 0 < lowConductor N B := zero_lt_one.trans_le hd
   have hsq : lowConductor N B * lowConductor N B ≤ Real.sqrt N := by
     rw [lowConductor, ← Real.rpow_add hlogpos, ← two_mul, Real.sqrt_eq_rpow]
     exact hp
@@ -108,13 +106,15 @@ theorem liuPanPrimitiveCofactorLedger_log_saving (U : ℝ) (hU : 0 < U) :
     filter_upwards [eventually_pan_conductor_bounds (U + 6) hB,
       eventually_ge_atTop Np] with N hb hNp m hm
     obtain ⟨_, hD1, hD, hDN, _⟩ := hb
-    have hmN : (m : ℝ) ≤ Real.sqrt N :=
-      (by exact_mod_cast (mem_Icc.mp hm).2 : (m : ℝ) ≤ panModulusCutoff N (U + 6)).trans hDN
-    have h := hp N hNp m (mem_Icc.mp hm).1 hmN
-    rw [← panModulusCutoff_eq_upper] at h
+    obtain ⟨hmpos, hmcutoff⟩ := mem_Icc.mp hm
+    have hmN : (m : ℝ) ≤ Real.sqrt N := calc
+      (m : ℝ) ≤ panModulusCutoff N (U + 6) := by exact_mod_cast hmcutoff
+      _ ≤ Real.sqrt N := hDN
+    have hsource := hp N hNp m hmpos hmN
+    rw [← panModulusCutoff_eq_upper] at hsource
     rw [liuPanPrimitiveCofactorLedger_eq_source,
       PanLow.nonprincipalLow_eq_low_add_high _ _ _ _ _ _ _ hD1 hD]
-    exact h
+    exact hsource
   obtain ⟨N₀, hN₀⟩ := eventually_atTop.mp he
   exact ⟨C, hC, U + 6, hB, N₀, hN₀⟩
 end MathlibNt.SieveTheory.LiuWeight

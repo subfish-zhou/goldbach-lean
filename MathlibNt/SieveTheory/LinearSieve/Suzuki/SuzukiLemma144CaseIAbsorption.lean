@@ -50,19 +50,8 @@ noncomputable def caseISourceOrderCoefficient (A D d : ℝ) : ℝ :=
 theorem caseI_rpow_contraction_gap
     {Δ σ : ℝ} (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hσ : 1 < σ) :
     (1 - Δ) / σ ≤ 1 - (1 - 1 / σ) ^ (1 - Δ) := by
-  have hσ0 : 0 < σ := zero_lt_one.trans hσ
-  have hbase0 : 0 ≤ 1 - 1 / σ := by
-    rw [sub_nonneg, div_le_one hσ0]
-    exact hσ.le
-  have hamgm := Real.geom_mean_le_arith_mean2_weighted
-    (show 0 ≤ 1 - Δ by linarith) hΔ0.le hbase0
-    (show 0 ≤ (1 : ℝ) by norm_num) (show (1 - Δ) + Δ = 1 by ring)
-  rw [Real.one_rpow, mul_one] at hamgm
-  calc
-    (1 - Δ) / σ = 1 - ((1 - Δ) * (1 - 1 / σ) + Δ * 1) := by
-      field_simp [ne_of_gt hσ0]
-      ring
-    _ ≤ 1 - (1 - 1 / σ) ^ (1 - Δ) := sub_le_sub_left hamgm 1
+  exact MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.rpow_contraction_gap
+    hΔ0 hΔ1 hσ
 
 /-- The canonical midpoint strict factor leaves at least half of the elementary
 Claim-14.6 gap. -/

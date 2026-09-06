@@ -19,8 +19,7 @@ variable {q : ℕ} [NeZero q]
 omit [NeZero q] in
 private theorem sum_Ioc_characterAF (χ : DirichletCharacter ℂ q) (N : ℕ) :
     (∑ n ∈ Ioc 0 N, toArithmeticFunction (χ ·) n) = ∑ n ∈ Ioc 0 N, χ n :=
-  sum_congr rfl fun _ hn =>
-    (χ.apply_eq_toArithmeticFunction_apply (Nat.ne_of_gt (mem_Ioc.mp hn).1)).symm
+  DirichletCharacter.sum_Ioc_characterArithmeticFunction χ N
 
 private theorem sum_Ioc_zeta (N : ℕ) :
     (∑ n ∈ Ioc 0 N, (ArithmeticFunction.zeta : ArithmeticFunction ℂ) n) = N := by
@@ -67,8 +66,7 @@ theorem norm_LFunction_one_sub_sum_Ioc_div_le
       sum_insert (by simp)]
     simp only [DirichletLAbelWeightVariation.cpowWeight, cpow_neg_one,
       Nat.cast_zero, ofReal_zero, inv_zero, zero_mul, zero_add, ofReal_natCast]
-    have hI : Icc 1 m = Ioc 0 m := by ext n; simp; omega
-    rw [hI]
+    rw [show Icc 1 m = Ioc 0 m from Icc_succ_left_eq_Ioc _ _]
     apply sum_congr rfl
     intro n _
     simp [div_eq_mul_inv, mul_comm]
@@ -96,7 +94,7 @@ theorem norm_sum_Ioc_zetaMul_sub_harmonic_main_le
           ring
         rw [heq, norm_mul, Complex.norm_real, Real.norm_eq_abs]
         exact (mul_le_mul (norm_le_one χ a)
-          (abs_natDiv_cast_sub_div_le_one N a (by have := (mem_Ioc.mp ha).1; omega))
+          (abs_natDiv_cast_sub_div_le_one N a (Nat.succ_le_of_lt (mem_Ioc.mp ha).1))
           (abs_nonneg _) (by norm_num)).trans (by norm_num)
       _ = N.sqrt := by simp
   have harm :
@@ -151,18 +149,14 @@ theorem norm_sum_Ioc_zetaMul_sub_LFunction_main_le
     nlinarith [mul_nonneg (sub_nonneg.mpr hmle)
       (show (0 : ℝ) ≤ (N.sqrt : ℝ) + 1 by positivity)]
   calc
-    _ = ‖((∑ n ∈ Ioc 0 N, χ.zetaMul n) -
-        (N : ℂ) * ∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ)) +
-        (N : ℂ) * ((∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ)) - χ.LFunction 1)‖ := by
-      congr 1
-      ring
     _ ≤ ‖(∑ n ∈ Ioc 0 N, χ.zetaMul n) -
         (N : ℂ) * ∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ)‖ +
         (N : ℝ) * ‖χ.LFunction 1 - ∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ)‖ := by
-      simpa only [norm_mul, Complex.norm_natCast, norm_sub_rev] using norm_add_le
-        ((∑ n ∈ Ioc 0 N, χ.zetaMul n) -
-          (N : ℂ) * ∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ))
-        ((N : ℂ) * ((∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ)) - χ.LFunction 1))
+      simpa only [← mul_sub, norm_mul, Complex.norm_natCast, norm_sub_rev] using
+        norm_sub_le_norm_sub_add_norm_sub
+          (∑ n ∈ Ioc 0 N, χ.zetaMul n)
+          ((N : ℂ) * ∑ n ∈ Ioc 0 N.sqrt, χ n / (n : ℂ))
+          ((N : ℂ) * χ.LFunction 1)
     _ ≤ 3 * q * (N.sqrt : ℝ) + (N : ℝ) * (2 * q / (N.sqrt + 1 : ℝ)) :=
       add_le_add hdisc (mul_le_mul_of_nonneg_left htail (by positivity))
     _ = 3 * q * (N.sqrt : ℝ) + 2 * q * ((N : ℝ) / (N.sqrt + 1 : ℝ)) := by ring
@@ -191,7 +185,7 @@ theorem sum_Ioc_norm_zetaMul_le_nine_mul_modulus
     by_cases hN : N = 0
     · simp [hN]
     · have hN' : (1 : ℝ) ≤ N := by exact_mod_cast Nat.pos_of_ne_zero hN
-      exact Real.sqrt_le_iff.mpr ⟨by positivity, by nlinarith⟩
+      exact Real.sqrt_le_self_iff.mpr (Or.inr hN')
   calc
     _ ≤ ‖∑ n ∈ Ioc 0 N, χ.zetaMul n‖ := Complex.re_le_norm _
     _ ≤ ‖(∑ n ∈ Ioc 0 N, χ.zetaMul n) - (N : ℂ) * χ.LFunction 1‖ +
@@ -201,7 +195,7 @@ theorem sum_Ioc_norm_zetaMul_le_nine_mul_modulus
     _ ≤ 7 * q * Real.sqrt N + (N : ℝ) * (2 * q) := by
       rw [norm_mul, Complex.norm_natCast]
       exact add_le_add h (mul_le_mul_of_nonneg_left hL (by positivity))
-    _ ≤ 9 * q * N := by
-      nlinarith [mul_le_mul_of_nonneg_left hsqrt (show (0 : ℝ) ≤ 7 * q by positivity)]
+    _ ≤ 7 * q * N + (N : ℝ) * (2 * q) := by gcongr
+    _ = 9 * q * N := by ring
 
 end DirichletCharacter

@@ -76,7 +76,7 @@ def vaughanCanonicalBilinearTensor
     vaughanBilinearTensorCoeff vaughanMangoldtCoeff b y d
       (vaughanCanonicalDyadicBlock N v l) t
 
-private lemma vaughanCanonicalBilinearBlock_eq_shortTensorForm
+lemma vaughanCanonicalBilinearBlock_eq_shortTensorForm
     (b : ℕ → ℂ) (y N u v k l q : ℕ) (χ : PrimitiveCharacter q) :
     vaughanTypeIICanonicalBilinearBlock b y N u v k l q χ =
       bilinearTensorCharacterForm
@@ -116,7 +116,7 @@ private lemma vaughanCanonicalBilinearBlock_eq_shortTensorForm
   · intro e he
     exact (mem_vaughanCanonicalDyadicBlock.mp he).1
 
-private lemma vaughanCanonicalBilinearTensor_energy_le
+lemma vaughanCanonicalBilinearTensor_energy_le
     (b : ℕ → ℂ) (y N u v k l : ℕ) :
     bilinearTensorCoeffEnergy
         (vaughanCanonicalBilinearTensor b y N v l)
@@ -128,12 +128,12 @@ private lemma vaughanCanonicalBilinearTensor_energy_le
     vaughanCanonicalShortTensorEnergy
   apply Finset.sum_le_sum
   intro d hd
-  apply Finset.sum_le_sum
-  intro t ht
-  rw [norm_mul, mul_pow]
   have hμ : ‖vaughanMoebiusCoeff d‖ ^ 2 ≤ (1 : ℝ) := by
     rcases ArithmeticFunction.moebius_eq_or d with h | h | h <;>
       simp [vaughanMoebiusCoeff, h]
+  apply Finset.sum_le_sum
+  intro t ht
+  rw [norm_mul, mul_pow]
   simpa using mul_le_mul_of_nonneg_right hμ
     (sq_nonneg ‖vaughanBilinearTensorCoeff vaughanMangoldtCoeff b y d
       (vaughanCanonicalDyadicBlock N v l) t‖)
@@ -180,23 +180,18 @@ lemma vaughanBilinearTensorCoeff_eq_zero_of_eShell_above_length
     (fun e he => (mem_vaughanCanonicalDyadicBlock.mp he).1)]
   apply Finset.sum_eq_zero
   intro e he
-  have hedata := (mem_vaughanTensorFiber_iff_local y d e
-    (vaughanCanonicalDyadicBlock N v l) t).mp he
-  obtain ⟨heShell, m, hm, hem⟩ := hedata
+  obtain ⟨heShell, m, hm, hem⟩ :=
+    (mem_vaughanTensorFiber_iff_local y d e
+      (vaughanCanonicalDyadicBlock N v l) t).mp he
   have helower : 2 ^ l ≤ e :=
     (vaughanCanonicalDyadicBlock_pow_bounds heShell).1
   have hmpos : 0 < m := (Finset.mem_Icc.mp hm).1
-  have htpos : 0 < t :=
-    lt_of_lt_of_le Int.zero_lt_one (Finset.mem_Icc.mp ht).1
-  have htcast : (t.toNat : ℤ) = t := Int.toNat_of_nonneg htpos.le
-  have hemt : e * m = t.toNat := by
-    exact_mod_cast hem.trans htcast.symm
-  have htM : t.toNat ≤ vaughanCanonicalTensorLength y k := by
-    exact_mod_cast htcast.trans_le (Finset.mem_Icc.mp ht).2
-  have : 2 ^ l ≤ t.toNat := by
-    rw [← hemt]
-    exact helower.trans (Nat.le_mul_of_pos_right e hmpos)
-  omega
+  have hproduct : e * m ≤ vaughanCanonicalTensorLength y k := by
+    exact_mod_cast hem.trans_le (Finset.mem_Icc.mp ht).2
+  -- Every fiber product is at least the shell base, but at most the short length.
+  have hshell : 2 ^ l ≤ vaughanCanonicalTensorLength y k :=
+    helower.trans ((Nat.le_mul_of_pos_right e hmpos).trans hproduct)
+  exact (not_le_of_gt hEM hshell).elim
 
 /-- Precise `e`-shell dichotomy: above `M` the short tensor energy is zero;
 on active shells the polynomial bound below is independent of `E=2^l`. -/

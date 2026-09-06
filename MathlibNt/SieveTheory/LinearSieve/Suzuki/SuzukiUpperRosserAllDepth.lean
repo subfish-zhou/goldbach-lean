@@ -44,24 +44,8 @@ theorem errorEnvelope_odd_le_sixteen_on_upper_window
     · rw [hH.initial_plus s (by linarith) (by norm_num; linarith)]
       norm_num
     · have h3s : 3 < s := lt_of_not_ge hs3
-      have hanti : AntitoneOn (weightedHat H .plus) (Icc (3 : ℝ) s) := by
-        apply antitoneOn_of_deriv_nonpos (convex_Icc (3 : ℝ) s)
-        · exact (continuousOn_id.pow 2).mul (hH.continuous .plus) |>.mono (by
-            intro x hx
-            change 0 < x
-            linarith [hx.1])
-        · intro x hx
-          have hx' : x ∈ Ioo (3 : ℝ) s := by simpa only [interior_Icc] using hx
-          exact (hH.dde .plus x (by
-            simp [ErrorSign.epsilon]
-            linarith [hx'.1])).differentiableAt.differentiableWithinAt
-        · intro x hx
-          have hx' : x ∈ Ioo (3 : ℝ) s := by simpa only [interior_Icc] using hx
-          rw [(hH.dde .plus x (by
-            simp [ErrorSign.epsilon]
-            linarith [hx'.1])).deriv]
-          exact mul_nonpos_of_nonpos_of_nonneg (by linarith [hx'.1])
-            (hH.positive .minus (x - 1) (by linarith [hx'.1])).le
+      have hanti : AntitoneOn (weightedHat H .plus) (Icc (3 : ℝ) s) :=
+        weightedHat_antitoneOn_Icc_closed hH .plus (by norm_num [ErrorSign.epsilon])
       have hle := hanti ⟨le_rfl, h3s.le⟩ ⟨h3s.le, le_rfl⟩ h3s.le
       rw [hH.initial_plus 3 (by norm_num) (by norm_num)] at hle
       norm_num at hle ⊢

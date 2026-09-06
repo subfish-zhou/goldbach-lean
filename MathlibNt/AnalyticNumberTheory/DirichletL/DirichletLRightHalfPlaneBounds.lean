@@ -57,24 +57,25 @@ theorem norm_dirichletLSeries_le {q : ℕ} (χ : DirichletCharacter ℂ q)
   have hs : 1 < (σ + Complex.I * t : ℂ).re := by simpa using hσ
   have hsum : Summable (LSeries.term (fun n : ℕ => χ n) (σ + Complex.I * t)) :=
     DirichletCharacter.LSeriesSummable_of_one_lt_re χ hs
-  have hnorm := norm_tsum_le_tsum_norm hsum.norm
-  refine hnorm.trans ((hsum.norm).tsum_le_tsum (fun n => ?_)
-    (Real.summable_nat_rpow.mpr (by linarith : -σ < -1)) |>.trans
-      (tsum_nat_rpow_neg_le σ hσ))
-  by_cases hn : n = 0
-  · simp [LSeries.term, hn, Real.zero_rpow (by linarith : -σ ≠ 0)]
-  · rw [LSeries.term, if_neg hn, norm_div,
-      norm_natCast_cpow_of_re_ne_zero n (by
-        simp only [add_re, ofReal_re, mul_re, I_re, zero_mul, ofReal_im, I_im,
-          mul_one, sub_self, add_zero]
-        linarith)]
-    simp only [add_re, ofReal_re, mul_re, I_re, zero_mul, ofReal_im, I_im,
-      mul_one, sub_self, add_zero]
-    norm_num
-    rw [Real.rpow_neg (Nat.cast_nonneg n)]
-    simpa only [one_div] using
-      div_le_div_of_nonneg_right (χ.norm_le_one n)
-        (Real.rpow_nonneg (Nat.cast_nonneg n) σ)
+  have hre : (σ + Complex.I * t : ℂ).re = σ := by simp
+  have hterm (n : ℕ) :
+      ‖LSeries.term (fun n : ℕ => χ n) (σ + Complex.I * t) n‖ ≤ (n : ℝ) ^ (-σ) := by
+    by_cases hn : n = 0
+    · simp [LSeries.term, hn, Real.zero_rpow (by linarith : -σ ≠ 0)]
+    · rw [LSeries.term, if_neg hn, norm_div,
+        norm_natCast_cpow_of_re_ne_zero n (by rw [hre]; linarith), hre,
+        Real.rpow_neg (Nat.cast_nonneg n)]
+      simpa only [one_div] using
+        div_le_div_of_nonneg_right (χ.norm_le_one n)
+          (Real.rpow_nonneg (Nat.cast_nonneg n) σ)
+  calc
+    ‖LSeries (fun n : ℕ => χ n) (σ + Complex.I * t)‖
+        ≤ ∑' n, ‖LSeries.term (fun n : ℕ => χ n) (σ + Complex.I * t) n‖ :=
+      norm_tsum_le_tsum_norm hsum.norm
+    _ ≤ ∑' n : ℕ, (n : ℝ) ^ (-σ) :=
+      hsum.norm.tsum_le_tsum hterm
+        (Real.summable_nat_rpow.mpr (by linarith : -σ < -1))
+    _ ≤ 1 + 1 / (σ - 1) := tsum_nat_rpow_neg_le σ hσ
 
 /-- Explicit uniform right-half-plane bound for the continued L-function. -/
 theorem norm_dirichletLFunction_le {q : ℕ} [NeZero q]

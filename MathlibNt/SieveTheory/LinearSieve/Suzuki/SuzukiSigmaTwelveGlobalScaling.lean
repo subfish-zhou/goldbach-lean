@@ -45,25 +45,12 @@ theorem suzukiVProduct_div_eq_suffix
     rw [← hA, ← hC]
     exact (Finset.prod_filter_mul_prod_filter_not B (fun q : ℕ => (q : ℝ) < (p : ℝ))
       (fun q => 1 - S.nu q)).symm
-  have hAne : (∏ q ∈ A, (1 - S.nu q)) ≠ 0 := by
-    apply Finset.prod_ne_zero_iff.mpr
-    intro q hq
-    have hqS : q ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hq).1
-    have hqprime : q.Prime := Nat.prime_of_mem_primeFactors hqS
-    have hqdiv : q ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hqS).2.1
-    exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime q hqprime hqdiv))
-  have hCne : (∏ q ∈ C, (1 - S.nu q)) ≠ 0 := by
-    apply Finset.prod_ne_zero_iff.mpr
-    intro q hq
-    have hqS : q ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hq).1
-    have hqprime : q.Prime := Nat.prime_of_mem_primeFactors hqS
-    have hqdiv : q ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hqS).2.1
-    exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime q hqprime hqdiv))
+  have hAne : (∏ q ∈ A, (1 - S.nu q)) ≠ 0 :=
+    (suzukiVProduct_pos S (p : ℝ)).ne'
   unfold suzukiVProduct
   change (∏ q ∈ A, (1 - S.nu q)) / (∏ q ∈ B, (1 - S.nu q)) =
     ∏ q ∈ C, (1 - S.nu q)⁻¹
-  rw [Finset.prod_inv_distrib, hpartition]
-  field_simp [hAne, hCne]
+  rw [Finset.prod_inv_distrib, hpartition, div_mul_eq_div_div, div_self hAne, one_div]
 
 /-- Source-coordinate version of the natural-ceiling error estimate.  Unlike
 `naturalCeil_error_le_claim14_13`, this is the form needed by the literal

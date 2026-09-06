@@ -45,21 +45,11 @@ theorem suzukiLowerSecondIntervalSourceKernel_eq_jurkatRichert
           SwitchingPrinciple.jurkatRichertInnerIntegral u / u := by
   have hlog : (∫ x in (4 : ℝ)..s, (x - 1)⁻¹) =
       Real.log (s - 1) - Real.log 3 := by
-    have hderiv : ∀ x ∈ Set.uIcc (4 : ℝ) s,
-        HasDerivAt (fun y : ℝ => Real.log (y - 1)) ((x - 1)⁻¹) x := by
-      intro x hx
-      rw [Set.uIcc_of_le hs] at hx
-      simpa [one_div] using
-        ((hasDerivAt_id x).sub_const 1).log
-          (by linarith [hx.1] : x - 1 ≠ 0)
-    have hint : IntervalIntegrable (fun x : ℝ => (x - 1)⁻¹) volume 4 s :=
-      ((continuousOn_id.sub continuousOn_const).inv₀
-        (fun x hx => by
-          rw [Set.uIcc_of_le hs] at hx
-          exact ne_of_gt (by linarith [hx.1] : 0 < x - 1))).intervalIntegrable
-    have hraw := intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hint
-    norm_num at hraw ⊢
-    exact hraw
+    have hs1 : 0 < s - 1 := by linarith
+    rw [intervalIntegral.integral_comp_sub_right (fun x : ℝ => x⁻¹) 1,
+      show (4 : ℝ) - 1 = 3 by norm_num,
+      integral_inv_of_pos (by norm_num : (0 : ℝ) < 3) hs1,
+      Real.log_div hs1.ne' (by norm_num : (3 : ℝ) ≠ 0)]
   have hshift :
       (∫ x in (4 : ℝ)..s,
           SwitchingPrinciple.jurkatRichertInnerIntegral (x - 1) / (x - 1)) =

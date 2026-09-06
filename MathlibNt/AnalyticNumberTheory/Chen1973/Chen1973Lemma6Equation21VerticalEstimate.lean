@@ -51,11 +51,7 @@ theorem chen1973Lemma6_eq21_verticalIntegral_bound_of_logDerivative_bound
   change Integrable G at hG
   change (∫ t, G t) ≤ 2 * budget at hGbound
   let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
-  have hχ : χ.1 ≠ 1 := by
-    intro h
-    have hp := χ.2
-    rw [DirichletCharacter.IsPrimitive, h, DirichletCharacter.conductor_one] at hp
-    omega
+  have hχ : χ.1 ≠ 1 := primitiveCharacter_ne_one hd χ
   have hL : Measurable χ.1.LFunction :=
     (DirichletCharacter.differentiable_LFunction hχ).continuous.measurable
   have hLm : Measurable (deriv χ.1.LFunction) := measurable_deriv _
@@ -69,11 +65,6 @@ theorem chen1973Lemma6_eq21_verticalIntegral_bound_of_logDerivative_bound
     intro t
     have hcpow : ‖(y : ℂ) ^ ((σ : ℂ) + t * I)‖ = y ^ σ := by
       simpa using Complex.norm_cpow_eq_rpow_re_of_pos hy0 ((σ : ℂ) + t * I)
-    have hweight : 0 ≤ (1 + Real.log ((d : ℝ) * (1 + |t|))) ^ r := by
-      have hlog : 0 ≤ Real.log ((d : ℝ) * (1 + |t|)) := by
-        apply Real.log_nonneg
-        nlinarith [abs_nonneg t]
-      positivity
     have hD := hderiv t
     change ‖chen1973PrimitiveLDeriv d ((σ : ℂ) + t * I) χ /
       chen1973Lemma6PrimitiveLValue d ((σ : ℂ) + t * I) χ‖ ≤ _ at hD
@@ -90,6 +81,7 @@ theorem chen1973Lemma6_eq21_verticalIntegral_bound_of_logDerivative_bound
         apply mul_le_mul (DirichletCharacter.norm_le_one χ.1 _) _ (by positivity) (by positivity)
         exact mul_le_mul_of_nonneg_left hD (by positivity)
       _ = _ := by dsimp [G]; ring
+  -- The weighted kernel dominates the actual section, proving integrability first.
   have hdom : Integrable (fun t => (M * y ^ σ) * G t) := hG.const_mul _
   have hF : Integrable F := hdom.mono' hFm.aestronglyMeasurable (Filter.Eventually.of_forall hpoint)
   have hint : ‖∫ t, F t‖ ≤ (M * y ^ σ) * (2 * budget) := by
@@ -99,6 +91,7 @@ theorem chen1973Lemma6_eq21_verticalIntegral_bound_of_logDerivative_bound
         integral_mono_ae hF.norm hdom (Filter.Eventually.of_forall hpoint)
       _ = (M * y ^ σ) * (∫ t, G t) := integral_const_mul _ _
       _ ≤ _ := mul_le_mul_of_nonneg_left hGbound (mul_nonneg hM (Real.rpow_nonneg hy0.le _))
+  -- Restore the Perron normalization and the factor (log y)⁻¹.
   refine ⟨hF, ?_⟩
   rw [chen1973Lemma6_eq21_verticalIntegral_eq_termShift]
   change ‖((Real.log y)⁻¹ : ℂ) * (((1 / (2 * Real.pi) : ℝ) : ℂ) * ∫ t, F t)‖ ≤ _
@@ -110,6 +103,6 @@ theorem chen1973Lemma6_eq21_verticalIntegral_bound_of_logDerivative_bound
   calc
     _ ≤ (Real.log y)⁻¹ * ((1 / (2 * Real.pi)) * ((M * y ^ σ) * (2 * budget))) := by
       gcongr
-    _ = _ := by dsimp [budget, a, N, D, σ, y] at *; ring
+    _ = _ := by dsimp [budget, a, N, D, σ, y]; ring
 
 end AnalyticNumberTheory.LargeSieve

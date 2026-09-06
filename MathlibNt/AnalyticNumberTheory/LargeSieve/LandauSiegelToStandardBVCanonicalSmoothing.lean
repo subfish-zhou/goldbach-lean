@@ -99,23 +99,18 @@ theorem standardBVCanonicalSmoothing_support :
 
 private lemma standardBVCanonicalWeight_eq_div (x : ℝ) (_hx : x ∈ Ioi (0 : ℝ)) :
     standardBVCanonicalWeight x = standardBVCanonicalBaseBump x / x := by
-  by_cases hhalf : (1 / 2 : ℝ) ≤ x
-  · have hmax : max x (1 / 2) = x := max_eq_left hhalf
-    rw [standardBVCanonicalWeight, hmax]
-  · have hout : x ∉ support standardBVCanonicalBaseBump := by
-      intro hs
-      have hs' := standardBVCanonicalBaseBump_support hs
-      linarith [hs'.1]
-    have hzero : standardBVCanonicalBaseBump x = 0 := notMem_support.mp hout
-    simp [standardBVCanonicalWeight, hzero]
+  by_cases hs : x ∈ support standardBVCanonicalBaseBump
+  · rw [standardBVCanonicalWeight,
+      max_eq_left (standardBVCanonicalBaseBump_support hs).1]
+  · simp [standardBVCanonicalWeight, notMem_support.mp hs]
 
 private lemma standardBVCanonicalWeight_zero_of_nonpos {x : ℝ}
     (hx : x ∉ Ioi (0 : ℝ)) : standardBVCanonicalWeight x = 0 := by
   have hout : x ∉ support standardBVCanonicalBaseBump := by
     intro hs
-    have hs' := standardBVCanonicalBaseBump_support hs
-    have hx0 : x ≤ 0 := le_of_not_gt hx
-    linarith [hs'.1]
+    apply hx
+    exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 2)
+      (standardBVCanonicalBaseBump_support hs).1
   simp [standardBVCanonicalWeight, notMem_support.mp hout]
 
 /-- The canonical smoothing function has multiplicative mass one. -/
@@ -129,9 +124,8 @@ theorem standardBVCanonicalSmoothing_mass_one :
           intro x hx
           change standardBVCanonicalSmoothing x / x =
             standardBVCanonicalWeight x / standardBVCanonicalWeightMass
-          rw [standardBVCanonicalWeight_eq_div x hx]
-          simp only [standardBVCanonicalSmoothing]
-          ring
+          rw [standardBVCanonicalWeight_eq_div x hx, standardBVCanonicalSmoothing,
+            div_right_comm]
     _ = ∫ x : ℝ,
           standardBVCanonicalWeight x / standardBVCanonicalWeightMass := by
           apply setIntegral_eq_integral_of_forall_compl_eq_zero

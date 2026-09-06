@@ -1,4 +1,3 @@
-import Mathlib.Analysis.MellinInversion
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 
@@ -91,17 +90,5 @@ theorem integral_chenLaplaceMoment {q : ℂ} (hq : 0 < q.re) (n : ℕ) :
         linear_combination -hFTC]
       rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
       ring
-
-private theorem chen_rexp_neg_deriv :
-    ∀ x ∈ univ, HasDerivWithinAt (Real.exp ∘ Neg.neg) (-Real.exp (-x)) univ x :=
-  fun x _ ↦ mul_neg_one (Real.exp (-x)) ▸
-    ((Real.hasDerivAt_exp (-x)).comp x (hasDerivAt_neg x)).hasDerivWithinAt
-
-private theorem chen_rexp_neg_image : Real.exp ∘ Neg.neg '' univ = Ioi 0 := by
-  rw [Set.image_comp, Set.image_univ_of_surjective neg_surjective, Set.image_univ,
-    Real.range_exp]
-
-private theorem chen_rexp_neg_injOn : univ.InjOn (Real.exp ∘ Neg.neg) :=
-  Real.exp_injective.injOn.comp neg_injective.injOn (univ.mapsTo_univ _)
 
 end AnalyticNumberTheory.LargeSieve

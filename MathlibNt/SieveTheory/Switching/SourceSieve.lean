@@ -358,26 +358,11 @@ modulus, including the canonical residue `0` at `d = 1`. -/
 theorem jurkatRichertSource_mod_coprime {N d : ℕ}
     (hd : d ∣ jurkatRichertSourceSiftingProduct N) :
     (N % d).Coprime d := by
-  have hd0 : d ≠ 0 := by
-    intro hd0
-    subst d
-    have hP0 : jurkatRichertSourceSiftingProduct N = 0 := by simpa using hd
-    exact jurkatRichertSourceSiftingProduct_ne_zero N hP0
-  have hPN : Nat.Coprime (jurkatRichertSourceSiftingProduct N) N :=
-    jurkatRichertSourceSiftingProduct_coprime_N N
-  have hdN : Nat.Coprime d N := Nat.Coprime.coprime_dvd_left hd hPN
-  apply Nat.coprime_of_dvd'
-  intro k hk hk1 hk2
-  have hkN : k ∣ N := by
-    have hkdiv : k ∣ d * (N / d) + N % d :=
-      Nat.dvd_add
-        (by simpa [mul_comm] using (dvd_mul_of_dvd_right hk2 (N / d))) hk1
-    have hNdef : d * (N / d) + N % d = N := by
-      simpa [Nat.add_comm] using (Nat.mod_add_div N d)
-    rw [← hNdef]
-    exact hkdiv
-  exact False.elim
-    (Nat.not_coprime_of_dvd_of_dvd (Nat.Prime.one_lt hk) hk2 hkN hdN)
+  have hdN : Nat.Coprime d N :=
+    Nat.Coprime.coprime_dvd_left hd (jurkatRichertSourceSiftingProduct_coprime_N N)
+  change Nat.gcd (N % d) d = 1
+  rw [← Nat.gcd_rec]
+  exact hdN
 
 /-- The finitely many prime partners removed before sifting: they are exactly
 the odd cutoff primes already dividing `N`. -/
@@ -560,15 +545,7 @@ theorem jurkatRichertSourceRemainderSum_le_standardMax_add_exceptional
           abs_jurkatRichertSource_rem_le_standardError_add_exceptional
             N d hEven hN hdvd
       _ ≤ BombieriVinogradov.standardPrimeAPMaxError N d + E.card :=
-        calc
-          |BombieriVinogradov.standardPrimeAPError N d (N % d)| + E.card =
-              E.card + |BombieriVinogradov.standardPrimeAPError N d (N % d)| :=
-            add_comm _ _
-          _ ≤ E.card + BombieriVinogradov.standardPrimeAPMaxError N d :=
-            add_le_add_right
-              (BombieriVinogradov.abs_standardPrimeAPError_le_max hunit) _
-          _ = BombieriVinogradov.standardPrimeAPMaxError N d + E.card :=
-            add_comm _ _
+        add_le_add (BombieriVinogradov.abs_standardPrimeAPError_le_max hunit) le_rfl
   unfold jurkatRichertSourceRemainderSum
   change (∑ d ∈ D, |(jurkatRichertSourceBoundingSieve N).rem d|) ≤ _
   calc
@@ -809,30 +786,8 @@ theorem jurkatRichertSourceConditionedBoundingSieve_siftedSum_eq_card
           (fun a => Nat.Coprime (jurkatRichertSourceSiftingProduct N) a) =
         ((jurkatRichertSourceCandidates N).filter
           (fun p => q ∣ N - p)).image (fun p => N - p) := by
-    ext a
-    constructor
-    · intro ha
-      rcases Finset.mem_filter.mp ha with ⟨haConditioned, haCoprime⟩
-      rcases Finset.mem_filter.mp haConditioned with ⟨haSupport, hqa⟩
-      have haBase :
-          a ∈ (jurkatRichertSourceUnsiftedComplements N).filter
-            (fun b => Nat.Coprime (jurkatRichertSourceSiftingProduct N) b) :=
-        Finset.mem_filter.mpr ⟨haSupport, haCoprime⟩
-      rw [jurkatRichertSourceSiftedComplements_eq_candidate_image] at haBase
-      rcases Finset.mem_image.mp haBase with ⟨p, hp, rfl⟩
-      exact Finset.mem_image.mpr
-        ⟨p, Finset.mem_filter.mpr ⟨hp, hqa⟩, rfl⟩
-    · intro ha
-      rcases Finset.mem_image.mp ha with ⟨p, hp, rfl⟩
-      rcases Finset.mem_filter.mp hp with ⟨hpCandidate, hqp⟩
-      have hpBase :
-          N - p ∈ (jurkatRichertSourceUnsiftedComplements N).filter
-            (fun a => Nat.Coprime (jurkatRichertSourceSiftingProduct N) a) := by
-        rw [jurkatRichertSourceSiftedComplements_eq_candidate_image]
-        exact Finset.mem_image.mpr ⟨p, hpCandidate, rfl⟩
-      rcases Finset.mem_filter.mp hpBase with ⟨hpSupport, hpCoprime⟩
-      exact Finset.mem_filter.mpr
-        ⟨Finset.mem_filter.mpr ⟨hpSupport, hqp⟩, hpCoprime⟩
+    rw [jurkatRichertSourceConditionedSupport, Finset.filter_comm,
+      jurkatRichertSourceSiftedComplements_eq_candidate_image, Finset.filter_image]
   rw [hset]
   have hcard :
       (((jurkatRichertSourceCandidates N).filter

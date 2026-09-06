@@ -165,18 +165,7 @@ lemma gaussSum_mulShift_apply {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ 
 /-- The sum over ZMod q equals the sum over representatives r < q. -/
 lemma zmodSum_eq_rangeSum {q : ℕ} [NeZero q] {M : Type*} [AddCommMonoid M] (f : ZMod q → M) :
     (∑ a : ZMod q, f a) = ∑ r ∈ Finset.range q, f (r : ZMod q) := by
-  refine Finset.sum_bij (s := Finset.univ) (t := Finset.range q) (fun a _ => a.val) ?_ ?_ ?_ ?_
-  · intro a ha
-    exact Finset.mem_range.mpr (ZMod.val_lt a)
-  · intro a₁ ha₁ a₂ ha₂ h
-    rw [← ZMod.natCast_zmod_val a₁, ← ZMod.natCast_zmod_val a₂]
-    exact congrArg (fun v : ℕ => (v : ZMod q)) h
-  · intro r hr
-    refine ⟨(r : ZMod q), Finset.mem_univ _, ?_⟩
-    rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp hr)]
-  · intro a ha
-    congr 1
-    exact (ZMod.natCast_zmod_val a).symm
+  exact zmod_sum_range f
 
 /-- **Parseval (ZMod version)**: sum_{a mod q} |sum_{x mod q} e(a*x.val/q) z x|^2 = q * sum_x |z x|^2. -/
 lemma zmodParseval_zmod {q : ℕ} [NeZero q] (z : ZMod q → ℂ) :
@@ -203,9 +192,6 @@ lemma zmodParseval_zmod {q : ℕ} [NeZero q] (z : ZMod q → ℂ) :
     congr 1
     rw [zmodSum_eq_rangeSum]
   have hP := zmodParseval (NeZero.pos q) z'
-  have hP1 : (∑ a ∈ Finset.range q, ((‖∑ r ∈ Finset.range q, charReal ((a : ℝ) * (r : ℝ) / (q : ℝ)) * z' r‖ ^ 2 : ℝ) : ℂ))
-      = (q : ℂ) * (∑ r ∈ Finset.range q, ((‖z' r‖ ^ 2 : ℝ) : ℂ)) := by
-    simpa [map_sum] using hP
   have hP2 : (∑ a ∈ Finset.range q, ‖∑ r ∈ Finset.range q, charReal ((a : ℝ) * (r : ℝ) / (q : ℝ)) * z' r‖ ^ 2)
       = (q : ℝ) * ∑ r ∈ Finset.range q, ‖z' r‖ ^ 2 := by
     have hc : ((∑ a ∈ Finset.range q, ‖∑ r ∈ Finset.range q, charReal ((a : ℝ) * (r : ℝ) / (q : ℝ)) * z' r‖ ^ 2 : ℝ) : ℂ)
@@ -239,6 +225,14 @@ lemma dirichletChar_norm_unit {q : ℕ} (χ : DirichletCharacter ℂ q) {a : ZMo
   have hpow_χ : (χ a) ^ n = 1 := by
     rw [← map_pow, hpow_l, map_one]
   exact Complex.norm_eq_one_of_pow_eq_one hpow_χ hn
+
+/-- The norm of a Dirichlet character is at most one, for every modulus. -/
+lemma dirichletChar_norm_le_one (q : ℕ) (χ : DirichletCharacter ℂ q) (a : ZMod q) : ‖χ a‖ ≤ 1 := by
+  by_cases ha : IsUnit a
+  · rw [dirichletChar_norm_unit χ ha]
+  · have hz : χ a = 0 := MulChar.map_nonunit χ ha
+    rw [hz]
+    norm_num
 
 /-- The L2 mass of |chi| over all residues is phi(q). -/
 lemma charNormSq_sum {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
@@ -389,8 +383,7 @@ def charAddSum (a : ℤ → ℂ) (M : ℤ) (N q : ℕ) (x : ZMod q) : ℂ :=
 lemma charReal_mul_div {q : ℕ} [NeZero q] (n : ℤ) (x : ZMod q) :
     charReal ((n : ℝ) * ((x.val : ℝ) / (q : ℝ))) =
       charReal ((n : ℝ) * (x.val : ℝ) / (q : ℝ)) := by
-  congr 1
-  field_simp [show (q : ℝ) ≠ 0 by exact_mod_cast (NeZero.ne q)]
+  rw [mul_div_assoc]
 
 /-- The Fourier transform of a primitive character: for all n,
   sum_{x mod q} star(chi x) * e(n x / q) = chi n * tau(star chi). -/
@@ -485,45 +478,23 @@ lemma primitiveInversion {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (h
 lemma charOrthSum_star {q : ℕ} [NeZero q] (a b : ZMod q) :
     (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b) =
       if IsUnit a ∧ IsUnit b ∧ a = b then (q.totient : ℂ) else 0 := by
-  have h := charOrthSum (Nat.pos_of_ne_zero (NeZero.ne q)) a b
-  by_cases hcond : IsUnit a ∧ IsUnit b ∧ a = b
-  · rw [if_pos hcond]
-    -- h : Σ_χ χ a·star(χ b) = φ (cond true)
-    rw [if_pos hcond] at h
-    -- goal: Σ_χ star(χ a)·χ b = φ — star of h
-    have hstar := congrArg star h
-    -- hstar : star (Σ_χ χ a·star(χ b)) = star (φ : ℂ)
-    -- LHS: Σ_χ star(χ a)·star(star(χ b)) = Σ_χ star(χ a)·χ b
-    calc
-      (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b)
-          = star (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b)) := by
-            change (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b) =
-              (starRingEnd ℂ) (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b))
-            rw [map_sum]
-            apply Finset.sum_congr rfl
-            intro χ hχ
-            change star (χ a) * χ b = star (χ a * star (χ b))
-            rw [star_mul, star_star]
-            ring
-      _ = star ((q.totient : ℂ)) := hstar
-      _ = (q.totient : ℂ) := by simp
-  · rw [if_neg hcond]
-    rw [if_neg hcond] at h
-    -- goal: Σ_χ star(χ a)·χ b = 0 — from h : Σ χ a·star(χ b) = 0
-    have hstar := congrArg star h
-    calc
-      (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b)
-          = star (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b)) := by
-            change (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b) =
-              (starRingEnd ℂ) (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b))
-            rw [map_sum]
-            apply Finset.sum_congr rfl
-            intro χ hχ
-            change star (χ a) * χ b = star (χ a * star (χ b))
-            rw [star_mul, star_star]
-            ring
-      _ = star (0 : ℂ) := hstar
-      _ = 0 := by simp
+  -- Conjugate orthogonality once: star distributes over the sum and
+  -- star (chi a * star (chi b)) = star (chi a) * chi b over ℂ.
+  calc
+    (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b)
+        = star (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b)) := by
+          change (∑ χ : DirichletCharacter ℂ q, star (χ a) * χ b) =
+            (starRingEnd ℂ) (∑ χ : DirichletCharacter ℂ q, χ a * star (χ b))
+          rw [map_sum]
+          apply Finset.sum_congr rfl
+          intro χ hχ
+          change star (χ a) * χ b = star (χ a * star (χ b))
+          rw [star_mul, star_star]
+          ring
+    _ = if IsUnit a ∧ IsUnit b ∧ a = b then (q.totient : ℂ) else 0 := by
+          rw [charOrthSum (Nat.pos_of_ne_zero (NeZero.ne q)) a b]
+          -- Both possible values, phi(q) and zero, are fixed by star.
+          split_ifs <;> simp
 
 /-- **Unit Parseval**: sum_chi ||sum_x star(chi x) T x||^2 = phi(q) * sum over units |T x|^2. -/
 lemma charParseval_units {q : ℕ} [NeZero q] (T : ZMod q → ℂ) :

@@ -15,18 +15,7 @@ theorem HasDimensionOneLocalProductBound.mono
     {S : BoundingSieve} {K K' : ℝ}
     (h : HasDimensionOneLocalProductBound S K) (hKK' : K ≤ K') :
     HasDimensionOneLocalProductBound S K' := by
-  intro z₁ z₂ hz₁ hz₁₂
-  have hbase := h z₁ z₂ hz₁ hz₁₂
-  have hlog₁ : 0 < Real.log z₁ := Real.log_pos (by linarith)
-  have hlog₂ : 0 ≤ Real.log z₂ :=
-    (Real.log_pos ((show (1 : ℝ) < 2 by norm_num).trans_le (hz₁.trans hz₁₂))).le
-  calc
-    (∏ p ∈ S.prodPrimes.primeFactors.filter
-        (fun p : ℕ => z₁ ≤ (p : ℝ) ∧ (p : ℝ) < z₂),
-        (1 - S.nu p)⁻¹) ≤
-        Real.log z₂ / Real.log z₁ * (1 + K / Real.log z₁) := hbase
-    _ ≤ Real.log z₂ / Real.log z₁ * (1 + K' / Real.log z₁) := by
-      gcongr
+  exact MathlibNt.SieveTheory.hasDimensionOneLocalProductBound_mono_K h hKK'
 
 /-- Real endpoint geometry for the natural ceiling used by the all-depth Suzuki
 producer.  In particular, every prime at most the requested real cutoff is
@@ -115,20 +104,10 @@ theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
   have hzroot : z < (D : ℝ) ^ (1 / s) := by simpa [D] using hgeom.2.2.1
   have hzceil : 2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ := by simpa [D] using hgeom.2.2.2
   have hzD : z < (D : ℝ) := by
-    have hΔeq : Δ = z ^ s := by
-      have hzpos : 0 < z := by linarith
-      have hlogz : Real.log z ≠ 0 :=
-        ne_of_gt (Real.log_pos (by linarith))
-      rw [Real.rpow_def_of_pos hzpos, hs]
-      have hcancel : Real.log z * (Real.log Δ / Real.log z) = Real.log Δ := by
-        field_simp
-      rw [hcancel, Real.exp_log hΔ]
-    have hzΔ : z ≤ Δ := by
-      rw [hΔeq]
-      calc
-        z = z ^ (1 : ℝ) := (Real.rpow_one z).symm
-        _ ≤ z ^ s := Real.rpow_le_rpow_of_exponent_le (by linarith) (by linarith)
-    exact hzΔ.trans_lt hΔD
+    have hrootD : (D : ℝ) ^ (1 / s) ≤ (D : ℝ) :=
+      Real.rpow_le_self_of_one_le (by exact_mod_cast (show 1 ≤ D by omega))
+        ((div_le_one (by linarith : 0 < s)).2 (by linarith))
+    exact hzroot.trans_le hrootD
   have hσ : 4 ≤ sourceSigma (D : ℝ) d := hDσ _ (hzσ.trans hzD.le)
   have hsσ : s ≤ sourceSigma (D : ℝ) d := hshi.trans hσ
   have hcutCeil : ∀ p ∈ S.prodPrimes.primeFactors,

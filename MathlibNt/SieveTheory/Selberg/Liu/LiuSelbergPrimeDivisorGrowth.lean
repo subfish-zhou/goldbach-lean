@@ -20,6 +20,26 @@ open Finset Filter
 noncomputable def liuPrimeDivisorCutoff (N : ℕ) : ℕ :=
   ⌈Real.log (N : ℝ)⌉₊
 
+/-- Passing from `log N` to its natural ceiling costs at most one after taking logs. -/
+private theorem log_liuPrimeDivisorCutoff_le {N : ℕ}
+    (hlogN2 : 2 ≤ Real.log (N : ℝ)) :
+    Real.log (liuPrimeDivisorCutoff N : ℝ) ≤ 1 + Real.log (Real.log N) := by
+  let y := liuPrimeDivisorCutoff N
+  have hlogN0 : 0 ≤ Real.log (N : ℝ) := le_trans (by norm_num) hlogN2
+  have hlogNpos : 0 < Real.log (N : ℝ) := lt_of_lt_of_le (by norm_num) hlogN2
+  have hlogN_le_y : Real.log (N : ℝ) ≤ (y : ℝ) := Nat.le_ceil _
+  have hyPos : (0 : ℝ) < y := hlogNpos.trans_le hlogN_le_y
+  have hy_lt : (y : ℝ) < Real.log N + 1 := Nat.ceil_lt_add_one hlogN0
+  have hy_le_two_log : (y : ℝ) ≤ 2 * Real.log N := by linarith
+  calc
+    Real.log (y : ℝ) ≤ Real.log (2 * Real.log N) :=
+      Real.strictMonoOn_log.monotoneOn hyPos (mul_pos (by norm_num) hlogNpos)
+        hy_le_two_log
+    _ = Real.log 2 + Real.log (Real.log N) := by
+      rw [Real.log_mul (by norm_num) hlogNpos.ne']
+    _ ≤ 1 + Real.log (Real.log N) := by
+      linarith [Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)]
+
 private theorem sum_log_primeFactors_le_log {N : ℕ} (hN : 0 < N) :
     ∑ p ∈ N.primeFactors, Real.log p ≤ Real.log N := by
   have hradPos : 0 < ∏ p ∈ N.primeFactors, p := by
@@ -59,14 +79,9 @@ private theorem one_add_prime_inv_le_one_sub_prime_inv_inv
 
 private theorem one_le_one_sub_prime_inv_inv {p : ℕ} (hp : p.Prime) :
     1 ≤ (1 - ((p : ℝ)⁻¹))⁻¹ := by
-  have hpR : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
-  have hden : 0 < 1 - ((p : ℝ)⁻¹) := by
-    have : (1 : ℝ) < p := lt_of_lt_of_le (by norm_num) hpR
-    exact sub_pos.mpr ((inv_lt_one₀ (by positivity)).2 this)
-  have hmul : (1 : ℝ) * (1 - ((p : ℝ)⁻¹)) ≤ 1 := by
-    have : 0 ≤ ((p : ℝ)⁻¹) := inv_nonneg.mpr (by positivity)
-    linarith
-  simpa only [one_div] using (le_div_iff₀ hden).2 hmul
+  calc
+    1 ≤ 1 + ((p : ℝ)⁻¹) := le_add_of_nonneg_right (by positivity)
+    _ ≤ (1 - ((p : ℝ)⁻¹))⁻¹ := one_add_prime_inv_le_one_sub_prime_inv_inv hp
 
 private theorem small_prime_divisor_product_le
     {N y : ℕ} :
@@ -189,28 +204,12 @@ theorem exists_liuPrimeDivisorProduct_le_log_log :
       have : N = 0 := Nat.eq_zero_of_not_pos h
       subst N
       norm_num at hlogN2
-    have hlogN0 : 0 ≤ Real.log (N : ℝ) := le_trans (by norm_num) hlogN2
-    have hlogNpos : 0 < Real.log (N : ℝ) := lt_of_lt_of_le (by norm_num) hlogN2
     have hlogN_le_y : Real.log (N : ℝ) ≤ (y : ℝ) := by
       exact Nat.le_ceil _
     have hy : 2 ≤ y := by
       exact_mod_cast (hlogN2.trans hlogN_le_y)
-    have hyPos : (0 : ℝ) < y := by positivity
-    have hy_lt : (y : ℝ) < Real.log N + 1 := by
-      exact Nat.ceil_lt_add_one hlogN0
-    have hy_le_two_log : (y : ℝ) ≤ 2 * Real.log N := by
-      linarith
-    have hlogy_le :
-        Real.log (y : ℝ) ≤ 1 + Real.log (Real.log N) := by
-      calc
-        Real.log (y : ℝ) ≤ Real.log (2 * Real.log N) :=
-          Real.strictMonoOn_log.monotoneOn hyPos (mul_pos (by norm_num) hlogNpos)
-            hy_le_two_log
-        _ = Real.log 2 + Real.log (Real.log N) := by
-          rw [Real.log_mul (by norm_num) (ne_of_gt hlogNpos)]
-        _ ≤ 1 + Real.log (Real.log N) := by
-          have := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
-          linarith
+    have hlogy_le : Real.log (y : ℝ) ≤ 1 + Real.log (Real.log N) :=
+      log_liuPrimeDivisorCutoff_le hlogN2
     have hsmall :=
       small_prime_divisor_product_le (N := N) (y := y)
     have hPP := (hMertens y hy).1
@@ -267,9 +266,9 @@ theorem exists_liuPrimeDivisorLogSum_le_log_log_sq :
     have hn : 0 ≤ C / Real.log 2 := le_trans (abs_nonneg _) h
     simpa using (le_div_iff₀ (Real.log_pos (by norm_num))).mp hn
   let K := |B| + C / Real.log 2
-  refine ⟨8 * (1 + K), by
-    have hK : 0 ≤ K := add_nonneg (abs_nonneg _) (div_nonneg hC (Real.log_pos (by norm_num)).le)
-    positivity, ?_⟩
+  have hK : 0 ≤ K := add_nonneg (abs_nonneg _)
+    (div_nonneg hC (Real.log_pos (by norm_num)).le)
+  refine ⟨8 * (1 + K), by positivity, ?_⟩
   have hlog : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
   have hll : Tendsto (fun N : ℕ => Real.log (Real.log (N : ℝ))) atTop atTop :=
@@ -284,25 +283,12 @@ theorem exists_liuPrimeDivisorLogSum_le_log_log_sq :
       have : N = 0 := Nat.eq_zero_of_not_pos hn
       subst N
       norm_num at hlogN2
-    have hlogN0 : 0 ≤ Real.log (N : ℝ) := hlogN2.trans' (by norm_num)
-    have hlogNpos : 0 < Real.log (N : ℝ) := lt_of_lt_of_le (by norm_num) hlogN2
     have hlogN_le_y : Real.log (N : ℝ) ≤ (y : ℝ) := Nat.le_ceil _
     have hy : 2 ≤ y := by exact_mod_cast hlogN2.trans hlogN_le_y
     have hlogypos : 0 < Real.log (y : ℝ) :=
       Real.log_pos (by exact_mod_cast (show 1 < y by omega))
-    have hy_le : (y : ℝ) ≤ 2 * Real.log N := by
-      have := Nat.ceil_lt_add_one hlogN0
-      change (y : ℝ) < Real.log N + 1 at this
-      linarith
-    have hlogy_le : Real.log (y : ℝ) ≤ 1 + Real.log (Real.log N) := by
-      calc
-        Real.log (y : ℝ) ≤ Real.log (2 * Real.log N) :=
-          Real.strictMonoOn_log.monotoneOn (show (0 : ℝ) < y by positivity)
-            (mul_pos (by norm_num) hlogNpos) hy_le
-        _ = Real.log 2 + Real.log (Real.log N) := by
-          rw [Real.log_mul (by norm_num) hlogNpos.ne']
-        _ ≤ 1 + Real.log (Real.log N) := by
-          linarith [Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)]
+    have hlogy_le : Real.log (y : ℝ) ≤ 1 + Real.log (Real.log N) :=
+      log_liuPrimeDivisorCutoff_le hlogN2
     have hrecip :
         MertensTheorem.primeReciprocalSum y ≤ Real.log (Real.log y) + K := by
       have hm := hM y hy
@@ -367,8 +353,6 @@ theorem exists_liuPrimeDivisorLogSum_le_log_log_sq :
     simp only [not_le]
     have hloglogy : Real.log (Real.log y) ≤ Real.log y :=
       (Real.log_le_sub_one_of_pos hlogypos).trans (by linarith)
-    have hK : 0 ≤ K := add_nonneg (abs_nonneg _)
-      (div_nonneg hC (Real.log_pos (by norm_num)).le)
     calc
       _ ≤ Real.log y * MertensTheorem.primeReciprocalSum y + 1 :=
         add_le_add hsmall hlarge

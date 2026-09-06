@@ -48,13 +48,10 @@ open Complex ContinuousLinearMap in
 lemma HasDerivAt.of_hasDerivAt_ofReal_comp {z : ℝ} {f : ℝ → ℝ} {u : ℂ}
     (hf : HasDerivAt (fun y ↦ (f y : ℂ)) u z) :
     ∃ u' : ℝ, u = u' ∧ HasDerivAt f u' z := by
-  lift u to ℝ
-  · have H := (imCLM.hasFDerivAt.comp z hf.hasFDerivAt).hasDerivAt.deriv
-    simp only [Function.comp_def, imCLM_apply, ofReal_im, deriv_const] at H
-    rwa [eq_comm, comp_apply, imCLM_apply, toSpanSingleton_apply_one] at H
-  refine ⟨u, rfl, ?_⟩
-  convert! (reCLM.hasFDerivAt.comp z hf.hasFDerivAt).hasDerivAt
-  rw [comp_apply, toSpanSingleton_apply_one, reCLM_apply, ofReal_re]
+  have hreal : HasDerivAt f u.re z := by
+    simpa only [Function.comp_def, reCLM_apply, ofReal_re] using
+      (reCLM.hasFDerivAt.comp_hasDerivAt z hf)
+  exact ⟨u.re, hf.unique hreal.ofReal_comp, hreal⟩
 
 lemma DifferentiableAt.ofReal_comp_iff {z : ℝ} {f : ℝ → ℝ} :
     DifferentiableAt ℝ (fun (y : ℝ) ↦ (f y : ℂ)) z ↔ DifferentiableAt ℝ f z := by

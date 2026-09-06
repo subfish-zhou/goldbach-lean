@@ -18,9 +18,7 @@ theorem log_lower_endpoint
     {D σ w : ℝ} (hD : 1 < D) (_hσ : 0 < σ)
     (hw : w = D ^ (1 / σ)) :
     Real.log w = Real.log D / σ := by
-  have hD0 : 0 < D := zero_lt_one.trans hD
-  rw [hw, Real.log_rpow hD0]
-  ring
+  exact log_upper_endpoint hD _hσ hw
 
 /-- The power-coordinate endpoints satisfy `1 < w ≤ z`. -/
 theorem endpoints_order
@@ -61,14 +59,10 @@ theorem log_div_log_mem_Icc
   constructor
   · rw [le_div_iff₀ hlogx]
     rw [hlogz] at hlogxz
-    have hs0 : s ≠ 0 := ne_of_gt hs
-    field_simp [hs0] at hlogxz
-    simpa [mul_comm] using hlogxz
+    simpa [mul_comm] using (le_div_iff₀ hs).mp hlogxz
   · rw [div_le_iff₀ hlogx]
     rw [hlogw] at hlogwx
-    have hσ0 : σ ≠ 0 := ne_of_gt hσ
-    field_simp [hσ0] at hlogwx
-    exact hlogwx
+    simpa [mul_comm] using (div_le_iff₀ hσ).mp hlogwx
 
 /-- Suzuki's coordinate takes the upper endpoint `z` to `s`. -/
 theorem coordinate_at_upper
@@ -85,10 +79,7 @@ theorem coordinate_at_lower
     {D σ w : ℝ} (hD : 1 < D) (hσ : 0 < σ)
     (hw : w = D ^ (1 / σ)) :
     Real.log D / Real.log w = σ := by
-  rw [log_lower_endpoint hD hσ hw]
-  have hσ0 : σ ≠ 0 := ne_of_gt hσ
-  have hlogD0 : Real.log D ≠ 0 := ne_of_gt (Real.log_pos hD)
-  field_simp
+  exact coordinate_at_upper hD hσ hw
 
 /-- Applying `H` at the upper endpoint gives exactly `H s`. -/
 theorem apply_coordinate_at_upper

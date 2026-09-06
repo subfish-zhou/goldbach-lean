@@ -25,8 +25,7 @@ def vaughanTypeIIRange (N u : ℕ) : Finset ℕ :=
 
 @[simp] theorem mem_vaughanTypeIIRange {N u d : ℕ} :
     d ∈ vaughanTypeIIRange N u ↔ 0 < d ∧ d ≤ N ∧ u < d := by
-  simp [vaughanTypeIIRange, Nat.succ_le_iff]
-  aesop
+  simp [vaughanTypeIIRange, Nat.succ_le_iff, and_assoc]
 
 /-- Canonical dyadic bases, represented by binary-logarithm levels. -/
 def vaughanCanonicalDyadicBases (N u : ℕ) : Finset ℕ :=
@@ -283,30 +282,9 @@ theorem vaughanTypeIIFullAt_eq_sum_canonical_blocks {n N u v : ℕ}
         vaughanMoebiusCoeff d * vaughanMangoldtCoeff e else 0)]
   apply Finset.sum_congr rfl
   intro k hk
-  calc
-    (∑ d ∈ vaughanCanonicalDyadicBlock N u k,
-        ∑ e ∈ vaughanTypeIIRange N v,
-          if d * e ∣ n then
-            vaughanMoebiusCoeff d * vaughanMangoldtCoeff e else 0) =
-        ∑ e ∈ vaughanTypeIIRange N v,
-          ∑ d ∈ vaughanCanonicalDyadicBlock N u k,
-            if d * e ∣ n then
-              vaughanMoebiusCoeff d * vaughanMangoldtCoeff e else 0 :=
-      Finset.sum_comm
-    _ = ∑ l ∈ vaughanCanonicalDyadicBases N v,
-          ∑ e ∈ vaughanCanonicalDyadicBlock N v l,
-            ∑ d ∈ vaughanCanonicalDyadicBlock N u k,
-              if d * e ∣ n then
-                vaughanMoebiusCoeff d * vaughanMangoldtCoeff e else 0 := by
-      rw [sum_vaughanCanonicalDyadicBlock]
-    _ = ∑ l ∈ vaughanCanonicalDyadicBases N v,
-          ∑ d ∈ vaughanCanonicalDyadicBlock N u k,
-            ∑ e ∈ vaughanCanonicalDyadicBlock N v l,
-              if d * e ∣ n then
-                vaughanMoebiusCoeff d * vaughanMangoldtCoeff e else 0 := by
-      apply Finset.sum_congr rfl
-      intro l hl
-      exact Finset.sum_comm
+  -- Partition the `e` range using the one-dimensional ledger, then restore `d,e` order.
+  rw [Finset.sum_comm, ← sum_vaughanCanonicalDyadicBlock N v]
+  exact Finset.sum_congr rfl fun l _ => Finset.sum_comm
 
 /-- One canonical rectangle before the `n=d*e*m` substitution. -/
 def vaughanTypeIICanonicalBlockPrefix

@@ -62,8 +62,6 @@ theorem multiple_totient_ratio_le
     exact_mod_cast hφnat
   have hdφ : 0 < (d.totient : ℝ) := by exact_mod_cast Nat.totient_pos.mpr hd
   have hrφ : 0 < (r.totient : ℝ) := by exact_mod_cast Nat.totient_pos.mpr hr
-  have hdrφ : 0 < ((d * r).totient : ℝ) := by
-    exact_mod_cast Nat.totient_pos.mpr (Nat.mul_pos hd hr)
   calc
     ((d * r : ℕ) : ℝ) / ((d * r).totient : ℝ)
         ≤ ((d * r : ℕ) : ℝ) / ((d.totient : ℝ) * (r.totient : ℝ)) := by
@@ -74,11 +72,8 @@ theorem multiple_totient_ratio_le
           field_simp
     _ ≤ ((d : ℝ) / (d.totient : ℝ)) * (r : ℝ) := by
           apply mul_le_mul_of_nonneg_left
-          · exact (div_le_iff₀ hrφ).2 (by
-              have hrφnat : 0 < r.totient := Nat.totient_pos.mpr hr
-              have hrφone : (1 : ℝ) ≤ r.totient := by
-                exact_mod_cast Nat.succ_le_iff.mpr hrφnat
-              nlinarith)
+          · apply div_le_self (by positivity)
+            exact_mod_cast Nat.succ_le_iff.mpr (Nat.totient_pos.mpr hr)
           · positivity
 
 /-- Elementary explicit conductor-fibre bound.  It is weaker than the optimal
@@ -102,10 +97,8 @@ theorem imprimitiveConductorWeight_le_sq
             (by positivity))
     _ = ((Finset.Icc 1 R).card : ℝ) *
           (((d : ℝ) / (d.totient : ℝ)) * (R : ℝ)) := by simp
-    _ ≤ (R : ℝ) * (((d : ℝ) / (d.totient : ℝ)) * (R : ℝ)) := by
-        apply mul_le_mul_of_nonneg_right
-        · exact_mod_cast (by simp : (Finset.Icc 1 R).card ≤ R)
-        · positivity
+    _ = (R : ℝ) * (((d : ℝ) / (d.totient : ℝ)) * (R : ℝ)) := by
+        simp
     _ = ((R : ℝ) ^ 2) * ((d : ℝ) / (d.totient : ℝ)) := by ring
 
 /-- Dyadic conductor-window transport.  On `D ≤ d ≤ 2D`, the coarse fibre
@@ -138,18 +131,6 @@ theorem imprimitive_conductor_window_le_weighted_primitive
     _ = ((Q / D : ℕ) : ℝ) ^ 2 *
           (((d : ℝ) / (d.totient : ℝ)) *
             ∑ ψ : PrimitiveCharacter d, F d ψ) := by ring
-
-/-- Primitive prefix maxima are nonnegative. -/
-theorem primitiveCharacterPrefixMaxSquare_nonneg
-    (b : ℤ → ℂ) (M : ℤ) (N d : ℕ) (ψ : PrimitiveCharacter d) :
-    0 ≤ primitiveCharacterPrefixMaxSquare b M N d ψ := by
-  unfold primitiveCharacterPrefixMaxSquare
-  have h := Finset.le_max'
-    ((Finset.range (N + 1)).image
-      (fun y => primitiveCharacterPrefixSquare b M y d ψ))
-    (primitiveCharacterPrefixSquare b M 0 d ψ)
-    (Finset.mem_image.mpr ⟨0, by simp, rfl⟩)
-  simpa [primitiveCharacterPrefixSquare] using h
 
 /-- Direct specialization to primitive prefix maxima.  Combined with
 `weighted_primitive_prefix_maximal` at modulus cutoff `2D`, this is the exact
@@ -212,10 +193,11 @@ theorem dyadic_multiplicity_mul_modulus_sq_le (Q D : ℕ) :
     simpa [mul_comm] using Nat.mul_div_le Q D
   have hreal : ((Q / D : ℕ) : ℝ) * (D : ℝ) ≤ Q := by
     exact_mod_cast hnat
-  have hnonneg : 0 ≤ ((Q / D : ℕ) : ℝ) * (D : ℝ) := by positivity
-  have hQ : 0 ≤ (Q : ℝ) := by positivity
-  push_cast
-  nlinarith [sq_le_sq₀ hnonneg hQ |>.2 hreal]
+  calc
+    (((Q / D : ℕ) : ℝ) ^ 2) * (((2 * D : ℕ) : ℝ) ^ 2) =
+        4 * (((Q / D : ℕ) : ℝ) * (D : ℝ)) ^ 2 := by push_cast; ring
+    _ ≤ 4 * ((Q : ℝ) ^ 2) := by
+      gcongr
 
 end
 

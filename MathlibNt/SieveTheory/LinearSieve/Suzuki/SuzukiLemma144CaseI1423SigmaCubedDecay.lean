@@ -68,9 +68,10 @@ theorem tendsto_caseI1423_sourceScalar
     rw [abs_of_nonneg (Real.rpow_nonneg hq0 _), abs_of_nonneg hxpow0] at hx
     norm_num [Real.rpow_natCast] at hx
     have hx' : (Real.log x) ^ 5 ≤ C⁻¹ * x ^ δ := hx
-    have := mul_le_mul_of_nonneg_left hx' hC.le
-    field_simp [ne_of_gt hC] at this
-    exact this
+    calc
+      C * (Real.log x) ^ 5 ≤ C * (C⁻¹ * x ^ δ) :=
+        mul_le_mul_of_nonneg_left hx' hC.le
+      _ = x ^ δ := by rw [← mul_assoc, mul_inv_cancel₀ hC.ne', one_mul]
   have hupper : ∀ᶠ D : ℝ in atTop,
       K ^ 2 * sourceSigma D d ^ 3 *
           Real.log (Real.exp 1 * sourceSigma D d) *
@@ -174,8 +175,13 @@ theorem tendsto_caseI1423_sourceScalar
       have hqpow : 0 ≤ q ^ 5 := by positivity
       calc
         K ^ 2 * (ell ^ 3 * Real.log (Real.exp 1 * sourceSigma D d) * q) ≤
-            K ^ 2 * (32 * q ^ 5) := by gcongr
-        _ ≤ 32 * (K ^ 2 + 1) * q ^ 5 := by nlinarith [sq_nonneg K]
+            K ^ 2 * (32 * q ^ 5) :=
+          mul_le_mul_of_nonneg_left hpacket (sq_nonneg K)
+        _ = 32 * K ^ 2 * q ^ 5 := by ring
+        _ ≤ 32 * (K ^ 2 + 1) * q ^ 5 :=
+          mul_le_mul_of_nonneg_right
+            (mul_le_mul_of_nonneg_left (le_add_of_nonneg_right zero_le_one)
+              (by norm_num)) hqpow
     have hpow' : C * q ^ 5 ≤ x ^ δ := by simpa [x, q] using hpow
     have halgebra :
         K ^ 2 * sourceSigma D d ^ 3 *

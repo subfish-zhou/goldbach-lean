@@ -67,10 +67,8 @@ theorem eventually_abs_primeReciprocalLogRectangle_sub_lt
     ∀ᶠ N : ℕ in atTop,
       |primeReciprocalLogRectangle N a₀ a₁ b₀ b₁ -
         logarithmicRectangleMass a₀ a₁ b₀ b₁| < ε := by
-  have h := tendsto_primeReciprocalLogRectangle ha₀ ha hb₀ hb
-  rw [Metric.tendsto_nhds] at h
-  filter_upwards [h ε hε] with N hN
-  simpa only [Real.dist_eq] using hN
+  simpa only [Real.dist_eq] using
+    (Metric.tendsto_nhds.mp (tendsto_primeReciprocalLogRectangle ha₀ ha hb₀ hb)) ε hε
 
 /-- Threshold form of the fixed logarithmic rectangle limit. -/
 theorem exists_abs_primeReciprocalLogRectangle_sub_lt
@@ -112,11 +110,9 @@ theorem eventually_abs_weighted_sum_primeReciprocalLogRectangle_sub_lt
           primeReciprocalLogRectangle N (a₀ i) (a₁ i) (b₀ i) (b₁ i)) -
         ∑ i ∈ s, c i *
           logarithmicRectangleMass (a₀ i) (a₁ i) (b₀ i) (b₁ i)| < ε := by
-  have h := tendsto_weighted_sum_primeReciprocalLogRectangle
-    s c a₀ a₁ b₀ b₁ ha₀ ha hb₀ hb
-  rw [Metric.tendsto_nhds] at h
-  filter_upwards [h ε hε] with N hN
-  simpa only [Real.dist_eq] using hN
+  simpa only [Real.dist_eq] using
+    (Metric.tendsto_nhds.mp (tendsto_weighted_sum_primeReciprocalLogRectangle
+      s c a₀ a₁ b₀ b₁ ha₀ ha hb₀ hb)) ε hε
 
 /-- Threshold form of fixed finite weighted-grid convergence. -/
 theorem exists_abs_weighted_sum_primeReciprocalLogRectangle_sub_lt

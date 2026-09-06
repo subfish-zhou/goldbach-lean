@@ -21,6 +21,7 @@ theorem LiuPanUnweightedTheorem2Specialization.to_corollary230
   obtain ⟨C₉, hC₉, hfinite⟩ := exists_liuPanWeightedSum_sq_le_unweighted
   refine ⟨κ, ?_⟩
   intro A hA
+  -- The second moment spends nine logarithms on the weight and two on the envelope.
   let U : ℝ := 2 * A + 11
   obtain ⟨K, hK, B, hB, Nsrc, hsrc⟩ := hPan U (by dsimp [U]; linarith)
   let D : ℝ := C₉ * (2 ^ (11 : ℕ) : ℝ) * liuActualEnvelopeConstant κ * K
@@ -37,7 +38,7 @@ theorem LiuPanUnweightedTheorem2Specialization.to_corollary230
     have he1 : Real.exp 1 < (3 : ℝ) := Real.exp_one_lt_d9.trans (by norm_num)
     exact ((Real.lt_log_iff_exp_lt (by exact_mod_cast (by omega : 0 < N))).2
       (he1.trans_le (by exact_mod_cast hN3))).le
-  have hlog : 0 < Real.log (N : ℝ) := by linarith
+  have hlog : 0 < Real.log (N : ℝ) := lt_of_lt_of_le zero_lt_one hlog1
   have hlog2 := liu_log_add_two_le_two_log hN2
   have hlog2nonneg : 0 ≤ Real.log ((N : ℝ) + 2) :=
     Real.log_nonneg (by have : (0 : ℝ) ≤ N := Nat.cast_nonneg _; linarith)
@@ -83,6 +84,7 @@ theorem LiuPanUnweightedTheorem2Specialization.to_corollary230
           Real.rpow_natCast _ 9]
         dsimp [D]
         field_simp [hlog.ne']
+  -- Recover the nonnegative sum from its second-moment bound.
   have hleft : 0 ≤ liuPanWangDingCorollary230Sum κ N B := by
     unfold liuPanWangDingCorollary230Sum
     exact sum_nonneg fun q _ => mul_nonneg (by positivity)
@@ -90,11 +92,12 @@ theorem LiuPanUnweightedTheorem2Specialization.to_corollary230
   have htarget : 0 ≤ C * (N : ℝ) / Real.log N ^ A := by positivity
   have hDsquare : D ≤ C ^ 2 := by
     dsimp [C]
-    nlinarith [Real.sq_sqrt hD, Real.sqrt_nonneg D]
+    nlinarith only [Real.sq_sqrt hD, Real.sqrt_nonneg D]
   apply (sq_le_sq₀ hleft htarget).mp
   calc
     _ ≤ D * ((N : ℝ) / Real.log N ^ A) ^ 2 := hmajor
-    _ ≤ C ^ 2 * ((N : ℝ) / Real.log N ^ A) ^ 2 := by gcongr
+    _ ≤ C ^ 2 * ((N : ℝ) / Real.log N ^ A) ^ 2 :=
+      mul_le_mul_of_nonneg_right hDsquare (sq_nonneg _)
     _ = _ := by ring
 
 end MathlibNt.SieveTheory.LiuWeight

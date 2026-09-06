@@ -86,16 +86,8 @@ theorem apNormalizedWeightedRowShellMean_sq_le
         (fun r => ‖w r‖)
         (fun r => Real.sqrt
           (primitiveCharacterPrefixMaxSquare (c r) 0 (L r) q χ))
-      refine hr.trans ?_
-      dsimp [E]
-      rw [show (∑ r ∈ S, ‖w r‖ ^ 2) = rowShellShortEnergy S w by
-        rfl]
-      apply mul_le_mul_of_nonneg_left
-      · apply Finset.sum_le_sum
-        intro r hr
-        rw [Real.sq_sqrt]
-        exact primitiveCharacterPrefixMaxSquare_nonneg (c r) 0 (L r) q χ
-      · exact rowShellShortEnergy_nonneg S w
+      simpa only [A, E, rowShellShortEnergy,
+        Real.sq_sqrt (primitiveCharacterPrefixMaxSquare_nonneg ..)] using hr
     have hsq : (∑ χ : PrimitiveCharacter q, A χ) ^ 2 ≤
         (q.totient : ℝ) * E *
           ∑ χ : PrimitiveCharacter q, ∑ r ∈ S,
@@ -260,19 +252,14 @@ theorem apNormalized_typeI_shell_physical
   have hHC : 0 ≤ H * C := mul_nonneg hH (le_trans (by norm_num) hC)
   have hND : 0 ≤ N * D := mul_nonneg hN hD.le
   have hsND : (Real.sqrt (N * D)) ^ 2 = N * D := Real.sq_sqrt hND
-  have hEB : D * (E * B) ≤ D * ((D * W ^ 2) * B) := by gcongr
   have hcancel : E * B ≤ W ^ 2 * R ^ 2 *
       (N ^ 2 + C * Q ^ 2 * N * D) := by
-    have hmul : D * (E * B) ≤ D *
-        (W ^ 2 * R ^ 2 * (N ^ 2 + C * Q ^ 2 * N * D)) := by
-      calc
-        D * (E * B) ≤ D * ((D * W ^ 2) * B) := hEB
-        _ = W ^ 2 * (D * (D * B)) := by ring
-        _ ≤ W ^ 2 * (D * (R ^ 2 *
-              (N ^ 2 + C * Q ^ 2 * N * D))) := by gcongr
-        _ = D * (W ^ 2 * R ^ 2 *
-              (N ^ 2 + C * Q ^ 2 * N * D)) := by ring
-    nlinarith
+    calc
+      E * B ≤ (D * W ^ 2) * B := mul_le_mul_of_nonneg_right henergy hB
+      _ = W ^ 2 * (D * B) := by ring
+      _ ≤ W ^ 2 * (R ^ 2 * (N ^ 2 + C * Q ^ 2 * N * D)) :=
+        mul_le_mul_of_nonneg_left hrow (sq_nonneg W)
+      _ = _ := by ring
   have hinside : N ^ 2 + C * Q ^ 2 * N * D ≤
       C * (N + Q * Real.sqrt (N * D)) ^ 2 := by
     have hN2C : N ^ 2 ≤ C * N ^ 2 := by nlinarith [sq_nonneg N]
@@ -302,7 +289,7 @@ theorem apNormalized_typeI_shell_physical
         ring
   have htarget : 0 ≤ W * R * Real.sqrt (H * C) *
       (N + Q * Real.sqrt (N * D)) := by positivity
-  nlinarith
+  exact (sq_le_sq₀ hmean htarget).mp hsquare
 
 /-- Finite shell aggregation.  This is the final wiring theorem used after the
 first lane (`d` shells) and middle lane (`(d,e)` shells) have separately been
@@ -328,20 +315,13 @@ theorem vaughanDirectAPNormalizedTypeIInput_of_shells
       ((firstShells.card + middleShells.card : ℕ) : ℝ) logPay := by
   unfold VaughanDirectAPNormalizedTypeIInput
   let X : ℝ := (N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N
-  have hX : 0 ≤ X := by dsimp [X]; positivity
   calc
     apNormalizedVaughanTypeIMean N Q u v ≤
         (∑ s ∈ firstShells, firstMean s) +
           ∑ s ∈ middleShells, middleMean s := hdecomp
     _ ≤ (∑ _s ∈ firstShells, logPay * X) +
           ∑ _s ∈ middleShells, logPay * X := by
-        apply add_le_add
-        · apply Finset.sum_le_sum
-          intro s hs
-          exact hfirst s hs
-        · apply Finset.sum_le_sum
-          intro s hs
-          exact hmiddle s hs
+        exact add_le_add (Finset.sum_le_sum hfirst) (Finset.sum_le_sum hmiddle)
     _ = ((firstShells.card + middleShells.card : ℕ) : ℝ) * logPay * X := by
         simp [X]
         ring

@@ -116,9 +116,8 @@ theorem floorTail_le_claim145_logExponent
     linarith
   have hMlog :
       (M : ℝ) * (1 + Real.log L - Real.log (M : ℝ)) ≤
-        (M : ℝ) * (1 + Real.log L - Real.log (s - 2)) := by
-    have := mul_le_mul_of_nonneg_left hlogxM (show (0 : ℝ) ≤ (M : ℝ) by positivity)
-    linarith
+        (M : ℝ) * (1 + Real.log L - Real.log (s - 2)) :=
+    mul_le_mul_of_nonneg_left (sub_le_sub_left hlogxM _) hMreal.le
   have hfloorError :
       (M : ℝ) * (1 + Real.log L - Real.log (s - 2)) ≤
         (s - 2) * (1 + Real.log L - Real.log (s - 2)) :=
@@ -128,7 +127,8 @@ theorem floorTail_le_claim145_logExponent
         (L + (M : ℝ) * (1 + Real.log L - Real.log (M : ℝ))) := by
     apply pow_div_factorial_mul_exp_le_logExponent hL hM
     simpa [M] using hT
-  exact hexact.trans (Real.exp_le_exp.mpr (by linarith))
+  exact hexact.trans (Real.exp_le_exp.mpr
+    (add_le_add le_rfl (hMlog.trans hfloorError)))
 
 /-- Direct consumer for the tail object occurring in Lemma 14.3.  The standard
 `L^M/M! * exp L` estimate is kept as an explicit premise, so this theorem can be

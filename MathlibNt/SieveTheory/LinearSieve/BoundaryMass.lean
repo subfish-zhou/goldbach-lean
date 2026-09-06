@@ -1375,27 +1375,12 @@ theorem upperRosserBoundaryMass_one_le_five_mul_log_six
   change (∫ x₀ in Set.Ioo a b,
     x₀⁻¹ * upperRosserBoundaryLogKernel s a x₀) ≤ 5 * Real.log 6
   by_cases hab : a < b
-  · have hf := integrableOn_inv_mul_upperRosserBoundaryLogKernel
-      (s := s) ha (show b ≤ 1 from min_le_left _ _)
-    have hfinite : MeasureTheory.volume (Set.Ioo a b) ≠ ⊤ := by
-      rw [Real.volume_Ioo]
-      exact ENNReal.ofReal_ne_top
-    have hconst :
-        MeasureTheory.IntegrableOn (fun _ : ℝ => 6 * Real.log 6)
-          (Set.Ioo a b) :=
-      MeasureTheory.integrableOn_const hfinite
-    calc
+  · calc
       (∫ x₀ in Set.Ioo a b,
           x₀⁻¹ * upperRosserBoundaryLogKernel s a x₀) ≤
-          ∫ _x₀ in Set.Ioo a b, 6 * Real.log 6 := by
-        apply MeasureTheory.setIntegral_mono_on hf hconst measurableSet_Ioo
-        intro x₀ hx₀
-        exact inv_mul_upperRosserBoundaryLogKernel_le
-          ha hx₀.1.le (hx₀.2.le.trans (min_le_left _ _))
-      _ = (b - a) * (6 * Real.log 6) := by
-        rw [MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-          Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hab.le)]
-        rfl
+          (b - a) * (6 * Real.log 6) :=
+        integral_inv_mul_upperRosserBoundaryLogKernel_le_length
+          ha le_rfl hab.le (min_le_left _ _)
       _ ≤ 5 * Real.log 6 := by
         have hb : b ≤ 1 := min_le_left _ _
         have hlog : 0 ≤ Real.log 6 := Real.log_nonneg (by norm_num)

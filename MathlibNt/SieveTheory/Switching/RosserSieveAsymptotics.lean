@@ -118,11 +118,14 @@ theorem sum_mul_upperRosserBoundaryChainsFixedDepthDensity_zero_le_integral_add
   have hproduct :
       Real.log (z + 1) / Real.log z *
           (1 + K / ((s / 3) * Real.log z)) ≤ (1 + η) * (1 + η) :=
-    mul_le_mul hlogRatio (by linarith) (by linarith) (by linarith)
+    mul_le_mul hlogRatio (add_le_add le_rfl herror)
+      (add_nonneg zero_le_one herrorNonneg) (add_nonneg zero_le_one hη)
   have hdelta :
       Real.log (z + 1) / Real.log z *
           (1 + K / ((s / 3) * Real.log z)) - 1 ≤ 2 * η + η ^ 2 := by
-    nlinarith
+    calc
+      _ ≤ (1 + η) * (1 + η) - 1 := sub_le_sub_right hproduct 1
+      _ = 2 * η + η ^ 2 := by ring
   have hsratioNonneg : 0 ≤ 3 / s := div_nonneg (by norm_num) hspos.le
   have hsratioLe : 3 / s ≤ 2 := by
     apply (div_le_iff₀ hspos).2
@@ -148,7 +151,7 @@ theorem sum_mul_upperRosserBoundaryChainsFixedDepthDensity_zero_le_integral_add
     _ = 3 / s - 1 + (3 / s) *
           (Real.log (z + 1) / Real.log z *
             (1 + K / ((s / 3) * Real.log z)) - 1) := by ring
-    _ ≤ 3 / s - 1 + 2 * (2 * η + η ^ 2) := by linarith
+    _ ≤ 3 / s - 1 + 2 * (2 * η + η ^ 2) := add_le_add le_rfl hscaled
     _ = (∫ a in Set.Ioo 0 1, a⁻¹ * a⁻¹ *
           LinearSieve.upperRosserBoundaryMass 0 s a) + 4 * η + 2 * η ^ 2 := by
       rw [LinearSieve.integral_upperRosserBoundaryMass_zero hspos hshi]
@@ -1436,54 +1439,8 @@ private theorem tendsto_jurkatRichertMertensUpperCoefficient (C : ℝ) :
           C / Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ) ^ 2))
       Filter.atTop
       (nhds (10 * Real.exp (-Real.eulerMascheroniConstant))) := by
-  have hqinv := tendsto_log_jurkatRichertSourceZ_sub_one_div_log.inv₀
-    (by norm_num : (1 / 10 : ℝ) ≠ 0)
-  have hmR : Filter.Tendsto
-      (fun N : ℕ => ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ))
-      Filter.atTop Filter.atTop :=
-    tendsto_natCast_atTop_atTop.comp tendsto_jurkatRichertSourceZ_sub_one_atTop
-  have hlogm : Filter.Tendsto
-      (fun N : ℕ => Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ))
-      Filter.atTop Filter.atTop :=
-    Real.tendsto_log_atTop.comp hmR
-  have hloginv : Filter.Tendsto
-      (fun N : ℕ => (Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ))⁻¹)
-      Filter.atTop (nhds 0) :=
-    tendsto_inv_atTop_zero.comp hlogm
-  have hE : Filter.Tendsto
-      (fun _ : ℕ => Real.exp (-Real.eulerMascheroniConstant))
-      Filter.atTop (nhds (Real.exp (-Real.eulerMascheroniConstant))):=
-    tendsto_const_nhds
-  have hC : Filter.Tendsto (fun _ : ℕ => C) Filter.atTop (nhds C) :=
-    tendsto_const_nhds
-  have hmain := (hE.mul hqinv).add ((hC.mul hqinv).mul hloginv)
-  have hmain' : Filter.Tendsto (fun N : ℕ =>
-      Real.exp (-Real.eulerMascheroniConstant) *
-          (Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ) /
-            Real.log (N : ℝ))⁻¹ +
-        (C * (Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ) /
-            Real.log (N : ℝ))⁻¹) *
-          (Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ))⁻¹)
-      Filter.atTop
-      (nhds (10 * Real.exp (-Real.eulerMascheroniConstant))) := by
-    convert hmain using 1
-    norm_num
-    ring
-  apply hmain'.congr'
-  filter_upwards [eventually_jurkatRichertSourceZ_sub_one_eq_correctedChenZ,
-      Filter.eventually_ge_atTop (3 ^ 10)] with N heq hN
-  have hNpos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (by omega : 1 < N))
-  have hc := correctedChenZ_sub_one_ge_of_N_ge (k := 2) (by norm_num)
-    (show (2 + 1) ^ 10 ≤ N by simpa using hN)
-  have hm : 3 ≤ jurkatRichertSourceZ N - 1 := by
-    rw [heq]
-    omega
-  have hmlog :
-      0 < Real.log ((jurkatRichertSourceZ N - 1 : ℕ) : ℝ) :=
-    Real.log_pos
-      (by exact_mod_cast (by omega : 1 < jurkatRichertSourceZ N - 1))
-  field_simp [hNpos.ne', hmlog.ne']
+  simpa only [neg_div, sub_neg_eq_add] using
+    tendsto_jurkatRichertMertensCoefficient (-C)
 
 /-- Mertens' product theorem at the literal source cutoff, with Liu's genuine
 normalization and an upper error uniform in the even integer `N`. -/

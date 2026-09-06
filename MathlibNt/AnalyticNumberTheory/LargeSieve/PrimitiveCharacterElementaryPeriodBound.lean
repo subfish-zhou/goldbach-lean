@@ -29,20 +29,9 @@ theorem primitiveCharacter_sum_zmod_eq_zero {q : ℕ} [NeZero q] (hq : 1 < q)
 theorem primitiveCharacter_sum_range_period_eq_zero {q : ℕ} (hq : 1 < q)
     (χ : PrimitiveCharacter q) :
     ∑ n ∈ range q, χ.1 (n : ZMod q) = 0 := by
-  obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
-  letI : NeZero r.succ := ⟨by omega⟩
-  calc
-    (∑ n ∈ range r.succ, χ.1 (n : ZMod r.succ)) =
-        ∑ i : Fin r.succ, χ.1 ((i : ℕ) : ZMod r.succ) := by
-          symm
-          exact Fin.sum_univ_eq_sum_range
-            (fun n : ℕ => χ.1 (n : ZMod r.succ)) r.succ
-    _ = ∑ a : ZMod r.succ, χ.1 a := by
-      apply Fintype.sum_equiv (ZMod.finEquiv r.succ).toEquiv
-      intro i
-      congr 1
-      exact ZMod.natCast_zmod_val (ZMod.finEquiv r.succ i)
-    _ = 0 := primitiveCharacter_sum_zmod_eq_zero hq χ
+  letI : NeZero q := ⟨by omega⟩
+  rw [← sum_zmod_eq_sum_range]
+  exact primitiveCharacter_sum_zmod_eq_zero hq χ
 
 private theorem sum_range_mul_period_eq_zero {E : Type*} [AddCommMonoid E]
     (f : ℕ → E) (q : ℕ) (hperiod : ∀ k n, f (k * q + n) = f n)
@@ -127,11 +116,7 @@ theorem primitiveCharacter_logWeight_range_norm_le {q M : ℕ} (hq : 1 < q)
   let S : ℕ → ℂ := fun n => ∑ k ∈ range n, f k
   have hS (n : ℕ) : ‖S n‖ ≤ 2 * q := by
     change ‖∑ k ∈ range n, χ.1 ((k + 1 : ℕ) : ZMod q)‖ ≤ 2 * q
-    have heq : (∑ k ∈ range n, χ.1 ((k + 1 : ℕ) : ZMod q)) =
-        ∑ m ∈ Ico 1 (n + 1), χ.1 (m : ZMod q) := by
-      simpa only [Nat.add_comm] using
-        shifted_prefix_eq_Ico (fun m : ℕ => χ.1 (m : ZMod q)) n
-    rw [heq]
+    rw [shifted_prefix_eq_Ico (fun m : ℕ => χ.1 (m : ZMod q)) n]
     exact primitiveCharacter_interval_norm_le_two_mul hq χ
   have hwmono (k : ℕ) : Real.log (k + 1) ≤ Real.log (k + 2) := by
     apply Real.strictMonoOn_log.monotoneOn
@@ -143,12 +128,8 @@ theorem primitiveCharacter_logWeight_range_norm_le {q M : ℕ} (hq : 1 < q)
   have htel (N : ℕ) :
       (∑ k ∈ range N,
           (Real.log (k + 2) - Real.log (k + 1))) = Real.log (N + 1) := by
-    induction N with
-    | zero => norm_num
-    | succ N ih =>
-        rw [sum_range_succ, ih]
-        push_cast
-        ring
+    simpa [Nat.cast_add, Nat.cast_one, add_assoc, one_add_one_eq_two] using
+      Finset.sum_range_sub (fun k : ℕ => Real.log ((k : ℝ) + 1)) N
   have hlognonneg (n : ℕ) : 0 ≤ Real.log ((n : ℝ) + 1) := by
     rw [← Nat.cast_one, ← Nat.cast_add]
     exact Real.log_natCast_nonneg (n + 1)
@@ -193,17 +174,12 @@ theorem primitiveCharacter_logWeight_Icc_norm_le {q M : ℕ} (hq : 1 < q)
     (χ : PrimitiveCharacter q) :
     ‖∑ m ∈ Icc 1 M, (Real.log m : ℂ) * χ.1 (m : ZMod q)‖
       ≤ 4 * q * Real.log (M + 1) := by
-  by_cases hM : M = 0
-  · subst M
-    simp
-  · have hMpos : 0 < M := Nat.pos_of_ne_zero hM
-    have hsets : Icc 1 M = Ico 1 (M + 1) := by
-      ext m
-      simp
-    rw [hsets, ← shifted_prefix_eq_Ico
-      (fun m : ℕ => (Real.log m : ℂ) * χ.1 (m : ZMod q)) M]
-    simpa only [Nat.cast_add, Nat.cast_one] using
-      primitiveCharacter_logWeight_range_norm_le hq χ
+  have hsets : Icc 1 M = Ico 1 (M + 1) := by
+    simpa using (Finset.Ico_succ_right_eq_Icc (1 : ℕ) M).symm
+  rw [hsets, ← shifted_prefix_eq_Ico
+    (fun m : ℕ => (Real.log m : ℂ) * χ.1 (m : ZMod q)) M]
+  simpa only [Nat.cast_add, Nat.cast_one] using
+    primitiveCharacter_logWeight_range_norm_le hq χ
 
 end
 

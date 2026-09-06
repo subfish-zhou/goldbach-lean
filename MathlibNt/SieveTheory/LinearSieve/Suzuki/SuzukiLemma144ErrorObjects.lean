@@ -172,7 +172,6 @@ theorem equation14_14
   have hratio : 0 < t / (t - 1) := div_pos ht0 htm0
   rw [qD]
   rw [show H.kappaHat - 1 + 1 = H.kappaHat by ring]
-  rw [show H.kappaHat + 1 = H.kappaHat + 1 by rfl]
   rw [Real.rpow_add htm0, Real.rpow_add hratio]
   rw [Real.rpow_one, Real.rpow_one]
   field_simp
@@ -187,6 +186,12 @@ theorem equation14_15
   norm_num
   exact (equation14_14 H sign D d Δ t ht).symm
 
+/-- The shared exponential base is positive on every source range below. -/
+private lemma errorBase_pos {D d s : ℝ} (hD : 1 < D) (hs : 0 ≤ s) :
+    0 < 1 + s ^ d / Real.log D :=
+  add_pos_of_pos_of_nonneg zero_lt_one
+    (div_nonneg (Real.rpow_nonneg hs _) (Real.log_pos hD).le)
+
 /-- Positivity of `E_N` from the currently available finite/Section-13 layer
 positivity data. -/
 theorem errorEnvelope_nonneg
@@ -194,11 +199,7 @@ theorem errorEnvelope_nonneg
     (hD : 1 < D) (hs : 0 ≤ s) (hT : 0 ≤ H.T (ErrorSign.ofDepth N) s) :
     0 ≤ errorEnvelope H N D d s := by
   unfold errorEnvelope
-  have hlog : 0 < Real.log D := Real.log_pos hD
-  have hbase : 0 ≤ 1 + s ^ d / Real.log D := by
-    have : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hs _) hlog.le
-    linarith
+  have hbase : 0 ≤ 1 + s ^ d / Real.log D := (errorBase_pos hD hs).le
   exact mul_nonneg
     (mul_nonneg (Real.rpow_nonneg hbase _) (Real.rpow_nonneg hs _)) hT
 
@@ -208,13 +209,9 @@ theorem qD_nonneg
     (hD : 1 < D) (hs : 1 ≤ s) (hT : 0 ≤ H.T sign (s - 1)) :
     0 ≤ qD H sign D d Δ s := by
   unfold qD
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have hs0 : 0 ≤ s := zero_le_one.trans hs
   have hsm0 : 0 ≤ s - 1 := sub_nonneg.mpr hs
-  have hbase : 0 ≤ 1 + s ^ d / Real.log D := by
-    have : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hs0 _) hlog.le
-    linarith
+  have hbase : 0 ≤ 1 + s ^ d / Real.log D := (errorBase_pos hD hs0).le
   have hratio : 0 ≤ s / (s - 1) := div_nonneg hs0 hsm0
   exact mul_nonneg
     (mul_nonneg
@@ -227,12 +224,8 @@ theorem lambda_nonneg
     (hD : 1 < D) (hε : 0 ≤ ε) (ht : 0 ≤ t) (hT : 0 ≤ H.T sign t) :
     0 ≤ lambda H sign D d ε t := by
   unfold lambda
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have hte : 0 ≤ t + ε := add_nonneg ht hε
-  have hbase : 0 ≤ 1 + (t + ε) ^ d / Real.log D := by
-    have : 0 ≤ (t + ε) ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hte _) hlog.le
-    linarith
+  have hbase : 0 ≤ 1 + (t + ε) ^ d / Real.log D := (errorBase_pos hD hte).le
   exact mul_nonneg
     (mul_nonneg (Real.rpow_nonneg hbase _) (Real.rpow_nonneg ht _)) hT
 
@@ -243,11 +236,7 @@ theorem errorEnvelope_pos
     (hD : 1 < D) (hs : 0 < s) (hT : 0 < H.T (ErrorSign.ofDepth N) s) :
     0 < errorEnvelope H N D d s := by
   unfold errorEnvelope
-  have hlog : 0 < Real.log D := Real.log_pos hD
-  have hbase : 0 < 1 + s ^ d / Real.log D := by
-    have : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hs.le _) hlog.le
-    linarith
+  have hbase : 0 < 1 + s ^ d / Real.log D := errorBase_pos hD hs.le
   exact mul_pos
     (mul_pos (Real.rpow_pos_of_pos hbase _) (Real.rpow_pos_of_pos hs _)) hT
 
@@ -257,13 +246,9 @@ theorem qD_pos
     (hD : 1 < D) (hs : 1 < s) (hT : 0 < H.T sign (s - 1)) :
     0 < qD H sign D d Δ s := by
   unfold qD
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have hs0 : 0 < s := zero_lt_one.trans hs
   have hsm0 : 0 < s - 1 := sub_pos.mpr hs
-  have hbase : 0 < 1 + s ^ d / Real.log D := by
-    have : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hs0.le _) hlog.le
-    linarith
+  have hbase : 0 < 1 + s ^ d / Real.log D := errorBase_pos hD hs0.le
   exact mul_pos
     (mul_pos
       (mul_pos (Real.rpow_pos_of_pos hbase _) (Real.rpow_pos_of_pos hsm0 _)) hT)
@@ -275,12 +260,8 @@ theorem lambda_pos
     (hD : 1 < D) (hε : 0 ≤ ε) (ht : 0 < t) (hT : 0 < H.T sign t) :
     0 < lambda H sign D d ε t := by
   unfold lambda
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have hte : 0 < t + ε := add_pos_of_pos_of_nonneg ht hε
-  have hbase : 0 < 1 + (t + ε) ^ d / Real.log D := by
-    have : 0 ≤ (t + ε) ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hte.le _) hlog.le
-    linarith
+  have hbase : 0 < 1 + (t + ε) ^ d / Real.log D := errorBase_pos hD hte.le
   exact mul_pos
     (mul_pos (Real.rpow_pos_of_pos hbase _) (Real.rpow_pos_of_pos ht _)) hT
 
@@ -292,7 +273,6 @@ theorem continuousOn_errorEnvelope
     (hT : ContinuousOn (H.T (ErrorSign.ofDepth N)) (Ici a)) :
     ContinuousOn (errorEnvelope H N D d) (Ici a) := by
   unfold errorEnvelope
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have hsPow : ContinuousOn (fun s : ℝ => s ^ d) (Ici a) :=
     continuousOn_id.rpow continuousOn_const (by
       intro s hs
@@ -300,11 +280,8 @@ theorem continuousOn_errorEnvelope
       exact ne_of_gt (ha.trans_le hs))
   have hbase : ContinuousOn (fun s : ℝ => 1 + s ^ d / Real.log D) (Ici a) :=
     continuousOn_const.add (hsPow.div_const _)
-  have hbasePos : ∀ s ∈ Ici a, 0 < 1 + s ^ d / Real.log D := by
-    intro s hs
-    have : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg (ha.trans_le hs).le _) hlog.le
-    linarith
+  have hbasePos : ∀ s ∈ Ici a, 0 < 1 + s ^ d / Real.log D :=
+    fun _ hs => errorBase_pos hD (ha.trans_le hs).le
   have houter : ContinuousOn (fun s : ℝ => (1 + s ^ d / Real.log D) ^ s) (Ici a) :=
     hbase.rpow continuousOn_id (fun s hs => Or.inl (ne_of_gt (hbasePos s hs)))
   have hspow : ContinuousOn (fun s : ℝ => s ^ (H.kappaHat - 1 + 1)) (Ici a) :=
@@ -319,18 +296,14 @@ theorem continuousOn_qD
     (hD : 1 < D) (hT : Continuous (H.T sign)) :
     ContinuousOn (qD H sign D d Δ) (Ioi 1) := by
   unfold qD
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have htpos : ∀ t ∈ Ioi (1 : ℝ), 0 < t := fun t ht => zero_lt_one.trans ht
   have htmpos : ∀ t ∈ Ioi (1 : ℝ), 0 < t - 1 := fun t ht => sub_pos.mpr ht
   have htpow : ContinuousOn (fun t : ℝ => t ^ d) (Ioi 1) :=
     continuousOn_id.rpow continuousOn_const (fun t ht => Or.inl (ne_of_gt (htpos t ht)))
   have hbase : ContinuousOn (fun t : ℝ => 1 + t ^ d / Real.log D) (Ioi 1) :=
     continuousOn_const.add (htpow.div_const _)
-  have hbasePos : ∀ t ∈ Ioi (1 : ℝ), 0 < 1 + t ^ d / Real.log D := by
-    intro t ht
-    have : 0 ≤ t ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg (htpos t ht).le _) hlog.le
-    linarith
+  have hbasePos : ∀ t ∈ Ioi (1 : ℝ), 0 < 1 + t ^ d / Real.log D :=
+    fun t ht => errorBase_pos hD (htpos t ht).le
   have houter : ContinuousOn
       (fun t : ℝ => (1 + t ^ d / Real.log D) ^ (t - 1)) (Ioi 1) :=
     hbase.rpow (continuousOn_id.sub continuousOn_const)
@@ -356,7 +329,6 @@ theorem continuousOn_lambda
     (hD : 1 < D) (hε : 0 ≤ ε) (hT : Continuous (H.T sign)) :
     ContinuousOn (lambda H sign D d ε) (Ioi 0) := by
   unfold lambda
-  have hlog : 0 < Real.log D := Real.log_pos hD
   have htpos : ∀ t ∈ Ioi (0 : ℝ), 0 < t := fun t ht => ht
   have htepos : ∀ t ∈ Ioi (0 : ℝ), 0 < t + ε := fun t ht => add_pos_of_pos_of_nonneg ht hε
   have hpow : ContinuousOn (fun t : ℝ => (t + ε) ^ d) (Ioi 0) :=
@@ -364,11 +336,8 @@ theorem continuousOn_lambda
       (fun t ht => Or.inl (ne_of_gt (htepos t ht)))
   have hbase : ContinuousOn (fun t : ℝ => 1 + (t + ε) ^ d / Real.log D) (Ioi 0) :=
     continuousOn_const.add (hpow.div_const _)
-  have hbasePos : ∀ t ∈ Ioi (0 : ℝ), 0 < 1 + (t + ε) ^ d / Real.log D := by
-    intro t ht
-    have : 0 ≤ (t + ε) ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg (htepos t ht).le _) hlog.le
-    linarith
+  have hbasePos : ∀ t ∈ Ioi (0 : ℝ), 0 < 1 + (t + ε) ^ d / Real.log D :=
+    fun t ht => errorBase_pos hD (htepos t ht).le
   have houter := hbase.rpow continuousOn_id
     (fun t ht => Or.inl (ne_of_gt (hbasePos t ht)))
   have htpow : ContinuousOn (fun t : ℝ => t ^ (H.kappaHat + 1)) (Ioi 0) :=

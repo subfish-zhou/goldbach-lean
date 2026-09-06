@@ -49,9 +49,8 @@ theorem logDerivZeta_conj' (s : ℂ) :
     (logDeriv riemannZeta) (conj s) = conj (logDeriv riemannZeta s) := logDerivZeta_conj s
 
 blueprint_comment /--
-% TODO: Submit this to Mathlib.
+Now available in Mathlib; this wrapper is retained for the blueprint.
 -/
-set_option backward.isDefEq.respectTransparency false in
 @[blueprint
   (title := "intervalIntegral-conj")
   (statement := /--
@@ -60,10 +59,8 @@ set_option backward.isDefEq.respectTransparency false in
     $$\int_{a}^{b} \overline{f(x)} \, dx = \overline{\int_{a}^{b} f(x) \, dx}.$$
   -/)
   (proof := /--
-    We unfold the interval integral into an integral over a uIoc and use the conjugation property
-    of integrals.
+    Apply the conjugation identity for interval integrals from Mathlib.
   -/)]
 theorem intervalIntegral_conj {f : ℝ → ℂ} {a b : ℝ} :
     ∫ (x : ℝ) in a..b, conj (f x) = conj (∫ (x : ℝ) in a..b, f x) := by
-  rw [intervalIntegral.intervalIntegral_eq_integral_uIoc, integral_conj, ← RCLike.conj_smul,
-    ← intervalIntegral.intervalIntegral_eq_integral_uIoc]
+  exact intervalIntegral.intervalIntegral_conj

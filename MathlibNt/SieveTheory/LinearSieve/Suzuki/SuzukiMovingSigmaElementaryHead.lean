@@ -1,5 +1,6 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146SourceAssembly
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaCompactHead
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFixedGapRpowMargin
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral
@@ -45,16 +46,18 @@ theorem exists_sourceSigma_fixed_lower_threshold
     L ≤ X := hLX
     _ ≤ Real.log (Real.log (27 * D)) := hll
     _ ≤ (Real.log D) ^ (1 / d) * Real.log (Real.log (27 * D)) := by
-      nlinarith [mul_nonneg (sub_nonneg.mpr hpow1) hll0]
+      simpa only [one_mul] using mul_le_mul_of_nonneg_right hpow1 hll0
 
-private lemma tendsto_fixed_perturbation
-    (d t : ℝ) :
-    Tendsto (fun D : ℝ => perturbation D d 0 t) atTop (𝓝 1) := by
-  have hdiv : Tendsto (fun D : ℝ => t ^ d / Real.log D) atTop (𝓝 0) :=
-    Real.tendsto_log_atTop.const_div_atTop (t ^ d)
-  have hbase : Tendsto (fun D : ℝ => 1 + t ^ d / Real.log D) atTop (𝓝 1) := by
-    simpa using tendsto_const_nhds.add hdiv
-  simpa [perturbation] using hbase.rpow_const (Or.inl one_ne_zero)
+private lemma one_le_fixed_perturbation
+    {cutoff exponent point : ℝ}
+    (hlog : 0 ≤ Real.log cutoff) (hpoint : 0 ≤ point) :
+    1 ≤ perturbation cutoff exponent 0 point := by
+  unfold perturbation
+  simp only [add_zero]
+  apply Real.one_le_rpow
+  · exact le_add_of_nonneg_right
+      (div_nonneg (Real.rpow_nonneg hpoint _) hlog)
+  · exact hpoint
 
 /-- The elementary fixed-compact perturbation input used by the source assembly. -/
 theorem fixedCompactPerturbationContract
@@ -74,57 +77,18 @@ theorem fixedCompactPerturbationContract
     cases sign <;> simp [ErrorSign.epsilon] at hs <;> linarith
   have hs1 : 1 < s := by
     cases sign <;> simp [ErrorSign.epsilon] at hs <;> linarith
-  have hPs : 1 ≤ perturbation D d 0 s := by
-    rw [perturbation]
-    have hu : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hspos.le _) hlog.le
-    apply Real.one_le_rpow
-    · simpa using (show (1 : ℝ) ≤ 1 + s ^ d / Real.log D by linarith)
-    · exact hspos.le
+  have hPs : 1 ≤ perturbation D d 0 s :=
+    one_le_fixed_perturbation hlog.le hspos.le
   calc
     perturbation D d 0 (M + 2) ≤ 2 := (hD₁ D hD₁D).le
-    _ ≤ 2 * perturbation D d 0 s := by nlinarith
+    _ ≤ 2 * perturbation D d 0 s := by
+      simpa only [mul_one] using
+        mul_le_mul_of_nonneg_left hPs (by norm_num : (0 : ℝ) ≤ 2)
 
 private lemma fixed_gap_rpow_margin
     {gap M : ℝ} (hgap0 : 0 < gap) (hgap1 : gap < 1) (hM : 4 ≤ M) :
     (1 - 1 / (M + 2)) ^ (gap / 2) < 1 - gap / (4 * M) := by
-  let x : ℝ := 1 - 1 / (M + 2)
-  have hMpos : 0 < M := by linarith
-  have hMp2 : 0 < M + 2 := by linarith
-  have hx0 : 0 < x := by
-    dsimp [x]
-    exact sub_pos.mpr ((div_lt_one hMp2).mpr (by linarith))
-  have hx1 : x < 1 := by
-    dsimp [x]
-    have : 0 < 1 / (M + 2) := one_div_pos.mpr hMp2
-    linarith
-  have hp0 : 0 ≤ gap / 2 := by positivity
-  have hp1 : 0 ≤ 1 - gap / 2 := by linarith
-  have hweights : gap / 2 + (1 - gap / 2) = 1 := by ring
-  have hamgm := Real.geom_mean_le_arith_mean2_weighted
-    hp0 hp1 hx0.le (show 0 ≤ (1 : ℝ) by norm_num) hweights
-  rw [Real.one_rpow, mul_one] at hamgm
-  have hlinear : x ^ (gap / 2) ≤ 1 - gap / (2 * (M + 2)) := by
-    calc
-      x ^ (gap / 2) ≤ (gap / 2) * x + (1 - gap / 2) * 1 := hamgm
-      _ = 1 - gap / (2 * (M + 2)) := by
-        dsimp [x]
-        field_simp [ne_of_gt hMp2]
-        ring
-  have hstrict : 1 - gap / (2 * (M + 2)) < 1 - gap / (4 * M) := by
-    rw [sub_lt_sub_iff_left]
-    rw [div_lt_div_iff₀ (mul_pos (by norm_num) hMpos)
-      (mul_pos (by norm_num) hMp2)]
-    nlinarith
-  exact hlinear.trans_lt hstrict
-
-private lemma tendsto_source_weight (gap : ℝ) :
-    Tendsto (fun σ : ℝ => (1 - 1 / σ) ^ gap) atTop (𝓝 1) := by
-  have hinv : Tendsto (fun σ : ℝ => 1 / σ) atTop (𝓝 0) := by
-    simpa [one_div] using tendsto_inv_atTop_zero
-  have hbase : Tendsto (fun σ : ℝ => 1 - 1 / σ) atTop (𝓝 1) := by
-    simpa using tendsto_const_nhds.sub hinv
-  simpa using hbase.rpow_const (Or.inl one_ne_zero)
+  exact fixedGap_rpow_margin hgap0 hgap1 hM
 
 /-- Corrected fixed-head source contract, with `gap = 1 - Δ`.  All thresholds
 are chosen after the fixed cutoff `M`; no fixed-endpoint theorem is diagonalized. -/
@@ -192,13 +156,8 @@ theorem lemma133WeightedHeadContract_corrected
     cases sign <;> simp [ErrorSign.epsilon] at hs <;> linarith
   have hs1 : 1 < s := by
     cases sign <;> simp [ErrorSign.epsilon] at hs <;> linarith
-  have hPs : 1 ≤ perturbation D d 0 s := by
-    rw [perturbation]
-    have hu : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg hspos.le _) hlog.le
-    apply Real.one_le_rpow
-    · simpa using (show (1 : ℝ) ≤ 1 + s ^ d / Real.log D by linarith)
-    · exact hspos.le
+  have hPs : 1 ≤ perturbation D d 0 s :=
+    one_le_fixed_perturbation hlog.le hspos.le
   have htail := lemma13_3_weightedTail_strict_closedRange hH sign
     (show 0 ≤ θ by dsimp [θ]; positivity) hs (show s ≤ M + 2 by linarith)
   have hqcont := continuousOn_qD_Icc_of_contract (d := d) hH sign.opposite hD1
@@ -242,7 +201,7 @@ theorem lemma133WeightedHeadContract_corrected
     have htd : t ^ d ≤ (M + 2) ^ d :=
       Real.rpow_le_rpow ht0.le htM hd
     have hbase : 1 + t ^ d / Real.log D ≤ 1 + (M + 2) ^ d / Real.log D := by
-      gcongr
+      exact add_le_add le_rfl (div_le_div_of_nonneg_right htd hlog.le)
     have hbase0 : 1 ≤ 1 + t ^ d / Real.log D := by
       have : 0 ≤ t ^ d / Real.log D :=
         div_nonneg (Real.rpow_nonneg ht0.le _) hlog.le

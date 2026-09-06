@@ -253,8 +253,8 @@ theorem weighted_primitive_modulus_le_reduced {q : ℕ} [NeZero q]
     _ = ∑ a ∈ reducedResidues q, ‖A a‖ ^ 2 := by field_simp
     _ = _ := rfl
 
-/-- Weighted primitive-character Bombieri--Davenport inequality across all
-`1 ≤ q ≤ Q`, with interval coefficients and the exact additive-stack constant. -/
+/-- Reindex canonical reduced residues for `1 ≤ q ≤ Q` by reduced Farey
+indices, preserving the modulus range and coprimality condition. -/
 theorem sum_reducedResidues_eq_sum_reducedFareyIndices
     {β : Type*} [AddCommMonoid β] (Q : ℕ) (f : ℕ × ℕ → β) :
     (∑ q ∈ Finset.Icc 1 Q, ∑ a ∈ reducedResidues q, f (q, a)) =
@@ -291,36 +291,13 @@ theorem interval_additive_energy_reindex (b : ℤ → ℂ) (M : ℤ) (N Q : ℕ)
       ∑ qa ∈ reducedFareyIndices Q,
         ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
           (charReal ((n : ℝ) * reducedFareyPoint qa) : ℂ) * b n‖ ^ 2 := by
-  rw [Finset.sum_sigma']
-  refine Finset.sum_bij (fun x _ => (x.1, x.2)) ?_ ?_ ?_ ?_
-  · intro x hx
-    rcases x with ⟨q, a⟩
-    simp only [Finset.mem_sigma] at hx
-    rw [mem_reducedFareyIndices]
-    rcases Finset.mem_Icc.mp hx.1 with ⟨hq1, hqQ⟩
-    rcases mem_reducedResidues.mp hx.2 with ⟨haq, hcop⟩
-    exact ⟨hq1, hqQ, haq, hcop⟩
-  · intro x hx y hy hxy
-    rcases x with ⟨q, a⟩
-    rcases y with ⟨r, c⟩
-    cases hxy
-    rfl
-  · intro qa hqa
-    rcases qa with ⟨q, a⟩
-    rw [mem_reducedFareyIndices] at hqa
-    refine ⟨⟨q, a⟩, ?_, rfl⟩
-    simp only [Finset.mem_sigma]
-    exact ⟨Finset.mem_Icc.mpr ⟨hqa.1, hqa.2.1⟩,
-      mem_reducedResidues.mpr ⟨hqa.2.2.1, hqa.2.2.2⟩⟩
-  · intro x hx
-    rcases x with ⟨q, a⟩
-    congr 2
-    apply Finset.sum_congr rfl
-    intro n hn
-    congr 2
-    dsimp [reducedFareyPoint]
-    ring
+  simpa only [reducedFareyPoint, mul_div_assoc] using
+    sum_reducedResidues_eq_sum_reducedFareyIndices Q (fun qa =>
+      ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
+        (charReal ((n : ℝ) * (qa.2 : ℝ) / (qa.1 : ℝ)) : ℂ) * b n‖ ^ 2)
 
+/-- Weighted primitive-character Bombieri--Davenport inequality across all
+`1 ≤ q ≤ Q`, with interval coefficients and the exact additive-stack constant. -/
 theorem weighted_primitive_bombieri_davenport (b : ℤ → ℂ) (M : ℤ)
     (N Q : ℕ) (hQ : 0 < Q) :
     (∑ q ∈ Finset.Icc 1 Q,

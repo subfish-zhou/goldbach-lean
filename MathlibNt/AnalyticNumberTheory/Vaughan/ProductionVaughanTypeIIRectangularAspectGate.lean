@@ -58,7 +58,11 @@ private lemma aspect_product_bound
       have hinner : n * (n + A ^ 2) ≤
           (n + A * Real.sqrt n) ^ 2 := by
         nlinarith [mul_nonneg hA0 hsqrtn]
-      nlinarith
+      calc
+        n * (c ^ 2 * (H + 1) * (n + A ^ 2))
+            = (c ^ 2 * (H + 1)) * (n * (n + A ^ 2)) := by ring
+        _ ≤ (c ^ 2 * (H + 1)) * (n + A * Real.sqrt n) ^ 2 :=
+          mul_le_mul_of_nonneg_left hinner hfac
 
 /-- Honest aspect-gated scalarization of the actual weak-large-sieve rank-one
 term for one active canonical rectangle.  Here `D=2^k`, `X=N/D`,
@@ -165,7 +169,7 @@ theorem vaughanTypeIIRectangularRexp_le_aspectGate
       Real.sqrt ((t + c * A) * (27 * x * L)) := by positivity
   have hrhs : 0 ≤ c * Real.sqrt (27 * (H + 1) * L) *
       (n + A * Real.sqrt n) := by positivity
-  nlinarith
+  exact (sq_le_sq₀ hlhs hrhs).mp hsq
 
 /-- The actual one-shell weighted mean under the same aspect gate.  The
 rectangular coefficient-`L¹` error is deliberately retained. -/

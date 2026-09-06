@@ -155,26 +155,10 @@ theorem primeReciprocalLogInterval_eq_sub (N : ℕ) {a b : ℝ}
       Real.rpow_nonneg (Nat.cast_nonneg N) _
     have hpb : 0 ≤ (N : ℝ) ^ b :=
       Real.rpow_nonneg (Nat.cast_nonneg N) _
-    constructor
-    · rintro ⟨prange, hprime, hlow, hupp⟩
-      refine ⟨⟨prange, hprime⟩, ?_⟩
-      intro hlower
-      have hlower' := hlower.1
-      change p ≤ Nat.floor ((N : ℝ) ^ a) at hlower'
-      have hle : (p : ℝ) ≤ (N : ℝ) ^ a :=
-        (Nat.le_floor_iff hpa).mp hlower'
-      exact (not_le_of_gt hlow) hle
-    · rintro ⟨⟨prange, hprime⟩, hlower⟩
-      have prange' := prange
-      change p ≤ Nat.floor ((N : ℝ) ^ b) at prange'
-      have hupp : (p : ℝ) ≤ (N : ℝ) ^ b :=
-        (Nat.le_floor_iff hpb).mp prange'
-      refine ⟨prange, hprime, ?_, hupp⟩
-      rw [← Nat.floor_lt hpa]
-      by_contra hnot
-      apply hlower
-      refine ⟨?_, hprime⟩
-      simpa only [rpowFloor] using le_of_not_gt hnot
+    -- Translate both floored cutoffs before comparing the prime supports.
+    simp only [rpowFloor, Nat.le_floor_iff hpa, Nat.le_floor_iff hpb]
+    by_cases hprime : p.Prime <;>
+      simp [hprime, not_le, and_comm]
   · intro p hp
     rfl
 
@@ -245,10 +229,8 @@ theorem eventually_abs_primeReciprocalLogInterval_sub_lt {a b ε : ℝ}
     (ha : 0 < a) (hab : a < b) (hε : 0 < ε) :
     ∀ᶠ N : ℕ in atTop,
       |primeReciprocalLogInterval N a b - Real.log (b / a)| < ε := by
-  have h := tendsto_primeReciprocalLogInterval ha hab
-  rw [Metric.tendsto_nhds] at h
-  filter_upwards [h ε hε] with N hN
-  simpa only [Real.dist_eq] using hN
+  simpa only [Real.dist_eq] using
+    (Metric.tendsto_nhds.mp (tendsto_primeReciprocalLogInterval ha hab)) ε hε
 
 /-- Threshold form of the quantitative fixed-cell estimate. -/
 theorem exists_abs_primeReciprocalLogInterval_sub_lt {a b ε : ℝ}

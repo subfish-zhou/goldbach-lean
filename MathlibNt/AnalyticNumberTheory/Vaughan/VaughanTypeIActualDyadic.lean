@@ -175,21 +175,15 @@ theorem apNormalizedVaughanTypeIFirstDyadicShell_physical
       vaughanTypeIFirstDyadicLogPay u k N Q *
         ((N : ℝ) + (Q : ℝ) *
           Real.sqrt ((N : ℝ) * (2 ^ k : ℕ))) := by
-  by_cases hS : vaughanTypeIFirstDyadicShell u k = ∅
-  · simp [apNormalizedVaughanTypeIFirstShellMean,
-      vaughanTypeIFirstDyadicLogPay, hS, apNormalizedWeightedRowShellMean,
-      rowShellShortEnergy, variableLengthPrimitivePrefixBudget]
-  · obtain ⟨d, hd⟩ := Finset.nonempty_iff_ne_empty.mpr hS
-    apply shell_physical_with_literal_ledgers
-      (vaughanTypeIFirstDyadicShell u k)
-      (fun d => ((ArithmeticFunction.moebius d : ℤ) : ℂ))
-      (vaughanTypeIFirstRowCoeff fun _ => 1)
-      (vaughanTypeIFirstRowLength N) (2 ^ k) N Q hN (by positivity)
-    simpa [apNormalizedVaughanTypeIFirstShellMean,
-      vaughanTypeIFirstDyadicLogPay, rowShellShortEnergy,
-      vaughanTypeIFirstShortEnergy, mul_assoc] using
-      apNormalizedVaughanTypeIFirstShellMean_sq_le_budget
-        (vaughanTypeIFirstDyadicShell u k) N Q hQ hcard
+  apply shell_physical_with_literal_ledgers
+    (vaughanTypeIFirstDyadicShell u k)
+    (fun d => ((ArithmeticFunction.moebius d : ℤ) : ℂ))
+    (vaughanTypeIFirstRowCoeff fun _ => 1)
+    (vaughanTypeIFirstRowLength N) (2 ^ k) N Q hN (by positivity)
+  simpa [apNormalizedVaughanTypeIFirstShellMean,
+    rowShellShortEnergy, vaughanTypeIFirstShortEnergy, mul_assoc] using
+    apNormalizedVaughanTypeIFirstShellMean_sq_le_budget
+      (vaughanTypeIFirstDyadicShell u k) N Q hQ hcard
 
 /-- Every middle product shell meets the same physical lemma. -/
 theorem apNormalizedVaughanTypeIMiddleProductDyadicShell_physical
@@ -202,23 +196,17 @@ theorem apNormalizedVaughanTypeIMiddleProductDyadicShell_physical
         ((N : ℝ) + (Q : ℝ) *
           Real.sqrt ((N : ℝ) * (2 ^ k : ℕ))) := by
   let S := vaughanTypeIMiddleProductDyadicShell u v k
-  by_cases hS : S = ∅
-  · simp [apNormalizedVaughanTypeIMiddleProductShellMean,
-      vaughanTypeIMiddleProductDyadicLogPay, S, hS,
-      apNormalizedWeightedRowShellMean, rowShellShortEnergy,
-      variableLengthPrimitivePrefixBudget]
-  · obtain ⟨de, hde⟩ := Finset.nonempty_iff_ne_empty.mpr hS
-    apply shell_physical_with_literal_ledgers S
+  apply shell_physical_with_literal_ledgers S
+    (fun de => ((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
+      (ArithmeticFunction.vonMangoldt de.2 : ℂ))
+    (vaughanTypeIMiddlePairRowCoeff fun _ => 1)
+    (vaughanTypeIMiddlePairRowLength N) (2 ^ k) N Q hN (by positivity)
+  simpa [apNormalizedVaughanTypeIMiddleProductShellMean, S] using
+    apNormalizedWeightedRowShellMean_sq_le_budget S
       (fun de => ((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
         (ArithmeticFunction.vonMangoldt de.2 : ℂ))
       (vaughanTypeIMiddlePairRowCoeff fun _ => 1)
-      (vaughanTypeIMiddlePairRowLength N) (2 ^ k) N Q hN (by positivity)
-    simpa [apNormalizedVaughanTypeIMiddleProductShellMean, S] using
-      apNormalizedWeightedRowShellMean_sq_le_budget S
-        (fun de => ((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
-          (ArithmeticFunction.vonMangoldt de.2 : ℂ))
-        (vaughanTypeIMiddlePairRowCoeff fun _ => 1)
-        (vaughanTypeIMiddlePairRowLength N) Q hQ hcard
+      (vaughanTypeIMiddlePairRowLength N) Q hQ hcard
 
 /-- Explicit common payment used by the finite shell assembler. -/
 def vaughanTypeIActualDyadicLogPay (N Q u v : ℕ) : ℝ :=

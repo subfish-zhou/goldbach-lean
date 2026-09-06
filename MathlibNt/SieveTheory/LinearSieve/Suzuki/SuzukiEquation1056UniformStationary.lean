@@ -168,20 +168,6 @@ theorem scalarRatio_lt_one_of_stationary
   have hsmall : 10 / s < 1 / 2 := by
     apply (div_lt_iff₀ hs0).2
     nlinarith [Real.exp_pos 2]
-  have hmpos : 0 < m := by
-    have hd := hdelta.trans htwo'
-    have hkk := hk.trans hthree
-    have hsum : (xi s - xi (s - 1)) + kappaOneLogSlope (s - 1) ≤ 10 / s := by
-      calc
-        _ ≤ 4 / s + 6 / s := add_le_add hd hkk
-        _ = 10 / s := by ring
-    have htwo0 : 0 ≤ 2 / s := div_nonneg (by norm_num) hs0.le
-    have heq : m = A - (xi s - xi (s - 1)) + 2 / s -
-        kappaOneLogSlope (s - 1) := by
-      dsimp [A, m]
-      ring
-    rw [heq]
-    linarith
   have hgapUpper : A - m ≤ 10 / s := by
     have hd := hdelta.trans htwo'
     have hkk := hk.trans hthree
@@ -196,6 +182,8 @@ theorem scalarRatio_lt_one_of_stationary
       ring
     rw [heq]
     linarith
+  have hmpos : 0 < m := by
+    linarith only [hgapUpper, hAhalf, hsmall]
   have hxprev_pos : 0 < xi (s - 1) := by linarith
   have hEqXi := xi_equation (by linarith : 1 < s - 1)
   have hnegxi : Real.exp (-(xi (s - 1))) =

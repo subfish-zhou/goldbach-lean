@@ -16,38 +16,11 @@ abbrev RawLandauSiegelLowerBound : Prop :=
       χ.IsPrimitive → χ ^ 2 = 1 → χ ≠ 1 →
       c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re
 
-private theorem rpow_one_add_inv_log_nat (N : ℕ) (hN : 1 < N) :
-    (N : ℝ) ^ (1 + (Real.log (N : ℝ))⁻¹) = Real.exp 1 * N := by
-  have hNr : (0 : ℝ) < N := by exact_mod_cast (Nat.zero_lt_of_lt hN)
-  have hlog : Real.log (N : ℝ) ≠ 0 := (Real.log_pos (by exact_mod_cast hN)).ne'
-  rw [Real.rpow_add hNr, Real.rpow_one, Real.rpow_def_of_pos hNr]
-  rw [mul_inv_cancel₀ hlog]
-  ring
-
 private theorem quadratic_integral_lower_middle_upper
     (f : ℝ → ℂ) {T : ℝ} (hf : Integrable f) (hT : 0 ≤ T) :
     (∫ t in Iic (-T), f t) + (∫ t in Ioc (-T) T, f t) +
         (∫ t in Ici T, f t) = ∫ t, f t := by
-  have h₁ := integral_add_compl (μ := volume) (s := Iic (-T)) measurableSet_Iic hf
-  have h₂ := integral_add_compl (μ := volume.restrict (Ioi (-T)))
-    (s := Iic T) measurableSet_Iic hf.integrableOn
-  rw [integral_Ici_eq_integral_Ioi]
-  simp only [compl_Iic] at h₁ h₂
-  have hi : Iic T ∩ Ioi (-T) = Ioc (-T) T := by
-    ext x
-    simp only [mem_inter_iff, mem_Iic, mem_Ioi, mem_Ioc]
-    tauto
-  have hc : Ioi T ∩ Ioi (-T) = Ioi T := by
-    ext x
-    simp only [mem_inter_iff, mem_Ioi]
-    constructor
-    · exact fun hx => hx.1
-    · intro hx
-      exact ⟨hx, by linarith⟩
-  rw [Measure.restrict_restrict measurableSet_Iic,
-    Measure.restrict_restrict measurableSet_Ioi] at h₂
-  rw [hi, hc] at h₂
-  linear_combination h₁ + h₂
+  exact AnalyticNumberTheory.LargeSieve.integral_lower_middle_upper f hf hT
 
 /-- The pointwise quadratic contour keeps the conditional left edge but lets
 the right edge move anywhere inside the quarter-width strip. -/
@@ -202,52 +175,47 @@ theorem exists_dirichletLTwistedSmoothedQuadraticPointwiseContourNormBounds
   have hw : 0 < dirichletLQuadraticConditionalCrossZeroWidth A c η q T := by
     dsimp only [dirichletLTwistedSmoothedQuadraticConditionalDelta] at hδwidth
     linarith
+  have hw2 : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ 1 / 2 := by
+    have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
+    have hq1 : (1 : ℝ) ≤ q := by
+      exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
+    have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
+      exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
+        unfold dirichletLNonquadraticConductorLogCutoff
+        exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
+          unfold dirichletLNonquadraticConductorLogHeightBlock
+          omega)))
+    have hcentralH : 0 < dirichletLQuadraticConditionalCentralH q T := by
+      dsimp only [dirichletLQuadraticConditionalCentralH]
+      linarith [Real.log_nonneg hcut]
+    have hτ : 0 < dirichletLQuadraticConditionalCentralHeight c η q T := by
+      dsimp only [dirichletLQuadraticConditionalCentralHeight]
+      exact lt_min hT0 (div_pos (mul_pos hc (Real.rpow_pos_of_pos hq _))
+        (mul_pos (by norm_num) (sq_pos_of_pos hcentralH)))
+    have hH1 : 1 ≤ dirichletLQuadraticConditionalFixedH q
+        (dirichletLQuadraticConditionalCentralHeight c η q T) T := by
+      dsimp only [dirichletLQuadraticConditionalFixedH]
+      have hlog : 0 ≤ Real.log (dirichletLNonquadraticConductorLogCutoff q T) :=
+        Real.log_nonneg hcut
+      have hlogT : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
+      have hinv : 0 < 1 / (2 * dirichletLQuadraticConditionalCentralHeight c η q T) := by
+        positivity
+      linarith
+    have hH : 0 < dirichletLQuadraticConditionalFixedH q
+        (dirichletLQuadraticConditionalCentralHeight c η q T) T :=
+      lt_of_lt_of_le zero_lt_one hH1
+    have hp1 : (q : ℝ) ^ (-2 * η) ≤ 1 := by
+      simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
+    dsimp only [dirichletLQuadraticConditionalCrossZeroWidth]
+    calc
+      A * (q : ℝ) ^ (-2 * η) /
+          dirichletLQuadraticConditionalFixedH q
+              (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 ≤ A := by
+        rw [div_le_iff₀ (pow_pos hH 12)]
+        exact (mul_le_of_le_one_right hA.le hp1).trans
+          (le_mul_of_one_le_right hA.le (one_le_pow₀ hH1 (n := 12)))
+      _ ≤ 1 / 2 := hAhalf
   have hδ1 : δ ≤ 1 := by
-    have hw2 : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ 1 / 2 := by
-      have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
-      have hq1 : (1 : ℝ) ≤ q := by
-        exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-      have hcentralH : 0 < dirichletLQuadraticConditionalCentralH q T := by
-        dsimp only [dirichletLQuadraticConditionalCentralH]
-        have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-          exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-            unfold dirichletLNonquadraticConductorLogCutoff
-            exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-              unfold dirichletLNonquadraticConductorLogHeightBlock
-              omega)))
-        linarith [Real.log_nonneg hcut]
-      have hτ : 0 < dirichletLQuadraticConditionalCentralHeight c η q T := by
-        dsimp only [dirichletLQuadraticConditionalCentralHeight]
-        exact lt_min hT0 (div_pos (mul_pos hc (Real.rpow_pos_of_pos hq _))
-          (mul_pos (by norm_num) (sq_pos_of_pos hcentralH)))
-      have hH1 : 1 ≤ dirichletLQuadraticConditionalFixedH q
-          (dirichletLQuadraticConditionalCentralHeight c η q T) T := by
-        dsimp only [dirichletLQuadraticConditionalFixedH]
-        have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-          exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-            unfold dirichletLNonquadraticConductorLogCutoff
-            exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-              unfold dirichletLNonquadraticConductorLogHeightBlock
-              omega)))
-        have hlog : 0 ≤ Real.log (dirichletLNonquadraticConductorLogCutoff q T) :=
-          Real.log_nonneg hcut
-        have hlogT : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
-        have hinv : 0 < 1 / (2 * dirichletLQuadraticConditionalCentralHeight c η q T) := by
-          positivity
-        linarith
-      have hH : 0 < dirichletLQuadraticConditionalFixedH q
-          (dirichletLQuadraticConditionalCentralHeight c η q T) T :=
-        lt_of_lt_of_le zero_lt_one hH1
-      have hp1 : (q : ℝ) ^ (-2 * η) ≤ 1 := by
-        simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
-      dsimp only [dirichletLQuadraticConditionalCrossZeroWidth]
-      calc
-        A * (q : ℝ) ^ (-2 * η) /
-            dirichletLQuadraticConditionalFixedH q
-                (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 ≤ A := by
-          rw [div_le_iff₀ (pow_pos hH 12)]
-          nlinarith [one_le_pow₀ hH1 (n := 12), mul_le_of_le_one_right hA.le hp1]
-        _ ≤ 1 / 2 := hAhalf
     dsimp only [dirichletLTwistedSmoothedQuadraticConditionalDelta] at hδwidth
     linarith
   have hbase' := hbase Z hZ hzeta χ hquad hχ hA hAc hAhalf hAsmall hc hη
@@ -257,7 +225,8 @@ theorem exists_dirichletLTwistedSmoothedQuadraticPointwiseContourNormBounds
           a (-T) T‖ ≤ (C₀ + 16 * M) * T * Q * X ^ a / ε := by
     have hleft := hbase'.1
     have hfactor : 0 ≤ T * Q * X ^ a / ε := by positivity
-    have hcoef : C₀ ≤ C₀ + 16 * M := by nlinarith [hM.le]
+    have hcoef : C₀ ≤ C₀ + 16 * M :=
+      le_add_of_nonneg_right (mul_nonneg (by norm_num) hM.le)
     calc
       _ ≤ C₀ * T * Q * X ^ a / ε := hleft
       _ ≤ (C₀ + 16 * M) * T * Q * X ^ a / ε := by
@@ -270,56 +239,7 @@ theorem exists_dirichletLTwistedSmoothedQuadraticPointwiseContourNormBounds
     linarith
   have ha : (1 / 2 : ℝ) ≤ a := by
     dsimp only [a, dirichletLTwistedSmoothedQuadraticConditionalLeft]
-    have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
-    have hp1 : (q : ℝ) ^ (-2 * η) ≤ 1 := by
-      have hq1 : (1 : ℝ) ≤ q := by
-        exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-      simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
-    have hcentralH : 0 < dirichletLQuadraticConditionalCentralH q T := by
-      dsimp only [dirichletLQuadraticConditionalCentralH]
-      have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-        exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-          unfold dirichletLNonquadraticConductorLogCutoff
-          exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-            unfold dirichletLNonquadraticConductorLogHeightBlock
-            omega)))
-      linarith [Real.log_nonneg hcut]
-    have hτ : 0 < dirichletLQuadraticConditionalCentralHeight c η q T := by
-      dsimp only [dirichletLQuadraticConditionalCentralHeight]
-      exact lt_min hT0 (div_pos (mul_pos (show 0 < c by linarith)
-        (Real.rpow_pos_of_pos hq _)) (mul_pos (by norm_num) (sq_pos_of_pos hcentralH)))
-    have hH1 : 1 ≤ dirichletLQuadraticConditionalFixedH q
-        (dirichletLQuadraticConditionalCentralHeight c η q T) T := by
-      dsimp only [dirichletLQuadraticConditionalFixedH]
-      have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-        exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-          unfold dirichletLNonquadraticConductorLogCutoff
-          exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-            unfold dirichletLNonquadraticConductorLogHeightBlock
-            omega)))
-      have hlog : 0 ≤ Real.log (dirichletLNonquadraticConductorLogCutoff q T) :=
-        Real.log_nonneg hcut
-      have hlogT : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
-      have hinv : 0 < 1 / (2 * dirichletLQuadraticConditionalCentralHeight c η q T) := by
-        positivity
-      linarith
-    have hH : 0 < dirichletLQuadraticConditionalFixedH q
-        (dirichletLQuadraticConditionalCentralHeight c η q T) T :=
-      lt_of_lt_of_le zero_lt_one hH1
-    calc
-      1 / 2 ≤ 1 - dirichletLQuadraticConditionalCrossZeroWidth A c η q T := by
-        dsimp only [dirichletLQuadraticConditionalCrossZeroWidth]
-        have hpow : 1 ≤ dirichletLQuadraticConditionalFixedH q
-            (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 := one_le_pow₀ hH1
-        have hAq : A * (q : ℝ) ^ (-2 * η) ≤ A := mul_le_of_le_one_right hA.le hp1
-        have hsmall :
-            A * (q : ℝ) ^ (-2 * η) /
-              dirichletLQuadraticConditionalFixedH q
-                (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 ≤ A := by
-          rw [div_le_iff₀ (pow_pos hH 12)]
-          nlinarith
-        linarith
-      _ ≤ a := by rfl
+    linarith only [hw2]
   have horizontalPoint (σ t : ℝ) (hσa : a ≤ σ) (hσb : σ ≤ 1 + δ) (ht' : |t| = T) :
       ‖DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X (σ + t * I)‖ ≤
         (2 * Q) * (2 * M / (ε * (1 + T ^ 2))) * X ^ (1 + δ) := by
@@ -744,6 +664,10 @@ private theorem eventually_log_rpow_mul_exp_le_one
       nlinarith
     _ = 1 := Real.exp_zero
 
+private theorem eventually_log_pow_le_sqrt_nat (k : ℕ) :
+    ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ k ≤ Real.sqrt N := by
+  exact log_pow_le_sqrt_eventually k
+
 set_option maxHeartbeats 1600000
 /-- Uniform coarse control of the two genuinely quadratic scales.  In
 particular this expands the `τ⁻¹` contribution inside `FixedH`; it is not a
@@ -1066,31 +990,8 @@ theorem eventually_quadraticPointwiseSW_four_payments
   have hdecayN := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hdecay
   have hlogtop : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  have hsqrtReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * (P + 4))).eventuallyLE
-  have hsqrtNat := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtReal
-  have hsqrtEReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * E)).eventuallyLE
-  have hsqrtENat := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtEReal
-  have hsqrtE : ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ E ≤ Real.sqrt N := by
-    filter_upwards [hsqrtENat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * E = E * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
-  have hsqrt : ∀ᶠ N : ℕ in atTop,
-      Real.log (N : ℝ) ^ (P + 4) ≤ Real.sqrt N := by
-    filter_upwards [hsqrtNat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * (P + 4) = (P + 4) * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
+  have hsqrt := eventually_log_pow_le_sqrt_nat (P + 4)
+  have hsqrtE := eventually_log_pow_le_sqrt_nat E
   filter_upwards [hscale, hdecayN, hsqrt, hsqrtE,
       hlogtop.eventually (eventually_ge_atTop (Real.exp 2)),
       eventually_const_le_log_rpow 4 (7 / 8 : ℝ) (by norm_num),
@@ -1304,34 +1205,9 @@ theorem exists_quadraticPointwiseSiegelWalfisz_uniform
   let K : ℝ := K₀ + 2 * c₀
   refine ⟨K, by dsimp only [K, c₀]; positivity, ?_⟩
   have hpay := eventually_quadraticPointwiseSW_four_payments c A hc hA C D
-  have hsqrtReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * D)).eventuallyLE
-  have hsqrtNat := (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtReal
-  have hsqrt : ∀ᶠ N : ℕ in atTop,
-      Real.log (N : ℝ) ^ D ≤ Real.sqrt N := by
-    filter_upwards [hsqrtNat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * D = D * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
+  have hsqrt := eventually_log_pow_le_sqrt_nat D
   let P := D + 40
-  have hsqrtStrongReal :=
-    (Real.isLittleO_pow_log_id_atTop (n := 2 * (P + 4))).eventuallyLE
-  have hsqrtStrongNat :=
-    (tendsto_natCast_atTop_atTop (R := ℝ)).eventually hsqrtStrongReal
-  have hsqrtStrong : ∀ᶠ N : ℕ in atTop,
-      Real.log (N : ℝ) ^ (P + 4) ≤ Real.sqrt N := by
-    filter_upwards [hsqrtStrongNat, eventually_ge_atTop (2 : ℕ)] with N hlog hN2
-    have hN0 : (0 : ℝ) ≤ N := by positivity
-    have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-      exact_mod_cast (show 1 ≤ N by omega))
-    rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hlog0 _),
-      Real.norm_eq_abs, id_eq, abs_of_nonneg hN0] at hlog
-    rw [show 2 * (P + 4) = (P + 4) * 2 by omega, pow_mul] at hlog
-    nlinarith [Real.sq_sqrt hN0, Real.sqrt_nonneg (N : ℝ)]
+  have hsqrtStrong := eventually_log_pow_le_sqrt_nat (P + 4)
   have hlogtop : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
     Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
   have hlog4ev := hlogtop.eventually (eventually_ge_atTop (4 : ℝ))

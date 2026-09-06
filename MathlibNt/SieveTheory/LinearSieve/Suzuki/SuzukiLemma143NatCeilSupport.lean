@@ -65,16 +65,17 @@ theorem suzukiSourceOuterCarrier_rpow_eq_empty
     (hD : 1 < D) (hs : 0 < s) (hns : (n : ℝ) + 2 ≤ s) :
     suzukiSourceOuterCarrierPowerReal n D ((D : ℝ) ^ (1 / s))
         S.prodPrimes.primeFactors = ∅ := by
-  ext p
+  have hempty := suzukiSourceLowerCarrier_rpow_eq_empty S hD hs hns
+  ext prime
   constructor
   · intro hp
-    simp only [suzukiSourceOuterCarrierPowerReal, Finset.mem_filter] at hp
-    rcases hp with ⟨⟨hpP, hplt⟩, hDpow, _⟩
-    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpP
-    have hpowlt : p ^ (n + 2) < D :=
-      nat_pow_lt_of_lt_rpow_one_div hD hs hplt hpPrime.one_le (by
-        exact_mod_cast hns)
-    omega
+    have hpLower : prime ∈
+        (suzukiSupportedBelowPowerReal S ((D : ℝ) ^ (1 / s))).filter
+          (fun p => D ≤ p ^ (n + 2)) :=
+      Finset.mem_filter.mpr
+        ⟨(Finset.mem_filter.mp hp).1, (Finset.mem_filter.mp hp).2.1⟩
+    rw [hempty] at hpLower
+    exact hpLower
   · intro hp
     simp at hp
 

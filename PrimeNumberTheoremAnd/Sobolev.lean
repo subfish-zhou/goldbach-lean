@@ -28,10 +28,7 @@ section lemmas
 noncomputable def funscale {E : Type*} (g : ℝ → E) (R x : ℝ) : E := g (R⁻¹ • x)
 
 lemma contDiff_ofReal : ContDiff ℝ ∞ ofReal := by
-  have key x : HasDerivAt ofReal 1 x := hasDerivAt_id x |>.ofReal_comp
-  have key' : deriv ofReal = fun _ => 1 := by ext x ; exact (key x).deriv
-  refine contDiff_infty_iff_deriv.mpr ⟨fun x => (key x).differentiableAt, ?_⟩
-  simpa [key'] using contDiff_const
+  exact Complex.ofRealCLM.contDiff
 
 omit [NormedSpace ℝ E] in
 lemma tendsto_funscale {f : ℝ → E} (hf : ContinuousAt f 0) (x : ℝ) :
@@ -143,16 +140,8 @@ lemma differentiable (f : W1 (n + 1) E) : Differentiable ℝ f :=
 
 lemma iteratedDeriv_sub {f g : ℝ → E} (hf : ContDiff ℝ n f) (hg : ContDiff ℝ n g) :
     iteratedDeriv n (f - g) = iteratedDeriv n f - iteratedDeriv n g := by
-  induction n generalizing f g with
-  | zero => rfl
-  | succ n ih =>
-    have hf' : ContDiff ℝ n (deriv f) := hf.iterate_deriv' n 1
-    have hg' : ContDiff ℝ n (deriv g) := hg.iterate_deriv' n 1
-    have hfg : deriv (f - g) = deriv f - deriv g := by
-      ext x ; apply deriv_sub
-      · exact (hf.differentiable (by simp)).differentiableAt
-      · exact (hg.differentiable (by simp)).differentiableAt
-    simp_rw [iteratedDeriv_succ', ← ih hf' hg', hfg]
+  ext x
+  exact _root_.iteratedDeriv_sub hf.contDiffAt hg.contDiffAt
 
 noncomputable def deriv (f : W1 (n + 1) E) : W1 n E where
   toFun := _root_.deriv f

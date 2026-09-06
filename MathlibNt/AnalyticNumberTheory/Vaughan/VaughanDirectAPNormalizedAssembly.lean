@@ -172,10 +172,7 @@ theorem direct_conductor_sum_le_apNormalizedPrimitive
         conductorHarmonicFactor Q ^ 2 *
           (((d.totient : ℝ)⁻¹) *
             ∑ ψ : PrimitiveCharacter d, primitivePrefixAmplitude a N d ψ) := by
-      apply Finset.sum_congr rfl
-      intro d hd
-      rw [div_eq_mul_inv]
-      ring
+      simp only [div_eq_mul_inv, mul_assoc]
     _ ≤ ∑ d ∈ Finset.Icc 1 Q,
         conductorHarmonicFactor Q ^ 2 *
           (((d.totient : ℝ)⁻¹) *
@@ -253,21 +250,18 @@ theorem direct_L1_vaughan_apNormalized_physical_assembly
     unfold VaughanDirectAPNormalizedTypeIInput at hI
     unfold VaughanDirectAPNormalizedTypeIIInput at hII
     unfold vaughanDirectPhysicalMajorant
-    have hN0 : 0 ≤ (N : ℝ) := by positivity
-    have hqbase0 : 0 ≤ (Q : ℝ) ^ 2 * Real.sqrt N := by positivity
-    have htail0 : 0 ≤ (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ) := by positivity
+    have hKL : 0 ≤ K * logPay := mul_nonneg hK hlogPay
     calc
       _ ≤ K * logPay * ((N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N) +
           K * logPay * ((N : ℝ) +
             (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ)) := add_le_add hI hII
       _ ≤ 2 * (K * logPay * ((N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N +
             (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ))) := by
-        have hKL : 0 ≤ K * logPay := mul_nonneg hK hlogPay
-        have hn := mul_nonneg hKL hN0
-        have hb := mul_nonneg hKL hqbase0
-        have ht := mul_nonneg hKL htail0
-        ring_nf at *
-        nlinarith
+        rw [two_mul]
+        apply add_le_add
+        · exact mul_le_mul_of_nonneg_left (le_add_of_nonneg_right (by positivity)) hKL
+        · apply mul_le_mul_of_nonneg_left _ hKL
+          exact add_le_add (le_add_of_nonneg_right (by positivity)) le_rfl
   calc
     _ ≤ directAllCharacterMean vonMangoldtIntegerCoeff N Q := hstart
     _ ≤ 2 * conductorHarmonicFactor Q ^ 2 *
@@ -279,11 +273,14 @@ theorem direct_L1_vaughan_apNormalized_physical_assembly
             apNormalizedVaughanSmallMean N Q v)) +
         2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by
       gcongr
+    _ = 4 * conductorHarmonicFactor Q ^ 2 *
+          (apNormalizedVaughanTypeIMean N Q u v +
+            apNormalizedVaughanTypeIIMean N Q u v +
+            apNormalizedVaughanSmallMean N Q v) +
+        2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by ring
     _ ≤ _ := by
-      have hs0 : 0 ≤ apNormalizedVaughanSmallMean N Q v :=
-        apNormalizedPrimitiveMean_nonneg _ _ _
-      have hH0 : 0 ≤ conductorHarmonicFactor Q ^ 2 := sq_nonneg _
-      nlinarith [mul_le_mul_of_nonneg_left hlanes hH0]
+      apply add_le_add _ le_rfl
+      exact mul_le_mul_of_nonneg_left (add_le_add hlanes le_rfl) (by positivity)
 
 end
 

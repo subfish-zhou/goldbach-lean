@@ -72,14 +72,6 @@ private theorem highConductor_subset_full {R Q : ℕ} :
   simp only [Finset.mem_Ioc, Finset.mem_Icc] at hd ⊢
   omega
 
-private theorem primitiveCharacterPrefixMaxSquare_nonneg
-    (b : ℤ → ℂ) (M : ℤ) (L d : ℕ) (χ : PrimitiveCharacter d) :
-    0 ≤ primitiveCharacterPrefixMaxSquare b M L d χ := by
-  unfold primitiveCharacterPrefixMaxSquare
-  apply Finset.le_max'
-  exact Finset.mem_image.mpr ⟨0, by simp,
-    by simp [primitiveCharacterPrefixSquare]⟩
-
 /-- The physical cutoff and shell lower endpoint force support in the common
 short interval. -/
 theorem vaughanTypeIICollectedRowCoefficient_eq_zero_of_length_lt
@@ -108,15 +100,7 @@ private theorem norm_sum_mul_sq_le
     (a z : ι → ℂ) :
     ‖∑ i ∈ s, a i * z i‖ ^ 2 ≤
       (∑ i ∈ s, ‖a i‖ ^ 2) * (∑ i ∈ s, ‖z i‖ ^ 2) := by
-  have hn : ‖∑ i ∈ s, a i * z i‖ ≤ ∑ i ∈ s, ‖a i‖ * ‖z i‖ := by
-    calc
-      _ ≤ ∑ i ∈ s, ‖a i * z i‖ := norm_sum_le _ _
-      _ = _ := by simp_rw [norm_mul]
-  calc
-    ‖∑ i ∈ s, a i * z i‖ ^ 2 ≤ (∑ i ∈ s, ‖a i‖ * ‖z i‖) ^ 2 :=
-      pow_le_pow_left₀ (norm_nonneg _) hn 2
-    _ ≤ (∑ i ∈ s, ‖a i‖ ^ 2) * (∑ i ∈ s, ‖z i‖ ^ 2) :=
-      Finset.sum_mul_sq_le_sq_mul_sq s (fun i => ‖a i‖) (fun i => ‖z i‖)
+  exact finiteComplexCauchy s a z
 
 /-- Row Cauchy for the literal collected shell, with each row controlled by its
 own complete canonical prefix maximum. -/
@@ -278,21 +262,10 @@ theorem vaughanTypeIIFixedShell_largeSieve_scale (N Q k : ℕ) :
   have hdiag :
       (2 ^ k : ℝ) * (vaughanTypeIIFixedShellLength N k : ℝ) ≤ (N : ℝ) := by
     exact_mod_cast vaughanTypeIIFixedShell_diagonal_scale N k
+  -- Distribute the shell scale; the modulus term is identical on both sides.
   unfold primitiveLargeSieveConstant
-  calc
-    (2 ^ k : ℝ) *
-        ((vaughanTypeIIFixedShellLength N k : ℝ) +
-          (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-            (Q : ℝ) ^ 2) =
-      (2 ^ k : ℝ) * (vaughanTypeIIFixedShellLength N k : ℝ) +
-        (2 ^ k : ℝ) *
-          (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-            (Q : ℝ) ^ 2 := by ring
-    _ ≤ _ :=
-      add_le_add_left hdiag
-        ((2 ^ k : ℝ) *
-          (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-            (Q : ℝ) ^ 2)
+  rw [mul_add, ← mul_assoc]
+  exact add_le_add_left hdiag _
 
 end
 end AnalyticNumberTheory.LargeSieve

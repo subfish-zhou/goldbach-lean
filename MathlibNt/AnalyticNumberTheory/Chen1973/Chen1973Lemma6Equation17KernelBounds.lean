@@ -38,11 +38,8 @@ theorem chen1973Lemma6_eq17_one_le_norm_one_add_div
     {A : ℝ} (hA : 0 < A) {s : ℂ} (hs : 0 ≤ s.re) :
     1 ≤ ‖1 + s / (A : ℂ)‖ := by
   have hre : 1 ≤ (1 + s / (A : ℂ)).re := by
-    simp [Complex.div_re]
-    positivity
-  calc
-    1 ≤ |(1 + s / (A : ℂ)).re| := hre.trans (le_abs_self _)
-    _ ≤ ‖1 + s / (A : ℂ)‖ := Complex.abs_re_le_norm _
+    simpa using (le_add_of_nonneg_right (a := (1 : ℝ)) (div_nonneg hs hA.le))
+  exact hre.trans (Complex.re_le_norm _)
 
 /-- Since `n+1 ≥ 1`, the exact Mellin power dominates its first factor on the
 closed right half-plane. -/
@@ -62,12 +59,7 @@ theorem chen1973Lemma6_eq17_radial_le_sqrt_two_mul_complex
   have hnormsq : ‖1 + s / (A : ℂ)‖ ^ 2 =
       (1 + s.re / A) ^ 2 + (s.im / A) ^ 2 := by
     rw [Complex.sq_norm]
-    simp only [Complex.normSq_apply, Complex.add_re, Complex.one_re,
-      Complex.div_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero,
-      add_zero, Complex.add_im, Complex.one_im, zero_add, Complex.div_im,
-      pow_two]
-    field_simp [hA.ne']
-    ring
+    simp [Complex.normSq_apply, pow_two]
   have hs_norm_sq : ‖s‖ ^ 2 = s.re ^ 2 + s.im ^ 2 := by
     rw [Complex.sq_norm]
     simp [Complex.normSq_apply, pow_two]
@@ -75,7 +67,7 @@ theorem chen1973Lemma6_eq17_radial_le_sqrt_two_mul_complex
       (Real.sqrt 2 * ‖1 + s / (A : ℂ)‖) ^ 2 := by
     rw [mul_pow, hsqrt_sq, hnormsq]
     field_simp [hA.ne']
-    nlinarith [sq_nonneg (A - ‖s‖)]
+    nlinarith only [hs_norm_sq, sq_nonneg (A - ‖s‖), mul_nonneg hA.le hs]
   exact (sq_le_sq₀ (by positivity) (by positivity)).mp hsq
 
 /-- Comparison of the exact complex Mellin denominator with the literal
@@ -101,7 +93,6 @@ theorem chen1973Lemma6_eq17_mellinKernel_norm_le_radial
   have hpowpos : 0 < ‖1 + s / (A : ℂ)‖ ^ N :=
     pow_pos (zero_lt_one.trans_le hbase) _
   have hradpos : 0 < (1 + ‖s‖ / A) ^ N := pow_pos (by positivity) _
-  have hsqrt0 : 0 ≤ Real.sqrt 2 := Real.sqrt_nonneg _
   unfold chen1973MellinKernel chen1973Lemma6Eq17Kernel
   rw [norm_div, norm_one, norm_mul, norm_pow]
   change 1 / (‖s‖ * ‖1 + s / (A : ℂ)‖ ^ N) ≤
@@ -124,10 +115,8 @@ theorem chen1973Lemma6_eq17_one_le_log_and_order {x : ℕ} (hx : 3 ≤ x) :
     (1 : ℝ) ≤ Real.log x ∧ 1 ≤ chen1973PerronOrder (x : ℝ) := by
   have hxR : (3 : ℝ) ≤ x := by exact_mod_cast hx
   have hlog : (1 : ℝ) < Real.log x := by
-    have h := Real.strictMonoOn_log (Real.exp_pos 1)
-      (show (0 : ℝ) < (x : ℝ) by exact_mod_cast (show 0 < x by omega))
+    exact (Real.lt_log_iff_exp_lt (by positivity)).2
       (Real.exp_one_lt_three.trans_le hxR)
-    simpa using h
   refine ⟨hlog.le, ?_⟩
   unfold chen1973PerronOrder
   have hcast : ((1 : ℕ) : ℝ) ≤ Real.log x := by simpa using hlog.le
@@ -154,12 +143,8 @@ theorem chen1973Lemma6_eq17_kernel_pos {x : ℕ} (hx : 1 < x)
     {σ v : ℝ} (hσ : 0 < σ) :
     0 < chen1973Lemma6Eq17Kernel x (σ + v * I) := by
   unfold chen1973Lemma6Eq17Kernel
-  have hs : 0 < ‖((σ : ℂ) + (v : ℂ) * I)‖ := by
-    rw [norm_pos_iff]
-    intro h
-    have := congrArg Complex.re h
-    simp at this
-    linarith
+  have hs : 0 < ‖((σ : ℂ) + (v : ℂ) * I)‖ :=
+    hσ.trans_le (by simpa using Complex.re_le_norm ((σ : ℂ) + (v : ℂ) * I))
   have ha := chen1973Lemma6_eq17_perronScale_pos hx
   exact mul_pos hs (by positivity)
 
@@ -182,9 +167,9 @@ theorem chen1973Lemma6_eq17_cauchy_le_kernel
   have hrsq : r ^ 2 = σ ^ 2 + v ^ 2 :=
     chen1973Lemma6_eq17_vertical_norm_sq σ v
   have hσr : σ ≤ r := by
-    nlinarith [sq_nonneg v, sq_nonneg (r - σ)]
-  have hvr : v ^ 2 ≤ r ^ 2 := by nlinarith [sq_nonneg σ]
-  have hσa : σ ≤ 2 * a := by nlinarith
+    simpa [r] using Complex.re_le_norm ((σ : ℂ) + (v : ℂ) * I)
+  have hvr : v ^ 2 ≤ r ^ 2 := by nlinarith only [hrsq, sq_nonneg σ]
+  have hσa : σ ≤ 2 * a := hσupper.trans (by linarith only [ha1])
   have hpow : 1 + r / a ≤
       (1 + r / a) ^ (chen1973PerronOrder (x : ℝ) + 1) := by
     simpa using pow_le_pow_right₀
@@ -204,7 +189,7 @@ theorem chen1973Lemma6_eq17_cauchy_le_kernel
   have hfirstPower : (1 / 2 : ℝ) * σ * (1 + (v / a) ^ 2) ≤
       r * (1 + r / a) := by
     field_simp [ha.ne']
-    nlinarith
+    nlinarith only [hfirst, hsecond, mul_nonneg hr0 (sq_nonneg a)]
   exact hfirstPower.trans (mul_le_mul_of_nonneg_left hpow hr0)
 
 /-- Every fixed natural radial power up to the source order is retained by
@@ -458,10 +443,7 @@ theorem chen1973Lemma6_eq17_conductorWeight_le_divisorSquare
         (3 : ℝ) ^ d.primeFactors.card / d ≤
       (d.divisors.card : ℝ) ^ 2 / d := by
   have hmu : |((ArithmeticFunction.moebius d : ℤ) : ℝ)| = 1 := by
-    have hsqZ := ArithmeticFunction.moebius_sq_eq_one_of_squarefree hd
-    have hsqR : (((ArithmeticFunction.moebius d : ℤ) : ℝ)) ^ 2 = 1 := by
-      exact_mod_cast hsqZ
-    rcases sq_eq_one_iff.mp hsqR with h | h <;> simp [h]
+    exact_mod_cast ArithmeticFunction.abs_moebius_eq_one_of_squarefree hd
   rw [hmu, one_mul]
   exact div_le_div_of_nonneg_right
     (eq17_three_pow_primeFactors_card_le_divisors_card_sq hd) (by positivity)

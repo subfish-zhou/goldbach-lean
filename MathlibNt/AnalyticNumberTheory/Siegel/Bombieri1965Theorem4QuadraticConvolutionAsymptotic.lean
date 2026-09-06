@@ -80,16 +80,18 @@ theorem IsPrimitive.abs_quadratic_convolution_sub_LValue_main_le
     _ ≤ (X.sqrt : ℝ) +
         (8 * Real.sqrt q * (1 + Real.log q)) * ((X / X.sqrt : ℕ) : ℝ) +
         (X : ℝ) * (2 * (q : ℝ) / (X.sqrt : ℝ)) := by
-      gcongr
-      simpa only [abs_sub_comm] using htail
+      exact add_le_add hdisc (mul_le_mul_of_nonneg_left
+        (by simpa only [abs_sub_comm] using htail) (Nat.cast_nonneg X))
     _ ≤ Real.sqrt X + (24 * q) * ((X : ℝ) / (X.sqrt : ℝ)) +
         (X : ℝ) * (2 * (q : ℝ) / (X.sqrt : ℝ)) := by
       gcongr
       exact Nat.cast_div_le
     _ = Real.sqrt X + (26 * q) * ((X : ℝ) / (X.sqrt : ℝ)) := by ring
     _ ≤ Real.sqrt X + (26 * q) * (3 * Real.sqrt X) := by gcongr
-    _ ≤ 79 * q * Real.sqrt X := by
-      nlinarith [Real.sqrt_nonneg (X : ℝ)]
+    -- Absorb the remaining square-root term using q ≥ 1.
+    _ ≤ q * Real.sqrt X + (26 * q) * (3 * Real.sqrt X) :=
+      add_le_add (le_mul_of_one_le_left (Real.sqrt_nonneg _) hqR) le_rfl
+    _ = 79 * q * Real.sqrt X := by ring
 
 /-- Real-endpoint version, with the floor error paid by the actual harmonic
 tail estimate at one. This is the summatory input for partial summation. -/
@@ -105,8 +107,8 @@ theorem IsPrimitive.abs_quadratic_convolution_floor_sub_LValue_main_le
   have hL : |(χ.LFunction 1).re| ≤ 2 * q := (Complex.abs_re_le_norm _).trans hnorm
   have hfloor : (⌊x⌋₊ : ℝ) ≤ x := Nat.floor_le (by linarith)
   have herror : |(⌊x⌋₊ : ℝ) - x| ≤ 1 := by
-    rw [abs_le]
-    constructor <;> linarith [Nat.lt_floor_add_one x]
+    rw [abs_of_nonpos (sub_nonpos.mpr hfloor)]
+    linarith only [Nat.lt_floor_add_one x]
   have hsqrt : Real.sqrt (⌊x⌋₊ : ℝ) ≤ Real.sqrt x := Real.sqrt_le_sqrt hfloor
   have hsqrt1 : 1 ≤ Real.sqrt x :=
     (Real.le_sqrt (by norm_num) (by linarith)).mpr (by simpa using hx)
@@ -123,6 +125,11 @@ theorem IsPrimitive.abs_quadratic_convolution_floor_sub_LValue_main_le
           (((⌊x⌋₊ : ℝ) - x) * (χ.LFunction 1).re)
     _ ≤ 79 * q * Real.sqrt (⌊x⌋₊ : ℝ) + 1 * (2 * q) := by gcongr
     _ ≤ 79 * q * Real.sqrt x + 1 * (2 * q) := by gcongr
-    _ ≤ 81 * q * Real.sqrt x := by nlinarith [(Nat.cast_nonneg q : (0 : ℝ) ≤ q)]
+    -- Since x ≥ 1, the endpoint error also fits the square-root budget.
+    _ ≤ 79 * q * Real.sqrt x + (2 * q) * Real.sqrt x := by
+      exact add_le_add le_rfl (by
+        simpa only [one_mul] using
+          le_mul_of_one_le_right (by positivity : 0 ≤ 2 * (q : ℝ)) hsqrt1)
+    _ = 81 * q * Real.sqrt x := by ring
 
 end AnalyticNumberTheory.LargeSieve.Bombieri1965Theorem4

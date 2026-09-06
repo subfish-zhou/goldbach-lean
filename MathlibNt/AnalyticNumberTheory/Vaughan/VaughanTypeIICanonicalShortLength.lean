@@ -32,12 +32,6 @@ def vaughanCanonicalShortTensorEnergy
       ‖vaughanBilinearTensorCoeff β c y d
         (vaughanCanonicalDyadicBlock N v l) t‖ ^ 2
 
-private lemma nat_of_int_Icc_le {t : ℤ} {X : ℕ}
-    (ht : t ∈ Finset.Icc (1 : ℤ) X) : t.toNat ≤ X := by
-  have ht0 : 0 ≤ t := le_trans (by norm_num) (Finset.mem_Icc.mp ht).1
-  have htcast : (t.toNat : ℤ) = t := Int.toNat_of_nonneg ht0
-  exact_mod_cast htcast.trans_le (Finset.mem_Icc.mp ht).2
-
 /-- Every actual `t=e*m` fibre on level `k` lies below `y / 2^k`.
 This uses the closed lower shell endpoint `2^k ≤ d`; in particular `k=0`
 gives the literal bound `t ≤ y`. -/
@@ -194,7 +188,8 @@ theorem pow_mul_primitiveLargeSieveConstant_short_le
   have hlen : ((2 ^ k * vaughanCanonicalTensorLength y k : ℕ) : ℝ) ≤ (y : ℝ) := by
     exact_mod_cast pow_mul_vaughanCanonicalTensorLength_le y k
   push_cast at hlen ⊢
-  nlinarith
+  rw [mul_add]
+  exact add_le_add hlen le_rfl
 
 /-- Primitive row-prefix bound with the shell energy already paid and the
 short large-sieve constant expanded.  This is the formal cancellation
@@ -250,49 +245,7 @@ theorem imprimitive_conductor_window_family_le_linear_typeII
       ((Q / C : ℕ) : ℝ) * conductorHarmonicFactor (Q / C) *
         ∑ d ∈ Finset.Icc 1 (2 * C),
           ((d : ℝ) / (d.totient : ℝ)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-  calc
-    _ ≤ ∑ d ∈ Finset.Icc C (2 * C),
-        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
-          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_le_sum
-      intro d hdmem
-      have hd : 0 < d := hC.trans_le (Finset.mem_Icc.mp hdmem).1
-      have hdiv : Q / d ≤ Q / C :=
-        Nat.div_le_div_left (Finset.mem_Icc.mp hdmem).1 hC
-      have hharm : conductorHarmonicFactor (Q / d) ≤
-          conductorHarmonicFactor (Q / C) := by
-        unfold conductorHarmonicFactor
-        apply Finset.sum_le_sum_of_subset_of_nonneg
-        · exact Finset.Icc_subset_Icc_right hdiv
-        · intro e he hnot
-          positivity
-      have hsum : 0 ≤ ∑ ψ : PrimitiveCharacter d, F d ψ :=
-        Finset.sum_nonneg fun ψ _ => hF d ψ
-      apply mul_le_mul_of_nonneg_right _ hsum
-      refine (imprimitiveConductorWeight_le_linear_harmonic Q d hd).trans ?_
-      have hh0 := conductorHarmonicFactor_nonneg (Q / d)
-      gcongr
-    _ ≤ ∑ d ∈ Finset.Icc 1 (2 * C),
-        (((d : ℝ) / (d.totient : ℝ)) * ((Q / C : ℕ) : ℝ) *
-          conductorHarmonicFactor (Q / C)) * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_le_sum_of_subset_of_nonneg
-      · intro d hd
-        exact Finset.mem_Icc.mpr ⟨hC.trans_le (Finset.mem_Icc.mp hd).1,
-          (Finset.mem_Icc.mp hd).2⟩
-      · intro d hd hnot
-        have hd0 : 0 < d := (Finset.mem_Icc.mp hd).1
-        have hφ0 : (0 : ℝ) < d.totient := by
-          exact_mod_cast Nat.totient_pos.mpr hd0
-        exact mul_nonneg
-          (mul_nonneg
-            (mul_nonneg (div_nonneg (by positivity) hφ0.le) (by positivity))
-            (conductorHarmonicFactor_nonneg _))
-          (Finset.sum_nonneg fun ψ _ => hF d ψ)
-    _ = _ := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro d hd
-      ring
+  exact imprimitive_conductor_window_le_weighted_primitive_linear F hF Q C hC
 
 /-- Conductor-window summary for the complete row-prefix maximum.  Combining
 this with `weighted_primitive_vaughanCanonicalTensorPrefix` at cap `2*C` and

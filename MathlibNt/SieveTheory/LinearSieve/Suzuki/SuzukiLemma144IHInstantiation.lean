@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion
 
 open scoped Classical BigOperators
 open Finset Set
@@ -67,12 +68,7 @@ theorem recursiveCoordinate_power_identity
 theorem parityDomain_mono {β : ℝ} {n : ℕ} {x y : ℝ}
     (hx : x ∈ KappaOneModel.parityDomain β n) (hxy : x ≤ y) :
     y ∈ KappaOneModel.parityDomain β n := by
-  unfold KappaOneModel.parityDomain at hx ⊢
-  by_cases hodd : n % 2 = 1
-  · rw [if_pos hodd] at hx ⊢
-    exact hx.trans_le hxy
-  · rw [if_neg hodd] at hx ⊢
-    exact hx.trans hxy
+  exact MathlibNt.SieveTheory.SwitchingPrinciple.parityDomain_upperClosed hx hxy
 
 /-- Internalize the global Lemma-14.4 induction hypothesis at every carrier
 point of (14.10).

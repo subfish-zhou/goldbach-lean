@@ -26,8 +26,7 @@ theorem eq19Beta_actual_linear
   have hl : 0 < Real.log (x : ℝ) := Real.log_pos (by exact_mod_cast (show 1 < x by omega))
   have hβ : 1/2 ≤ chen1973Lemma6Beta x := by
     unfold chen1973Lemma6Beta
-    have hh : (0 : ℝ) ≤ 1/Real.log (x : ℝ) := by positivity
-    linarith
+    exact le_add_of_nonneg_right (by positivity)
   have hp := chen1973Lemma6_eq19_dyadic_pair_second_moment_scalar
     x L level B k m D Q hx hB (chen1973Lemma6Beta x) v hβ hD hcell
   have hm := chen1973Lemma6_eq19_mobius_fourth_moment_uniform
@@ -74,8 +73,7 @@ theorem eq19Beta_integrable_and_budget
   have hl : 0 < Real.log (x : ℝ) := Real.log_pos (by exact_mod_cast (show 1 < x by omega))
   have hβ : 1/2 ≤ chen1973Lemma6Beta x := by
     unfold chen1973Lemma6Beta
-    have hh : (0 : ℝ) ≤ 1/Real.log (x : ℝ) := by positivity
-    linarith
+    exact le_add_of_nonneg_right (by positivity)
   apply eq20_corrected_linear_integrable_and_bound hx hβ
     (show 0 ≤ eq19BetaLinearCoefficient x L level B k H D Q by
       unfold eq19BetaLinearCoefficient; positivity)
@@ -191,10 +189,9 @@ lemma eq19Beta_printedHeight_upper {x L B lastD level k : ℕ}
   have hR : 1 ≤ R := by
     apply le_trans (one_le_pow₀ hu : 1 ≤ u^100)
     exact le_mul_of_one_le_left (by positivity) (one_le_pow₀ (by norm_num))
-  have hT : 1 ≤ R*u^100*J := by
-    calc
-      1 = (1:ℝ)*1*1 := by norm_num
-      _ ≤ R*u^100*J := by gcongr; exact one_le_pow₀ hu
+  have hT : 1 ≤ R*u^100*J :=
+    one_le_mul_of_one_le_of_one_le
+      (one_le_mul_of_one_le_of_one_le hR (one_le_pow₀ hu)) hJ
   have hTeq : chen1973Lemma6Eq19PrintedHeightReal x level = R*u^100*J := by
     dsimp [R, u, J, eq19AlphaQ0, chen1973Lemma6Eq19PrintedHeightReal]
     ring
@@ -253,7 +250,7 @@ lemma eq19Beta_derivative_coefficient {x L B lastD level k : ℕ}
     have hQ1 : 1 ≤ Q := by
       dsimp [Q]
       exact_mod_cast (show 1 ≤ chen1973Lemma6Eq19SourceQ L level by have := chen1973Lemma6Eq19SourceQ_ge_two P; omega)
-    nlinarith
+    exact one_le_mul_of_one_le_of_one_le hQ1 (le_add_of_nonneg_right ha)
   have hlog0 : 0 ≤ 1+Real.log (Q*(1+a)) := by linarith [Real.log_nonneg hbase]
   have hlog : 1+Real.log (Q*(1+a)) ≤ 8*u := by
     have hh : Real.log (Q*(1+a)) ≤ Real.log (Q*4) :=
@@ -397,17 +394,13 @@ lemma eq19Beta_printed_coefficient {x L B lastD level k : ℕ}
   have hD : 0 < D := by dsimp [D]; exact_mod_cast chen1973Lemma6Eq19SourceD_pos P
   have hQ0 : 0 ≤ Q := by dsimp [Q]; positivity
   have hQD : Q = 2*D := by dsimp [Q,D]; exact_mod_cast (eq19Alpha_source_geometry P hQ).1
-  have hJ : 0 ≤ J := by
-    have hh := (eq19Alpha_I_log90 P.hlog_one htt).1
-    dsimp [J]
-    linarith
+  have hJ : 0 ≤ J := zero_le_one.trans (eq19Alpha_I_log90 P.hlog_one htt).1
   have hY : 1 ≤ Y := by
     dsimp [Y]
     exact_mod_cast (show 1 ≤ B*2^k from Nat.mul_pos P.hB (pow_pos (by omega) k))
   have hβ : 1/2 ≤ chen1973Lemma6Beta x := by
     unfold chen1973Lemma6Beta
-    have hi : (0:ℝ) ≤ 1/Real.log (x:ℝ) := by positivity
-    linarith
+    exact le_add_of_nonneg_right (by positivity)
   have hp : Y^(1-2*chen1973Lemma6Beta x) ≤ 1 := by
     simpa using Real.rpow_le_rpow_of_exponent_le hY (show 1-2*chen1973Lemma6Beta x ≤ 0 by linarith)
   have hC := chen1973Lemma6_eq19SharpConstant_pos.le
@@ -501,10 +494,9 @@ theorem chen1973Lemma6_eq19_beta_contribution_small (ε : ℝ) (hε : 0 < ε) (h
   refine ⟨18*Real.pi*eq19BetaNumeratorConstant, by positivity,
     max (max X₁ X₂) (max X₃ X₄), ?_⟩
   intro x hx L B lastD level k m P hcut hQ
-  have hx₁ := (le_max_left X₁ X₂).trans ((le_max_left (max X₁ X₂) (max X₃ X₄)).trans hx)
-  have hx₂ := (le_max_right X₁ X₂).trans ((le_max_left (max X₁ X₂) (max X₃ X₄)).trans hx)
-  have hx₃ := (le_max_left X₃ X₄).trans ((le_max_right (max X₁ X₂) (max X₃ X₄)).trans hx)
-  have hx₄ := (le_max_right X₃ X₄).trans ((le_max_right (max X₁ X₂) (max X₃ X₄)).trans hx)
+  obtain ⟨hx₁₂, hx₃₄⟩ := max_le_iff.mp hx
+  obtain ⟨hx₁, hx₂⟩ := max_le_iff.mp hx₁₂
+  obtain ⟨hx₃, hx₄⟩ := max_le_iff.mp hx₃₄
   by_cases he : chen1973Lemma6PrimePairShell x B k m = ∅
   · rw [eq19Beta_empty_integral he, mul_zero]
     positivity
@@ -521,13 +513,10 @@ theorem chen1973Lemma6_eq19_beta_contribution_small (ε : ℝ) (hε : 0 < ε) (h
   have hu : 1 ≤ u := P.hlog_one
   have hu0 : 0 < u := by linarith
   have hW : 0 ≤ W := (chen1973Lemma6Eq19I_pos x L level).le
-  have hJ : 0 ≤ J := by
-    have hh := (eq19Alpha_I_log90 P.hlog_one htt).1
-    dsimp [J]
-    linarith
+  have hJ : 0 ≤ J := zero_le_one.trans (eq19Alpha_I_log90 P.hlog_one htt).1
   have hWJ : W*Real.sqrt J ≤ J := by
     have hWI : W^2 ≤ J := hX₂ x hx₂ L level P.hL_lower
-    have hWs : W ≤ Real.sqrt J := by nlinarith [Real.sq_sqrt hJ, Real.sqrt_nonneg J]
+    have hWs : W ≤ Real.sqrt J := Real.le_sqrt_of_sq_le hWI
     calc
       _ ≤ Real.sqrt J*Real.sqrt J := mul_le_mul_of_nonneg_right hWs (Real.sqrt_nonneg _)
       _ = J := Real.mul_self_sqrt hJ

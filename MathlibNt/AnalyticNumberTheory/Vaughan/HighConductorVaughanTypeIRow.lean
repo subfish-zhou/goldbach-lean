@@ -16,14 +16,6 @@ def highConductorVaughanTypeIRowAmplitude
   Real.sqrt (primitiveCharacterPrefixMaxSquare
     (vaughanTypeIRowCoefficient a b) M L d χ)
 
-private theorem primitiveCharacterPrefixMaxSquare_nonneg
-    (b : ℤ → ℂ) (M : ℤ) (N q : ℕ) (χ : PrimitiveCharacter q) :
-    0 ≤ primitiveCharacterPrefixMaxSquare b M N q χ := by
-  unfold primitiveCharacterPrefixMaxSquare
-  apply Finset.le_max'
-  exact Finset.mem_image.mpr ⟨0, by simp,
-    by simp [primitiveCharacterPrefixSquare]⟩
-
 private theorem highConductor_subset_full {R Q : ℕ} :
     Finset.Ioc R Q ⊆ Finset.Icc 1 Q := by
   intro d hd
@@ -50,15 +42,8 @@ theorem highConductorVaughanTypeIRow_squareLedger_le
           ∑ χ : PrimitiveCharacter d,
             primitiveCharacterPrefixMaxSquare
               (vaughanTypeIRowCoefficient a b) M L d χ := by
-        apply Finset.sum_congr rfl
-        intro d hd
-        congr 1
-        apply Finset.sum_congr rfl
-        intro χ hχ
-        unfold highConductorVaughanTypeIRowAmplitude
-        exact Real.sq_sqrt
-          (primitiveCharacterPrefixMaxSquare_nonneg
-            (vaughanTypeIRowCoefficient a b) M L d χ)
+        simp only [highConductorVaughanTypeIRowAmplitude,
+          Real.sq_sqrt (primitiveCharacterPrefixMaxSquare_nonneg _ _ _ _ _)]
     _ ≤ ∑ d ∈ Finset.Icc 1 Q,
         ((d : ℝ) / (d.totient : ℝ)) *
           ∑ χ : PrimitiveCharacter d,

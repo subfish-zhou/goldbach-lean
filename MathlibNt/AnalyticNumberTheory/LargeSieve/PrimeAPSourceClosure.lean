@@ -76,14 +76,10 @@ theorem card_higherPrimePowerSupport_le (N : ℕ) :
     _ = _ := by simp
 
 private lemma vonMangoldt_zero_local : ArithmeticFunction.vonMangoldt 0 = 0 := by
-  rw [← not_ne_iff]
-  intro h
-  obtain ⟨p, k, hp, hk, hpow⟩ :=
-    (isPrimePow_nat_iff 0).mp (ArithmeticFunction.vonMangoldt_ne_zero_iff.mp h)
-  have : 0 < p ^ k := pow_pos hp.pos k
-  omega
+  simp only [ArithmeticFunction.map_zero]
 
-private lemma lambda_norm_le_log_of_le {n N : ℕ} (hn : n ≤ N) (hN : 2 ≤ N) :
+/-- The von Mangoldt coefficient through `N` has norm at most `log N`. -/
+lemma lambda_norm_le_log_of_le {n N : ℕ} (hn : n ≤ N) (hN : 2 ≤ N) :
     ‖lambdaNatCoeff n‖ ≤ Real.log (N : ℝ) := by
   by_cases hnz : n = 0
   · subst n
@@ -102,7 +98,9 @@ theorem norm_lambdaPrimePowerCorrection_le_explicit
     ‖lambdaPrimePowerCorrection y q a‖ ≤
       ((N.sqrt + 1 : ℕ) : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ) := by
   by_cases hN : 2 ≤ N
-  · rw [lambdaPrimePowerCorrection_eq_nonprime_sum]
+  · have hlog : 0 ≤ Real.log (N : ℝ) :=
+      Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
+    rw [lambdaPrimePowerCorrection_eq_nonprime_sum]
     calc
       _ ≤ ∑ n ∈ Finset.range (y + 1),
           ‖if (n : ZMod q) = (a : ZMod q) ∧ ¬ n.Prime then lambdaNatCoeff n else 0‖ :=
@@ -116,17 +114,12 @@ theorem norm_lambdaPrimePowerCorrection_le_explicit
         by_cases hr : (n : ZMod q) = (a : ZMod q) ∧ ¬ n.Prime
         · rw [if_pos hr]
           by_cases hΛ : ArithmeticFunction.vonMangoldt n = 0
-          · have hlog : 0 ≤ Real.log (N : ℝ) :=
-              Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
-            simp only [lambdaNatCoeff, hΛ]
-            by_cases hm : n ∈ higherPrimePowerSupport N <;> simp [hm, hlog]
+          · simp [lambdaNatCoeff, hΛ, higherPrimePowerSupport]
           · rw [if_pos]
             · exact lambda_norm_le_log_of_le hnN hN
             · exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr
                 (Nat.lt_succ_iff.mpr hnN), hr.2, hΛ⟩
-        · have hlog : 0 ≤ Real.log (N : ℝ) :=
-            Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
-          simp only [if_neg hr, norm_zero]
+        · simp only [if_neg hr, norm_zero]
           by_cases hm : n ∈ higherPrimePowerSupport N <;> simp [hm, hlog]
       _ ≤ ((higherPrimePowerSupport N).card : ℝ) * Real.log (N : ℝ) := by
         rw [← Finset.sum_filter]
@@ -141,11 +134,11 @@ theorem norm_lambdaPrimePowerCorrection_le_explicit
             · exact_mod_cast Finset.card_le_card (by
                 intro n hn
                 exact (Finset.mem_filter.mp hn).2)
-            · exact Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
+            · exact hlog
       _ ≤ ((N.sqrt + 1 : ℕ) : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ) := by
         apply mul_le_mul_of_nonneg_right
         · exact_mod_cast card_higherPrimePowerSupport_le N
-        · exact Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
+        · exact hlog
 
   · have hNle : N ≤ 1 := by omega
     have hcorr : lambdaPrimePowerCorrection y q a = 0 := by
@@ -190,13 +183,7 @@ theorem sum_lambdaPrimePowerCorrectionPrefixMaxError_le
     _ ≤ ∑ _q ∈ Finset.Icc 1 Q, primePowerCorrectionExplicitBound N := by
       exact Finset.sum_le_sum fun q _ =>
         lambdaPrimePowerCorrectionPrefixMaxError_le_explicit N q
-    _ = ((Finset.Icc 1 Q).card : ℝ) * primePowerCorrectionExplicitBound N := by simp
-    _ ≤ (Q : ℝ) * primePowerCorrectionExplicitBound N := by
-      apply mul_le_mul_of_nonneg_right
-      · norm_cast
-        simp
-      · unfold primePowerCorrectionExplicitBound
-        positivity
+    _ = (Q : ℝ) * primePowerCorrectionExplicitBound N := by simp
 
 /-- Literal Standard-BV-range specialization of the preceding elementary
 estimate. -/

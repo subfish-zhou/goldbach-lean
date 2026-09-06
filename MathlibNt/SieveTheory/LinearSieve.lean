@@ -23,12 +23,12 @@ The differential-delay framework motivating the legacy outline uses:
 where γ is the Euler-Mascheroni constant.
 
 These legacy conventions are not a specification of the canonical
-dimension-one sieve functions. In particular, the local definitions
-`sieveFunctionF` and `sieveFunctionf` below contain placeholder branches and
-are used only in fixed-parameter remainder interfaces. They do not establish
-the classical uniform estimates or Chen's numerical constants. The finite
-lower-Möbius and generic Rosser density interfaces are developed separately
-in the first part of this module.
+dimension-one sieve functions. In particular, `sieveFunctionF` and
+`sieveFunctionf` in the imported `SieveApplications` module contain
+placeholder branches and are used only in fixed-parameter remainder
+interfaces. They do not establish the classical uniform estimates or
+Chen's numerical constants. The finite lower-Möbius and generic Rosser
+density interfaces are developed separately in the imported modules.
 
 References:
   - Jurkat & Richert (1965), Acta Arith. 11, 217-240

@@ -68,17 +68,12 @@ theorem conj_sum_range_cpowWeight_character
   apply sum_congr rfl
   intro n hn
   rw [map_mul]
-  change conj (cpowWeight s n) * conj (χ.1 n) = _
-  have harg : ((n : ℂ)).arg ≠ Real.pi := by
-    change (((n : ℝ) : ℂ)).arg ≠ Real.pi
-    rw [Complex.arg_ofReal_of_nonneg (by positivity)]
-    exact ne_of_lt Real.pi_pos
   unfold cpowWeight
   rw [primitiveCharacterConjEquiv_val]
   change conj ((n : ℂ) ^ (-s)) * conj (χ.1 n) =
     (n : ℂ) ^ (-(conj s)) * conj (χ.1 n)
   congr 1
-  simpa using (Complex.cpow_conj (n : ℂ) (-s) harg).symm
+  simpa using conj_cpow_nat (-s) n
 
 /-- Conjugation identity for a primitive Dirichlet L-function on the whole
 conditional-convergence half-plane. -/
@@ -124,11 +119,6 @@ theorem primitiveLDeriv_conj
     (hχ : χ.1 ≠ 1) (s : ℂ) (hs : 0 < s.re) :
     deriv (primitiveCharacterConjEquiv q χ).1.LFunction (conj s) =
       conj (deriv χ.1.LFunction s) := by
-  have hstar : (primitiveCharacterConjEquiv q χ).1 ≠ 1 := by
-    intro h
-    apply hχ
-    have := congrArg star h
-    simpa using this
   let F : ℂ → ℂ := fun z => conj (χ.1.LFunction (conj z))
   have hF : HasDerivAt F (conj (deriv χ.1.LFunction s)) (conj s) := by
     simpa [F, Function.comp_def] using
@@ -155,16 +145,7 @@ theorem chen1973Lemma6MobiusPartialSum_conj
   intro n hn
   change (((ArithmeticFunction.moebius n : ℤ) : ℂ) *
       conj (χ.1 (n : ZMod q)) / (n : ℂ) ^ conj s) = _
-  have hnum :
-      conj (((ArithmeticFunction.moebius n : ℤ) : ℂ) * χ.1 (n : ZMod q)) =
-        ((ArithmeticFunction.moebius n : ℤ) : ℂ) * conj (χ.1 (n : ZMod q)) := by
-    rw [map_mul]
-    simp
-  have hden : conj ((n : ℂ) ^ s) = (n : ℂ) ^ conj s := conj_cpow_nat s n
-  rw [← hnum, ← hden]
-  exact (map_div₀ conj
-    (((ArithmeticFunction.moebius n : ℤ) : ℂ) * χ.1 (n : ZMod q))
-    ((n : ℂ) ^ s)).symm
+  simp only [map_div₀, map_mul, map_intCast, conj_cpow_nat]
 
 /-- The exact pair polynomial in equation (17), made public for the symmetry
 and subsequent moment arguments. -/
@@ -239,8 +220,7 @@ theorem chen1973Lemma6OneSubLS_conj
   · rw [primitiveLFunction_conj χ hχ s hs,
       chen1973Lemma6MobiusPartialSum_conj]
     simp
-  · rw [chen1973Lemma6MobiusPartialSum_conj]
-    simp
+  · simp
 
 /-- Exact conjugation identity for `L' S`. -/
 theorem chen1973Lemma6LDerivMulS_conj
@@ -332,8 +312,7 @@ theorem chen1973Lemma6A_reflection
     rw [DirichletCharacter.IsPrimitive, heq, DirichletCharacter.conductor_one] at hp
     omega
   have hsre : 0 < ((a : ℂ) + (v : ℂ) * I).re := by simpa using ha
-  rw [show ((a : ℂ) + -(v : ℂ) * I) =
-      conj ((a : ℂ) + (v : ℂ) * I) by apply Complex.ext <;> simp]
+  rw [← ofReal_neg, ← conj_verticalLine a v]
   change ‖chen1973Lemma6Eq17PairPolynomial x B k m
       (conj ((a : ℂ) + (v : ℂ) * I)) (primitiveCharacterConjEquiv q χ)‖ *
     ‖1 - chen1973Lemma6PrimitiveLValue q (conj ((a : ℂ) + (v : ℂ) * I))
@@ -343,8 +322,7 @@ theorem chen1973Lemma6A_reflection
   rw [chen1973Lemma6Eq17PairPolynomial_conj,
     chen1973Lemma6PrimitiveLValue_conj_of_one_lt hq1 _ χ hχ hsre,
     chen1973Lemma6MobiusPartialSum_conj]
-  simp only [← map_mul, Complex.norm_conj]
-  rw [map_mul, norm_one_sub_conj_mul_conj]
+  simp only [Complex.norm_conj, norm_one_sub_conj_mul_conj]
   rfl
 
 /-- The second equation-(17) numerator is even on every positive real vertical
@@ -375,8 +353,7 @@ theorem chen1973Lemma6B_reflection
     rw [DirichletCharacter.IsPrimitive, heq, DirichletCharacter.conductor_one] at hp
     omega
   have hsre : 0 < ((a : ℂ) + (v : ℂ) * I).re := by simpa using ha
-  rw [show ((a : ℂ) + -(v : ℂ) * I) =
-      conj ((a : ℂ) + (v : ℂ) * I) by apply Complex.ext <;> simp]
+  rw [← ofReal_neg, ← conj_verticalLine a v]
   split_ifs with hq'
   · change ‖chen1973Lemma6Eq17PairPolynomial x B k m
         (conj ((a : ℂ) + (v : ℂ) * I)) (primitiveCharacterConjEquiv q χ)‖ *
@@ -441,7 +418,8 @@ def chen1973Lemma6Eq17SecondFullIntegral
     chen1973Lemma6B x L level B k m H (chen1973Lemma6Beta x + v * I) /
       chen1973Lemma6Eq17Kernel x (chen1973Lemma6Beta x + v * I)
 
-private theorem integral_eq_two_mul_Ioi_of_even (f : ℝ → ℝ)
+/-- The integral of an even real function is twice its positive-half-line integral. -/
+theorem integral_eq_two_mul_Ioi_of_even (f : ℝ → ℝ)
     (heven : ∀ v, f (-v) = f v) :
     (∫ v : ℝ, f v) = 2 * ∫ v in Ioi (0 : ℝ), f v := by
   have habs : (fun v : ℝ => f v) = fun v => f |v| := by

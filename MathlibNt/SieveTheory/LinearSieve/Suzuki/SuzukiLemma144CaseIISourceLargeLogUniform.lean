@@ -2,6 +2,7 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CommonScaleUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointCoefficientUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioCoefficients
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIIntegralTransportRelative
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology Asymptotics
@@ -212,19 +213,7 @@ private theorem perturbation_three_le_one_add_seven_ratio_sourceLarge
     {D d : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d)
     (hsmall : 3 ^ d ≤ Real.log D) :
     perturbation D d 0 3 ≤ 1 + 7 * (3 ^ d / Real.log D) := by
-  let u : ℝ := 3 ^ d / Real.log D
-  have hu0 : 0 ≤ u := div_nonneg (Real.rpow_nonneg (by norm_num) _) hlog.le
-  have hu1 : u ≤ 1 := (div_le_one hlog).2 hsmall
-  have hu2 : u ^ 2 ≤ u := by nlinarith [mul_nonneg hu0 (sub_nonneg.mpr hu1)]
-  have hu3 : u ^ 3 ≤ u := by
-    calc
-      u ^ 3 = u ^ 2 * u := by ring
-      _ ≤ u * u := mul_le_mul_of_nonneg_right hu2 hu0
-      _ ≤ u := by nlinarith
-  rw [perturbation]
-  norm_num [Real.rpow_natCast]
-  dsimp [u] at *
-  nlinarith
+  exact perturbation_three_le_one_add_seven_ratio hlog hd hsmall
 
 /-- Quantitative source-large-log replacement for the moving rounded Case-II
 bracket.  The witness is a lower bound for the source separator `C1`; it is
@@ -340,11 +329,11 @@ theorem exists_caseIIConcreteRoundedRelativeBracketSourceLarge_gap_uniform
       calc
         _ ≤ 18 * K ^ 2 * σ * 4 * L2 := by
           have hpos : 0 ≤ 18 * K ^ 2 * σ := by positivity
-          have hterm2 : (1 + 3 * K / x) * finiteSourceLayer 1 2 (N - 1) 2 ≤ 4 * L2 := by
-            nlinarith [hLayer2, hfac, hLayer2nonneg]
-          nlinarith
+          have hterm2 : (1 + 3 * K / x) * finiteSourceLayer 1 2 (N - 1) 2 ≤ 4 * L2 :=
+            mul_le_mul hfac hLayer2 hLayer2nonneg (by norm_num : (0 : ℝ) ≤ 4)
+          simpa only [mul_assoc] using mul_le_mul_of_nonneg_left hterm2 hpos
         _ = 72 * K ^ 2 * σ * L2 := by ring
-    linarith
+    exact add_le_add hfirst hsecond
   have hQ :
       caseIIQDRelativeEndpointCoeffSourceLarge (D : ℝ) Δ K ≤
         864 * K ^ 2 * rΔ := by
@@ -353,7 +342,17 @@ theorem exists_caseIIConcreteRoundedRelativeBracketSourceLarge_gap_uniform
     calc
       _ ≤ 216 * K ^ 2 * 4 * rΔ := by gcongr
       _ = 864 * K ^ 2 * rΔ := by ring
-  have hbaseUnit : 1 ≤ K * σ := by nlinarith
+  have hbaseUnit : 1 ≤ K * σ := by
+    calc
+      1 ≤ σ := hσ1.le
+      _ ≤ K * σ := by
+        simpa only [one_mul] using mul_le_mul_of_nonneg_right hK1 hσ0.le
+  have hKsigma : K * σ ≤ K ^ 2 * σ ^ 2 := by
+    calc
+      K * σ = (K * σ) * 1 := by ring
+      _ ≤ (K * σ) * (K * σ) :=
+        mul_le_mul_of_nonneg_left hbaseUnit (mul_nonneg hK0.le hσ0.le)
+      _ = K ^ 2 * σ ^ 2 := by ring
   let T : ℝ := K ^ 2 * σ ^ 2 * x ^ (Δ - 1)
   have hT0 : 0 ≤ T := by dsimp [T]; positivity
   have hEndScaled :
@@ -366,8 +365,6 @@ theorem exists_caseIIConcreteRoundedRelativeBracketSourceLarge_gap_uniform
     have h0 : 9 * K * L3 * x ^ (Δ - 1) * σ ≤ 9 * L3 * T := by
       dsimp [T]
       have hL3pos : 0 ≤ 9 * L3 * x ^ (Δ - 1) := by positivity
-      have hKsigma : K * σ ≤ K ^ 2 * σ ^ 2 := by
-        nlinarith [sq_nonneg (K * σ - 1)]
       calc
         9 * K * L3 * x ^ (Δ - 1) * σ = (9 * L3 * x ^ (Δ - 1)) * (K * σ) := by ring
         _ ≤ (9 * L3 * x ^ (Δ - 1)) * (K ^ 2 * σ ^ 2) := mul_le_mul_of_nonneg_left hKsigma hL3pos
@@ -388,8 +385,6 @@ theorem exists_caseIIConcreteRoundedRelativeBracketSourceLarge_gap_uniform
     have h2 : 27 * K * x ^ (Δ - 1) * σ ≤ 27 * T := by
       dsimp [T]
       have h27pos : 0 ≤ 27 * x ^ (Δ - 1) := by positivity
-      have hKsigma : K * σ ≤ K ^ 2 * σ ^ 2 := by
-        nlinarith [sq_nonneg (K * σ - 1)]
       calc
         27 * K * x ^ (Δ - 1) * σ = (27 * x ^ (Δ - 1)) * (K * σ) := by ring
         _ ≤ (27 * x ^ (Δ - 1)) * (K ^ 2 * σ ^ 2) := mul_le_mul_of_nonneg_left hKsigma h27pos
@@ -449,14 +444,12 @@ theorem exists_caseIIConcreteRoundedRelativeBracketSourceLarge_gap_uniform
           nlinarith
         _ ≤ J * K / x := hexcess
     have hs := mul_le_mul_of_nonneg_right hraw hσ0.le
-    have hunitSq : K * σ ≤ K ^ 2 * σ ^ 2 := by
-      nlinarith [sq_nonneg (K * σ - 1)]
     dsimp [T]
     calc
       ((1 + 3 * K / x) * c * perturbation (D : ℝ) d 0 3 - c) * σ ≤
           (J * K / x) * σ := hs
       _ = J * (K * σ) * x⁻¹ := by rw [div_eq_mul_inv]; ring
-      _ ≤ J * (K ^ 2 * σ ^ 2) * x⁻¹ := mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hunitSq (by positivity)) (by positivity)
+      _ ≤ J * (K ^ 2 * σ ^ 2) * x⁻¹ := mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hKsigma (by positivity)) (by positivity)
       _ ≤ J * (K ^ 2 * σ ^ 2) * x ^ (Δ - 1) := mul_le_mul_of_nonneg_left hinvpow (by positivity)
       _ = J * (K ^ 2 * σ ^ 2 * x ^ (Δ - 1)) := by ring
   have hTotalScaled :

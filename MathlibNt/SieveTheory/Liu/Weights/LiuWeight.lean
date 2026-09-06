@@ -602,8 +602,8 @@ theorem panDistributionError_mul_eq_neg_li_div_totient
     AnalyticNumberTheory.Sieve.panDistributionError Y (p₁ * p₂) d l =
       -(AnalyticNumberTheory.Sieve.logarithmicIntegral
           ((Y : ℝ) / (p₁ * p₂)) / Nat.totient d) := by
-  simp [AnalyticNumberTheory.Sieve.panDistributionError,
-    primesInAPBelow_mul_eq_zero_of_dvd_modulus hp₁d hp₁l]
+  exact liuScaledAPError_mul_eq_neg_main_div_totient
+    AnalyticNumberTheory.Sieve.logarithmicIntegral hp₁d hp₁l
 
 /-- The sign-free consequence retains `|li|`; no positivity of the logarithmic
 integral is assumed. -/
@@ -612,8 +612,8 @@ theorem abs_panDistributionError_mul_eq_abs_li_div_totient
     |AnalyticNumberTheory.Sieve.panDistributionError Y (p₁ * p₂) d l| =
       |AnalyticNumberTheory.Sieve.logarithmicIntegral
           ((Y : ℝ) / (p₁ * p₂))| / Nat.totient d := by
-  simp [AnalyticNumberTheory.Sieve.panDistributionError,
-    primesInAPBelow_mul_eq_zero_of_dvd_modulus hp₁d hp₁l, abs_div]
+  exact abs_liuScaledAPError_mul_eq_abs_main_div_totient
+    AnalyticNumberTheory.Sieve.logarithmicIntegral hp₁d hp₁l
 
 /-- Specialization of the exact signed formula to the residue `N % d`. -/
 theorem panDistributionError_mul_mod_eq_neg_li_div_totient
@@ -659,14 +659,8 @@ theorem panDistributionNoncoprimeMajorant_liuWeight_eq_support_sum
       ∑ a ∈ (range (X + 1)).filter
           (fun a => LiuWeightSupport N z y a ∧ ¬a.Coprime d),
         |AnalyticNumberTheory.Sieve.panDistributionError Y a d l| := by
-  classical
-  unfold AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-  rw [Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro a ha
-  by_cases hs : LiuWeightSupport N z y a
-  · by_cases hc : a.Coprime d <;> simp [liuWeight, hs, hc]
-  · simp [liuWeight, hs]
+  exact liuMainNoncoprimeMajorant_liuWeight_eq_support_sum
+    AnalyticNumberTheory.Sieve.logarithmicIntegral N z y Y X d l
 
 /-- Exact reindexing of the supported non-coprime sum by the unique admissible
 pair. -/
@@ -677,37 +671,8 @@ theorem liuSupportNoncoprimeSum_eq_p₁DividesSum
         (fun a => LiuWeightSupport N z y a ∧ ¬a.Coprime d),
       |AnalyticNumberTheory.Sieve.panDistributionError Y a d l|) =
       liuP₁DividesSum N z y Y X d l := by
-  classical
-  symm
-  unfold liuP₁DividesSum
-  apply Finset.sum_bij (fun p _ => p.1 * p.2)
-  · intro p hp
-    rw [mem_filter] at hp ⊢
-    have hcond := mem_liuWeightPairs.mp hp.1
-    refine ⟨mem_range.mpr (by omega), ?_⟩
-    refine ⟨⟨p, hp.1, rfl⟩, ?_⟩
-    exact (not_coprime_mul_iff_p₁_dvd hwy hcond.1 hcond.2.1
-      hcond.2.2.2.2.1 hd).2 hp.2.2
-  · rintro ⟨p₁, p₂⟩ hp ⟨q₁, q₂⟩ hq heq
-    rw [mem_filter] at hp hq
-    have hu := liuPairConditions_unique
-      (mem_liuWeightPairs.mp hp.1) (mem_liuWeightPairs.mp hq.1) heq
-    exact Prod.ext hu.1 hu.2
-  · intro a ha
-    rw [mem_filter] at ha
-    rcases ha.2.1 with ⟨p, hp, hpa⟩
-    have hcond := mem_liuWeightPairs.mp hp
-    have hnc : ¬(p.1 * p.2).Coprime d := by simpa [hpa] using ha.2.2
-    have hp₁d := (not_coprime_mul_iff_p₁_dvd hwy hcond.1 hcond.2.1
-      hcond.2.2.2.2.1 hd).1 hnc
-    exact ⟨p, mem_filter.mpr ⟨hp, by
-      constructor
-      · rw [hpa]
-        exact Nat.lt_succ_iff.mp (by
-          simpa [Nat.succ_eq_add_one] using mem_range.mp ha.1)
-      · exact hp₁d⟩, hpa⟩
-  · intro p hp
-    rfl
+  exact liuMainSupportNoncoprimeSum_eq_p₁DividesMainSum
+    AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y Y X d l hwy hd
 
 /-- **Exact equality for the majorant.**  On moduli whose prime divisors are at
 most the independent cutoff `w ≤ y`, Liu's weight with lower cutoff `z` has
@@ -747,13 +712,8 @@ theorem liuP₁DividesSum_mod_eq_abs_li_sum
           (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
         |AnalyticNumberTheory.Sieve.logarithmicIntegral
           ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
-  classical
-  unfold liuP₁DividesSum
-  apply Finset.sum_congr rfl
-  intro p hp
-  rw [Finset.mem_filter] at hp
-  rw [abs_panDistributionError_mul_mod_eq_abs_li_div_totient
-    hp.2.2 (havoid p.1 (mem_liuWeightPairs.mp hp.1).1 hp.2.2)]
+  exact liuP₁DividesMainSum_mod_eq_abs_main_sum
+    AnalyticNumberTheory.Sieve.logarithmicIntegral N z y Y X d havoid
 
 /-- Exact non-coprime majorant after every relevant prime divisor of `d` is
 known not to divide `N`.  The absolute value on `li` is retained. -/

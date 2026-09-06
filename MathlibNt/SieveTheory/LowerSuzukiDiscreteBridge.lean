@@ -50,9 +50,7 @@ theorem lowerSuzuki_terminalFactor
     (S : BoundingSieve) {z q : ℕ} (hq : q ∈ suzukiSupportedBelow S z) :
     S.nu q * suzukiSuffixRatio S z q =
       (S.nu q / (1 - S.nu q)) * suzukiSuffixRatio S z (q + 1) := by
-  rw [suzukiSuffixRatio_step_of_mem S z q hq]
-  rw [div_eq_mul_inv]
-  ring
+  rw [suzukiSuffixRatio_step_of_mem S z q hq, div_eq_mul_inv, mul_assoc]
 
 /-- The normalized layer with terminal `q` visibly externalized. -/
 theorem lowerSuzukiNormalizedLayer_terminalExternalized
@@ -128,11 +126,7 @@ theorem lowerSuzukiNormalizedLayer_eq_lemmaEightSixPrimeSum
   unfold lowerSuzukiNormalizedLayer suzukiPrimeSumNat
   apply sum_congr rfl
   intro q hq
-  change S.nu q * suzukiSuffixRatio S z q *
-      lowerSuzukiDiscreteKernel S D z k q =
-    S.nu q * suzukiSuffixRatio S z q * H (Real.log Dreal / Real.log q)
-  exact congrArg (fun x : ℝ => S.nu q * suzukiSuffixRatio S z q * x)
-    (hH q hq).symm
+  rw [← hH q hq]
 
 /-- Direct application of the proved dimension-one Suzuki lemma to the exact
 finite lower layer.  All hypotheses are inherited from that lemma, except for

@@ -1,5 +1,6 @@
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCoefficient
 import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
+import AnalyticNumberTheory.Sieve.SelbergUpperBound
 
 /-!
 # Exact finite Selberg optimization for Liu's source modulus
@@ -127,76 +128,30 @@ theorem liuSelbergOptimalLambda_support
 
 private lemma sum_moebius_eq_one {n : ℕ} :
     (∑ d ∈ n.divisors, (μ d : ℝ)) = if n = 1 then (1 : ℝ) else 0 := by
-  have h := ArithmeticFunction.coe_zeta_mul_coe_moebius (R := ℝ)
-  have hkey : (ζ * (μ : ArithmeticFunction ℝ)) n =
-      (1 : ArithmeticFunction ℝ) n := by rw [h]
-  rw [ArithmeticFunction.coe_zeta_mul_apply, ArithmeticFunction.one_apply] at hkey
-  simpa [ArithmeticFunction.intCoe_apply, mul_comm] using hkey
+  exact AnalyticNumberTheory.Sieve.sum_moebius_eq_one
 
 private lemma dvd_iff_div_dvd {e l d : ℕ}
     (he : e ≠ 0) (hd : d ∣ e) (hl : l ∣ e) :
     l ∣ d ↔ e / d ∣ e / l := by
-  constructor
-  · rintro ⟨k, rfl⟩
-    have hl0 : 0 < l := Nat.pos_of_dvd_of_pos hl (Nat.pos_of_ne_zero he)
-    have hkl : k ∣ e / l := by
-      have heq : e = l * (e / l) := by
-        rw [mul_comm, Nat.div_mul_cancel hl]
-      rw [heq] at hd
-      exact (Nat.mul_dvd_mul_iff_left hl0).mp hd
-    rw [(Nat.div_div_eq_div_mul e l k).symm]
-    exact Nat.div_dvd_of_dvd hkl
-  · rintro ⟨j, hj⟩
-    have heq1 : e = l * (e / l) := by
-      rw [mul_comm, Nat.div_mul_cancel hl]
-    have heq2 : d * (e / d) = e := by
-      rw [mul_comm, Nat.div_mul_cancel hd]
-    have hdq : 0 < e / d :=
-      Nat.pos_of_dvd_of_pos (Nat.div_dvd_of_dvd hd) (Nat.pos_of_ne_zero he)
-    refine ⟨j, Nat.mul_right_cancel hdq ?_⟩
-    calc
-      d * (e / d) = e := heq2
-      _ = l * (e / l) := heq1
-      _ = l * j * (e / d) := by rw [hj]; ring
+  exact AnalyticNumberTheory.Sieve.dvd_iff_div_dvd he hd hl
 
 private lemma sum_moebius_quotient_of_dvd {e l : ℕ}
     (he : e ≠ 0) (hle : l ∣ e) :
     (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
       if e = l then (1 : ℝ) else 0 := by
-  have hbij :
-      (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
-        ∑ d ∈ e.divisors, if d ∣ e / l then (μ d : ℝ) else 0 := by
-    refine Finset.sum_bij (fun d _ => e / d) ?_ ?_ ?_ ?_
-    · intro d hd
-      exact Nat.mem_divisors.mpr
-        ⟨Nat.div_dvd_of_dvd (Nat.mem_divisors.mp hd).1, he⟩
-    · intro a ha b hb hab
-      exact (Nat.div_div_self (Nat.mem_divisors.mp ha).1 he).symm.trans
-        ((congrArg (e / ·) hab).trans
-          (Nat.div_div_self (Nat.mem_divisors.mp hb).1 he))
-    · intro d hd
-      exact ⟨e / d, Nat.mem_divisors.mpr
-        ⟨Nat.div_dvd_of_dvd (Nat.mem_divisors.mp hd).1, he⟩,
-        Nat.div_div_self (Nat.mem_divisors.mp hd).1 he⟩
-    · intro d hd
-      have hdvd := (Nat.mem_divisors.mp hd).1
-      by_cases hld : l ∣ d
-      · simp [hld, (dvd_iff_div_dvd he hdvd hle).mp hld]
-      · simp [hld, not_congr (dvd_iff_div_dvd he hdvd hle) |>.mp hld]
-  rw [hbij, ← Finset.sum_filter,
-    Nat.divisors_filter_dvd_of_dvd he (Nat.div_dvd_of_dvd hle),
-    sum_moebius_eq_one]
-  by_cases hel : e = l
-  · subst e
-    have hl0 : 0 < l := Nat.pos_of_ne_zero he
-    simp [Nat.div_self hl0]
-  · have hdiv : e / l ≠ 1 := by
-      intro h
-      apply hel
-      calc
-        e = l * (e / l) := by rw [mul_comm, Nat.div_mul_cancel hle]
-        _ = l := by rw [h, mul_one]
-    simp [hel, hdiv]
+  exact AnalyticNumberTheory.Sieve.sum_moebius_quotient_of_dvd he hle
+
+/-- Reverse-divisor Möbius cancellation, including the case `l ∤ e`. -/
+private lemma sum_moebius_quotient {e l : ℕ} (he : e ≠ 0) :
+    (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
+      if e = l then (1 : ℝ) else 0 := by
+  by_cases hle : l ∣ e
+  · exact sum_moebius_quotient_of_dvd he hle
+  · have hel : e ≠ l := fun h => hle (h ▸ dvd_refl l)
+    rw [if_neg hel]
+    apply Finset.sum_eq_zero
+    intro d hd
+    exact if_neg (fun hld => hle (hld.trans (Nat.mem_divisors.mp hd).1))
 
 set_option maxHeartbeats 800000 in
 /-- Reverse-divisor inversion recovers every diagonal coordinate on the
@@ -304,18 +259,7 @@ theorem liuSelbergOptimalX_eq_sum_nu_mul_lambda
             (μ (e / d) : ℝ) else 0 := by
               rw [hfilt, Finset.sum_filter]
       _ = if e = l then (1 : ℝ) else 0 := by
-        by_cases hle : l ∣ e
-        · exact sum_moebius_quotient_of_dvd he0 hle
-        · have hel : e ≠ l := fun h => hle (h ▸ dvd_refl l)
-          have hz : (∑ d ∈ e.divisors,
-              if l ∣ d then (μ (e / d) : ℝ) else 0) = 0 := by
-            apply Finset.sum_eq_zero
-            intro d hd
-            rw [if_neg]
-            intro hld
-            exact hle (hld.trans (Nat.mem_divisors.mp hd).1)
-          rw [hz]
-          simp [hel]
+        exact sum_moebius_quotient he0
   symm
   calc
     (∑ e ∈ C, ∑ d ∈ C, if l ∣ d then
@@ -844,18 +788,7 @@ private theorem truncatedSelbergOptimalX_eq_sum_nu_mul_lambda
             (μ (e / d) : ℝ) else 0 := by
               rw [hfilt, Finset.sum_filter]
       _ = if e = l then (1 : ℝ) else 0 := by
-        by_cases hle : l ∣ e
-        · exact sum_moebius_quotient_of_dvd he0 hle
-        · have hel : e ≠ l := fun h => hle (h ▸ dvd_refl l)
-          have hz : (∑ d ∈ e.divisors,
-              if l ∣ d then (μ (e / d) : ℝ) else 0) = 0 := by
-            apply Finset.sum_eq_zero
-            intro d hd
-            rw [if_neg]
-            intro hld
-            exact hle (hld.trans (Nat.mem_divisors.mp hd).1)
-          rw [hz]
-          simp [hel]
+        exact sum_moebius_quotient he0
   symm
   calc
     (∑ e ∈ C, ∑ d ∈ C, if l ∣ d then
@@ -1071,6 +1004,11 @@ theorem one_div_truncatedSelbergDenominator_le_mainSum
     intro l hlP hlC
     rw [hx_zero l hlP hlC]
     simp
+  -- Squarefreeness removes the Möbius squares in every part of Titu's inequality.
+  have hmu_sq : ∀ l ∈ C, (μ l : ℝ) ^ 2 = 1 := by
+    intro l hl
+    exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree
+      (S.squarefree_of_mem_divisors_prodPrimes (hC_subset hl))
   have hTitu :
       (∑ l ∈ C, (μ l : ℝ) * x l) ^ 2 /
           ∑ l ∈ C, S.selbergTerms l * (μ l : ℝ) ^ 2 ≤
@@ -1079,13 +1017,8 @@ theorem one_div_truncatedSelbergDenominator_le_mainSum
             (S.selbergTerms l * (μ l : ℝ) ^ 2) := by
     apply sq_sum_div_le_sum_sq_div
     intro l hl
-    have hlP : l ∈ S.prodPrimes.divisors := hC_subset hl
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes hlP
-    have hpos := S.selbergTerms_pos (Nat.mem_divisors.mp hlP).1
-    have hμsq : (μ l : ℝ) ^ 2 = 1 := by
-      exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    rw [hμsq, mul_one]
-    exact hpos
+    rw [hmu_sq l hl, mul_one]
+    exact S.selbergTerms_pos (Nat.mem_divisors.mp (hC_subset hl)).1
   have hDenom :
       (∑ l ∈ C, S.selbergTerms l * (μ l : ℝ) ^ 2) =
         truncatedSelbergDenominator S R := by
@@ -1093,20 +1026,14 @@ theorem one_div_truncatedSelbergDenominator_le_mainSum
       ∑ l ∈ C, S.selbergTerms l
     apply Finset.sum_congr rfl
     intro l hl
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes (hC_subset hl)
-    have hμsq : (μ l : ℝ) ^ 2 = 1 := by
-      exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    rw [hμsq, mul_one]
+    rw [hmu_sq l hl, mul_one]
   have hRHS :
       (∑ l ∈ C, ((μ l : ℝ) * x l) ^ 2 /
           (S.selbergTerms l * (μ l : ℝ) ^ 2)) =
         ∑ l ∈ C, (S.selbergTerms l)⁻¹ * (x l) ^ 2 := by
     apply Finset.sum_congr rfl
     intro l hl
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes (hC_subset hl)
-    have hμsq : (μ l : ℝ) ^ 2 = 1 := by
-      exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    rw [hμsq, mul_one, mul_pow, hμsq, one_mul, div_eq_inv_mul]
+    rw [hmu_sq l hl, mul_one, mul_pow, hmu_sq l hl, one_mul, div_eq_inv_mul]
   rw [hMoebiusInv, hDenom] at hTitu
   simp only [one_pow] at hTitu
   rw [hRHS, one_div] at hTitu

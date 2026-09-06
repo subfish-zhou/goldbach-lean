@@ -14,9 +14,8 @@ private lemma suzukiLayerNumerator_eq_sourceRecursion_of_two_le
     suzukiLayerNumerator 1 β n s =
       ∫ t in recursionLower β s n..(β + n),
         suzukiLayer 1 β (n - 1) (t - 1) := by
-  obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := ⟨n - 2, by omega⟩
-  simpa [dPowDensity, Nat.cast_add, Nat.cast_ofNat] using
-    suzukiLayerNumerator_succ_succ (1 : ℝ) β s k
+  exact SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
+    β s hn
 
 private lemma weighted_suzukiLayer_odd_lowStrip
     {n : ℕ} (hn : 3 ≤ n) (hodd : n % 2 = 1)

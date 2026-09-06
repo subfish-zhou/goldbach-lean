@@ -27,18 +27,24 @@ def dirichletLTwistedSmoothedConductorLogRectangle (q : ℕ) (T : ℝ) : Set ℂ
   ((dirichletLTwistedSmoothedConductorLogLeftEdge q T : ℂ) - I * T).Rectangle
     (2 + I * T)
 
+private theorem one_lt_conductorLogLM
+    {q : ℕ} [NeZero q] {T : ℝ} (hT : 3 ≤ T) :
+    1 < dirichletLTwistedSmoothedConductorLogLM q T := by
+  have hM : 4 ≤ dirichletLTwistedSmoothedConductorLogCutoff q T := by
+    simpa only [dirichletLTwistedSmoothedConductorLogCutoff] using
+      four_le_dirichletLNonquadraticConductorLogCutoff hT
+  have hlogM : 0 < Real.log (dirichletLTwistedSmoothedConductorLogCutoff q T : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < dirichletLTwistedSmoothedConductorLogCutoff q T by omega))
+  dsimp only [dirichletLTwistedSmoothedConductorLogLM]
+  linarith only [hlogM]
+
 /-- At height at least three, the quantitative edge lies strictly right of `1/2`. -/
 theorem one_half_lt_dirichletLTwistedSmoothedConductorLogLeftEdge
     {q : ℕ} [NeZero q] {T : ℝ} (hT : 3 ≤ T) :
     (1 / 2 : ℝ) < dirichletLTwistedSmoothedConductorLogLeftEdge q T := by
   let M := dirichletLTwistedSmoothedConductorLogCutoff q T
   let LM : ℝ := 1 + Real.log M
-  have hM : 4 ≤ M := by
-    simpa only [M, dirichletLTwistedSmoothedConductorLogCutoff] using
-      four_le_dirichletLNonquadraticConductorLogCutoff hT
-  have hlogM : 0 < Real.log (M : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < M by omega))
-  have hLM : 1 < LM := by dsimp only [LM]; linarith
+  have hLM : 1 < LM := one_lt_conductorLogLM hT
   have hLMpow : 1 ≤ LM ^ 9 := one_le_pow₀ hLM.le
   have hden : (2 : ℝ) < 4398046511104 * LM ^ 9 := by nlinarith
   have hwidth : 1 / (4398046511104 * LM ^ 9) < (1 / 2 : ℝ) :=
@@ -53,12 +59,7 @@ theorem dirichletLTwistedSmoothedConductorLogLeftEdge_lt_one
     dirichletLTwistedSmoothedConductorLogLeftEdge q T < 1 := by
   let M := dirichletLTwistedSmoothedConductorLogCutoff q T
   let LM : ℝ := 1 + Real.log M
-  have hM : 4 ≤ M := by
-    simpa only [M, dirichletLTwistedSmoothedConductorLogCutoff] using
-      four_le_dirichletLNonquadraticConductorLogCutoff hT
-  have hlogM : 0 < Real.log (M : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < M by omega))
-  have hLM : 0 < LM := by dsimp only [LM]; linarith
+  have hLM : 0 < LM := zero_lt_one.trans (one_lt_conductorLogLM hT)
   have hwidth : 0 < 1 / (4398046511104 * LM ^ 9) := by positivity
   dsimp only [dirichletLTwistedSmoothedConductorLogLeftEdge,
     dirichletLTwistedSmoothedConductorLogLM, LM, M]
@@ -71,12 +72,7 @@ theorem dirichletLTwistedSmoothedConductorLogRectangle_subset
       dirichletLNonquadraticConductorLogRectangle q T := by
   let M := dirichletLTwistedSmoothedConductorLogCutoff q T
   let LM : ℝ := 1 + Real.log M
-  have hM : 4 ≤ M := by
-    simpa only [M, dirichletLTwistedSmoothedConductorLogCutoff] using
-      four_le_dirichletLNonquadraticConductorLogCutoff hT
-  have hlogM : 0 < Real.log (M : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < M by omega))
-  have hLM : 0 < LM := by dsimp only [LM]; linarith
+  have hLM : 0 < LM := zero_lt_one.trans (one_lt_conductorLogLM hT)
   have hnewDen : 0 < (4398046511104 : ℝ) * LM ^ 9 := by positivity
   have holdDen : 0 < (274877906944 : ℝ) * LM ^ 9 := by positivity
   have hdenle : (274877906944 : ℝ) * LM ^ 9 ≤ 4398046511104 * LM ^ 9 := by
@@ -201,11 +197,8 @@ theorem norm_logDeriv_LFunction_le_on_conductorLogLeftEdge
   have hwidth : 1 / (4398046511104 * LM ^ 9) ≤
       1 / (4398046511104 * Lm ^ 9) :=
     one_div_le_one_div_of_le hlocalDen hdenle
-  have hleftOne : dirichletLTwistedSmoothedConductorLogLeftEdge q T < 1 := by
-    dsimp only [dirichletLTwistedSmoothedConductorLogLeftEdge,
-      dirichletLTwistedSmoothedConductorLogLM, LM, M]
-    have : 0 < 1 / (4398046511104 * LM ^ 9) := by positivity
-    linarith
+  have hleftOne : dirichletLTwistedSmoothedConductorLogLeftEdge q T < 1 :=
+    dirichletLTwistedSmoothedConductorLogLeftEdge_lt_one _hT
   have hstrip : dirichletLTwistedSmoothedConductorLogLeftEdge q T ∈ Set.Ico
       (1 - 1 / (4398046511104 *
         (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 9)) 1 := by

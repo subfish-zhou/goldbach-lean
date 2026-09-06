@@ -159,17 +159,21 @@ theorem tatuzawaPair_square_lower
           (LSeries.term (tatuzawaPairCoefficient χ₁ χ₂) (σ : ℂ) (m ^ 2)).re := by
         apply Finset.sum_le_sum
         intro m hm
-        rw [tatuzawaPair_term_re_eq χ₁ χ₂ (pow_ne_zero 2 (Nat.ne_of_gt (Finset.mem_Icc.mp hm).1))]
+        obtain ⟨hm_lower, hm_upper⟩ := Finset.mem_Icc.mp hm
+        have hmpos : 0 < m := Nat.zero_lt_of_lt hm_lower
+        have hmsqpos : 0 < ((m ^ 2 : ℕ) : ℝ) := by
+          exact_mod_cast pow_pos hmpos 2
+        have hmsqle : ((m ^ 2 : ℕ) : ℝ) ≤ (X : ℝ) := by
+          exact_mod_cast Nat.pow_le_pow_left hm_upper 2
+        rw [tatuzawaPair_term_re_eq χ₁ χ₂ (pow_ne_zero 2 hmpos.ne')]
+        -- Bound the square's denominator by the cutoff denominator, while
+        -- its coefficient is at least one.
         have hdenpos : 0 < ((m ^ 2 : ℕ) : ℝ) ^ σ :=
-          Real.rpow_pos_of_pos (by
-            exact_mod_cast pow_pos (Nat.zero_lt_of_lt (Finset.mem_Icc.mp hm).1) 2) σ
+          Real.rpow_pos_of_pos hmsqpos σ
         have hdenle : ((m ^ 2 : ℕ) : ℝ) ^ σ ≤ (X : ℝ) ^ σ :=
-          Real.rpow_le_rpow (by exact_mod_cast (Nat.zero_le (m ^ 2)))
-            (by exact_mod_cast (Nat.pow_le_pow_left (Finset.mem_Icc.mp hm).2 2))
-            (le_of_lt (zero_lt_one.trans hσ))
+          Real.rpow_le_rpow hmsqpos.le hmsqle (zero_lt_one.trans hσ).le
         have hcoeff : (1 : ℝ) ≤ (tatuzawaPairCoefficient χ₁ χ₂ (m ^ 2)).re := by
-          have hc := one_le_tatuzawaPairCoefficient_sq χ₁ χ₂ h₁ h₂
-            (Nat.ne_of_gt (Finset.mem_Icc.mp hm).1)
+          have hc := one_le_tatuzawaPairCoefficient_sq χ₁ χ₂ h₁ h₂ hmpos.ne'
           rw [RCLike.le_iff_re_im] at hc
           exact hc.1
         calc

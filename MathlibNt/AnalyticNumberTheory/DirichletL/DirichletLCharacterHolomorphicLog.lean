@@ -38,10 +38,7 @@ theorem exists_holomorphicLog_on_ball
   have hh : DifferentiableOn ℂ h U := fun z hz ↦
     (hh' z hz).differentiableAt.differentiableWithinAt
   let F : ℂ → ℂ := fun z ↦ exp (h z) / g z
-  have hF : DifferentiableOn ℂ F U := by
-    intro z hz
-    exact (hh' z hz).differentiableAt.cexp.div
-      ((hg z hz).differentiableAt (isOpen_ball.mem_nhds hz)) (hg0 z hz) |>.differentiableWithinAt
+  have hF : DifferentiableOn ℂ F U := hh.cexp.div hg hg0
   have hFderiv : ∀ z ∈ U, deriv F z = 0 := by
     intro z hz
     have hgd : DifferentiableAt ℂ g z :=
@@ -87,13 +84,10 @@ theorem CharacterLocalDiskData.exists_holomorphicLog_deriv_eq_logDeriv
   obtain ⟨h, hh, hexp⟩ := d.exists_holomorphicLog hR
   refine ⟨h, hh, hexp, ?_⟩
   intro z hz
-  have hgd : DifferentiableAt ℂ d.g z :=
-    (d.g_analytic z hz).differentiableAt
   have hhd : DifferentiableAt ℂ h z :=
     (hh z hz).differentiableAt (isOpen_ball.mem_nhds hz)
-  have hevent : (fun w ↦ exp (h w)) =ᶠ[𝓝 z] d.g := by
-    filter_upwards [isOpen_ball.mem_nhds hz] with w hw
-    exact hexp hw
+  have hevent : (fun w ↦ exp (h w)) =ᶠ[𝓝 z] d.g :=
+    hexp.eventuallyEq_of_mem (isOpen_ball.mem_nhds hz)
   have hderiv : deriv h z * d.g z = deriv d.g z := by
     rw [← hexp hz, ← hevent.deriv_eq]
     simpa only [mul_comm] using hhd.hasDerivAt.cexp.deriv.symm

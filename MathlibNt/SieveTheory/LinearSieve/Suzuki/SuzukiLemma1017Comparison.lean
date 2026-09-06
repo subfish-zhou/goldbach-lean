@@ -37,12 +37,8 @@ theorem adjointPlus_dde (s : ℝ) :
 theorem adjointMinus_dde (s : ℝ) :
     HasDerivAt (fun u => u * adjointMinus u)
       (2 * adjointMinus s - adjointMinus (s + 1)) s := by
-  have heq : (fun u : ℝ => u * adjointMinus u) = id := by
-    funext u
-    simp [adjointMinus]
-  rw [heq]
-  apply (hasDerivAt_id s).congr_deriv
   norm_num [adjointMinus]
+  exact hasDerivAt_id s
 
 theorem adjointPlus_pos {s : ℝ} (hs : 2 ≤ s) : 0 < adjointPlus s := by
   dsimp [adjointPlus]
@@ -73,10 +69,8 @@ theorem strict_adjoint_window
       ∫ t in s - 1..s, adjointPlus (t + 1) * Q t := by
   let g : ℝ → ℝ := fun t => (adjointPlus (t + 1) - adjointPlus s) * Q t
   have hcont : ContinuousOn g (Icc (s - 1) s) := by
-    apply Continuous.continuousOn
-    exact (((continuous_id.add continuous_const).pow 2 |>.sub
-      (continuous_const.mul (continuous_id.add continuous_const)) |>.add
-      continuous_const).sub continuous_const).mul hQ
+    dsimp [g, adjointPlus]
+    fun_prop
   have hnonneg : ∀ t ∈ Ioc (s - 1) s, 0 ≤ g t := by
     intro t ht
     have ht0 : 0 < t := by linarith [ht.1]
@@ -100,9 +94,8 @@ theorem strict_adjoint_window
   have hWint : IntervalIntegrable (fun t => adjointPlus (t + 1) * Q t)
       volume (s - 1) s := by
     apply Continuous.intervalIntegrable
-    exact (((continuous_id.add continuous_const).pow 2 |>.sub
-      (continuous_const.mul (continuous_id.add continuous_const)) |>.add
-      continuous_const).mul hQ)
+    dsimp [adjointPlus]
+    fun_prop
   have heq :
       (∫ t in s - 1..s, g t) =
         (∫ t in s - 1..s, adjointPlus (t + 1) * Q t) -
@@ -155,7 +148,7 @@ theorem claim10_18_one_step_strict
       |∫ t in s - 1..s, P t| ≤ ∫ t in s - 1..s, |P t| := habs
       _ ≤ ρ * (∫ t in s - 1..s, Q t) := hmono
       _ < ρ * (s * Q s) := mul_lt_mul_of_pos_left hQwindow hρ
-  nlinarith
+  exact (mul_lt_mul_iff_right₀ hs0).mp (by simpa only [mul_left_comm ρ s] using hchain)
 
 /-- Compact extraction of a uniform coefficient strictly below one.  This is
 applied to the positive hat-layer identities `P=T⁺-T⁻`, `Q=T⁺+T⁻`; those

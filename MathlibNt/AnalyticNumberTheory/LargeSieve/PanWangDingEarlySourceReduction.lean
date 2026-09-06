@@ -53,17 +53,13 @@ theorem panTheoremALeft_le_productionFareyBound
       intro q hq
       have hqP := (Finset.mem_Ioc.mp hq).1
       have hqpos : 0 < q := hP.trans hqP
-      have hφ : 0 < (q.totient : ℝ) := by
-        exact_mod_cast Nat.totient_pos.mpr hqpos
       have hsum : 0 ≤ ∑ χ : PrimitiveCharacter q,
           ‖primitiveIntervalAmplitude b M N χ‖ ^ 2 := by positivity
       have hqone : (1 : ℝ) ≤ q := by exact_mod_cast hqpos
       have hcoeff : (q.totient : ℝ)⁻¹ ≤
           (q : ℝ) * (q.totient : ℝ)⁻¹ := by
-        calc
-          (q.totient : ℝ)⁻¹ = 1 * (q.totient : ℝ)⁻¹ := by ring
-          _ ≤ (q : ℝ) * (q.totient : ℝ)⁻¹ :=
-            mul_le_mul_of_nonneg_right hqone (le_of_lt (inv_pos.mpr hφ))
+        simpa only [one_mul] using
+          mul_le_mul_of_nonneg_right hqone (by positivity : 0 ≤ (q.totient : ℝ)⁻¹)
       rw [div_eq_mul_inv]
       exact mul_le_mul_of_nonneg_right hcoeff hsum
     _ ≤ ∑ q ∈ Finset.Icc 1 Q,
@@ -115,25 +111,12 @@ theorem panIym_eq_low_add_high
       panIymLow g d y A₁ A₂ D₁ + panIymHigh g d y A₁ A₂ D₁ D := by
   have hset : Finset.Icc 1 D = Finset.Icc 1 D₁ ∪ Finset.Ioc D₁ D := by
     ext q
-    constructor
-    · intro hq
-      rcases Finset.mem_Icc.mp hq with ⟨hq1, hqD⟩
-      by_cases hqD₁ : q ≤ D₁
-      · exact Finset.mem_union_left _ (Finset.mem_Icc.mpr ⟨hq1, hqD₁⟩)
-      · exact Finset.mem_union_right _
-          (Finset.mem_Ioc.mpr ⟨Nat.lt_of_not_ge hqD₁, hqD⟩)
-    · intro hq
-      rcases Finset.mem_union.mp hq with hq | hq
-      · rcases Finset.mem_Icc.mp hq with ⟨hq1, hqD₁⟩
-        exact Finset.mem_Icc.mpr ⟨hq1, hqD₁.trans hD⟩
-      · rcases Finset.mem_Ioc.mp hq with ⟨hD₁q, hqD⟩
-        exact Finset.mem_Icc.mpr ⟨by omega, hqD⟩
+    simp only [Finset.mem_union, Finset.mem_Icc, Finset.mem_Ioc]
+    omega
   have hdis : Disjoint (Finset.Icc 1 D₁) (Finset.Ioc D₁ D) := by
     refine Finset.disjoint_left.mpr ?_
     intro q hq₁ hq₂
-    rcases Finset.mem_Icc.mp hq₁ with ⟨hq1, hqD₁⟩
-    rcases Finset.mem_Ioc.mp hq₂ with ⟨hD₁q, hqD⟩
-    omega
+    exact (not_lt_of_ge (Finset.mem_Icc.mp hq₁).2) (Finset.mem_Ioc.mp hq₂).1
   unfold panIym panIymLow panIymHigh
   rw [hset, Finset.sum_union hdis]
 

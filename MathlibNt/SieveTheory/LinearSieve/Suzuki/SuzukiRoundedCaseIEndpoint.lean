@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointFromCaseI
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set
@@ -23,13 +24,7 @@ replaced by its natural ceiling. -/
 theorem suzukiVProduct_natCeil_eq
     (S : BoundingSieve) {x : ℝ} {z : ℕ} (hz : z = ⌈x⌉₊) :
     suzukiVProduct S (z : ℝ) = suzukiVProduct S x := by
-  classical
-  unfold suzukiVProduct
-  congr 1
-  ext p
-  simp only [Finset.mem_filter]
-  rw [Nat.cast_lt]
-  rw [nat_lt_of_eq_ceil_iff hz]
+  exact SwitchingPrinciple.suzukiVProduct_natCeil_eq S hz
 
 /-- The Lemma-8.7 prime sum is likewise insensitive to replacing its Euler
 suffix cutoff by the natural ceiling. -/
@@ -181,7 +176,7 @@ theorem sigmaEleven_add_sigmaTwelve_suzukiVProduct_le_finiteSourceLayer_add_qD_n
     rw [hVz, suzukiVProduct_div_eq_suffix S hpz]
     dsimp [Q]
     have hmul := mul_le_mul_of_nonneg_left herr (mul_nonneg hnu hsuffix)
-    nlinarith
+    simpa only [mul_assoc, mul_left_comm, mul_comm] using hmul
   have houter : 0 ≤ C * Real.exp (Real.sqrt K) * suzukiVProduct S (z : ℝ) :=
     mul_nonneg (mul_nonneg hC (Real.exp_nonneg _)) (suzukiVProduct_pos S _).le
   have h12final :

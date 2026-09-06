@@ -282,50 +282,15 @@ theorem exists_upperRosserBoundaryChains_weightedSubaggregate_uniform_tail
                   (S.prodPrimes.primeFactors.filter (fun p => q < p))
                   (L + j + N)) *
           ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p) ≤ τ L) := by
-  obtain ⟨N, τ, hτ, hτnonneg, hfull⟩ :=
-    exists_upperRosserBoundaryChains_weightedAggregate_uniform_tail K hK
-  refine ⟨N, τ, hτ, hτnonneg, ?_⟩
-  intro S T L n z Δ s hT hz hΔ hs hlocal hcut
-  let P := S.prodPrimes.primeFactors
-  let F : ℕ → ℝ := fun q =>
-    (S.nu q / (1 - S.nu q)) *
-      ∑ j ∈ Finset.range n,
-        LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-          S.nu (Nat.floor Δ + 1) q
-          (P.filter (fun p => q < p)) (L + j + N)
-  have hF : ∀ q ∈ P, 0 ≤ F q := by
-    intro q hq
-    apply mul_nonneg (nu_div_one_sub_nonneg_of_mem hq)
-    apply Finset.sum_nonneg
-    intro j hj
-    apply LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity_nonneg
-    · intro p hp
-      have hpP := (Finset.mem_filter.mp hp).1
-      have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpP
-      have hpDvd : p ∣ S.prodPrimes :=
-        (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpP |>.2
-      exact (S.nu_pos_of_prime p hpPrime hpDvd).le
-    · intro p hp
-      have hpP := (Finset.mem_filter.mp hp).1
-      have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpP
-      have hpDvd : p ∣ S.prodPrimes :=
-        (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpP |>.2
-      exact (S.nu_lt_one_of_prime p hpPrime hpDvd).le
-  have hprod : 0 ≤ ∏ p ∈ P, (1 - S.nu p) := by
-    apply Finset.prod_nonneg
-    intro p hp
-    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hp
-    have hpDvd : p ∣ S.prodPrimes :=
-      (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hp |>.2
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hpPrime hpDvd).le
-  have hsum : (∑ q ∈ T, F q) ≤ ∑ q ∈ P, F q :=
-    Finset.sum_le_sum_of_subset_of_nonneg hT (fun q hqP hqT => hF q hqP)
-  calc
-    (∑ q ∈ T, F q) * ∏ p ∈ P, (1 - S.nu p) ≤
-        (∑ q ∈ P, F q) * ∏ p ∈ P, (1 - S.nu p) :=
-      mul_le_mul_of_nonneg_right hsum hprod
-    _ ≤ τ L := by
-      simpa [P, F] using hfull S L n z Δ s hz hΔ hs hlocal hcut
+  obtain ⟨N, C, hC, hgeom⟩ :=
+    exists_upperRosserBoundaryChains_weightedSubaggregate_geometric K hK
+  refine ⟨N, (fun L => 90 * C * (9 / 10 : ℝ) ^ L), ?_, ?_, ?_⟩
+  · simpa only [mul_zero] using
+      (tendsto_pow_atTop_nhds_zero_of_lt_one
+        (r := (9 / 10 : ℝ)) (by norm_num) (by norm_num)).const_mul (90 * C)
+  · intro L
+    positivity
+  · exact hgeom
 
 
 end

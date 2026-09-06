@@ -306,6 +306,16 @@ private theorem discreteAbelAmplifier_le_prefixMax
   exact Finset.le_max' _ _ (Finset.mem_image.mpr
     ⟨y, Finset.mem_range.mpr (Nat.lt_succ_iff.mpr hy), rfl⟩)
 
+private theorem discreteAbelAmplifier_nonneg (y : ℕ) :
+    0 ≤ discreteAbelAmplifier y := by
+  unfold discreteAbelAmplifier
+  exact add_nonneg (abs_nonneg _) (Finset.sum_nonneg fun _ _ => abs_nonneg _)
+
+theorem discreteAbelAmplifierPrefixMax_nonneg (N : ℕ) :
+    0 ≤ discreteAbelAmplifierPrefixMax N :=
+  (discreteAbelAmplifier_nonneg 0).trans
+    (discreteAbelAmplifier_le_prefixMax (Nat.zero_le N))
+
 private theorem globalSourceError_le_prefixMax
     {y N : ℕ} (hy : y ≤ N) :
     globalChebyshevToLiSourceError y ≤
@@ -339,11 +349,7 @@ private theorem bridgeRHS_nonneg (N q : ℕ) :
         (lambdaAPPrefixMaxError N q +
           lambdaPrimePowerCorrectionPrefixMaxError N q) +
       (q.totient : ℝ)⁻¹ * globalChebyshevToLiSourcePrefixMaxError N := by
-  have hA0 : 0 ≤ discreteAbelAmplifier 0 := by
-    unfold discreteAbelAmplifier
-    positivity
-  have hA : 0 ≤ discreteAbelAmplifierPrefixMax N :=
-    hA0.trans (discreteAbelAmplifier_le_prefixMax (Nat.zero_le N))
+  have hA := discreteAbelAmplifierPrefixMax_nonneg N
   have hL : 0 ≤ lambdaAPPrefixMaxError N q := by
     unfold lambdaAPPrefixMaxError
     exact insertZeroMax_nonneg _
@@ -366,24 +372,14 @@ theorem abs_standardPrimeAPError_le_prefix_bridge
       (q.totient : ℝ)⁻¹ * globalChebyshevToLiSourcePrefixMaxError N := by
   refine (abs_standardPrimeAPError_le_abel hq).trans ?_
   apply add_le_add
-  · have hTheta : 0 ≤ thetaAPResiduePrefixMaxError y q a := by
-      unfold thetaAPResiduePrefixMaxError
-      have hmem : |thetaAPMainError 0 q a| ∈
-          (range (y + 1)).image (fun n : ℕ => |thetaAPMainError n q a|) := by
-        apply Finset.mem_image.mpr
-        refine ⟨0, ?_, rfl⟩
-        simp
-      exact (abs_nonneg (thetaAPMainError 0 q a)).trans (Finset.le_max' _ _ hmem)
-    have hAmp : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-      have hAy : 0 ≤ discreteAbelAmplifier y := by
-        unfold discreteAbelAmplifier
-        exact add_nonneg (abs_nonneg _) (Finset.sum_nonneg fun _ _ => abs_nonneg _)
-      exact hAy.trans (discreteAbelAmplifier_le_prefixMax hy)
+  · have hTheta : 0 ≤ thetaAPResiduePrefixMaxError y q a :=
+      (abs_nonneg (thetaAPMainError 0 q a)).trans
+        (abs_thetaAPMainError_le_residuePrefixMax (Nat.zero_le y))
     exact mul_le_mul
       (discreteAbelAmplifier_le_prefixMax hy)
       ((thetaAPResiduePrefixMaxError_mono hy).trans
         (thetaAPResiduePrefixMaxError_le_lambda_add_primePower ha))
-      hTheta hAmp
+      hTheta (discreteAbelAmplifierPrefixMax_nonneg N)
   · exact mul_le_mul_of_nonneg_left (globalSourceError_le_prefixMax hy)
       (inv_nonneg.mpr (Nat.cast_nonneg q.totient))
 
@@ -425,27 +421,10 @@ theorem standardPrimeAPPrefixMaxError_le_principal_character_bridge
           lambdaPrimePowerCorrectionPrefixMaxError N q) +
       (q.totient : ℝ)⁻¹ * globalChebyshevToLiSourcePrefixMaxError N := by
   refine (standardPrimeAPPrefixMaxError_le_lambda_bridge hq).trans ?_
-  have hA0 : 0 ≤ discreteAbelAmplifier 0 := by
-    unfold discreteAbelAmplifier
-    positivity
-  have hA : 0 ≤ discreteAbelAmplifierPrefixMax N :=
-    hA0.trans (discreteAbelAmplifier_le_prefixMax (Nat.zero_le N))
-  have hLam :
-      lambdaAPPrefixMaxError N q ≤
-        (q.totient : ℝ)⁻¹ *
-          (principalLambdaPrefixMaxError N q +
-            ∑ χ ∈ nonprincipalCharacters q,
-              lambdaCharacterPrefixMaxAmplitude N q χ) :=
-    lambdaAPPrefixMaxError_le_character_majorant (q := q) (N := N) hq
-  have hinner :
-      lambdaAPPrefixMaxError N q + lambdaPrimePowerCorrectionPrefixMaxError N q ≤
-        (q.totient : ℝ)⁻¹ *
-            (principalLambdaPrefixMaxError N q +
-              ∑ χ ∈ nonprincipalCharacters q,
-                lambdaCharacterPrefixMaxAmplitude N q χ) +
-          lambdaPrimePowerCorrectionPrefixMaxError N q :=
-    add_le_add hLam le_rfl
-  exact add_le_add (mul_le_mul_of_nonneg_left hinner hA) le_rfl
+  apply add_le_add
+  · apply mul_le_mul_of_nonneg_left _ (discreteAbelAmplifierPrefixMax_nonneg N)
+    exact add_le_add (lambdaAPPrefixMaxError_le_character_majorant hq) le_rfl
+  · exact le_rfl
 
 end
 

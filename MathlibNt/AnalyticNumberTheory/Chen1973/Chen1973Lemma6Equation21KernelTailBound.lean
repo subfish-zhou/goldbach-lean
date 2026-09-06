@@ -49,7 +49,7 @@ private theorem eq21_logWeight_tail_le {a d t : ℝ}
     apply (le_div_iff₀ ha).mpr
     nlinarith
   have hprod : d * (1 + t) ≤ (d * (1 + a)) * (t / a) := by
-    nlinarith [mul_le_mul_of_nonneg_left hratio hd0.le]
+    simpa only [mul_assoc] using mul_le_mul_of_nonneg_left hratio hd0.le
   have hlog := Real.log_le_log (mul_pos hd0 (by positivity)) hprod
   rw [Real.log_mul (ne_of_gt (mul_pos hd0 (by positivity)))
     (ne_of_gt (div_pos ht0 ha))] at hlog
@@ -110,17 +110,16 @@ theorem chen1973Lemma6_eq21_weightedKernel_tail_integrable_and_bound
     · exact mul_nonneg (norm_nonneg _) (pow_nonneg hw.1 _)
     · simpa only [f, g, a, N, D, Nat.add_assoc] using
         chen1973Lemma6_eq21_weightedKernel_tail_bound (σ := σ) hx hd ht.le r
-  have hbound : ∀ᵐ t ∂volume.restrict (Ioi a), ‖f t‖ ≤ g t := by
+  have hpoint_ae : ∀ᵐ t ∂volume.restrict (Ioi a), 0 ≤ f t ∧ f t ≤ g t := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-    rw [Real.norm_eq_abs, abs_of_nonneg (hpoint t ht).1]
-    exact (hpoint t ht).2
-  have hf : IntegrableOn f (Ioi a) := hg.mono' hm.aestronglyMeasurable hbound
+    exact hpoint t ht
+  have hf : IntegrableOn f (Ioi a) :=
+    hg.mono' hm.aestronglyMeasurable (hpoint_ae.mono fun t ht => by
+      simpa only [Real.norm_eq_abs, abs_of_nonneg ht.1] using ht.2)
   refine ⟨hf, ?_⟩
   calc
-    (∫ t in Ioi a, f t) ≤ ∫ t in Ioi a, g t := by
-      apply integral_mono_ae hf hg
-      filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-      exact (hpoint t ht).2
+    (∫ t in Ioi a, f t) ≤ ∫ t in Ioi a, g t :=
+      integral_mono_ae hf hg (hpoint_ae.mono fun _ ht => ht.2)
     _ = _ := chen1973Lemma6_eq21_shiftedLogTail_integral ha D N r hN
 
 end AnalyticNumberTheory.LargeSieve

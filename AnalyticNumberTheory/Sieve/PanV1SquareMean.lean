@@ -57,18 +57,7 @@ set_option maxHeartbeats 800000
 
 /-- `μ(d) ∈ {-1, 0, 1}`: `|μ d| ≤ 1`. -/
 lemma moebius_abs_le_one (d : ℕ) : |((μ d : ℤ) : ℝ)| ≤ 1 := by
-  by_cases h : Squarefree d
-  · have hμ : (μ d : ℤ) = (-1 : ℤ) ^ ArithmeticFunction.cardFactors d := by
-      unfold ArithmeticFunction.moebius
-      simp [h]
-    rw [hμ]
-    have hpow : |(((-1 : ℤ) ^ ArithmeticFunction.cardFactors d : ℤ) : ℝ)| = 1 := by
-      rw [← Int.cast_abs, abs_pow, abs_neg, abs_one]
-      norm_num
-    rw [hpow]
-  · have hμ : (μ d : ℤ) = 0 := ArithmeticFunction.moebius_eq_zero_of_not_squarefree h
-    rw [hμ]
-    norm_num
+  exact_mod_cast (ArithmeticFunction.abs_moebius_le_one (n := d))
 
 /-- `vaughanFirst 0 u = 0` (`0.divisors = ∅`). -/
 lemma vaughanFirst_zero (u : ℕ) : vaughanFirst 0 u = 0 := by
@@ -183,7 +172,7 @@ lemma card_multiples_Icc (N m : ℕ) (hm : 1 ≤ m) :
 /-! ## 3. Reciprocal-lcm sums and Σ_{n≤N} τ(n)² ≤ N·(1+log(N+1))³ -/
 
 /-- `1/lcm(d,e) = gcd(d,e)/(d·e)` in `ℝ`, for `d,e ≥ 1`. -/
-private lemma lcm_inv_eq_gcd_div {d e : ℕ} (hd : 1 ≤ d) (he : 1 ≤ e) :
+lemma pan_lcm_inv_eq_gcd_div {d e : ℕ} (hd : 1 ≤ d) (he : 1 ≤ e) :
     (1 : ℝ) / (Nat.lcm d e : ℝ) = (Nat.gcd d e : ℝ) / ((d : ℝ) * (e : ℝ)) := by
   have hgmul : (Nat.gcd d e : ℝ) * (Nat.lcm d e : ℝ) = (d : ℝ) * (e : ℝ) := by
     exact_mod_cast (Nat.gcd_mul_lcm d e)
@@ -228,7 +217,7 @@ lemma lcm_inv_sum_le (N : ℕ) :
     intro d hd
     apply Finset.sum_congr rfl
     intro e he
-    exact lcm_inv_eq_gcd_div (Finset.mem_Icc.mp hd).1 (Finset.mem_Icc.mp he).1
+    exact pan_lcm_inv_eq_gcd_div (Finset.mem_Icc.mp hd).1 (Finset.mem_Icc.mp he).1
   -- gcd(d,e) = Σ_{g | gcd d e} φ(g) (Nat.sum_totient)
   have htot : ∀ d e : ℕ,
       (Nat.gcd d e : ℝ) = ∑ g ∈ (Nat.gcd d e).divisors, (Nat.totient g : ℝ) := by
@@ -393,33 +382,8 @@ lemma lcm_inv_sum_le (N : ℕ) :
             (∑ d ∈ Finset.Icc 1 N, (if g ∣ d then (1 : ℝ) / (d : ℝ) else 0)) *
             (∑ e ∈ Finset.Icc 1 N, (if g ∣ e then (1 : ℝ) / (e : ℝ) else 0)) := by
             -- Factor the double sum: Σ_d Σ_e (φ·B_d·C_e) = φ·(Σ_d B_d)·(Σ_e C_e).
-            let B : ℕ → ℝ := fun d => if g ∣ d then (1 : ℝ) / (d : ℝ) else 0
-            let C : ℕ → ℝ := fun e => if g ∣ e then (1 : ℝ) / (e : ℝ) else 0
-            calc
-              (∑ d ∈ Finset.Icc 1 N, ∑ e ∈ Finset.Icc 1 N, ((Nat.totient g : ℝ) * B d) * C e)
-                  = ∑ d ∈ Finset.Icc 1 N, ∑ e ∈ Finset.Icc 1 N, (Nat.totient g : ℝ) * (B d * C e) := by
-                    apply Finset.sum_congr rfl
-                    intro d hd
-                    apply Finset.sum_congr rfl
-                    intro e he
-                    ring
-              _ = (Nat.totient g : ℝ) * (∑ d ∈ Finset.Icc 1 N, ∑ e ∈ Finset.Icc 1 N, B d * C e) := by
-                    rw [Finset.mul_sum]
-                    apply Finset.sum_congr rfl
-                    intro d hd
-                    rw [Finset.mul_sum]
-              _ = (Nat.totient g : ℝ) * ((∑ d ∈ Finset.Icc 1 N, B d) * (∑ e ∈ Finset.Icc 1 N, C e)) := by
-                    congr 1
-                    calc
-                      (∑ d ∈ Finset.Icc 1 N, ∑ e ∈ Finset.Icc 1 N, B d * C e)
-                          = ∑ d ∈ Finset.Icc 1 N, B d * (∑ e ∈ Finset.Icc 1 N, C e) := by
-                                apply Finset.sum_congr rfl
-                                intro d hd
-                                rw [← Finset.mul_sum (s := Finset.Icc 1 N) (f := fun e => C e) (a := B d)]
-                      _ = (∑ d ∈ Finset.Icc 1 N, B d) * (∑ e ∈ Finset.Icc 1 N, C e) := by
-                                rw [← Finset.sum_mul (s := Finset.Icc 1 N) (f := fun d => B d)
-                                  (a := (∑ e ∈ Finset.Icc 1 N, C e))]
-              _ = ((Nat.totient g : ℝ) * ∑ d ∈ Finset.Icc 1 N, B d) * (∑ e ∈ Finset.Icc 1 N, C e) := by ring
+            simp only [Finset.mul_sum, Finset.sum_mul]
+            rw [Finset.sum_comm]
       _ = (Nat.totient g : ℝ) / (g : ℝ) ^ 2 *
             (∑ d ∈ Finset.Icc 1 (N / g), (1 : ℝ) / (d : ℝ)) *
             (∑ e ∈ Finset.Icc 1 (N / g), (1 : ℝ) / (e : ℝ)) := by
@@ -504,16 +468,7 @@ lemma divisorCountSq_sum_le (N : ℕ) :
   have hsq : ∀ n : ℕ, ((n.divisors.card : ℝ) ^ 2) =
       ∑ d ∈ n.divisors, ∑ e ∈ n.divisors, (1 : ℝ) := by
     intro n
-    have hc : (n.divisors.card : ℝ) = ∑ d ∈ n.divisors, (1 : ℝ) := by
-      rw [Finset.card_eq_sum_ones]
-      simp
-    rw [hc, pow_two]
-    rw [Finset.sum_mul (s := n.divisors) (f := fun _ : ℕ => (1 : ℝ))
-      (a := ∑ e ∈ n.divisors, (1 : ℝ))]
-    apply Finset.sum_congr rfl
-    intro d hd
-    rw [Finset.mul_sum]
-    simp
+    simp [pow_two]
   -- For each n, replace divisor pairs by the lcm-divisibility condition on (Icc 1 N)².
   have hper : ∀ n ∈ Finset.Icc 1 N,
       (∑ d ∈ n.divisors, ∑ e ∈ n.divisors, (1 : ℝ)) =
@@ -698,16 +653,6 @@ theorem vaughanFirst_l2_sum_le (u : ℕ) : ∃ C : ℝ, 0 < C ∧ ∀ N : ℕ,
             exact sq_le_sq.mpr (by
               have h1 : Real.log (N + 1) ≤ 1 + Real.log (N + 1) := by linarith
               simpa [abs_of_nonneg hlog, abs_of_nonneg (by linarith : 0 ≤ 1 + Real.log (N + 1))] using h1)
-          have hle2 : (1 + Real.log (N + 1)) ^ 3 ≤ (1 + Real.log (N + 1)) ^ 5 := by
-            have hc : 1 ≤ 1 + Real.log (N + 1) := by linarith
-            have hcpos : 0 ≤ 1 + Real.log (N + 1) := by linarith
-            calc
-              (1 + Real.log (N + 1)) ^ 3 = (1 + Real.log (N + 1)) ^ 3 * 1 := by ring
-              _ ≤ (1 + Real.log (N + 1)) ^ 3 * (1 + Real.log (N + 1)) ^ 2 := by
-                    exact mul_le_mul_of_nonneg_left
-                      (by simpa using (pow_le_pow_left₀ (by norm_num : 0 ≤ (1 : ℝ)) hc 2))
-                      (pow_nonneg hcpos 3)
-              _ = (1 + Real.log (N + 1)) ^ 5 := by ring
           have hN : 0 ≤ (N : ℝ) := by exact_mod_cast Nat.zero_le N
           calc
             (Real.log (N + 1)) ^ 2 * (N : ℝ) * (1 + Real.log (N + 1)) ^ 3
@@ -725,7 +670,7 @@ theorem vaughanFirst_l2_sum_le (u : ℕ) : ∃ C : ℝ, 0 < C ∧ ∀ N : ℕ,
 
 /-- Reindex an `ℕ` range sum as an `ℤ` interval sum
 using the natural embedding `n ↦ n`. -/
-private lemma sum_range_to_Icc_int {m : ℕ} {β : Type*} [AddCommMonoid β] (f : ℕ → β)
+lemma pan_sum_range_to_Icc_int {m : ℕ} {β : Type*} [AddCommMonoid β] (f : ℕ → β)
     (g : ℤ → β) (hfg : ∀ n : ℕ, f n = g (n : ℤ)) :
     (∑ n ∈ Finset.range (m + 1), f n) = ∑ n ∈ Finset.Icc (0 : ℤ) (m : ℤ), g n := by
   rw [Finset.sum_bij (s := Finset.range (m + 1)) (t := Finset.Icc (0 : ℤ) (m : ℤ))
@@ -770,30 +715,15 @@ theorem panTypeICharSqSum_le_additiveSieve (q m u : ℕ) (hq : 0 < q) :
   -- Coefficient identity: a (n : ℤ) = vaughanFirst n u.
   have ha : ∀ n : ℕ, a (n : ℤ) = (vaughanFirst n u : ℂ) := by
     intro n
-    have htn : (n : ℤ).toNat = n := by
-      have hz : ((n : ℤ).toNat : ℤ) = (n : ℤ) := Int.toNat_of_nonneg (by omega)
-      exact_mod_cast hz
-    simp [a, htn]
+    simp [a]
   -- Character sum: Σ_{Icc} a n·χ(n) = panTypeIV1CharSum q m u χ.
   have hchar : ∀ χ : DirichletCharacter ℂ q,
       (∑ n ∈ Finset.Icc (0 : ℤ) (m : ℤ), a n * χ (n : ZMod q)) =
         panTypeIV1CharSum q m u χ := by
     intro χ
     unfold panTypeIV1CharSum
-    rw [← sum_range_to_Icc_int (f := fun n => (vaughanFirst n u : ℂ) * χ (n : ZMod q))
+    rw [← pan_sum_range_to_Icc_int (f := fun n => (vaughanFirst n u : ℂ) * χ (n : ZMod q))
       (g := fun n => a n * χ (n : ZMod q))]
-    · intro n
-      simp [ha n]
-  -- Reindex the charReal sum: Σ_{Icc} charReal(n·r/q)·a n = Σ_{range} charReal·vaughanFirst.
-  have hcr : ∀ r : ℕ,
-      (∑ n ∈ Finset.Icc (0 : ℤ) (m : ℤ),
-        (charReal ((n : ℝ) * ((r : ℝ) / (q : ℝ))) : ℂ) * a n) =
-      ∑ n ∈ Finset.range (m + 1),
-        (charReal ((n : ℝ) * ((r : ℝ) / (q : ℝ))) : ℂ) * (vaughanFirst n u : ℂ) := by
-    intro r
-    rw [← sum_range_to_Icc_int
-      (f := fun n => (charReal ((n : ℝ) * ((r : ℝ) / (q : ℝ))) : ℂ) * (vaughanFirst n u : ℂ))
-      (g := fun n => (charReal ((n : ℝ) * ((r : ℝ) / (q : ℝ))) : ℂ) * a n)]
     · intro n
       simp [ha n]
   -- characterSieveModulus_le (M = -1, N = m+1)
@@ -843,7 +773,7 @@ theorem panTypeICharSqSum_le_additiveSieve (q m u : ℕ) (hq : 0 < q) :
   -- Identify the L² sum of coefficients.
   have hL2 : (∑ n ∈ Finset.Icc (0 : ℤ) (m : ℤ), ‖a n‖ ^ 2) =
       (∑ n ∈ Finset.range (m + 1), (vaughanFirst n u) ^ 2) := by
-    rw [← sum_range_to_Icc_int (f := fun n => ‖(vaughanFirst n u : ℂ)‖ ^ 2)
+    rw [← pan_sum_range_to_Icc_int (f := fun n => ‖(vaughanFirst n u : ℂ)‖ ^ 2)
       (g := fun n => ‖a n‖ ^ 2)]
     · apply Finset.sum_congr rfl
       intro n hn

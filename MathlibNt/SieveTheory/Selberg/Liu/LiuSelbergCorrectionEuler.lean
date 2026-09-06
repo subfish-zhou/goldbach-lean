@@ -122,6 +122,31 @@ theorem tsum_liuSelbergCorrection_prime_pow_eq_localFactor_inv
         have he3 : 3 ≤ e := Nat.le_of_not_gt (by simpa using he)
         rw [liuSelbergCorrection_prime_pow_eq_zero_of_not_dvd hp hpn he3]
 
+/-- The absolute local Euler total contains the unit term. -/
+theorem liuSelbergAbsPrimeDeviation_nonneg_core
+    {N : ℕ} (hNeven : Even N) (p : Nat.Primes) :
+    0 ≤ liuSelbergAbsPrimeDeviation N p := by
+  rw [liuSelbergAbsPrimeDeviation,
+    tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
+  by_cases hpdvd : (p : ℕ) ∣ N
+  · simp [hpdvd]
+  · rw [if_neg hpdvd]
+    have hp2 : 2 < (p : ℕ) := by
+      have hpne : (p : ℕ) ≠ 2 := by
+        intro heq
+        apply hpdvd
+        rw [heq]
+        exact hNeven.two_dvd
+      have := p.2.two_le
+      omega
+    have hpR : (0 : ℝ) < (p : ℕ) := by exact_mod_cast p.2.pos
+    have hpR2 : (0 : ℝ) < ((p : ℕ) : ℝ) - 2 := by
+      have : (2 : ℝ) < (p : ℕ) := by exact_mod_cast hp2
+      linarith
+    have hq : 0 ≤ 3 / (((p : ℕ) : ℝ) * (((p : ℕ) : ℝ) - 2)) := by
+      positivity
+    linarith
+
 theorem summable_liuSelbergAbsPrimeDeviation
     {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
     Summable (liuSelbergAbsPrimeDeviation N) := by
@@ -155,26 +180,7 @@ theorem summable_liuSelbergAbsPrimeDeviation
     simp [b, Function.comp_apply, div_eq_mul_inv, mul_comm]
   apply Summable.of_nonneg_of_le
     (fun p => ?_) (fun p => ?_) (hd.add hb)
-  · rw [liuSelbergAbsPrimeDeviation,
-      tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
-    by_cases hpdvd : (p : ℕ) ∣ N
-    · simp [hpdvd]
-    · rw [if_neg hpdvd]
-      have hp2 : 2 < (p : ℕ) := by
-        have hpne : (p : ℕ) ≠ 2 := by
-          intro heq
-          apply hpdvd
-          rw [heq]
-          exact hNeven.two_dvd
-        have := p.2.two_le
-        omega
-      have hpR : (0 : ℝ) < (p : ℕ) := by exact_mod_cast p.2.pos
-      have hpR2 : (0 : ℝ) < ((p : ℕ) : ℝ) - 2 := by
-        have : (2 : ℝ) < (p : ℕ) := by exact_mod_cast hp2
-        linarith
-      have hq : 0 ≤ 3 / (((p : ℕ) : ℝ) * (((p : ℕ) : ℝ) - 2)) := by
-        positivity
-      linarith
+  · exact liuSelbergAbsPrimeDeviation_nonneg_core hNeven p
   · rw [liuSelbergAbsPrimeDeviation,
       tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
     by_cases hpdvd : (p : ℕ) ∣ N
@@ -204,117 +210,6 @@ theorem summable_liuSelbergAbsPrimeDeviation
       have hpR3 : (3 : ℝ) ≤ (p : ℕ) := by
         exact_mod_cast (Nat.succ_le_iff.mpr hp2)
       nlinarith [sq_nonneg (((p : ℕ) : ℝ) - 3)]
-
-theorem summable_norm_liuSelbergCorrection
-    {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
-    Summable (fun d : ℕ => ‖liuSelbergCorrection N d‖) := by
-  classical
-  let f : ℕ → ℝ := fun d => ‖liuSelbergCorrection N d‖
-  have hf1 : f 1 = 1 := by simp [f]
-  have hfmul : ∀ {m n : ℕ}, m.Coprime n → f (m * n) = f m * f n := by
-    intro m n hmn
-    simp only [f]
-    rw [(liuSelbergCorrection_isMultiplicative N).map_mul_of_coprime hmn,
-      norm_mul]
-  have hdev := summable_liuSelbergAbsPrimeDeviation hNeven hN
-  have hmult :
-      Multipliable (fun p : Nat.Primes => 1 + liuSelbergAbsPrimeDeviation N p) :=
-    Real.multipliable_one_add_of_summable hdev
-  refine summable_of_sum_range_le
-    (c := ∏' p : Nat.Primes, (1 + liuSelbergAbsPrimeDeviation N p))
-    (fun _ => norm_nonneg _) fun z => ?_
-  have hlocal : ∀ {p : ℕ}, p.Prime →
-      Summable (fun e : ℕ => ‖f (p ^ e)‖) := by
-    intro p hp
-    simpa only [f, Real.norm_eq_abs, abs_abs] using
-      summable_abs_liuSelbergCorrection_prime_pow N hp
-  have hsmooth :=
-    EulerProduct.summable_and_hasSum_smoothNumbers_prod_primesBelow_tsum
-      hf1 hfmul hlocal z
-  have hsind :
-      Summable (z.smoothNumbers.indicator f) :=
-    summable_subtype_iff_indicator.mp (by
-      change Summable (fun m : z.smoothNumbers =>
-        |liuSelbergCorrection N (m : ℕ)|)
-      simpa only [f, Real.norm_eq_abs, abs_abs] using hsmooth.1)
-  calc
-    ∑ n ∈ Finset.range z, ‖liuSelbergCorrection N n‖ =
-        ∑ n ∈ Finset.range z,
-          z.smoothNumbers.indicator f n := by
-            apply sum_congr rfl
-            intro n hn
-            by_cases hn0 : n = 0
-            · subst n
-              simp [f, Set.indicator]
-            ·             rw [Set.indicator_of_mem
-              (Nat.mem_smoothNumbers_of_lt (Nat.pos_of_ne_zero hn0)
-                (Finset.mem_range.mp hn))]
-    _ ≤ ∑' n : ℕ, z.smoothNumbers.indicator f n :=
-      hsind.sum_le_tsum _ (fun n _ => by
-        by_cases hn : n ∈ z.smoothNumbers <;> simp [Set.indicator, hn, f])
-    _ = ∑' n : z.smoothNumbers, f n := (_root_.tsum_subtype _ _).symm
-    _ = ∏ p ∈ z.primesBelow, ∑' e : ℕ, f (p ^ e) := hsmooth.2.tsum_eq
-    _ ≤ ∏' p : Nat.Primes, (1 + liuSelbergAbsPrimeDeviation N p) := by
-      let e : z.primesBelow ↪ Nat.Primes :=
-        ⟨fun p => ⟨p.1, Nat.prime_of_mem_primesBelow p.2⟩, by
-          intro a b h
-          apply Subtype.ext
-          exact congrArg (fun q : Nat.Primes => (q : ℕ)) h⟩
-      let S : Finset Nat.Primes := z.primesBelow.attach.map e
-      have hprod :
-          (∏ p ∈ z.primesBelow, ∑' k : ℕ, f (p ^ k)) =
-            ∏ p ∈ S, (1 + liuSelbergAbsPrimeDeviation N p) := by
-        refine Finset.prod_bij (fun p hp => e ⟨p, hp⟩) ?_ ?_ ?_ ?_
-        · intro p hp
-          simp [S]
-        · intro a ha b hb hab
-          exact congrArg (fun q : Nat.Primes => (q : ℕ)) hab
-        · intro p hp
-          dsimp only [S] at hp
-          obtain ⟨q, hq, rfl⟩ := Finset.mem_map.mp hp
-          exact ⟨q.1, q.2, rfl⟩
-        · intro p hp
-          rw [liuSelbergAbsPrimeDeviation]
-          change (∑' k : ℕ, |liuSelbergCorrection N (p ^ k)|) =
-            1 + ((∑' k : ℕ, |liuSelbergCorrection N (p ^ k)|) - 1)
-          ring
-      rw [hprod]
-      have hdev_nonneg (p : Nat.Primes) :
-          0 ≤ liuSelbergAbsPrimeDeviation N p := by
-        rw [liuSelbergAbsPrimeDeviation,
-          tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
-        by_cases hpdvd : (p : ℕ) ∣ N
-        · simp [hpdvd]
-        · rw [if_neg hpdvd]
-          have hp2 : 2 < (p : ℕ) := by
-            have hpne : (p : ℕ) ≠ 2 := by
-              intro heq
-              apply hpdvd
-              rw [heq]
-              exact hNeven.two_dvd
-            have := p.2.two_le
-            omega
-          have hpR : (0 : ℝ) < (p : ℕ) := by exact_mod_cast p.2.pos
-          have hpR2 : (0 : ℝ) < ((p : ℕ) : ℝ) - 2 := by
-            have : (2 : ℝ) < (p : ℕ) := by exact_mod_cast hp2
-            linarith
-          have hq :
-              0 ≤ 3 / (((p : ℕ) : ℝ) * (((p : ℕ) : ℝ) - 2)) := by
-            positivity
-          linarith
-      exact ge_of_tendsto hmult.hasProd (Filter.eventually_atTop.mpr
-        ⟨S, fun T hST =>
-          Finset.prod_le_prod_of_subset_of_one_le hST
-            (fun p _ => by
-              linarith [hdev_nonneg p])
-            (fun p _ _ => by
-              linarith [hdev_nonneg p])⟩)
-
-theorem summable_abs_liuSelbergCorrection
-    {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
-    Summable (fun d : ℕ => |liuSelbergCorrection N d|) := by
-  simpa only [Real.norm_eq_abs] using
-    summable_norm_liuSelbergCorrection hNeven hN
 
 private theorem summable_norm_of_summable_prime_deviation
     (f : ℕ → ℝ) (hf0 : f 0 = 0) (hf1 : f 1 = 1)
@@ -391,6 +286,27 @@ private theorem summable_norm_of_summable_prime_deviation
           Finset.prod_le_prod_of_subset_of_one_le hST
             (fun p _ => by linarith [hdev_nonneg p])
             (fun p _ _ => by linarith [hdev_nonneg p])⟩)
+
+theorem summable_norm_liuSelbergCorrection
+    {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
+    Summable (fun d : ℕ => ‖liuSelbergCorrection N d‖) := by
+  apply summable_norm_of_summable_prime_deviation (liuSelbergCorrection N)
+    (by simp) (by simp)
+    (fun {_ _} hmn => (liuSelbergCorrection_isMultiplicative N).map_mul_of_coprime hmn)
+  · intro p hp
+    simpa only [Real.norm_eq_abs] using
+      summable_abs_liuSelbergCorrection_prime_pow N hp
+  · simp only [Real.norm_eq_abs]
+    exact summable_liuSelbergAbsPrimeDeviation hNeven hN
+  · intro p
+    simp only [Real.norm_eq_abs]
+    exact liuSelbergAbsPrimeDeviation_nonneg_core hNeven p
+
+theorem summable_abs_liuSelbergCorrection
+    {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
+    Summable (fun d : ℕ => |liuSelbergCorrection N d|) := by
+  simpa only [Real.norm_eq_abs] using
+    summable_norm_liuSelbergCorrection hNeven hN
 
 private theorem summable_abs_liuSelbergCorrection_mul_fourthRoot
     {N : ℕ} (hNeven : Even N) (hN : 0 < N) :

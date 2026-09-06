@@ -61,6 +61,7 @@ theorem nonprincipalPrimitivePsiSiegelWalfiszSource_of_landauSiegelLowerBound
                 ‖lambdaCharacterPrefix y q χ‖ ≤
                   K * (N : ℝ) / Real.log (N : ℝ) ^ D) :
     NonprincipalPrimitivePsiSiegelWalfiszSource := by
+  -- Fix η = 1 before choosing C and D, keeping the zero-free region uniform.
   obtain ⟨c, hc, hlower⟩ := hLandauSiegel 1 (by norm_num)
   obtain ⟨A, hA, hzero⟩ :=
     exists_dirichletL_quadratic_conditional_powerZeroFree c 1 hc (by norm_num)
@@ -83,9 +84,10 @@ theorem nonprincipalPrimitivePsiSiegelWalfiszSource_of_landauSiegelLowerBound
   obtain ⟨Kq, hKq, hq⟩ :=
     hquadraticZeroFreeToPointwise C D 1 A (by norm_num) hA hquadraticZero
   refine ⟨Kn + Kq, add_pos hKn hKq, ?_⟩
+  -- Use a common eventual range and constant for both character cases.
   filter_upwards [hn, hq] with N hnN hqN
   intro hN2 q hqmem ψ hψ y hy
-  letI : NeZero q := ⟨by
+  let : NeZero q := ⟨by
     have hq2 : 2 ≤ q := (Finset.mem_Icc.mp hqmem).1
     omega⟩
   have hthreshold : q ≤ logConductorThreshold N C :=
@@ -97,14 +99,14 @@ theorem nonprincipalPrimitivePsiSiegelWalfiszSource_of_landauSiegelLowerBound
           Kq * (N : ℝ) / Real.log (N : ℝ) ^ D := hb
       _ ≤ (Kn + Kq) * (N : ℝ) / Real.log (N : ℝ) ^ D := by
         gcongr
-        linarith [hKn]
+        exact le_add_of_nonneg_left hKn.le
   · have hb := hnN q (inferInstance : NeZero q) hthreshold ψ.1 hquad y hy
     calc
       ‖lambdaCharacterPrefix y q ψ.1‖ ≤
           Kn * (N : ℝ) / Real.log (N : ℝ) ^ D := hb
       _ ≤ (Kn + Kq) * (N : ℝ) / Real.log (N : ℝ) ^ D := by
         gcongr
-        linarith [hKq]
+        exact le_add_of_nonneg_right hKq.le
 
 end
 

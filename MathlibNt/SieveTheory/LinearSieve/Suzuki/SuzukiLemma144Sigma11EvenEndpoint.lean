@@ -20,28 +20,26 @@ closed-envelope regularity only to run Lemma 8.7 and the finite recursion at the
 endpoint.  The prime carrier itself is strict, so no prime coordinate is added.
 -/
 
-private theorem finiteSourceLayer_continuousOn_closedDomain
+/-- Finite source layers are continuous on the closed parity domain for `beta > 1`. -/
+theorem finiteSourceLayer_continuousOn_closedDomain
     {β : ℝ} (hβ : 1 < β) (N : ℕ) :
     ContinuousOn (finiteSourceLayer 1 β N) (KappaOneModel.closedDomain β N) := by
   classical
   unfold finiteSourceLayer
-  induction Finset.Icc 1 N using Finset.induction_on with
-  | empty => simpa using
+  apply continuousOn_finset_sum
+  intro n hn
+  by_cases hpar : n % 2 = N % 2
+  · simp only [hpar, if_true]
+    have hclosed : KappaOneModel.closedDomain β n =
+        KappaOneModel.closedDomain β N := by
+      unfold KappaOneModel.closedDomain KappaOneModel.eps
+      rw [hpar]
+    have hreg := (KappaOneModel.regular hβ n).continuous
+    rw [hclosed] at hreg
+    exact hreg.congr fun s _ =>
+      (KappaOneModel.layer_eq_suzukiLayer β n s).symm
+  · simpa only [hpar, if_false] using
       (continuousOn_const : ContinuousOn (fun _ : ℝ => (0 : ℝ)) _)
-  | @insert n u hn ih =>
-      simp only [Finset.sum_insert hn]
-      by_cases hpar : n % 2 = N % 2
-      · simp only [hpar, if_true]
-        have hclosed : KappaOneModel.closedDomain β n =
-            KappaOneModel.closedDomain β N := by
-          unfold KappaOneModel.closedDomain KappaOneModel.eps
-          rw [hpar]
-        have hreg := (KappaOneModel.regular hβ n).continuous
-        rw [hclosed] at hreg
-        exact (hreg.congr fun s _ =>
-          (KappaOneModel.layer_eq_suzukiLayer β n s).symm).add ih
-      · simp only [hpar, if_false]
-        exact continuousOn_const.add ih
 
 private theorem finiteSourceLayer_nonneg_on_closedDomain
     {β : ℝ} (hβ : 1 < β) (N : ℕ) {s : ℝ}
@@ -307,7 +305,8 @@ private theorem one_step_closed_predecessor
         _ = suzukiLayerNumerator 1 β (k + 2) s := by
           symm
           simpa [a, b, f] using
-            suzukiLayerNumerator_eq_sourceRecursion_of_two_le β s (by omega : 2 ≤ k + 2)
+            SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
+              β s (by omega : 2 ≤ k + 2)
     have hscale := mul_le_mul_of_nonneg_left hraw (by positivity : 0 ≤ 1 / s)
     rw [← rpow_mul_suzukiLayer 1 β (k + 2) hspos] at hscale
     simpa [f, one_div, hspos.ne'] using hscale

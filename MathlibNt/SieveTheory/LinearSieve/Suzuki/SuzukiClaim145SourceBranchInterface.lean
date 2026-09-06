@@ -46,13 +46,8 @@ theorem claim14_5Scale_nonneg_on_source_domain
   have hσ : 0 < sourceSigma (D : ℝ) d := sourceSigma_pos_of_nat_two_le hD
   have hs0 : 0 < s := by linarith
   have hV : 0 ≤ claim14_5VProduct S (D : ℝ) := by
-    unfold claim14_5VProduct
-    apply Finset.prod_nonneg
-    intro p hp
-    have hpS : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hp).1
-    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-    have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hpprime hpdiv).le
+    simpa only [claim14_5VProduct, suzukiVProduct] using
+      (suzukiVProduct_pos S (D : ℝ)).le
   have hE : 0 ≤ errorEnvelope H N (D : ℝ) d s :=
     errorEnvelope_nonneg H N hD1 hs0.le
       (hH.toSection13HatContract.positive _ s hs0).le
