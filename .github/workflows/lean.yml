@@ -41,10 +41,10 @@ jobs:
           .venv-blueprint/bin/pip install -r blueprint/requirements.txt
       - name: Extract and render blueprint
         run: |
-          lake build Goldbach:blueprint
+          lake --wfail build Goldbach:blueprint
           source .venv-blueprint/bin/activate
           leanblueprint web 2>&1 | tee "$RUNNER_TEMP/blueprint.log"
-          ! grep -E 'ERROR:|could not be resolved|File not found:' "$RUNNER_TEMP/blueprint.log"
+          ! grep -E 'WARNING:|ERROR:|could not be resolved|File not found:' "$RUNNER_TEMP/blueprint.log"
           test -s blueprint/web/index.html
           python3 - <<'PY'
           from pathlib import Path
@@ -62,7 +62,9 @@ jobs:
           path: blueprint/web
           if-no-files-found: error
       - name: Build and validate Lean API documentation
-        run: python3 scripts/build_docs.py --blueprint blueprint/web
+        run: python3 scripts/build_docs.py --output docbuild/.lake/build/api
+      - name: Assemble and validate project homepage and documentation
+        run: python3 scripts/build_site.py --api docbuild/.lake/build/api --blueprint blueprint/web --output docbuild/.lake/build/site
       - name: Upload complete documentation website
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,95 +1,106 @@
-# API documentation and proof Blueprint
+# Project homepage, Lean documentation and proof Blueprint
 
-The documentation site has two complementary views:
+The website presents the Goldbach research program through three routes:
 
-- **Lean API documentation** at the site root: doc-gen4 module pages,
-  declaration search, declaration anchors, source links, imports, and
-  reverse-import links for the documented modules.
-- **Proof Blueprint** at `blueprint/`: the existing mathematical narrative and
-  dependency graph. The Blueprint is not a substitute for API documentation.
+- **Project homepage** at `/`: research goals, progress, reading routes,
+  verification instructions and provenance links. Chen's **1 + 2 theorem** is
+  formalized; **1 + 1.9** is in progress, with stronger results as further
+  research directions. The homepage HTML and CSS live in `website/`.
+- **Lean API documentation** at `/docs/`: doc-gen4 module pages, declaration
+  search, declaration anchors, source links, imports and reverse-import links
+  for the documented modules.
+- **Proof Blueprint** at `/blueprint/`: the mathematical narrative and selected
+  proof dependencies, with links into the implementation.
 
-The public mathematical endpoint is the unconditional **1 + 2 theorem**:
-Chen's theorem, not the binary Goldbach conjecture. Lean's standard foundational
-axioms (`propext`, `Classical.choice`, and `Quot.sound`) are part of the logical
-foundation, not additional mathematical assumptions. Generating documentation
-is not a proof or axiom audit; see [VERIFICATION.md](VERIFICATION.md).
+The completed public theorems give a prime-plus-almost-prime representation of
+every sufficiently large even integer and a quantitative representation bound.
+[THEOREMS.md](THEOREMS.md) defines their precise mathematical scope.
+The proofs use Lean's standard logical foundation: `propext`, `Classical.choice`
+and `Quot.sound`. [VERIFICATION.md](VERIFICATION.md) describes the source build,
+literal statement checks, axiom reports and kernel replay. The documentation
+pipeline below renders compiled declarations and checks the resulting site.
 
 ## Pinned generator and isolation
 
 The nested `docbuild/` Lake project uses Lean `v4.33.0-rc1` and doc-gen4's
 [official matching tag](https://github.com/leanprover/doc-gen4/tree/v4.33.0-rc1),
 frozen at `498457dedc5bf2eb884c5100804ef24c96b92a08`. Its committed manifest pins
-all generator dependencies. It does **not** require the theorem project as a
-Lake dependency and does not change the core `lakefile.toml`, `lake-manifest.json`,
-or `lean-toolchain`. Documentation dependencies live under
-`docbuild/.lake/packages`; the existing mathlib installation is read in place,
-not copied into a second Lake dependency tree.
+all generator dependencies. The theorem project and its core `lakefile.toml`,
+`lake-manifest.json` and `lean-toolchain` remain independent of this generator
+project. Documentation dependencies live under `docbuild/.lake/packages`;
+the generator reads the theorem project's existing mathlib installation in place.
 
 The [upstream README](https://github.com/leanprover/doc-gen4/blob/v4.33.0-rc1/README.md)
 recommends a nested Lake project. Its normal `:docs` facets recursively document
-imports and Lean core. At this pinned version there is no external-documentation
-base-URL option in those facets or the renderer. To avoid generating all mathlib
-HTML, `GoldbachDocs.lean` calls the upstream analyzer, HTML renderer, and search
-index writer for **project modules only**. It retains the complete imported
-name-to-module context, so declaration links can still be resolved. A small
-Python postprocessor redirects dependency links in HTML and search/header JSON.
-No doc-gen4 source patch is applied.
+imports and Lean core. At this pinned version those facets and the renderer
+provide no external-documentation base-URL option. `GoldbachDocs.lean` therefore
+calls the unmodified upstream analyzer, HTML renderer and search-index writer
+for **project modules only**. It retains the complete imported name-to-module
+context for declaration links. A Python postprocessor redirects dependency links
+in HTML and search/header JSON.
 
 Dependency API links use <https://leanprover-community.github.io/mathlib4_docs/>.
-That site is a **moving documentation reference**, not a version-pinned build
-input; a declaration or anchor can differ from this project's pinned mathlib.
-Use `--mathlib-docs URL` to select a compatible hosted snapshot when available.
-LeanArchitect imports link to their pinned GitHub source because this build does
-not assume an independently hosted LeanArchitect API site. Source links for
-project declarations are pinned to the checkout's Git commit and line ranges.
-A local, unpushed commit's source links become publicly resolvable only after that
-commit is published. Generate from a clean, committed release checkout.
+This moving documentation reference can contain declarations or anchors that
+differ from the project's pinned mathlib. Use `--mathlib-docs URL` to select a
+compatible hosted snapshot when available. LeanArchitect imports link to their
+pinned GitHub source. Source links for project declarations use the checkout's
+Git commit and line ranges. Generate from a clean, committed release checkout,
+and publish that commit to make its source links publicly resolvable.
 
 ## Build a complete API site
 
 Requirements: the pinned Lean/Lake toolchain, a C compiler, Git, Python 3.10 or
 newer, network access for the generator's first build, and sufficient disk space
-for its native executable and the project API pages. First finish the normal
-project build. The documentation command deliberately **does not compile project
-proofs**, and should not race an active project build:
+for its native executable and the project API pages. Finish the project build
+before starting documentation generation, so all compiled proofs and runtime
+sidecars are ready and remain stable throughout rendering:
 
 ```sh
 lake --wfail build
 python3 scripts/build_docs.py
 ```
 
-The default output is `docbuild/.lake/build/site/`. It must not already exist:
-choose a fresh path with `--output` for later runs. Each invocation generates into
-a fresh intermediate directory, so stale modules cannot leak into a new site.
-A failed run leaves diagnostic intermediates under
-`docbuild/.lake/build/api-run-*`, but does not publish a successful output directory.
-These are ignored build products, not files to commit.
+The default API output is `docbuild/.lake/build/api/`. Choose a fresh path with
+`--output` for each later run. Each invocation generates into a fresh intermediate
+directory and publishes the output after validation. Failed runs leave diagnostic
+intermediates under `docbuild/.lake/build/api-run-*`. These directories are
+ignored build products.
 
-Without `--module`, the script enumerates **all source modules**, not just facade
-import closures, in all four libraries:
+With its default module selection, the script enumerates **every source module**
+in all four libraries, including modules outside facade import closures:
 
 - `Goldbach`
 - `MathlibNt`
 - `AnalyticNumberTheory`
 - `PrimeNumberTheoremAnd`
 
-It builds only the generator, reads compiled `.olean` artifacts and their runtime
-sidecars, renders modules with at most two concurrent processes by default,
-waits for every module, and writes the upstream declaration and header search
-indexes. Use `--jobs 1` to serialize rendering, or a larger value when memory
-and CPU resources permit. It then checks module coverage, declaration search anchors,
-and local HTML asset/link targets. It fails if doc-gen4 reports that declaration
-analysis was omitted. It does not produce mathlib, Lean core, or generator-library
-HTML. The global upstream tactic catalogue is not populated; tactic declarations
-remain documented on their project module pages.
+It builds the generator, reads the project's compiled `.olean` artifacts and
+runtime sidecars, renders the selected modules, waits for every renderer, then
+writes the upstream declaration and header search indexes. The main options are:
 
-`build-info.json` records the source revision, toolchain, generator and mathlib
-revisions, renderer concurrency, module inventory, declaration count, external
-link count, and whether
-this is a full or partial build. A partial build must not be presented as full
-release documentation.
+| Option | Effect |
+|---|---|
+| `--module NAME` | Select a module; repeat the option to select several. The default selects all four libraries. |
+| `--jobs N` | Run at most `N` module renderers concurrently; the default is `2`, and `1` serializes rendering. |
+| `--output PATH` | Publish to a new directory after validation. |
+| `--artifacts-from PATH` | Read project artifacts and dependencies from a matching compiled checkout. |
+| `--mathlib-docs URL` | Set the external dependency API base URL. |
+| `--blueprint PATH` | Include an already rendered Blueprint inside a legacy API bundle. |
 
-## Small-module smoke test
+Choose renderer concurrency to fit available memory and CPU resources. The driver
+also defaults `LEAN_NUM_THREADS` to `2` when the environment leaves it unset.
+Generated module HTML covers the selected project modules; mathlib, Lean core
+and generator-library references link outward. Project tactic declarations appear
+on their module pages; the global upstream tactic catalogue remains empty.
+
+Validation checks module coverage, declaration search anchors and local HTML
+asset/link targets. Omitted declaration analysis reported by doc-gen4 fails the
+run. `build-info.json` records the source revision, toolchain, generator and
+mathlib revisions, renderer concurrency, module inventory, declaration count,
+external URL count and full/partial scope. Release website assembly requires a
+full API build.
+
+## Small-module smoke test and artifact reuse
 
 ```sh
 lake --wfail build Goldbach.Statement
@@ -100,43 +111,94 @@ python3 -m http.server 8000 --directory docbuild/.lake/build/smoke-site
 
 Visit <http://localhost:8000/Goldbach/Statement.html>, search for
 `Goldbach.ChenTheorem`, follow its declaration anchor and source link, and inspect
-the external `Nat.Prime` and import links. Serve over HTTP: opening `file://` pages
-breaks the fetch-based search interface. The source-only regression tests are:
+the external `Nat.Prime` and import links. Serve over HTTP so the fetch-based
+search interface can load its indexes.
+
+To reuse prebuilt artifacts, add `--artifacts-from /path/to/compiled-checkout`.
+First finish and verify the corresponding project build on the same proof
+branch, including transitive dependencies. The script reads that checkout in
+place and runs Lake only in the documentation generator project. Its preflight
+compares the toolchain, core dependency manifest and selected source hashes,
+and checks that the selected `.olean` files exist. The completed project build
+supplies the freshness guarantee for transitive artifacts.
+
+## Assemble the project website
+
+Build the Blueprint using the [normal procedure](ARCHITECTURE.md#interactive-blueprint),
+then assemble it with a full API build:
+
+```sh
+python3 scripts/build_docs.py --output docbuild/.lake/build/api
+python3 scripts/build_site.py --api docbuild/.lake/build/api \
+  --blueprint blueprint/web --output docbuild/.lake/build/site
+python3 -m http.server 8000 --directory docbuild/.lake/build/site
+```
+
+If the full API output already exists and has been verified, start with the
+`build_site.py` command. Use a fresh site output path for each assembly.
+The resulting routes are `/`, `/docs/` and `/blueprint/`, relative to the
+project's deployment prefix. The API sidebar and Blueprint page headers link
+back to the homepage. Blueprint declaration links retain their pinned GitHub
+source locations.
+
+`build_site.py` copies the full API output, rendered Blueprint and homepage
+assets into a fresh intermediate directory. It adds cross-navigation, checks the
+declaration census and local links/anchors, then moves the validated result to
+the requested output directory. The input trees remain unchanged. Assembly
+works entirely with the existing HTML and assets, so homepage-only changes can
+reuse a previously verified full API build and Blueprint.
+
+Both API-only output and the older `build_docs.py --blueprint` bundle are valid
+assembly inputs. For a legacy bundle, the copy step omits its nested Blueprint
+and places the separately supplied Blueprint at the sibling `/blueprint/`
+route. A partial API build fails the assembly preflight.
+
+The homepage's source revision comes from the API build record and identifies
+the Lean source used for that API build. The assembled record retains this
+revision and separately records the homepage hash and route layout, allowing
+homepage changes to reuse the same proof documentation.
+
+The Blueprint's plasTeX configuration selects the `HTML5` renderer, loads
+`plastexdepgraph` and `leanblueprint`, copies theme extras, and loads local
+packages and templates. It sets `split-level=0`, `localtoc-level=0` and
+`mathjax-dollars=False`. LeanArchitect's declaration-only setup macros have
+explicit empty HTML templates, so they emit no visible body content while
+parser warnings remain enabled.
+
+Link repair maps two historical relative module URLs to their actual
+`AnalyticNumberTheory` pages. Links to compiler-generated proof auxiliaries,
+auxiliary definitions and constructor indices omitted by doc-gen4 point to the
+owning declaration when that owner's anchor exists on the same page. Validation
+rejects other missing anchors. Directory routes must contain `index.html`, and
+local links must remain within the deployment boundary. The explicitly
+registered declaration-search `find/` route handles its fragments in JavaScript;
+other HTML fragments are checked against page anchors, with `#top` accepted as
+the page-top destination.
+
+`external_url_count` counts distinct external URLs in HTML attributes and API
+index/header metadata. Before release, check external link availability and
+Blueprint graph interaction in a browser, alongside the local structural checks.
+
+## Regression tests and deployment
+
+Run the source-only regression suites with:
 
 ```sh
 python3 -m unittest discover -s scripts -p test_build_docs.py -v
+python3 -m unittest discover -s scripts -p test_build_site.py -v
 ```
 
-To read prebuilt artifacts from a separate matching checkout without writing or
-running Lake there, add `--artifacts-from /path/to/compiled-checkout`. The script
-checks the toolchain, core dependency manifest, selected source hashes, and the
-presence of selected `.olean` files. These checks do not establish that all
-transitive artifacts are current: the caller must first finish and verify the
-corresponding project build. Do not use artifacts from another proof branch.
-
-## Preserve and include the Blueprint
-
-Build the existing Blueprint by the repository's normal Blueprint procedure,
-then pass its generated HTML directory:
-
-```sh
-python3 scripts/build_docs.py --blueprint blueprint/web \
-  --output docbuild/.lake/build/release-site
-python3 -m http.server 8000 --directory docbuild/.lake/build/release-site
-```
-
-This copies the existing Blueprint output, without modifying its sources, into
-`release-site/blueprint/` and adds a Blueprint link to the API home page. Existing
-Blueprint declaration links continue to point to their GitHub source locations.
-If `--blueprint` is omitted, the output contains only the API site. The API
-validator checks local HTML link and asset targets in both trees, including
-ordinary fragment anchors. It does not certify graph interaction or external
-link availability. Verify those separately before release.
+The site suite exercises API-only and legacy-bundle inputs, preservation of input
+trees, cross-navigation and repeated navigation insertion, homepage hashes,
+partial-build rejection, revision validation, missing targets, declaration-census
+mismatches, directory routes and deployment-boundary escapes. It also checks that
+Blueprint navigation is added to the page header while theorem headers remain
+intact.
 
 For Pages, upload the **entire generated site directory**, preserving
-`declarations/*.bmp` (these are JSON indexes despite their extension), `find/`,
-JavaScript/CSS, `.nojekyll`, and optional `blueprint/`. The generator uses relative
-site links and works below a project Pages prefix. Publishing, workflow changes,
-and release tagging are separate steps: a local build alone does not deploy a
-website. Rebuild after the final release commit so source-link revisions match
-what is actually published.
+`docs/declarations/*.bmp` (JSON indexes despite their extension), `docs/find/`,
+JavaScript/CSS, root homepage assets, `.nojekyll` and `blueprint/`. Relative site
+links support deployment below a project Pages prefix. Publish the site through
+the deployment workflow after local validation. Generate the release API from
+the final published source commit so declaration source links resolve to that
+revision.

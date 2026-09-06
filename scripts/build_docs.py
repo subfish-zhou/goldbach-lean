@@ -21,6 +21,11 @@ LIBRARIES = ("Goldbach", "MathlibNt", "AnalyticNumberTheory", "PrimeNumberTheore
 MATHLIB_DOCS = "https://leanprover-community.github.io/mathlib4_docs/"
 SOURCE_REPO = "https://github.com/subfish-zhou/goldbach-lean"
 DOCGEN_REV = "498457dedc5bf2eb884c5100804ef24c96b92a08"
+# Legacy relative URLs in migrated AnalyticNumberTheory module docstrings.
+LEGACY_MODULE_LINKS = {
+    "LargeSieve.WellSpaced": "AnalyticNumberTheory.LargeSieve.WellSpaced",
+    "LargeSieve.PanTypeIAssembly": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+}
 ATTR = re.compile(r'\b(href|src)=("|\')(.*?)\2', re.DOTALL)
 
 
@@ -96,19 +101,50 @@ def external_link(module_path, fragment, source_root, all_modules, manifest, mat
 
 def rewrite_site(site, all_modules, manifest, source_root, mathlib_docs):
     """Rewrite only missing module-page URLs, not assets or existing local pages."""
-    rewritten = set()
+    external_urls = set()
+    anchor_cache = {}
 
     def link(value, page):
         parsed = urlsplit(html.unescape(value))
-        if parsed.scheme or parsed.netloc or not parsed.path or parsed.path.startswith("/"):
+        if parsed.scheme or parsed.netloc:
+            if parsed.scheme in {"http", "https"} or parsed.netloc:
+                external_urls.add(html.unescape(value))
+            return value
+        if not parsed.path or parsed.path.startswith("/"):
             return value
         rel = posixpath.normpath(posixpath.join(page.parent.as_posix(), unquote(parsed.path)))
         if rel.startswith("../"):
             raise ValueError(f"Link escapes site: {page}: {value}")
-        if (site / rel).exists() or not rel.endswith(".html"):
+        target_page = site / rel
+        auxiliary = re.fullmatch(r"(.+)\.(?:_proof_\d+|_aux_\d+|ctorIdx)",
+                                 unquote(parsed.fragment))
+        if auxiliary and target_page.is_file() and rel.endswith(".html"):
+            # doc-gen4 omits compiler auxiliaries; link to their actual owner,
+            # and only when that owner's anchor exists on this same page.
+            if rel not in anchor_cache:
+                anchor_cache[rel] = {html.unescape(x) for x in re.findall(
+                    r'\bid="([^"]*)"', target_page.read_text())}
+            anchors = anchor_cache[rel]
+            if unquote(parsed.fragment) not in anchors and auxiliary[1] in anchors:
+                return parsed._replace(fragment=quote(auxiliary[1], safe="")).geturl()
+        if target_page.exists() or not rel.endswith(".html"):
             return value
+        if rel.endswith(".html"):
+            legacy = rel[:-5].replace("/", ".")
+            if legacy in LEGACY_MODULE_LINKS:
+                canonical = LEGACY_MODULE_LINKS[legacy]
+                if canonical not in all_modules:
+                    raise ValueError(f"Missing canonical module for legacy URL: {legacy}")
+                rel = canonical.replace(".", "/") + ".html"
+                if (site / rel).is_file():
+                    target = posixpath.relpath(rel, page.parent.as_posix())
+                    if parsed.query:
+                        target += "?" + parsed.query
+                    if parsed.fragment:
+                        target += "#" + parsed.fragment
+                    return target
         target = external_link(rel, parsed.fragment, source_root, all_modules, manifest, mathlib_docs)
-        rewritten.add(target)
+        external_urls.add(target)
         return target
 
     def markup(text, page):
@@ -136,10 +172,10 @@ def rewrite_site(site, all_modules, manifest, source_root, mathlib_docs):
 
     for file in (site / "declarations").glob("*.bmp"):
         file.write_text(json.dumps(data(json.loads(file.read_text())), ensure_ascii=False, separators=(",", ":")))
-    return sorted(rewritten)
+    return sorted(external_urls)
 
 
-def verify_site(site, modules):
+def verify_site(site, modules, *, site_root=None):
     index = json.loads((site / "declarations/declaration-data.bmp").read_text())
     for required in ("index.html", "search.html", "search.js", "find/index.html",
                      "declarations/header-data.bmp", "navbar.html", "style.css"):
@@ -157,23 +193,34 @@ def verify_site(site, modules):
             page_ids[page] = {html.unescape(value) for value in re.findall(r'\bid="([^"]*)"', page.read_text())} if page.is_file() else set()
         if unquote(parsed.fragment) not in page_ids[page]:
             raise ValueError(f"Search target is missing: {name}")
+    verify_local_links(site, boundary=site_root, find_routes=[site / "find/index.html"],
+                       page_ids=page_ids)
+    return len(index["declarations"])
+
+
+def verify_local_links(site, *, boundary=None, find_routes=(), page_ids=None):
+    """Check HTML links inside an explicit deployment boundary."""
+    boundary = (boundary or site).resolve()
+    find_routes = {path.resolve() for path in find_routes}
+    page_ids = {} if page_ids is None else page_ids
     for file in site.rglob("*.html"):
         for match in ATTR.finditer(file.read_text()):
             parsed = urlsplit(html.unescape(match[3]))
             if parsed.scheme or parsed.netloc:
                 continue
             path = (file.parent / unquote(parsed.path)).resolve() if parsed.path else file.resolve()
-            if not path.is_relative_to(site.resolve()) or not path.exists():
+            if not path.is_relative_to(boundary) or not path.exists():
                 raise ValueError(f"Broken local link: {file.relative_to(site)}: {match[3]}")
             if path.is_dir():
                 path = path / "index.html"
-            # /find/ interprets #doc in JavaScript rather than as an element ID.
-            if parsed.fragment and unquote(parsed.fragment).lower() != "top" and path.suffix == ".html" and path != (site / "find/index.html").resolve():
+            if not path.is_file():
+                raise ValueError(f"Broken local link: {file.relative_to(site)}: {match[3]}")
+            # Only explicitly declared find routes may interpret #doc in JavaScript.
+            if parsed.fragment and unquote(parsed.fragment).lower() != "top" and path.suffix == ".html" and path not in find_routes:
                 if path not in page_ids:
                     page_ids[path] = {html.unescape(value) for value in re.findall(r'\bid="([^"]*)"', path.read_text())}
                 if unquote(parsed.fragment) not in page_ids[path]:
                     raise ValueError(f"Broken local anchor: {file.relative_to(site)}: {match[3]}")
-    return len(index["declarations"])
 
 
 def decorate_homepage(site, include_blueprint):
@@ -208,7 +255,7 @@ def main():
     parser.add_argument("--module", action="append", help="Render only this module (repeatable; default: all four libraries)")
     parser.add_argument("--artifacts-from", type=Path, default=ROOT,
                         help="Read already compiled artifacts and packages from a matching checkout; never builds there")
-    parser.add_argument("--output", type=Path, default=ROOT / "docbuild/.lake/build/site",
+    parser.add_argument("--output", type=Path, default=ROOT / "docbuild/.lake/build/api",
                         help="New output directory; must not already exist")
     parser.add_argument("--blueprint", type=Path, help="Copy an already generated Blueprint HTML directory to blueprint/")
     parser.add_argument("--mathlib-docs", default=MATHLIB_DOCS, help="Upstream dependency API base URL")
@@ -280,7 +327,7 @@ def main():
         "scope": "full" if modules == all_modules else "partial",
         "renderer_jobs": args.jobs,
         "modules": modules, "module_count": len(modules), "declaration_count": count,
-        "external_link_count": len(external), "blueprint_included": bool(args.blueprint),
+        "external_url_count": len(external), "blueprint_included": bool(args.blueprint),
     }
     (site / "build-info.json").write_text(json.dumps(report, indent=2) + "\n")
     (site / ".nojekyll").touch()

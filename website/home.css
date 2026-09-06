@@ -1,0 +1,79 @@
+:root {
+  color-scheme: light;
+  --paper: #faf9f6;
+  --ink: #202c29;
+  --muted: #4e5b55;
+  --green: #1b624a;
+  --line: #d5dcd5;
+  --wash: #edf1ea;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+a { color: var(--green); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 3px solid var(--green); outline-offset: 5px; }
+.wrap { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
+.masthead { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 24px; border-bottom: 1px solid var(--line); }
+.brand { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 25px; font-weight: bold; text-decoration: none; white-space: nowrap; }
+.menu { display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: center; font-size: 14px; }
+.menu a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.menu a:hover { text-decoration: underline; }
+.hero { padding: 64px 0 38px; max-width: 800px; }
+.eyebrow { font-size: 12px; font-weight: 650; letter-spacing: .11em; text-transform: uppercase; color: var(--green); margin: 0 0 16px; }
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: normal; }
+h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1.08; letter-spacing: -.035em; margin: 0 0 26px; }
+h2 { font-size: 29px; line-height: 1.25; margin: 0 0 20px; }
+h3 { font-size: 30px; line-height: 1.25; margin: 0 0 14px; }
+h3 a { text-decoration: none; }
+h3 a:hover { text-decoration: underline; }
+h3 span { font-family: system-ui, sans-serif; font-size: 22px; }
+p { margin: 0 0 16px; }
+.lead { color: var(--muted); font-size: 20px; line-height: 1.6; max-width: 720px; }
+.research-status { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 28px; margin: 0 0 32px; padding: 22px 0; border-block: 1px solid var(--line); }
+.research-status dt { color: var(--green); font-size: 12px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+.research-status dd { margin: 0; font-size: 17px; }
+.statement { padding: 28px 32px; background: var(--wash); }
+.statement h2 { font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+.theorem-text { font-family: Georgia, "Times New Roman", serif; font-size: 25px; line-height: 1.5; }
+.statement > p:not(.theorem-text) { color: var(--muted); font-size: 15px; max-width: 880px; }
+.text-link { display: inline-block; padding-block: 8px; font-size: 15px; font-weight: 550; }
+.reading { padding: 52px 0 40px; }
+.reading-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.reading-item { border-top: 1px solid var(--line); padding-top: 26px; }
+.reading-item p:not(.eyebrow) { color: var(--muted); }
+.details { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; padding: 38px 0; border-top: 1px solid var(--line); }
+.details p { color: var(--muted); }
+.verification { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 44px; border-top: 1px solid var(--line); padding: 40px 0; }
+.verification > div { min-width: 0; }
+.verification p:not(.eyebrow) { color: var(--muted); font-size: 16px; }
+pre { min-width: 0; max-width: 100%; margin: 0; padding: 24px; overflow-x: auto; background: var(--wash); font-size: 13px; line-height: 2.1; border: 1px solid var(--line); }
+code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.credits p { font-size: 15px; }
+.footer { border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; padding-block: 24px; font-size: 13px; color: var(--muted); }
+.footer p { margin: 0; }
+.skip { position: absolute; top: -100px; left: 16px; background: white; padding: 12px; z-index: 10; }
+.skip:focus { top: 8px; }
+@media (max-width: 720px) {
+  .wrap { width: calc(100% - 36px); }
+  .masthead { align-items: flex-start; flex-direction: column; gap: 6px; padding-block: 18px 12px; }
+  .menu { gap: 4px 20px; }
+  .hero { padding-block: 36px 24px; }
+  .lead { font-size: 18px; }
+  .statement { padding: 23px; }
+  .theorem-text { font-size: 22px; }
+  .reading-grid, .details, .verification, .research-status { grid-template-columns: 1fr; gap: 24px; }
+  .details { gap: 0; }
+  .reading { padding-block: 36px; }
+  .details, .verification { padding-block: 30px; }
+  .footer { flex-direction: column; gap: 6px; }
+  .credits a { overflow-wrap: anywhere; }
+}
+@media print {
+  body { background: white; font-size: 11pt; }
+  .wrap { width: 100%; }
+  .masthead, .skip { display: none; }
+  .hero { padding-top: 0; }
+  h1 { font-size: 36pt; }
+  .statement, pre { background: transparent; border: 1px solid var(--line); }
+  .reading, .statement, .verification { break-inside: avoid; }
+}

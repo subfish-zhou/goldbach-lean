@@ -43,6 +43,55 @@ class DocumentationTests(unittest.TestCase):
             self.assertEqual(before, (page.read_bytes(), index.read_bytes()))
             self.assertFalse((site / "Mathlib").exists())
 
+    def test_migrated_module_links_resolve_to_exact_local_pages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            parent = site / "AnalyticNumberTheory/LargeSieve"
+            parent.mkdir(parents=True)
+            page = parent / "Multiplicative.html"
+            page.write_text('<a href="../.././LargeSieve/WellSpaced.html#known">legacy</a>'
+                            '<a href="https://example.org/?a=1&amp;b=2">external</a>')
+            (parent / "WellSpaced.html").write_text('<div id="known"></div>')
+            args = (site, ["AnalyticNumberTheory.LargeSieve.WellSpaced"],
+                    {"packages": []}, "https://example.org/blob/sha", MATHLIB_DOCS)
+            urls = rewrite_site(*args)
+            self.assertIn('href="WellSpaced.html#known"', page.read_text())
+            before = page.read_bytes()
+            self.assertEqual(rewrite_site(*args), urls)
+            self.assertEqual(page.read_bytes(), before)
+            self.assertEqual(urls, ['https://example.org/?a=1&b=2'])
+
+    def test_legacy_mapping_requires_a_real_project_module(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            (site / "index.html").write_text('<a href="LargeSieve/PanTypeIAssembly.html">legacy</a>')
+            with self.assertRaisesRegex(ValueError, "Missing canonical module"):
+                rewrite_site(site, [], {"packages": []}, "https://example.org", MATHLIB_DOCS)
+
+    def test_omitted_auxiliaries_link_only_to_existing_owners(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            page = site / "Module.html"
+            page.write_text('<div id="definition"></div><div id="Side"></div>'
+                            '<div id="real._proof_1"></div>'
+                            '<a href="Module.html#definition._proof_1">proof</a>'
+                            '<a href="Module.html#definition._aux_2">auxiliary</a>'
+                            '<a href="Module.html#Side.ctorIdx">constructor index</a>'
+                            '<a href="Module.html#real._proof_1">documented auxiliary</a>'
+                            '<a href="Module.html#missing._proof_1">missing owner</a>'
+                            '<a href="Module.html#unrelated">unrelated</a>')
+            args = (site, ["Module"], {"packages": []}, "https://example.org", MATHLIB_DOCS)
+            rewrite_site(*args)
+            content = page.read_text()
+            self.assertIn('href="Module.html#definition">proof', content)
+            self.assertIn('href="Module.html#definition">auxiliary', content)
+            self.assertIn('href="Module.html#Side">constructor index', content)
+            self.assertIn('href="Module.html#real._proof_1"', content)
+            self.assertIn('href="Module.html#missing._proof_1"', content)
+            self.assertIn('href="Module.html#unrelated"', content)
+            rewrite_site(*args)
+            self.assertEqual(page.read_text(), content)
+
     def test_unknown_dependencies_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             site = Path(directory)

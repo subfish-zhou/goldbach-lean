@@ -1,0 +1,43 @@
+{
+  "scope": "Clean build of all four project libraries with cached pinned dependencies; excludes dependency acquisition, cache preparation, documentation and proof replay",
+  "command": [
+    "lake",
+    "-Kjobs=8",
+    "--wfail",
+    "build"
+  ],
+  "LEAN_NUM_THREADS": "2",
+  "logical_cpus": 32,
+  "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+  "machine": "x86_64",
+  "toolchain": "leanprover/lean4:v4.33.0-rc1",
+  "source_revision": "86fca7d54db4f431b64f52596519d275f05c28c6",
+  "source_fingerprint_sha256": "5cb04e71a1a3a8f85d531930d162cc2dca510db24c16738592e2abd4436f29f1",
+  "initial_load_average": [
+    0.375,
+    0.7919921875,
+    1.92431640625
+  ],
+  "status": "passed",
+  "started_unix": 1788715632.1134953,
+  "peak_sum_rss_bytes": 11198849024,
+  "peak_sum_pss_bytes": 7350815744,
+  "peak_process_count": 3,
+  "samples": 1609,
+  "pss_read_failures": 100,
+  "sample_interval_seconds": 1,
+  "memory_method": "Approximately once per second, sum PSS/RSS for Lake and observed descendants. PSS apportions shared pages; RSS can double-count. Excludes filesystem cache and other jobs; sampled peaks are not minimum RAM requirements.",
+  "elapsed_seconds": 1806.475514410995,
+  "finished_unix": 1788717438.5890193,
+  "exit_code": 0,
+  "warning_count": 0,
+  "success_line": "Build completed successfully (4633 jobs).",
+  "source_fingerprint_after_sha256": "5cb04e71a1a3a8f85d531930d162cc2dca510db24c16738592e2abd4436f29f1",
+  "source_unchanged": true,
+  "uncached_dependency_builds": [],
+  "final_load_average": [
+    2.4296875,
+    3.16796875,
+    3.42724609375
+  ]
+}

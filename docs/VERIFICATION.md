@@ -3,52 +3,83 @@
 Run all commands at the project root with the pinned toolchain:
 
 ```sh
+unset LEAN_PATH LEAN_SRC_PATH
 lake exe cache get
 lake --wfail build
 python3 scripts/check.py
 lake env leanchecker --verbose Goldbach.Theorem
 ```
 
-## Separate acceptance gates
+## Acceptance gates
 
-1. **Source build:** `lake --wfail build` compiles all four default libraries, including
-   the public entry point, acceptance checks, and every shipped Lean module.
-2. **Source surface:** `python3 scripts/check.py --static-only` checks all shipped
-   Lean files for missing local imports, import cycles, source reachability,
-   proof placeholders, custom axiom declarations, trusted native decision calls,
-   unsafe declarations, and the kernel-check bypass option. It also checks the
-   release text for untranslated CJK content and private machine paths, including
-   Blueprint source and renderer configuration. The isolated `Goldbach.Blueprint`
-   documentation root is checked separately from the public import closure.
-3. **Literal target and axiom dependency:** `python3 scripts/check.py` performs
+1. **Source build:** `lake --wfail build` builds all four default libraries,
+   covering every shipped Lean module, the public entry point and the acceptance
+   checks. Lean elaborates the source and its kernel checks the resulting proof
+   terms as modules are compiled.
+2. **Source surface:** `python3 scripts/check.py --static-only` scans all shipped
+   Lean files for missing local imports, import cycles and source reachability.
+   It flags the tokens `sorry`, `admit`, `axiom`, `native_decide`, `unsafe` and
+   `debug.skipKernelTC` after masking nested comments and string literals.
+   These rules catch proof placeholders, custom axiom declarations, trusted
+   native decision calls, unsafe declarations and the kernel-check bypass option
+   at the source level. The release-text scan also checks for untranslated CJK
+   content and private machine paths, including Blueprint source and renderer
+   configuration. `Goldbach.Blueprint` is a separate documentation root in the
+   reachability check, alongside the public and check roots.
+3. **Literal targets and axiom dependencies:** `python3 scripts/check.py` runs
    the source checks and elaborates `Goldbach/Checks.lean`. The check module
    expands the public specification, verifies the original implementation
-   signatures, and prints the transitive axioms of the two public results and
-   their implementation endpoints. The script fails on absent reports or axioms
-   outside `propext`, `Classical.choice`, and `Quot.sound`.
-4. **Independent replay:** `lake env leanchecker --verbose Goldbach.Theorem`
-   replays compiled declarations in a separate process with the matching Lean
-   checker. Use an environment without an inherited `LEAN_PATH` from another
-   project. Success on a leaf alone does not replace the source build.
+   signatures, and checks the quantitative coefficient, normalization and actual
+   representation count. It also checks repeated prime factors and the lower
+   bound on the second summand. Its four axiom reports cover the two public
+   results and their implementation endpoints. Every report must appear exactly
+   once, and each reported axiom must belong to the allowed set
+   `propext`, `Classical.choice`, `Quot.sound`.
+4. **Independent module replay:** `lake env leanchecker --verbose Goldbach.Theorem`
+   uses the matching Lean checker in a separate process to replay compiled
+   declarations in `Goldbach.Theorem` over its cached imports. The imports supply
+   the dependency environment for this module-level replay; the full source
+   build above checks the project's source closure. Run the replay in an
+   environment with `LEAN_PATH` and `LEAN_SRC_PATH` clear of values inherited
+   from another project.
 5. **Isolated reconstruction:** extract the source archive into an independent
-   directory, fetch the pinned dependencies, and run the same commands. Do not
-   copy project `.olean` files from the development tree.
+   directory, fetch the pinned dependencies, and run the same commands. Build
+   project `.olean` files from the extracted sources in that directory; obtain
+   dependency artifacts through the pinned dependency setup.
+
+The logical foundation is Lean's standard propositional extensionality
+(`propext`), classical choice (`Classical.choice`) and quotient soundness
+(`Quot.sound`). The axiom gate accepts any subset of these three and rejects
+additional axioms, missing reports and duplicate reports. `check.py` clears
+inherited `LEAN_PATH` and `LEAN_SRC_PATH` before invoking Lean.
+
+## How the checks fit together
+
+The lexical scanner checks source tokens and import structure. It handles nested
+comments and strings; Lean's parser, elaborator and kernel handle Lean syntax,
+types and proof terms. The axiom reports identify the transitive logical
+assumptions used by each endpoint. The literal target checks establish the types
+of the public results, and the proved almost-prime conversion connects the
+internal representation predicate to primes and products of two primes.
+Together these checks cover the implementation, its logical dependencies and
+its public mathematical statement.
+
+The theorem quantifies over every even natural number above an existential
+threshold. Its universal scope comes from the Lean proof. The threshold and
+quantifier order are given in [THEOREMS.md](THEOREMS.md).
+
+The release build uses `lake --wfail build`: every reported warning fails the
+build, including warnings replayed from cached modules. The public statement
+check also enables `warningAsError`. Resolve each warning at its source and
+keep the warning gate active alongside the theorem-type and axiom checks.
+
+## Source size and website checks
 
 `python3 scripts/check.py --static-only --count-lines` additionally reports
 nonblank Lean source lines with nested comments removed and string literals
-retained. This is the release-note size convention, not a proof verification gate.
+retained. Release notes use this convention to measure source size.
 
-## What these checks do not mean
-
-The lexical scanner understands nested comments and strings but is not a Lean
-parser. The compiler and the axiom report are the authoritative proof checks.
-No finite numerical experiment establishes the universal theorem: the theorem
-is a Lean proof with an existential threshold. The standard axiom report does
-not on its own establish that a named predicate matches the intended mathematics;
-that is why the literal target and almost-prime conversion are checked separately.
-
-The release gate uses `lake --wfail build`: any reported warning fails the
-build, including replayed warnings from cached modules. The public statement
-check also enables `warningAsError`. Fix the cause rather than adding linter
-suppressions. A warning-free build is a separate engineering gate, not a
-substitute for the literal theorem and axiom checks above.
+The documentation pipeline checks generated module coverage, declaration search
+anchors, local links and site routes. Its source-only regression tests include
+API-only and legacy-bundle assembly inputs and deployment-boundary checks.
+See [DOCUMENTATION.md](DOCUMENTATION.md) for the commands and browser checks.

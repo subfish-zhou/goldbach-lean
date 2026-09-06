@@ -1,12 +1,11 @@
-# Release notes: toward v1.0.0
+# Release notes: v1.0.0
 
 Compared with **v1.0.0-rc1**, commit
 `976e60343f5cc50b2f5b2b980de21124e5afc662`.
 
-This revision preserves the public Chen 1+2 theorem and its eventual `0.67`
-representation lower bound. It improves proof reuse, local proof structure,
-and project navigation. It does not prove binary Goldbach, provide an explicit
-threshold, or establish the separate 1+1.9 result.
+The first stable release provides Chen's 1+2 theorem and its eventual `0.67`
+representation lower bound, with shared proof infrastructure, a warning-free
+build, and a project website linking the mathematical outline and Lean sources.
 
 ## Lean source size
 
@@ -15,7 +14,7 @@ block comments, including documentation comments. Retain string literals and
 code preceding an inline comment. Include root Lean entry files and all Lean
 files in the four project source directories, including newly added helpers.
 Exclude dependencies, build output, Markdown, tooling, and external optimization
-artifacts. These are source lines, not theorem counts or proof-term sizes.
+artifacts. The resulting metric is the number of Lean source lines.
 
 | Source area | v1.0.0-rc1 | This revision | Change |
 |---|---:|---:|---:|
@@ -30,24 +29,21 @@ The Lean source file count changes from **729 to 735**. Five focused helper
 modules replace repeated local arguments, and one isolated module annotates
 existing declarations for Blueprint. Without its 55 lines of presentation
 metadata, the proof source is 221,389 lines, a reduction of 11,893 lines (5.10%).
-The total above includes it; fewer lines need not mean fewer modules.
-Counts compare the complete source trees, not a sum of overlapping
-optimization batches. A scanner that also erases strings will undercount both
-trees by 33 lines and is not the counting convention used here.
+The total above includes this metadata. Counts compare complete source trees
+using one scanner; string literals contribute 33 lines in each tree.
 
 Reproduce the current count with `python3 scripts/check.py --static-only --count-lines`.
 The same `count_code_lines` function applied to the Git blobs of `v1.0.0-rc1`
-reproduces 233,282. Markdown, Python, and TeX are not included in either total.
+reproduces 233,282. Both totals use the same Lean-only counting scope.
 
 ## Proof-path improvements
 
-### Shared estimates instead of parallel implementations
+### Shared estimates
 
 The dependency audit examined 166 groups of structurally identical theorem
 types. Of these, 95 required reuse changes, 39 already reused an existing proof,
-and 32 were trivial wrappers. Identical types alone were not treated as a reason
-to merge declarations: import direction, existing providers, and public APIs
-were checked before changing consumers.
+and 32 were trivial wrappers. Reuse decisions checked import direction,
+existing providers, and public interfaces before changing consumers.
 
 Shared logarithmic and scalar estimates now live below their consumers in
 [LogPowerBounds](../MathlibNt/Analysis/LogPowerBounds.lean),
@@ -55,8 +51,7 @@ Shared logarithmic and scalar estimates now live below their consumers in
 [PanQuotientBounds](../MathlibNt/AnalyticNumberTheory/LargeSieve/PanQuotientBounds.lean),
 [SuzukiEndpointScalarBounds](../MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiEndpointScalarBounds.lean),
 and [SuzukiFixedGapRpowMargin](../MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiFixedGapRpowMargin.lean).
-Consumers apply these providers instead of maintaining independent versions
-of the same estimate. Public forwarding lemmas remain where they preserve the
+Consumers now share these providers. Public forwarding lemmas remain where they preserve the
 existing API.
 
 ### One Suzuki fixed-head route
@@ -73,42 +68,38 @@ argument remains a separate consumer.
 
 The fixed-perturbation convergence theorem is provided from
 [SuzukiClaim146Quantitative](../MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiClaim146Quantitative.lean),
-and fixed-gap power estimates use the shared scalar layer. This replaces
-parallel cutoff and moving-head implementations with a common dependency path,
-without introducing a reverse import.
+and fixed-gap power estimates use the shared scalar layer. The cutoff and moving-head implementations now use a common acyclic
+dependency path.
 
 ### Character counts use the common bound
 
 In [VaughanDirectAPNormalizedTypeIIActualPhysical](../MathlibNt/AnalyticNumberTheory/Vaughan/VaughanDirectAPNormalizedTypeIIActualPhysical.lean),
 `card_primitiveCharacter_le_totient` now directly applies
 `primitiveCharacter_card_le_totient_basic`. The public alias is retained, but
-the finite-cardinality argument is no longer repeated in that consumer.
+the finite-cardinality argument comes from the common provider.
 
 ### Explicit order and algebra steps
 
-The cutoff square-root comparison now uses `le_of_sq_le_sq`, with the power
-identity proved explicitly, rather than asking nonlinear arithmetic to search
-the entire local context. Its logarithmic estimates use `add_le_add` to expose
+The cutoff square-root comparison now uses `le_of_sq_le_sq` with an explicit
+power identity. Its logarithmic estimates use `add_le_add` to expose
 the exact inequalities being combined.
 
-A subsequent ten-shard pass replaced 44 local automation points across 20 files
+Further cleanup replaced 44 local automation points across 20 files
 in Suzuki, Chen1973, large-sieve, Vaughan, Dirichlet L-function, arithmetic,
-switching, and PNT modules. Examples include multiplication and division
+switching, and prime-number-theorem modules. Examples include multiplication and division
 monotonicity, cancellation with an explicit nonzero premise, square comparison,
 and positivity-to-strict-order conversions. Additional moving-head product and
 quotient steps use the same approach. Automation remains where it makes the
-proof clearer; tactic occurrence counts are not performance measurements.
+proof clearer. Build performance is measured by the clean-build benchmark below.
 
 ### Public mathematics stays fixed
 
 The literal specification in [Goldbach/Statement.lean](../Goldbach/Statement.lean)
 and the public endpoints in [Goldbach/Theorem.lean](../Goldbach/Theorem.lean)
-are unchanged from the release candidate. The qualitative and quantitative
-endpoints share the proved Liu-Pan distribution input but remain distinct
-declarations. The qualitative public theorem does not directly call the public
-quantitative theorem. No public conclusion was weakened and no mathematical
-premise was added to a public endpoint. No custom axioms, proof placeholders, or
-kernel bypasses were introduced.
+are unchanged from the release candidate. Each public endpoint uses its own implementation declaration, and both share
+the proved Liu-Pan distribution input. The implementation discharges the
+analytic premises through proved theorems. Public axiom reports contain only
+Lean's standard logical axioms: `propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Navigation and dependency views
 
@@ -120,10 +111,8 @@ file-splitting notes while retaining mathematical explanations and attribution.
 
 LeanArchitect extracts declaration metadata and dependencies; LeanBlueprint
 renders mathematical documents and dependency graphs from blueprint data.
-They are complementary tools, not alternative proof checkers. The curated
-diagrams distinguish mathematical implication, direct imports, and declaration
-references; historical optimization exports are not presented as fresh release
-graphs.
+The diagrams distinguish mathematical implication, direct imports, and
+declaration references. Each view identifies its source and edge convention.
 
 An executable [Blueprint](../Goldbach/Blueprint.lean) now supplies seven selected
 nodes and six automatically inferred endpoint edges. Three input nodes explicitly
@@ -131,15 +120,15 @@ exclude upstream display dependencies to define the diagram boundary; their Lean
 proof dependencies remain intact. The renderer links declarations to the source
 positions exported by LeanArchitect, pinned to the Git revision used to render.
 CI builds a downloadable `goldbach-blueprint` website artifact after the proof
-checks. It is also included under `blueprint/` in the complete API website.
+checks. The project website places this selected-declaration view at
+`/blueprint/`, alongside Lean Doc at `/docs/` and the independent homepage at `/`.
 See the [build instructions](ARCHITECTURE.md#interactive-blueprint).
-The seven-node Blueprint is a curated explanation, not an exhaustive project graph.
 
-The API website uses the same doc-gen4 renderer as mathlib documentation and
+The Lean API documentation uses the same doc-gen4 renderer as Mathlib documentation and
 covers all four project libraries, with declaration search, source links pinned
 to the checked-out revision, and links to external dependency documentation.
-Mathlib's external documentation is a rolling website, not a version-pinned
-proof dependency. Successful main-branch verification is required before
+Mathlib's external documentation tracks upstream updates; the project's proof
+dependency is locked in `lake-manifest.json`. Successful main-branch verification is required before
 GitHub Pages deployment. See [DOCUMENTATION.md](DOCUMENTATION.md).
 
 ## Verification and performance
@@ -147,21 +136,26 @@ GitHub Pages deployment. See [DOCUMENTATION.md](DOCUMENTATION.md).
 The release gates are a full warning-fatal build, literal public statement and
 standard-axiom checks, script regression tests, an independent replay of
 `Goldbach.Theorem`, and validation of the complete documentation website.
-The replay checks that module over its cached imports, not a fresh independent
-replay of the entire import closure. Blueprint checks distinguish the seven
+The replay checks `Goldbach.Theorem` against its cached imports. Blueprint checks distinguish the seven
 selected nodes and six endpoint edges from the full proof dependency graph.
 See [VERIFICATION.md](VERIFICATION.md) for the separate acceptance gates and
 isolated reconstruction instructions.
 
-Warnings are treated as build failures rather than globally suppressed.
+Warnings are treated as build failures.
 Cleanup covers unused variables, redundant tactics and simplifier arguments,
 deprecated names, and explicitly scoped unused section instances. Where an
 unused binder received an underscore prefix, in-tree named-argument consumers
 were updated as well. The public theorem statements remain unchanged.
 
-[BUILD_BENCHMARK.md](BUILD_BENCHMARK.md) defines the clean-project timing
-boundary and records the historical 36-minute-23-second baseline. The new
-measurement uses a separate checkout with cached pinned dependencies and no
-compiled project modules. Incremental builds and concurrent shard timings
-are not used as substitutes. Source-size reduction and build time are separate
-measurements; single-run timings do not establish a hardware-independent speedup.
+The recorded clean builds took **36:23 for v1.0.0-rc1 and 30:06 for v1.0.0**,
+a **17.3% reduction in elapsed time**. Sampled peak proportional memory increased
+from **5.97 to 6.85 GiB**; sampled peak resident memory was **10.48 and 10.43 GiB**,
+respectively. Each version has one recorded run using the same CPU model and
+thread settings. Timing depends on machine load and cache state.
+
+The v1.0.0 run starts from a separate checkout with cached pinned dependencies
+and zero compiled project modules. It finishes with zero warnings and matching
+proof-source fingerprints before and after the build. The
+[benchmark guide](BUILD_BENCHMARK.md) describes the timing and memory methods,
+including the recorded sampling failures. Full records are available for
+[v1.0.0-rc1](benchmarks/v1.0.0-rc1.json) and [v1.0.0](benchmarks/v1.0.0.json).

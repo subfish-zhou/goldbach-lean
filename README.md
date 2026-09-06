@@ -1,23 +1,29 @@
 # goldbach-lean
 
-A Lean 4 formalization of **Chen's 1+2 theorem**, **v1.0.0**:
+A Lean 4 project formalizing progress toward **Goldbach's conjecture**, from
+Chen's 1+2 theorem toward 1+1.9 and stronger results.
 
-every sufficiently large even natural number is the sum of a prime and either
-a prime or a product of two primes. The two factors may be equal.
+The first stable release, **v1.0.0**, formalizes **Chen's 1+2 theorem**:
 
-This is the first stable release. It does **not** assert the binary
-Goldbach conjecture, an explicit numerical threshold, or the separate 1+1.9
-result.
+> Every sufficiently large even natural number is the sum of a prime and either
+> a prime or a product of two primes. The two factors may be equal.
 
-See the [release notes](docs/RELEASE_NOTES.md) for the comparison with v1.0.0-rc1:
-233,282 to 221,487 nonblank, comment-free Lean source lines, including Blueprint
-metadata. No cross-machine build-time comparison is claimed.
+Work on the 1+1.9 target is underway, with stronger results as a further research
+direction. The theorem statements and documentation below describe the completed
+1+2 development.
 
-**[Browse the Lean API documentation](https://subfish-zhou.github.io/goldbach-lean/)**
+Compared with v1.0.0-rc1, this release reduces nonblank, comment-free Lean source
+from **233,282 to 221,444 lines**, including Blueprint metadata. The recorded
+clean builds took **36:23 and 30:06**; sampled proportional-memory peaks were
+**5.97 and 6.85 GiB**, respectively. See the [release notes](docs/RELEASE_NOTES.md)
+and [benchmark method and records](docs/BUILD_BENCHMARK.md).
+
+**[Project homepage](https://subfish-zhou.github.io/goldbach-lean/)**
+· **[Lean API documentation](https://subfish-zhou.github.io/goldbach-lean/docs/)**
 · **[Interactive proof Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)**
 
-The API site covers all four project libraries, with declaration search, source
-links, and import navigation. See [how the website is built](docs/DOCUMENTATION.md).
+The Lean API documentation covers all four project libraries, with declaration
+search, source links, and import navigation. See [how the website is built](docs/DOCUMENTATION.md).
 
 | Read the mathematics | Explore the proof | Check the result |
 |---|---|---|
@@ -42,8 +48,8 @@ separates this view from direct imports and compiled declaration dependencies.
 
 The [interactive Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)
 renders selected declaration dependencies from LeanArchitect, with links to their
-Lean source. CI validates both documentation views and publishes them together
-from `main`. The Blueprint remains available as the `goldbach-blueprint` artifact.
+Lean source. Continuous integration (CI) validates the documentation and assembles
+the project homepage, Lean Doc, and Blueprint into one website, published from `main`. The Blueprint remains available as the `goldbach-blueprint` artifact.
 
 ## Main results
 
@@ -74,6 +80,7 @@ actual good-representation set, for even `N`. See
 Install [elan](https://github.com/leanprover/elan), then run from this directory:
 
 ```sh
+unset LEAN_PATH LEAN_SRC_PATH
 lake exe cache get
 lake --wfail build
 python3 scripts/check.py
@@ -82,11 +89,11 @@ lake env leanchecker --verbose Goldbach.Theorem
 ```
 
 The toolchain and all Git dependencies are pinned by `lean-toolchain` and
-`lake-manifest.json`. No sibling project, private path, or externally supplied
-`LEAN_PATH` is required. `lake exe cache get` downloads Mathlib's compiled
-cache; the project proofs themselves are built from source. `leanchecker`
-performs a separate replay of compiled declarations; it is not a replacement
-for the source build or the literal-statement check.
+`lake-manifest.json`. The checkout contains the complete local source closure.
+`lake exe cache get` downloads Mathlib's compiled cache; the project proofs are
+built from source. Verification combines the source build, the literal-statement
+and axiom checks, and a separate replay of `Goldbach.Theorem` against its cached
+imports using `leanchecker`.
 
 The checks reject proof placeholders and custom axioms in the shipped source,
 verify the public theorem axiom reports against Lean's standard classical
@@ -105,8 +112,8 @@ limitations.
 
 The proof uses a modern combination of Jurkat–Richert/Richert linear sieve,
 Suzuki comparison results, Selberg upper sieve, and proved distribution bounds.
-It is **not** presented as a line-by-line reconstruction of Chen's 1973 paper.
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+The [architecture guide](docs/ARCHITECTURE.md) explains how these ingredients
+combine to prove the public results.
 
 ## Sources and license
 

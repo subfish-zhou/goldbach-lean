@@ -1,6 +1,8 @@
 # Proof and software architecture
 
-Follow the public statement down to its inputs, or start with an analytic
+The completed Chen (1+2) proof represents every sufficiently large even integer
+as the sum of a prime and a number that is either prime or a product of two
+primes. Follow the public statement down to its inputs, or start with an analytic
 ingredient and work upward. The [README roadmap](../README.md#proof-at-a-glance)
 shows the mathematics; the graph below shows the source boundary.
 
@@ -67,20 +69,21 @@ is `chen_good_representations_lower_bound_unconditional`, both in namespace
 `MathlibNt.ChensTheorem`. Each supplies the same proved input to its respective
 conditional assembly in
 [ChenVerifiedPrerequisites](../MathlibNt/SieveTheory/Chen/ChenVerifiedPrerequisites.lean).
-In particular, the public existence theorem does **not** directly call the
-public `0.67` representation theorem. The mathematical roadmap summarizes the
-argument, not the exact declaration call graph.
+The existence endpoint derives positivity through its own assembly; the
+quantitative endpoint exposes the `0.67` representation bound. The mathematical
+roadmap explains the argument, while this graph records the selected declaration
+references.
 
 ## Public boundary
 
 `Goldbach.Statement` defines the literal mathematical target using only basic
 Mathlib notions. `Goldbach.Theorem` instantiates that target and exposes the
-quantitative representation bound. `Goldbach.Checks` is a test module, not an
-import of the public library.
+quantitative representation bound. `Goldbach.Checks` imports the public library
+from a separate test module.
 
-The package contains the complete local import closure needed by the theorem.
-It does not depend on a sibling analytics checkout. Git dependencies are pinned;
-ported sources that required local adaptation are included with attribution.
+The package contains the complete local import closure needed by the theorem,
+including the required analytics sources. Git dependencies are pinned; ported
+sources that required local adaptation are included with attribution.
 
 ## Mathematical dependency layers
 
@@ -121,7 +124,7 @@ when following an input into its implementation.
 | [BombieriVinogradov](../MathlibNt/AnalyticNumberTheory/BombieriVinogradov/) | Averaged-distribution assembly |
 | [Chen1973](../MathlibNt/AnalyticNumberTheory/Chen1973/) | Retained source-specific analytic ingredients |
 | [AnalyticNumberTheory](../AnalyticNumberTheory/) | Reusable prime-counting, Mertens, and sieve interfaces |
-| [PrimeNumberTheoremAnd](../PrimeNumberTheoremAnd/) | Attributed and adapted PNT source closure |
+| [PrimeNumberTheoremAnd](../PrimeNumberTheoremAnd/) | Attributed and adapted prime-number-theorem source closure |
 
 </details>
 
@@ -150,12 +153,12 @@ a declaration namespace identifies its stable mathematical name.
 
 ## Interactive Blueprint
 
-[Goldbach/Blueprint.lean](../Goldbach/Blueprint.lean) annotates existing theorems
-without changing their proofs. It is a separate documentation root: importing
-`Goldbach` does not import these presentation attributes. The site contains
-seven selected nodes and six inferred endpoint edges, not all project lemmas.
-The three input nodes explicitly exclude upstream Blueprint labels from the
-display; their complete Lean proof dependencies remain unchanged.
+[Goldbach/Blueprint.lean](../Goldbach/Blueprint.lean) attaches presentation
+attributes to existing theorems through a separate documentation root. The
+public `Goldbach` import and the Lean proofs remain unchanged. The graph
+presents seven selected nodes and six inferred endpoint edges. Its three input
+nodes hide upstream Blueprint labels to keep the display focused on the endpoint
+assembly; their complete Lean proof dependencies remain unchanged.
 
 LeanArchitect produces the node data; LeanBlueprint renders the document and
 interactive graph. In this graph arrows point from a dependency to its consumer,
@@ -172,7 +175,7 @@ root:
 python3 -m venv .venv-blueprint
 . .venv-blueprint/bin/activate
 pip install -r blueprint/requirements.txt
-lake build Goldbach:blueprint
+lake --wfail build Goldbach:blueprint
 leanblueprint web
 leanblueprint serve
 ```
@@ -181,14 +184,15 @@ The site is generated under `blueprint/web`; the default preview is
 `http://localhost:8000`. Generated HTML, exported TeX, and the Python environment
 are ignored by Git. The verification workflow builds the same site after the
 Lean checks and uploads it as `goldbach-blueprint`. Download that Actions
-artifact to inspect a particular revision. The complete documentation website
-also includes this Blueprint at `blueprint/` alongside the
-[Lean API documentation](DOCUMENTATION.md); successful `main` builds deploy the
-combined site to [GitHub Pages](https://subfish-zhou.github.io/goldbach-lean/).
-PDF generation is not part of this release.
+artifact to inspect a particular revision. The website has three entry points:
+the standalone project homepage at `/`, [Lean API documentation](DOCUMENTATION.md)
+at `/docs/`, and the interactive Blueprint at `/blueprint/`. These paths are
+relative to the project site root. Successful `main` builds deploy the site to
+[GitHub Pages](https://subfish-zhou.github.io/goldbach-lean/). The release
+documentation build produces the web edition of the Blueprint.
 
-The small [source-link adapter](../blueprint/src/sources.py) prevents project
-declarations from being sent to Mathlib's default documentation search.
+The small [source-link adapter](../blueprint/src/sources.py) directs project
+declaration links to their own source locations.
 
 ## Reading dependency data
 
@@ -197,54 +201,58 @@ There are three useful views of the project, with different meanings:
 | View | Nodes and edges | Suitable use |
 |---|---|---|
 | Mathematical roadmap | Ingredients and the results they support | Understand the argument before opening implementation files |
-| Module DAG | Source modules and their direct imports | Navigate the code, find shared foundations, and identify rebuild impact |
-| LeanArchitect declaration DAG | Compiled declarations and references in their types or proof values | Trace which lemmas a theorem uses and identify reusable proof interfaces |
+| Module import graph | Source modules and their direct imports | Navigate the code, find shared foundations, and identify rebuild impact |
+| LeanArchitect declaration graph | Compiled declarations and references in their types or proof values | Trace which lemmas a theorem uses and identify reusable proof interfaces |
 
-LeanArchitect is pinned as a tooling dependency. Its graph is an inspection aid,
-not an additional proof checker or a mathematical premise. An import edge does
-not mean that every declaration in the imported module is used. Conversely,
-a path in a declaration graph may pass through generated declarations rather
-than a hand-written mathematical lemma.
+LeanArchitect is pinned as a tooling dependency and supplies graphs for proof
+inspection. Lean checks the proofs. A module import edge records access to a
+module; a declaration edge records a reference in a type or proof value.
+Declaration paths can pass through both hand-written lemmas and generated
+declarations.
 
 For a release graph, build the exact release source first and export from that
 compiled environment. Record the source revision, dirty-tree status, Lean and
 dependency versions, graph roots, and whether edges come from types, values, or
-both. A snapshot from before a refactor must not be labeled as the current graph.
-The diagrams on this page are curated source navigation, not a fresh
-LeanArchitect export or an exhaustive graph of the project.
+both. Label each snapshot with the revision it describes, and regenerate the
+export after a refactor before publishing it as the current graph. The diagrams
+on this page are curated source-navigation views of selected modules and
+declarations.
 
 A useful full atlas should open at the public results, group modules by the
 subsystems above, and let readers expand one dependency neighborhood at a time.
 Keep source links and edge direction visible. Keep raw export databases, timing
 logs, and optimization ledgers outside the reading guide; their size and role
-are different from release documentation. Graph reachability and duplicate-type
-counts do not replace the [verification gates](VERIFICATION.md).
+are different from release documentation. Every release must pass the
+[verification gates](VERIFICATION.md); graph reachability and duplicate-type
+counts serve as supplementary inspection data.
 
 ## Important interface distinctions
 
-The actual Goldbach source density is `1 / (p - 1)`, not the literal
-Jurkat–Richert specialization `1 / p`. The proof connects these through the
-constructed sieve functions and comparison theorems; it does not identify the
-two source models.
+The actual Goldbach source has density `1 / (p - 1)`. The literal
+Jurkat–Richert specialization has density `1 / p`. These are distinct source
+models, connected in the proof through constructed sieve functions and
+comparison theorems.
 
-The modern upper comparison is not attributed to the literal 1965 theorem.
-Likewise, proving the endpoint does not claim to reproduce every formula in
-Chen's original paper. Source-specific module names identify mathematical
-inputs, not a claim of historical verbatim replication.
+The modern upper comparison comes from Suzuki's comparison results. The
+implementation combines Chen's argument with the source variants documented in
+each module; source-specific module names identify those mathematical inputs.
 
-A failed historical counting premise must not be used as the release endpoint.
 The final route uses corrected finite counting and the actual good-representation
-set, with all remaining analytic premises supplied by proved theorems.
+set, with every analytic premise supplied by a proved theorem. Endpoint changes
+must use valid counting premises for that set and discharge every analytic
+premise. Historical counting errors must be corrected before those formulations
+can enter the proof.
 
 ## Engineering rules
 
 - Public theorem names and statement meanings are stable across source reorganization.
-- Mathematical declaration namespaces need not match physical subdirectories;
-  this keeps existing proof references stable while modules are grouped by topic.
-- Source dependencies flow toward the public facade; tests do not become its imports.
+- Mathematical declaration namespaces stay stable while physical modules are
+  grouped by topic.
+- The public facade imports its proof dependencies; test modules remain outside
+  the facade's import closure.
 - Standalone imports and private helpers are verified after module splitting.
-- No experimental worktree, build artifact, task transcript, or internal report
-  belongs to the public source tree.
-- Unreachable modules are excluded from this release, not automatically declared
-  mathematically invalid. Shared dependencies remain even if they also serve
-  work beyond the release theorem.
+- Keep experimental worktrees, build artifacts, task transcripts, and internal
+  reports outside the public source tree.
+- Select release modules by reachability from the release roots. This is a
+  packaging criterion; mathematical validity is assessed through proof checking.
+  Retain shared dependencies, including those that also support further research.
