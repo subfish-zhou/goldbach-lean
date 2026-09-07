@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A Lean 4 project formalizing progress toward Goldbach's conjecture, from Chen's 1+2 theorem toward 1+1.9 and stronger results.">
+  <meta name="description" content="A Lean 4 project formalizing Chen's 1+2 and Li–Liu's 1+1.9 theorems, building analytic number theory toward stronger results on Goldbach's conjecture.">
   <title>Goldbach Lean — Formalizing progress toward Goldbach</title>
   <link rel="stylesheet" href="home.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -23,14 +23,21 @@
   <main id="content" class="wrap">
     <div class="hero">
       <h1>Formalizing progress<br>toward Goldbach.</h1>
-      <p class="lead">A Lean 4 project advancing the formal study of Goldbach’s conjecture, from Chen’s 1+2 theorem toward 1+1.9 and stronger results.</p>
+      <p class="lead">A Lean 4 project advancing the formal study of Goldbach’s conjecture and reusable analytic number theory, with Chen’s 1+2 and Li–Liu’s 1+1.9 theorems formalized and stronger results as a research direction.</p>
     </div>
 
     <dl class="research-status" aria-label="Results and research directions">
       <div data-status="formalized"><dt>Formalized</dt><dd>Chen’s 1+2 theorem</dd></div>
-      <div data-status="in-progress"><dt>Work in progress</dt><dd>The 1+1.9 target</dd></div>
+      <div data-status="formalized"><dt>Formalized</dt><dd>Li–Liu’s 1+1.9 theorem</dd></div>
       <div data-status="research-direction"><dt>Longer-term direction</dt><dd>Stronger results toward Goldbach</dd></div>
     </dl>
+
+    <section class="statement" aria-labelledby="li-liu-theorem">
+      <h2 id="li-liu-theorem">Completed result · Li–Liu’s 1+1.9 theorem</h2>
+      <p class="theorem-text">Every sufficiently large even natural number has a representation <code>N = p + r*q</code>, where <code>p</code> and <code>q</code> are prime, <code>r = 1</code> or <code>r</code> is prime, and <code>r^10 ≤ q^9</code>.</p>
+      <p>The factor-size condition is stated in exact natural-number arithmetic. The real-power endpoint gives the equivalent condition <code>r ≤ q^(9/10)</code>.</p>
+      <a class="text-link" href="@@SOURCE_ROOT@@/Goldbach/OnePlusOneNine.lean">Read the Li–Liu public theorems →</a>
+    </section>
 
     <section class="statement" aria-labelledby="theorem">
       <h2 id="theorem">Completed result · Chen’s 1+2 theorem</h2>
@@ -45,7 +52,7 @@
         <div class="reading-item">
           <p class="eyebrow">The mathematical view</p>
           <h3><a href="blueprint/">Lean Blueprint <span aria-hidden="true">↗</span></a></h3>
-          <p>Read the outline of the completed 1+2 proof and explore the dependency graph of selected declarations, with links to their Lean source.</p>
+          <p>Read the overview of both results and explore the selected Chen 1+2 declaration graph, with links to the Lean source.</p>
           <a class="text-link" href="blueprint/dep_graph_document.html">Explore the dependency graph →</a>
         </div>
         <div class="reading-item">
@@ -60,7 +67,8 @@
     <section class="details" aria-labelledby="beyond">
       <h2 id="beyond">More than existence</h2>
       <div>
-        <p>The 1+2 formalization also proves an eventual lower bound for the number of good representations of an even integer. The precise normalization is documented alongside the theorem.</p>
+        <p>The Li–Liu count <code>D19(N)</code> counts distinct eligible primes <code>p</code>, once per prime. For every sufficiently large even <code>N</code>, it is strictly greater than <code>(1/2500) * liuSingularSeries(N) * N / log(N)^2</code>, with <code>1/2500 = 0.0004</code> exactly.</p>
+        <p>A stronger family gives the eventual lower bound with each fixed real coefficient <code>κ &lt; 515093/800000000</code>; the threshold is chosen after <code>κ</code>. The Chen 1+2 bound retains its coefficient <code>0.67</code> for its own good-representation count. Both use the Liu singular-series normalization.</p>
         <p><a href="docs/Goldbach/Theorem.html#Goldbach.representation_lower_bound">Representation lower bound</a> · <a href="@@SOURCE_ROOT@@/docs/THEOREMS.md">Definitions and normalization</a></p>
         <p>For a broader mathematical roadmap, see the <a href="@@SOURCE_ROOT@@/docs/ARCHITECTURE.md">proof architecture</a>. The interactive Blueprint shows selected declaration dependencies.</p>
       </div>
@@ -71,20 +79,29 @@
         <p class="eyebrow">Reproduce the verification</p>
         <h2 id="verify-heading">Verify the completed results</h2>
         <p>From the project root of a checkout of the <a href="@@TREE_ROOT@@">Lean source snapshot</a>, run these commands using the repository’s pinned toolchain. Use an environment without a <code>LEAN_PATH</code> inherited from another project.</p>
-        <p>The completed 1+2 theorems use Lean’s standard logical axioms. The verification guide explains the source checks, axiom reports and independent replay.</p>
+        <p>Both completed developments use Lean’s standard logical axioms. The verification guide explains the separate Chen and Li–Liu acceptance probes, endpoint inspection and module replay.</p>
         <a class="text-link" href="@@SOURCE_ROOT@@/docs/VERIFICATION.md">Verification guide and trust boundary →</a>
       </div>
-      <pre aria-label="Commands to build and verify the project"><code>lake exe cache get
-lake --wfail build
-python3 scripts/check.py
-lake env leanchecker --verbose Goldbach.Theorem</code></pre>
+      <pre aria-label="Commands to build the public interfaces"><code>lake exe cache get
+lake build Goldbach.Theorem
+lake build Goldbach.OnePlusOneNine
+lake build Goldbach.All
+lake --wfail build</code></pre>
+    </section>
+
+    <section class="details" aria-labelledby="upgrade">
+      <h2 id="upgrade">Keep your existing build</h2>
+      <div>
+        <p>Import <code>Goldbach</code> for 1+2, <code>Goldbach.OnePlusOneNine</code> for 1+1.9, or <code>Goldbach.All</code> for both. The original 1+2 entry remains separate from the new extension.</p>
+        <p>The package configuration, toolchain and dependency pins are unchanged. Keep <code>.lake/</code> when updating; Lake reuses unchanged dependency artifacts and rebuilds new or affected modules as needed. See the <a href="@@SOURCE_ROOT@@/README.md#focused-builds-and-upgrading-an-existing-checkout">upgrade commands</a>.</p>
+      </div>
     </section>
 
     <section class="details credits" aria-labelledby="sources">
       <h2 id="sources">Sources &amp; reuse</h2>
       <div>
         <p>This project builds on <a href="https://github.com/UyNewNas/chen-theorem-lean">UyNewNas/chen-theorem-lean</a>, <a href="https://github.com/UyNewNas/analytic-number-theory-lean">analytic-number-theory-lean</a>, Mathlib and adapted material from <a href="https://github.com/AlexKontorovich/PrimeNumberTheoremAnd">PrimeNumberTheoremAnd</a>.</p>
-        <p>The 1+2 proof combines modern linear-sieve comparisons, Selberg's upper sieve and proved distribution estimates. See the <a href="@@SOURCE_ROOT@@/docs/PROVENANCE.md">provenance and mathematical sources</a> for attribution and the role of each component.</p>
+        <p>The developments combine linear-sieve comparisons, Selberg's upper sieve, proved distribution estimates and Li–Liu's constrained finite counts and integral bounds. See the <a href="@@SOURCE_ROOT@@/docs/PROVENANCE.md">provenance and mathematical sources</a> for attribution and the role of each component.</p>
       </div>
     </section>
   </main>

@@ -4253,7 +4253,7 @@ theorem sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin_logSq
         hn hm hz hlog
     rw [Real.rpow_def_of_pos
       (by exact_mod_cast hn : (0 : ℝ) < n)] at hUpperRpow
-    convert hUpperRpow using 1 <;> ring
+    convert hUpperRpow using 1; ring
 
 /-- Before weakening the elementary Rankin estimate to logarithmic-square
 decay, the same finite Abel identity retains the sharper decay
@@ -4518,7 +4518,7 @@ theorem sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin
       exact hFinite m hm
     rw [Real.rpow_def_of_pos
       (by exact_mod_cast hn : (0 : ℝ) < n)] at hUpperRpow
-    convert hUpperRpow using 1 <;> ring
+    convert hUpperRpow using 1; ring
 
 /-- Below the sifting cutoff every positive integer is smooth, so the source's
 real `Psi` carrier is the full interval through `floor xi`. -/

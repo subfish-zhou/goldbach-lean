@@ -1,12 +1,36 @@
 # Proof and software architecture
 
-The completed Chen (1+2) proof represents every sufficiently large even integer
-as the sum of a prime and a number that is either prime or a product of two
-primes. Follow the public statement down to its inputs, or start with an analytic
+The completed Chen (1+2) and Li–Liu (1+1.9) developments have separate public
+entries over shared analytic foundations. Li–Liu adds the literal factor-size
+condition `r^10 ≤ q^9` to `N = p + r*q`, with `p, q` prime and `r = 1` or prime.
+Follow either public statement down to its inputs, or start with an analytic
 ingredient and work upward. The [README roadmap](../README.md#proof-at-a-glance)
 shows the mathematics; the graph below shows the source boundary.
 
-## Public import graph
+## Li–Liu extension
+
+| Import / build target | Public results |
+|---|---|
+| `Goldbach` / `Goldbach.Theorem` | Chen existence and the `0.67` lower bound |
+| `Goldbach.OnePlusOneNine` | Li–Liu natural-power and real-power existence, strict `0.0004` count, and fixed-coefficient lower bounds |
+| `Goldbach.All` | Both interfaces |
+
+`Goldbach.lean` and `MathlibNt.lean` retain the established 1+2 entry structure.
+The new facade [Goldbach/OnePlusOneNine.lean](../Goldbach/OnePlusOneNine.lean)
+imports the Li–Liu endpoints; [Goldbach/All.lean](../Goldbach/All.lean) joins the
+two public entries. Shared foundations remain common dependencies, so existing
+builds can retain their `.lake/` artifacts and compile the added route
+incrementally. See the [target and upgrade commands](../README.md#focused-builds-and-upgrading-an-existing-checkout).
+
+Start with the [literal representation and distinct-prime count](../MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean),
+then the [unconditional existence endpoints](../MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean)
+and [quantitative assembly](../MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean).
+The quantitative assembly applies the G11 estimates to the original counts
+and combines them with the certified G67, G9 and G12 integral estimates before
+passing to `D19`. [THEOREMS.md](THEOREMS.md) records the exact coefficients,
+normalization and quantifier order.
+
+## Chen public import graph
 
 Every arrow below is a **direct local import**, pointing from consumer to
 dependency. This direction is the reverse of the mathematical roadmap.
@@ -26,7 +50,7 @@ flowchart TD
 ```
 
 The statement is independent of the implementation, and the checks sit outside
-the public import closure. Both public results enter through the same
+the public import closure. Both Chen public results enter through the same
 implementation module; they have distinct endpoint declarations.
 
 ## Source reading route
@@ -51,7 +75,7 @@ and its attributed [MediumPNT implementation](../PrimeNumberTheoremAnd/MediumPNT
 
 ## A shared declaration input
 
-The two public endpoints reuse the same proved Liu-Pan distribution input.
+The two Chen public endpoints reuse the same proved Liu-Pan distribution input.
 These are selected **source-level declaration references**, with arrows from
 consumer to dependency; other references are omitted.
 
@@ -155,7 +179,7 @@ a declaration namespace identifies its stable mathematical name.
 
 [Goldbach/Blueprint.lean](../Goldbach/Blueprint.lean) attaches presentation
 attributes to existing theorems through a separate documentation root. The
-public `Goldbach` import and the Lean proofs remain unchanged. The graph
+public `Goldbach` import and the Lean proofs remain unchanged. The Chen graph
 presents seven selected nodes and six inferred endpoint edges. Its three input
 nodes hide upstream Blueprint labels to keep the display focused on the endpoint
 assembly; their complete Lean proof dependencies remain unchanged.

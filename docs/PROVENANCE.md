@@ -2,7 +2,8 @@
 
 ## Original project sources
 
-The completed Chen (1+2) implementation builds on
+The Chen (1+2) implementation and the shared foundations reused by the
+Li–Liu (1+1.9) development build on
 [UyNewNas/chen-theorem-lean](https://github.com/UyNewNas/chen-theorem-lean), with
 substantial subsequent proof completion and engineering changes. The reusable
 analytics sources originate in
@@ -37,12 +38,17 @@ Their own licenses and attribution remain applicable.
 
 ## Mathematical sources
 
-The implementation assembles the completed Chen theorem from the following
+The implementation assembles the completed Chen and Li–Liu theorems from the following
 mathematical sources. Module documentation identifies the source variants and
 adaptations used at each step.
 
 - J. R. Chen, *On the representation of a large even integer as the sum of a
   prime and the product of at most two primes*, Scientia Sinica 16 (1973), 157–176.
+- Li–Liu (2026), the `1+1.9` result and its distinct-prime count
+  `D_{1,19/10}(N)`. The [finite representation module](../MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean)
+  identifies the source labels `p+rq/r<`, `D1a` and `Goldbachbasic`; the
+  [quantitative endpoint](../MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean)
+  combines the original counts with the certified integral estimates.
 - The Jurkat–Richert linear-sieve and Richert weighted-sieve arguments, with
   precise source variants identified in the implementation module documentation.
 - Suzuki's modern linear-sieve comparison results, which supply comparisons for
@@ -54,4 +60,5 @@ adaptations used at each step.
   with [arXiv:2203.07871](https://arxiv.org/abs/2203.07871).
 
 Source references record the mathematical provenance of the Lean proofs.
-The acceptance checks report the formal dependency axioms of both public results.
+The [verification guide](VERIFICATION.md) describes axiom inspection for both
+public interfaces and the scope of their separate acceptance probes.

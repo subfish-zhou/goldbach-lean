@@ -1,7 +1,7 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectJoinedTerms
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalizationRoots
 
-/-! 次级项的字面局部包络；长区间分式保留，未声称最终归一化。 -/
+/-! Local bounds for the secondary terms, retaining the long-interval fractions. -/
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -1,5 +1,10 @@
 # Clean-build benchmark
 
+These historical records cover the **Chen 1+2** source trees at v1.0.0-rc1
+and v1.0.0. Their timings and source fingerprints belong to those revisions.
+For the current 1+1.9 targets and cache-preserving upgrade procedure, see the
+[README](../README.md#focused-builds-and-upgrading-an-existing-checkout).
+
 ## Recorded results
 
 | Measurement | v1.0.0-rc1 | v1.0.0 |

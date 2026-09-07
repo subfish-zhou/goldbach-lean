@@ -31,8 +31,13 @@ jobs:
         run: python3 scripts/check.py
       - name: Test verification scripts
         run: python3 -m unittest discover -s scripts -p 'test_*.py'
-      - name: Replay public theorem
-        run: lake env leanchecker --verbose Goldbach.Theorem
+      - name: Replay public theorems and check probes
+        run: |
+          lake env leanchecker --verbose Goldbach.Theorem
+          lake env leanchecker --verbose Goldbach.Checks
+          lake env leanchecker --verbose Goldbach.OnePlusOneNine
+          lake env leanchecker --verbose Goldbach.OnePlusOneNineChecks
+          lake env leanchecker --verbose Goldbach.All
       - name: Install blueprint renderer
         run: |
           sudo apt-get update

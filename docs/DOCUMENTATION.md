@@ -4,21 +4,28 @@ The website presents the Goldbach research program through three routes:
 
 - **Project homepage** at `/`: research goals, progress, reading routes,
   verification instructions and provenance links. Chen's **1 + 2 theorem** is
-  formalized; **1 + 1.9** is in progress, with stronger results as further
-  research directions. The homepage HTML and CSS live in `website/`.
+  formalized alongside **Li–Liu's 1+1.9 theorem**, with stronger results as
+  further research directions. The homepage HTML and CSS live in `website/`.
 - **Lean API documentation** at `/docs/`: doc-gen4 module pages, declaration
   search, declaration anchors, source links, imports and reverse-import links
   for the documented modules.
-- **Proof Blueprint** at `/blueprint/`: the mathematical narrative and selected
-  proof dependencies, with links into the implementation.
+- **Proof Blueprint** at `/blueprint/`: an overview of both completed results
+  and the selected **Chen 1+2** dependency graph, with links into the implementation.
 
-The completed public theorems give a prime-plus-almost-prime representation of
-every sufficiently large even integer and a quantitative representation bound.
+The completed public theorems give Chen's prime-plus-almost-prime representation
+and Li–Liu's constrained `N = p + r*q` representation with `r^10 ≤ q^9`, together
+with quantitative bounds for their respective distinct-prime counts.
 [THEOREMS.md](THEOREMS.md) defines their precise mathematical scope.
 The proofs use Lean's standard logical foundation: `propext`, `Classical.choice`
 and `Quot.sound`. [VERIFICATION.md](VERIFICATION.md) describes the source build,
 literal statement checks, axiom reports and kernel replay. The documentation
 pipeline below renders compiled declarations and checks the resulting site.
+
+The current source entries are `Goldbach` for 1+2, `Goldbach.OnePlusOneNine`
+for 1+1.9, and `Goldbach.All` for both. The existing Blueprint annotations in
+`Goldbach/Blueprint.lean` describe the Chen route; its prose introduces Li–Liu
+and links readers to the new source entry. The generated API inventory and
+source revision are recorded in each website's `build-info.json`.
 
 ## Pinned generator and isolation
 

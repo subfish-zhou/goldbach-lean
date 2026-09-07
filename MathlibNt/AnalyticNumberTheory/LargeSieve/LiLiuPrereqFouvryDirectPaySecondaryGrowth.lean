@@ -1,6 +1,6 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryLocal
 
-/-! 实际log、tau和完成模数的小幂工具。 -/
+/-! Small-power bounds for logarithms, divisor counts and completed moduli. -/
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

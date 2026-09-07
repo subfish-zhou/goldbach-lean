@@ -1,6 +1,4 @@
 import Goldbach.Theorem
-import MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative
 
 /-!
 # Goldbach: Chen's theorem in Lean

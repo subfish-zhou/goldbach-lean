@@ -1,22 +1,24 @@
 # goldbach-lean
 
-A Lean 4 project formalizing progress toward **Goldbach's conjecture**, from
-Chen's 1+2 theorem toward 1+1.9 and stronger results.
+A Lean 4 project formalizing progress toward **Goldbach's conjecture** and
+building reusable analytic number theory, with **Chen's 1+2 theorem** and
+**Li–Liu's 1+1.9 theorem** formalized. Stronger results remain a research direction.
 
-The first stable release, **v1.0.0**, formalizes **Chen's 1+2 theorem**:
+The Li–Liu result proves:
 
-> Every sufficiently large even natural number is the sum of a prime and either
-> a prime or a product of two primes. The two factors may be equal.
+> Every sufficiently large even natural number has a representation
+> `N = p + r*q`, where `p` and `q` are prime, `r = 1` or `r` is prime, and
+> `r^10 ≤ q^9`.
 
-Work on the 1+1.9 target is underway, with stronger results as a further research
-direction. The theorem statements and documentation below describe the completed
-1+2 development.
+It also proves the strict `0.0004` lower bound for the number of distinct prime
+first summands satisfying this condition, in the Liu singular-series normalization.
+The earlier **1+2** result remains available through its original import and
+public names: every sufficiently large even natural number is a prime plus
+another prime or a product of two primes, whose factors may be equal.
 
-Compared with v1.0.0-rc1, this release reduces nonblank, comment-free Lean source
-from **233,282 to 221,444 lines**, including Blueprint metadata. The recorded
-clean builds took **36:23 and 30:06**; sampled proportional-memory peaks were
-**5.97 and 6.85 GiB**, respectively. See the [release notes](docs/RELEASE_NOTES.md)
-and [benchmark method and records](docs/BUILD_BENCHMARK.md).
+The [release notes](docs/RELEASE_NOTES.md) describe the new results and retain the
+historical v1.0.0 record. The [recorded build benchmarks](docs/BUILD_BENCHMARK.md)
+measure the v1.0.0-rc1 and v1.0.0 **1+2** developments.
 
 **[Project homepage](https://subfish-zhou.github.io/goldbach-lean/)**
 · **[Lean API documentation](https://subfish-zhou.github.io/goldbach-lean/docs/)**
@@ -30,6 +32,9 @@ search, source links, and import navigation. See [how the website is built](docs
 | [Theorems and normalization](docs/THEOREMS.md) | [Architecture and source map](docs/ARCHITECTURE.md) | [Verification and trust boundary](docs/VERIFICATION.md) |
 
 ## Proof at a glance
+
+The following roadmap describes the Chen 1+2 route. The Li–Liu extension has
+its own [public entry and source route](docs/ARCHITECTURE.md#liliu-extension).
 
 ```mermaid
 flowchart BT
@@ -52,6 +57,28 @@ Lean source. Continuous integration (CI) validates the documentation and assembl
 the project homepage, Lean Doc, and Blueprint into one website, published from `main`. The Blueprint remains available as the `goldbach-blueprint` artifact.
 
 ## Main results
+
+The two developments have separate imports over shared analytic foundations.
+Use `import Goldbach` for the established 1+2 interface,
+`import Goldbach.OnePlusOneNine` for 1+1.9, or `import Goldbach.All` for both.
+
+```lean
+import Goldbach.OnePlusOneNine
+
+#check Goldbach.one_plus_one_nine
+#check Goldbach.one_plus_one_nine_real
+#check Goldbach.one_plus_one_nine_count
+#check Goldbach.one_plus_one_nine_lower_bound
+```
+
+The natural-power theorem retains the exact `r^10 ≤ q^9` condition; the real-power
+version states `r ≤ q^((19/10 : ℝ) - 1)`. The count theorem gives
+`(1/2500) * liuSingularSeries N * N / (Real.log N)^2 < D19 N`, where `D19`
+counts different eligible primes `p`. The stronger lower-bound family allows
+each fixed real `κ < 515093/800000000`, with a threshold depending on `κ`.
+See [the precise statements and normalization](docs/THEOREMS.md).
+
+The original Chen interface is unchanged:
 
 ```lean
 import Goldbach
@@ -91,9 +118,12 @@ lake env leanchecker --verbose Goldbach.Theorem
 The toolchain and all Git dependencies are pinned by `lean-toolchain` and
 `lake-manifest.json`. The checkout contains the complete local source closure.
 `lake exe cache get` downloads Mathlib's compiled cache; the project proofs are
-built from source. Verification combines the source build, the literal-statement
-and axiom checks, and a separate replay of `Goldbach.Theorem` against its cached
-imports using `leanchecker`.
+built from source. `scripts/check.py` runs separate statement and axiom probes
+for Chen 1+2 and Li–Liu 1+1.9. `Goldbach/Checks.lean` retains the Chen checks;
+`Goldbach/OnePlusOneNineChecks.lean` checks the new interface. The `leanchecker`
+command above replays the Chen public module against cached imports. The
+[verification guide](docs/VERIFICATION.md) gives the Li–Liu inspection and replay
+commands as well.
 
 The checks reject proof placeholders and custom axioms in the shipped source,
 verify the public theorem axiom reports against Lean's standard classical
@@ -101,10 +131,38 @@ axioms (`propext`, `Classical.choice`, `Quot.sound`), and check source hygiene.
 Read [`docs/VERIFICATION.md`](docs/VERIFICATION.md) for the exact coverage and
 limitations.
 
+### Focused builds and upgrading an existing checkout
+
+```sh
+lake build Goldbach.Theorem          # Chen 1+2
+lake build Goldbach.OnePlusOneNine   # Li–Liu 1+1.9
+lake build Goldbach.All              # both public interfaces
+lake build                          # full project
+```
+
+If you have already built the project, keep `.lake/` and update your checkout
+without cleaning it. To update an existing `main` checkout:
+
+```sh
+git switch main
+git pull --ff-only
+lake build Goldbach.OnePlusOneNine
+```
+
+To use the integration branch instead, run `git fetch origin`, then
+`git switch integrate/liliu19-latest`. If that branch is not yet local, use
+`git switch --track origin/integrate/liliu19-latest` instead. Preserve or commit
+any local work before switching branches.
+
+The package configuration, toolchain and dependency pins are unchanged. Lake
+can reuse unchanged dependency artifacts and rebuilds new or changed modules
+and affected consumers as needed. Keep the existing `.lake/` directory; rebuild
+work depends on your cache state and selected target.
+
 ## Organization
 
 - `Goldbach/`: independent statement, public theorems, and acceptance checks.
-- `MathlibNt/`: Chen's sieve and analytic proof implementation.
+- `MathlibNt/`: Chen and Li–Liu sieve and analytic proof implementations.
 - `AnalyticNumberTheory/`: reusable prime-distribution, Mertens, and sieve results.
 - `PrimeNumberTheoremAnd/`: the attributed, adapted prime-number-theorem source closure.
 - `scripts/`: reproducible source and trust checks.

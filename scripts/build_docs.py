@@ -235,11 +235,14 @@ def decorate_homepage(site, include_blueprint):
     if (site / "Goldbach/Theorem.html").is_file():
         links.append('<a href="Goldbach/Theorem.html#Goldbach.chen_theorem">Verified proof</a>')
         links.append('<a href="Goldbach/Theorem.html#Goldbach.representation_lower_bound">Representation bound</a>')
+    if (site / "Goldbach/OnePlusOneNine.html").is_file():
+        links.append('<a href="Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine">Li–Liu 1+1.9 theorem</a>')
+        links.append('<a href="Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine_count">Strict 0.0004 prime-count bound</a>')
     if include_blueprint:
         links.append('<a href="blueprint/index.html">Proof Blueprint</a>')
     introduction = (
         '<div id="goldbach-introduction"><h1>Goldbach Lean</h1>'
-        '<p>Lean 4 API documentation for the formalization of Chen\'s 1+2 theorem.</p>'
+        '<p>Lean 4 API documentation for Chen\'s 1+2 theorem and the Li–Liu 1+1.9 theorem, with separate public interfaces.</p>'
         '<p>' + ' &middot; '.join(links) + '</p></div>'
     )
     heading = '<h1>Welcome to the documentation page </h1>'

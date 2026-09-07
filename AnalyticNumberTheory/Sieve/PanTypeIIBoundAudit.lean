@@ -1,39 +1,24 @@
-/-
-! # AnalyticNumberTheory.Sieve.PanTypeIIBoundAudit
-
-## Red-team audit: truth check of panTypeIICharSquareMeanBound (ant #15, issue #43)
-
-**结论: 该陈述按字面为假。** 本文件给出完整证明的初等反例:
-
-  panTypeIICharSquareMeanBound 1 1 为假。
-
-反例家族: u = v = 1, m = Q^2, Q -> oo. 主特征 (平凡特征) 的贡献给出
-
-  LHS(Q, Q^2) >= c1 * Q^5    (q = p1*p2 素数的 q 上的 9*|S_{(n,q)=1}(Lambda-log)|^2 项),
-  RHS(Q, Q^2)  = C*(m+Q^2)*Sum vaughanThird(n,1,1)^2 <= c2 * C * Q^4 * log^2 Q,
-
-比值 ~ Q/log^2 Q -> oo, 无常数 C 可吸收。经典 Bombieri--Davenport q <= Q 特征大筛
-(Montgomery 1971 Ch.1 Thm 5.1; Davenport Ch.27) 只对**原特征**成立; 全体特征版本
-需要单独处理主特征质量 (对 vaughanThird 的双线性结构在 u,v 大时成立 —— type II
-的真正解析内容), 对 u=v=1 的 Lambda - log 结构失败。
-
-本文件形式化 (全部真证明, 零 sorry):
-  (1) vaughanThird(n,1,1) = Lambda(n) - log n;
-  (2) 反例的初等分解: 窗口倍数计数 (card_multiples_Ioc), 互素计数
-      (coprime_count_Ioc), 主特征平方和 >= 平凡特征项 (panTypeIICharSqSum_ge_trivial),
-      vaughanThird L2 界 (v3_one_one_sq_sum_le), 主特征质量下界
-      (vCharAbs_lower);
-  (3) 反例装配路线 (LHS/RHS 界 + 最终矛盾) 在 §6 文档化: 剩余为初等计数与
-      Q/log^2 Q 无界性, 全部解析内容 (主特征质量下界、L2 界、平凡特征支配) 已证明。
-
-注意: mathlib 有完整 Dirichlet 特征理论 (conductor/IsPrimitive/gaussSum,
-Mathlib.NumberTheory.DirichletCharacter.*) —— 那是对**修正后**的原特征版本的
-基础设施; 对当前陈述本身, 主特征反例使其不可证。
--/
-
 import AnalyticNumberTheory.Sieve.PanMeanValueBody
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.Tactic
+
+/-!
+# Auxiliary estimates for the all-character Type II audit
+
+This module proves elementary identities and bounds used to examine the
+all-character predicate `panTypeIICharSquareMeanBound` at `u = v = 1`:
+the identity `vaughanThird(n,1,1) = Lambda(n) - log n`, interval and coprime
+counts, domination by the principal character, an L2 upper bound, and a lower
+bound for the principal-character mass.
+
+Section 6 records a proposed counterexample assembly at `m = Q^2`, with its
+remaining counting and growth arguments stated in prose. The declarations
+in this module establish the individual auxiliary bounds listed above.
+
+For the primitive-character large sieve, see Montgomery (1971), Chapter 1,
+Theorem 5.1, and Davenport, Chapter 27. Mathlib's Dirichlet-character library
+supplies conductor, primitivity and Gauss-sum infrastructure.
+-/
 
 namespace AnalyticNumberTheory.Sieve
 

@@ -1,4 +1,44 @@
-# Release notes: v1.0.0
+# Release notes
+
+## Li–Liu 1+1.9
+
+The project now formalizes Li–Liu's 1+1.9 theorem alongside the existing Chen
+1+2 development. Every sufficiently large even natural number has a
+representation `N = p + r*q`, with `p` and `q` prime, `r = 1` or prime, and
+`r^10 ≤ q^9`. A second endpoint gives the equivalent real-power formulation.
+
+The quantitative result counts distinct eligible primes `p` and proves
+
+```text
+(1/2500) * (liuSingularSeries(N) * N / log(N)^2) < D19(N)
+```
+
+for all sufficiently large even `N`. The coefficient `1/2500` is exactly
+`0.0004`. For each fixed real `κ < 515093/800000000`, a further endpoint gives
+the eventual non-strict lower bound with coefficient `κ`; its threshold is
+chosen after `κ`. [THEOREMS.md](THEOREMS.md) defines the count and the exact
+Liu singular-series normalization.
+
+### Imports and existing builds
+
+`Goldbach` retains the 1+2 entry and public names. Import
+`Goldbach.OnePlusOneNine` for the four new Li–Liu endpoints, or `Goldbach.All`
+for both developments. The package configuration, toolchain and dependency
+pins stay fixed. Keep `.lake/` when updating an existing build; Lake can reuse
+unchanged dependencies and rebuild the new or affected modules. Use
+`lake build Goldbach.Theorem`, `lake build Goldbach.OnePlusOneNine`, or
+`lake build Goldbach.All` for the selected public target, and `lake build`
+for the full project. The [README](../README.md#focused-builds-and-upgrading-an-existing-checkout)
+gives the branch-update commands.
+
+The [verification guide](VERIFICATION.md) separates full source checking,
+the separate Chen and Li–Liu acceptance probes, and endpoint inspection. The existing 1+2
+verification records retain their original theorem and revision scope.
+
+## Historical release: v1.0.0
+
+The remainder of this page records the **1+2** release, including its source
+counts, proof-path changes and measured clean builds.
 
 Compared with **v1.0.0-rc1**, commit
 `976e60343f5cc50b2f5b2b980de21124e5afc662`.
@@ -32,7 +72,8 @@ metadata, the proof source is 221,389 lines, a reduction of 11,893 lines (5.10%)
 The total above includes this metadata. Counts compare complete source trees
 using one scanner; string literals contribute 33 lines in each tree.
 
-Reproduce the current count with `python3 scripts/check.py --static-only --count-lines`.
+Reproduce the v1.0.0 count from that source revision with
+`python3 scripts/check.py --static-only --count-lines`.
 The same `count_code_lines` function applied to the Git blobs of `v1.0.0-rc1`
 reproduces 233,282. Both totals use the same Lean-only counting scope.
 
