@@ -97,21 +97,9 @@ theorem goldbachS1_beta_lowerDensity
   have hK : 2 ≤ K := le_max_left _ _
   have hlocal : ∀ (N : ℕ) (hEven : Even N) (ε z : ℝ),
       HasDimensionOneLocalProductBound (goldbachS1BoundingSieve N hEven ε z) K := by
-    intro N hEven ε z z₁ z₂ hz₁ hz₁₂
-    have hbase := hlocal₀ N hEven ε z z₁ z₂ hz₁ hz₁₂
-    have hlog₁ : 0 < Real.log z₁ := Real.log_pos (by linarith)
-    have hlog₂ : 0 ≤ Real.log z₂ := Real.log_nonneg (by linarith)
-    have hratio : 0 ≤ Real.log z₂ / Real.log z₁ := div_nonneg hlog₂ hlog₁.le
-    calc
-      _ ≤ Real.log z₂ / Real.log z₁ * (1 + K₀ / Real.log z₁) := hbase
-      _ ≤ Real.log z₂ / Real.log z₁ * (1 + K / Real.log z₁) := by
-          have hK₀K : K₀ ≤ K := by
-            dsimp [K]
-            exact le_max_right (2 : ℝ) K₀
-          have hdiv : K₀ / Real.log z₁ ≤ K / Real.log z₁ :=
-            div_le_div_of_nonneg_right hK₀K hlog₁.le
-          apply mul_le_mul_of_nonneg_left _ hratio
-          linarith
+    intro N hEven ε z
+    exact MathlibNt.SieveTheory.hasDimensionOneLocalProductBound_mono_K
+      (hlocal₀ N hEven ε z) (le_max_right 2 K₀)
   obtain ⟨Dσ, _hDσ, hσgate⟩ :=
     exists_sourceSigma_fixed_lower_threshold (16 : ℝ) s (by norm_num)
   obtain ⟨Nσ, hNσ, hNσlarge⟩ :=

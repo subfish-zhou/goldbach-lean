@@ -161,24 +161,14 @@ noncomputable def goldbachB6 (A : Finset ℕ) (N : ℕ) (z y : ℝ) : ℤ :=
 theorem goldbachR_nonneg (A : Finset ℕ) (N : ℕ) (z y : ℝ) :
     0 ≤ goldbachR A N z y := by
   unfold goldbachR
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  exact literalH_nonneg A (N * r) (r * s * t) s
+  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
+    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
 theorem goldbachB6_nonneg (A : Finset ℕ) (N : ℕ) (z y : ℝ) :
     0 ≤ goldbachB6 A N z y := by
   unfold goldbachB6
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  exact literalH_nonneg A (N * r) (r * s * t) s
+  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
+    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
 private theorem goldbachStrictMiddleEndpoint_empty
     (N t : ℕ) :

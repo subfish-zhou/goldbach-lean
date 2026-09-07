@@ -35,11 +35,9 @@ private theorem literalH_le_dvdFiberCard
     (A : Finset ℕ) (M d : ℕ) (x : ℝ) :
     literalH A M d x ≤ ((A.filter fun n => d ∣ n).card : ℤ) := by
   unfold literalH
-  have hsubset : A.filter (literalHPoint M d x) ⊆ A.filter (fun n => d ∣ n) := by
-    intro n hn
-    rcases Finset.mem_filter.mp hn with ⟨hnA, hpoint⟩
-    exact Finset.mem_filter.mpr ⟨hnA, hpoint.1⟩
-  exact_mod_cast Finset.card_le_card hsubset
+  exact_mod_cast Finset.card_le_card
+    (Finset.monotone_filter_right A (p := literalHPoint M d x)
+      (q := fun n => d ∣ n) (fun _ _ hn => hn.1))
 
 private theorem mem_goldbachRepeatShapes_iff {N : ℕ} {z y : ℝ} {a : RepeatTriple} :
     a ∈ goldbachRepeatShapes N z y ↔

@@ -8,6 +8,11 @@ noncomputable section
 namespace G67CenteredEnvelope
 set_option maxHeartbeats 4000000
 
+/-- Positivity certificates shared by the centered logarithmic bounds. -/
+theorem g67CenteredEnvelope_constants_pos :
+    0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < center := by
+  norm_num [a, b, c, center]
+
 theorem shifted_error {t s : ℝ} (h : s-t ∈ Icc a c) :
     |shiftedLogPolynomial t s - Real.log ((s-t)/center)| ≤ 1/10000000 := by
   have hx : (s-t)/center-1 ∈ Icc (-3/5 : ℝ) (3/5) := by
@@ -36,9 +41,7 @@ theorem profile_error {s : ℝ} (hs : s ∈ Icc (2*a) cutoff) :
 theorem log_product_center {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
     Real.log (x*y/(a*b)) = Real.log (center^2/(a*b)) +
       Real.log (x/center)+Real.log (y/center) := by
-  have ha : 0 < a := by norm_num [a]
-  have hb : 0 < b := by norm_num [b]
-  have hc : 0 < center := by norm_num [center,a,c]
+  obtain ⟨ha, hb, _, hc⟩ := g67CenteredEnvelope_constants_pos
   simp (disch := positivity) only [Real.log_div, Real.log_mul, Real.log_pow]
   ring
 
@@ -53,10 +56,7 @@ theorem squareEarly_bounds {s : ℝ} (hs : s ∈ Icc (2*a) (a+b)) :
     constructor <;> linarith [hs.1,hs.2]
   have pa : 0 < s-a := lt_of_lt_of_le (by norm_num [a]) ha.1
   have ea := shifted_error ha
-  have apos : 0 < a := by norm_num [a]
-  have bpos : 0 < b := by norm_num [b]
-  have cpos : 0 < c := by norm_num [c]
-  have mpos : 0 < center := by norm_num [center,a,c]
+  obtain ⟨apos, bpos, cpos, mpos⟩ := g67CenteredEnvelope_constants_pos
   have e0 := (constant_log_error (show (center/a : ℝ) ∈ Icc 1 4 by norm_num [center,a,b,c])).1
   have he : Real.log (squareEarlyArgument s) = 2*Real.log (center/a)+2*Real.log ((s-a)/center) := by
     unfold squareEarlyArgument
@@ -89,10 +89,7 @@ theorem squareLate_bounds {s : ℝ} (hs : s ∈ Icc (a+b) (2*b)) :
     constructor <;> linarith [hs.1,hs.2]
   have pb : 0 < s-b := lt_of_lt_of_le (by norm_num [a]) hb.1
   have eb := shifted_error hb
-  have apos : 0 < a := by norm_num [a]
-  have bpos : 0 < b := by norm_num [b]
-  have cpos : 0 < c := by norm_num [c]
-  have mpos : 0 < center := by norm_num [center,a,c]
+  obtain ⟨apos, bpos, cpos, mpos⟩ := g67CenteredEnvelope_constants_pos
   have e0 := (constant_log_error (show (2*b/center : ℝ) ∈ Icc 1 4 by norm_num [center,a,b,c])).1
   have e1 := (constant_log_error (show (2 : ℝ) ∈ Icc 1 4 by norm_num [center,a,b,c])).2
   have he : Real.log (squareLateArgument s) = 2*(Real.log (2*b/center)-Real.log 2)-2*Real.log ((s-b)/center) := by
@@ -131,10 +128,7 @@ theorem rectangleEarly_bounds {s : ℝ} (hs : s ∈ Icc (a+b) (2*b)) :
     constructor <;> linarith [hs.1,hs.2]
   have pb : 0 < s-b := lt_of_lt_of_le (by norm_num [a]) hb.1
   have eb := shifted_error hb
-  have apos : 0 < a := by norm_num [a]
-  have bpos : 0 < b := by norm_num [b]
-  have cpos : 0 < c := by norm_num [c]
-  have mpos : 0 < center := by norm_num [center,a,c]
+  obtain ⟨apos, bpos, cpos, mpos⟩ := g67CenteredEnvelope_constants_pos
   have e0 := (constant_log_error (show (center^2/(a*b) : ℝ) ∈ Icc 1 4 by norm_num [center,a,b,c])).1
   have he : Real.log (rectangleEarlyArgument s) = Real.log (center^2/(a*b))+Real.log ((s-b)/center)+Real.log ((s-a)/center) := by
     unfold rectangleEarlyArgument
@@ -172,10 +166,7 @@ theorem rectangleMiddle_bounds {s : ℝ} (hs : s ∈ Icc (2*b) (a+c)) :
     constructor <;> linarith [hs.1,hs.2]
   have pb : 0 < s-b := lt_of_lt_of_le (by norm_num [a]) hb.1
   have eb := shifted_error hb
-  have apos : 0 < a := by norm_num [a]
-  have bpos : 0 < b := by norm_num [b]
-  have cpos : 0 < c := by norm_num [c]
-  have mpos : 0 < center := by norm_num [center,a,c]
+  obtain ⟨apos, bpos, cpos, mpos⟩ := g67CenteredEnvelope_constants_pos
   have e0 := (constant_log_error (show (b/a : ℝ) ∈ Icc 1 4 by norm_num [center,a,b,c])).1
   have he : Real.log (rectangleMiddleArgument s) = Real.log (b/a)+Real.log ((s-a)/center)-Real.log ((s-b)/center) := by
     unfold rectangleMiddleArgument
@@ -213,10 +204,7 @@ theorem rectangleLate_bounds {s : ℝ} (hs : s ∈ Icc (a+c) (cutoff)) :
     constructor <;> linarith [hs.1,hs.2]
   have pc : 0 < s-c := lt_of_lt_of_le (by norm_num [a]) hc.1
   have ec := shifted_error hc
-  have apos : 0 < a := by norm_num [a]
-  have bpos : 0 < b := by norm_num [b]
-  have cpos : 0 < c := by norm_num [c]
-  have mpos : 0 < center := by norm_num [center,a,c]
+  obtain ⟨apos, bpos, cpos, mpos⟩ := g67CenteredEnvelope_constants_pos
   have e0 := (constant_log_error (show (b*c/center^2 : ℝ) ∈ Icc 1 4 by norm_num [center,a,b,c])).1
   have he : Real.log (rectangleLateArgument s) = Real.log (b*c/center^2)-Real.log ((s-c)/center)-Real.log ((s-b)/center) := by
     unfold rectangleLateArgument

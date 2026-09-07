@@ -18,29 +18,20 @@ private theorem literalH_le_dvdFiberCard_budget
     (A : Finset ℕ) (M d : ℕ) (x : ℝ) :
     literalH A M d x ≤ ((A.filter fun n => d ∣ n).card : ℤ) := by
   unfold literalH
-  have hsubset : A.filter (literalHPoint M d x) ⊆ A.filter (fun n => d ∣ n) := by
-    intro n hn
-    rcases Finset.mem_filter.mp hn with ⟨hnA, hpoint⟩
-    exact Finset.mem_filter.mpr ⟨hnA, hpoint.1⟩
-  exact_mod_cast Finset.card_le_card hsubset
+  exact_mod_cast Finset.card_le_card
+    (Finset.monotone_filter_right A (p := literalHPoint M d x)
+      (q := fun n => d ∣ n) (fun _ _ hn => hn.1))
 
 private theorem literalH_eq_zero_of_large_divisor_budget
     (A : Finset ℕ) (M d N : ℕ) (x : ℝ)
     (hA : ∀ n ∈ A, 1 ≤ n ∧ n < N) (hNd : N < d) :
     literalH A M d x = 0 := by
   unfold literalH
-  have hempty : A.filter (literalHPoint M d x) = ∅ := by
-    ext n
-    constructor
-    · intro hn
-      exfalso
-      rcases Finset.mem_filter.mp hn with ⟨hnA, hpoint⟩
-      rcases hA n hnA with ⟨hn1, hnN⟩
-      have hdn : d ≤ n := Nat.le_of_dvd (lt_of_lt_of_le Nat.zero_lt_one hn1) hpoint.1
-      omega
-    · intro hn
-      cases hn
-  simp [hempty]
+  have hempty : A.filter (literalHPoint M d x) = ∅ :=
+    Finset.filter_eq_empty_iff.mpr fun n hn hp =>
+      (not_le_of_gt (hA n hn).2)
+        (hNd.le.trans (Nat.le_of_dvd (lt_of_lt_of_le Nat.zero_lt_one (hA n hn).1) hp.1))
+  simp only [hempty, Finset.card_empty, Nat.cast_zero]
 
 private theorem left_dvd_of_pair_dvd_budget
     {a b n : ℕ}

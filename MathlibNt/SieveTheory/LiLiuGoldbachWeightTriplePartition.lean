@@ -37,25 +37,15 @@ theorem goldbachWeightLowMiddle_nonneg
     (A : Finset ℕ) (N : ℕ) (z b y : ℝ) :
     0 ≤ goldbachWeightLowMiddle A N z b y := by
   unfold goldbachWeightLowMiddle
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  exact literalH_nonneg A (N * r) (r * s * t) s
+  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
+    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
 theorem goldbachWeightUpperMiddle_nonneg
     (A : Finset ℕ) (N : ℕ) (z b y : ℝ) :
     0 ≤ goldbachWeightUpperMiddle A N z b y := by
   unfold goldbachWeightUpperMiddle
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  exact literalH_nonneg A (N * r) (r * s * t) s
+  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
+    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
 private theorem goldbachWeightTriplePartition_closedPrimes_eq_filter_ge
     (N : ℕ) (z y : ℝ) {r : ℕ}

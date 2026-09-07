@@ -60,16 +60,8 @@ theorem exists_goldbachComposite_dimensionOne_constant :
       HasDimensionOneLocalProductBound (goldbachS3BoundingSieve N hEven ε z m) K := by
   obtain ⟨K₀, _, hlocal₀⟩ := PairDensity_local_base
   refine ⟨max 2 K₀, le_max_left _ _, ?_⟩
-  intro N hEven ε z m z₁ z₂ hz₁ hz₁₂
-  have hbase := hlocal₀ N hEven ε z m z₁ z₂ hz₁ hz₁₂
-  have hlog₁ : 0 < Real.log z₁ := Real.log_pos (by linarith)
-  have hlog₂ : 0 ≤ Real.log z₂ := Real.log_nonneg (by linarith)
-  have hratio : 0 ≤ Real.log z₂ / Real.log z₁ := div_nonneg hlog₂ hlog₁.le
-  calc
-    _ ≤ Real.log z₂ / Real.log z₁ * (1 + K₀ / Real.log z₁) := hbase
-    _ ≤ Real.log z₂ / Real.log z₁ * (1 + max 2 K₀ / Real.log z₁) := by
-      have hd := div_le_div_of_nonneg_right (le_max_right (2 : ℝ) K₀) hlog₁.le
-      apply mul_le_mul_of_nonneg_left _ hratio
-      linarith
+  intro N hEven ε z m
+  exact MathlibNt.SieveTheory.hasDimensionOneLocalProductBound_mono_K
+    (hlocal₀ N hEven ε z m) (le_max_right 2 K₀)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

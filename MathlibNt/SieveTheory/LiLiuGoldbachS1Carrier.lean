@@ -54,19 +54,7 @@ theorem goldbachS1ProdPrimes_ne_zero (N : ℕ) (z : ℝ) :
 
 private theorem S1Carrier_primeFactors_prod_eq_self {S : Finset ℕ}
     (hS : ∀ p ∈ S, p.Prime) : (S.prod id).primeFactors = S := by
-  induction S using Finset.induction_on with
-  | empty =>
-      simp [Nat.primeFactors_one]
-  | insert p S hpS ih =>
-      rw [Finset.prod_insert hpS]
-      show (p * S.prod id).primeFactors = insert p S
-      have hpPrime := hS p (Finset.mem_insert_self _ _)
-      have hp0 : p ≠ 0 := hpPrime.ne_zero
-      have hS0 : S.prod id ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        (hS q (Finset.mem_insert_of_mem hq)).pos
-      rw [Nat.primeFactors_mul hp0 hS0, Nat.Prime.primeFactors hpPrime,
-        ih (fun q hq => hS q (Finset.mem_insert_of_mem hq))]
-      rfl
+  exact MathlibNt.SieveTheory.LiuWeight.primeFactors_prod_eq_self_paperQ hS
 
 theorem goldbachS1ProdPrimes_primeFactors (N : ℕ) (z : ℝ) :
     (goldbachS1ProdPrimes N z).primeFactors = goldbachS1SiftingPrimes N z := by

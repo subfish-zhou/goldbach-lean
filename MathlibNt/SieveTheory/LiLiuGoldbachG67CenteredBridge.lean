@@ -27,9 +27,7 @@ theorem squareEarly_integral_loss :
       have ps : 0 < s := by
         norm_num [a,b,c,cutoff] at hs ⊢
         linarith [hs.1]
-      have apos : 0 < a := by norm_num [a]
-      have bpos : 0 < b := by norm_num [b]
-      have cpos : 0 < c := by norm_num [c]
+      obtain ⟨apos, bpos, cpos, _⟩ := g67CenteredEnvelope_constants_pos
       apply ContinuousAt.continuousWithinAt
       unfold squareEarlyArgument
       fun_prop (disch := positivity)
@@ -57,9 +55,7 @@ theorem squareLate_integral_loss :
       have ps : 0 < s := by
         norm_num [a,b,c,cutoff] at hs ⊢
         linarith [hs.1]
-      have apos : 0 < a := by norm_num [a]
-      have bpos : 0 < b := by norm_num [b]
-      have cpos : 0 < c := by norm_num [c]
+      obtain ⟨apos, bpos, cpos, _⟩ := g67CenteredEnvelope_constants_pos
       apply ContinuousAt.continuousWithinAt
       unfold squareLateArgument
       fun_prop (disch := positivity)
@@ -90,9 +86,7 @@ theorem rectangleEarly_integral_loss :
       have ps : 0 < s := by
         norm_num [a,b,c,cutoff] at hs ⊢
         linarith [hs.1]
-      have apos : 0 < a := by norm_num [a]
-      have bpos : 0 < b := by norm_num [b]
-      have cpos : 0 < c := by norm_num [c]
+      obtain ⟨apos, bpos, cpos, _⟩ := g67CenteredEnvelope_constants_pos
       apply ContinuousAt.continuousWithinAt
       unfold rectangleEarlyArgument
       fun_prop (disch := positivity)
@@ -123,9 +117,7 @@ theorem rectangleMiddle_integral_loss :
       have ps : 0 < s := by
         norm_num [a,b,c,cutoff] at hs ⊢
         linarith [hs.1]
-      have apos : 0 < a := by norm_num [a]
-      have bpos : 0 < b := by norm_num [b]
-      have cpos : 0 < c := by norm_num [c]
+      obtain ⟨apos, bpos, cpos, _⟩ := g67CenteredEnvelope_constants_pos
       apply ContinuousAt.continuousWithinAt
       unfold rectangleMiddleArgument
       fun_prop (disch := positivity)
@@ -156,9 +148,7 @@ theorem rectangleLate_integral_loss :
       have ps : 0 < s := by
         norm_num [a,b,c,cutoff] at hs ⊢
         linarith [hs.1]
-      have apos : 0 < a := by norm_num [a]
-      have bpos : 0 < b := by norm_num [b]
-      have cpos : 0 < c := by norm_num [c]
+      obtain ⟨apos, bpos, cpos, _⟩ := g67CenteredEnvelope_constants_pos
       apply ContinuousAt.continuousWithinAt
       unfold rectangleLateArgument
       fun_prop (disch := positivity)
