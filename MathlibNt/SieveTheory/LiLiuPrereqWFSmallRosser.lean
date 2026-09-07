@@ -261,53 +261,14 @@ theorem sum_powerset_insert_pairs (f : Finset ℕ → ℝ)
     {q : ℕ} {T : Finset ℕ} (hqT : q ∉ T) :
     ∑ s ∈ (insert q T).powerset, f s =
       ∑ s ∈ T.powerset, (f s + f (insert q s)) := by
-  have hdis : Disjoint T.powerset (T.powerset.image (insert q)) := by
-    rw [Finset.disjoint_left]
-    intro s hs hsi
-    have hqnot : q ∉ s := fun hqs => hqT (Finset.mem_powerset.mp hs hqs)
-    obtain ⟨u, _, rfl⟩ := Finset.mem_image.mp hsi
-    exact hqnot (Finset.mem_insert_self q u)
-  have hinj : Set.InjOn (insert q) (↑T.powerset : Set (Finset ℕ)) := by
-    intro s hs u hu hsu
-    have hqs : q ∉ s := fun h => hqT (Finset.mem_powerset.mp hs h)
-    have hqu : q ∉ u := fun h => hqT (Finset.mem_powerset.mp hu h)
-    have heq := congrArg (fun v : Finset ℕ => v.erase q) hsu
-    simpa [Finset.erase_insert, hqs, hqu] using heq
-  rw [Finset.powerset_insert, Finset.sum_union hdis,
-    Finset.sum_image hinj, ← Finset.sum_add_distrib]
+  rw [Finset.sum_powerset_insert hqT, ← Finset.sum_add_distrib]
 
 theorem sum_divisors_eq_sum_powerset {n : ℕ}
     (hn : Squarefree n) (f : ℕ → ℝ) :
     ∑ d ∈ n.divisors, f d = ∑ s ∈ n.primeFactors.powerset, f (s.prod id) := by
-  refine Finset.sum_bij (fun d _ => d.primeFactors) ?_ ?_ ?_ ?_
-  · intro d hd
-    rw [Finset.mem_powerset]
-    exact Nat.primeFactors_mono (Nat.mem_divisors.mp hd).1 hn.ne_zero
-  · intro d₁ hd₁ d₂ hd₂ heq
-    have hs₁ : Squarefree d₁ :=
-      Squarefree.squarefree_of_dvd (Nat.mem_divisors.mp hd₁).1 hn
-    have hs₂ : Squarefree d₂ :=
-      Squarefree.squarefree_of_dvd (Nat.mem_divisors.mp hd₂).1 hn
-    calc
-      d₁ = d₁.primeFactors.prod id := by
-        simpa only [id_eq] using (Nat.prod_primeFactors_of_squarefree hs₁).symm
-      _ = d₂.primeFactors.prod id := by rw [heq]
-      _ = d₂ := by
-        simpa only [id_eq] using Nat.prod_primeFactors_of_squarefree hs₂
-  · intro s hs
-    have hsub : s ⊆ n.primeFactors := Finset.mem_powerset.mp hs
-    have hprime : ∀ p ∈ s, p.Prime := fun p hp =>
-      Nat.prime_of_mem_primeFactors (hsub hp)
-    refine ⟨s.prod id, ?_, Nat.primeFactors_prod hprime⟩
-    rw [Nat.mem_divisors]
-    refine ⟨?_, hn.ne_zero⟩
-    rw [← Nat.prod_primeFactors_of_squarefree hn]
-    simpa only [id_eq] using
-      Finset.prod_dvd_prod_of_subset s n.primeFactors id hsub
-  · intro d hd
-    have hsd : Squarefree d := Squarefree.squarefree_of_dvd (Nat.mem_divisors.mp hd).1 hn
-    congr 1
-    simpa only [id_eq] using (Nat.prod_primeFactors_of_squarefree hsd).symm
+  simpa only [Nat.divisors_filter_squarefree_of_squarefree hn, Nat.factors_eq,
+    List.toFinset_coe, Nat.toFinset_factors, Finset.prod_val] using
+    (Nat.sum_divisors_filter_squarefree (f := f) hn.ne_zero)
 
 theorem lowerWeight_prod_eq_setWeight {M : ℕ} {L : ℝ}
     (hM : Squarefree M) {s : Finset ℕ} (hsub : s ⊆ M.primeFactors) :

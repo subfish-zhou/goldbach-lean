@@ -61,25 +61,13 @@ private theorem S1SieveProductLower_liuCorrectionTruncated_eq_smallFactors
       (N.primeFactors.filter (fun p => 2 < p ∧ p < Z)).prod
         SingularSeries.liuCorrectionFactor := by
   classical
-  have hrange : Finset.range (Z - 1 + 1) = Finset.range Z := by
-    rw [Nat.sub_add_cancel hZ]
   unfold SingularSeries.liuCorrectionTruncated
-  rw [hrange, ← Finset.prod_filter]
+  rw [Nat.sub_add_cancel hZ, ← Finset.prod_filter]
   congr 1
   ext p
-  constructor
-  · intro hp
-    rw [Finset.mem_filter] at hp
-    rcases hp with ⟨hpbase, hpdvd⟩
-    rw [Finset.mem_filter, Finset.mem_range] at hpbase
-    rcases hpbase with ⟨hpZ, hpPrime, hp2⟩
-    rw [Finset.mem_filter, Nat.mem_primeFactors]
-    exact ⟨⟨hpPrime, hpdvd, hN.ne'⟩, hp2, hpZ⟩
-  · intro hp
-    rw [Finset.mem_filter, Nat.mem_primeFactors] at hp
-    rcases hp with ⟨⟨hpPrime, hpdvd, _⟩, hp2, hpZ⟩
-    rw [Finset.mem_filter, Finset.mem_filter, Finset.mem_range]
-    exact ⟨⟨hpZ, hpPrime, hp2⟩, hpdvd⟩
+  simp only [Finset.mem_filter, Finset.mem_range,
+    Nat.mem_primeFactors_of_ne_zero hN.ne']
+  tauto
 
 private theorem S1SieveProductLower_liuCorrection_eq_truncated_mul_omitted
     {N Z : ℕ} (hN : 0 < N) (hZ : 1 ≤ Z) :
@@ -87,32 +75,12 @@ private theorem S1SieveProductLower_liuCorrection_eq_truncated_mul_omitted
       SingularSeries.liuCorrectionTruncated N (Z - 1) *
         S1SieveProductLowerOmittedCorrection N Z := by
   classical
-  let A := N.primeFactors.filter (fun p => 2 < p)
-  have hsplit := Finset.prod_filter_mul_prod_filter_not A
-    (fun p => p < Z) SingularSeries.liuCorrectionFactor
-  have hsmallSet :
-      ((N.primeFactors.filter fun p => 2 < p).filter fun p => p < Z) =
-        N.primeFactors.filter (fun p => 2 < p ∧ p < Z) := by
-    ext p
-    simp [and_assoc]
-  have hlargeSet :
-      ((N.primeFactors.filter fun p => 2 < p).filter fun p => ¬ p < Z) =
-        S1SieveProductLowerOmittedPrimes N Z := by
-    ext p
-    simp [S1SieveProductLowerOmittedPrimes, not_lt, and_assoc]
   rw [S1SieveProductLower_liuCorrectionTruncated_eq_smallFactors hN hZ,
     SingularSeries.liuCorrection, S1SieveProductLowerOmittedCorrection]
-  calc
-    (N.primeFactors.filter fun p => 2 < p).prod SingularSeries.liuCorrectionFactor =
-        ((N.primeFactors.filter fun p => 2 < p).filter fun p => p < Z).prod
-            SingularSeries.liuCorrectionFactor *
-          ((N.primeFactors.filter fun p => 2 < p).filter fun p => ¬ p < Z).prod
-            SingularSeries.liuCorrectionFactor := hsplit.symm
-    _ =
-        (N.primeFactors.filter (fun p => 2 < p ∧ p < Z)).prod
-            SingularSeries.liuCorrectionFactor *
-          (S1SieveProductLowerOmittedPrimes N Z).prod
-            SingularSeries.liuCorrectionFactor := by rw [hsmallSet, hlargeSet]
+  simpa only [Finset.filter_filter, not_lt, S1SieveProductLowerOmittedPrimes] using
+    (Finset.prod_filter_mul_prod_filter_not
+      (N.primeFactors.filter fun p => 2 < p)
+      (fun p => p < Z) SingularSeries.liuCorrectionFactor).symm
 
 private theorem S1SieveProductLower_omittedPrimeProduct_dvd
     (N Z : ℕ) :
@@ -126,17 +94,8 @@ private theorem S1SieveProductLower_pow_card_le_omittedPrimeProduct
     (N Z : ℕ) :
     Z ^ (S1SieveProductLowerOmittedPrimes N Z).card ≤
       (S1SieveProductLowerOmittedPrimes N Z).prod id := by
-  classical
-  calc
-    Z ^ (S1SieveProductLowerOmittedPrimes N Z).card =
-        (S1SieveProductLowerOmittedPrimes N Z).prod (fun _ => Z) := by
-          rw [← Finset.prod_const]
-    _ ≤ (S1SieveProductLowerOmittedPrimes N Z).prod id := by
-          apply Finset.prod_le_prod
-          · intro p hp
-            exact Nat.zero_le Z
-          · intro p hp
-            exact (Finset.mem_filter.mp hp).2.2
+  exact Finset.pow_card_le_prod _ id Z
+    (fun p hp => (Finset.mem_filter.mp hp).2.2)
 
 private theorem S1SieveProductLower_omittedPrimeCard_le_eighteen
     {N Z : ℕ} (hN : 0 < N) (hZ : 2 ≤ Z) (hNZ : N ≤ Z ^ 18) :

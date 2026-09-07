@@ -189,16 +189,9 @@ theorem goldbachBadPoint_nonneg (N n : ℕ) :
 private theorem head_le_of_mem_tail :
     ∀ {a : ℕ} {l : List ℕ},
       List.IsChain (· ≤ ·) (a :: l) → ∀ {x : ℕ}, x ∈ l → a ≤ x
-  | _, [], _, _, hx => by cases hx
-  | a, b :: l, hchain, x, hx => by
-      have hab : a ≤ b := by
-        have h := (List.isChain_cons.1 hchain).1
-        simpa using h b (by simp)
-      rw [List.mem_cons] at hx
-      rcases hx with rfl | hx
-      · exact hab
-      · exact le_trans hab (head_le_of_mem_tail (a := b) (l := l)
-          ((List.isChain_cons.1 hchain).2) hx)
+    := by
+  intro a l hchain x hx
+  exact List.IsChain.rel_cons hchain hx
 
 private theorem head_le_of_mem {a : ℕ} {l : List ℕ}
     (hchain : List.IsChain (· ≤ ·) (a :: l)) :
