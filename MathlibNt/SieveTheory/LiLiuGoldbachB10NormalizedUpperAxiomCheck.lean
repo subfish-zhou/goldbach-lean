@@ -1,0 +1,7 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachB10SiftedCount_normalized_upper
+
+#print axioms goldbachB10SiftedCount_normalized_upper

@@ -1,0 +1,93 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedTransport
+
+namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check GoldbachG11SwitchedBody
+#print axioms GoldbachG11SwitchedBody
+#check goldbachG11SwitchedBodyProd
+#print axioms goldbachG11SwitchedBodyProd
+#check goldbachG11SwitchedBodies
+#print axioms goldbachG11SwitchedBodies
+#check mem_goldbachG11SwitchedBodies_iff
+#print axioms mem_goldbachG11SwitchedBodies_iff
+#check goldbachG11SwitchedBodyProd_pos
+#print axioms goldbachG11SwitchedBodyProd_pos
+#check goldbachG11FirstPrimeFiber
+#print axioms goldbachG11FirstPrimeFiber
+#check mem_goldbachG11FirstPrimeFiber_iff
+#print axioms mem_goldbachG11FirstPrimeFiber_iff
+#check goldbachG11FirstPrimeFiber_interval_iff
+#print axioms goldbachG11FirstPrimeFiber_interval_iff
+#check goldbachG11FirstPrimeFiber_coprime_iff
+#print axioms goldbachG11FirstPrimeFiber_coprime_iff
+#check goldbachG11GoodSwitchedBodies
+#print axioms goldbachG11GoodSwitchedBodies
+#check mem_goldbachG11GoodSwitchedBodies_iff
+#print axioms mem_goldbachG11GoodSwitchedBodies_iff
+#check goldbachG11SwitchedTotal
+#print axioms goldbachG11SwitchedTotal
+#check goldbachG11GoodSwitchedTotal
+#print axioms goldbachG11GoodSwitchedTotal
+#check goldbachG11BadSwitchedTotal
+#print axioms goldbachG11BadSwitchedTotal
+#check goldbachG11SwitchedTotal_eq_good_add_bad
+#print axioms goldbachG11SwitchedTotal_eq_good_add_bad
+#check goldbachG11SwitchedTotal_sub_good_nonneg
+#print axioms goldbachG11SwitchedTotal_sub_good_nonneg
+
+#check goldbachG11SwitchedBodyOf
+#print axioms goldbachG11SwitchedBodyOf
+#check goldbachG11_switch_product
+#print axioms goldbachG11_switch_product
+#check goldbachG11_switch_cutoff_iff
+#print axioms goldbachG11_switch_cutoff_iff
+#check goldbachG11RoughPair_to_switched
+#print axioms goldbachG11RoughPair_to_switched
+#check goldbachG11Switched_to_roughPair
+#print axioms goldbachG11Switched_to_roughPair
+#check GoldbachG11RoughAtom
+#print axioms GoldbachG11RoughAtom
+#check GoldbachG11SwitchedAtom
+#print axioms GoldbachG11SwitchedAtom
+#check goldbachG11RoughFamily
+#print axioms goldbachG11RoughFamily
+#check goldbachG11SwitchedFamily
+#print axioms goldbachG11SwitchedFamily
+#check goldbachG11SwitchForward
+#print axioms goldbachG11SwitchForward
+#check goldbachG11SwitchBackward
+#print axioms goldbachG11SwitchBackward
+#check goldbachG11SwitchForward_mem
+#print axioms goldbachG11SwitchForward_mem
+#check goldbachG11SwitchBackward_mem
+#print axioms goldbachG11SwitchBackward_mem
+#check goldbachG11SwitchBackward_forward
+#print axioms goldbachG11SwitchBackward_forward
+#check goldbachG11SwitchForward_backward
+#print axioms goldbachG11SwitchForward_backward
+#check goldbachG11SwitchEquiv
+#print axioms goldbachG11SwitchEquiv
+#check goldbachG11Switch_card
+#print axioms goldbachG11Switch_card
+#check goldbachG11Switch_sum
+#print axioms goldbachG11Switch_sum
+#check goldbachG11RoughCount_sum_eq_switchedTotal
+#print axioms goldbachG11RoughCount_sum_eq_switchedTotal
+#check goldbachG11Switch_filter_count
+#print axioms goldbachG11Switch_filter_count
+#check goldbachG11BadRoughPair_mem_NException
+#print axioms goldbachG11BadRoughPair_mem_NException
+#check goldbachG11RoughPair_output_injective
+#print axioms goldbachG11RoughPair_output_injective
+#check goldbachG11BadRoughCount_le_NCount
+#print axioms goldbachG11BadRoughCount_le_NCount
+#check goldbachG11BadSwitchedTotal_le_NCount_sum
+#print axioms goldbachG11BadSwitchedTotal_le_NCount_sum
+#check goldbachG11SwitchedTotal_le_good_add_NCount
+#print axioms goldbachG11SwitchedTotal_le_good_add_NCount
+#check goldbachG11RoughTotal_eq_switchedTotal
+#print axioms goldbachG11RoughTotal_eq_switchedTotal
+#check goldbachG11RoughTotal_good_comparison
+#print axioms goldbachG11RoughTotal_good_comparison
+
+end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

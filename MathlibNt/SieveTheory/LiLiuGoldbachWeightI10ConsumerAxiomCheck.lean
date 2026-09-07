@@ -1,0 +1,7 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightI10Consumer
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachWeight_twelve_base_I10_consumed_eventually
+
+#print axioms goldbachWeight_twelve_base_I10_consumed_eventually

@@ -1,0 +1,11 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS2MainMassUpper
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachS2MainMassUpperSum
+#check goldbachS2MainMassUpper
+#check goldbachS2MainMassUpper_nine_nineteen_sub
+
+#print axioms goldbachS2MainMassUpperSum
+#print axioms goldbachS2MainMassUpper
+#print axioms goldbachS2MainMassUpper_nine_nineteen_sub

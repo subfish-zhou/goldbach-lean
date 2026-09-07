@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10ZeroPrefix
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB10ProductQFiber_subset_zeroPrefix
+#print axioms goldbachB10ProductQFiber_subset_zeroPrefix
+#check goldbachB10SiftedCount_le_zeroPrefix
+#print axioms goldbachB10SiftedCount_le_zeroPrefix

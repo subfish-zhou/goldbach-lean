@@ -1,0 +1,49 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachTwoBasic
+
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachDifferenceCarrier_bounds
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_two_basic_sieve_eventually
+#check MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_two_basic_sieve_eventually
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check SurvivesSieve
+#check literalHPoint
+#check literalH
+#check goldbachBadCount
+#check goldbachBadPoint
+#check goldbachS1
+#check goldbachS2Primes
+#check goldbachS2
+#check goldbachS4Pairs
+#check goldbachS4
+#check goldbachS1Point
+#check goldbachS2Point
+#check goldbachS4Point
+
+#check literalH_eq_sum_indicator
+#check goldbachBadCount_eq_sum_indicator
+#check goldbachS1_eq_sum_point
+#check survivesSieve_mono
+#check leastPrimeFactorAtLeast_mono
+#check goldbachBasicWeight_nonneg_of_le
+#check prime_not_dvd_of_coprime
+#check survivesSieve_iff_leastPrimeFactorAtLeast_of_coprime
+#check goldbachS1Point_eq_indicator_of_coprime
+#check goldbachS1Point_le_one
+#check goldbachS2Point_nonneg
+#check goldbachS4Point_nonneg
+#check goldbachBadPoint_nonneg
+#check goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
+#check goldbachS2_eq_sum_point
+#check goldbachS4_eq_sum_point
+#check goldbachBasicFiniteRHS_ge_S1_sub_S2_sub_S4_sub_X
+
+#print axioms literalH_eq_sum_indicator
+#print axioms goldbachBadCount_eq_sum_indicator
+#print axioms goldbachS1_eq_sum_point
+#print axioms goldbachBasicWeight_nonneg_of_le
+#print axioms survivesSieve_iff_leastPrimeFactorAtLeast_of_coprime
+#print axioms goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
+#print axioms goldbachS2_eq_sum_point
+#print axioms goldbachS4_eq_sum_point
+#print axioms goldbachBasicFiniteRHS_ge_S1_sub_S2_sub_S4_sub_X

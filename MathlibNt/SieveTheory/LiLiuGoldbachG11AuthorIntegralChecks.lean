@@ -1,0 +1,48 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralScalar
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check g11AuthorKernel
+#print axioms g11AuthorKernel
+#check g11AuthorPrimitive0
+#print axioms g11AuthorPrimitive0
+#check g11AuthorLog_hasDerivAt
+#print axioms g11AuthorLog_hasDerivAt
+#check g11AuthorPrimitive0_hasDerivAt
+#print axioms g11AuthorPrimitive0_hasDerivAt
+#check g11AuthorPrimitive1
+#print axioms g11AuthorPrimitive1
+#check g11AuthorPrimitiveN
+#print axioms g11AuthorPrimitiveN
+#check g11AuthorPrimitive1_hasDerivAt
+#print axioms g11AuthorPrimitive1_hasDerivAt
+#check g11AuthorPrimitiveN_hasDerivAt
+#print axioms g11AuthorPrimitiveN_hasDerivAt
+#check g11AuthorMajorant
+#print axioms g11AuthorMajorant
+#check g11AuthorMajorantPrimitive
+#print axioms g11AuthorMajorantPrimitive
+#check g11AuthorMajorantPrimitive_hasDerivAt
+#print axioms g11AuthorMajorantPrimitive_hasDerivAt
+#check g11AuthorMajorant_geometric
+#print axioms g11AuthorMajorant_geometric
+#check g11AuthorKernel_nonneg
+#print axioms g11AuthorKernel_nonneg
+#check g11AuthorKernel_continuousOn
+#print axioms g11AuthorKernel_continuousOn
+#check continuous_g11AuthorMajorant
+#print axioms continuous_g11AuthorMajorant
+#check g11AuthorMajorant_integral
+#print axioms g11AuthorMajorant_integral
+#check g11AuthorKernel_integral
+#print axioms g11AuthorKernel_integral
+#check goldbachG11PrimeIntegral_author_le_primitives
+#print axioms goldbachG11PrimeIntegral_author_le_primitives
+#check g11Author_log53_bounds
+#print axioms g11Author_log53_bounds
+#check g11Author_log40_bounds
+#print axioms g11Author_log40_bounds
+#check g11Author_primitives_scalar_bound
+#print axioms g11Author_primitives_scalar_bound
+#check goldbachG11PrimeIntegral_author_scalar_le_10191
+#print axioms goldbachG11PrimeIntegral_author_scalar_le_10191

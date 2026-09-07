@@ -1,0 +1,14 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachSmallEpsilon
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS2LogCoefficient
+#print axioms goldbachS2LogCoefficient
+#check goldbachWeightKnownCoefficient
+#print axioms goldbachWeightKnownCoefficient
+#check goldbachS2LogCoefficient_zero
+#print axioms goldbachS2LogCoefficient_zero
+#check goldbachWeightKnownCoefficient_zero
+#print axioms goldbachWeightKnownCoefficient_zero
+#check goldbachS2_g3_upper_small_epsilon
+#print axioms goldbachS2_g3_upper_small_epsilon
+#check goldbachWeight_remainingEight_small_epsilon
+#print axioms goldbachWeight_remainingEight_small_epsilon

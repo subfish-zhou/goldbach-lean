@@ -1,0 +1,8 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachBadCount_le_primeFactors
+#check goldbach_primeFactors_card_le_sqrt_add_one
+#check goldbachBadCount_twice_le_four_div
+#print axioms goldbachBadCount_le_primeFactors
+#print axioms goldbach_primeFactors_card_le_sqrt_add_one
+#print axioms goldbachBadCount_twice_le_four_div

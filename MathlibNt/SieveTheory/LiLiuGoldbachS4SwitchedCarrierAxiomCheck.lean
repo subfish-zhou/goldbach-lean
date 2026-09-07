@@ -1,0 +1,104 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check instDecidableGoldbachS4CarrierGeometry
+#print axioms instDecidableGoldbachS4CarrierGeometry
+#check instDecidableGoldbachS4SwitchedCarrier
+#print axioms instDecidableGoldbachS4SwitchedCarrier
+
+#check mem_goldbachS4Pairs_iff
+#print axioms mem_goldbachS4Pairs_iff
+#check goldbachC8Prod
+#print axioms goldbachC8Prod
+#check goldbachC8Prod_pos
+#print axioms goldbachC8Prod_pos
+#check goldbachS4Pair_power_geometry
+#print axioms goldbachS4Pair_power_geometry
+#check goldbachC8Prod_le_two_thirds
+#print axioms goldbachC8Prod_le_two_thirds
+#check goldbachC8Prod_support_bounds
+#print axioms goldbachC8Prod_support_bounds
+#check goldbachS4Cutoff_fourth_gt
+#print axioms goldbachS4Cutoff_fourth_gt
+#check goldbachC8Prod_injOn
+#print axioms goldbachC8Prod_injOn
+#check goldbachC8ProductSupport
+#print axioms goldbachC8ProductSupport
+#check goldbachC8ProductFiber
+#print axioms goldbachC8ProductFiber
+#check goldbachC8Coeff
+#print axioms goldbachC8Coeff
+#check goldbachC8Coeff_le_one
+#print axioms goldbachC8Coeff_le_one
+#check goldbachC8Coeff_pos_iff
+#print axioms goldbachC8Coeff_pos_iff
+#check goldbachC8ProductSupport_bounds
+#print axioms goldbachC8ProductSupport_bounds
+#check goldbachS4Pair_mem_largePrimeDivisors
+#print axioms goldbachS4Pair_mem_largePrimeDivisors
+#check goldbachS4Pair_dvdFiber_card_le_fourHundred
+#print axioms goldbachS4Pair_dvdFiber_card_le_fourHundred
+
+#check goldbachS4ActualAtoms
+#print axioms goldbachS4ActualAtoms
+#check mem_goldbachS4ActualAtoms_iff
+#print axioms mem_goldbachS4ActualAtoms_iff
+#check goldbachS4_eq_card_actualAtoms
+#print axioms goldbachS4_eq_card_actualAtoms
+#check goldbachS4BadAtoms
+#print axioms goldbachS4BadAtoms
+#check goldbachS4GoodAtoms
+#print axioms goldbachS4GoodAtoms
+#check goldbachS4Cofactor
+#print axioms goldbachS4Cofactor
+#check goldbachS4ActualAtom_factorization
+#print axioms goldbachS4ActualAtom_factorization
+#check goldbachS4Cofactor_two_le
+#print axioms goldbachS4Cofactor_two_le
+#check goldbachS4Cofactor_primeDivisor_ge
+#print axioms goldbachS4Cofactor_primeDivisor_ge
+#check goldbachS4Cofactor_prime
+#print axioms goldbachS4Cofactor_prime
+#check goldbachB8PlusAtoms
+#print axioms goldbachB8PlusAtoms
+#check mem_goldbachB8PlusAtoms_iff
+#print axioms mem_goldbachB8PlusAtoms_iff
+#check goldbachB8PlusOutput
+#print axioms goldbachB8PlusOutput
+#check goldbachB8PlusSiftedAtoms
+#print axioms goldbachB8PlusSiftedAtoms
+#check mem_goldbachB8PlusSiftedAtoms_iff
+#print axioms mem_goldbachB8PlusSiftedAtoms_iff
+#check goldbachB8PlusSiftedAtoms_eq_coprime_filter
+#print axioms goldbachB8PlusSiftedAtoms_eq_coprime_filter
+#check goldbachB8PlusPrimeAtoms
+#print axioms goldbachB8PlusPrimeAtoms
+#check goldbachB8PlusOutputFiber
+#print axioms goldbachB8PlusOutputFiber
+#check goldbachS4Switch
+#print axioms goldbachS4Switch
+#check goldbachS4Switch_output
+#print axioms goldbachS4Switch_output
+#check goldbachS4Switch_injOn
+#print axioms goldbachS4Switch_injOn
+#check goldbachS4Switch_mem_primeAtoms
+#print axioms goldbachS4Switch_mem_primeAtoms
+#check goldbachS4ActualAtoms_fiber_card_le_fourHundred
+#print axioms goldbachS4ActualAtoms_fiber_card_le_fourHundred
+#check goldbachS4BadAtoms_card_le
+#print axioms goldbachS4BadAtoms_card_le
+#check goldbachB8PlusOutputFiber_card_le_fourHundred
+#print axioms goldbachB8PlusOutputFiber_card_le_fourHundred
+#check goldbachB8Plus_low_card_le
+#print axioms goldbachB8Plus_low_card_le
+#check goldbachB8Plus_highPrime_subset_sifted
+#print axioms goldbachB8Plus_highPrime_subset_sifted
+#check goldbachB8PlusPrimeAtoms_card_le_sifted
+#print axioms goldbachB8PlusPrimeAtoms_card_le_sifted
+#check goldbachS4_le_sifted_B8Plus
+#print axioms goldbachS4_le_sifted_B8Plus
+#check exists_goldbachS4_switch_threshold
+#print axioms exists_goldbachS4_switch_threshold
+#check goldbachS4_eventually_le_sifted_B8Plus
+#print axioms goldbachS4_eventually_le_sifted_B8Plus

@@ -1,0 +1,4 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1PaidLower
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS1_levelSix_lower_paid
+#print axioms goldbachS1_levelSix_lower_paid

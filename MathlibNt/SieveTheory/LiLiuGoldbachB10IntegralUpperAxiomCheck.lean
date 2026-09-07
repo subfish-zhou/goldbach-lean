@@ -1,0 +1,10 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB10MainLogProductSum_eq_actualTriangleMass
+#print axioms goldbachB10MainLogProductSum_eq_actualTriangleMass
+#check goldbachB10I10_nonneg
+#print axioms goldbachB10I10_nonneg
+#check goldbachB10MainMass_le_I10_eventually
+#print axioms goldbachB10MainMass_le_I10_eventually
+#check goldbachB10SiftedCount_I10_upper
+#print axioms goldbachB10SiftedCount_I10_upper

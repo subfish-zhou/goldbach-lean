@@ -1,0 +1,21 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachStrictTriple
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check survivesSieve_mul_right_cutoff_prime_iff
+#check literalH_mul_right_cutoff_prime_eq
+#check goldbachDoubleDifference_fixed_pair
+#check goldbachVStrict
+#check goldbachV_eq_goldbachVStrict_add_goldbachQ
+#check goldbachUStrict_sub_goldbachVStrict_eq_goldbachWStrict
+#check goldbachDoubleDifference_eq_goldbachWStrict_sub_goldbachQ
+
+#print axioms survivesSieve_mul_right_cutoff_prime_iff
+#print axioms literalH_mul_right_cutoff_prime_eq
+#print axioms goldbachDoubleDifference_fixed_pair
+#print axioms goldbachV_eq_goldbachVStrict_add_goldbachQ
+#print axioms goldbachUStrict_sub_goldbachVStrict_eq_goldbachWStrict
+#print axioms goldbachDoubleDifference_eq_goldbachWStrict_sub_goldbachQ
+
+#check goldbach_strict_triple_lower_bound_eventually
+#print axioms goldbach_strict_triple_lower_bound_eventually

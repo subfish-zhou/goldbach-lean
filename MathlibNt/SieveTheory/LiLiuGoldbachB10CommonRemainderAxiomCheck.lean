@@ -1,0 +1,17 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10CommonRemainder
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachB10CommonRemainder
+#check goldbachB10MainWeight_sum_gateLoss_le_logCube
+#check goldbachB10MainWeight_sum_gateLoss_log_saving
+#check goldbachB10CommonRemainder_eq_panPrefixRemainder_sub_deletedMain
+#check abs_goldbachB10CommonRemainder_le
+#check goldbachB10CommonRemainder_log_saving
+
+#print axioms goldbachB10CommonRemainder
+#print axioms goldbachB10MainWeight_sum_gateLoss_le_logCube
+#print axioms goldbachB10MainWeight_sum_gateLoss_log_saving
+#print axioms goldbachB10CommonRemainder_eq_panPrefixRemainder_sub_deletedMain
+#print axioms abs_goldbachB10CommonRemainder_le
+#print axioms goldbachB10CommonRemainder_log_saving

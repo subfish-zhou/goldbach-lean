@@ -1,0 +1,27 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBounds
+
+set_option autoImplicit false
+
+#check LiLiuPrereqBuchstab.buchstab_bounds
+#check LiLiuPrereqBuchstab.one_half_le_buchstab
+#check LiLiuPrereqBuchstab.buchstab_le_one
+#check LiLiuPrereqBuchstab.buchstab_pos
+#check LiLiuPrereqBuchstab.buchstab_nonneg
+#check LiLiuPrereqBuchstab.buchstab_ne_zero
+#check LiLiuPrereqBuchstab.one_div_buchstab_bounds
+#check LiLiuPrereqBuchstab.buchstab_eq_log_div
+#check LiLiuPrereqBuchstab.hasDerivAt_buchstab
+#check LiLiuPrereqBuchstab.deriv_buchstab
+#check LiLiuPrereqBuchstab.abs_deriv_buchstab_le
+
+#print axioms LiLiuPrereqBuchstab.buchstab_bounds
+#print axioms LiLiuPrereqBuchstab.one_half_le_buchstab
+#print axioms LiLiuPrereqBuchstab.buchstab_le_one
+#print axioms LiLiuPrereqBuchstab.buchstab_pos
+#print axioms LiLiuPrereqBuchstab.buchstab_nonneg
+#print axioms LiLiuPrereqBuchstab.buchstab_ne_zero
+#print axioms LiLiuPrereqBuchstab.one_div_buchstab_bounds
+#print axioms LiLiuPrereqBuchstab.buchstab_eq_log_div
+#print axioms LiLiuPrereqBuchstab.hasDerivAt_buchstab
+#print axioms LiLiuPrereqBuchstab.deriv_buchstab
+#print axioms LiLiuPrereqBuchstab.abs_deriv_buchstab_le

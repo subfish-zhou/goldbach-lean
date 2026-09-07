@@ -1,0 +1,12 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10MainLogSum
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB10MainLogProductSum
+#print axioms goldbachB10MainLogProductSum
+#check goldbachB10MainLogProductSum_nonneg
+#print axioms goldbachB10MainLogProductSum_nonneg
+#check goldbachB10ContinuousMainMass_le_logProductSum
+#print axioms goldbachB10ContinuousMainMass_le_logProductSum
+#check goldbachB10MainMass_le_logProductSum
+#print axioms goldbachB10MainMass_le_logProductSum
+#check goldbachB10MainLogProductSum_eq_pair_sum
+#print axioms goldbachB10MainLogProductSum_eq_pair_sum

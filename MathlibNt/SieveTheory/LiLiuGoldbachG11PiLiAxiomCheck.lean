@@ -1,0 +1,45 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiCenter
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachG11PiLiHi
+#print axioms goldbachG11PiLiHi
+#check goldbachG11PiLiLo
+#print axioms goldbachG11PiLiLo
+#check goldbachG11PiLiEndpoints_bounds
+#print axioms goldbachG11PiLiEndpoints_bounds
+#check goldbachG11PiLiLi_normalization
+#print axioms goldbachG11PiLiLi_normalization
+#check goldbachG11PiLi_real_pnt
+#print axioms goldbachG11PiLi_real_pnt
+#check goldbachG11PiLiEndpointError
+#print axioms goldbachG11PiLiEndpointError
+#check goldbachG11PiLiEndpointError_eq_zero
+#print axioms goldbachG11PiLiEndpointError_eq_zero
+#check goldbachG11PiLiLo_one
+#print axioms goldbachG11PiLiLo_one
+#check goldbachG11PiLi_endpoint_pnt
+#print axioms goldbachG11PiLi_endpoint_pnt
+#check goldbachG11PiLiCenterMass
+#print axioms goldbachG11PiLiCenterMass
+#check goldbachG11PiLiCenterMass_zero
+#print axioms goldbachG11PiLiCenterMass_zero
+#check goldbachG11PiLiCenterMass_eps_one
+#print axioms goldbachG11PiLiCenterMass_eps_one
+#check goldbachG11PiLi_reciprocal_product_mass
+#print axioms goldbachG11PiLi_reciprocal_product_mass
+#check goldbachG11PiLi_center_mass_bound
+#print axioms goldbachG11PiLi_center_mass_bound
+#check goldbachG11PiLi_center_change
+#print axioms goldbachG11PiLi_center_change
+
+#check AnalyticNumberTheory.LargeSieve.PanPrincipal.primeCount_li_pnt
+#print axioms AnalyticNumberTheory.LargeSieve.PanPrincipal.primeCount_li_pnt
+#check AnalyticNumberTheory.LargeSieve.PanPrincipal.abs_li_sub_le_short
+#print axioms AnalyticNumberTheory.LargeSieve.PanPrincipal.abs_li_sub_le_short
+#check AnalyticNumberTheory.LargeSieve.PanCofactor.reciprocal_totient_mass_le_log_sq
+#print axioms AnalyticNumberTheory.LargeSieve.PanCofactor.reciprocal_totient_mass_le_log_sq
+#check goldbachG11EffectiveProductCoefficient_bounds
+#print axioms goldbachG11EffectiveProductCoefficient_bounds
+#check goldbachG11GoodSwitchedTotal_eq_effective_normalized_sum
+#print axioms goldbachG11GoodSwitchedTotal_eq_effective_normalized_sum

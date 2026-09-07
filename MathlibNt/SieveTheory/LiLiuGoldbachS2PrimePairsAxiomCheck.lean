@@ -1,0 +1,15 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS2PrimePairs
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachS2PrimePairs
+#check mem_goldbachS2PrimePairs_iff
+#check goldbachS2PrimePairs_point_le_one
+#check goldbachS2PrimePairs_bridge
+#check goldbachS2PrimePairs_bridge_eventually
+
+#print axioms goldbachS2PrimePairs
+#print axioms mem_goldbachS2PrimePairs_iff
+#print axioms goldbachS2PrimePairs_point_le_one
+#print axioms goldbachS2PrimePairs_bridge
+#print axioms goldbachS2PrimePairs_bridge_eventually

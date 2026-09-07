@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS1BoundingSieve_sieveProduct_eq
+#print axioms goldbachS1BoundingSieve_sieveProduct_eq
+#check goldbachS1_mainMass_mul_product_lower
+#print axioms goldbachS1_mainMass_mul_product_lower

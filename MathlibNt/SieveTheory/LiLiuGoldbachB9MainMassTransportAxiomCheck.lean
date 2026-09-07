@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB9MainMassTransport
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB9PairLogKernel
+#print axioms goldbachB9PairLogKernel
+#check goldbachB9PlusMainMass_le_pair_kernel
+#print axioms goldbachB9PlusMainMass_le_pair_kernel

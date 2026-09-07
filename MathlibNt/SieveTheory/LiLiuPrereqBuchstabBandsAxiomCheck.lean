@@ -1,0 +1,26 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBands
+
+#check LiLiuPrereqBuchstab.tendsto_buchstabRemainder
+#check LiLiuPrereqBuchstab.roughCount_buchstab_sqrt
+#check LiLiuPrereqBuchstab.roughCount_buchstab_band_error
+#check LiLiuPrereqBuchstab.roughCount_buchstab_band_100
+#print axioms LiLiuPrereqBuchstab.buchstabRemainder_nonneg
+#print axioms LiLiuPrereqBuchstab.tendsto_buchstabRemainder
+#print axioms LiLiuPrereqBuchstab.antitoneOn_buchstabRemainder
+#print axioms LiLiuPrereqBuchstab.buchstabRemainder_inv_log_le
+#print axioms LiLiuPrereqBuchstab.buchstabRemainder_envelope_le
+#print axioms LiLiuPrereqBuchstab.buchstabRemainder_log_sq_bound
+#print axioms LiLiuPrereqBuchstab.sievingPrimes_sqrt_eq_primesIco
+#print axioms LiLiuPrereqBuchstab.roughCount_buchstab_sqrt
+#print axioms LiLiuPrereqBuchstab.buchstabPrimeKernel_eq_subproblem
+#print axioms LiLiuPrereqBuchstab.sum_primesIco_inv_mul_log_le
+#print axioms LiLiuPrereqBuchstab.sum_primesIco_div_log_le
+#print axioms LiLiuPrereqBuchstab.roughCount_sqrt_error_le
+#print axioms LiLiuPrereqBuchstab.sum_buchstabRemainder_errors_le
+#print axioms LiLiuPrereqBuchstab.buchstab_subproblem_band
+#print axioms LiLiuPrereqBuchstab.log_ratio_le_of_le_pow
+#print axioms LiLiuPrereqBuchstab.buchstabBandConstant_ge
+#print axioms LiLiuPrereqBuchstab.buchstabBandConstant_succ
+#print axioms LiLiuPrereqBuchstab.roughCount_base_remainder_error
+#print axioms LiLiuPrereqBuchstab.roughCount_buchstab_band_error
+#print axioms LiLiuPrereqBuchstab.roughCount_buchstab_band_100

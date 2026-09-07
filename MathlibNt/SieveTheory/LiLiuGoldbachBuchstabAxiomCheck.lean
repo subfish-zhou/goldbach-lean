@@ -1,0 +1,22 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachBuchstab
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check survivesSieve_iff_coprime_siftingProduct
+#check literalH_real_eq_siftedCount
+#check literalH_filter_one
+#check literalH_filter_trivialCarrier
+#check literalH_filter_mul_of_coprime
+#check literalH_buchstab_interval
+#check goldbachHalfOpenPrimes
+#check goldbachS3HalfOpen
+#check goldbachUStrict
+#check goldbachS1_two_buchstab_exact
+
+#print axioms survivesSieve_iff_coprime_siftingProduct
+#print axioms literalH_real_eq_siftedCount
+#print axioms literalH_filter_one
+#print axioms literalH_filter_trivialCarrier
+#print axioms literalH_filter_mul_of_coprime
+#print axioms literalH_buchstab_interval
+#print axioms goldbachS1_two_buchstab_exact

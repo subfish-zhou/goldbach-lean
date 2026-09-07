@@ -1,0 +1,28 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10Support
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check mem_goldbachC10ProductFiber_iff
+#check goldbachC10Prod_injOn
+#check goldbachC10Coeff_le_one
+#check goldbachB10Atom_prod_lt
+#check goldbachB10Atom_output_eq_sub
+#check goldbachB10Atom_prod_add_output
+#check goldbachB10Atom_output_dvd_iff_modEq
+#check goldbachB10Atom_prod_coprime_of_coprime_modulus
+#check goldbachB10Atom_output_dvd_iff_residueCondition
+#check mem_goldbachB10DivisorAtoms_iff
+#check goldbachB10DivisorAtoms_eq_residueFilter
+#check goldbachB10DivisorAtoms_card_eq_residueFilter_card
+#check goldbachC10Prod_le_rpow_half_and_lt_two_thirds
+#print axioms mem_goldbachC10ProductFiber_iff
+#print axioms goldbachC10Prod_injOn
+#print axioms goldbachC10Coeff_le_one
+#print axioms goldbachB10Atom_prod_lt
+#print axioms goldbachB10Atom_output_eq_sub
+#print axioms goldbachB10Atom_prod_add_output
+#print axioms goldbachB10Atom_output_dvd_iff_modEq
+#print axioms goldbachB10Atom_prod_coprime_of_coprime_modulus
+#print axioms goldbachB10Atom_output_dvd_iff_residueCondition
+#print axioms mem_goldbachB10DivisorAtoms_iff
+#print axioms goldbachB10DivisorAtoms_eq_residueFilter
+#print axioms goldbachB10DivisorAtoms_card_eq_residueFilter_card
+#print axioms goldbachC10Prod_le_rpow_half_and_lt_two_thirds

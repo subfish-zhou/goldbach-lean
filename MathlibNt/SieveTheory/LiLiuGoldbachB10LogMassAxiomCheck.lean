@@ -1,0 +1,121 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachB10Beta
+#check goldbachB10Gamma
+#check goldbachB10PairInLogRectangle
+#check goldbachB10PairsInLogRectangle
+#check goldbachB10PairLogKernel
+#check goldbachB10PairLogKernelSum
+#check goldbachB10PairLogKernelRectangleContribution
+#check goldbachB10PrimeLogExponent_add_two_mul_le_one
+#check goldbachB10PrimeLogExponent_ge_beta
+#check goldbachB10PrimeLogExponent_le_gamma
+#check goldbachB10PrimeLogExponent_second_pos
+#check goldbachB10PrimeLogExponent_second_le_upper
+#check goldbachB10OneSubPrimeLogExponent_pos
+#check goldbachB10PairLogKernelSum_le_sum_rectangleMajorants_of_cover
+
+#check goldbachB10AlphaGridStart
+#check goldbachB10BetaGridStart
+#check goldbachB10BetaGridEnd
+#check goldbachB10AlphaGridWidth
+#check goldbachB10BetaGridWidth
+#check goldbachB10AlphaGridPoint
+#check goldbachB10BetaGridPoint
+#check goldbachB10AlphaGridStep
+#check goldbachB10BetaGridStep
+#check goldbachB10LogGridCells
+#check goldbachB10LogGridMajorant
+#check goldbachB10LogGridUpperSum
+#check goldbachB10AlphaGridStep_pos
+#check goldbachB10BetaGridStep_pos
+#check goldbachB10AlphaGridPoint_eq_step
+#check goldbachB10BetaGridPoint_eq_step
+#check goldbachB10AlphaGridPoint_succ
+#check goldbachB10BetaGridPoint_succ
+#check goldbachB10AlphaGridPoint_pos
+#check goldbachB10BetaGridPoint_pos
+#check goldbachB10AlphaGridPoint_lt_succ
+#check goldbachB10BetaGridPoint_lt_succ
+#check goldbachB10AlphaGridPoint_mono
+#check goldbachB10BetaGridPoint_mono
+#check goldbachB10AlphaGridPoint_succ_le_end
+#check goldbachB10BetaGridPoint_succ_le_end
+#check goldbachB10LogGridCell_upperCorner_lt_one
+#check goldbachB10Pairs_covered_by_logGrid
+#check goldbachB10PairLogKernelSum_le_logGridMajorant
+#check tendsto_goldbachB10LogGridMajorant
+#check eventually_abs_goldbachB10LogGridMajorant_sub_lt
+#check exists_abs_goldbachB10LogGridMajorant_sub_lt
+
+#check goldbachB10MainIntegral
+#check goldbachB10MainIntegral_eq_setIntegral
+#check goldbachB10LogGridUpperSum_sub_mainIntegral_le
+#check tendsto_goldbachB10LogGridUpperSum_mainIntegral
+#check eventually_abs_goldbachB10LogGridUpperSum_sub_mainIntegral_lt
+#check exists_abs_goldbachB10LogGridUpperSum_sub_mainIntegral_lt
+
+#check goldbachB10ActualTriangleMass
+#check goldbachB10I10
+#check goldbachB10ActualTriangleMass_le_I10_eventually
+
+#print axioms goldbachB10Beta
+#print axioms goldbachB10Gamma
+#print axioms goldbachB10PairInLogRectangle
+#print axioms goldbachB10PairsInLogRectangle
+#print axioms goldbachB10PairLogKernel
+#print axioms goldbachB10PairLogKernelSum
+#print axioms goldbachB10PairLogKernelRectangleContribution
+#print axioms goldbachB10PrimeLogExponent_add_two_mul_le_one
+#print axioms goldbachB10PrimeLogExponent_ge_beta
+#print axioms goldbachB10PrimeLogExponent_le_gamma
+#print axioms goldbachB10PrimeLogExponent_second_pos
+#print axioms goldbachB10PrimeLogExponent_second_le_upper
+#print axioms goldbachB10OneSubPrimeLogExponent_pos
+#print axioms goldbachB10PairLogKernelSum_le_sum_rectangleMajorants_of_cover
+
+#print axioms goldbachB10AlphaGridStart
+#print axioms goldbachB10BetaGridStart
+#print axioms goldbachB10BetaGridEnd
+#print axioms goldbachB10AlphaGridWidth
+#print axioms goldbachB10BetaGridWidth
+#print axioms goldbachB10AlphaGridPoint
+#print axioms goldbachB10BetaGridPoint
+#print axioms goldbachB10AlphaGridStep
+#print axioms goldbachB10BetaGridStep
+#print axioms goldbachB10LogGridCells
+#print axioms goldbachB10LogGridMajorant
+#print axioms goldbachB10LogGridUpperSum
+#print axioms goldbachB10AlphaGridStep_pos
+#print axioms goldbachB10BetaGridStep_pos
+#print axioms goldbachB10AlphaGridPoint_eq_step
+#print axioms goldbachB10BetaGridPoint_eq_step
+#print axioms goldbachB10AlphaGridPoint_succ
+#print axioms goldbachB10BetaGridPoint_succ
+#print axioms goldbachB10AlphaGridPoint_pos
+#print axioms goldbachB10BetaGridPoint_pos
+#print axioms goldbachB10AlphaGridPoint_lt_succ
+#print axioms goldbachB10BetaGridPoint_lt_succ
+#print axioms goldbachB10AlphaGridPoint_mono
+#print axioms goldbachB10BetaGridPoint_mono
+#print axioms goldbachB10AlphaGridPoint_succ_le_end
+#print axioms goldbachB10BetaGridPoint_succ_le_end
+#print axioms goldbachB10LogGridCell_upperCorner_lt_one
+#print axioms goldbachB10Pairs_covered_by_logGrid
+#print axioms goldbachB10PairLogKernelSum_le_logGridMajorant
+#print axioms tendsto_goldbachB10LogGridMajorant
+#print axioms eventually_abs_goldbachB10LogGridMajorant_sub_lt
+#print axioms exists_abs_goldbachB10LogGridMajorant_sub_lt
+
+#print axioms goldbachB10MainIntegral
+#print axioms goldbachB10MainIntegral_eq_setIntegral
+#print axioms goldbachB10LogGridUpperSum_sub_mainIntegral_le
+#print axioms tendsto_goldbachB10LogGridUpperSum_mainIntegral
+#print axioms eventually_abs_goldbachB10LogGridUpperSum_sub_mainIntegral_lt
+#print axioms exists_abs_goldbachB10LogGridUpperSum_sub_mainIntegral_lt
+
+#print axioms goldbachB10ActualTriangleMass
+#print axioms goldbachB10I10
+#print axioms goldbachB10ActualTriangleMass_le_I10_eventually

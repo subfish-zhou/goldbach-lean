@@ -1,0 +1,13 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachB10PrimeProduct
+#check goldbachB10PrimeProduct_eq_sieveProductPrimeFactors
+#check goldbachB10PrimeProduct_log_le_liuSingularSeries
+#check goldbachB10BoundingSieve_sieveProductPrimeFactors_log_le_liuSingularSeries
+
+#print axioms goldbachB10PrimeProduct
+#print axioms goldbachB10PrimeProduct_eq_sieveProductPrimeFactors
+#print axioms goldbachB10PrimeProduct_log_le_liuSingularSeries
+#print axioms goldbachB10BoundingSieve_sieveProductPrimeFactors_log_le_liuSingularSeries

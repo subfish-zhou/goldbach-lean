@@ -1,0 +1,4 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS5PairKernelUpper
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS5Closed_normalized_upper_pairKernel
+#print axioms goldbachS5Closed_normalized_upper_pairKernel

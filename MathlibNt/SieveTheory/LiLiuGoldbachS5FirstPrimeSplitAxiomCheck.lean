@@ -1,0 +1,12 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplit
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachC10Pairs_filter_first_ge
+#print axioms goldbachC10Pairs_filter_first_ge
+#check goldbachC10Pairs_sum_split_first
+#print axioms goldbachC10Pairs_sum_split_first
+#check goldbachS5ClosedBelow
+#print axioms goldbachS5ClosedBelow
+#check goldbachS5Closed_eq_below_add_raisedCutoff
+#print axioms goldbachS5Closed_eq_below_add_raisedCutoff
+#check goldbachS5Closed_actual_split_first
+#print axioms goldbachS5Closed_actual_split_first

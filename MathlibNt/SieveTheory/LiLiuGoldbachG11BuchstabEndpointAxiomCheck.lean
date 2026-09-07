@@ -1,0 +1,48 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
+
+set_option autoImplicit false
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachG11_rough_iff_survives
+#print axioms goldbachG11_rough_iff_survives
+#check goldbachG11CofactorWindow
+#print axioms goldbachG11CofactorWindow
+#check mem_goldbachG11CofactorWindow_iff
+#print axioms mem_goldbachG11CofactorWindow_iff
+#check one_mem_goldbachG11CofactorWindow
+#print axioms one_mem_goldbachG11CofactorWindow
+#check goldbachG11CofactorWindow_prefix_subset
+#print axioms goldbachG11CofactorWindow_prefix_subset
+#check goldbachG11CofactorWindow_card
+#print axioms goldbachG11CofactorWindow_card
+#check goldbachG11CofactorWindow_card_real
+#print axioms goldbachG11CofactorWindow_card_real
+#check goldbachG11RoughPairs_cofactor_nat_div_cast
+#print axioms goldbachG11RoughPairs_cofactor_nat_div_cast
+#check goldbachG11RoughPairs_mem_window
+#print axioms goldbachG11RoughPairs_mem_window
+#check goldbachG11CofactorWindow_prime_pair
+#print axioms goldbachG11CofactorWindow_prime_pair
+#check goldbachG11RoughCount_eq_prime_window
+#print axioms goldbachG11RoughCount_eq_prime_window
+#check goldbachG11BuchstabMass
+#print axioms goldbachG11BuchstabMass
+#check goldbachG11_buchstab_cutoff_identity
+#print axioms goldbachG11_buchstab_cutoff_identity
+#check goldbachG11_buchstab_source_mass_identity
+#print axioms goldbachG11_buchstab_source_mass_identity
+#check goldbachG11_buchstab_mass_pos_le
+#print axioms goldbachG11_buchstab_mass_pos_le
+#check goldbachG11_buchstab_relative_to_absolute
+#print axioms goldbachG11_buchstab_relative_to_absolute
+#check goldbachG11_canonical_cofactor_lower_bound
+#print axioms goldbachG11_canonical_cofactor_lower_bound
+#check goldbachG11_buchstab_endpoints
+#print axioms goldbachG11_buchstab_endpoints
+#check goldbachG11CofactorWindow_buchstab_mass
+#print axioms goldbachG11CofactorWindow_buchstab_mass
+#check goldbachG11CofactorWindow_one
+#print axioms goldbachG11CofactorWindow_one
+#check goldbachG11BuchstabMass_one_window
+#print axioms goldbachG11BuchstabMass_one_window

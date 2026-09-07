@@ -1,0 +1,24 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPrimeSums
+
+#check LiLiuPrereqBuchstab.mem_primesIoc
+#check LiLiuPrereqBuchstab.mem_primesIcc
+#check LiLiuPrereqBuchstab.primePi_eq_sum_indicator
+#check LiLiuPrereqBuchstab.prime_abel
+#check LiLiuPrereqBuchstab.integrableOn_mul_primePi
+#check LiLiuPrereqBuchstab.one_le_log_of_start_le
+#check LiLiuPrereqBuchstab.integral_logTailKernel
+#check LiLiuPrereqBuchstab.sum_primesIoc_inv_mul_log_le
+#check LiLiuPrereqBuchstab.sum_primesIcc_eq_sum_primesIoc_add
+#check LiLiuPrereqBuchstab.sum_primesIcc_inv_mul_log_le
+#check LiLiuPrereqBuchstab.sum_primesIcc_div_log_le
+#print axioms LiLiuPrereqBuchstab.mem_primesIoc
+#print axioms LiLiuPrereqBuchstab.mem_primesIcc
+#print axioms LiLiuPrereqBuchstab.primePi_eq_sum_indicator
+#print axioms LiLiuPrereqBuchstab.prime_abel
+#print axioms LiLiuPrereqBuchstab.integrableOn_mul_primePi
+#print axioms LiLiuPrereqBuchstab.one_le_log_of_start_le
+#print axioms LiLiuPrereqBuchstab.integral_logTailKernel
+#print axioms LiLiuPrereqBuchstab.sum_primesIoc_inv_mul_log_le
+#print axioms LiLiuPrereqBuchstab.sum_primesIcc_eq_sum_primesIoc_add
+#print axioms LiLiuPrereqBuchstab.sum_primesIcc_inv_mul_log_le
+#print axioms LiLiuPrereqBuchstab.sum_primesIcc_div_log_le

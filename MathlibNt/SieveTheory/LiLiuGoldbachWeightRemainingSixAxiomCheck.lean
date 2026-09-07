@@ -1,0 +1,14 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSix
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachWeightRemainingSix
+#print axioms goldbachWeightRemainingSix
+#check goldbachWeightRemainingEight_eq_remainingSix_sub_s3Pair
+#print axioms goldbachWeightRemainingEight_eq_remainingSix_sub_s3Pair
+#check goldbachWeightSixCoefficient
+#print axioms goldbachWeightSixCoefficient
+#check goldbachWeightSixCoefficient_zero
+#print axioms goldbachWeightSixCoefficient_zero
+#check goldbachWeightSixCoefficient_continuousAt_zero
+#print axioms goldbachWeightSixCoefficient_continuousAt_zero
+#check goldbachWeightSixCoefficient_small_epsilon
+#print axioms goldbachWeightSixCoefficient_small_epsilon

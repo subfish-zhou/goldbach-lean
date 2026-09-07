@@ -1,0 +1,9 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check exists_goldbachB10BoundingSieve_dimensionOneLocalProductBound
+#check goldbachB10SiftedCount_le_rosserFactor_add_upperErrSum
+
+#print axioms exists_goldbachB10BoundingSieve_dimensionOneLocalProductBound
+#print axioms goldbachB10SiftedCount_le_rosserFactor_add_upperErrSum

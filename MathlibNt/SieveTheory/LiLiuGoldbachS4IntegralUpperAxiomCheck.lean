@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB8PairLogKernel_le_mainIntegral_eventually
+#print axioms goldbachB8PairLogKernel_le_mainIntegral_eventually
+#check goldbachS4_normalized_upper_integral
+#print axioms goldbachS4_normalized_upper_integral

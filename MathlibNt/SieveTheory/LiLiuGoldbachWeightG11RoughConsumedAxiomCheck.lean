@@ -1,0 +1,14 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightG11RoughConsumed
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#print goldbachG11RoughTotal
+#print goldbachWeightG11RoughRemainder
+#check goldbachG11RoughTotal
+#print axioms goldbachG11RoughTotal
+#check goldbachWeightG11RoughRemainder
+#print axioms goldbachWeightG11RoughRemainder
+#check goldbachWeightG11_le_roughTotal_normalized
+#print axioms goldbachWeightG11_le_roughTotal_normalized
+#check goldbachWeight_g11Rough_consumed_eventually
+#print axioms goldbachWeight_g11Rough_consumed_eventually
+#check goldbachWeight_g11Rough_consumed_small_epsilon
+#print axioms goldbachWeight_g11Rough_consumed_small_epsilon

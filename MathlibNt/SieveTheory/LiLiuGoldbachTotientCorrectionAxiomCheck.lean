@@ -1,0 +1,10 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachTotientCorrection
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachPrime_totient_weighted_correction
+#print axioms goldbachPrime_totient_weighted_correction
+#check goldbachPrime_totient_weighted_le
+#print axioms goldbachPrime_totient_weighted_le
+#check goldbachPrime_totient_weighted_rpow_eventually
+#print axioms goldbachPrime_totient_weighted_rpow_eventually
+#check goldbachS3PrimeWeights_totient_upper_eventually
+#print axioms goldbachS3PrimeWeights_totient_upper_eventually

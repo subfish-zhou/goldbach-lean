@@ -1,0 +1,5 @@
+import MathlibNt.SieveTheory.LiLiuBuchstabTailPropagation
+#check @LiLiuPrereqBuchstab.buchstab_weighted_sub_eq_integral
+#print axioms LiLiuPrereqBuchstab.buchstab_weighted_sub_eq_integral
+#check @LiLiuPrereqBuchstab.buchstab_upper_on_tail
+#print axioms LiLiuPrereqBuchstab.buchstab_upper_on_tail

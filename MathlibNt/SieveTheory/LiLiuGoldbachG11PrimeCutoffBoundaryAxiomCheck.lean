@@ -1,0 +1,14 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeCutoffBoundary
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachG11_prime_ne_lower_cutoff
+#print axioms goldbachG11_prime_ne_lower_cutoff
+#check goldbachG11_prime_lower_cutoff_iff
+#print axioms goldbachG11_prime_lower_cutoff_iff
+#check goldbachG11ProductSupport_one_lt
+#print axioms goldbachG11ProductSupport_one_lt
+#check goldbachG11ProductSupport_not_dvd
+#print axioms goldbachG11ProductSupport_not_dvd
+#check goldbachG11_product_upper_cutoff_iff
+#print axioms goldbachG11_product_upper_cutoff_iff
+#check goldbachG11ProductFirstPrimeFiber_endpoint_iff
+#print axioms goldbachG11ProductFirstPrimeFiber_endpoint_iff

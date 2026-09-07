@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB8FixedGridLimit
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check tendsto_goldbachB8LogGridMajorant
+#print axioms tendsto_goldbachB8LogGridMajorant
+#check goldbachB8PairLogKernel_le_gridUpperSum_eventually
+#print axioms goldbachB8PairLogKernel_le_gridUpperSum_eventually

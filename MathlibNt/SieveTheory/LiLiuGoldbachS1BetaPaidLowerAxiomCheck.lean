@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaPaidLower
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS1_antitone_cutoff
+#print axioms goldbachS1_antitone_cutoff
+#check goldbachS1_beta_lower_paid
+#print axioms goldbachS1_beta_lower_paid

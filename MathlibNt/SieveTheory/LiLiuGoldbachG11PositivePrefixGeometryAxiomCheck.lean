@@ -1,0 +1,8 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11PositivePrefixGeometry
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachG11RoughPairs_cofactor_window
+#print axioms goldbachG11RoughPairs_cofactor_window
+#check goldbachG11_positivePrefix_logQuotient_bounds
+#print axioms goldbachG11_positivePrefix_logQuotient_bounds
+#check goldbachG11_actualRoughCofactor_log_bounds
+#print axioms goldbachG11_actualRoughCofactor_log_bounds

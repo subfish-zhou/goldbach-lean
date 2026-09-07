@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbach_power_error_le_log_scale_eventually
+#check goldbachWeight_twelve_switched_log_scale_eventually
+#print axioms goldbach_power_error_le_log_scale_eventually
+#print axioms goldbachWeight_twelve_switched_log_scale_eventually

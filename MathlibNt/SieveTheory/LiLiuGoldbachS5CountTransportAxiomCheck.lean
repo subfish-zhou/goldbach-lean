@@ -1,0 +1,8 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS5SquareCount_le_QA
+#print axioms goldbachS5SquareCount_le_QA
+#check goldbachS5SquareCount_normalized
+#print axioms goldbachS5SquareCount_normalized
+#check goldbachS5Closed_le_B10ZeroPrefix_normalized
+#print axioms goldbachS5Closed_le_B10ZeroPrefix_normalized

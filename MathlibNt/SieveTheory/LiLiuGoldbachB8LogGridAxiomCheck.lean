@@ -1,0 +1,102 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB8LogKernel
+import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGrid
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check instDecidablePropB8LogKernel
+#check goldbachB8Gamma
+#check goldbachB8Pair_logGeometry
+#check goldbachB8PrimeLogExponent_second_le_upper
+#check goldbachB8OneSubPrimeLogExponent_pos
+#check goldbachB8LogProd_eq
+#check goldbachB8PairLogKernelTerm_eq
+#check goldbachB8PairLogKernel_eq_logCoordinateSum
+#check goldbachB8PairLogKernelTerm_nonneg
+#check goldbachB8PairsInLogRectangle
+#check goldbachB8PairLogKernelRectangleContribution
+#check goldbachB8PairsInLogRectangle_subset_primeLogRectanglePairs
+#check goldbachB8PairLogKernelTerm_le_rectangleCorner
+#check goldbachB8PairLogKernelRectangleContribution_le
+#check instDecidablePropB8LogGrid
+#check goldbachB8AlphaGridWidth
+#check goldbachB8BetaGridWidth
+#check goldbachB8AlphaGridPoint
+#check goldbachB8BetaGridPoint
+#check goldbachB8AlphaGridStep
+#check goldbachB8BetaGridStep
+#check goldbachB8LogGridCells
+#check goldbachB8LogGridMajorant
+#check goldbachB8LogGridUpperSum
+#check mem_goldbachB8LogGridCells_iff
+#check goldbachB8AlphaGridStep_pos
+#check goldbachB8BetaGridStep_pos
+#check goldbachB8AlphaGridPoint_eq_step
+#check goldbachB8BetaGridPoint_eq_step
+#check goldbachB8AlphaGridPoint_succ
+#check goldbachB8BetaGridPoint_succ
+#check goldbachB8AlphaGridPoint_pos
+#check goldbachB8BetaGridPoint_pos
+#check goldbachB8AlphaGridPoint_lt_succ
+#check goldbachB8BetaGridPoint_lt_succ
+#check goldbachB8AlphaGridPoint_mono
+#check goldbachB8BetaGridPoint_mono
+#check goldbachB8AlphaGridPoint_end
+#check goldbachB8BetaGridPoint_end
+#check goldbachB8AlphaGridPoint_succ_le_end
+#check goldbachB8BetaGridPoint_succ_le_end
+#check goldbachB8LogGridCell_cornerGap_ge
+#check goldbachB8LogGridCell_cornerGap_pos
+#check goldbachB8LogGridCell_upperCorner_lt_one
+#check goldbachB8Pairs_covered_by_logGrid
+#check goldbachB8PairLogKernel_le_logGridMajorant
+
+#print axioms instDecidablePropB8LogKernel
+#print axioms goldbachB8Gamma
+#print axioms goldbachB8Pair_logGeometry
+#print axioms goldbachB8PrimeLogExponent_second_le_upper
+#print axioms goldbachB8OneSubPrimeLogExponent_pos
+#print axioms goldbachB8LogProd_eq
+#print axioms goldbachB8PairLogKernelTerm_eq
+#print axioms goldbachB8PairLogKernel_eq_logCoordinateSum
+#print axioms goldbachB8PairLogKernelTerm_nonneg
+#print axioms goldbachB8PairsInLogRectangle
+#print axioms goldbachB8PairLogKernelRectangleContribution
+#print axioms goldbachB8PairsInLogRectangle_subset_primeLogRectanglePairs
+#print axioms goldbachB8PairLogKernelTerm_le_rectangleCorner
+#print axioms goldbachB8PairLogKernelRectangleContribution_le
+#print axioms instDecidablePropB8LogGrid
+#print axioms goldbachB8AlphaGridWidth
+#print axioms goldbachB8BetaGridWidth
+#print axioms goldbachB8AlphaGridPoint
+#print axioms goldbachB8BetaGridPoint
+#print axioms goldbachB8AlphaGridStep
+#print axioms goldbachB8BetaGridStep
+#print axioms goldbachB8LogGridCells
+#print axioms goldbachB8LogGridMajorant
+#print axioms goldbachB8LogGridUpperSum
+#print axioms mem_goldbachB8LogGridCells_iff
+#print axioms goldbachB8AlphaGridStep_pos
+#print axioms goldbachB8BetaGridStep_pos
+#print axioms goldbachB8AlphaGridPoint_eq_step
+#print axioms goldbachB8BetaGridPoint_eq_step
+#print axioms goldbachB8AlphaGridPoint_succ
+#print axioms goldbachB8BetaGridPoint_succ
+#print axioms goldbachB8AlphaGridPoint_pos
+#print axioms goldbachB8BetaGridPoint_pos
+#print axioms goldbachB8AlphaGridPoint_lt_succ
+#print axioms goldbachB8BetaGridPoint_lt_succ
+#print axioms goldbachB8AlphaGridPoint_mono
+#print axioms goldbachB8BetaGridPoint_mono
+#print axioms goldbachB8AlphaGridPoint_end
+#print axioms goldbachB8BetaGridPoint_end
+#print axioms goldbachB8AlphaGridPoint_succ_le_end
+#print axioms goldbachB8BetaGridPoint_succ_le_end
+#print axioms goldbachB8LogGridCell_cornerGap_ge
+#print axioms goldbachB8LogGridCell_cornerGap_pos
+#print axioms goldbachB8LogGridCell_upperCorner_lt_one
+#print axioms goldbachB8Pairs_covered_by_logGrid
+#print axioms goldbachB8PairLogKernel_le_logGridMajorant
+
+example (n N : ℕ) (hn : 0 < n) (hN : 2 ≤ N) :
+    goldbachB8PairLogKernel N ≤ goldbachB8LogGridMajorant n N :=
+  goldbachB8PairLogKernel_le_logGridMajorant n N hn hN

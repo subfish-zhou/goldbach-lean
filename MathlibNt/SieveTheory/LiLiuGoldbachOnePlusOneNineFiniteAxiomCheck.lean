@@ -1,0 +1,43 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine
+
+#check IsOnePlusOneNineRepresentation
+#check onePlusOneNineRepresentedPrimes
+#check D19
+#check D19_pos_iff
+#check D19_ne_zero_iff
+#check LeastPrimeFactorAtLeast
+#check OmegaAtLeast
+#check goldbachBasicWeight
+#check goldbachBasicFiniteRHS
+#check sum_goldbachBasicWeight_eq_finiteRHS
+#check goldbachPrimeCarrier
+#check goldbachPowerCutoff
+#check leastPrimeFactorAtLeast_powerCutoff_iff
+#check leastPrimeFactorAtLeast_powerCutoff_iff_minFac
+#check positive_goldbachBasicWeight_structure
+#check goldbachBasicWeight_le_one
+#check exists_goldbachBasic_growth_cutoff
+#check oneNine_power_bound
+#check goldbachBasic_pointwise_of_growth
+#check goldbachBasic_eventual_pointwise
+#check goldbachDifferenceCarrier
+#check mem_goldbachPrimeCarrier_iff
+#check goldbachBasic_finite_le_D19
+#check exists_representation_of_goldbachBasicFiniteRHS_pos
+
+#print axioms D19_pos_iff
+#print axioms D19_ne_zero_iff
+#print axioms sum_goldbachBasicWeight_eq_finiteRHS
+#print axioms leastPrimeFactorAtLeast_powerCutoff_iff
+#print axioms leastPrimeFactorAtLeast_powerCutoff_iff_minFac
+#print axioms positive_goldbachBasicWeight_structure
+#print axioms goldbachBasicWeight_le_one
+#print axioms exists_goldbachBasic_growth_cutoff
+#print axioms oneNine_power_bound
+#print axioms goldbachBasic_pointwise_of_growth
+#print axioms goldbachBasic_eventual_pointwise
+#print axioms mem_goldbachPrimeCarrier_iff
+#print axioms goldbachBasic_finite_le_D19
+#print axioms exists_representation_of_goldbachBasicFiniteRHS_pos

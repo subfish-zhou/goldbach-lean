@@ -1,0 +1,12 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachC9Pairs_eq_C10Pairs
+#print axioms goldbachC9Pairs_eq_C10Pairs
+#check goldbachC9ProductSupport_eq_C10ProductSupport
+#print axioms goldbachC9ProductSupport_eq_C10ProductSupport
+#check goldbachB9PlusAtoms_eq_B10ZeroPrefix
+#print axioms goldbachB9PlusAtoms_eq_B10ZeroPrefix
+#check goldbachB9PlusSiftedAtoms_eq_B10ZeroPrefix
+#print axioms goldbachB9PlusSiftedAtoms_eq_B10ZeroPrefix
+#check goldbachB9PlusSifted_card_eq_B10ZeroPrefix
+#print axioms goldbachB9PlusSifted_card_eq_B10ZeroPrefix

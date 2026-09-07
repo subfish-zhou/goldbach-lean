@@ -1,0 +1,21 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBase
+
+set_option autoImplicit false
+
+#check LiLiuPrereqBuchstab.sq_le_of_rough_composite
+#check LiLiuPrereqBuchstab.rough_composite_at_sq
+#check LiLiuPrereqBuchstab.rough_below_sq_iff
+#check LiLiuPrereqBuchstab.roughCount_below_sq
+#check LiLiuPrereqBuchstab.roughCount_prime_sq
+#check LiLiuPrereqBuchstab.roughCount_le_sq
+#check LiLiuPrereqBuchstab.card_primeNumbers
+#check LiLiuPrereqBuchstab.roughCount_le_sq_primeCounting
+
+#print axioms LiLiuPrereqBuchstab.sq_le_of_rough_composite
+#print axioms LiLiuPrereqBuchstab.rough_composite_at_sq
+#print axioms LiLiuPrereqBuchstab.rough_below_sq_iff
+#print axioms LiLiuPrereqBuchstab.roughCount_below_sq
+#print axioms LiLiuPrereqBuchstab.roughCount_prime_sq
+#print axioms LiLiuPrereqBuchstab.roughCount_le_sq
+#print axioms LiLiuPrereqBuchstab.card_primeNumbers
+#print axioms LiLiuPrereqBuchstab.roughCount_le_sq_primeCounting

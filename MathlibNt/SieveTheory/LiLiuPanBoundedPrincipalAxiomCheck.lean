@@ -1,0 +1,12 @@
+import MathlibNt.SieveTheory.LiLiuPanBoundedPrincipal
+
+open AnalyticNumberTheory.LargeSieve.PanPrincipal
+open MathlibNt.SieveTheory.LiuWeight
+
+#check boundedPrincipalRaw_le_budget
+#check boundedPrincipalRaw_log_saving
+#check liuMainPanCoprimeIntervalMaxL_le_actualCharacterMass_with_paid_principal
+
+#print axioms boundedPrincipalRaw_le_budget
+#print axioms boundedPrincipalRaw_log_saving
+#print axioms liuMainPanCoprimeIntervalMaxL_le_actualCharacterMass_with_paid_principal

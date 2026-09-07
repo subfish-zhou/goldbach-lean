@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS5IntegralUpper
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS5Closed_normalized_upper_integral
+#print axioms goldbachS5Closed_normalized_upper_integral
+#check goldbachB9MainIntegral_eq_singleIntegral
+#print axioms goldbachB9MainIntegral_eq_singleIntegral

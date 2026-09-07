@@ -1,0 +1,11 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachB10InnerIntegral_eq
+#check goldbachB10MainIntegral_eq_singleIntegral
+#check goldbachB10I10_eq_singleIntegral
+
+#print axioms goldbachB10InnerIntegral_eq
+#print axioms goldbachB10MainIntegral_eq_singleIntegral
+#print axioms goldbachB10I10_eq_singleIntegral

@@ -1,0 +1,14 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralScalar
+set_option pp.universes true
+set_option pp.explicit true
+set_option pp.fullNames true
+set_option pp.proofs false
+set_option pp.explicit false in
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB8MainIntegral_eight_mul_le_60962
+set_option pp.explicit false in
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS4_normalized_upper_60962
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB8MainIntegral_eight_mul_le_60962
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS4_normalized_upper_60962
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB8MainIntegral_eight_mul_le_60962
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS4_normalized_upper_60962

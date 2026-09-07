@@ -1,0 +1,22 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check largePrimeDivisors
+#check largePrimeDivisors_card_le_twenty
+#check card_filter_dvd_le_div
+#check card_filter_dvd_le_div_real
+#check goldbachSquarePrimes
+#check mem_goldbachSquarePrimes_iff
+#check goldbachQA
+#check goldbachQA_nonneg
+#check goldbachQA_real_le_two_mul_div
+#check goldbachQ_le_goldbachQA
+
+#print axioms largePrimeDivisors_card_le_twenty
+#print axioms card_filter_dvd_le_div
+#print axioms card_filter_dvd_le_div_real
+#print axioms mem_goldbachSquarePrimes_iff
+#print axioms goldbachQA_nonneg
+#print axioms goldbachQA_real_le_two_mul_div
+#print axioms goldbachQ_le_goldbachQA

@@ -1,0 +1,34 @@
+import MathlibNt.SieveTheory.LiLiuBuchstabSharpEnclosure
+
+set_option autoImplicit false
+
+#check @LiLiuBuchstabSharp.logLower
+#print axioms LiLiuBuchstabSharp.logLower
+#check @LiLiuBuchstabSharp.logLower_error
+#print axioms LiLiuBuchstabSharp.logLower_error
+#check @LiLiuBuchstabSharp.logLower_twelve_error
+#print axioms LiLiuBuchstabSharp.logLower_twelve_error
+#check @LiLiuBuchstabSharp.buchstab_le_709_div_1250
+#print axioms LiLiuBuchstabSharp.buchstab_le_709_div_1250
+#check @LiLiuBuchstabSharp.rationalSeed
+#print axioms LiLiuBuchstabSharp.rationalSeed
+#check @LiLiuBuchstabSharp.continuous_rationalSeed
+#print axioms LiLiuBuchstabSharp.continuous_rationalSeed
+#check @LiLiuBuchstabSharp.rationalSeed_eq
+#print axioms LiLiuBuchstabSharp.rationalSeed_eq
+#check @LiLiuBuchstabSharp.rationalSeed_error
+#print axioms LiLiuBuchstabSharp.rationalSeed_error
+#check @LiLiuBuchstabSharp.rationalStep
+#print axioms LiLiuBuchstabSharp.rationalStep
+#check @LiLiuBuchstabSharp.continuous_rationalStep
+#print axioms LiLiuBuchstabSharp.continuous_rationalStep
+#check @LiLiuBuchstabSharp.rationalStage
+#print axioms LiLiuBuchstabSharp.rationalStage
+#check @LiLiuBuchstabSharp.continuous_rationalStage
+#print axioms LiLiuBuchstabSharp.continuous_rationalStage
+#check @LiLiuBuchstabSharp.rationalStage_error
+#print axioms LiLiuBuchstabSharp.rationalStage_error
+#check @LiLiuBuchstabSharp.buchstab_sharp_window_left_enclosure
+#print axioms LiLiuBuchstabSharp.buchstab_sharp_window_left_enclosure
+#check @LiLiuBuchstabSharp.buchstab_sharp_window_right_enclosure
+#print axioms LiLiuBuchstabSharp.buchstab_sharp_window_right_enclosure

@@ -1,0 +1,12 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB9InnerIntegral
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB9InnerIntegral_eq
+#print axioms goldbachB9InnerIntegral_eq
+#check goldbachB9InnerIntegral_eq_logTwoSubThree
+#print axioms goldbachB9InnerIntegral_eq_logTwoSubThree
+#check goldbachB9DoubleIntegral_eq_singleIntegral
+#print axioms goldbachB9DoubleIntegral_eq_singleIntegral
+#check continuousOn_goldbachB9SingleIntegrand
+#print axioms continuousOn_goldbachB9SingleIntegrand
+#check intervalIntegrable_goldbachB9SingleIntegrand
+#print axioms intervalIntegrable_goldbachB9SingleIntegrand

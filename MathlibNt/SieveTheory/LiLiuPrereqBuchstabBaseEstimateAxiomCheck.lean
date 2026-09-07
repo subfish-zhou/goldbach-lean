@@ -1,0 +1,16 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBaseEstimate
+
+#check LiLiuPrereqBuchstab.primeCutoff_le_primeCounting
+#check LiLiuPrereqBuchstab.squareCorrection_le_one
+#check LiLiuPrereqBuchstab.roughCount_le_sq_real
+#check LiLiuPrereqBuchstab.roughCount_base_error
+#check LiLiuPrereqBuchstab.base_log_ratio_mem
+#check LiLiuPrereqBuchstab.base_buchstab_main_eq
+#check LiLiuPrereqBuchstab.roughCount_base_buchstab_error
+#print axioms LiLiuPrereqBuchstab.primeCutoff_le_primeCounting
+#print axioms LiLiuPrereqBuchstab.squareCorrection_le_one
+#print axioms LiLiuPrereqBuchstab.roughCount_le_sq_real
+#print axioms LiLiuPrereqBuchstab.roughCount_base_error
+#print axioms LiLiuPrereqBuchstab.base_log_ratio_mem
+#print axioms LiLiuPrereqBuchstab.base_buchstab_main_eq
+#print axioms LiLiuPrereqBuchstab.roughCount_base_buchstab_error

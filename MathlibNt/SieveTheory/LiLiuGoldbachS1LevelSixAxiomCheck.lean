@@ -1,0 +1,27 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1LevelSix
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check S1LevelSixZ
+#check S1LevelSixD
+#check S1LevelSix_two_le_Z
+#check S1LevelSix_two_le_D
+#check S1LevelSix_panModulusCutoff_eventually
+#check S1LevelSix_ceil_rootD_eq_Z
+#check S1LevelSix_logD_div_logZ_eq_six
+#check S1LevelSix_lt_Z_of_lt_rpow
+#check S1LevelSix_lt_powSix_of_lt
+#check S1LevelSix_lt_D_of_lt_Z
+#check S1LevelSix_primeFactor_lt_D
+
+#print axioms S1LevelSixZ
+#print axioms S1LevelSixD
+#print axioms S1LevelSix_two_le_Z
+#print axioms S1LevelSix_two_le_D
+#print axioms S1LevelSix_panModulusCutoff_eventually
+#print axioms S1LevelSix_ceil_rootD_eq_Z
+#print axioms S1LevelSix_logD_div_logZ_eq_six
+#print axioms S1LevelSix_lt_Z_of_lt_rpow
+#print axioms S1LevelSix_lt_powSix_of_lt
+#print axioms S1LevelSix_lt_D_of_lt_Z
+#print axioms S1LevelSix_primeFactor_lt_D

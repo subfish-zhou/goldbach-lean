@@ -1,0 +1,39 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaGeometry
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check S1BetaGeometryD
+#check S1BetaGeometryZeta
+#check S1BetaGeometryZ
+#check S1BetaGeometry_two_le_D
+#check S1BetaGeometry_one_lt_zeta
+#check S1BetaGeometry_two_le_Z
+#check S1BetaGeometry_rpow_le_zeta
+#check S1BetaGeometry_zeta_le_rpow_eventually
+#check S1BetaGeometry_eventually_ge_constant
+#check S1BetaGeometry_panModulusCutoff_eventually
+#check S1BetaGeometry_ceil_zeta_eq_Z
+#check S1BetaGeometry_logD_div_logZeta_eq_s
+#check S1BetaGeometry_Z_le_D
+#check S1BetaGeometry_lt_D_of_lt_zeta
+#check S1BetaGeometry_lt_D_of_lt_Z
+#check S1BetaGeometry_primeFactor_lt_D
+#check S1BetaGeometry_threshold
+
+#print axioms S1BetaGeometryD
+#print axioms S1BetaGeometryZeta
+#print axioms S1BetaGeometryZ
+#print axioms S1BetaGeometry_two_le_D
+#print axioms S1BetaGeometry_one_lt_zeta
+#print axioms S1BetaGeometry_two_le_Z
+#print axioms S1BetaGeometry_rpow_le_zeta
+#print axioms S1BetaGeometry_zeta_le_rpow_eventually
+#print axioms S1BetaGeometry_eventually_ge_constant
+#print axioms S1BetaGeometry_panModulusCutoff_eventually
+#print axioms S1BetaGeometry_ceil_zeta_eq_Z
+#print axioms S1BetaGeometry_logD_div_logZeta_eq_s
+#print axioms S1BetaGeometry_Z_le_D
+#print axioms S1BetaGeometry_lt_D_of_lt_zeta
+#print axioms S1BetaGeometry_lt_D_of_lt_Z
+#print axioms S1BetaGeometry_primeFactor_lt_D
+#print axioms S1BetaGeometry_threshold

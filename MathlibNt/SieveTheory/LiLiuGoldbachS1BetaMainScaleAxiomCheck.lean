@@ -1,0 +1,4 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaMainScale
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS1_beta_mainMass_mul_product_lower
+#print axioms goldbachS1_beta_mainMass_mul_product_lower

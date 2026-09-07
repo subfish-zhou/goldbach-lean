@@ -1,0 +1,16 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB8DiagonalStrip
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachAffineDiagonalStrip
+#print axioms goldbachAffineDiagonalStrip
+#check measurableSet_goldbachAffineDiagonalStrip
+#print axioms measurableSet_goldbachAffineDiagonalStrip
+#check goldbachAffineDiagonalStrip_section
+#print axioms goldbachAffineDiagonalStrip_section
+#check volume_goldbachAffineDiagonalStrip
+#print axioms volume_goldbachAffineDiagonalStrip
+#check goldbachB8DiagonalStrip
+#print axioms goldbachB8DiagonalStrip
+#check measurableSet_goldbachB8DiagonalStrip
+#print axioms measurableSet_goldbachB8DiagonalStrip
+#check volume_goldbachB8DiagonalStrip
+#print axioms volume_goldbachB8DiagonalStrip

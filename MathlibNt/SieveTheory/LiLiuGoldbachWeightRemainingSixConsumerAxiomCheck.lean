@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSixConsumer
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachWeight_remainingSix_S1_S2_S3_I10_consumed_eventually
+#print axioms goldbachWeight_remainingSix_S1_S2_S3_I10_consumed_eventually
+#check goldbachWeight_remainingSix_small_epsilon
+#print axioms goldbachWeight_remainingSix_small_epsilon

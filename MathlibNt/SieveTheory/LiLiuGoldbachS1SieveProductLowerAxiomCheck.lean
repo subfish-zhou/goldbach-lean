@@ -1,0 +1,7 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1SieveProductLower
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachS1PrimeProduct_log_ge_liuSingularSeries
+
+#print axioms goldbachS1PrimeProduct_log_ge_liuSingularSeries

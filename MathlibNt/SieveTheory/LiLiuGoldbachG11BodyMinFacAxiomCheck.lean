@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11BodyMinFac
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachG11_body_survives
+#print axioms goldbachG11_body_survives
+#check goldbachG11_body_minFac
+#print axioms goldbachG11_body_minFac

@@ -1,0 +1,320 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightFiveNegativeScalars
+set_option pp.fullNames true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_argument_mem
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_argument_mem
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_intervalIntegrable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_intervalIntegrable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel_first
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel_first
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel_second
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel_second
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel_third
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel_third
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_change_variable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_change_variable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_free
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_free
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_cancel
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_free_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_exp_free_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThirdExpFreeIntegral
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThirdExpFreeIntegral
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThirdExpFreeIntegral_integrable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThirdExpFreeIntegral_integrable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_coefficient_eq
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_coefficient_eq
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_oneThird_exp_free
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_oneThird_exp_free
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeEleventhsExpFreeIntegral
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeEleventhsExpFreeIntegral
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeEleventhsExpFreeIntegral_integrable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeEleventhsExpFreeIntegral_integrable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_coefficient_eq
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_coefficient_eq
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_threeElevenths_exp_free
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_threeElevenths_exp_free
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_base_integral
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_base_integral
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_derivative_quadratic_majorant
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_derivative_quadratic_majorant
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_shift
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_shift
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_kernel_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_kernel_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_quadratic_majorant
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_quadratic_majorant
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_nested_inner_cubic_majorant
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_nested_inner_cubic_majorant
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_nested_inner_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_nested_inner_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_nested_quartic_majorant
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_nested_quartic_majorant
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_increment
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_increment
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_third_body_split
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_third_body_split
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_full_rational_majorant
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_full_rational_majorant
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerPolynomial
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerPolynomial
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerPolynomial_hasDerivAt
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerPolynomial_hasDerivAt
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_log_geometric_remainder
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_log_geometric_remainder
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_hasDerivAt
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_hasDerivAt
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope_hasDerivAt
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope_hasDerivAt
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope_derivative_ge
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope_derivative_ge
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_le_envelope
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_inner_le_envelope
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_log_geometric_lower
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_log_geometric_lower
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerPolynomial_le_inner
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerPolynomial_le_inner
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope_error
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_innerEnvelope_error
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_fullEnvelope
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_fullEnvelope
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_fullEnvelope_majorizes
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_fullEnvelope_majorizes
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_fullEnvelope_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_fullEnvelope_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_integral_le_fullEnvelope
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_integral_le_fullEnvelope
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_integral_le_fullEnvelope
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_integral_le_fullEnvelope
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarMainKernel
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarMainKernel
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarCorrectionKernel
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarCorrectionKernel
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarMain_continuous
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarMain_continuous
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarBody_low
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarBody_low
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarBody_high
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarBody_high
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarCorrection_continuous
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalarCorrection_continuous
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_integral_split
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_scalar_integral_split
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_integral_split
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_integral_split
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_integral_split
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_integral_split
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3eval
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3eval
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3primAux
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3primAux
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3prim
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3prim
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3eval_continuous
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3eval_continuous
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3primAux_hasDerivAt
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3primAux_hasDerivAt
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3prim_hasDerivAt
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3prim_hasDerivAt
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3geom_lower
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3geom_lower
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3geom_upper
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3geom_upper
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3change_kernel
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3change_kernel
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3E
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3E
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3K
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3K
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3kernel_majorant
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3kernel_majorant
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3E_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3E_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3pCoeffs
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3pCoeffs
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3pCoeffs_eq
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3pCoeffs_eq
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q0
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q0
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q0_eq
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q0_eq
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q1
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q1
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q1_eq
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q1_eq
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q2
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q2
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q2_eq
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q2_eq
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0_value
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0_value
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0b
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0b
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0b_value
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0b_value
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1_value
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1_value
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2_value
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2_value
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B4
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B4
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3Base4
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3Base4
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B4_arithmetic
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B4_arithmetic
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B5
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B5
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3Base5
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3Base5
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B5_arithmetic
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3B5_arithmetic
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base_log
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base_log
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base4_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base4_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base5_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base5_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment0_domain
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment0_domain
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment1_domain
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment1_domain
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment2_domain
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3segment2_domain
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral0_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral0_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral0b_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral0b_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral1_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral1_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral2_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3integral2_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3E_integrable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3E_integrable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3I4_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3I4_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3I5_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3I5_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dL
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dL
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.A
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.A
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dA
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dA
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.B
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.B
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dB
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dB
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.D
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.D
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dD
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dD
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.G
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.G
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.K
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.K
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L_deriv
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L_deriv
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.A_deriv
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.A_deriv
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.B_deriv
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.B_deriv
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.D_deriv
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.D_deriv
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T_deriv
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T_deriv
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L_zero
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L_zero
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.A_zero
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.A_zero
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.B_zero
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.B_zero
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.D_zero
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.D_zero
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T_zero
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T_zero
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dA_residual
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dA_residual
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dA_dominates
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dA_dominates
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dB_residual
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dB_residual
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dB_dominates
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dB_dominates
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dD_residual
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dD_residual
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dD_dominates
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.dD_dominates
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H_residual
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H_residual
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H_dominates
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H_dominates
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L_residual
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.L_residual
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H_nonneg
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.H_nonneg
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.K_product
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.K_product
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.G_residual
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.G_residual
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.K_dominates
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.K_dominates
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.final_rational_evaluation
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.final_rational_evaluation
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.log_le_L
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.log_le_L
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.inner_le_A
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.inner_le_A
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.nested_inner_le_B
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.nested_inner_le_B
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.nested_le_D
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.nested_le_D
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.correction_continuousOn
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.correction_continuousOn
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.actual_correction_le_rational
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.actual_correction_le_rational
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base_integrable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base_integrable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main_integrable
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main_integrable
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main_high_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main_high_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main4_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main4_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main5_bound
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3main5_bound
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_scalar_le_2360636
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_scalar_le_2360636
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_scalar_le_1951976
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_scalar_le_1951976
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_coefficient_le_2360636
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_oneThird_coefficient_le_2360636
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_coefficient_le_1951976
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_threeElevenths_coefficient_le_1951976
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_2360636
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_2360636
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_1951976
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3_normalized_upper_1951976
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightFiveNegativeScalarCoefficient
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightFiveNegativeScalarCoefficient
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightFiveNegativeScalarCoefficient_le
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightFiveNegativeScalarCoefficient_le
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_remainingFive_fiveNegativeScalars_small_epsilon
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_remainingFive_fiveNegativeScalars_small_epsilon

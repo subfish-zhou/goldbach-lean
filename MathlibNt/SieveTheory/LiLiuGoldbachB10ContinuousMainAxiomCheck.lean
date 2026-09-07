@@ -1,0 +1,14 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB10ContinuousMainWeight
+#print axioms goldbachB10ContinuousMainWeight
+#check goldbachB10ContinuousMainMass
+#print axioms goldbachB10ContinuousMainMass
+#check goldbachB10MainWeight_sub_continuous_nonneg_le
+#print axioms goldbachB10MainWeight_sub_continuous_nonneg_le
+#check goldbachB10MainMass_sub_continuous_nonneg_le
+#print axioms goldbachB10MainMass_sub_continuous_nonneg_le
+#check goldbachB10MainMass_floor_payment_eventually
+#print axioms goldbachB10MainMass_floor_payment_eventually
+#check goldbachB10MainMass_floor_payment_mainScale
+#print axioms goldbachB10MainMass_floor_payment_mainScale

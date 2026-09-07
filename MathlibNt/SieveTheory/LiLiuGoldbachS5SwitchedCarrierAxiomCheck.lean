@@ -1,0 +1,114 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachS5_cofactor_prime_or_square
+#print axioms goldbachS5_cofactor_prime_or_square
+#check goldbachS5Closed_cofactor_prime_or_square
+#print axioms goldbachS5Closed_cofactor_prime_or_square
+
+#check instDecidableGoldbachS5CarrierGeometry
+#print axioms instDecidableGoldbachS5CarrierGeometry
+#check goldbachC9Pairs
+#print axioms goldbachC9Pairs
+#check mem_goldbachC9Pairs_iff
+#print axioms mem_goldbachC9Pairs_iff
+#check goldbachC9Pairs_subset_S4Pairs
+#print axioms goldbachC9Pairs_subset_S4Pairs
+#check goldbachC9Prod
+#print axioms goldbachC9Prod
+#check goldbachC9Prod_pos
+#print axioms goldbachC9Prod_pos
+#check goldbachC9Prod_injOn
+#print axioms goldbachC9Prod_injOn
+#check goldbachC9Prod_support_bounds
+#print axioms goldbachC9Prod_support_bounds
+#check goldbachC9ProductSupport
+#print axioms goldbachC9ProductSupport
+#check goldbachC9ProductFiber
+#print axioms goldbachC9ProductFiber
+#check goldbachC9Coeff
+#print axioms goldbachC9Coeff
+#check goldbachC9Coeff_le_one
+#print axioms goldbachC9Coeff_le_one
+#check goldbachC9Coeff_pos_iff
+#print axioms goldbachC9Coeff_pos_iff
+#check goldbachC9ProductSupport_bounds
+#print axioms goldbachC9ProductSupport_bounds
+#check goldbachS5Cutoff_twentieth_gt
+#print axioms goldbachS5Cutoff_twentieth_gt
+#check goldbachC9Pair_dvdFiber_card_le_fourHundred
+#print axioms goldbachC9Pair_dvdFiber_card_le_fourHundred
+
+#check instDecidableGoldbachS5SwitchedCarrier
+#print axioms instDecidableGoldbachS5SwitchedCarrier
+#check goldbachS5ActualAtoms
+#print axioms goldbachS5ActualAtoms
+#check mem_goldbachS5ActualAtoms_iff
+#print axioms mem_goldbachS5ActualAtoms_iff
+#check goldbachS5Closed_eq_card_actualAtoms
+#print axioms goldbachS5Closed_eq_card_actualAtoms
+#check goldbachS5BadAtoms
+#print axioms goldbachS5BadAtoms
+#check goldbachS5GoodAtoms
+#print axioms goldbachS5GoodAtoms
+#check goldbachS5SquareAtoms
+#print axioms goldbachS5SquareAtoms
+#check goldbachS5GoodNonsquareAtoms
+#print axioms goldbachS5GoodNonsquareAtoms
+#check goldbachS5SquareSet
+#print axioms goldbachS5SquareSet
+#check mem_goldbachS5SquareSet_iff
+#print axioms mem_goldbachS5SquareSet_iff
+#check goldbachS5SquareCount
+#print axioms goldbachS5SquareCount
+#check goldbachS5Cofactor
+#print axioms goldbachS5Cofactor
+#check goldbachS5ActualAtom_factorization
+#print axioms goldbachS5ActualAtom_factorization
+#check goldbachS5Cofactor_prime
+#print axioms goldbachS5Cofactor_prime
+#check goldbachB9PlusAtoms
+#print axioms goldbachB9PlusAtoms
+#check mem_goldbachB9PlusAtoms_iff
+#print axioms mem_goldbachB9PlusAtoms_iff
+#check goldbachB9PlusOutput
+#print axioms goldbachB9PlusOutput
+#check goldbachB9PlusSiftedAtoms
+#print axioms goldbachB9PlusSiftedAtoms
+#check mem_goldbachB9PlusSiftedAtoms_iff
+#print axioms mem_goldbachB9PlusSiftedAtoms_iff
+#check goldbachB9PlusSiftedAtoms_eq_coprime_filter
+#print axioms goldbachB9PlusSiftedAtoms_eq_coprime_filter
+#check goldbachB9PlusPrimeAtoms
+#print axioms goldbachB9PlusPrimeAtoms
+#check goldbachB9PlusOutputFiber
+#print axioms goldbachB9PlusOutputFiber
+#check goldbachS5Switch
+#print axioms goldbachS5Switch
+#check goldbachS5Switch_output
+#print axioms goldbachS5Switch_output
+#check goldbachS5Switch_injOn
+#print axioms goldbachS5Switch_injOn
+#check goldbachS5Switch_mem_primeAtoms
+#print axioms goldbachS5Switch_mem_primeAtoms
+#check goldbachS5GoodNonsquareAtoms_outputFiber_card_le
+#print axioms goldbachS5GoodNonsquareAtoms_outputFiber_card_le
+#check goldbachS5ActualAtoms_fiber_card_le_fourHundred
+#print axioms goldbachS5ActualAtoms_fiber_card_le_fourHundred
+#check goldbachS5BadAtoms_card_le
+#print axioms goldbachS5BadAtoms_card_le
+#check goldbachS5SquareAtoms_card_le
+#print axioms goldbachS5SquareAtoms_card_le
+#check goldbachB9PlusOutputFiber_card_le_fourHundred
+#print axioms goldbachB9PlusOutputFiber_card_le_fourHundred
+#check goldbachB9Plus_low_card_le
+#print axioms goldbachB9Plus_low_card_le
+#check goldbachB9Plus_highPrime_subset_sifted
+#print axioms goldbachB9Plus_highPrime_subset_sifted
+#check goldbachB9PlusPrimeAtoms_card_le_sifted
+#print axioms goldbachB9PlusPrimeAtoms_card_le_sifted
+#check goldbachS5Closed_le_sifted_B9Plus
+#print axioms goldbachS5Closed_le_sifted_B9Plus
+#check goldbachS5Closed_eventually_le_sifted_B9Plus
+#print axioms goldbachS5Closed_eventually_le_sifted_B9Plus

@@ -1,0 +1,21 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabCount
+
+set_option autoImplicit false
+
+#check LiLiuPrereqBuchstab.mem_roughNumbers
+#check LiLiuPrereqBuchstab.rough_iff_no_small_prime
+#check LiLiuPrereqBuchstab.one_mem_roughNumbers
+#check LiLiuPrereqBuchstab.rough_iff_minFac
+#check LiLiuPrereqBuchstab.minFac_mul_of_rough
+#check LiLiuPrereqBuchstab.rough_div_minFac
+#check LiLiuPrereqBuchstab.card_leastFactor_fiber
+#check LiLiuPrereqBuchstab.roughCount_buchstab
+
+#print axioms LiLiuPrereqBuchstab.mem_roughNumbers
+#print axioms LiLiuPrereqBuchstab.rough_iff_no_small_prime
+#print axioms LiLiuPrereqBuchstab.one_mem_roughNumbers
+#print axioms LiLiuPrereqBuchstab.rough_iff_minFac
+#print axioms LiLiuPrereqBuchstab.minFac_mul_of_rough
+#print axioms LiLiuPrereqBuchstab.rough_div_minFac
+#print axioms LiLiuPrereqBuchstab.card_leastFactor_fiber
+#print axioms LiLiuPrereqBuchstab.roughCount_buchstab

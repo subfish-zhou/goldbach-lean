@@ -1,0 +1,20 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialPaid
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachWeightD6_le_goldbachQA
+#check goldbachWeightD6_real_le_two_mul_div_z
+#check goldbachWeightB6pair_real_le_twenty_mul_div_b
+#check goldbachWeightB7_real_le_twenty_mul_div_b
+#check goldbachWeight_initial_error_real_le_forty_two_mul_div_z
+#check goldbachWeight_initial_paid_real
+
+#print axioms goldbachWeightD6_le_goldbachQA
+#print axioms goldbachWeightD6_real_le_two_mul_div_z
+#print axioms goldbachWeightB6pair_real_le_twenty_mul_div_b
+#print axioms goldbachWeightB7_real_le_twenty_mul_div_b
+#print axioms goldbachWeight_initial_error_real_le_forty_two_mul_div_z
+#print axioms goldbachWeight_initial_paid_real
+
+#check goldbachWeight_initial_paid_eventually
+#print axioms goldbachWeight_initial_paid_eventually

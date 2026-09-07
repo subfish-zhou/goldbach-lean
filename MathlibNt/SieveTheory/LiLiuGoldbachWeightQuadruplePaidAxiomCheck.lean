@@ -1,0 +1,24 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruplePaid
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachWeightT14
+#check goldbachWeightT15
+#check goldbachWeightG11
+#check goldbachWeightG12
+#check goldbachWeightT14_nonneg
+#check goldbachWeightT15_nonneg
+#check goldbachWeightG11_nonneg
+#check goldbachWeightG12_nonneg
+#check goldbachWeightG14_le_goldbachWeightT14_add_goldbachWeightG11
+#check goldbachWeightG15_le_goldbachWeightT15_add_goldbachWeightG12
+
+#print axioms goldbachWeightT14_nonneg
+#print axioms goldbachWeightT15_nonneg
+#print axioms goldbachWeightG11_nonneg
+#print axioms goldbachWeightG12_nonneg
+#print axioms goldbachWeightG14_le_goldbachWeightT14_add_goldbachWeightG11
+#print axioms goldbachWeightG15_le_goldbachWeightT15_add_goldbachWeightG12
+
+#check goldbachWeight_quadruple_paid_eventually
+#print axioms goldbachWeight_quadruple_paid_eventually

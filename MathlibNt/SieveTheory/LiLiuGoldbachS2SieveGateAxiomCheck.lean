@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS2SieveGate
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS2_sieveDivisor_coprime
+#print axioms goldbachS2_sieveDivisor_coprime
+#check goldbachS2_gated_sum_eq_sum
+#print axioms goldbachS2_gated_sum_eq_sum

@@ -1,0 +1,22 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
+
+set_option autoImplicit false
+
+#check LiLiuPrereqBuchstab.buchstab
+#check LiLiuPrereqBuchstab.approx_succ_eq
+#check LiLiuPrereqBuchstab.approx_eq_of_le
+#check LiLiuPrereqBuchstab.buchstab_eq_approx
+#check LiLiuPrereqBuchstab.buchstab_eq_one_div
+#check LiLiuPrereqBuchstab.continuous_buchstab
+#check LiLiuPrereqBuchstab.continuousOn_buchstab
+#check LiLiuPrereqBuchstab.mul_buchstab_eq_integral
+#check LiLiuPrereqBuchstab.hasDerivAt_mul_buchstab
+
+#print axioms LiLiuPrereqBuchstab.approx_succ_eq
+#print axioms LiLiuPrereqBuchstab.approx_eq_of_le
+#print axioms LiLiuPrereqBuchstab.buchstab_eq_approx
+#print axioms LiLiuPrereqBuchstab.buchstab_eq_one_div
+#print axioms LiLiuPrereqBuchstab.continuous_buchstab
+#print axioms LiLiuPrereqBuchstab.continuousOn_buchstab
+#print axioms LiLiuPrereqBuchstab.mul_buchstab_eq_integral
+#print axioms LiLiuPrereqBuchstab.hasDerivAt_mul_buchstab

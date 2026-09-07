@@ -1,0 +1,16 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB10MainWeight
+#print axioms goldbachB10MainWeight
+#check goldbachB10MainMass
+#print axioms goldbachB10MainMass
+#check b10_li_difference_nonneg_le
+#print axioms b10_li_difference_nonneg_le
+#check goldbachB10MainWeight_bounds_eventually
+#print axioms goldbachB10MainWeight_bounds_eventually
+#check goldbachB10MainMass_nonneg_eventually
+#print axioms goldbachB10MainMass_nonneg_eventually
+#check goldbachB10PanMainPrefix_eq_support_sum
+#print axioms goldbachB10PanMainPrefix_eq_support_sum
+#check goldbachB10PanMainPrefix_sub_eq_gatedMainWeight
+#print axioms goldbachB10PanMainPrefix_sub_eq_gatedMainWeight

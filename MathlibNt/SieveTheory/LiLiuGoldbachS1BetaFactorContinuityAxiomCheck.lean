@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFactorContinuity
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachS1_lowerFactor_continuousAt_betaRatio
+#print axioms goldbachS1_lowerFactor_continuousAt_betaRatio
+#check goldbachS1_exists_betaRatio_below
+#print axioms goldbachS1_exists_betaRatio_below

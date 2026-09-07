@@ -1,0 +1,4 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightProduct
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachWeight_twelve_product_log_scale_eventually
+#print axioms goldbachWeight_twelve_product_log_scale_eventually

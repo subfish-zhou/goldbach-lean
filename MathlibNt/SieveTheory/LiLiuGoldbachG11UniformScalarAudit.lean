@@ -1,0 +1,78 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightUniformRationalConsumed
+set_option pp.fullNames true
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLogLower
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLogLower
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLogUpper
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLogUpper
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalarUpper
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalarUpper
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_one_eq_uniform_primitives
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_one_eq_uniform_primitives
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_one_eq_uniform_log
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_one_eq_uniform_log
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLog_endpoints_eq
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLog_endpoints_eq
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLog_bounds
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformLog_bounds
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_enclosure
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_enclosure
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_rational_budget
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_rational_budget
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_lt_upper
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_lt_upper
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_upper_error
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11UniformScalar_upper_error
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_uniform8_coefficient_error
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_uniform8_coefficient_error
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_uniform8_coefficient_gt_author_number
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_uniform8_coefficient_gt_author_number
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11_le_uniformScalar_numeric
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11_le_uniformScalar_numeric
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11_le_uniformScalar_numeric_fixed
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11_le_uniformScalar_numeric_fixed
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_lowPrefix_rational_consumed_small_epsilon
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_lowPrefix_rational_consumed_small_epsilon
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11PaidBase_eq_actual
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11PaidBase_eq_actual
+set_option pp.universes true
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_uniformRational_consumed_small_epsilon
+set_option pp.universes false
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_uniformRational_consumed_small_epsilon

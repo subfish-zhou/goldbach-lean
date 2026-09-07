@@ -1,0 +1,6 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10EndpointScale
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check eventually_rpow_le_scaled_floor_rpow
+#check goldbachC10ProductSupport_scaled_floor_eventually
+#print axioms eventually_rpow_le_scaled_floor_rpow
+#print axioms goldbachC10ProductSupport_scaled_floor_eventually

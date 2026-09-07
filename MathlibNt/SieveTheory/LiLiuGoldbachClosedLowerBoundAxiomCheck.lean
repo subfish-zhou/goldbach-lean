@@ -1,0 +1,37 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachClosedLowerBound
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachClosedPrimes
+#check mem_goldbachClosedPrimes_iff
+#check goldbachS6HalfOpen
+#check goldbachR
+#check goldbachS6Closed
+#check goldbachB6
+#check goldbachR_nonneg
+#check goldbachB6_nonneg
+#check goldbachS6HalfOpen_eq_goldbachWStrict_add_goldbachR
+#check goldbachS6Closed_eq_goldbachS6HalfOpen_add_goldbachB6
+#check goldbachWStrict_eq_goldbachS6Closed_sub_goldbachR_sub_goldbachB6
+#check goldbachS3Closed
+#check goldbachS5Closed
+#check goldbachS3HalfOpen_le_goldbachS3Closed
+#check goldbachS5HalfOpen_le_goldbachS5Closed
+
+#print axioms mem_goldbachClosedPrimes_iff
+#print axioms goldbachR_nonneg
+#print axioms goldbachB6_nonneg
+#print axioms goldbachS6HalfOpen_eq_goldbachWStrict_add_goldbachR
+#print axioms goldbachS6Closed_eq_goldbachS6HalfOpen_add_goldbachB6
+#print axioms goldbachWStrict_eq_goldbachS6Closed_sub_goldbachR_sub_goldbachB6
+#print axioms goldbachS3HalfOpen_le_goldbachS3Closed
+#print axioms goldbachS5HalfOpen_le_goldbachS5Closed
+
+#check goldbachFiniteError
+#check mem_goldbachHalfOpenPrimes_iff
+#check literalH_nonneg
+#print axioms mem_goldbachHalfOpenPrimes_iff
+#print axioms literalH_nonneg
+#check goldbach_closed_sieve_lower_bound_eventually
+#print axioms goldbachFiniteError_nonneg
+#print axioms goldbach_closed_sieve_lower_bound_eventually

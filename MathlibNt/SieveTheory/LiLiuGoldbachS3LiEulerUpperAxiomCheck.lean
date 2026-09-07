@@ -1,0 +1,11 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS3LiEulerUpper
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachS3_strictEndpoint_mainMass_upper
+#check goldbachS3BoundingSieve_sieveProduct_eq_S1
+#check goldbachS3_li_mul_eulerProduct_upper
+
+#print axioms goldbachS3_strictEndpoint_mainMass_upper
+#print axioms goldbachS3BoundingSieve_sieveProduct_eq_S1
+#print axioms goldbachS3_li_mul_eulerProduct_upper

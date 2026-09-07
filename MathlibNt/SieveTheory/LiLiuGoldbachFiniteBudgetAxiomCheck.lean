@@ -1,0 +1,12 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachFiniteBudget
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB6_le_four_hundred_mul_div_y
+#check goldbachB6_le_four_hundred_mul_div_z
+#check goldbachFiniteError_le_446_of_growth
+#check goldbachFiniteError_446_eventually
+#check goldbachbig_finite_lower_bound_eventually
+#print axioms goldbachB6_le_four_hundred_mul_div_y
+#print axioms goldbachB6_le_four_hundred_mul_div_z
+#print axioms goldbachFiniteError_le_446_of_growth
+#print axioms goldbachFiniteError_446_eventually
+#print axioms goldbachbig_finite_lower_bound_eventually

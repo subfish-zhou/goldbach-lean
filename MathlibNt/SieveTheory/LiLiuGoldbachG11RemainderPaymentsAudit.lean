@@ -1,0 +1,5 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11RemainderPayments
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_smallOutput_paid
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_smallOutput_paid
+#check @MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_buchstabExcess_paid
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_buchstabExcess_paid

@@ -1,0 +1,13 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGeometry
+import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabGeometry
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachG11_product_le_fourthPower
+#print axioms goldbachG11_product_le_fourthPower
+#check goldbachG11_canonical_product_bounds
+#print axioms goldbachG11_canonical_product_bounds
+#check goldbachG11_buchstabParameter_bounds
+#print axioms goldbachG11_buchstabParameter_bounds
+#check goldbachG11_logPrimeExponent_mem
+#print axioms goldbachG11_logPrimeExponent_mem
+#check goldbachG11_canonical_logQuotient_bounds
+#print axioms goldbachG11_canonical_logQuotient_bounds

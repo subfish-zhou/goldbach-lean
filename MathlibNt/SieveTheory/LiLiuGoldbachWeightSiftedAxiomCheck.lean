@@ -1,0 +1,16 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachWeightSifted
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check mem_goldbachB10Atoms_iff
+#check goldbachB10SiftedCount_eq_card_atoms
+#check mem_goldbachB10SiftedAtoms_iff
+#check mem_goldbachPi10OutputFiber_iff
+#check goldbachPi10OutputFiber_card_le_fourHundred
+#check goldbachPi10_le_goldbachB10SiftedCount_add_fourHundred_floor
+#check goldbachWeight_twelve_sifted_log_scale_eventually
+#print axioms mem_goldbachB10Atoms_iff
+#print axioms goldbachB10SiftedCount_eq_card_atoms
+#print axioms mem_goldbachB10SiftedAtoms_iff
+#print axioms mem_goldbachPi10OutputFiber_iff
+#print axioms goldbachPi10OutputFiber_card_le_fourHundred
+#print axioms goldbachPi10_le_goldbachB10SiftedCount_add_fourHundred_floor
+#print axioms goldbachWeight_twelve_sifted_log_scale_eventually

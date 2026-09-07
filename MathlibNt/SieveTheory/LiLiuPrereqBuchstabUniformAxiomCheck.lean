@@ -1,0 +1,16 @@
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniform
+
+#check LiLiuPrereqBuchstab.rpow_cutoff_bounds
+#check LiLiuPrereqBuchstab.rpow_buchstab_main_eq
+#check LiLiuPrereqBuchstab.buchstab_normalization_pos
+#check LiLiuPrereqBuchstab.roughCount_relative_band_error
+#check LiLiuPrereqBuchstab.roughCount_uniform_error_bound
+#check LiLiuPrereqBuchstab.tendsto_uniform_buchstab_majorant
+#check LiLiuPrereqBuchstab.roughCount_uniform_buchstab
+#print axioms LiLiuPrereqBuchstab.rpow_cutoff_bounds
+#print axioms LiLiuPrereqBuchstab.rpow_buchstab_main_eq
+#print axioms LiLiuPrereqBuchstab.buchstab_normalization_pos
+#print axioms LiLiuPrereqBuchstab.roughCount_relative_band_error
+#print axioms LiLiuPrereqBuchstab.roughCount_uniform_error_bound
+#print axioms LiLiuPrereqBuchstab.tendsto_uniform_buchstab_majorant
+#print axioms LiLiuPrereqBuchstab.roughCount_uniform_buchstab

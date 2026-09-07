@@ -1,0 +1,40 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check goldbachB10Output
+#print axioms goldbachB10Output
+#check goldbachB10Support
+#print axioms goldbachB10Support
+#check goldbachB10Weight
+#print axioms goldbachB10Weight
+#check goldbachB10SiftingPrimes
+#print axioms goldbachB10SiftingPrimes
+#check goldbachB10ProdPrimes
+#print axioms goldbachB10ProdPrimes
+#check mem_goldbachB10SiftingPrimes_iff
+#print axioms mem_goldbachB10SiftingPrimes_iff
+#check goldbachB10ProdPrimes_squarefree
+#print axioms goldbachB10ProdPrimes_squarefree
+#check goldbachB10ProdPrimes_ne_zero
+#print axioms goldbachB10ProdPrimes_ne_zero
+#check goldbachB10ProdPrimes_primeFactors
+#print axioms goldbachB10ProdPrimes_primeFactors
+#check prime_dvd_goldbachB10ProdPrimes_iff
+#print axioms prime_dvd_goldbachB10ProdPrimes_iff
+#check goldbachB10ProdPrimes_coprime_N
+#print axioms goldbachB10ProdPrimes_coprime_N
+#check goldbachB10_dvd_prodPrimes_coprime_N
+#print axioms goldbachB10_dvd_prodPrimes_coprime_N
+#check prime_dvd_goldbachB10ProdPrimes_lt
+#print axioms prime_dvd_goldbachB10ProdPrimes_lt
+#check goldbachB10_coprime_prodPrimes_iff_literalHPoint
+#print axioms goldbachB10_coprime_prodPrimes_iff_literalHPoint
+#check goldbachB10BoundingSieve
+#print axioms goldbachB10BoundingSieve
+#check goldbachB10BoundingSieve_multSum_eq_card_divisorAtoms
+#print axioms goldbachB10BoundingSieve_multSum_eq_card_divisorAtoms
+#check goldbachB10BoundingSieve_siftedSum_eq
+#print axioms goldbachB10BoundingSieve_siftedSum_eq
+#check goldbachB10BoundingSieve_nu_eq_inv_totient
+#print axioms goldbachB10BoundingSieve_nu_eq_inv_totient
+#check goldbachB10BoundingSieve_rem_eq_card_sub
+#print axioms goldbachB10BoundingSieve_rem_eq_card_sub

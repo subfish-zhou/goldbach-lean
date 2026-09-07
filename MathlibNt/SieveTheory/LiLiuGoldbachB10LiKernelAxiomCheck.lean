@@ -1,0 +1,8 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10LiKernel
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+#check b10_li_difference_le_log_left
+#print axioms b10_li_difference_le_log_left
+#check b10_li_interval_relative_upper
+#print axioms b10_li_interval_relative_upper
+#check goldbachB10ContinuousMainWeight_relative_upper
+#print axioms goldbachB10ContinuousMainWeight_relative_upper

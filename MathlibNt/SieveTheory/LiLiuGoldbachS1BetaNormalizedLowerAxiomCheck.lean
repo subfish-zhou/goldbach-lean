@@ -1,0 +1,10 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFixedNormalizedLower
+import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaNormalizedLower
+
+open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachS1_beta_fixed_normalized_lower
+#check goldbachS1_beta_normalized_lower
+
+#print axioms goldbachS1_beta_fixed_normalized_lower
+#print axioms goldbachS1_beta_normalized_lower

@@ -1,0 +1,140 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelIntegralBound
+
+namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
+
+#check goldbachG11MeshStep
+#print axioms goldbachG11MeshStep
+#check goldbachG11MeshPoint
+#print axioms goldbachG11MeshPoint
+#check goldbachG11MeshCoords
+#print axioms goldbachG11MeshCoords
+#check goldbachG11MeshCells
+#print axioms goldbachG11MeshCells
+#check goldbachG11MeshLo
+#print axioms goldbachG11MeshLo
+#check goldbachG11MeshHi
+#print axioms goldbachG11MeshHi
+#check goldbachG11MeshStep_pos
+#print axioms goldbachG11MeshStep_pos
+#check goldbachG11MeshPoint_succ
+#print axioms goldbachG11MeshPoint_succ
+#check goldbachG11MeshPoint_strictMono
+#print axioms goldbachG11MeshPoint_strictMono
+#check goldbachG11MeshPoint_end
+#print axioms goldbachG11MeshPoint_end
+#check goldbachG11MeshPoint_bounds
+#print axioms goldbachG11MeshPoint_bounds
+#check goldbachG11MeshPoint_pos
+#print axioms goldbachG11MeshPoint_pos
+#check goldbachG11MeshCell_subset
+#print axioms goldbachG11MeshCell_subset
+#check goldbachG11Mesh_exists_cell
+#print axioms goldbachG11Mesh_exists_cell
+#check goldbachG11Mesh_index_mono
+#print axioms goldbachG11Mesh_index_mono
+#check goldbachG11MeshSup
+#print axioms goldbachG11MeshSup
+#check goldbachG11MeshCoeff
+#print axioms goldbachG11MeshCoeff
+#check goldbachG11MeshSup_attained
+#print axioms goldbachG11MeshSup_attained
+#check goldbachG11MeshSup_le
+#print axioms goldbachG11MeshSup_le
+#check goldbachG11MeshCoeff_nonneg
+#print axioms goldbachG11MeshCoeff_nonneg
+#check goldbachG11MeshCoeff_majorant
+#print axioms goldbachG11MeshCoeff_majorant
+
+#check goldbachG11MeshBox
+#print axioms goldbachG11MeshBox
+#check goldbachG11MeshAmbient
+#print axioms goldbachG11MeshAmbient
+#check goldbachG11MeshSource
+#print axioms goldbachG11MeshSource
+#check goldbachG11MeshCell
+#print axioms goldbachG11MeshCell
+#check goldbachG11MeshRegion
+#print axioms goldbachG11MeshRegion
+#check measurableSet_goldbachG11MeshCell
+#print axioms measurableSet_goldbachG11MeshCell
+#check measurableSet_goldbachG11MeshAmbient
+#print axioms measurableSet_goldbachG11MeshAmbient
+#check isCompact_goldbachG11MeshAmbient
+#print axioms isCompact_goldbachG11MeshAmbient
+#check measurableSet_goldbachG11MeshSource
+#print axioms measurableSet_goldbachG11MeshSource
+#check goldbachG11MeshBox_subset_ambient
+#print axioms goldbachG11MeshBox_subset_ambient
+#check goldbachG11MeshCell_subset_box
+#print axioms goldbachG11MeshCell_subset_box
+#check goldbachG11MeshCell_unique
+#print axioms goldbachG11MeshCell_unique
+#check goldbachG11MeshBox_cover
+#print axioms goldbachG11MeshBox_cover
+#check goldbachG11MeshSource_cover
+#print axioms goldbachG11MeshSource_cover
+#check goldbachG11MeshCell_order_error
+#print axioms goldbachG11MeshCell_order_error
+#check goldbachG11Mesh_prime_cover
+#print axioms goldbachG11Mesh_prime_cover
+
+#check goldbachG11MeshDensity
+#print axioms goldbachG11MeshDensity
+#check goldbachG11MeshIntegrand
+#print axioms goldbachG11MeshIntegrand
+#check continuousOn_goldbachG11MeshDensity
+#print axioms continuousOn_goldbachG11MeshDensity
+#check goldbachG11MeshDensity_nonneg
+#print axioms goldbachG11MeshDensity_nonneg
+#check integrableOn_goldbachG11MeshDensity
+#print axioms integrableOn_goldbachG11MeshDensity
+#check integrable_goldbachG11MeshSource
+#print axioms integrable_goldbachG11MeshSource
+#check goldbachG11LogBoxMass_eq_meshIntegral
+#print axioms goldbachG11LogBoxMass_eq_meshIntegral
+#check goldbachG11MeshSource_mem_iff
+#print axioms goldbachG11MeshSource_mem_iff
+#check goldbachG11PrimeIntegral_eq_meshSource
+#print axioms goldbachG11PrimeIntegral_eq_meshSource
+
+#check goldbachG11MeshUpperIntegrand
+#print axioms goldbachG11MeshUpperIntegrand
+#check goldbachG11MeshUpperSum
+#print axioms goldbachG11MeshUpperSum
+#check tendsto_goldbachG11MeshStep
+#print axioms tendsto_goldbachG11MeshStep
+#check tendsto_goldbachG11Mesh_sameCell
+#print axioms tendsto_goldbachG11Mesh_sameCell
+#check tendsto_goldbachG11MeshSup
+#print axioms tendsto_goldbachG11MeshSup
+#check tendsto_goldbachG11MeshCoeff
+#print axioms tendsto_goldbachG11MeshCoeff
+#check integrable_goldbachG11MeshUpperIntegrand
+#print axioms integrable_goldbachG11MeshUpperIntegrand
+#check goldbachG11MeshUpperSum_eq_integral
+#print axioms goldbachG11MeshUpperSum_eq_integral
+#check goldbachG11MeshUpperIntegrand_eq_of_mem
+#print axioms goldbachG11MeshUpperIntegrand_eq_of_mem
+#check goldbachG11MeshUpperIntegrand_eq_zero
+#print axioms goldbachG11MeshUpperIntegrand_eq_zero
+#check goldbachG11MeshRegion_eventually_not_mem
+#print axioms goldbachG11MeshRegion_eventually_not_mem
+#check tendsto_goldbachG11MeshUpperIntegrand
+#print axioms tendsto_goldbachG11MeshUpperIntegrand
+#check goldbachG11MeshCoeff_le
+#print axioms goldbachG11MeshCoeff_le
+#check goldbachG11MeshUpperIntegrand_dominated
+#print axioms goldbachG11MeshUpperIntegrand_dominated
+#check tendsto_goldbachG11MeshUpperSum
+#print axioms tendsto_goldbachG11MeshUpperSum
+#check goldbachG11MeshUpperSum_exists_le_integral
+#print axioms goldbachG11MeshUpperSum_exists_le_integral
+
+#check goldbachG11PrimeKernel_le_integral_eventually
+#print axioms goldbachG11PrimeKernel_le_integral_eventually
+#check goldbachG11PrimeKernel_one_le_integral_eventually
+#print axioms goldbachG11PrimeKernel_one_le_integral_eventually
+#check goldbachG11PrimeKernel_author_le_integral_eventually
+#print axioms goldbachG11PrimeKernel_author_le_integral_eventually
+
+end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
