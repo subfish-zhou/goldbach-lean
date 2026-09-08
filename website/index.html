@@ -36,7 +36,7 @@
       <h2 id="li-liu-theorem">Completed result · Li–Liu’s 1+1.9 theorem</h2>
       <p class="theorem-text">Every sufficiently large even natural number has a representation <code>N = p + r*q</code>, where <code>p</code> and <code>q</code> are prime, <code>r = 1</code> or <code>r</code> is prime, and <code>r^10 ≤ q^9</code>.</p>
       <p>The factor-size condition is stated in exact natural-number arithmetic. The real-power endpoint gives the equivalent condition <code>r ≤ q^(9/10)</code>.</p>
-      <a class="text-link" href="@@SOURCE_ROOT@@/Goldbach/OnePlusOneNine.lean">Read the Li–Liu public theorems →</a>
+      <a class="text-link" href="docs/Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine">Read the Li–Liu public theorems →</a>
     </section>
 
     <section class="statement" aria-labelledby="theorem">
@@ -52,7 +52,7 @@
         <div class="reading-item">
           <p class="eyebrow">The mathematical view</p>
           <h3><a href="blueprint/">Lean Blueprint <span aria-hidden="true">↗</span></a></h3>
-          <p>Read the overview of both results and explore the selected Chen 1+2 declaration graph, with links to the Lean source.</p>
+          <p>Follow Chen’s 1+2 and Li–Liu’s 1+1.9 proof routes, from reusable analytic foundations to their independent public theorems.</p>
           <a class="text-link" href="blueprint/dep_graph_document.html">Explore the dependency graph →</a>
         </div>
         <div class="reading-item">
@@ -61,6 +61,15 @@
           <p>Browse the generated Lean documentation for all four project libraries. Search declarations, inspect their types and follow imports and source links.</p>
           <a class="text-link" href="docs/Goldbach/Theorem.html#Goldbach.chen_theorem">Open Chen’s theorem →</a>
         </div>
+      </div>
+    </section>
+
+    <section class="details" aria-labelledby="foundations">
+      <h2 id="foundations">Shared foundations,<br>independent routes</h2>
+      <div>
+        <p>The Chen and Li–Liu developments now share proofs for recurring analytic steps: reindexing finite prime-pair sums, absorbing logarithmic remainders, and controlling integral errors through finite boundary covers.</p>
+        <p>Concrete applications supply their own factor ranges, error budgets and boundary geometry. Each theorem keeps its independent public interface, while the common lemmas form a reusable analytic number theory library.</p>
+        <a class="text-link" href="blueprint/">Follow the foundations into both proof routes →</a>
       </div>
     </section>
 
@@ -108,7 +117,7 @@ lake --wfail build</code></pre>
 
   <div class="footer wrap" role="contentinfo">
     <p>Goldbach Lean · <a href="@@SOURCE_ROOT@@/LICENSE">Apache-2.0</a></p>
-    <p>Lean source <a href="@@TREE_ROOT@@"><code>@@SHORT_REVISION@@</code></a> · <a href="build-info.json">Documentation build record</a></p>
+    <p>Website source <a href="@@TREE_ROOT@@"><code>@@SHORT_REVISION@@</code></a> · <a href="build-info.json">Documentation build record</a></p>
   </div>
 </body>
 </html>

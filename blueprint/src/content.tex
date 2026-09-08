@@ -1,54 +1,85 @@
 \input{../../.lake/build/blueprint/library/Goldbach.tex}
 
-\chapter{The public proof boundary}
+\chapter{Two routes toward Goldbach}
 
-The project formalizes Chen's $1+2$ and Li--Liu's $1+1.9$ theorems, while
-building reusable analytic number theory toward stronger Goldbach results.
-The public imports are separate: \texttt{Goldbach} retains the Chen interface,
-\texttt{Goldbach.OnePlusOneNine} exposes Li--Liu, and \texttt{Goldbach.All}
-combines them.
+This project formalizes Chen's $1+2$ theorem and Li--Liu's $1+1.9$ theorem,
+while building reusable analytic number theory toward stronger Goldbach results.
+The two developments retain independent public interfaces and proof routes.
+Use \texttt{Goldbach} for Chen, \texttt{Goldbach.OnePlusOneNine} for Li--Liu,
+and \texttt{Goldbach.All} to import both.
 
-Li--Liu's theorem gives, for every sufficiently large even natural number $N$,
-primes $p,q$ and a natural number $r$ with $r=1$ or $r$ prime, such that
+Chen's theorem represents every sufficiently large even natural number as
 \[
-N=p+rq, \qquad r^{10}\le q^9.
+N=p+q,
 \]
-The real-power endpoint gives the equivalent condition $r\le q^{9/10}$.
-Its count $D_{1,19/10}(N)$ counts distinct eligible primes $p$, once for each
-prime, and satisfies
+where $p$ is prime and $q$ is either prime or a product of two primes.
+The two factors in the product may coincide. Li--Liu's theorem also controls
+the relative sizes of the factors:
 \[
-\frac{1}{2500}\,\mathfrak S_{\mathrm{Liu}}(N)
-\frac{N}{(\log N)^2} < D_{1,19/10}(N)
+N=p+rq,\qquad p,q\text{ prime},\qquad r=1\text{ or }r\text{ prime},
+\qquad r^{10}\le q^9.
 \]
-for all sufficiently large even $N$. Here $1/2500=0.0004$ exactly and
-\[
-\mathfrak S_{\mathrm{Liu}}(N)=
-\prod_{\substack{\ell>2\ \mathrm{prime}\\\ell\mid N}}
-\frac{\ell-1}{\ell-2}
-\prod_{\ell>2\ \mathrm{prime}}\left(1-\frac{1}{(\ell-1)^2}\right).
-\]
-For each fixed real $\kappa<515093/800000000$, the development also proves an
-eventual non-strict lower bound with coefficient $\kappa$ in this normalization.
-The threshold is chosen after $\kappa$.
+The last condition is equivalently $r\le q^{9/10}$.
+Both existence statements have an existential threshold.
 
-The exact public declarations and their implementation imports are in
-\texttt{Goldbach/OnePlusOneNine.lean}; the repository's theorem guide records
-the definitions and quantifiers.
+\section{How to read the graph}
 
-\section{The Chen dependency graph}
+The interactive graph follows sixteen selected declarations: three reusable
+foundations, the seven-node Chen endpoint assembly, and six nodes in the
+Li--Liu route. LeanArchitect extracts dependencies from compiled declarations;
+arrows run from a dependency to its consumer. Each node has a mathematical
+summary and a link to its exact Lean source. The selected graph is a reading
+map through the full proof development. Open the Lean documentation to inspect
+individual types, module imports and the surrounding lemmas.
 
-Chen's theorem asserts that every sufficiently large even natural number is
-a prime plus either a prime or a product of two primes. The proof establishes
-the existence of a threshold with this property.
+The Li--Liu graph distinguishes the positive-margin route used by the public
+existence theorem from the sharper weighted-count estimate used by the
+quantitative theorem. This distinction follows the actual implementation.
 
-The Chen graph below shows seven selected declarations and six displayed edges
-inferred by LeanArchitect from the compiled endpoint declarations. The first
-three input nodes form the boundary of the displayed graph; each retains its
-complete upstream dependencies in Lean. Prose summaries and links to exact
-Lean statements accompany the nodes. The existence and quantitative endpoints
-use separate implementation declarations with a shared proved distribution input.
+\chapter{Reusable analytic foundations}
 
-\section{Distribution and conditional assembly}
+Several recurring arguments now have a common proof, with concrete applications
+supplying their own arithmetic or geometric data. These interfaces connect the
+existing developments and provide building blocks for further work.
+
+\section{Transporting a finite prime-pair sum}
+
+Liu's source separates the two prime-factor ranges. An admissible product
+therefore determines its ordered prime pair uniquely. This permits a single
+change-of-index theorem for arbitrary cutoffs, filters and additive kernels.
+The main-term sum, the noncoprime correction, the arbitrary-kernel identity
+and the pair-cardinality calculation all use this theorem. The filter and
+cutoff remain part of each application's exact finite carrier.
+\inputleannode{thm:pair-transport}
+
+\section{Absorbing a logarithmic remainder}
+
+Fix a positive logarithmic saving and a positive common lower bound for the
+normalizing weight. The extra logarithmic power makes the error coefficient
+tend to zero. After choosing one threshold, the estimate holds for every
+normalization exponent and every weight above that lower bound.
+Chen's singular-series estimates and Li--Liu's normalized terms use this
+common argument. Each application retains its own error budget and cutoff.
+\inputleannode{thm:log-saving}
+
+\section{Paying for a grid boundary}
+
+On the intersection of the grid region and the source region, a local bound
+controls the integrand error. Outside the source region, finitely many boundary
+strips cover the excess. Integrating these bounds yields one estimate that
+allows the strips to overlap. The B8, B9, B10 and Liu prime-pair applications
+supply their own strips, measures and kernel bounds. Their logarithmic
+rectangle masses and endpoint conventions are retained in those applications.
+\inputleannode{thm:grid-error}
+
+\chapter{Chen's prime-plus-almost-prime theorem}
+
+The Chen assembly combines a weighted lower sieve with the proved Liu--Pan
+switched-source distribution estimate. The intermediate theorems expose that
+distribution estimate as an input. Supplying its proved instance closes the
+existence and quantitative conclusions.
+
+\section{Distribution and assembly}
 \inputleannode{thm:liu-pan}
 \inputleannode{thm:conditional-count}
 \inputleannode{thm:conditional-chen}
@@ -61,20 +92,69 @@ use separate implementation declarations with a shared proved distribution input
 \inputleannode{thm:representation}
 \inputleannode{thm:chen}
 
+\chapter{Li--Liu's constrained-factor theorem}
+
+The finite weights detect primes that admit the required constrained-factor
+representation. Sieve estimates then turn those finite inequalities into
+positive lower bounds for sufficiently large even integers.
+\inputleannode{thm:liliu-finite}
+
+\section{Existence from a positive margin}
+
+Certified bounds for the sieve integrals establish a positive margin. The
+finite detection theorem converts that positivity into an eligible prime and
+hence the public $N=p+rq$ representation.
+\inputleannode{thm:liliu-margin}
+\inputleannode{thm:liliu-existence}
+
+\section{A quantitative count of distinct primes}
+
+Write $D_{1,19/10}(N)$ for the number of eligible primes $p$, counting each
+prime once even when it has several witnessing factorizations. The
+normalization is the Liu singular series
+\[
+\mathfrak S_{\mathrm{Liu}}(N)=
+\prod_{\substack{\ell>2\ \mathrm{prime}\\\ell\mid N}}
+\frac{\ell-1}{\ell-2}
+\prod_{\ell>2\ \mathrm{prime}}\left(1-\frac{1}{(\ell-1)^2}\right).
+\]
+The quantitative route applies the author G11 estimate and the certified
+remaining estimates to their original counts before combining the signed
+terms. It supplies, for every fixed real $\kappa<515093/800000000$, a threshold
+beyond which
+\[
+\kappa\,\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2}
+\le D_{1,19/10}(N)
+\]
+for all even $N$. The coefficient is fixed before the threshold is chosen.
+\inputleannode{thm:liliu-ledger}
+\inputleannode{thm:liliu-family}
+
+Choosing a certified coefficient above $1/2500$ and using positivity of the
+normalizing scale gives the paper's strict bound
+\[
+\frac{1}{2500}\,\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2}
+< D_{1,19/10}(N),\qquad 1/2500=0.0004.
+\]
+\inputleannode{thm:liliu-count}
+
 \chapter{Sources and verification}
 
-The development builds on UyNewNas/chen-theorem-lean and the attributed analytic
-number theory sources, with upstream copyright notices retained under Apache-2.0.
-The provenance guide records these sources and the Li--Liu mathematical inputs.
+The development builds on UyNewNas/chen-theorem-lean and the attributed
+analytic number theory sources, with upstream copyright notices retained
+under Apache-2.0. The provenance guide records these sources and the
+Li--Liu mathematical inputs.
 
-Existing builds can retain the \texttt{.lake/} directory when updating: the
-package configuration, toolchain and dependency pins are unchanged. Lake reuses
-unchanged dependencies and rebuilds new or affected modules as needed; the README
-gives focused build and upgrade commands.
+The repository contains the literal specifications, full proofs, theorem
+guide and verification scripts. Both completed routes use Lean's standard
+logical foundations: propositional extensionality, classical choice and
+quotient soundness. Verification combines strict compilation, exact statement
+and axiom checks, and independent kernel replay. The graph supplies a route
+from the mathematical outline to the declarations checked by Lean.
 
-The source repository includes the literal specifications, the full proofs,
-release notes, attribution, and instructions for rebuilding and checking the
-public theorems. Verification combines a source build, literal-statement and
-axiom checks, and independent replay; the graph provides source navigation.
+Existing checkouts can retain \texttt{.lake/} when updating. With the same
+package, toolchain and dependency pins, Lake reuses unchanged artifacts and
+rebuilds affected modules. The README provides focused commands for each
+public theorem and for the combined interface.
 
 \url{https://github.com/subfish-zhou/goldbach-lean}

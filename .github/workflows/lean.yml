@@ -51,15 +51,7 @@ jobs:
           leanblueprint web 2>&1 | tee "$RUNNER_TEMP/blueprint.log"
           ! grep -E 'WARNING:|ERROR:|could not be resolved|File not found:' "$RUNNER_TEMP/blueprint.log"
           test -s blueprint/web/index.html
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-          import pygraphviz
-          page = Path("blueprint/web/dep_graph_document.html").read_text()
-          graph = pygraphviz.AGraph(re.search(r"\.renderDot\(`(.*?)`\)", page, re.S).group(1))
-          assert graph.number_of_nodes() == 7 and graph.number_of_edges() == 6
-          assert "mathlib4_docs/find" not in page
-          PY
+          python3 scripts/verify_blueprint.py
       - name: Upload blueprint website
         uses: actions/upload-artifact@v4
         with:

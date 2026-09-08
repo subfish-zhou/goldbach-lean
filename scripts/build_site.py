@@ -55,7 +55,7 @@ def add_project_navigation(site):
         page.write_text(text.replace('</head>', f'<link rel="icon" href="{icon}" type="image/svg+xml"></head>', 1))
 
 
-def assemble(api, blueprint, output, *, templates=ROOT / "website"):
+def assemble(api, blueprint, output, *, templates=ROOT / "website", source_revision=None):
     api, blueprint, output = api.resolve(), blueprint.resolve(), output.resolve()
     if output.exists():
         raise ValueError("Output already exists; choose a new directory")
@@ -65,6 +65,14 @@ def assemble(api, blueprint, output, *, templates=ROOT / "website"):
     revision = report["source_revision"]
     if not re.fullmatch(r"[0-9a-f]{40}", revision):
         raise ValueError("Expected a full source revision in API build-info.json")
+    api_revision = revision
+    revision = source_revision or api_revision
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError("Expected a full source revision for the website")
+    blueprint_info = blueprint / "build-info.json"
+    blueprint_report = json.loads(blueprint_info.read_text()) if blueprint_info.exists() else {}
+    if blueprint_report and blueprint_report.get("source_revision") != revision:
+        raise ValueError("Blueprint source revision differs from the website source revision")
     modules = report["modules"]
     if report["module_count"] != len(modules) or len(set(modules)) != len(modules):
         raise ValueError("Inconsistent API module inventory")
@@ -97,7 +105,10 @@ def assemble(api, blueprint, output, *, templates=ROOT / "website"):
         raise ValueError("API declaration census changed during assembly")
     api_report = dict(report, blueprint_included=False, project_home="../index.html")
     (work / "docs/build-info.json").write_text(json.dumps(api_report, indent=2) + "\n")
-    assembled = dict(report, layout="project-home", api_path="docs/",
+    assembled = dict(report, website_source_revision=revision,
+                     api_source_revision=api_revision,
+                     blueprint_source_revision=blueprint_report.get("source_revision"),
+                     layout="project-home", api_path="docs/",
                      blueprint_path="blueprint/", blueprint_included=True,
                      homepage_sha256=hashlib.sha256((work / "index.html").read_bytes()).hexdigest())
     (work / "build-info.json").write_text(json.dumps(assembled, indent=2) + "\n")
@@ -112,8 +123,9 @@ def main():
     parser.add_argument("--api", type=Path, required=True)
     parser.add_argument("--blueprint", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=ROOT / "docbuild/.lake/build/site")
+    parser.add_argument("--source-revision", help="Website/Blueprint commit when reusing an older API artifact")
     args = parser.parse_args()
-    report = assemble(args.api, args.blueprint, args.output)
+    report = assemble(args.api, args.blueprint, args.output, source_revision=args.source_revision)
     print(json.dumps({k: v for k, v in report.items() if k != "modules"}, indent=2))
     print(f"Verified project website: {args.output.resolve()}")
 

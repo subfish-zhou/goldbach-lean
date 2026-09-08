@@ -9,8 +9,9 @@ The website presents the Goldbach research program through three routes:
 - **Lean API documentation** at `/docs/`: doc-gen4 module pages, declaration
   search, declaration anchors, source links, imports and reverse-import links
   for the documented modules.
-- **Proof Blueprint** at `/blueprint/`: an overview of both completed results
-  and the selected **Chen 1+2** dependency graph, with links into the implementation.
+- **Proof Blueprint** at `/blueprint/`: the selected **Chen 1+2** and
+  **Li–Liu 1+1.9** routes together with their reusable analytic foundations,
+  with links into the implementation.
 
 The completed public theorems give Chen's prime-plus-almost-prime representation
 and Li–Liu's constrained `N = p + r*q` representation with `r^10 ≤ q^9`, together
@@ -22,10 +23,21 @@ literal statement checks, axiom reports and kernel replay. The documentation
 pipeline below renders compiled declarations and checks the resulting site.
 
 The current source entries are `Goldbach` for 1+2, `Goldbach.OnePlusOneNine`
-for 1+1.9, and `Goldbach.All` for both. The existing Blueprint annotations in
-`Goldbach/Blueprint.lean` describe the Chen route; its prose introduces Li–Liu
-and links readers to the new source entry. The generated API inventory and
-source revision are recorded in each website's `build-info.json`.
+for 1+1.9, and `Goldbach.All` for both. Blueprint annotations in
+`Goldbach/Blueprint.lean` select sixteen declarations spanning both proof routes
+and the common foundations. Titles and mathematical summaries are authored
+there; chapters are written in `blueprint/src/content.tex`. LeanArchitect infers
+the selected dependency edges from compiled declarations, and LeanBlueprint
+renders the document. `scripts/verify_blueprint.py` checks the node and edge
+inventory against `blueprint/graph.json`.
+
+The generated API inventory retains its own `source_revision` in
+`docs/build-info.json`. The assembled site's record also distinguishes
+`api_source_revision`, `website_source_revision` and `blueprint_source_revision`.
+For a homepage/Blueprint preview that reuses an older complete API artifact,
+pass `--source-revision COMMIT` to `scripts/build_site.py`; the Blueprint record
+must match that website revision. API pages retain their original source links.
+The standard CI build generates all three views from the same revision.
 
 ## Pinned generator and isolation
 

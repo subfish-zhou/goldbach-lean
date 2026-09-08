@@ -17,10 +17,11 @@ class ProjectSiteTests(unittest.TestCase):
         self.api = self.root / "api"
         self.blueprint = self.root / "blueprint"
         self.output = self.root / "published"
-        self.modules = ["Goldbach.Statement", "Goldbach.Theorem"]
+        self.modules = ["Goldbach.Statement", "Goldbach.Theorem", "Goldbach.OnePlusOneNine"]
         declarations = {"Goldbach.ChenTheorem": "Statement",
                         "Goldbach.chen_theorem": "Theorem",
-                        "Goldbach.representation_lower_bound": "Theorem"}
+                        "Goldbach.representation_lower_bound": "Theorem",
+                        "Goldbach.one_plus_one_nine": "OnePlusOneNine"}
         for name in ("search.html", "search.js", "find/index.html", "style.css",
                      "declarations/header-data.bmp"):
             file = self.api / name
@@ -32,15 +33,15 @@ class ProjectSiteTests(unittest.TestCase):
         (self.api / "navbar.html").write_text('<html><head></head><body>'
                                                '<h3>General documentation</h3></body></html>')
         (self.api / "Goldbach").mkdir()
-        for module in ("Statement", "Theorem"):
+        for module in ("Statement", "Theorem", "OnePlusOneNine"):
             ids = ''.join(f'<div id="{name}"></div>' for name, mod in declarations.items() if mod == module)
             (self.api / f"Goldbach/{module}.html").write_text(f'<html><head></head><body>{ids}</body></html>')
         index = {"modules": {m: {"url": m.replace('.', '/') + '.html'} for m in self.modules},
                  "declarations": {name: {"docLink": f"./Goldbach/{mod}.html#{name}"}
                                   for name, mod in declarations.items()}}
         (self.api / "declarations/declaration-data.bmp").write_text(json.dumps(index))
-        self.report = {"scope": "full", "modules": self.modules, "module_count": 2,
-                       "declaration_count": 3, "source_revision": "a" * 40, "blueprint_included": True}
+        self.report = {"scope": "full", "modules": self.modules, "module_count": 3,
+                       "declaration_count": 4, "source_revision": "a" * 40, "blueprint_included": True}
         (self.api / "build-info.json").write_text(json.dumps(self.report))
         (self.api / "blueprint").mkdir()
         (self.api / "blueprint/index.html").write_text("Old nested copy")
@@ -60,7 +61,7 @@ class ProjectSiteTests(unittest.TestCase):
         self.assertIn('href="../index.html"', (self.output / "docs/navbar.html").read_text())
         self.assertIn('href="../blueprint/index.html"', (self.output / "docs/index.html").read_text())
         self.assertIn('href="../docs/index.html"', (self.output / "blueprint/index.html").read_text())
-        self.assertEqual(verify_site(self.output / "docs", self.modules, site_root=self.output), 3)
+        self.assertEqual(verify_site(self.output / "docs", self.modules, site_root=self.output), 4)
         original = self.snapshot(self.output)
         add_project_navigation(self.output)
         self.assertEqual(original, self.snapshot(self.output))
@@ -81,7 +82,7 @@ class ProjectSiteTests(unittest.TestCase):
         result = assemble(self.api, self.blueprint, self.output)
         self.assertTrue(result['blueprint_included'])
         self.assertIn('href="../blueprint/index.html"', (self.output / 'docs/navbar.html').read_text())
-        self.assertEqual(verify_site(self.output / 'docs', self.modules, site_root=self.output), 3)
+        self.assertEqual(verify_site(self.output / 'docs', self.modules, site_root=self.output), 4)
 
     def test_blueprint_theorem_headers_are_not_page_headers(self):
         page = self.blueprint / 'index.html'
@@ -113,9 +114,23 @@ class ProjectSiteTests(unittest.TestCase):
         self.assertFalse(self.output.exists())
 
     def test_stale_declaration_count_fails(self):
-        self.report['declaration_count'] = 4
+        self.report['declaration_count'] = 5
         (self.api / 'build-info.json').write_text(json.dumps(self.report))
         with self.assertRaisesRegex(ValueError, 'census changed'):
+            assemble(self.api, self.blueprint, self.output)
+
+    def test_distinct_api_and_website_revisions_are_preserved(self):
+        (self.blueprint / 'build-info.json').write_text(json.dumps({'source_revision': 'b' * 40}))
+        result = assemble(self.api, self.blueprint, self.output, source_revision='b' * 40)
+        self.assertEqual(result['api_source_revision'], 'a' * 40)
+        self.assertEqual(result['website_source_revision'], 'b' * 40)
+        self.assertEqual(result['blueprint_source_revision'], 'b' * 40)
+        self.assertEqual(json.loads((self.output / 'docs/build-info.json').read_text())['source_revision'], 'a' * 40)
+        self.assertIn('/tree/' + 'b' * 40, (self.output / 'index.html').read_text())
+
+    def test_mismatched_blueprint_revision_is_rejected(self):
+        (self.blueprint / 'build-info.json').write_text(json.dumps({'source_revision': 'b' * 40}))
+        with self.assertRaisesRegex(ValueError, 'Blueprint source revision differs'):
             assemble(self.api, self.blueprint, self.output)
 
     def test_empty_directory_is_not_a_valid_web_route(self):

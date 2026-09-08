@@ -179,10 +179,12 @@ a declaration namespace identifies its stable mathematical name.
 
 [Goldbach/Blueprint.lean](../Goldbach/Blueprint.lean) attaches presentation
 attributes to existing theorems through a separate documentation root. The
-public `Goldbach` import and the Lean proofs remain unchanged. The Chen graph
-presents seven selected nodes and six inferred endpoint edges. Its three input
-nodes hide upstream Blueprint labels to keep the display focused on the endpoint
-assembly; their complete Lean proof dependencies remain unchanged.
+public `Goldbach` import and the Lean proofs remain unchanged. The selected graph
+presents sixteen nodes and twenty inferred edges: reusable prime-pair transport,
+logarithmic error absorption and grid integration; the seven-node Chen assembly;
+and six Li–Liu nodes covering finite detection, existence and quantitative counts.
+Upstream presentation labels outside this roadmap are hidden; their complete
+Lean proof dependencies remain unchanged.
 
 LeanArchitect produces the node data; LeanBlueprint renders the document and
 interactive graph. In this graph arrows point from a dependency to its consumer,
@@ -201,6 +203,7 @@ python3 -m venv .venv-blueprint
 pip install -r blueprint/requirements.txt
 lake --wfail build Goldbach:blueprint
 leanblueprint web
+python3 scripts/verify_blueprint.py
 leanblueprint serve
 ```
 
