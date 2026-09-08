@@ -1,0 +1,424 @@
+% Source-led account of the implemented Chen 1+2 route; local notation only.
+\section{Chen's theorem: from a signed sieve weight to representations}
+\label{bp:chen-route}
+
+A prime $p<N$ determines its partner $N-p$ uniquely.  We count representations
+by the prime $p$, rather than by factorizations of its partner.  The public finite set is
+\[
+ G(N)=\{p<N:p\text{ prime},\ 2\le N-p,\ \Omega(N-p)\le2\},
+\]
+Thus $|G(N)|=R_2(N)$ in the overview notation; $\Omega(n)$ counts prime factors with multiplicity.
+Thus a prime partner and a square of a prime are both permitted, while
+$N-p=1$ is excluded.  This is exactly \texttt{chenGoodRepresentations}.
+The quantitative target is $|G(N)|\ge0.67 \mathcal X_N$ for all sufficiently large
+even $N$, with the normalization
+\[
+ \mathcal X_N=\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2},\qquad
+ \mathfrak S_{\mathrm{Liu}}(N)=\prod_{\substack{r\mid N\\r>2\ \text{prime}}}\frac{r-1}{r-2}
+                 \prod_{r>2\ {\rm prime}}\left(1-\frac1{(r-1)^2}\right).
+\]
+The second product is the positive constant $U=C_2$ from the foundations chapter, and $\mathfrak S_{\mathrm{Liu}}(N)\ge U>0$.  This uniform lower bound will let us pay errors
+without choosing a different normalization for each even integer.
+
+\subsection{A finite weight that recognizes the desired partners}
+Put $z=\max(2,\lfloor N^{1/10}\rfloor)$ and $y=\lceil N^{1/3}\rceil$.
+The corrected candidate set is
+\[
+ \mathcal C(N)=\{p<N:p\text{ prime},\ N-p\ge2,
+          \ r\nmid N-p\text{ for every prime }r<z\}.
+\]
+Sifting has removed small factors, but a surviving partner can still have
+three or more prime factors. Let $\mathcal Q_{z,y}$ be the primes in $[z,y)$.
+For a prime $r$, let $\nu_r(n)$ be its exponent in the factorization of $n$. To charge these survivors, define
+\begin{align*}
+ v(n)&=\sum_{r\in\mathcal Q_{z,y},\,r\mid n}\nu_r(n),\\
+ t(n)&=\#\{r:z\le r<y,\ r\text{ prime},\
+       \exists s,u\text{ prime},\ y\le s\le u,\ r<s,\ rsu=n\},\\
+ w(n)&=1-\tfrac12v(n)-\tfrac12t(n).
+\end{align*}
+The second count records first factors $r$, with the larger factors existentially quantified.  In particular, its definition includes $s=u$.
+For a $z$-rough integer $1\le n<y^3$, meaning that no prime below $z$ divides $n$, positivity of $w(n)$ forces
+$n=1$, a prime, or a product of two primes.  Indeed, the nonnegative
+integer $v(n)+t(n)$ must be at most one.  If $v(n)=0$, all factors
+are at least $y$, so three factors contradict $n<y^3$.  If $v(n)=1$,
+there is exactly one medium factor, with valuation one; two remaining
+large factors would contribute to $t(n)$ and use up the second unit.
+\inputleannode{bp:chen-positive-weight}
+For $N\ge9$ we have $z<y$ and $N\le y^3$; a candidate's positive
+prime component gives the strict inequality $N-p<y^3$.
+Consequently a bad candidate has penalty $v(N-p)+t(N-p)\ge2$.
+A good candidate has $w(N-p)\le1$, so summing the pointwise comparison
+$w(N-p)\le\mathbf1_{G(N)}(p)$ gives
+\[\begin{gathered}
+ |G(N)|\ge|\mathcal C(N)|-\tfrac12(P(N)+T(N))=W(N)-\tfrac12T(N),\\
+ P(N)=\sum_{p\in\mathcal C(N)}v(N-p),\qquad
+ T(N)=\sum_{p\in\mathcal C(N)}t(N-p),\\
+ W(N)=|\mathcal C(N)|-\tfrac12P(N).
+\end{gathered}\]
+Here $W$ is \texttt{jurkatRichertWeightedCount}; $P,T$ are the corrected prime-power and triple penalties.  The factor $1/2$ comes
+from the bad-candidate inequality, not from a symmetry of a switched sum.
+\inputleannode{bp:chen-finite-counting}
+
+\subsection{The source weight separates a lower sieve from upper sieves}
+The analytic lower bound first treats a slightly different finite carrier,
+\[
+ \mathcal S(N)=\{p\le N:p\text{ prime},\
+    r\nmid N-p\text{ for every odd prime }r\le N^{1/10}\}.
+\]
+Let $\mathcal Q(N)$ be the primes $N^{1/10}<q\le N^{1/3}$, and set
+\[
+ H(N)=\sum_{q\in\mathcal Q(N)}\#\{p\in\mathcal S(N):q\mid N-p\},
+ \qquad W_{\rm src}(N)=|\mathcal S(N)|-\tfrac12 H(N).
+\]
+Finite interchange of sums identifies this with the source weight
+$\sum_{p\in\mathcal S(N)}(1-\frac12\#\{q\in\mathcal Q(N):q\mid N-p\})$.
+Each medium prime is charged once, irrespective of valuation.  A lower bound for $|\mathcal S(N)|$ and an upper bound for $H(N)$ therefore
+advance the same signed inequality in the required directions.
+
+For the base sieve, remove the exceptional unsifted primes whose complement
+is divisible by an odd cutoff prime dividing $N$.  Such an exceptional
+prime equals that divisor.  The remaining sifting product and main mass are
+\[\begin{gathered}
+ \mathcal P_N=\prod_{\substack{2<r\le N^{1/10}\\r\ \text{prime},\ r\nmid N}}r,
+ \qquad X=\operatorname{li}_{2/\log2}(N),\\
+ V_N=\prod_{\substack{r\mid\mathcal P_N\\r\ \text{prime}}}\left(1-\frac1{r-1}\right),
+\end{gathered}\]
+Here $\operatorname{li}_{\kappa}=L_{\kappa}$ in the foundations notation:
+\[
+ \operatorname{li}_{\kappa}(x)=\kappa+\int_2^x\frac{dt}{\log t}\quad(x>1),
+ \qquad \operatorname{li}_{\kappa}(x)=\kappa\quad(0\le x\le1).
+\]
+The latter is the implementation's totalized-integral convention, not a
+Cauchy principal value. In particular $X=L_*(N)$, where
+$L_*=L_{2/\log2}$ and $L_*(0)=L_*(1)=2/\log2$.
+See \sourcefile{MathlibNt/SieveTheory/Arithmetic/LiuLogarithmicIntegral.lean}{genuine logarithmic integral}
+and \sourcefile{MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbelDeterministic.lean}{finite-endpoint convention}.
+The density is $1/(r-1)$; $R_N(d)=|\mathcal A_d|-X/\varphi(d)$ is the discrepancy of the unsifted complement
+carrier: $\mathcal A_d$ consists of the remaining complements divisible by $d\mid\mathcal P_N$.
+With level $D=N^{1/2-\epsilon}$, lower Rosser coefficients give a finite
+lower bound by their density sum minus
+$\mathcal R_0=\sum_{d\mid\mathcal P_N,\ d\le D}|R_N(d)|$.
+For the explicit sieve functions put
+\[
+ I(u)=\int_2^{u-1}\frac{\log(t-1)}t\,dt,\qquad
+ J=\int_3^4\frac{I(u)}u\,du,\qquad
+ K=\int_3^4\frac{10I(u)}{u(5-u)}\,du.
+\]
+The implemented density theorem yields, for each $\delta>0$, a fixed
+$\epsilon>0$ and eventually for even $N$
+\[
+ |\mathcal S(N)|\ge (f(5)-\delta)XV_N-\mathcal R_0,
+ \qquad f(5)=\frac{2e^\gamma}{5}(\log4+J).
+\]
+
+\inputleannode{bp:chen-lower-sieve}
+The density input is supplied by the constructed Jurkat--Richert delay
+functions through the modern Suzuki varying-family comparison.  Continuity
+at $s=5$ permits a fixed small loss $s=5-10\epsilon$.
+Ordinary Bombieri--Vinogradov pays $\mathcal R_0$ at this power-reduced
+level; the removed exceptional primes receive a separate power-saving bound.
+Mertens normalization supplies the lower estimate
+$XV_N\ge(20e^{-\gamma}-\delta)\mathcal X_N$ for any fixed positive margin.
+Combining the three eventual bounds gives, for every $\eta>0$,
+\[
+ |\mathcal S(N)|\ge (B_0-\eta)\mathcal X_N,\qquad B_0=8(\log4+J).
+\]
+The proof chooses the density loss first, then invokes distribution at that same $\epsilon$; all thresholds are intersected before choosing $N$.
+\inputleannode{bp:chen-base-asymptotic}
+
+\subsection{The varying-level upper penalty and its distribution bill}
+For each $q\in\mathcal Q(N)$, condition the same complement carrier by
+$q\mid N-p$.  Its nominal mass is $X/(q-1)$, including the lane $q\mid N$;
+the exact discrepancy, rather than a reduced-residue approximation, handles
+that lane.  The upper sieve uses
+\[
+ D_q=N^{1/2-\epsilon}/q,\qquad
+ s_q=\frac{\log D_q}{\log N^{1/10}}
+     =5-10\epsilon-10\frac{\log q}{\log N}.
+\]
+Integer support is $d<\lfloor D_q\rfloor+1$.  Summing the finite upper
+Rosser inequalities gives $H\le\mathcal M_q+\mathcal R_q$, with
+$\mathcal M_q$ the sum of $X/(q-1)$ times the actual upper density sums,
+and $\mathcal R_q$ the sum of their absolute-coefficient remainder bills.
+\inputleannode{bp:chen-finite-upper}
+The modern all-depth Suzuki theorem controls these density sums uniformly
+in the conditioned sieve.  In the range used here its continuous factor is
+\[
+ F(s)=\begin{cases}2e^\gamma/s,&s\le3,\\
+ (2e^\gamma/s)(1+I(s)),&s>3,\end{cases}
+
+\]
+Thus the density model is $XV_N\sum_{q\in\mathcal Q(N)}F(s_q)/(q-1)$.
+Partial summation retains both $s_q$ and the exact $q-1$.  For any margin, one chooses $0<\epsilon<1/60$ and then
+obtains the coefficient $B_1=8(\log8+K/2)$, using the integrals defined above.
+Distribution is needed for the combined modulus $qd$.  On $q\nmid N$
+the finite bill is dominated by
+\[
+ \sum_{\substack{q\in\mathcal Q(N)\\q\nmid N}}
+ \sum_{\substack{d\mid\mathcal P_N\\d\le D_q}}
+       3^{\omega(d)}E_{\rm prime}(N,qd),
+\]
+where the fixed-endpoint error and the foundations' prefix error are
+\[\begin{gathered}
+ E_{\rm prime}(N,m)=\max_{l\in(\mathbb Z/m\mathbb Z)^\times}
+   \left|\pi(N;m,l)-\frac{L_*(N)}{\varphi(m)}\right|,\\
+ E^*(N,m)=\max_{n\in\{0,\ldots,N\}}E_{\rm prime}(n,m),
+ \qquad E_{\rm prime}(N,m)\le E^*(N,m).
+\end{gathered}\]
+Here $\pi(N;m,l)$ counts primes at most $N$ in residue class $l$ modulo $m$.
+Modulo one the canonical residue is zero; for modulus zero both maxima
+are defined to be zero. Thus this is the same genuine-$L_*$ normalization
+as ordinary BV, but only the endpoint maximum is consumed in the displayed bill.
+The definitions and endpoint-to-prefix comparison are in
+\sourcefile{MathlibNt/SieveTheory/Distribution/BombieriVinogradov.lean}{ordinary AP errors};
+the exact weighted bill is in
+\sourcefile{MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean}{combined-modulus error sum}.
+The map $(q,d)\mapsto qd$ is injective here: $q$ is above every prime
+factor of $d$.  Finite Cauchy--Schwarz pays the weight with a
+$9^{\omega}/d$ moment; ordinary BV is requested with saving $2A+10$
+to leave saving $A$.  Nonreduced lanes and exceptional support corrections
+are bounded separately and then absorbed into $\mathcal X_N$.
+\inputleannode{bp:chen-weighted-bv}
+The upper asymptotic allocates one third of its margin to density comparison,
+one third to prime partial summation, and one third to distribution.
+It concludes $H(N)\le(B_1+\eta)\mathcal X_N$ eventually for even $N$.
+\inputleannode{bp:chen-upper-asymptotic}
+Using a base margin $\eta/2$ and an upper margin $\eta$ now gives
+\[\begin{gathered}
+ W_{\rm src}(N)\ge(2.6408-\eta)\mathcal X_N,\\
+ B_0-\tfrac12B_1=8\bigl(\log4-\tfrac12\log8+J-K/4\bigr)\ge2.6408.
+\end{gathered}\]
+The last comparison uses the proved $J-K/4\ge-0.0164725$ and a certified
+lower bound for $\log2$; it is an integral inequality, not floating-point quadrature.
+\inputleannode{bp:chen-distinct-lower}
+
+\subsection{Paying for rounded endpoints and repeated prime factors}
+Write $W_{\rm dist}=|\mathcal C|-\frac12\sum_{p\in\mathcal C}
+\#\{r\in[z,y):r\text{ prime},\ r\mid N-p\}$.
+For even $N>2^{110}$, the implemented source comparison is
+$W_{\rm src}-10N^{9/10}\le W_{\rm dist}$.
+It splits the two carriers into their intersection and exceptional fibres:
+the lower-floor fibre, $p=2$, and the unit complement $N-p=1$.
+Signed weights need not be monotone under enlarging the candidate set, so this comparison is necessary.
+Repeated medium factors have their own finite estimate:
+\[
+ P(N)\le\sum_{p\in\mathcal C(N)}\#\{r\in[z,y):r\text{ prime},\ r\mid N-p\}
+           +60N^{9/10}.
+\]
+Divisibility by $r^2$ is bounded by counting quotients, giving at most
+$6N^{9/10}$ candidate--prime pairs; each relevant valuation is at most ten.
+\inputleannode{bp:chen-prime-powers}
+Hence $W_{\rm dist}-30N^{9/10}\le W$.
+Since $60N^{9/10}\le\rho \mathcal X_N$ eventually for every $\rho>0$,
+the source-to-corrected loss and the valuation loss fit within an arbitrary
+coefficient margin.  Taking the source margin and the power-error margin
+to be $\eta/2$ proves $W(N)\ge(2.6408-\eta)\mathcal X_N$.
+This lower bound has already paid the entire prime-power penalty $P$.
+\inputleannode{bp:chen-valuation-lower}
+
+\subsection{Moving the remaining triple penalty into a Selberg square}
+Only $T$ remains to be subtracted.  Put $z_0=\lfloor N^{1/10}\rfloor$,
+$y_0=\lfloor N^{1/3}\rfloor$, and let $\mathcal L$ consist of prime pairs
+$(r,s)$ satisfying $z_0<r\le y_0<s$ and $rs^2\le N$.
+Liu's characteristic weight $b(a)$ is one exactly when $a=rs$ for such
+a pair; it is unique, and sums involving $b$ run over its support.  On $z\le r<y\le s$,
+let $T_{\rm src}$ count $(r,s,u)$ with $(r,s)\in\mathcal L$,
+$u$ prime, $s\le u$, $rsu\le N$, and $N-rsu\in\mathcal C(N)$.
+A first-factor witness counted by $T$ chooses one ordered pair $(s,u)$.
+The map to $(r,s,u)$ recovers the candidate as $p=N-rsu$, so it is injective.
+Its only cutoff exceptions are $r=z_0$ and $s=y_0$; quotient counting pays
+both, giving $T\le T_{\rm src}+13N^{9/10}$ once $z_0\ge2$.
+\inputleannode{bp:chen-triple-endpoints}
+For even $N$ and $R=\lfloor N^{1/4-\epsilon/2}\rfloor\ge1$, put
+$Q=\prod_{r\le R,\ r\ \text{prime},\ r\nmid N}r$ and
+$\mathcal D=\{d\mid Q:d\le R\}$.  The Selberg square is
+\[
+ \mathcal B_\lambda(N)=\sum_a b(a)
+   \sum_{\substack{u\ \text{prime}\\au\le N}}
+       \left(\sum_{\substack{d\in\mathcal D\\d\mid N-au}}\lambda_d\right)^2.
+\]
+The optimal coefficients satisfy $\lambda_1=1$, $|\lambda_d|\le1$, and vanish off $\mathcal D$.  If the candidate prime $p=N-rsu$ does not
+divide $Q$, its divisor packet contains only $d=1$ and its square is one.
+Primes $p\mid Q$ contribute to a residual $E_Q$.  Nonnegativity allows us to drop $s\le u$ and enlarge the common pair region,
+yielding $T_{\rm src}\le\mathcal B_\lambda+E_Q$.
+\inputleannode{bp:chen-square-majorant}
+For each source pair the exceptional residual injects into the prime divisors
+of $Q$.  Pair support has size at most $\lceil N^{2/3}\rceil+1$, whereas
+$Q$ has at most $R+1$ prime divisors.  Thus $E_Q\le6N^{11/12}$ for
+$N\ge1$ and $\epsilon\ge0$.  Both this loss and the endpoint loss are
+smaller than $C_A N/(\log N)^A$ for every fixed $A>0$.
+
+\subsection{The square's main term and the switched distribution error}
+Expanding the square replaces simultaneous divisibility by
+$[d_1,d_2]\mid N-au$.  Finite interchange gives exactly
+\[\begin{gathered}
+ \mathcal B_\lambda=M_1+\mathcal E_\lambda,\\
+ M_1=\left(\sum_{d_1,d_2\in\mathcal D}
+     \frac{\lambda_{d_1}\lambda_{d_2}}{\varphi([d_1,d_2])}\right)
+       \sum_a b(a)\operatorname{li}_2(N/a).
+\end{gathered}\]
+The error uses the same coefficients and the actual progression discrepancy
+$\pi(N;a,d,l)-\operatorname{li}_2(N/a)/\varphi(d)$, where
+$\pi(N;a,d,l)$ counts primes $u$ with $au\le N$ and $au\equiv l\pmod d$.
+\inputleannode{bp:chen-square-expansion}
+The optimizer uses reverse-divisor M\"obius inversion of the diagonal coordinates $\mu(\ell)g(\ell)/\mathcal G$, where
+$g(\ell)=\prod_{\substack{r\mid\ell\\r\ \text{prime}}}(r-2)^{-1}$ and
+$\mathcal G=\sum_{\ell\in\mathcal D}g(\ell)$.
+Diagonalizing the quadratic form proves its value is exactly $1/\mathcal G$.
+The denominator estimate bounds this by
+$(8+\delta)\mathfrak S_{\mathrm{Liu}}(N)/\log N$ whenever
+$\delta>0$ and $0<\epsilon<\delta/(2(8+\delta))$, eventually along even $N$.
+The other factor must be estimated with the genuine logarithmic integral,
+not identified with its proxy $x/\log x$.
+
+Write the exact prime-pair reciprocal-log mass as
+\[
+ S_{\rm rec}(N)=\sum_{(r,s)\in\mathcal L}
+       \frac{1}{rs\log(N/(rs))}.
+\]
+In logarithmic coordinates $\alpha=\log r/\log N$ and
+$\beta=\log s/\log N$, the limiting domain is
+\[
+ \mathcal D_{\rm Liu}=\{(\alpha,\beta):1/10\le\alpha\le1/3,
+                  \ 1/3\le\beta\le(1-\alpha)/2\}.
+\]
+The sloping edge is precisely the condition $rs^2\le N$;
+the finite sum still uses the rounded cutoffs defining $\mathcal L$.
+The limiting prime reciprocal measures give the factors $d\alpha/\alpha$
+and $d\beta/\beta$, while
+$\log(N/(rs))=(1-\alpha-\beta)\log N$. The source integral is therefore
+\[\begin{aligned}
+ I_{\rm Liu}
+ &=\int_{1/10}^{1/3}\frac{d\alpha}{\alpha}
+       \int_{1/3}^{(1-\alpha)/2}\frac{d\beta}{\beta(1-\alpha-\beta)}\\
+ &=\int_{1/10}^{1/3}
+       \frac{\log(2-3\alpha)}{\alpha(1-\alpha)}\,d\alpha
+ <0.49254.
+\end{aligned}\]
+All denominators are positive on this domain. Partial fractions evaluate
+the inner integral as $\log(2-3\alpha)/(1-\alpha)$, proving the reduction.
+The strict constant bound is proved for this integral itself: after the
+change $t=(1-3\alpha)/(3-3\alpha)$ it becomes
+\[
+ 3\int_0^{7/27}\frac{\log((1+t)/(1-t))}{1-3t}\,dt.
+\]
+On this interval the source bounds the logarithm above by
+\[
+ P_{\log}(t)=2\sum_{j=0}^{5}\frac{t^{2j+1}}{2j+1}
+                    +\frac{729}{340}t^{13}.
+\]
+This follows from the logarithmic series with its bounded positive tail.
+Exact integration of $3P_{\log}(t)/(1-3t)$, followed by a rational upper
+bound for $\log(9/2)$, gives the strict inequality above. This is not a
+comparison of two preassigned decimals or a floating-point quadrature;
+see \sourcefile{MathlibNt/SieveTheory/Liu/Weights/LiuWeightMainIntegral.lean}{source integral and strict bound}.
+
+For each fixed $\tau>0$, the actual transfer proves
+\[
+ \log N\,S_{\rm rec}(N)\le I_{\rm Liu}+\tau
+ \quad\hbox{for all sufficiently large }N.
+\]
+It first fixes a fine logarithmic grid, then chooses the finite-$N$
+threshold for that grid. Choosing $\tau$ inside the strict gap
+$0.49254-I_{\rm Liu}$ gives $S_{\rm rec}(N)\le0.49254/\log N$
+eventually, with the exact finite pair carrier unchanged. These are the
+actual producers in
+\sourcefile{MathlibNt/SieveTheory/Liu/PrimePairs/LiuPrimePairTransfer.lean}{prime-pair transfer}.
+
+To pass to the genuine main mass, fix $\kappa\ge0$ and put
+\[\begin{aligned}
+ \Delta_{\kappa}(x)&=\operatorname{li}_{\kappa}(x)-\frac{x}{\log x},\\
+ H_{\kappa}(N)&=\sum_a b(a)\operatorname{li}_{\kappa}(N/a)
+       =N S_{\rm rec}(N)+\sum_{(r,s)\in\mathcal L}\Delta_{\kappa}(N/(rs)).
+\end{aligned}\]
+The equality is exact reindexing by the unique prime pair. Integration by
+parts gives $|\Delta_{\kappa}(x)|\le C_{\Delta,\kappa}x/(\log x)^2$ eventually.
+For every source pair, $N/(rs)\ge N^{1/3}$, hence
+$\log(N/(rs))\ge(\log N)/3$. Mertens bounds the reciprocal pair mass by
+a fixed constant $B_{\rm pair}$, so uniformly over the pair set,
+\[
+ \left|\sum_{(r,s)\in\mathcal L}\Delta_{\kappa}(N/(rs))\right|
+ \le\frac{9C_{\Delta,\kappa}B_{\rm pair}N}{(\log N)^2}
+ =o\!\left(\frac{N}{\log N}\right).
+\]
+Thus for every fixed $\kappa\ge0$ and $\eta>0$, eventually
+\[
+ 0\le H_{\kappa}(N)\le(0.49254+\eta)\frac{N}{\log N}.
+\]
+The exact decomposition and summed correction are proved in
+\sourcefile{MathlibNt/SieveTheory/Liu/Weights/LiuWeightMainSum.lean}{genuine-li correction};
+\sourcefile{MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergMainTermInstantiation.lean}{unconditional genuine-li mass}
+combines this correction with the proved reciprocal-log bound.
+The actual even-filter optimizer consumes that result in
+\sourcefile{MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergEvenAssembly.lean}{optimized main-term assembly}.
+It fixes $\delta=\eta=10^{-7}$ and $0<\epsilon\le\epsilon_0=10^{-10}$;
+the coefficient product satisfies
+$(8+\delta)(0.49254+\eta)\le3.94033$.
+Consequently the displayed main term $M_1=H_2(N)/\mathcal G$ satisfies
+$M_1\le3.94033\mathcal X_N$ with a genuine, fixed coefficient margin.
+\inputleannode{bp:chen-square-main-term}
+
+The remaining distribution theorem concerns the convolution $b(a)$ with
+primes.  For $A_1=\lfloor(\log N)^{2B}\rfloor+1$ and
+$A_2=\lfloor N^{2/3}\rfloor$, define
+\[
+ E_q(\kappa)=\max_{l\in(\mathbb Z/q\mathbb Z)^\times}
+ \left|\sum_{\substack{A_1<a\le A_2\\(a,q)=1}}b(a)
+  \left(\pi(N;a,q,l)-\frac{\operatorname{li}_{\kappa}(N/a)}{\varphi(q)}\right)\right|.
+\]
+The absolute value is outside the $a$-sum.  Modulus one uses residue zero; modulus zero contributes zero.  At the fixed normalization $\kappa=2/\log2$,
+the proved source theorem says that every $\sigma>0$ admits $C,B,N_0$ such that
+$\sum_{q<N^{1/2}/(\log N)^B}E_q(\kappa)\le CN/(\log N)^\sigma$
+for every $N\ge N_0$.  Its proof splits nonprincipal primitive conductors
+into low and high ranges, uniformly in the changing source and cofactor,
+and pays the principal character separately.  Two extra logarithms pay the
+reciprocal-totient cofactor sum before this unweighted bound is obtained.
+See the source-linked statement in result~\ref{bp:foundation-liupan}.
+The Selberg expansion needs a weighted modulus sum.  Finite Cauchy gives
+\[\begin{gathered}
+ \left(\sum_{q<L}\mu(q)^2 3^{\omega(q)}E_q(\kappa)\right)^2\\
+ \le C_9(\log(N+2))^9
+       \left(C_\kappa N(1+\log N)^2\sum_{q<L}E_q(\kappa)\right),\\
+ L=N^{1/2}/(\log N)^B.
+\end{gathered}\]
+Requesting $\sigma=2A+11$ therefore leaves any prescribed saving $A$.
+\inputleannode{bp:chen-switched-weight-payment}
+Source support identifies the interval sum with the full supported sum.
+Replacing the strict source modulus range by the smaller closed range costs
+$B\mapsto B+1$; changing the additive normalization to $\kappa=2$ is paid
+separately.  This supplies the canonical coprime distribution bound.
+In the square, $[d_1,d_2]\le R^2\le N^{1/2-\epsilon}$; regrouping coefficient
+pairs gives the $3^{\omega(d)}$ majorant.  The noncoprime $a$-part has an
+independent $O(N^{9/10}(\log N)^2)$ bound, so it too fits every fixed
+inverse-log budget.  The resulting estimate is
+$|\mathcal E_\lambda|\le C N/(\log N)^A$, uniformly for the eventual
+admissible coefficient family, with $C$ fixed before $N$.
+\inputleannode{bp:chen-square-remainder}
+
+\subsection{Closing one budget on the original representation count}
+Combine the square bound with the two finite corrections to obtain
+\[
+ T(N)\le3.94033\mathcal X_N+C\frac{N}{(\log N)^3}
+\]
+eventually for even $N$.  In the actual assembly $\epsilon=\epsilon_0$ and
+$A=3$ are fixed first; the resulting constant is the sum of the square,
+endpoint, and paper-modulus residual constants.
+\inputleannode{bp:chen-triple-upper}
+Now choose the weighted-lower margin $\eta=1/10000$.
+The uniform bound $\mathfrak S_{\mathrm{Liu}}(N)\ge U>0$ makes the displayed remainder
+at most $\mathcal X_N/10000$ eventually.  Intersect these two events with the
+triple-bound event and $N\ge9$.  The finite bridge then gives
+\[
+ |G(N)|\ge W(N)-\tfrac12T(N)
+ \ge\left(2.6408-10^{-4}-\tfrac12(3.94033+10^{-4})\right)\mathcal X_N
+ =0.670485\mathcal X_N\ge0.67\mathcal X_N.
+\]
+This is the public count introduced at the start, with the same prime, square, and unit conventions.
+\inputleannode{bp:chen-representation-lower-bound}
+Since $\mathcal X_N>0$ for $N>1$, a positive finite cardinality supplies a prime
+$p\in G(N)$ and hence $N=p+(N-p)$.  The implemented existence route uses
+the same finite positivity lemma with the more generous margins $1/10$,
+then extracts an eventual threshold $N_0$ and expands the almost-prime
+predicate.  Its conclusion permits either a prime partner or $q=rs$ with
+$r,s$ prime, including $r=s$.
+\inputleannode{bp:chen-theorem}

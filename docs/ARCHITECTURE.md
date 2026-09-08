@@ -179,12 +179,18 @@ a declaration namespace identifies its stable mathematical name.
 
 [Goldbach/Blueprint.lean](../Goldbach/Blueprint.lean) attaches presentation
 attributes to existing theorems through a separate documentation root. The
-public `Goldbach` import and the Lean proofs remain unchanged. The selected graph
-presents sixteen nodes and twenty inferred edges: reusable prime-pair transport,
-logarithmic error absorption and grid integration; the seven-node Chen assembly;
-and six Li–Liu nodes covering finite detection, existence and quantitative counts.
-Upstream presentation labels outside this roadmap are hidden; their complete
-Lean proof dependencies remain unchanged.
+public `Goldbach` import and the Lean proofs remain unchanged. The Blueprint
+starts with the counting objects and the two mathematical reductions, then
+expands the analytic foundations, Chen's weighted sieve and penalty, and
+Li–Liu's constrained-factor weights and signed integral estimates. Each proof
+chapter has a graph with mathematical titles and its immediate external inputs.
+A separate whole-document graph supports cross-chapter navigation.
+
+The graph is a projection onto documented declarations. The prose explains
+inputs, estimates, signs, boundary conditions and final error absorption; its
+mathematical coverage is reviewed independently of the exact graph inventory.
+Upstream presentation labels outside this roadmap are hidden while their
+complete Lean proof dependencies remain unchanged.
 
 LeanArchitect produces the node data; LeanBlueprint renders the document and
 interactive graph. In this graph arrows point from a dependency to its consumer,

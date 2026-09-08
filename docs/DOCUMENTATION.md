@@ -24,12 +24,28 @@ pipeline below renders compiled declarations and checks the resulting site.
 
 The current source entries are `Goldbach` for 1+2, `Goldbach.OnePlusOneNine`
 for 1+1.9, and `Goldbach.All` for both. Blueprint annotations in
-`Goldbach/Blueprint.lean` select sixteen declarations spanning both proof routes
-and the common foundations. Titles and mathematical summaries are authored
-there; chapters are written in `blueprint/src/content.tex`. LeanArchitect infers
-the selected dependency edges from compiled declarations, and LeanBlueprint
-renders the document. `scripts/verify_blueprint.py` checks the node and edge
-inventory against `blueprint/graph.json`.
+`Goldbach/Blueprint.lean` select substantive mathematical stages from both routes
+and their analytic foundations. `blueprint/nodes.json` records their mathematical
+titles, source declarations and roles. After editing that curated catalogue,
+run `python3 scripts/generate_blueprint.py` to regenerate the annotations;
+`--check` verifies synchronization without writing. This is mechanical code
+generation, not automatic mathematical node selection. The master `blueprint/src/content.tex`
+includes the overview and proof chapters in `blueprint/src/chapters/`.
+LeanArchitect infers dependencies from compiled declarations; LeanBlueprint
+renders the exposition and both global and chapter-sized graphs. Chapter graphs
+include immediate external inputs, marked `(input)`, without inventing edges.
+`scripts/verify_blueprint.py` checks the exact graph inventories, chapter-edge
+reachability, paths from every selected node to a documented theorem exit,
+mathematical display titles, and source-file targets. These are structural
+regression checks; mathematical coverage and teaching clarity require separate
+review. The [coverage guide](../blueprint/COVERAGE.md) records where the principal
+counting, sieve, distribution, integral and error-budget obligations are explained.
+The `\sourcefile{path}{title}` macro pins background reading links to the
+Blueprint's own source revision at rendering time.
+
+Stable entry pages are `overview.html`, `foundations.html`, `chen.html` and
+`liliu.html` beneath `/blueprint/`. They are resolved from rendered chapter IDs,
+so adding a chapter cannot silently redirect a homepage link to the wrong topic.
 
 The generated API inventory retains its own `source_revision` in
 `docs/build-info.json`. The assembled site's record also distinguishes

@@ -1,0 +1,62 @@
+\section{Reusable proofs and source boundaries}
+
+The mathematical chapters follow finite counts and the estimates they need.
+The source tree also factors recurring technical arguments into reusable
+interfaces. Three examples are useful when reading an individual proof:
+\begin{itemize}
+\item A finite prime-pair transport theorem reindexes a supported integer
+      sum by its unique admissible ordered prime pair. Concrete cutoffs,
+      filters and kernels remain inputs to that theorem. It lives with
+      the Liu weights in \texttt{MathlibNt.SieveTheory.Liu.Weights.LiuWeight}.
+\item Uniform logarithmic error absorption separates the elementary
+      eventual estimate from the singular-series specialization. The
+      generic argument lives in \texttt{MathlibNt.Analysis.LogScaleAbsorption}.
+\item The integral excess-cover theorem combines a local approximation on
+      a common region with a finite cover of its boundary excess. It lives
+      in \texttt{MathlibNt.Analysis.IntegralExcessCover}; each application
+      supplies its actual measure, strips and logarithmic kernel.
+\end{itemize}
+These interfaces support the proof chapters without changing the counting
+objects, factor-size constraints, signed sums or endpoint conventions.
+
+\section{Finding and checking a declaration}
+
+Each named result in the Blueprint links to a concrete declaration in the
+source revision recorded by the website. The Lean documentation provides
+its full type, surrounding definitions and module imports. For a major
+estimate, read both the declaration and the definitions in its input type:
+a packaged input can specify a source, density, modulus weight, cutoff and
+order of quantifiers that a short theorem title cannot display.
+
+The public entries are \texttt{Goldbach} for Chen,
+\texttt{Goldbach.OnePlusOneNine} for Li--Liu, and \texttt{Goldbach.All} for
+both. These entries expose independent theorem contracts over shared
+foundations. Reusing a library does not identify different sieve densities
+or different representation predicates.
+
+Lean checks the formal proofs using propositional extensionality, classical
+choice and quotient soundness as its standard logical foundations. The
+project's acceptance process checks statements, compiles with warnings as
+errors, inspects theorem axiom dependencies and independently replays
+compiled declarations. The Blueprint has additional editorial obligations:
+its mathematical statements and explanations must match the implementation,
+and its reading route must expose the substantive estimates needed by each
+conclusion. Graph extraction and rendering tests address a separate,
+structural part of that verification.
+
+\section{Mathematical sources and attribution}
+
+This development builds on UyNewNas/chen-theorem-lean, the attributed
+analytic-number-theory library, Mathlib and adapted
+PrimeNumberTheoremAnd sources. Upstream copyright notices are retained
+under Apache-2.0. The repository's \sourcefile{docs/PROVENANCE.md}{mathematical provenance guide} identifies the mathematical sources and their roles. The two proof chapters describe the
+implemented arguments: classical results and modern replacements are
+identified at the places where they enter the proof.
+
+The website build record distinguishes its own editorial source revision,
+the Blueprint revision and the Lean API revision. A local documentation
+preview can reuse a previously generated API artifact while preserving
+that artifact's original source links. Online deployment is a separate
+step from generation and local verification.
+
+\url{https://github.com/subfish-zhou/goldbach-lean}

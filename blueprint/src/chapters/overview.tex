@@ -1,0 +1,137 @@
+\section{What is being counted?}
+
+Fix an even natural number $N$. Both arguments seek a prime $p$ for which the
+complementary integer $N-p$ has very few prime factors. Write $\Omega(n)$ for
+the number of prime factors of a positive integer $n$, counted with
+multiplicity. Thus a prime square has two prime factors for this purpose.
+The Chen representation count in this project is
+\[\begin{gathered}
+ R_2(N)=\#\{p<N:p\text{ prime},\\
+ N-p\ge2,\quad\Omega(N-p)\le2\}.
+\end{gathered}\]
+A member of this set gives a prime plus a prime or a product of two primes.
+The two factors may coincide. The implementation names this finite set
+\texttt{chenGoodRepresentations}; $R_2(N)$ is its cardinality.
+
+Li--Liu impose a size condition on the two complementary factors. Their
+count, written $D_{1,19/10}(N)$ here and \texttt{D19} in Lean, counts primes
+$p\le N$ for which there exist natural numbers $r,q$ satisfying
+\[\begin{gathered}
+ N=p+rq,\qquad q\text{ prime},\\
+ r=1\text{ or }r\text{ prime},\qquad r^{10}\le q^9.
+\end{gathered}\]
+Each eligible $p$ is counted once, regardless of the number of witnesses.
+The exponent condition is stated in exact natural-number arithmetic; over
+the nonnegative reals it is equivalent to $r\le q^{9/10}$.
+
+For $N>1$, the common normalization is
+\[
+ \mathcal X_N=\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2},
+\]
+where
+\[
+ \mathfrak S_{\mathrm{Liu}}(N)=
+ \prod_{\substack{\ell>2\ \mathrm{prime}\\\ell\mid N}}
+       \frac{\ell-1}{\ell-2}
+ \prod_{\ell>2\ \mathrm{prime}}\left(1-\frac{1}{(\ell-1)^2}\right).
+\]
+The proofs establish positivity of this scale for the relevant large $N$.
+The public quantitative conclusions are $R_2(N)\ge0.67\mathcal X_N$ and
+$D_{1,19/10}(N)>0.0004\mathcal X_N$, eventually for every even $N$.
+The counting definitions and the proof routes remain separate.
+
+\section{The mathematical plan}
+
+Both proofs replace a difficult existence question by a finite counting
+inequality. The finite inequality comes first: it determines precisely
+which estimates the analytic part must supply. Positive contributions need
+lower bounds, negative contributions need upper bounds, and all remainders
+must fit into a single positive final margin.
+
+For Chen, follow this route:
+\begin{enumerate}
+\item Build a weighted count of prime complements, together with penalties
+      for the unwanted factor patterns. A finite counting bridge compares
+      the corrected weight with the actual count $R_2(N)$.
+\item Apply the weighted lower sieve to the original Goldbach source.
+      The lower-bound construction includes its prime-power correction.
+\item Bound the remaining triple-factor penalty through switching and the
+      Selberg upper sieve. A distribution estimate for the switched source
+      supplies the required averaged remainder control.
+\item Put the lower and upper estimates into the finite bridge, absorb the
+      errors in one eventual range, and obtain the representation bound.
+      Positivity then yields a representation.
+\end{enumerate}
+Chapter~\ref{chap:chen} explains each of these steps and its exact implemented
+interfaces. In particular, the triple-factor correction is a concrete
+count, not a synonym for an unspecified error term.
+
+For Li--Liu, follow a different finite reduction:
+\begin{enumerate}
+\item Construct weights whose pointwise inequalities detect the literal
+      constrained-factor representations counted by $D_{1,19/10}(N)$.
+\item Decompose the resulting weighted count into sifted sums and
+      prime-factor ranges. Retain the signs and coefficients of the
+      decomposition throughout the estimates.
+\item Bound those terms with the appropriate lower or upper sieve, switched
+      counts and prime-sum integrals. Certify the required bounds on the
+      actual integrals and preserve the factor-range boundaries.
+\item Combine the estimates with a common error budget. The implementation
+      exposes both a positive-margin existence proof and a sharper
+      quantitative proof using the author G11 estimate.
+\end{enumerate}
+Chapter~\ref{chap:liliu} defines the paper's numbered sums and integrals at
+first use, before explaining how they enter these steps.
+
+Chapter~\ref{chap:foundations} identifies the shared analytic inputs.
+Those inputs are reused with the source, local density and remainder
+weights appropriate to each application.
+
+\section{Reading a sieve estimate}
+
+The notation in this paragraph is a dictionary for the sieve interfaces.
+Let $A$ be a finite set of integers and $\mathcal P$ a specified finite set
+of sieving primes. Its sifted count is
+\[
+ S(A,\mathcal P)=\#\{a\in A:\ell\nmid a\text{ for every }\ell\in\mathcal P\}.
+\]
+In applications, weights or multiplicities replace the unweighted count.
+For a positive divisor $d$, write $A_d=\{a\in A:d\mid a\}$ and separate
+its count into an expected local-density term and a remainder:
+\[
+ |A_d|=g(d)X_A+r_d.
+\]
+Here $X_A$ is the source mass, $g(d)$ is its local density, and $r_d$ is the
+error. The density is part of the source model; it is not interchangeable
+between different sources. A sieve bound combines a main term built from
+these densities with a weighted sum of the remainders.
+
+A \emph{level of distribution} describes the divisor range over which a
+suitable average of these errors can be controlled. A \emph{conditioned
+source} additionally fixes one or more prime divisors before sieving the
+remaining factor. \emph{Switching} reorganizes which factors are summed
+first, so that the upper sieve can act on a more useful source. Each
+application below specifies the actual carriers and cutoffs; this dictionary
+does not replace their endpoint conventions.
+
+\section{How to use the three layers}
+
+Read the two argument outlines above for the global structure. A first-time
+reader can go directly to either proof chapter and return to the analytic
+foundations when an input is needed; the foundations need not be read straight
+through before seeing an application. Cross-references next to the first uses
+of numbered sieve terms lead to their exact definitions. The overview
+graph compresses existing dependency paths between the main mathematical
+stages; its arrows can stand for several intermediate lemmas. Then follow
+the relevant proof chapter: its displayed inequalities explain what each
+input proves and why the next step follows. Open a chapter's proof graph to
+inspect the compiled dependencies between its named lemmas; nodes marked
+\emph{input} are introduced in another chapter. Node titles are mathematical
+names, and clicking a node opens its statement and exact Lean source.
+On narrow screens, long displayed equations can be scrolled horizontally.
+
+The all-declarations graph is also available for cross-chapter navigation.
+Both graph views project onto explicitly documented lemmas. Their edges are
+extracted from compiled declarations; the chapter prose explains the
+mathematical reductions that a graph alone cannot express. Elementary Lean
+plumbing and compatibility wrappers are left to the source view.

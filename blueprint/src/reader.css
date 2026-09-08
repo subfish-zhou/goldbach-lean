@@ -1,0 +1,16 @@
+/* Keep long mathematical displays readable without widening the page. */
+.displaymath, .equation, .equationgroup {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-block: 0.3rem;
+}
+mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.3rem;
+}
+.content code, article code { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  table.tabular { display: block; max-width: 100%; overflow-x: auto; }
+}

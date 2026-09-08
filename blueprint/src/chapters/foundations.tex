@@ -1,0 +1,588 @@
+\section{Analytic foundations of the two Goldbach arguments}
+
+The two arguments need more than a supply of primes.
+They need primes distributed in residue classes, with errors that remain small
+when summed against the actual sieve coefficients.
+They also need a normalization of the resulting Euler products that is uniform
+in the even integer being represented.
+These are separate tasks: neither a linear sieve nor an equidistribution
+estimate alone gives the final representation count.
+
+\subsection{The main scale and its local densities}
+
+Throughout this section, $N$ is a positive even integer tending to infinity,
+$p$ denotes a prime, $\varphi$ is Euler's totient, and $\omega(d)$ counts the
+\emph{distinct} prime divisors of $d$.
+Write $\gamma$ for the Euler--Mascheroni constant and put
+\[
+ C_2=\prod_{p>2}\left(1-\frac1{(p-1)^2}\right),\qquad
+ \mathfrak S_{\mathrm{Liu}}(N)=C_2\prod_{\substack{p\mid N\\p>2}}\frac{p-1}{p-2},
+ \qquad \mathcal X_N=\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2}.
+\]
+Here $\mathfrak S_{\mathrm{Liu}}$ is Liu's normalization: the factor at $2$ is omitted.
+The source proves $C_2>0$ and $\mathfrak S_{\mathrm{Liu}}(N)\ge C_2$.
+Consequently a proved error $O(N/(\log N)^{2+u})$, with fixed $u>0$,
+can eventually be made smaller than any prescribed positive multiple of $\mathcal X_N$.
+This last absorption is elementary; producing that error is the analytic work.
+
+For the Goldbach difference sequence $N-p$, divisibility by a prime $q\nmid N$
+asks for $p\equiv N\pmod q$ among the reduced residue classes.
+Its density is therefore $g(q)=1/(q-1)$, extended multiplicatively on squarefree
+sifting divisors, not $1/q$.
+For an integer cutoff $Z$, the actual sieve product is
+\[
+ V_N(Z)=\prod_{\substack{p<Z\\p\nmid N}}\left(1-\frac1{p-1}\right).
+\]
+Evenness removes the exceptional prime $2$.
+The literal Jurkat--Richert $1/p$ specialization is a different source model.
+What passes between the models is a constructed system of sieve functions and
+proved comparison estimates, not an identification of their Euler factors.
+
+\subsection{Prime counting, Mertens estimates, and moving products}
+
+The von Mangoldt function is $\Lambda(p^k)=\log p$ for a prime $p$
+and an integer $k\ge1$, and is zero on all other positive integers.
+Define $\psi(x)=\sum_{1\le n\le x}\Lambda(n)$,
+$\vartheta(x)=\sum_{p\le x}\log p$, and
+$\pi(x)=\#\{p\le x:p\text{ is prime}\}$.
+The prime-distribution facade supplies a quantitative prime number theorem (PNT):
+\inputleannode{bp:foundation-pnt}
+For some $c>0$, its error is $O(x\exp(-c(\log x)^{1/10}))$.
+The effective $\vartheta$ estimate keeps the prime-power correction explicitly;
+Abel summation then supplies prime reciprocal sums and the Mertens estimates.
+The separate prime-counting facade also supplies $\pi(n)\sim n/\log n$ and
+an upper bound valid for every integer $n\ge2$.
+
+The constant in the product formula is identified, not left unspecified:
+\inputleannode{bp:foundation-mertens}
+\[
+ \left|\prod_{p\le n}(1-1/p)-\frac{e^{-\gamma}}{\log n}\right|
+ \le \frac{C}{(\log n)^2}\qquad(n\ge2).
+\]
+The local Goldbach version also proves a dimension-one interval estimate.
+For any finite set $\mathcal P$ of odd primes in $[z_1,z_2)$, with
+$2\le z_1\le z_2$, one constant $K>1$ gives
+\inputleannode{bp:foundation-local-product}
+\[
+ \prod_{p\in\mathcal P}\left(1-\frac1{p-1}\right)^{-1}
+ \le \frac{\log z_2}{\log z_1}\left(1+\frac K{\log z_1}\right).
+\]
+This supplies the local-product hypothesis of the actual Chen and Li--Liu
+bounding sieves, uniformly over their changing finite prime sets.
+Here and below, Li--Liu's $S_1$ means the base sift of the original difference
+source $N-p$, and $S_2$ means the sum of sources obtained by fixing one prime
+factor; their precise fibres are defined in Section~\ref{sec:liliu-fibres}.
+The source $\mathcal B_{10}$ retains three prime labels while sifting the
+output $N-rsq$; see Section~\ref{sec:liliu-output-sift}.
+These forward references specify the counting objects; the present chapter
+explains the analytic estimates that will be applied to them.
+
+Finite truncations of $\mathfrak S_{\mathrm{Liu}}(N)$ must still be distinguished from the full
+product. The universal odd-prime tail is independent of $N$; omitted divisor
+corrections are not. The source obtains a uniform upper comparison of the
+truncation with $(1+\eta)\mathfrak S_{\mathrm{Liu}}(N)$ as the cutoff grows.
+The lower comparison needed for $S_1$ requires additional geometry:
+for $z\ge N^{1/18}$, there are at most eighteen prime divisors of $N$
+at or above $\lceil z\rceil$.
+Their correction product is bounded by
+$\exp(18/(\lceil z\rceil-2))$ once the denominator is positive.
+This is why the lower normalization is not just the upper argument reversed.
+The resulting upper and lower products have leading term
+$2e^{-\gamma}\mathfrak S_{\mathrm{Liu}}(N)/\log z$, with explicitly paid relative errors.
+
+\subsection{Ordinary prime distribution and the weighted Chen error}
+
+For a real additive normalization $\kappa$ and $x\ge0$, use
+\[
+ L_\kappa(x)=
+ \begin{cases}
+ \kappa,&0\le x\le1,\\
+ \displaystyle\kappa+\int_2^x\frac{dt}{\log t},&x>1,
+ \end{cases}
+ \qquad L_*=L_{2/\log2}.
+\]
+The integral in the second branch is an ordinary oriented integral on an
+interval avoiding $1$. The first branch records the implementation's
+\emph{totalized interval-integral convention}: an integral over the
+nonintegrable logarithmic singularity is assigned zero. It is not a Cauchy
+principal value. In particular $L_*(0)=L_*(1)=2/\log2$.
+The source's \texttt{trueLogarithmicIntegral} means this $L_*$, not the
+unshifted integral and not $x/\log x$; see
+\sourcefile{MathlibNt/SieveTheory/Arithmetic/LiuLogarithmicIntegral.lean}{logarithmic-integral normalization}
+and \sourcefile{MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbelDeterministic.lean}{the zero-integral endpoint lemma}.
+Let $\pi(y;q,a)$ count primes at most the integer $y$ in the class $a\bmod q$,
+and, for integers $N\ge0$ and $q\ge1$, define the nested maximum
+\[
+ E^*(N,q)=\max_{\substack{y\in\mathbb Z\\0\le y\le N}}\ \max_{\substack{0\le a<q\\(a,q)=1}}
+ \left|\pi(y;q,a)-\frac{L_*(y)}{\varphi(q)}\right|,
+ \qquad Q_B(N)=\left\lfloor\frac{N^{1/2}}{(\log N)^B}\right\rfloor.
+\]
+The residues $a$ are integers. At modulus zero put $E^*(N,0)=0$;
+modulus one has the single reduced residue $a=0$.
+Thus the maximum really includes $y=0,1$, with the convention just specified;
+see \sourcefile{MathlibNt/SieveTheory/Distribution/BombieriVinogradov.lean}{the exact AP and prefix maxima}.
+The proved standard Bombieri--Vinogradov (BV) theorem states that for every $A>0$
+there are $B\ge0$ and $C>0$ such that, eventually,
+\inputleannode{bp:foundation-bv}
+\[
+ \sum_{1\le q\le Q_B(N)} E^*(N,q)\le C\frac{N}{(\log N)^A}.
+\]
+The maxima allow the consumer to choose its residue and its integer endpoint;
+the theorem does not bound an arbitrary convolution by ordinary prime BV.
+Richert's unshifted-integral formulation is supplied by a further normalization
+comparison in the same analytic producer, not by redefining $L_*$.
+
+For comparison with the Chen chapter, its notations $U$ and
+$\operatorname{li}_\kappa$ mean $C_2$ and $L_\kappa$, respectively.
+Its fixed-endpoint prime error is
+\[
+ E_{\rm prime}(N,q)=\max_{\substack{0\le a<q\\(a,q)=1}}
+ \left|\pi(N;q,a)-\frac{L_*(N)}{\varphi(q)}\right|
+ \le E^*(N,q) \qquad(q\ge1).
+\]
+This is the same centering and residue maximum, with only the additional
+prefix maximum omitted.
+
+\paragraph{Why Rosser weights give a lower or upper sieve.}
+Let $\mathcal P$ be a finite set of distinct sifting primes,
+$P=\prod_{p\in\mathcal P}p$, and let $D_{\rm nat}\ge2$ be an integer level
+such that every $p\in\mathcal P$ is below $D_{\rm nat}$.
+The M\"obius function $\mu$ is zero on integers divisible by a prime square
+and is $(-1)^k$ on products of $k$ distinct primes, with $\mu(1)=1$;
+thus $\mu^2$ is the squarefree indicator on positive integers.
+For $d\mid P$ write its prime factors in decreasing order
+$d=p_1\cdots p_k$, $p_1>\cdots>p_k$. Define
+\[
+ \lambda_d^{\pm}=
+ \begin{cases}
+ \mu(d),&d\mid P,\ d<D_{\rm nat},\ \text{and the corresponding chain tests hold},\\
+ 0,&\text{otherwise},
+ \end{cases}
+\]
+where the test at position $j$ is
+\[
+ p_1\cdots p_{j-1}p_j^3<D_{\rm nat}:
+ \quad\begin{cases}
+ j\text{ even},&\lambda_d^-,\\
+ j\text{ odd},&\lambda_d^+.
+ \end{cases}
+\]
+The empty chain passes, so $\lambda_1^\pm=1$.
+In real-level consumers the convention $D_{\rm nat}=\lfloor D_{\rm real}\rfloor+1$
+makes $d<D_{\rm nat}$ exactly $d\le D_{\rm real}$ for integer $d$;
+the chain tests themselves still use $D_{\rm nat}$.
+Other natural-level choices, such as the level-six construction below,
+are retained as specified by their producers.
+
+The finite Rosser certificates give the pointwise inequalities, for positive
+integers $a$,
+\[
+ \sum_{d\mid\gcd(a,P)}\lambda_d^-
+ \le \mathbf1_{\gcd(a,P)=1}
+ \le \sum_{d\mid\gcd(a,P)}\lambda_d^+,
+ \qquad |\lambda_d^\pm|\le1.
+\]
+For a finite sequence $\mathcal A$ of positive integers (counting any labels
+with their multiplicity), set
+$\mathcal A_d=\{a\in\mathcal A:d\mid a\}$ and
+$S(\mathcal A,P)=\#\{a\in\mathcal A:\gcd(a,P)=1\}$.
+Write $|\mathcal A_d|=Xg(d)+r_d$, where $X\ge0$ is the main mass,
+$g$ is the multiplicative density with $g(1)=1$, and $r_d$ is the discrepancy.
+Summing the pointwise inequalities and interchanging finite sums gives
+\[
+ X\sum_{d\mid P}\lambda_d^-g(d)-\sum_{d\mid P}|\lambda_d^-r_d|
+ \le S(\mathcal A,P)\le
+ X\sum_{d\mid P}\lambda_d^+g(d)+\sum_{d\mid P}|\lambda_d^+r_d|.
+\]
+The same argument applies to nonnegative weighted sources. This separates
+the analytic density comparison from payment of the distribution remainder.
+These combinatorial Rosser weights are not the Selberg optimizer used later.
+The lower definition and certificate are in
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/FiniteWeights.lean}{finite lower Rosser weights};
+the odd-position definition is in
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/RosserChains.lean}{upper Rosser chains},
+and its certificate is in
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/UpperRosserDensity.lean}{finite upper Rosser weights}.
+
+\paragraph{The conditioned distribution bill.}
+For Chen's conditioning let $P_N=\prod_{2<p\le N^{1/10},\ p\nmid N}p$.
+The relevant modulus is $qd$, not $d$; medium primes satisfy
+$N^{1/10}<q\le N^{1/3}$. The weighted producer controls the reduced carrier
+\inputleannode{bp:foundation-weighted-bv}
+\[
+ \sum_{\substack{q\text{ in Chen's medium range}\\q\nmid N}}
+ \ \sum_{\substack{d\mid P_N\\d<\lfloor N^{1/2-\epsilon}/q\rfloor+1}}
+ 3^{\omega(d)}\max_{(a,qd)=1}
+ \left|\pi(N;qd,a)-\frac{L_*(N)}{\varphi(qd)}\right|
+ \ll_{\epsilon,A}\frac{N}{(\log N)^A}.
+\]
+Here $0<\epsilon<1/6$ and $A>0$.
+The proof checks injectivity of $(q,d)\mapsto qd$ on this carrier and pays the
+weight by finite Cauchy and divisor-moment estimates, using ordinary BV with
+saving exponent $2A+10$.
+Nonreduced lanes $q\mid N$ and removed small primes have separate corrections.
+This producer enters Chen's conditioned upper sieve; ordinary BV also pays the
+base lower-sieve remainder and Li--Liu's strict-endpoint $S_1$ remainder.
+
+\subsection{Constructed sieve functions and uniform comparison}
+
+Write $F$ and $f$ for the constructed dimension-one upper and lower
+Jurkat--Richert functions. Their initial values are $F(s)=2e^\gamma/s$
+for $0<s\le3$ and $f(s)=0$ for $0<s\le2$; the delay equations are
+$(sF(s))'=f(s-1)$ and $(sf(s))'=F(s-1)$ beyond the initial intervals.
+For a real level $D_{\rm real}>0$ and cutoff $z>1$, the sieve coordinate is
+$s=\log D_{\rm real}/\log z$.
+
+The hats needed for the error estimate are positive extensions of the
+normalized derivatives $-F'/(2e^\gamma)$ and $f'/(2e^\gamma)$, rather
+than additional counting functions. With $c_\gamma=2e^\gamma$, they are,
+for $s>0$,
+\[
+ \widehat T^+(s)=
+ \begin{cases}s^{-2},&s\le3,\\
+ \bigl(F(s)-f(s-1)\bigr)/(c_\gamma s),&s>3,
+ \end{cases}
+ \qquad
+ \widehat T^-(s)=
+ \begin{cases}2s^{-2},&s\le2,\\
+ \bigl(F(s-1)-f(s)\bigr)/(c_\gamma s),&s>2.
+ \end{cases}
+\]
+The delay construction proves positivity, continuity, the weighted delay
+relations, and decay, with Suzuki's initial parameter $\widehat\beta=2$:
+\inputleannode{bp:foundation-jr-hats}
+The definitions and all these properties are supplied together in
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean}{constructed hats and their source theorem}.
+
+To state the lower comparison precisely, fix real parameters $d,\Delta,\Theta$
+(the letter $d$ here is an error exponent, not a sifting divisor) satisfying
+\[
+ 0<\Delta<1,\qquad d>\frac7{1-\Delta},\qquad \Theta>0,
+ \qquad \frac2d<\frac1\Theta,\qquad
+ \frac2\Theta+\frac3d<1-\Delta.
+\]
+They are chosen before the level grows. For $D>1$ define the source cutoff
+and the depth-$m$ error envelope by
+\[
+ \sigma_{\rm src}(D;d)=(\log D)^{1/d}\log\log(27D),
+ \qquad
+ E_m(D,s;d)=\left(1+\frac{s^d}{\log D}\right)^s s
+ \begin{cases}\widehat T^+(s),&m\text{ odd},\\
+ \widehat T^-(s),&m\text{ even}.
+ \end{cases}
+\]
+For a bounding sieve $S$, let $\mathcal P_S$ denote its finite sifting prime
+set and let $g_S$ denote its multiplicative density, with $0\le g_S(p)<1$.
+Put $\mathcal P_S(z)=\{p\in\mathcal P_S:p<z\}$,
+$P_S(z)=\prod_{p\in\mathcal P_S(z)}p$, and
+$V_S(z)=\prod_{p\in\mathcal P_S(z)}(1-g_S(p))$.
+Its dimension-one local-product condition with constant $K$ is
+\[
+ \prod_{\substack{p\in\mathcal P_S\\z_1\le p<z_2}}
+ (1-g_S(p))^{-1}
+ \le\frac{\log z_2}{\log z_1}\left(1+\frac K{\log z_1}\right)
+ \qquad(2\le z_1\le z_2).
+\]
+For an integer level $D_{\rm nat}\ge2$ and $4\le s\le6$, use the actual
+rounded cutoff and carrier-dependent even depth
+\[
+ z=\left\lceil D_{\rm nat}^{1/s}\right\rceil,\qquad
+ m=2\bigl(|\mathcal P_S(z)|+1\bigr).
+\]
+The source-coordinate relation is the displayed ceiling; after rounding,
+one must not replace $s$ by $\log D_{\rm nat}/\log z$.
+Assume $z\ge2$ and $s\le\sigma_{\rm src}(D_{\rm nat};d)$.
+With the constructed hats and the fixed parameters above, the lower
+comparison chooses its constants before $S$, $K$, $D_{\rm nat}$ and $s$ vary:
+\inputleannode{bp:foundation-suzuki-lower}
+In particular, there is $C\ge3$ such that for each $K\ge2$ satisfying the
+local-product condition,
+\[
+ V_S(z)\bigl(f(s)-\mathcal E_m(D_{\rm nat},s;d,\Delta,K)\bigr)
+ \le \sum_{e\mid P_S(z)}\lambda_e^-g_S(e),
+\]
+where the weights have level $D_{\rm nat}$ and the \emph{complete} loss is
+\[
+ \mathcal E_m(D,s;d,\Delta,K)
+ =C\exp(\sqrt K)\,E_m(D,s;d)(\log D)^{-\Delta}.
+\]
+The parameter inequalities, cutoff, envelope and full comparison can be
+read respectively in
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiClaim145SourceParameters.lean}{Suzuki's parameter conditions},
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCaseIISourceSigmaDecay.lean}{the source cutoff},
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144ErrorObjects.lean}{the exact error envelope}, and
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean}{the uniform lower comparison}.
+
+For Chen the source verifies $(d,\Delta,\Theta)=(16,1/2,7)$ and takes
+\[
+ D_{\rm nat}=\lfloor N^{1/2-\epsilon}\rfloor+1,
+ \qquad s=5-10\epsilon,\qquad 0\le\epsilon<1/10.
+\]
+For each fixed $\epsilon$ and each $\rho>0$, it then selects an $N$ threshold
+for both the source-cutoff condition and $\mathcal E_m<\rho$, for \emph{all}
+depths $m$. Indeed, with $s$ fixed the perturbation
+$(1+s^{16}/\log D)^s$ tends to $1$ and $(\log D)^{-1/2}$ tends to zero;
+depth only chooses between two fixed hat values. A growing prime set and
+hence a growing adaptive depth therefore cause no extra loss.
+The actual finite-source comparison is
+\sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenVaryingFamilyLowerDensity.lean}{Chen's varying-family lower density},
+using \sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenAdaptiveDepthAbsorption.lean}{all-depth error absorption}
+and \sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenParameterBridge.lean}{the floor/ceiling geometry}.
+Li--Liu's beta branch also fixes its coordinate before choosing the integer
+threshold; its final fixed-$s$ range is $4\le s<33/8$.
+
+The modern upper comparison gives, for each local-product constant $K>1$
+and tolerance $\rho>0$, a cutoff $z_0$ uniform in the bounding sieve:
+\inputleannode{bp:foundation-suzuki-upper}
+If $z\ge\max(2,z_0)$, every sifting prime is at most $z$,
+$D_{\rm real}>0$, and $s=\log D_{\rm real}/\log z$ satisfies
+$3/2\le s\le4$, then
+\[
+ \sum_{e\mid P}\lambda_e^+g_S(e)
+ \le (F(s)+\rho)\prod_{p\mid P}(1-g_S(p)),
+ \qquad D_{\rm nat}=\lfloor D_{\rm real}\rfloor+1,
+\]
+where $P=\prod_{p\in\mathcal P_S}p$ and the product on the right runs over
+primes. This comparison uses the local-product condition just defined.
+The source-cutoff and odd-depth error are absorbed in the choice of $z_0$;
+see \sourcefile{MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean}{the upper comparison through four}.
+A finite source bound still requires the separate remainder payment derived
+from the pointwise Rosser inequality.
+
+\paragraph{Which comparisons the Li--Liu terms actually use.}
+The following three applications distinguish the ranges before the explicit
+sieve-function formulas are used in the Li--Liu chapter.
+\begin{enumerate}
+\item Chen's conditioned upper sieve and Li--Liu's $S_2$ and $\mathcal B_{10}$
+upper sieves use the preceding $3/2\le s\le4$ theorem. Li--Liu's second
+positive $S_1$ term uses the fixed-$s$ beta lower branch; continuity selects
+$s<33/8$ before the threshold to approximate its endpoint coefficient.
+\item The first positive $S_1$ term instead uses the genuine level-six
+construction at $z_N=N^{4/53}$:
+\[
+ Z_6=\lceil z_N\rceil,\qquad D_6=Z_6^6,\qquad s=6.
+\]
+For every $\rho>0$, the lower Rosser main sum at this natural level is at
+least $(f(6)-\rho)V_N(Z_6)$ eventually, uniformly in the source parameter
+$0<\epsilon<1$. Since $D_6\sim N^{24/53}$ and $24/53<1/2$, this choice leaves room below
+the ordinary-BV square-root level for the distribution payment.
+The definition and density theorem are
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS1LevelSix.lean}{the level-six geometry}
+and \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean}{the actual level-six lower density}.
+Combining this with the main mass, the lower product, and the paid ordinary-BV
+remainder gives, for each fixed $0<\epsilon<1$ and $\delta>0$,
+\[
+ \left(\frac{53}{2}e^{-\gamma}(1-\epsilon)f(6)-\delta\right)\mathcal X_N
+ \le S_1(z_N)
+\]
+eventually for even $N$, where $S_1(z_N)$ denotes the base sift of the
+$\epsilon$-truncated difference source at cutoff $z_N$.
+The actual assembly is
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean}{the first positive normalized term};
+it uses the separately paid level-six error, not the beta endpoint theorem.
+The notation $f_*$ in the Li--Liu chapter is this $f$ on $[4,6]$.
+\item The $S_3$ upper main sum feeding $G_4,G_5$ uses a \emph{different}
+producer. Let $F_S$ denote the constructed continuous Suzuki upper factor;
+its subscript means Suzuki, not dependence on the particular sieve $S$.
+For each $K>1$ and $\rho>0$, its own uniform cutoff gives
+\[
+ \sum_{e\mid P}\lambda_e^+g_S(e)
+ \le (F_S(s)+\rho)\prod_{p\mid P}(1-g_S(p))
+ \qquad(3/2\le s\le6),
+\]
+with the same real-level, prime-support and local-product conditions as above.
+This is \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean}{the upper comparison through six};
+its odd-depth error is controlled uniformly in $s$ on this larger interval.
+The theorem \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean}{the actual S3 Rosser main sum}
+supplies the Goldbach local-product constant and specializes the sum to
+$\sum_{e\mid P}\lambda_e^+/\varphi(e)$.
+It is consumed in
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS3NormalizedUpper.lean}{the normalized S3 upper bound}.
+This covers the whole required $53/24\le s\le45/8$ interval, including
+its part beyond $4$. It is not a change of the range of the preceding node.
+\end{enumerate}
+
+\subsection{Switched distribution is an aggregate estimate}
+
+For a bounded real coefficient $a(m)$ on positive integers, an interval
+$I=(A_1,A_2]\cap\mathbb N$ with integer $0\le A_1\le A_2$, an endpoint
+$Y\ge0$, a modulus $q\ge1$, and a reduced residue $l$, put
+\[
+ R_{a,I,\kappa}(Y;q,l)=
+ \sum_{\substack{m\in I\\(m,q)=1}}a(m)
+ \left(\#\{p:mp\le Y,\ mp\equiv l\pmod q\}
+       -\frac{L_\kappa(Y/m)}{\varphi(q)}\right).
+\]
+The counted variable $p$ is prime. Set
+$M_{a,I,\kappa}(Y;q)=\max_{(l,q)=1}|R_{a,I,\kappa}(Y;q,l)|$.
+The sum over $m$ stays \emph{inside} the absolute value.
+Replacing this by the sum of absolute errors for each $m$ would demand a
+stronger, different distribution theorem.
+
+For Liu's particular prime-pair characteristic coefficient and prescribed
+source interval, the unweighted Pan specialization is proved at $\kappa=2/\log2$.
+\inputleannode{bp:foundation-liupan}
+Its arbitrary logarithmic saving is transferred to the
+$\mu(q)^2 3^{\omega(q)}$-weighted source by finite weight payment.
+The strict source cutoff is only enlarged or embedded with a proved inclusion;
+transport to the closed-floor consumer spends a logarithm, replacing $B$ by $B+1$.
+A separate additive-normalization estimate gives the canonical $L_2$ coprime
+input used by both public Chen implementations.
+\inputleannode{bp:foundation-liupan-canonical}
+
+Li--Liu's changing source coefficients require a broader producer, not merely
+Chen's fixed characteristic coefficient.
+\inputleannode{bp:foundation-pan-bounded}
+For every $U>0$ it chooses $C,B,N_0$ before $N$, $I$, and $a$,
+assuming $|a(m)|\le1$, $A_2\le N^{2/3}$, and $(\log N)^{2B}\le A_1$,
+and bounds $\sum_{q\le Q_B(N)}M_{a,I,*}(N;q)$ by $CN/(\log N)^U$.
+The $S_2$ switched remainder is identified with such an aggregate.
+For $B_{10}$, the finite window is a difference of prefixes at $N$ and
+$\lfloor\epsilon N\rfloor$; both endpoints must satisfy the producer's geometry.
+Removing the main-term coprimality gate leaves a signed deleted-main term,
+whose absolute contribution is paid separately before the common-mass sieve.
+
+\subsection{Selberg optimization and the Chen triple penalty}
+
+Put $R=\lfloor N^{1/4-\epsilon/2}\rfloor$ and define Liu's paper modulus by $Q=\prod_{p\le R,\ p\nmid N}p$, with the product over primes.
+For coefficients supported on $d\mid Q$, $d\le R$, the Selberg square expands
+into a main quadratic form plus a signed remainder indexed by pairs of divisors.
+The explicit optimizer is normalized at $1$ and has $|\lambda_d|\le1$
+on the admissible even source. Its denominator is
+\[
+ G(N,\epsilon)=\sum_{\substack{d\mid Q\\d\le R}}
+                  \prod_{p\mid d}\frac1{p-2}.
+\]
+For fixed $\epsilon<1/2$, the proved even-integer limit is
+\inputleannode{bp:foundation-selberg-denominator}
+\[
+ \frac{G(N,\epsilon)\mathfrak S_{\mathrm{Liu}}(N)}{\log N}
+ \longrightarrow \frac{1/4-\epsilon/2}{2}.
+\]
+Together with the genuine-logarithmic-integral prime-pair main mass, this gives
+the optimized main-term bound used in the Chen upper penalty.
+
+Grouping the remainder by $d=[d_1,d_2]=\operatorname{lcm}(d_1,d_2)$,
+the least common multiple, uses $d\le d_1d_2\le R^2$.
+For squarefree $d$, each prime has three possible placements in the pair,
+which explains the factor $3^{\omega(d)}$.
+\inputleannode{bp:foundation-selberg-remainder}
+The resulting full-distribution majorant is supplied by the canonical coprime
+Pan theorem together with the proved noncoprime correction.
+The even Selberg assembly is then transported to corrected Chen triples;
+modulus-dividing residual primes and source-boundary fibres are not discarded.
+This is Chen's Selberg route, not a substitute for Li--Liu's linear upper sieves.
+
+\subsection{What is shared, and where the arguments separate}
+
+The shared foundation is now visible: PNT and Mertens normalization, ordinary BV,
+constructed Jurkat--Richert functions, uniform Suzuki comparisons, and the
+low/high-conductor machinery underlying the two Pan producers.
+Li--Liu's $S_1$ normalization combines paid ordinary-BV error, lower density,
+and the genuine lower sieve product; its $S_2$ and $B_{10}$ normalizations use
+bounded-coefficient Pan distribution, upper density, and the upper product.
+Their final elementary error absorption is not the source of these inputs.
+
+There is also a distinct well-factorable rectangular distribution lane.
+Fix integers $i,j,A\ge0$, a scale constant $C_{\rm scale}\ge1$, and a
+real gap $\zeta>0$. These are fixed \emph{before} choosing the threshold
+in $x$. For each $x$ above that threshold, the estimate is uniform in
+rectangles, residues and coefficients satisfying
+\[
+ M\ge1,\quad T\ge1,\quad 4MT=x,\quad T=x^\nu,
+ \quad \zeta\le\nu\le\frac1{10}+\frac\zeta{10},
+ \quad N\in\mathbb N,\quad 0<N\le C_{\rm scale}x.
+\]
+Choose a finite long-variable set $\mathcal U\subset[M,2M]\cap\mathbb N$
+and a short interval $J=(u,v]\cap\mathbb N$ with $T\le u\le v\le2T$.
+The long coefficient $\alpha$ satisfies $|\alpha(m)|\le\tau_i(m)$ on
+$\mathcal U$, where $\tau_i$ counts ordered factorizations into $i$ positive
+integer factors ($\tau_0$ is the indicator of $1$).
+The short coefficient is the actual Goldbach prime mask
+$\beta_N(n)=\mathbf1_{n\text{ prime},\,(n,N)=1}$.
+Set $Q=x^{(5-5\nu)/9-\zeta}$, and let $c$ be a signed well-factorable
+coefficient of order $j$ at level $Q$: $|c(q)|\le\tau_j(q)$, and for every
+split $Q=Q_1Q_2$ with $Q_1,Q_2\ge1$, it is a Dirichlet convolution
+$c=c_1*c_2$ of coefficients supported on $1\le n\le Q_1$ and
+$1\le n\le Q_2$, respectively, each bounded in absolute value by $\tau_j(n)$.
+The centered signed error is
+\[
+ \mathcal E_{\rm rect}=
+ \sum_{\substack{1\le q\le\lfloor Q\rfloor\\(q,N)=1}}c(q)
+ \left(
+ \sum_{\substack{m\in\mathcal U,\ n\in J\\mn\equiv N\pmod q}}
+       \alpha(m)\beta_N(n)
+ -\frac1{\varphi(q)}
+ \sum_{\substack{m\in\mathcal U,\ n\in J\\(mn,q)=1}}
+       \alpha(m)\beta_N(n)
+ \right).
+\]
+\inputleannode{bp:foundation-fouvry-rectangle}
+The theorem gives $|\mathcal E_{\rm rect}|\le x/(\log x)^A$ for all these
+choices after the one threshold depending only on $i,j,A,C_{\rm scale},\zeta$.
+In particular the Goldbach residue $N$ may vary in the displayed range,
+whereas the positive gap $\zeta$ is not allowed to shrink with $x$.
+The precise interval geometry is in
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryPrimeC2.lean}{the prime rectangle},
+the convolution condition in
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryFactorConvolution.lean}{signed well-factorability},
+and the centered error in
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryDispersion.lean}{the bilinear discrepancy}.
+The parameter order and the literal residue $N$ are those of
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean}{the Goldbach rectangle theorem}.
+Li--Liu's flexible $G_{12}$ rectangles consume this producer unchanged;
+curved-region boundaries and exceptions are paid separately in that chapter.
+
+\subsection{Inside the distribution proofs}
+A Dirichlet character modulo $q$ is a multiplicative function on the reduced
+residue classes, extended by zero to nonunits. Character orthogonality
+converts residue-class errors into character sums. The conductor is the
+smallest modulus from which a character is induced; passing to primitive
+characters also introduces cofactor sums and their totient weights.
+The principal character is the character equal to one on all units.
+
+For ordinary Bombieri--Vinogradov, three branches meet before the maximal
+prime-counting estimate is obtained.
+\begin{enumerate}
+\item The principal part is paid by the quantitative prime number theorem,
+with the actual logarithmic-integral normalization and prime-power correction.
+\item Nonprincipal characters of small conductor use Siegel--Walfisz
+estimates: arbitrary inverse-logarithmic saving while the conductor stays
+in the prescribed logarithmic range. The implementation constructs the
+smoothing function and obtains the required uniform quadratic $L$-value
+lower bound from its proved Landau--Siegel theorem.
+\inputleannode{bp:foundation-bv-low}
+\item Large conductors use Vaughan's identity to split the von Mangoldt
+weight into Type I, Type II and a small remainder. Type I retains a long
+summation variable and uses periodic character cancellation with Cauchy;
+Type II is bilinear and uses the all-aspect large-sieve estimate on the
+chosen high-conductor family. One common choice of the two Vaughan
+cutoffs is used in all three estimates. Prefix maxima and conductor
+sums are paid before the resulting inverse-logarithmic bound is consumed.
+\inputleannode{bp:foundation-bv-high}
+\end{enumerate}
+The unconditional BV producer combines these branches and passes to prime
+counts by partial summation. Its proof is a modern implementation of the
+needed distribution estimate, with each branch's actual inputs supplied.
+
+For Pan distribution, the object throughout the proof is the signed
+coefficient--prime convolution defined above. The low branch uses the
+nonprincipal prime-prefix Siegel--Walfisz estimate. The high branch keeps
+the short and long coefficient polynomials together; a Perron integral
+separates the hyperbolic product constraint while preserving their
+character coupling. Low and high estimates hold with the cofactor still
+free after the common threshold. The primitive-conductor assembly then
+pays the reciprocal-totient cofactor sum, and a separate principal estimate
+completes the aggregate. This explains why ordinary prime BV cannot
+simply replace the Pan input in a switched sieve.
+
+The well-factorable branch keeps cancellation also in the modulus
+coefficient: a level-$Q$ well-factorable coefficient admits appropriately
+supported convolution factorizations when $Q$ is split into two levels.
+The signed version and its divisor bounds are part of the implemented
+rectangle theorem's assumptions. Applying its bilinear estimates to each
+admissible rectangle is followed by the separate boundary and exception
+payments in the Li--Liu chapter.
+The subsequent $G_{67},G_9,G_{11},G_{12}$ integral and signed-count assemblies
+belong to the Li--Liu argument, rather than being silently absorbed into a
+claim that the common analytic estimates alone prove both endpoints.

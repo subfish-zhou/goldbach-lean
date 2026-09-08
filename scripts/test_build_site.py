@@ -46,7 +46,8 @@ class ProjectSiteTests(unittest.TestCase):
         (self.api / "blueprint").mkdir()
         (self.api / "blueprint/index.html").write_text("Old nested copy")
         self.blueprint.mkdir()
-        for name in ("index.html", "dep_graph_document.html"):
+        for name in ("index.html", "dep_graph_document.html", "overview.html",
+                     "foundations.html", "chen.html", "liliu.html"):
             (self.blueprint / name).write_text('<html><head></head><body><header>Blueprint</header></body></html>')
 
     def snapshot(self, directory):
@@ -108,7 +109,7 @@ class ProjectSiteTests(unittest.TestCase):
 
     def test_missing_homepage_target_fails_before_publication(self):
         # This is an explicitly disposable test fixture, not a project artifact.
-        (self.blueprint / 'dep_graph_document.html').unlink()
+        (self.blueprint / 'overview.html').unlink()
         with self.assertRaisesRegex(ValueError, 'Broken local link'):
             assemble(self.api, self.blueprint, self.output)
         self.assertFalse(self.output.exists())

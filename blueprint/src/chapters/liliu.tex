@@ -1,0 +1,586 @@
+\section{Li--Liu's asymmetric Goldbach theorem}
+\label{sec:liliu-mathematical-chain}
+
+The assertion is not merely that an even integer is a prime plus an
+almost prime.  The two factors in the almost prime must have a prescribed
+imbalance.  This chapter follows the implemented finite counts through
+sieving, switching, integral estimates, and the final choice of parameters.
+There are two implemented exits: a qualitative existence proof and a stronger
+counting proof using the author's two-branch estimate for the eleventh term.
+
+\subsection{The counted object and the meaning of the exponent}
+For natural numbers $N,p$, write $\mathcal R(N,p)$ for
+\[
+ p\text{ prime},\qquad \exists r,q\in\mathbb N:\quad
+ (r=1\text{ or }r\text{ prime}),\quad q\text{ prime},\quad
+ N=p+rq,\qquad r^{10}\le q^9.
+\]
+The final inequality is equivalent to $r\le q^{9/10}$, with real powers
+on the right.  Clearing the rational exponent avoids rounding and retains
+both factors; an unrestricted two-almost-prime predicate would be weaker.
+\inputleannode{bp:liliu-representation}
+As in the overview, define $D_{1,19/10}(N)=\#\{p\le N:\mathcal R(N,p)\}$.
+This counts distinct primes $p$, not triples $(p,r,q)$, and
+$D_{1,19/10}(N)>0$ is equivalent to the existence of the displayed witnesses.
+\inputleannode{bp:liliu-count-positive}
+
+Fix $\varepsilon>0$ and put
+\[
+ \mathcal P_{N,\varepsilon}=\{p\text{ prime}:p<(1-\varepsilon)N\},\qquad
+ \mathcal A=\{N-p:p\in\mathcal P_{N,\varepsilon}\},\qquad
+ \tau=\frac9{19}-\varepsilon.
+\]
+Every $n\in\mathcal A$ satisfies $n>\varepsilon N$.
+From now on take $N$ sufficiently large that $\varepsilon N>1$;
+then every $n\in\mathcal A$ is at least two.  This pays the domain
+condition before we use its least prime factor.
+For a real exponent $a$ use the exact natural cutoff
+$z_a=\lceil N^a\rceil$: for a prime $\ell$, $z_a\le\ell$ if and only if
+$N^a\le\ell$.  Let $P^-(n)$ be the least prime factor of $n\ge2$,
+and let $\Omega(n)$ count prime factors with multiplicity.
+The integer-valued basic weight is
+\[
+ w_a(n)=\mathbf1_{P^-(n)\ge N^a}
+ -\mathbf1_{P^-(n)\ge N^\tau,\,\Omega(n)\ge2}
+ +\mathbf1_{P^-(n)\ge N^\tau,\,\Omega(n)\ge3}
+ -\mathbf1_{P^-(n)\ge N^a,\,\Omega(n)\ge3}.
+\]
+Its positive values are at most one.  A positive value forces $n$ to be
+prime, or $n=rq$ with prime factors and $r<N^\tau$.
+For all sufficiently large $N$, uniformly in $a$ and $p$,
+\[
+ (N^\tau)^{19}\le(\varepsilon N)^9,
+ \qquad r^{19}\le n^9=r^9q^9,
+ \qquad r^{10}\le q^9.
+\]
+The last implication cancels the positive integer $r^9$; it is the
+arithmetic reason for the particular exponent $9/19$ in the cutoff.
+\inputleannode{bp:liliu-imbalance}
+The prime case uses $r=1$.  Thus $w_a(N-p)\le\mathbf1_{\mathcal R(N,p)}$.
+The map $p\mapsto N-p$ is injective on the carrier, so summing gives
+\[
+ \sum_{n\in\mathcal A}w_a(n)\le D_{1,19/10}(N).
+\]
+Here the threshold follows $\varepsilon$ but precedes $a$ and $p$.
+This is an eventual theorem, not the explicit threshold printed in the paper.
+\inputleannode{bp:liliu-basic}
+
+\subsection{Literal sieve fibres and the six-term decomposition}
+\label{sec:liliu-fibres}
+Define the finite fibre
+\[
+ H(A,M,d;x)=\#\{n\in A:d\mid n,\quad
+ \ell\mid n,\ \ell\text{ prime},\ \ell\nmid M\Longrightarrow\ell\ge x\}.
+\]
+The sieve filters the original integer $n$, not the quotient $n/d$.
+In the sums below every prime label is coprime to $N$; repeated prime
+labels are permitted whenever the weak inequalities permit them.
+With $A=\mathcal A$ understood, define
+\begin{align*}
+ S_1(x)&=H(A,N,1;x),\\
+ S_2(T)&=\sum_{T\le r,\ r^2\le N}H(A,N,r;r),\\
+ S_3(z,y)&=\sum_{z\le r\le y}H(A,N,r;z),\\
+ S_4(y)&=\sum_{y\le r\le s,\ rs^2\le N}H(A,Nr,rs;s),\\
+ S_5(z,y)&=\sum_{z\le r\le y\le s,\ rs^2\le N}H(A,Nr,rs;s),\\
+ S_6(z,y)&=\sum_{z\le r\le s\le t\le y}H(A,Nr,rst;s).
+\end{align*}
+Buchstab's identity partitions survivors by their smallest newly admitted
+prime.  Apply the basic inequality at two cutoffs, expand $S_1(y)$ down
+to $z$, and split $S_4(z)$ at $y$.  The difference of the resulting double
+sums supplies the positive triple term $S_6(z,y)$.
+This is an exact finite partition before endpoint losses are paid.
+The loss is $E=2X+Q+R+B_6$: $X$ counts noncoprime differences,
+$Q=\sum_{z\le r<y}H(A,N,r^2;r)$ counts the square diagonal,
+$R$ is the triple sum with $t<y$ and $r=s$ or $s=t$,
+and $B_6$ is the triple sum with $t=y$.
+Fix $0<\varepsilon<2/15$.  One threshold $N_0(\varepsilon)$ works
+for every $1/21<k<\sigma\le1/3$: with $z=N^k$, $y=N^\sigma$,
+all even $N\ge N_0$ satisfy the actual finite bound
+\[
+ 2S_1(z)-2S_2(N^\tau)-S_3(z,y)-2S_4(y)-S_5(z,y)+S_6(z,y)
+ -446N^{1-k}\le2D_{1,19/10}(N).
+\]
+The uniform bound $0\le E\le446N^{1-k}$ is proved from the four counts,
+not stipulated as a big-$O$ premise.
+\inputleannode{bp:liliu-six}
+
+\subsection{The twelve terms and a factor-excluded tenth fibre}
+Now fix
+\[
+ a=\frac4{53},\quad b=\frac4{33},\quad c=\frac3{11},\qquad
+ z=N^a,\quad B=N^b,\quad C=N^c,\quad T=N^\tau.
+\]
+These satisfy $1/18<a<b<(1-3b)/3<c<1/3$.
+Set $G_1=S_1(z)$, $G_2=S_1(B)$, $G_3=S_2(T)$,
+$G_4=S_3(z,N^{1/3})$, $G_5=S_3(z,C)$, and
+\begin{align*}
+ G_6&=\sum_{z\le r\le s\le B}H(A,N,rs;z),&
+ G_7&=\sum_{z\le r\le B\le s\le C}H(A,N,rs;z),\\
+ G_8&=S_4(C),&G_9&=S_5(z,N^{1/3}),\\
+ G_{11}&=\sum_{z\le r\le q\le s\le t\le B}H(A,Nr,rqst;q),\\
+ G_{12}&=\sum_{z\le r\le q\le s\le B\le t\le C}H(A,Nr,rqst;q).
+\end{align*}
+For the tenth term the implementation uses
+\[
+ G_{10}^{\rm corr}=\sum_{B\le r\le C\le s,\ rs^2\le N}
+ H(A,Nrs,rs;\sqrt{N/(rs)}).
+\]
+The excluded modulus is $Nrs$: both chosen prime factors are exempted from further sifting, because the sieve acts on $n$ itself. The following finite comparison uses this explicitly defined intermediate fibre.
+After removing noncoprime and square-divisible exceptional atoms, the
+cofactor $q=n/(rs)$ is prime: its least prime factor is at least
+$\sqrt{N/(rs)}$, while $q<N/(rs)$.
+The injection preserves the pair labels and sends the surviving atom to
+\[
+ (r,s,q),\quad \varepsilon N/(rs)<q<N/(rs),\quad
+ q\text{ prime},\quad N-rsq\text{ prime}.
+\]
+Let $\Pi_{10}$ count these labelled triples.
+Use the six-term bound at $(k,\sigma)=(a,1/3)$ and $(b,c)$;
+the first $S_4(N^{1/3})$ vanishes.  Three selected triple regions inside
+$S_6(z,N^{1/3})$, with a paid upper-endpoint overlap, account for the
+pair gains and quadruple subtractions.  The remaining $S_5(B,C)$ is
+covered by the corrected tenth fibre and the third triple region.
+Combining these inequalities and paying all finite exceptions gives the
+\emph{corrected twelve-term inequality actually consumed below}.  Fix
+$0<\varepsilon<2/15$; for all sufficiently large even $N$,
+\[
+ 3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9
+ -G_{10}^{\rm corr}-G_{11}-G_{12}-1334N^{1-a}
+ \le4D_{1,19/10}(N).
+\]
+The source threshold is even uniform over exponents satisfying
+$1/18<a<b<(1-3b)/3<c<1/3$; here we use the displayed fixed triple.
+There is also an auxiliary switched inequality: replacing
+$-G_{10}^{\rm corr}-1334N^{1-a}$ by
+$-\Pi_{10}-2214N^{1-a}$ preserves the conclusion.
+It is not the twelve-term input used by the production assembly.
+Neither signed left side has yet been proved positive.
+See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean}{corrected and switched finite bounds}.
+\inputleannode{bp:liliu-twelve}
+\subsubsection{Sifting the output while retaining the labels}
+\label{sec:liliu-output-sift}
+For output sifting, let $\mathcal B_{10}(Z)$ keep the same $(r,s,q)$
+labels and the strict cofactor window, but replace primality of $N-rsq$
+by the literal output condition
+\[
+ \ell\mid N-rsq,\quad \ell\text{ prime},\quad \ell\nmid N
+ \quad\Longrightarrow\quad \ell\ge Z.
+\]
+This sieves the output $N-rsq$, not its prime cofactor $q$; the excluded
+modulus here is $N$, in contrast to $Nrs$ in the original corrected fibre.
+For $N\ge2$, $\varepsilon>0$, $b>1/18$ and $Z\ge1$, the finite bound
+\[
+ \Pi_{10}\le\mathcal B_{10}(Z)+400\lfloor Z\rfloor
+\]
+pays for small prime outputs without identifying different labels.
+The source permits any real second cutoff $C$; no small-epsilon window or
+evenness assumption is needed for this finite comparison.
+See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean}{literal output fibres and finite comparison}.
+As an auxiliary error-payment observation, for fixed $0\le\theta<1$
+and $\delta>0$, the power losses with $1\le Z\le N^\theta$ are eventually
+at most $\delta N/\log^2N$, with the threshold preceding the varying $Z$.
+The actual analytic route chooses and eliminates the auxiliary cutoff
+inside the bound for $\Pi_{10}$; it does not require an entire sifted
+replacement of the twelve-term expression.
+\inputleannode{bp:liliu-sifted}
+
+\subsection{Normalization and the first positive and negative estimates}
+Use the author's normalization, without an additional factor two:
+\[
+ \mathfrak S_{\mathrm{Liu}}(N)=\prod_{\substack{\ell>2\\\ell\mid N}}\frac{\ell-1}{\ell-2}
+       \prod_{\ell>2}\left(1-\frac1{(\ell-1)^2}\right),\qquad
+ \mathcal X_N=\frac{\mathfrak S_{\mathrm{Liu}}(N)N}{\log^2N}.
+\]
+Products here run over primes.  The universal product is positive and
+bounds $\mathfrak S_{\mathrm{Liu}}(N)$ below; in particular $\mathcal X_N>0$ for $N\ge4$.
+Let $\gamma$ denote Euler's constant.  The lower and upper
+Jurkat--Richert functions $f,F$ have $f(u)=0$ and $F(u)=2e^{\gamma}/u$
+for $0<u\le2$, and satisfy $(uf(u))'=F(u-1)$,
+$(uF(u))'=f(u-1)$ for $u>2$.
+For the lower factor on $[4,6]$ the implementation uses explicitly
+\[
+ I(v)=\int_2^{v-1}\frac{\log(t-1)}t\,dt,\qquad
+ f_*(s)=\frac{2e^{\gamma}}s
+ \left(\log(s-1)+\int_3^{s-1}\frac{I(v)}v\,dv\right).
+\]
+For every fixed $\delta>0$ and $0<\varepsilon<1$, a threshold
+$N_0(\delta,\varepsilon)\ge4$ gives
+$((1-\varepsilon)L-\delta)\mathcal X_N\le3G_1+G_2$
+for every even $N\ge N_0$, where
+\[
+ L=e^{-\gamma}\left(\frac{159}{2}f_*(6)
+                         +\frac{33}{2}f_*(33/8)\right).
+\]
+The multiplicities three and one are already included in $L$.
+The first factor $f_*(6)$ uses a separate level-six lower-density
+producer, not the beta-cutoff theorem near $33/8$.
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean}{level-six lower density}
+proves that, for each $\rho>0$, the actual lower Rosser density is at least
+$(f_*(6)-\rho)$ times the local sieve product once $N$ is large;
+this density threshold precedes $0<\varepsilon<1$.
+Its real consumer,
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean}{alpha normalization at level six},
+combines that density with the main-mass/product lower bound and the
+paid level-six remainder.  The resulting count threshold follows the
+fixed $\varepsilon$.
+For the second factor, continuity first selects a fixed ratio $s<33/8$;
+the fixed-ratio sieve theorem is applied only afterwards.  Thus the
+endpoint value $f_*(33/8)$ is obtained with a paid error, not by assuming
+uniform validity of a sieve theorem at its limiting ratio.
+\inputleannode{bp:liliu-positive}
+For the following $G_3,G_4,G_5$ upper bounds, fix $\delta>0$ and
+$0<\varepsilon<2/15$; each bound holds for every sufficiently large
+even $N$, with its threshold following those fixed parameters.
+The negative term $G_3$ is bounded above by
+$[8\log((1-\tau)/\tau)+\delta]\mathcal X_N$; its external multiplicity is four.
+For $d=1/3,3/11$, put
+\[
+ A_3(d)=\frac{53}{2}e^{-\gamma}
+       \int_a^d\frac{F_S((1/2-u)/a)}u\,du.
+\]
+Here $F_S$ is the implemented Suzuki upper factor.  On the required
+range $53/24\le s\le45/8$, its exact exp-free formulas are
+\[
+ e^{-\gamma}F_S(s)=\frac2s
+ \begin{cases}
+ 1,&s\le3,\\
+ 1+I(s),&3\le s\le5,\\
+ 1+I(5)+\displaystyle\int_5^s
+ \frac{\log(t-2)+\int_3^{t-2}I(v)/v\,dv}{t-1}\,dt,&5\le s\le45/8.
+ \end{cases}
+\]
+Thus the third-interval correction is not discarded.  A formula for $F_S$
+alone would not justify this use beyond four.  The separate
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean}{S3 upper Rosser comparison through six}
+proves, for every $\rho>0$, one cutoff threshold such that the actual upper
+Rosser main sum is at most $(F_S(s)+\rho)$ times its sieve product
+for every $3/2\le s=\log\Delta/\log z\le6$ and $\Delta>0$.
+It obtains the genuine local-product witness internally from
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean}{upper density through six}.
+The proof in
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachS3NormalizedUpper.lean}{actual S3 normalized consumer}
+uses this comparison at the moving finite-level ratios, then passes to
+the limiting integral above.  This covers $G_4,G_5$ and the entire
+$[53/24,45/8]$ range; the narrower upper comparison through four is not
+being silently extended.
+The actual bounds are $G_4\le[(1-\varepsilon)A_3(1/3)+\delta]\mathcal X_N$
+and $G_5\le[(1-\varepsilon)A_3(c)+\delta]\mathcal X_N$.
+
+Switching $G_8,G_9$ creates the labelled $\mathcal B_8^+,\mathcal B_9^+$:
+$(r,s,q)$ with the respective original pair constraints, prime $q$,
+and $rsq<N$; their output is $N-rsq$.
+Good original atoms inject into the prime-output atoms; noncoprime,
+square, and small-output exceptions are paid separately before upper sifting.
+The logarithmic prime coordinates $u=\log r/\log N$, $v=\log s/\log N$
+produce the density $K(u,v)=1/[uv(1-u-v)]$.
+Define the fixed integrals
+\[
+ I_8=\int_c^{1/3}\int_u^{(1-u)/2}K(u,v)\,dv\,du,\qquad
+ I_{10}=\int_b^c\int_c^{(1-u)/2}K(u,v)\,dv\,du.
+\]
+The corrected tenth count first satisfies
+$G_{10}^{\rm corr}\le\Pi_{10}+880N^{1-b}$ eventually.
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachPi10IntegralUpper.lean}{Pi10 after output sifting and cutoff elimination}
+bounds the actual $\Pi_{10}$ count, not $\mathcal B_{10}(Z)$ for arbitrary $Z$.
+Then \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean}{corrected tenth count bounded by I10}
+pays the $880N^{1-b}$ error.  Precisely, for every $\delta>0$ and every
+fixed $0<\varepsilon<1$, some $N_0(\delta,\varepsilon)\ge4$ gives
+\[
+ G_{10}^{\rm corr}\le[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N
+ \qquad(N\ge N_0\text{ even}).
+\]
+To see the actual signed consumption, put
+\[
+ \mathcal T_{11}=3G_1+G_2-4G_3-G_4-G_5+G_6+G_7
+                    -2G_8-G_9-G_{11}-G_{12}.
+\]
+The corrected twelve-term input reads
+$\mathcal T_{11}-(G_{10}^{\rm corr}+1334N^{1-a})\le4D_{1,19/10}(N)$.
+For fixed $\delta>0$ and $0<\varepsilon<2/15$, use the preceding bound
+with loss $\delta/2$ and pay $1334N^{1-a}\le(\delta/2)\mathcal X_N$.
+Because the subtracted cost is at most
+$[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N$, this gives
+\[
+ \mathcal T_{11}-[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N
+ \le4D_{1,19/10}(N).
+\]
+This is exactly the input of the subsequent count ledger:
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean}{corrected twelve-term I10 consumer}.
+Its threshold follows $\delta,\varepsilon$ but is uniform in
+$1/18<a<b$ with $b=4/33,c=3/11$ fixed.
+The resulting upper coefficients are $8I_8$ for $G_8$ and
+$8(1-\varepsilon)I_{10}$ for the tenth-term cost after output sifting
+and cutoff elimination.
+The external factor two makes the total eighth-term cost $16I_8$.
+The standard inputs are actual prime-progression remainder bounds,
+Rosser upper/lower sieves, Euler-product normalization, and logarithmic
+prime-sum limits; they are applied to these carriers, not supplied as
+hypotheses on $D_{19}$.
+With $R_5=G_6+G_7-G_9-G_{11}-G_{12}$, the retained endpoint
+certificates and continuity at $\varepsilon=0$ give the following local
+contract: for every $\delta>0$, there is
+$\varepsilon_0\in(0,2/15]$ such that, for each fixed
+$0<\varepsilon<\varepsilon_0$, some $N_0(\delta,\varepsilon)\ge4$
+works for every even $N\ge N_0$ in
+\[
+ R_5+(c_0-\delta)\mathcal X_N\le4D_{1,19/10}(N),\qquad c_0=\frac{124341093}{200000000}.
+\]
+Indeed $c_0\le L-32\log(10/9)-A_3(1/3)-A_3(c)-8I_{10}-16I_8$.
+The retained bounds are $A_3(1/3)\le236056871187/10^{10}$,
+$A_3(c)\le195190815363/10^{10}$,
+$8I_{10}\le540995781/10^8$, and $8I_8\le60961168/10^8$.
+\inputleannode{bp:liliu-retained}
+
+\subsection{The ninth term and the positive pair integrals}
+Split the original $G_9$ labels by $r<N^{1/10}$ and $r\ge N^{1/10}$.
+The strict-low and closed-high pieces partition the entire count.
+For every fixed $\delta>0$ and $0<\varepsilon<2/15$, the low
+Fouvry route and the ordinary high route give, for all sufficiently large
+even $N$ (with $N_0\ge4$ depending on these fixed parameters),
+\[
+ C_9=\frac{36}{5}\int_a^{1/10}\int_{1/3}^{(1-u)/2}
+       \frac{K(u,v)}{1-u}\,dv\,du
+       +8\int_{1/10}^{1/3}\int_{1/3}^{(1-u)/2}K(u,v)\,dv\,du,
+ \qquad G_9\le(C_9+\delta)\mathcal X_N.
+\]
+There are two inner integrals, both for $a\le u\le1/3$:
+\begin{align*}
+ \int_{1/3}^{(1-u)/2}K(u,v)\,dv
+   &=\frac{\log(2-3u)}{u(1-u)},\\
+ \int_{1/3}^{(1-u)/2}\frac{K(u,v)}{1-u}\,dv
+   &=\frac{\log(2-3u)}{u(1-u)^2}.
+\end{align*}
+Thus the low single-integral kernel retains the extra $1/(1-u)$;
+only the high piece uses the first identity without that extra factor.
+See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachB9SplitIntegralReduction.lean}{weighted and unweighted G9 reductions}.
+Primitive and rational logarithm bounds certify $C_9\le527231/100000$.
+\inputleannode{bp:liliu-b9}
+For the positive pair terms define
+\[
+ k_\eta(u,v)=\max\{0,f((1/2-u-v)/a)-\eta\},\qquad
+ C_{67}=\frac{53}{2e^{\gamma}}\left[
+ \frac12\int_a^b\int_a^b\frac{k_0(u,v)}{uv}\,dv\,du
+ +\int_a^b\int_b^c\frac{k_0(u,v)}{uv}\,dv\,du\right].
+\]
+The lower Rosser sums retain $1/\varphi(rs)$ even on the square diagonal.
+Passing to $1/(rs)$ is a one-sided comparison, not an equality.
+Symmetry gives the half-square integral for $G_6$; $G_7$ gives the rectangle.
+Truncation by $\eta$ costs at most $\eta$ times their logarithmic masses.
+After paying the prime-progression remainder, the actual result has this
+order of choices: for every $\delta>0$, first choose
+$\varepsilon_0\in(0,2/15]$; for each fixed
+$0<\varepsilon<\varepsilon_0$, choose $N_0(\delta,\varepsilon)\ge4$.
+Then every even $N\ge N_0$ satisfies
+$G_6+G_7\ge(C_{67}-\delta)\mathcal X_N$.
+The small epsilon window absorbs the source-mass loss; increasing $N$
+alone would not remove it for an arbitrary fixed epsilon.
+See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean}{actual pair lower bound and its epsilon window}.
+\inputleannode{bp:liliu-pair}
+For certification the source moves to $s=u+v$ and the elementary lower
+profile
+\[
+ \phi(s)=\max\left\{0,\frac{\log(((1/2-s)-a)/a)}{1/2-s}\right\},
+ \qquad 2a\le s\le b+c.
+\]
+The denominator and logarithm argument are positive throughout this
+actual sum-coordinate domain.  Set $d_*=1/2-2a$; the profile vanishes
+on $[d_*,b+c]$.  The square splits at $a+b$, and the rectangle at $2b,a+c$.
+Define the five fixed integrals, including the half-square multiplicity,
+by
+\begin{align*}
+ J_{\rm elem}={}&\frac12\left[
+ \int_{2a}^{a+b}\frac{\phi(s)}s\log\frac{(s-a)^2}{a^2}\,ds
+ +\int_{a+b}^{2b}\frac{\phi(s)}s\log\frac{b^2}{(s-b)^2}\,ds\right]\\
+ &+\int_{a+b}^{2b}\frac{\phi(s)}s\log\frac{(s-b)(s-a)}{ab}\,ds\\
+ &+\int_{2b}^{a+c}\frac{\phi(s)}s\log\frac{b(s-a)}{a(s-b)}\,ds
+ +\int_{a+c}^{d_*}\frac{\phi(s)}s\log\frac{bc}{(s-c)(s-b)}\,ds.
+\end{align*}
+This is exactly the source's five-branch elementary integral, not a
+renaming of $C_{67}$:
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG67G67Specialization.lean}{elementary profile and its domain},
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG67G67Piecewise.lean}{five fixed branches and actual pair comparison}.
+Five centered polynomial integrations, with total loss $21/4240000$,
+certify
+\[
+ \frac{54233}{10000}\le4J_{\rm elem}\le C_{67}.
+\]
+The second inequality is a proved elementary-to-actual integral
+comparison; it is this inequality that will also enter the older ledger.
+No floating-point quadrature value is used as a premise.
+\inputleannode{bp:liliu-pair-certificate}
+
+\subsection{The original eleventh-term domain and the cross term}
+The four logarithmic variables for $G_{11}$ satisfy
+$a\le u\le v\le w\le t\le b$.
+For a literal label $(r,q,s,t)$, the actual cofactor $m$ lies in the
+strict window $\varepsilon N/(rqst)<m<N/(rqst)$.  After the exceptional
+atoms are paid, the rough-cofactor comparison uses the second prime $q$
+as its sieve cutoff.  The upper-bound proof enlarges this window to
+the full rough mother up to $x=N/(rqst)$, discarding its positive lower
+endpoint.  It is the \emph{upper endpoint of this mother count} that has
+Buchstab parameter
+\[
+ \frac{\log x}{\log q}=\frac{1-u-v-w-t}{v}\in[17/4,37/4].
+\]
+This is not the parameter $\log m/\log q$ of each actual cofactor;
+that parameter is not equal to the displayed endpoint ratio.
+The enlargement is also why no factor $1-\varepsilon$ survives in
+the $G_{11}$ coefficient, unlike the window-sensitive tenth-term bound.
+See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG11MainMassBuchstab.lean}{full rough mother and loss of the window factor}
+and \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernel.lean}{canonical upper-endpoint geometry}.
+Write $\omega_{\mathrm B}$ for Buchstab's function,
+with $u\omega_{\mathrm B}(u)=1$ on $[1,2]$ and $(u\omega_{\mathrm B}(u))'=\omega_{\mathrm B}(u-1)$ for $u>2$.
+Its proved bound on this interval is $W=561522/10^6$.
+Here take $N\ge4$ with $N^a\ge4$.  A used cell has ratio
+$1<\rho\le5/4$ and first lower endpoint $\rho^j$;
+the finite level comparison imposes no separate restriction on
+$\varepsilon$ beyond membership in the source's used-cell set.
+For a fixed level loss $0\le\eta<1/4$, its actual level is
+\[
+ Q_{\mathrm{mix}}=\begin{cases}
+ N^{5/9-\eta}/((2/3)\rho^j)^{5/9},&\rho^j\le N^{1/10},\\
+ N^{1/2-\eta},&\rho^j>N^{1/10}.
+ \end{cases}
+\]
+The buffered low cell and the ordinary high cell both give the required
+bound for every short prime $p$ in that cell. The associated limiting exponent is
+$\lambda(u)=(5/9)(1-\min\{u,1/10\})$.
+Consequently the upper-sieve weight is
+\[
+ h(u)=\frac4{\lambda(u)}=\frac{36}{5(1-\min\{u,1/10\})}
+ =\begin{cases}36/[5(1-u)],&u\le1/10,\\8,&u\ge1/10.\end{cases}
+\]
+This weight is derived at every short prime in each grid cell from the
+buffered low level and the ordinary high level; it is not a replacement
+of an already paid scalar eight by a smaller number.
+\inputleannode{bp:liliu-level}
+Define $I_{11}(h)$ by integrating $h(u)/(uv^2wt)$ over the ordered domain.
+This is exactly the author's two integrals: split the first coordinate
+at $1/10$, retain $u\le v\le w\le t\le b$, and retain $v^2$ in the denominator.
+The source's nested label is $(t,w,u,v)$, which explains the coordinate
+order in the finite kernel.  Integrating the last three variables gives
+\[
+ I_{11}(h)=\int_a^b h(u)K_{11}(u)\,du,\qquad
+ K_{11}(u)=\frac{(\log^2(b/u)-2\log(b/u)+2)/u-2/b}{2u}.
+\]
+Thus $I_{11}(h)=\frac{36}{5}\int_a^{1/10}K_{11}(u)/(1-u)\,du
++8\int_{1/10}^bK_{11}(u)\,du$, the original-domain match needed here.
+\inputleannode{bp:liliu-domain}
+A finite geometric majorant for $1/(1-u)$, exact primitives, and certified
+bounds for $\log(53/33)$ and $\log(40/33)$ prove
+$W I_{11}(h)\le10191/100000$.
+\inputleannode{bp:liliu-g11-certificate}
+The actual-count producer also pays for the switched exceptional atoms,
+both distribution remainders, grid ordering collars, and newly admitted
+prime divisors of $N$.  With mesh $\rho=1+t$, it uses the bounded weight
+$h+t\le9$; the collar costs $O(t)$ and the divisor tail is bounded by
+$16800\cdot9\log N/N^a$ on the normalized mother scale.
+Continuity first chooses $0<t\le1/8$ to fit the requested loss, then
+one maximum of the thresholds pays this tail and the $5N/\log^3N$ error.
+Only after these steps does it conclude: for every fixed $\delta>0$
+and $0<\varepsilon\le1$, there exists $N_0(\delta,\varepsilon)\ge4$
+such that every even $N\ge N_0$ satisfies
+$G_{11}\le(10191/100000+\delta)\mathcal X_N$.
+This is a fixed-epsilon result, not one requiring epsilon to shrink with delta.
+\inputleannode{bp:liliu-g11-actual}
+
+For $G_{12}$ the original domain is
+$a\le u\le v\le w\le b$, with the fourth coordinate independently in
+$b\le t\le c$.  At the full rough upper endpoint $x=N/(rqst)$,
+its Buchstab parameter is still $\log x/\log q=(1-u-v-w-t)/v$.
+The cross domain guarantees this ratio is at least three; on the strict
+low branch $u<1/10$, the improved lower bound is $79/25$.
+The two constants are pointwise majorants of the actual Buchstab function:
+\[
+ \omega_{\mathrm B}(\xi)\le\frac{564383}{10^6}\quad(\xi\ge3),
+ \qquad
+ \omega_{\mathrm B}(\xi)\le\frac{561990}{10^6}\quad(\xi\ge79/25).
+\]
+They have no upper cutoff.  The geometric implication and their use at
+actual labels are proved in
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG12SharpGeometry.lean}{cross-domain Buchstab geometry};
+the pointwise analytic bounds are in
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG12BuchstabMajorant.lean}{two Buchstab majorants}.
+Thus these constants enter before integration, rather than being outputs
+of a quadrature calculation.  Put $h_{12}(u)=h(u)\,561990/10^6$ for $u<1/10$, and
+$h_{12}(u)=h(u)\,564383/10^6$ for $u\ge1/10$, and define
+\[
+ C_{12}=\int_a^b\int_u^b\int_v^b\int_b^c
+             \frac{h_{12}(u)}{uv^2wt}\,dt\,dw\,dv\,du.
+\]
+The original quadruple count passes through rough cofactors and
+product-prime output fibres.  Both exception payments are retained;
+a clipped low/high grid then gives the actual contract: for every fixed
+$\delta>0$ and $0<\varepsilon\le2/15$, some
+$N_0(\delta,\varepsilon)\ge4$ works for all even $N\ge N_0$ in
+$G_{12}\le(C_{12}+\delta)\mathcal X_N$.
+The low branch remains strict and the high branch includes $u=1/10$;
+no boundary labels or exception payments are dropped.
+\inputleannode{bp:liliu-cross}
+A rational envelope, integration by primitives, and endpoint logarithm
+bounds certify $C_{12}\le66821/100000$ on this cross domain.
+\inputleannode{bp:liliu-cross-certificate}
+
+\subsection{One common error budget and the two completed exits}
+First substitute the $G_9$ and actual author-$G_{11}$ upper bounds into
+$R_5$, allocating thirds of a requested loss to the three input estimates.
+Here, too, the local contract is: for every $\delta>0$, first choose
+$\varepsilon_0\in(0,2/15]$; for each fixed $0<\varepsilon<\varepsilon_0$,
+choose $N_0(\delta,\varepsilon)\ge4$.  Then every even $N\ge N_0$ satisfies
+\[
+ G_6+G_7-G_{12}+(c_0-C_9-10191/100000-\delta)\mathcal X_N\le4D_{1,19/10}(N).
+\]
+\inputleannode{bp:liliu-author-consume}
+Next substitute the original pair lower bound and cross upper bound.
+The scalar certificates give exactly
+\[
+ \frac{54233}{10000}+\frac{124341093}{200000000}
+ -\frac{527231}{100000}-\frac{10191}{100000}-\frac{66821}{100000}
+ =\frac{515093}{200000000}=:m_{\rm author}.
+\]
+For every $\delta>0$ the implementation proves
+$\exists\varepsilon_0\in(0,2/15]$, $\forall\varepsilon\in(0,\varepsilon_0)$,
+$\exists N_0\ge4$, $\forall N\ge N_0$ even:
+$(m_{\rm author}-\delta)\mathcal X_N\le4D_{1,19/10}(N)$.
+It takes minima of the epsilon windows and maxima of all natural thresholds.
+There is no threshold asserted uniformly over all small positive epsilon.
+\inputleannode{bp:liliu-ledger}
+Fix any real $\kappa<515093/800000000$ before choosing the threshold.
+Take $\delta=m_{\rm author}-4\kappa>0$, then $\varepsilon=\varepsilon_0/2$.
+The result is $\exists K\ge4$, $\forall N\ge K$ even:
+$\kappa \mathcal X_N\le D_{1,19/10}(N)$.  The ceiling itself is not asserted.
+\inputleannode{bp:liliu-coefficient}
+Choosing $\kappa=1/2000$ and using $\mathcal X_N>0$ gives the strict paper bound
+$D_{1,19/10}(N)>(1/2500)\mathcal X_N=0.0004\mathcal X_N$, not merely a weak inequality.
+\inputleannode{bp:liliu-paper}
+The qualitative existence route remains separate.  It uses the coarser
+actual $G_{11}$ coefficient $10385101/10^8$ and the five-branch
+$J_{\rm elem}$ defined above.  Its margin is the integral expression
+\[
+ m_{\rm old}=4J_{\rm elem}+c_0-C_9-\frac{10385101}{10^8}-C_{12},
+ \qquad \frac{126891}{200000000}\le m_{\rm old}.
+\]
+The rational number is a certified lower bound, not the definition of
+$m_{\rm old}$.  In particular $C_{67}$ has not merely been renamed.
+The old route has its own actual-count ledger:
+for every $\delta>0$, there exists $\varepsilon_0\in(0,2/15]$ such that,
+for each fixed $0<\varepsilon<\varepsilon_0$, there exists
+$N_0(\delta,\varepsilon)\ge4$ for which
+\[
+ (m_{\rm old}-\delta)\mathcal X_N\le4D_{1,19/10}(N)
+ \qquad(N\ge N_0\text{ even}).
+\]
+The proof substitutes $4J_{\rm elem}\le C_{67}$ into the older
+actual cross-integral ledger, keeping its coarser eleventh-term cost;
+see \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachSharpPiecewiseLedger.lean}{old margin definition and actual-count ledger}.
+Its scalar positivity and independent witness exit are in
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean}{old certified margin and existence theorem}.
+Its own certified quantitative ceiling is $126891/800000000$,
+not the author-route ceiling.
+\inputleannode{bp:liliu-old-margin}
+Taking $\delta=m_{\rm old}/2$, then $\varepsilon=\varepsilon_0/2$, proves
+$D_{1,19/10}(N)>0$ and extracts the natural-power witnesses.
+The source-exponent bridge finally gives $r\le q^{(19/10)-1}$.
+This is the actual implementation of the unconditional existence theorem;
+it need not be rerouted through the stronger counting theorem.
+\inputleannode{bp:liliu-existence}
