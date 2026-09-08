@@ -1,4 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import MathlibNt.Analysis.LogScaleAbsorption
 import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
 import MathlibNt.SieveTheory.LiLiuGoldbachB10PaidUpper
 import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
@@ -195,48 +196,17 @@ private theorem B10NormalizedUpper_paid_error_absorb_eventually
       C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
         δ * SingularSeries.liuUniversalProduct * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-  let A : ℝ := max 1 (C / (δ * SingularSeries.liuUniversalProduct))
-  have hlog := (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-    (eventually_ge_atTop A)
-  obtain ⟨N₁, hN₁⟩ := eventually_atTop.mp hlog
-  refine ⟨max 4 N₁, le_max_left _ _, ?_⟩
+  -- Normalize the positive paid coefficient to its absolute-value envelope.
+  have hbase :=
+    MathlibNt.Analysis.eventually_log_rpow_remainder_lt_of_lower_bound
+      |C| SingularSeries.liuUniversalProduct δ 2
+      SingularSeries.liuUniversalProduct_pos hδ (by norm_num)
+  obtain ⟨M, hM⟩ := Filter.eventually_atTop.mp hbase
+  refine ⟨max 4 M, le_max_left _ _, ?_⟩
   intro N hN
-  have hN₁' : N₁ ≤ N := (le_max_right _ _).trans hN
-  have hN4 : 4 ≤ N := (le_max_left _ _).trans hN
-  have hlogNA : A ≤ Real.log (N : ℝ) := hN₁ N hN₁'
-  have hlogN1 : 1 ≤ Real.log (N : ℝ) := (le_max_left _ _).trans hlogNA
-  have hlogNpos : 0 < Real.log (N : ℝ) := by linarith
-  have hL2pos : 0 < Real.log (N : ℝ) ^ (2 : ℝ) := Real.rpow_pos_of_pos hlogNpos 2
-  have hL4pos : 0 < Real.log (N : ℝ) ^ (4 : ℝ) := Real.rpow_pos_of_pos hlogNpos 4
-  have hL2ge : Real.log (N : ℝ) ≤ Real.log (N : ℝ) ^ (2 : ℝ) := by
-    rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.rpow_add hlogNpos, Real.rpow_one]
-    nlinarith
-  have hA2 : A ≤ Real.log (N : ℝ) ^ (2 : ℝ) := hlogNA.trans hL2ge
-  have hAdef : C / (δ * SingularSeries.liuUniversalProduct) ≤ A := le_max_right _ _
-  have hCbound :
-      C ≤ δ * SingularSeries.liuUniversalProduct * Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hmain :
-        C / (δ * SingularSeries.liuUniversalProduct) ≤ Real.log (N : ℝ) ^ (2 : ℝ) :=
-      hAdef.trans hA2
-    have hδU : 0 < δ * SingularSeries.liuUniversalProduct := by
-      exact mul_pos hδ SingularSeries.liuUniversalProduct_pos
-    simpa [mul_comm, mul_left_comm, mul_assoc] using (div_le_iff₀ hδU).mp hmain
-  have hCdiv :
-      C / Real.log (N : ℝ) ^ (2 : ℝ) ≤ δ * SingularSeries.liuUniversalProduct := by
-    exact (div_le_iff₀ hL2pos).2 (by simpa [mul_comm, mul_left_comm, mul_assoc] using hCbound)
-  have hsplit :
-      Real.log (N : ℝ) ^ (4 : ℝ) =
-        Real.log (N : ℝ) ^ (2 : ℝ) * Real.log (N : ℝ) ^ (2 : ℝ) := by
-    rw [show (4 : ℝ) = 2 + 2 by norm_num, Real.rpow_add hlogNpos]
-  calc
-    C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ)
-      = (N : ℝ) * ((C / Real.log (N : ℝ) ^ (2 : ℝ)) / Real.log (N : ℝ) ^ (2 : ℝ)) := by
-          rw [hsplit]
-          field_simp [hL2pos.ne']
-    _ ≤ (N : ℝ) * (δ * SingularSeries.liuUniversalProduct / Real.log (N : ℝ) ^ (2 : ℝ)) := by
-          gcongr
-    _ = δ * SingularSeries.liuUniversalProduct * (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by
-          ring
+  have h := (hM N ((le_max_right _ _).trans hN)
+    2 SingularSeries.liuUniversalProduct le_rfl).le
+  simpa only [abs_of_pos hC, show (2 : ℝ) + 2 = 4 by norm_num] using h
 
 /-- The already-produced paid upper bound and sieve-product estimate combine to
 the genuine coefficient `8 + δ` once the cutoff is normalized by

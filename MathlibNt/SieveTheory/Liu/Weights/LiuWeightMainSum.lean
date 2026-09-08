@@ -26,40 +26,10 @@ theorem liuWeightMainSum_eq_sum_pairs (main : ℝ → ℝ) (N : ℕ) :
     liuWeightMainSum main N =
       ∑ p ∈ liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N),
         main ((N : ℝ) / (p.1 * p.2)) := by
-  classical
   unfold liuWeightMainSum
-  calc
-    (∑ a ∈ range (N + 1),
-        liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-          main ((N : ℝ) / a)) =
-        ∑ a ∈ (range (N + 1)).filter
-            (LiuWeightSupport N (liuSourceZ10 N) (liuSourceY3 N)),
-          main ((N : ℝ) / a) := by
-      rw [Finset.sum_filter]
-      apply Finset.sum_congr rfl
-      intro a _
-      by_cases ha : LiuWeightSupport N (liuSourceZ10 N) (liuSourceY3 N) a
-      · simp [liuWeight, ha]
-      · simp [liuWeight, ha]
-    _ = ∑ p ∈ liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N),
-          main ((N : ℝ) / (p.1 * p.2)) := by
-      symm
-      apply Finset.sum_bij (fun p _ => p.1 * p.2)
-      · intro p hp
-        rw [Finset.mem_filter]
-        exact ⟨Finset.mem_range.mpr (Nat.lt_succ_iff.mpr
-            (liuWeightSupport_le ⟨p, hp, rfl⟩)),
-          ⟨p, hp, rfl⟩⟩
-      · intro p hp q hq hpq
-        have hu := liuPairConditions_unique
-          (mem_liuWeightPairs.mp hp) (mem_liuWeightPairs.mp hq) hpq
-        exact Prod.ext hu.1 hu.2
-      · intro a ha
-        rw [Finset.mem_filter] at ha
-        rcases ha.2 with ⟨p, hp, hpa⟩
-        exact ⟨p, hp, hpa⟩
-      · intro p _
-        simp only [Nat.cast_mul]
+  simpa only [Nat.cast_mul] using
+    sum_liuWeight_mul_eq_sum_pairs_of_support N (liuSourceZ10 N) (liuSourceY3 N)
+      (fun a => main ((N : ℝ) / a))
 
 /-- The reciprocal-log sum printed in Liu's `lm-mt`, with every quotient taken
 in `ℝ`. -/

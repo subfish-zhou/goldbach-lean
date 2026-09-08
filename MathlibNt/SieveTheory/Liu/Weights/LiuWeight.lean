@@ -211,6 +211,47 @@ theorem liuWeightSupport_le {N z y a : ℕ} (ha : LiuWeightSupport N z y a) :
     refine ⟨p₂, ?_⟩
     simp [pow_two, mul_assoc])).trans hcond.2.2.2.2.2
 
+/-- Transport an arbitrary filtered kernel through the unique prime-pair product.
+The truncation is independent of `N`; no sign condition is imposed on the kernel. -/
+theorem sum_liuWeightSupport_filter_eq_sum_pairs
+    {R : Type*} [AddCommMonoid R] (N z y X : ℕ)
+    (E : ℕ → Prop) [DecidablePred E] (F : ℕ → R) :
+    (∑ a ∈ (range (X + 1)).filter
+      (fun a => LiuWeightSupport N z y a ∧ E a), F a) =
+      ∑ p ∈ (liuWeightPairs N z y).filter
+        (fun p => p.1 * p.2 ≤ X ∧ E (p.1 * p.2)), F (p.1 * p.2) := by
+  classical
+  symm
+  apply sum_bij (fun p _ => p.1 * p.2)
+  · intro p hp
+    rcases mem_filter.mp hp with ⟨hp, hX, hE⟩
+    exact mem_filter.mpr ⟨mem_range.mpr (Nat.lt_succ_iff.mpr hX),
+      ⟨p, hp, rfl⟩, hE⟩
+  · intro p hp q hq hpq
+    have hu := liuPairConditions_unique
+      (mem_liuWeightPairs.mp (mem_filter.mp hp).1)
+      (mem_liuWeightPairs.mp (mem_filter.mp hq).1) hpq
+    exact Prod.ext hu.1 hu.2
+  · intro a ha
+    rcases mem_filter.mp ha with ⟨ha, ⟨p, hp, rfl⟩, hE⟩
+    exact ⟨p, mem_filter.mpr ⟨hp, Nat.lt_succ_iff.mp (mem_range.mp ha), hE⟩, rfl⟩
+  · intro p _
+    rfl
+
+/-- Reindex an arbitrary sum against Liu's characteristic source by its unique
+admissible ordered prime pair. -/
+theorem sum_liuWeight_mul_eq_sum_pairs_of_support
+    (N z y : ℕ) (F : ℕ → ℝ) :
+    (∑ a ∈ range (N + 1), liuWeight N z y a * F a) =
+      ∑ p ∈ liuWeightPairs N z y, F (p.1 * p.2) := by
+  classical
+  have hfull : (liuWeightPairs N z y).filter
+      (fun p => p.1 * p.2 ≤ N ∧ True) = liuWeightPairs N z y :=
+    filter_eq_self.mpr (fun p hp => ⟨liuWeightSupport_le ⟨p, hp, rfl⟩, trivial⟩)
+  have h := sum_liuWeightSupport_filter_eq_sum_pairs N z y N (fun _ => True) F
+  rw [hfull] at h
+  simpa [sum_filter, liuWeight, ite_mul] using h
+
 /-- The root-free `N^(2/3)` calculation in its minimal natural-number form.
 The two hypotheses say exactly that the smaller factor is first and that the
 paper's square-root cutoff holds. -/
@@ -499,36 +540,13 @@ theorem liuMainSupportNoncoprimeSum_eq_p₁DividesMainSum
      |liuScaledAPError main Y a d l|) =
      liuP₁DividesMainSum main N z y Y X d l := by
  classical
- symm
+ rw [sum_liuWeightSupport_filter_eq_sum_pairs]
  unfold liuP₁DividesMainSum
- apply Finset.sum_bij (fun p _ => p.1 * p.2)
- · intro p hp
-   rw [mem_filter] at hp ⊢
-   have hcond := mem_liuWeightPairs.mp hp.1
-   refine ⟨mem_range.mpr (by omega), ?_⟩
-   refine ⟨⟨p, hp.1, rfl⟩, ?_⟩
-   exact (not_coprime_mul_iff_p₁_dvd hwy hcond.1 hcond.2.1
-     hcond.2.2.2.2.1 hd).2 hp.2.2
- · rintro ⟨p₁, p₂⟩ hp ⟨q₁, q₂⟩ hq heq
-   rw [mem_filter] at hp hq
-   have hu := liuPairConditions_unique
-     (mem_liuWeightPairs.mp hp.1) (mem_liuWeightPairs.mp hq.1) heq
-   exact Prod.ext hu.1 hu.2
- · intro a ha
-   rw [mem_filter] at ha
-   rcases ha.2.1 with ⟨p, hp, hpa⟩
-   have hcond := mem_liuWeightPairs.mp hp
-   have hnc : ¬(p.1 * p.2).Coprime d := by simpa [hpa] using ha.2.2
-   have hp₁d := (not_coprime_mul_iff_p₁_dvd hwy hcond.1 hcond.2.1
-     hcond.2.2.2.2.1 hd).1 hnc
-   exact ⟨p, mem_filter.mpr ⟨hp, by
-     constructor
-     · rw [hpa]
-       exact Nat.lt_succ_iff.mp (by
-         simpa [Nat.succ_eq_add_one] using mem_range.mp ha.1)
-     · exact hp₁d⟩, hpa⟩
- · intro p _
-   rfl
+ congr 1
+ apply filter_congr
+ intro p hp
+ have hc := mem_liuWeightPairs.mp hp
+ rw [not_coprime_mul_iff_p₁_dvd hwy hc.1 hc.2.1 hc.2.2.2.2.1 hd]
 
 /-- Exact finite main-parametric reduction to the `p₁ ∣ d` pair sum. -/
 theorem liuMainNoncoprimeMajorant_liuWeight_eq_p₁DividesMainSum

@@ -1,3 +1,4 @@
+import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGrid
 import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
 import Mathlib.MeasureTheory.Integral.Prod
@@ -5,7 +6,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 
 open Filter Finset MeasureTheory Set
-open scoped BigOperators Interval Topology
+open scoped ENNReal BigOperators Interval Topology
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
@@ -909,205 +910,111 @@ private lemma volume_goldbachB10ObliqueStrip (n : ℕ) (hn : 0 < n) :
   field_simp [hnreal.ne']
   ring
 
-private lemma goldbachB10LogGridUpperIntegrand_majorized {n : ℕ} (hn : 0 < n)
-    (x : ℝ × ℝ) :
-    goldbachB10LogGridUpperIntegrand n x ≤
-      goldbachB10LogSourceRegion.indicator goldbachB10LogIntegrand x +
-        (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1).indicator
-          (fun _ => 240 / (n : ℝ)) x +
-        (goldbachB10LeftStrip n).indicator (fun _ => (160 : ℝ)) x +
-        (goldbachB10BottomStrip n).indicator (fun _ => (160 : ℝ)) x +
-        (goldbachB10ObliqueStrip n).indicator (fun _ => (160 : ℝ)) x := by
-  have hunitNonneg : 0 ≤
-      (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1).indicator
-        (fun _ => 240 / (n : ℝ)) x := by
-    by_cases hx : x ∈ Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1
-    · rw [Set.indicator_of_mem hx]
-      positivity
-    · rw [Set.indicator_of_notMem hx]
-  have hleftNonneg : 0 ≤ (goldbachB10LeftStrip n).indicator (fun _ => (160 : ℝ)) x := by
-    by_cases hx : x ∈ goldbachB10LeftStrip n
-    · rw [Set.indicator_of_mem hx]
-      norm_num
-    · rw [Set.indicator_of_notMem hx]
-  have hbottomNonneg : 0 ≤ (goldbachB10BottomStrip n).indicator (fun _ => (160 : ℝ)) x := by
-    by_cases hx : x ∈ goldbachB10BottomStrip n
-    · rw [Set.indicator_of_mem hx]
-      norm_num
-    · rw [Set.indicator_of_notMem hx]
-  have hobliqueNonneg : 0 ≤ (goldbachB10ObliqueStrip n).indicator (fun _ => (160 : ℝ)) x := by
-    by_cases hx : x ∈ goldbachB10ObliqueStrip n
-    · rw [Set.indicator_of_mem hx]
-      norm_num
-    · rw [Set.indicator_of_notMem hx]
-  by_cases hs : x ∈ goldbachB10LogSourceRegion
-  · have hambient := goldbachB10LogSourceRegion_subset_ambientBox hs
-    have hunit : x ∈ Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1 := by
-      refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
-      · exact le_trans (by
-          dsimp [goldbachB10AlphaGridStart]
-          norm_num : (0 : ℝ) ≤ goldbachB10AlphaGridStart) hambient.1.1
-      · exact le_trans hambient.1.2 (by
-          dsimp [goldbachB10Gamma]
-          norm_num : goldbachB10Gamma ≤ (1 : ℝ))
-      · exact le_trans (by
-          dsimp [goldbachB10BetaGridStart]
-          norm_num : (0 : ℝ) ≤ goldbachB10BetaGridStart) hambient.2.1
-      · exact le_trans hambient.2.2 (by
-          dsimp [goldbachB10BetaGridEnd]
-          norm_num : goldbachB10BetaGridEnd ≤ (1 : ℝ))
-    rw [Set.indicator_of_mem hs, Set.indicator_of_mem hunit]
-    linarith [goldbachB10LogGridUpperIntegrand_le_integrand_add hn hs,
-      hleftNonneg, hbottomNonneg, hobliqueNonneg]
-  · rw [Set.indicator_of_notMem hs]
-    by_cases hg : x ∈ goldbachB10LogGridRegion n
-    · have hmain : goldbachB10LogGridUpperIntegrand n x ≤ 160 :=
-        goldbachB10LogGridUpperIntegrand_le_oneSixty hn hg
-      rw [goldbachB10LogGridRegion] at hg
-      obtain ⟨q, hq, hxq⟩ := Set.mem_iUnion₂.1 hg
-      have hxq' :
-          x.1 ∈ Ioc (goldbachB10AlphaGridPoint n q.1)
-              (goldbachB10AlphaGridPoint n q.1 + goldbachB10AlphaGridStep n) ∧
-            x.2 ∈ Ioc (goldbachB10BetaGridPoint n q.2)
-              (goldbachB10BetaGridPoint n q.2 + goldbachB10BetaGridStep n) := by
-        simpa [goldbachB10LogGridCell, goldbachB10AlphaGridPoint_succ hn,
-          goldbachB10BetaGridPoint_succ hn] using hxq
-      have hqSel := (show
-          goldbachB10Beta ≤ goldbachB10AlphaGridPoint n (q.1 + 1) ∧
-            goldbachB10Gamma ≤ goldbachB10BetaGridPoint n (q.2 + 1) ∧
-            goldbachB10AlphaGridPoint n q.1 + 2 * goldbachB10BetaGridPoint n q.2 < 1 from by
-          rw [goldbachB10LogGridCells, Finset.mem_filter] at hq
-          exact hq.2)
-      have hgeom := goldbachB10LogGridRegion_geometry hn hg
-      by_cases hleft : x.1 ≤ goldbachB10Beta
-      · have hxleft : x ∈ goldbachB10LeftStrip n := by
-          refine ⟨?_, ?_⟩
-          · have hright : goldbachB10Beta ≤
-                goldbachB10AlphaGridPoint n q.1 + goldbachB10AlphaGridStep n := by
-              simpa [goldbachB10AlphaGridPoint_succ hn] using hqSel.1
-            exact ⟨by linarith [hxq.1.1, hright], hleft⟩
-          · exact ⟨hgeom.2.1.1.le, hgeom.2.1.2⟩
-        rw [Set.indicator_of_mem hxleft]
-        linarith [hmain, hunitNonneg, hbottomNonneg, hobliqueNonneg]
-      · have hβ : goldbachB10Beta < x.1 := lt_of_not_ge hleft
-        by_cases hbottom : x.2 ≤ goldbachB10Gamma
-        · have hxbottom : x ∈ goldbachB10BottomStrip n := by
-            refine ⟨⟨hβ.le, hgeom.1.2⟩, ?_⟩
-            have htop : goldbachB10Gamma ≤
-                goldbachB10BetaGridPoint n q.2 + goldbachB10BetaGridStep n := by
-              simpa [goldbachB10BetaGridPoint_succ hn] using hqSel.2.1
-            exact ⟨by linarith [hxq'.2.1, htop], hbottom⟩
-          rw [Set.indicator_of_mem hxbottom]
-          linarith [hmain, hunitNonneg, hleftNonneg, hobliqueNonneg]
-        · have hγ : goldbachB10Gamma < x.2 := lt_of_not_ge hbottom
-          have habove : (1 - x.1) / 2 < x.2 := by
-            by_contra h
-            apply hs
-            exact ⟨⟨hβ, hgeom.1.2⟩, ⟨hγ, le_of_not_gt h⟩⟩
-          have hxoblique : x ∈ goldbachB10ObliqueStrip n := by
-            refine ⟨⟨hβ.le, hgeom.1.2⟩, habove, ?_⟩
-            linarith
-          rw [Set.indicator_of_mem hxoblique]
-          linarith [hmain, hunitNonneg, hleftNonneg, hbottomNonneg]
-    · rw [goldbachB10LogGridUpperIntegrand_eq_zero_of_notMem hg]
-      linarith [hunitNonneg, hleftNonneg, hbottomNonneg, hobliqueNonneg]
+private lemma goldbachB10LogGridRegion_excess_subset {n : ℕ} (hn : 0 < n) :
+    goldbachB10LogGridRegion n \ goldbachB10LogSourceRegion ⊆
+      (goldbachB10LeftStrip n ∪ goldbachB10BottomStrip n) ∪ goldbachB10ObliqueStrip n := by
+  rintro x ⟨hg, hs⟩
+  rw [goldbachB10LogGridRegion] at hg
+  obtain ⟨q, hq, hxq⟩ := Set.mem_iUnion₂.1 hg
+  have hxq' :
+      x.1 ∈ Ioc (goldbachB10AlphaGridPoint n q.1)
+          (goldbachB10AlphaGridPoint n q.1 + goldbachB10AlphaGridStep n) ∧
+        x.2 ∈ Ioc (goldbachB10BetaGridPoint n q.2)
+          (goldbachB10BetaGridPoint n q.2 + goldbachB10BetaGridStep n) := by
+    simpa [goldbachB10LogGridCell, goldbachB10AlphaGridPoint_succ hn,
+      goldbachB10BetaGridPoint_succ hn] using hxq
+  have hqSel := (show
+      goldbachB10Beta ≤ goldbachB10AlphaGridPoint n (q.1 + 1) ∧
+        goldbachB10Gamma ≤ goldbachB10BetaGridPoint n (q.2 + 1) ∧
+        goldbachB10AlphaGridPoint n q.1 + 2 * goldbachB10BetaGridPoint n q.2 < 1 from by
+      rw [goldbachB10LogGridCells, Finset.mem_filter] at hq
+      exact hq.2)
+  have hgeom := goldbachB10LogGridRegion_geometry hn hg
+  by_cases hleft : x.1 ≤ goldbachB10Beta
+  · have hxleft : x ∈ goldbachB10LeftStrip n := by
+      refine ⟨?_, ?_⟩
+      · have hright : goldbachB10Beta ≤
+            goldbachB10AlphaGridPoint n q.1 + goldbachB10AlphaGridStep n := by
+          simpa [goldbachB10AlphaGridPoint_succ hn] using hqSel.1
+        exact ⟨by linarith [hxq.1.1, hright], hleft⟩
+      · exact ⟨hgeom.2.1.1.le, hgeom.2.1.2⟩
+    exact Or.inl (Or.inl hxleft)
+  · have hβ : goldbachB10Beta < x.1 := lt_of_not_ge hleft
+    by_cases hbottom : x.2 ≤ goldbachB10Gamma
+    · have hxbottom : x ∈ goldbachB10BottomStrip n := by
+        refine ⟨⟨hβ.le, hgeom.1.2⟩, ?_⟩
+        have htop : goldbachB10Gamma ≤
+            goldbachB10BetaGridPoint n q.2 + goldbachB10BetaGridStep n := by
+          simpa [goldbachB10BetaGridPoint_succ hn] using hqSel.2.1
+        exact ⟨by linarith [hxq'.2.1, htop], hbottom⟩
+      exact Or.inl (Or.inr hxbottom)
+    · have hγ : goldbachB10Gamma < x.2 := lt_of_not_ge hbottom
+      have habove : (1 - x.1) / 2 < x.2 := by
+        by_contra h
+        apply hs
+        exact ⟨⟨hβ, hgeom.1.2⟩, ⟨hγ, le_of_not_gt h⟩⟩
+      have hxoblique : x ∈ goldbachB10ObliqueStrip n := by
+        refine ⟨⟨hβ.le, hgeom.1.2⟩, habove, ?_⟩
+        linarith
+      exact Or.inr hxoblique
 
 /-- The selected B10 upper sum exceeds the exact integral by at most `260/n`. -/
 theorem goldbachB10LogGridUpperSum_sub_mainIntegral_le
     (n : ℕ) (hn : 0 < n) :
     goldbachB10LogGridUpperSum n - goldbachB10MainIntegral ≤ 260 / (n : ℝ) := by
-  let unitBox : Set (ℝ × ℝ) := Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1
-  let fSource := goldbachB10LogSourceRegion.indicator goldbachB10LogIntegrand
-  let fUnit := unitBox.indicator (fun _ => 240 / (n : ℝ))
-  let fLeft := (goldbachB10LeftStrip n).indicator (fun _ => (160 : ℝ))
-  let fBottom := (goldbachB10BottomStrip n).indicator (fun _ => (160 : ℝ))
-  let fOblique := (goldbachB10ObliqueStrip n).indicator (fun _ => (160 : ℝ))
-  have hSource : Integrable fSource :=
-    integrable_indicator_of_integrableOn measurableSet_goldbachB10LogSourceRegion
-      (integrableOn_goldbachB10LogIntegrand measurableSet_goldbachB10LogSourceRegion
-        goldbachB10LogSourceRegion_subset_ambientBox)
-  have hUnit : Integrable fUnit := by
-    apply integrable_indicator_of_integrableOn
-      (measurableSet_Icc.prod measurableSet_Icc)
-    apply integrableOn_const
-    · dsimp [unitBox]
-      rw [volume_unitBox]
-      norm_num
-    · finiteness
-  have hLeft : Integrable fLeft := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB10LeftStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB10LeftStrip n hn]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hBottom : Integrable fBottom := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB10BottomStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB10BottomStrip n hn]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hOblique : Integrable fOblique := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB10ObliqueStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB10ObliqueStrip n hn]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hmono :
-      (∫ x, goldbachB10LogGridUpperIntegrand n x) ≤
-        ∫ x, (((fSource x + fUnit x) + fLeft x) + fBottom x) + fOblique x := by
-    apply MeasureTheory.integral_mono
-      (integrable_goldbachB10LogGridUpperIntegrand n hn)
-      ((((hSource.add hUnit).add hLeft).add hBottom).add hOblique)
-    intro x
-    exact goldbachB10LogGridUpperIntegrand_majorized hn x
-  rw [← goldbachB10LogGridUpperSum_eq_integral n hn] at hmono
-  change goldbachB10LogGridUpperSum n ≤
-    ∫ x, (((fSource x + fUnit x) + fLeft x) + fBottom x) + fOblique x at hmono
-  have hOuter := MeasureTheory.integral_add (((hSource.add hUnit).add hLeft).add hBottom) hOblique
-  change (∫ x, (((fSource x + fUnit x) + fLeft x) + fBottom x) + fOblique x) =
-    (∫ x, ((fSource x + fUnit x) + fLeft x) + fBottom x) + ∫ x, fOblique x at hOuter
-  rw [hOuter] at hmono
-  have hMid₂ := MeasureTheory.integral_add ((hSource.add hUnit).add hLeft) hBottom
-  change (∫ x, ((fSource x + fUnit x) + fLeft x) + fBottom x) =
-    (∫ x, (fSource x + fUnit x) + fLeft x) + ∫ x, fBottom x at hMid₂
-  rw [hMid₂] at hmono
-  have hMid₁ := MeasureTheory.integral_add (hSource.add hUnit) hLeft
-  change (∫ x, (fSource x + fUnit x) + fLeft x) =
-    (∫ x, fSource x + fUnit x) + ∫ x, fLeft x at hMid₁
-  rw [hMid₁] at hmono
-  have hInner := MeasureTheory.integral_add hSource hUnit
-  change (∫ x, fSource x + fUnit x) =
-    (∫ x, fSource x) + ∫ x, fUnit x at hInner
-  rw [hInner] at hmono
-  dsimp [fSource, fUnit, fLeft, fBottom, fOblique, unitBox] at hmono
-  rw [MeasureTheory.integral_indicator measurableSet_goldbachB10LogSourceRegion,
-    ← goldbachB10MainIntegral_eq_setIntegral,
-    MeasureTheory.integral_indicator_const (240 / (n : ℝ))
-      (measurableSet_Icc.prod measurableSet_Icc),
-    MeasureTheory.integral_indicator_const (160 : ℝ)
-      (measurableSet_goldbachB10LeftStrip n),
-    MeasureTheory.integral_indicator_const (160 : ℝ)
-      (measurableSet_goldbachB10BottomStrip n),
-    MeasureTheory.integral_indicator_const (160 : ℝ)
-      (measurableSet_goldbachB10ObliqueStrip n),
-    MeasureTheory.Measure.real_def, volume_unitBox,
-    MeasureTheory.Measure.real_def, volume_goldbachB10LeftStrip n hn,
-    MeasureTheory.Measure.real_def, volume_goldbachB10BottomStrip n hn,
-    MeasureTheory.Measure.real_def, volume_goldbachB10ObliqueStrip n hn] at hmono
-  simp only [ENNReal.toReal_one, smul_eq_mul] at hmono
+  classical
+  let E : Fin 3 → Set (ℝ × ℝ) :=
+    ![goldbachB10LeftStrip n, goldbachB10BottomStrip n, goldbachB10ObliqueStrip n]
+  have hEm : ∀ i, MeasurableSet (E i) := by
+    intro i
+    fin_cases i
+    · exact measurableSet_goldbachB10LeftStrip n
+    · exact measurableSet_goldbachB10BottomStrip n
+    · exact measurableSet_goldbachB10ObliqueStrip n
+  have hEf : ∀ i, volume (E i) ≠ ∞ := by
+    intro i
+    fin_cases i <;> simp [E, volume_goldbachB10LeftStrip n hn,
+      volume_goldbachB10BottomStrip n hn, volume_goldbachB10ObliqueStrip n hn]
+  have h := MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover
+    volume (goldbachB10LogGridRegion n) goldbachB10LogSourceRegion
+    (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) E
+    (goldbachB10LogGridUpperIntegrand n) goldbachB10LogIntegrand (240 / (n : ℝ)) 160
+    (integrable_goldbachB10LogGridUpperIntegrand n hn)
+    (integrableOn_goldbachB10LogIntegrand measurableSet_goldbachB10LogSourceRegion
+      goldbachB10LogSourceRegion_subset_ambientBox)
+    measurableSet_goldbachB10LogSourceRegion (measurableSet_Icc.prod measurableSet_Icc)
+    (by rw [volume_unitBox]; norm_num) hEm hEf (by positivity) (by norm_num)
+    (fun _ hx => goldbachB10LogIntegrand_nonneg
+      (goldbachB10LogSourceRegion_subset_ambientBox hx))
+    (fun _ hx => goldbachB10LogGridUpperIntegrand_eq_zero_of_notMem hx)
+    (by
+      intro x hx
+      have hb := goldbachB10LogSourceRegion_subset_ambientBox hx.2
+      dsimp [goldbachB10LogAmbientBox, goldbachB10AlphaGridStart,
+        goldbachB10Gamma, goldbachB10BetaGridStart, goldbachB10BetaGridEnd] at hb
+      exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
+        ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
+    (fun _ hx => goldbachB10LogGridUpperIntegrand_le_integrand_add hn hx.2)
+    (by
+      intro x hx
+      rcases goldbachB10LogGridRegion_excess_subset hn hx with (hl | hb) | ho
+      · exact ⟨0, hl⟩
+      · exact ⟨1, hb⟩
+      · exact ⟨2, ho⟩)
+    (fun _ hx => goldbachB10LogGridUpperIntegrand_le_oneSixty hn hx.1)
+  rw [← goldbachB10LogGridUpperSum_eq_integral n hn,
+    ← goldbachB10MainIntegral_eq_setIntegral, Fin.sum_univ_three] at h
+  dsimp [E] at h
+  simp only [Measure.real_def, volume_unitBox, volume_goldbachB10LeftStrip n hn,
+    volume_goldbachB10BottomStrip n hn, volume_goldbachB10ObliqueStrip n hn,
+    ENNReal.toReal_one, one_mul] at h
   rw [ENNReal.toReal_ofReal (by positivity : 0 ≤ (95 / 2904 : ℝ) / n),
     ENNReal.toReal_ofReal (by positivity : 0 ≤ (125 / 4356 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (91 / 2178 : ℝ) / n)] at hmono
-  have herr :
-      240 / (n : ℝ) +
-          (95 / 2904 : ℝ) / n * 160 +
-          (125 / 4356 : ℝ) / n * 160 +
-          (91 / 2178 : ℝ) / n * 160 ≤
-        260 / (n : ℝ) := by
-    have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-    field_simp [hnreal.ne']
-    norm_num
-  linarith
+    ENNReal.toReal_ofReal (by positivity : 0 ≤ (91 / 2178 : ℝ) / n)] at h
+  refine h.trans ?_
+  have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
+  field_simp [hnreal.ne']
+  norm_num
 
 /-- The B10 logarithmic-grid upper sums converge to the exact printed integral
 `I10` as the mesh tends to zero. -/

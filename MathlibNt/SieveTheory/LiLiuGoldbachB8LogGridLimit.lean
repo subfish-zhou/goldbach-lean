@@ -1,8 +1,9 @@
+import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridRegion
 import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
 
 open Finset MeasureTheory Set
-open scoped BigOperators Interval
+open scoped ENNReal BigOperators Interval
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
@@ -299,119 +300,65 @@ private theorem volume_b8UnitBox :
   rw [Measure.volume_eq_prod ℝ ℝ, Measure.prod_prod]
   norm_num [Real.volume_Icc]
 
-private theorem b8Indicator_nonneg {s : Set (ℝ × ℝ)} {f : ℝ × ℝ → ℝ}
-    (h : ∀ x ∈ s, 0 ≤ f x) (x : ℝ × ℝ) : 0 ≤ s.indicator f x := by
-  classical
-  by_cases hx : x ∈ s
-  · rw [indicator_of_mem hx]
-    exact h x hx
-  · rw [indicator_of_notMem hx]
-
-private theorem b8UpperIntegrand_majorized {n : ℕ} (hn : 0 < n) (x : ℝ × ℝ) :
-    goldbachB8LogGridUpperIntegrand n x ≤
-      goldbachB8LogSourceRegion.indicator liuLogIntegrand x +
-        b8UnitBox.indicator (fun _ => 64 / (n : ℝ)) x +
-        (goldbachB8LeftStrip n).indicator (fun _ => (64 : ℝ)) x +
-        (goldbachB8DiagonalStrip n).indicator (fun _ => (64 : ℝ)) x +
-        (goldbachB8ObliqueStrip n).indicator (fun _ => (64 : ℝ)) x := by
-  have hS := b8Indicator_nonneg (fun x hx =>
-    (goldbachB8LogIntegrand_bounds (goldbachB8LogSourceRegion_subset_ambientBox hx)).1) x
-  have hU := b8Indicator_nonneg
-    (s := b8UnitBox) (f := fun _ => 64 / (n : ℝ)) (by intros; positivity) x
-  have hL := b8Indicator_nonneg
-    (s := goldbachB8LeftStrip n) (f := fun _ => (64 : ℝ)) (by intros; norm_num) x
-  have hD := b8Indicator_nonneg
-    (s := goldbachB8DiagonalStrip n) (f := fun _ => (64 : ℝ)) (by intros; norm_num) x
-  have hO := b8Indicator_nonneg
-    (s := goldbachB8ObliqueStrip n) (f := fun _ => (64 : ℝ)) (by intros; norm_num) x
-  by_cases hg : x ∈ goldbachB8LogGridRegion n
-  · by_cases hs : x ∈ goldbachB8LogSourceRegion
-    · have hb := goldbachB8LogGridRegion_subset_ambientBox hn hg
-      have hu : x ∈ b8UnitBox :=
-        ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
-          ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩
-      rw [indicator_of_mem hs, indicator_of_mem hu]
-      linarith [b8UpperIntegrand_le_integrand_add hn hg]
-    · rw [indicator_of_notMem hs]
-      have hb := b8UpperIntegrand_le_sixtyFour hn hg
-      rcases goldbachB8LogGridRegion_excess_subset hn ⟨hg, hs⟩ with (hl | hd) | ho
-      · rw [indicator_of_mem hl]
-        linarith
-      · rw [indicator_of_mem hd]
-        linarith
-      · rw [indicator_of_mem ho]
-        linarith
-  · rw [b8UpperIntegrand_eq_zero hg]
-    linarith
-
 theorem goldbachB8LogGridErrorConstant_pos : (0 : ℝ) < 1000 := by norm_num
 
 /-- One-sided structural error for every positive mesh size, not an assumed limit. -/
 theorem goldbachB8LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
     goldbachB8LogGridUpperSum n - goldbachB8MainIntegral ≤ 1000 / (n : ℝ) := by
-  let fSource := goldbachB8LogSourceRegion.indicator liuLogIntegrand
-  let fUnit := b8UnitBox.indicator (fun _ => 64 / (n : ℝ))
-  let fLeft := (goldbachB8LeftStrip n).indicator (fun _ => (64 : ℝ))
-  let fDiagonal := (goldbachB8DiagonalStrip n).indicator (fun _ => (64 : ℝ))
-  let fOblique := (goldbachB8ObliqueStrip n).indicator (fun _ => (64 : ℝ))
-  have hSource : Integrable fSource := integrable_goldbachB8SourceIndicator
-  have hUnit : Integrable fUnit := by
-    apply integrable_indicator_of_integrableOn (measurableSet_Icc.prod measurableSet_Icc)
-    apply integrableOn_const
-    · rw [volume_b8UnitBox]
-      norm_num
-    · finiteness
-  have hLeft : Integrable fLeft := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB8LeftStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB8LeftStrip]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hDiagonal : Integrable fDiagonal := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB8DiagonalStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB8DiagonalStrip]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hOblique : Integrable fOblique := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB8ObliqueStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB8ObliqueStrip]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hmono : (∫ x, goldbachB8LogGridUpperIntegrand n x) ≤
-      ∫ x, (((fSource x + fUnit x) + fLeft x) + fDiagonal x) + fOblique x :=
-    integral_mono (integrable_goldbachB8LogGridUpperIntegrand n hn)
-      ((((hSource.add hUnit).add hLeft).add hDiagonal).add hOblique)
-      (b8UpperIntegrand_majorized hn)
-  rw [← goldbachB8LogGridUpperSum_eq_integral n hn] at hmono
-  have hOuter := integral_add (((hSource.add hUnit).add hLeft).add hDiagonal) hOblique
-  have hMid := integral_add ((hSource.add hUnit).add hLeft) hDiagonal
-  have hInner := integral_add (hSource.add hUnit) hLeft
-  have hFirst := integral_add hSource hUnit
-  simp only [Pi.add_apply] at hOuter hMid hInner hFirst
-  rw [hOuter, hMid, hInner, hFirst] at hmono
-  dsimp [fSource, fUnit, fLeft, fDiagonal, fOblique, b8UnitBox] at hmono
-  rw [integral_indicator measurableSet_goldbachB8LogSourceRegion,
-    ← goldbachB8MainIntegral_eq_setIntegral,
-    integral_indicator_const (64 / (n : ℝ)) (measurableSet_Icc.prod measurableSet_Icc),
-    integral_indicator_const (64 : ℝ) (measurableSet_goldbachB8LeftStrip n),
-    integral_indicator_const (64 : ℝ) (measurableSet_goldbachB8DiagonalStrip n),
-    integral_indicator_const (64 : ℝ) (measurableSet_goldbachB8ObliqueStrip n),
-    Measure.real_def, volume_b8UnitBox,
-    Measure.real_def, volume_goldbachB8LeftStrip,
-    Measure.real_def, volume_goldbachB8DiagonalStrip,
-    Measure.real_def, volume_goldbachB8ObliqueStrip] at hmono
-  simp only [ENNReal.toReal_one, smul_eq_mul] at hmono
+  classical
+  let E : Fin 3 → Set (ℝ × ℝ) :=
+    ![goldbachB8LeftStrip n, goldbachB8DiagonalStrip n, goldbachB8ObliqueStrip n]
+  have hEm : ∀ i, MeasurableSet (E i) := by
+    intro i
+    fin_cases i
+    · exact measurableSet_goldbachB8LeftStrip n
+    · exact measurableSet_goldbachB8DiagonalStrip n
+    · exact measurableSet_goldbachB8ObliqueStrip n
+  have hEf : ∀ i, volume (E i) ≠ ∞ := by
+    intro i
+    fin_cases i <;> simp [E, volume_goldbachB8LeftStrip,
+      volume_goldbachB8DiagonalStrip, volume_goldbachB8ObliqueStrip]
+  have hAf : volume b8UnitBox ≠ ∞ := by
+    change volume (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) ≠ ∞
+    rw [volume_b8UnitBox]
+    norm_num
+  have h := MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover
+    volume (goldbachB8LogGridRegion n) goldbachB8LogSourceRegion b8UnitBox E
+    (goldbachB8LogGridUpperIntegrand n) liuLogIntegrand (64 / (n : ℝ)) 64
+    (integrable_goldbachB8LogGridUpperIntegrand n hn)
+    (integrableOn_goldbachB8LogIntegrand measurableSet_goldbachB8LogSourceRegion
+      goldbachB8LogSourceRegion_subset_ambientBox)
+    measurableSet_goldbachB8LogSourceRegion (measurableSet_Icc.prod measurableSet_Icc)
+    hAf hEm hEf (by positivity) (by norm_num)
+    (fun x hx => (goldbachB8LogIntegrand_bounds
+      (goldbachB8LogSourceRegion_subset_ambientBox hx)).1)
+    (fun _ hx => b8UpperIntegrand_eq_zero hx)
+    (by
+      intro x hx
+      have hb := goldbachB8LogGridRegion_subset_ambientBox hn hx.1
+      exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
+        ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
+    (fun _ hx => b8UpperIntegrand_le_integrand_add hn hx.1)
+    (by
+      intro x hx
+      rcases goldbachB8LogGridRegion_excess_subset hn hx with (hl | hd) | ho
+      · exact ⟨0, hl⟩
+      · exact ⟨1, hd⟩
+      · exact ⟨2, ho⟩)
+    (fun _ hx => b8UpperIntegrand_le_sixtyFour hn hx.1)
+  rw [← goldbachB8LogGridUpperSum_eq_integral n hn,
+    ← goldbachB8MainIntegral_eq_setIntegral, Fin.sum_univ_three] at h
+  dsimp [E, b8UnitBox] at h
+  simp only [Measure.real_def, volume_b8UnitBox, volume_goldbachB8LeftStrip,
+    volume_goldbachB8DiagonalStrip, volume_goldbachB8ObliqueStrip,
+    ENNReal.toReal_one, one_mul] at h
   rw [ENNReal.toReal_ofReal (by positivity : 0 ≤ (5 / 528 : ℝ) / n),
     ENNReal.toReal_ofReal (by positivity : 0 ≤ (13 / 1089 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (41 / 4356 : ℝ) / n)] at hmono
-  have herr : 64 / (n : ℝ) + (5 / 528 : ℝ) / n * 64 +
-      (13 / 1089 : ℝ) / n * 64 + (41 / 4356 : ℝ) / n * 64 ≤ 1000 / (n : ℝ) := by
-    have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-    field_simp [hnreal.ne']
-    norm_num
-  linarith
+    ENNReal.toReal_ofReal (by positivity : 0 ≤ (41 / 4356 : ℝ) / n)] at h
+  refine h.trans ?_
+  have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
+  field_simp [hnreal.ne']
+  norm_num
 
 /-- Choose the mesh after the tolerance; no prime-size threshold is selected here. -/
 theorem exists_goldbachB8LogGridUpperSum_le_mainIntegral_add

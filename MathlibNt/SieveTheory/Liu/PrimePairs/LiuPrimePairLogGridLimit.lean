@@ -1,3 +1,4 @@
+import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
 import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainIntegral
 import Mathlib.MeasureTheory.Integral.Prod
@@ -814,113 +815,59 @@ lemma liuLogGridUpperIntegrand_majorized {n : ℕ} (hn : 0 < n)
         (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1).indicator
           (fun _ => 750 / (n : ℝ)) x +
         (liuLogExcessStrip n).indicator (fun _ => 150) x := by
-  have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-  by_cases hs : x ∈ liuLogSourceRegion
-  · have hambient := liuLogSourceRegion_subset_ambientBox hs
-    have hunit : x ∈ Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1 := by
-      exact ⟨⟨by linarith [hambient.1.1], by linarith [hambient.1.2]⟩,
-        ⟨by linarith [hambient.2.1], by linarith [hambient.2.2]⟩⟩
-    rw [Set.indicator_of_mem hs, Set.indicator_of_mem hunit]
-    have hstrip : 0 ≤
-        (liuLogExcessStrip n).indicator (fun _ => (150 : ℝ)) x := by
-      by_cases hx : x ∈ liuLogExcessStrip n
-      · rw [Set.indicator_of_mem hx]
-        norm_num
-      · rw [Set.indicator_of_notMem hx]
-    linarith [liuLogGridUpperIntegrand_le_integrand_add hn hs]
-  · rw [Set.indicator_of_notMem hs]
-    by_cases hg : x ∈ liuLogGridRegion n
-    · have he : x ∈ liuLogExcessStrip n :=
-        liuLogGridRegion_diff_source_subset_excessStrip hn ⟨hg, hs⟩
-      rw [Set.indicator_of_mem he]
-      have hunit : 0 ≤
-          (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1).indicator
-            (fun _ => 750 / (n : ℝ)) x := by
-        by_cases hx : x ∈ Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1
-        · rw [Set.indicator_of_mem hx]
-          positivity
-        · rw [Set.indicator_of_notMem hx]
-      linarith [liuLogGridUpperIntegrand_le_oneHundredFifty hn hg]
-    · rw [liuLogGridUpperIntegrand_eq_zero_of_notMem hg]
-      have hunit : 0 ≤
-          (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1).indicator
-            (fun _ => 750 / (n : ℝ)) x := by
-        by_cases hx : x ∈ Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1
-        · rw [Set.indicator_of_mem hx]
-          positivity
-        · rw [Set.indicator_of_notMem hx]
-      have hstrip : 0 ≤
-          (liuLogExcessStrip n).indicator (fun _ => (150 : ℝ)) x := by
-        by_cases hx : x ∈ liuLogExcessStrip n
-        · rw [Set.indicator_of_mem hx]
-          norm_num
-        · rw [Set.indicator_of_notMem hx]
-      linarith
+  classical
+  have h := MathlibNt.Analysis.IntegralExcessCover.majorized_of_excess_cover
+    (liuLogGridRegion n) liuLogSourceRegion (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1)
+    (fun _ : Fin 1 => liuLogExcessStrip n)
+    (liuLogGridUpperIntegrand n) liuLogIntegrand (750 / (n : ℝ)) 150
+    (by positivity) (by norm_num)
+    (fun _ hx => liuLogIntegrand_nonneg (liuLogSourceRegion_subset_ambientBox hx))
+    (fun _ hx => liuLogGridUpperIntegrand_eq_zero_of_notMem hx)
+    (by
+      intro x hx
+      have hb := liuLogSourceRegion_subset_ambientBox hx.2
+      exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
+        ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
+    (fun _ hx => liuLogGridUpperIntegrand_le_integrand_add hn hx.2)
+    (fun _ hx => ⟨0, liuLogGridRegion_diff_source_subset_excessStrip hn hx⟩)
+    (fun _ hx => liuLogGridUpperIntegrand_le_oneHundredFifty hn hx.1)
+  simpa using h x
 
 /-- The grid upper sum exceeds Liu's source integral by at most `759/n`. -/
 theorem liuLogGridUpperSum_sub_source_le (n : ℕ) (hn : 0 < n) :
     liuLogGridUpperSum n - liuSourceMainIntegral ≤ 759 / (n : ℝ) := by
-  let unitBox : Set (ℝ × ℝ) := Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1
-  let fSource := liuLogSourceRegion.indicator liuLogIntegrand
-  let fUnit := unitBox.indicator (fun _ => 750 / (n : ℝ))
-  let fStrip := (liuLogExcessStrip n).indicator (fun _ => (150 : ℝ))
-  have hSource : Integrable fSource :=
-    integrable_indicator_of_integrableOn measurableSet_liuLogSourceRegion
-      (integrableOn_liuLogIntegrand measurableSet_liuLogSourceRegion
-        liuLogSourceRegion_subset_ambientBox)
-  have hUnit : Integrable fUnit := by
-    apply integrable_indicator_of_integrableOn
-      (measurableSet_Icc.prod measurableSet_Icc)
-    apply integrableOn_const
-    · dsimp [unitBox]
-      rw [volume_unitBox]
-      norm_num
-    · finiteness
-  have hStrip : Integrable fStrip := by
-    apply integrable_indicator_of_integrableOn
-      (measurableSet_liuLogExcessStrip n)
-    apply integrableOn_const
-    · rw [volume_liuLogExcessStrip hn]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hmono :
-      (∫ x, liuLogGridUpperIntegrand n x) ≤
-        ∫ x, (fSource x + fUnit x) + fStrip x := by
-    apply MeasureTheory.integral_mono
-      (integrable_liuLogGridUpperIntegrand n hn)
-      ((hSource.add hUnit).add hStrip)
-    intro x
-    exact liuLogGridUpperIntegrand_majorized hn x
-  rw [← liuLogGridUpperSum_eq_integral n hn] at hmono
-  change liuLogGridUpperSum n ≤
-    ∫ x, (fSource x + fUnit x) + fStrip x at hmono
-  have hOuter := MeasureTheory.integral_add (hSource.add hUnit) hStrip
-  change (∫ x, (fSource x + fUnit x) + fStrip x) =
-    (∫ x, fSource x + fUnit x) + ∫ x, fStrip x at hOuter
-  rw [hOuter] at hmono
-  have hInner := MeasureTheory.integral_add hSource hUnit
-  change (∫ x, fSource x + fUnit x) =
-    (∫ x, fSource x) + ∫ x, fUnit x at hInner
-  rw [hInner] at hmono
-  dsimp [fSource, fUnit, fStrip, unitBox] at hmono
-  rw [MeasureTheory.integral_indicator measurableSet_liuLogSourceRegion,
-    ← liuSourceMainIntegral_eq_setIntegral,
-    MeasureTheory.integral_indicator_const (750 / (n : ℝ))
-      (measurableSet_Icc.prod measurableSet_Icc),
-    MeasureTheory.integral_indicator_const (150 : ℝ)
-      (measurableSet_liuLogExcessStrip n),
-    MeasureTheory.Measure.real_def, volume_unitBox,
-    MeasureTheory.Measure.real_def, volume_liuLogExcessStrip hn] at hmono
-  simp only [ENNReal.toReal_one, smul_eq_mul] at hmono
-  rw [ENNReal.toReal_ofReal (by positivity :
-    0 ≤ 49 / (900 * (n : ℝ)))] at hmono
-  have herr :
-      750 / (n : ℝ) + 49 / (900 * (n : ℝ)) * 150 ≤
-        759 / (n : ℝ) := by
-    have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-    field_simp
-    norm_num
-  linarith
+  classical
+  have h := MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover
+    volume (liuLogGridRegion n) liuLogSourceRegion (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1)
+    (fun _ : Fin 1 => liuLogExcessStrip n)
+    (liuLogGridUpperIntegrand n) liuLogIntegrand (750 / (n : ℝ)) 150
+    (integrable_liuLogGridUpperIntegrand n hn)
+    (integrableOn_liuLogIntegrand measurableSet_liuLogSourceRegion
+      liuLogSourceRegion_subset_ambientBox)
+    measurableSet_liuLogSourceRegion (measurableSet_Icc.prod measurableSet_Icc)
+    (by rw [volume_unitBox]; norm_num)
+    (fun _ => measurableSet_liuLogExcessStrip n)
+    (fun _ => by rw [volume_liuLogExcessStrip hn]; exact ENNReal.ofReal_ne_top)
+    (by positivity) (by norm_num)
+    (fun _ hx => liuLogIntegrand_nonneg (liuLogSourceRegion_subset_ambientBox hx))
+    (fun _ hx => liuLogGridUpperIntegrand_eq_zero_of_notMem hx)
+    (by
+      intro x hx
+      have hb := liuLogSourceRegion_subset_ambientBox hx.2
+      exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
+        ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
+    (fun _ hx => liuLogGridUpperIntegrand_le_integrand_add hn hx.2)
+    (fun _ hx => ⟨0, liuLogGridRegion_diff_source_subset_excessStrip hn hx⟩)
+    (fun _ hx => liuLogGridUpperIntegrand_le_oneHundredFifty hn hx.1)
+  rw [← liuLogGridUpperSum_eq_integral n hn,
+    ← liuSourceMainIntegral_eq_setIntegral] at h
+  simp only [Fin.sum_univ_one, Measure.real_def, volume_unitBox,
+    volume_liuLogExcessStrip hn, ENNReal.toReal_one, one_mul] at h
+  rw [ENNReal.toReal_ofReal (by positivity : 0 ≤ 49 / (900 * (n : ℝ)))] at h
+  refine h.trans ?_
+  have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
+  field_simp
+  norm_num
 
 /-- The canonical logarithmic-grid upper sums converge to Liu's source
 integral as the mesh tends to zero. -/

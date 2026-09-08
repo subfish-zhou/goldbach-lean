@@ -1,7 +1,8 @@
+import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridRegion
 
 open Finset MeasureTheory Set
-open scoped BigOperators Interval
+open scoped ENNReal BigOperators Interval
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
@@ -353,119 +354,65 @@ private theorem volume_b9UnitBox :
   rw [Measure.volume_eq_prod ℝ ℝ, Measure.prod_prod]
   norm_num [Real.volume_Icc]
 
-private theorem b9Indicator_nonneg {s : Set (ℝ × ℝ)} {f : ℝ × ℝ → ℝ}
-    (h : ∀ x ∈ s, 0 ≤ f x) (x : ℝ × ℝ) : 0 ≤ s.indicator f x := by
-  classical
-  by_cases hx : x ∈ s
-  · rw [indicator_of_mem hx]
-    exact h x hx
-  · rw [indicator_of_notMem hx]
-
-private theorem b9UpperIntegrand_majorized {n : ℕ} (hn : 0 < n) (x : ℝ × ℝ) :
-    goldbachB9LogGridUpperIntegrand n x ≤
-      goldbachB9LogSourceRegion.indicator liuLogIntegrand x +
-        b9UnitBox.indicator (fun _ => 1600 / (n : ℝ)) x +
-        (goldbachB9LeftStrip n).indicator (fun _ => (480 : ℝ)) x +
-        (goldbachB9BottomStrip n).indicator (fun _ => (480 : ℝ)) x +
-        (goldbachB9ObliqueStrip n).indicator (fun _ => (480 : ℝ)) x := by
-  have hS := b9Indicator_nonneg (fun x hx =>
-    (goldbachB9LogIntegrand_bounds (goldbachB9LogSourceRegion_subset_ambientBox hx)).1) x
-  have hU := b9Indicator_nonneg
-    (s := b9UnitBox) (f := fun _ => 1600 / (n : ℝ)) (by intros; positivity) x
-  have hL := b9Indicator_nonneg
-    (s := goldbachB9LeftStrip n) (f := fun _ => (480 : ℝ)) (by intros; norm_num) x
-  have hB := b9Indicator_nonneg
-    (s := goldbachB9BottomStrip n) (f := fun _ => (480 : ℝ)) (by intros; norm_num) x
-  have hO := b9Indicator_nonneg
-    (s := goldbachB9ObliqueStrip n) (f := fun _ => (480 : ℝ)) (by intros; norm_num) x
-  by_cases hg : x ∈ goldbachB9LogGridRegion n
-  · by_cases hs : x ∈ goldbachB9LogSourceRegion
-    · have hb := goldbachB9LogGridRegion_subset_ambientBox hn hg
-      have hu : x ∈ b9UnitBox :=
-        ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
-          ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩
-      rw [indicator_of_mem hs, indicator_of_mem hu]
-      linarith [goldbachB9LogGridUpperIntegrand_le_integrand_add hn hg]
-    · rw [indicator_of_notMem hs]
-      have hb := goldbachB9LogGridUpperIntegrand_le hn hg
-      rcases goldbachB9LogGridRegion_excess_subset hn ⟨hg, hs⟩ with (hl | hd) | ho
-      · rw [indicator_of_mem hl]
-        linarith
-      · rw [indicator_of_mem hd]
-        linarith
-      · rw [indicator_of_mem ho]
-        linarith
-  · rw [goldbachB9LogGridUpperIntegrand_eq_zero hg]
-    linarith
-
 theorem goldbachB9LogGridErrorConstant_pos : (0 : ℝ) < 10000 := by norm_num
 
-/-- Uniform in every positive mesh, with the actual integral as the main term. -/
+/-- One-sided structural error for every positive mesh size, not an assumed limit. -/
 theorem goldbachB9LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
     goldbachB9LogGridUpperSum n - goldbachB9MainIntegral ≤ 10000 / (n : ℝ) := by
-  let fSource := goldbachB9LogSourceRegion.indicator liuLogIntegrand
-  let fUnit := b9UnitBox.indicator (fun _ => 1600 / (n : ℝ))
-  let fLeft := (goldbachB9LeftStrip n).indicator (fun _ => (480 : ℝ))
-  let fBottom := (goldbachB9BottomStrip n).indicator (fun _ => (480 : ℝ))
-  let fOblique := (goldbachB9ObliqueStrip n).indicator (fun _ => (480 : ℝ))
-  have hSource : Integrable fSource := integrable_goldbachB9SourceIndicator
-  have hUnit : Integrable fUnit := by
-    apply integrable_indicator_of_integrableOn (measurableSet_Icc.prod measurableSet_Icc)
-    apply integrableOn_const
-    · rw [volume_b9UnitBox]
-      norm_num
-    · finiteness
-  have hLeft : Integrable fLeft := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB9LeftStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB9LeftStrip]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hBottom : Integrable fBottom := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB9BottomStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB9BottomStrip]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hOblique : Integrable fOblique := by
-    apply integrable_indicator_of_integrableOn (measurableSet_goldbachB9ObliqueStrip n)
-    apply integrableOn_const
-    · rw [volume_goldbachB9ObliqueStrip]
-      exact ENNReal.ofReal_ne_top
-    · finiteness
-  have hmono : (∫ x, goldbachB9LogGridUpperIntegrand n x) ≤
-      ∫ x, (((fSource x + fUnit x) + fLeft x) + fBottom x) + fOblique x :=
-    integral_mono (integrable_goldbachB9LogGridUpperIntegrand n hn)
-      ((((hSource.add hUnit).add hLeft).add hBottom).add hOblique)
-      (b9UpperIntegrand_majorized hn)
-  rw [← goldbachB9LogGridUpperSum_eq_integral n hn] at hmono
-  have hOuter := integral_add (((hSource.add hUnit).add hLeft).add hBottom) hOblique
-  have hMid := integral_add ((hSource.add hUnit).add hLeft) hBottom
-  have hInner := integral_add (hSource.add hUnit) hLeft
-  have hFirst := integral_add hSource hUnit
-  simp only [Pi.add_apply] at hOuter hMid hInner hFirst
-  rw [hOuter, hMid, hInner, hFirst] at hmono
-  dsimp [fSource, fUnit, fLeft, fBottom, fOblique, b9UnitBox] at hmono
-  rw [integral_indicator measurableSet_goldbachB9LogSourceRegion,
-    ← goldbachB9MainIntegral_eq_setIntegral,
-    integral_indicator_const (1600 / (n : ℝ)) (measurableSet_Icc.prod measurableSet_Icc),
-    integral_indicator_const (480 : ℝ) (measurableSet_goldbachB9LeftStrip n),
-    integral_indicator_const (480 : ℝ) (measurableSet_goldbachB9BottomStrip n),
-    integral_indicator_const (480 : ℝ) (measurableSet_goldbachB9ObliqueStrip n),
-    Measure.real_def, volume_b9UnitBox,
-    Measure.real_def, volume_goldbachB9LeftStrip,
-    Measure.real_def, volume_goldbachB9BottomStrip,
-    Measure.real_def, volume_goldbachB9ObliqueStrip] at hmono
-  simp only [ENNReal.toReal_one, smul_eq_mul] at hmono
+  classical
+  let E : Fin 3 → Set (ℝ × ℝ) :=
+    ![goldbachB9LeftStrip n, goldbachB9BottomStrip n, goldbachB9ObliqueStrip n]
+  have hEm : ∀ i, MeasurableSet (E i) := by
+    intro i
+    fin_cases i
+    · exact measurableSet_goldbachB9LeftStrip n
+    · exact measurableSet_goldbachB9BottomStrip n
+    · exact measurableSet_goldbachB9ObliqueStrip n
+  have hEf : ∀ i, volume (E i) ≠ ∞ := by
+    intro i
+    fin_cases i <;> simp [E, volume_goldbachB9LeftStrip,
+      volume_goldbachB9BottomStrip, volume_goldbachB9ObliqueStrip]
+  have hAf : volume b9UnitBox ≠ ∞ := by
+    change volume (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) ≠ ∞
+    rw [volume_b9UnitBox]
+    norm_num
+  have h := MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover
+    volume (goldbachB9LogGridRegion n) goldbachB9LogSourceRegion b9UnitBox E
+    (goldbachB9LogGridUpperIntegrand n) liuLogIntegrand (1600 / (n : ℝ)) 480
+    (integrable_goldbachB9LogGridUpperIntegrand n hn)
+    (integrableOn_goldbachB9LogIntegrand measurableSet_goldbachB9LogSourceRegion
+      goldbachB9LogSourceRegion_subset_ambientBox)
+    measurableSet_goldbachB9LogSourceRegion (measurableSet_Icc.prod measurableSet_Icc)
+    hAf hEm hEf (by positivity) (by norm_num)
+    (fun x hx => (goldbachB9LogIntegrand_bounds
+      (goldbachB9LogSourceRegion_subset_ambientBox hx)).1)
+    (fun _ hx => goldbachB9LogGridUpperIntegrand_eq_zero hx)
+    (by
+      intro x hx
+      have hb := goldbachB9LogGridRegion_subset_ambientBox hn hx.1
+      exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
+        ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
+    (fun _ hx => goldbachB9LogGridUpperIntegrand_le_integrand_add hn hx.1)
+    (by
+      intro x hx
+      rcases goldbachB9LogGridRegion_excess_subset hn hx with (hl | hd) | ho
+      · exact ⟨0, hl⟩
+      · exact ⟨1, hd⟩
+      · exact ⟨2, ho⟩)
+    (fun _ hx => goldbachB9LogGridUpperIntegrand_le hn hx.1)
+  rw [← goldbachB9LogGridUpperSum_eq_integral n hn,
+    ← goldbachB9MainIntegral_eq_setIntegral, Fin.sum_univ_three] at h
+  dsimp [E, b9UnitBox] at h
+  simp only [Measure.real_def, volume_b9UnitBox, volume_goldbachB9LeftStrip,
+    volume_goldbachB9BottomStrip, volume_goldbachB9ObliqueStrip,
+    ENNReal.toReal_one, one_mul] at h
   rw [ENNReal.toReal_ofReal (by positivity : 0 ≤ (17 / 240 : ℝ) / n),
     ENNReal.toReal_ofReal (by positivity : 0 ≤ (41 / 636 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (1927 / 19080 : ℝ) / n)] at hmono
-  have herr : 1600 / (n : ℝ) + (17 / 240 : ℝ) / n * 480 +
-      (41 / 636 : ℝ) / n * 480 + (1927 / 19080 : ℝ) / n * 480 ≤ 10000 / (n : ℝ) := by
-    have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-    field_simp [hnreal.ne']
-    norm_num
-  linarith
+    ENNReal.toReal_ofReal (by positivity : 0 ≤ (1927 / 19080 : ℝ) / n)] at h
+  refine h.trans ?_
+  have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
+  field_simp [hnreal.ne']
+  norm_num
 
 theorem exists_goldbachB9LogGridUpperSum_le_mainIntegral_add
     (δ : ℝ) (hδ : 0 < δ) :

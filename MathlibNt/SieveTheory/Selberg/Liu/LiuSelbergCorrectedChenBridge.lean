@@ -1,4 +1,5 @@
 import MathlibNt.ChensTheorem
+import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergEvenAssembly
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic
 import MathlibNt.SieveTheory.SwitchingPrinciple
@@ -978,32 +979,7 @@ theorem sum_liuWeight_mul_eq_sum_pairs
     (N z y : ℕ) (F : ℕ → ℝ) :
     (∑ a ∈ range (N + 1), liuWeight N z y a * F a) =
       ∑ p ∈ liuWeightPairs N z y, F (p.1 * p.2) := by
-  classical
-  calc
-    (∑ a ∈ range (N + 1), liuWeight N z y a * F a) =
-        ∑ a ∈ (range (N + 1)).filter (LiuWeightSupport N z y), F a := by
-      rw [sum_filter]
-      apply sum_congr rfl
-      intro a _
-      by_cases ha : LiuWeightSupport N z y a <;> simp [liuWeight, ha]
-    _ = ∑ p ∈ liuWeightPairs N z y, F (p.1 * p.2) := by
-      symm
-      apply sum_bij (fun p _ => p.1 * p.2)
-      · intro p hp
-        rw [mem_filter]
-        exact ⟨mem_range.mpr (Nat.lt_succ_iff.mpr
-            (liuWeightSupport_le ⟨p, hp, rfl⟩)),
-          ⟨p, hp, rfl⟩⟩
-      · intro p hp q hq hpq
-        have hu := liuPairConditions_unique
-          (mem_liuWeightPairs.mp hp) (mem_liuWeightPairs.mp hq) hpq
-        exact Prod.ext hu.1 hu.2
-      · intro a ha
-        rw [mem_filter] at ha
-        rcases ha.2 with ⟨p, hp, hpa⟩
-        exact ⟨p, hp, hpa⟩
-      · intro p _
-        rfl
+  exact sum_liuWeight_mul_eq_sum_pairs_of_support N z y F
 
 /-- The unique product map identifies Liu's pair carrier with the supported
 source integers. -/
@@ -1011,20 +987,20 @@ theorem liuWeightPairs_card_eq_support_card (N z y : ℕ) :
     (liuWeightPairs N z y).card =
       ((Icc 1 N).filter (LiuWeightSupport N z y)).card := by
   classical
-  apply Finset.card_bij (fun p _ => p.1 * p.2)
-  · intro p hp
-    have hpair := mem_liuWeightPairs.mp hp
-    exact mem_filter.mpr
-      ⟨mem_Icc.mpr ⟨Nat.mul_pos hpair.1.pos hpair.2.1.pos,
-        liuWeightSupport_le ⟨p, hp, rfl⟩⟩,
-        ⟨p, hp, rfl⟩⟩
-  · intro p hp q hq hpq
-    have hu := liuPairConditions_unique
-      (mem_liuWeightPairs.mp hp) (mem_liuWeightPairs.mp hq) hpq
-    exact Prod.ext hu.1 hu.2
-  · intro a ha
-    rcases (mem_filter.mp ha).2 with ⟨p, hp, hpa⟩
-    exact ⟨p, hp, hpa⟩
+  have hfull : (liuWeightPairs N z y).filter
+      (fun p => p.1 * p.2 ≤ N ∧ 1 ≤ p.1 * p.2) = liuWeightPairs N z y := by
+    apply filter_eq_self.mpr
+    intro p hp
+    have hc := mem_liuWeightPairs.mp hp
+    exact ⟨liuWeightSupport_le ⟨p, hp, rfl⟩, Nat.mul_pos hc.1.pos hc.2.1.pos⟩
+  have hsets : (range (N + 1)).filter (fun a => LiuWeightSupport N z y a ∧ 1 ≤ a) =
+      (Icc 1 N).filter (LiuWeightSupport N z y) := by
+    ext a
+    simp only [mem_filter, mem_range, mem_Icc, Nat.lt_succ_iff]
+    tauto
+  simpa only [hfull, hsets, sum_const, smul_eq_mul, mul_one] using
+    (sum_liuWeightSupport_filter_eq_sum_pairs N z y N (fun a => 1 ≤ a)
+      (fun _ => (1 : ℕ))).symm
 
 /-- Every prime factor of Liu's paper modulus lies below its defining cutoff. -/
 theorem liuPaperQModulus_primeFactors_card_le_cutoff_add_one
@@ -1424,46 +1400,6 @@ theorem LiuPanWangDingTheorem.eventually_correctedChenOmegaTriple_le
   hPan.to_canonicalCoprimeTheorem.eventually_correctedChenOmegaTriple_le
     epsilon A hepsilon hepsilon_le hA
 
-/-- An inverse-log remainder is absorbed into an arbitrary positive multiple of
-the genuine Liu singular-series scale.  The uniform lower bound is the positive
-universal Euler product, since every divisor correction factor is at least one. -/
-theorem eventually_inverse_log_remainder_le_liuSingularSeries
-    (C ρ : ℝ) (hρ : 0 < ρ) :
-    ∀ᶠ N : ℕ in atTop,
-      C * (N : ℝ) / Real.log N ^ (3 : ℕ) ≤
-        ρ * SingularSeries.liuSingularSeries N * (N : ℝ) /
-          Real.log N ^ (2 : ℕ) := by
-  have hlog : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
-    Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  have hratio : Tendsto
-      (fun N : ℕ => C / Real.log (N : ℝ)) atTop (nhds 0) :=
-    hlog.const_div_atTop C
-  have hsmall : ∀ᶠ N : ℕ in atTop,
-      C / Real.log (N : ℝ) ≤
-        ρ * SingularSeries.liuUniversalProduct :=
-    hratio.eventually (Iic_mem_nhds
-      (mul_pos hρ SingularSeries.liuUniversalProduct_pos))
-  filter_upwards [hsmall, eventually_ge_atTop 2] with N hsmallN hN
-  have hcoef : C / Real.log (N : ℝ) ≤
-      ρ * SingularSeries.liuSingularSeries N :=
-    hsmallN.trans (mul_le_mul_of_nonneg_left
-      (SingularSeries.liuUniversalProduct_le_liuSingularSeries N) hρ.le)
-  have hlogpos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hXnonneg :
-      0 ≤ (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℕ) := by
-    positivity
-  calc
-    C * (N : ℝ) / Real.log N ^ (3 : ℕ) =
-        (C / Real.log N) *
-          ((N : ℝ) / Real.log N ^ (2 : ℕ)) := by
-      field_simp [hlogpos.ne']
-    _ ≤ (ρ * SingularSeries.liuSingularSeries N) *
-          ((N : ℝ) / Real.log N ^ (2 : ℕ)) :=
-      mul_le_mul_of_nonneg_right hcoef hXnonneg
-    _ = ρ * SingularSeries.liuSingularSeries N * (N : ℝ) /
-          Real.log N ^ (2 : ℕ) := by ring
-
 /-- The final Chen theorem from the derived Jurkat--Richert weighted lower API
 and the Liu--Pan--Wang--Ding aggregate theorem.  This broad intermediate
 interface is retained for downstream compatibility. -/
@@ -1551,45 +1487,19 @@ theorem eventually_inverse_log_remainder_le_truncated
         ρ * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
           (correctedChenZ N - 1) * (N : ℝ) /
             Real.log N ^ (2 : ℕ) := by
-  have hlog : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
-    Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  have hratio : Tendsto
-      (fun N : ℕ => C / Real.log (N : ℝ)) atTop (nhds 0) :=
-    hlog.const_div_atTop C
-  have hsmall : ∀ᶠ N : ℕ in atTop,
-      C / Real.log (N : ℝ) ≤ ρ / 2 :=
-    hratio.eventually (Iic_mem_nhds (by linarith))
-  filter_upwards [hsmall, eventually_ge_atTop 59049] with N hsmallN hN
+  have hbase :=
+    MathlibNt.Analysis.eventually_log_rpow_remainder_lt_of_lower_bound
+      C (1 / 2 : ℝ) ρ 1 (by norm_num) hρ (by norm_num)
+  filter_upwards [hbase, Filter.eventually_ge_atTop (59049 : ℕ)] with N hN hlarge
   have hz : 2 ≤ correctedChenZ N - 1 :=
-    correctedChenZ_sub_one_ge_two_of_large hN
-  have hseries : (1 / 2 : ℝ) ≤
-      AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-        (correctedChenZ N - 1) :=
+    correctedChenZ_sub_one_ge_two_of_large hlarge
+  have hs : (1 / 2 : ℝ) ≤
+      AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) :=
     singularSeriesTruncated_ge_half hz
-  have hcoef : C / Real.log (N : ℝ) ≤
-      ρ * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-        (correctedChenZ N - 1) := by
-    calc
-      C / Real.log (N : ℝ) ≤ ρ / 2 := hsmallN
-      _ ≤ ρ * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-          (correctedChenZ N - 1) := by nlinarith
-  have hlogpos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hXnonneg :
-      0 ≤ (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℕ) := by
-    positivity
-  calc
-    C * (N : ℝ) / Real.log N ^ (3 : ℕ) =
-        (C / Real.log N) *
-          ((N : ℝ) / Real.log N ^ (2 : ℕ)) := by
-      field_simp [hlogpos.ne']
-    _ ≤ (ρ * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-          (correctedChenZ N - 1)) *
-            ((N : ℝ) / Real.log N ^ (2 : ℕ)) :=
-      mul_le_mul_of_nonneg_right hcoef hXnonneg
-    _ = ρ * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-          (correctedChenZ N - 1) * (N : ℝ) /
-            Real.log N ^ (2 : ℕ) := by ring
+  have h := (hN 2
+    (AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1)) hs).le
+  norm_num [Real.rpow_natCast] at h
+  exact h
 
 /-- The canonical corrected-triple estimate in the analytic truncation units.
 The Euler-tail margin `ηs` and inverse-log absorption margin `ηr` remain
