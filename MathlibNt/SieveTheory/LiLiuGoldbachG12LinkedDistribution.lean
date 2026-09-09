@@ -4,7 +4,7 @@ import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Classical Finset Filter
 open scoped BigOperators Topology
-open AnalyticNumberTheory.Sieve AnalyticNumberTheory.LargeSieve Wu2004MeanValue
+open AnalyticNumberTheory.Sieve _root_.AnalyticNumberTheory.LargeSieve Wu2004MeanValue
 noncomputable section
 
 theorem goldbachG12Linked_balanced_support {N m : ℕ}

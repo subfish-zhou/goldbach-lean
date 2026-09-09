@@ -1335,334 +1335,6 @@ private lemma log_one_sub_prime_odd_bound {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 
   rw [hsubst, ← hrhs]
   exact log_one_sub_bound ht0 htle
 
-/-- **Sieve-product lower bound**: there is c₁ > 0 such that, for every
-even N ≥ 4 and z ≥ 2,
-  c₁ / log z ≤ V(z, N) = Π_{p < z, p ∤ N}(1 - 1/(p-1)).
-
-Proof outline:
-  1. Evenness of N excludes p = 2 from the sieve product. Omitting factors
-     with p | N can only increase the product, so
-     V ≥ W(z) := Π_{p < z, p > 2}(1 - 1/(p-1)).
-  2. Use the local correction |log(1 - 1/(p-1)) + 1/(p-1)| ≤ 2/(p-1)².
-  3. By Mertens' second theorem,
-     -log W = Σ_{p<z,p>2} 1/(p-1) + O(1) ≤ log log z + O(1).
-  4. Exponentiating gives W = exp(log W) ≥ e^{-C}/log z.
-
-This supplies the lower-bound scale in V ≈ 𝔖(N)·e^{-γ}/log z,
-as needed for the Jurkat-Richert main term. -/
-theorem goldbachSieveProduct_lower_bound :
-    ∃ c₁ : ℝ, 0 < c₁ ∧ ∀ N z : ℕ, 2 ≤ z → Even N → 4 ≤ N →
-      c₁ / log z ≤ goldbachSieveProduct N z := by
-  obtain ⟨B₁, C₁, hM⟩ := mertens_second_theorem
-  have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-  have hC1 : 0 ≤ C₁ := by
-    have hb := hM 2 (by norm_num)
-    have hnonneg : 0 ≤ C₁ / log 2 := le_trans (abs_nonneg _) hb
-    simpa using (le_div_iff₀ hlog2).mp hnonneg
-  -- The sums of 1/p² over primes are bounded.
-  have hsum2 : Summable (fun n : ℕ => 1 / (n : ℝ) ^ 2) :=
-    (Real.summable_one_div_nat_pow (p := 2)).2 (by norm_num : (1 : ℕ) < 2)
-  have hK : ∃ K : ℝ, 0 ≤ K ∧
-      ∀ z : ℕ, ((range z).filter Nat.Prime).sum (fun p => 1 / (p : ℝ) ^ 2) ≤ K := by
-    refine ⟨∑' n : ℕ, (1 / (n : ℝ) ^ 2 : ℝ), tsum_nonneg (fun n => by positivity), ?_⟩
-    intro z
-    exact Summable.sum_le_tsum ((range z).filter Nat.Prime)
-      (fun n _hn => by positivity) hsum2
-  obtain ⟨K, hK0, hK⟩ := hK
-  let Ctotal : ℝ := B₁ + C₁ / log 2 + 12 * K
-  refine ⟨exp (-Ctotal), by exact Real.exp_pos _, ?_⟩
-  intro N z hz hN hN4
-  have hz1 : (1 : ℝ) < z := by exact_mod_cast (by omega : 1 < z)
-  have hlogzpos : 0 < log z := Real.log_pos hz1
-  let W : ℝ := ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).prod
-    (fun p => 1 - 1 / ((p : ℝ) - 1))
-  -- V ≥ W: the sifting set for V is contained in that for W, and factors lie in (0, 1].
-  have hVsub : ((range z).filter (fun p => Nat.Prime p ∧ ¬ p ∣ N)) ⊆
-      ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)) := by
-    intro p hp
-    simp only [mem_filter, mem_range] at hp ⊢
-    rcases hp with ⟨hpz, hpP, hpndvd⟩
-    have hpne2 : p ≠ 2 := by
-      intro hp2
-      have h2dvd : 2 ∣ N := by
-        rcases hN with ⟨k, hk⟩
-        refine ⟨k, ?_⟩
-        rw [hk]
-        omega
-      exact hpndvd (by simpa [hp2] using h2dvd)
-    exact ⟨hpz, hpP, hpne2⟩
-  have hVgeW : W ≤ goldbachSieveProduct N z := by
-    unfold W goldbachSieveProduct
-    refine Finset.prod_le_prod_of_subset_of_le_one hVsub ?_ ?_
-    · intro p hp
-      have hp' : p.Prime := (mem_filter.mp hp).2.1
-      have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-      have hp3 : 3 ≤ p := by
-        have h2lt : 2 < p := by
-          have h2le : 2 ≤ p := hp'.two_le
-          omega
-        omega
-      -- 0 ≤ 1 - 1/(p-1)
-      have hle : 1 / ((p : ℝ) - 1) ≤ 1 / 2 := by
-        have h2le : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-          have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-          linarith
-        exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2le
-      linarith
-    · intro p hp _hnot
-      have hp' : p.Prime := (mem_filter.mp hp).2.1
-      have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-      have hp3 : 3 ≤ p := by
-        have h2lt : 2 < p := by
-          have h2le : 2 ≤ p := hp'.two_le
-          omega
-        omega
-      have hpos : 0 < (p : ℝ) - 1 := by
-        have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-        linarith
-      have hnonneg : 0 ≤ 1 / ((p : ℝ) - 1) :=
-        div_nonneg zero_le_one (le_of_lt hpos)
-      exact sub_le_self (a := (1 : ℝ)) hnonneg
-  -- log W = Σ log(1 - 1/(p-1))
-  have hlogW : log W = ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-      (fun p => log (1 - 1 / ((p : ℝ) - 1))) := by
-    unfold W
-    rw [Real.log_prod]
-    intro p hp
-    have hp' : p.Prime := (mem_filter.mp hp).2.1
-    have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-    have hp3 : 3 ≤ p := by
-      have h2lt : 2 < p := by
-        have h2le : 2 ≤ p := hp'.two_le
-        omega
-      omega
-    have hle : 1 / ((p : ℝ) - 1) ≤ 1 / 2 := by
-      have h2le : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-        have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-        linarith
-      exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2le
-    have hlt : 1 / ((p : ℝ) - 1) < 1 := by
-      have h12 : (1 / 2 : ℝ) < 1 := by norm_num
-      exact lt_of_le_of_lt hle h12
-    have hfac : (1 - 1 / ((p : ℝ) - 1)) ≠ 0 := by linarith
-    exact hfac
-  -- E(z) := Σ_{p<z,p>2} (-log(1-1/(p-1)) - 1/(p-1)), |E| ≤ 8K
-  let E : ℝ := ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-    (fun p => -log (1 - 1 / ((p : ℝ) - 1)) - 1 / ((p : ℝ) - 1))
-  have hneglog : -log W =
-      ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-        (fun p => 1 / ((p : ℝ) - 1)) + E := by
-    unfold E
-    rw [hlogW]
-    rw [← Finset.sum_neg_distrib]
-    rw [← Finset.sum_add_distrib]
-    apply Finset.sum_congr rfl
-    intro p hp
-    ring
-  have hEabs : |E| ≤ 8 * K := by
-    unfold E
-    calc
-      |((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-          (fun p => -log (1 - 1 / ((p : ℝ) - 1)) - 1 / ((p : ℝ) - 1))|
-          ≤ ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-            (fun p => |(-log (1 - 1 / ((p : ℝ) - 1)) - 1 / ((p : ℝ) - 1))|) :=
-            Finset.abs_sum_le_sum_abs _ _
-      _ ≤ ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-            (fun p => 2 / ((p : ℝ) - 1) ^ 2) := by
-          apply Finset.sum_le_sum
-          intro p hp
-          have hp' : p.Prime := (mem_filter.mp hp).2.1
-          have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-          have h := log_one_sub_prime_odd_bound hp' hp2
-          rw [← abs_neg] at h
-          rwa [show (-(log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1))) =
-              -log (1 - 1 / ((p : ℝ) - 1)) - 1 / ((p : ℝ) - 1) by ring] at h
-      _ ≤ ((range z).filter Nat.Prime).sum (fun p => 8 / (p : ℝ) ^ 2) := by
-          calc
-            ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-                (fun p => 2 / ((p : ℝ) - 1) ^ 2)
-              ≤ ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-                  (fun p => 8 / (p : ℝ) ^ 2) := by
-                  apply Finset.sum_le_sum
-                  intro p hp
-                  have hp' : p.Prime := (mem_filter.mp hp).2.1
-                  have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-                  have hp3 : 3 ≤ p := by
-                    have h2lt : 2 < p := by
-                      have h2le : 2 ≤ p := hp'.two_le
-                      omega
-                    omega
-                  have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp'.ne_zero
-                  have hpm1 : (p : ℝ) - 1 ≠ 0 := by
-                    have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-                    have : 0 < (p : ℝ) - 1 := by linarith
-                    exact ne_of_gt this
-                  have hp2' : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le
-                  have hpos1 : 0 < (p : ℝ) - 1 := by
-                    have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-                    linarith
-                  have hpos2 : 0 < (p : ℝ) ^ 2 := sq_pos_of_pos (by linarith : 0 < (p : ℝ))
-                  rw [div_le_div_iff₀ (sq_pos_of_pos hpos1) hpos2]
-                  nlinarith
-            _ ≤ ((range z).filter Nat.Prime).sum (fun p => 8 / (p : ℝ) ^ 2) := by
-                  exact Finset.sum_le_sum_of_subset_of_nonneg
-                    (by
-                      intro p hp
-                      simp only [mem_filter, mem_range] at hp ⊢
-                      exact ⟨by omega, hp.2.1⟩)
-                    (fun p _hp _hnot => by positivity)
-      _ ≤ 8 * K := by
-          calc
-            ((range z).filter Nat.Prime).sum (fun p => 8 / (p : ℝ) ^ 2)
-                = 8 * ((range z).filter Nat.Prime).sum (fun p => 1 / (p : ℝ) ^ 2) := by
-                  rw [Finset.mul_sum]
-                  congr 1
-                  ext p
-                  ring
-            _ ≤ 8 * K := mul_le_mul_of_nonneg_left (hK z) (by norm_num)
-  -- Σ_{p<z,p>2} 1/(p-1) ≤ S(z) + 4K
-  have hsum_le : ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-      (fun p => 1 / ((p : ℝ) - 1)) ≤ primeReciprocalSum z + 4 * K := by
-    calc
-      ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-          (fun p => 1 / ((p : ℝ) - 1))
-          ≤ ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-              (fun p => 1 / (p : ℝ) + 1 / ((p : ℝ) - 1) ^ 2) := by
-            apply Finset.sum_le_sum
-            intro p hp
-            have hp' : p.Prime := (mem_filter.mp hp).2.1
-            have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-            have hp3 : 3 ≤ p := by
-              have h2lt : 2 < p := by
-                have h2le : 2 ≤ p := hp'.two_le
-                omega
-              omega
-            -- 1/(p-1) = 1/p + 1/(p(p-1)) ≤ 1/p + 1/(p-1)²
-            have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp'.ne_zero
-            have hpm1 : (p : ℝ) - 1 ≠ 0 := by
-              have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-              have : 0 < (p : ℝ) - 1 := by linarith
-              exact ne_of_gt this
-            have hle : 1 / ((p : ℝ) - 1) ≤ 1 / (p : ℝ) + 1 / ((p : ℝ) - 1) ^ 2 := by
-              -- 1/(p-1) - 1/(p-1)² = (p-2)/(p-1)² ≤ 1/p
-              have hpos1 : 0 < (p : ℝ) - 1 := by
-                have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-                linarith
-              have hpos2 : 0 < (p : ℝ) := by exact_mod_cast (by omega : 0 < p)
-              have hstep : 1 / ((p : ℝ) - 1) - 1 / ((p : ℝ) - 1) ^ 2 =
-                  ((p : ℝ) - 2) / ((p : ℝ) - 1) ^ 2 := by
-                field_simp [hpm1]
-                ring
-              have hle' : ((p : ℝ) - 2) / ((p : ℝ) - 1) ^ 2 ≤ 1 / (p : ℝ) := by
-                rw [div_le_div_iff₀ (sq_pos_of_pos hpos1) hpos2]
-                nlinarith
-              have hsub : 1 / ((p : ℝ) - 1) - 1 / ((p : ℝ) - 1) ^ 2 ≤ 1 / (p : ℝ) := by
-                rwa [hstep]
-              nlinarith
-            exact hle
-      _ = ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-            (fun p => 1 / (p : ℝ)) +
-          ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-            (fun p => 1 / ((p : ℝ) - 1) ^ 2) := by
-            rw [Finset.sum_add_distrib]
-      _ ≤ primeReciprocalSum z + 4 * K := by
-          -- Σ_{p<z,p>2} 1/p ≤ S(z); Σ_{p<z,p>2} 1/(p-1)² ≤ 4K
-          have h1 : ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-              (fun p => 1 / (p : ℝ)) ≤ primeReciprocalSum z := by
-            unfold primeReciprocalSum
-            -- Compare the sum over a subset.
-            exact Finset.sum_le_sum_of_subset_of_nonneg
-              (by intro p hp; simp only [mem_filter, mem_range] at hp ⊢; exact ⟨by omega, hp.2.1⟩)
-              (fun p _hp _hnot => by positivity)
-          have h2 : ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-              (fun p => 1 / ((p : ℝ) - 1) ^ 2) ≤ 4 * K := by
-            calc
-              ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-                  (fun p => 1 / ((p : ℝ) - 1) ^ 2)
-                  ≤ ((range z).filter (fun p => Nat.Prime p ∧ p ≠ 2)).sum
-                      (fun p => 4 / (p : ℝ) ^ 2) := by
-                    apply Finset.sum_le_sum
-                    intro p hp
-                    have hp' : p.Prime := (mem_filter.mp hp).2.1
-                    have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-                    have hp3 : 3 ≤ p := by
-                      have h2lt : 2 < p := by
-                        have h2le : 2 ≤ p := hp'.two_le
-                        omega
-                      omega
-                    have hpos1 : 0 < (p : ℝ) - 1 := by
-                      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-                      linarith
-                    have hpos2 : 0 < (p : ℝ) := by exact_mod_cast (by omega : 0 < p)
-                    rw [div_le_div_iff₀ (sq_pos_of_pos hpos1) (sq_pos_of_pos hpos2)]
-                    have hp3' : (3 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hp3
-                    nlinarith
-              _ ≤ ((range z).filter Nat.Prime).sum (fun p => 4 / (p : ℝ) ^ 2) := by
-                    exact Finset.sum_le_sum_of_subset_of_nonneg
-                      (by
-                        intro p hp
-                        simp only [mem_filter, mem_range] at hp ⊢
-                        exact ⟨by omega, hp.2.1⟩)
-                      (fun p _hp _hnot => by positivity)
-              _ = 4 * ((range z).filter Nat.Prime).sum (fun p => 1 / (p : ℝ) ^ 2) := by
-                    rw [Finset.mul_sum]
-                    congr 1
-                    ext p
-                    ring
-              _ ≤ 4 * K := mul_le_mul_of_nonneg_left (hK z) (by norm_num)
-          nlinarith
-  -- -log W ≤ log log z + Ctotal
-  have hS : primeReciprocalSum z ≤ log (log z) + B₁ + C₁ / log 2 := by
-    have hMz := hM z hz
-    have h1 : primeReciprocalSum z ≤ log (log z) + B₁ + C₁ / log z := by
-      have h := (abs_le.mp hMz).2
-      linarith
-    have h2 : C₁ / log z ≤ C₁ / log 2 := by
-      have hlelog : log 2 ≤ log z :=
-        (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
-          (by exact_mod_cast (by omega : 0 < z))).2 (by exact_mod_cast hz)
-      exact div_le_div_of_nonneg_left hC1 hlog2 hlelog
-    nlinarith
-  have hneg_le : -log W ≤ log (log z) + Ctotal := by
-    have hE : E ≤ |E| := le_abs_self _
-    have h1 : -log W ≤ (primeReciprocalSum z + 4 * K) + 8 * K := by
-      nlinarith [hneglog, hE, hEabs, hsum_le]
-    unfold Ctotal
-    nlinarith [h1, hS]
-  -- W ≥ e^{-Ctotal}/log z
-  have hWpos : 0 < W := by
-    unfold W
-    exact Finset.prod_pos (fun p hp => by
-      have hp' : p.Prime := (mem_filter.mp hp).2.1
-      have hp2 : p ≠ 2 := (mem_filter.mp hp).2.2
-      have hp3 : 3 ≤ p := by
-        have h2lt : 2 < p := by
-          have h2le : 2 ≤ p := hp'.two_le
-          omega
-        omega
-      have hle : 1 / ((p : ℝ) - 1) ≤ 1 / 2 := by
-        have h2le : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-          have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-          linarith
-        exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2le
-      have hlt : 1 / ((p : ℝ) - 1) < 1 := by
-        have h12 : (1 / 2 : ℝ) < 1 := by norm_num
-        exact lt_of_le_of_lt hle h12
-      linarith)
-  have hW_low : exp (-Ctotal) / log z ≤ W := by
-    have hlogW_ge : -log (log z) - Ctotal ≤ log W := by linarith [hneg_le]
-    have h1 : exp (-log (log z) - Ctotal) ≤ exp (log W) :=
-      Real.exp_le_exp.mpr hlogW_ge
-    have hWexp : exp (log W) = W := Real.exp_log hWpos
-    have h2 : exp (-log (log z) - Ctotal) = exp (-Ctotal) / log z := by
-      rw [show -log (log z) - Ctotal = -log (log z) + (-Ctotal) by ring, Real.exp_add]
-      rw [Real.exp_neg, Real.exp_log (by positivity : 0 < log z)]
-      rw [div_eq_mul_inv]
-      ring
-    rw [hWexp] at h1
-    rwa [h2] at h1
-  exact hW_low.trans hVgeW
-
 /-- Sieve-product upper bound: V(z, N) ≤ 1, since every factor lies in [0, 1].
 The factor at p = 2 can be zero when N is odd. -/
 theorem goldbachSieveProduct_le_one (N z : ℕ) :
@@ -2751,6 +2423,54 @@ theorem exists_goldbach_inverse_interval_bound :
       _ ≤ (log z₂ / log z₁) * (1 + K / log z₁) :=
         mul_le_mul_of_nonneg_left (by linarith) (le_of_lt hratio_pos)
 
+
+/-- **Sieve-product lower bound**: there is c₁ > 0 such that, for every
+ even N ≥ 4 and z ≥ 2, `c₁ / log z ≤ goldbachSieveProduct N z`.
+ Specialize the finite-set inverse interval estimate to `[2,z)` and invert. -/
+theorem goldbachSieveProduct_lower_bound :
+    ∃ c₁ : ℝ, 0 < c₁ ∧ ∀ N z : ℕ, 2 ≤ z → Even N → 4 ≤ N →
+      c₁ / log z ≤ goldbachSieveProduct N z := by
+  obtain ⟨K, hK, hinterval⟩ := exists_goldbach_inverse_interval_bound
+  have hlog2 : 0 < log 2 := Real.log_pos (by norm_num)
+  have hfactor : 0 < 1 + K / log 2 := by positivity
+  refine ⟨log 2 / (1 + K / log 2), div_pos hlog2 hfactor, ?_⟩
+  intro N z hz hN _hN4
+  let s := (range z).filter (fun p => Nat.Prime p ∧ ¬ p ∣ N)
+  have hs : ∀ p ∈ s, p.Prime ∧ 2 < p := by
+    intro p hp
+    have hp' := (mem_filter.mp hp).2
+    refine ⟨hp'.1, ?_⟩
+    have h2 : 2 ∣ N := even_iff_two_dvd.mp hN
+    have hp2 : p ≠ 2 := by
+      intro heq
+      exact hp'.2 (heq.symm ▸ h2)
+    have := hp'.1.two_le
+    omega
+  have hVpos : 0 < goldbachSieveProduct N z := by
+    apply Finset.prod_pos
+    intro p hp
+    have hp3 : (3 : ℝ) ≤ p := by
+      exact_mod_cast (show 3 ≤ p from (hs p hp).2)
+    have hrec : 1 / ((p : ℝ) - 1) ≤ 1 / 2 :=
+      one_div_le_one_div_of_le (by norm_num) (by linarith)
+    linarith
+  have hbound := hinterval s hs 2 z (by norm_num) (by exact_mod_cast hz) (by
+    intro p hp
+    constructor
+    · exact_mod_cast (hs p hp).1.two_le
+    · exact_mod_cast (mem_range.mp (mem_filter.mp hp).1))
+  have hlogz : 0 < log (z : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < z by omega))
+  have hRpos : 0 < log (z : ℝ) / log 2 * (1 + K / log 2) :=
+    mul_pos (div_pos hlogz hlog2) hfactor
+  rw [Finset.prod_inv_distrib] at hbound
+  change (goldbachSieveProduct N z)⁻¹ ≤ _ at hbound
+  have hinv := one_div_le_one_div_of_le (inv_pos.mpr hVpos) hbound
+  have heq : log 2 / (1 + K / log 2) / log (z : ℝ) =
+      1 / (log (z : ℝ) / log 2 * (1 + K / log 2)) := by
+    field_simp
+  rw [heq]
+  simpa only [one_div, inv_inv] using hinv
 
 /-! ## 7. Mathematical scope -/
 

@@ -36,24 +36,10 @@ private theorem S1SieveProductLower_absConst_div_log_le
       2 * Real.exp (|C| / (δ * Real.exp (-Real.eulerMascheroniConstant))) ≤ (Z : ℝ)) :
     |C| / Real.log ((Z - 1 : ℕ) : ℝ) ≤
       δ * Real.exp (-Real.eulerMascheroniConstant) := by
-  have hE : 0 < Real.exp (-Real.eulerMascheroniConstant) := Real.exp_pos _
-  have hL :
-      |C| / (δ * Real.exp (-Real.eulerMascheroniConstant)) ≤
-        Real.log ((Z - 1 : ℕ) : ℝ) :=
-    S1SieveProductLower_log_lower_of_two_mul_exp_le (by omega) hZA
-  have hδE : 0 < δ * Real.exp (-Real.eulerMascheroniConstant) := mul_pos hδ hE
-  have hlogPos : 0 < Real.log ((Z - 1 : ℕ) : ℝ) := by
-    exact Real.log_pos (by exact_mod_cast (show 1 < Z - 1 by omega))
-  have hmul := mul_le_mul_of_nonneg_left hL hδE.le
-  have hcancel :
-      (δ * Real.exp (-Real.eulerMascheroniConstant)) *
-          (|C| / (δ * Real.exp (-Real.eulerMascheroniConstant))) = |C| := by
-    field_simp [hδ.ne', (Real.exp_pos _).ne']
-  have hbound : |C| ≤
-      (δ * Real.exp (-Real.eulerMascheroniConstant)) * Real.log ((Z - 1 : ℕ) : ℝ) := by
-    simpa [hcancel] using hmul
-  exact (div_le_iff₀ hlogPos).2 <| by
-    simpa [mul_assoc, mul_left_comm, mul_comm] using hbound
+  have hlogPos : 0 < Real.log ((Z - 1 : ℕ) : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < Z - 1 by omega))
+  exact (div_le_comm₀ hlogPos (mul_pos hδ (Real.exp_pos _))).2
+    (S1SieveProductLower_log_lower_of_two_mul_exp_le (by omega) hZA)
 
 private theorem S1SieveProductLower_liuCorrectionTruncated_eq_smallFactors
     {N Z : ℕ} (hN : 0 < N) (hZ : 1 ≤ Z) :
@@ -100,22 +86,9 @@ private theorem S1SieveProductLower_pow_card_le_omittedPrimeProduct
 private theorem S1SieveProductLower_omittedPrimeCard_le_eighteen
     {N Z : ℕ} (hN : 0 < N) (hZ : 2 ≤ Z) (hNZ : N ≤ Z ^ 18) :
     (S1SieveProductLowerOmittedPrimes N Z).card ≤ 18 := by
-  by_contra hcard
-  have hcard19 : 19 ≤ (S1SieveProductLowerOmittedPrimes N Z).card := by omega
-  have hprodLe : (S1SieveProductLowerOmittedPrimes N Z).prod id ≤ N :=
-    Nat.le_of_dvd hN (S1SieveProductLower_omittedPrimeProduct_dvd N Z)
-  have hpow19 :
-      Z ^ 19 ≤ Z ^ (S1SieveProductLowerOmittedPrimes N Z).card :=
-    Nat.pow_le_pow_right (by omega) hcard19
-  have hpowProd :
-      Z ^ (S1SieveProductLowerOmittedPrimes N Z).card ≤
-        (S1SieveProductLowerOmittedPrimes N Z).prod id :=
-    S1SieveProductLower_pow_card_le_omittedPrimeProduct N Z
-  have hlt : Z ^ 18 < Z ^ 19 := by
-    exact Nat.pow_lt_pow_right (by omega) (by omega)
-  have hle : Z ^ 19 ≤ Z ^ 18 := by
-    exact le_trans hpow19 (le_trans hpowProd (le_trans hprodLe hNZ))
-  exact (not_le_of_gt hlt) hle
+  apply (pow_le_pow_iff_right₀ (show 1 < Z by omega)).mp
+  exact (S1SieveProductLower_pow_card_le_omittedPrimeProduct N Z).trans
+    ((Nat.le_of_dvd hN (S1SieveProductLower_omittedPrimeProduct_dvd N Z)).trans hNZ)
 
 private theorem S1SieveProductLower_correctionFactor_le_exp
     {p Z : ℕ} (hp2 : 2 < p) (hZ : 3 ≤ Z) (hZp : Z ≤ p) :
@@ -190,14 +163,8 @@ private theorem S1SieveProductLower_exp_eighteen_div_le_one_add
       18 / Real.log (1 + δ) ≤ ((Z - 2 : ℕ) : ℝ) := by
     rw [hcast]
     linarith
-  have hdiv : 18 / ((Z - 2 : ℕ) : ℝ) ≤ Real.log (1 + δ) := by
-    have hmul := mul_le_mul_of_nonneg_right hden hlogPos.le
-    have hlogNe : Real.log (1 + δ) ≠ 0 := ne_of_gt hlogPos
-    have hmain :
-        18 ≤ ((Z - 2 : ℕ) : ℝ) * Real.log (1 + δ) := by
-      simpa [div_eq_mul_inv, hlogNe, mul_assoc, mul_left_comm, mul_comm] using hmul
-    exact (div_le_iff₀ hZ2Pos).2 <| by
-      simpa [mul_assoc, mul_left_comm, mul_comm] using hmain
+  have hdiv : 18 / ((Z - 2 : ℕ) : ℝ) ≤ Real.log (1 + δ) :=
+    (div_le_comm₀ hZ2Pos hlogPos).2 hden
   calc
     Real.exp (18 / ((Z - 2 : ℕ) : ℝ)) ≤ Real.exp (Real.log (1 + δ)) :=
       Real.exp_le_exp.mpr hdiv

@@ -8,6 +8,7 @@ idx = base.idx
 
 
 class IntegrityTests(TestCase):
+    root: Path
     setUp = base.IndexTests.setUp
     row = base.IndexTests.row
     build = base.IndexTests.build
@@ -63,6 +64,20 @@ class IntegrityTests(TestCase):
         db=self.build([self.row('A',proof_nodes=2**100),self.row('B')])
         with idx.sqlite3.connect(db) as conn:
             self.assertEqual(conn.execute('SELECT proof_nodes FROM declarations WHERE name=?',('A',)).fetchone()[0],str(2**100))
+
+    def test_inventory_rejects_missing_object_or_source_index(self):
+        import hashlib
+        raw = (self.root/'M.lean').read_bytes()
+        blob = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+        tree = f'100644 blob {blob}\tM.lean\0'.encode()
+        for suffix in ['olean', 'ilean']:
+            with self.subTest(suffix=suffix):
+                objects = self.root / ('partial-'+suffix)
+                objects.mkdir()
+                (objects/('M.'+suffix)).write_bytes(b'fixture')
+                with mock.patch.object(idx, 'git', side_effect=[b'fixture', tree]):
+                    with self.assertRaisesRegex(ValueError, 'incomplete compiled module'):
+                        idx.source_inventory(self.root, objects)
 
     def test_connection_closed_on_stale(self):
         import sqlite3

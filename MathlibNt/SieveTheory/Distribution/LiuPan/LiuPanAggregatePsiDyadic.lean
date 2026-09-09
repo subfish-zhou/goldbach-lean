@@ -18,7 +18,7 @@ namespace MathlibNt.SieveTheory.LiuWeight
 
 open Finset ArithmeticFunction
 open AnalyticNumberTheory.Sieve
-open AnalyticNumberTheory.LargeSieve
+open _root_.AnalyticNumberTheory.LargeSieve
 
 /-- The half-open positive dyadic shell `[2^j, 2^(j+1))`. -/
 def liuPanDyadicShell (j : ℕ) : Finset ℕ :=

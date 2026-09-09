@@ -6,7 +6,7 @@ open scoped BigOperators ArithmeticFunction.Moebius ArithmeticFunction.zeta
 namespace MathlibNt.SieveTheory
 
 open Finset
-open AnalyticNumberTheory.LargeSieve
+open _root_.AnalyticNumberTheory.LargeSieve
 
 /-- The (ordered) dyadic blocks in the binary decomposition of `[start,start+rem)`.
 The recursive call is on the remainder after removing the largest dyadic block. -/

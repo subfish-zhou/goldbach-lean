@@ -115,6 +115,37 @@ class IndexTests(unittest.TestCase):
         db = self.build([self.row('A'), self.row('B')])
         self.assertEqual(idx.candidates(db, min_lines=1)['candidate_count'], 2)
 
+    def test_features_retrieve_different_binder_shapes(self):
+        symbols = ['Finset.sum', 'Nat.gcd']
+        db = self.build([self.row('A', type_deps=symbols),
+                         self.row('B', type_deps=symbols, type_hash='other', type_shape_hash='longer')])
+        self.assertEqual(idx.candidates(db, min_lines=1)['candidate_count'], 0)
+        pairs = idx.candidates(db, min_lines=1, mode='features')['candidates']
+        self.assertEqual(len(pairs), 2)
+        self.assertTrue(all(p['match'] == 'type-symbol-features' for p in pairs))
+        self.assertTrue(all(0 < p['similarity'] <= 1.00000001 for p in pairs))
+
+    def test_features_keep_reverse_dependency_gate(self):
+        symbols = ['Finset.sum', 'Nat.gcd']
+        db = self.build([self.row('A', type_deps=symbols),
+                         self.row('B', type_deps=symbols, direct_deps=['A'])])
+        pairs = {(p['target'], p['provider']) for p in
+                 idx.candidates(db, min_lines=1, mode='features')['candidates']}
+        self.assertEqual(pairs, {('B', 'A')})
+
+    def test_features_exclude_ambiguous_names(self):
+        symbols = ['Finset.sum', 'Nat.gcd']
+        db = self.build([self.row('A', type_deps=symbols), self.row('B', type_deps=symbols)])
+        with sqlite3.connect(db) as c:
+            c.execute('INSERT INTO ambiguous_declarations VALUES (?)', ('B',))
+        self.assertEqual(idx.candidates(db, min_lines=1, mode='features')['candidate_count'], 0)
+
+    def test_features_reject_stale_input(self):
+        db = self.build([self.row('A')])
+        (self.root / 'M.lean').write_text('changed')
+        with self.assertRaisesRegex(ValueError, 'stale source'):
+            idx.candidates(db, mode='features')
+
     def test_no_overwrite(self):
         self.build([self.row('A')])
         with self.assertRaises(FileExistsError): self.build([self.row('A')])

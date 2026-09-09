@@ -69,6 +69,9 @@ $2\le z_1\le z_2$, one constant $K>1$ gives
 \]
 This supplies the local-product hypothesis of the actual Chen and Li--Liu
 bounding sieves, uniformly over their changing finite prime sets.
+Taking the lower endpoint to be $2$ also gives a uniform $c/\log z$ lower
+bound for the finite product over primes $p<z$ not dividing $N$: one $c>0$
+works for all even $N\ge4$ and every real $z\ge2$.
 Here and below, Li--Liu's $S_1$ means the base sift of the original difference
 source $N-p$, and $S_2$ means the sum of sources obtained by fixing one prime
 factor; their precise fibres are defined in Section~\ref{sec:liliu-fibres}.
@@ -89,6 +92,34 @@ $\exp(18/(\lceil z\rceil-2))$ once the denominator is positive.
 This is why the lower normalization is not just the upper argument reversed.
 The resulting upper and lower products have leading term
 $2e^{-\gamma}\mathfrak S_{\mathrm{Liu}}(N)/\log z$, with explicitly paid relative errors.
+
+\subsection{A finite arithmetic bound shared by two mean-square arguments}
+
+Let $j$ be a nonnegative integer and let $\tau_j(n)$ count ordered $j$-tuples
+of positive integers whose product is $n$; thus $\tau_0$ is $1$ at $n=1$
+and $0$ elsewhere. For a real $L\ge1$, a finite set
+$\mathcal Q\subseteq\{1,\ldots,\lfloor L\rfloor\}$, and real coefficients satisfying
+$|c(q)|\le\tau_j(q)$ on $\mathcal Q$, the
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/LcmWeightBounds.lean}{finite lcm-weight core}
+proves
+\[
+ \sum_{q,r\in\mathcal Q}\left|\frac{c(q)c(r)}{\operatorname{lcm}(q,r)}\right|
+ \le (1+\log L)^{2j^2+1}.
+\]
+Here $\operatorname{lcm}(q,r)$ is the least common multiple.
+Symmetry and $|ab|\le(a^2+b^2)/2$ reduce the double sum to row sums weighted
+by $c(q)^2$. A divisor decomposition bounds the row at $q$ by
+$\tau_2(q)(1+\log L)/q$; the remaining divisor moment contributes
+$(1+\log L)^{2j^2}$. This calculation uses finite sums and harmonic estimates.
+
+For an integer $m\ge0$, take $j=1$, $c(q)=1$, $\mathcal Q=\{1,\ldots,m\}$ and
+$L=m+1$. The result is the bound
+$\sum_{q,r\le m,\ q,r\ge1}1/\operatorname{lcm}(q,r)
+\le(1+\log(m+1))^3$ used in Pan's divisor-square estimate.
+The signed version also supplies the large-gcd part of the later dispersion
+argument. Both consumers import this arithmetic core; the elementary
+specialization therefore keeps its dependency boundary below smoothing and
+Poisson summation.
 
 \subsection{Ordinary prime distribution and the weighted Chen error}
 

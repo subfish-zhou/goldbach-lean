@@ -120,7 +120,9 @@ def source_inventory(source: Path, objects: Path) -> dict:
         module = path[:-5].replace('/', '.')
         obj = objects / (path[:-5] + '.olean')
         ilean = objects / (path[:-5] + '.ilean')
-        if not obj.is_file() or not ilean.is_file():
+        if obj.is_file() != ilean.is_file():
+            raise ValueError(f'incomplete compiled module (object/source index): {module}')
+        if not obj.is_file():
             missing.append({'module': module, 'source': path})
             continue
         raw_index = ilean.read_bytes()
@@ -273,9 +275,11 @@ def reachable(graph: dict[str, set[str]], start: str, target: str) -> bool:
     return False
 
 
-def candidates(db: Path, limit: int = 100, min_lines: int = 8) -> dict:
+def candidates(db: Path, limit: int = 100, min_lines: int = 8, mode: str = 'fingerprint') -> dict:
     if limit <= 0 or min_lines < 0:
         raise ValueError('positive limit and nonnegative min-lines required')
+    if mode not in ('fingerprint', 'features'):
+        raise ValueError('unknown candidate mode')
     with closing(sqlite3.connect(db.resolve().as_uri() + '?mode=ro', uri=True)) as conn:
         conn.row_factory = sqlite3.Row
         state = conn.execute("SELECT value FROM metadata WHERE key='state'").fetchone()
@@ -284,7 +288,7 @@ def candidates(db: Path, limit: int = 100, min_lines: int = 8) -> dict:
         manifest = json.loads(conn.execute("SELECT value FROM metadata WHERE key='manifest'").fetchone()[0])
         summary = json.loads(conn.execute("SELECT value FROM metadata WHERE key='summary'").fetchone()[0])
         validate_manifest(manifest)
-        rows = list(conn.execute("SELECT name,module,source_lines,type_hash,shape_hash,conclusion_head,level_params "
+        rows = list(conn.execute("SELECT name,module,source_lines,type_hash,shape_hash,conclusion_head,level_params,payload "
                                  "FROM declarations WHERE explicit=1 AND kind IN ('theorem','thm') "
                                  "AND name NOT IN (SELECT name FROM ambiguous_declarations) ORDER BY name"))
         all_names = {x[0] for x in conn.execute('SELECT name FROM declarations')}
@@ -312,6 +316,10 @@ def candidates(db: Path, limit: int = 100, min_lines: int = 8) -> dict:
                 todo.extend(graph.get(n, ()))
             return seen
         exact, shapes = {}, {}
+        features = None
+        if mode == 'features':
+            from features import TypeFeatures
+            features = TypeFeatures([r for r in rows if not r['name'].startswith('_private.')])
         for r in rows:
             exact.setdefault((r['conclusion_head'],r['type_hash'],r['level_params']), []).append(r)
             shapes.setdefault((r['conclusion_head'],r['shape_hash']), []).append(r)
@@ -321,6 +329,11 @@ def candidates(db: Path, limit: int = 100, min_lines: int = 8) -> dict:
                 continue
             matches = {b['name']:b for b in exact[(a['conclusion_head'],a['type_hash'],a['level_params'])]}
             matches.update({b['name']:b for b in shapes[(a['conclusion_head'],a['shape_hash'])]})
+            scores = {}
+            if features is not None:
+                nearest = features.matches(a)
+                matches = {b['name']: b for b, _ in nearest}
+                scores = {b['name']: score for b, score in nearest}
             for b in sorted(matches.values(), key=lambda r:r['name']):
                 if a['name'] == b['name'] or b['name'].startswith('_private.'):
                     continue
@@ -339,8 +352,12 @@ def candidates(db: Path, limit: int = 100, min_lines: int = 8) -> dict:
                           'provider_module': b['module'], 'target_lines': a['source_lines'],
                           'match': 'type-fingerprint' if same_type else 'shape-fingerprint',
                           'provider_already_imported': already_imported,
-                          'status': 'unverified; hash/shape matches require full Lean coverage and dependency checks',
+                          'status': 'unverified; retrieval matches require full Lean coverage and dependency checks',
                           'priority': (2 if same_type else 1) * a['source_lines']}
+                if features is not None:
+                    record.update(match='type-symbol-features', similarity=scores[b['name']],
+                                  novel_retrieval=not same_type and a['shape_hash'] != b['shape_hash'],
+                                  priority=scores[b['name']] * a['source_lines'])
                 item = (record['priority'], already_imported, -count, record)
                 if len(found) < limit:
                     heapq.heappush(found, item)
@@ -351,7 +368,8 @@ def candidates(db: Path, limit: int = 100, min_lines: int = 8) -> dict:
                 'unextracted_modules': summary['unextracted_modules'],
                 'rejected_unresolved_project_dependencies': unresolved,
                 'dependency_filter_scope': 'indexed graph; external-library closure rechecked by Lean before replacement',
-                'scope': 'exact and structural fingerprints among indexed explicit project theorems; not all specializations'}
+                'scope': ('same-conclusion type-symbol neighbors; bounded, not typed unification' if features is not None
+                          else 'exact and structural fingerprints among indexed explicit project theorems; not all specializations')}
 
 
 def main() -> None:
@@ -360,13 +378,14 @@ def main() -> None:
     m = s.add_parser('manifest'); m.add_argument('--source', type=Path, required=True); m.add_argument('--objects', type=Path, required=True); m.add_argument('--output', type=Path, required=True)
     i = s.add_parser('index'); i.add_argument('--manifest', type=Path, required=True); i.add_argument('--input', type=Path, nargs='+', required=True); i.add_argument('--output', type=Path, required=True)
     c = s.add_parser('candidates'); c.add_argument('--database', type=Path, required=True); c.add_argument('--limit', type=int, default=100); c.add_argument('--min-lines', type=int, default=8); c.add_argument('--output', type=Path, required=True)
+    c.add_argument('--mode', choices=['fingerprint', 'features'], default='fingerprint')
     a = p.parse_args()
     if a.cmd == 'manifest':
         result = source_inventory(a.source, a.objects)
     elif a.cmd == 'index':
         print(json.dumps(build_index(json.loads(a.manifest.read_text()), a.input, a.output))); return
     else:
-        result = candidates(a.database, a.limit, a.min_lines)
+        result = candidates(a.database, a.limit, a.min_lines, a.mode)
     with a.output.open('x') as f:
         json.dump(result, f, indent=2); f.write('\n')
     print(json.dumps({k:v for k,v in result.items() if k not in ('modules','candidates')} if a.cmd != 'manifest' else {'modules':len(result['modules']),'missing':result['missing'],'revision':result['revision']}))

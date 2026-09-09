@@ -4,7 +4,7 @@ import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindowAP
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Finset
 open scoped BigOperators
-open AnalyticNumberTheory.LargeSieve
+open _root_.AnalyticNumberTheory.LargeSieve
 
 /-- An inadmissible cofactor contributes no actual output divisible by d. -/
 theorem goldbachG11Linked_outputDivisors_empty {N m d : ℕ} {ε : ℝ}

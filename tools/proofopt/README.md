@@ -14,6 +14,11 @@ that an arbitrary object was compiled from an arbitrary source. Recompile the
 selected original sources before accepting a replacement, and compare their
 original declarations against the seed.
 
+A compiled module needs both its object and its compiler source index. If only
+one is present, inventory stops with `incomplete compiled module`; uncompiled
+tracked sources are listed separately in `missing`. Keep the intended corpus
+and this exclusion list explicit when describing index coverage.
+
 `LEAN` below is the absolute path of that toolchain's `lean` executable.
 `SEED_OBJECTS` is the project object directory. `SEED_LEAN_PATH` includes it and
 the matching dependency object directories, separated by colons. Obtain these
@@ -67,12 +72,25 @@ python3 tools/proofopt/run_coverage.py \
   --output "$OUT/coverage" --limit 20 --timeout 300
 ```
 
-The current retrieval stage considers equal type fingerprints and equal full
-structural shapes among explicit project theorems. This deliberately misses
-many general-to-special relationships; it is not an exhaustive containment
-search. A declaration's source length is only a ranking feature, **not an
-estimate of saved proof lines**. Long signatures and already-short wrappers can
-rank highly and must be discarded if there is no actual saving.
+The default retrieval stage considers equal type fingerprints and equal full
+structural shapes among explicit project theorems. `--mode features` additionally
+supports a separate, bounded search by conclusion head and shared constants in
+the **type**, without requiring the same number or shape of binders:
+
+```sh
+python3 tools/proofopt/index.py candidates --database "$OUT/index.sqlite" \
+  --mode features --min-lines 30 --limit 200 --output "$OUT/features.json"
+```
+
+Inverse-frequency weighted cosine similarity ranks up to eight providers per
+target before the existing import/dependency gates. `novel_retrieval` records
+whether the pair falls outside the original type/shape groups. This is a search
+feature, not typed unification, containment, equivalence, or a probability of
+proof success. The Lean coverage/replay gates are unchanged. Source length is
+only a ranking feature, **not estimated savings**: long signatures and already
+short wrappers can rank highly and must be discarded without actual savings.
+After changing source, regenerate the manifest and sealed index from matching
+current objects; do not bypass validation to keep using a historical database.
 
 The Lean probe restores state between pairs, keeps original universes rigid,
 checks reverse type/proof dependencies (including generated helpers), and tries

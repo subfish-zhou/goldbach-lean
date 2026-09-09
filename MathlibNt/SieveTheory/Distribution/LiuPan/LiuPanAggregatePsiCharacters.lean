@@ -19,7 +19,7 @@ namespace MathlibNt.SieveTheory.LiuWeight
 open Finset ArithmeticFunction
 open Filter
 open AnalyticNumberTheory.Sieve
-open AnalyticNumberTheory.LargeSieve
+open _root_.AnalyticNumberTheory.LargeSieve
 
 /-- The source prefix twisted by a Dirichlet character. -/
 noncomputable def liuPanSourceCharacterPrefix

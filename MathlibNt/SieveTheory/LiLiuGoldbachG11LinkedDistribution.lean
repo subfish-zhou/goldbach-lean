@@ -13,7 +13,7 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 open Classical Finset Filter
 open scoped BigOperators Topology
-open AnalyticNumberTheory.Sieve AnalyticNumberTheory.LargeSieve
+open AnalyticNumberTheory.Sieve _root_.AnalyticNumberTheory.LargeSieve
 open Wu2004MeanValue
 
 noncomputable section

@@ -290,6 +290,20 @@ proved bounds in `AnalyticNumberTheory.Sieve.SingularSeries`. Both namespaces ke
 their original finite definitions; this does not identify them with Liu's
 infinite odd-prime singular series.
 
+[LcmWeightBounds](../MathlibNt/AnalyticNumberTheory/LargeSieve/LcmWeightBounds.lean)
+contains finite gcd-row, reciprocal-lcm and signed lcm-weight estimates. Its only
+project dependency is the divisor-moment module. `PanV1SquareMean` specializes
+its signed estimate to constant weights of order one, while
+`LiLiuPrereqFouvryHighDeltaWeights` retains its original declarations as wrappers
+and uses the same estimate in the large-gcd remainder. The elementary Pan bound
+therefore acquires no smoothing or Poisson dependencies from this reuse.
+
+The uniform `goldbachSieveProduct_lower_bound` specializes
+`exists_goldbach_inverse_interval_bound` at lower endpoint two and takes
+reciprocals after proving positivity. S1's auxiliary division and prime-count
+bounds use the corresponding ordered-field and power-order interfaces in
+Mathlib. The original types, including their parameter domains, are retained.
+
 [Proof optimization tools](../tools/proofopt/README.md) provide source-pinned
 compiled-expression indexing, bounded coverage probes and isolated proposals.
 Candidate scores are not proofs. Full types and definition values, actual

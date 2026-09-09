@@ -31,7 +31,7 @@ open scoped BigOperators Topology
 namespace MathlibNt.SieveTheory.Richert1969
 
 open SwitchingPrinciple
-open AnalyticNumberTheory.LargeSieve
+open _root_.AnalyticNumberTheory.LargeSieve
 open AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418
 
 private theorem primeProduct_le_totient_ratio

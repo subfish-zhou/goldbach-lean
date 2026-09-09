@@ -15,7 +15,7 @@ namespace MathlibNt.SieveTheory.LiuWeight
 
 open Filter Finset
 open AnalyticNumberTheory.Sieve
-open AnalyticNumberTheory.LargeSieve
+open _root_.AnalyticNumberTheory.LargeSieve
 open ArithmeticFunction
 
 /-- The nonnegative non-prime part of the logarithmically normalized

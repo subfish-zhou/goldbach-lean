@@ -3,7 +3,7 @@ import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorFinite
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorMass
 
 namespace MathlibNt.SieveTheory.LiuWeight
-open Finset AnalyticNumberTheory.LargeSieve
+open Finset _root_.AnalyticNumberTheory.LargeSieve
 open scoped BigOperators
 noncomputable section
 

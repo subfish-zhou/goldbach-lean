@@ -80,7 +80,31 @@ end Fixture
     for name,(body,good) in audit_cases.items():
         p=output/('Audit_'+name+'.lean');p.write_text('import CoverageFixture\nimport proofopt.Audit\n'+body)
         invoke('audit-'+name,[str(p)],good)
-    receipt={'tool_compiles':5,'coverage_pairs':4,'proof_text_replayed':1,'corrupted_type_rejected':True,'source_span_cases':4,'preservation_cases':4,'audit_cases':3}
+    # Real elaborated types with different binder shapes exercise feature retrieval
+    # and then the existing kernel/text-replay gates; this fixture claims no LOC saving.
+    from features import TypeFeatures
+    feature_source = '''namespace FeatureFixture
+def f (n : Nat) := n + n
+theorem general (a b : Nat) (h : a = b) : f a + 1 = f b + 1 := by cases h; rfl
+theorem special (a : Nat) : f a + 1 = f a + 1 := rfl
+end FeatureFixture
+'''
+    p=output/'FeatureFixture.lean'; p.write_text(feature_source)
+    invoke('feature-source',['-o',str(output/'FeatureFixture.olean'),str(p)])
+    raw=invoke('feature-extract',['--run',str(tools/'Extract.lean'),
+                                 'FeatureFixture='+str(output/'FeatureFixture.olean')])
+    data={r['name']:r for r in map(json.loads,raw.splitlines()) if r['kind']=='theorem'}
+    a,b=data['FeatureFixture.special'],data['FeatureFixture.general']
+    assert a['type_shape_hash'] != b['type_shape_hash']
+    feature_rows=[dict(name=r['name'],conclusion_head=r['conclusion_head'],payload=json.dumps(r)) for r in (a,b)]
+    found=TypeFeatures(feature_rows).matches(feature_rows[0])
+    assert found and found[0][0]['name']==b['name']
+    p=output/'FeatureProbe.lean';p.write_text('import proofopt.Coverage\nimport FeatureFixture\n#proofopt_coverage FeatureFixture.special FeatureFixture.general\n')
+    text=invoke('feature-coverage',[str(p)])
+    pair=parse_results(text,[(a['name'],b['name'])])[0];assert pair['status']=='success'
+    p=output/'FeatureReplay.lean';p.write_text('import FeatureFixture\ntheorem feature_replay : '+pair['type']+' := '+pair['proof']+'\n')
+    invoke('feature-replay',['-DautoImplicit=false','-DwarningAsError=true',str(p)])
+    receipt={'tool_compiles':5,'coverage_pairs':5,'proof_text_replayed':2,'feature_retrieval_kernel_replayed':True,'corrupted_type_rejected':True,'source_span_cases':4,'preservation_cases':4,'audit_cases':3}
     (output/'acceptance.json').write_text(json.dumps(receipt,indent=2)+'\n')
     return receipt
 
