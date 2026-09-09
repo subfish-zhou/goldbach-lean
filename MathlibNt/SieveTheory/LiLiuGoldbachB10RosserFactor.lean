@@ -94,6 +94,16 @@ private theorem B10RosserFactor_upperRosserWeight_certificate
     (goldbachB10ProdPrimes_squarefree N Z)
     (goldbachB10ProdPrimes_ne_zero N Z) hD1 hcut
 
+/-- Upper Rosser certification depends only on the shared prime product and
+logarithmic cutoff, not on the surrounding B8, B10 or linked-sieve weights. -/
+theorem goldbachProdPrimes_upperRosserCertificate
+    {N : ℕ} {Z Δ s : ℝ}
+    (hZ : 2 ≤ Z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log Z)
+    (hslo : 3 / 2 ≤ s) :
+    LinearSieve.IsUpperRosserCertificate
+      (goldbachB10ProdPrimes N Z) (Nat.floor Δ + 1) :=
+  B10RosserFactor_upperRosserWeight_certificate hZ hΔ hs hslo
+
 /-- The actual `B10` sifted count is bounded by the genuine Jurkat--Richert
 upper Rosser factor, while retaining the exact finite upper remainder sum. -/
 theorem goldbachB10SiftedCount_le_rosserFactor_add_upperErrSum

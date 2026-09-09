@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
 import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
 import MathlibNt.SieveTheory.MertensTheorem
 import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
@@ -66,23 +67,7 @@ theorem goldbachB8Plus_upperRosserWeight_certificate
     (hslo : 3 / 2 ≤ s) :
     LinearSieve.IsUpperRosserCertificate
       (goldbachB10ProdPrimes N Z) (Nat.floor Δ + 1) := by
-  have hD1 : 1 < Nat.floor Δ + 1 := by
-    have htwo : (2 : ℕ) < Nat.floor Δ + 1 :=
-      lt_floor_add_one_of_le_of_log_ratio
-        (p := 2) hZ hΔ (by simpa using hZ) hs hslo
-    omega
-  have hcut : ∀ p ∈ (goldbachB10ProdPrimes N Z).primeFactors,
-      p < Nat.floor Δ + 1 := by
-    intro p hp
-    have hpPrime := Nat.prime_of_mem_primeFactors hp
-    have hpdvd : p ∣ goldbachB10ProdPrimes N Z :=
-      (Nat.mem_primeFactors_of_ne_zero
-        (goldbachB10ProdPrimes_ne_zero N Z)).mp hp |>.2
-    exact lt_floor_add_one_of_le_of_log_ratio
-      (p := p) hZ hΔ (prime_dvd_goldbachB10ProdPrimes_lt hpPrime hpdvd).le hs hslo
-  exact LinearSieve.upperRosserWeight_certificate
-    (goldbachB10ProdPrimes_squarefree N Z)
-    (goldbachB10ProdPrimes_ne_zero N Z) hD1 hcut
+  exact goldbachProdPrimes_upperRosserCertificate hZ hΔ hs hslo
 
 /-- The genuine upper factor for the full labelled B8plus count and its fixed mass. -/
 theorem goldbachB8PlusSiftedCount_le_rosserFactor_add_upperErrSum

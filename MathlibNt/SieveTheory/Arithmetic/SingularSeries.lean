@@ -64,11 +64,11 @@ noncomputable def localFactor (p N : ℕ) : ℝ :=
       (p : ℝ) * (p - 2) / ((p - 1) ^ 2)
 
 /-- The factor at p = 2 is 2 for even N. -/
-theorem localFactor_two (hN : Even N) : localFactor 2 N = 2 := by
+theorem localFactor_two {N : ℕ} (hN : Even N) : localFactor 2 N = 2 := by
   simp [localFactor, even_iff_two_dvd.mp hN]
 
 /-- The factor at p = 2 is 1 for odd N. -/
-theorem localFactor_two_odd (hN : Odd N) : localFactor 2 N = 1 := by
+theorem localFactor_two_odd {N : ℕ} (hN : Odd N) : localFactor 2 N = 1 := by
   simp [localFactor, hN.not_two_dvd_nat]
 
 /-- For a prime p > 2 with p | N, the factor is p/(p-1). -/
@@ -247,80 +247,7 @@ is at least ∏_{n=2}^{N-1} (1 - 1/n²) = N/(2(N-1)) ≥ 1/2
 by telescoping. Thus 𝔖(N) ≥ 2 · 1 · 1/2 = 1. -/
 theorem singularSeries_bounded_below :
     ∃ c : ℝ, 0 < c ∧ ∀ N : ℕ, 2 ≤ N → Even N → c ≤ singularSeries N := by
-  refine ⟨1, by norm_num, ?_⟩
-  intro N hN hEven
-  unfold singularSeries singularSeriesTruncated
-  set A := (range (N + 1)).filter Nat.Prime with hA_def
-  have h2mem : 2 ∈ A := by
-    rw [hA_def]
-    simp [mem_filter, hN, Nat.prime_two]
-  rw [Finset.prod_eq_mul_prod_sdiff_singleton_of_mem h2mem]
-  rw [localFactor_two hEven]
-  have hfilter_eq : A \ {2} = (range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p) := by
-    rw [hA_def]
-    ext p
-    constructor
-    · intro hp
-      rw [mem_sdiff, mem_filter] at hp
-      rcases hp with ⟨hp_mem, hp_ne⟩
-      rcases hp_mem with ⟨hp_range, hp_prime⟩
-      rw [mem_filter]
-      refine ⟨hp_range, hp_prime, ?_⟩
-      have hp_ne' : p ≠ 2 := by
-        intro h
-        exact hp_ne (by simp [h])
-      rcases hp_prime.eq_two_or_odd' with h2 | hodd
-      · exact absurd h2 hp_ne'
-      · have : 2 ≤ p := hp_prime.two_le
-        omega
-    · intro hp
-      rw [mem_filter] at hp
-      rcases hp with ⟨hp_range, hp_props⟩
-      rcases hp_props with ⟨hp_prime, hp2⟩
-      rw [mem_sdiff, mem_filter]
-      constructor
-      · exact ⟨hp_range, hp_prime⟩
-      · intro hp_mem2
-        have hp_eq2 : p = 2 := by simpa using hp_mem2
-        omega
-  rw [hfilter_eq]
-  have hfac : ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) ≤
-      ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => localFactor p N) := by
-    apply Finset.prod_le_prod
-    · intro p hp
-      rw [mem_filter] at hp
-      have hp3 : 3 ≤ p := by omega
-      have hp1_ge : (1 : ℝ) ≤ ((p : ℝ) - 1) ^ 2 := by
-        have : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-          have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-          linarith
-        nlinarith
-      have hdiv : 1 / ((p : ℝ) - 1) ^ 2 ≤ 1 := by
-        exact div_le_one_of_le₀ hp1_ge (sq_nonneg ((p : ℝ) - 1))
-      linarith
-    · intro p hp
-      rw [mem_filter] at hp
-      exact localFactor_ge_square hp.2.1 hp.2.2
-  have htel : (N : ℝ) / (2 * ((N : ℝ) - 1)) ≤
-      ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := by
-    rw [← int_square_product N hN]
-    exact prime_square_product_ge_int N
-  calc
-    (1 : ℝ) ≤ 2 * ((N : ℝ) / (2 * ((N : ℝ) - 1))) := by
-      have hN1 : (0 : ℝ) < (N : ℝ) - 1 := by
-        have : (2 : ℝ) ≤ N := by exact_mod_cast hN
-        linarith
-      field_simp
-      nlinarith [show (2 : ℝ) ≤ (N : ℝ) by exact_mod_cast hN]
-    _ ≤ 2 * ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) :=
-          mul_le_mul_of_nonneg_left htel (by norm_num)
-    _ ≤ 2 * ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => localFactor p N) :=
-          mul_le_mul_of_nonneg_left hfac (by norm_num)
+  exact _root_.AnalyticNumberTheory.Sieve.singularSeries_bounded_below
 
 /-- Upper bound for the truncated definition: 𝔖(N) ≤ 2^ω(N) ≤ 2N.
 
@@ -333,98 +260,7 @@ It gives 𝔖(N) ≤ 2^ω(N), and hence also the looser bound
 𝔖(N) ≤ 2^{ω(N)+1} ≤ 2N. -/
 theorem singularSeries_bounded_above :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ N : ℕ, 2 ≤ N → singularSeries N ≤ C * (N : ℝ) := by
-  refine ⟨2, by norm_num, ?_⟩
-  intro N hN
-  unfold singularSeries singularSeriesTruncated
-  set A := (range (N + 1)).filter Nat.Prime with hA_def
-  have prime_of_mem_A {p : ℕ} (hp : p ∈ A) : p.Prime := (mem_filter.mp hp).2
-  have hsplit := Finset.prod_filter_mul_prod_filter_not A (fun p => p ∣ N)
-    (fun p => localFactor p N)
-  -- First part (p | N): each of the ω(N) factors is at most 2.
-  have h1 : (A.filter (fun p => p ∣ N)).prod (fun p => localFactor p N) ≤
-      (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by
-    calc
-      (A.filter (fun p => p ∣ N)).prod (fun p => localFactor p N)
-          ≤ (A.filter (fun p => p ∣ N)).prod (fun _ => (2 : ℝ)) := by
-              apply Finset.prod_le_prod
-              · intro p hp
-                rw [mem_filter] at hp
-                have hpA : p ∈ A := hp.1
-                have hpPrime : p.Prime := prime_of_mem_A hpA
-                exact le_of_lt (localFactor_pos hpPrime)
-              · intro p hp
-                rw [mem_filter] at hp
-                have hpA : p ∈ A := hp.1
-                have hpPrime : p.Prime := prime_of_mem_A hpA
-                exact localFactor_le_two hpPrime
-      _ = (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by
-              rw [Finset.prod_const]
-  -- Second part (p ∤ N): each factor is at most 1.
-  have h2 : (A.filter (fun p => ¬ p ∣ N)).prod (fun p => localFactor p N) ≤ 1 := by
-    apply Finset.prod_le_one
-    · intro p hp
-      rw [mem_filter] at hp
-      have hpA : p ∈ A := hp.1
-      have hpPrime : p.Prime := prime_of_mem_A hpA
-      exact le_of_lt (localFactor_pos hpPrime)
-    · intro p hp
-      rw [mem_filter] at hp
-      have hpA : p ∈ A := hp.1
-      have hpPrime : p.Prime := prime_of_mem_A hpA
-      exact localFactor_le_one_of_not_dvd hpPrime hp.2
-  -- 2^ω(N) ≤ N
-  have hpow : (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card ≤ (N : ℝ) := by
-    have hsubset : A.filter (fun p => p ∣ N) ⊆ N.primeFactors := by
-      intro p hp
-      rw [mem_filter] at hp
-      rcases hp with ⟨hpA, hpdvd⟩
-      rw [mem_filter] at hpA
-      exact (Nat.mem_primeFactors_of_ne_zero (by omega : N ≠ 0)).2 ⟨hpA.2, hpdvd⟩
-    have hcard : (A.filter (fun p => p ∣ N)).card ≤ N.primeFactors.card :=
-      Finset.card_le_card hsubset
-    calc
-      (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card ≤ (2 : ℝ) ^ N.primeFactors.card :=
-          by
-            have hpow_nat : 2 ^ (A.filter (fun p => p ∣ N)).card ≤ 2 ^ N.primeFactors.card :=
-              Nat.pow_le_pow_right (by norm_num) hcard
-            exact_mod_cast hpow_nat
-      _ = (N.primeFactors.prod fun _ => (2 : ℝ)) := by
-          rw [← Finset.prod_const]
-      _ ≤ N.primeFactors.prod (fun p => (p : ℝ)) := by
-          apply Finset.prod_le_prod
-          · intro p hp
-            norm_num
-          · intro p hp
-            have hp2 : (2 : ℝ) ≤ p := by
-              exact_mod_cast (Nat.prime_of_mem_primeFactors hp).two_le
-            linarith
-      _ ≤ (N : ℝ) := by
-          have hdvd_nat : (N.primeFactors.prod fun p => p) ∣ N := Nat.prod_primeFactors_dvd N
-          have hNpos : 0 < N := by omega
-          have hle_nat : N.primeFactors.prod (fun p => p) ≤ N :=
-            Nat.le_of_dvd hNpos hdvd_nat
-          rw [← cast_prod]
-          exact_mod_cast hle_nat
-  calc
-    A.prod (fun p => localFactor p N)
-        = (A.filter (fun p => p ∣ N)).prod (fun p => localFactor p N) *
-          (A.filter (fun p => ¬ p ∣ N)).prod (fun p => localFactor p N) := hsplit.symm
-    _ ≤ (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card * 1 :=
-            by
-              have h3 : 0 ≤ (A.filter (fun p => ¬ p ∣ N)).prod (fun p => localFactor p N) := by
-                apply Finset.prod_nonneg
-                intro p hp
-                rw [mem_filter] at hp
-                have hpA : p ∈ A := hp.1
-                have hpPrime : p.Prime := prime_of_mem_A hpA
-                exact le_of_lt (localFactor_pos hpPrime)
-              have h4 : (0 : ℝ) ≤ (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by positivity
-              exact mul_le_mul h1 h2 h3 h4
-    _ = (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by ring
-    _ ≤ (N : ℝ) := hpow
-    _ ≤ 2 * (N : ℝ) := by
-        have hN0 : (0 : ℝ) ≤ N := by exact_mod_cast (by omega : 0 ≤ N)
-        nlinarith
+  exact _root_.AnalyticNumberTheory.Sieve.singularSeries_bounded_above
 
 /-! ## 8. Mathematical scope -/
 

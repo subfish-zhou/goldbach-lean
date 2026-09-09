@@ -276,6 +276,26 @@ must use valid counting premises for that set and discharge every analytic
 premise. Historical counting errors must be corrected before those formulations
 can enter the proof.
 
+## Proof reuse and discovery
+
+The public `goldbachProdPrimes_upperRosserCertificate` interface in
+[LiLiuGoldbachB10RosserFactor](../MathlibNt/SieveTheory/LiLiuGoldbachB10RosserFactor.lean)
+exposes the existing certificate for the shared prime product and logarithmic
+cutoff. B8 and G11 retain their original certificate statements and consume this
+lower interface; neither application is made a dependency of the other. The
+mother weights and the later finite error sums remain application-specific.
+
+The legacy finite singular-series upper and lower bounds reuse the corresponding
+proved bounds in `AnalyticNumberTheory.Sieve.SingularSeries`. Both namespaces keep
+their original finite definitions; this does not identify them with Liu's
+infinite odd-prime singular series.
+
+[Proof optimization tools](../tools/proofopt/README.md) provide source-pinned
+compiled-expression indexing, bounded coverage probes and isolated proposals.
+Candidate scores are not proofs. Full types and definition values, actual
+consumer paths, standard axiom cones, source builds and independent kernel
+replay are separate acceptance gates.
+
 ## Engineering rules
 
 - Public theorem names and statement meanings are stable across source reorganization.
