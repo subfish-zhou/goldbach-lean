@@ -15,6 +15,7 @@ import shutil
 import tempfile
 
 from build_docs import ROOT, SOURCE_REPO, verify_local_links, verify_site
+from embed_dependencies import add_dependency_views
 
 
 def add_project_navigation(site):
@@ -28,8 +29,7 @@ def add_project_navigation(site):
         links = ('<div id="goldbach-project-links">'
                  '<div class="nav_link"><a href="../index.html">Project home</a></div>'
                  '<div class="nav_link"><a href="../blueprint/index.html">Lean Blueprint</a></div>'
-                 '<div class="nav_link"><a href="../report/index.html">Li–Liu report</a></div>'
-                 '<div class="nav_link"><a href="../structure/index.html">Project structure</a></div>'
+                 '<div class="nav_link"><a href="../report/index.html">Li–Liu proof structure</a></div>'
                  '</div>')
         navbar.write_text(text.replace(marker, marker + links))
     index = api / "index.html"
@@ -46,11 +46,9 @@ def add_project_navigation(site):
         home = posixpath.relpath(site / "index.html", page.parent)
         docs = posixpath.relpath(api / "index.html", page.parent)
         report_link = posixpath.relpath(site / "report/index.html", page.parent)
-        structure_link = posixpath.relpath(site / "structure/index.html", page.parent)
         links = ('<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0">'
                  f'<a href="{home}">Project home</a> · <a href="{docs}">Lean Doc</a> · '
-                 f'<a href="{report_link}">Li–Liu report</a> · '
-                 f'<a href="{structure_link}">Project structure</a></div>')
+                 f'<a href="{report_link}">Li–Liu proof structure</a></div>')
         position = header.end() - len('</header>')
         page.write_text(text[:position] + links + text[position:])
     for page in site.rglob("*.html"):
@@ -128,6 +126,7 @@ def assemble(api, blueprint, output, *, structure=None, templates=ROOT / "websit
             raise ValueError("Unexpanded report template marker")
         page.write_text(text)
     add_project_navigation(work)
+    dependency_panels = add_dependency_views(work, templates)
     count = verify_site(work / "docs", modules, site_root=work)
     if count != report["declaration_count"]:
         raise ValueError("API declaration census changed during assembly")
@@ -137,6 +136,7 @@ def assemble(api, blueprint, output, *, structure=None, templates=ROOT / "websit
                      api_source_revision=api_revision,
                      structure_source_revision=structure_report["source_revision"],
                      structure_path="structure/", report_path="report/",
+                     dependency_panels=dependency_panels,
                      blueprint_source_revision=blueprint_report.get("source_revision"),
                      layout="project-home", api_path="docs/",
                      blueprint_path="blueprint/", blueprint_included=True,

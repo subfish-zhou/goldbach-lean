@@ -2,13 +2,13 @@
 
 ## Reader route and fixed mathematical source
 
-Start with the [author report](https://subfish-zhou.github.io/goldbach-lean/report/)
+Start with the [Li–Liu proof structure](https://subfish-zhou.github.io/goldbach-lean/report/)
 for the public statements, two proof exits, and the paper-to-Lean correspondence
 ledger. Continue with the [selected Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)
-for the finite weights and analytic arguments; use the
-[structure browser](https://subfish-zhou.github.io/goldbach-lean/structure/) for
-the full project-module and declaration-reference views and the
+for the finite weights and analytic arguments, and the
 [Lean API](https://subfish-zhou.github.io/goldbach-lean/docs/) for exact statements.
+Dependency panels at individual results provide optional access to actual
+compiled references, without replacing the mathematical exposition.
 These are progressively deeper reading layers.
 
 The Li–Liu mathematical source is **Jiamin Li and Jianya Liu,

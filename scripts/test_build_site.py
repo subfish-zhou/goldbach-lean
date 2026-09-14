@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from build_docs import verify_local_links, verify_site
 from build_site import add_project_navigation, assemble
@@ -11,6 +12,11 @@ from build_site import add_project_navigation, assemble
 
 class ProjectSiteTests(unittest.TestCase):
     def setUp(self):
+        # The dependency-panel component has separate DOM/binding tests and a
+        # real full-site acceptance pass; this fixture exercises site assembly.
+        self.panels = patch('build_site.add_dependency_views', return_value={})
+        self.panels.start()
+        self.addCleanup(self.panels.stop)
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
@@ -59,7 +65,10 @@ class ProjectSiteTests(unittest.TestCase):
         self.blueprint.mkdir()
         for name in ("index.html", "dep_graph_document.html", "overview.html",
                      "foundations.html", "chen.html", "liliu.html"):
-            (self.blueprint / name).write_text('<html><head></head><body><header>Blueprint</header></body></html>')
+            ids = ''.join(f'<div id="{label}"></div>' for label in
+                          ('bp:liliu-basic', 'bp:liliu-twelve'))
+            (self.blueprint / name).write_text('<html><head></head><body><header>Blueprint</header>'
+                                               + ids + '</body></html>')
 
     def snapshot(self, directory):
         return {str(p.relative_to(directory)): p.read_bytes() for p in directory.rglob('*') if p.is_file()}

@@ -13,11 +13,11 @@ deployment prefix:
 - **Proof Blueprint** at `/blueprint/`: the selected **Chen 1+2** and
   **Li–Liu 1+1.9** routes together with their reusable analytic foundations,
   with links into the implementation.
-- **Author report** at `/report/`: the Li–Liu result, its two proof exits,
-  paper-to-Lean correspondence and review scope, authored in `website/report/`.
-- **Full structure explorer** at `/structure/`: the four-library module
-  inventory and compiled declaration references, with separate public-exit role labels, generated separately from
-  existing Lean objects and assembled with the other views.
+- **Li–Liu proof structure** at `/report/`: the counted object, mathematical
+  stages, two proof exits and paper-to-Lean correspondence.
+- **Advanced dependency inspector** at `/structure/`: the backend for optional
+  panels beside Blueprint results and Lean API declarations. Global search,
+  imports and engineering details remain secondary, collapsed controls.
 
 This documentation update uses an independent local static-site build followed
 by publication to `gh-pages`. The commands below describe that release path;
@@ -78,6 +78,24 @@ module inventory and linked declarations. Pass `--source-revision COMMIT` to
 `scripts/build_site.py` to identify the website source; the Blueprint record
 must match it. An older API must never be relabelled as newly rendered output.
 Keep the report's own source pins and review scope alongside these identities.
+
+## Mathematical context and optional dependency inspection
+
+Blueprint and the Li–Liu proof page provide the mathematical architecture;
+Lean API remains the primary declaration and module reference. The assembler
+adds closed dependency panels beside actual API declarations, selected Blueprint
+results, and the mathematical stages of the Li–Liu page. Opening a panel creates
+its inspector iframe for the first time. No declaration graph is loaded merely
+by reading the mathematical page.
+
+Panel routes are bound to real `constNames` providers in the structure export.
+The inspector initially emphasizes local proof/definition references; type,
+recursor, external and generated-helper details remain expandable. Presentation
+folds preserve the complete exported data and its edge kinds. Advanced global
+search remains available inside the inspector, outside the primary navigation.
+The bare `/structure/` URL returns to the Blueprint mathematical overview;
+`?advanced=1` explicitly opens the advanced tool, and existing declaration
+deep links remain valid.
 
 ## Pinned generator and isolation
 

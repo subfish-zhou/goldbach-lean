@@ -258,7 +258,7 @@ def projection(owners):
         raise ValueError("Dangling Blueprint edge")
     return {"schemaVersion": SCHEMA, "kind": "hand-selected-blueprint-projection",
             "edgeDirection": "prerequisite-to-consumer",
-            "edgeMeaning": "Authored explanatory dependencies, not a complete Const graph or import graph",
+            "edgeMeaning": "Compiled dependencies among hand-selected explanatory nodes; not the complete Const or import graph",
             "nodes": projected, "edges": edges, "url": "../blueprint/index.html"}
 
 

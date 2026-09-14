@@ -26,8 +26,9 @@ measure the v1.0.0-rc1 and v1.0.0 **1+2** developments.
 
 The Lean API documentation covers all four project libraries, with declaration
 search, source links, and import navigation. The complete local publication
-layout also includes a Li–Liu author report at `/report/` and the four-library
-structure explorer at `/structure/`. See [how the website is built and published](docs/DOCUMENTATION.md).
+layout includes the Li–Liu mathematical proof structure and paper correspondence
+at `/report/`. Optional dependency panels in the Blueprint and API expose the
+compiled dependency data; `/structure/` is their advanced inspection backend. See [how the website is built and published](docs/DOCUMENTATION.md).
 
 | Read the mathematics | Explore the proof | Check the result |
 |---|---|---|

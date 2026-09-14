@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Li–Liu (1+1.9): author report and proof correspondence</title>
+<title>Li–Liu (1+1.9): proof structure and paper correspondence</title>
 <meta name="description" content="The Li–Liu Goldbach result in Lean: exact statements, two proof exits, distribution contracts and a source-pinned paper correspondence ledger.">
 <link rel="stylesheet" href="../home.css">
 <style>
@@ -19,19 +19,22 @@
 <nav class="menu" aria-label="Project">
 <a href="../docs/">Lean API</a>
 <a href="../blueprint/">Mathematical Blueprint</a>
-<a href="../structure/">Full structure</a>
+<a href="../blueprint/overview.html">Proof overview</a>
 </nav>
 </header>
 <main id="main" class="wrap">
 <section class="hero">
 <h1>Li–Liu’s (1+1.9) theorem</h1>
-<p class="lead">An author-facing reading guide to the formal Goldbach proof: the counted object, the analytic mechanisms, and the exact route from finite weights to the public theorems.</p>
+<p class="lead">The mathematical structure of the formal Goldbach proof: the counted object, the analytic mechanisms, and the exact route from finite weights to the public theorems.</p>
 <p>Jiamin Li and Jianya Liu’s weighted-sieve argument provides the mathematical starting point. The Lean development records finite carriers, uniform thresholds, paid exceptions and rational coefficient certificates.</p>
 </section>
 <nav aria-label="Report sections">
 <ul class="report-toc">
 <li>
 <a href="#result">Public result</a>
+</li>
+<li>
+<a href="#proof-structure">Proof structure</a>
 </li>
 <li>
 <a href="#interfaces">Four interfaces, two exits</a>
@@ -43,10 +46,7 @@
 <a href="#distribution">Three distribution inputs</a>
 </li>
 <li>
-<a href="#talk">Suggested talk</a>
-</li>
-<li>
-<a href="#scope">Source and review scope</a>
+<a href="#scope">Sources and mathematical scope</a>
 </li>
 </ul>
 </nav>
@@ -60,6 +60,37 @@
 <p>This C(N) is <code>liuSingularSeries N</code>. The normalization has no additional factor two. The quantitative interface proves</p>
 <p class="formula">∃ K ∈ ℕ, K ≥ 4, ∀ N ≥ K, Even N ⇒ (1/2500)X<sub>N</sub> &lt; D19(N).</p>
 <p>The stronger retained certificate gives, for <strong>each fixed real κ &lt; 515093/800000000</strong>, a K ≥ 4 after that choice such that κX<sub>N</sub> ≤ D19(N) for every even N ≥ K. This is a family of eventual bounds; the ceiling is excluded. Both statements have existential natural thresholds.</p>
+</section>
+<section id="proof-structure" class="report-section">
+<h2>Mathematical proof structure</h2>
+<p>The finite counting argument, analytic estimates and final parameter choices have different responsibilities. Each stage below links to its mathematical exposition; compiled dependencies can be opened in place when a particular implication needs inspection.</p>
+<details class="math-stage" open>
+<summary>Finite representations → weighted detection → sifted counts</summary>
+<p>The counting object is the set of eligible primes p, with the factor witnesses retained existentially. The finite detector connects positive weight to the constrained representation. The Buchstab decompositions keep the exact excluded prime factors and exceptional counts.</p>
+<p><a href="../blueprint/liliu.html#bp:liliu-basic">Finite weight detector</a> · <a href="../blueprint/liliu.html#bp:liliu-twelve">Twelve-term decomposition</a></p>
+<div data-proof-node="bp:liliu-basic"></div>
+<div data-proof-node="bp:liliu-twelve"></div>
+</details>
+<details class="math-stage">
+<summary>Distribution estimates → controlled sieve remainders</summary>
+<p>Ordinary Bombieri–Vinogradov controls prime progressions. Bounded-coefficient Pan controls the changing switched convolution with its coefficient sum inside the absolute value. Fouvry's estimate controls signed well-factorable bilinear errors. Each counting application retains the coefficient, residue and parameter uniformity it needs.</p>
+<p><a href="#distribution">The three analytic contracts</a> · <a href="../blueprint/foundations.html">Their analytic foundations</a></p>
+</details>
+<details class="math-stage">
+<summary>Local densities and integral bounds → main-term coefficients</summary>
+<p>The lower density at level six supplies the positive lower-sieve contribution. Upper density through six controls the corresponding upper-sieve terms. The corrected tenth count reaches its integral bound through the proved Pi10/I10 comparison; the remaining positive and negative terms have their own domains and error payments.</p>
+<div data-proof-node="bp:liliu-s1-density-six"></div>
+<div data-proof-node="bp:liliu-upper-density-six"></div>
+<div data-proof-node="bp:liliu-g10-integral"></div>
+<p><a href="../blueprint/liliu.html">Density, switching and integral arguments</a></p>
+</details>
+<details class="math-stage">
+<summary>Two retained assemblies → existence and quantitative bounds</summary>
+<p>The earlier positive-margin assembly supplies natural-power witnesses and their equivalent real-exponent form. The author-G11 assembly retains the stronger signed coefficient budget used for the strict paper count and the fixed-coefficient family. The public interfaces below keep those routes separate.</p>
+<div data-proof-node="bp:liliu-public-natural"></div>
+<div data-proof-node="bp:liliu-public-count"></div>
+<p><a href="#interfaces">Exact interfaces and the two assemblies</a></p>
+</details>
 </section>
 <section id="interfaces" class="report-section">
 <h2>Four public interfaces, two actual proof exits</h2>
@@ -139,7 +170,7 @@
 <code>5c4ecc0</code>
 </a>.</p>
 <p>
-<strong>Literal</strong> refers to a fixed counting object or displayed expression; <strong>equivalent</strong> identifies a proved notation or integral bridge; <strong>replacement</strong> records the actual finite or analytic route used. The final row and the scope section identify comparisons still awaiting a line-by-line review. A correspondence for a major statement is distinct from an audit of every line of its original proof.</p>
+<strong>Literal</strong> refers to a fixed counting object or displayed expression; <strong>equivalent</strong> identifies a proved notation or integral bridge; <strong>replacement</strong> records the actual finite or analytic route used. The rows identify the implemented mathematical contracts and distinguish them from broader statements of the paper.</p>
 <div class="table-scroll" tabindex="0" aria-label="Paper to Lean correspondence, horizontally scrollable">
 <table class="ledger">
 <thead>
@@ -454,31 +485,13 @@
 <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean#L11-L22">The exact rectangle theorem</a> is directly consumed by <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG12FlexibleRectangleC2.lean#L24-L40">G12FlexibleRectangle.rectangle_C2_bound</a>. The low-G9 and mixed-level G11 counting routes retain their own boundary and exception payments. The low-G9 kernel keeps the extra 1/(1−u); its finite split assigns equality at N<sup>1/10</sup> to the high branch.</p>
 <p>These three contracts are proved ingredients of the displayed public theorem types. An EH or WEH assumption belongs to a different conditional result.</p>
 </section>
-<section id="talk" class="report-section">
-<h2>A suggested order for the academic report</h2>
-<ol>
-<li>
-<strong>State the counted object first.</strong> Display N=p+rq, the exact exponent condition, the distinct-p count and C(N). Show the four public statements and the two routes.</li>
-<li>
-<strong>Explain the finite detector.</strong> Start from the four basic indicators; positive weight forces a prime or an appropriately unbalanced two-prime product. Explain why τ=9/19−ε allows cancellation of r⁹.</li>
-<li>
-<strong>Build the signed count.</strong> Present the six-term Buchstab partition, the twelve-term ledger, and the exceptional sets. Define the corrected tenth fibre before switching to labelled prime outputs.</li>
-<li>
-<strong>Choose the analytic input by the source.</strong> Contrast original prime progressions, varying switched convolutions and signed well-factorable bilinear rectangles. State the order of uniform choices in each.</li>
-<li>
-<strong>Explain the positive and negative costs.</strong> Show the actual lower density at six, upper density through six, the I10 consumption bridge, the G9 low/high split and the original G11/G12 domains. Introduce the integral certificates only after their counting consumers.</li>
-<li>
-<strong>Close one error budget, then select parameters.</strong> Display the author-G11 rational ledger and explain κ → δ → ε₀ → ε → K. Finish with the strict 0.0004 theorem; return briefly to the separate earlier-margin witness exit.</li>
-<li>
-<strong>Move from exposition to inspection.</strong> Use the Blueprint for selected arguments, the full structure browser for module and declaration references, and the API for the exact statement at any node.</li>
-</ol>
-</section>
+
 <section id="scope" class="report-section">
-<h2>Source, attribution and review scope</h2>
+<h2>Sources, attribution and mathematical scope</h2>
 <p>The paper’s unconditional Goldbach <a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem1">Theorem 1.1</a> is the result exposed here. Its twin-prime <a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem2">Theorem 1.2</a> and <a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem3">Theorems 1.3–1.4 under WEH(0.999)</a> are distinct results of the paper. The correspondence on this page concerns its unconditional Goldbach result. The abstract describes the conditional results in Elliott–Halberstam terms; their exact theorem statements use the weighted condition.</p>
-<p>This source reading checks the public types and their direct proof bodies, selected finite objects, the three analytic contracts, important integral domains, and the producers/consumers named in the ledger. Remaining original-source comparison work includes the complete general statements and proofs in Sections 2–3, every intermediate transformation in Section 5, the original numerical evaluations separately from the retained certificates, and version alignment with locally cited source labels. The production chain uses the proved corrected inequality and its Pi10/I10 bridge; the ledger identifies the change of excluded modulus explicitly.</p>
-<p>The public Lean types have no unproved distribution, integral or positivity premise. The standard logical principles <code>propext</code>, <code>Classical.choice</code> and <code>Quot.sound</code> are distinct from mathematical assumptions such as WEH. Type comparison, build, transitive axiom inspection and independent replay are separate checks; their procedure is documented in <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/docs/VERIFICATION.md#L22-L61">the verification guide</a>. This report is a source-reading guide, not a new execution certificate.</p>
-<p>The <a href="../blueprint/">Blueprint</a> is a selected mathematical exposition, while the <a href="../structure/">structure browser</a> supplies the full project-module and declaration-reference views. Genuine type/value references explain implementation structure; they acquire their mathematical interpretation from the counted objects and contracts above.</p>
+<p>The correspondence distinguishes displayed mathematical objects, proved equivalences, and replacement arguments. The level-six density route and the corrected tenth fibre are identified explicitly in the ledger. The production chain uses the proved corrected inequality and its Pi10/I10 bridge.</p>
+<p>The public Lean types have no unproved distribution, integral or positivity premise. The standard logical principles <code>propext</code>, <code>Classical.choice</code> and <code>Quot.sound</code> are distinct from mathematical assumptions such as WEH. Type comparison, build, transitive axiom inspection and independent replay are separate checks; their procedure is documented in <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/docs/VERIFICATION.md#L22-L61">the verification guide</a>.</p>
+<p>The <a href="../blueprint/">Blueprint</a> develops the mathematical arguments; <a href="../docs/">Lean API documentation</a> supplies exact declarations and source navigation. Dependency panels at individual results expand the actual compiled references on demand, in the context of the counted objects and analytic contracts.</p>
 <p>
 <a href="@@SOURCE_ROOT@@/docs/PROVENANCE.md">Source provenance and licensing</a> records upstream Lean contributions, the adapted PrimeNumberTheoremAnd closure and the retained Apache-2.0 source license. Existing copyright and author notices remain applicable; mathematical attribution to Li and Liu is preserved separately from the software provenance.</p>
 </section>

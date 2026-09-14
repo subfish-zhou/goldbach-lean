@@ -3,44 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Complete project structure · Goldbach in Lean</title>
+  <title>Dependency inspector · Goldbach in Lean</title>
   <link rel="stylesheet" href="explorer.css">
   <script defer src="explorer.js"></script>
 </head>
 <body>
 <header>
-  <nav aria-label="Project navigation"><a href="../index.html">Project home</a><a href="../docs/">Lean API</a><a href="../blueprint/">Blueprint</a><a href="../report/">Li–Liu report</a></nav>
-  <p class="eyebrow">GOLDBACH IN LEAN / COMPLETE SOURCE &amp; COMPILED STRUCTURE</p>
-  <h1>Follow the actual dependencies.</h1>
-  <p class="lead">Chen and Li–Liu endpoints. Four source libraries. Separate import and declaration graphs, loaded one neighborhood at a time.</p>
-  <p id="build-status" role="status">Loading the verified module inventory…</p>
+  <nav aria-label="Return to the mathematics"><a href="../blueprint/">← Blueprint mathematical overview</a><a href="../docs/">Lean API</a></nav>
+  <p class="eyebrow">GOLDBACH IN LEAN / ON-DEMAND INSPECTION</p>
+  <h1>Dependency inspector</h1>
+  <p class="lead">Inspect a selected declaration’s compiled references from the Blueprint, report, or Lean API. Start with the mathematical overview for the proof’s argument.</p>
 </header>
 <main>
-  <section aria-labelledby="boundaries-title" class="boundaries">
-    <h2 id="boundaries-title">Three views, three meanings</h2>
-    <div class="legend-grid">
-      <div><h3>Module imports</h3><p><b>Module → imported module.</b> The complete direct local import graph, parsed from every source header and checked against compiled headers. An import is <em>not</em> a theorem dependency.</p></div>
-      <div><h3>Compiled declaration references</h3><p><b>Declaration → referenced constant.</b> Separate edges for the compiled <code>type</code>, theorem proof / definition <code>value</code>, and recursor rule RHS. Ownership comes from actual <code>ModuleData.constNames</code>, not namespaces.</p></div>
-      <div><h3>Hand-selected Blueprint</h3><p><b>Prerequisite → consumer</b> (opposite direction). An explanatory selection, not the full import or Const graph. <a href="../blueprint/">Read the mathematical narrative</a> or inspect its projection below.</p></div>
+  <section id="detail" aria-live="polite"><h2>No declaration selected</h2><p>Return to the <a href="../blueprint/">Blueprint mathematical overview</a> or <a href="../docs/">Lean API</a> to choose a declaration. Module and declaration lookup remain available under Advanced inspection.</p></section>
+  <details id="advanced">
+    <summary>Advanced inspection — search, module imports, and export provenance</summary>
+    <p class="muted">These engineering views use the full exported inventory. Opening this panel enables module lookup; selecting declaration search loads its complete index on demand.</p>
+    <div class="workspace">
+      <aside aria-labelledby="search-title">
+        <h2 id="search-title">Find a module or declaration</h2>
+        <label for="search-mode">Search scope</label>
+        <select id="search-mode"><option value="modules">All source modules</option><option value="declarations">All compiled declarations</option></select>
+        <label for="library">Library</label>
+        <select id="library"><option value="">All four libraries</option><option>Goldbach</option><option>MathlibNt</option><option>AnalyticNumberTheory</option><option>PrimeNumberTheoremAnd</option></select>
+        <label for="query">Name contains</label><input id="query" type="search" autocomplete="off" placeholder="e.g. chen_theorem or LiLiu">
+        <p id="search-status" role="status">Open Advanced inspection to search.</p><div id="results"></div>
+      </aside>
+      <section id="module-detail" aria-live="polite"><h2>Module inspection</h2><p>Select a module to inspect its imports and compiled declaration census.</p></section>
     </div>
-    <details><summary>Coverage, external boundary, and cycles</summary><p>All declarations in the local compiled constant census are included, including generated auxiliaries. A name can occur in several actual module censuses (for example, a regenerated equation lemma); all providers are retained, and reference signatures must agree before graph nodes are merged. Exported axiom-shaped signatures are completed with body-bearing private object parts. External or unresolved constants outside that census are retained by exact name, but are not assigned a package from their spelling or expanded. Local <code>extraConstNames</code> have their own boundary category when no body is available.</p><p>This is a static <code>Expr.const</code> graph, not arbitrary reflection, runtime calls, tactic execution, projection metadata, or dynamic lookup. Edges are unique references, not occurrence counts. Recursive clusters and self-edges are kept; we do not assume this graph is a DAG. Verified API anchors are used only when supplied by a real API bundle; other declarations link to their owning module at the recorded source commit.</p><p><a href="build-info.json">Build provenance and coverage</a> · <a href="inputs.json">Input fingerprints</a> · <a href="modules.json">Module and shard schema</a></p></details>
-  </section>
-  <section aria-labelledby="entry-title"><h2 id="entry-title">Choose an entry point</h2><div id="entries" class="entry-grid"></div></section>
-  <section class="workspace" aria-label="Structure explorer">
-    <aside>
-      <h2>Find a module or declaration</h2>
-      <label for="search-mode">Search scope</label>
-      <select id="search-mode"><option value="modules">All source modules</option><option value="declarations">All compiled declarations</option></select>
-      <label for="library">Library</label>
-      <select id="library"><option value="">All four libraries</option><option>Goldbach</option><option>MathlibNt</option><option>AnalyticNumberTheory</option><option>PrimeNumberTheoremAnd</option></select>
-      <label for="query">Name contains</label><input id="query" type="search" autocomplete="off" placeholder="e.g. chen_theorem or LiLiu">
-      <p id="search-status" role="status"></p><div id="results"></div>
-    </aside>
-    <section id="detail" aria-live="polite"><h2>Start with Chen or Li–Liu above.</h2><p>Search covers the complete inventory. Expanding a dependency loads only its module shard. No enormous graph is drawn on page load.</p></section>
-  </section>
-  <section class="projection"><h2>Blueprint selection versus complete graph</h2><p id="projection-count">The hand-selected Blueprint is a readable projection. Its omitted declarations remain searchable in the complete graph.</p><button id="load-projection" type="button">Inspect the hand-selected projection</button><div id="projection"></div></section>
-  <noscript><p>This interactive browser needs JavaScript. The <a href="modules.json">complete module inventory</a> and <a href="build-info.json">provenance</a> remain directly downloadable.</p></noscript>
+    <section class="boundaries" aria-labelledby="boundaries-title">
+      <h2 id="boundaries-title">Export provenance and edge meanings</h2>
+      <p id="build-status" role="status">Build statistics load when Advanced inspection is opened.</p>
+      <div class="legend-grid">
+        <div><h3>Module imports</h3><p><b>Module → imported module.</b> Direct local imports parsed from every source header and checked against compiled headers. An import is <em>not</em> a theorem dependency.</p></div>
+        <div><h3>Compiled declaration references</h3><p><b>Declaration → referenced constant.</b> Separate edges for the compiled <code>type</code>, theorem proof / definition <code>value</code>, and recursor rule RHS. Ownership comes from actual <code>ModuleData.constNames</code>, not namespaces.</p></div>
+        <div><h3>Selected Blueprint projection</h3><p><b>Compiled prerequisite → consumer</b> (opposite direction). Dependencies among selected explanatory nodes; this projection has different coverage from the full Const and import graphs. <a href="../blueprint/">Read the mathematical narrative</a>.</p></div>
+      </div>
+      <details><summary>Coverage, external boundary, and cycles</summary><p>All declarations in the local compiled constant census are included, including generated auxiliaries. A name can occur in several actual module censuses (for example, a regenerated equation lemma); all providers are retained, and reference signatures must agree before graph nodes are merged. Exported axiom-shaped signatures are completed with body-bearing private object parts. External or unresolved constants outside that census are retained by exact name, but are not assigned a package from their spelling or expanded. Local <code>extraConstNames</code> have their own boundary category when no body is available.</p><p>This is a static <code>Expr.const</code> graph, not arbitrary reflection, runtime calls, tactic execution, projection metadata, or dynamic lookup. Edges are unique references, not occurrence counts or proof execution order. The inspector preserves each exported reference array’s order. Recursive clusters and self-edges are kept; this graph need not be a DAG. Verified API anchors are used only when supplied by a real API bundle; other declarations link to their owning module at the recorded source commit.</p></details>
+      <p><a href="build-info.json">Build provenance and coverage</a> · <a href="inputs.json">Input fingerprints</a> · <a href="modules.json">Full module inventory and shard schema</a></p>
+    </section>
+    <details class="projection"><summary>Inspect the selected Blueprint projection</summary><p id="projection-count">Selected nodes and their compiled prerequisites form a projection with a different scope from the complete reference graph.</p><p><a href="../blueprint/">Blueprint narrative</a> · <a href="blueprint-projection.json">Exported projection data</a></p><button id="load-projection" type="button">Load selected projection records</button><div id="projection"></div></details>
+  </details>
+  <noscript><p>The inspector needs JavaScript. The <a href="modules.json">complete module inventory</a> and <a href="build-info.json">provenance</a> remain directly downloadable.</p></noscript>
 </main>
-<footer><a href="../index.html">Goldbach in Lean</a> · Source-pinned structure, not a proof replay.</footer>
+<footer><a href="../index.html">Project home</a> · <a href="../blueprint/">Blueprint</a> · <a href="../docs/">Lean API</a> · Source-pinned compiled references, not a proof replay.</footer>
 </body>
 </html>
