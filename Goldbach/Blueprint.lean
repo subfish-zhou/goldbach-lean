@@ -357,3 +357,57 @@ attribute [blueprint "bp:foundation-bv-high"
   (statement := /-- For each requested logarithmic saving, one common pair of Vaughan cutoffs pays the Type I, Type II and small-term means on the chosen high-conductor family, including the prefix and cofactor amplification factors. -/)
   (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
   AnalyticNumberTheory.LargeSieve.standardBVHighChosenUnconditional
+
+attribute [blueprint "bp:liliu-s1-density-six"
+  (title := "The actual lower density at level six")
+  (statement := /-- For every $\rho>0$, some $N_0\ge2$ works for all even $N\ge N_0$ and every $0<\varepsilon<1$: $(f(6)-\rho)V_N\le S_N.\mathrm{mainSum}(\lambda^-)$, where $S_N$ is the actual $S_1$ bounding sieve at $z=N^{4/53}$, $V_N$ its sieve product and $\lambda^-$ its lower Rosser weight at $D=\lceil N^{4/53}\rceil^6$. The density threshold precedes epsilon. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_levelSix_lowerDensitySix
+
+attribute [blueprint "bp:liliu-upper-density-six"
+  (title := "Uniform upper density through six")
+  (statement := /-- For every $K>1$ and $\rho>0$, some $z_0$ works for every bounding sieve $S$ and real $z,\Delta,s$: if $z\ge\max(2,z_0)$, $\Delta>0$, $S$ has the dimension-one local-product bound with $K$, all its sifting primes are at most $z$, and $s=\log\Delta/\log z\in[3/2,6]$, then $S.\mathrm{mainSum}(\lambda^+)\le(F_S(s)+\rho)V_S$. Here $F_S$ denotes the Suzuki factor, $V_S$ the sieve product, and $\lambda^+$ has natural level $\lfloor\Delta\rfloor+1$. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_upperRosserDensity_six
+
+attribute [blueprint "bp:liliu-s3-main-six"
+  (title := "The consumed S3 upper Rosser main sum")
+  (statement := /-- For every $\rho>0$, some $z_0\ge2$ works uniformly in $N$, its evenness proof, and real $\varepsilon,z,\Delta,s$: if $z\ge z_0$, $\Delta>0$ and $s=\log\Delta/\log z\in[3/2,6]$, then $\sum_{d\mid P_N(z)}\lambda_d^+/\varphi(d)\le(F_S(s)+\rho)V_N(z)$. The natural level is $\lfloor\Delta\rfloor+1$ and the local-product witness is supplied internally. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3RosserMain_upper_six
+
+attribute [blueprint "bp:liliu-g10-integral"
+  (title := "The corrected tenth count bounded by I10")
+  (statement := /-- For every $\delta>0$ and each fixed $0<\varepsilon<1$, some $N_0\ge4$ gives $G_{10}^{\rm corr}\le[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N$ for every even $N\ge N_0$, at $(b,c)=(4/33,3/11)$. The corrected fibre excludes prime divisors of $Nrs$ and retains both labels; $\mathcal X_N=\mathfrak S_{\rm Liu}(N)N/\log^2N$. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG10Corrected_I10_upper
+
+attribute [blueprint "bp:liliu-i10-consumed"
+  (title := "Pay I10 inside the corrected signed ledger")
+  (statement := /-- For every $\delta>0$ and each fixed $0<\varepsilon<2/15$, some $N_0\ge4$ works for all even $N\ge N_0$ and every $1/18<a<4/33$: $\mathcal T_{11}-[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N\le4D_{1,19/10}(N)$. Here $\mathcal T_{11}=3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9-G_{11}-G_{12}$, with $b=4/33,c=3/11$. Both the corrected tenth cost and $1334N^{1-a}$ are paid. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_twelve_base_I10_consumed_eventually
+
+attribute [blueprint "bp:liliu-public-natural"
+  (title := "Public existence: exact natural powers")
+  (statement := /-- $\exists K\in\mathbb N$, $4\le K$, such that for all even $N\ge K$ there exist $p,r,q\in\mathbb N$ with $p\le N$, $p,q$ prime, $r=1$ or $r$ prime, $N=p+rq$ and $r^{10}\le q^9$. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  Goldbach.one_plus_one_nine
+
+attribute [blueprint "bp:liliu-public-real"
+  (title := "Public existence: real exponent")
+  (statement := /-- $\exists K\in\mathbb N$, $4\le K$, such that for all even $N\ge K$ there exist $p,r,q\in\mathbb N$ with $p\le N$, $p,q$ prime, $r=1$ or $r$ prime, $N=p+rq$ and $(r:\mathbb R)\le(q:\mathbb R)^{(19/10)-1}$. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  Goldbach.one_plus_one_nine_real
+
+attribute [blueprint "bp:liliu-public-count"
+  (title := "Public count: the strict paper bound")
+  (statement := /-- $\exists K\in\mathbb N$, $4\le K$, $\forall N\ge K$, $2\mid N\Rightarrow(1/2500)\mathcal X_N<D_{1,19/10}(N)$. Here $D$ counts distinct primes $p$ and $\mathcal X_N=\mathfrak S_{\rm Liu}(N)N/\log^2N$, with no extra factor two. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  Goldbach.one_plus_one_nine_count
+
+attribute [blueprint "bp:liliu-public-coefficient"
+  (title := "Public count: each fixed coefficient below the ceiling")
+  (statement := /-- For every real $\kappa<515093/800000000$, there exists $K\in\mathbb N$, $4\le K$, such that every even $N\ge K$ satisfies $\kappa\mathcal X_N\le D_{1,19/10}(N)$. The threshold follows the chosen coefficient; the ceiling itself is excluded. -/)
+  (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
+  Goldbach.one_plus_one_nine_lower_bound

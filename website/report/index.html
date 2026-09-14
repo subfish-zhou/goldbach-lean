@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Li–Liu (1+1.9): author report and proof correspondence</title>
+<meta name="description" content="The Li–Liu Goldbach result in Lean: exact statements, two proof exits, distribution contracts and a source-pinned paper correspondence ledger.">
+<link rel="stylesheet" href="../home.css">
+<style>
+.report-section{padding:32px 0;border-top:1px solid var(--line)}
+.report-section h3{font-size:23px;margin-top:24px}.report-section li{margin-bottom:10px}
+.table-scroll{overflow-x:auto;margin-block:20px}table{border-collapse:collapse;width:100%;font-size:15px}th,td{padding:14px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}thead{background:var(--wash)}th{font-weight:600}td p{margin:10px 0 0}td small{display:block;color:var(--muted);margin-top:7px}code{overflow-wrap:anywhere}td code,th code{font-size:12px}table hr{border:0;border-top:1px solid var(--line);margin:12px 0}.formula{padding:18px;background:var(--wash);overflow-x:auto;font-family:Georgia,serif;font-size:19px}.report-toc{display:flex;gap:12px 24px;flex-wrap:wrap;padding:0;list-style:none}.ledger th:first-child{width:20%}.ledger td:nth-child(2){width:34%}.report-section p{max-width:960px}@media(max-width:720px){th,td{padding:10px 7px;font-size:14px}.ledger{min-width:840px}.facades{min-width:700px}}@media print{.table-scroll{overflow:visible}.ledger,.facades{min-width:0}th,td{font-size:9pt}.report-section{break-inside:auto}a{overflow-wrap:anywhere}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to report</a>
+<header class="masthead wrap">
+<a class="brand" href="../">Goldbach in Lean</a>
+<nav class="menu" aria-label="Project">
+<a href="../docs/">Lean API</a>
+<a href="../blueprint/">Mathematical Blueprint</a>
+<a href="../structure/">Full structure</a>
+</nav>
+</header>
+<main id="main" class="wrap">
+<section class="hero">
+<h1>Li–Liu’s (1+1.9) theorem</h1>
+<p class="lead">An author-facing reading guide to the formal Goldbach proof: the counted object, the analytic mechanisms, and the exact route from finite weights to the public theorems.</p>
+<p>Jiamin Li and Jianya Liu’s weighted-sieve argument provides the mathematical starting point. The Lean development records finite carriers, uniform thresholds, paid exceptions and rational coefficient certificates.</p>
+</section>
+<nav aria-label="Report sections">
+<ul class="report-toc">
+<li>
+<a href="#result">Public result</a>
+</li>
+<li>
+<a href="#interfaces">Four interfaces, two exits</a>
+</li>
+<li>
+<a href="#paper-map">Paper → Lean ledger</a>
+</li>
+<li>
+<a href="#distribution">Three distribution inputs</a>
+</li>
+<li>
+<a href="#talk">Suggested talk</a>
+</li>
+<li>
+<a href="#scope">Source and review scope</a>
+</li>
+</ul>
+</nav>
+<section id="result" class="report-section">
+<h2>The result and its normalization</h2>
+<p>There exists a natural K ≥ 4 such that every even natural N ≥ K has natural witnesses p,r,q with p ≤ N, p and q prime, r equal to 1 or prime, and</p>
+<p class="formula">N = p + rq, &nbsp; r¹⁰ ≤ q⁹.</p>
+<p>The last inequality is exactly equivalent to r ≤ q<sup>9/10</sup> over the reals. Thus the factor imbalance is part of the conclusion. The prime case is represented by r=1.</p>
+<p>Define D19(N) as the number of <strong>distinct primes p ≤ N</strong> admitting such witnesses. Its finite carrier retains an existential pair r,q for each counted p. Write</p>
+<p class="formula">C(N) = ∏<sub>ℓ&gt;2 prime</sub>(1 − 1/(ℓ−1)²) · ∏<sub>ℓ&gt;2 prime, ℓ∣N</sub>(ℓ−1)/(ℓ−2),<br>X<sub>N</sub> = C(N)N/(log N)².</p>
+<p>This C(N) is <code>liuSingularSeries N</code>. The normalization has no additional factor two. The quantitative interface proves</p>
+<p class="formula">∃ K ∈ ℕ, K ≥ 4, ∀ N ≥ K, Even N ⇒ (1/2500)X<sub>N</sub> &lt; D19(N).</p>
+<p>The stronger retained certificate gives, for <strong>each fixed real κ &lt; 515093/800000000</strong>, a K ≥ 4 after that choice such that κX<sub>N</sub> ≤ D19(N) for every even N ≥ K. This is a family of eventual bounds; the ceiling is excluded. Both statements have existential natural thresholds.</p>
+</section>
+<section id="interfaces" class="report-section">
+<h2>Four public interfaces, two actual proof exits</h2>
+<p>Import <code>Goldbach.OnePlusOneNine</code>. The four declarations expose two completed routes with different retained margins.</p>
+<div class="table-scroll">
+<table class="facades">
+<thead>
+<tr>
+<th>Public declaration</th>
+<th>Actual exit</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">
+<a href="../docs/Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine">
+<code>Goldbach.one_plus_one_nine</code>
+</a>
+</th>
+<td>Existence / earlier margin<br>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L55-L59">goldbach_onePlusOneNine_nat_unconditional</a>
+</td>
+<td>Natural-power witnesses: r¹⁰ ≤ q⁹. <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L15-L19">Source</a>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="../docs/Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine_real">
+<code>Goldbach.one_plus_one_nine_real</code>
+</a>
+</th>
+<td>Existence / earlier margin<br>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L63-L71">goldbach_onePlusOneNine_unconditional</a>
+</td>
+<td>The same witnesses transported to the real exponent (19/10)−1. <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L22-L26">Source</a>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="../docs/Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine_count">
+<code>Goldbach.one_plus_one_nine_count</code>
+</a>
+</th>
+<td>Count / author-G11 ledger<br>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L64-L76">goldbach_D19_gt_paper_0004</a>
+</td>
+<td>Strict paper coefficient: (1/2500)X_N &lt; D19(N). <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L29-L35">Source</a>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="../docs/Goldbach/OnePlusOneNine.html#Goldbach.one_plus_one_nine_lower_bound">
+<code>Goldbach.one_plus_one_nine_lower_bound</code>
+</a>
+</th>
+<td>Count / author-G11 ledger<br>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L46-L59">goldbach_D19_author_lower_of_coefficient_lt</a>
+</td>
+<td>Every fixed real κ &lt; 515093/800000000, then an eventual threshold. <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L38-L44">Source</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Existence: the earlier positive margin</h3>
+<p>
+<code>LiLiuGoldbachOneNineUnconditional</code> proves positivity of its own integral margin, bounded below by 126891/200000000. The actual-count ledger gives D19(N)&gt;0, then extracts natural-power witnesses. The real-exponent theorem applies the proved equivalence. These two facades retain this earlier route.</p>
+<h3>Count: the author-G11 estimate</h3>
+<p>The stronger route applies the original-count pair lower bound, G9 upper bound, author-G11 upper bound and cross-G12 upper bound before closing its signed ledger. Its exact retained coefficient on 4D19 is</p>
+<p class="formula">54233/10000 + 124341093/200000000 − 527231/100000 − 10191/100000 − 66821/100000 = 515093/200000000.</p>
+<p>The internal order is ∀δ&gt;0, ∃ε₀∈(0,2/15], ∀ε∈(0,ε₀), ∃N₀≥4, ∀N≥N₀ even. For the public coefficient theorem, first fix κ, then set δ = 515093/200000000 − 4κ and choose ε=ε₀/2. No epsilon remains in the public type. For the strict paper count the proof takes κ=1/2000 and uses X<sub>N</sub>&gt;0.</p>
+</section>
+<section id="paper-map" class="report-section">
+<h2>Paper stage → Lean declaration → comparison status</h2>
+<p>The fixed source is <a href="https://arxiv.org/html/2606.05224v1">arXiv:2606.05224v1</a>, <em>Theorem (1+1.9) on the Goldbach Conjecture</em>, by Jiamin Li and Jianya Liu. The numbered references below were read in that public HTML. Lean source links are pinned to revision <a href="https://github.com/subfish-zhou/goldbach-lean/tree/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f">
+<code>5c4ecc0</code>
+</a>.</p>
+<p>
+<strong>Literal</strong> refers to a fixed counting object or displayed expression; <strong>equivalent</strong> identifies a proved notation or integral bridge; <strong>replacement</strong> records the actual finite or analytic route used. The final row and the scope section identify comparisons still awaiting a line-by-line review. A correspondence for a major statement is distinct from an audit of every line of its original proof.</p>
+<div class="table-scroll" tabindex="0" aria-label="Paper to Lean correspondence, horizontally scrollable">
+<table class="ledger">
+<thead>
+<tr>
+<th>Fixed paper stage</th>
+<th>Lean statement and source</th>
+<th>Correspondence and exact boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem1">Theorem 1.1</a>; <a href="https://arxiv.org/html/2606.05224v1#S4.E4">(4.4)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L29-L35">Goldbach.one_plus_one_nine_count</a>
+<br>
+<small>
+<code>Goldbach/OnePlusOneNine.lean</code>, lines 29-35</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L30-L45">D19 / IsOnePlusOneNineRepresentation</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean</code>, lines 30-45</small>
+</td>
+<td>
+<strong>Literal target, equivalent encoding</strong>
+<p>The counted variable is the distinct prime p. The factor restriction is encoded by natural powers; the scale is C(N)N/log²N. The strict paper coefficient is exactly 1/2500.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S1.E6">Representation (1.6)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineLiteralExponent.lean#L7">oneNine_power_iff_source_exponent</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachOneNineLiteralExponent.lean</code>, lines 7</small>
+</td>
+<td>
+<strong>Proved equivalence</strong>
+<p>The natural inequality r¹⁰ ≤ q⁹ is equivalent to (r : ℝ) ≤ (q : ℝ)^((19/10)−1). The real facade obtains its witnesses from the natural-power existence exit.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S4.Thmproposition1">Proposition 4.1, (4.6)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L353-L361">goldbachBasic_finite_le_D19</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean</code>, lines 353-361</small>
+</td>
+<td>
+<strong>Specialized weight; eventual replacement</strong>
+<p>The four integer-valued indicators retain Ω ≥ 2 and Ω ≥ 3. A fixed ε is chosen before a common eventual threshold; the development specializes the target to a=19/10. The explicit cutoff printed in the proposition is not the public Lean contract.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S4.Thmproposition2">Proposition 4.2, (4.8)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachFiniteBudget.lean#L79-L99">goldbachbig_finite_lower_bound_eventually</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachFiniteBudget.lean</code>, lines 79-99</small>
+</td>
+<td>
+<strong>Specialized finite bound with explicit losses</strong>
+<p>The six-term sign pattern is retained. The Lean bound pays the noncoprime, square, repeated-label and boundary pieces with 446N^(1−k), uniformly in 1/21 &lt; k &lt; σ ≤ 1/3 after fixing 0 &lt; ε &lt; 2/15.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S4.Thmproposition3">Proposition 4.3, (4.18)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG10Cofactor.lean#L48-L59">goldbachG10Corrected</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG10Cofactor.lean</code>, lines 48-59</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean#L59-L67">goldbachWeight_twelve_corrected_lower_bound_eventually</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean</code>, lines 59-67</small>
+</td>
+<td>
+<strong>Modified intermediate fibre; proved replacement bound</strong>
+<p>The printed tenth term excludes primes dividing Nr; the implemented corrected fibre excludes primes dividing Nrs while sifting the original integer. Its signed bound pays 1334N^(1−a). This correspondence records the implemented change of object; an equality with the printed fibre remains a separate question.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.SS1">Section 5.1, (5.11)–(5.16)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean#L107-L116">goldbachS1_levelSix_lowerDensitySix</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean</code>, lines 107-116</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean#L40-L46">goldbachS1_alphaFourFiftyThree_normalized_lower</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean</code>, lines 40-46</small>
+</td>
+<td>
+<strong>Replacement route to the retained coefficient</strong>
+<p>The paper passes from f(53/8) to f(6). Lean directly constructs the actual lower Rosser density at level ⌈N^(4/53)⌉⁶. Its density threshold precedes ε; the normalized count threshold follows fixed δ,ε. The second positive term approaches 33/8 from a fixed ratio below it.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.SS2">Section 5.2: G4 and G5</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean#L202-L211">goldbach_upperRosserDensity_six</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean</code>, lines 202-211</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean#L62-L85">goldbachS3RosserMain_upper_six</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean</code>, lines 62-85</small>
+</td>
+<td>
+<strong>Modern comparison; same limiting integral role</strong>
+<p>The consumed upper-density theorem is uniform on [3/2,6], with a real level Δ and natural level floor(Δ)+1. The actual S3 consumer covers the limiting [53/24,45/8] range. This review checks that range and its consumption; the paper’s entire displayed chain of sieve-function identities has not been compared line by line.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.E30">(5.30)</a> and <a href="https://arxiv.org/html/2606.05224v1#S5.E32">(5.32): G6 + G7</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean#L10-L41">goldbachG11Author_reused_pair_lower</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean</code>, lines 10-41</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L9-L18">goldbachG67IntegralConstant_lower_certified</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean</code>, lines 9-18</small>
+</td>
+<td>
+<strong>Original-count bound; alternative scalar certificate</strong>
+<p>The pair count is bounded below through the actual integral C67. The retained certificate gives C67 ≥ 54233/10000 via a five-branch elementary integral. The combined lower bound has a small ε window chosen after δ. The individual decimal evaluations of g6 and g7 are not the certificate used here.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.SS3">Section 5.3: switched distribution, (5.37)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean#L91-L106">liuMainPanCoprimeIntervalMaxL_boundedAggregate_log_saving</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean</code>, lines 91-106</small>
+</td>
+<td>
+<strong>Source-specific distribution contract</strong>
+<p>The variable coefficient–prime convolution stays inside the absolute value. Constants precede the varying bounded coefficient and interval; the upper endpoint and logarithmic lower endpoint satisfy the explicit Pan geometry. The B10 consumer pays both endpoints. This is the needed specialization, separately tracked from the full WEH(1/2) formulation of Lemma 3.1.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.E45">(5.45): the ninth coefficient</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachB9SplitIntegralReduction.lean#L45-L60">goldbachB9PaperSplitIntegral / eq_singleIntegrals</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachB9SplitIntegralReduction.lean</code>, lines 45-60</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachS5PaperSplitUpper.lean#L16-L38">goldbachS5Closed_normalized_upper_paperSplit</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachS5PaperSplitUpper.lean</code>, lines 16-38</small>
+</td>
+<td>
+<strong>Literal integral; proved reduction and count consumption</strong>
+<p>The low branch retains 1/[uv(1−u−v)(1−u)]; its one-variable denominator is u(1−u)². The original finite count is partitioned strict-low / closed-high, then both bounds are consumed. The Fouvry low route and the ordinary-level high route remain separate.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.E46">(5.46): the tenth integral</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachPi10IntegralUpper.lean#L8-L24">goldbachPi10_I10_upper</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachPi10IntegralUpper.lean</code>, lines 8-24</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean#L8-L23">goldbachG10Corrected_I10_upper</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean</code>, lines 8-23</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean#L24-L45">goldbachWeight_twelve_base_I10_consumed_eventually</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean</code>, lines 24-45</small>
+</td>
+<td>
+<strong>Same integral domain; corrected-count replacement</strong>
+<p>For fixed δ&gt;0 and 0&lt;ε&lt;1, G10corr ≤ [8(1−ε)I10+δ]X_N eventually. Labelled prime outputs, the auxiliary sift cutoff and the 880N^(1−b) switching loss are paid first. In the signed consumer the additional 1334N^(1−a) is paid; no positivity of the eleven-term base is assumed.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.E48">(5.48): author G11</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean#L198-L206">goldbachG11PrimeIntegral_author_split</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean</code>, lines 198-206</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorActualProducer.lean#L10-L28">goldbachWeightG11_le_authorIntegral_direct</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorActualProducer.lean</code>, lines 10-28</small>
+</td>
+<td>
+<strong>Original-domain correspondence; certified majorant</strong>
+<p>The ordered domain a≤u≤v≤w≤t≤b and the v² denominator are retained, with the first coordinate split at 1/10. The weight is 36/[5(1−u)] below the split and 8 above it. The Buchstab constant majorizes the full rough mother at its upper endpoint; the original fixed-ε count is bounded after the exceptional atoms and distribution costs are paid.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.E49">(5.49)–(5.50): G12</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG12PrimeKernel.lean#L18-L22">goldbachG12PrimeIntegral</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG12PrimeKernel.lean</code>, lines 18-22</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG12SharpWeight.lean#L5-L7">G12SharpWeight.factor / weight</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG12SharpWeight.lean</code>, lines 5-7</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean#L44-L60">goldbachG11Author_reused_cross_upper</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean</code>, lines 44-60</small>
+</td>
+<td>
+<strong>Matched cross domain and branch constants</strong>
+<p>The fourth coordinate ranges independently over [b,c]. The strict-low factor is 561990/10⁶, the closed-high factor 564383/10⁶. Both original-count exception payments are supplied. The fixed paper’s full proof of the global Buchstab majorants has not been audited line by line in this report.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S5.SS5">Section 5.5, (5.51)</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L9-L42">goldbachWeight_authorG11_numericLedger</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean</code>, lines 9-42</small>
+<hr>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L46-L76">goldbach_D19_author_lower_of_coefficient_lt / goldbach_D19_gt_paper_0004</a>
+<br>
+<small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean</code>, lines 46-76</small>
+</td>
+<td>
+<strong>Alternative exact retained ledger; same strict conclusion</strong>
+<p>The certified rational combination is 515093/200000000 on the scale 4D19. Fix κ below a quarter of that margin, then select δ, an ε window, one ε, and the threshold. The strict paper bound is obtained using κ=1/2000 and positivity of X_N.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://arxiv.org/html/2606.05224v1#S2">Sections 2–3: general analytic statements</a>
+</th>
+<td>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean#L11-L22">primeC2_goldbach_rectangle_kscale</a>
+<br>
+<small>
+<code>MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean</code>, lines 11-22</small>
+</td>
+<td>
+<strong>Specific contracts checked; full source audit open</strong>
+<p>Ordinary BV, bounded-coefficient Pan and the Goldbach Fouvry rectangle are distinguished below. General statements outside these consumed contracts, the other distribution lemmas, and all original proofs’ individual transformations await separate line-by-line comparison.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="distribution" class="report-section">
+<h2>Three distribution inputs, three counting objects</h2>
+<p>The level of distribution is only one part of an analytic input. The position of the absolute value, the varying coefficient, and the residue uniformity determine whether a theorem can pay a particular sieve remainder.</p>
+<h3>1. Ordinary Bombieri–Vinogradov: original prime progressions</h3>
+<p>The maximal prime-AP error is centered at L<sub>*</sub>(y)/φ(q), where L<sub>*</sub>(y)=2/log 2+∫₂ʸdt/log t for y&gt;1 and the totalized endpoint convention gives L<sub>*</sub>(0)=L<sub>*</sub>(1)=2/log 2. Its sum over q ≤ floor(N<sup>1/2</sup>/(log N)<sup>B</sup>) has arbitrary inverse-log saving, with a maximum over integer prefixes and reduced residues. Principal, small-conductor Siegel–Walfisz, and large-conductor Vaughan/large-sieve estimates are assembled before the original-source S1 remainder is paid.</p>
+<p>Read the Blueprint from <em>Prime counting, Mertens estimates, and moving products</em> through <em>Inside the distribution proofs</em>. The source entry is <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean#L19-L46">standardBombieriVinogradov and its low-conductor producer</a>.</p>
+<h3>2. Bounded-coefficient Pan: changing switched convolutions</h3>
+<p>The discrepancy sums f(m) times a prime-progression error over m in (A1,A2], with (m,q)=1, <strong>inside</strong> the absolute value. Given a requested saving U&gt;0, the constants C,B,N₀ precede all N≥N₀, the interval and f, under |f|≤1, A2≤N<sup>2/3</sup> and (log N)<sup>2B</sup>≤A1. Primitive low/high conductor bounds, cofactor summation and a paid principal term give the aggregate. Switched S2 and B10 consume it; B10 pays both its upper and lower prefix endpoints.</p>
+<p>The fixed Chen convolution and the varying Li–Liu coefficient have separate contracts. Read <em>Switched distribution is an aggregate estimate</em>, then inspect <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean#L91-L158">the bounded aggregate</a> and <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachB10PanTwoEndpoints.lean#L96">the two-endpoint consumer</a>.</p>
+<h3>3. Fouvry: signed well-factorable bilinear errors</h3>
+<p>The modulus coefficient remains signed while bilinear progression masses are centered by their coprime mass divided by φ(q). The Goldbach rectangle theorem fixes divisor orders, saving, Cscale≥1 and a gap ζ&gt;0 before the rectangle and residue vary. It uses 4MT=x, T=x<sup>ν</sup>, ζ≤ν≤1/10+ζ/10, 0&lt;N≤Cscale·x and level x<sup>(5−5ν)/9−ζ</sup>, with a divisor-bounded long coefficient and the literal prime short coefficient coprime to N.</p>
+<p>
+<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean#L11-L22">The exact rectangle theorem</a> is directly consumed by <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachG12FlexibleRectangleC2.lean#L24-L40">G12FlexibleRectangle.rectangle_C2_bound</a>. The low-G9 and mixed-level G11 counting routes retain their own boundary and exception payments. The low-G9 kernel keeps the extra 1/(1−u); its finite split assigns equality at N<sup>1/10</sup> to the high branch.</p>
+<p>These three contracts are proved ingredients of the displayed public theorem types. An EH or WEH assumption belongs to a different conditional result.</p>
+</section>
+<section id="talk" class="report-section">
+<h2>A suggested order for the academic report</h2>
+<ol>
+<li>
+<strong>State the counted object first.</strong> Display N=p+rq, the exact exponent condition, the distinct-p count and C(N). Show the four public statements and the two routes.</li>
+<li>
+<strong>Explain the finite detector.</strong> Start from the four basic indicators; positive weight forces a prime or an appropriately unbalanced two-prime product. Explain why τ=9/19−ε allows cancellation of r⁹.</li>
+<li>
+<strong>Build the signed count.</strong> Present the six-term Buchstab partition, the twelve-term ledger, and the exceptional sets. Define the corrected tenth fibre before switching to labelled prime outputs.</li>
+<li>
+<strong>Choose the analytic input by the source.</strong> Contrast original prime progressions, varying switched convolutions and signed well-factorable bilinear rectangles. State the order of uniform choices in each.</li>
+<li>
+<strong>Explain the positive and negative costs.</strong> Show the actual lower density at six, upper density through six, the I10 consumption bridge, the G9 low/high split and the original G11/G12 domains. Introduce the integral certificates only after their counting consumers.</li>
+<li>
+<strong>Close one error budget, then select parameters.</strong> Display the author-G11 rational ledger and explain κ → δ → ε₀ → ε → K. Finish with the strict 0.0004 theorem; return briefly to the separate earlier-margin witness exit.</li>
+<li>
+<strong>Move from exposition to inspection.</strong> Use the Blueprint for selected arguments, the full structure browser for module and declaration references, and the API for the exact statement at any node.</li>
+</ol>
+</section>
+<section id="scope" class="report-section">
+<h2>Source, attribution and review scope</h2>
+<p>The paper’s unconditional Goldbach <a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem1">Theorem 1.1</a> is the result exposed here. Its twin-prime <a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem2">Theorem 1.2</a> and <a href="https://arxiv.org/html/2606.05224v1#S1.Thmtheorem3">Theorems 1.3–1.4 under WEH(0.999)</a> are distinct results of the paper. The correspondence on this page concerns its unconditional Goldbach result. The abstract describes the conditional results in Elliott–Halberstam terms; their exact theorem statements use the weighted condition.</p>
+<p>This source reading checks the public types and their direct proof bodies, selected finite objects, the three analytic contracts, important integral domains, and the producers/consumers named in the ledger. Remaining original-source comparison work includes the complete general statements and proofs in Sections 2–3, every intermediate transformation in Section 5, the original numerical evaluations separately from the retained certificates, and version alignment with locally cited source labels. The production chain uses the proved corrected inequality and its Pi10/I10 bridge; the ledger identifies the change of excluded modulus explicitly.</p>
+<p>The public Lean types have no unproved distribution, integral or positivity premise. The standard logical principles <code>propext</code>, <code>Classical.choice</code> and <code>Quot.sound</code> are distinct from mathematical assumptions such as WEH. Type comparison, build, transitive axiom inspection and independent replay are separate checks; their procedure is documented in <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/docs/VERIFICATION.md#L22-L61">the verification guide</a>. This report is a source-reading guide, not a new execution certificate.</p>
+<p>The <a href="../blueprint/">Blueprint</a> is a selected mathematical exposition, while the <a href="../structure/">structure browser</a> supplies the full project-module and declaration-reference views. Genuine type/value references explain implementation structure; they acquire their mathematical interpretation from the counted objects and contracts above.</p>
+<p>
+<a href="@@SOURCE_ROOT@@/docs/PROVENANCE.md">Source provenance and licensing</a> records upstream Lean contributions, the adapted PrimeNumberTheoremAnd closure and the retained Apache-2.0 source license. Existing copyright and author notices remain applicable; mathematical attribution to Li and Liu is preserved separately from the software provenance.</p>
+</section>
+</main>
+<footer class="footer wrap">
+<p>Li–Liu (1+1.9) · Paper-to-Lean reading guide</p>
+<a href="../">Project home</a>
+</footer>
+</body>
+</html>

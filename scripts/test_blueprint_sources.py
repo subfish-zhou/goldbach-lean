@@ -2,6 +2,7 @@
 from pathlib import Path
 import importlib.util
 import unittest
+import tempfile
 
 SOURCE = Path(__file__).resolve().parents[1] / 'blueprint/src/sources.py'
 SPEC = importlib.util.spec_from_file_location('blueprint_sources', SOURCE)
@@ -11,6 +12,22 @@ SPEC.loader.exec_module(sources)
 
 
 class ChapterGraphTests(unittest.TestCase):
+    def test_relocated_source_requires_exact_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'checkout'
+            root.mkdir()
+            target = root / 'Example.lean'
+            recorded = Path(tmp) / 'original.lean'
+            target.write_text('theorem example : True := True.intro')
+            recorded.write_bytes(target.read_bytes())
+            self.assertEqual(sources.verified_source_path(root, recorded, 'Example.lean'),
+                             Path('Example.lean'))
+            recorded.write_text('different source')
+            with self.assertRaises(ValueError):
+                sources.verified_source_path(root, recorded, 'Example.lean')
+            with self.assertRaises(ValueError):
+                sources.verified_source_path(root, recorded, '../original.lean')
+
     def test_projection_keeps_inputs_without_fabricating_edges(self):
         nodes = {'background', 'input', 'middle', 'endpoint', 'other'}
         edges = {('background', 'input')}

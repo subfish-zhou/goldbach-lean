@@ -22,6 +22,17 @@ class ProjectSiteTests(unittest.TestCase):
                         "Goldbach.chen_theorem": "Theorem",
                         "Goldbach.representation_lower_bound": "Theorem",
                         "Goldbach.one_plus_one_nine": "OnePlusOneNine"}
+        for suffix in ("real", "count", "lower_bound"):
+            declarations["Goldbach.one_plus_one_nine_" + suffix] = "OnePlusOneNine"
+        self.declaration_count = len(declarations)
+        self.structure = self.root / "structure"
+        self.structure.mkdir()
+        (self.structure / "index.html").write_text('<html><head></head><body>Structure</body></html>')
+        (self.structure / "build-info.json").write_text(json.dumps({
+            "scope": "full-four-library", "source_revision": "a" * 40,
+            "module_count": len(self.modules)}))
+        (self.structure / "modules.json").write_text(json.dumps({
+            "modules": [{"name": m} for m in self.modules]}))
         for name in ("search.html", "search.js", "find/index.html", "style.css",
                      "declarations/header-data.bmp"):
             file = self.api / name
@@ -41,7 +52,7 @@ class ProjectSiteTests(unittest.TestCase):
                                   for name, mod in declarations.items()}}
         (self.api / "declarations/declaration-data.bmp").write_text(json.dumps(index))
         self.report = {"scope": "full", "modules": self.modules, "module_count": 3,
-                       "declaration_count": 4, "source_revision": "a" * 40, "blueprint_included": True}
+                       "declaration_count": self.declaration_count, "source_revision": "a" * 40, "blueprint_included": True}
         (self.api / "build-info.json").write_text(json.dumps(self.report))
         (self.api / "blueprint").mkdir()
         (self.api / "blueprint/index.html").write_text("Old nested copy")
@@ -55,14 +66,14 @@ class ProjectSiteTests(unittest.TestCase):
 
     def test_complete_layout_preserves_inputs_and_navigation_is_idempotent(self):
         before = self.snapshot(self.api), self.snapshot(self.blueprint)
-        report = assemble(self.api, self.blueprint, self.output)
+        report = assemble(self.api, self.blueprint, self.output, structure=self.structure)
         self.assertEqual(before, (self.snapshot(self.api), self.snapshot(self.blueprint)))
         self.assertTrue((self.output / "docs/search.js").is_file())
         self.assertFalse((self.output / "docs/blueprint").exists())
         self.assertIn('href="../index.html"', (self.output / "docs/navbar.html").read_text())
         self.assertIn('href="../blueprint/index.html"', (self.output / "docs/index.html").read_text())
         self.assertIn('href="../docs/index.html"', (self.output / "blueprint/index.html").read_text())
-        self.assertEqual(verify_site(self.output / "docs", self.modules, site_root=self.output), 4)
+        self.assertEqual(verify_site(self.output / "docs", self.modules, site_root=self.output), self.declaration_count)
         original = self.snapshot(self.output)
         add_project_navigation(self.output)
         self.assertEqual(original, self.snapshot(self.output))
@@ -71,7 +82,7 @@ class ProjectSiteTests(unittest.TestCase):
         self.assertTrue(report['blueprint_included'])
         self.assertNotIn('@@', (self.output / 'index.html').read_text())
         with self.assertRaisesRegex(ValueError, 'Output already exists'):
-            assemble(self.api, self.blueprint, self.output)
+            assemble(self.api, self.blueprint, self.output, structure=self.structure)
 
     def test_api_only_input_matches_ci_layout(self):
         # Remove only the disposable legacy-bundle fixture.
@@ -80,16 +91,16 @@ class ProjectSiteTests(unittest.TestCase):
         (self.api / 'index.html').write_text('<html><head></head><body><main>Lean Doc</main></body></html>')
         self.report['blueprint_included'] = False
         (self.api / 'build-info.json').write_text(json.dumps(self.report))
-        result = assemble(self.api, self.blueprint, self.output)
+        result = assemble(self.api, self.blueprint, self.output, structure=self.structure)
         self.assertTrue(result['blueprint_included'])
         self.assertIn('href="../blueprint/index.html"', (self.output / 'docs/navbar.html').read_text())
-        self.assertEqual(verify_site(self.output / 'docs', self.modules, site_root=self.output), 4)
+        self.assertEqual(verify_site(self.output / 'docs', self.modules, site_root=self.output), self.declaration_count)
 
     def test_blueprint_theorem_headers_are_not_page_headers(self):
         page = self.blueprint / 'index.html'
         page.write_text('<html><head></head><body><header>Page</header>'
                         '<article><header>Theorem</header></article></body></html>')
-        assemble(self.api, self.blueprint, self.output)
+        assemble(self.api, self.blueprint, self.output, structure=self.structure)
         text = (self.output / 'blueprint/index.html').read_text()
         self.assertEqual(text.count('id="goldbach-project-links"'), 1)
         self.assertIn('<article><header>Theorem</header></article>', text)
@@ -98,31 +109,31 @@ class ProjectSiteTests(unittest.TestCase):
         self.report['scope'] = 'partial'
         (self.api / 'build-info.json').write_text(json.dumps(self.report))
         with self.assertRaisesRegex(ValueError, 'requires a full API'):
-            assemble(self.api, self.blueprint, self.output)
+            assemble(self.api, self.blueprint, self.output, structure=self.structure)
         self.assertFalse(self.output.exists())
 
     def test_invalid_revision_fails_before_template_expansion(self):
         self.report['source_revision'] = '<script>bad</script>'
         (self.api / 'build-info.json').write_text(json.dumps(self.report))
         with self.assertRaisesRegex(ValueError, 'full source revision'):
-            assemble(self.api, self.blueprint, self.output)
+            assemble(self.api, self.blueprint, self.output, structure=self.structure)
 
     def test_missing_homepage_target_fails_before_publication(self):
         # This is an explicitly disposable test fixture, not a project artifact.
         (self.blueprint / 'overview.html').unlink()
         with self.assertRaisesRegex(ValueError, 'Broken local link'):
-            assemble(self.api, self.blueprint, self.output)
+            assemble(self.api, self.blueprint, self.output, structure=self.structure)
         self.assertFalse(self.output.exists())
 
     def test_stale_declaration_count_fails(self):
-        self.report['declaration_count'] = 5
+        self.report['declaration_count'] = self.declaration_count + 1
         (self.api / 'build-info.json').write_text(json.dumps(self.report))
         with self.assertRaisesRegex(ValueError, 'census changed'):
-            assemble(self.api, self.blueprint, self.output)
+            assemble(self.api, self.blueprint, self.output, structure=self.structure)
 
     def test_distinct_api_and_website_revisions_are_preserved(self):
         (self.blueprint / 'build-info.json').write_text(json.dumps({'source_revision': 'b' * 40}))
-        result = assemble(self.api, self.blueprint, self.output, source_revision='b' * 40)
+        result = assemble(self.api, self.blueprint, self.output, structure=self.structure, source_revision='b' * 40)
         self.assertEqual(result['api_source_revision'], 'a' * 40)
         self.assertEqual(result['website_source_revision'], 'b' * 40)
         self.assertEqual(result['blueprint_source_revision'], 'b' * 40)
@@ -132,7 +143,7 @@ class ProjectSiteTests(unittest.TestCase):
     def test_mismatched_blueprint_revision_is_rejected(self):
         (self.blueprint / 'build-info.json').write_text(json.dumps({'source_revision': 'b' * 40}))
         with self.assertRaisesRegex(ValueError, 'Blueprint source revision differs'):
-            assemble(self.api, self.blueprint, self.output)
+            assemble(self.api, self.blueprint, self.output, structure=self.structure)
 
     def test_empty_directory_is_not_a_valid_web_route(self):
         site = self.root / 'empty-route'

@@ -28,6 +28,8 @@ def add_project_navigation(site):
         links = ('<div id="goldbach-project-links">'
                  '<div class="nav_link"><a href="../index.html">Project home</a></div>'
                  '<div class="nav_link"><a href="../blueprint/index.html">Lean Blueprint</a></div>'
+                 '<div class="nav_link"><a href="../report/index.html">Li–Liu report</a></div>'
+                 '<div class="nav_link"><a href="../structure/index.html">Project structure</a></div>'
                  '</div>')
         navbar.write_text(text.replace(marker, marker + links))
     index = api / "index.html"
@@ -43,8 +45,12 @@ def add_project_navigation(site):
             raise ValueError(f"Unexpected Blueprint page header: {page.name}")
         home = posixpath.relpath(site / "index.html", page.parent)
         docs = posixpath.relpath(api / "index.html", page.parent)
+        report_link = posixpath.relpath(site / "report/index.html", page.parent)
+        structure_link = posixpath.relpath(site / "structure/index.html", page.parent)
         links = ('<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0">'
-                 f'<a href="{home}">Project home</a> · <a href="{docs}">Lean Doc</a></div>')
+                 f'<a href="{home}">Project home</a> · <a href="{docs}">Lean Doc</a> · '
+                 f'<a href="{report_link}">Li–Liu report</a> · '
+                 f'<a href="{structure_link}">Project structure</a></div>')
         position = header.end() - len('</header>')
         page.write_text(text[:position] + links + text[position:])
     for page in site.rglob("*.html"):
@@ -55,7 +61,7 @@ def add_project_navigation(site):
         page.write_text(text.replace('</head>', f'<link rel="icon" href="{icon}" type="image/svg+xml"></head>', 1))
 
 
-def assemble(api, blueprint, output, *, templates=ROOT / "website", source_revision=None):
+def assemble(api, blueprint, output, *, structure=None, templates=ROOT / "website", source_revision=None):
     api, blueprint, output = api.resolve(), blueprint.resolve(), output.resolve()
     if output.exists():
         raise ValueError("Output already exists; choose a new directory")
@@ -78,6 +84,17 @@ def assemble(api, blueprint, output, *, templates=ROOT / "website", source_revis
         raise ValueError("Inconsistent API module inventory")
     if not (blueprint / "index.html").is_file():
         raise ValueError("Blueprint index.html is missing")
+    if structure is None:
+        raise ValueError("A full project structure export is required")
+    structure = Path(structure).resolve()
+    structure_report = json.loads((structure / "build-info.json").read_text())
+    structure_modules = json.loads((structure / "modules.json").read_text())["modules"]
+    if (structure_report.get("scope") != "full-four-library"
+            or structure_report.get("module_count") != len(modules)
+            or sorted(m["name"] for m in structure_modules) != sorted(modules)):
+        raise ValueError("Structure and API module inventories differ")
+    if not re.fullmatch(r"[0-9a-f]{40}", structure_report.get("source_revision", "")):
+        raise ValueError("Structure source revision is missing")
     output.parent.mkdir(parents=True, exist_ok=True)
     work = Path(tempfile.mkdtemp(prefix="site-run-", dir=output.parent))
     # Older API bundles contained Blueprint at their own root. It now has a
@@ -86,6 +103,8 @@ def assemble(api, blueprint, output, *, templates=ROOT / "website", source_revis
         return {"blueprint"} if Path(path).resolve() == api else set()
     shutil.copytree(api, work / "docs", ignore=ignore)
     shutil.copytree(blueprint, work / "blueprint")
+    shutil.copytree(structure, work / "structure")
+    shutil.copytree(templates / "report", work / "report")
     for name in ("home.css", "favicon.svg"):
         shutil.copy2(templates / name, work / name)
     homepage = (templates / "index.html").read_text()
@@ -93,12 +112,21 @@ def assemble(api, blueprint, output, *, templates=ROOT / "website", source_revis
         "@@SOURCE_ROOT@@": f"{SOURCE_REPO}/blob/{revision}",
         "@@TREE_ROOT@@": f"{SOURCE_REPO}/tree/{revision}",
         "@@SHORT_REVISION@@": revision[:7],
+        "@@API_TREE_ROOT@@": f"{SOURCE_REPO}/tree/{api_revision}",
+        "@@API_SHORT_REVISION@@": api_revision[:7],
     }
     for old, new in replacements.items():
         homepage = homepage.replace(old, new)
     if "@@" in homepage:
         raise ValueError("Unexpanded homepage template marker")
     (work / "index.html").write_text(homepage)
+    for page in (work / "report").rglob("*.html"):
+        text = page.read_text()
+        for old, new in replacements.items():
+            text = text.replace(old, new)
+        if "@@" in text:
+            raise ValueError("Unexpanded report template marker")
+        page.write_text(text)
     add_project_navigation(work)
     count = verify_site(work / "docs", modules, site_root=work)
     if count != report["declaration_count"]:
@@ -107,6 +135,8 @@ def assemble(api, blueprint, output, *, templates=ROOT / "website", source_revis
     (work / "docs/build-info.json").write_text(json.dumps(api_report, indent=2) + "\n")
     assembled = dict(report, website_source_revision=revision,
                      api_source_revision=api_revision,
+                     structure_source_revision=structure_report["source_revision"],
+                     structure_path="structure/", report_path="report/",
                      blueprint_source_revision=blueprint_report.get("source_revision"),
                      layout="project-home", api_path="docs/",
                      blueprint_path="blueprint/", blueprint_included=True,
@@ -122,10 +152,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--api", type=Path, required=True)
     parser.add_argument("--blueprint", type=Path, required=True)
+    parser.add_argument("--structure", type=Path, required=True,
+                        help="Verified export's structure/ directory")
     parser.add_argument("--output", type=Path, default=ROOT / "docbuild/.lake/build/site")
     parser.add_argument("--source-revision", help="Website/Blueprint commit when reusing an older API artifact")
     args = parser.parse_args()
-    report = assemble(args.api, args.blueprint, args.output, source_revision=args.source_revision)
+    report = assemble(args.api, args.blueprint, args.output, structure=args.structure, source_revision=args.source_revision)
     print(json.dumps({k: v for k, v in report.items() if k != "modules"}, indent=2))
     print(f"Verified project website: {args.output.resolve()}")
 

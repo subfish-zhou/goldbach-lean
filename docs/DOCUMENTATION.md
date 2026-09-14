@@ -1,6 +1,7 @@
-# Project homepage, Lean documentation and proof Blueprint
+# Project website, Lean documentation and dependency views
 
-The website presents the Goldbach research program through three routes:
+The complete static-site layout has five routes, relative to the project's
+deployment prefix:
 
 - **Project homepage** at `/`: research goals, progress, reading routes,
   verification instructions and provenance links. Chen's **1 + 2 theorem** is
@@ -12,6 +13,16 @@ The website presents the Goldbach research program through three routes:
 - **Proof Blueprint** at `/blueprint/`: the selected **Chen 1+2** and
   **Li–Liu 1+1.9** routes together with their reusable analytic foundations,
   with links into the implementation.
+- **Author report** at `/report/`: the Li–Liu result, its two proof exits,
+  paper-to-Lean correspondence and review scope, authored in `website/report/`.
+- **Full structure explorer** at `/structure/`: the four-library module
+  inventory and compiled declaration references, with separate public-exit role labels, generated separately from
+  existing Lean objects and assembled with the other views.
+
+This documentation update uses an independent local static-site build followed
+by publication to `gh-pages`. The commands below describe that release path;
+the deployed version is established by reading the live build records after
+Pages finishes, not by the presence of these instructions in the source tree.
 
 The completed public theorems give Chen's prime-plus-almost-prime representation
 and Li–Liu's constrained `N = p + r*q` representation with `r^10 ≤ q^9`, together
@@ -32,7 +43,15 @@ run `python3 scripts/generate_blueprint.py` to regenerate the annotations;
 generation, not automatic mathematical node selection. The master `blueprint/src/content.tex`
 includes the overview and proof chapters in `blueprint/src/chapters/`.
 LeanArchitect infers dependencies from compiled declarations; LeanBlueprint
-renders the exposition and both global and chapter-sized graphs. Chapter graphs
+renders the exposition and both global and chapter-sized graphs. After a reviewed
+catalogue change and a successful render, `python3 scripts/update_blueprint_graph.py`
+checks the new graph against the approved exits; add `--write` to refresh
+`blueprint/graph.json`. Changing the exit contract requires explicitly repeating
+`--terminal LABEL` for each approved exit. The command reads actual rendered DOT
+and requires every selected node to reach an approved exit. Continue with
+`python3 scripts/verify_blueprint.py` to check the updated snapshot and source links.
+Run these commands in the activated Blueprint environment so its `plastex` and
+`pygraphviz` dependencies are available. Chapter graphs
 include immediate external inputs, marked `(input)`, without inventing edges.
 `scripts/verify_blueprint.py` checks the exact graph inventories, chapter-edge
 reachability, paths from every selected node to a documented theorem exit,
@@ -48,12 +67,17 @@ Stable entry pages are `overview.html`, `foundations.html`, `chen.html` and
 so adding a chapter cannot silently redirect a homepage link to the wrong topic.
 
 The generated API inventory retains its own `source_revision` in
-`docs/build-info.json`. The assembled site's record also distinguishes
-`api_source_revision`, `website_source_revision` and `blueprint_source_revision`.
-For a homepage/Blueprint preview that reuses an older complete API artifact,
-pass `--source-revision COMMIT` to `scripts/build_site.py`; the Blueprint record
-must match that website revision. API pages retain their original source links.
-The standard CI build generates all three views from the same revision.
+`docs/build-info.json`. The assembled site's record distinguishes
+`api_source_revision`, `website_source_revision`, `blueprint_source_revision`
+and `structure_source_revision`;
+`structure/build-info.json` records the structure export's source revision and
+input fingerprint. The API source version and website version may differ when
+reusing a verified complete API artifact. Record both exact commits, preserve
+the API's original source links, and check compatibility with the current
+module inventory and linked declarations. Pass `--source-revision COMMIT` to
+`scripts/build_site.py` to identify the website source; the Blueprint record
+must match it. An older API must never be relabelled as newly rendered output.
+Keep the report's own source pins and review scope alongside these identities.
 
 ## Pinned generator and isolation
 
@@ -82,33 +106,41 @@ pinned GitHub source. Source links for project declarations use the checkout's
 Git commit and line ranges. Generate from a clean, committed release checkout,
 and publish that commit to make its source links publicly resolvable.
 
-## CI budgets and artifact reuse
+## Independent Lean CI and local documentation
 
-Proof verification and documentation are separate jobs. The verification job
-still builds all four libraries without warnings, runs the source/statement/axiom
-checks and tests, and replays every original public check target. Documentation
-requires that job to succeed; deployment requires both jobs. A cold verification
-job currently has a 180-minute safety budget and documentation has its own
-120-minute budget. These budgets prevent documentation from consuming the proof
-job's remaining time; increasing a timeout is not a measured speed improvement.
+`.github/workflows/lean.yml` verifies source pushes other than `gh-pages`, pull
+requests and manual runs. It retains the full warning-free library build,
+source/statement/axiom checks, script tests and public-module kernel replay:
+
+```sh
+lake --wfail build
+python3 scripts/check.py
+python3 -m unittest discover -s scripts -p 'test_*.py'
+lake env leanchecker --verbose Goldbach.Theorem
+lake env leanchecker --verbose Goldbach.Checks
+lake env leanchecker --verbose Goldbach.OnePlusOneNine
+lake env leanchecker --verbose Goldbach.OnePlusOneNineChecks
+lake env leanchecker --verbose Goldbach.All
+```
+
+These gates remain independent of documentation generation. The Lean workflow
+has no website generation or deployment job; pushing generated files to
+`gh-pages` does not restart the proof workflow. It keeps a 180-minute job budget,
+a 160-minute build-step budget and the build timing/runner-context artifact.
+Those limits are safety budgets, not measured speed improvements.
 
 The project build cache is keyed by platform, toolchain, dependency manifest,
 Lake configuration and revision, with a same-configuration incremental fallback.
-Lake always runs after restoration, including on an exact cache hit. Only the
-successful prerequisite job's artifacts from the same workflow run are passed
-to documentation. A tar archive preserves artifact sidecars and permissions;
-revision and configuration checks precede restoration. Dependency caches are
-fetched on each runner. The generator cache contains pinned dependencies and
-compiler products, never old API pages or an old website. All pages and search
-indexes are generated for the current revision and validated before deployment.
-
-Build and API-generation logs include GNU `time` resource measurements and are
-uploaded separately. Compare cold-cache and warm-cache runs separately, and use
-actual GitHub runner measurements rather than extrapolating local leaf timings.
+Lake and the checks run even on an exact cache hit. Local documentation reads
+stable, previously verified compiled inputs; its generator has a separate
+dependency installation. Reusing those inputs requires matching source and
+configuration evidence. Static validation and publishing do not replace the
+Lean build, checks or replay. Compare cold-cache and warm-cache timings
+separately, and keep local measurements distinct from GitHub runner results.
 
 ## Build a complete API site
 
-Requirements: the pinned Lean/Lake toolchain, a C compiler, Git, Python 3.10 or
+Requirements: the pinned Lean/Lake toolchain, a C compiler, Git, Python 3.11 or
 newer, network access for the generator's first build, and sufficient disk space
 for its native executable and the project API pages. Finish the project build
 before starting documentation generation, so all compiled proofs and runtime
@@ -184,38 +216,77 @@ supplies the freshness guarantee for transitive artifacts.
 ## Assemble the project website
 
 Build the Blueprint using the [normal procedure](ARCHITECTURE.md#interactive-blueprint),
-then assemble it with a full API build:
+including `python3 scripts/verify_blueprint.py`, which writes its build record.
+Generate the structure export from the same stable compiled project, then supply
+its pre-generated `structure/` directory to the assembler. In this example,
+`api-release`, `structure-release` and `site-release` must all be new paths;
+`SITE_REVISION` is the exact committed website/Blueprint source revision:
 
 ```sh
-python3 scripts/build_docs.py --output docbuild/.lake/build/api
-python3 scripts/build_site.py --api docbuild/.lake/build/api \
-  --blueprint blueprint/web --output docbuild/.lake/build/site
-python3 -m http.server 8000 --directory docbuild/.lake/build/site
+SITE_REVISION=$(git rev-parse HEAD)
+python3 scripts/build_docs.py --output docbuild/.lake/build/api-release
+python3 scripts/build_project_structure.py \
+  --api docbuild/.lake/build/api-release \
+  --source-revision "$SITE_REVISION" \
+  --output docbuild/.lake/build/structure-release
+python3 scripts/build_site.py --api docbuild/.lake/build/api-release \
+  --blueprint blueprint/web \
+  --structure docbuild/.lake/build/structure-release/structure \
+  --source-revision "$SITE_REVISION" \
+  --output docbuild/.lake/build/site-release
+python3 -m http.server 8000 --directory docbuild/.lake/build/site-release
 ```
 
-If the full API output already exists and has been verified, start with the
-`build_site.py` command. Use a fresh site output path for each assembly.
-The resulting routes are `/`, `/docs/` and `/blueprint/`, relative to the
-project's deployment prefix. The API sidebar and Blueprint page headers link
-back to the homepage. Blueprint declaration links retain their pinned GitHub
-source locations.
+If a compatible full API output already exists and has been verified, skip API
+generation and use that path in both later commands. Likewise, a structure
+export can be reused with matching source/object fingerprints and valid API
+links. `build_project_structure.py --output DIR` writes `DIR/structure/`;
+`build_site.py --structure` takes that inner directory, not `DIR` or the
+unpopulated `website/structure/` template directory. The assembler requires
+`--structure` and checks that its module inventory matches the full API inventory.
 
-`build_site.py` copies the full API output, rendered Blueprint and homepage
-assets into a fresh intermediate directory. It adds cross-navigation, checks the
-declaration census and local links/anchors, then moves the validated result to
-the requested output directory. The input trees remain unchanged. Assembly
-works entirely with the existing HTML and assets, so homepage-only changes can
-reuse a previously verified full API build and Blueprint.
+The resulting routes are `/`, `/docs/`, `/blueprint/`, `/report/` and
+`/structure/`. `build_site.py` combines the full API output, rendered Blueprint,
+pre-generated structure export, homepage assets and authored `website/report/`
+pages in a fresh output tree. It checks declaration coverage and local links
+and anchors within the complete deployment boundary. Assembly reads static
+inputs and leaves their trees unchanged; it performs neither Lean compilation
+nor API rendering nor structure extraction. Preserve every route together when
+previewing or publishing, because navigation and data links cross subdirectories.
 
 Both API-only output and the older `build_docs.py --blueprint` bundle are valid
 assembly inputs. For a legacy bundle, the copy step omits its nested Blueprint
 and places the separately supplied Blueprint at the sibling `/blueprint/`
 route. A partial API build fails the assembly preflight.
 
-The homepage's source revision comes from the API build record and identifies
-the Lean source used for that API build. The assembled record retains this
-revision and separately records the homepage hash and route layout, allowing
-homepage changes to reuse the same proof documentation.
+Without `--source-revision`, the website source revision defaults to the API
+revision. Supply it explicitly when the website/Blueprint comes from a newer
+commit. Preserve the separate API, website, Blueprint and structure identities
+and inspect the report's fixed source links; a homepage hash or a matching
+module count alone cannot establish provenance for all these inputs.
+
+### Three graph meanings
+
+The structure exporter reads all four libraries, including modules outside the
+public facades' import closures. Its declaration census uses actual
+`ModuleData.constNames`, cross-checked against stored constants, and retains
+every provider of repeated names. The reading views have different edge meanings:
+
+| View | Edge meaning and direction |
+|---|---|
+| Curated mathematical Blueprint | Selected explanatory prerequisite → consumer; LeanArchitect supplies dependencies for the authored selection. |
+| Module import graph | Consumer module → direct source import, cross-checked against compiled imports. This records module access, not use of a particular proof. |
+| Compiled declaration reference graph | Declaration → `Expr.const` reference in its `type`, proof/definition `value`, or `recursorRHS`, kept as separate edge types. |
+
+Only the compiled value-reference layer records actual static references in a
+stored proof or definition value. An import path is never a proof/value path.
+The compiled graph retains cycles and self-references, generated declarations,
+and exact names at the external or unresolved boundary; it is not forced into
+a DAG. References outside the local census are not recursively expanded.
+These are static expression references, not tactic execution traces or dynamic
+runtime calls. The exporter fingerprints source and object bytes and checks
+import agreement; proof verification remains the responsibility of Lean's
+build/check/replay gates. See [the architecture guide](ARCHITECTURE.md#reading-dependency-data).
 
 The Blueprint's plasTeX configuration selects the `HTML5` renderer, loads
 `plastexdepgraph` and `leanblueprint`, copies theme extras, and loads local
@@ -245,6 +316,9 @@ Run the source-only regression suites with:
 ```sh
 python3 -m unittest discover -s scripts -p test_build_docs.py -v
 python3 -m unittest discover -s scripts -p test_build_site.py -v
+python3 -m unittest discover -s scripts -p test_project_structure.py -v
+python3 -m unittest discover -s scripts -p test_publish_site.py -v
+python3 -m unittest discover -s scripts -p test_ci_workflow.py -v
 ```
 
 The site suite exercises API-only and legacy-bundle inputs, preservation of input
@@ -254,13 +328,49 @@ mismatches, directory routes and deployment-boundary escapes. It also checks tha
 Blueprint navigation is added to the page header while theorem headers remain
 intact.
 
-For Pages, upload the **entire generated site directory**, preserving
+For Pages, publish the **entire generated site directory**, preserving
 `docs/declarations/*.bmp` (JSON indexes despite their extension), `docs/find/`,
-JavaScript/CSS, root homepage assets, `.nojekyll` and `blueprint/`. Relative site
-links support deployment below a project Pages prefix. Publish the site through
-the deployment workflow after local validation. Generate the release API from
-the final published source commit so declaration source links resolve to that
-revision.
+JavaScript/CSS, homepage assets, `.nojekyll`, `blueprint/`, `report/` and the
+complete `structure/` data shards. Relative links support a project Pages prefix.
+Keep Apache-2.0 licensing, upstream copyright notices and the attribution in
+[PROVENANCE.md](PROVENANCE.md) intact across the public reading surfaces.
+
+First validate the prepared payload without Git writes:
+
+```sh
+python3 scripts/publish_site.py --site docbuild/.lake/build/site-release
+```
+
+The publisher checks required routes, full API coverage, exact source identities,
+declaration anchors, local links and the static-file inventory. It rejects
+private/build directories, symlinks, private paths or credentials in text, and
+oversized files or payloads. Keep build logs, raw extraction caches and private
+verification ledgers outside the publishable tree.
+
+For an authorized release, use a clean committed source checkout whose `HEAD`
+matches `website_source_revision`, with publicly resolvable source commits,
+Git push access to the configured repository and authenticated `gh` access to
+Pages settings. Require the corresponding Lean acceptance evidence separately;
+the publisher does not query CI. Then run:
+
+```sh
+python3 scripts/publish_site.py --site <new-complete-site-directory> \
+  --publish --configure-pages --staging <new-staging-directory>
+```
+
+Replace both angle-bracket placeholders with actual paths. The staging directory
+must not exist. The publisher creates a separate Git checkout there, preserves
+existing `gh-pages` history, pushes the static tree without force, reads back
+the remote branch, and configures Pages to serve `gh-pages` at `/`. Its local
+receipt stays in the staging checkout's `.git/publication-result.json`, outside
+the uploaded site. It neither commits nor rewrites the source branch.
+
+After GitHub Pages finishes deploying, read the public `build-info.json` and the
+API, Blueprint and structure build records; match them to the candidate's exact
+versions. Check all five entry routes, declaration search and its destination
+anchors, and both graph interfaces under the real project prefix. A successful
+push or settings update establishes the publishing request; live read-back
+establishes which version is online.
 
 ## Local proof-compilation measurements
 

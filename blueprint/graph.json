@@ -44,8 +44,10 @@
     "bp:liliu-cross-certificate",
     "bp:liliu-domain",
     "bp:liliu-existence",
+    "bp:liliu-g10-integral",
     "bp:liliu-g11-actual",
     "bp:liliu-g11-certificate",
+    "bp:liliu-i10-consumed",
     "bp:liliu-imbalance",
     "bp:liliu-ledger",
     "bp:liliu-level",
@@ -54,11 +56,18 @@
     "bp:liliu-pair-certificate",
     "bp:liliu-paper",
     "bp:liliu-positive",
+    "bp:liliu-public-coefficient",
+    "bp:liliu-public-count",
+    "bp:liliu-public-natural",
+    "bp:liliu-public-real",
     "bp:liliu-representation",
     "bp:liliu-retained",
+    "bp:liliu-s1-density-six",
+    "bp:liliu-s3-main-six",
     "bp:liliu-sifted",
     "bp:liliu-six",
-    "bp:liliu-twelve"
+    "bp:liliu-twelve",
+    "bp:liliu-upper-density-six"
   ],
   "edges": [
     [
@@ -219,6 +228,10 @@
     ],
     [
       "bp:foundation-jr-hats",
+      "bp:liliu-g10-integral"
+    ],
+    [
+      "bp:foundation-jr-hats",
       "bp:liliu-g11-actual"
     ],
     [
@@ -227,7 +240,11 @@
     ],
     [
       "bp:foundation-jr-hats",
-      "bp:liliu-positive"
+      "bp:liliu-s1-density-six"
+    ],
+    [
+      "bp:foundation-jr-hats",
+      "bp:liliu-upper-density-six"
     ],
     [
       "bp:foundation-liupan",
@@ -259,6 +276,10 @@
     ],
     [
       "bp:foundation-local-product",
+      "bp:liliu-g10-integral"
+    ],
+    [
+      "bp:foundation-local-product",
       "bp:liliu-g11-actual"
     ],
     [
@@ -267,7 +288,11 @@
     ],
     [
       "bp:foundation-local-product",
-      "bp:liliu-positive"
+      "bp:liliu-s1-density-six"
+    ],
+    [
+      "bp:foundation-local-product",
+      "bp:liliu-s3-main-six"
     ],
     [
       "bp:foundation-mertens",
@@ -287,6 +312,10 @@
     ],
     [
       "bp:foundation-mertens",
+      "bp:liliu-g10-integral"
+    ],
+    [
+      "bp:foundation-mertens",
       "bp:liliu-g11-actual"
     ],
     [
@@ -303,7 +332,7 @@
     ],
     [
       "bp:foundation-pan-bounded",
-      "bp:liliu-retained"
+      "bp:liliu-g10-integral"
     ],
     [
       "bp:foundation-pnt",
@@ -351,7 +380,7 @@
     ],
     [
       "bp:foundation-suzuki-lower",
-      "bp:liliu-positive"
+      "bp:liliu-s1-density-six"
     ],
     [
       "bp:foundation-suzuki-upper",
@@ -371,7 +400,7 @@
     ],
     [
       "bp:foundation-suzuki-upper",
-      "bp:liliu-retained"
+      "bp:liliu-g10-integral"
     ],
     [
       "bp:foundation-weighted-bv",
@@ -394,6 +423,10 @@
       "bp:liliu-existence"
     ],
     [
+      "bp:liliu-b9",
+      "bp:liliu-public-natural"
+    ],
+    [
       "bp:liliu-basic",
       "bp:liliu-six"
     ],
@@ -402,8 +435,16 @@
       "bp:liliu-paper"
     ],
     [
+      "bp:liliu-coefficient",
+      "bp:liliu-public-coefficient"
+    ],
+    [
       "bp:liliu-count-positive",
       "bp:liliu-existence"
+    ],
+    [
+      "bp:liliu-count-positive",
+      "bp:liliu-public-natural"
     ],
     [
       "bp:liliu-cross",
@@ -422,12 +463,24 @@
       "bp:liliu-g11-certificate"
     ],
     [
+      "bp:liliu-existence",
+      "bp:liliu-public-real"
+    ],
+    [
+      "bp:liliu-g10-integral",
+      "bp:liliu-i10-consumed"
+    ],
+    [
       "bp:liliu-g11-actual",
       "bp:liliu-author-consume"
     ],
     [
       "bp:liliu-g11-certificate",
       "bp:liliu-g11-actual"
+    ],
+    [
+      "bp:liliu-i10-consumed",
+      "bp:liliu-retained"
     ],
     [
       "bp:liliu-imbalance",
@@ -446,12 +499,20 @@
       "bp:liliu-existence"
     ],
     [
+      "bp:liliu-old-margin",
+      "bp:liliu-public-natural"
+    ],
+    [
       "bp:liliu-pair",
       "bp:liliu-ledger"
     ],
     [
       "bp:liliu-pair-certificate",
       "bp:liliu-ledger"
+    ],
+    [
+      "bp:liliu-paper",
+      "bp:liliu-public-count"
     ],
     [
       "bp:liliu-positive",
@@ -474,8 +535,20 @@
       "bp:liliu-existence"
     ],
     [
-      "bp:liliu-sifted",
+      "bp:liliu-retained",
+      "bp:liliu-public-natural"
+    ],
+    [
+      "bp:liliu-s1-density-six",
+      "bp:liliu-positive"
+    ],
+    [
+      "bp:liliu-s3-main-six",
       "bp:liliu-retained"
+    ],
+    [
+      "bp:liliu-sifted",
+      "bp:liliu-g10-integral"
     ],
     [
       "bp:liliu-six",
@@ -483,7 +556,11 @@
     ],
     [
       "bp:liliu-twelve",
-      "bp:liliu-retained"
+      "bp:liliu-i10-consumed"
+    ],
+    [
+      "bp:liliu-upper-density-six",
+      "bp:liliu-s3-main-six"
     ]
   ],
   "chapters": {
@@ -499,7 +576,8 @@
         "bp:liliu-basic",
         "bp:liliu-g11-actual",
         "bp:liliu-ledger",
-        "bp:liliu-paper",
+        "bp:liliu-public-count",
+        "bp:liliu-public-natural",
         "bp:liliu-retained",
         "bp:liliu-twelve"
       ],
@@ -542,11 +620,15 @@
         ],
         [
           "bp:liliu-ledger",
-          "bp:liliu-paper"
+          "bp:liliu-public-count"
         ],
         [
           "bp:liliu-retained",
           "bp:liliu-ledger"
+        ],
+        [
+          "bp:liliu-retained",
+          "bp:liliu-public-natural"
         ],
         [
           "bp:liliu-twelve",
@@ -883,8 +965,10 @@
         "bp:liliu-cross-certificate",
         "bp:liliu-domain",
         "bp:liliu-existence",
+        "bp:liliu-g10-integral",
         "bp:liliu-g11-actual",
         "bp:liliu-g11-certificate",
+        "bp:liliu-i10-consumed",
         "bp:liliu-imbalance",
         "bp:liliu-ledger",
         "bp:liliu-level",
@@ -893,11 +977,18 @@
         "bp:liliu-pair-certificate",
         "bp:liliu-paper",
         "bp:liliu-positive",
+        "bp:liliu-public-coefficient",
+        "bp:liliu-public-count",
+        "bp:liliu-public-natural",
+        "bp:liliu-public-real",
         "bp:liliu-representation",
         "bp:liliu-retained",
+        "bp:liliu-s1-density-six",
+        "bp:liliu-s3-main-six",
         "bp:liliu-sifted",
         "bp:liliu-six",
-        "bp:liliu-twelve"
+        "bp:liliu-twelve",
+        "bp:liliu-upper-density-six"
       ],
       "edges": [
         [
@@ -942,6 +1033,10 @@
         ],
         [
           "bp:foundation-jr-hats",
+          "bp:liliu-g10-integral"
+        ],
+        [
+          "bp:foundation-jr-hats",
           "bp:liliu-g11-actual"
         ],
         [
@@ -950,7 +1045,11 @@
         ],
         [
           "bp:foundation-jr-hats",
-          "bp:liliu-positive"
+          "bp:liliu-s1-density-six"
+        ],
+        [
+          "bp:foundation-jr-hats",
+          "bp:liliu-upper-density-six"
         ],
         [
           "bp:foundation-local-product",
@@ -962,6 +1061,10 @@
         ],
         [
           "bp:foundation-local-product",
+          "bp:liliu-g10-integral"
+        ],
+        [
+          "bp:foundation-local-product",
           "bp:liliu-g11-actual"
         ],
         [
@@ -970,7 +1073,11 @@
         ],
         [
           "bp:foundation-local-product",
-          "bp:liliu-positive"
+          "bp:liliu-s1-density-six"
+        ],
+        [
+          "bp:foundation-local-product",
+          "bp:liliu-s3-main-six"
         ],
         [
           "bp:foundation-mertens",
@@ -979,6 +1086,10 @@
         [
           "bp:foundation-mertens",
           "bp:liliu-cross"
+        ],
+        [
+          "bp:foundation-mertens",
+          "bp:liliu-g10-integral"
         ],
         [
           "bp:foundation-mertens",
@@ -998,7 +1109,7 @@
         ],
         [
           "bp:foundation-pan-bounded",
-          "bp:liliu-retained"
+          "bp:liliu-g10-integral"
         ],
         [
           "bp:foundation-pnt",
@@ -1014,7 +1125,7 @@
         ],
         [
           "bp:foundation-suzuki-lower",
-          "bp:liliu-positive"
+          "bp:liliu-s1-density-six"
         ],
         [
           "bp:foundation-suzuki-upper",
@@ -1026,7 +1137,7 @@
         ],
         [
           "bp:foundation-suzuki-upper",
-          "bp:liliu-retained"
+          "bp:liliu-g10-integral"
         ],
         [
           "bp:liliu-author-consume",
@@ -1041,6 +1152,10 @@
           "bp:liliu-existence"
         ],
         [
+          "bp:liliu-b9",
+          "bp:liliu-public-natural"
+        ],
+        [
           "bp:liliu-basic",
           "bp:liliu-six"
         ],
@@ -1049,8 +1164,16 @@
           "bp:liliu-paper"
         ],
         [
+          "bp:liliu-coefficient",
+          "bp:liliu-public-coefficient"
+        ],
+        [
           "bp:liliu-count-positive",
           "bp:liliu-existence"
+        ],
+        [
+          "bp:liliu-count-positive",
+          "bp:liliu-public-natural"
         ],
         [
           "bp:liliu-cross",
@@ -1069,12 +1192,24 @@
           "bp:liliu-g11-certificate"
         ],
         [
+          "bp:liliu-existence",
+          "bp:liliu-public-real"
+        ],
+        [
+          "bp:liliu-g10-integral",
+          "bp:liliu-i10-consumed"
+        ],
+        [
           "bp:liliu-g11-actual",
           "bp:liliu-author-consume"
         ],
         [
           "bp:liliu-g11-certificate",
           "bp:liliu-g11-actual"
+        ],
+        [
+          "bp:liliu-i10-consumed",
+          "bp:liliu-retained"
         ],
         [
           "bp:liliu-imbalance",
@@ -1093,12 +1228,20 @@
           "bp:liliu-existence"
         ],
         [
+          "bp:liliu-old-margin",
+          "bp:liliu-public-natural"
+        ],
+        [
           "bp:liliu-pair",
           "bp:liliu-ledger"
         ],
         [
           "bp:liliu-pair-certificate",
           "bp:liliu-ledger"
+        ],
+        [
+          "bp:liliu-paper",
+          "bp:liliu-public-count"
         ],
         [
           "bp:liliu-positive",
@@ -1121,8 +1264,20 @@
           "bp:liliu-existence"
         ],
         [
-          "bp:liliu-sifted",
+          "bp:liliu-retained",
+          "bp:liliu-public-natural"
+        ],
+        [
+          "bp:liliu-s1-density-six",
+          "bp:liliu-positive"
+        ],
+        [
+          "bp:liliu-s3-main-six",
           "bp:liliu-retained"
+        ],
+        [
+          "bp:liliu-sifted",
+          "bp:liliu-g10-integral"
         ],
         [
           "bp:liliu-six",
@@ -1130,7 +1285,11 @@
         ],
         [
           "bp:liliu-twelve",
-          "bp:liliu-retained"
+          "bp:liliu-i10-consumed"
+        ],
+        [
+          "bp:liliu-upper-density-six",
+          "bp:liliu-s3-main-six"
         ]
       ]
     }
@@ -1138,7 +1297,9 @@
   "terminals": [
     "bp:chen-representation-lower-bound",
     "bp:chen-theorem",
-    "bp:liliu-paper",
-    "bp:liliu-existence"
+    "bp:liliu-public-coefficient",
+    "bp:liliu-public-count",
+    "bp:liliu-public-natural",
+    "bp:liliu-public-real"
   ]
 }

@@ -8,6 +8,40 @@ in the even integer being represented.
 These are separate tasks: neither a linear sieve nor an equidistribution
 estimate alone gives the final representation count.
 
+
+\subsection{Choosing the distribution input by its counting object}
+\label{sec:distribution-reading-route}
+Read the distribution part in three layers: first the discrepancy being
+summed, then the uniformity in its moving parameters, and finally its actual
+counting consumer. This separates three inputs used in the Goldbach proof.
+\begin{enumerate}
+\item \emph{Ordinary Bombieri--Vinogradov:} a prime progression and a maximum
+over reduced residues and integer prefixes. The lower $S_1$ sieve pays this
+error on the original difference source. In the paper this is the ordinary
+prime-distribution setting of (1.11) and its uses in Section~5.1.
+The proof below passes through principal, small-conductor and large-conductor
+branches before the actual maximal prime-counting theorem is available.
+\item \emph{Bounded-coefficient Pan:} a coefficient--prime convolution, with
+the coefficient sum inside the absolute value. Its constants precede the
+varying coefficient and interval. The switched $S_2$ and $B_{10}$ sources use
+this input; the latter pays both window endpoints. The paper's weighted
+setting (1.12)--(1.13), Lemma~3.1 and the application (5.37) motivate this
+source-specific implementation. Its contract below gives the precise
+$|a|\le1$, $A_2\le N^{2/3}$ and logarithmic lower-endpoint conditions.
+\item \emph{Fouvry well-factorable distribution:} a signed sum in the modulus
+of bilinear discrepancies. Lemma~3.5 of the fixed paper supplies the
+$5(1-\nu)/9$ level in the small-prime range. The implemented rectangle theorem
+retains the moving Goldbach residue and the coprimality-filtered prime
+coefficient. Flexible $G_{12}$ rectangles consume that exact theorem; the
+$G_9$ low-count producer and the author-$G_{11}$ mixed-level route have their
+own subsequent carrier and boundary payments.
+\end{enumerate}
+The detailed formulas below specify these three different contracts.
+Ordinary prime BV, a fixed Chen convolution, and the varying Li--Liu
+convolution are therefore separate navigation entries. The selected Blueprint
+nodes emphasize their mathematical roles; the structure browser supplies the
+full module and declaration-reference views for following the implementation.
+
 \subsection{The main scale and its local densities}
 
 Throughout this section, $N$ is a positive even integer tending to infinity,

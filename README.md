@@ -25,7 +25,9 @@ measure the v1.0.0-rc1 and v1.0.0 **1+2** developments.
 · **[Interactive proof Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)**
 
 The Lean API documentation covers all four project libraries, with declaration
-search, source links, and import navigation. See [how the website is built](docs/DOCUMENTATION.md).
+search, source links, and import navigation. The complete local publication
+layout also includes a Li–Liu author report at `/report/` and the four-library
+structure explorer at `/structure/`. See [how the website is built and published](docs/DOCUMENTATION.md).
 
 | Read the mathematics | Explore the proof | Check the result |
 |---|---|---|
@@ -53,8 +55,23 @@ separates this view from direct imports and compiled declaration dependencies.
 
 The [interactive Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)
 renders selected declaration dependencies from LeanArchitect, with links to their
-Lean source. Continuous integration (CI) validates the documentation and assembles
-the project homepage, Lean Doc, and Blueprint into one website, published from `main`. The Blueprint remains available as the `goldbach-blueprint` artifact.
+Lean source. This curated mathematical view is distinct from the module import
+graph and the compiled declaration graph in the structure explorer. Imports
+record module access; only the separate compiled `value` references record
+actual static uses within stored proofs or definitions. The declaration graph
+also keeps `type` and `recursorRHS` references separate.
+
+The release procedure for this documentation update builds and validates the
+complete static site locally, then publishes it independently to `gh-pages`
+from a fresh staging checkout. Lean CI retains the full warning-free build, source/statement/axiom
+checks, script tests, and replay of `Goldbach.Theorem`, `Goldbach.Checks`,
+`Goldbach.OnePlusOneNine`, `Goldbach.OnePlusOneNineChecks` and `Goldbach.All`;
+it does not generate or deploy the website. A reused API artifact may document
+an earlier source version than the website: record both exact revisions and
+preserve the API's original source links. Follow the
+[deployment procedure](docs/DOCUMENTATION.md#regression-tests-and-deployment)
+and read back the live build records after Pages deploys to determine which
+version is online.
 
 ## Main results
 

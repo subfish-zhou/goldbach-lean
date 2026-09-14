@@ -23,6 +23,17 @@ def decorate_graph(text, heading, caption):
     return text
 
 
+def verified_source_path(root, recorded, relative):
+    """Reuse source locations from another checkout only for identical bytes."""
+    root = Path(root).resolve()
+    target = (root / relative).resolve()
+    target.relative_to(root)
+    source = Path(recorded).resolve()
+    if not source.is_file() or not target.is_file() or source.read_bytes() != target.read_bytes():
+        raise ValueError('Compiled source location does not match the current catalogue source')
+    return target.relative_to(root)
+
+
 def reader_label(title):
     """Use mathematical titles, keeping internal labels only as identifiers."""
     return r'\n'.join(textwrap.wrap(title.replace('--', '–'), width=26,
@@ -149,14 +160,16 @@ def ProcessOptions(options, document):
     def source_links():
         locations = {}
         artifacts = root / '.lake/build/blueprint/module/Goldbach/Blueprint.artifacts'
-        for path in artifacts.glob('*.tex'):
+        for item in catalog:
+            path = artifacts / (item['label'] + '.tex')
             match = re.search(r'\\lean\{([^}]+)\}\s*% at (.+):(\d+)\.\d+-', path.read_text())
-            if match:
-                declaration, source, line = match.groups()
-                relative = Path(source).resolve().relative_to(root)
-                locations[declaration] = (
-                    'https://github.com/subfish-zhou/goldbach-lean/blob/'
-                    f'{revision}/{quote(relative.as_posix())}#L{int(line) + 1}')
+            if match is None or match.group(1) != item['declaration']:
+                raise ValueError('Compiled catalogue source location is missing or mismatched')
+            declaration, source, line = match.groups()
+            relative = verified_source_path(root, source, item['path'])
+            locations[declaration] = (
+                'https://github.com/subfish-zhou/goldbach-lean/blob/'
+                f'{revision}/{quote(relative.as_posix())}#L{int(line) + 1}')
         for graph in document.userdata['dep_graph']['graphs'].values():
             for node in graph.nodes:
                 declarations = node.userdata.get('leandecls', [])

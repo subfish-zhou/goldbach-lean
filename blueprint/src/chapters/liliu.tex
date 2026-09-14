@@ -8,6 +8,27 @@ sieving, switching, integral estimates, and the final choice of parameters.
 There are two implemented exits: a qualitative existence proof and a stronger
 counting proof using the author's two-branch estimate for the eleventh term.
 
+
+\paragraph{Reading this chapter with the paper.}
+The mathematical source is Jiamin Li and Jianya Liu,
+\emph{Theorem $(1+1.9)$ on the Goldbach Conjecture},
+\href{https://arxiv.org/html/2606.05224v1}{arXiv:2606.05224v1}.
+Theorem~1.1 and equation~(4.4) give the public result and the distinct-prime
+count. Propositions~4.1--4.3 organize the finite argument; Sections~5.1--5.5
+organize its analytic estimates and final assembly.
+The report page supplies a stage-by-stage paper/Lean correspondence ledger.
+This chapter and its graph are a selected mathematical exposition; the
+structure browser supplies the full project-module and declaration-reference
+views. The API provides the complete statement at each named declaration.
+
+\paragraph{Three useful comparison conventions.}
+An exact count or identity is compared literally after its notation is fixed.
+An equivalent formulation carries an explicit bridge, such as the rational
+exponent conversion below. A replacement proof records its actual intermediate
+objects: the level-six lower sieve and the factor-excluded tenth fibre are
+examples. These distinctions preserve the authors' weighted-sieve contribution
+while making the implemented route reproducible.
+
 \subsection{The counted object and the meaning of the exponent}
 For natural numbers $N,p$, write $\mathcal R(N,p)$ for
 \[
@@ -227,6 +248,11 @@ For the second factor, continuity first selects a fixed ratio $s<33/8$;
 the fixed-ratio sieve theorem is applied only afterwards.  Thus the
 endpoint value $f_*(33/8)$ is obtained with a paid error, not by assuming
 uniform validity of a sieve theorem at its limiting ratio.
+\inputleannode{bp:liliu-s1-density-six}
+In the fixed public paper, equations~(5.11)--(5.13) first use $f(53/8)$
+and then its lower comparison with $f(6)$. The implementation obtains the
+needed $f(6)$ coefficient directly at natural level $\lceil N^{4/53}\rceil^6$.
+This is a replacement lower-sieve route to the retained coefficient.
 \inputleannode{bp:liliu-positive}
 For the following $G_3,G_4,G_5$ upper bounds, fix $\delta>0$ and
 $0<\varepsilon<2/15$; each bound holds for every sufficiently large
@@ -263,6 +289,8 @@ uses this comparison at the moving finite-level ratios, then passes to
 the limiting integral above.  This covers $G_4,G_5$ and the entire
 $[53/24,45/8]$ range; the narrower upper comparison through four is not
 being silently extended.
+\inputleannode{bp:liliu-upper-density-six}
+\inputleannode{bp:liliu-s3-main-six}
 The actual bounds are $G_4\le[(1-\varepsilon)A_3(1/3)+\delta]\mathcal X_N$
 and $G_5\le[(1-\varepsilon)A_3(c)+\delta]\mathcal X_N$.
 
@@ -304,6 +332,14 @@ $[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N$, this gives
  \mathcal T_{11}-[8(1-\varepsilon)I_{10}+\delta]\mathcal X_N
  \le4D_{1,19/10}(N).
 \]
+\inputleannode{bp:liliu-g10-integral}
+\inputleannode{bp:liliu-i10-consumed}
+For comparison, Proposition~4.3 in the fixed public paper writes the excluded
+prime set as $\mathscr P(Nr)$ in its tenth term. The present
+$G_{10}^{\rm corr}$ explicitly uses $Nrs$ while sifting the original integer.
+The proved corrected inequality and the following consumption bridge establish
+this implementation's route; an equality with the printed tenth fibre is a
+separate comparison question.
 This is exactly the input of the subsequent count ledger:
 \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean}{corrected twelve-term I10 consumer}.
 Its threshold follows $\delta,\varepsilon$ but is uniform in
@@ -584,3 +620,19 @@ The source-exponent bridge finally gives $r\le q^{(19/10)-1}$.
 This is the actual implementation of the unconditional existence theorem;
 it need not be rerouted through the stronger counting theorem.
 \inputleannode{bp:liliu-existence}
+
+\subsection{Four public interfaces for the two exits}
+Import \texttt{Goldbach.OnePlusOneNine}. The public natural-power and
+real-exponent interfaces expose the earlier-margin existence route:
+\inputleannode{bp:liliu-public-natural}
+\inputleannode{bp:liliu-public-real}
+The author-$G_{11}$ ledger supplies the strict paper count and the stronger
+fixed-coefficient family:
+\inputleannode{bp:liliu-public-count}
+\inputleannode{bp:liliu-public-coefficient}
+These public types have no distribution, integral-estimate or positivity
+premise. Their standard logical foundation is checked separately from their
+mathematical statement by the acceptance probes described in the verification
+guide. The paper's twin-prime Theorem~1.2 and its
+$\mathrm{WEH}(0.999)$-conditional Theorems~1.3--1.4 have their own mathematical
+contracts; the four interfaces here concern the unconditional Goldbach result.

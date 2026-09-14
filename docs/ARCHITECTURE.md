@@ -230,49 +230,71 @@ leanblueprint serve
 
 The site is generated under `blueprint/web`; the default preview is
 `http://localhost:8000`. Generated HTML, exported TeX, and the Python environment
-are ignored by Git. The verification workflow builds the same site after the
-Lean checks and uploads it as `goldbach-blueprint`. Download that Actions
-artifact to inspect a particular revision. The website has three entry points:
-the standalone project homepage at `/`, [Lean API documentation](DOCUMENTATION.md)
-at `/docs/`, and the interactive Blueprint at `/blueprint/`. These paths are
-relative to the project site root. Successful `main` builds deploy the site to
-[GitHub Pages](https://subfish-zhou.github.io/goldbach-lean/). The release
-documentation build produces the web edition of the Blueprint.
+are ignored by Git. `verify_blueprint.py` checks the generated graph and reader
+routes and writes `blueprint/web/build-info.json` with the source revision.
+The independent local publication procedure combines the homepage at `/`,
+[Lean API documentation](DOCUMENTATION.md) at `/docs/`, this Blueprint at
+`/blueprint/`, the Li–Liu author report at `/report/`, and the full structure
+explorer at `/structure/`. All paths are relative to the project site root.
+
+The assembler takes a pre-generated structure directory through `--structure`;
+it copies static inputs rather than extracting declarations or rebuilding Lean.
+[Generation and publication commands](DOCUMENTATION.md#assemble-the-project-website)
+use a new complete-site directory and a separate new staging checkout to publish
+to `gh-pages`. The Lean workflow remains responsible for the full warning-free
+build, source/statement/axiom checks, script tests and all five public/check
+replays; it neither generates nor deploys the website. A successful source CI
+run and a live [Pages](https://subfish-zhou.github.io/goldbach-lean/) deployment
+are separate records. Verify the public build records after deployment before
+identifying the new candidate as the online version.
 
 The small [source-link adapter](../blueprint/src/sources.py) directs project
 declaration links to their own source locations.
 
 ## Reading dependency data
 
-There are three useful views of the project, with different meanings:
+Keep these three graph types distinct in labels, counts and navigation:
 
 | View | Nodes and edges | Suitable use |
 |---|---|---|
-| Mathematical roadmap | Ingredients and the results they support | Understand the argument before opening implementation files |
-| Module import graph | Source modules and their direct imports | Navigate the code, find shared foundations, and identify rebuild impact |
-| LeanArchitect declaration graph | Compiled declarations and references in their types or proof values | Trace which lemmas a theorem uses and identify reusable proof interfaces |
+| Curated mathematical Blueprint | Authored selection of mathematical stages; prerequisite → consumer, with dependencies supplied by LeanArchitect | Read the argument and its explained analytic inputs |
+| Module import graph | Source module → direct imported module; parsed imports cross-checked against compiled imports | Navigate source boundaries and inspect rebuild dependencies |
+| Compiled declaration reference graph | Declaration → exact `Expr.const` reference, separated into `type`, proof/definition `value` and `recursorRHS` | Inspect actual stored expression dependencies and reusable interfaces |
 
-LeanArchitect is pinned as a tooling dependency and supplies graphs for proof
-inspection. Lean checks the proofs. A module import edge records access to a
-module; a declaration edge records a reference in a type or proof value.
-Declaration paths can pass through both hand-written lemmas and generated
-declarations.
+The diagrams on this page and the README's mathematical roadmap are selected
+navigation views. The Blueprint is also a selected explanatory projection.
+Its graph inventory does not establish coverage of every compiled declaration.
+In particular, a module import records access to a module; it must never be
+called an actual proof/value dependency. A stored value reference identifies a
+constant used in a theorem proof, definition or opaque value; type references
+and recursor-rule references remain separate layers.
 
-For a release graph, build the exact release source first and export from that
-compiled environment. Record the source revision, dirty-tree status, Lean and
-dependency versions, graph roots, and whether edges come from types, values, or
-both. Label each snapshot with the revision it describes, and regenerate the
-export after a refactor before publishing it as the current graph. The diagrams
-on this page are curated source-navigation views of selected modules and
-declarations.
+`scripts/build_project_structure.py` and `tools/ProjectStructure.lean` export
+the full four-library census from existing compiled objects. Ownership comes
+from `ModuleData.constNames`, checked against stored constants, rather than
+namespace spelling. The export includes generated declarations, keeps all
+actual providers of repeated names, and records `extraConstNames` boundaries.
+It retains cycles and self-references. External or unresolved names stay
+visible as `outside-local-census` references and are not recursively expanded.
+The graph captures static expression references, not dynamic calls or the
+tactic execution that constructed a proof.
 
-A useful full atlas should open at the public results, group modules by the
-subsystems above, and let readers expand one dependency neighborhood at a time.
-Keep source links and edge direction visible. Keep raw export databases, timing
-logs, and optimization ledgers outside the reading guide; their size and role
-are different from release documentation. Every release must pass the
-[verification gates](VERIFICATION.md); graph reachability and duplicate-type
-counts serve as supplementary inspection data.
+Export after verifying the exact source and compiled inputs. The generated
+`structure/build-info.json` and `structure/inputs.json` bind its census to the
+source revision, toolchain and source/object fingerprints. The exporter checks
+source revision, import agreement and input stability; it does not replay the
+kernel. Every release still requires the [verification gates](VERIFICATION.md).
+
+The [local website procedure](DOCUMENTATION.md) passes the export's inner
+`structure/` directory to `build_site.py --structure`, alongside full API pages
+and the rendered Blueprint. The API source revision and website revision may
+differ when a compatible API artifact is reused, but both exact versions must
+be recorded. Keep the API's original source links, the Blueprint's source
+record, the structure fingerprint and the author report's own source pins.
+Keep source links and edge direction visible in the reader-facing explorer;
+raw extraction caches, timing logs and private optimization ledgers remain
+outside the static publication payload. Upstream licenses and attribution
+remain as documented in [PROVENANCE.md](PROVENANCE.md).
 
 ## Important interface distinctions
 

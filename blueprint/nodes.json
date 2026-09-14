@@ -26,7 +26,7 @@
     "declaration": "MathlibNt.SieveTheory.MertensTheorem.exists_goldbach_inverse_interval_bound",
     "title": "Uniform dimension-one Goldbach local product",
     "statement": "$\\exists K>1:\\ \\prod_{p\\in\\mathcal P}(1-1/(p-1))^{-1}\\le(\\log z_2/\\log z_1)(1+K/\\log z_1)$ for every finite set of odd primes $\\mathcal P\\subset[z_1,z_2)$, $2\\le z_1\\le z_2$.",
-    "source": "MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean:2444-2450",
+    "source": "MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean:2094-2100",
     "path": "MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean",
     "role": "Analytic producer. Direct consumers: MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.exists_goldbachB10BoundingSieve_dimensionOneLocalProductBound and MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.exists_goldbachS2SwitchedBoundingSieve_dimensionOneLocalProductBound. Constants precede the varying source.",
     "chapter": "foundations",
@@ -602,7 +602,7 @@
     "path": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean",
     "role": "strict-quantitative-terminal",
     "chapter": "liliu",
-    "overview": true
+    "overview": false
   },
   {
     "label": "bp:liliu-old-margin",
@@ -644,6 +644,105 @@
     "path": "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean",
     "role": "Large-conductor branch of ordinary prime distribution",
     "chapter": "foundations",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-s1-density-six",
+    "declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_levelSix_lowerDensitySix",
+    "title": "The actual lower density at level six",
+    "statement": "For every $\\rho>0$, some $N_0\\ge2$ works for all even $N\\ge N_0$ and every $0<\\varepsilon<1$: $(f(6)-\\rho)V_N\\le S_N.\\mathrm{mainSum}(\\lambda^-)$, where $S_N$ is the actual $S_1$ bounding sieve at $z=N^{4/53}$, $V_N$ its sieve product and $\\lambda^-$ its lower Rosser weight at $D=\\lceil N^{4/53}\\rceil^6$. The density threshold precedes epsilon.",
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean:107-116",
+    "path": "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean",
+    "role": "Actual lower-density producer. Direct value consumer: goldbachS1_alphaFourFiftyThree_normalized_lower in LiLiuGoldbachS1AlphaNormalizedLower.lean:71; combined with its separate main mass and paid remainder.",
+    "chapter": "liliu",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-upper-density-six",
+    "declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_upperRosserDensity_six",
+    "title": "Uniform upper density through six",
+    "statement": "For every $K>1$ and $\\rho>0$, some $z_0$ works for every bounding sieve $S$ and real $z,\\Delta,s$: if $z\\ge\\max(2,z_0)$, $\\Delta>0$, $S$ has the dimension-one local-product bound with $K$, all its sifting primes are at most $z$, and $s=\\log\\Delta/\\log z\\in[3/2,6]$, then $S.\\mathrm{mainSum}(\\lambda^+)\\le(F_S(s)+\\rho)V_S$. Here $F_S$ denotes the Suzuki factor, $V_S$ the sieve product, and $\\lambda^+$ has natural level $\\lfloor\\Delta\\rfloor+1$.",
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean:202-211",
+    "path": "MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean",
+    "role": "Uniform analytic comparison. Direct value consumer: goldbachS3RosserMain_upper_six, which supplies the actual Goldbach local-product witness. This is a separate producer from the comparison through four.",
+    "chapter": "liliu",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-s3-main-six",
+    "declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3RosserMain_upper_six",
+    "title": "The consumed S3 upper Rosser main sum",
+    "statement": "For every $\\rho>0$, some $z_0\\ge2$ works uniformly in $N$, its evenness proof, and real $\\varepsilon,z,\\Delta,s$: if $z\\ge z_0$, $\\Delta>0$ and $s=\\log\\Delta/\\log z\\in[3/2,6]$, then $\\sum_{d\\mid P_N(z)}\\lambda_d^+/\\varphi(d)\\le(F_S(s)+\\rho)V_N(z)$. The natural level is $\\lfloor\\Delta\\rfloor+1$ and the local-product witness is supplied internally.",
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean:62-70",
+    "path": "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean",
+    "role": "Actual totient-density consumer and producer. Value use in the private S3NormalizedUpper_rosser_kernel at LiLiuGoldbachS3NormalizedUpper.lean:77, feeding goldbachS3_normalized_upper and the G4/G5 retained ledger.",
+    "chapter": "liliu",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-g10-integral",
+    "declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG10Corrected_I10_upper",
+    "title": "The corrected tenth count bounded by I10",
+    "statement": "For every $\\delta>0$ and each fixed $0<\\varepsilon<1$, some $N_0\\ge4$ gives $G_{10}^{\\rm corr}\\le[8(1-\\varepsilon)I_{10}+\\delta]\\mathcal X_N$ for every even $N\\ge N_0$, at $(b,c)=(4/33,3/11)$. The corrected fibre excludes prime divisors of $Nrs$ and retains both labels; $\\mathcal X_N=\\mathfrak S_{\\rm Liu}(N)N/\\log^2N$.",
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean:8-15",
+    "path": "MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean",
+    "role": "Actual corrected-count producer. Value inputs: goldbachPi10_I10_upper and goldbachG10Corrected_eventually_le_pi10_add_880. Direct value consumer: goldbachWeight_twelve_base_I10_consumed_eventually (LiLiuGoldbachWeightI10Consumer.lean:45).",
+    "chapter": "liliu",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-i10-consumed",
+    "declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_twelve_base_I10_consumed_eventually",
+    "title": "Pay I10 inside the corrected signed ledger",
+    "statement": "For every $\\delta>0$ and each fixed $0<\\varepsilon<2/15$, some $N_0\\ge4$ works for all even $N\\ge N_0$ and every $1/18<a<4/33$: $\\mathcal T_{11}-[8(1-\\varepsilon)I_{10}+\\delta]\\mathcal X_N\\le4D_{1,19/10}(N)$. Here $\\mathcal T_{11}=3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9-G_{11}-G_{12}$, with $b=4/33,c=3/11$. Both the corrected tenth cost and $1334N^{1-a}$ are paid.",
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean:24-35",
+    "path": "MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean",
+    "role": "Signed-count consumer. Direct value consumer: goldbachWeight_remainingEight_S1_S2_I10_consumed_eventually in LiLiuGoldbachWeightRemainingEight.lean; feeds the retained-count ledgers, without using a switched replacement twelve-term interface.",
+    "chapter": "liliu",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-public-natural",
+    "declaration": "Goldbach.one_plus_one_nine",
+    "title": "Public existence: exact natural powers",
+    "statement": "$\\exists K\\in\\mathbb N$, $4\\le K$, such that for all even $N\\ge K$ there exist $p,r,q\\in\\mathbb N$ with $p\\le N$, $p,q$ prime, $r=1$ or $r$ prime, $N=p+rq$ and $r^{10}\\le q^9$.",
+    "source": "Goldbach/OnePlusOneNine.lean:15-19",
+    "path": "Goldbach/OnePlusOneNine.lean",
+    "role": "Public facade; direct value is goldbach_onePlusOneNine_nat_unconditional from the old-margin existence route.",
+    "chapter": "liliu",
+    "overview": true
+  },
+  {
+    "label": "bp:liliu-public-real",
+    "declaration": "Goldbach.one_plus_one_nine_real",
+    "title": "Public existence: real exponent",
+    "statement": "$\\exists K\\in\\mathbb N$, $4\\le K$, such that for all even $N\\ge K$ there exist $p,r,q\\in\\mathbb N$ with $p\\le N$, $p,q$ prime, $r=1$ or $r$ prime, $N=p+rq$ and $(r:\\mathbb R)\\le(q:\\mathbb R)^{(19/10)-1}$.",
+    "source": "Goldbach/OnePlusOneNine.lean:22-26",
+    "path": "Goldbach/OnePlusOneNine.lean",
+    "role": "Public facade; direct value is goldbach_onePlusOneNine_unconditional, obtained from the old-margin natural-power exit by the exact exponent equivalence.",
+    "chapter": "liliu",
+    "overview": false
+  },
+  {
+    "label": "bp:liliu-public-count",
+    "declaration": "Goldbach.one_plus_one_nine_count",
+    "title": "Public count: the strict paper bound",
+    "statement": "$\\exists K\\in\\mathbb N$, $4\\le K$, $\\forall N\\ge K$, $2\\mid N\\Rightarrow(1/2500)\\mathcal X_N<D_{1,19/10}(N)$. Here $D$ counts distinct primes $p$ and $\\mathcal X_N=\\mathfrak S_{\\rm Liu}(N)N/\\log^2N$, with no extra factor two.",
+    "source": "Goldbach/OnePlusOneNine.lean:29-35",
+    "path": "Goldbach/OnePlusOneNine.lean",
+    "role": "Public facade; direct value is goldbach_D19_gt_paper_0004 from the author-G11 count route.",
+    "chapter": "liliu",
+    "overview": true
+  },
+  {
+    "label": "bp:liliu-public-coefficient",
+    "declaration": "Goldbach.one_plus_one_nine_lower_bound",
+    "title": "Public count: each fixed coefficient below the ceiling",
+    "statement": "For every real $\\kappa<515093/800000000$, there exists $K\\in\\mathbb N$, $4\\le K$, such that every even $N\\ge K$ satisfies $\\kappa\\mathcal X_N\\le D_{1,19/10}(N)$. The threshold follows the chosen coefficient; the ceiling itself is excluded.",
+    "source": "Goldbach/OnePlusOneNine.lean:38-44",
+    "path": "Goldbach/OnePlusOneNine.lean",
+    "role": "Public facade; direct value is goldbach_D19_author_lower_of_coefficient_lt. Stronger retained coefficient family, accounted separately from the strict paper coefficient.",
+    "chapter": "liliu",
     "overview": false
   }
 ]
