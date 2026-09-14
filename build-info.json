@@ -2526,14 +2526,19 @@
   "declaration_count": 16191,
   "external_url_count": 19162,
   "blueprint_included": true,
-  "website_source_revision": "79402529948f734638ece97c4e50281417abd44b",
+  "website_source_revision": "75c1138b3d7e27b8be2fb4ca88a7cb5b4de3f971",
   "api_source_revision": "5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f",
-  "structure_source_revision": "79402529948f734638ece97c4e50281417abd44b",
+  "structure_source_revision": "75c1138b3d7e27b8be2fb4ca88a7cb5b4de3f971",
   "structure_path": "structure/",
   "report_path": "report/",
-  "blueprint_source_revision": "79402529948f734638ece97c4e50281417abd44b",
+  "dependency_panels": {
+    "docs": 15674,
+    "blueprint": 309,
+    "report": 7
+  },
+  "blueprint_source_revision": "75c1138b3d7e27b8be2fb4ca88a7cb5b4de3f971",
   "layout": "project-home",
   "api_path": "docs/",
   "blueprint_path": "blueprint/",
-  "homepage_sha256": "be49e0b35c27b2a828531f69c9bc18a6bb684e3e8593529d0a9361e29d91d930"
+  "homepage_sha256": "d6e49f38dc5bcf7590f32b50d34e90c23f1ceea2e2f82432b5d24410359277e4"
 }

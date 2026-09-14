@@ -23,7 +23,7 @@ body {
 header,
 main,
 footer {
-  max-width: 1440px;
+  max-width: 1180px;
   margin: auto;
   padding: 24px 40px;
 }
@@ -36,7 +36,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  margin-bottom: 38px;
+  margin-bottom: 22px;
 }
 
 a {
@@ -49,7 +49,7 @@ a:hover {
 }
 
 h1 {
-  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
   letter-spacing: -.045em;
   line-height: 1.12;
   max-width: 900px;
@@ -97,8 +97,7 @@ main > section {
   background: white;
 }
 
-.legend-grid,
-.entry-grid {
+.legend-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
@@ -118,23 +117,6 @@ details > summary {
 
 details p {
   max-width: 1000px;
-}
-
-.entry {
-  background: var(--soft);
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-}
-
-.entry button {
-  margin: 3px 5px 3px 0;
-}
-
-.entry p {
-  font-size: .85rem;
-  margin: 8px 0;
-  color: var(--muted);
 }
 
 button,
@@ -196,6 +178,7 @@ label {
 }
 
 aside,
+#module-detail,
 #detail {
   background: white;
   border: 1px solid var(--line);
@@ -211,8 +194,8 @@ aside {
   overflow: auto;
 }
 
-#detail {
-  min-height: 500px;
+#detail,
+#module-detail {
   /* Wrap owner/provider metadata too, not only headings and tree rows. */
   overflow-wrap: anywhere;
 }
@@ -353,8 +336,7 @@ footer {
     padding: 20px;
   }
 
-  .legend-grid,
-  .entry-grid {
+  .legend-grid {
     grid-template-columns: 1fr;
   }
 
@@ -378,4 +360,65 @@ footer {
   a {
     transition: background-color .12s;
   }
+}
+
+#advanced {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+#advanced > summary {
+  color: var(--muted);
+}
+
+#advanced .boundaries,
+#advanced .projection {
+  margin-top: 24px;
+}
+
+.inspection-note {
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px;
+  background: var(--soft);
+  font-size: .88rem;
+}
+
+.references [data-edge] {
+  margin: 18px 0;
+}
+
+.reference-position {
+  color: var(--muted);
+  font: .75rem ui-monospace, monospace;
+  margin-right: 8px;
+}
+
+.reference-fold > details > summary {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Embedded inspection contains only the current declaration detail. The
+   parent owns the surrounding disclosure, iframe creation and navigation. */
+.embed header,
+.embed footer,
+.embed #advanced,
+.embed noscript {
+  display: none !important;
+}
+
+.embed body {
+  background: white;
+}
+
+.embed main {
+  max-width: none;
+  padding: 12px;
+}
+
+.embed #detail {
+  border: 0;
+  border-radius: 0;
+  padding: 4px;
+  margin-bottom: 0;
 }

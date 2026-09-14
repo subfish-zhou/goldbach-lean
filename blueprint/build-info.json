@@ -1,7 +1,7 @@
 {
   "node_count": 68,
   "edge_count": 123,
-  "source_revision": "79402529948f734638ece97c4e50281417abd44b",
+  "source_revision": "75c1138b3d7e27b8be2fb4ca88a7cb5b4de3f971",
   "graph_scope": "mathematical-routes-with-chapter-inputs",
   "chapters": {
     "dep_graph_chapter_1.html": {
