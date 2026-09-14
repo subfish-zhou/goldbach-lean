@@ -13,6 +13,7 @@ import argparse
 from collections import Counter
 import hashlib
 import html
+from html.parser import HTMLParser
 import json
 from pathlib import Path
 import re
@@ -172,6 +173,17 @@ def cyclic_components(graph):
     return sorted(components, key=lambda c: c[0])
 
 
+class AnchorParser(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.ids = set()
+
+    def handle_starttag(self, tag, attrs):
+        value = dict(attrs).get("id")
+        if value is not None:
+            self.ids.add(value)
+
+
 def api_links(api):
     """Use verified doc-gen links, never manufacture auxiliary anchors."""
     if api is None:
@@ -188,8 +200,9 @@ def api_links(api):
         if not path.is_relative_to(api) or not path.is_file():
             raise ValueError(f"Missing or unsafe API page: {decl['docLink']}")
         if path not in cache:
-            cache[path] = set(re.findall(r'\bid=[\"\']([^\"\']*)[\"\']', path.read_text()))
-            cache[path] = {html.unescape(x) for x in cache[path]}
+            parser = AnchorParser()
+            parser.feed(path.read_text())
+            cache[path] = parser.ids
         if not parsed.fragment or unquote(parsed.fragment) not in cache[path]:
             raise ValueError(f"Missing API anchor: {decl['docLink']}")
         links[name] = "../docs/" + quote(relative, safe="/") + "#" + parsed.fragment

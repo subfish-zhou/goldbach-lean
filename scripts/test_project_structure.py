@@ -118,6 +118,11 @@ class StructureTests(unittest.TestCase):
                 builder.build_structure(output)
             self.assertEqual(sentinel.read_text(), "untouched")
 
+    def test_anchor_parser_preserves_quotes_and_decodes_entities(self):
+        parser = builder.AnchorParser()
+        parser.feed("<div id=\"Example.fact'\"></div><span id='Example.x&#39;'></span>")
+        self.assertEqual(parser.ids, {"Example.fact'", "Example.x'"})
+
     def test_api_links_require_real_anchor(self):
         with tempfile.TemporaryDirectory(dir=TEST_ROOT) as tmp:
             api = Path(tmp)
