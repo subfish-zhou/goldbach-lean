@@ -70,6 +70,14 @@ class PayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Symlink'):
             validate_payload(self.root)
 
+    def test_graph_webassembly_assets_have_a_real_header(self):
+        asset = self.root / 'blueprint/graphviz.wasm'
+        asset.write_bytes(b'\x00asm\x01\x00\x00\x00')
+        self.assertIn('blueprint/graphviz.wasm', validate_payload(self.root)['files'])
+        asset.write_bytes(b'not a WebAssembly module')
+        with self.assertRaisesRegex(ValueError, 'Invalid WebAssembly'):
+            validate_payload(self.root)
+
     def test_nonstatic_and_private_content_rejected(self):
         bad = self.root / 'proof.olean'
         bad.write_bytes(b'fixture')

@@ -21,7 +21,7 @@ from build_project_structure import verify_export
 FORBIDDEN_PARTS = {'.git', '.github', '.lake', '__pycache__', 'comms'}
 STATIC_SUFFIXES = {'.html', '.json', '.js', '.css', '.svg', '.txt', '.md', '.bmp',
                    '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.woff', '.woff2',
-                   '.ttf', '.otf', '.eot', '.map', '.pdf', '.gz', '.webmanifest'}
+                   '.ttf', '.otf', '.eot', '.map', '.pdf', '.gz', '.webmanifest', '.wasm'}
 TEXT_SUFFIXES = {'.html', '.json', '.js', '.css', '.svg', '.txt', '.md', '.bmp'}
 PRIVATE_TEXT = re.compile(r'/(?:home|Users|mnt)/[A-Za-z0-9._-]+/|comms/(?:inbox|outbox)|github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY')
 SHA = re.compile(r'[0-9a-f]{40}')
@@ -78,6 +78,8 @@ def validate_payload(site, *, expected_modules=None):
         if path.suffix not in STATIC_SUFFIXES and path.name not in {'.nojekyll', 'CNAME', 'LICENSE'}:
             raise ValueError(f'Non-static file in publication payload: {relative}')
         data = path.read_bytes()
+        if path.suffix == '.wasm' and not data.startswith(b'\x00asm\x01\x00\x00\x00'):
+            raise ValueError(f'Invalid WebAssembly asset: {relative}')
         if len(data) >= 100 * 1024 * 1024:
             raise ValueError(f'File exceeds the Git publication size gate: {relative}')
         total += len(data)
