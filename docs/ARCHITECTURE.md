@@ -234,9 +234,8 @@ are ignored by Git. `verify_blueprint.py` checks the generated graph and reader
 routes and writes `blueprint/web/build-info.json` with the source revision.
 The independent local publication procedure combines the homepage at `/`,
 [Lean API documentation](DOCUMENTATION.md) at `/docs/`, this Blueprint at
-`/blueprint/`, and the Li–Liu proof structure at `/report/`. The `/structure/`
-route serves on-demand dependency panels and advanced inspection, rather than
-a separate primary catalogue. All paths are relative to the project site root.
+`/blueprint/`, and the Li–Liu proof structure at `/report/`. Dependency panels
+load their internal renderer and data from `assets/dependencies/`. All paths are relative to the project site root.
 
 The assembler takes a pre-generated structure directory through `--structure`;
 it copies static inputs rather than extracting declarations or rebuilding Lean.

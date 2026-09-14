@@ -1,14 +1,8 @@
 /* Complete graphs are exported; only requested neighborhoods are rendered. */
 "use strict";
 (() => {
-  const query = new URLSearchParams(location.search);
-  const selected = query.has("module") || new URLSearchParams(location.hash.slice(1)).has("module");
-  if (!selected && query.get("embed") !== "1" && query.get("advanced") !== "1") {
-    location.replace("../blueprint/overview.html");
-    return;
-  }
   const $ = id => document.getElementById(id);
-  const embed = new URLSearchParams(location.search).get("embed") === "1";
+  const embed = true;
   document.documentElement.classList.toggle("embed", embed);
   const state = {index: null, info: null, shards: new Map(), search: [], searchLoaded: false, searchPromise: null, advancedPromise: null, route: 0};
   // Display value first; never sort, merge, or drop the exported arrays.
@@ -198,7 +192,7 @@
     const detail = $("detail"); detail.replaceChildren();
     detail.append(el("h2", "No selected declaration"));
     const note = el("p", "Return to the ");
-    note.append(link("Blueprint mathematical overview", "../blueprint/"), document.createTextNode(" or "), link("Lean API", "../docs/"), document.createTextNode(" to choose a declaration."));
+    note.append(link("Blueprint mathematical overview", "../../blueprint/"), document.createTextNode(" or "), link("Lean API", "../../docs/"), document.createTextNode(" to choose a declaration."));
     detail.append(note);
     if (!embed) detail.append(el("p", "Module and declaration lookup remain available under Advanced inspection.", "muted"));
   }
@@ -244,7 +238,7 @@
     } else {
       detail.append(el("h2", module.name), links(mid));
       detail.append(el("p", "Module imports and the compiled declaration census are in Advanced inspection below. For the proof argument, return to the Blueprint mathematical overview."));
-      detail.append(link("Blueprint mathematical overview", "../blueprint/"));
+      detail.append(link("Blueprint mathematical overview", "../../blueprint/"));
       detail = $("module-detail"); detail.replaceChildren();
       detail.append(el("span", "Module import view — not a theorem dependency graph", "badge"), el("h2", module.name), links(mid));
       detail.append(el("h3", "Public endpoint Const-closure roles"));

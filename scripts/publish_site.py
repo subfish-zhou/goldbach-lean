@@ -35,8 +35,10 @@ def run(args, *, cwd=None, capture=False) -> str:
 
 def validate_payload(site, *, expected_modules=None):
     site = Path(site).resolve()
+    if (site / 'structure').exists() or (site / 'assets/dependencies/index.html').exists():
+        raise ValueError('Retired standalone dependency route in payload')
     for route in ('index.html', 'docs/index.html', 'blueprint/index.html',
-                  'structure/index.html', 'report/index.html', '.nojekyll'):
+                  'assets/dependencies/panel.html', 'report/index.html', '.nojekyll'):
         if not (site / route).is_file():
             raise ValueError(f'Missing publication route: {route}')
     info = json.loads((site / 'build-info.json').read_text())
@@ -56,12 +58,12 @@ def validate_payload(site, *, expected_modules=None):
     blueprint = json.loads((site / 'blueprint/build-info.json').read_text())
     if info['blueprint_source_revision'] != blueprint.get('source_revision'):
         raise ValueError('Blueprint source identity mismatch')
-    structure = json.loads((site / 'structure/build-info.json').read_text())
+    structure = json.loads((site / 'assets/dependencies/build-info.json').read_text())
     if not SHA.fullmatch(structure.get('source_revision', '')):
         raise ValueError('Structure data has no exact source identity')
     if info.get('structure_source_revision') != structure['source_revision']:
         raise ValueError('Structure source identity mismatch')
-    verify_export(site / 'structure', expected_modules=modules, api=site / 'docs')
+    verify_export(site / 'assets/dependencies', expected_modules=modules, api=site / 'docs')
     if verify_site(site / 'docs', modules, site_root=site) != api['declaration_count']:
         raise ValueError('API declaration census mismatch')
     verify_local_links(site, find_routes=[site / 'docs/find/index.html'])

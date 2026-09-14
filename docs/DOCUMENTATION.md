@@ -1,6 +1,6 @@
 # Project website, Lean documentation and dependency views
 
-The complete static-site layout has five routes, relative to the project's
+The static site has four reader-facing routes, relative to the project's
 deployment prefix:
 
 - **Project homepage** at `/`: research goals, progress, reading routes,
@@ -15,9 +15,9 @@ deployment prefix:
   with links into the implementation.
 - **Li–Liu proof structure** at `/report/`: the counted object, mathematical
   stages, two proof exits and paper-to-Lean correspondence.
-- **Advanced dependency inspector** at `/structure/`: the backend for optional
-  panels beside Blueprint results and Lean API declarations. Global search,
-  imports and engineering details remain secondary, collapsed controls.
+
+Optional dependency panels use internal assets beneath `assets/dependencies/`;
+this directory has no standalone homepage.
 
 This documentation update uses an independent local static-site build followed
 by publication to `gh-pages`. The commands below describe that release path;
@@ -70,7 +70,7 @@ The generated API inventory retains its own `source_revision` in
 `docs/build-info.json`. The assembled site's record distinguishes
 `api_source_revision`, `website_source_revision`, `blueprint_source_revision`
 and `structure_source_revision`;
-`structure/build-info.json` records the structure export's source revision and
+`assets/dependencies/build-info.json` records the structure export's source revision and
 input fingerprint. The API source version and website version may differ when
 reusing a verified complete API artifact. Record both exact commits, preserve
 the API's original source links, and check compatibility with the current
@@ -91,11 +91,8 @@ by reading the mathematical page.
 Panel routes are bound to real `constNames` providers in the structure export.
 The inspector initially emphasizes local proof/definition references; type,
 recursor, external and generated-helper details remain expandable. Presentation
-folds preserve the complete exported data and its edge kinds. Advanced global
-search remains available inside the inspector, outside the primary navigation.
-The bare `/structure/` URL returns to the Blueprint mathematical overview;
-`?advanced=1` explicitly opens the advanced tool, and existing declaration
-deep links remain valid.
+folds preserve the complete exported data and its edge kinds. The renderer is used inside document panels; there is no separate inspector
+homepage or compatibility redirect.
 
 ## Pinned generator and isolation
 
@@ -263,8 +260,7 @@ links. `build_project_structure.py --output DIR` writes `DIR/structure/`;
 unpopulated `website/structure/` template directory. The assembler requires
 `--structure` and checks that its module inventory matches the full API inventory.
 
-The resulting routes are `/`, `/docs/`, `/blueprint/`, `/report/` and
-`/structure/`. `build_site.py` combines the full API output, rendered Blueprint,
+The reader-facing routes are `/`, `/docs/`, `/blueprint/` and `/report/`. `build_site.py` combines the full API output, rendered Blueprint,
 pre-generated structure export, homepage assets and authored `website/report/`
 pages in a fresh output tree. It checks declaration coverage and local links
 and anchors within the complete deployment boundary. Assembly reads static

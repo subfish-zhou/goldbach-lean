@@ -17,7 +17,7 @@ class PayloadTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.rev = '1' * 40
         for name in ('index.html', 'docs/index.html', 'blueprint/index.html',
-                     'structure/index.html', 'report/index.html', '.nojekyll'):
+                     'assets/dependencies/panel.html', 'report/index.html', '.nojekyll'):
             p = self.root / name
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_text('Synthetic fixture, not release evidence.')
@@ -27,7 +27,7 @@ class PayloadTests(unittest.TestCase):
                      'api_source_revision': self.rev, 'blueprint_source_revision': self.rev,
                      'structure_source_revision': self.rev}
         self.write_info()
-        for part in ('blueprint', 'structure'):
+        for part in ('blueprint', 'assets/dependencies'):
             (self.root / part / 'build-info.json').write_text(json.dumps({'source_revision': self.rev}))
         self.structure_check = patch('publish_site.verify_export')
         self.structure_check.start()
@@ -43,10 +43,16 @@ class PayloadTests(unittest.TestCase):
         (self.root / 'build-info.json').write_text(json.dumps(self.info))
         (self.root / 'docs/build-info.json').write_text(json.dumps(self.api))
 
+    def test_retired_route_is_rejected(self):
+        (self.root / 'structure').mkdir()
+        (self.root / 'structure/index.html').write_text('retired redirect fixture')
+        with self.assertRaisesRegex(ValueError, 'Retired standalone'):
+            validate_payload(self.root)
+
     def test_complete_inventory(self):
         r = validate_payload(self.root, expected_modules=['Example'])
         self.assertEqual(r['module_count'], 1)
-        self.assertIn('structure/index.html', r['files'])
+        self.assertIn('assets/dependencies/panel.html', r['files'])
         with self.assertRaisesRegex(ValueError, 'inventory differs'):
             validate_payload(self.root, expected_modules=['Example', 'Missing'])
 

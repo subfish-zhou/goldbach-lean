@@ -28,7 +28,7 @@ The Lean API documentation covers all four project libraries, with declaration
 search, source links, and import navigation. The complete local publication
 layout includes the Li–Liu mathematical proof structure and paper correspondence
 at `/report/`. Optional dependency panels in the Blueprint and API expose the
-compiled dependency data; `/structure/` is their advanced inspection backend. See [how the website is built and published](docs/DOCUMENTATION.md).
+compiled dependency data from internal static assets. See [how the website is built and published](docs/DOCUMENTATION.md).
 
 | Read the mathematics | Explore the proof | Check the result |
 |---|---|---|
@@ -57,7 +57,7 @@ separates this view from direct imports and compiled declaration dependencies.
 The [interactive Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)
 renders selected declaration dependencies from LeanArchitect, with links to their
 Lean source. This curated mathematical view is distinct from the module import
-graph and the compiled declaration graph in the structure explorer. Imports
+graph and the compiled declaration graph available through these panels. Imports
 record module access; only the separate compiled `value` references record
 actual static uses within stored proofs or definitions. The declaration graph
 also keeps `type` and `recursorRHS` references separate.

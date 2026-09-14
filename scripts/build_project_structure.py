@@ -205,7 +205,7 @@ def api_links(api):
             cache[path] = parser.ids
         if not parsed.fragment or unquote(parsed.fragment) not in cache[path]:
             raise ValueError(f"Missing API anchor: {decl['docLink']}")
-        links[name] = "../docs/" + quote(relative, safe="/") + "#" + parsed.fragment
+        links[name] = "../../docs/" + quote(relative, safe="/") + "#" + parsed.fragment
         pages.add(".".join(Path(relative).with_suffix("").parts))
     for module in modules_in(ROOT):
         if (api / source_path(module).with_suffix(".html")).is_file():
@@ -259,7 +259,7 @@ def projection(owners):
     return {"schemaVersion": SCHEMA, "kind": "hand-selected-blueprint-projection",
             "edgeDirection": "prerequisite-to-consumer",
             "edgeMeaning": "Compiled dependencies among hand-selected explanatory nodes; not the complete Const or import graph",
-            "nodes": projected, "edges": edges, "url": "../blueprint/index.html"}
+            "nodes": projected, "edges": edges, "url": "../../blueprint/index.html"}
 
 
 def build_structure(output, *, source_revision=None, api=None, batch_size=64, extraction_cache=None):
@@ -277,7 +277,7 @@ def build_structure(output, *, source_revision=None, api=None, batch_size=64, ex
         raise ValueError("Missing compiled modules; build libraries first: " + ", ".join(missing[:12]))
     support = ["lean-toolchain", "lake-manifest.json", "lakefile.toml", "tools/ProjectStructure.lean",
                "scripts/build_project_structure.py", "blueprint/nodes.json", "blueprint/graph.json",
-               "website/structure/index.html", "website/structure/explorer.js", "website/structure/explorer.css"]
+               "website/structure/panel.html", "website/structure/explorer.js", "website/structure/explorer.css"]
     support_hashes = {p: digest(ROOT / p) for p in support}
     inputs = []
     for module in modules:
@@ -332,7 +332,7 @@ def build_structure(output, *, source_revision=None, api=None, batch_size=64, ex
             relative = source_path(module).as_posix()
             module_rows.append({"id": i, "name": module, "library": module.split(".")[0],
                                 "source": f"{SOURCE_REPO}/blob/{revision}/{quote(relative, safe='/')}",
-                                "api": "../docs/" + quote(relative[:-5] + ".html", safe="/") if module in api_pages else None,
+                                "api": "../../docs/" + quote(relative[:-5] + ".html", safe="/") if module in api_pages else None,
                                 "imports": [module_ids[x] for x in imports if x in module_ids],
                                 "externalImports": [x for x in imports if x not in module_ids],
                                 "declarationCount": len(declarations), "shard": f"modules/{i}.json"})
@@ -442,7 +442,7 @@ def build_structure(output, *, source_revision=None, api=None, batch_size=64, ex
                              "Generated declarations without verified API anchors link to their owning module source"],
                   "lean_version": subprocess.check_output(["lake", "env", "lean", "--version"], cwd=ROOT, text=True).strip()}
         write_json(structure / "build-info.json", report)
-        for name in ("index.html", "explorer.js", "explorer.css"):
+        for name in ("panel.html", "explorer.js", "explorer.css"):
             shutil.copy2(ROOT / "website/structure" / name, structure / name)
         # Detect concurrent changes in source/object bytes during extraction.
         for item in inputs:
@@ -496,7 +496,7 @@ def verify_export(structure, *, expected_modules=None, api=None):
             if d["kind"] in ("theorem", "definition", "opaque") and not d["hasValue"]:
                 raise ValueError("Missing required proof/definition value")
             if d["api"] is not None:
-                if not d["api"].startswith("../docs/") or "#" not in d["api"]:
+                if not d["api"].startswith("../../docs/") or "#" not in d["api"]:
                     raise ValueError("Invalid API route")
                 if actual_api is not None and actual_api.get(d["name"]) != d["api"]:
                     raise ValueError("API link does not match verified anchor")
@@ -599,8 +599,8 @@ def verify_export(structure, *, expected_modules=None, api=None):
     labels = {n["label"] for n in bp["nodes"]}
     if any(owners.get(n["name"]) != n["modules"] for n in bp["nodes"]) or any(a not in labels or b not in labels for a, b in bp["edges"]):
         raise ValueError("Invalid Blueprint projection")
-    page = (structure / "index.html").read_text()
-    for route in ("../docs/", "../blueprint/", "../index.html", "explorer.css", "explorer.js"):
+    page = (structure / "panel.html").read_text()
+    for route in ("../../docs/", "../../blueprint/", "../../index.html", "explorer.css", "explorer.js"):
         if route not in page:
             raise ValueError(f"Missing navigation route: {route}")
     for asset in ("explorer.css", "explorer.js"):

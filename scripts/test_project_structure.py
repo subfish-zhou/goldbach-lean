@@ -131,7 +131,7 @@ class StructureTests(unittest.TestCase):
             (api / "declarations/declaration-data.bmp").write_text(json.dumps(
                 {"declarations": {"Real.fact": {"docLink": "./M.html#Real.fact"}}}))
             links, pages = builder.api_links(api)
-            self.assertEqual(links["Real.fact"], "../docs/M.html#Real.fact")
+            self.assertEqual(links["Real.fact"], "../../docs/M.html#Real.fact")
             self.assertNotIn("Real.fact._proof_1", links)
             self.assertIn("M", pages)
             (api / "M.html").write_text("no anchor")

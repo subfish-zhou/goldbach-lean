@@ -101,7 +101,7 @@ def assemble(api, blueprint, output, *, structure=None, templates=ROOT / "websit
         return {"blueprint"} if Path(path).resolve() == api else set()
     shutil.copytree(api, work / "docs", ignore=ignore)
     shutil.copytree(blueprint, work / "blueprint")
-    shutil.copytree(structure, work / "structure")
+    shutil.copytree(structure, work / "assets/dependencies")
     shutil.copytree(templates / "report", work / "report")
     for name in ("home.css", "favicon.svg"):
         shutil.copy2(templates / name, work / name)
@@ -135,7 +135,7 @@ def assemble(api, blueprint, output, *, structure=None, templates=ROOT / "websit
     assembled = dict(report, website_source_revision=revision,
                      api_source_revision=api_revision,
                      structure_source_revision=structure_report["source_revision"],
-                     structure_path="structure/", report_path="report/",
+                     structure_path="assets/dependencies/", report_path="report/",
                      dependency_panels=dependency_panels,
                      blueprint_source_revision=blueprint_report.get("source_revision"),
                      layout="project-home", api_path="docs/",

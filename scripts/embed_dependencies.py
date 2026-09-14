@@ -52,9 +52,7 @@ def panel(route, title):
     return ('\n<details class="dependency-panel" data-dependency-src="'
             + escape(embedded, quote=True) + '"><summary>Inspect dependencies</summary>'
             + '<p class="dependency-context">' + escape(title)
-            + ' · compiled type and proof/definition references. '
-            + '<a href="' + escape(route, quote=True)
-            + '" target="_blank" rel="noopener">Open separately</a></p>'
+            + ' · compiled type and proof/definition references.</p>'
             + '<div class="dependency-host"></div></details>\n')
 
 
@@ -77,10 +75,10 @@ def inject_panels(text, bindings, script, style):
 
 def add_dependency_views(site, templates):
     site, templates = Path(site), Path(templates)
-    index = json.loads((site / 'structure/modules.json').read_text())
+    index = json.loads((site / 'assets/dependencies/modules.json').read_text())
     owners = defaultdict(list)
     for shard in index['searchShards']:
-        rows = json.loads((site / 'structure' / shard['path']).read_text())['declarations']
+        rows = json.loads((site / 'assets/dependencies' / shard['path']).read_text())['declarations']
         for name, mid, kind in rows:
             owners[name].append((mid, kind))
     by_page = defaultdict(dict)
@@ -88,7 +86,7 @@ def add_dependency_views(site, templates):
     def binding(page, name, mid, title):
         if mid not in {m for m, _ in owners[name]}:
             raise ValueError('Dependency route has no actual census provider: ' + name)
-        target = posixpath.relpath(site / 'structure/index.html', page.parent)
+        target = posixpath.relpath(site / 'assets/dependencies/panel.html', page.parent)
         return target + '?' + urlencode({'module': mid, 'decl': name}), title
 
     api = json.loads((site / 'docs/declarations/declaration-data.bmp').read_text())
@@ -106,7 +104,7 @@ def add_dependency_views(site, templates):
         module_name = '.'.join(Path(relative).with_suffix('').parts)
         mid = next((m for m, _ in providers if index['modules'][m]['name'] == module_name), providers[0][0])
         by_page[page][name] = binding(page, name, mid, name)
-    projection = json.loads((site / 'structure/blueprint-projection.json').read_text())
+    projection = json.loads((site / 'assets/dependencies/blueprint-projection.json').read_text())
     for page in [*(site / 'blueprint').glob('*.html'), *(site / 'report').glob('*.html')]:
         for node in projection['nodes']:
             if not node['modules']:

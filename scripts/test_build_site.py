@@ -33,7 +33,7 @@ class ProjectSiteTests(unittest.TestCase):
         self.declaration_count = len(declarations)
         self.structure = self.root / "structure"
         self.structure.mkdir()
-        (self.structure / "index.html").write_text('<html><head></head><body>Structure</body></html>')
+        (self.structure / "panel.html").write_text('<html><head></head><body>Structure</body></html>')
         (self.structure / "build-info.json").write_text(json.dumps({
             "scope": "full-four-library", "source_revision": "a" * 40,
             "module_count": len(self.modules)}))
