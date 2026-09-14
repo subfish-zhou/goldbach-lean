@@ -1,0 +1,85 @@
+{
+  "node_count": 68,
+  "edge_count": 123,
+  "source_revision": "79402529948f734638ece97c4e50281417abd44b",
+  "graph_scope": "mathematical-routes-with-chapter-inputs",
+  "chapters": {
+    "dep_graph_chapter_1.html": {
+      "node_count": 14,
+      "edge_count": 13
+    },
+    "dep_graph_chapter_2.html": {
+      "node_count": 18,
+      "edge_count": 16
+    },
+    "dep_graph_chapter_3.html": {
+      "node_count": 30,
+      "edge_count": 46
+    },
+    "dep_graph_chapter_4.html": {
+      "node_count": 43,
+      "edge_count": 75
+    }
+  },
+  "reader_routes": {
+    "overview.html": "chap-overview.html",
+    "foundations.html": "chap-foundations.html",
+    "chen.html": "chap-chen.html",
+    "liliu.html": "chap-liliu.html"
+  },
+  "sourcefile_paths": [
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorChangeLevelLedger.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/ImprimitiveConductorWeightLinear.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LcmWeightBounds.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryPrimeC2.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryDispersion.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryFactorConvolution.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean",
+    "MathlibNt/SieveTheory/Arithmetic/LiuLogarithmicIntegral.lean",
+    "MathlibNt/SieveTheory/Distribution/BombieriVinogradov.lean",
+    "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbelDeterministic.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachB9SplitIntegralReduction.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG11MainMassBuchstab.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernel.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG12BuchstabMajorant.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG12SharpGeometry.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG67G67Piecewise.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG67G67Specialization.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachPi10IntegralUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS1LevelSix.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS3NormalizedUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachSharpPiecewiseLedger.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean",
+    "MathlibNt/SieveTheory/LinearSieve/FiniteWeights.lean",
+    "MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean",
+    "MathlibNt/SieveTheory/LinearSieve/RosserChains.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCaseIISourceSigmaDecay.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenAdaptiveDepthAbsorption.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenParameterBridge.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenVaryingFamilyLowerDensity.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiClaim145SourceParameters.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144ErrorObjects.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean",
+    "MathlibNt/SieveTheory/LinearSieve/UpperRosserDensity.lean",
+    "MathlibNt/SieveTheory/Liu/PrimePairs/LiuPrimePairTransfer.lean",
+    "MathlibNt/SieveTheory/Liu/Weights/LiuWeightMainIntegral.lean",
+    "MathlibNt/SieveTheory/Liu/Weights/LiuWeightMainSum.lean",
+    "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergEvenAssembly.lean",
+    "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergMainTermInstantiation.lean",
+    "MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean",
+    "PrimeNumberTheoremAnd/Consequences.lean",
+    "docs/PROVENANCE.md"
+  ]
+}

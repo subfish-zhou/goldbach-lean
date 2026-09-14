@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reading the formal implementation</title>
+<link rel="prev" href="chap-liliu.html" title="Li–Liu: two factors with a prescribed imbalance" />
+<link rel="up" href="index.html" title="goldbach-lean: Chen and Li–Liu theorems" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/reader.css" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">goldbach-lean: Chen and Li–Liu theorems</a></h1>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-overview.html"><span class="toc_ref">1</span> <span class="toc_entry">Two counting theorems and their proof routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-overview.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">What is being counted?</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000007"><span class="toc_ref">1.2</span> <span class="toc_entry">The mathematical plan</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000008"><span class="toc_ref">1.3</span> <span class="toc_entry">Reading a sieve estimate</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000011"><span class="toc_ref">1.4</span> <span class="toc_entry">How to use the three layers</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-foundations.html"><span class="toc_ref">2</span> <span class="toc_entry">Prime distribution and sieve foundations</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-foundations.html#a0000000012"><span class="toc_ref">2.1</span> <span class="toc_entry">Analytic foundations of the two Goldbach arguments</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-chen.html"><span class="toc_ref">3</span> <span class="toc_entry">Chen: a prime plus at most two primes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-chen.html#bp:chen-route"><span class="toc_ref">3.1</span> <span class="toc_entry">Chen’s theorem: from a signed sieve weight to representations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-liliu.html"><span class="toc_ref">4</span> <span class="toc_entry">Li–Liu: two factors with a prescribed imbalance</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-liliu.html#sec:liliu-mathematical-chain"><span class="toc_ref">4.1</span> <span class="toc_entry">Li–Liu’s asymmetric Goldbach theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-implementation.html"><span class="toc_ref">5</span> <span class="toc_entry">Reading the formal implementation</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-implementation.html#a0000000013"><span class="toc_ref">5.1</span> <span class="toc_entry">Reusable proofs and source boundaries</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000014"><span class="toc_ref">5.2</span> <span class="toc_entry">Finding and checking a declaration</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000015"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathematical sources and attribution</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">All documented lemmas — proof graph</a></li>
+<li ><a href="dep_graph_chapter_1.html">Two counting theorems and their proof routes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_2.html">Prime distribution and sieve foundations — proof graph</a></li>
+<li ><a href="dep_graph_chapter_3.html">Chen: a prime plus at most two primes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_4.html">Li–Liu: two factors with a prescribed imbalance — proof graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:implementation">5 Reading the formal implementation</h1>
+
+<h1 id="a0000000013">5.1 Reusable proofs and source boundaries</h1>
+<p>The mathematical chapters follow finite counts and the estimates they need. The source tree also factors recurring technical arguments into reusable interfaces. The following examples are useful when reading an individual proof: </p>
+<ul class="itemize">
+  <li><p>A finite prime-pair transport theorem reindexes a supported integer sum by its unique admissible ordered prime pair. Concrete cutoffs, filters and kernels remain inputs to that theorem. It lives with the Liu weights in <span class="ttfamily">MathlibNt.SieveTheory.Liu.Weights.LiuWeight</span>. </p>
+</li>
+  <li><p>Uniform logarithmic error absorption separates the elementary eventual estimate from the singular-series specialization. The generic argument lives in <span class="ttfamily">MathlibNt.Analysis.LogScaleAbsorption</span>. </p>
+</li>
+  <li><p>The integral excess-cover theorem combines a local approximation on a common region with a finite cover of its boundary excess. It lives in <span class="ttfamily">MathlibNt.Analysis.IntegralExcessCover</span>; each application supplies its actual measure, strips and logarithmic kernel. </p>
+</li>
+  <li><p>Filtered output sums retain every label in each fibre, with arbitrary additive weights. <span class="ttfamily">MathlibNt.SieveTheory.FiniteFibres</span> shares this transport across the B8, B10, S2, G11 and G12 source models. Unlike the injective prime-pair transport, it permits repeated outputs. The integer and real product-grouping identities use Mathlib directly. </p>
+</li>
+  <li><p>Labelled incidence bounds in <span class="ttfamily">MathlibNt.SieveTheory.FiniteLabelCounting</span> count reverse relation fibres, retaining repeated products as separate labels. Its fixed-output sigma-fibre lemma keeps both positivity and the product upper bound needed to cancel natural-number subtraction. </p>
+</li>
+  <li><p><span class="ttfamily">MathlibNt.SieveTheory.FiniteRealWindows</span> writes an arithmetic window \((L,U]\) as a difference of closed prefixes. The predicate retains primality and the product congruence in the G11/G12 uses; \(0\le L\le U\le N\) is supplied by the original geometric bounds. These exact AP-window counts are separate library interfaces, not dependencies of the current headline counting proof. </p>
+</li>
+  <li><p><span class="ttfamily">MathlibNt.Analysis.MovingIntervalIntegral</span> shares indicator-section and Fubini arguments for B8/B9/B10, the Liu source triangle, the weighted Fouvry G9 region and B9-high. For a measurable outer set \(s\) and measurable region \(R=\{ (u,v):u\in s,\  l(u){\lt}v\le r(u)\} \), an integrable real kernel on \(R\) satisfies \(\int _R f=\int _{u\in s}\int _{v\in (l(u),r(u)]}f(u,v)\). No endpoint ordering or continuity is added; empty sections remain empty. Each application still proves its own kernel integrability and its conversion from oriented interval integrals. This continuous identity makes no assertion about discrete prime boundary atoms. </p>
+</li>
+  <li><p><span class="ttfamily">MathlibNt.Analysis.LogGridEstimates</span> shares reciprocal-kernel variation, exact half-open cell disjointness, weighted cell evaluation and strip integration across Liu and B8/B9/B10. The true logarithmic density and the application-specific excess cover are retained. Its three-strip bound is one-sided; Liu and B10 still supply separate lower bounds before concluding convergence. </p>
+</li>
+  <li><p>The boundary regularity development first proves joint continuity of the complete moving integral under a fixed local integrable majorant. Compactness supplies the original uniform moduli without repeatedly splitting common intervals and short boundary strips. Positive lower screens, the original depth induction and the zero-depth jump sets remain; no explicit rate follows from this compactness argument. </p>
+</li>
+  <li><p>The Jurkat–Richert auxiliary estimates bound a smooth reciprocal tail by a finite weighted moment and its Euler-product bound, taking the finite upper endpoint to infinity with all other parameters fixed. A shared normalization of the existing Selberg estimate at the (4.1) cutoff keeps its complete squared-count error in both ratio branches. The original cutoff definitions, constants and threshold order remain. The auxiliary bounds now share these finite-moment and normalization steps. </p>
+</li>
+  <li><p>The damped Perron estimates share a two-majorant integral bound and a single-character sharp-to-smoothed comparison. With natural \(M\ge 3\), rectangular coordinates in \([1,M]\), \(Q{\gt}0\) and \(S\subseteq [1,Q]\), smoothing at \(\epsilon =M^{-2}\) gives the factors \(1/2+(7\log M+2)/\pi \) for a common real smoothing parameter in \([1/2,M+1/2]\) and \(1/2+(14\log M+4)/\pi \) for natural-valued selectors \(Y(q,\chi )\le M\). These multiply the same aggregate rank-one large-sieve bound; the selector keeps four rank-one contributions. Applying the sharp comparison at each cutoff and summing with the nonnegative weight \(q/\varphi (q)\) adds \(8/(\pi M)\) times the product of the rectangular coefficient \(L^1\) mass and weighted family mass. The single-character comparison uses natural \(M\ge 1\), natural \(Y\le M\) and positive products; the aggregate sharp interfaces retain \(mn\le M\). </p>
+</li>
+  <li><p><span class="ttfamily">MathlibNt.Analysis.SieveNormalization</span> isolates elementary lower-bound multiplication and upper-bound exponential cancellation. The four Li–Liu applications retain their actual counts, main masses, singular series, remainder budgets and parameter ranges; the alpha case reuses the existing inverse-log absorption estimate. </p>
+</li>
+  <li><p><span class="ttfamily">MathlibNt.Analysis.RealLogPowerThreshold</span> packages eventual domination of a fixed multiple of a real log power by a positive power. The Suzuki applications preserve thresholds before the varying sieve, the same-constant contract and the moving-depth domain. The remaining local algebraic compression is not a new analytic estimate. </p>
+</li>
+  <li><p><span class="ttfamily">MathlibNt.Tactic.PolynomialDeriv</span> and <span class="ttfamily">MathlibNt.Tactic.ElementaryDeriv</span> replace repeated derivative-rule assembly by kernel-checked proof generation. Polynomial formulas reuse Mathlib’s polynomial derivative theorem; logarithmic and rational formulas retain their actual nonzero conditions and final algebraic identities. These tools change proof maintenance, not the sieve constants or ranges. </p>
+</li>
+</ul>
+<p> These interfaces preserve the counting objects, factor-size constraints, signed sums and endpoint conventions. Both current quantitative entry points consume the log-grid layer. The rewritten boundary-regularity and Rankin proof bodies are used through their library interfaces, not by either current headline quantitative proof. The shared Perron and Suzuki arguments occur in both quantitative chains; these four count normalizations occur in the Li–Liu chain. The formal proofs share these analytic and algebraic steps. </p>
+<p>The prime-number-theorem implementation shares the three-factor norm estimate and the right-contour power identity. It recombines the nine contour pieces with their original signs before taking norms, and separately records the smoothing, outer, shifted and central error bounds. In particular, the two infinite right-contour tails have scale \(X\log X/(\epsilon T)\). </p>
+<p>For a real interval \([z_1,z_2)\) with \(2\le z_1\le z_2\), the inverse-product argument takes \(k=\max (2,\lceil z_1\rceil -1)\) and \(n=\max (k,\lfloor z_2\rfloor )\). The same integer comparison applies to empty prime sets and small real endpoints. The resulting constant is chosen before the finite prime set and the two real endpoints. </p>
+<p>The finite-product bridge writes the actual sieve product as \(2S_mP_m\), where \(m=Z-1\), \(S_m\) is Liu’s odd-prime truncation and \(P_m\) is the ordinary prime product up to \(m\). Multiplication by \(\log m\) gives both signs of the Mertens estimate in one place. The lower and upper consumers retain their own finite-to-infinite truncation comparisons and original parameter domains. </p>
+<p>The Siegel–Walfisz estimates share a horizontal Mellin–Bochner bound, the signed three-edge contour identity with two tails, and scalar tail and smoothing estimates. Each application supplies its zero-free region and logarithmic-derivative bound. The quadratic argument also retains the base term used when transporting from a negative left exponent. </p>
+<p>For small cutoffs, the Bombieri–Vinogradov argument bounds the actual weighted coefficient energy, then the complete squared-error expression, and finally absorbs logarithmic powers. The balanced and adaptive cases use the same estimate with their actual cutoff. The adaptive cutoff is eventually bounded by the balanced cutoff; monotonicity is not required. The modulus weight, prefix maxima and harmonic factors stay in the expression being estimated. </p>
+<p>The <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean">high-conductor estimates</a> reuse the quadratic Abel/conductor envelope from the <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean">block first-moment module</a>. Writing \(A_N\) for the Abel amplifier prefix maximum and \(H_Q\) for the conductor harmonic factor, it gives \(4A_NH_Q^2\le 48(\log N)^2\) for natural \(B\), \(N\ge 3\) and the actual Pan cutoff \(Q\) at exponent \(B\), including \(Q=0\). The chosen Type-I and Type-II estimates use this bound directly; bare block sources keep the five-log reserve through its existing corollary. The block assembler and the chosen small-term estimate also share the square-to-first-moment step: at conductor threshold at least one, \(P^2(3HL)\le Z^2\) with \(Z\ge 0\) gives \(P\, \mathrm{mean}\le Z\), where \(H\) is the high-conductor harmonic factor and \(L\) is the actual primitive prefix-square ledger on the same high-conductor set. The factor three stays in the payment. This square comparison permits signed \(P\); the first-moment block estimates use a nonnegative multiplier. </p>
+<p>For each character, the library’s <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorChangeLevelLedger.lean">conductor-change ledger</a> bounds its prefix maximum square by twice its primitive-conductor prefix maximum square plus \(8N\) times the coefficient energy on integers in \((M,M+N]\) not coprime to the original modulus. It then sums with \(q/\varphi (q)\) and regroups the primitive term by conductor, avoiding a repeated error estimate under nested sums. The principal term stays in its separate exact splitting identity. </p>
+<p>The library’s <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/ImprimitiveConductorWeightLinear.lean">linear conductor transport</a> applies the existing theorem for an arbitrary nonnegative family \(F(d,\psi )\) directly to the primitive prefix maximum square. For natural \(D{\gt}0\), the imprimitive-weighted sum on \([D,2D]\) is bounded by the primitive-weighted sum on \([1,2D]\) times \((Q/D)H_{Q/D}\), with natural-number division and the same harmonic factor as above. This specialization supplies nonnegativity and avoids repeating the weight comparison and conductor-window enlargement. </p>
+<p>The Suzuki Case-I endpoint core uses the application’s envelope-transport inequality at a fixed sieve level to normalize the endpoint estimate. It then combines three source-order remainders against the same nonnegative budget. Its strict and even-endpoint consumers retain separate domains, with thresholds chosen before the varying sieve. </p>
+<p>Write \(\theta (x)=\sum _{p\le x}\log p\), summing over primes, and let \(\pi (x)\) count primes at most \(x\). In the <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/PrimeNumberTheoremAnd/Consequences.lean">prime-counting consequences</a>, Abel summation and the Chebyshev remainder estimate give \(\pi (x)\sim x/\log x\) from \(\theta (x)\sim x\). The logarithmic integral has the same scale: on \(t{\gt}1\), </p>
+<div class="displaymath" id="a0000000216">
+  \[  \left(\frac{t}{\log t}\right)' =\frac1{\log t}-\frac1{(\log t)^2},  \]
+</div>
+<p> so the fundamental theorem of calculus and the squared-log integral bound give \(\int _2^x dt/\log t\sim x/\log x\), and hence \(\pi (x)\sim \int _2^x dt/\log t\). The endpoint identity includes \(2\le a\le b\) with \(a=b\) allowed. The Blueprint’s epsilon-and-cutoff presentation gives another proof of this asymptotic comparison; the Lean implementation chains these equivalences. The legacy matcher interface is maintained separately. </p>
+<h1 id="a0000000014">5.2 Finding and checking a declaration</h1>
+<p>Each named result in the Blueprint links to a concrete declaration in the source revision recorded by the website. The Lean documentation provides its full type, surrounding definitions and module imports. For a major estimate, read both the declaration and the definitions in its input type: a packaged input can specify a source, density, modulus weight, cutoff and order of quantifiers that a short theorem title cannot display. </p>
+<p>The public entries are <span class="ttfamily">Goldbach</span> for Chen, <span class="ttfamily">Goldbach.OnePlusOneNine</span> for Li–Liu, and <span class="ttfamily">Goldbach.All</span> for both. These entries expose independent theorem contracts over shared foundations. Reusing a library does not identify different sieve densities or different representation predicates. </p>
+<p>Lean checks the formal proofs using propositional extensionality, classical choice and quotient soundness as its standard logical foundations. The project’s acceptance process checks statements, compiles with warnings as errors, inspects theorem axiom dependencies and independently replays compiled declarations. The Blueprint has additional editorial obligations: its mathematical statements and explanations must match the implementation, and its reading route must expose the substantive estimates needed by each conclusion. Graph extraction and rendering tests address a separate, structural part of that verification. </p>
+<h1 id="a0000000015">5.3 Mathematical sources and attribution</h1>
+<p>This development builds on UyNewNas/chen-theorem-lean, the attributed analytic-number-theory library, Mathlib and adapted PrimeNumberTheoremAnd sources. Upstream copyright notices are retained under Apache-2.0. The repository’s <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/docs/PROVENANCE.md">mathematical provenance guide</a> identifies the mathematical sources and their roles. The two proof chapters describe the implemented arguments: classical results and modern replacements are identified at the places where they enter the proof. </p>
+<p>The website build record distinguishes its own editorial source revision, the Blueprint revision and the Lean API revision. A local documentation preview can reuse a previously generated API artifact while preserving that artifact’s original source links. Online deployment is a separate step from generation and local verification. </p>
+<p><a href="https://github.com/subfish-zhou/goldbach-lean">https://github.com/subfish-zhou/goldbach-lean</a> </p>
+<h4 id="a0000000217">Character estimates and shared payments.</h4>
+<p> The reduced-residue character estimate specializes the existing Parseval identity on units. The primitive-character estimate retains its separate direct orthogonal-family Bessel argument, using the existing inner-product and energy identifications. These are distinct proof routes. In the pointwise Siegel–Walfisz estimates, the horizontal contour edges are controlled by the tail term. The shared masked dyadic payment for the Fouvry estimates belongs to the existing MaskedW module; the callers retain their geometric hypotheses and threshold choices. </p>
+<h4 id="a0000000218">S2 limit budget and Vaughan cell estimate.</h4>
+<p> The S2 main-mass estimate combines the weighted logarithmic-kernel limit with its vanishing remainder contribution before choosing the final threshold. The comparison still uses the actual prime carrier, a larger prime window with nonnegative weights, and the original logarithmic coefficient. For the Vaughan all-aspect cell estimate, one local symmetric square-root estimate controls both cross terms. The argument retains the actual conductor cell, active rectangles, normalization, and the original four-term bound; the symmetric estimate is local to the proof rather than a new public interface. </p>
+<h4 id="a0000000219">Weighted Perron norms and the S1 error budget.</h4>
+<p> The selector estimate first bounds the nonnegative weighted sum of norms of the damped Perron integrals. The four selector-independent phase twists are controlled by the rank-one large-sieve energy bridge, and the two integrable majorants preserve the exact coefficient 14 log M + 4 before the signed Perron identity is averaged. The fixed-s S1 bound keeps the true carrier, sieve product and singular-series normalization: density and main-mass losses share the scalar delta budget, while half of that budget absorbs the paid Bombieri–Vinogradov remainder. A common threshold combines these estimates; S1 depends transitively on the selector rather than forming an independent branch.   </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="chap-liliu.html" title="Li–Liu: two factors with a prescribed imbalance"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="goldbach-lean: Chen and Li–Liu theorems"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prime distribution and sieve foundations</title>
+<link rel="next" href="chap-chen.html" title="Chen: a prime plus at most two primes" />
+<link rel="prev" href="chap-overview.html" title="Two counting theorems and their proof routes" />
+<link rel="up" href="index.html" title="goldbach-lean: Chen and Li–Liu theorems" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/reader.css" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">goldbach-lean: Chen and Li–Liu theorems</a></h1>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-overview.html"><span class="toc_ref">1</span> <span class="toc_entry">Two counting theorems and their proof routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-overview.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">What is being counted?</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000007"><span class="toc_ref">1.2</span> <span class="toc_entry">The mathematical plan</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000008"><span class="toc_ref">1.3</span> <span class="toc_entry">Reading a sieve estimate</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000011"><span class="toc_ref">1.4</span> <span class="toc_entry">How to use the three layers</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-foundations.html"><span class="toc_ref">2</span> <span class="toc_entry">Prime distribution and sieve foundations</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-foundations.html#a0000000012"><span class="toc_ref">2.1</span> <span class="toc_entry">Analytic foundations of the two Goldbach arguments</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-chen.html"><span class="toc_ref">3</span> <span class="toc_entry">Chen: a prime plus at most two primes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-chen.html#bp:chen-route"><span class="toc_ref">3.1</span> <span class="toc_entry">Chen’s theorem: from a signed sieve weight to representations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-liliu.html"><span class="toc_ref">4</span> <span class="toc_entry">Li–Liu: two factors with a prescribed imbalance</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-liliu.html#sec:liliu-mathematical-chain"><span class="toc_ref">4.1</span> <span class="toc_entry">Li–Liu’s asymmetric Goldbach theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-implementation.html"><span class="toc_ref">5</span> <span class="toc_entry">Reading the formal implementation</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-implementation.html#a0000000013"><span class="toc_ref">5.1</span> <span class="toc_entry">Reusable proofs and source boundaries</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000014"><span class="toc_ref">5.2</span> <span class="toc_entry">Finding and checking a declaration</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000015"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathematical sources and attribution</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">All documented lemmas — proof graph</a></li>
+<li ><a href="dep_graph_chapter_1.html">Two counting theorems and their proof routes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_2.html">Prime distribution and sieve foundations — proof graph</a></li>
+<li ><a href="dep_graph_chapter_3.html">Chen: a prime plus at most two primes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_4.html">Li–Liu: two factors with a prescribed imbalance — proof graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:foundations">2 Prime distribution and sieve foundations</h1>
+
+<h1 id="a0000000012">2.1 Analytic foundations of the two Goldbach arguments</h1>
+<p>The two arguments need more than a supply of primes. They need primes distributed in residue classes, with errors that remain small when summed against the actual sieve coefficients. They also need a normalization of the resulting Euler products that is uniform in the even integer being represented. These are separate tasks: neither a linear sieve nor an equidistribution estimate alone gives the final representation count. </p>
+<h2 id="sec:distribution-reading-route">2.1.1 Choosing the distribution input by its counting object</h2>
+<p>  Read the distribution part in three layers: first the discrepancy being summed, then the uniformity in its moving parameters, and finally its actual counting consumer. This separates three inputs used in the Goldbach proof. </p>
+<ol class="enumerate">
+  <li><p><em>Ordinary Bombieri–Vinogradov:</em> a prime progression and a maximum over reduced residues and integer prefixes. The lower \(S_1\) sieve pays this error on the original difference source. In the paper this is the ordinary prime-distribution setting of (1.11) and its uses in Section&#160;5.1. The proof below passes through principal, small-conductor and large-conductor branches before the actual maximal prime-counting theorem is available. </p>
+</li>
+  <li><p><em>Bounded-coefficient Pan:</em> a coefficient–prime convolution, with the coefficient sum inside the absolute value. Its constants precede the varying coefficient and interval. The switched \(S_2\) and \(B_{10}\) sources use this input; the latter pays both window endpoints. The paper’s weighted setting (1.12)–(1.13), Lemma&#160;3.1 and the application (5.37) motivate this source-specific implementation. Its contract below gives the precise \(|a|\le 1\), \(A_2\le N^{2/3}\) and logarithmic lower-endpoint conditions. </p>
+</li>
+  <li><p><em>Fouvry well-factorable distribution:</em> a signed sum in the modulus of bilinear discrepancies. Lemma&#160;3.5 of the fixed paper supplies the \(5(1-\nu )/9\) level in the small-prime range. The implemented rectangle theorem retains the moving Goldbach residue and the coprimality-filtered prime coefficient. Flexible \(G_{12}\) rectangles consume that exact theorem; the \(G_9\) low-count producer and the author-\(G_{11}\) mixed-level route have their own subsequent carrier and boundary payments. </p>
+</li>
+</ol>
+<p> The detailed formulas below specify these three different contracts. Ordinary prime BV, a fixed Chen convolution, and the varying Li–Liu convolution are therefore separate navigation entries. The selected Blueprint nodes emphasize their mathematical roles; the structure browser supplies the full module and declaration-reference views for following the implementation. </p>
+<h2 id="a0000000016">2.1.2 The main scale and its local densities</h2>
+<p>Throughout this section, \(N\) is a positive even integer tending to infinity, \(p\) denotes a prime, \(\varphi \) is Euler’s totient, and \(\omega (d)\) counts the <em>distinct</em> prime divisors of \(d\). Write \(\gamma \) for the Euler–Mascheroni constant and put </p>
+<div class="displaymath" id="a0000000017">
+  \[  C_2=\prod _{p{\gt}2}\left(1-\frac1{(p-1)^2}\right),\qquad \mathfrak S_{\mathrm{Liu}}(N)=C_2\prod _{\substack {p\mid N\\ p{\gt}2}}\frac{p-1}{p-2}, \qquad \mathcal X_N=\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2}.  \]
+</div>
+<p> Here \(\mathfrak S_{\mathrm{Liu}}\) is Liu’s normalization: the factor at \(2\) is omitted. The source proves \(C_2{\gt}0\) and \(\mathfrak S_{\mathrm{Liu}}(N)\ge C_2\). Consequently a proved error \(O(N/(\log N)^{2+u})\), with fixed \(u{\gt}0\), can eventually be made smaller than any prescribed positive multiple of \(\mathcal X_N\). This last absorption is elementary; producing that error is the analytic work. </p>
+<p>For the Goldbach difference sequence \(N-p\), divisibility by a prime \(q\nmid N\) asks for \(p\equiv N\pmod q\) among the reduced residue classes. Its density is therefore \(g(q)=1/(q-1)\), extended multiplicatively on squarefree sifting divisors, not \(1/q\). For an integer cutoff \(Z\), the actual sieve product is </p>
+<div class="displaymath" id="a0000000018">
+  \[  V_N(Z)=\prod _{\substack {p{\lt}Z\\ p\nmid N}}\left(1-\frac1{p-1}\right).  \]
+</div>
+<p> Evenness removes the exceptional prime \(2\). The literal Jurkat–Richert \(1/p\) specialization is a different source model. What passes between the models is a constructed system of sieve functions and proved comparison estimates, not an identification of their Euler factors. </p>
+<h2 id="a0000000019">2.1.3 Prime counting, Mertens estimates, and moving products</h2>
+<p>The von Mangoldt function is \(\Lambda (p^k)=\log p\) for a prime \(p\) and an integer \(k\ge 1\), and is zero on all other positive integers. Define \(\psi (x)=\sum _{1\le n\le x}\Lambda (n)\), \(\vartheta (x)=\sum _{p\le x}\log p\), and \(\pi (x)=\# \{ p\le x:p\text{ is prime}\} \). The prime-distribution facade supplies a quantitative prime number theorem (PNT): </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-pnt">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">1</span>
+    <span class="theorem_thmtitle">A quantitative prime number theorem</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-pnt">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000020"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/AnalyticNumberTheory/PrimeDistribution/PrimeNumberTheorem.lean#L16" class="lean_decl">AnalyticNumberTheory.PrimeDistribution.chebyshevPsi_medium_error</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\exists c{\gt}0:\  \psi (x)-x=O(xe^{-c(\log x)^{1/10}})\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000020">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  For some \(c{\gt}0\), its error is \(O(x\exp (-c(\log x)^{1/10}))\). The effective \(\vartheta \) estimate keeps the prime-power correction explicitly; Abel summation then supplies prime reciprocal sums and the Mertens estimates. The separate prime-counting facade also supplies \(\pi (n)\sim n/\log n\) and an upper bound valid for every integer \(n\ge 2\). </p>
+<p>The constant in the product formula is identified, not left unspecified: </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-mertens">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">2</span>
+    <span class="theorem_thmtitle">Mertens product with its identified constant</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-mertens">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/AnalyticNumberTheory/Mertens/Theorems.lean#L24" class="lean_decl">AnalyticNumberTheory.Mertens.primeProduct_mertens_nat</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\exists C{\gt}0\  \forall n\ge 2:\  |\prod _{p\le n}(1-1/p)-e^{-\gamma }/\log n|\le C/(\log n)^2\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000021">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="displaymath" id="a0000000022">
+  \[  \left|\prod _{p\le n}(1-1/p)-\frac{e^{-\gamma }}{\log n}\right| \le \frac{C}{(\log n)^2}\qquad (n\ge 2).  \]
+</div>
+<p> The local Goldbach version also proves a dimension-one interval estimate. For any finite set \(\mathcal P\) of odd primes in \([z_1,z_2)\), with \(2\le z_1\le z_2\), one constant \(K{\gt}1\) gives </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-local-product">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">3</span>
+    <span class="theorem_thmtitle">Uniform dimension-one Goldbach local product</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-local-product">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000023"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean#L2093" class="lean_decl">MathlibNt.SieveTheory.MertensTheorem.exists_goldbach_inverse_interval_bound</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\exists K{\gt}1:\  \prod _{p\in \mathcal P}(1-1/(p-1))^{-1}\le (\log z_2/\log z_1)(1+K/\log z_1)\) for every finite set of odd primes \(\mathcal P\subset [z_1,z_2)\), \(2\le z_1\le z_2\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000023">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="displaymath" id="a0000000024">
+  \[  \prod _{p\in \mathcal P}\left(1-\frac1{p-1}\right)^{-1} \le \frac{\log z_2}{\log z_1}\left(1+\frac K{\log z_1}\right).  \]
+</div>
+<p> This supplies the local-product hypothesis of the actual Chen and Li–Liu bounding sieves, uniformly over their changing finite prime sets. Taking the lower endpoint to be \(2\) also gives a uniform \(c/\log z\) lower bound for the finite product over primes \(p{\lt}z\) not dividing \(N\): one \(c{\gt}0\) works for all even \(N\ge 4\) and every real \(z\ge 2\). Here and below, Li–Liu’s \(S_1\) means the base sift of the original difference source \(N-p\), and \(S_2\) means the sum of sources obtained by fixing one prime factor; their precise fibres are defined in Section&#160;<a href="chap-liliu.html#sec:liliu-fibres">4.1.2</a>. The source \(\mathcal B_{10}\) retains three prime labels while sifting the output \(N-rsq\); see Section&#160;??. These forward references specify the counting objects; the present chapter explains the analytic estimates that will be applied to them. </p>
+<p>Finite truncations of \(\mathfrak S_{\mathrm{Liu}}(N)\) must still be distinguished from the full product. The universal odd-prime tail is independent of \(N\); omitted divisor corrections are not. The source obtains a uniform upper comparison of the truncation with \((1+\eta )\mathfrak S_{\mathrm{Liu}}(N)\) as the cutoff grows. The lower comparison needed for \(S_1\) requires additional geometry: for \(z\ge N^{1/18}\), there are at most eighteen prime divisors of \(N\) at or above \(\lceil z\rceil \). Their correction product is bounded by \(\exp (18/(\lceil z\rceil -2))\) once the denominator is positive. This is why the lower normalization is not just the upper argument reversed. The resulting upper and lower products have leading term \(2e^{-\gamma }\mathfrak S_{\mathrm{Liu}}(N)/\log z\), with explicitly paid relative errors. </p>
+<h2 id="a0000000025">2.1.4 A finite arithmetic bound shared by two mean-square arguments</h2>
+<p>Let \(j\) be a nonnegative integer and let \(\tau _j(n)\) count ordered \(j\)-tuples of positive integers whose product is \(n\); thus \(\tau _0\) is \(1\) at \(n=1\) and \(0\) elsewhere. For a real \(L\ge 1\), a finite set \(\mathcal Q\subseteq \{ 1,\ldots ,\lfloor L\rfloor \} \), and real coefficients satisfying \(|c(q)|\le \tau _j(q)\) on \(\mathcal Q\), the <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LcmWeightBounds.lean">finite lcm-weight core</a> proves </p>
+<div class="displaymath" id="a0000000026">
+  \[  \sum _{q,r\in \mathcal Q}\left|\frac{c(q)c(r)}{\operatorname {lcm}(q,r)}\right| \le (1+\log L)^{2j^2+1}.  \]
+</div>
+<p> Here \(\operatorname {lcm}(q,r)\) is the least common multiple. Symmetry and \(|ab|\le (a^2+b^2)/2\) reduce the double sum to row sums weighted by \(c(q)^2\). A divisor decomposition bounds the row at \(q\) by \(\tau _2(q)(1+\log L)/q\); the remaining divisor moment contributes \((1+\log L)^{2j^2}\). This calculation uses finite sums and harmonic estimates. </p>
+<p>For an integer \(m\ge 0\), take \(j=1\), \(c(q)=1\), \(\mathcal Q=\{ 1,\ldots ,m\} \) and \(L=m+1\). The result is the bound \(\sum _{q,r\le m,\  q,r\ge 1}1/\operatorname {lcm}(q,r) \le (1+\log (m+1))^3\) used in Pan’s divisor-square estimate. The signed version also supplies the large-gcd part of the later dispersion argument. Both consumers import this arithmetic core; the elementary specialization therefore keeps its dependency boundary below smoothing and Poisson summation. </p>
+<h2 id="a0000000027">2.1.5 Ordinary prime distribution and the weighted Chen error</h2>
+<p>For a real additive normalization \(\kappa \) and \(x\ge 0\), use </p>
+<div class="displaymath" id="a0000000028">
+  \[  L_\kappa (x)= \begin{cases}  \kappa ,& 0\le x\le 1,\\ \displaystyle \kappa +\int _2^x\frac{dt}{\log t},& x{\gt}1, \end{cases} \qquad L_*=L_{2/\log 2}.  \]
+</div>
+<p> The integral in the second branch is an ordinary oriented integral on an interval avoiding \(1\). The first branch records the implementation’s <em>totalized interval-integral convention</em>: an integral over the nonintegrable logarithmic singularity is assigned zero. It is not a Cauchy principal value. In particular \(L_*(0)=L_*(1)=2/\log 2\). The source’s <span class="ttfamily">trueLogarithmicIntegral</span> means this \(L_*\), not the unshifted integral and not \(x/\log x\); see <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Arithmetic/LiuLogarithmicIntegral.lean">logarithmic-integral normalization</a> and <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbelDeterministic.lean">the zero-integral endpoint lemma</a>. Let \(\pi (y;q,a)\) count primes at most the integer \(y\) in the class \(a\bmod q\), and, for integers \(N\ge 0\) and \(q\ge 1\), define the nested maximum </p>
+<div class="displaymath" id="a0000000029">
+  \[  E^*(N,q)=\max _{\substack {y\in \mathbb Z\\ 0\le y\le N}}\  \max _{\substack {0\le a{\lt}q\\ (a,q)=1}} \left|\pi (y;q,a)-\frac{L_*(y)}{\varphi (q)}\right|, \qquad Q_B(N)=\left\lfloor \frac{N^{1/2}}{(\log N)^B}\right\rfloor .  \]
+</div>
+<p> The residues \(a\) are integers. At modulus zero put \(E^*(N,0)=0\); modulus one has the single reduced residue \(a=0\). Thus the maximum really includes \(y=0,1\), with the convention just specified; see <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/BombieriVinogradov.lean">the exact AP and prefix maxima</a>. The proved standard Bombieri–Vinogradov (BV) theorem states that for every \(A{\gt}0\) there are \(B\ge 0\) and \(C{\gt}0\) such that, eventually, </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-bv">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">4</span>
+    <span class="theorem_thmtitle">Bombieri–Vinogradov for primes</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-bv">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000030"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean#L37" class="lean_decl">AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.standardBombieriVinogradov</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(A{\gt}0\) there are \(B\ge 0\), \(C{\gt}0\) and \(N_0\) such that \(\sum _{1\le q\le Q_B(N)}E^*(N,q)\le CN/(\log N)^A\) for integers \(N\ge N_0\), where \(Q_B(N)=\lfloor N^{1/2}/(\log N)^B\rfloor \) and \(E^*(N,q)=\max _{y\in \{ 0,\ldots ,N\} }\max _{0\le a{\lt}q,\, (a,q)=1}|\pi (y;q,a)-L_*(y)/\varphi (q)|\). Here \(L_*(x)=2/\log 2+\int _2^xdt/\log t\) for \(x{\gt}1\), while \(L_*(0)=L_*(1)=2/\log 2\) by the totalized interval-integral convention, not a principal value; \(E^*(N,0)=0\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000030">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="displaymath" id="a0000000031">
+  \[  \sum _{1\le q\le Q_B(N)} E^*(N,q)\le C\frac{N}{(\log N)^A}.  \]
+</div>
+<p> The maxima allow the consumer to choose its residue and its integer endpoint; the theorem does not bound an arbitrary convolution by ordinary prime BV. Richert’s unshifted-integral formulation is supplied by a further normalization comparison in the same analytic producer, not by redefining \(L_*\). </p>
+<p>For comparison with the Chen chapter, its notations \(U\) and \(\operatorname {li}_\kappa \) mean \(C_2\) and \(L_\kappa \), respectively. Its fixed-endpoint prime error is </p>
+<div class="displaymath" id="a0000000032">
+  \[  E_{\rm prime}(N,q)=\max _{\substack {0\le a{\lt}q\\ (a,q)=1}} \left|\pi (N;q,a)-\frac{L_*(N)}{\varphi (q)}\right| \le E^*(N,q) \qquad (q\ge 1).  \]
+</div>
+<p> This is the same centering and residue maximum, with only the additional prefix maximum omitted. </p>
+<h4 id="a0000000033">Why Rosser weights give a lower or upper sieve.</h4>
+<p> Let \(\mathcal P\) be a finite set of distinct sifting primes, \(P=\prod _{p\in \mathcal P}p\), and let \(D_{\rm nat}\ge 2\) be an integer level such that every \(p\in \mathcal P\) is below \(D_{\rm nat}\). The Möbius function \(\mu \) is zero on integers divisible by a prime square and is \((-1)^k\) on products of \(k\) distinct primes, with \(\mu (1)=1\); thus \(\mu ^2\) is the squarefree indicator on positive integers. For \(d\mid P\) write its prime factors in decreasing order \(d=p_1\cdots p_k\), \(p_1{\gt}\cdots {\gt}p_k\). Define </p>
+<div class="displaymath" id="a0000000034">
+  \[  \lambda _d^{\pm }= \begin{cases}  \mu (d),& d\mid P,\  d{\lt}D_{\rm nat},\  \text{and the corresponding chain tests hold},\\ 0,& \text{otherwise}, \end{cases}  \]
+</div>
+<p> where the test at position \(j\) is </p>
+<div class="displaymath" id="a0000000035">
+  \[  p_1\cdots p_{j-1}p_j^3{\lt}D_{\rm nat}: \quad \begin{cases}  j\text{ even},& \lambda _d^-,\\ j\text{ odd},& \lambda _d^+. \end{cases}  \]
+</div>
+<p> The empty chain passes, so \(\lambda _1^\pm =1\). In real-level consumers the convention \(D_{\rm nat}=\lfloor D_{\rm real}\rfloor +1\) makes \(d{\lt}D_{\rm nat}\) exactly \(d\le D_{\rm real}\) for integer \(d\); the chain tests themselves still use \(D_{\rm nat}\). Other natural-level choices, such as the level-six construction below, are retained as specified by their producers. </p>
+<p>The finite Rosser certificates give the pointwise inequalities, for positive integers \(a\), </p>
+<div class="displaymath" id="a0000000036">
+  \[  \sum _{d\mid \gcd (a,P)}\lambda _d^- \le \mathbf1_{\gcd (a,P)=1} \le \sum _{d\mid \gcd (a,P)}\lambda _d^+, \qquad |\lambda _d^\pm |\le 1.  \]
+</div>
+<p> For a finite sequence \(\mathcal A\) of positive integers (counting any labels with their multiplicity), set \(\mathcal A_d=\{ a\in \mathcal A:d\mid a\} \) and \(S(\mathcal A,P)=\# \{ a\in \mathcal A:\gcd (a,P)=1\} \). Write \(|\mathcal A_d|=Xg(d)+r_d\), where \(X\ge 0\) is the main mass, \(g\) is the multiplicative density with \(g(1)=1\), and \(r_d\) is the discrepancy. Summing the pointwise inequalities and interchanging finite sums gives </p>
+<div class="displaymath" id="a0000000037">
+  \[  X\sum _{d\mid P}\lambda _d^-g(d)-\sum _{d\mid P}|\lambda _d^-r_d| \le S(\mathcal A,P)\le X\sum _{d\mid P}\lambda _d^+g(d)+\sum _{d\mid P}|\lambda _d^+r_d|.  \]
+</div>
+<p> The same argument applies to nonnegative weighted sources. This separates the analytic density comparison from payment of the distribution remainder. These combinatorial Rosser weights are not the Selberg optimizer used later. The lower definition and certificate are in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/FiniteWeights.lean">finite lower Rosser weights</a>; the odd-position definition is in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/RosserChains.lean">upper Rosser chains</a>, and its certificate is in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/UpperRosserDensity.lean">finite upper Rosser weights</a>. </p>
+<h4 id="a0000000038">The conditioned distribution bill.</h4>
+<p> For Chen’s conditioning let \(P_N=\prod _{2{\lt}p\le N^{1/10},\  p\nmid N}p\). The relevant modulus is \(qd\), not \(d\); medium primes satisfy \(N^{1/10}{\lt}q\le N^{1/3}\). The weighted producer controls the reduced carrier </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-weighted-bv">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">5</span>
+    <span class="theorem_thmtitle">The actual weighted conditioned Chen error</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-weighted-bv">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000039"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/Bombieri1965RichertWeightedConsumer.lean#L18" class="lean_decl">MathlibNt.SieveTheory.Bombieri1965RichertWeightedConsumer.chenWeightedBombieriVinogradov</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For fixed \(0{\lt}\epsilon {\lt}1/6\) and \(A{\gt}0\), let \(P_N=\prod _{2{\lt}p\le N^{1/10},\, p\nmid N}p\). Eventually, \(\sum _{N^{1/10}{\lt}q\le N^{1/3},\  q\  \text{ prime},\  q\nmid N}\sum _{d\mid P_N,\  d{\lt}\lfloor N^{1/2-\epsilon }/q\rfloor +1}3^{\omega (d)}E_{\rm prime}(N,qd)\ll _{\epsilon ,A}N/(\log N)^A\). The fixed-endpoint error is \(E_{\rm prime}(N,h)=\max _{0\le a{\lt}h,\, (a,h)=1}|\pi (N;h,a)-L_*(N)/\varphi (h)|\le E^*(N,h)\); all products run over primes. The constants and threshold depend only on the fixed parameters. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000039">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="displaymath" id="a0000000040">
+  \[  \sum _{\substack {q\text{ in Chen's medium range}\\ q\nmid N}} \  \sum _{\substack {d\mid P_N\\ d{\lt}\lfloor N^{1/2-\epsilon }/q\rfloor +1}} 3^{\omega (d)}\max _{(a,qd)=1} \left|\pi (N;qd,a)-\frac{L_*(N)}{\varphi (qd)}\right| \ll _{\epsilon ,A}\frac{N}{(\log N)^A}.  \]
+</div>
+<p> Here \(0{\lt}\epsilon {\lt}1/6\) and \(A{\gt}0\). The proof checks injectivity of \((q,d)\mapsto qd\) on this carrier and pays the weight by finite Cauchy and divisor-moment estimates, using ordinary BV with saving exponent \(2A+10\). Nonreduced lanes \(q\mid N\) and removed small primes have separate corrections. This producer enters Chen’s conditioned upper sieve; ordinary BV also pays the base lower-sieve remainder and Li–Liu’s strict-endpoint \(S_1\) remainder. </p>
+<h2 id="a0000000041">2.1.6 Constructed sieve functions and uniform comparison</h2>
+<p>Write \(F\) and \(f\) for the constructed dimension-one upper and lower Jurkat–Richert functions. Their initial values are \(F(s)=2e^\gamma /s\) for \(0{\lt}s\le 3\) and \(f(s)=0\) for \(0{\lt}s\le 2\); the delay equations are \((sF(s))'=f(s-1)\) and \((sf(s))'=F(s-1)\) beyond the initial intervals. For a real level \(D_{\rm real}{\gt}0\) and cutoff \(z{\gt}1\), the sieve coordinate is \(s=\log D_{\rm real}/\log z\). </p>
+<p>The hats needed for the error estimate are positive extensions of the normalized derivatives \(-F'/(2e^\gamma )\) and \(f'/(2e^\gamma )\), rather than additional counting functions. With \(c_\gamma =2e^\gamma \), they are, for \(s{\gt}0\), </p>
+<div class="displaymath" id="a0000000042">
+  \[  \widehat T^+(s)= \begin{cases} s^{-2},& s\le 3,\\ \bigl(F(s)-f(s-1)\bigr)/(c_\gamma s),& s{\gt}3, \end{cases} \qquad \widehat T^-(s)= \begin{cases} 2s^{-2},& s\le 2,\\ \bigl(F(s-1)-f(s)\bigr)/(c_\gamma s),& s{\gt}2. \end{cases}  \]
+</div>
+<p> The delay construction proves positivity, continuity, the weighted delay relations, and decay, with Suzuki’s initial parameter \(\widehat\beta =2\): </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-jr-hats">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">6</span>
+    <span class="theorem_thmtitle">Constructed Jurkat–Richert comparison functions</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-jr-hats">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000043"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean#L259" class="lean_decl">MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.jr1965Section13HatSourceContract</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For the constructed Jurkat–Richert functions \(F,f\), let \(c_\gamma =2e^\gamma \). On \(s{\gt}0\), define \(\widehat T^+(s)=s^{-2}\) for \(s\le 3\) and \([F(s)-f(s-1)]/(c_\gamma s)\) for \(s{\gt}3\); define \(\widehat T^-(s)=2s^{-2}\) for \(s\le 2\) and \([F(s-1)-f(s)]/(c_\gamma s)\) for \(s{\gt}2\). These positive extensions of the normalized derivatives \(-F'/c_\gamma \) and \(f'/c_\gamma \) satisfy the complete Suzuki source properties with \(\widehat\beta =2\): positivity, continuity, the initial formulas, weighted delay derivatives, and weighted and exponential decay. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000043">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The definitions and all these properties are supplied together in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean">constructed hats and their source theorem</a>. </p>
+<p>To state the lower comparison precisely, fix real parameters \(d,\Delta ,\Theta \) (the letter \(d\) here is an error exponent, not a sifting divisor) satisfying </p>
+<div class="displaymath" id="a0000000044">
+  \[  0{\lt}\Delta {\lt}1,\qquad d{\gt}\frac7{1-\Delta },\qquad \Theta {\gt}0, \qquad \frac2d{\lt}\frac1\Theta ,\qquad \frac2\Theta +\frac3d{\lt}1-\Delta .  \]
+</div>
+<p> They are chosen before the level grows. For \(D{\gt}1\) define the source cutoff and the depth-\(m\) error envelope by </p>
+<div class="displaymath" id="a0000000045">
+  \[  \sigma _{\rm src}(D;d)=(\log D)^{1/d}\log \log (27D), \qquad E_m(D,s;d)=\left(1+\frac{s^d}{\log D}\right)^s s \begin{cases} \widehat T^+(s),& m\text{ odd},\\ \widehat T^-(s),& m\text{ even}. \end{cases}  \]
+</div>
+<p> For a bounding sieve \(S\), let \(\mathcal P_S\) denote its finite sifting prime set and let \(g_S\) denote its multiplicative density, with \(0\le g_S(p){\lt}1\). Put \(\mathcal P_S(z)=\{ p\in \mathcal P_S:p{\lt}z\} \), \(P_S(z)=\prod _{p\in \mathcal P_S(z)}p\), and \(V_S(z)=\prod _{p\in \mathcal P_S(z)}(1-g_S(p))\). Its dimension-one local-product condition with constant \(K\) is </p>
+<div class="displaymath" id="a0000000046">
+  \[  \prod _{\substack {p\in \mathcal P_S\\ z_1\le p{\lt}z_2}} (1-g_S(p))^{-1} \le \frac{\log z_2}{\log z_1}\left(1+\frac K{\log z_1}\right) \qquad (2\le z_1\le z_2).  \]
+</div>
+<p> For an integer level \(D_{\rm nat}\ge 2\) and \(4\le s\le 6\), use the actual rounded cutoff and carrier-dependent even depth </p>
+<div class="displaymath" id="a0000000047">
+  \[  z=\left\lceil D_{\rm nat}^{1/s}\right\rceil ,\qquad m=2\bigl(|\mathcal P_S(z)|+1\bigr).  \]
+</div>
+<p> The source-coordinate relation is the displayed ceiling; after rounding, one must not replace \(s\) by \(\log D_{\rm nat}/\log z\). Assume \(z\ge 2\) and \(s\le \sigma _{\rm src}(D_{\rm nat};d)\). With the constructed hats and the fixed parameters above, the lower comparison chooses its constants before \(S\), \(K\), \(D_{\rm nat}\) and \(s\) vary: </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-suzuki-lower">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">7</span>
+    <span class="theorem_thmtitle">Lower Rosser comparison uniform in the sieve</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-suzuki-lower">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000048"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean#L105" class="lean_decl">MathlibNt.SieveTheory.exists_lowerRosserDensity_dimensionOneLowerFactor_of_suzuki_literal_allDepth_uniform_in_S_of_source</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   Fix hats satisfying the Suzuki source properties and real \(d,\Delta ,\Theta \) with \(0{\lt}\Delta {\lt}1\), \(d{\gt}7/(1-\Delta )\), \(\Theta {\gt}0\), \(2/d{\lt}1/\Theta \) and \(2/\Theta +3/d{\lt}1-\Delta \). The source selects its auxiliary constants, and in particular \(C\ge 3\), before the bounding sieve \(S\) varies. For each \(K\ge 2\) satisfying its dimension-one local-product bound, each integer \(D\ge 2\) and \(4\le s\le 6\), put \(z=\lceil D^{1/s}\rceil \ge 2\) and assume \(s\le \sigma _{\rm src}(D;d)=(\log D)^{1/d}\log \log (27D)\). With \(\mathcal P_S(z)\) the supported primes below \(z\), \(P=\prod _{p\in \mathcal P_S(z)}p\), \(m=2(|\mathcal P_S(z)|+1)\) and \(V_S(z)=\prod _{p\in \mathcal P_S(z)}(1-g_S(p))\), one has \(V_S(z)[f(s)-C e^{\sqrt K}E_m(D,s;d)(\log D)^{-\Delta }]\le \sum _{e\mid P}\lambda _e^-g_S(e)\). The weights are the finite lower Rosser weights of natural level \(D\), and \(E_m(D,s;d)=(1+s^d/\log D)^s s\widehat T^{\eta _m}(s)\), with \(\eta _m=+\) for odd \(m\) and \(-\) for even \(m\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000048">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  In particular, there is \(C\ge 3\) such that for each \(K\ge 2\) satisfying the local-product condition, </p>
+<div class="displaymath" id="a0000000049">
+  \[  V_S(z)\bigl(f(s)-\mathcal E_m(D_{\rm nat},s;d,\Delta ,K)\bigr) \le \sum _{e\mid P_S(z)}\lambda _e^-g_S(e),  \]
+</div>
+<p> where the weights have level \(D_{\rm nat}\) and the <em>complete</em> loss is </p>
+<div class="displaymath" id="a0000000050">
+  \[  \mathcal E_m(D,s;d,\Delta ,K) =C\exp (\sqrt K)\, E_m(D,s;d)(\log D)^{-\Delta }.  \]
+</div>
+<p> The parameter inequalities, cutoff, envelope and full comparison can be read respectively in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiClaim145SourceParameters.lean">Suzuki’s parameter conditions</a>, <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCaseIISourceSigmaDecay.lean">the source cutoff</a>, <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144ErrorObjects.lean">the exact error envelope</a>, and <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean">the uniform lower comparison</a>. </p>
+<p>For Chen the source verifies \((d,\Delta ,\Theta )=(16,1/2,7)\) and takes </p>
+<div class="displaymath" id="a0000000051">
+  \[  D_{\rm nat}=\lfloor N^{1/2-\epsilon }\rfloor +1, \qquad s=5-10\epsilon ,\qquad 0\le \epsilon {\lt}1/10.  \]
+</div>
+<p> For each fixed \(\epsilon \) and each \(\rho {\gt}0\), it then selects an \(N\) threshold for both the source-cutoff condition and \(\mathcal E_m{\lt}\rho \), for <em>all</em> depths \(m\). Indeed, with \(s\) fixed the perturbation \((1+s^{16}/\log D)^s\) tends to \(1\) and \((\log D)^{-1/2}\) tends to zero; depth only chooses between two fixed hat values. A growing prime set and hence a growing adaptive depth therefore cause no extra loss. The actual finite-source comparison is <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenVaryingFamilyLowerDensity.lean">Chen’s varying-family lower density</a>, using <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenAdaptiveDepthAbsorption.lean">all-depth error absorption</a> and <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenParameterBridge.lean">the floor/ceiling geometry</a>. Li–Liu’s beta branch also fixes its coordinate before choosing the integer threshold; its final fixed-\(s\) range is \(4\le s{\lt}33/8\). </p>
+<p>The modern upper comparison gives, for each local-product constant \(K{\gt}1\) and tolerance \(\rho {\gt}0\), a cutoff \(z_0\) uniform in the bounding sieve: </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-suzuki-upper">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">8</span>
+    <span class="theorem_thmtitle">Modern upper Rosser comparison</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-suzuki-upper">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000052"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean#L69" class="lean_decl">MathlibNt.SieveTheory.dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   Given hats satisfying the Suzuki source properties and fixed \(d,\Delta ,\Theta \) with \(0{\lt}\Delta {\lt}1\), \(d{\gt}7/(1-\Delta )\), \(\Theta {\gt}0\), \(2/d{\lt}1/\Theta \) and \(2/\Theta +3/d{\lt}1-\Delta \), for every \(K{\gt}1\) and \(\rho {\gt}0\) there is \(z_0\) before the bounding sieve \(S\) varies. If \(z\ge \max (2,z_0)\), \(D_{\rm real}{\gt}0\), \(S\) satisfies the dimension-one local-product bound with \(K\), every sifting prime is at most \(z\), and \(s=\log D_{\rm real}/\log z\in [3/2,4]\), then \(\sum _{e\mid P}\lambda _e^+g_S(e)\le (F(s)+\rho )\prod _{p\mid P}(1-g_S(p))\). Here \(P\) is the product of the sifting primes, the product on the right is over primes, and \(\lambda ^+\) is the finite upper Rosser weight at natural level \(\lfloor D_{\rm real}\rfloor +1\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000052">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  If \(z\ge \max (2,z_0)\), every sifting prime is at most \(z\), \(D_{\rm real}{\gt}0\), and \(s=\log D_{\rm real}/\log z\) satisfies \(3/2\le s\le 4\), then </p>
+<div class="displaymath" id="a0000000053">
+  \[  \sum _{e\mid P}\lambda _e^+g_S(e) \le (F(s)+\rho )\prod _{p\mid P}(1-g_S(p)), \qquad D_{\rm nat}=\lfloor D_{\rm real}\rfloor +1,  \]
+</div>
+<p> where \(P=\prod _{p\in \mathcal P_S}p\) and the product on the right runs over primes. This comparison uses the local-product condition just defined. The source-cutoff and odd-depth error are absorbed in the choice of \(z_0\); see <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean">the upper comparison through four</a>. A finite source bound still requires the separate remainder payment derived from the pointwise Rosser inequality. </p>
+<h4 id="a0000000054">Which comparisons the Li–Liu terms actually use.</h4>
+<p> The following three applications distinguish the ranges before the explicit sieve-function formulas are used in the Li–Liu chapter. </p>
+<ol class="enumerate">
+  <li><p>Chen’s conditioned upper sieve and Li–Liu’s \(S_2\) and \(\mathcal B_{10}\) upper sieves use the preceding \(3/2\le s\le 4\) theorem. Li–Liu’s second positive \(S_1\) term uses the fixed-\(s\) beta lower branch; continuity selects \(s{\lt}33/8\) before the threshold to approximate its endpoint coefficient. </p>
+</li>
+  <li><p>The first positive \(S_1\) term instead uses the genuine level-six construction at \(z_N=N^{4/53}\): </p>
+<div class="displaymath" id="a0000000055">
+  \[  Z_6=\lceil z_N\rceil ,\qquad D_6=Z_6^6,\qquad s=6.  \]
+</div>
+<p> For every \(\rho {\gt}0\), the lower Rosser main sum at this natural level is at least \((f(6)-\rho )V_N(Z_6)\) eventually, uniformly in the source parameter \(0{\lt}\epsilon {\lt}1\). Since \(D_6\sim N^{24/53}\) and \(24/53{\lt}1/2\), this choice leaves room below the ordinary-BV square-root level for the distribution payment. The definition and density theorem are <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1LevelSix.lean">the level-six geometry</a> and <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean">the actual level-six lower density</a>. Combining this with the main mass, the lower product, and the paid ordinary-BV remainder gives, for each fixed \(0{\lt}\epsilon {\lt}1\) and \(\delta {\gt}0\), </p>
+<div class="displaymath" id="a0000000056">
+  \[  \left(\frac{53}{2}e^{-\gamma }(1-\epsilon )f(6)-\delta \right)\mathcal X_N \le S_1(z_N)  \]
+</div>
+<p> eventually for even \(N\), where \(S_1(z_N)\) denotes the base sift of the \(\epsilon \)-truncated difference source at cutoff \(z_N\). The actual assembly is <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean">the first positive normalized term</a>; it uses the separately paid level-six error, not the beta endpoint theorem. The notation \(f_*\) in the Li–Liu chapter is this \(f\) on \([4,6]\). </p>
+</li>
+  <li><p>The \(S_3\) upper main sum feeding \(G_4,G_5\) uses a <em>different</em> producer. Let \(F_S\) denote the constructed continuous Suzuki upper factor; its subscript means Suzuki, not dependence on the particular sieve \(S\). For each \(K{\gt}1\) and \(\rho {\gt}0\), its own uniform cutoff gives </p>
+<div class="displaymath" id="a0000000057">
+  \[  \sum _{e\mid P}\lambda _e^+g_S(e) \le (F_S(s)+\rho )\prod _{p\mid P}(1-g_S(p)) \qquad (3/2\le s\le 6),  \]
+</div>
+<p> with the same real-level, prime-support and local-product conditions as above. This is <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean">the upper comparison through six</a>; its odd-depth error is controlled uniformly in \(s\) on this larger interval. The theorem <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean">the actual S3 Rosser main sum</a> supplies the Goldbach local-product constant and specializes the sum to \(\sum _{e\mid P}\lambda _e^+/\varphi (e)\). It is consumed in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS3NormalizedUpper.lean">the normalized S3 upper bound</a>. This covers the whole required \(53/24\le s\le 45/8\) interval, including its part beyond \(4\). It is not a change of the range of the preceding node. </p>
+</li>
+</ol>
+<h2 id="a0000000058">2.1.7 Switched distribution is an aggregate estimate</h2>
+<p>For a bounded real coefficient \(a(m)\) on positive integers, an interval \(I=(A_1,A_2]\cap \mathbb N\) with integer \(0\le A_1\le A_2\), an endpoint \(Y\ge 0\), a modulus \(q\ge 1\), and a reduced residue \(l\), put </p>
+<div class="displaymath" id="a0000000059">
+  \[  R_{a,I,\kappa }(Y;q,l)= \sum _{\substack {m\in I\\ (m,q)=1}}a(m) \left(\# \{ p:mp\le Y,\  mp\equiv l\pmod q\}  -\frac{L_\kappa (Y/m)}{\varphi (q)}\right).  \]
+</div>
+<p> The counted variable \(p\) is prime. Set \(M_{a,I,\kappa }(Y;q)=\max _{(l,q)=1}|R_{a,I,\kappa }(Y;q,l)|\). The sum over \(m\) stays <em>inside</em> the absolute value. Replacing this by the sum of absolute errors for each \(m\) would demand a stronger, different distribution theorem. </p>
+<p>For Liu’s particular prime-pair characteristic coefficient and prescribed source interval, the unweighted Pan specialization is proved at \(\kappa =2/\log 2\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-liupan">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">9</span>
+    <span class="theorem_thmtitle">Liu–Pan distribution for the actual convolution</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-liupan">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000060"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean#L48" class="lean_decl">MathlibNt.SieveTheory.LiuWeight.liuPanUnweightedTheorem2Specialization_proved</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\exists \kappa \  \forall U{\gt}0\  \exists C{\gt}0,B\ge 0,N_0:\  \sum _{q{\lt}N^{1/2}/(\log N)^B}M_{a_N,I_N,\kappa }(N;q)\le CN/(\log N)^U\) for \(N\ge N_0\); the proof chooses \(\kappa =2/\log 2\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000060">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  Its arbitrary logarithmic saving is transferred to the \(\mu (q)^2 3^{\omega (q)}\)-weighted source by finite weight payment. The strict source cutoff is only enlarged or embedded with a proved inclusion; transport to the closed-floor consumer spends a logarithm, replacing \(B\) by \(B+1\). A separate additive-normalization estimate gives the canonical \(L_2\) coprime input used by both public Chen implementations. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-liupan-canonical">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">10</span>
+    <span class="theorem_thmtitle">Liu–Pan convolution distribution</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-liupan-canonical">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000061"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean#L107" class="lean_decl">MathlibNt.SieveTheory.LiuWeight.liuPanCanonicalCoprimeTheorem_proved</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\forall \epsilon ,A{\gt}0\  \exists C{\gt}0,B\ge 0,N_0:\) the canonical \(L_2\) coprime weighted remainder majorant is \(\le CN/(\log N)^A\) for \(N\ge N_0\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000061">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>Li–Liu’s changing source coefficients require a broader producer, not merely Chen’s fixed characteristic coefficient. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-pan-bounded">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">11</span>
+    <span class="theorem_thmtitle">Pan distribution for varying weights</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-pan-bounded">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000062"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean#L90" class="lean_decl">MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalMaxL_boundedAggregate_log_saving</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\forall U{\gt}0\  \exists C{\gt}0,B\ge 0,N_0\  \forall N\ge N_0,I,a:\  \sum _{1\le q\le Q_B(N)}M_{a,I,*}(N;q)\le CN/(\log N)^U\), provided \(|a|\le 1\), \(A_2\le N^{2/3}\), \((\log N)^{2B}\le A_1\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000062">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  For every \(U{\gt}0\) it chooses \(C,B,N_0\) before \(N\), \(I\), and \(a\), assuming \(|a(m)|\le 1\), \(A_2\le N^{2/3}\), and \((\log N)^{2B}\le A_1\), and bounds \(\sum _{q\le Q_B(N)}M_{a,I,*}(N;q)\) by \(CN/(\log N)^U\). The \(S_2\) switched remainder is identified with such an aggregate. For \(B_{10}\), the finite window is a difference of prefixes at \(N\) and \(\lfloor \epsilon N\rfloor \); both endpoints must satisfy the producer’s geometry. Removing the main-term coprimality gate leaves a signed deleted-main term, whose absolute contribution is paid separately before the common-mass sieve. </p>
+<h2 id="a0000000063">2.1.8 Selberg optimization and the Chen triple penalty</h2>
+<p>Put \(R=\lfloor N^{1/4-\epsilon /2}\rfloor \) and define Liu’s paper modulus by \(Q=\prod _{p\le R,\  p\nmid N}p\), with the product over primes. For coefficients supported on \(d\mid Q\), \(d\le R\), the Selberg square expands into a main quadratic form plus a signed remainder indexed by pairs of divisors. The explicit optimizer is normalized at \(1\) and has \(|\lambda _d|\le 1\) on the admissible even source. Its denominator is </p>
+<div class="displaymath" id="a0000000064">
+  \[  G(N,\epsilon )=\sum _{\substack {d\mid Q\\ d\le R}} \prod _{p\mid d}\frac1{p-2}.  \]
+</div>
+<p> For fixed \(\epsilon {\lt}1/2\), the proved even-integer limit is </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-selberg-denominator">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">12</span>
+    <span class="theorem_thmtitle">Asymptotic of the optimized Selberg denominator</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-selberg-denominator">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000065"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorAsymptotic.lean#L83" class="lean_decl">MathlibNt.SieveTheory.LiuWeight.tendsto_liuSelbergDenominator_normalized_even</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\epsilon {\lt}1/2\implies G(N,\epsilon )\mathfrak S_{\mathrm{Liu}}(N)/\log N\to (1/4-\epsilon /2)/2\) along the even integers. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000065">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="displaymath" id="a0000000066">
+  \[  \frac{G(N,\epsilon )\mathfrak S_{\mathrm{Liu}}(N)}{\log N} \longrightarrow \frac{1/4-\epsilon /2}{2}.  \]
+</div>
+<p> Together with the genuine-logarithmic-integral prime-pair main mass, this gives the optimized main-term bound used in the Chen upper penalty. </p>
+<p>Grouping the remainder by \(d=[d_1,d_2]=\operatorname {lcm}(d_1,d_2)\), the least common multiple, uses \(d\le d_1d_2\le R^2\). For squarefree \(d\), each prime has three possible placements in the pair, which explains the factor \(3^{\omega (d)}\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-selberg-remainder">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">13</span>
+    <span class="theorem_thmtitle">Paying the signed Selberg remainder</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-selberg-remainder">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000067"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean#L349" class="lean_decl">MathlibNt.SieveTheory.LiuWeight.abs_liuSelbergRemainder_le_fullDistributionMajorant</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(|\mathcal R_{\lambda }(N,\epsilon )|\le \mathcal M_{\mathrm{full}}(N,\epsilon )\) for \(N\ge 1\) and admissible supported \(\lambda \); the majorant has lcm weight \(3^{\omega (d)}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000067">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The resulting full-distribution majorant is supplied by the canonical coprime Pan theorem together with the proved noncoprime correction. The even Selberg assembly is then transported to corrected Chen triples; modulus-dividing residual primes and source-boundary fibres are not discarded. This is Chen’s Selberg route, not a substitute for Li–Liu’s linear upper sieves. </p>
+<h2 id="a0000000068">2.1.9 What is shared, and where the arguments separate</h2>
+<p>The shared foundation is now visible: PNT and Mertens normalization, ordinary BV, constructed Jurkat–Richert functions, uniform Suzuki comparisons, and the low/high-conductor machinery underlying the two Pan producers. Li–Liu’s \(S_1\) normalization combines paid ordinary-BV error, lower density, and the genuine lower sieve product; its \(S_2\) and \(B_{10}\) normalizations use bounded-coefficient Pan distribution, upper density, and the upper product. Their final elementary error absorption is not the source of these inputs. </p>
+<p>There is also a distinct well-factorable rectangular distribution lane. Fix integers \(i,j,A\ge 0\), a scale constant \(C_{\rm scale}\ge 1\), and a real gap \(\zeta {\gt}0\). These are fixed <em>before</em> choosing the threshold in \(x\). For each \(x\) above that threshold, the estimate is uniform in rectangles, residues and coefficients satisfying </p>
+<div class="displaymath" id="a0000000069">
+  \[  M\ge 1,\quad T\ge 1,\quad 4MT=x,\quad T=x^\nu , \quad \zeta \le \nu \le \frac1{10}+\frac\zeta {10}, \quad N\in \mathbb N,\quad 0{\lt}N\le C_{\rm scale}x.  \]
+</div>
+<p> Choose a finite long-variable set \(\mathcal U\subset [M,2M]\cap \mathbb N\) and a short interval \(J=(u,v]\cap \mathbb N\) with \(T\le u\le v\le 2T\). The long coefficient \(\alpha \) satisfies \(|\alpha (m)|\le \tau _i(m)\) on \(\mathcal U\), where \(\tau _i\) counts ordered factorizations into \(i\) positive integer factors (\(\tau _0\) is the indicator of \(1\)). The short coefficient is the actual Goldbach prime mask \(\beta _N(n)=\mathbf1_{n\text{ prime},\, (n,N)=1}\). Set \(Q=x^{(5-5\nu )/9-\zeta }\), and let \(c\) be a signed well-factorable coefficient of order \(j\) at level \(Q\): \(|c(q)|\le \tau _j(q)\), and for every split \(Q=Q_1Q_2\) with \(Q_1,Q_2\ge 1\), it is a Dirichlet convolution \(c=c_1*c_2\) of coefficients supported on \(1\le n\le Q_1\) and \(1\le n\le Q_2\), respectively, each bounded in absolute value by \(\tau _j(n)\). The centered signed error is </p>
+<div class="displaymath" id="a0000000070">
+  \[  \mathcal E_{\rm rect}= \sum _{\substack {1\le q\le \lfloor Q\rfloor \\ (q,N)=1}}c(q) \left( \sum _{\substack {m\in \mathcal U,\  n\in J\\ mn\equiv N\pmod q}} \alpha (m)\beta _N(n) -\frac1{\varphi (q)} \sum _{\substack {m\in \mathcal U,\  n\in J\\ (mn,q)=1}} \alpha (m)\beta _N(n) \right).  \]
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-fouvry-rectangle">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">14</span>
+    <span class="theorem_thmtitle">Well-factorable rectangular Goldbach distribution</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-fouvry-rectangle">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000071"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean#L10" class="lean_decl">MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeC2_goldbach_rectangle_kscale</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   Fix \(i,j,A\in \mathbb N\), \(C_{\rm scale}\ge 1\) and \(\zeta {\gt}0\). There is a threshold \(x_0\) depending only on these parameters such that for every real \(x\ge x_0\) the bound \(|\mathcal E_{\rm rect}|\le x/(\log x)^A\) holds uniformly in the following data: \(M,T\ge 1\), \(4MT=x\), \(T=x^\nu \), \(\zeta \le \nu \le 1/10+\zeta /10\); an integer residue \(0{\lt}N\le C_{\rm scale}x\); a finite set \(\mathcal U\subset [M,2M]\cap \mathbb N\) and interval \(J=(u,v]\cap \mathbb N\) with \(T\le u\le v\le 2T\); coefficients \(|\alpha (m)|\le \tau _i(m)\) on \(\mathcal U\), the short coefficient \(\beta _N(n)=\mathbf1_{n\  \text{ prime},\, (n,N)=1}\), and a signed well-factorable coefficient \(c\) of order \(j\) at \(Q=x^{(5-5\nu )/9-\zeta }\). Here \(\tau _i\) is the ordered \(i\)-fold divisor function, and \(\mathcal E_{\rm rect}\) is the signed sum over \(1\le q\le \lfloor Q\rfloor \), \((q,N)=1\), of \(c(q)\) times the \(\alpha \beta _N\) bilinear progression mass at \(mn\equiv N\pmod q\) minus its coprime mass divided by \(\varphi (q)\). The threshold precedes all rectangle, residue and coefficient choices. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000071">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The theorem gives \(|\mathcal E_{\rm rect}|\le x/(\log x)^A\) for all these choices after the one threshold depending only on \(i,j,A,C_{\rm scale},\zeta \). In particular the Goldbach residue \(N\) may vary in the displayed range, whereas the positive gap \(\zeta \) is not allowed to shrink with \(x\). The precise interval geometry is in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryPrimeC2.lean">the prime rectangle</a>, the convolution condition in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryFactorConvolution.lean">signed well-factorability</a>, and the centered error in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryDispersion.lean">the bilinear discrepancy</a>. The parameter order and the literal residue \(N\) are those of <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean">the Goldbach rectangle theorem</a>. Li–Liu’s flexible \(G_{12}\) rectangles consume this producer unchanged; curved-region boundaries and exceptions are paid separately in that chapter. </p>
+<h2 id="a0000000072">2.1.10 Inside the distribution proofs</h2>
+<p> A Dirichlet character modulo \(q\) is a multiplicative function on the reduced residue classes, extended by zero to nonunits. Character orthogonality converts residue-class errors into character sums. The conductor is the smallest modulus from which a character is induced; passing to primitive characters also introduces cofactor sums and their totient weights. The principal character is the character equal to one on all units. </p>
+<p>For ordinary Bombieri–Vinogradov, three branches meet before the maximal prime-counting estimate is obtained. </p>
+<ol class="enumerate">
+  <li><p>The principal part is paid by the quantitative prime number theorem, with the actual logarithmic-integral normalization and prime-power correction. </p>
+</li>
+  <li><p>Nonprincipal characters of small conductor use Siegel–Walfisz estimates: arbitrary inverse-logarithmic saving while the conductor stays in the prescribed logarithmic range. The implementation constructs the smoothing function and obtains the required uniform quadratic \(L\)-value lower bound from its proved Landau–Siegel theorem. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-bv-low">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">15</span>
+    <span class="theorem_thmtitle">Small-conductor Siegel–Walfisz input</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-bv-low">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000073"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean#L28" class="lean_decl">AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.nonprincipalPrimitivePsiSiegelWalfiszSource</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   The constructed smoothing function and the proved uniform Landau–Siegel lower bound supply the nonprincipal primitive Siegel–Walfisz estimate required by the ordinary BV producer. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000073">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+</li>
+  <li><p>Large conductors use Vaughan’s identity to split the von Mangoldt weight into Type I, Type II and a small remainder. Type I retains a long summation variable and uses periodic character cancellation with Cauchy; Type II is bilinear and uses the all-aspect large-sieve estimate on the chosen high-conductor family. One common choice of the two Vaughan cutoffs is used in all three estimates. Prefix maxima and conductor sums are paid before the resulting inverse-logarithmic bound is consumed. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:foundation-bv-high">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">16</span>
+    <span class="theorem_thmtitle">Large-conductor Vaughan estimates</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-foundations.html#bp:foundation-bv-high">#</a>
+    
+    <a class="icon proof" href="chap-foundations.html#a0000000074"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean#L519" class="lean_decl">AnalyticNumberTheory.LargeSieve.standardBVHighChosenUnconditional</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For each requested logarithmic saving, one common pair of Vaughan cutoffs pays the Type I, Type II and small-term means on the chosen high-conductor family, including the prefix and cofactor amplification factors. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000074">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+</li>
+</ol>
+<p> The unconditional BV producer combines these branches and passes to prime counts by partial summation. Its proof is a modern implementation of the needed distribution estimate, with each branch’s actual inputs supplied. </p>
+<p>For Pan distribution, the object throughout the proof is the signed coefficient–prime convolution defined above. The low branch uses the nonprincipal prime-prefix Siegel–Walfisz estimate. The high branch keeps the short and long coefficient polynomials together; a Perron integral separates the hyperbolic product constraint while preserving their character coupling. Low and high estimates hold with the cofactor still free after the common threshold. The primitive-conductor assembly then pays the reciprocal-totient cofactor sum, and a separate principal estimate completes the aggregate. This explains why ordinary prime BV cannot simply replace the Pan input in a switched sieve. </p>
+<p>The well-factorable branch keeps cancellation also in the modulus coefficient: a level-\(Q\) well-factorable coefficient admits appropriately supported convolution factorizations when \(Q\) is split into two levels. The signed version and its divisor bounds are part of the implemented rectangle theorem’s assumptions. Applying its bilinear estimates to each admissible rectangle is followed by the separate boundary and exception payments in the Li–Liu chapter. The subsequent \(G_{67},G_9,G_{11},G_{12}\) integral and signed-count assemblies belong to the Li–Liu argument, rather than being silently absorbed into a claim that the common analytic estimates alone prove both endpoints.  </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="chap-overview.html" title="Two counting theorems and their proof routes"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="goldbach-lean: Chen and Li–Liu theorems"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-chen.html" title="Chen: a prime plus at most two primes"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

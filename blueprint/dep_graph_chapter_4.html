@@ -1,0 +1,1409 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Li–Liu proof dependencies</title>
+  <meta name="generator" content="plasTeX" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles/theme-white.css" />
+  <link rel="stylesheet" href="styles/dep_graph.css" />
+  
+  <script type="text/x-mathjax-config">
+  
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  
+  </script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">  </script>
+
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+  <a class="toc" href="index.html">Home</a>
+  <h1>Li–Liu proof dependencies</h1>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+<p id="graph-reading-guide" style="margin:1rem;max-width:75ch">Arrows follow compiled declaration dependencies. Nodes marked (input) are introduced in another chapter. Click a node for its statement and Lean source.</p>
+<div class="wrapper">
+<div class="content">
+  <div id="Legend">
+    <span id="legend_title" class="title">Legend
+    <div class="btn">
+       <div class="bar"></div>
+       <div class="bar"></div>
+       <div class="bar"></div>
+    </div></span> 
+    <dl class="legend">
+      
+      <dt>Boxes</dt><dd>definitions</dd>
+      
+      <dt>Ellipses</dt><dd>theorems and lemmas</dd>
+      
+      <dt>Blue border</dt><dd>the <em>statement</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Orange border</dt><dd>the <em>statement</em> of this result is not ready to be formalized; the blueprint needs more work</dd>
+      
+      <dt>Blue background</dt><dd>the <em>proof</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Green border</dt><dd>the <em>statement</em> of this result is formalized</dd>
+      
+      <dt>Green background</dt><dd>the <em>proof</em> of this result is formalized</dd>
+      
+      <dt>Dark green background</dt><dd>the <em>proof</em> of this result and all its ancestors are formalized</dd>
+      
+      <dt>Dark green border</dt><dd>this is in Mathlib</dd>
+      
+    </dl>
+  </div>
+    <div id="graph"></div>
+<div id="statements">
+
+    
+    <div class="dep-modal-container" id="bp:foundation-bv_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-bv" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">4</span><span class="theorem_thmtitle">Bombieri–Vinogradov for primes</span></div>
+    <div class="thm_thmcontent"><p>   For every \(A{\gt}0\) there are \(B\ge 0\), \(C{\gt}0\) and \(N_0\) such that \(\sum _{1\le q\le Q_B(N)}E^*(N,q)\le CN/(\log N)^A\) for integers \(N\ge N_0\), where \(Q_B(N)=\lfloor N^{1/2}/(\log N)^B\rfloor \) and \(E^*(N,q)=\max _{y\in \{ 0,\ldots ,N\} }\max _{0\le a{\lt}q,\, (a,q)=1}|\pi (y;q,a)-L_*(y)/\varphi (q)|\). Here \(L_*(x)=2/\log 2+\int _2^xdt/\log t\) for \(x{\gt}1\), while \(L_*(0)=L_*(1)=2/\log 2\) by the totalized interval-integral convention, not a principal value; \(E^*(N,0)=0\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-bv">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean#L37">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-bv-high_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-bv-high" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">16</span><span class="theorem_thmtitle">Large-conductor Vaughan estimates</span></div>
+    <div class="thm_thmcontent"><p>   For each requested logarithmic saving, one common pair of Vaughan cutoffs pays the Type I, Type II and small-term means on the chosen high-conductor family, including the prefix and cofactor amplification factors. </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-bv-high">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean#L519">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-fouvry-rectangle_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-fouvry-rectangle" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">14</span><span class="theorem_thmtitle">Well-factorable rectangular Goldbach distribution</span></div>
+    <div class="thm_thmcontent"><p>   Fix \(i,j,A\in \mathbb N\), \(C_{\rm scale}\ge 1\) and \(\zeta {\gt}0\). There is a threshold \(x_0\) depending only on these parameters such that for every real \(x\ge x_0\) the bound \(|\mathcal E_{\rm rect}|\le x/(\log x)^A\) holds uniformly in the following data: \(M,T\ge 1\), \(4MT=x\), \(T=x^\nu \), \(\zeta \le \nu \le 1/10+\zeta /10\); an integer residue \(0{\lt}N\le C_{\rm scale}x\); a finite set \(\mathcal U\subset [M,2M]\cap \mathbb N\) and interval \(J=(u,v]\cap \mathbb N\) with \(T\le u\le v\le 2T\); coefficients \(|\alpha (m)|\le \tau _i(m)\) on \(\mathcal U\), the short coefficient \(\beta _N(n)=\mathbf1_{n\  \text{ prime},\, (n,N)=1}\), and a signed well-factorable coefficient \(c\) of order \(j\) at \(Q=x^{(5-5\nu )/9-\zeta }\). Here \(\tau _i\) is the ordered \(i\)-fold divisor function, and \(\mathcal E_{\rm rect}\) is the signed sum over \(1\le q\le \lfloor Q\rfloor \), \((q,N)=1\), of \(c(q)\) times the \(\alpha \beta _N\) bilinear progression mass at \(mn\equiv N\pmod q\) minus its coprime mass divided by \(\varphi (q)\). The threshold precedes all rectangle, residue and coefficient choices. </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-fouvry-rectangle">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean#L10">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-jr-hats_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-jr-hats" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">6</span><span class="theorem_thmtitle">Constructed Jurkat–Richert comparison functions</span></div>
+    <div class="thm_thmcontent"><p>   For the constructed Jurkat–Richert functions \(F,f\), let \(c_\gamma =2e^\gamma \). On \(s{\gt}0\), define \(\widehat T^+(s)=s^{-2}\) for \(s\le 3\) and \([F(s)-f(s-1)]/(c_\gamma s)\) for \(s{\gt}3\); define \(\widehat T^-(s)=2s^{-2}\) for \(s\le 2\) and \([F(s-1)-f(s)]/(c_\gamma s)\) for \(s{\gt}2\). These positive extensions of the normalized derivatives \(-F'/c_\gamma \) and \(f'/c_\gamma \) satisfy the complete Suzuki source properties with \(\widehat\beta =2\): positivity, continuity, the initial formulas, weighted delay derivatives, and weighted and exponential decay. </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-jr-hats">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean#L259">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-local-product_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-local-product" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">3</span><span class="theorem_thmtitle">Uniform dimension-one Goldbach local product</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists K{\gt}1:\  \prod _{p\in \mathcal P}(1-1/(p-1))^{-1}\le (\log z_2/\log z_1)(1+K/\log z_1)\) for every finite set of odd primes \(\mathcal P\subset [z_1,z_2)\), \(2\le z_1\le z_2\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-local-product">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean#L2093">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-mertens_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-mertens" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">2</span><span class="theorem_thmtitle">Mertens product with its identified constant</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists C{\gt}0\  \forall n\ge 2:\  |\prod _{p\le n}(1-1/p)-e^{-\gamma }/\log n|\le C/(\log n)^2\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-mertens">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/AnalyticNumberTheory/Mertens/Theorems.lean#L24">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-pan-bounded_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-pan-bounded" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">11</span><span class="theorem_thmtitle">Pan distribution for varying weights</span></div>
+    <div class="thm_thmcontent"><p>   \(\forall U{\gt}0\  \exists C{\gt}0,B\ge 0,N_0\  \forall N\ge N_0,I,a:\  \sum _{1\le q\le Q_B(N)}M_{a,I,*}(N;q)\le CN/(\log N)^U\), provided \(|a|\le 1\), \(A_2\le N^{2/3}\), \((\log N)^{2B}\le A_1\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-pan-bounded">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean#L90">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-pnt_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-pnt" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">1</span><span class="theorem_thmtitle">A quantitative prime number theorem</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists c{\gt}0:\  \psi (x)-x=O(xe^{-c(\log x)^{1/10}})\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-pnt">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/AnalyticNumberTheory/PrimeDistribution/PrimeNumberTheorem.lean#L16">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-suzuki-lower_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-suzuki-lower" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">7</span><span class="theorem_thmtitle">Lower Rosser comparison uniform in the sieve</span></div>
+    <div class="thm_thmcontent"><p>   Fix hats satisfying the Suzuki source properties and real \(d,\Delta ,\Theta \) with \(0{\lt}\Delta {\lt}1\), \(d{\gt}7/(1-\Delta )\), \(\Theta {\gt}0\), \(2/d{\lt}1/\Theta \) and \(2/\Theta +3/d{\lt}1-\Delta \). The source selects its auxiliary constants, and in particular \(C\ge 3\), before the bounding sieve \(S\) varies. For each \(K\ge 2\) satisfying its dimension-one local-product bound, each integer \(D\ge 2\) and \(4\le s\le 6\), put \(z=\lceil D^{1/s}\rceil \ge 2\) and assume \(s\le \sigma _{\rm src}(D;d)=(\log D)^{1/d}\log \log (27D)\). With \(\mathcal P_S(z)\) the supported primes below \(z\), \(P=\prod _{p\in \mathcal P_S(z)}p\), \(m=2(|\mathcal P_S(z)|+1)\) and \(V_S(z)=\prod _{p\in \mathcal P_S(z)}(1-g_S(p))\), one has \(V_S(z)[f(s)-C e^{\sqrt K}E_m(D,s;d)(\log D)^{-\Delta }]\le \sum _{e\mid P}\lambda _e^-g_S(e)\). The weights are the finite lower Rosser weights of natural level \(D\), and \(E_m(D,s;d)=(1+s^d/\log D)^s s\widehat T^{\eta _m}(s)\), with \(\eta _m=+\) for odd \(m\) and \(-\) for even \(m\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-suzuki-lower">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean#L105">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-suzuki-upper_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-suzuki-upper" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">8</span><span class="theorem_thmtitle">Modern upper Rosser comparison</span></div>
+    <div class="thm_thmcontent"><p>   Given hats satisfying the Suzuki source properties and fixed \(d,\Delta ,\Theta \) with \(0{\lt}\Delta {\lt}1\), \(d{\gt}7/(1-\Delta )\), \(\Theta {\gt}0\), \(2/d{\lt}1/\Theta \) and \(2/\Theta +3/d{\lt}1-\Delta \), for every \(K{\gt}1\) and \(\rho {\gt}0\) there is \(z_0\) before the bounding sieve \(S\) varies. If \(z\ge \max (2,z_0)\), \(D_{\rm real}{\gt}0\), \(S\) satisfies the dimension-one local-product bound with \(K\), every sifting prime is at most \(z\), and \(s=\log D_{\rm real}/\log z\in [3/2,4]\), then \(\sum _{e\mid P}\lambda _e^+g_S(e)\le (F(s)+\rho )\prod _{p\mid P}(1-g_S(p))\). Here \(P\) is the product of the sifting primes, the product on the right is over primes, and \(\lambda ^+\) is the finite upper Rosser weight at natural level \(\lfloor D_{\rm real}\rfloor +1\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-suzuki-upper">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean#L69">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-author-consume_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-author-consume" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">59</span><span class="theorem_thmtitle">Author estimate consumed at the original counts</span></div>
+    <div class="thm_thmcontent"><p>    For every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there is \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \(G_6+G_7-G_{12}+(c_0-C_9-10191/100000-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\), at the fixed exponents of this chapter. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-author-consume">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorCountLedger.lean#L9">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-b9_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-b9" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">50</span><span class="theorem_thmtitle">The original ninth count and its split integral</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon {\lt}2/15\), there is \(N_0\ge 4\) such that all even \(N\ge N_0\) satisfy \(G_9\le (C_9+\delta )\mathcal X_N\), with \(G_9=S_5(N^{4/53},N^{1/3})\). The threshold follows \(\delta ,\varepsilon \). The low part of \(C_9\) retains the additional factor \(1/(1-u)\), so its reduced kernel has denominator \(u(1-u)^2\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-b9">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS5PaperSplitUpper.lean#L15">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-basic_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-basic" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">39</span><span class="theorem_thmtitle">Li–Liu finite weight detector</span></div>
+    <div class="thm_thmcontent"><p>    For every fixed \(\varepsilon {\gt}0\), there is \(N_0\in \mathbb N\) such that, for all \(N\ge N_0\) and every real \(a\), \(\sum _{n\in \mathcal A}w_a(n)\le D_{1,19/10}(N)\). The threshold precedes \(a\); no evenness hypothesis is needed. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-basic">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L351">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-coefficient_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-coefficient" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">61</span><span class="theorem_thmtitle">Every fixed coefficient below the retained ceiling</span></div>
+    <div class="thm_thmcontent"><p>    \(\forall \kappa {\lt}515093/800000000\  \exists K\ge 4\  \forall N\ge K,\  2\mid N\Rightarrow \kappa \mathcal X_N\le D_{1,19/10}(N)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-coefficient">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L45">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-count-positive_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-count-positive" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">37</span><span class="theorem_thmtitle">Positive distinct-prime count</span></div>
+    <div class="thm_thmcontent"><p>    For every \(N\in \mathbb N\), \(D_{1,19/10}(N){\gt}0\) if and only if there exist \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\), and \(r^{10}\le q^9\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-count-positive">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L53">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-cross_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-cross" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">57</span><span class="theorem_thmtitle">The original cross count after both exception payments</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon \le 2/15\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) such that all even \(N\ge N_0\) satisfy \(G_{12}\le (C_{12}+\delta )\mathcal X_N\). Both exception payments are included. The original domain is \(z\le r\le q\le s\le B\le t\le C\), and \(C_{12}\) uses the strict-low, closed-high Buchstab-weight split defined in the text. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-cross">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean#L44">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-cross-certificate_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-cross-certificate" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">58</span><span class="theorem_thmtitle">Certified cross integral</span></div>
+    <div class="thm_thmcontent"><p>   \(C_{12}\le 66821/100000\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-cross-certificate">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG12EvaluationScalar.lean#L19">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-domain_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-domain" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">54</span><span class="theorem_thmtitle">Matching the author original ordered domain</span></div>
+    <div class="thm_thmcontent"><p>   \(I_{11}(h)=\frac{36}{5}\int _a^{1/10}\frac{K_{11}(u)}{1-u}\, du+8\int _{1/10}^bK_{11}(u)\, du\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-domain">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean#L199">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-existence_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-existence" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">64</span><span class="theorem_thmtitle">The actual unconditional existence endpoint</span></div>
+    <div class="thm_thmcontent"><p>   There exists \(K\ge 4\) such that every even \(N\ge K\) admits \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\), and \(r\le q^{(19/10)-1}\). This endpoint is supplied by the independent old-margin existence route. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-existence">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L62">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-g10-integral_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-g10-integral" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">47</span><span class="theorem_thmtitle">The corrected tenth count bounded by I10</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\delta {\gt}0\) and each fixed \(0{\lt}\varepsilon {\lt}1\), some \(N_0\ge 4\) gives \(G_{10}^{\rm corr}\le [8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N\) for every even \(N\ge N_0\), at \((b,c)=(4/33,3/11)\). The corrected fibre excludes prime divisors of \(Nrs\) and retains both labels; \(\mathcal X_N=\mathfrak S_{\rm Liu}(N)N/\log ^2N\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-g10-integral">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean#L7">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-g11-actual_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-g11-actual" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">56</span><span class="theorem_thmtitle">Eleventh-term count upper bound</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon \le 1\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) such that all even \(N\ge N_0\) satisfy \(G_{11}\le (10191/100000+\delta )\mathcal X_N\) on the original domain \(z\le r\le q\le s\le t\le B\). No factor \(1-\varepsilon \) is asserted: this bound uses the full upper-endpoint rough mother. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-g11-actual">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorActualProducer.lean#L86">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-g11-certificate_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-g11-certificate" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">55</span><span class="theorem_thmtitle">Certified author integral</span></div>
+    <div class="thm_thmcontent"><p>   \((561522/10^6)I_{11}(h)\le 10191/100000\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-g11-certificate">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorIntegralScalar.lean#L48">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-i10-consumed_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-i10-consumed" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">48</span><span class="theorem_thmtitle">Pay I10 inside the corrected signed ledger</span></div>
+    <div class="thm_thmcontent"><p>    For every \(\delta {\gt}0\) and each fixed \(0{\lt}\varepsilon {\lt}2/15\), some \(N_0\ge 4\) works for all even \(N\ge N_0\) and every \(1/18{\lt}a{\lt}4/33\): \(\mathcal T_{11}-[8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N\le 4D_{1,19/10}(N)\). Here \(\mathcal T_{11}=3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9-G_{11}-G_{12}\), with \(b=4/33,c=3/11\). Both the corrected tenth cost and \(1334N^{1-a}\) are paid. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-i10-consumed">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean#L22">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-imbalance_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-imbalance" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">38</span><span class="theorem_thmtitle">The arithmetic imbalance mechanism</span></div>
+    <div class="thm_thmcontent"><p>   For \(N,n,r,q\in \mathbb N\) and \(\varepsilon {\gt}0\), assume \(r{\gt}0\), \(n=rq{\gt}\varepsilon N\), \(r{\lt}\lceil N^{9/19-\varepsilon }\rceil \), and \((N^{9/19-\varepsilon })^{19}\le (\varepsilon N)^9\). Then \(r^{10}\le q^9\). The cutoff is equivalent to \(r{\lt}N^{9/19-\varepsilon }\) because \(r\) is integral. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-imbalance">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L256">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-ledger_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-ledger" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">60</span><span class="theorem_thmtitle">Li–Liu positive total weight</span></div>
+    <div class="thm_thmcontent"><p>    For every \(\delta {\gt}0\), there is \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \((515093/200000000-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\). The threshold is not asserted uniformly over all small positive epsilon. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-ledger">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L8">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-level_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-level" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">53</span><span class="theorem_thmtitle">The author weight from the actual mixed level</span></div>
+    <div class="thm_thmcontent"><p>   For \(N\ge 4\), \(N^{4/53}\ge 4\), \(1{\lt}\rho \le 5/4\), and \(0\le \eta {\lt}1/4\), every used grid cell and every short prime \(p\) in it satisfy \(4\log N/\log Q_{\mathrm{mix}}\le h(\log p/\log N)+32\eta \). The finite comparison has arbitrary real \(\varepsilon \), constrained only through membership in the used-cell set; \(\eta \) is the level loss, not a small-epsilon-window parameter. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-level">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorLevel.lean#L68">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-old-margin_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-old-margin" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">63</span><span class="theorem_thmtitle">The separate earlier positive margin</span></div>
+    <div class="thm_thmcontent"><p>   For \(m_{\mathrm{old}}:=4J_{\mathrm{elem}}+c_0-C_9-10385101/10^8-C_{12}\), where \(J_{\mathrm{elem}}\) is the five fixed sum-coordinate integrals in the text (including the half-square multiplicity), \(126891/200000000\le m_{\mathrm{old}}\). This is an unconditional scalar certificate with no epsilon parameter, not the definition of the margin and not the author-route ledger. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-old-margin">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L21">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-pair_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-pair" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">51</span><span class="theorem_thmtitle">Original positive pair counts</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there is \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \((C_{67}-\delta )\mathcal X_N\le G_6+G_7\), at \((a,b,c)=(4/53,4/33,3/11)\). The small epsilon window absorbs the source-mass loss before the natural threshold is chosen. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-pair">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean#L9">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-pair-certificate_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-pair-certificate" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">52</span><span class="theorem_thmtitle">Certified lower bound for the pair integral</span></div>
+    <div class="thm_thmcontent"><p>   \(54233/10000\le C_{67}\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-pair-certificate">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L17">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-paper_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-paper" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">62</span><span class="theorem_thmtitle">Li–Liu: strict 0.0004 lower bound</span></div>
+    <div class="thm_thmcontent"><p>    \(\exists K\ge 4\  \forall N\ge K,\  2\mid N\Rightarrow 0.0004\mathcal X_N{\lt}D_{1,19/10}(N)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-paper">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L62">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-positive_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-positive" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">44</span><span class="theorem_thmtitle">The two positive lower-sieve terms</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon {\lt}1\), there exists \(N_0\ge 4\) such that all even \(N\ge N_0\) satisfy \(((1-\varepsilon )L-\delta )\mathcal X_N\le 3G_1+G_2\), at \((a,b)=(4/53,4/33)\). The threshold may depend on both \(\delta \) and \(\varepsilon \); epsilon need not shrink with delta. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-positive">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1PositivePair.lean#L9">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-public-coefficient_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-public-coefficient" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">68</span><span class="theorem_thmtitle">Public count: each fixed coefficient below the ceiling</span></div>
+    <div class="thm_thmcontent"><p>    For every real \(\kappa {\lt}515093/800000000\), there exists \(K\in \mathbb N\), \(4\le K\), such that every even \(N\ge K\) satisfies \(\kappa \mathcal X_N\le D_{1,19/10}(N)\). The threshold follows the chosen coefficient; the ceiling itself is excluded. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-public-coefficient">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L38">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-public-count_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-public-count" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">67</span><span class="theorem_thmtitle">Public count: the strict paper bound</span></div>
+    <div class="thm_thmcontent"><p>    \(\exists K\in \mathbb N\), \(4\le K\), \(\forall N\ge K\), \(2\mid N\Rightarrow (1/2500)\mathcal X_N{\lt}D_{1,19/10}(N)\). Here \(D\) counts distinct primes \(p\) and \(\mathcal X_N=\mathfrak S_{\rm Liu}(N)N/\log ^2N\), with no extra factor two. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-public-count">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L29">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-public-natural_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-public-natural" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">65</span><span class="theorem_thmtitle">Public existence: exact natural powers</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists K\in \mathbb N\), \(4\le K\), such that for all even \(N\ge K\) there exist \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\) and \(r^{10}\le q^9\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-public-natural">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L14">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-public-real_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-public-real" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">66</span><span class="theorem_thmtitle">Public existence: real exponent</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists K\in \mathbb N\), \(4\le K\), such that for all even \(N\ge K\) there exist \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\) and \((r:\mathbb R)\le (q:\mathbb R)^{(19/10)-1}\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-public-real">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L22">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-representation_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-representation" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">36</span><span class="definition_thmtitle">The literal asymmetric representation</span></div>
+    <div class="thm_thmcontent"><p>   For \(N,p\in \mathbb N\), the representation predicate is \(p\) prime and \(\exists r,q\in \mathbb N\): \((r=1\text{ or }r\text{ prime})\), \(q\) prime, \(N=p+rq\), and \(r^{10}\le q^9\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-representation">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L28">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-retained_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-retained" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">49</span><span class="theorem_thmtitle">Li–Liu five-term reduction</span></div>
+    <div class="thm_thmcontent"><p>    For every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there is \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \(G_6+G_7-G_9-G_{11}-G_{12}+(124341093/200000000-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\), at the fixed exponents of this chapter. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-retained">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightAllRetainedEndpointsConsumed.lean#L27">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-s1-density-six_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-s1-density-six" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">43</span><span class="theorem_thmtitle">The actual lower density at level six</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\rho {\gt}0\), some \(N_0\ge 2\) works for all even \(N\ge N_0\) and every \(0{\lt}\varepsilon {\lt}1\): \((f(6)-\rho )V_N\le S_N.\mathrm{mainSum}(\lambda ^-)\), where \(S_N\) is the actual \(S_1\) bounding sieve at \(z=N^{4/53}\), \(V_N\) its sieve product and \(\lambda ^-\) its lower Rosser weight at \(D=\lceil N^{4/53}\rceil ^6\). The density threshold precedes epsilon. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-s1-density-six">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean#L104">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-s3-main-six_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-s3-main-six" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">46</span><span class="theorem_thmtitle">The consumed S3 upper Rosser main sum</span></div>
+    <div class="thm_thmcontent"><p>   For every \(\rho {\gt}0\), some \(z_0\ge 2\) works uniformly in \(N\), its evenness proof, and real \(\varepsilon ,z,\Delta ,s\): if \(z\ge z_0\), \(\Delta {\gt}0\) and \(s=\log \Delta /\log z\in [3/2,6]\), then \(\sum _{d\mid P_N(z)}\lambda _d^+/\varphi (d)\le (F_S(s)+\rho )V_N(z)\). The natural level is \(\lfloor \Delta \rfloor +1\) and the local-product witness is supplied internally. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-s3-main-six">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean#L61">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-sifted_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-sifted" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">42</span><span class="theorem_thmtitle">Label-preserving output sifting</span></div>
+    <div class="thm_thmcontent"><p>   For \(N\ge 2\), \(\varepsilon {\gt}0\), \(\beta {\gt}1/18\), any real second cutoff \(C\), and \(Z\ge 1\), the finite labelled counts with first cutoff \(B=N^\beta \) satisfy \(\Pi _{10}\le \mathcal B_{10}(Z)+400\lfloor Z\rfloor \). Here the output \(N-rsq\) is sifted excluding prime divisors of \(N\), while the pair labels and strict prime-cofactor window are retained. Neither eventuality nor evenness is required. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-sifted">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean#L383">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-six_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-six" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">40</span><span class="theorem_thmtitle">Six-term sieve inequality with paid losses</span></div>
+    <div class="thm_thmcontent"><p>    Fix \(0{\lt}\varepsilon {\lt}2/15\). There is \(N_0\in \mathbb N\) such that every even \(N\ge N_0\) and every \(1/21{\lt}k{\lt}\sigma \le 1/3\), with \(z=N^k,y=N^\sigma ,T=N^{9/19-\varepsilon }\), satisfy \(2S_1(z)-2S_2(T)-S_3(z,y)-2S_4(y)-S_5(z,y)+S_6(z,y)-446N^{1-k}\le 2D_{1,19/10}(N)\). This threshold is uniform in \(k,\sigma \); there is no additional positive-loss parameter. </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-six">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachFiniteBudget.lean#L78">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-twelve_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-twelve" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">41</span><span class="theorem_thmtitle">Li–Liu twelve-term decomposition</span></div>
+    <div class="thm_thmcontent"><p>    Fix \(0{\lt}\varepsilon {\lt}2/15\). One threshold works for every \(1/18{\lt}a{\lt}b{\lt}(1-3b)/3{\lt}c{\lt}1/3\). With the corresponding cutoffs, every even \(N\) beyond it satisfies \(3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9-G_{10}^{\mathrm{corr}}-G_{11}-G_{12}-1334N^{1-a}\le 4D_{1,19/10}(N)\). In the analytic application \((a,b,c)=(4/53,4/33,3/11)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-twelve">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean#L58">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:liliu-upper-density-six_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:liliu-upper-density-six" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">45</span><span class="theorem_thmtitle">Uniform upper density through six</span></div>
+    <div class="thm_thmcontent"><p>   For every \(K{\gt}1\) and \(\rho {\gt}0\), some \(z_0\) works for every bounding sieve \(S\) and real \(z,\Delta ,s\): if \(z\ge \max (2,z_0)\), \(\Delta {\gt}0\), \(S\) has the dimension-one local-product bound with \(K\), all its sifting primes are at most \(z\), and \(s=\log \Delta /\log z\in [3/2,6]\), then \(S.\mathrm{mainSum}(\lambda ^+)\le (F_S(s)+\rho )V_S\). Here \(F_S\) denotes the Suzuki factor, \(V_S\) the sieve product, and \(\lambda ^+\) has natural level \(\lfloor \Delta \rfloor +1\). </p>
+</div>
+
+    <a class="latex_link" href="chap-liliu.html#bp:liliu-upper-density-six">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean#L201">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+</div>
+</div> <!-- content -->
+</div> <!-- wrapper -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<script src="js/d3.min.js"></script>
+<script src="js/hpcc.min.js"></script>
+<script src="js/d3-graphviz.js"></script>
+
+<script type="text/javascript">
+const graphContainer = d3.select("#graph");
+const width = graphContainer.node().clientWidth;
+const height = graphContainer.node().clientHeight;
+
+
+graphContainer.graphviz({useWorker: true})
+    .width(width)
+    .height(height)
+    .fit(true)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent,		nodesep=0.3,		ranksep=0.6	];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	subgraph cluster_foundations {		graph [color="#64748b",			fontname=Helvetica,			fontsize=16,			label="Analytic inputs",			margin=16,			style=rounded		];		"bp:foundation-suzuki-lower"	[color=green,			fillcolor="#1CAC78",			label="Lower Rosser comparison\nuniform in the sieve\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt"	[color=green,			fillcolor="#1CAC78",			label="A quantitative prime\nnumber theorem\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-local-product"	[color=green,			fillcolor="#1CAC78",			label="Uniform dimension-one\nGoldbach local product\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt" -> "bp:foundation-local-product";		"bp:foundation-mertens"	[color=green,			fillcolor="#1CAC78",			label="Mertens product with its\nidentified constant\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt" -> "bp:foundation-mertens";		"bp:foundation-fouvry-rectangle"	[color=green,			fillcolor="#1CAC78",			label="Well-factorable\nrectangular Goldbach\ndistribution\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt" -> "bp:foundation-fouvry-rectangle";		"bp:foundation-jr-hats"	[color=green,			fillcolor="#1CAC78",			label="Constructed Jurkat–Richert\ncomparison functions\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-bv-high"	[color=green,			fillcolor="#1CAC78",			label="Large-conductor Vaughan\nestimates\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-bv-high" -> "bp:foundation-fouvry-rectangle";		"bp:foundation-bv"	[color=green,			fillcolor="#1CAC78",			label="Bombieri–Vinogradov for\nprimes\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-bv-high" -> "bp:foundation-bv";		"bp:foundation-pan-bounded"	[color=green,			fillcolor="#1CAC78",			label="Pan distribution for\nvarying weights\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-bv-high" -> "bp:foundation-pan-bounded";		"bp:foundation-suzuki-upper"	[color=green,			fillcolor="#1CAC78",			label="Modern upper Rosser\ncomparison\n(input)",			shape=ellipse,			style=filled];	}	subgraph cluster_liliu {		graph [color="#64748b",			fontname=Helvetica,			fontsize=16,			label="Li–Liu 1 + 1.9",			margin=16,			style=rounded		];		"bp:liliu-retained"	[color=green,			fillcolor="#1CAC78",			label="Li–Liu five-term reduction",			shape=ellipse,			style=filled];		"bp:liliu-existence"	[color=green,			fillcolor="#1CAC78",			label="The actual unconditional\nexistence endpoint",			shape=ellipse,			style=filled];		"bp:liliu-retained" -> "bp:liliu-existence";		"bp:liliu-author-consume"	[color=green,			fillcolor="#1CAC78",			label="Author estimate consumed\nat the original counts",			shape=ellipse,			style=filled];		"bp:liliu-retained" -> "bp:liliu-author-consume";		"bp:liliu-public-natural"	[color=green,			fillcolor="#1CAC78",			label="Public existence: exact\nnatural powers",			shape=ellipse,			style=filled];		"bp:liliu-retained" -> "bp:liliu-public-natural";		"bp:liliu-public-real"	[color=green,			fillcolor="#1CAC78",			label="Public existence: real\nexponent",			shape=ellipse,			style=filled];		"bp:liliu-existence" -> "bp:liliu-public-real";		"bp:liliu-ledger"	[color=green,			fillcolor="#1CAC78",			label="Li–Liu positive total\nweight",			shape=ellipse,			style=filled];		"bp:liliu-author-consume" -> "bp:liliu-ledger";		"bp:liliu-coefficient"	[color=green,			fillcolor="#1CAC78",			label="Every fixed coefficient\nbelow the retained ceiling",			shape=ellipse,			style=filled];		"bp:liliu-ledger" -> "bp:liliu-coefficient";		"bp:liliu-pair"	[color=green,			fillcolor="#1CAC78",			label="Original positive pair\ncounts",			shape=ellipse,			style=filled];		"bp:liliu-pair" -> "bp:liliu-ledger";		"bp:liliu-public-coefficient"	[color=green,			fillcolor="#1CAC78",			label="Public count: each fixed\ncoefficient below the\nceiling",			shape=ellipse,			style=filled];		"bp:liliu-coefficient" -> "bp:liliu-public-coefficient";		"bp:liliu-paper"	[color=green,			fillcolor="#1CAC78",			label="Li–Liu: strict 0.0004\nlower bound",			shape=ellipse,			style=filled];		"bp:liliu-coefficient" -> "bp:liliu-paper";		"bp:liliu-cross"	[color=green,			fillcolor="#1CAC78",			label="The original cross count\nafter both exception\npayments",			shape=ellipse,			style=filled];		"bp:liliu-cross" -> "bp:liliu-ledger";		"bp:liliu-level"	[color=green,			fillcolor="#1CAC78",			label="The author weight from the\nactual mixed level",			shape=ellipse,			style=filled];		"bp:liliu-g11-actual"	[color=green,			fillcolor="#1CAC78",			label="Eleventh-term count upper\nbound",			shape=ellipse,			style=filled];		"bp:liliu-level" -> "bp:liliu-g11-actual";		"bp:liliu-g11-actual" -> "bp:liliu-author-consume";		"bp:liliu-imbalance"	[color=green,			fillcolor="#1CAC78",			label="The arithmetic imbalance\nmechanism",			shape=ellipse,			style=filled];		"bp:liliu-basic"	[color=green,			fillcolor="#1CAC78",			label="Li–Liu finite weight\ndetector",			shape=ellipse,			style=filled];		"bp:liliu-imbalance" -> "bp:liliu-basic";		"bp:liliu-six"	[color=green,			fillcolor="#1CAC78",			label="Six-term sieve inequality\nwith paid losses",			shape=ellipse,			style=filled];		"bp:liliu-basic" -> "bp:liliu-six";		"bp:liliu-twelve"	[color=green,			fillcolor="#1CAC78",			label="Li–Liu twelve-term\ndecomposition",			shape=ellipse,			style=filled];		"bp:liliu-six" -> "bp:liliu-twelve";		"bp:liliu-g10-integral"	[color=green,			fillcolor="#1CAC78",			label="The corrected tenth count\nbounded by I10",			shape=ellipse,			style=filled];		"bp:liliu-i10-consumed"	[color=green,			fillcolor="#1CAC78",			label="Pay I10 inside the\ncorrected signed ledger",			shape=ellipse,			style=filled];		"bp:liliu-g10-integral" -> "bp:liliu-i10-consumed";		"bp:liliu-i10-consumed" -> "bp:liliu-retained";		"bp:liliu-cross-certificate"	[color=green,			fillcolor="#1CAC78",			label="Certified cross integral",			shape=ellipse,			style=filled];		"bp:liliu-cross-certificate" -> "bp:liliu-ledger";		"bp:liliu-old-margin"	[color=green,			fillcolor="#1CAC78",			label="The separate earlier\npositive margin",			shape=ellipse,			style=filled];		"bp:liliu-cross-certificate" -> "bp:liliu-old-margin";		"bp:liliu-old-margin" -> "bp:liliu-existence";		"bp:liliu-old-margin" -> "bp:liliu-public-natural";		"bp:liliu-public-count"	[color=green,			fillcolor="#1CAC78",			label="Public count: the strict\npaper bound",			shape=ellipse,			style=filled];		"bp:liliu-paper" -> "bp:liliu-public-count";		"bp:liliu-count-positive"	[color=green,			fillcolor="#1CAC78",			label="Positive distinct-prime\ncount",			shape=ellipse,			style=filled];		"bp:liliu-count-positive" -> "bp:liliu-existence";		"bp:liliu-count-positive" -> "bp:liliu-public-natural";		"bp:liliu-twelve" -> "bp:liliu-i10-consumed";		"bp:liliu-domain"	[color=green,			fillcolor="#1CAC78",			label="Matching the author\noriginal ordered domain",			shape=ellipse,			style=filled];		"bp:liliu-g11-certificate"	[color=green,			fillcolor="#1CAC78",			label="Certified author integral",			shape=ellipse,			style=filled];		"bp:liliu-domain" -> "bp:liliu-g11-certificate";		"bp:liliu-g11-certificate" -> "bp:liliu-g11-actual";		"bp:liliu-positive"	[color=green,			fillcolor="#1CAC78",			label="The two positive\nlower-sieve terms",			shape=ellipse,			style=filled];		"bp:liliu-positive" -> "bp:liliu-retained";		"bp:liliu-sifted"	[color=green,			fillcolor="#1CAC78",			label="Label-preserving output\nsifting",			shape=ellipse,			style=filled];		"bp:liliu-sifted" -> "bp:liliu-g10-integral";		"bp:liliu-s1-density-six"	[color=green,			fillcolor="#1CAC78",			label="The actual lower density\nat level six",			shape=ellipse,			style=filled];		"bp:liliu-s1-density-six" -> "bp:liliu-positive";		"bp:liliu-pair-certificate"	[color=green,			fillcolor="#1CAC78",			label="Certified lower bound for\nthe pair integral",			shape=ellipse,			style=filled];		"bp:liliu-pair-certificate" -> "bp:liliu-ledger";		"bp:liliu-upper-density-six"	[color=green,			fillcolor="#1CAC78",			label="Uniform upper density\nthrough six",			shape=ellipse,			style=filled];		"bp:liliu-s3-main-six"	[color=green,			fillcolor="#1CAC78",			label="The consumed S3 upper\nRosser main sum",			shape=ellipse,			style=filled];		"bp:liliu-upper-density-six" -> "bp:liliu-s3-main-six";		"bp:liliu-s3-main-six" -> "bp:liliu-retained";		"bp:liliu-representation"	[color=green,			fillcolor="#B0ECA3",			label="The literal asymmetric\nrepresentation",			shape=box,			style=filled];		"bp:liliu-representation" -> "bp:liliu-basic"	[style=dashed];		"bp:liliu-representation" -> "bp:liliu-count-positive"	[style=dashed];		"bp:liliu-b9"	[color=green,			fillcolor="#1CAC78",			label="The original ninth count\nand its split integral",			shape=ellipse,			style=filled];		"bp:liliu-b9" -> "bp:liliu-existence";		"bp:liliu-b9" -> "bp:liliu-author-consume";		"bp:liliu-b9" -> "bp:liliu-public-natural";	}	"bp:foundation-suzuki-lower" -> "bp:liliu-s1-density-six";	"bp:foundation-local-product" -> "bp:liliu-pair";	"bp:foundation-local-product" -> "bp:liliu-cross";	"bp:foundation-local-product" -> "bp:liliu-g11-actual";	"bp:foundation-local-product" -> "bp:liliu-g10-integral";	"bp:foundation-local-product" -> "bp:liliu-s1-density-six";	"bp:foundation-local-product" -> "bp:liliu-s3-main-six";	"bp:foundation-local-product" -> "bp:liliu-b9";	"bp:foundation-mertens" -> "bp:liliu-pair";	"bp:foundation-mertens" -> "bp:liliu-cross";	"bp:foundation-mertens" -> "bp:liliu-g11-actual";	"bp:foundation-mertens" -> "bp:liliu-g10-integral";	"bp:foundation-mertens" -> "bp:liliu-positive";	"bp:foundation-mertens" -> "bp:liliu-b9";	"bp:foundation-fouvry-rectangle" -> "bp:liliu-cross";	"bp:foundation-fouvry-rectangle" -> "bp:liliu-g11-actual";	"bp:foundation-fouvry-rectangle" -> "bp:liliu-b9";	"bp:foundation-jr-hats" -> "bp:liliu-pair";	"bp:foundation-jr-hats" -> "bp:liliu-cross";	"bp:foundation-jr-hats" -> "bp:liliu-g11-actual";	"bp:foundation-jr-hats" -> "bp:liliu-g10-integral";	"bp:foundation-jr-hats" -> "bp:liliu-s1-density-six";	"bp:foundation-jr-hats" -> "bp:liliu-upper-density-six";	"bp:foundation-jr-hats" -> "bp:liliu-b9";	"bp:foundation-bv" -> "bp:liliu-pair";	"bp:foundation-bv" -> "bp:liliu-positive";	"bp:foundation-pan-bounded" -> "bp:liliu-g10-integral";	"bp:foundation-pan-bounded" -> "bp:liliu-b9";	"bp:foundation-suzuki-upper" -> "bp:liliu-cross";	"bp:foundation-suzuki-upper" -> "bp:liliu-g10-integral";	"bp:foundation-suzuki-upper" -> "bp:liliu-b9";}`)
+    .on("end", interactive);
+
+latexLabelEscaper = function(label) {
+  return label.replace(/\./g, '\\.').replace(/:/g, '\\:')
+}
+
+clickNode = function() {
+  $("#statements div").hide()
+  var node_id = $('text', this).text();
+  $('.thm').hide();
+  $('#'+latexLabelEscaper(node_id)).show().children().show();
+}
+function interactive() {
+    $("span#legend_title").on("click", function () {
+           $(this).siblings('dl').toggle();
+        })
+
+    d3.selectAll('.node')
+        .attr('pointer-events', 'fill')
+        .on('click', function () {
+           var title = d3.select(this).selectAll('title').text().trim();
+           $('#statements > div').hide()
+           $('.thm').hide();
+           $('#'+latexLabelEscaper(title)+'_modal').show().children().show().children().show();
+           $('#statements').show()
+        });
+
+    d3.selectAll('.dep-closebtn').on('click', function() {
+        var modal =
+            d3.select(this).node().parentNode.parentNode.parentNode ;
+        d3.select(modal).style('display', 'none');
+    });
+}
+
+</script>
+
+</body>
+</html>

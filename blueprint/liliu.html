@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Li–Liu: two factors with a prescribed imbalance</title>
+<link rel="next" href="chap-implementation.html" title="Reading the formal implementation" />
+<link rel="prev" href="chap-chen.html" title="Chen: a prime plus at most two primes" />
+<link rel="up" href="index.html" title="goldbach-lean: Chen and Li–Liu theorems" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/reader.css" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">goldbach-lean: Chen and Li–Liu theorems</a></h1>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-overview.html"><span class="toc_ref">1</span> <span class="toc_entry">Two counting theorems and their proof routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-overview.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">What is being counted?</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000007"><span class="toc_ref">1.2</span> <span class="toc_entry">The mathematical plan</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000008"><span class="toc_ref">1.3</span> <span class="toc_entry">Reading a sieve estimate</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000011"><span class="toc_ref">1.4</span> <span class="toc_entry">How to use the three layers</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-foundations.html"><span class="toc_ref">2</span> <span class="toc_entry">Prime distribution and sieve foundations</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-foundations.html#a0000000012"><span class="toc_ref">2.1</span> <span class="toc_entry">Analytic foundations of the two Goldbach arguments</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-chen.html"><span class="toc_ref">3</span> <span class="toc_entry">Chen: a prime plus at most two primes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-chen.html#bp:chen-route"><span class="toc_ref">3.1</span> <span class="toc_entry">Chen’s theorem: from a signed sieve weight to representations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-liliu.html"><span class="toc_ref">4</span> <span class="toc_entry">Li–Liu: two factors with a prescribed imbalance</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-liliu.html#sec:liliu-mathematical-chain"><span class="toc_ref">4.1</span> <span class="toc_entry">Li–Liu’s asymmetric Goldbach theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-implementation.html"><span class="toc_ref">5</span> <span class="toc_entry">Reading the formal implementation</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-implementation.html#a0000000013"><span class="toc_ref">5.1</span> <span class="toc_entry">Reusable proofs and source boundaries</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000014"><span class="toc_ref">5.2</span> <span class="toc_entry">Finding and checking a declaration</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000015"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathematical sources and attribution</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">All documented lemmas — proof graph</a></li>
+<li ><a href="dep_graph_chapter_1.html">Two counting theorems and their proof routes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_2.html">Prime distribution and sieve foundations — proof graph</a></li>
+<li ><a href="dep_graph_chapter_3.html">Chen: a prime plus at most two primes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_4.html">Li–Liu: two factors with a prescribed imbalance — proof graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:liliu">4 Li–Liu: two factors with a prescribed imbalance</h1>
+
+<h1 id="sec:liliu-mathematical-chain">4.1 Li–Liu’s asymmetric Goldbach theorem</h1>
+
+<p>The assertion is not merely that an even integer is a prime plus an almost prime. The two factors in the almost prime must have a prescribed imbalance. This chapter follows the implemented finite counts through sieving, switching, integral estimates, and the final choice of parameters. There are two implemented exits: a qualitative existence proof and a stronger counting proof using the author’s two-branch estimate for the eleventh term. </p>
+<h4 id="a0000000134">Reading this chapter with the paper.</h4>
+<p> The mathematical source is Jiamin Li and Jianya Liu, <em>Theorem \((1+1.9)\) on the Goldbach Conjecture</em>, <a href ="https://arxiv.org/html/2606.05224v1">arXiv:2606.05224v1</a>. Theorem&#160;1.1 and equation&#160;(4.4) give the public result and the distinct-prime count. Propositions&#160;4.1–4.3 organize the finite argument; Sections&#160;5.1–5.5 organize its analytic estimates and final assembly. The report page supplies a stage-by-stage paper/Lean correspondence ledger. This chapter and its graph are a selected mathematical exposition; the structure browser supplies the full project-module and declaration-reference views. The API provides the complete statement at each named declaration. </p>
+<h4 id="a0000000135">Three useful comparison conventions.</h4>
+<p> An exact count or identity is compared literally after its notation is fixed. An equivalent formulation carries an explicit bridge, such as the rational exponent conversion below. A replacement proof records its actual intermediate objects: the level-six lower sieve and the factor-excluded tenth fibre are examples. These distinctions preserve the authors’ weighted-sieve contribution while making the implemented route reproducible. </p>
+<h2 id="a0000000136">4.1.1 The counted object and the meaning of the exponent</h2>
+<p> For natural numbers \(N,p\), write \(\mathcal R(N,p)\) for </p>
+<div class="displaymath" id="a0000000137">
+  \[  p\text{ prime},\qquad \exists r,q\in \mathbb N:\quad (r=1\text{ or }r\text{ prime}),\quad q\text{ prime},\quad N=p+rq,\qquad r^{10}\le q^9.  \]
+</div>
+<p> The final inequality is equivalent to \(r\le q^{9/10}\), with real powers on the right. Clearing the rational exponent avoids rounding and retains both factors; an unrestricted two-almost-prime predicate would be weaker. </p>
+<div class="definition_thmwrapper theorem-style-plain" id="bp:liliu-representation">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">36</span>
+    <span class="definition_thmtitle">The literal asymmetric representation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-representation">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L28" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.IsOnePlusOneNineRepresentation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   For \(N,p\in \mathbb N\), the representation predicate is \(p\) prime and \(\exists r,q\in \mathbb N\): \((r=1\text{ or }r\text{ prime})\), \(q\) prime, \(N=p+rq\), and \(r^{10}\le q^9\). </p>
+
+  </div>
+</div>
+<p>  As in the overview, define \(D_{1,19/10}(N)=\# \{ p\le N:\mathcal R(N,p)\} \). This counts distinct primes \(p\), not triples \((p,r,q)\), and \(D_{1,19/10}(N){\gt}0\) is equivalent to the existence of the displayed witnesses. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-count-positive">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">37</span>
+    <span class="theorem_thmtitle">Positive distinct-prime count</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-count-positive">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000138"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L53" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.D19_pos_iff</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every \(N\in \mathbb N\), \(D_{1,19/10}(N){\gt}0\) if and only if there exist \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\), and \(r^{10}\le q^9\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000138">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>Fix \(\varepsilon {\gt}0\) and put </p>
+<div class="displaymath" id="a0000000139">
+  \[  \mathcal P_{N,\varepsilon }=\{ p\text{ prime}:p{\lt}(1-\varepsilon )N\} ,\qquad \mathcal A=\{ N-p:p\in \mathcal P_{N,\varepsilon }\} ,\qquad \tau =\frac9{19}-\varepsilon .  \]
+</div>
+<p> Every \(n\in \mathcal A\) satisfies \(n{\gt}\varepsilon N\). From now on take \(N\) sufficiently large that \(\varepsilon N{\gt}1\); then every \(n\in \mathcal A\) is at least two. This pays the domain condition before we use its least prime factor. For a real exponent \(a\) use the exact natural cutoff \(z_a=\lceil N^a\rceil \): for a prime \(\ell \), \(z_a\le \ell \) if and only if \(N^a\le \ell \). Let \(P^-(n)\) be the least prime factor of \(n\ge 2\), and let \(\Omega (n)\) count prime factors with multiplicity. The integer-valued basic weight is </p>
+<div class="displaymath" id="a0000000140">
+  \[  w_a(n)=\mathbf1_{P^-(n)\ge N^a} -\mathbf1_{P^-(n)\ge N^\tau ,\, \Omega (n)\ge 2} +\mathbf1_{P^-(n)\ge N^\tau ,\, \Omega (n)\ge 3} -\mathbf1_{P^-(n)\ge N^a,\, \Omega (n)\ge 3}.  \]
+</div>
+<p> Its positive values are at most one. A positive value forces \(n\) to be prime, or \(n=rq\) with prime factors and \(r{\lt}N^\tau \). For all sufficiently large \(N\), uniformly in \(a\) and \(p\), </p>
+<div class="displaymath" id="a0000000141">
+  \[  (N^\tau )^{19}\le (\varepsilon N)^9, \qquad r^{19}\le n^9=r^9q^9, \qquad r^{10}\le q^9.  \]
+</div>
+<p> The last implication cancels the positive integer \(r^9\); it is the arithmetic reason for the particular exponent \(9/19\) in the cutoff. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-imbalance">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">38</span>
+    <span class="theorem_thmtitle">The arithmetic imbalance mechanism</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-imbalance">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000142"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L256" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.oneNine_power_bound</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For \(N,n,r,q\in \mathbb N\) and \(\varepsilon {\gt}0\), assume \(r{\gt}0\), \(n=rq{\gt}\varepsilon N\), \(r{\lt}\lceil N^{9/19-\varepsilon }\rceil \), and \((N^{9/19-\varepsilon })^{19}\le (\varepsilon N)^9\). Then \(r^{10}\le q^9\). The cutoff is equivalent to \(r{\lt}N^{9/19-\varepsilon }\) because \(r\) is integral. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000142">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The prime case uses \(r=1\). Thus \(w_a(N-p)\le \mathbf1_{\mathcal R(N,p)}\). The map \(p\mapsto N-p\) is injective on the carrier, so summing gives </p>
+<div class="displaymath" id="a0000000143">
+  \[  \sum _{n\in \mathcal A}w_a(n)\le D_{1,19/10}(N).  \]
+</div>
+<p> Here the threshold follows \(\varepsilon \) but precedes \(a\) and \(p\). This is an eventual theorem, not the explicit threshold printed in the paper. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-basic">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">39</span>
+    <span class="theorem_thmtitle">Li–Liu finite weight detector</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-basic">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000144"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-imbalance">Theorem 38</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean#L351" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.goldbachBasic_finite_le_D19</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every fixed \(\varepsilon {\gt}0\), there is \(N_0\in \mathbb N\) such that, for all \(N\ge N_0\) and every real \(a\), \(\sum _{n\in \mathcal A}w_a(n)\le D_{1,19/10}(N)\). The threshold precedes \(a\); no evenness hypothesis is needed. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000144">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="sec:liliu-fibres">4.1.2 Literal sieve fibres and the six-term decomposition</h2>
+<p>  Define the finite fibre </p>
+<div class="displaymath" id="a0000000145">
+  \[  H(A,M,d;x)=\# \{ n\in A:d\mid n,\quad \ell \mid n,\  \ell \text{ prime},\  \ell \nmid M\Longrightarrow \ell \ge x\} .  \]
+</div>
+<p> The sieve filters the original integer \(n\), not the quotient \(n/d\). In the sums below every prime label is coprime to \(N\); repeated prime labels are permitted whenever the weak inequalities permit them. With \(A=\mathcal A\) understood, define </p>
+<div class="displaymath" id="a0000000146">
+  \begin{align*}  S_1(x)& =H(A,N,1;x),\\ S_2(T)& =\sum _{T\le r,\  r^2\le N}H(A,N,r;r),\\ S_3(z,y)& =\sum _{z\le r\le y}H(A,N,r;z),\\ S_4(y)& =\sum _{y\le r\le s,\  rs^2\le N}H(A,Nr,rs;s),\\ S_5(z,y)& =\sum _{z\le r\le y\le s,\  rs^2\le N}H(A,Nr,rs;s),\\ S_6(z,y)& =\sum _{z\le r\le s\le t\le y}H(A,Nr,rst;s). \end{align*}
+</div>
+<p> Buchstab’s identity partitions survivors by their smallest newly admitted prime. Apply the basic inequality at two cutoffs, expand \(S_1(y)\) down to \(z\), and split \(S_4(z)\) at \(y\). The difference of the resulting double sums supplies the positive triple term \(S_6(z,y)\). This is an exact finite partition before endpoint losses are paid. The loss is \(E=2X+Q+R+B_6\): \(X\) counts noncoprime differences, \(Q=\sum _{z\le r{\lt}y}H(A,N,r^2;r)\) counts the square diagonal, \(R\) is the triple sum with \(t{\lt}y\) and \(r=s\) or \(s=t\), and \(B_6\) is the triple sum with \(t=y\). Fix \(0{\lt}\varepsilon {\lt}2/15\). One threshold \(N_0(\varepsilon )\) works for every \(1/21{\lt}k{\lt}\sigma \le 1/3\): with \(z=N^k\), \(y=N^\sigma \), all even \(N\ge N_0\) satisfy the actual finite bound </p>
+<div class="displaymath" id="a0000000147">
+  \[  2S_1(z)-2S_2(N^\tau )-S_3(z,y)-2S_4(y)-S_5(z,y)+S_6(z,y) -446N^{1-k}\le 2D_{1,19/10}(N).  \]
+</div>
+<p> The uniform bound \(0\le E\le 446N^{1-k}\) is proved from the four counts, not stipulated as a big-\(O\) premise. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-six">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">40</span>
+    <span class="theorem_thmtitle">Six-term sieve inequality with paid losses</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-six">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000148"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-basic">Theorem 39</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachFiniteBudget.lean#L78" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachbig_finite_lower_bound_eventually</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Fix \(0{\lt}\varepsilon {\lt}2/15\). There is \(N_0\in \mathbb N\) such that every even \(N\ge N_0\) and every \(1/21{\lt}k{\lt}\sigma \le 1/3\), with \(z=N^k,y=N^\sigma ,T=N^{9/19-\varepsilon }\), satisfy \(2S_1(z)-2S_2(T)-S_3(z,y)-2S_4(y)-S_5(z,y)+S_6(z,y)-446N^{1-k}\le 2D_{1,19/10}(N)\). This threshold is uniform in \(k,\sigma \); there is no additional positive-loss parameter. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000148">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="a0000000149">4.1.3 The twelve terms and a factor-excluded tenth fibre</h2>
+<p> Now fix </p>
+<div class="displaymath" id="a0000000150">
+  \[  a=\frac4{53},\quad b=\frac4{33},\quad c=\frac3{11},\qquad z=N^a,\quad B=N^b,\quad C=N^c,\quad T=N^\tau .  \]
+</div>
+<p> These satisfy \(1/18{\lt}a{\lt}b{\lt}(1-3b)/3{\lt}c{\lt}1/3\). Set \(G_1=S_1(z)\), \(G_2=S_1(B)\), \(G_3=S_2(T)\), \(G_4=S_3(z,N^{1/3})\), \(G_5=S_3(z,C)\), and </p>
+<div class="displaymath" id="a0000000151">
+  \begin{align*}  G_6& =\sum _{z\le r\le s\le B}H(A,N,rs;z),&  G_7& =\sum _{z\le r\le B\le s\le C}H(A,N,rs;z),\\ G_8& =S_4(C),& G_9& =S_5(z,N^{1/3}),\\ G_{11}& =\sum _{z\le r\le q\le s\le t\le B}H(A,Nr,rqst;q),\\ G_{12}& =\sum _{z\le r\le q\le s\le B\le t\le C}H(A,Nr,rqst;q). \end{align*}
+</div>
+<p> For the tenth term the implementation uses </p>
+<div class="displaymath" id="a0000000152">
+  \[  G_{10}^{\rm corr}=\sum _{B\le r\le C\le s,\  rs^2\le N} H(A,Nrs,rs;\sqrt{N/(rs)}).  \]
+</div>
+<p> The excluded modulus is \(Nrs\): both chosen prime factors are exempted from further sifting, because the sieve acts on \(n\) itself. The following finite comparison uses this explicitly defined intermediate fibre. After removing noncoprime and square-divisible exceptional atoms, the cofactor \(q=n/(rs)\) is prime: its least prime factor is at least \(\sqrt{N/(rs)}\), while \(q{\lt}N/(rs)\). The injection preserves the pair labels and sends the surviving atom to </p>
+<div class="displaymath" id="a0000000153">
+  \[  (r,s,q),\quad \varepsilon N/(rs){\lt}q{\lt}N/(rs),\quad q\text{ prime},\quad N-rsq\text{ prime}.  \]
+</div>
+<p> Let \(\Pi _{10}\) count these labelled triples. Use the six-term bound at \((k,\sigma )=(a,1/3)\) and \((b,c)\); the first \(S_4(N^{1/3})\) vanishes. Three selected triple regions inside \(S_6(z,N^{1/3})\), with a paid upper-endpoint overlap, account for the pair gains and quadruple subtractions. The remaining \(S_5(B,C)\) is covered by the corrected tenth fibre and the third triple region. Combining these inequalities and paying all finite exceptions gives the <em>corrected twelve-term inequality actually consumed below</em>. Fix \(0{\lt}\varepsilon {\lt}2/15\); for all sufficiently large even \(N\), </p>
+<div class="displaymath" id="a0000000154">
+  \[  3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9 -G_{10}^{\rm corr}-G_{11}-G_{12}-1334N^{1-a} \le 4D_{1,19/10}(N).  \]
+</div>
+<p> The source threshold is even uniform over exponents satisfying \(1/18{\lt}a{\lt}b{\lt}(1-3b)/3{\lt}c{\lt}1/3\); here we use the displayed fixed triple. There is also an auxiliary switched inequality: replacing \(-G_{10}^{\rm corr}-1334N^{1-a}\) by \(-\Pi _{10}-2214N^{1-a}\) preserves the conclusion. It is not the twelve-term input used by the production assembly. Neither signed left side has yet been proved positive. See <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean">corrected and switched finite bounds</a>. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-twelve">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">41</span>
+    <span class="theorem_thmtitle">Li–Liu twelve-term decomposition</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-twelve">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000155"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-six">Theorem 40</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean#L58" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_twelve_corrected_lower_bound_eventually</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Fix \(0{\lt}\varepsilon {\lt}2/15\). One threshold works for every \(1/18{\lt}a{\lt}b{\lt}(1-3b)/3{\lt}c{\lt}1/3\). With the corresponding cutoffs, every even \(N\) beyond it satisfies \(3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9-G_{10}^{\mathrm{corr}}-G_{11}-G_{12}-1334N^{1-a}\le 4D_{1,19/10}(N)\). In the analytic application \((a,b,c)=(4/53,4/33,3/11)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000155">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h3 id="sec:liliu-output-sift">Sifting the output while retaining the labels</h3>
+<p>  For output sifting, let \(\mathcal B_{10}(Z)\) keep the same \((r,s,q)\) labels and the strict cofactor window, but replace primality of \(N-rsq\) by the literal output condition </p>
+<div class="displaymath" id="a0000000156">
+  \[  \ell \mid N-rsq,\quad \ell \text{ prime},\quad \ell \nmid N \quad \Longrightarrow \quad \ell \ge Z.  \]
+</div>
+<p> This sieves the output \(N-rsq\), not its prime cofactor \(q\); the excluded modulus here is \(N\), in contrast to \(Nrs\) in the original corrected fibre. For \(N\ge 2\), \(\varepsilon {\gt}0\), \(b{\gt}1/18\) and \(Z\ge 1\), the finite bound </p>
+<div class="displaymath" id="a0000000157">
+  \[  \Pi _{10}\le \mathcal B_{10}(Z)+400\lfloor Z\rfloor  \]
+</div>
+<p> pays for small prime outputs without identifying different labels. The source permits any real second cutoff \(C\); no small-epsilon window or evenness assumption is needed for this finite comparison. See <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean">literal output fibres and finite comparison</a>. As an auxiliary error-payment observation, for fixed \(0\le \theta {\lt}1\) and \(\delta {\gt}0\), the power losses with \(1\le Z\le N^\theta \) are eventually at most \(\delta N/\log ^2N\), with the threshold preceding the varying \(Z\). The actual analytic route chooses and eliminates the auxiliary cutoff inside the bound for \(\Pi _{10}\); it does not require an entire sifted replacement of the twelve-term expression. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-sifted">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">42</span>
+    <span class="theorem_thmtitle">Label-preserving output sifting</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-sifted">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000158"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean#L383" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPi10_le_goldbachB10SiftedCount_add_fourHundred_floor</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For \(N\ge 2\), \(\varepsilon {\gt}0\), \(\beta {\gt}1/18\), any real second cutoff \(C\), and \(Z\ge 1\), the finite labelled counts with first cutoff \(B=N^\beta \) satisfy \(\Pi _{10}\le \mathcal B_{10}(Z)+400\lfloor Z\rfloor \). Here the output \(N-rsq\) is sifted excluding prime divisors of \(N\), while the pair labels and strict prime-cofactor window are retained. Neither eventuality nor evenness is required. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000158">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="a0000000159">4.1.4 Normalization and the first positive and negative estimates</h2>
+<p> Use the author’s normalization, without an additional factor two: </p>
+<div class="displaymath" id="a0000000160">
+  \[  \mathfrak S_{\mathrm{Liu}}(N)=\prod _{\substack {\ell {\gt}2\\ \ell \mid N}}\frac{\ell -1}{\ell -2} \prod _{\ell {\gt}2}\left(1-\frac1{(\ell -1)^2}\right),\qquad \mathcal X_N=\frac{\mathfrak S_{\mathrm{Liu}}(N)N}{\log ^2N}.  \]
+</div>
+<p> Products here run over primes. The universal product is positive and bounds \(\mathfrak S_{\mathrm{Liu}}(N)\) below; in particular \(\mathcal X_N{\gt}0\) for \(N\ge 4\). Let \(\gamma \) denote Euler’s constant. The lower and upper Jurkat–Richert functions \(f,F\) have \(f(u)=0\) and \(F(u)=2e^{\gamma }/u\) for \(0{\lt}u\le 2\), and satisfy \((uf(u))'=F(u-1)\), \((uF(u))'=f(u-1)\) for \(u{\gt}2\). For the lower factor on \([4,6]\) the implementation uses explicitly </p>
+<div class="displaymath" id="a0000000161">
+  \[  I(v)=\int _2^{v-1}\frac{\log (t-1)}t\, dt,\qquad f_*(s)=\frac{2e^{\gamma }}s \left(\log (s-1)+\int _3^{s-1}\frac{I(v)}v\, dv\right).  \]
+</div>
+<p> For every fixed \(\delta {\gt}0\) and \(0{\lt}\varepsilon {\lt}1\), a threshold \(N_0(\delta ,\varepsilon )\ge 4\) gives \(((1-\varepsilon )L-\delta )\mathcal X_N\le 3G_1+G_2\) for every even \(N\ge N_0\), where </p>
+<div class="displaymath" id="a0000000162">
+  \[  L=e^{-\gamma }\left(\frac{159}{2}f_*(6) +\frac{33}{2}f_*(33/8)\right).  \]
+</div>
+<p> The multiplicities three and one are already included in \(L\). The first factor \(f_*(6)\) uses a separate level-six lower-density producer, not the beta-cutoff theorem near \(33/8\). <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean">level-six lower density</a> proves that, for each \(\rho {\gt}0\), the actual lower Rosser density is at least \((f_*(6)-\rho )\) times the local sieve product once \(N\) is large; this density threshold precedes \(0{\lt}\varepsilon {\lt}1\). Its real consumer, <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean">alpha normalization at level six</a>, combines that density with the main-mass/product lower bound and the paid level-six remainder. The resulting count threshold follows the fixed \(\varepsilon \). For the second factor, continuity first selects a fixed ratio \(s{\lt}33/8\); the fixed-ratio sieve theorem is applied only afterwards. Thus the endpoint value \(f_*(33/8)\) is obtained with a paid error, not by assuming uniform validity of a sieve theorem at its limiting ratio. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-s1-density-six">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">43</span>
+    <span class="theorem_thmtitle">The actual lower density at level six</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-s1-density-six">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000163"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean#L104" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_levelSix_lowerDensitySix</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\rho {\gt}0\), some \(N_0\ge 2\) works for all even \(N\ge N_0\) and every \(0{\lt}\varepsilon {\lt}1\): \((f(6)-\rho )V_N\le S_N.\mathrm{mainSum}(\lambda ^-)\), where \(S_N\) is the actual \(S_1\) bounding sieve at \(z=N^{4/53}\), \(V_N\) its sieve product and \(\lambda ^-\) its lower Rosser weight at \(D=\lceil N^{4/53}\rceil ^6\). The density threshold precedes epsilon. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000163">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  In the fixed public paper, equations&#160;(5.11)–(5.13) first use \(f(53/8)\) and then its lower comparison with \(f(6)\). The implementation obtains the needed \(f(6)\) coefficient directly at natural level \(\lceil N^{4/53}\rceil ^6\). This is a replacement lower-sieve route to the retained coefficient. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-positive">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">44</span>
+    <span class="theorem_thmtitle">The two positive lower-sieve terms</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-positive">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000164"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS1PositivePair.lean#L9" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_positivePair_normalized_lower</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon {\lt}1\), there exists \(N_0\ge 4\) such that all even \(N\ge N_0\) satisfy \(((1-\varepsilon )L-\delta )\mathcal X_N\le 3G_1+G_2\), at \((a,b)=(4/53,4/33)\). The threshold may depend on both \(\delta \) and \(\varepsilon \); epsilon need not shrink with delta. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000164">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  For the following \(G_3,G_4,G_5\) upper bounds, fix \(\delta {\gt}0\) and \(0{\lt}\varepsilon {\lt}2/15\); each bound holds for every sufficiently large even \(N\), with its threshold following those fixed parameters. The negative term \(G_3\) is bounded above by \([8\log ((1-\tau )/\tau )+\delta ]\mathcal X_N\); its external multiplicity is four. For \(d=1/3,3/11\), put </p>
+<div class="displaymath" id="a0000000165">
+  \[  A_3(d)=\frac{53}{2}e^{-\gamma } \int _a^d\frac{F_S((1/2-u)/a)}u\, du.  \]
+</div>
+<p> Here \(F_S\) is the implemented Suzuki upper factor. On the required range \(53/24\le s\le 45/8\), its exact exp-free formulas are </p>
+<div class="displaymath" id="a0000000166">
+  \[  e^{-\gamma }F_S(s)=\frac2s \begin{cases}  1,& s\le 3,\\ 1+I(s),& 3\le s\le 5,\\ 1+I(5)+\displaystyle \int _5^s \frac{\log (t-2)+\int _3^{t-2}I(v)/v\, dv}{t-1}\, dt,& 5\le s\le 45/8. \end{cases}  \]
+</div>
+<p> Thus the third-interval correction is not discarded. A formula for \(F_S\) alone would not justify this use beyond four. The separate <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean">S3 upper Rosser comparison through six</a> proves, for every \(\rho {\gt}0\), one cutoff threshold such that the actual upper Rosser main sum is at most \((F_S(s)+\rho )\) times its sieve product for every \(3/2\le s=\log \Delta /\log z\le 6\) and \(\Delta {\gt}0\). It obtains the genuine local-product witness internally from <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean">upper density through six</a>. The proof in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS3NormalizedUpper.lean">actual S3 normalized consumer</a> uses this comparison at the moving finite-level ratios, then passes to the limiting integral above. This covers \(G_4,G_5\) and the entire \([53/24,45/8]\) range; the narrower upper comparison through four is not being silently extended. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-upper-density-six">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">45</span>
+    <span class="theorem_thmtitle">Uniform upper density through six</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-upper-density-six">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000167"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean#L201" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_upperRosserDensity_six</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(K{\gt}1\) and \(\rho {\gt}0\), some \(z_0\) works for every bounding sieve \(S\) and real \(z,\Delta ,s\): if \(z\ge \max (2,z_0)\), \(\Delta {\gt}0\), \(S\) has the dimension-one local-product bound with \(K\), all its sifting primes are at most \(z\), and \(s=\log \Delta /\log z\in [3/2,6]\), then \(S.\mathrm{mainSum}(\lambda ^+)\le (F_S(s)+\rho )V_S\). Here \(F_S\) denotes the Suzuki factor, \(V_S\) the sieve product, and \(\lambda ^+\) has natural level \(\lfloor \Delta \rfloor +1\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000167">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-s3-main-six">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">46</span>
+    <span class="theorem_thmtitle">The consumed S3 upper Rosser main sum</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-s3-main-six">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000168"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean#L61" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS3RosserMain_upper_six</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\rho {\gt}0\), some \(z_0\ge 2\) works uniformly in \(N\), its evenness proof, and real \(\varepsilon ,z,\Delta ,s\): if \(z\ge z_0\), \(\Delta {\gt}0\) and \(s=\log \Delta /\log z\in [3/2,6]\), then \(\sum _{d\mid P_N(z)}\lambda _d^+/\varphi (d)\le (F_S(s)+\rho )V_N(z)\). The natural level is \(\lfloor \Delta \rfloor +1\) and the local-product witness is supplied internally. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000168">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The actual bounds are \(G_4\le [(1-\varepsilon )A_3(1/3)+\delta ]\mathcal X_N\) and \(G_5\le [(1-\varepsilon )A_3(c)+\delta ]\mathcal X_N\). </p>
+<p>Switching \(G_8,G_9\) creates the labelled \(\mathcal B_8^+,\mathcal B_9^+\): \((r,s,q)\) with the respective original pair constraints, prime \(q\), and \(rsq{\lt}N\); their output is \(N-rsq\). Good original atoms inject into the prime-output atoms; noncoprime, square, and small-output exceptions are paid separately before upper sifting. The logarithmic prime coordinates \(u=\log r/\log N\), \(v=\log s/\log N\) produce the density \(K(u,v)=1/[uv(1-u-v)]\). Define the fixed integrals </p>
+<div class="displaymath" id="a0000000169">
+  \[  I_8=\int _c^{1/3}\int _u^{(1-u)/2}K(u,v)\, dv\, du,\qquad I_{10}=\int _b^c\int _c^{(1-u)/2}K(u,v)\, dv\, du.  \]
+</div>
+<p> The corrected tenth count first satisfies \(G_{10}^{\rm corr}\le \Pi _{10}+880N^{1-b}\) eventually. <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachPi10IntegralUpper.lean">Pi10 after output sifting and cutoff elimination</a> bounds the actual \(\Pi _{10}\) count, not \(\mathcal B_{10}(Z)\) for arbitrary \(Z\). Then <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean">corrected tenth count bounded by I10</a> pays the \(880N^{1-b}\) error. Precisely, for every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon {\lt}1\), some \(N_0(\delta ,\varepsilon )\ge 4\) gives </p>
+<div class="displaymath" id="a0000000170">
+  \[  G_{10}^{\rm corr}\le [8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N \qquad (N\ge N_0\text{ even}).  \]
+</div>
+<p> To see the actual signed consumption, put </p>
+<div class="displaymath" id="a0000000171">
+  \[  \mathcal T_{11}=3G_1+G_2-4G_3-G_4-G_5+G_6+G_7 -2G_8-G_9-G_{11}-G_{12}.  \]
+</div>
+<p> The corrected twelve-term input reads \(\mathcal T_{11}-(G_{10}^{\rm corr}+1334N^{1-a})\le 4D_{1,19/10}(N)\). For fixed \(\delta {\gt}0\) and \(0{\lt}\varepsilon {\lt}2/15\), use the preceding bound with loss \(\delta /2\) and pay \(1334N^{1-a}\le (\delta /2)\mathcal X_N\). Because the subtracted cost is at most \([8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N\), this gives </p>
+<div class="displaymath" id="a0000000172">
+  \[  \mathcal T_{11}-[8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N \le 4D_{1,19/10}(N).  \]
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-g10-integral">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">47</span>
+    <span class="theorem_thmtitle">The corrected tenth count bounded by I10</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-g10-integral">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000173"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean#L7" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG10Corrected_I10_upper</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\delta {\gt}0\) and each fixed \(0{\lt}\varepsilon {\lt}1\), some \(N_0\ge 4\) gives \(G_{10}^{\rm corr}\le [8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N\) for every even \(N\ge N_0\), at \((b,c)=(4/33,3/11)\). The corrected fibre excludes prime divisors of \(Nrs\) and retains both labels; \(\mathcal X_N=\mathfrak S_{\rm Liu}(N)N/\log ^2N\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000173">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-i10-consumed">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">48</span>
+    <span class="theorem_thmtitle">Pay I10 inside the corrected signed ledger</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-i10-consumed">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000174"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-twelve">Theorem 41</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-g10-integral">Theorem 47</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean#L22" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_twelve_base_I10_consumed_eventually</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every \(\delta {\gt}0\) and each fixed \(0{\lt}\varepsilon {\lt}2/15\), some \(N_0\ge 4\) works for all even \(N\ge N_0\) and every \(1/18{\lt}a{\lt}4/33\): \(\mathcal T_{11}-[8(1-\varepsilon )I_{10}+\delta ]\mathcal X_N\le 4D_{1,19/10}(N)\). Here \(\mathcal T_{11}=3G_1+G_2-4G_3-G_4-G_5+G_6+G_7-2G_8-G_9-G_{11}-G_{12}\), with \(b=4/33,c=3/11\). Both the corrected tenth cost and \(1334N^{1-a}\) are paid. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000174">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  For comparison, Proposition&#160;4.3 in the fixed public paper writes the excluded prime set as \(\mathscr P(Nr)\) in its tenth term. The present \(G_{10}^{\rm corr}\) explicitly uses \(Nrs\) while sifting the original integer. The proved corrected inequality and the following consumption bridge establish this implementation’s route; an equality with the printed tenth fibre is a separate comparison question. This is exactly the input of the subsequent count ledger: <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean">corrected twelve-term I10 consumer</a>. Its threshold follows \(\delta ,\varepsilon \) but is uniform in \(1/18{\lt}a{\lt}b\) with \(b=4/33,c=3/11\) fixed. The resulting upper coefficients are \(8I_8\) for \(G_8\) and \(8(1-\varepsilon )I_{10}\) for the tenth-term cost after output sifting and cutoff elimination. The external factor two makes the total eighth-term cost \(16I_8\). The standard inputs are actual prime-progression remainder bounds, Rosser upper/lower sieves, Euler-product normalization, and logarithmic prime-sum limits; they are applied to these carriers, not supplied as hypotheses on \(D_{19}\). With \(R_5=G_6+G_7-G_9-G_{11}-G_{12}\), the retained endpoint certificates and continuity at \(\varepsilon =0\) give the following local contract: for every \(\delta {\gt}0\), there is \(\varepsilon _0\in (0,2/15]\) such that, for each fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), some \(N_0(\delta ,\varepsilon )\ge 4\) works for every even \(N\ge N_0\) in </p>
+<div class="displaymath" id="a0000000175">
+  \[  R_5+(c_0-\delta )\mathcal X_N\le 4D_{1,19/10}(N),\qquad c_0=\frac{124341093}{200000000}.  \]
+</div>
+<p> Indeed \(c_0\le L-32\log (10/9)-A_3(1/3)-A_3(c)-8I_{10}-16I_8\). The retained bounds are \(A_3(1/3)\le 236056871187/10^{10}\), \(A_3(c)\le 195190815363/10^{10}\), \(8I_{10}\le 540995781/10^8\), and \(8I_8\le 60961168/10^8\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-retained">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">49</span>
+    <span class="theorem_thmtitle">Li–Liu five-term reduction</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-retained">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000176"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-mertens">Theorem 2</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-bv">Theorem 4</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-pan-bounded">Theorem 11</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-i10-consumed">Theorem 48</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-local-product">Theorem 3</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-jr-hats">Theorem 6</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-suzuki-upper">Theorem 8</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-s3-main-six">Theorem 46</a></li>
+          
+          <li><a href="chap-foundations.html#bp:foundation-pnt">Theorem 1</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-positive">Theorem 44</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachWeightAllRetainedEndpointsConsumed.lean#L27" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_remainingFive_allRetained_small_epsilon</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there is \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \(G_6+G_7-G_9-G_{11}-G_{12}+(124341093/200000000-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\), at the fixed exponents of this chapter. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000176">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="a0000000177">4.1.5 The ninth term and the positive pair integrals</h2>
+<p> Split the original \(G_9\) labels by \(r{\lt}N^{1/10}\) and \(r\ge N^{1/10}\). The strict-low and closed-high pieces partition the entire count. For every fixed \(\delta {\gt}0\) and \(0{\lt}\varepsilon {\lt}2/15\), the low Fouvry route and the ordinary high route give, for all sufficiently large even \(N\) (with \(N_0\ge 4\) depending on these fixed parameters), </p>
+<div class="displaymath" id="a0000000178">
+  \[  C_9=\frac{36}{5}\int _a^{1/10}\int _{1/3}^{(1-u)/2} \frac{K(u,v)}{1-u}\, dv\, du +8\int _{1/10}^{1/3}\int _{1/3}^{(1-u)/2}K(u,v)\, dv\, du, \qquad G_9\le (C_9+\delta )\mathcal X_N.  \]
+</div>
+<p> There are two inner integrals, both for \(a\le u\le 1/3\): </p>
+<div class="displaymath" id="a0000000179">
+  \begin{align*}  \int _{1/3}^{(1-u)/2}K(u,v)\, dv & =\frac{\log (2-3u)}{u(1-u)},\\ \int _{1/3}^{(1-u)/2}\frac{K(u,v)}{1-u}\, dv & =\frac{\log (2-3u)}{u(1-u)^2}. \end{align*}
+</div>
+<p> Thus the low single-integral kernel retains the extra \(1/(1-u)\); only the high piece uses the first identity without that extra factor. See <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachB9SplitIntegralReduction.lean">weighted and unweighted G9 reductions</a>. Primitive and rational logarithm bounds certify \(C_9\le 527231/100000\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-b9">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">50</span>
+    <span class="theorem_thmtitle">The original ninth count and its split integral</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-b9">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000180"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachS5PaperSplitUpper.lean#L15" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS5Closed_normalized_upper_paperSplit</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon {\lt}2/15\), there is \(N_0\ge 4\) such that all even \(N\ge N_0\) satisfy \(G_9\le (C_9+\delta )\mathcal X_N\), with \(G_9=S_5(N^{4/53},N^{1/3})\). The threshold follows \(\delta ,\varepsilon \). The low part of \(C_9\) retains the additional factor \(1/(1-u)\), so its reduced kernel has denominator \(u(1-u)^2\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000180">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  For the positive pair terms define </p>
+<div class="displaymath" id="a0000000181">
+  \[  k_\eta (u,v)=\max \{ 0,f((1/2-u-v)/a)-\eta \} ,\qquad C_{67}=\frac{53}{2e^{\gamma }}\left[ \frac12\int _a^b\int _a^b\frac{k_0(u,v)}{uv}\, dv\, du +\int _a^b\int _b^c\frac{k_0(u,v)}{uv}\, dv\, du\right].  \]
+</div>
+<p> The lower Rosser sums retain \(1/\varphi (rs)\) even on the square diagonal. Passing to \(1/(rs)\) is a one-sided comparison, not an equality. Symmetry gives the half-square integral for \(G_6\); \(G_7\) gives the rectangle. Truncation by \(\eta \) costs at most \(\eta \) times their logarithmic masses. After paying the prime-progression remainder, the actual result has this order of choices: for every \(\delta {\gt}0\), first choose \(\varepsilon _0\in (0,2/15]\); for each fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), choose \(N_0(\delta ,\varepsilon )\ge 4\). Then every even \(N\ge N_0\) satisfies \(G_6+G_7\ge (C_{67}-\delta )\mathcal X_N\). The small epsilon window absorbs the source-mass loss; increasing \(N\) alone would not remove it for an arbitrary fixed epsilon. See <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean">actual pair lower bound and its epsilon window</a>. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-pair">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">51</span>
+    <span class="theorem_thmtitle">Original positive pair counts</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-pair">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000182"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean#L9" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Author_reused_pair_lower</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there is \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \((C_{67}-\delta )\mathcal X_N\le G_6+G_7\), at \((a,b,c)=(4/53,4/33,3/11)\). The small epsilon window absorbs the source-mass loss before the natural threshold is chosen. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000182">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  For certification the source moves to \(s=u+v\) and the elementary lower profile </p>
+<div class="displaymath" id="a0000000183">
+  \[  \phi (s)=\max \left\{ 0,\frac{\log (((1/2-s)-a)/a)}{1/2-s}\right\} , \qquad 2a\le s\le b+c.  \]
+</div>
+<p> The denominator and logarithm argument are positive throughout this actual sum-coordinate domain. Set \(d_*=1/2-2a\); the profile vanishes on \([d_*,b+c]\). The square splits at \(a+b\), and the rectangle at \(2b,a+c\). Define the five fixed integrals, including the half-square multiplicity, by </p>
+<div class="displaymath" id="a0000000184">
+  \begin{align*}  J_{\rm elem}={}& \frac12\left[ \int _{2a}^{a+b}\frac{\phi (s)}s\log \frac{(s-a)^2}{a^2}\, ds +\int _{a+b}^{2b}\frac{\phi (s)}s\log \frac{b^2}{(s-b)^2}\, ds\right]\\ & +\int _{a+b}^{2b}\frac{\phi (s)}s\log \frac{(s-b)(s-a)}{ab}\, ds\\ & +\int _{2b}^{a+c}\frac{\phi (s)}s\log \frac{b(s-a)}{a(s-b)}\, ds +\int _{a+c}^{d_*}\frac{\phi (s)}s\log \frac{bc}{(s-c)(s-b)}\, ds. \end{align*}
+</div>
+<p> This is exactly the source’s five-branch elementary integral, not a renaming of \(C_{67}\): <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG67G67Specialization.lean">elementary profile and its domain</a>, <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG67G67Piecewise.lean">five fixed branches and actual pair comparison</a>. Five centered polynomial integrations, with total loss \(21/4240000\), certify </p>
+<div class="displaymath" id="a0000000185">
+  \[  \frac{54233}{10000}\le 4J_{\rm elem}\le C_{67}.  \]
+</div>
+<p> The second inequality is a proved elementary-to-actual integral comparison; it is this inequality that will also enter the older ledger. No floating-point quadrature value is used as a premise. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-pair-certificate">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">52</span>
+    <span class="theorem_thmtitle">Certified lower bound for the pair integral</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-pair-certificate">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000186"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L17" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG67IntegralConstant_lower_certified</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(54233/10000\le C_{67}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000186">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="a0000000187">4.1.6 The original eleventh-term domain and the cross term</h2>
+<p> The four logarithmic variables for \(G_{11}\) satisfy \(a\le u\le v\le w\le t\le b\). For a literal label \((r,q,s,t)\), the actual cofactor \(m\) lies in the strict window \(\varepsilon N/(rqst){\lt}m{\lt}N/(rqst)\). After the exceptional atoms are paid, the rough-cofactor comparison uses the second prime \(q\) as its sieve cutoff. The upper-bound proof enlarges this window to the full rough mother up to \(x=N/(rqst)\), discarding its positive lower endpoint. It is the <em>upper endpoint of this mother count</em> that has Buchstab parameter </p>
+<div class="displaymath" id="a0000000188">
+  \[  \frac{\log x}{\log q}=\frac{1-u-v-w-t}{v}\in [17/4,37/4].  \]
+</div>
+<p> This is not the parameter \(\log m/\log q\) of each actual cofactor; that parameter is not equal to the displayed endpoint ratio. The enlargement is also why no factor \(1-\varepsilon \) survives in the \(G_{11}\) coefficient, unlike the window-sensitive tenth-term bound. See <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11MainMassBuchstab.lean">full rough mother and loss of the window factor</a> and <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernel.lean">canonical upper-endpoint geometry</a>. Write \(\omega _{\mathrm B}\) for Buchstab’s function, with \(u\omega _{\mathrm B}(u)=1\) on \([1,2]\) and \((u\omega _{\mathrm B}(u))'=\omega _{\mathrm B}(u-1)\) for \(u{\gt}2\). Its proved bound on this interval is \(W=561522/10^6\). Here take \(N\ge 4\) with \(N^a\ge 4\). A used cell has ratio \(1{\lt}\rho \le 5/4\) and first lower endpoint \(\rho ^j\); the finite level comparison imposes no separate restriction on \(\varepsilon \) beyond membership in the source’s used-cell set. For a fixed level loss \(0\le \eta {\lt}1/4\), its actual level is </p>
+<div class="displaymath" id="a0000000189">
+  \[  Q_{\mathrm{mix}}=\begin{cases}  N^{5/9-\eta }/((2/3)\rho ^j)^{5/9},& \rho ^j\le N^{1/10},\\ N^{1/2-\eta },& \rho ^j{\gt}N^{1/10}. \end{cases}  \]
+</div>
+<p> The buffered low cell and the ordinary high cell both give the required bound for every short prime \(p\) in that cell. The associated limiting exponent is \(\lambda (u)=(5/9)(1-\min \{ u,1/10\} )\). Consequently the upper-sieve weight is </p>
+<div class="displaymath" id="a0000000190">
+  \[  h(u)=\frac4{\lambda (u)}=\frac{36}{5(1-\min \{ u,1/10\} )} =\begin{cases} 36/[5(1-u)],& u\le 1/10,\\ 8,& u\ge 1/10.\end{cases}  \]
+</div>
+<p> This weight is derived at every short prime in each grid cell from the buffered low level and the ordinary high level; it is not a replacement of an already paid scalar eight by a smaller number. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-level">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">53</span>
+    <span class="theorem_thmtitle">The author weight from the actual mixed level</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-level">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000191"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorLevel.lean#L68" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11MixedLevel_author_weight</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For \(N\ge 4\), \(N^{4/53}\ge 4\), \(1{\lt}\rho \le 5/4\), and \(0\le \eta {\lt}1/4\), every used grid cell and every short prime \(p\) in it satisfy \(4\log N/\log Q_{\mathrm{mix}}\le h(\log p/\log N)+32\eta \). The finite comparison has arbitrary real \(\varepsilon \), constrained only through membership in the used-cell set; \(\eta \) is the level loss, not a small-epsilon-window parameter. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000191">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  Define \(I_{11}(h)\) by integrating \(h(u)/(uv^2wt)\) over the ordered domain. This is exactly the author’s two integrals: split the first coordinate at \(1/10\), retain \(u\le v\le w\le t\le b\), and retain \(v^2\) in the denominator. The source’s nested label is \((t,w,u,v)\), which explains the coordinate order in the finite kernel. Integrating the last three variables gives </p>
+<div class="displaymath" id="a0000000192">
+  \[  I_{11}(h)=\int _a^b h(u)K_{11}(u)\, du,\qquad K_{11}(u)=\frac{(\log ^2(b/u)-2\log (b/u)+2)/u-2/b}{2u}.  \]
+</div>
+<p> Thus \(I_{11}(h)=\frac{36}{5}\int _a^{1/10}K_{11}(u)/(1-u)\, du +8\int _{1/10}^bK_{11}(u)\, du\), the original-domain match needed here. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-domain">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">54</span>
+    <span class="theorem_thmtitle">Matching the author original ordered domain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-domain">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000193"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean#L199" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_author_split</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(I_{11}(h)=\frac{36}{5}\int _a^{1/10}\frac{K_{11}(u)}{1-u}\, du+8\int _{1/10}^bK_{11}(u)\, du\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000193">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  A finite geometric majorant for \(1/(1-u)\), exact primitives, and certified bounds for \(\log (53/33)\) and \(\log (40/33)\) prove \(W I_{11}(h)\le 10191/100000\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-g11-certificate">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">55</span>
+    <span class="theorem_thmtitle">Certified author integral</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-g11-certificate">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000194"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorIntegralScalar.lean#L48" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_author_scalar_le_10191</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \((561522/10^6)I_{11}(h)\le 10191/100000\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000194">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The actual-count producer also pays for the switched exceptional atoms, both distribution remainders, grid ordering collars, and newly admitted prime divisors of \(N\). With mesh \(\rho =1+t\), it uses the bounded weight \(h+t\le 9\); the collar costs \(O(t)\) and the divisor tail is bounded by \(16800\cdot 9\log N/N^a\) on the normalized mother scale. Continuity first chooses \(0{\lt}t\le 1/8\) to fit the requested loss, then one maximum of the thresholds pays this tail and the \(5N/\log ^3N\) error. Only after these steps does it conclude: for every fixed \(\delta {\gt}0\) and \(0{\lt}\varepsilon \le 1\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) such that every even \(N\ge N_0\) satisfies \(G_{11}\le (10191/100000+\delta )\mathcal X_N\). This is a fixed-epsilon result, not one requiring epsilon to shrink with delta. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-g11-actual">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">56</span>
+    <span class="theorem_thmtitle">Eleventh-term count upper bound</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-g11-actual">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000195"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorActualProducer.lean#L86" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11_le_authorScalar_direct</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon \le 1\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) such that all even \(N\ge N_0\) satisfy \(G_{11}\le (10191/100000+\delta )\mathcal X_N\) on the original domain \(z\le r\le q\le s\le t\le B\). No factor \(1-\varepsilon \) is asserted: this bound uses the full upper-endpoint rough mother. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000195">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>For \(G_{12}\) the original domain is \(a\le u\le v\le w\le b\), with the fourth coordinate independently in \(b\le t\le c\). At the full rough upper endpoint \(x=N/(rqst)\), its Buchstab parameter is still \(\log x/\log q=(1-u-v-w-t)/v\). The cross domain guarantees this ratio is at least three; on the strict low branch \(u{\lt}1/10\), the improved lower bound is \(79/25\). The two constants are pointwise majorants of the actual Buchstab function: </p>
+<div class="displaymath" id="a0000000196">
+  \[  \omega _{\mathrm B}(\xi )\le \frac{564383}{10^6}\quad (\xi \ge 3), \qquad \omega _{\mathrm B}(\xi )\le \frac{561990}{10^6}\quad (\xi \ge 79/25).  \]
+</div>
+<p> They have no upper cutoff. The geometric implication and their use at actual labels are proved in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG12SharpGeometry.lean">cross-domain Buchstab geometry</a>; the pointwise analytic bounds are in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG12BuchstabMajorant.lean">two Buchstab majorants</a>. Thus these constants enter before integration, rather than being outputs of a quadrature calculation. Put \(h_{12}(u)=h(u)\, 561990/10^6\) for \(u{\lt}1/10\), and \(h_{12}(u)=h(u)\, 564383/10^6\) for \(u\ge 1/10\), and define </p>
+<div class="displaymath" id="a0000000197">
+  \[  C_{12}=\int _a^b\int _u^b\int _v^b\int _b^c \frac{h_{12}(u)}{uv^2wt}\, dt\, dw\, dv\, du.  \]
+</div>
+<p> The original quadruple count passes through rough cofactors and product-prime output fibres. Both exception payments are retained; a clipped low/high grid then gives the actual contract: for every fixed \(\delta {\gt}0\) and \(0{\lt}\varepsilon \le 2/15\), some \(N_0(\delta ,\varepsilon )\ge 4\) works for all even \(N\ge N_0\) in \(G_{12}\le (C_{12}+\delta )\mathcal X_N\). The low branch remains strict and the high branch includes \(u=1/10\); no boundary labels or exception payments are dropped. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-cross">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">57</span>
+    <span class="theorem_thmtitle">The original cross count after both exception payments</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-cross">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000198"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean#L44" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Author_reused_cross_upper</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For every \(\delta {\gt}0\) and every fixed \(0{\lt}\varepsilon \le 2/15\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) such that all even \(N\ge N_0\) satisfy \(G_{12}\le (C_{12}+\delta )\mathcal X_N\). Both exception payments are included. The original domain is \(z\le r\le q\le s\le B\le t\le C\), and \(C_{12}\) uses the strict-low, closed-high Buchstab-weight split defined in the text. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000198">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  A rational envelope, integration by primitives, and endpoint logarithm bounds certify \(C_{12}\le 66821/100000\) on this cross domain. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-cross-certificate">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">58</span>
+    <span class="theorem_thmtitle">Certified cross integral</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-cross-certificate">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000199"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG12EvaluationScalar.lean#L19" class="lean_decl">G12AnalyticCertificate.actual_le_target</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(C_{12}\le 66821/100000\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000199">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="a0000000200">4.1.7 One common error budget and the two completed exits</h2>
+<p> First substitute the \(G_9\) and actual author-\(G_{11}\) upper bounds into \(R_5\), allocating thirds of a requested loss to the three input estimates. Here, too, the local contract is: for every \(\delta {\gt}0\), first choose \(\varepsilon _0\in (0,2/15]\); for each fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), choose \(N_0(\delta ,\varepsilon )\ge 4\). Then every even \(N\ge N_0\) satisfies </p>
+<div class="displaymath" id="a0000000201">
+  \[  G_6+G_7-G_{12}+(c_0-C_9-10191/100000-\delta )\mathcal X_N\le 4D_{1,19/10}(N).  \]
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-author-consume">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">59</span>
+    <span class="theorem_thmtitle">Author estimate consumed at the original counts</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-author-consume">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000202"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-retained">Theorem 49</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-b9">Theorem 50</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-g11-actual">Theorem 56</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorCountLedger.lean#L9" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_paperSplit_authorG11_consumed_small_epsilon</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there is \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \(G_6+G_7-G_{12}+(c_0-C_9-10191/100000-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\), at the fixed exponents of this chapter. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000202">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  Next substitute the original pair lower bound and cross upper bound. The scalar certificates give exactly </p>
+<div class="displaymath" id="a0000000203">
+  \[  \frac{54233}{10000}+\frac{124341093}{200000000} -\frac{527231}{100000}-\frac{10191}{100000}-\frac{66821}{100000} =\frac{515093}{200000000}=:m_{\rm author}.  \]
+</div>
+<p> For every \(\delta {\gt}0\) the implementation proves \(\exists \varepsilon _0\in (0,2/15]\), \(\forall \varepsilon \in (0,\varepsilon _0)\), \(\exists N_0\ge 4\), \(\forall N\ge N_0\) even: \((m_{\rm author}-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\). It takes minima of the epsilon windows and maxima of all natural thresholds. There is no threshold asserted uniformly over all small positive epsilon. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-ledger">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">60</span>
+    <span class="theorem_thmtitle">Li–Liu positive total weight</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-ledger">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000204"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-cross">Theorem 57</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-pair-certificate">Theorem 52</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-pair">Theorem 51</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-cross-certificate">Theorem 58</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-author-consume">Theorem 59</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L8" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_authorG11_numericLedger</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every \(\delta {\gt}0\), there is \(\varepsilon _0\in (0,2/15]\) such that, for every fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) for which all even \(N\ge N_0\) satisfy \((515093/200000000-\delta )\mathcal X_N\le 4D_{1,19/10}(N)\). The threshold is not asserted uniformly over all small positive epsilon. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000204">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  Fix any real \(\kappa {\lt}515093/800000000\) before choosing the threshold. Take \(\delta =m_{\rm author}-4\kappa {\gt}0\), then \(\varepsilon =\varepsilon _0/2\). The result is \(\exists K\ge 4\), \(\forall N\ge K\) even: \(\kappa \mathcal X_N\le D_{1,19/10}(N)\). The ceiling itself is not asserted. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-coefficient">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">61</span>
+    <span class="theorem_thmtitle">Every fixed coefficient below the retained ceiling</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-coefficient">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000205"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-ledger">Theorem 60</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L45" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_D19_author_lower_of_coefficient_lt</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\forall \kappa {\lt}515093/800000000\  \exists K\ge 4\  \forall N\ge K,\  2\mid N\Rightarrow \kappa \mathcal X_N\le D_{1,19/10}(N)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000205">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  Choosing \(\kappa =1/2000\) and using \(\mathcal X_N{\gt}0\) gives the strict paper bound \(D_{1,19/10}(N){\gt}(1/2500)\mathcal X_N=0.0004\mathcal X_N\), not merely a weak inequality. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-paper">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">62</span>
+    <span class="theorem_thmtitle">Li–Liu: strict 0.0004 lower bound</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-paper">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000206"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-coefficient">Theorem 61</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean#L62" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_D19_gt_paper_0004</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\exists K\ge 4\  \forall N\ge K,\  2\mid N\Rightarrow 0.0004\mathcal X_N{\lt}D_{1,19/10}(N)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000206">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The qualitative existence route remains separate. It uses the coarser actual \(G_{11}\) coefficient \(10385101/10^8\) and the five-branch \(J_{\rm elem}\) defined above. Its margin is the integral expression </p>
+<div class="displaymath" id="a0000000207">
+  \[  m_{\rm old}=4J_{\rm elem}+c_0-C_9-\frac{10385101}{10^8}-C_{12}, \qquad \frac{126891}{200000000}\le m_{\rm old}.  \]
+</div>
+<p> The rational number is a certified lower bound, not the definition of \(m_{\rm old}\). In particular \(C_{67}\) has not merely been renamed. The old route has its own actual-count ledger: for every \(\delta {\gt}0\), there exists \(\varepsilon _0\in (0,2/15]\) such that, for each fixed \(0{\lt}\varepsilon {\lt}\varepsilon _0\), there exists \(N_0(\delta ,\varepsilon )\ge 4\) for which </p>
+<div class="displaymath" id="a0000000208">
+  \[  (m_{\rm old}-\delta )\mathcal X_N\le 4D_{1,19/10}(N) \qquad (N\ge N_0\text{ even}).  \]
+</div>
+<p> The proof substitutes \(4J_{\rm elem}\le C_{67}\) into the older actual cross-integral ledger, keeping its coarser eleventh-term cost; see <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachSharpPiecewiseLedger.lean">old margin definition and actual-count ledger</a>. Its scalar positivity and independent witness exit are in <a href ="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean">old certified margin and existence theorem</a>. Its own certified quantitative ceiling is \(126891/800000000\), not the author-route ceiling. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-old-margin">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">63</span>
+    <span class="theorem_thmtitle">The separate earlier positive margin</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-old-margin">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000209"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L21" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachSharpElementaryMargin_lower_certified</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   For \(m_{\mathrm{old}}:=4J_{\mathrm{elem}}+c_0-C_9-10385101/10^8-C_{12}\), where \(J_{\mathrm{elem}}\) is the five fixed sum-coordinate integrals in the text (including the half-square multiplicity), \(126891/200000000\le m_{\mathrm{old}}\). This is an unconditional scalar certificate with no epsilon parameter, not the definition of the margin and not the author-route ledger. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000209">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  Taking \(\delta =m_{\rm old}/2\), then \(\varepsilon =\varepsilon _0/2\), proves \(D_{1,19/10}(N){\gt}0\) and extracts the natural-power witnesses. The source-exponent bridge finally gives \(r\le q^{(19/10)-1}\). This is the actual implementation of the unconditional existence theorem; it need not be rerouted through the stronger counting theorem. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-existence">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">64</span>
+    <span class="theorem_thmtitle">The actual unconditional existence endpoint</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-existence">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000210"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L62" class="lean_decl">MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_unconditional</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   There exists \(K\ge 4\) such that every even \(N\ge K\) admits \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\), and \(r\le q^{(19/10)-1}\). This endpoint is supplied by the independent old-margin existence route. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000210">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<h2 id="a0000000211">4.1.8 Four public interfaces for the two exits</h2>
+<p> Import <span class="ttfamily">Goldbach.OnePlusOneNine</span>. The public natural-power and real-exponent interfaces expose the earlier-margin existence route: </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-public-natural">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">65</span>
+    <span class="theorem_thmtitle">Public existence: exact natural powers</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-public-natural">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000212"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L14" class="lean_decl">Goldbach.one_plus_one_nine</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\exists K\in \mathbb N\), \(4\le K\), such that for all even \(N\ge K\) there exist \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\) and \(r^{10}\le q^9\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000212">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-public-real">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">66</span>
+    <span class="theorem_thmtitle">Public existence: real exponent</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-public-real">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000213"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L22" class="lean_decl">Goldbach.one_plus_one_nine_real</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   \(\exists K\in \mathbb N\), \(4\le K\), such that for all even \(N\ge K\) there exist \(p,r,q\in \mathbb N\) with \(p\le N\), \(p,q\) prime, \(r=1\) or \(r\) prime, \(N=p+rq\) and \((r:\mathbb R)\le (q:\mathbb R)^{(19/10)-1}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000213">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  The author-\(G_{11}\) ledger supplies the strict paper count and the stronger fixed-coefficient family: </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-public-count">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">67</span>
+    <span class="theorem_thmtitle">Public count: the strict paper bound</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-public-count">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000214"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-paper">Theorem 62</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L29" class="lean_decl">Goldbach.one_plus_one_nine_count</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    \(\exists K\in \mathbb N\), \(4\le K\), \(\forall N\ge K\), \(2\mid N\Rightarrow (1/2500)\mathcal X_N{\lt}D_{1,19/10}(N)\). Here \(D\) counts distinct primes \(p\) and \(\mathcal X_N=\mathfrak S_{\rm Liu}(N)N/\log ^2N\), with no extra factor two. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000214">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="bp:liliu-public-coefficient">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">68</span>
+    <span class="theorem_thmtitle">Public count: each fixed coefficient below the ceiling</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-liliu.html#bp:liliu-public-coefficient">#</a>
+    
+    <a class="icon proof" href="chap-liliu.html#a0000000215"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-liliu.html#bp:liliu-representation">Definition 36</a></li>
+          
+          <li><a href="chap-liliu.html#bp:liliu-coefficient">Theorem 61</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/OnePlusOneNine.lean#L38" class="lean_decl">Goldbach.one_plus_one_nine_lower_bound</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For every real \(\kappa {\lt}515093/800000000\), there exists \(K\in \mathbb N\), \(4\le K\), such that every even \(N\ge K\) satisfies \(\kappa \mathcal X_N\le D_{1,19/10}(N)\). The threshold follows the chosen coefficient; the ceiling itself is excluded. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000215">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+<p>  These public types have no distribution, integral-estimate or positivity premise. Their standard logical foundation is checked separately from their mathematical statement by the acceptance probes described in the verification guide. The paper’s twin-prime Theorem&#160;1.2 and its \(\mathrm{WEH}(0.999)\)-conditional Theorems&#160;1.3–1.4 have their own mathematical contracts; the four interfaces here concern the unconditional Goldbach result.  </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="chap-chen.html" title="Chen: a prime plus at most two primes"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="goldbach-lean: Chen and Li–Liu theorems"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-implementation.html" title="Reading the formal implementation"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

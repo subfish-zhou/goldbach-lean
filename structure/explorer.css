@@ -1,0 +1,381 @@
+:root {
+  color-scheme: light;
+  --ink: #162b37;
+  --muted: #536774;
+  --paper: #f6f8f8;
+  --line: #d5e0e3;
+  --accent: #09665d;
+  --soft: #e7f2ef;
+  --warm: #8a4c18;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, sans-serif;
+}
+
+header,
+main,
+footer {
+  max-width: 1440px;
+  margin: auto;
+  padding: 24px 40px;
+}
+
+header {
+  padding-top: 30px;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 38px;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  letter-spacing: -.045em;
+  line-height: 1.12;
+  max-width: 900px;
+  margin: 8px 0 20px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.eyebrow {
+  letter-spacing: .12em;
+  font-size: .73rem;
+  font-weight: 750;
+  color: var(--accent);
+}
+
+.lead {
+  font-size: 1.15rem;
+  max-width: 880px;
+  color: var(--muted);
+}
+
+#build-status {
+  font-size: .88rem;
+}
+
+main > section {
+  margin-bottom: 32px;
+}
+
+.boundaries,
+.projection {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 25px;
+  background: white;
+}
+
+.legend-grid,
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.legend-grid p {
+  font-size: .9rem;
+  color: var(--muted);
+  margin-top: 0;
+}
+
+details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+details p {
+  max-width: 1000px;
+}
+
+.entry {
+  background: var(--soft);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
+.entry button {
+  margin: 3px 5px 3px 0;
+}
+
+.entry p {
+  font-size: .85rem;
+  margin: 8px 0;
+  color: var(--muted);
+}
+
+button,
+select,
+input {
+  font: inherit;
+}
+
+button {
+  border: 1px solid #8eaeb0;
+  border-radius: 6px;
+  padding: 7px 11px;
+  color: var(--accent);
+  background: white;
+  cursor: pointer;
+  /* Provider/cycle buttons can contain an entire generated Lean name. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+button:hover {
+  background: var(--soft);
+}
+
+button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #cf992f;
+  outline-offset: 3px;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid #9caeb7;
+  border-radius: 5px;
+  padding: 9px;
+  background: white;
+  color: var(--ink);
+}
+
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 650;
+  margin: 12px 0 5px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(250px, 340px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+aside,
+#detail {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+  min-width: 0;
+}
+
+aside {
+  position: sticky;
+  top: 12px;
+  max-height: 92vh;
+  overflow: auto;
+}
+
+#detail {
+  min-height: 500px;
+  /* Wrap owner/provider metadata too, not only headings and tree rows. */
+  overflow-wrap: anywhere;
+}
+
+#detail h2 {
+  overflow-wrap: anywhere;
+}
+
+.result {
+  display: block;
+  text-align: left;
+  overflow-wrap: anywhere;
+  width: 100%;
+  margin: 6px 0;
+  font-size: .82rem;
+}
+
+.result small,
+.muted {
+  display: block;
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+#search-status {
+  font-size: .82rem;
+  color: var(--muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 12px 0;
+}
+
+.links > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.tree {
+  list-style: none;
+  padding-left: 18px;
+  margin: 10px 0;
+  border-left: 2px solid var(--line);
+}
+
+/* A real import path can be hundreds of modules deep. Stop accumulating
+   indentation after three levels; native disclosure nesting and every edge
+   remain intact, and users can still focus any module or declaration. */
+.tree .tree .tree .tree {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.tree > li {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+  font-size: .86rem;
+}
+
+.tree details {
+  padding: 3px 0;
+}
+
+.edge-label,
+.badge {
+  font-size: .73rem;
+  border-radius: 4px;
+  background: var(--soft);
+  padding: 2px 6px;
+  color: var(--accent);
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.boundary {
+  color: var(--warm);
+}
+
+.boundary .badge {
+  background: #fff1e2;
+  color: var(--warm);
+}
+
+.cycle {
+  border-left: 3px solid #b66c21;
+  padding: 10px 14px;
+  background: #fff5e9;
+  font-size: .9rem;
+}
+
+.error {
+  color: #9a2525;
+  background: #fff1f1;
+  padding: 14px;
+  border-radius: 5px;
+}
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.more {
+  margin: 10px 0;
+}
+
+.projection-row {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+}
+
+.projection-row summary {
+  font-size: .92rem;
+}
+
+.projection-row ul {
+  font-size: .85rem;
+}
+
+code {
+  font-size: .86em;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  font-size: .85rem;
+  color: var(--muted);
+  padding-bottom: 40px;
+}
+
+@media (max-width: 950px) {
+  header,
+  main,
+  footer {
+    padding: 20px;
+  }
+
+  .legend-grid,
+  .entry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    position: static;
+    max-height: none;
+  }
+
+  #results {
+    max-height: 350px;
+    overflow: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button,
+  a {
+    transition: background-color .12s;
+  }
+}

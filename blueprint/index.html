@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>goldbach-lean: Chen and Li–Liu theorems</title>
+<link rel="next" href="chap-overview.html" title="Two counting theorems and their proof routes" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/reader.css" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-overview.html"><span class="toc_ref">1</span> <span class="toc_entry">Two counting theorems and their proof routes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-overview.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">What is being counted?</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000007"><span class="toc_ref">1.2</span> <span class="toc_entry">The mathematical plan</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000008"><span class="toc_ref">1.3</span> <span class="toc_entry">Reading a sieve estimate</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000011"><span class="toc_ref">1.4</span> <span class="toc_entry">How to use the three layers</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-foundations.html"><span class="toc_ref">2</span> <span class="toc_entry">Prime distribution and sieve foundations</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-foundations.html#a0000000012"><span class="toc_ref">2.1</span> <span class="toc_entry">Analytic foundations of the two Goldbach arguments</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-chen.html"><span class="toc_ref">3</span> <span class="toc_entry">Chen: a prime plus at most two primes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-chen.html#bp:chen-route"><span class="toc_ref">3.1</span> <span class="toc_entry">Chen’s theorem: from a signed sieve weight to representations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-liliu.html"><span class="toc_ref">4</span> <span class="toc_entry">Li–Liu: two factors with a prescribed imbalance</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-liliu.html#sec:liliu-mathematical-chain"><span class="toc_ref">4.1</span> <span class="toc_entry">Li–Liu’s asymmetric Goldbach theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-implementation.html"><span class="toc_ref">5</span> <span class="toc_entry">Reading the formal implementation</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-implementation.html#a0000000013"><span class="toc_ref">5.1</span> <span class="toc_entry">Reusable proofs and source boundaries</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000014"><span class="toc_ref">5.2</span> <span class="toc_entry">Finding and checking a declaration</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000015"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathematical sources and attribution</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">All documented lemmas — proof graph</a></li>
+<li ><a href="dep_graph_chapter_1.html">Two counting theorems and their proof routes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_2.html">Prime distribution and sieve foundations — proof graph</a></li>
+<li ><a href="dep_graph_chapter_3.html">Chen: a prime plus at most two primes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_4.html">Li–Liu: two factors with a prescribed imbalance — proof graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<div class="titlepage">
+<h1>goldbach-lean: Chen and Li–Liu theorems</h1>
+<p class="authors">
+<span class="author">goldbach-lean contributors</span>
+</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div> <!--main-text -->
+<nav class=local_toc>
+<ul>
+  <li>	
+  <a href="chap-overview.html"><span class="toc_ref">1</span> <span class="toc_entry">Two counting theorems and their proof routes</span></a>
+	<ul>
+		   <li>	
+  <a href="chap-overview.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">What is being counted?</span></a>
+  </li>
+  <li>	
+  <a href="chap-overview.html#a0000000007"><span class="toc_ref">1.2</span> <span class="toc_entry">The mathematical plan</span></a>
+  </li>
+  <li>	
+  <a href="chap-overview.html#a0000000008"><span class="toc_ref">1.3</span> <span class="toc_entry">Reading a sieve estimate</span></a>
+  </li>
+  <li>	
+  <a href="chap-overview.html#a0000000011"><span class="toc_ref">1.4</span> <span class="toc_entry">How to use the three layers</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="chap-foundations.html"><span class="toc_ref">2</span> <span class="toc_entry">Prime distribution and sieve foundations</span></a>
+	<ul>
+		   <li>	
+  <a href="chap-foundations.html#a0000000012"><span class="toc_ref">2.1</span> <span class="toc_entry">Analytic foundations of the two Goldbach arguments</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="chap-chen.html"><span class="toc_ref">3</span> <span class="toc_entry">Chen: a prime plus at most two primes</span></a>
+	<ul>
+		   <li>	
+  <a href="chap-chen.html#bp:chen-route"><span class="toc_ref">3.1</span> <span class="toc_entry">Chen’s theorem: from a signed sieve weight to representations</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="chap-liliu.html"><span class="toc_ref">4</span> <span class="toc_entry">Li–Liu: two factors with a prescribed imbalance</span></a>
+	<ul>
+		   <li>	
+  <a href="chap-liliu.html#sec:liliu-mathematical-chain"><span class="toc_ref">4.1</span> <span class="toc_entry">Li–Liu’s asymmetric Goldbach theorem</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="chap-implementation.html"><span class="toc_ref">5</span> <span class="toc_entry">Reading the formal implementation</span></a>
+	<ul>
+		   <li>	
+  <a href="chap-implementation.html#a0000000013"><span class="toc_ref">5.1</span> <span class="toc_entry">Reusable proofs and source boundaries</span></a>
+  </li>
+  <li>	
+  <a href="chap-implementation.html#a0000000014"><span class="toc_ref">5.2</span> <span class="toc_entry">Finding and checking a declaration</span></a>
+  </li>
+  <li>	
+  <a href="chap-implementation.html#a0000000015"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathematical sources and attribution</span></a>
+  </li>
+
+	</ul>
+  </li>
+</ul>
+</nav>
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="chap-overview.html" title="Two counting theorems and their proof routes"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

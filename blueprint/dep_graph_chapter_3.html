@@ -1,0 +1,1019 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chen proof dependencies</title>
+  <meta name="generator" content="plasTeX" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles/theme-white.css" />
+  <link rel="stylesheet" href="styles/dep_graph.css" />
+  
+  <script type="text/x-mathjax-config">
+  
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  
+  </script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">  </script>
+
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+  <a class="toc" href="index.html">Home</a>
+  <h1>Chen proof dependencies</h1>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+<p id="graph-reading-guide" style="margin:1rem;max-width:75ch">Arrows follow compiled declaration dependencies. Nodes marked (input) are introduced in another chapter. Click a node for its statement and Lean source.</p>
+<div class="wrapper">
+<div class="content">
+  <div id="Legend">
+    <span id="legend_title" class="title">Legend
+    <div class="btn">
+       <div class="bar"></div>
+       <div class="bar"></div>
+       <div class="bar"></div>
+    </div></span> 
+    <dl class="legend">
+      
+      <dt>Boxes</dt><dd>definitions</dd>
+      
+      <dt>Ellipses</dt><dd>theorems and lemmas</dd>
+      
+      <dt>Blue border</dt><dd>the <em>statement</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Orange border</dt><dd>the <em>statement</em> of this result is not ready to be formalized; the blueprint needs more work</dd>
+      
+      <dt>Blue background</dt><dd>the <em>proof</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Green border</dt><dd>the <em>statement</em> of this result is formalized</dd>
+      
+      <dt>Green background</dt><dd>the <em>proof</em> of this result is formalized</dd>
+      
+      <dt>Dark green background</dt><dd>the <em>proof</em> of this result and all its ancestors are formalized</dd>
+      
+      <dt>Dark green border</dt><dd>this is in Mathlib</dd>
+      
+    </dl>
+  </div>
+    <div id="graph"></div>
+<div id="statements">
+
+    
+    <div class="dep-modal-container" id="bp:chen-base-asymptotic_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-base-asymptotic" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">20</span><span class="theorem_thmtitle">Distribution closes the base lower bound</span></div>
+    <div class="thm_thmcontent"><p>   The base lower sieve and its Goldbach distribution estimate imply, for every \(\eta {\gt}0\), \((8(\log 4+J)-\eta )\mathcal X_N\le |\mathcal S(N)|\) eventually for even \(N\). Mertens normalization is supplied internally. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-base-asymptotic">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean#L1677">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-distinct-lower_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-distinct-lower" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">24</span><span class="theorem_thmtitle">Subtract half the medium-prime upper bound</span></div>
+    <div class="thm_thmcontent"><p>   The base lower asymptotic and the two standard upper inputs imply \(W_{\rm src}(N)\ge (2.6408-\eta )\mathcal X_N\) eventually for even \(N\), for every \(\eta {\gt}0\). The proof uses the exact source weight identity and the integral estimate. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-distinct-lower">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean#L828">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-finite-counting_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-finite-counting" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">18</span><span class="theorem_thmtitle">Chen finite counting inequality</span></div>
+    <div class="thm_thmcontent"><p>   If \(z{\lt}y\) and every corrected candidate complement is below \(y^3\), then \(|\mathcal C(N)|-(P(N)+T(N))/2\le |\mathcal C(N)\cap G(N)|\). The proof sums the pointwise weight bound. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-finite-counting">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/WeightedCounting.lean#L173">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-finite-upper_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-finite-upper" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">21</span><span class="theorem_thmtitle">Sum the conditioned finite upper sieves</span></div>
+    <div class="thm_thmcontent"><p>   For \(N{\gt}1\) and \(\epsilon {\lt}1/60\), \(H(N)\le \mathcal M_q(N,\epsilon )+\mathcal R_q(N,\epsilon )\), using exact conditioned sources and levels \(d{\lt}\lfloor N^{1/2-\epsilon }/q\rfloor +1\). </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-finite-upper">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean#L1148">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-lower-sieve_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-lower-sieve" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">19</span><span class="theorem_thmtitle">Lower Rosser density gives the actual base sieve</span></div>
+    <div class="thm_thmcontent"><p>   The source lower-density lemma implies that for every \(\delta {\gt}0\) some fixed \(0{\lt}\epsilon {\lt}1/2\) gives \((f(5)-\delta )XV_N-\mathcal R_0(N,\epsilon )\le |\mathcal S(N)|\) eventually for even \(N\). The actual finite remainder is retained. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-lower-sieve">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean#L828">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-positive-weight_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-positive-weight" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">17</span><span class="theorem_thmtitle">Positive weight detects at most two factors</span></div>
+    <div class="thm_thmcontent"><p>   If \(2\le z{\lt}y\), \(1\le n{\lt}y^3\), no prime below \(z\) divides \(n\), and \(w(n){\gt}0\), then \(n=1\), \(n\) is prime, or \(n=rs\) for primes \(r,s\ge z\). </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-positive-weight">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/Weights.lean#L403">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-prime-powers_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-prime-powers" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">25</span><span class="theorem_thmtitle">Bound the proper-prime-power correction</span></div>
+    <div class="thm_thmcontent"><p>   For even \(N{\gt}2^{110}\), \(P(N)\le \sum _{p\in \mathcal C(N)}\# \{ r\in [z,y):r\text{ prime},\  r\mid N-p\} +60N^{9/10}\). Square-divisibility counts and a valuation bound pay the correction. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-prime-powers">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean#L1049">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-representation-lower-bound_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-representation-lower-bound" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">34</span><span class="theorem_thmtitle">Chen: 0.67 representation bound</span></div>
+    <div class="thm_thmcontent"><p>   For every sufficiently large even \(N\), \(0.67\, \mathfrak S_{\mathrm{Liu}}(N)N/(\log N)^2\le |G(N)|\), where \(G(N)\) is the original set of primes \(p{\lt}N\) with \(N-p\ge 2\) and at most two prime factors counted with multiplicity. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-representation-lower-bound">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/Theorem.lean#L23">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-square-expansion_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-square-expansion" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">29</span><span class="theorem_thmtitle">Expand the square into progression counts</span></div>
+    <div class="thm_thmcontent"><p>   For all \(N,\epsilon ,\lambda \), \(\mathcal B_\lambda =\sum _{d_1,d_2\in \mathcal D}\lambda _{d_1}\lambda _{d_2}\sum _a b(a)\pi (N;a,[d_1,d_2],N\bmod [d_1,d_2])\). The proof is finite sum interchange and least-common-multiple divisibility. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-square-expansion">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean#L203">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-square-main-term_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-square-main-term" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">30</span><span class="theorem_thmtitle">Bound the optimized Selberg main term</span></div>
+    <div class="thm_thmcontent"><p>   For every fixed \(\kappa \ge 0\) and \(0{\lt}\epsilon \le 10^{-10}\), eventually along even \(N\), the optimal main term \(H_{\kappa }(N)/\mathcal G\) is at most \(3.94033\mathcal X_N\), where \(H_{\kappa }(N)=\sum _a b(a)\operatorname {li}_{\kappa }(N/a)\). The actual source integral is \(I_{\rm Liu}=\int _{1/10}^{1/3}\int _{1/3}^{(1-\alpha )/2}[\alpha \beta (1-\alpha -\beta )]^{-1}\, d\beta \, d\alpha {\lt}0.49254\). The producer transfers the exact reciprocal-log pair sum to this integral, then pays the genuine-li-minus-proxy correction to obtain \(0\le H_{\kappa }(N)\le (0.49254+\eta )N/\log N\) for each fixed \(\eta {\gt}0\) eventually. This is multiplied by the denominator estimate; the proof fixes \(\delta =\eta =10^{-7}\). </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-square-main-term">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergEvenAssembly.lean#L64">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-square-majorant_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-square-majorant" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">28</span><span class="theorem_thmtitle">A candidate prime contributes a unit Selberg packet</span></div>
+    <div class="thm_thmcontent"><p>   For even \(N\) and \(R\ge 1\), the corrected triple slice at a fixed pair is bounded by its optimal Selberg square sum plus the residual counting candidate primes \(N-rsu\mid Q\). Away from this residual only divisor \(1\) contributes. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-square-majorant">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean#L1156">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-square-remainder_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-square-remainder" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">32</span><span class="theorem_thmtitle">Pay the actual signed Selberg remainder</span></div>
+    <div class="thm_thmcontent"><p>   Under the canonical coprime theorem, for every \(\epsilon ,A{\gt}0\), filter \(\mathcal F\le \mathrm{atTop}\) and eventually admissible family \(\lambda _N\), there is \(C{\gt}0\) with \(|\mathcal E_{\lambda _N}(N)|\le CN/(\log N)^A\) eventually in \(\mathcal F\). The full majorant includes the noncoprime part. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-square-remainder">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean#L450">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-switched-weight-payment_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-switched-weight-payment" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">31</span><span class="theorem_thmtitle">Pay the switched modulus weight by finite Cauchy</span></div>
+    <div class="thm_thmcontent"><p>    One \(C_9{\gt}0\), fixed before \(\kappa ,N,B\), bounds \((\sum _{q{\lt}L}\mu (q)^2 3^{\omega (q)}E_q(\kappa ))^2\) by \(C_9(\log (N+2))^9 C_\kappa N(1+\log N)^2\sum _{q{\lt}L}E_q(\kappa )\) for \(N\ge 2\), \(\log N\ge 1\), and \(B\ge 0\). </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-switched-weight-payment">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanModernWeightTransfer.lean#L79">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-theorem_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-theorem" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">35</span><span class="theorem_thmtitle">Chen prime plus at most two primes</span></div>
+    <div class="thm_thmcontent"><p>   There exists \(N_0\in \mathbb N\) such that every even \(N\ge N_0\) admits \(N=p+q\), with \(p\) prime and either \(q\) prime or \(q=rs\) for primes \(r,s\), which may coincide. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-theorem">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/Goldbach/Theorem.lean#L15">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-triple-endpoints_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-triple-endpoints" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">27</span><span class="theorem_thmtitle">Inject first-factor witnesses into source triples and endpoints</span></div>
+    <div class="thm_thmcontent"><p>   For \(N\ge 1\) and \(\lfloor N^{1/10}\rfloor \ge 2\), \(T(N)\le T_{\rm src}(N)+13N^{9/10}\). An injective selected-factor map isolates the two integer cutoff fibres. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-triple-endpoints">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean#L846">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-triple-upper_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-triple-upper" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">33</span><span class="theorem_thmtitle">Chen triple-penalty upper bound</span></div>
+    <div class="thm_thmcontent"><p>   Under the canonical coprime theorem, for every \(0{\lt}\epsilon \le 10^{-10}\) and \(A{\gt}0\) there is \(C{\gt}0\) such that eventually for even \(N\), \(T(N)\le 3.94033\mathcal X_N+CN/(\log N)^A\). Both cutoff and paper-modulus residuals are included. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-triple-upper">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean#L1314">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-upper-asymptotic_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-upper-asymptotic" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">23</span><span class="theorem_thmtitle">Close the varying-prime upper asymptotic</span></div>
+    <div class="thm_thmcontent"><p>   The uniform upper density theorem and weighted BV imply, for every \(\eta {\gt}0\), \(H(N)\le (8(\log 8+K/2)+\eta )\mathcal X_N\) eventually for even \(N\). Prime partial summation is internal. </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-upper-asymptotic">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean#L761">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-valuation-lower_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-valuation-lower" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">26</span><span class="theorem_thmtitle">Chen weighted lower bound</span></div>
+    <div class="thm_thmcontent"><p>   The distinct source weighted lower bound implies \(W(N)\ge (2.6408-\eta )\mathcal X_N\) eventually for even \(N\), for every \(\eta {\gt}0\). Source-boundary and valuation losses are absorbed using \(\mathfrak S_{\mathrm{Liu}}(N)\ge U{\gt}0\). </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-valuation-lower">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean#L1320">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:chen-weighted-bv_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:chen-weighted-bv" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">22</span><span class="theorem_thmtitle">Pay combined-modulus weighted prime errors</span></div>
+    <div class="thm_thmcontent"><p>   Ordinary BV implies that for each fixed \(0{\lt}\epsilon {\lt}1/6\) and \(A{\gt}0\) some \(C{\gt}0\) gives \(\sum _{q\in \mathcal Q(N),\  q\nmid N}\sum _{d\mid \mathcal P_N,\  d\le N^{1/2-\epsilon }/q}3^{\omega (d)}E_{\rm prime}(N,qd)\le CN/(\log N)^A\) eventually. Here \(E_{\rm prime}(N,m)=\max _l|\pi (N;m,l)-L_*(N)/\varphi (m)|\) over canonical reduced residues, \(L_*=\operatorname {li}_{2/\log 2}\), and \(E_{\rm prime}(N,m)\le E^*(N,m)\). Modulus zero has error zero and modulus one uses residue zero. The proof requests ordinary prefix-maximal saving \(2A+10\). </p>
+</div>
+
+    <a class="latex_link" href="chap-chen.html#bp:chen-weighted-bv">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Richert/Richert1969Ordinary418Specialization.lean#L828">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-bv_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-bv" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">4</span><span class="theorem_thmtitle">Bombieri–Vinogradov for primes</span></div>
+    <div class="thm_thmcontent"><p>   For every \(A{\gt}0\) there are \(B\ge 0\), \(C{\gt}0\) and \(N_0\) such that \(\sum _{1\le q\le Q_B(N)}E^*(N,q)\le CN/(\log N)^A\) for integers \(N\ge N_0\), where \(Q_B(N)=\lfloor N^{1/2}/(\log N)^B\rfloor \) and \(E^*(N,q)=\max _{y\in \{ 0,\ldots ,N\} }\max _{0\le a{\lt}q,\, (a,q)=1}|\pi (y;q,a)-L_*(y)/\varphi (q)|\). Here \(L_*(x)=2/\log 2+\int _2^xdt/\log t\) for \(x{\gt}1\), while \(L_*(0)=L_*(1)=2/\log 2\) by the totalized interval-integral convention, not a principal value; \(E^*(N,0)=0\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-bv">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean#L37">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-jr-hats_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-jr-hats" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">6</span><span class="theorem_thmtitle">Constructed Jurkat–Richert comparison functions</span></div>
+    <div class="thm_thmcontent"><p>   For the constructed Jurkat–Richert functions \(F,f\), let \(c_\gamma =2e^\gamma \). On \(s{\gt}0\), define \(\widehat T^+(s)=s^{-2}\) for \(s\le 3\) and \([F(s)-f(s-1)]/(c_\gamma s)\) for \(s{\gt}3\); define \(\widehat T^-(s)=2s^{-2}\) for \(s\le 2\) and \([F(s-1)-f(s)]/(c_\gamma s)\) for \(s{\gt}2\). These positive extensions of the normalized derivatives \(-F'/c_\gamma \) and \(f'/c_\gamma \) satisfy the complete Suzuki source properties with \(\widehat\beta =2\): positivity, continuity, the initial formulas, weighted delay derivatives, and weighted and exponential decay. </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-jr-hats">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean#L259">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-liupan-canonical_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-liupan-canonical" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">10</span><span class="theorem_thmtitle">Liu–Pan convolution distribution</span></div>
+    <div class="thm_thmcontent"><p>   \(\forall \epsilon ,A{\gt}0\  \exists C{\gt}0,B\ge 0,N_0:\) the canonical \(L_2\) coprime weighted remainder majorant is \(\le CN/(\log N)^A\) for \(N\ge N_0\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-liupan-canonical">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean#L107">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-local-product_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-local-product" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">3</span><span class="theorem_thmtitle">Uniform dimension-one Goldbach local product</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists K{\gt}1:\  \prod _{p\in \mathcal P}(1-1/(p-1))^{-1}\le (\log z_2/\log z_1)(1+K/\log z_1)\) for every finite set of odd primes \(\mathcal P\subset [z_1,z_2)\), \(2\le z_1\le z_2\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-local-product">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean#L2093">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-mertens_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-mertens" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">2</span><span class="theorem_thmtitle">Mertens product with its identified constant</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists C{\gt}0\  \forall n\ge 2:\  |\prod _{p\le n}(1-1/p)-e^{-\gamma }/\log n|\le C/(\log n)^2\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-mertens">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/AnalyticNumberTheory/Mertens/Theorems.lean#L24">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-pnt_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-pnt" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">1</span><span class="theorem_thmtitle">A quantitative prime number theorem</span></div>
+    <div class="thm_thmcontent"><p>   \(\exists c{\gt}0:\  \psi (x)-x=O(xe^{-c(\log x)^{1/10}})\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-pnt">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/AnalyticNumberTheory/PrimeDistribution/PrimeNumberTheorem.lean#L16">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-selberg-denominator_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-selberg-denominator" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">12</span><span class="theorem_thmtitle">Asymptotic of the optimized Selberg denominator</span></div>
+    <div class="thm_thmcontent"><p>   \(\epsilon {\lt}1/2\implies G(N,\epsilon )\mathfrak S_{\mathrm{Liu}}(N)/\log N\to (1/4-\epsilon /2)/2\) along the even integers. </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-selberg-denominator">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorAsymptotic.lean#L83">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-selberg-remainder_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-selberg-remainder" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">13</span><span class="theorem_thmtitle">Paying the signed Selberg remainder</span></div>
+    <div class="thm_thmcontent"><p>   \(|\mathcal R_{\lambda }(N,\epsilon )|\le \mathcal M_{\mathrm{full}}(N,\epsilon )\) for \(N\ge 1\) and admissible supported \(\lambda \); the majorant has lcm weight \(3^{\omega (d)}\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-selberg-remainder">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean#L349">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-suzuki-lower_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-suzuki-lower" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">7</span><span class="theorem_thmtitle">Lower Rosser comparison uniform in the sieve</span></div>
+    <div class="thm_thmcontent"><p>   Fix hats satisfying the Suzuki source properties and real \(d,\Delta ,\Theta \) with \(0{\lt}\Delta {\lt}1\), \(d{\gt}7/(1-\Delta )\), \(\Theta {\gt}0\), \(2/d{\lt}1/\Theta \) and \(2/\Theta +3/d{\lt}1-\Delta \). The source selects its auxiliary constants, and in particular \(C\ge 3\), before the bounding sieve \(S\) varies. For each \(K\ge 2\) satisfying its dimension-one local-product bound, each integer \(D\ge 2\) and \(4\le s\le 6\), put \(z=\lceil D^{1/s}\rceil \ge 2\) and assume \(s\le \sigma _{\rm src}(D;d)=(\log D)^{1/d}\log \log (27D)\). With \(\mathcal P_S(z)\) the supported primes below \(z\), \(P=\prod _{p\in \mathcal P_S(z)}p\), \(m=2(|\mathcal P_S(z)|+1)\) and \(V_S(z)=\prod _{p\in \mathcal P_S(z)}(1-g_S(p))\), one has \(V_S(z)[f(s)-C e^{\sqrt K}E_m(D,s;d)(\log D)^{-\Delta }]\le \sum _{e\mid P}\lambda _e^-g_S(e)\). The weights are the finite lower Rosser weights of natural level \(D\), and \(E_m(D,s;d)=(1+s^d/\log D)^s s\widehat T^{\eta _m}(s)\), with \(\eta _m=+\) for odd \(m\) and \(-\) for even \(m\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-suzuki-lower">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean#L105">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-suzuki-upper_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-suzuki-upper" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">8</span><span class="theorem_thmtitle">Modern upper Rosser comparison</span></div>
+    <div class="thm_thmcontent"><p>   Given hats satisfying the Suzuki source properties and fixed \(d,\Delta ,\Theta \) with \(0{\lt}\Delta {\lt}1\), \(d{\gt}7/(1-\Delta )\), \(\Theta {\gt}0\), \(2/d{\lt}1/\Theta \) and \(2/\Theta +3/d{\lt}1-\Delta \), for every \(K{\gt}1\) and \(\rho {\gt}0\) there is \(z_0\) before the bounding sieve \(S\) varies. If \(z\ge \max (2,z_0)\), \(D_{\rm real}{\gt}0\), \(S\) satisfies the dimension-one local-product bound with \(K\), every sifting prime is at most \(z\), and \(s=\log D_{\rm real}/\log z\in [3/2,4]\), then \(\sum _{e\mid P}\lambda _e^+g_S(e)\le (F(s)+\rho )\prod _{p\mid P}(1-g_S(p))\). Here \(P\) is the product of the sifting primes, the product on the right is over primes, and \(\lambda ^+\) is the finite upper Rosser weight at natural level \(\lfloor D_{\rm real}\rfloor +1\). </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-suzuki-upper">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean#L69">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="bp:foundation-weighted-bv_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="bp:foundation-weighted-bv" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">5</span><span class="theorem_thmtitle">The actual weighted conditioned Chen error</span></div>
+    <div class="thm_thmcontent"><p>   For fixed \(0{\lt}\epsilon {\lt}1/6\) and \(A{\gt}0\), let \(P_N=\prod _{2{\lt}p\le N^{1/10},\, p\nmid N}p\). Eventually, \(\sum _{N^{1/10}{\lt}q\le N^{1/3},\  q\  \text{ prime},\  q\nmid N}\sum _{d\mid P_N,\  d{\lt}\lfloor N^{1/2-\epsilon }/q\rfloor +1}3^{\omega (d)}E_{\rm prime}(N,qd)\ll _{\epsilon ,A}N/(\log N)^A\). The fixed-endpoint error is \(E_{\rm prime}(N,h)=\max _{0\le a{\lt}h,\, (a,h)=1}|\pi (N;h,a)-L_*(N)/\varphi (h)|\le E^*(N,h)\); all products run over primes. The constants and threshold depend only on the fixed parameters. </p>
+</div>
+
+    <a class="latex_link" href="chap-foundations.html#bp:foundation-weighted-bv">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://github.com/subfish-zhou/goldbach-lean/blob/79402529948f734638ece97c4e50281417abd44b/MathlibNt/SieveTheory/Distribution/Bombieri1965RichertWeightedConsumer.lean#L18">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+</div>
+</div> <!-- content -->
+</div> <!-- wrapper -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<script src="js/d3.min.js"></script>
+<script src="js/hpcc.min.js"></script>
+<script src="js/d3-graphviz.js"></script>
+
+<script type="text/javascript">
+const graphContainer = d3.select("#graph");
+const width = graphContainer.node().clientWidth;
+const height = graphContainer.node().clientHeight;
+
+
+graphContainer.graphviz({useWorker: true})
+    .width(width)
+    .height(height)
+    .fit(true)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent,		nodesep=0.3,		ranksep=0.6	];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	subgraph cluster_foundations {		graph [color="#64748b",			fontname=Helvetica,			fontsize=16,			label="Analytic inputs",			margin=16,			style=rounded		];		"bp:foundation-suzuki-lower"	[color=green,			fillcolor="#1CAC78",			label="Lower Rosser comparison\nuniform in the sieve\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-selberg-remainder"	[color=green,			fillcolor="#1CAC78",			label="Paying the signed Selberg\nremainder\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-bv"	[color=green,			fillcolor="#1CAC78",			label="Bombieri–Vinogradov for\nprimes\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-weighted-bv"	[color=green,			fillcolor="#1CAC78",			label="The actual weighted\nconditioned Chen error\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-bv" -> "bp:foundation-weighted-bv";		"bp:foundation-suzuki-upper"	[color=green,			fillcolor="#1CAC78",			label="Modern upper Rosser\ncomparison\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt"	[color=green,			fillcolor="#1CAC78",			label="A quantitative prime\nnumber theorem\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-local-product"	[color=green,			fillcolor="#1CAC78",			label="Uniform dimension-one\nGoldbach local product\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt" -> "bp:foundation-local-product";		"bp:foundation-selberg-denominator"	[color=green,			fillcolor="#1CAC78",			label="Asymptotic of the\noptimized Selberg\ndenominator\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt" -> "bp:foundation-selberg-denominator";		"bp:foundation-mertens"	[color=green,			fillcolor="#1CAC78",			label="Mertens product with its\nidentified constant\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-pnt" -> "bp:foundation-mertens";		"bp:foundation-liupan-canonical"	[color=green,			fillcolor="#1CAC78",			label="Liu–Pan convolution\ndistribution\n(input)",			shape=ellipse,			style=filled];		"bp:foundation-jr-hats"	[color=green,			fillcolor="#1CAC78",			label="Constructed Jurkat–Richert\ncomparison functions\n(input)",			shape=ellipse,			style=filled];	}	subgraph cluster_chen {		graph [color="#64748b",			fontname=Helvetica,			fontsize=16,			label="Chen 1 + 2",			margin=16,			style=rounded		];		"bp:chen-finite-upper"	[color=green,			fillcolor="#1CAC78",			label="Sum the conditioned finite\nupper sieves",			shape=ellipse,			style=filled];		"bp:chen-upper-asymptotic"	[color=green,			fillcolor="#1CAC78",			label="Close the varying-prime\nupper asymptotic",			shape=ellipse,			style=filled];		"bp:chen-finite-upper" -> "bp:chen-upper-asymptotic";		"bp:chen-distinct-lower"	[color=green,			fillcolor="#1CAC78",			label="Subtract half the\nmedium-prime upper bound",			shape=ellipse,			style=filled];		"bp:chen-upper-asymptotic" -> "bp:chen-distinct-lower";		"bp:chen-representation-lower-bound"	[color=green,			fillcolor="#1CAC78",			label="Chen: 0.67 representation\nbound",			shape=ellipse,			style=filled];		"bp:chen-distinct-lower" -> "bp:chen-representation-lower-bound";		"bp:chen-theorem"	[color=green,			fillcolor="#1CAC78",			label="Chen prime plus at most\ntwo primes",			shape=ellipse,			style=filled];		"bp:chen-distinct-lower" -> "bp:chen-theorem";		"bp:chen-base-asymptotic"	[color=green,			fillcolor="#1CAC78",			label="Distribution closes the\nbase lower bound",			shape=ellipse,			style=filled];		"bp:chen-base-asymptotic" -> "bp:chen-representation-lower-bound";		"bp:chen-base-asymptotic" -> "bp:chen-theorem";		"bp:chen-switched-weight-payment"	[color=green,			fillcolor="#1CAC78",			label="Pay the switched modulus\nweight by finite Cauchy",			shape=ellipse,			style=filled];		"bp:chen-square-remainder"	[color=green,			fillcolor="#1CAC78",			label="Pay the actual signed\nSelberg remainder",			shape=ellipse,			style=filled];		"bp:chen-triple-upper"	[color=green,			fillcolor="#1CAC78",			label="Chen triple-penalty upper\nbound",			shape=ellipse,			style=filled];		"bp:chen-square-remainder" -> "bp:chen-triple-upper";		"bp:chen-triple-upper" -> "bp:chen-representation-lower-bound";		"bp:chen-triple-upper" -> "bp:chen-theorem";		"bp:chen-positive-weight"	[color=green,			fillcolor="#1CAC78",			label="Positive weight detects at\nmost two factors",			shape=ellipse,			style=filled];		"bp:chen-finite-counting"	[color=green,			fillcolor="#1CAC78",			label="Chen finite counting\ninequality",			shape=ellipse,			style=filled];		"bp:chen-positive-weight" -> "bp:chen-finite-counting";		"bp:chen-finite-counting" -> "bp:chen-representation-lower-bound";		"bp:chen-finite-counting" -> "bp:chen-theorem";		"bp:chen-lower-sieve"	[color=green,			fillcolor="#1CAC78",			label="Lower Rosser density gives\nthe actual base sieve",			shape=ellipse,			style=filled];		"bp:chen-lower-sieve" -> "bp:chen-representation-lower-bound";		"bp:chen-lower-sieve" -> "bp:chen-theorem";		"bp:chen-valuation-lower"	[color=green,			fillcolor="#1CAC78",			label="Chen weighted lower bound",			shape=ellipse,			style=filled];		"bp:chen-valuation-lower" -> "bp:chen-representation-lower-bound";		"bp:chen-valuation-lower" -> "bp:chen-theorem";		"bp:chen-triple-endpoints"	[color=green,			fillcolor="#1CAC78",			label="Inject first-factor\nwitnesses into source\ntriples and endpoints",			shape=ellipse,			style=filled];		"bp:chen-triple-endpoints" -> "bp:chen-triple-upper";		"bp:chen-square-main-term"	[color=green,			fillcolor="#1CAC78",			label="Bound the optimized\nSelberg main term",			shape=ellipse,			style=filled];		"bp:chen-square-main-term" -> "bp:chen-triple-upper";		"bp:chen-prime-powers"	[color=green,			fillcolor="#1CAC78",			label="Bound the\nproper-prime-power\ncorrection",			shape=ellipse,			style=filled];		"bp:chen-prime-powers" -> "bp:chen-valuation-lower";		"bp:chen-square-expansion"	[color=green,			fillcolor="#1CAC78",			label="Expand the square into\nprogression counts",			shape=ellipse,			style=filled];		"bp:chen-square-expansion" -> "bp:chen-triple-upper";		"bp:chen-square-majorant"	[color=green,			fillcolor="#1CAC78",			label="A candidate prime\ncontributes a unit Selberg\npacket",			shape=ellipse,			style=filled];		"bp:chen-square-majorant" -> "bp:chen-triple-upper";		"bp:chen-weighted-bv"	[color=green,			fillcolor="#1CAC78",			label="Pay combined-modulus\nweighted prime errors",			shape=ellipse,			style=filled];	}	"bp:foundation-suzuki-lower" -> "bp:chen-representation-lower-bound";	"bp:foundation-suzuki-lower" -> "bp:chen-theorem";	"bp:foundation-selberg-remainder" -> "bp:chen-square-remainder";	"bp:foundation-weighted-bv" -> "bp:chen-representation-lower-bound";	"bp:foundation-weighted-bv" -> "bp:chen-theorem";	"bp:foundation-suzuki-upper" -> "bp:chen-representation-lower-bound";	"bp:foundation-suzuki-upper" -> "bp:chen-theorem";	"bp:foundation-pnt" -> "bp:chen-switched-weight-payment"	[style=dashed];	"bp:foundation-pnt" -> "bp:chen-square-remainder";	"bp:foundation-pnt" -> "bp:chen-weighted-bv";	"bp:foundation-local-product" -> "bp:chen-upper-asymptotic";	"bp:foundation-local-product" -> "bp:chen-lower-sieve";	"bp:foundation-selberg-denominator" -> "bp:chen-square-main-term";	"bp:foundation-mertens" -> "bp:chen-upper-asymptotic";	"bp:foundation-mertens" -> "bp:chen-base-asymptotic";	"bp:foundation-liupan-canonical" -> "bp:chen-representation-lower-bound";	"bp:foundation-liupan-canonical" -> "bp:chen-theorem";	"bp:foundation-jr-hats" -> "bp:chen-representation-lower-bound";	"bp:foundation-jr-hats" -> "bp:chen-theorem";	"bp:chen-switched-weight-payment" -> "bp:foundation-liupan-canonical";	"bp:chen-weighted-bv" -> "bp:foundation-weighted-bv";}`)
+    .on("end", interactive);
+
+latexLabelEscaper = function(label) {
+  return label.replace(/\./g, '\\.').replace(/:/g, '\\:')
+}
+
+clickNode = function() {
+  $("#statements div").hide()
+  var node_id = $('text', this).text();
+  $('.thm').hide();
+  $('#'+latexLabelEscaper(node_id)).show().children().show();
+}
+function interactive() {
+    $("span#legend_title").on("click", function () {
+           $(this).siblings('dl').toggle();
+        })
+
+    d3.selectAll('.node')
+        .attr('pointer-events', 'fill')
+        .on('click', function () {
+           var title = d3.select(this).selectAll('title').text().trim();
+           $('#statements > div').hide()
+           $('.thm').hide();
+           $('#'+latexLabelEscaper(title)+'_modal').show().children().show().children().show();
+           $('#statements').show()
+        });
+
+    d3.selectAll('.dep-closebtn').on('click', function() {
+        var modal =
+            d3.select(this).node().parentNode.parentNode.parentNode ;
+        d3.select(modal).style('display', 'none');
+    });
+}
+
+</script>
+
+</body>
+</html>

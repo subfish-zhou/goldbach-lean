@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Two counting theorems and their proof routes</title>
+<link rel="next" href="chap-foundations.html" title="Prime distribution and sieve foundations" />
+<link rel="prev" href="index.html" title="goldbach-lean: Chen and Li–Liu theorems" />
+<link rel="up" href="index.html" title="goldbach-lean: Chen and Li–Liu theorems" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/reader.css" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"></head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">goldbach-lean: Chen and Li–Liu theorems</a></h1>
+<div id="goldbach-project-links" style="font:14px/1.8 system-ui,sans-serif; padding:8px 0"><a href="../index.html">Project home</a> · <a href="../docs/index.html">Lean Doc</a> · <a href="../report/index.html">Li–Liu report</a> · <a href="../structure/index.html">Project structure</a></div></header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class=" active current">
+  <a href="chap-overview.html"><span class="toc_ref">1</span> <span class="toc_entry">Two counting theorems and their proof routes</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-overview.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">What is being counted?</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000007"><span class="toc_ref">1.2</span> <span class="toc_entry">The mathematical plan</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000008"><span class="toc_ref">1.3</span> <span class="toc_entry">Reading a sieve estimate</span></a>
+ </li>
+<li class="">
+  <a href="chap-overview.html#a0000000011"><span class="toc_ref">1.4</span> <span class="toc_entry">How to use the three layers</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-foundations.html"><span class="toc_ref">2</span> <span class="toc_entry">Prime distribution and sieve foundations</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-foundations.html#a0000000012"><span class="toc_ref">2.1</span> <span class="toc_entry">Analytic foundations of the two Goldbach arguments</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-chen.html"><span class="toc_ref">3</span> <span class="toc_entry">Chen: a prime plus at most two primes</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-chen.html#bp:chen-route"><span class="toc_ref">3.1</span> <span class="toc_entry">Chen’s theorem: from a signed sieve weight to representations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-liliu.html"><span class="toc_ref">4</span> <span class="toc_entry">Li–Liu: two factors with a prescribed imbalance</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-liliu.html#sec:liliu-mathematical-chain"><span class="toc_ref">4.1</span> <span class="toc_entry">Li–Liu’s asymmetric Goldbach theorem</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-implementation.html"><span class="toc_ref">5</span> <span class="toc_entry">Reading the formal implementation</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-implementation.html#a0000000013"><span class="toc_ref">5.1</span> <span class="toc_entry">Reusable proofs and source boundaries</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000014"><span class="toc_ref">5.2</span> <span class="toc_entry">Finding and checking a declaration</span></a>
+ </li>
+<li class="">
+  <a href="chap-implementation.html#a0000000015"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathematical sources and attribution</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">All documented lemmas — proof graph</a></li>
+<li ><a href="dep_graph_chapter_1.html">Two counting theorems and their proof routes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_2.html">Prime distribution and sieve foundations — proof graph</a></li>
+<li ><a href="dep_graph_chapter_3.html">Chen: a prime plus at most two primes — proof graph</a></li>
+<li ><a href="dep_graph_chapter_4.html">Li–Liu: two factors with a prescribed imbalance — proof graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:overview">1 Two counting theorems and their proof routes</h1>
+
+<h1 id="a0000000002">1.1 What is being counted?</h1>
+<p>Fix an even natural number \(N\). Both arguments seek a prime \(p\) for which the complementary integer \(N-p\) has very few prime factors. Write \(\Omega (n)\) for the number of prime factors of a positive integer \(n\), counted with multiplicity. Thus a prime square has two prime factors for this purpose. The Chen representation count in this project is </p>
+<div class="displaymath" id="a0000000003">
+  \[ \begin{gathered} R_2(N)=\# \{ p{\lt}N:p\text{ prime},\\ N-p\ge 2,\quad \Omega (N-p)\le 2\} . \end{gathered} \]
+</div>
+<p> A member of this set gives a prime plus a prime or a product of two primes. The two factors may coincide. The implementation names this finite set <span class="ttfamily">chenGoodRepresentations</span>; \(R_2(N)\) is its cardinality. </p>
+<p>Li–Liu impose a size condition on the two complementary factors. Their count, written \(D_{1,19/10}(N)\) here and <span class="ttfamily">D19</span> in Lean, counts primes \(p\le N\) for which there exist natural numbers \(r,q\) satisfying </p>
+<div class="displaymath" id="a0000000004">
+  \[ \begin{gathered} N=p+rq,\qquad q\text{ prime},\\ r=1\text{ or }r\text{ prime},\qquad r^{10}\le q^9. \end{gathered} \]
+</div>
+<p> Each eligible \(p\) is counted once, regardless of the number of witnesses. The exponent condition is stated in exact natural-number arithmetic; over the nonnegative reals it is equivalent to \(r\le q^{9/10}\). </p>
+<p>For \(N{\gt}1\), the common normalization is </p>
+<div class="displaymath" id="a0000000005">
+  \[  \mathcal X_N=\mathfrak S_{\mathrm{Liu}}(N)\frac{N}{(\log N)^2},  \]
+</div>
+<p> where </p>
+<div class="displaymath" id="a0000000006">
+  \[  \mathfrak S_{\mathrm{Liu}}(N)= \prod _{\substack {\ell {\gt}2\  \mathrm{prime}\\ \ell \mid N}} \frac{\ell -1}{\ell -2} \prod _{\ell {\gt}2\  \mathrm{prime}}\left(1-\frac{1}{(\ell -1)^2}\right).  \]
+</div>
+<p> The proofs establish positivity of this scale for the relevant large \(N\). The public quantitative conclusions are \(R_2(N)\ge 0.67\mathcal X_N\) and \(D_{1,19/10}(N){\gt}0.0004\mathcal X_N\), eventually for every even \(N\). The counting definitions and the proof routes remain separate. </p>
+<h1 id="a0000000007">1.2 The mathematical plan</h1>
+<p>Both proofs replace a difficult existence question by a finite counting inequality. The finite inequality comes first: it determines precisely which estimates the analytic part must supply. Positive contributions need lower bounds, negative contributions need upper bounds, and all remainders must fit into a single positive final margin. </p>
+<p>For Chen, follow this route: </p>
+<ol class="enumerate">
+  <li><p>Build a weighted count of prime complements, together with penalties for the unwanted factor patterns. A finite counting bridge compares the corrected weight with the actual count \(R_2(N)\). </p>
+</li>
+  <li><p>Apply the weighted lower sieve to the original Goldbach source. The lower-bound construction includes its prime-power correction. </p>
+</li>
+  <li><p>Bound the remaining triple-factor penalty through switching and the Selberg upper sieve. A distribution estimate for the switched source supplies the required averaged remainder control. </p>
+</li>
+  <li><p>Put the lower and upper estimates into the finite bridge, absorb the errors in one eventual range, and obtain the representation bound. Positivity then yields a representation. </p>
+</li>
+</ol>
+<p> Chapter&#160;<a href="chap-chen.html">3</a> explains each of these steps and its exact implemented interfaces. In particular, the triple-factor correction is a concrete count, not a synonym for an unspecified error term. </p>
+<p>For Li–Liu, follow a different finite reduction: </p>
+<ol class="enumerate">
+  <li><p>Construct weights whose pointwise inequalities detect the literal constrained-factor representations counted by \(D_{1,19/10}(N)\). </p>
+</li>
+  <li><p>Decompose the resulting weighted count into sifted sums and prime-factor ranges. Retain the signs and coefficients of the decomposition throughout the estimates. </p>
+</li>
+  <li><p>Bound those terms with the appropriate lower or upper sieve, switched counts and prime-sum integrals. Certify the required bounds on the actual integrals and preserve the factor-range boundaries. </p>
+</li>
+  <li><p>Combine the estimates with a common error budget. The implementation exposes both a positive-margin existence proof and a sharper quantitative proof using the author G11 estimate. </p>
+</li>
+</ol>
+<p> Chapter&#160;<a href="chap-liliu.html">4</a> defines the paper’s numbered sums and integrals at first use, before explaining how they enter these steps. </p>
+<p>Chapter&#160;<a href="chap-foundations.html">2</a> identifies the shared analytic inputs. Those inputs are reused with the source, local density and remainder weights appropriate to each application. </p>
+<h1 id="a0000000008">1.3 Reading a sieve estimate</h1>
+<p>The notation in this paragraph is a dictionary for the sieve interfaces. Let \(A\) be a finite set of integers and \(\mathcal P\) a specified finite set of sieving primes. Its sifted count is </p>
+<div class="displaymath" id="a0000000009">
+  \[  S(A,\mathcal P)=\# \{ a\in A:\ell \nmid a\text{ for every }\ell \in \mathcal P\} .  \]
+</div>
+<p> In applications, weights or multiplicities replace the unweighted count. For a positive divisor \(d\), write \(A_d=\{ a\in A:d\mid a\} \) and separate its count into an expected local-density term and a remainder: </p>
+<div class="displaymath" id="a0000000010">
+  \[  |A_d|=g(d)X_A+r_d.  \]
+</div>
+<p> Here \(X_A\) is the source mass, \(g(d)\) is its local density, and \(r_d\) is the error. The density is part of the source model; it is not interchangeable between different sources. A sieve bound combines a main term built from these densities with a weighted sum of the remainders. </p>
+<p>A <em>level of distribution</em> describes the divisor range over which a suitable average of these errors can be controlled. A <em>conditioned source</em> additionally fixes one or more prime divisors before sieving the remaining factor. <em>Switching</em> reorganizes which factors are summed first, so that the upper sieve can act on a more useful source. Each application below specifies the actual carriers and cutoffs; this dictionary does not replace their endpoint conventions. </p>
+<h1 id="a0000000011">1.4 How to use the three layers</h1>
+<p>Read the two argument outlines above for the global structure. A first-time reader can go directly to either proof chapter and return to the analytic foundations when an input is needed; the foundations need not be read straight through before seeing an application. Cross-references next to the first uses of numbered sieve terms lead to their exact definitions. The overview graph compresses existing dependency paths between the main mathematical stages; its arrows can stand for several intermediate lemmas. Then follow the relevant proof chapter: its displayed inequalities explain what each input proves and why the next step follows. Open a chapter’s proof graph to inspect the compiled dependencies between its named lemmas; nodes marked <em>input</em> are introduced in another chapter. Node titles are mathematical names, and clicking a node opens its statement and exact Lean source. On narrow screens, long displayed equations can be scrolled horizontally. </p>
+<p>The all-declarations graph is also available for cross-chapter navigation. Both graph views project onto explicitly documented lemmas. Their edges are extracted from compiled declarations; the chapter prose explains the mathematical reductions that a graph alone cannot express. Elementary Lean plumbing and compatibility wrappers are left to the source view.  </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="index.html" title="goldbach-lean: Chen and Li–Liu theorems"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="goldbach-lean: Chen and Li–Liu theorems"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-foundations.html" title="Prime distribution and sieve foundations"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>
