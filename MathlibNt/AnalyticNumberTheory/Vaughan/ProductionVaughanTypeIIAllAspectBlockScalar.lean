@@ -340,221 +340,135 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_allAspect_scalar
       1000000 * Real.log (4 * N + 4 : ℕ) ^ 15 *
         ((N : ℝ) / i + (N : ℝ) / Real.sqrt (u + 1 : ℕ) +
           (N : ℝ) / Real.sqrt (v + 1 : ℕ) + (i : ℝ) * Real.sqrt N) := by
-  let L := Real.log (4 * N + 4 : ℕ)
+  classical
+  let L : ℝ := Real.log (4 * N + 4 : ℕ)
   let D : ℝ := vaughanTypeIIRectangularD k
   let X : ℝ := vaughanTypeIIRectangularX N k
-  let c : ℝ := primitiveBilinearQFactor (2 * i)
-  let rd := Real.sqrt D
-  let rx := Real.sqrt X
-  have hg := allAspect_active_geometry N u v k l hactive
-  have hlower := allAspect_shell_lower_bounds N u v k l hactive
-  have hlevels : ∀ q ∈ G.cell i, i ≤ q := fun q hq => (Finset.mem_Ioc.mp (hcell hq)).1.le
-  have hS : G.cell i ⊆ Finset.Icc 1 (2 * i) := by
-    intro q hq
-    have h := Finset.mem_Ioc.mp (hcell hq)
-    exact Finset.mem_Icc.mpr ⟨by omega, h.2⟩
-  have hnorm := apNormalizedVaughanActualCollectedShellMeanOn_le_inv_mul_weightedMean
-    N u v k l i (G.cell i) hi hlevels
-  have hexp := vaughanActualCanonicalCollectedShellWeightedMean_le_explicit
-    N (2 * i) u v k l (by omega) (by omega) (G.cell i) hS hactive
-  have hR := vaughanTypeIIRectangularRexp_le_expanded_allAspect
-    N (2 * i) u v k l (by omega) hactive
-  have hsmooth := allAspect_smoothing_le N hN
-  have hroot := allAspect_root_log_le N u v k l hN hactive
-  have hc := allAspect_qFactor_le N i hN hi h2i
-  have hc0 : 0 ≤ c := by dsimp [c]; exact primitiveBilinearQFactor_nonneg _
-  have hL2 : 2 ≤ L := allAspect_log_ge_two N hN
-  have hL0 : 0 ≤ L := by linarith
-  have hD0 : 0 ≤ D := by positivity
-  have hX0 : 0 ≤ X := by positivity
-  have hDX : D * X ≤ (N : ℝ) := by
-    dsimp [D, X]
-    exact_mod_cast hg.2.2
-  have hrd2 : rd ^ 2 = D := Real.sq_sqrt hD0
-  have hrx2 : rx ^ 2 = X := Real.sq_sqrt hX0
-  have hrd0 : 0 ≤ rd := Real.sqrt_nonneg _
-  have hrx0 : 0 ≤ rx := Real.sqrt_nonneg _
-  have hu0 : (0 : ℝ) < (u + 1 : ℕ) := by positivity
-  have hv0 : (0 : ℝ) < (v + 1 : ℕ) := by positivity
-  have hru0 : 0 < Real.sqrt (u + 1 : ℕ) := Real.sqrt_pos.2 hu0
-  have hrv0 : 0 < Real.sqrt (v + 1 : ℕ) := Real.sqrt_pos.2 hv0
-  have hru : Real.sqrt (u + 1 : ℕ) ≤ 2 * rd := by
-    rw [Real.sqrt_le_iff]
-    constructor
-    · positivity
-    · have hcast : ((u + 1 : ℕ) : ℝ) ≤ 2 * D := by
-        dsimp [D]
-        exact_mod_cast hlower.1
-      nlinarith
-  have hrv : Real.sqrt (v + 1 : ℕ) ≤ 2 * rx := by
-    have h2lX : (2 ^ l : ℝ) ≤ X := by
-      dsimp [X]
-      exact_mod_cast (show 2 ^ l ≤ vaughanTypeIIRectangularX N k from
-        (Nat.le_div_iff_mul_le (by positivity : 0 < 2 ^ k)).2
-          (by simpa [mul_comm] using
-            (mem_vaughanTypeIIActiveCanonicalRectangles.mp hactive).2))
-    rw [Real.sqrt_le_iff]
-    constructor
-    · positivity
-    · have hcast : ((v + 1 : ℕ) : ℝ) ≤ 2 * (2 ^ l : ℝ) := by exact_mod_cast hlower.2
-      nlinarith
-  have hDroot : D * rx ≤ 2 * (N : ℝ) / Real.sqrt (v + 1 : ℕ) := by
-    apply (le_div_iff₀ hrv0).2
-    nlinarith [mul_nonneg hD0 hrx0]
-  have hXroot : X * rd ≤ 2 * (N : ℝ) / Real.sqrt (u + 1 : ℕ) := by
-    apply (le_div_iff₀ hru0).2
-    nlinarith [mul_nonneg hX0 hrd0]
-  have hprodroot : rd * rx ≤ Real.sqrt N := by
-    have hsquares : (rd * rx) ^ 2 ≤ (Real.sqrt N) ^ 2 := by
-      rw [mul_pow, hrd2, hrx2, Real.sq_sqrt (by positivity)]
-      exact hDX
-    nlinarith only [hsquares, Real.sqrt_nonneg (N : ℝ), mul_nonneg hrd0 hrx0]
-  have hsharp := allAspect_sharpTerm_le N Q C u v k l i G hN hi hcell hactive
-  have hsqrtN3 : 3 ≤ Real.sqrt (N : ℝ) := by
-    have hh := Real.sqrt_le_sqrt (by exact_mod_cast hN : (9 : ℝ) ≤ N)
-    norm_num at hh ⊢
-    exact hh
-  have hbase0 : 0 ≤ (N : ℝ) / i + (N : ℝ) / Real.sqrt (u + 1 : ℕ) +
-      (N : ℝ) / Real.sqrt (v + 1 : ℕ) + (i : ℝ) * Real.sqrt N := by positivity
-  let B : ℝ := (N : ℝ) / i + (N : ℝ) / Real.sqrt (u + 1 : ℕ) +
+  let A : ℝ := (N : ℝ) / i + (N : ℝ) / Real.sqrt (u + 1 : ℕ) +
     (N : ℝ) / Real.sqrt (v + 1 : ℕ) + (i : ℝ) * Real.sqrt N
-  have hB0 : 0 ≤ B := by simpa [B] using hbase0
-  have hinner :
-      D * X + c * ((2 * i : ℕ) : ℝ) * (D * rx + X * rd) +
-          c ^ 2 * ((2 * i : ℕ) : ℝ) ^ 2 * rd * rx ≤
-        (N : ℝ) + (15 * L) * (2 * (i : ℝ)) *
-          (2 * (N : ℝ) / Real.sqrt (v + 1 : ℕ) +
-           2 * (N : ℝ) / Real.sqrt (u + 1 : ℕ)) +
-          (15 * L) ^ 2 * (4 * (i : ℝ) ^ 2) * Real.sqrt N := by
-    have hc2 : c ^ 2 ≤ (15 * L) ^ 2 := pow_le_pow_left₀ hc0 hc 2
-    have hcast2 : (((2 * i : ℕ) : ℝ)) = 2 * (i : ℝ) := by norm_num
-    rw [hcast2]
-    apply add_le_add
-    · apply add_le_add hDX
-      apply mul_le_mul
-      · exact mul_le_mul hc (le_refl _) (by positivity) (by positivity)
-      · exact add_le_add hDroot hXroot
-      · positivity
-      · positivity
-    · calc
-        c ^ 2 * (2 * (i : ℝ)) ^ 2 * rd * rx =
-            (c ^ 2 * (2 * (i : ℝ)) ^ 2) * (rd * rx) := by ring
-        _ ≤ ((15 * L) ^ 2 * (2 * (i : ℝ)) ^ 2) * Real.sqrt N :=
-          mul_le_mul (mul_le_mul_of_nonneg_right hc2 (sq_nonneg _))
-            hprodroot (mul_nonneg hrd0 hrx0) (by positivity)
-        _ = (15 * L) ^ 2 * (4 * (i : ℝ) ^ 2) * Real.sqrt N := by ring
-  have hmain :
-      (1 / (i : ℝ)) *
-        ((1 / 2 + (14 * Real.log ((2 * N : ℕ) : ℝ) + 4) / Real.pi) *
-          vaughanTypeIIRectangularRexp N k l (2 * i)) ≤
-      (1 / (i : ℝ)) * ((8 * L) * (6 * L ^ 3) *
-        ((N : ℝ) + (15 * L) * (2 * (i : ℝ)) *
-          (2 * (N : ℝ) / Real.sqrt (v + 1 : ℕ) +
-           2 * (N : ℝ) / Real.sqrt (u + 1 : ℕ)) +
-          (15 * L) ^ 2 * (4 * (i : ℝ) ^ 2) * Real.sqrt N)) := by
-    have hR' : vaughanTypeIIRectangularRexp N k l (2 * i) ≤
-        (6 * L ^ 3) *
-          (D * X + c * ((2 * i : ℕ) : ℝ) * (D * rx + X * rd) +
-            c ^ 2 * ((2 * i : ℕ) : ℝ) ^ 2 * rd * rx) := by
+  have hL : 1 ≤ L := le_trans (by norm_num) (allAspect_log_ge_two N hN)
+  have hiR : (0 : ℝ) < i := by exact_mod_cast hi
+  have hD : 0 ≤ D := by dsimp [D]; positivity
+  have hX : 0 ≤ X := by dsimp [X]; positivity
+  have hA : 0 ≤ A := by dsimp [A]; positivity
+  have hDX : D * X ≤ N := by
+    dsimp [D, X]
+    exact_mod_cast (allAspect_active_geometry N u v k l hactive).2.2
+  have hcorner : 2 ^ l ≤ vaughanTypeIIRectangularX N k := by
+    apply (Nat.le_div_iff_mul_le (by positivity : 0 < 2 ^ k)).2
+    simpa [mul_comm] using (mem_vaughanTypeIIActiveCanonicalRectangles.mp hactive).2
+  obtain ⟨huD, hvX⟩ := allAspect_shell_lower_bounds N u v k l hactive
+  have hvX' : (v + 1 : ℕ) ≤ 2 * vaughanTypeIIRectangularX N k :=
+    hvX.trans (Nat.mul_le_mul_left 2 hcorner)
+  -- A single symmetric root estimate pays both off-diagonal terms.
+  have cross (a b w : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hw : 0 < w)
+      (hab : a * b ≤ N) (hwb : w ≤ 2 * b) :
+      a * Real.sqrt b ≤ 2 * (N : ℝ) / Real.sqrt w := by
+    have hs : Real.sqrt b * Real.sqrt w ≤ 2 * b := by
       calc
-        _ ≤ Real.sqrt (27 * Real.log
-              (vaughanTypeIIRectangularX N k + 1 : ℕ) ^ 5) *
-            ((vaughanTypeIIRectangularD k : ℝ) *
-                vaughanTypeIIRectangularX N k +
-              primitiveBilinearQFactor (2 * i) * ((2 * i : ℕ) : ℝ) *
-                ((vaughanTypeIIRectangularD k : ℝ) *
-                    Real.sqrt (vaughanTypeIIRectangularX N k) +
-                  (vaughanTypeIIRectangularX N k : ℝ) *
-                    Real.sqrt (vaughanTypeIIRectangularD k)) +
-              primitiveBilinearQFactor (2 * i) ^ 2 * ((2 * i : ℕ) : ℝ) ^ 2 *
-                Real.sqrt (vaughanTypeIIRectangularD k) *
-                Real.sqrt (vaughanTypeIIRectangularX N k)) := hR
-        _ ≤ _ := by
-          dsimp [D, X, c, rd, rx]
-          gcongr
-    have hR0 : 0 ≤ vaughanTypeIIRectangularRexp N k l (2 * i) := by
-      unfold vaughanTypeIIRectangularRexp
-      positivity
+        Real.sqrt b * Real.sqrt w = Real.sqrt (b * w) := (Real.sqrt_mul hb w).symm
+        _ ≤ Real.sqrt ((2 * b) ^ 2) := by
+          apply Real.sqrt_le_sqrt
+          nlinarith [mul_le_mul_of_nonneg_left hwb hb]
+        _ = 2 * b := Real.sqrt_sq (by positivity)
+    apply (le_div_iff₀ (Real.sqrt_pos.2 hw)).2
+    nlinarith [mul_le_mul_of_nonneg_left hs ha]
+  have hcrossX : D * Real.sqrt X ≤ 2 * (N : ℝ) / Real.sqrt (v + 1 : ℕ) :=
+    cross D X (v + 1 : ℕ) hD hX (by positivity) hDX (by dsimp [X]; exact_mod_cast hvX')
+  have hcrossD : X * Real.sqrt D ≤ 2 * (N : ℝ) / Real.sqrt (u + 1 : ℕ) :=
+    cross X D (u + 1 : ℕ) hX hD (by positivity)
+      (by simpa [mul_comm] using hDX) (by dsimp [D]; exact_mod_cast huD)
+  have hroots : Real.sqrt D * Real.sqrt X ≤ Real.sqrt N := by
+    rw [← Real.sqrt_mul hD]
+    exact Real.sqrt_le_sqrt hDX
+  have hparts : (N : ℝ) / i ≤ A ∧
+      (N : ℝ) / Real.sqrt (u + 1 : ℕ) ≤ A ∧
+      (N : ℝ) / Real.sqrt (v + 1 : ℕ) ≤ A ∧
+      (i : ℝ) * Real.sqrt N ≤ A := by
+    have h0 : (0 : ℝ) ≤ (N : ℝ) / i := by positivity
+    have h1 : (0 : ℝ) ≤ (N : ℝ) / Real.sqrt (u + 1 : ℕ) := by positivity
+    have h2 : (0 : ℝ) ≤ (N : ℝ) / Real.sqrt (v + 1 : ℕ) := by positivity
+    have h3 : (0 : ℝ) ≤ (i : ℝ) * Real.sqrt N := by positivity
+    dsimp [A]
+    constructor; linarith
+    constructor; linarith
+    constructor <;> linarith
+  have hNA : (N : ℝ) ≤ (i : ℝ) * A := by
+    simpa [mul_comm] using (div_le_iff₀ hiR).1 hparts.1
+  have huA : (N : ℝ) / Real.sqrt (u + 1 : ℕ) ≤ A := hparts.2.1
+  have hvA : (N : ℝ) / Real.sqrt (v + 1 : ℕ) ≤ A := hparts.2.2.1
+  have hiA : (i : ℝ) * Real.sqrt N ≤ A := hparts.2.2.2
+  have hiA' : (i : ℝ) ≤ A := by
+    have hs : 1 ≤ Real.sqrt (N : ℝ) := by
+      exact Real.one_le_sqrt.mpr (by exact_mod_cast (show 1 ≤ N by omega))
+    nlinarith
+  have hq := allAspect_qFactor_le N i hN hi h2i
+  have hq0 : 0 ≤ primitiveBilinearQFactor (2 * i) := by
+    unfold primitiveBilinearQFactor
+    positivity
+  have hR : vaughanTypeIIRectangularRexp N k l (2 * i) ≤
+      12000 * L ^ 5 * (i : ℝ) * A := by
+    refine (vaughanTypeIIRectangularRexp_le_expanded_allAspect
+      N (2 * i) u v k l (by omega) hactive).trans ?_
+    have hroot := allAspect_root_log_le N u v k l hN hactive
+    change _ ≤ 12000 * L ^ 5 * (i : ℝ) * A
+    have hsum : D * Real.sqrt X + X * Real.sqrt D ≤ 4 * A := by
+      simp only [mul_div_assoc] at hcrossX hcrossD
+      nlinarith
+    have hbody : D * X + primitiveBilinearQFactor (2 * i) * (2 * i : ℕ) *
+        (D * Real.sqrt X + X * Real.sqrt D) +
+        primitiveBilinearQFactor (2 * i) ^ 2 * (2 * i : ℕ) ^ 2 *
+          Real.sqrt D * Real.sqrt X ≤ 2000 * L ^ 2 * (i : ℝ) * A := by
+      calc
+        _ ≤ (i : ℝ) * A + (15 * L) * (2 * i : ℕ) * (4 * A) +
+            (15 * L) ^ 2 * (2 * i : ℕ) ^ 2 * Real.sqrt N := by
+          rw [mul_assoc (_ ^ 2 * _ ^ 2)]
+          apply add_le_add
+          · apply add_le_add (hDX.trans hNA)
+            gcongr
+          · gcongr
+        _ ≤ 2000 * L ^ 2 * (i : ℝ) * A := by
+          push_cast
+          have hlast := mul_le_mul_of_nonneg_left hiA
+            (show 0 ≤ 900 * L ^ 2 * (i : ℝ) by positivity)
+          have hL2 : L ≤ L ^ 2 := by nlinarith
+          nlinarith [mul_nonneg (show 0 ≤ L ^ 2 - 1 by nlinarith)
+            (show 0 ≤ (i : ℝ) * A by positivity),
+            mul_nonneg (show 0 ≤ L ^ 2 - L by nlinarith)
+            (show 0 ≤ (i : ℝ) * A by positivity)]
     calc
-      _ ≤ (1 / (i : ℝ)) * ((8 * L) *
-          vaughanTypeIIRectangularRexp N k l (2 * i)) := by
-            apply mul_le_mul_of_nonneg_left _ (by positivity)
-            exact mul_le_mul_of_nonneg_right hsmooth hR0
-      _ ≤ (1 / (i : ℝ)) * ((8 * L) * ((6 * L ^ 3) *
-          (D * X + c * ((2 * i : ℕ) : ℝ) * (D * rx + X * rd) +
-            c ^ 2 * ((2 * i : ℕ) : ℝ) ^ 2 * rd * rx))) := by
-              apply mul_le_mul_of_nonneg_left _ (by positivity)
-              exact mul_le_mul_of_nonneg_left hR' (by positivity)
-      _ ≤ _ := by
-        apply mul_le_mul_of_nonneg_left _ (by positivity)
-        convert mul_le_mul_of_nonneg_left hinner
-          (mul_nonneg (by positivity : 0 ≤ 8 * L) (by positivity : 0 ≤ 6 * L ^ 3)) using 1; ring
-  calc
-    _ ≤ (1 / (i : ℝ)) * vaughanActualCanonicalCollectedShellWeightedMean
-        N u v k l (G.cell i) := hnorm
-    _ ≤ (1 / (i : ℝ)) *
-        ((1 / 2 + (14 * Real.log ((2 * N : ℕ) : ℝ) + 4) / Real.pi) *
-          vaughanTypeIIRectangularRexp N k l (2 * i) +
-        (8 / (Real.pi * ((2 * N : ℕ) : ℝ))) *
-          vaughanTypeIIRectangularL1exp N k l * weightedPrimitiveFamilyMass (G.cell i)) :=
-      mul_le_mul_of_nonneg_left hexp (by positivity)
-    _ ≤ (1 / (i : ℝ)) * ((8 * L) * (6 * L ^ 3) *
-          ((N : ℝ) + (15 * L) * (2 * (i : ℝ)) *
-            (2 * (N : ℝ) / Real.sqrt (v + 1 : ℕ) +
-             2 * (N : ℝ) / Real.sqrt (u + 1 : ℕ)) +
-            (15 * L) ^ 2 * (4 * (i : ℝ) ^ 2) * Real.sqrt N)) +
-        32 * (i : ℝ) * L ^ 3 := by
-      rw [mul_add]
-      exact add_le_add hmain hsharp
-    _ ≤ 1000000 * L ^ 15 *
-        ((N : ℝ) / i + (N : ℝ) / Real.sqrt (u + 1 : ℕ) +
-          (N : ℝ) / Real.sqrt (v + 1 : ℕ) + (i : ℝ) * Real.sqrt N) := by
-      have hL1 : 1 ≤ L := le_trans (by norm_num) hL2
-      have hpow6 : L ^ 6 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
-      have hpow5 : L ^ 5 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
-      have hpow4 : L ^ 4 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
-      have hpow3 : L ^ 3 ≤ L ^ 15 := pow_le_pow_right₀ hL1 (by omega)
-      have hsharpB : 32 * (i : ℝ) * L ^ 3 ≤ 32 * L ^ 3 * B := by
-        have hiB : (i : ℝ) ≤ B := by
-          have hii : (i : ℝ) ≤ (i : ℝ) * Real.sqrt N := by
-            exact le_mul_of_one_le_right (by positivity)
-              (le_trans (by norm_num) hsqrtN3)
-          dsimp [B]
-          have h1 : 0 ≤ (N : ℝ) / i := by positivity
-          have h2 : 0 ≤ (N : ℝ) / Real.sqrt (u + 1 : ℕ) := by positivity
-          have h3 : 0 ≤ (N : ℝ) / Real.sqrt (v + 1 : ℕ) := by positivity
-          linarith only [hii, h1, h2, h3]
-        calc
-          _ = (32 * L ^ 3) * i := by ring
-          _ ≤ (32 * L ^ 3) * B := mul_le_mul_of_nonneg_left hiB (by positivity)
-      have hn0 : 0 ≤ (N : ℝ) / i := by positivity
-      have huq0 : 0 ≤ (N : ℝ) / Real.sqrt (u + 1 : ℕ) := by positivity
-      have hvq0 : 0 ≤ (N : ℝ) / Real.sqrt (v + 1 : ℕ) := by positivity
-      have hir0 : 0 ≤ (i : ℝ) * Real.sqrt N := by positivity
-      have hNdiv : (N : ℝ) / i ≤ B := by dsimp [B]; linarith
-      have huB : (N : ℝ) / Real.sqrt (u + 1 : ℕ) ≤ B := by dsimp [B]; linarith
-      have hvB : (N : ℝ) / Real.sqrt (v + 1 : ℕ) ≤ B := by dsimp [B]; linarith
-      have hiB : (i : ℝ) * Real.sqrt N ≤ B := by dsimp [B]; linarith
-      have hiR : (0 : ℝ) < i := by exact_mod_cast hi
-      calc
-        _ = 48 * L ^ 4 * ((N : ℝ) / i) +
-              2880 * L ^ 5 * ((N : ℝ) / Real.sqrt (v + 1 : ℕ) +
-                (N : ℝ) / Real.sqrt (u + 1 : ℕ)) +
-              43200 * L ^ 6 * ((i : ℝ) * Real.sqrt N) +
-              32 * (i : ℝ) * L ^ 3 := by field_simp; ring
-        _ ≤ (48 * L ^ 4 + 5760 * L ^ 5 + 43200 * L ^ 6 + 32 * L ^ 3) * B := by
-          nlinarith [mul_nonneg (mul_nonneg (by norm_num : (0:ℝ) ≤ 48) (pow_nonneg hL0 4))
-              (sub_nonneg.mpr hNdiv),
-            mul_nonneg (mul_nonneg (by norm_num : (0:ℝ) ≤ 2880) (pow_nonneg hL0 5))
-              (sub_nonneg.mpr hvB),
-            mul_nonneg (mul_nonneg (by norm_num : (0:ℝ) ≤ 2880) (pow_nonneg hL0 5))
-              (sub_nonneg.mpr huB),
-            mul_nonneg (mul_nonneg (by norm_num : (0:ℝ) ≤ 43200) (pow_nonneg hL0 6))
-              (sub_nonneg.mpr hiB), sub_nonneg.mpr hsharpB]
-        _ ≤ 1000000 * L ^ 15 * B := by
-          apply mul_le_mul_of_nonneg_right _ hB0
-          linarith only [hpow3, hpow4, hpow5, hpow6, pow_nonneg hL0 15]
-        _ = _ := by rfl
+      _ ≤ (6 * L ^ 3) * (2000 * L ^ 2 * (i : ℝ) * A) := by
+        exact mul_le_mul hroot hbody (by positivity) (by positivity)
+      _ = _ := by ring
+  have hS : G.cell i ⊆ Finset.Icc 1 (2 * i) := by
+    intro q hqS
+    obtain ⟨hlo, hhi⟩ := Finset.mem_Ioc.mp (hcell hqS)
+    exact Finset.mem_Icc.mpr ⟨by omega, hhi⟩
+  have hn := apNormalizedVaughanActualCollectedShellMeanOn_le_inv_mul_weightedMean
+    N u v k l i (G.cell i) hi (fun q hqS => (Finset.mem_Ioc.mp (hcell hqS)).1.le)
+  have he := vaughanActualCanonicalCollectedShellWeightedMean_le_explicit
+    N (2 * i) u v k l (by omega) (by omega) (G.cell i) hS hactive
+  have hs := allAspect_smoothing_le N hN
+  have hsharp := allAspect_sharpTerm_le N Q C u v k l i G hN hi hcell hactive
+  have hLP : L ^ 6 ≤ L ^ 15 := pow_le_pow_right₀ hL (by omega)
+  have hLP3 : L ^ 3 ≤ L ^ 15 := pow_le_pow_right₀ hL (by omega)
+  have hmain : (1 / (i : ℝ)) *
+      ((1 / 2 + (14 * Real.log (2 * N : ℕ) + 4) / Real.pi) *
+        vaughanTypeIIRectangularRexp N k l (2 * i)) ≤ 96000 * L ^ 6 * A := by
+    calc
+      _ ≤ (1 / (i : ℝ)) * ((8 * L) * (12000 * L ^ 5 * (i : ℝ) * A)) := by
+        have hR0 : 0 ≤ vaughanTypeIIRectangularRexp N k l (2 * i) := by
+          unfold vaughanTypeIIRectangularRexp
+          positivity
+        gcongr
+      _ = _ := by field_simp; ring
+  have htotal := hn.trans (mul_le_mul_of_nonneg_left he (by positivity : 0 ≤ 1 / (i : ℝ)))
+  rw [mul_add] at htotal
+  change _ ≤ 1000000 * L ^ 15 * A
+  have hpay := mul_le_mul_of_nonneg_right hLP hA
+  have hpay3 := mul_le_mul_of_nonneg_right hLP3 hA
+  have hsharp' := mul_le_mul_of_nonneg_right hiA' (show 0 ≤ L ^ 3 by positivity)
+  nlinarith
 
 /-- Summing the all-aspect estimate over every active canonical rectangle keeps
 exactly the active-family cardinality. -/

@@ -20,12 +20,12 @@ private theorem S1SieveProductLower_log_lower_of_two_mul_exp_le
     A ≤ Real.log ((Z - 1 : ℕ) : ℝ) := by
   have hExp : Real.exp A ≤ ((Z - 1 : ℕ) : ℝ) := by
     have hmid : Real.exp A ≤ (Z : ℝ) / 2 := by
-      nlinarith
+      linarith only [hZA]
     have hhalf : (Z : ℝ) / 2 ≤ ((Z - 1 : ℕ) : ℝ) := by
       have hnat : Z ≤ 2 * (Z - 1) := by omega
       have hcast : (Z : ℝ) ≤ 2 * ((Z - 1 : ℕ) : ℝ) := by
         exact_mod_cast hnat
-      nlinarith
+      linarith only [hcast]
     exact hmid.trans hhalf
   have hlog := Real.log_le_log (Real.exp_pos A) hExp
   simpa [Real.log_exp] using hlog
@@ -95,7 +95,7 @@ private theorem S1SieveProductLower_correctionFactor_le_exp
     SingularSeries.liuCorrectionFactor p ≤
       Real.exp (1 / ((Z - 2 : ℕ) : ℝ)) := by
   have hp2R : (2 : ℝ) < p := by exact_mod_cast hp2
-  have hp2' : 0 < (p : ℝ) - 2 := by linarith
+  have hp2' : 0 < (p : ℝ) - 2 := sub_pos.mpr hp2R
   have hZ2 : 2 ≤ Z := by omega
   have hZ2' : 0 < ((Z - 2 : ℕ) : ℝ) := by
     exact_mod_cast (show 0 < Z - 2 by omega)
@@ -105,14 +105,14 @@ private theorem S1SieveProductLower_correctionFactor_le_exp
       simpa using (Nat.cast_sub hZ2 : ((Z - 2 : ℕ) : ℝ) = (Z : ℝ) - (2 : ℝ))
     have hpCast : (Z : ℝ) ≤ p := by exact_mod_cast hZp
     rw [hcast]
-    linarith
+    exact sub_le_sub_right hpCast 2
   have hrecip :
       1 / ((p : ℝ) - 2) ≤ 1 / ((Z - 2 : ℕ) : ℝ) :=
     one_div_le_one_div_of_le hZ2' hden
   have hfactor :
       SingularSeries.liuCorrectionFactor p = 1 + 1 / ((p : ℝ) - 2) := by
     unfold SingularSeries.liuCorrectionFactor
-    have hp2ne : (p : ℝ) - 2 ≠ 0 := by linarith
+    have hp2ne : (p : ℝ) - 2 ≠ 0 := hp2'.ne'
     field_simp [hp2ne]
     ring
   calc
@@ -152,7 +152,7 @@ private theorem S1SieveProductLower_exp_eighteen_div_le_one_add
     apply Real.log_pos
     linarith
   have htailNonneg : 0 ≤ 18 / Real.log (1 + δ) := by positivity
-  have hZ3 : (3 : ℝ) ≤ Z := by nlinarith
+  have hZ3 : (3 : ℝ) ≤ Z := (le_add_of_nonneg_right htailNonneg).trans hZ
   have hZ3Nat : 3 ≤ Z := by exact_mod_cast hZ3
   have hZ2 : 2 ≤ Z := by omega
   have hZ2Pos : 0 < ((Z - 2 : ℕ) : ℝ) := by
@@ -162,7 +162,7 @@ private theorem S1SieveProductLower_exp_eighteen_div_le_one_add
   have hden :
       18 / Real.log (1 + δ) ≤ ((Z - 2 : ℕ) : ℝ) := by
     rw [hcast]
-    linarith
+    linarith only [hZ]
   have hdiv : 18 / ((Z - 2 : ℕ) : ℝ) ≤ Real.log (1 + δ) :=
     (div_le_comm₀ hZ2Pos hlogPos).2 hden
   calc
@@ -210,7 +210,7 @@ private theorem S1SieveProductLower_correctionTruncated_ge_one_sub
   have hInv₁ : 1 - δ ≤ (1 + δ)⁻¹ := by
     have h1δ : 0 < 1 + δ := by linarith
     have hmul : (1 - δ) * (1 + δ) ≤ 1 := by
-      nlinarith [sq_nonneg δ]
+      nlinarith only [sq_nonneg δ]
     simpa [one_div] using (le_div_iff₀ h1δ).2 hmul
   have hInv₂ : (1 + δ)⁻¹ ≤ T⁻¹ := by
     have h1δ : 0 < 1 + δ := by linarith
@@ -220,7 +220,7 @@ private theorem S1SieveProductLower_correctionTruncated_ge_one_sub
   have hmul :
       (1 - δ) * SingularSeries.liuCorrection N ≤
         SingularSeries.liuCorrection N * T⁻¹ := by
-    simpa [mul_comm, mul_left_comm, mul_assoc] using
+    simpa only [mul_comm] using
       mul_le_mul_of_nonneg_right hInv hCorrNonneg
   have hdecomp :
       SingularSeries.liuCorrection N =
@@ -281,29 +281,7 @@ private theorem S1SieveProductLower_nat_le_ceil_pow
 private theorem S1SieveProductLower_goldbachSieveProduct_nonneg
     {N Z : ℕ} (hEven : Even N) :
     0 ≤ MertensTheorem.goldbachSieveProduct N Z := by
-  unfold MertensTheorem.goldbachSieveProduct
-  apply Finset.prod_nonneg
-  intro p hp
-  rcases Finset.mem_filter.mp hp with ⟨_, hpPrime, hpNotDvd⟩
-  have hpNeTwo : p ≠ 2 := by
-    intro hp2
-    have h2dvd : 2 ∣ N := by
-      rcases hEven with ⟨k, hk⟩
-      refine ⟨k, ?_⟩
-      rw [hk]
-      omega
-    exact hpNotDvd (by simpa [hp2] using h2dvd)
-  have hp3 : 3 ≤ p := by
-    have hp2le : 2 ≤ p := hpPrime.two_le
-    omega
-  have hfrac : 1 / ((p : ℝ) - 1) ≤ 1 := by
-    have hpos : 0 < (p : ℝ) - 1 := by
-      have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      linarith
-    rw [div_le_iff₀ hpos]
-    have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-    linarith
-  linarith
+  exact GoldbachLiuProductBridge.product_nonneg hEven
 
 theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
     (η : ℝ) (hη : 0 < η) (_hη1 : η < 1) :
@@ -318,9 +296,9 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
     positivity
   have hδlt1 : δ < 1 := by
     dsimp [δ]
-    nlinarith
-  have hOneSubδ : 0 ≤ 1 - δ := by linarith
-  obtain ⟨C, hC⟩ := MertensTheorem.sieve_product_asymptotic
+    linarith only [_hη1]
+  have hOneSubδ : 0 ≤ 1 - δ := sub_nonneg.mpr hδlt1.le
+  obtain ⟨C, hC⟩ := GoldbachLiuProductBridge.exists_log_bounds
   let tailThreshold : ℝ := 3 + 18 / Real.log (1 + δ)
   let errThreshold : ℝ :=
     2 * Real.exp (|C| / (δ * Real.exp (-Real.eulerMascheroniConstant)))
@@ -359,7 +337,7 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
   have hZ3r : (3 : ℝ) ≤ Z := by
     have htailCut' : 3 + 18 / Real.log (1 + δ) ≤ (Z : ℝ) := by
       simpa [tailThreshold] using htailCut
-    nlinarith
+    exact (le_add_of_nonneg_right htailNonneg).trans htailCut'
   have hZ3 : 3 ≤ Z := by exact_mod_cast hZ3r
   have hNZ : N ≤ Z ^ 18 := by
     dsimp [Z]
@@ -369,122 +347,20 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
         SingularSeries.liuSingularSeriesTruncated N (Z - 1) :=
     S1SieveProductLower_truncated_ge_one_sub_liuSingularSeries hNpos hZ3 hNZ hδ <|
       by simpa [tailThreshold] using htailCut
-  have hlogPos : 0 < Real.log ((Z - 1 : ℕ) : ℝ) := by
-    exact Real.log_pos (by exact_mod_cast (show 1 < Z - 1 by omega))
   have hErr :
       |C| / Real.log ((Z - 1 : ℕ) : ℝ) ≤
         δ * Real.exp (-Real.eulerMascheroniConstant) :=
     S1SieveProductLower_absConst_div_log_le hδ hZ3 <| by
       dsimp [errThreshold] at herrCut
       exact herrCut
-  have hsieveAbs :
-      |MertensTheorem.goldbachSieveProduct N Z -
-          SingularSeries.singularSeriesTruncated N (Z - 1) *
-            Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ)| ≤
-        C * SingularSeries.singularSeriesTruncated N (Z - 1) /
-          (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 :=
-    hC N Z hZ3 hEven hN4
-  have hsieveAbs' :
-      |MertensTheorem.goldbachSieveProduct N Z -
-          SingularSeries.singularSeriesTruncated N (Z - 1) *
-            Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ)| ≤
-        |C| * SingularSeries.singularSeriesTruncated N (Z - 1) /
-          (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 := by
-    calc
-      |MertensTheorem.goldbachSieveProduct N Z -
-          SingularSeries.singularSeriesTruncated N (Z - 1) *
-            Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ)|
-        ≤ C * SingularSeries.singularSeriesTruncated N (Z - 1) /
-            (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 := hsieveAbs
-      _ ≤ |C| * SingularSeries.singularSeriesTruncated N (Z - 1) /
-            (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 := by
-          have hSpos :
-              0 < SingularSeries.singularSeriesTruncated N (Z - 1) :=
-            SingularSeries.singularSeriesTruncated_pos N (Z - 1) (by omega)
-          have hterm :
-              0 ≤ SingularSeries.singularSeriesTruncated N (Z - 1) /
-                (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 := by
-            exact div_nonneg hSpos.le (sq_nonneg _)
-          have hCabs :
-              C * (SingularSeries.singularSeriesTruncated N (Z - 1) /
-                    (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) ≤
-                |C| * (SingularSeries.singularSeriesTruncated N (Z - 1) /
-                    (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) :=
-            mul_le_mul_of_nonneg_right (le_abs_self C) hterm
-          calc
-            C * SingularSeries.singularSeriesTruncated N (Z - 1) /
-                (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2
-              = C * (SingularSeries.singularSeriesTruncated N (Z - 1) /
-                  (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) := by ring
-            _ ≤ |C| * (SingularSeries.singularSeriesTruncated N (Z - 1) /
-                  (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) := hCabs
-            _ = |C| * SingularSeries.singularSeriesTruncated N (Z - 1) /
-                  (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 := by ring
-  have hlegacy :
-      SingularSeries.singularSeriesTruncated N (Z - 1) =
-        2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) :=
-    SingularSeries.singularSeriesTruncated_eq_two_mul_liuSingularSeriesTruncated
-      N (Z - 1) hEven (by omega)
-  have hLowerProduct :
-      2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) *
-          (Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ) -
-            |C| / (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) ≤
-        MertensTheorem.goldbachSieveProduct N Z := by
-    have hmain :
-        SingularSeries.singularSeriesTruncated N (Z - 1) *
-            Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ) -
-          |C| * SingularSeries.singularSeriesTruncated N (Z - 1) /
-            (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 ≤
-        MertensTheorem.goldbachSieveProduct N Z := by
-      have hsub :
-          -(|C| * SingularSeries.singularSeriesTruncated N (Z - 1) /
-              (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) ≤
-            MertensTheorem.goldbachSieveProduct N Z -
-              SingularSeries.singularSeriesTruncated N (Z - 1) *
-                Real.exp (-Real.eulerMascheroniConstant) /
-                  Real.log ((Z - 1 : ℕ) : ℝ) := (abs_le.mp hsieveAbs').1
-      linarith
-    rw [hlegacy] at hmain
-    have hrew :
-        (2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1)) *
-            Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ) -
-          |C| * (2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1)) /
-            (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2 =
-        2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) *
-          (Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log ((Z - 1 : ℕ) : ℝ) -
-            |C| / (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) := by
-      ring
-    simpa [hrew] using hmain
-  have hMulLog :
-      2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) *
-          (Real.exp (-Real.eulerMascheroniConstant) -
-            |C| / Real.log ((Z - 1 : ℕ) : ℝ)) ≤
-        MertensTheorem.goldbachSieveProduct N Z * Real.log ((Z - 1 : ℕ) : ℝ) := by
-    have hmul := mul_le_mul_of_nonneg_right hLowerProduct hlogPos.le
-    calc
-      2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) *
-          (Real.exp (-Real.eulerMascheroniConstant) -
-            |C| / Real.log ((Z - 1 : ℕ) : ℝ))
-        = 2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) *
-            (Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log ((Z - 1 : ℕ) : ℝ) -
-              |C| / (Real.log ((Z - 1 : ℕ) : ℝ)) ^ 2) *
-            Real.log ((Z - 1 : ℕ) : ℝ) := by
-              field_simp [hlogPos.ne']
-      _ ≤ MertensTheorem.goldbachSieveProduct N Z * Real.log ((Z - 1 : ℕ) : ℝ) := by
-              simpa [mul_assoc, mul_left_comm, mul_comm] using hmul
+  -- The exact finite product and the Mertens denominator are handled once
+  -- in the shared bridge; the omitted divisor correction remains above.
+  have hMulLog := (hC N Z hZ3 hEven hN4).1
   have hCoeffLower :
       Real.exp (-Real.eulerMascheroniConstant) * (1 - δ) ≤
         Real.exp (-Real.eulerMascheroniConstant) -
           |C| / Real.log ((Z - 1 : ℕ) : ℝ) := by
-    linarith
+    linarith only [hErr]
   have hTruncNonneg :
       0 ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) := by
     have hTruncPos : 0 < SingularSeries.liuSingularSeriesTruncated N (Z - 1) :=
@@ -503,7 +379,7 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
       _ ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Z - 1) *
             (Real.exp (-Real.eulerMascheroniConstant) -
               |C| / Real.log ((Z - 1 : ℕ) : ℝ)) := by
-              gcongr
+              exact mul_le_mul_of_nonneg_left hCoeffLower hTruncNonneg
       _ ≤ MertensTheorem.goldbachSieveProduct N Z * Real.log ((Z - 1 : ℕ) : ℝ) := hMulLog
   have hCoeffNonneg :
       0 ≤ 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 - δ) := by
@@ -528,7 +404,7 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
   have hEtaCoeff :
       1 - η ≤ (1 - δ) ^ 2 := by
     dsimp [δ]
-    nlinarith [sq_nonneg η]
+    nlinarith only [sq_nonneg η]
   have hEtaToDelta :
       2 * Real.exp (-Real.eulerMascheroniConstant) * (1 - η) *
           SingularSeries.liuSingularSeries N ≤
@@ -538,7 +414,7 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
     have hcoef :
         2 * Real.exp (-Real.eulerMascheroniConstant) * (1 - η) ≤
           2 * Real.exp (-Real.eulerMascheroniConstant) * (1 - δ) ^ 2 := by
-      gcongr
+      exact mul_le_mul_of_nonneg_left hEtaCoeff hbase
     exact mul_le_mul_of_nonneg_right hcoef (SingularSeries.liuSingularSeries_pos N).le
   have hVnonneg : 0 ≤ MertensTheorem.goldbachSieveProduct N Z :=
     S1SieveProductLower_goldbachSieveProduct_nonneg hEven
@@ -553,7 +429,7 @@ theorem goldbachS1PrimeProduct_log_ge_liuSingularSeries
       simpa using (Nat.cast_sub (by omega : 1 ≤ Z) :
         ((Z - 1 : ℕ) : ℝ) = (Z : ℝ) - ((1 : ℕ) : ℝ))
     rw [hcast]
-    linarith
+    linarith only [hceilLt]
   have hlogMono :
       Real.log ((Z - 1 : ℕ) : ℝ) ≤ Real.log z := by
     exact Real.log_le_log hargPos hargLt.le

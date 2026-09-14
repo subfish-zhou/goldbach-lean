@@ -1,3 +1,5 @@
+import MathlibNt.Analysis.LogGridEstimates
+import MathlibNt.Analysis.MovingIntervalIntegral
 import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridRegion
 import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
@@ -82,19 +84,14 @@ private theorem continuousOn_b8Kernel :
 private theorem integrableOn_b8Density {s : Set (ℝ × ℝ)}
     (hs : MeasurableSet s) (hsub : s ⊆ goldbachB8LogAmbientBox) :
     IntegrableOn liuLogDensity s := by
-  apply ContinuousOn.integrableOn_of_subset_isCompact continuousOn_b8Density
-    isCompact_goldbachB8LogAmbientBox hs hsub
-  exact (lt_of_le_of_lt (measure_mono hsub)
-    isCompact_goldbachB8LogAmbientBox.measure_lt_top).ne
+  exact continuousOn_b8Density.integrableOn_of_subset_isCompact isCompact_goldbachB8LogAmbientBox hs hsub
+    (ne_top_of_le_ne_top isCompact_goldbachB8LogAmbientBox.measure_ne_top (measure_mono hsub))
 
 theorem integrableOn_goldbachB8LogIntegrand {s : Set (ℝ × ℝ)}
     (hs : MeasurableSet s) (hsub : s ⊆ goldbachB8LogAmbientBox) :
     IntegrableOn liuLogIntegrand s := by
-  apply ContinuousOn.integrableOn_of_subset_isCompact
-    (continuousOn_b8Kernel.mul continuousOn_b8Density)
-    isCompact_goldbachB8LogAmbientBox hs hsub
-  exact (lt_of_le_of_lt (measure_mono hsub)
-    isCompact_goldbachB8LogAmbientBox.measure_lt_top).ne
+  exact (continuousOn_b8Kernel.mul continuousOn_b8Density).integrableOn_of_subset_isCompact isCompact_goldbachB8LogAmbientBox hs hsub
+    (ne_top_of_le_ne_top isCompact_goldbachB8LogAmbientBox.measure_ne_top (measure_mono hsub))
 
 theorem integrable_goldbachB8SourceIndicator :
     Integrable (goldbachB8LogSourceRegion.indicator liuLogIntegrand) :=
@@ -121,40 +118,11 @@ private theorem goldbachB8MainIntegral_eq_iteratedSetIntegral :
 theorem goldbachB8MainIntegral_eq_setIntegral :
     goldbachB8MainIntegral = ∫ x in goldbachB8LogSourceRegion, liuLogIntegrand x := by
   rw [goldbachB8MainIntegral_eq_iteratedSetIntegral]
-  let F := goldbachB8LogSourceRegion.indicator liuLogIntegrand
-  have hF : Integrable F := integrable_goldbachB8SourceIndicator
-  have hinner (u : ℝ) :
-      (∫ v, F (u, v)) =
-        (Ioc (3 / 11 : ℝ) (1 / 3)).indicator
-          (fun u => ∫ v in Ioc u ((1 - u) / 2), liuLogIntegrand (u, v)) u := by
-    by_cases hu : u ∈ Ioc (3 / 11 : ℝ) (1 / 3)
-    · rw [indicator_of_mem hu, ← integral_indicator measurableSet_Ioc]
-      apply integral_congr_ae
-      filter_upwards with v
-      have hmem : (u, v) ∈ goldbachB8LogSourceRegion ↔ v ∈ Ioc u ((1 - u) / 2) :=
-        and_iff_right hu
-      change goldbachB8LogSourceRegion.indicator liuLogIntegrand (u, v) =
-        (Ioc u ((1 - u) / 2)).indicator (fun v => liuLogIntegrand (u, v)) v
-      by_cases hv : v ∈ Ioc u ((1 - u) / 2)
-      · rw [indicator_of_mem (hmem.mpr hv), indicator_of_mem hv]
-      · rw [indicator_of_notMem (fun h => hv (hmem.mp h)), indicator_of_notMem hv]
-    · rw [indicator_of_notMem hu]
-      apply integral_eq_zero_of_ae
-      filter_upwards with v
-      exact indicator_of_notMem (fun h => hu h.1) _
-  have hFubini : (∫ z, F z) = ∫ u, ∫ v, F (u, v) := by
-    rw [Measure.volume_eq_prod ℝ ℝ] at hF ⊢
-    exact integral_prod F hF
-  calc
-    _ = ∫ u, (Ioc (3 / 11 : ℝ) (1 / 3)).indicator
-        (fun u => ∫ v in Ioc u ((1 - u) / 2), liuLogIntegrand (u, v)) u := by
-      rw [integral_indicator measurableSet_Ioc]
-    _ = ∫ u, ∫ v, F (u, v) := by
-      apply integral_congr_ae
-      filter_upwards with u
-      exact (hinner u).symm
-    _ = ∫ z, F z := hFubini.symm
-    _ = _ := integral_indicator measurableSet_goldbachB8LogSourceRegion
+  exact (MathlibNt.Analysis.setIntegral_moving_Ioc_eq_iterated
+    (Ioc (3 / 11 : ℝ) (1 / 3)) id (fun u => (1 - u) / 2)
+    liuLogIntegrand measurableSet_Ioc measurableSet_goldbachB8LogSourceRegion
+    (integrableOn_goldbachB8LogIntegrand measurableSet_goldbachB8LogSourceRegion
+      goldbachB8LogSourceRegion_subset_ambientBox)).symm
 
 theorem goldbachB8MainIntegral_nonneg : 0 ≤ goldbachB8MainIntegral := by
   rw [goldbachB8MainIntegral_eq_setIntegral]
@@ -194,26 +162,14 @@ private theorem b8UpperIntegrand_eq_of_mem {n : ℕ} (hn : 0 < n)
     goldbachB8LogGridUpperIntegrand n x =
       (1 / (1 - goldbachB8AlphaGridPoint n (q.1 + 1) -
         goldbachB8BetaGridPoint n (q.2 + 1))) * liuLogDensity x := by
-  classical
   unfold goldbachB8LogGridUpperIntegrand
-  rw [Finset.sum_eq_single q]
-  · rw [indicator_of_mem hx]
-  · intro r _ hrq
-    have hnot : x ∉ goldbachB8LogGridCell n r := fun hxr =>
-      Set.disjoint_left.mp
-        (goldbachB8LogGridCell_pairwiseDisjoint hn (mem_univ q) (mem_univ r) hrq.symm)
-        hx hxr
-    rw [indicator_of_notMem hnot, mul_zero]
-  · exact fun h => (h hq).elim
+  exact MathlibNt.Analysis.LogGridEstimates.weighted_sum_eq_of_mem _ _ _ _
+    (goldbachB8LogGridCell_pairwiseDisjoint hn) hq hx
 
 private theorem b8UpperIntegrand_eq_zero {n : ℕ} {x : ℝ × ℝ}
     (hx : x ∉ goldbachB8LogGridRegion n) : goldbachB8LogGridUpperIntegrand n x = 0 := by
-  classical
-  apply Finset.sum_eq_zero
-  intro q hq
-  have hnot : x ∉ goldbachB8LogGridCell n q :=
-    fun h => hx (Set.mem_iUnion₂.mpr ⟨q, hq, h⟩)
-  rw [indicator_of_notMem hnot, mul_zero]
+  unfold goldbachB8LogGridUpperIntegrand
+  exact MathlibNt.Analysis.LogGridEstimates.weighted_sum_zero _ _ _ _ hx
 
 private theorem b8CornerKernel_le_four {n : ℕ} (hn : 0 < n) (q : Fin n × Fin n) :
     1 / (1 - goldbachB8AlphaGridPoint n (q.1 + 1) -
@@ -238,47 +194,18 @@ theorem goldbachB8LogGrid_kernel_variation {n : ℕ} (hn : 0 < n)
       goldbachB8BetaGridPoint n (q.2 + 1)) - liuLogKernel x ∧
     1 / (1 - goldbachB8AlphaGridPoint n (q.1 + 1) -
       goldbachB8BetaGridPoint n (q.2 + 1)) - liuLogKernel x ≤ 4 / (n : ℝ) := by
-  let c := 1 - goldbachB8AlphaGridPoint n (q.1 + 1) -
-    goldbachB8BetaGridPoint n (q.2 + 1)
-  let d := 1 - x.1 - x.2
-  have hc : (1 / 4 : ℝ) ≤ c := by
-    have h := goldbachB8LogGridCell_cornerGap_ge hn q
-    dsimp [c]
+  simp only [goldbachB8LogGridCell, goldbachB8AlphaGridPoint_succ, goldbachB8BetaGridPoint_succ] at hx
+  simp only [goldbachB8AlphaGridPoint_succ, goldbachB8BetaGridPoint_succ, liuLogKernel]
+  apply MathlibNt.Analysis.LogGridEstimates.cell_reciprocal_variation hx
+    (l := 1 / 4) (by norm_num) ?_ (by positivity) ?_
+  · have h := goldbachB8LogGridCell_cornerGap_ge hn q
+    rw [goldbachB8AlphaGridPoint_succ, goldbachB8BetaGridPoint_succ] at h
     linarith
-  have hcd : c ≤ d := by dsimp [c, d]; linarith [hx.1.2, hx.2.2]
-  have hd : (1 / 4 : ℝ) ≤ d := hc.trans hcd
-  have hcpos : 0 < c := by linarith
-  have hdpos : 0 < d := by linarith
-  have hdelta : d - c ≤ goldbachB8AlphaGridStep n + goldbachB8BetaGridStep n := by
-    dsimp [c, d]
-    rw [goldbachB8AlphaGridPoint_succ, goldbachB8BetaGridPoint_succ]
-    linarith [hx.1.1, hx.2.1]
-  have hstep : goldbachB8AlphaGridStep n + goldbachB8BetaGridStep n =
-      (13 / 66 : ℝ) / n := by
-    unfold goldbachB8AlphaGridStep goldbachB8BetaGridStep
+  · unfold goldbachB8AlphaGridStep goldbachB8BetaGridStep
       goldbachB8AlphaGridWidth goldbachB8BetaGridWidth
-    ring
-  have hprod : (1 / 16 : ℝ) ≤ c * d := by
-    nlinarith [mul_nonneg (sub_nonneg.mpr hc) (sub_nonneg.mpr hd)]
-  have hformula : 1 / c - liuLogKernel x = (d - c) / (c * d) := by
-    change 1 / c - 1 / d = (d - c) / (c * d)
-    field_simp [hcpos.ne', hdpos.ne']
-  change 0 ≤ 1 / c - liuLogKernel x ∧ 1 / c - liuLogKernel x ≤ 4 / (n : ℝ)
-  rw [hformula]
-  constructor
-  · exact div_nonneg (sub_nonneg.mpr hcd) (mul_pos hcpos hdpos).le
-  · have hinv : 1 / (c * d) ≤ 16 := by
-      simpa using one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 1 / 16) hprod
-    calc
-      (d - c) / (c * d) = (d - c) * (1 / (c * d)) := by ring
-      _ ≤ (goldbachB8AlphaGridStep n + goldbachB8BetaGridStep n) * 16 :=
-        mul_le_mul hdelta hinv (one_div_pos.mpr (mul_pos hcpos hdpos)).le
-          (add_nonneg (goldbachB8AlphaGridStep_pos hn).le (goldbachB8BetaGridStep_pos hn).le)
-      _ ≤ 4 / (n : ℝ) := by
-        rw [hstep]
-        have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-        field_simp [hnreal.ne']
-        norm_num
+    have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
+    field_simp
+    norm_num
 
 private theorem b8UpperIntegrand_le_integrand_add {n : ℕ} (hn : 0 < n)
     {x : ℝ × ℝ} (hx : x ∈ goldbachB8LogGridRegion n) :
@@ -305,32 +232,23 @@ theorem goldbachB8LogGridErrorConstant_pos : (0 : ℝ) < 1000 := by norm_num
 /-- One-sided structural error for every positive mesh size, not an assumed limit. -/
 theorem goldbachB8LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
     goldbachB8LogGridUpperSum n - goldbachB8MainIntegral ≤ 1000 / (n : ℝ) := by
-  classical
-  let E : Fin 3 → Set (ℝ × ℝ) :=
-    ![goldbachB8LeftStrip n, goldbachB8DiagonalStrip n, goldbachB8ObliqueStrip n]
-  have hEm : ∀ i, MeasurableSet (E i) := by
-    intro i
-    fin_cases i
-    · exact measurableSet_goldbachB8LeftStrip n
-    · exact measurableSet_goldbachB8DiagonalStrip n
-    · exact measurableSet_goldbachB8ObliqueStrip n
-  have hEf : ∀ i, volume (E i) ≠ ∞ := by
-    intro i
-    fin_cases i <;> simp [E, volume_goldbachB8LeftStrip,
-      volume_goldbachB8DiagonalStrip, volume_goldbachB8ObliqueStrip]
-  have hAf : volume b8UnitBox ≠ ∞ := by
-    change volume (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) ≠ ∞
-    rw [volume_b8UnitBox]
-    norm_num
-  have h := MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover
-    volume (goldbachB8LogGridRegion n) goldbachB8LogSourceRegion b8UnitBox E
+  have h := MathlibNt.Analysis.LogGridEstimates.integral_sub_le_three_strips
+    (goldbachB8LogGridRegion n) goldbachB8LogSourceRegion
+    (Set.Icc (0 : ℝ) 1 ×ˢ Set.Icc (0 : ℝ) 1)
+    (goldbachB8LeftStrip n) (goldbachB8DiagonalStrip n) (goldbachB8ObliqueStrip n)
     (goldbachB8LogGridUpperIntegrand n) liuLogIntegrand (64 / (n : ℝ)) 64
+    ((5 / 528 : ℝ) / n) ((13 / 1089 : ℝ) / n) ((41 / 4356 : ℝ) / n)
     (integrable_goldbachB8LogGridUpperIntegrand n hn)
     (integrableOn_goldbachB8LogIntegrand measurableSet_goldbachB8LogSourceRegion
       goldbachB8LogSourceRegion_subset_ambientBox)
     measurableSet_goldbachB8LogSourceRegion (measurableSet_Icc.prod measurableSet_Icc)
-    hAf hEm hEf (by positivity) (by norm_num)
-    (fun x hx => (goldbachB8LogIntegrand_bounds
+    volume_b8UnitBox
+    (measurableSet_goldbachB8LeftStrip n) (measurableSet_goldbachB8DiagonalStrip n)
+    (measurableSet_goldbachB8ObliqueStrip n)
+    (volume_goldbachB8LeftStrip n) (volume_goldbachB8DiagonalStrip n)
+    (volume_goldbachB8ObliqueStrip n)
+    (by positivity) (by positivity) (by positivity) (by positivity) (by norm_num)
+    (fun _ hx => (goldbachB8LogIntegrand_bounds
       (goldbachB8LogSourceRegion_subset_ambientBox hx)).1)
     (fun _ hx => b8UpperIntegrand_eq_zero hx)
     (by
@@ -339,25 +257,11 @@ theorem goldbachB8LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
       exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
         ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
     (fun _ hx => b8UpperIntegrand_le_integrand_add hn hx.1)
-    (by
-      intro x hx
-      rcases goldbachB8LogGridRegion_excess_subset hn hx with (hl | hd) | ho
-      · exact ⟨0, hl⟩
-      · exact ⟨1, hd⟩
-      · exact ⟨2, ho⟩)
-    (fun _ hx => b8UpperIntegrand_le_sixtyFour hn hx.1)
-  rw [← goldbachB8LogGridUpperSum_eq_integral n hn,
-    ← goldbachB8MainIntegral_eq_setIntegral, Fin.sum_univ_three] at h
-  dsimp [E, b8UnitBox] at h
-  simp only [Measure.real_def, volume_b8UnitBox, volume_goldbachB8LeftStrip,
-    volume_goldbachB8DiagonalStrip, volume_goldbachB8ObliqueStrip,
-    ENNReal.toReal_one, one_mul] at h
-  rw [ENNReal.toReal_ofReal (by positivity : 0 ≤ (5 / 528 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (13 / 1089 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (41 / 4356 : ℝ) / n)] at h
+    (goldbachB8LogGridRegion_excess_subset hn) (fun _ hx => b8UpperIntegrand_le_sixtyFour hn hx.1)
+  rw [← goldbachB8LogGridUpperSum_eq_integral n hn, ← goldbachB8MainIntegral_eq_setIntegral] at h
   refine h.trans ?_
   have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-  field_simp [hnreal.ne']
+  field_simp
   norm_num
 
 /-- Choose the mesh after the tolerance; no prime-size threshold is selected here. -/

@@ -260,31 +260,15 @@ orthonormal subfamily.  The proof never compares the primitive ledger with an
 all-character energy. -/
 theorem primitiveReducedBesselDirect (q : ℕ) [NeZero q] :
     PrimitiveReducedBesselDirect q := by
+  classical
   intro c
-  have hB :=
-    (normalizedPrimitiveCharacterVector_orthonormal (q := q)).sum_inner_products_le
-      (reducedCoefficientVector (q := q) c) (s := Finset.univ)
-  rw [reducedCoefficientVector_norm_sq] at hB
-  simp_rw [inner_normalizedPrimitiveCharacter_reducedCoefficient] at hB
-  have hφ : (0 : ℝ) < (q.totient : ℝ) := by
-    exact_mod_cast Nat.totient_pos.mpr (NeZero.pos q)
-  have hsqrt : (0 : ℝ) < Real.sqrt (q.totient : ℝ) := Real.sqrt_pos.2 hφ
-  have hscale : ∀ z : ℂ,
-      ‖((Real.sqrt (q.totient : ℝ) : ℂ)⁻¹) * z‖ ^ 2 =
-        (1 / (q.totient : ℝ)) * ‖z‖ ^ 2 := by
-    intro z
-    rw [norm_mul, norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hsqrt,
-      mul_pow, inv_pow, Real.sq_sqrt (le_of_lt hφ)]
-    field_simp
-  simp_rw [hscale, ← Finset.mul_sum] at hB
-  have hmul := mul_le_mul_of_nonneg_left hB (le_of_lt hφ)
-  calc
-    _ = (q.totient : ℝ) *
-        ((1 / (q.totient : ℝ)) *
-          ∑ χ : PrimitiveCharacter q,
-            ‖∑ a ∈ reducedResidues q, c a * χ.1⁻¹ (a : ZMod q)‖ ^ 2) := by
-      field_simp
-    _ ≤ _ := hmul
+  have h := normalizedPrimitiveCharacterVector_orthonormal (q := q)
+    |>.sum_inner_products_le (s := Finset.univ) (reducedCoefficientVector c)
+  simp_rw [inner_normalizedPrimitiveCharacter_reducedCoefficient, norm_mul, norm_inv,
+    Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _),
+    mul_pow, inv_pow, Real.sq_sqrt (Nat.cast_nonneg q.totient)] at h
+  rw [← Finset.mul_sum, reducedCoefficientVector_norm_sq] at h
+  exact (inv_mul_le_iff₀ (Nat.cast_pos.mpr (Nat.totient_pos.mpr (NeZero.pos q)))).mp h
 
 /-- Once the direct primitive Bessel estimate is supplied, the exact ledger
 reduces to the unweighted reduced additive energy.  This consumer itself never

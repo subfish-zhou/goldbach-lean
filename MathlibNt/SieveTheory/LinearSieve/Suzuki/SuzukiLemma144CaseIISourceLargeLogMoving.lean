@@ -113,60 +113,28 @@ theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_i
     exact (Real.log_le_sub_one_of_pos hD0).trans_lt
       (sub_lt_self _ zero_lt_one)
   have hCminD : C1min < (D : ℝ) := hCminlog.trans hlogDlt
-  have hDg : Dg ≤ (D : ℝ) := by
-    have hle : Dg ≤ C1min := by
-      dsimp [C1min]
-      have hm := le_max_right (0 : ℝ) Dg
-      nlinarith [hm, hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCminD.le
-  have hDerrR : (Derr : ℝ) ≤ (D : ℝ) := by
-    have hle : (Derr : ℝ) ≤ C1min := by
-      dsimp [C1min]
-      nlinarith [hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCminD.le
-  have hDcoordR : (Dcoord : ℝ) ≤ (D : ℝ) := by
-    have hle : (Dcoord : ℝ) ≤ C1min := by
-      dsimp [C1min]
-      nlinarith [hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCminD.le
-  have hD146 : D146 ≤ (D : ℝ) := by
-    have hle : D146 ≤ C1min := by
-      dsimp [C1min]
-      have hm := le_max_right (0 : ℝ) D146
-      nlinarith [hm, hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCminD.le
-  have hDconst : Dconst ≤ (D : ℝ) := by
-    have hle : Dconst ≤ C1min := by
-      dsimp [C1min]
-      have hm := le_max_right (0 : ℝ) Dconst
-      nlinarith [hm, hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCminD.le
-  have hDlarge : Dlarge ≤ (D : ℝ) := by
-    have hle : Dlarge ≤ C1min := by
-      dsimp [C1min]
-      have hm := le_max_right (0 : ℝ) Dlarge
-      nlinarith [hm, hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCminD.le
-  have hDsqR : (Dmin ^ 2 : ℝ) ≤ (D : ℝ) := by
-    have hle : (Dmin ^ 2 : ℝ) ≤ C1min := by
-      dsimp [C1min]
-      exact le_add_of_nonneg_left (by positivity)
-    exact hle.trans hCminD.le
-  have hDsq : Dmin ^ 2 ≤ D := by exact_mod_cast hDsqR
+  have hcuts : Cgap ≤ C1min ∧ Ccase ≤ C1min ∧ Dg ≤ C1min ∧
+      (Derr : ℝ) ≤ C1min ∧ (Dcoord : ℝ) ≤ C1min ∧ D146 ≤ C1min ∧
+      Dconst ≤ C1min ∧ Dlarge ≤ C1min ∧ (Dmin ^ 2 : ℝ) ≤ C1min := by
+    dsimp [C1min]
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
+      linarith [le_max_right (0 : ℝ) Cgap, le_max_right (0 : ℝ) Ccase,
+        le_max_right (0 : ℝ) Dg, le_max_right (0 : ℝ) D146,
+        le_max_right (0 : ℝ) Dconst, le_max_right (0 : ℝ) Dlarge,
+        Nat.cast_nonneg (α := ℝ) Derr, Nat.cast_nonneg (α := ℝ) Dcoord,
+        sq_nonneg (Dmin : ℝ)]
+  obtain ⟨hCgap, hCcase, hDg, hDerrR, hDcoordR, hD146, hDconst, hDlarge, hDsqR⟩ := hcuts
+  have hDg := hDg.trans hCminD.le
+  have hDerrR := hDerrR.trans hCminD.le
+  have hDcoordR := hDcoordR.trans hCminD.le
+  have hD146 := hD146.trans hCminD.le
+  have hDconst := hDconst.trans hCminD.le
+  have hDlarge := hDlarge.trans hCminD.le
+  have hDsq : Dmin ^ 2 ≤ D := by exact_mod_cast hDsqR.trans hCminD.le
   have herrorD := herrorAt D (by exact_mod_cast hDerrR) S
   have hcoordinateD := hcoordinateAt D (by exact_mod_cast hDcoordR) S
-  have hCgap : Cgap ≤ C1 := by
-    have hle : Cgap ≤ C1min := by
-      dsimp [C1min]
-      have hm := le_max_right (0 : ℝ) Cgap
-      nlinarith [hm, hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCmin
-  have hCcase : Ccase ≤ C1 := by
-    have hle : Ccase ≤ C1min := by
-      dsimp [C1min]
-      have hm := le_max_right (0 : ℝ) Ccase
-      nlinarith [hm, hmGap, hmCase, hmDg, hm146, hmConst, hmLarge]
-    exact hle.trans hCmin
+  have hCgap := hCgap.trans hCmin
+  have hCcase := hCcase.trans hCmin
   have hD4 : 4 ≤ D := by
     have : 4 ≤ Dmin ^ 2 := by nlinarith
     exact this.trans hDsq
@@ -250,25 +218,9 @@ theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_i
           suzukiSourceV S m (D ⌈/⌉ p) p)) ≤
         caseIIOddClaim145Endpoint S d N D := by
     intro _
-    have hwle : ⌈(D : ℝ) ^ (1 / σ)⌉₊ ≤ y := by
-      exact Nat.ceil_mono (by simpa [σ] using g.hwy)
-    have hrec := suzukiActualT_caseI_recurrence_strict
-      (S := S) (N := N) (D := D)
-      (z := ⌈(D : ℝ) ^ (1 / σ)⌉₊) (by omega)
-      (by
-        intro _ p hp
-        have hpw : (p : ℝ) < (D : ℝ) ^ (1 / σ) := by
-          simpa [Nat.lt_ceil] using hp
-        have hpcubeRoot : (p : ℝ) < (D : ℝ) ^ (1 / (3 : ℝ)) :=
-          hpw.trans_le (by simpa [σ] using g.hwy)
-        have hDR : (0 : ℝ) < (D : ℝ) := by exact_mod_cast (show 0 < D by omega)
-        have hiff := Real.lt_rpow_inv_iff_of_pos
-          (x := (p : ℝ)) (y := (D : ℝ)) (z := (3 : ℝ))
-          (by positivity) hDR.le (by norm_num)
-        have hcubeR : (p : ℝ) ^ (3 : ℕ) < (D : ℝ) := by
-          norm_num [one_div] at hiff hpcubeRoot ⊢
-          exact hiff.mp hpcubeRoot
-        exact_mod_cast hcubeR)
+    have hrec := suzukiActualT_caseI_recurrence_natCeil
+      (S := S) (N := N) (D := D) (s := σ)
+      (by omega) (by omega) (by simpa [σ] using g.h3σ) rfl
     rw [caseIIOddClaim145Endpoint]
     simp_rw [sourceParityIndices_eq_actualParityCarrier,
       ← suzukiActualT_eq_parity_sum]

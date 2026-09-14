@@ -756,7 +756,7 @@ private lemma prime_inv_sq_minus_one_sum_le :
     have hp2 : 2 ≤ p := hp'.two_le
     have hpcast : (2 : ℝ) ≤ (p : ℝ) := by exact_mod_cast hp2
     have hpos : 0 < (p : ℝ) := by exact_mod_cast hp'.pos
-    have hpm1 : (p : ℝ) - 1 ≥ (p : ℝ) / 2 := by nlinarith
+    have hpm1 : (p : ℝ) - 1 ≥ (p : ℝ) / 2 := by linarith only [hpcast]
     have hpm1pos : 0 < (p : ℝ) - 1 := by linarith
     -- 1/(p−1)² ≤ 1/(p/2)² = 4/p²
     have hsq : (p : ℝ) / 2 ≤ (p : ℝ) - 1 := by linarith
@@ -846,17 +846,17 @@ private lemma prime_inv_pminus1_over_primeFactors_le :
     have hE2 : Real.exp 2 < 9 := by
       rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.exp_add]
       have hEp : 0 < Real.exp 1 := Real.exp_pos _
-      nlinarith [hE, hEp]
+      nlinarith only [hE, hEp]
     rw [Real.lt_log_iff_exp_lt (by norm_num : (0 : ℝ) < 9)]
     exact hE2
   have hlog3n_gt2 : 2 < log (3 * n : ℝ) := by
-    have h9le : (9 : ℝ) ≤ 3 * n := by nlinarith
+    have h9le : (9 : ℝ) ≤ 3 * n := by linarith only [hnR]
     have hle := Real.log_le_log (by norm_num : (0 : ℝ) < 9) (by linarith : (9 : ℝ) ≤ 3 * n)
     linarith
   have hloglog3n : log 2 ≤ log (log (3 * n : ℝ)) := by
     have hpos : 0 < log (3 * n : ℝ) := by
       have : 1 ≤ log (3 * n : ℝ) := by
-        have h3 : (3 : ℝ) ≤ 3 * n := by nlinarith
+        have h3 : (3 : ℝ) ≤ 3 * n := by linarith only [hnR]
         have hle := Real.log_le_log (by norm_num : (0 : ℝ) < 3) (by linarith : (3 : ℝ) ≤ 3 * n)
         -- log 3 ≥ 1 follows from le_log_one_add_of_nonneg at x = 2.
         have hlog3 : 1 ≤ log 3 := by
@@ -908,7 +908,7 @@ private lemma prime_inv_pminus1_over_primeFactors_le :
       have hden_pos' : 0 < (u : ℝ) - 1 := by
         have : (3 : ℝ) ≤ (u : ℝ) := by exact_mod_cast hu3
         linarith
-      exact (one_div_le_one_div hden_pos hden_pos').2 (by nlinarith)
+      exact (one_div_le_one_div hden_pos hden_pos').2 (sub_le_sub_right hpu.le 1)
     have hsum_bnd : (∑ p ∈ n.primeFactors.filter (fun p : ℕ => (u : ℝ) < (p : ℝ)),
         1 / ((p : ℝ) - 1)) ≤
         (n.primeFactors.card : ℝ) / ((u : ℝ) - 1) := by
@@ -928,13 +928,13 @@ private lemma prime_inv_pminus1_over_primeFactors_le :
     have homega : (n.primeFactors.card : ℝ) ≤ log (n : ℝ) / log 2 := omega_le_log n (by omega)
     have hdenb : (u : ℝ) - 1 ≥ log (3 * n : ℝ) / 2 := by
       have hlog3n2 : 2 ≤ log (3 * n : ℝ) := le_of_lt hlog3n_gt2
-      nlinarith [hu2]
+      linarith only [hu2, hlog3n2]
     have hb : (n.primeFactors.card : ℝ) / ((u : ℝ) - 1) ≤ 4 / log 2 := by
       -- (log n/log 2)/(log 3n/2) = 2·log n/(log 2·log 3n) ≤ 2/log 2
       have hlog2pos : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
       have hlog2pos' : 0 < log 2 := hlog2pos
       have hln : log (n : ℝ) ≤ log (3 * n : ℝ) := by
-        exact Real.log_le_log (by positivity : 0 < (n : ℝ)) (by nlinarith : (n : ℝ) ≤ 3 * n)
+        exact Real.log_le_log (by positivity : 0 < (n : ℝ)) (by linarith only [hnR] : (n : ℝ) ≤ 3 * n)
       have hden : 0 < log (3 * n : ℝ) := by linarith
       calc
         (n.primeFactors.card : ℝ) / ((u : ℝ) - 1)
@@ -984,8 +984,8 @@ private lemma prime_inv_pminus1_over_primeFactors_le :
       have hposll : 0 < log (3 * n : ℝ) := by linarith
       have h2ll : 2 * log (3 * n : ℝ) ≥ log (3 * n : ℝ) + 1 := by
         have : 1 ≤ log (3 * n : ℝ) := by linarith
-        nlinarith
-      have h1 : log (3 * n : ℝ) + 1 ≤ 2 * log (3 * n : ℝ) := by linarith
+        linarith only [this]
+      have h1 : log (3 * n : ℝ) + 1 ≤ 2 * log (3 * n : ℝ) := h2ll
       have hle1 : log (u : ℝ) ≤ log (log (3 * n : ℝ) + 1) := by
         -- u ≤ log 3n + 1 and log 3n + 1 > 0.
         have hpos : 0 < log (3 * n : ℝ) + 1 := by linarith
@@ -1012,7 +1012,7 @@ private lemma prime_inv_pminus1_over_primeFactors_le :
         have : 1 < log (3 * n : ℝ) := by linarith
         exact Real.log_pos (by linarith : 1 < log (3 * n : ℝ))
       have hx : log 2 ≤ log (log (3 * n : ℝ)) := hloglog3n
-      have hsum : log (log (3 * n : ℝ)) + log 2 ≤ 2 * log (log (3 * n : ℝ)) := by nlinarith
+      have hsum : log (log (3 * n : ℝ)) + log 2 ≤ 2 * log (log (3 * n : ℝ)) := by linarith only [hx]
       have h1 : log (log (log (3 * n : ℝ)) + log 2) ≤ log (2 * log (log (3 * n : ℝ))) := by
         have hpos : 0 < log (log (3 * n : ℝ)) + log 2 := by
           have : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
@@ -1030,7 +1030,7 @@ private lemma prime_inv_pminus1_over_primeFactors_le :
             (∑ p ∈ n.primeFactors.filter (fun p : ℕ => (u : ℝ) < (p : ℝ)), 1 / ((p : ℝ) - 1)) := hsplit
     _ ≤ (log (log (u : ℝ)) + C₀) + 4 / log 2 := add_le_add hsmall hlarge
     _ ≤ (log (log (log (3 * n : ℝ))) + (log 2 + 1) + C₀) + 4 / log 2 := by
-          nlinarith [hsmall2]
+          linarith only [hsmall2]
     _ ≤ log (log (log (3 * n : ℝ))) + (C₀ + (log 2 + 1) + 4 / log 2 + 1) := by
           linarith
 
@@ -1089,7 +1089,7 @@ theorem divisor_sum_bound (A : ℝ) (hA : 0 < A) :
     have h : 1 ≤ C * (log (log 3)) ^ A := by
       have hC' : (1 / (log (log 3)) ^ A) * (log (log 3)) ^ A = 1 := by
         field_simp [hpowpos.ne']
-      nlinarith
+      exact (div_le_iff₀ hpowpos).mp hC
     simpa [show ((3 * 2 : ℕ) : ℝ) = 6 by norm_num] using h
   by_cases hn2 : n = 2
   · subst n
@@ -1108,7 +1108,7 @@ theorem divisor_sum_bound (A : ℝ) (hA : 0 < A) :
     have h : 1 + A ≤ C * (log (log 6)) ^ A := by
       have hC' : ((1 + A) / (log (log 6)) ^ A) * (log (log 6)) ^ A = 1 + A := by
         field_simp [hpowpos.ne']
-      nlinarith
+      exact (div_le_iff₀ hpowpos).mp hC
     change 1 + A ≤ C * (log (log (3 * (2 : ℝ)))) ^ A
     norm_num
     exact h
@@ -1169,7 +1169,7 @@ theorem divisor_sum_bound (A : ℝ) (hA : 0 < A) :
         (∑ p ∈ n.primeFactors, 1 / ((p : ℝ) - 1) ^ 2))) ≤
         Real.exp (A * (log (log (log (3 * n : ℝ))) + C₁ + K)) := by
       apply Real.exp_le_exp.2
-      nlinarith [hS1, hS2, hA0]
+      exact mul_le_mul_of_nonneg_left (add_le_add hS1 hS2) hA0
     have hLLpos : 0 < log (log (3 * n : ℝ)) := by
       have hlog3n : 1 < log (3 * n : ℝ) := by
         have h6le : (6 : ℝ) ≤ 3 * n := by exact_mod_cast (by omega : (6 : ℕ) ≤ 3 * n)
@@ -1806,11 +1806,13 @@ private lemma r1_pair_prod_le_half (N : ℕ) {p₁ p₂ : ℕ} (hp₂ge2 : 2 ≤
     (hp₁sq : (p₁ : ℝ) * (p₂ : ℝ) ^ 2 ≤ (N : ℝ)) :
     (p₁ : ℝ) * (p₂ : ℝ) ≤ (N : ℝ) / 2 := by
   have hp₂ge2r : (2 : ℝ) ≤ (p₂ : ℝ) := by exact_mod_cast hp₂ge2
-  have hp₂half : (p₂ : ℝ) ≤ (p₂ : ℝ) ^ 2 / 2 := by nlinarith [hp₂ge2r]
+  have hp₂half : (p₂ : ℝ) ≤ (p₂ : ℝ) ^ 2 / 2 := by nlinarith only [hp₂ge2r]
   calc
     (p₁ : ℝ) * (p₂ : ℝ) ≤ (p₁ : ℝ) * ((p₂ : ℝ) ^ 2 / 2) :=
       mul_le_mul_of_nonneg_left hp₂half (by positivity : 0 ≤ (p₁ : ℝ))
-    _ ≤ (N : ℝ) / 2 := by nlinarith [hp₁sq]
+    _ ≤ (N : ℝ) / 2 := by
+      rw [← mul_div_assoc]
+      exact div_le_div_of_nonneg_right hp₁sq (by norm_num)
 
 /-- **Auxiliary bound for R₁**: for positive p₁, p₂,
 p₁p₂ ≤ N/2 implies N/(p₁p₂) ≥ 2. -/
@@ -1822,7 +1824,7 @@ private lemma r1_pair_x_ge_two (N : ℕ) {p₁ p₂ : ℕ} (hp₁ : 1 ≤ p₁) 
   rw [le_div_iff₀ hdenpos]
   have hcast : ((p₁ * p₂ : ℕ) : ℝ) = (p₁ : ℝ) * (p₂ : ℝ) := by norm_cast
   rw [hcast]
-  nlinarith [hprod]
+  linarith only [hprod]
 
 /-- **Auxiliary uniqueness for R₁**: for prime pairs satisfying
 p₁ ≤ N^(1/3) < p₂ and p₁' ≤ N^(1/3) < p₂', equal products imply
@@ -1936,7 +1938,7 @@ private lemma r1_sum_rewrite (N : ℕ) (ε : ℝ) (hε : 0 < ε) (hN : 2 ≤ N)
       have hx₂ge2 : 2 ≤ x.2 := hx₂prime.two_le
       have hx₂ge1 : 1 ≤ x.2 := by omega
       have hx₂ge1r : (1 : ℝ) ≤ (x.2 : ℝ) := by exact_mod_cast hx₂ge1
-      have hx₂le : (x.2 : ℝ) ≤ (x.2 : ℝ) ^ 2 := by nlinarith [hx₂ge1r]
+      have hx₂le : (x.2 : ℝ) ≤ (x.2 : ℝ) ^ 2 := le_self_pow₀ hx₂ge1r (by decide)
       have hxprodN : (x.1 : ℝ) * (x.2 : ℝ) ≤ (N : ℝ) :=
         le_trans (mul_le_mul_of_nonneg_left hx₂le (by positivity : 0 ≤ (x.1 : ℝ))) hx₁mul
       have hxprod_le : x.1 * x.2 ≤ N := by exact_mod_cast hxprodN
@@ -2024,7 +2026,7 @@ private lemma r1_sum_rewrite (N : ℕ) (ε : ℝ) (hε : 0 < ε) (hN : 2 ≤ N)
       have hp₂ge1r : (1 : ℝ) ≤ (p₂ : ℝ) := by exact_mod_cast hp₂ge1
       have hp₂leN_r : (p₂ : ℝ) ≤ (N : ℝ) := by
         calc
-          (p₂ : ℝ) ≤ (p₂ : ℝ) ^ 2 := by nlinarith [hp₂ge1r]
+          (p₂ : ℝ) ≤ (p₂ : ℝ) ^ 2 := le_self_pow₀ hp₂ge1r (by decide)
           _ ≤ (N : ℝ) := hp₂sq_le_N
       have hp₂leN : p₂ ≤ N := by exact_mod_cast hp₂leN_r
       have hp₂range : p₂ ∈ Finset.range (N + 1) := by

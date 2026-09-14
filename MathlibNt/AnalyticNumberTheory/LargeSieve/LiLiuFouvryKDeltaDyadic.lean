@@ -118,59 +118,10 @@ theorem betaClean_wMaskedTruncated_largeDelta_dyadic_kscale
     apply pow_le_pow_left₀ (by linarith [Real.log_nonneg (show 1 ≤ 2 * M by linarith)])
     dsimp [H]
     linarith [Real.log_le_log (by positivity : 0 < 2 * M) hMx]
-  have hheadPay :
-      (∑ m ∈ S, α m ^ 2) *
-          (|wMaskedOriginal M N Q (betaClean β a) c a P| +
-            |wMaskedZeroMode M N Q (betaClean β a) c a P|) ≤
-        x ^ 2 / Real.log x ^ (A + 1) := by
-    apply (le_div_iff₀ (pow_pos hlog0 (A + 1))).mpr
-    calc
-      _ ≤ (2 * M * H ^ u) *
-          (2 * M * (2 * T) ^ 2 * x ^ (-ρ / 2)) * H ^ (A + 1) := by
-        apply mul_le_mul
-          (mul_le_mul hAlpha hheadPower (by positivity) (by positivity))
-          (pow_le_pow_left₀ hlog0.le (by dsimp [H]; linarith) _) (by positivity)
-          (by positivity)
-      _ = (M * (2 * T)) ^ 2 *
-          (4 * H ^ (u + (A + 1)) * x ^ (-ρ / 2)) := by
-        rw [pow_add]
-        ring
-      _ ≤ x ^ 2 * 1 :=
-        mul_le_mul (pow_le_pow_left₀ (by positivity) hMT 2)
-          (by simpa only [Real.rpow_zero] using hpay) (by positivity) (sq_nonneg _)
-      _ = _ := mul_one _
-  have he := wMaskedOriginal_eq_zero_add_truncated_add_tail hM0
+  exact wMaskedTruncated_dyadic_power_payment hM0 hT0 (by linarith) hMT hlog
+    (sum_nonneg (fun _ _ ↦ sq_nonneg _)) hAlpha
+    (by simpa only [Real.rpow_zero] using hpay)
     (wUniformCutoff M (x ^ η)) N Q (betaClean β a) c a P
-    (fun q hq ↦ (mem_Ioc.mp (hQx hq)).1.ne')
-  have htrunc :
-      wMaskedTruncated M (wUniformCutoff M (x ^ η)) N Q (betaClean β a) c a P =
-        (wMaskedOriginal M N Q (betaClean β a) c a P -
-          wMaskedZeroMode M N Q (betaClean β a) c a P) -
-            wMaskedTail M (wUniformCutoff M (x ^ η)) N Q (betaClean β a) c a P := by
-    linarith
-  have htri :
-      |wMaskedTruncated M (wUniformCutoff M (x ^ η)) N Q (betaClean β a) c a P| ≤
-        |wMaskedOriginal M N Q (betaClean β a) c a P| +
-          |wMaskedZeroMode M N Q (betaClean β a) c a P| +
-            |wMaskedTail M (wUniformCutoff M (x ^ η)) N Q (betaClean β a) c a P| := by
-    rw [htrunc]
-    exact (abs_sub _ _).trans (add_le_add (abs_sub _ _) le_rfl)
-  have hα0 : 0 ≤ ∑ m ∈ S, α m ^ 2 := sum_nonneg (fun _ _ ↦ sq_nonneg _)
-  have htwo : 2 * (x ^ 2 / Real.log x ^ (A + 1)) ≤
-      x ^ 2 / Real.log x ^ A := by
-    rw [pow_succ (Real.log x) A, div_mul_eq_div_div, ← mul_div_assoc]
-    apply (div_le_iff₀ hlog0).mpr
-    simpa only [mul_comm] using
-      mul_le_mul_of_nonneg_left hlog (by positivity : 0 ≤ x ^ 2 / Real.log x ^ A)
-  calc
-    _ ≤ (∑ m ∈ S, α m ^ 2) *
-        (|wMaskedOriginal M N Q (betaClean β a) c a P| +
-          |wMaskedZeroMode M N Q (betaClean β a) c a P| +
-            |wMaskedTail M (wUniformCutoff M (x ^ η)) N Q (betaClean β a) c a P|) :=
-      mul_le_mul_of_nonneg_left htri hα0
-    _ ≤ 2 * (x ^ 2 / Real.log x ^ (A + 1)) := by
-      rw [mul_add]
-      linarith
-    _ ≤ _ := htwo
+    (fun q hq ↦ (mem_Ioc.mp (hQx hq)).1.ne') hheadPower htailPay
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

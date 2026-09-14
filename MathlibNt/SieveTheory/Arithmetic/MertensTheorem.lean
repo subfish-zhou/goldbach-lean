@@ -947,10 +947,7 @@ theorem primeProduct_asymptotic_order :
       exact Finset.prod_pos (fun p hp => by
         have hp' : p.Prime := (mem_filter.mp hp).2
         have hp1 : 1 < (p : ℝ) := by exact_mod_cast hp'.one_lt
-        have hdiv : 1 / (p : ℝ) < 1 := by
-          rw [div_lt_iff₀ (by positivity : 0 < (p : ℝ))]
-          nlinarith
-        linarith)
+        exact sub_pos.mpr ((div_lt_one₀ (lt_trans zero_lt_one hp1)).mpr hp1))
     -- log Π = Σ log(1 - 1/p)
     have hlogprod : log (primeProduct x) =
         ((range (x + 1)).filter Nat.Prime).sum (fun p => log (1 - 1 / (p : ℝ))) := by
@@ -959,10 +956,8 @@ theorem primeProduct_asymptotic_order :
       intro p hp
       have hp' : p.Prime := (mem_filter.mp hp).2
       have hp1 : 1 < (p : ℝ) := by exact_mod_cast hp'.one_lt
-      have hdiv : 1 / (p : ℝ) < 1 := by
-        rw [div_lt_iff₀ (by positivity : 0 < (p : ℝ))]
-        nlinarith
-      linarith
+      exact ne_of_gt (sub_pos.mpr
+        ((div_lt_one₀ (lt_trans zero_lt_one hp1)).mpr hp1))
     -- E(x) := Σ_{p ≤ x} (-log(1-1/p) - 1/p), |E(x)| ≤ T
     let E : ℝ := ((range (x + 1)).filter Nat.Prime).sum
       (fun p => -log (1 - 1 / (p : ℝ)) - 1 / (p : ℝ))
@@ -1006,7 +1001,7 @@ theorem primeProduct_asymptotic_order :
         rw [hneglog]
         unfold δ
         ring
-      linarith
+      linarith only [h1]
     have hP' : primeProduct x = exp (-B₁ - δ - E) / log x := by
       rw [← Real.exp_log hprod_pos]
       have hsplit : -(log (log x) + B₁ + δ + E) = -log (log x) + (-B₁ - δ - E) := by ring
@@ -1017,11 +1012,11 @@ theorem primeProduct_asymptotic_order :
     have hlower : -B₁ - T - C₁ / log 2 ≤ -B₁ - δ - E := by
       have hδ : δ ≤ |δ| := le_abs_self _
       have hE : E ≤ |E| := le_abs_self _
-      nlinarith [hδ, hE, hδ_le2, hEabs, hT0]
+      linarith only [hδ, hE, hδ_le2, hEabs]
     have hupper : -B₁ - δ - E ≤ -B₁ + T + C₁ / log 2 := by
       have hδ' : -δ ≤ |δ| := neg_le_abs δ
       have hE' : -E ≤ |E| := neg_le_abs E
-      nlinarith [hδ', hE', hδ_le2, hEabs, hT0]
+      linarith only [hδ', hE', hδ_le2, hEabs]
     have hP_low : exp (-B₁ - T - C₁ / log 2) ≤ exp (-B₁ - δ - E) :=
       Real.exp_le_exp.mpr hlower
     have hP_up : exp (-B₁ - δ - E) ≤ exp (-B₁ + T + C₁ / log 2) :=
@@ -1151,24 +1146,23 @@ theorem prime_reciprocal_sum_bounded (α β : ℝ) (hα : 0 < α) (_hβ : α < �
           (abs_le.mp hMx).2
         have hLu : (log (log u) + _B₁) - primeReciprocalSum u ≤ C₁ / log u := by
           have h := (abs_le.mp hMu).1
-          linarith
+          linarith only [h]
         -- log x / log u ≤ 2 / α
         have hlogratio : log x / log u ≤ 2 / α := by
           have hα0 : α ≠ 0 := ne_of_gt hα
           by_cases hbig : (2 * log 2 / α) ≤ log x
           · -- log u ≥ α·log x - log 2 ≥ (α/2)·log x
             have hcross : 2 * log 2 ≤ α * log x := by
-              have := (div_le_iff₀ hα).mp hbig
-              nlinarith
+              simpa only [mul_comm] using (div_le_iff₀ hα).mp hbig
             have hden : 0 < α * log x - log 2 := by
-              nlinarith [hcross, hlog2pos]
+              linarith only [hcross, hlog2pos]
             have hxα2 : (2 : ℝ) ≤ (x : ℝ) ^ α := by
               have hu_le : (u : ℝ) ≤ (x : ℝ) ^ α := Nat.floor_le hxα0
               have hu2' : (2 : ℝ) ≤ (u : ℝ) := by exact_mod_cast hu2
-              nlinarith
+              exact hu2'.trans hu_le
             have hfl : (x : ℝ) ^ α / 2 ≤ u := by
               have hlt := Nat.lt_floor_add_one (a := (x : ℝ) ^ α)
-              nlinarith [hlt, hxα2]
+              linarith only [hlt, (show (2 : ℝ) ≤ (u : ℝ) by exact_mod_cast hu2)]
             have hlogu_ge : α * log x - log 2 ≤ log u := by
               have hpos1 : 0 < (x : ℝ) ^ α / 2 := by positivity
               have hpos2 : 0 < (u : ℝ) := by exact_mod_cast (by omega : 0 < u)
@@ -1179,9 +1173,8 @@ theorem prime_reciprocal_sum_bounded (α β : ℝ) (hα : 0 < α) (_hβ : α < �
                   rw [Real.log_rpow (by exact_mod_cast (by omega : 0 < x))]
               _ ≤ log u := (Real.log_le_log_iff hpos1 hpos2).2 hfl
             have hfrac : log x / (α * log x - log 2) ≤ 2 / α := by
-              rw [div_le_iff₀ hden]
-              field_simp [hα0, hden.ne']
-              nlinarith [hcross]
+              apply (div_le_div_iff₀ hden hα).mpr
+              nlinarith only [hcross]
             calc
               log x / log u ≤ log x / (α * log x - log 2) :=
                 div_le_div_of_nonneg_left (le_of_lt hlogxpos) hden hlogu_ge
@@ -1194,12 +1187,10 @@ theorem prime_reciprocal_sum_bounded (α β : ℝ) (hα : 0 < α) (_hβ : α < �
                   (by exact_mod_cast (by omega : 0 < u))).2 (by exact_mod_cast hu2)
               exact div_le_div_of_nonneg_left (le_of_lt hlogxpos) hlog2pos hlog2_le_logu
             have hcross2 : α * log x < 2 * log 2 := by
-              have := (lt_div_iff₀ hα).mp hlt
-              nlinarith
+              simpa only [mul_comm] using (lt_div_iff₀ hα).mp hlt
             have hle2 : log x / log 2 ≤ 2 / α := by
-              rw [div_le_iff₀ hlog2pos]
-              field_simp [hα0]
-              nlinarith [hcross2]
+              apply (div_le_div_iff₀ hlog2pos hα).mpr
+              simpa only [mul_comm] using hcross2.le
             exact hle1.trans hle2
         -- log(log x) - log(log u) = log(log x / log u) ≤ log(2/α)
         have hLdiff : log (log x) - log (log u) ≤ log (2 / α) := by
@@ -1212,7 +1203,7 @@ theorem prime_reciprocal_sum_bounded (α β : ℝ) (hα : 0 < α) (_hβ : α < �
         -- Combine the difference estimates.
         have hdiff : primeReciprocalSum x - primeReciprocalSum u ≤
             (log (log x) - log (log u)) + C₁ / log x + C₁ / log u := by
-          nlinarith [hLx, hLu]
+          linarith only [hLx, hLu]
         have hlelog : log 2 ≤ log x :=
           (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
             (by exact_mod_cast (by omega : 0 < x))).2 (by exact_mod_cast hx)
@@ -1227,17 +1218,16 @@ theorem prime_reciprocal_sum_bounded (α β : ℝ) (hα : 0 < α) (_hβ : α < �
           unfold K
           exact le_max_left _ _
         have h2div : 2 * C₁ / log 2 = C₁ / log 2 + C₁ / log 2 := by
-          field_simp [hlog2pos.ne']
           ring
         have hfinal : primeReciprocalSum x - primeReciprocalSum u ≤ K + 2 * C₁ / log 2 := by
           calc
             primeReciprocalSum x - primeReciprocalSum u
                 ≤ (log (log x) - log (log u)) + C₁ / log x + C₁ / log u := hdiff
             _ ≤ log (2 / α) + C₁ / log 2 + C₁ / log 2 := by
-                nlinarith [hLdiff, hc1x, hc1u]
+                exact add_le_add (add_le_add hLdiff hc1x) hc1u
             _ ≤ K + 2 * C₁ / log 2 := by
                 rw [h2div]
-                nlinarith [hK1]
+                linarith only [hK1]
         rw [hUeq]
         exact hfinal.trans (le_max_right _ _)
       · -- u ≤ 1: x is bounded, and S x ≤ S x₀.
@@ -1908,6 +1898,14 @@ theorem twinPrimeConstant_lt_one : twinPrimeConstant < 1 := by
 
 /-! ## 6.5 Local interval factors -/
 
+/-- Positivity of the Goldbach local factor, independently of the prime carrier. -/
+private lemma goldbach_local_factor_pos {p : ℕ} (hp2 : 2 < p) :
+    0 < 1 - 1 / ((p : ℝ) - 1) := by
+  have hp3 : (3 : ℝ) ≤ p := by exact_mod_cast hp2
+  have hrec : 1 / ((p : ℝ) - 1) ≤ 1 / 2 :=
+    one_div_le_one_div_of_le (by norm_num) (by linarith)
+  linarith
+
 /-- For an odd prime, the logarithm of the inverse Goldbach local factor is
 controlled by its reciprocal-prime main term and a summable error. -/
 private lemma log_goldbach_inverse_factor_le {p : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
@@ -1969,33 +1967,13 @@ theorem exists_log_goldbach_inverse_interval_bound :
     rcases hs p hp with ⟨hpp, hkp, hpn⟩
     simp only [T, Finset.mem_filter, Finset.mem_Ioo]
     exact ⟨⟨hkp, by omega⟩, hpp⟩
-  have hprodpos : 0 < ∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹ := by
-    apply Finset.prod_pos
-    intro p hp
-    have hpdata := hs p hp
-    have hp3 : 3 ≤ p := by omega
-    have hden : 0 < 1 - 1 / ((p : ℝ) - 1) := by
-      have htwo : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-        have hp3r : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-        linarith
-      have hrec : 1 / ((p : ℝ) - 1) ≤ 1 / 2 :=
-        one_div_le_one_div_of_le (by norm_num) htwo
-      linarith
-    exact inv_pos.mpr hden
   have hlogprod :
       log (∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹) =
         ∑ p ∈ s, log (1 - 1 / ((p : ℝ) - 1))⁻¹ := by
-    rw [Real.log_prod]
+    apply Real.log_prod
     intro p hp
-    exact ne_of_gt (inv_pos.mpr (by
-      have hpdata := hs p hp
-      have hp3 : 3 ≤ p := by omega
-      have htwo : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-        have hp3r : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-        linarith
-      have hrec : 1 / ((p : ℝ) - 1) ≤ 1 / 2 :=
-        one_div_le_one_div_of_le (by norm_num) htwo
-      linarith))
+    exact (inv_pos.mpr (goldbach_local_factor_pos
+      (lt_of_le_of_lt hk (hs p hp).2.1))).ne'
   have hlocal :
       (∑ p ∈ s, log (1 - 1 / ((p : ℝ) - 1))⁻¹) ≤
         (∑ p ∈ s, (1 / (p : ℝ) + 12 / (p : ℝ) ^ 2)) := by
@@ -2123,306 +2101,142 @@ theorem exists_goldbach_inverse_interval_bound :
   obtain ⟨C, hC, hinterval⟩ := exists_log_goldbach_inverse_interval_bound
   let A : ℝ := 2 * C + 24
   let D : ℝ := 2 * A + 2 * log 2
-  let E : ℝ := (D / log 2) * exp (A / log 2)
-  let K : ℝ := 2 * D + E * D + 2
+  let K : ℝ := D * exp (D / log 2) + 2
   have hlog2 : 0 < log 2 := Real.log_pos (by norm_num)
-  have hA : 0 ≤ A := by
-    dsimp [A]
-    nlinarith
-  have hD : 0 < D := by
-    dsimp [D]
-    nlinarith
-  have hDthree : 3 ≤ D := by
-    dsimp [D, A]
-    nlinarith
-  have hE : 0 < E := by
-    dsimp [E]
-    positivity
+  have hA : 0 ≤ A := by dsimp [A]; linarith only [hC]
+  have hD : 0 < D := by dsimp [D]; positivity
   have hK : 1 < K := by
+    have : 0 < D * exp (D / log 2) := mul_pos hD (Real.exp_pos _)
     dsimp [K]
-    nlinarith
+    linarith only [this]
   refine ⟨K, hK, ?_⟩
   intro s hs z₁ z₂ hz₁ hz₁₂ hsinterval
-  have hlogz₁ : 0 < log z₁ := Real.log_pos (by linarith)
-  have hlogz₁₂ : log z₁ ≤ log z₂ :=
-    Real.log_le_log (by linarith) hz₁₂
-  have hlogz₂ : 0 < log z₂ := lt_of_lt_of_le hlogz₁ hlogz₁₂
+  have hz₁pos : 0 < z₁ := by linarith only [hz₁]
+  have hz₂pos : 0 < z₂ := hz₁pos.trans_le hz₁₂
+  have hlogz₁ : 0 < log z₁ := Real.log_pos (by linarith only [hz₁])
+  have hlogz₁₂ : log z₁ ≤ log z₂ := Real.log_le_log hz₁pos hz₁₂
+  have hlogz₂ : 0 < log z₂ := hlogz₁.trans_le hlogz₁₂
   have hratio_pos : 0 < log z₂ / log z₁ := div_pos hlogz₂ hlogz₁
-  have hprodpos : 0 < ∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹ := by
-    apply Finset.prod_pos
+  -- One cutoff works on the entire real range, including z₁ = 2.
+  -- The ceiling predecessor retains a prime at the closed lower endpoint;
+  -- the maximum with 2 is harmless because every prime in s is odd.
+  let k : ℕ := max 2 (Nat.ceil z₁ - 1)
+  let n : ℕ := max k (Nat.floor z₂)
+  have hk2 : 2 ≤ k := le_max_left _ _
+  have hkpos : (0 : ℝ) < k := by exact_mod_cast (show 0 < k by omega)
+  have hceil1 : 1 ≤ Nat.ceil z₁ := by
+    have := Nat.le_ceil z₁
+    by_contra h
+    have : Nat.ceil z₁ = 0 := by omega
+    simp only [this, Nat.cast_zero] at *
+    linarith
+  have hpredcast : ((Nat.ceil z₁ - 1 : ℕ) : ℝ) = (Nat.ceil z₁ : ℝ) - 1 := by
+    rw [Nat.cast_sub hceil1, Nat.cast_one]
+  have hklez₁ : (k : ℝ) ≤ z₁ := by
+    dsimp [k]
+    rw [Nat.cast_max, max_le_iff, hpredcast]
+    exact ⟨hz₁, by linarith only [Nat.ceil_lt_add_one hz₁pos.le]⟩
+  have hz₁lek : z₁ ≤ (k : ℝ) + 1 := by
+    have hpred : (Nat.ceil z₁ : ℝ) - 1 ≤ (k : ℝ) := by
+      rw [← hpredcast]
+      exact_mod_cast (le_max_right 2 (Nat.ceil z₁ - 1))
+    linarith [Nat.le_ceil z₁]
+  have hkhalf : z₁ / 2 ≤ (k : ℝ) := by
+    have : (2 : ℝ) ≤ k := by exact_mod_cast hk2
+    linarith only [this, hz₁lek]
+  have hnlez₂ : (n : ℝ) ≤ z₂ := by
+    dsimp [n]
+    rw [Nat.cast_max, max_le_iff]
+    exact ⟨hklez₁.trans hz₁₂, Nat.floor_le hz₂pos.le⟩
+  have hkn : k ≤ n := le_max_left _ _
+  have hlogk : 0 < log (k : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < k by omega))
+  have hlogn : 0 < log (n : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < n by omega))
+  have hbound := hinterval k n hk2 hkn s (by
     intro p hp
-    have hp2 : 2 < p := (hs p hp).2
-    have hp3 : 3 ≤ p := by omega
-    have hden : 0 < 1 - 1 / ((p : ℝ) - 1) := by
-      have htwo : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-        have hp3r : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-        linarith
-      have hrec : 1 / ((p : ℝ) - 1) ≤ 1 / 2 :=
-        one_div_le_one_div_of_le (by norm_num) htwo
-      linarith
-    exact inv_pos.mpr hden
-  by_cases hempty : s = ∅
-  · subst s
-    simp only [Finset.prod_empty]
-    have hratio_one : 1 ≤ log z₂ / log z₁ := by
-      apply (le_div_iff₀ hlogz₁).mpr
-      linarith
-    have hfactor_one : 1 ≤ 1 + K / log z₁ := by
-      have hKpos : 0 ≤ K := by linarith
-      have : 0 ≤ K / log z₁ := div_nonneg hKpos (le_of_lt hlogz₁)
-      linarith
-    calc
-      1 ≤ (log z₂ / log z₁) * 1 := by simpa using hratio_one
-      _ ≤ (log z₂ / log z₁) * (1 + K / log z₁) :=
-        mul_le_mul_of_nonneg_left hfactor_one (le_of_lt hratio_pos)
-  obtain ⟨p, hp⟩ := Finset.nonempty_iff_ne_empty.mpr hempty
-  have hpz₁ : z₁ ≤ (p : ℝ) := (hsinterval p hp).1
-  have hpz₂ : (p : ℝ) < z₂ := (hsinterval p hp).2
-  by_cases hlarge : exp D ≤ z₁
-  · let k : ℕ := Nat.floor z₁ - 1
-    let n : ℕ := Nat.floor z₂
-    have hDlog : D ≤ log z₁ := by
-      have := Real.log_le_log (Real.exp_pos D) hlarge
-      simpa using this
-    have hz₁four : 4 ≤ z₁ := by
-      calc
-        (4 : ℝ) ≤ D + 1 := by linarith
-        _ ≤ exp D := Real.add_one_le_exp D
-        _ ≤ z₁ := hlarge
-    have hfloor_four : 4 ≤ Nat.floor z₁ := Nat.le_floor hz₁four
-    have hkhalf : z₁ / 2 ≤ (k : ℝ) := by
-      have hfloor := Nat.lt_floor_add_one z₁
-      have hkcast : (k : ℝ) = (Nat.floor z₁ : ℝ) - 1 := by
-        dsimp [k]
-        rw [Nat.cast_sub (by omega : 1 ≤ Nat.floor z₁)]
-        norm_num
-      rw [hkcast]
-      nlinarith
-    have hkz₁ : (k : ℝ) < z₁ := by
-      have hfloor : (Nat.floor z₁ : ℝ) ≤ z₁ :=
-        Nat.floor_le (by linarith)
-      have hklt : k < Nat.floor z₁ := by
-        dsimp [k]
-        omega
-      exact lt_of_lt_of_le (by exact_mod_cast hklt) hfloor
-    have hkp : k < p := by
-      have : (k : ℝ) < (p : ℝ) := lt_of_lt_of_le hkz₁ hpz₁
-      exact_mod_cast this
-    have hpn : p ≤ n := by
-      have : p < n + 1 := by
-        have hcast : (p : ℝ) < (n : ℝ) + 1 := by
-          dsimp [n]
-          exact lt_trans hpz₂ (Nat.lt_floor_add_one z₂)
-        exact_mod_cast hcast
+    refine ⟨(hs p hp).1, ?_, ?_⟩
+    · have hceil : Nat.ceil z₁ ≤ p := Nat.ceil_le.mpr (hsinterval p hp).1
+      have hp2 := (hs p hp).2
+      dsimp [k]
       omega
-    have hk2 : 2 ≤ k := by
-      have : (2 : ℝ) ≤ (k : ℝ) := by nlinarith [hkhalf, hz₁four]
-      exact_mod_cast this
-    have hkn : k ≤ n := le_trans (le_of_lt hkp) hpn
-    have hbound := hinterval k n hk2 hkn s (by
-      intro q hq
-      refine ⟨(hs q hq).1, ?_, ?_⟩
-      · have : (k : ℝ) < (q : ℝ) :=
-          lt_of_lt_of_le hkz₁ (hsinterval q hq).1
-        exact_mod_cast this
-      · have hqfloor := Nat.lt_floor_add_one z₂
-        have : q < n + 1 := by
-          have hcast : (q : ℝ) < (n : ℝ) + 1 := by
-            dsimp [n]
-            exact lt_trans (hsinterval q hq).2 hqfloor
-          exact_mod_cast hcast
-        omega)
-    have hlogk : 0 < log (k : ℝ) := by
-      apply Real.log_pos
-      exact_mod_cast (show 1 < k by omega)
-    have hlogk_le : log (k : ℝ) ≤ log z₁ :=
-      Real.log_le_log (by positivity) (le_of_lt hkz₁)
-    have hlogk_lower : log z₁ - log 2 ≤ log (k : ℝ) := by
-      calc
-        log z₁ - log 2 = log (z₁ / 2) := by
-          rw [Real.log_div (ne_of_gt (by linarith : 0 < z₁)) (by norm_num)]
-        _ ≤ log (k : ℝ) := Real.log_le_log (by positivity) hkhalf
-    have hlogk_half : log z₁ / 2 ≤ log (k : ℝ) := by
-      dsimp [D, A] at hDlog
-      nlinarith
-    have hAdiv : A / log (k : ℝ) ≤ 2 * A / log z₁ := by
-      apply (div_le_div_iff₀ hlogk hlogz₁).mpr
-      have := mul_le_mul_of_nonneg_left hlogk_half hA
-      nlinarith
-    have hlogratio : log (log z₁ / log (k : ℝ)) ≤ 2 * log 2 / log z₁ := by
-      have hratio : 0 < log z₁ / log (k : ℝ) := div_pos hlogz₁ hlogk
-      calc
-        log (log z₁ / log (k : ℝ)) ≤ log z₁ / log (k : ℝ) - 1 :=
-          Real.log_le_sub_one_of_pos hratio
-        _ = (log z₁ - log (k : ℝ)) / log (k : ℝ) := by
-          field_simp
-        _ ≤ log 2 / log (k : ℝ) := by
-          apply div_le_div_of_nonneg_right
-            (by linarith [hlogk_le, hlogk_lower]) (le_of_lt hlogk)
-        _ ≤ 2 * log 2 / log z₁ := by
-          apply (div_le_div_iff₀ hlogk hlogz₁).mpr
-          have := mul_le_mul_of_nonneg_left hlogk_half (le_of_lt hlog2)
-          nlinarith
-    have hnlez₂ : (n : ℝ) ≤ z₂ := by
-      dsimp [n]
-      exact Nat.floor_le (by linarith)
-    have hlogn : 0 < log (n : ℝ) := by
-      apply Real.log_pos
-      exact_mod_cast (show 1 < n by omega)
-    have hlogn_le : log (n : ℝ) ≤ log z₂ :=
-      Real.log_le_log (by exact_mod_cast (show 0 < n by omega)) hnlez₂
-    have hinner :
-        log (log (n : ℝ) / log (k : ℝ)) ≤ log (log z₂ / log (k : ℝ)) :=
-      Real.log_le_log (div_pos hlogn hlogk)
-        (div_le_div_of_nonneg_right hlogn_le (le_of_lt hlogk))
-    have hsplit :
-        log (log z₂ / log (k : ℝ)) =
-          log (log z₂ / log z₁) + log (log z₁ / log (k : ℝ)) := by
-      rw [Real.log_div hlogz₂.ne' hlogk.ne',
-        Real.log_div hlogz₂.ne' hlogz₁.ne',
-        Real.log_div hlogz₁.ne' hlogk.ne']
-      ring
-    have hlogprod :
-        log (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          log (log z₂ / log z₁) + D / log z₁ := by
-      calc
-        log (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-            log (log (n : ℝ) / log (k : ℝ)) + A / log (k : ℝ) := by
-              simpa only [A] using hbound
-        _ ≤ log (log z₂ / log (k : ℝ)) + A / log (k : ℝ) :=
-          add_le_add hinner le_rfl
-        _ = log (log z₂ / log z₁) +
-              (log (log z₁ / log (k : ℝ)) + A / log (k : ℝ)) := by
-          rw [hsplit]
-          ring
-        _ ≤ log (log z₂ / log z₁) +
-              (2 * log 2 / log z₁ + 2 * A / log z₁) :=
-          by linarith [add_le_add hlogratio hAdiv]
-        _ = log (log z₂ / log z₁) + D / log z₁ := by
-          dsimp [D]
-          ring
-    have hxnonneg : 0 ≤ D / log z₁ := div_nonneg (le_of_lt hD) (le_of_lt hlogz₁)
-    have hxle : D / log z₁ ≤ 1 := (div_le_one₀ hlogz₁).mpr hDlog
-    have hexp : exp (D / log z₁) ≤ 1 + 2 * D / log z₁ := by
-      have habs : |D / log z₁| ≤ 1 := by
-        rw [abs_of_nonneg hxnonneg]
-        exact hxle
-      have h := Real.abs_exp_sub_one_le habs
-      rw [abs_of_nonneg hxnonneg] at h
-      have h' : |exp (D / log z₁) - 1| ≤ 2 * D / log z₁ := by
-        calc
-          |exp (D / log z₁) - 1| ≤ 2 * (D / log z₁) := h
-          _ = 2 * D / log z₁ := by ring
-      have hself : exp (D / log z₁) - 1 ≤ |exp (D / log z₁) - 1| :=
-        le_abs_self _
-      calc
-        exp (D / log z₁) = (exp (D / log z₁) - 1) + 1 := by ring
-        _ ≤ |exp (D / log z₁) - 1| + 1 := add_le_add_left hself _
-        _ ≤ 2 * D / log z₁ + 1 := add_le_add_left h' _
-        _ = 1 + 2 * D / log z₁ := by ring
-    have hprodexp :
-        (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          (log z₂ / log z₁) * exp (D / log z₁) := by
-      have := Real.exp_le_exp.mpr hlogprod
-      rw [Real.exp_log hprodpos, Real.exp_add,
-        Real.exp_log hratio_pos] at this
-      exact this
-    have hKlarge : 2 * D ≤ K := by
-      dsimp [K]
-      nlinarith
+    · exact (Nat.le_floor (hsinterval p hp).2.le).trans (le_max_right _ _))
+  -- k ≥ 2 and z₁ ≤ k + 1 imply z₁ ≤ k², so the logarithmic
+  -- comparison needs no large/small split or auxiliary exponential threshold.
+  have hlogk_half : log z₁ / 2 ≤ log (k : ℝ) := by
+    have hk2r : (2 : ℝ) ≤ k := by exact_mod_cast hk2
+    have hz₁sq : z₁ ≤ (k : ℝ) ^ 2 := by nlinarith only [hk2r, hz₁lek]
+    have h := Real.log_le_log hz₁pos hz₁sq
+    rw [Real.log_pow] at h
+    norm_num only [Nat.cast_ofNat] at h
+    linarith only [h]
+  have hlogk_lower : log z₁ - log 2 ≤ log (k : ℝ) := by
     calc
-      (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          (log z₂ / log z₁) * exp (D / log z₁) := hprodexp
-      _ ≤ (log z₂ / log z₁) * (1 + 2 * D / log z₁) :=
-        mul_le_mul_of_nonneg_left hexp (le_of_lt hratio_pos)
-      _ ≤ (log z₂ / log z₁) * (1 + K / log z₁) := by
-        apply mul_le_mul_of_nonneg_left _ (le_of_lt hratio_pos)
-        have hdiv : 2 * D / log z₁ ≤ K / log z₁ :=
-          div_le_div_of_nonneg_right hKlarge (le_of_lt hlogz₁)
-        linarith
-  · let n : ℕ := Nat.floor z₂
-    have hp2 : 2 < p := (hs p hp).2
-    have hpn : p ≤ n := by
-      have : p < n + 1 := by
-        have hcast : (p : ℝ) < (n : ℝ) + 1 := by
-          dsimp [n]
-          exact lt_trans hpz₂ (Nat.lt_floor_add_one z₂)
-        exact_mod_cast hcast
-      omega
-    have hn2 : 2 ≤ n := by omega
-    have hbound := hinterval 2 n (by norm_num) hn2 s (by
-      intro q hq
-      refine ⟨(hs q hq).1, (hs q hq).2, ?_⟩
-      have hqfloor := Nat.lt_floor_add_one z₂
-      have : q < n + 1 := by
-        have hcast : (q : ℝ) < (n : ℝ) + 1 := by
-          dsimp [n]
-          exact lt_trans (hsinterval q hq).2 hqfloor
-        exact_mod_cast hcast
-      omega)
-    have hsmalllog : log z₁ ≤ D := by
-      have hz₁exp : z₁ ≤ exp D := le_of_lt (lt_of_not_ge hlarge)
-      have := Real.log_le_log (by linarith : 0 < z₁) hz₁exp
-      simpa using this
-    have hnlez₂ : (n : ℝ) ≤ z₂ := by
-      dsimp [n]
-      exact Nat.floor_le (by linarith)
-    have hlogn : 0 < log (n : ℝ) := by
-      apply Real.log_pos
-      exact_mod_cast (show 1 < n by omega)
-    have hlogn_le : log (n : ℝ) ≤ log z₂ :=
-      Real.log_le_log (by positivity) hnlez₂
-    have hlogndiv : log (n : ℝ) / log 2 ≤ log z₂ / log 2 :=
-      div_le_div_of_nonneg_right hlogn_le (le_of_lt hlog2)
-    have hsplit :
-        log z₂ / log 2 =
-          (log z₂ / log z₁) * (log z₁ / log 2) := by
-      field_simp
-    have hz₁div : log z₁ / log 2 ≤ D / log 2 :=
-      div_le_div_of_nonneg_right hsmalllog (le_of_lt hlog2)
-    have hlogprod :
-        log (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          log (log (n : ℝ) / log 2) + A / log 2 := by
-      simpa [A] using hbound
-    have hprodexp :
-        (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          (log (n : ℝ) / log 2) * exp (A / log 2) := by
-      have h := Real.exp_le_exp.mpr hlogprod
-      rw [Real.exp_log hprodpos, Real.exp_add,
-        Real.exp_log (div_pos hlogn hlog2)] at h
-      exact h
-    have hprodE :
-        (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          (log z₂ / log z₁) * E := by
-      calc
-        (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-            (log (n : ℝ) / log 2) * exp (A / log 2) := hprodexp
-        _ ≤ (log z₂ / log 2) * exp (A / log 2) :=
-          mul_le_mul_of_nonneg_right hlogndiv (by positivity)
-        _ = (log z₂ / log z₁) *
-              ((log z₁ / log 2) * exp (A / log 2)) := by
-          rw [hsplit]
-          ring
-        _ ≤ (log z₂ / log z₁) *
-              ((D / log 2) * exp (A / log 2)) :=
-          mul_le_mul_of_nonneg_left
-            (mul_le_mul_of_nonneg_right hz₁div (by positivity))
-            (le_of_lt hratio_pos)
-        _ = (log z₂ / log z₁) * E := by rfl
-    have hKE : E ≤ K / log z₁ := by
-      apply (le_div_iff₀ hlogz₁).mpr
-      calc
-        E * log z₁ ≤ E * D :=
-          mul_le_mul_of_nonneg_left hsmalllog (le_of_lt hE)
-        _ ≤ K := by
-          dsimp [K]
-          nlinarith
+      log z₁ - log 2 = log (z₁ / 2) :=
+        (Real.log_div hz₁pos.ne' (by norm_num)).symm
+      _ ≤ log (k : ℝ) := Real.log_le_log (by positivity) hkhalf
+  have hAdiv : A / log (k : ℝ) ≤ 2 * A / log z₁ := by
+    apply (div_le_div_iff₀ hlogk hlogz₁).mpr
+    nlinarith only [mul_le_mul_of_nonneg_left hlogk_half hA]
+  have hlogratio : log (log z₁ / log (k : ℝ)) ≤ 2 * log 2 / log z₁ := by
     calc
-      (∏ q ∈ s, (1 - 1 / ((q : ℝ) - 1))⁻¹) ≤
-          (log z₂ / log z₁) * E := hprodE
-      _ ≤ (log z₂ / log z₁) * (1 + K / log z₁) :=
-        mul_le_mul_of_nonneg_left (by linarith) (le_of_lt hratio_pos)
-
+      log (log z₁ / log (k : ℝ)) ≤ log z₁ / log (k : ℝ) - 1 :=
+        Real.log_le_sub_one_of_pos (div_pos hlogz₁ hlogk)
+      _ = (log z₁ - log (k : ℝ)) / log (k : ℝ) := by field_simp
+      _ ≤ log 2 / log (k : ℝ) :=
+        div_le_div_of_nonneg_right (by linarith only [hlogk_lower]) hlogk.le
+      _ ≤ 2 * log 2 / log z₁ := by
+        apply (div_le_div_iff₀ hlogk hlogz₁).mpr
+        nlinarith only [mul_le_mul_of_nonneg_left hlogk_half hlog2.le]
+  have hinner : log (log (n : ℝ) / log (k : ℝ)) ≤
+      log (log z₂ / log (k : ℝ)) :=
+    Real.log_le_log (div_pos hlogn hlogk)
+      (div_le_div_of_nonneg_right
+        (Real.log_le_log (by positivity) hnlez₂) hlogk.le)
+  have hsplit : log (log z₂ / log (k : ℝ)) =
+      log (log z₂ / log z₁) + log (log z₁ / log (k : ℝ)) := by
+    rw [Real.log_div hlogz₂.ne' hlogk.ne',
+      Real.log_div hlogz₂.ne' hlogz₁.ne', Real.log_div hlogz₁.ne' hlogk.ne']
+    ring
+  have hlogprod : log (∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹) ≤
+      log (log z₂ / log z₁) + D / log z₁ := by
+    calc
+      log (∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹) ≤
+          log (log (n : ℝ) / log (k : ℝ)) + A / log (k : ℝ) := hbound
+      _ ≤ log (log z₂ / log (k : ℝ)) + 2 * A / log z₁ :=
+        add_le_add hinner hAdiv
+      _ ≤ log (log z₂ / log z₁) +
+          (2 * log 2 / log z₁ + 2 * A / log z₁) := by
+        rw [hsplit]
+        linarith only [hlogratio]
+      _ = log (log z₂ / log z₁) + D / log z₁ := by dsimp [D]; ring
+  -- Linearize exp on the fixed compact range 0 ≤ D/log z₁ ≤ D/log 2.
+  -- Its tangent inequality at -x gives exp x ≤ 1 + x * exp x.
+  have hx : 0 ≤ D / log z₁ := by positivity
+  have hxupper : D / log z₁ ≤ D / log 2 :=
+    div_le_div_of_nonneg_left hD.le hlog2
+      (Real.log_le_log (by norm_num) hz₁)
+  have hexp : exp (D / log z₁) ≤ 1 + K / log z₁ := by
+    have htangent := mul_le_mul_of_nonneg_right
+      (Real.add_one_le_exp (-(D / log z₁))) (Real.exp_pos (D / log z₁)).le
+    rw [← Real.exp_add, neg_add_cancel, Real.exp_zero] at htangent
+    have hmul := mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr hxupper) hx
+    calc
+      exp (D / log z₁) ≤ 1 + (D / log z₁) * exp (D / log 2) := by
+        nlinarith only [htangent, hmul]
+      _ ≤ 1 + K / log z₁ := by
+        have hKdiv : K / log z₁ =
+            (D / log z₁) * exp (D / log 2) + 2 / log z₁ := by
+          dsimp only [K]
+          ring
+        rw [hKdiv]
+        have hslack : 0 ≤ (2 : ℝ) / log z₁ := by positivity
+        linarith only [hslack]
+  have hprodpos : 0 < ∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹ :=
+    Finset.prod_pos (fun p hp => inv_pos.mpr (goldbach_local_factor_pos (hs p hp).2))
+  have hprodexp := Real.exp_le_exp.mpr hlogprod
+  rw [Real.exp_log hprodpos, Real.exp_add, Real.exp_log hratio_pos] at hprodexp
+  exact hprodexp.trans (mul_le_mul_of_nonneg_left hexp hratio_pos.le)
 
 /-- **Sieve-product lower bound**: there is c₁ > 0 such that, for every
  even N ≥ 4 and z ≥ 2, `c₁ / log z ≤ goldbachSieveProduct N z`.
@@ -2446,14 +2260,8 @@ theorem goldbachSieveProduct_lower_bound :
       exact hp'.2 (heq.symm ▸ h2)
     have := hp'.1.two_le
     omega
-  have hVpos : 0 < goldbachSieveProduct N z := by
-    apply Finset.prod_pos
-    intro p hp
-    have hp3 : (3 : ℝ) ≤ p := by
-      exact_mod_cast (show 3 ≤ p from (hs p hp).2)
-    have hrec : 1 / ((p : ℝ) - 1) ≤ 1 / 2 :=
-      one_div_le_one_div_of_le (by norm_num) (by linarith)
-    linarith
+  have hVpos : 0 < goldbachSieveProduct N z :=
+    Finset.prod_pos (fun p hp => goldbach_local_factor_pos (hs p hp).2)
   have hbound := hinterval s hs 2 z (by norm_num) (by exact_mod_cast hz) (by
     intro p hp
     constructor

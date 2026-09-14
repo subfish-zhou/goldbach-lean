@@ -82,6 +82,30 @@ pinned GitHub source. Source links for project declarations use the checkout's
 Git commit and line ranges. Generate from a clean, committed release checkout,
 and publish that commit to make its source links publicly resolvable.
 
+## CI budgets and artifact reuse
+
+Proof verification and documentation are separate jobs. The verification job
+still builds all four libraries without warnings, runs the source/statement/axiom
+checks and tests, and replays every original public check target. Documentation
+requires that job to succeed; deployment requires both jobs. A cold verification
+job currently has a 180-minute safety budget and documentation has its own
+120-minute budget. These budgets prevent documentation from consuming the proof
+job's remaining time; increasing a timeout is not a measured speed improvement.
+
+The project build cache is keyed by platform, toolchain, dependency manifest,
+Lake configuration and revision, with a same-configuration incremental fallback.
+Lake always runs after restoration, including on an exact cache hit. Only the
+successful prerequisite job's artifacts from the same workflow run are passed
+to documentation. A tar archive preserves artifact sidecars and permissions;
+revision and configuration checks precede restoration. Dependency caches are
+fetched on each runner. The generator cache contains pinned dependencies and
+compiler products, never old API pages or an old website. All pages and search
+indexes are generated for the current revision and validated before deployment.
+
+Build and API-generation logs include GNU `time` resource measurements and are
+uploaded separately. Compare cold-cache and warm-cache runs separately, and use
+actual GitHub runner measurements rather than extrapolating local leaf timings.
+
 ## Build a complete API site
 
 Requirements: the pinned Lean/Lake toolchain, a C compiler, Git, Python 3.10 or
@@ -237,3 +261,66 @@ links support deployment below a project Pages prefix. Publish the site through
 the deployment workflow after local validation. Generate the release API from
 the final published source commit so declaration source links resolve to that
 revision.
+
+## Local proof-compilation measurements
+
+These are local module measurements, not whole-project or GitHub Actions speedups.
+Each pair uses identical frozen dependencies, two physical CPU cores, Lean `-j2`,
+and `-DautoImplicit=false -DwarningAsError=true`. Two interleaved AB/BA rounds
+compile the module afresh into separate output directories; the table reports
+mean elapsed time. Dependency preparation and validation are not included.
+
+| Module | Baseline | Optimized | Local elapsed-time reduction |
+| --- | ---: | ---: | ---: |
+| `MertensTheorem` | 31.00 s | 13.52 s | 56.4% |
+| `LiuPanAggregatePsiCharacters` | 16.10 s | 14.34 s | 10.9% |
+| `StandardBVChosenSmallSquare` | 14.57 s | 7.30 s | 49.9% |
+
+The changes restrict arithmetic tactics to the inequalities they need, replace
+large-context automation with monotonicity, and share exact scalar shell-sum
+identities for noncoprime corrections and prime-number-theorem remainders.
+Public statements, definition
+values, import compatibility, signed sums, weights, and constants are preserved.
+
+Incremental acceptance checks the changed modules, direct consumers, and public
+theorem checks against frozen dependencies, including declaration comparison,
+axiom inspection, and targeted kernel replay. A full clean CI measurement remains
+a separate integration measurement; these local percentages must not be applied
+to the entire project.
+
+A subsequent batch uses the same paired protocol, with the preceding accepted
+proof optimizations already present in the dependency baseline:
+
+| Module | Baseline | Optimized | Local elapsed-time reduction |
+| --- | ---: | ---: | ---: |
+| `SelbergUpperBound` | 15.25 s | 12.48 s | 18.2% |
+| `LiuPanPrimePowerLargeSieve` | 16.91 s | 10.76 s | 36.4% |
+| `LiLiuGoldbachS1SieveProductLower` | 12.89 s | 7.94 s | 38.4% |
+| `LiuPanPrimitivePerron` | 17.07 s | 15.57 s | 8.8% |
+
+This batch replaces general congruence search around a dependent character
+conversion with the precise scalar congruence, avoids unnecessary expansion of
+local aliases, and narrows arithmetic in divisor sums, the S₁ sieve-product
+lower bound and the Perron tail estimates. All original compiled declaration
+names, types, universes, declaration kinds and definition values are preserved,
+including compiler-generated auxiliaries. No new premise or import change is
+introduced, and neither warnings nor release verification gates are weakened.
+The S₁ constants and cutoffs, weighted character sums and Perron bounds are
+unchanged. Validation remains incremental and these measurements do not predict
+whole-project wall time.
+
+Strict downstream verification also exposed an existing unbound implicit `N` in
+a private `Switching.Weights` lemma. It is now explicitly written in the same
+position and with the same implicit binder information as in the old compiled
+constant. Full constant comparison confirms no new premise or type change;
+this compatibility repair is not counted as a speed improvement.
+
+## Shared derivative proof tools
+
+The polynomial and elementary derivative tools are now ordinary modules of
+`MathlibNt.Tactic`, with regression examples included in the library build.
+[Derivative automation](DERIVATIVE_AUTOMATION.md) records their scope, explicit
+domain obligations, local normalization timings and generated-name compatibility
+limits. The API documentation therefore resolves their imports from the project
+itself rather than from an external experimental search path. No timing probe or
+private audit object is required to build the project.

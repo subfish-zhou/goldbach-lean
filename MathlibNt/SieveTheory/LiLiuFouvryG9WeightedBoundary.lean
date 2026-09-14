@@ -72,41 +72,19 @@ theorem fouvryG9WeightedSourceIndicator_integral_section (u : ℝ) :
     (∫ v, fouvryG9WeightedSource.indicator fouvryG9WeightedIntegrand (u, v)) =
       (Ioc (4 / 53 : ℝ) (1 / 10)).indicator
         (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), fouvryG9WeightedIntegrand (u, v)) u := by
-  by_cases hu : u ∈ Ioc (4 / 53 : ℝ) (1 / 10)
-  · rw [indicator_of_mem hu, ← integral_indicator measurableSet_Ioc]
-    apply integral_congr_ae
-    filter_upwards with v
-    have hmem : (u, v) ∈ fouvryG9WeightedSource ↔ v ∈ Ioc (1 / 3) ((1 - u) / 2) :=
-      and_iff_right hu
-    change fouvryG9WeightedSource.indicator fouvryG9WeightedIntegrand (u, v) =
-      (Ioc (1 / 3) ((1 - u) / 2)).indicator (fun v => fouvryG9WeightedIntegrand (u, v)) v
-    by_cases hv : v ∈ Ioc (1 / 3) ((1 - u) / 2)
-    · rw [indicator_of_mem (hmem.mpr hv), indicator_of_mem hv]
-    · rw [indicator_of_notMem (fun h => hv (hmem.mp h)), indicator_of_notMem hv]
-  · rw [indicator_of_notMem hu]
-    apply integral_eq_zero_of_ae
-    filter_upwards with v
-    exact indicator_of_notMem (fun h => hu h.1) _
+  exact MathlibNt.Analysis.integral_indicator_moving_Ioc_section
+    (Ioc (4 / 53 : ℝ) (1 / 10)) (fun _ => (1 / 3 : ℝ))
+    (fun u => (1 - u) / 2) fouvryG9WeightedIntegrand u
 
 /-- Fubini is applied to an integrable indicator, not to an unspecified integral. -/
 theorem fouvryG9RelaxedIntegralLow_eq_setIntegral :
     fouvryG9RelaxedIntegralLow = ∫ x in fouvryG9WeightedSource, fouvryG9WeightedIntegrand x := by
   rw [fouvryG9RelaxedIntegralLow_eq_iteratedSetIntegral]
-  let F := fouvryG9WeightedSource.indicator fouvryG9WeightedIntegrand
-  have hF : Integrable F := integrable_fouvryG9WeightedSourceIndicator
-  have hFubini : (∫ z, F z) = ∫ u, ∫ v, F (u, v) := by
-    rw [Measure.volume_eq_prod ℝ ℝ] at hF ⊢
-    exact integral_prod F hF
-  calc
-    _ = ∫ u, (Ioc (4 / 53 : ℝ) (1 / 10)).indicator
-        (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), fouvryG9WeightedIntegrand (u, v)) u := by
-      rw [integral_indicator measurableSet_Ioc]
-    _ = ∫ u, ∫ v, F (u, v) := by
-      apply integral_congr_ae
-      filter_upwards with u
-      exact (fouvryG9WeightedSourceIndicator_integral_section u).symm
-    _ = ∫ z, F z := hFubini.symm
-    _ = _ := integral_indicator measurableSet_fouvryG9WeightedSource
+  exact (MathlibNt.Analysis.setIntegral_moving_Ioc_eq_iterated
+    (Ioc (4 / 53 : ℝ) (1 / 10)) (fun _ => (1 / 3 : ℝ)) (fun u => (1 - u) / 2)
+    fouvryG9WeightedIntegrand measurableSet_Ioc measurableSet_fouvryG9WeightedSource
+    (integrableOn_fouvryG9WeightedIntegrand measurableSet_fouvryG9WeightedSource
+      fouvryG9WeightedSource_subset_ambient)).symm
 
 theorem integrable_fouvryG9WeightedUpperIntegrand (n : ℕ) (hn : 0 < n) (h : ℝ) :
     Integrable (fouvryG9WeightedUpperIntegrand n h) := by

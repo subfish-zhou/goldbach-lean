@@ -101,156 +101,70 @@ theorem caseII_endpoint_le_concrete_finiteSourceLayer_add_qD_natCeil_of_errorTra
   let support := suzukiSupportedBelow S y
   let Tsrc : ℕ → ℕ → ℕ → ℝ := fun n D' p =>
     ∑ m ∈ sourceParityIndices n, suzukiSourceV S m D' p
-  have hτ : caseITau (D : ℝ) s = s := by
-    exact caseITau_eq_beta_add_one_of_log_threshold hH.beta_gt_one hD hDlarge
-  have hry : r ≤ (y : ℝ) := by
-    exact (Nat.le_ceil r).trans_eq (congrArg Nat.cast hyceil).symm
-
-  have hcaseI : Claim14_5CaseI β N s σ := by
-    unfold Claim14_5CaseI
-    have hmod : N % 2 = 1 := Nat.odd_iff.mp hN
-    constructor
-    · simp [s, hmod]
-    · simpa [s] using hβ1σ
+  have hτ : caseITau (D : ℝ) s = s :=
+    caseITau_eq_beta_add_one_of_log_threshold hH.beta_gt_one hD hDlarge
+  have hry : r ≤ (y : ℝ) :=
+    (Nat.le_ceil r).trans_eq (congrArg Nat.cast hyceil).symm
   have hsdom : s ∈ KappaOneModel.parityDomain β N := by
-    have hmod : N % 2 = 1 := Nat.odd_iff.mp hN
-    simp only [KappaOneModel.parityDomain, hmod, if_pos, Set.mem_Ioi]
+    simp only [KappaOneModel.parityDomain, Nat.odd_iff.mp hN, if_pos, Set.mem_Ioi]
     dsimp [s]
     linarith
   have hNm1mod : (N - 1) % 2 = 0 := by
-    have hmod : N % 2 = 1 := Nat.odd_iff.mp hN
+    have hmod := Nat.odd_iff.mp hN
     omega
   have hsm1dom : s - 1 ∈ KappaOneModel.parityDomain β (N - 1) := by
     simp [KappaOneModel.parityDomain, hNm1mod, s]
-  have hCeilSigma : ∀ p ∈ sigmaOneCarrier support D σ s,
-      2 ≤ p ∧ 2 * p ≤ D := by
-    intro p hp
-    have hp' := hp
-    simp only [support, sigmaOneCarrier, suzukiSupportedBelow,
-      Finset.mem_filter] at hp'
-    apply hCeilFull p hp'.1.1 hp'.2.1
-    have hpy : p < y := hp'.1.2
-    simpa [r, s, hyceil, Nat.lt_ceil] using hpy
+
+  -- The middle carrier already contains both real endpoint inequalities.
   have hSource : ∀ p ∈ sigmaOneCarrier support D σ s,
       finiteSourceLayer 1 β (N - 1) (recursiveCoordinate D p) ≤
         finiteSourceLayer 1 β (N - 1) (inheritedCoordinate D p) := by
     intro p hp
+    rcases Finset.mem_filter.mp hp with ⟨hpSupport, hpw, hpr⟩
+    have hceil := hCeilFull p (Finset.mem_filter.mp hpSupport).1 hpw hpr
     exact finiteSourceLayer_recursive_le_inherited hH.beta_gt_one (N - 1) D p
-      (hCeilSigma p hp).1 (hCeilSigma p hp).2
-      (hSourceDomain p (by simpa [support, s] using hp)).1
-      (hSourceDomain p (by simpa [support, s] using hp)).2
-  have hIHsource : PointwiseInductionContract support Tsrc
-      (fun p => suzukiVProduct S p)
-      (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-      β C K Δ N D σ s :=
-    naturalCeilContract_to_sourceCoordinate support Tsrc
-      (fun p => suzukiVProduct S p)
-      (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-      β C K Δ N D σ s
-      (by
-        intro p hp
-        exact (suzukiVProduct_pos S (p : ℝ)).le)
-      hC (by simpa [support, s] using hlog)
-      hSource
-      (by simpa [support, s] using hErrorTransport)
-      (by simpa [support, Tsrc, s] using hIH)
-  have h14 : sigmaOne support S.nu Tsrc N D σ s ≤
-      sigmaEleven support S.nu (fun p => suzukiVProduct S p)
-          (suzukiVProduct S y) β N D σ s +
-        sigmaTwelve support S.nu (fun p => suzukiVProduct S p)
-          (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-          (suzukiVProduct S y) C K Δ N D σ s :=
-    equation14_10_finset_assembly support S.nu (fun p => suzukiVProduct S p)
-      Tsrc (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-      (suzukiVProduct S y) β C K Δ N D σ s
-      (ne_of_gt (suzukiVProduct_pos S y))
-      (by simpa [support, s] using hnu) hIHsource
-  have hMiddleFull :=
+      hceil.1 hceil.2 (hSourceDomain p hp).1 (hSourceDomain p hp).2
+  have hIHsource := naturalCeilContract_to_sourceCoordinate support Tsrc
+    (fun p => suzukiVProduct S p)
+    (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
+    β C K Δ N D σ s (fun p _ => (suzukiVProduct_pos S (p : ℝ)).le)
+    hC hlog hSource hErrorTransport hIH
+  have h14 := equation14_10_finset_assembly support S.nu
+    (fun p => suzukiVProduct S p) Tsrc
+    (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
+    (suzukiVProduct S y) β C K Δ N D σ s
+    (ne_of_gt (suzukiVProduct_pos S y)) hnu hIHsource
+  have hMiddle :=
     sigmaEleven_add_sigmaTwelve_suzukiVProduct_le_finiteSourceLayer_add_qD_natCeil_closed
       (S := S) (H := H) (β := β) (C := C) (K := K) (d := d) (Δ := Δ)
       (s := s) (τ := s) (σ := σ) (N := N) (D := D) (z := y)
-      hH hsdom hsm1dom le_rfl (by simpa [s] using hβ1σ) hD hy2
-      (by simpa [s] using hroot2) (by simpa [s] using hroot2) hw2
-      (by simpa [s] using hwy) le_rfl (by simpa [s] using hyceil)
-      (by simpa [s] using hErrorThreshold) hK hlocal hClaim14_6_ii hC hΔ
-      (by simpa [s] using hCeilFull) (by simpa [s] using hT)
-      (by simpa [s] using hClaim14_13)
-  have hCarrier := sigmaTwelve_supportedBelow_eq_full S
+      hH hsdom hsm1dom le_rfl hβ1σ hD hy2 hroot2 hroot2 hw2
+      hwy le_rfl hyceil hErrorThreshold hK hlocal hClaim14_6_ii hC hΔ
+      hCeilFull hT hClaim14_13
+  -- Transport the carrier, rather than restating the entire middle bound.
+  rw [← sigmaTwelve_supportedBelow_eq_full S
     (fun p => suzukiVProduct S p)
     (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-    (suzukiVProduct S y) C K Δ N D y σ s hry
-  have hMiddle :
-      sigmaEleven support S.nu (fun p => suzukiVProduct S p)
-          (suzukiVProduct S y) β N D σ s +
-        sigmaTwelve support S.nu (fun p => suzukiVProduct S p)
-          (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-          (suzukiVProduct S y) C K Δ N D σ s ≤
-      suzukiVProduct S y *
-        (finiteSourceLayer 1 β N s +
-          (6 * K ^ 2 * finiteSourceLayer 1 β (N - 1) (s - 1) /
-            Real.log ((D : ℝ) ^ (1 / σ))) * (s / s)) +
-      C * Real.exp (Real.sqrt K) * suzukiVProduct S y *
-        (Real.log (D : ℝ)) ^ (-Δ) *
-        ((1 / s) * (∫ t in s..σ,
-            qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ t) +
-          (6 * K ^ 2 * qD H (ErrorSign.ofDepth N).opposite
-              (D : ℝ) d Δ s / Real.log ((D : ℝ) ^ (1 / σ))) * (s / s)) := by
-    rw [show support = S.prodPrimes.primeFactors.filter (fun p => p < y) from rfl,
-      hCarrier]
-    exact hMiddleFull
-  have hRec0 := suzukiSourceParitySum_recurrence_of_odd_of_supported_cube
-    S hN hycube
-  have hRec :
-      (∑ n ∈ sourceParityIndices N, suzukiSourceV S n D y) =
-        (∑ p ∈ (suzukiSupportedBelow S y).filter
-            (fun p : ℕ => (p : ℝ) < (D : ℝ) ^ (1 / σ)),
-          S.nu p * Tsrc (N - 1) (D ⌈/⌉ p) p) +
-        (∑ p ∈ (suzukiSupportedBelow S y).filter
-            (fun p : ℕ => (D : ℝ) ^ (1 / σ) ≤ (p : ℝ) ∧
-              (p : ℝ) < (D : ℝ) ^ (1 / s)),
-          S.nu p * Tsrc (N - 1) (D ⌈/⌉ p) p) := by
-    rw [hRec0]
-    rw [← Finset.sum_filter_add_sum_filter_not
-      (suzukiSupportedBelow S y)
-      (fun p : ℕ => (p : ℝ) < (D : ℝ) ^ (1 / σ))]
-    have hfilter :
-        (suzukiSupportedBelow S y).filter
-            (fun p : ℕ => ¬ (p : ℝ) < (D : ℝ) ^ (1 / σ)) =
-          (suzukiSupportedBelow S y).filter
-            (fun p : ℕ => (D : ℝ) ^ (1 / σ) ≤ (p : ℝ) ∧
-              (p : ℝ) < (D : ℝ) ^ (1 / s)) := by
-      ext p
-      simp only [Finset.mem_filter, not_lt]
-      constructor
-      · rintro ⟨hp, hpw⟩
-        refine ⟨hp, hpw, ?_⟩
-        have hpy : p < y := (Finset.mem_filter.mp hp).2
-        simpa [r, s, hyceil, Nat.lt_ceil] using hpy
-      · rintro ⟨hp, hpw, _⟩
-        exact ⟨hp, hpw⟩
-    rw [hfilter]
-  have hSigma0 :
-      (∑ p ∈ (suzukiSupportedBelow S y).filter
-          (fun p : ℕ => (p : ℝ) < (D : ℝ) ^ (1 / σ)),
-        S.nu p * Tsrc (N - 1) (D ⌈/⌉ p) p) ≤ B0 := by
-    have heq :
-        (suzukiSupportedBelow S y).filter
-            (fun p : ℕ => (p : ℝ) < (D : ℝ) ^ (1 / σ)) =
-          suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / σ)⌉₊ := by
-      rw [suzukiSupportedBelow_ceil_real]
-      ext p
-      simp only [suzukiSupportedBelow, Finset.mem_filter]
-      constructor
-      · rintro ⟨⟨hp, _⟩, hpw⟩
-        exact ⟨hp, hpw⟩
-      · rintro ⟨hp, hpw⟩
-        have hpyR : (p : ℝ) < r := hpw.trans_le (by simpa [r, s] using hwy)
-        have hpy : p < y := by simpa [r, hyceil, Nat.lt_ceil] using hpyR
-        exact ⟨⟨hp, hpy⟩, hpw⟩
-    rw [heq]
-    exact hEndpoint (claim14_5_sigma_endpoint_regime_of_caseI hcaseI)
-  rw [hRec]
-  apply add_le_add hSigma0
+    (suzukiVProduct S y) C K Δ N D y σ s hry] at hMiddle
+
+  -- Split once at the lower cutoff; natural ceiling preserves strict cutoffs.
+  have hLow : support.filter (fun p : ℕ => (p : ℝ) < (D : ℝ) ^ (1 / σ)) =
+      suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / σ)⌉₊ := by
+    dsimp [support]
+    rw [hyceil, suzukiSupportedBelow_ceil_real, suzukiSupportedBelow_ceil_real,
+      Finset.filter_filter]
+    exact Finset.filter_congr fun p _ =>
+      ⟨And.right, fun hp => ⟨hp.trans_le hwy, hp⟩⟩
+  have hHigh : support.filter (fun p : ℕ => ¬ (p : ℝ) < (D : ℝ) ^ (1 / σ)) =
+      sigmaOneCarrier support D σ s := by
+    apply Finset.filter_congr
+    intro p hp
+    have hpr := (nat_lt_of_eq_ceil_iff hyceil).mp (Finset.mem_filter.mp hp).2
+    exact ⟨fun hpw => ⟨le_of_not_gt hpw, hpr⟩, fun hpw => not_lt.mpr hpw.1⟩
+  rw [suzukiSourceParitySum_recurrence_of_odd_of_supported_cube S hN hycube,
+    ← Finset.sum_filter_add_sum_filter_not support
+      (fun p : ℕ => (p : ℝ) < (D : ℝ) ^ (1 / σ)), hLow, hHigh]
+  apply add_le_add (hEndpoint (claim14_5_sigma_endpoint_regime (by linarith)))
   change sigmaOne support S.nu Tsrc N D σ s ≤ _
   simpa [s] using h14.trans hMiddle
 

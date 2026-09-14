@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFRemainder
 
 noncomputable section
@@ -27,16 +28,9 @@ theorem sieve_test (N : ℕ) (hEven : Even N) (A : Finset (ℕ × ℕ)) (Z : ℝ
     (∑ n ∈ (sieve N hEven A Z).support.filter P, (sieve N hEven A Z).weights n) =
       ∑ p ∈ A, if P (N-p.2*p.1) then goldbachG12NormalizedCoefficient N p.1 else 0 := by
   let out := fun p : ℕ × ℕ => N-p.2*p.1
-  let U := (A.image out).filter P
-  have hf := sum_fiberwise_eq_sum_filter A U out
+  have hf := MathlibNt.SieveTheory.sum_fibres_filter_image A out P
     (fun p => goldbachG12NormalizedCoefficient N p.1)
-  have he : A.filter (fun p => out p ∈ U) = A.filter (fun p => P (out p)) := by
-    ext p
-    simp only [mem_filter]
-    exact ⟨fun hp => ⟨hp.1,(mem_filter.mp hp.2).2⟩,
-      fun hp => ⟨hp.1,mem_filter.mpr ⟨mem_image.mpr ⟨p,hp.1,rfl⟩,hp.2⟩⟩⟩
-  rw [he] at hf
-  simpa only [sieve, U, out, sum_filter] using hf
+  simpa only [sieve, out, sum_filter] using hf
 
 theorem sieve_rem (N : ℕ) (hEven : Even N) (A : Finset (ℕ × ℕ)) (Z : ℝ)
     {d : ℕ} (hd : d ∣ goldbachB10ProdPrimes N Z) :

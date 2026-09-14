@@ -38,6 +38,78 @@ private theorem one_half_lt_conductorLogFinalLeft
     linarith
   exact hold.trans_le hle
 
+/-- A horizontal Mellin--Bochner estimate, independent of the character's
+zero-free region.  The caller supplies the Mellin decay and the log-derivative
+bound; the proof pays for the height, complex power, and interval length. -/
+theorem norm_twistedSmoothedPerron_horizontal_le_of_logDeriv_bound
+    {ν : ℝ → ℝ} {M ε : ℝ} (hM : 0 ≤ M) (hε : 0 < ε)
+    (hMellin : ∀ s : ℂ, (1 / 2 : ℝ) ≤ s.re → s.re ≤ 2 →
+      ‖mellin (fun x ↦ (Smooth1 ν ε x : ℂ)) s‖ ≤ M * (ε * ‖s‖ ^ 2)⁻¹)
+    {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q)
+    {a b T t X J : ℝ} (ha : (1 / 2 : ℝ) ≤ a) (hab : a ≤ b)
+    (hb : b ≤ 2) (hT : 1 ≤ T) (ht : |t| = T) (hX : 1 ≤ X) (hJ : 0 ≤ J)
+    (hlog : ∀ σ : ℝ, a ≤ σ → σ ≤ b →
+      ‖deriv χ.LFunction (σ + t * I) / χ.LFunction (σ + t * I)‖ ≤ J) :
+    ‖HIntegral (DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X) a b t‖ ≤
+      4 * M * J * X ^ b / (ε * (1 + T ^ 2)) := by
+  have hX0 : 0 < X := lt_of_lt_of_le zero_lt_one hX
+  have hT0 : 0 < T := by linarith
+  have hpoint (σ : ℝ) (hσa : a ≤ σ) (hσb : σ ≤ b) :
+      ‖DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X (σ + t * I)‖ ≤
+        J * (2 * M / (ε * (1 + T ^ 2))) * X ^ b := by
+    have hm := hMellin (σ + t * I) (by simp; linarith) (by simp; exact hσb.trans hb)
+    have hnormsq : T ^ 2 ≤ ‖(σ : ℂ) + t * I‖ ^ 2 := by
+      rw [Complex.sq_norm]
+      simp [Complex.normSq_apply]
+      have ht2 := congrArg (fun u : ℝ => u ^ 2) ht
+      rw [sq_abs] at ht2
+      nlinarith [sq_nonneg σ]
+    have hinvDen : (T ^ 2)⁻¹ ≤ 2 * (1 + T ^ 2)⁻¹ := by
+      rw [show (T ^ 2)⁻¹ = 1 / T ^ 2 by rw [one_div],
+        show 2 * (1 + T ^ 2)⁻¹ = 2 / (1 + T ^ 2) by rw [div_eq_mul_inv]]
+      rw [div_le_div_iff₀ (sq_pos_of_pos hT0) (by positivity)]
+      nlinarith [sq_nonneg T]
+    have hm' : ‖mellin (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + t * I)‖ ≤
+        2 * M / (ε * (1 + T ^ 2)) := by
+      calc
+        _ ≤ M * (ε * ‖(σ : ℂ) + t * I‖ ^ 2)⁻¹ := hm
+        _ ≤ M * (2 / (ε * (1 + T ^ 2))) := by
+          gcongr
+          rw [mul_inv_rev]
+          calc
+            (‖(σ : ℂ) + t * I‖ ^ 2)⁻¹ * ε⁻¹ ≤
+                (2 * (1 + T ^ 2)⁻¹) * ε⁻¹ := by
+              gcongr
+              exact (inv_anti₀ (sq_pos_of_pos hT0) hnormsq).trans hinvDen
+            _ = 2 / (ε * (1 + T ^ 2)) := by field_simp [hε.ne']
+        _ = 2 * M / (ε * (1 + T ^ 2)) := by ring
+    have hXnorm : ‖(X : ℂ) ^ ((σ : ℂ) + t * I)‖ = X ^ σ := by
+      rw [Complex.norm_cpow_eq_rpow_re_of_pos hX0]
+      simp
+    have hXpow : X ^ σ ≤ X ^ b := Real.rpow_le_rpow_of_exponent_le hX hσb
+    have hlog' : ‖-deriv χ.LFunction (σ + t * I) / χ.LFunction (σ + t * I)‖ ≤ J := by
+      simpa only [neg_div, norm_neg] using hlog σ hσa hσb
+    dsimp only [DirichletCharacter.twistedSmoothedPerronIntegrand]
+    rw [norm_mul, norm_mul, hXnorm]
+    calc
+      _ ≤ J * (2 * M / (ε * (1 + T ^ 2))) * X ^ σ :=
+        mul_le_mul_of_nonneg_right
+          (mul_le_mul hlog' hm' (norm_nonneg _) hJ) (Real.rpow_nonneg hX0.le _)
+      _ ≤ _ := by gcongr
+  rw [HIntegral]
+  calc
+    _ ≤ (J * (2 * M / (ε * (1 + T ^ 2))) * X ^ b) * |b - a| := by
+      apply intervalIntegral.norm_integral_le_of_norm_le_const
+      intro σ hσ
+      rw [uIoc_of_le hab] at hσ
+      exact hpoint σ hσ.1.le hσ.2
+    _ ≤ (J * (2 * M / (ε * (1 + T ^ 2))) * X ^ b) * 2 := by
+      have hlen : |b - a| ≤ 2 := by
+        rw [abs_of_nonneg (sub_nonneg.mpr hab)]
+        linarith
+      gcongr
+    _ = _ := by ring
+
 /-- Genuine Bochner interval estimates for all three non-right edges of the
 final conductor-logarithmic rectangle.  The constant is selected before every
 arithmetic and contour parameter, so it depends only on the fixed smoothing
@@ -77,7 +149,7 @@ theorem exists_dirichletLTwistedSmoothedContourNormBounds
       dirichletLTwistedSmoothedConductorLogRight]
     linarith
   have hb2 : b ≤ 2 := by
-    dsimp only [b, dirichletLTwistedSmoothedConductorLogRight]
+    simp only [b, dirichletLTwistedSmoothedConductorLogRight]
     linarith
   have hX0 : 0 < X := lt_of_lt_of_le zero_lt_one hX
   have hT0 : 0 < T := lt_of_lt_of_le (by norm_num) hT
@@ -119,63 +191,6 @@ theorem exists_dirichletLTwistedSmoothedContourNormBounds
     rw [norm_mul, norm_mul, hXnorm]
     exact mul_le_mul_of_nonneg_right
       (mul_le_mul hlog' hm' (norm_nonneg _) (by positivity)) (Real.rpow_nonneg hX0.le _)
-  have horizontalPoint (σ η : ℝ) (hσa : a ≤ σ) (hσb : σ ≤ b)
-      (hη : |η| ≤ T) (hηsq : η ^ 2 = T ^ 2) :
-      ‖DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X (σ + η * I)‖ ≤
-        2251799813685248 * LM ^ 11 *
-          (2 * A / (ε * (1 + T ^ 2))) * X ^ (1 + d) := by
-    have hlog := norm_logDeriv_LFunction_le_on_conductorLogEdgeRectangle
-      χ hχsq hT hd hd1 hη hσa hσb
-    have hm := hMellin (1 / 2) (by norm_num) (σ + η * I)
-      (by simp; linarith) (by simp; exact hσb.trans hb2) ε hε hε1
-    have hnormsq : T ^ 2 ≤ ‖(σ : ℂ) + η * I‖ ^ 2 := by
-      rw [Complex.sq_norm]
-      simp [Complex.normSq_apply]
-      norm_num [pow_two] at hηsq ⊢
-      nlinarith [sq_nonneg σ]
-    have hinvT : (‖(σ : ℂ) + η * I‖ ^ 2)⁻¹ ≤ (T ^ 2)⁻¹ :=
-      inv_anti₀ (sq_pos_of_pos hT0) hnormsq
-    have hinvDen : (T ^ 2)⁻¹ ≤ 2 * (1 + T ^ 2)⁻¹ := by
-      rw [show (T ^ 2)⁻¹ = 1 / T ^ 2 by rw [one_div],
-        show 2 * (1 + T ^ 2)⁻¹ = 2 / (1 + T ^ 2) by rw [div_eq_mul_inv]]
-      rw [div_le_div_iff₀ (sq_pos_of_pos hT0) (by positivity)]
-      nlinarith [sq_nonneg T]
-    have hinv : (ε * ‖(σ : ℂ) + η * I‖ ^ 2)⁻¹ ≤
-        2 / (ε * (1 + T ^ 2)) := by
-      rw [mul_inv_rev]
-      calc
-        (‖(σ : ℂ) + η * I‖ ^ 2)⁻¹ * ε⁻¹
-            ≤ (2 * (1 + T ^ 2)⁻¹) * ε⁻¹ := by
-              exact mul_le_mul_of_nonneg_right (hinvT.trans hinvDen)
-                (inv_nonneg.mpr hε.le)
-        _ = 2 / (ε * (1 + T ^ 2)) := by
-          field_simp [hε.ne']
-    have hm' : ‖𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + η * I)‖ ≤
-        2 * A / (ε * (1 + T ^ 2)) := by
-      calc
-        _ ≤ A * (ε * ‖(σ : ℂ) + η * I‖ ^ 2)⁻¹ := hm
-        _ ≤ A * (2 / (ε * (1 + T ^ 2))) :=
-          mul_le_mul_of_nonneg_left hinv hA.le
-        _ = 2 * A / (ε * (1 + T ^ 2)) := by ring
-    have hXnorm : ‖(X : ℂ) ^ ((σ : ℂ) + η * I)‖ = X ^ σ := by
-      rw [Complex.norm_cpow_eq_rpow_re_of_pos hX0]
-      simp
-    have hXpow : X ^ σ ≤ X ^ (1 + d) := by
-      apply Real.rpow_le_rpow_of_exponent_le hX
-      simpa only [b, dirichletLTwistedSmoothedConductorLogRight] using hσb
-    have hlog' :
-        ‖-deriv χ.LFunction (σ + η * I) / χ.LFunction (σ + η * I)‖ ≤
-          2251799813685248 * LM ^ 11 := by
-      simpa only [neg_div, norm_neg, LM, mul_comm] using hlog
-    dsimp only [DirichletCharacter.twistedSmoothedPerronIntegrand]
-    rw [norm_mul, norm_mul, hXnorm]
-    calc
-      _ ≤ (2251799813685248 * LM ^ 11) *
-          (2 * A / (ε * (1 + T ^ 2))) * X ^ σ := by
-            exact mul_le_mul_of_nonneg_right
-              (mul_le_mul hlog' hm' (norm_nonneg _) (by positivity))
-              (Real.rpow_nonneg hX0.le _)
-      _ ≤ _ := by gcongr
   have hvertical :
       ‖VIntegral (DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X)
           a (-T) T‖ ≤
@@ -201,32 +216,24 @@ theorem exists_dirichletLTwistedSmoothedContourNormBounds
           a b η‖ ≤
         (36028797018963968 * A) * LM ^ 11 * X ^ (1 + d) /
           (ε * (1 + T ^ 2)) := by
-    rw [HIntegral]
+    have ht : |η| = T := by
+      nlinarith [sq_abs η, abs_nonneg η]
+    have hbound := norm_twistedSmoothedPerron_horizontal_le_of_logDeriv_bound hA.le hε
+      (fun s hs hs2 => hMellin (1 / 2) (by norm_num) s hs hs2 ε hε hε1)
+      χ ha.le hab hb2 (by linarith) ht hX
+      (show 0 ≤ 2251799813685248 * LM ^ 11 by positivity)
+      (fun σ hσa hσb => by
+        simpa only [LM, mul_comm] using
+          norm_logDeriv_LFunction_le_on_conductorLogEdgeRectangle
+            χ hχsq hT hd hd1 hη hσa hσb)
     calc
-      ‖∫ σ in a..b,
-          DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X (σ + η * I)‖
-          ≤ (2251799813685248 * LM ^ 11 *
-            (2 * A / (ε * (1 + T ^ 2))) * X ^ (1 + d)) * |b - a| := by
-              apply intervalIntegral.norm_integral_le_of_norm_le_const
-              intro σ hσ
-              rw [uIoc_of_le hab] at hσ
-              exact horizontalPoint σ η hσ.1.le hσ.2 hη hηsq
-      _ ≤ (36028797018963968 * A) * LM ^ 11 * X ^ (1 + d) /
-          (ε * (1 + T ^ 2)) := by
-        have hlen : |b - a| ≤ 2 := by
-          rw [abs_of_nonneg (sub_nonneg.mpr hab)]
-          linarith
-        have hden : 0 < ε * (1 + T ^ 2) := by positivity
-        calc
-          (2251799813685248 * LM ^ 11 *
-              (2 * A / (ε * (1 + T ^ 2))) * X ^ (1 + d)) * |b - a|
-              ≤ (2251799813685248 * LM ^ 11 *
-                (2 * A / (ε * (1 + T ^ 2))) * X ^ (1 + d)) * 2 := by
-                  gcongr
-          _ ≤ (36028797018963968 * A) * LM ^ 11 * X ^ (1 + d) /
-              (ε * (1 + T ^ 2)) := by
-                field_simp [hden.ne']
-                nlinarith [pow_pos hLM 11, Real.rpow_nonneg hX0.le (1 + d)]
+      _ ≤ 4 * A * (2251799813685248 * LM ^ 11) * X ^ b /
+          (ε * (1 + T ^ 2)) := hbound
+      _ ≤ _ := by
+        dsimp only [b, dirichletLTwistedSmoothedConductorLogRight]
+        apply div_le_div_of_nonneg_right _ (by positivity)
+        nlinarith [mul_nonneg (mul_nonneg hA.le (pow_nonneg hLM.le 11))
+          (Real.rpow_nonneg hX0.le (1 + d))]
   simpa only [a, b, LM] using
     ⟨hvertical, horizontalBound T (by simp [abs_of_nonneg hT0.le]) (by rfl),
       horizontalBound (-T) (by rw [abs_neg, abs_of_nonneg hT0.le]) (by ring)⟩

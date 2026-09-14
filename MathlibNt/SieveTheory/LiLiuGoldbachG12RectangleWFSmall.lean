@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFOutput
 
 noncomputable section
@@ -30,19 +31,13 @@ theorem linked_small_test (N : ℕ) (ε Z : ℝ) :
         if N-x.2*x.1 < Nat.ceil Z then goldbachG12NormalizedCoefficient N x.1 else 0 := by
   let A := goldbachG12LinkedAtoms N ε
   let out := goldbachG12LinkedOutput N
-  let U := (A.image out).filter (fun n => n < Nat.ceil Z)
-  have hf := sum_fiberwise_eq_sum_filter A U out
+  have hf := MathlibNt.SieveTheory.sum_fibres_filter_image A out (fun n => n < Nat.ceil Z)
     (fun x => goldbachG12NormalizedCoefficient N x.1)
-  have he : A.filter (fun x => out x ∈ U) = A.filter (fun x => out x < Nat.ceil Z) := by
-    ext x
-    simp only [mem_filter]
-    exact ⟨fun h => ⟨h.1,(mem_filter.mp h.2).2⟩,
-      fun h => ⟨h.1,mem_filter.mpr ⟨mem_image.mpr ⟨x,h.1,rfl⟩,h.2⟩⟩⟩
   calc
-    _ = ∑ x ∈ A.filter (fun x => out x ∈ U),
+    _ = ∑ x ∈ A.filter (fun x => out x < Nat.ceil Z),
         goldbachG12NormalizedCoefficient N x.1 := hf
     _ = _ := by
-      rw [he, sum_filter]
+      rw [sum_filter]
       rfl
 
 /-- Inclusion in the actual global G12 mother supplies the established 20

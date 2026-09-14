@@ -384,14 +384,8 @@ def StandardBVProductionBlockL1WeightedSource (loss : ℕ) : Prop :=
 
 private lemma blockL1_envelope_nonneg (N Q : ℕ) :
     0 ≤ 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 := by
-  have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-    have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-      unfold discreteAbelAmplifier
-      positivity
-    exact h0.trans (by
-      unfold discreteAbelAmplifierPrefixMax
-      exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
-  positivity
+  exact mul_nonneg
+    (mul_nonneg (by norm_num) (discreteAbelAmplifierPrefixMax_nonneg N)) (sq_nonneg _)
 
 /-- Compatibility assembler for the former degenerate `v = min N 1` source.
 New production code must use
@@ -443,28 +437,40 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted_legacy
     simp_rw [hpref]
     simp
   rw [hsmall, add_zero]
-  have hsum : P * (highConductorVaughanTypeIMean N Q C (u N) (v N) +
-      highConductorVaughanTypeIIMean N Q C (u N) (v N)) ≤
-      (K₁ + K₂) * Real.log (N : ℝ) ^ loss *
-        (2 * (N : ℝ) / (logConductorThreshold N C : ℝ) +
-          8 * (Q : ℝ) * Real.sqrt N) := by
-    rw [mul_add]
-    exact (add_le_add hI hII).trans_eq (by ring)
-  exact hsum.trans (by
-    have hp := hpay
-    change Real.log (N : ℝ) ^ loss *
-        (2 * (N : ℝ) / (logConductorThreshold N C : ℝ) +
-          8 * (Q : ℝ) * Real.sqrt N) ≤
-      10 * (N : ℝ) / Real.log (N : ℝ) ^ A at hp
-    calc
-      (K₁ + K₂) * Real.log (N : ℝ) ^ loss *
-          (2 * (N : ℝ) / (logConductorThreshold N C : ℝ) +
-            8 * (Q : ℝ) * Real.sqrt N) =
+  calc
+    P * (highConductorVaughanTypeIMean N Q C (u N) (v N) +
+        highConductorVaughanTypeIIMean N Q C (u N) (v N)) ≤
         (K₁ + K₂) * (Real.log (N : ℝ) ^ loss *
           (2 * (N : ℝ) / (logConductorThreshold N C : ℝ) +
-            8 * (Q : ℝ) * Real.sqrt N)) := by ring
-      _ ≤ (K₁ + K₂) * (10 * (N : ℝ) / Real.log (N : ℝ) ^ A) := by gcongr
-      _ = 10 * (K₁ + K₂) * (N : ℝ) / Real.log (N : ℝ) ^ A := by ring)
+            8 * (Q : ℝ) * Real.sqrt N)) := by
+      nlinarith only [hI, hII]
+    _ ≤ (K₁ + K₂) * (10 * (N : ℝ) / Real.log (N : ℝ) ^ A) :=
+      mul_le_mul_of_nonneg_left hpay (add_nonneg hK₁.le hK₂.le)
+    _ = 10 * (K₁ + K₂) * (N : ℝ) / Real.log (N : ℝ) ^ A := by ring
+
+/-- Consume the actual high-conductor square payment for any coefficient.
+The factor three is the existing ledger reserve, not a new triangle bound.
+Only the target needs to be nonnegative; the multiplier may be signed. -/
+theorem apNormalizedPrimitiveMeanOn_high_le_of_square_payment
+    (a : ℤ → ℂ) (N Q C : ℕ) (P Z : ℝ)
+    (hR : 1 ≤ logConductorThreshold N C) (hZ : 0 ≤ Z)
+    (hpay : P ^ 2 * (3 * highConductorHarmonicFactor Q
+        (logConductorThreshold N C) *
+        primitivePrefixSquareLedgerOn a N (highConductorSet N Q C)) ≤ Z ^ 2) :
+    P * apNormalizedPrimitiveMeanOn a N (highConductorSet N Q C) ≤ Z := by
+  have hcard : ∀ d ∈ Finset.Icc (logConductorThreshold N C + 1) Q,
+      Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
+    intro d hd
+    exact card_primitiveCharacter_le_totient d (by
+      have hdR := (Finset.mem_Icc.mp hd).1
+      omega)
+  have hc := apNormalizedPrimitiveMeanOn_high_sq_le a N Q
+    (logConductorThreshold N C) hcard
+  rw [← highConductorSet_eq_interval N Q C hR] at hc
+  have hw := mul_le_mul_of_nonneg_left hc (sq_nonneg P)
+  apply le_of_sq_le_sq _ hZ
+  nlinarith only [hw, hpay,
+    sq_nonneg (P * apNormalizedPrimitiveMeanOn a N (highConductorSet N Q C))]
 
 private lemma highConductorSet_eq_interval_blockL1 (N Q C : ℕ)
     (hR : 1 ≤ logConductorThreshold N C) :
@@ -509,79 +515,19 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted
       P * (highConductorVaughanTypeIMean N Q C (u N) (v N) +
         highConductorVaughanTypeIIMean N Q C (u N) (v N)) ≤
         10 * (K₁ + K₂) * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-    have hsum : P * (highConductorVaughanTypeIMean N Q C (u N) (v N) +
-        highConductorVaughanTypeIIMean N Q C (u N) (v N)) ≤
-        (K₁ + K₂) * Real.log (N : ℝ) ^ loss *
-          (2 * (N : ℝ) / (R : ℝ) + 8 * (Q : ℝ) * Real.sqrt N) := by
-      rw [mul_add]
-      exact (add_le_add hI hII).trans_eq (by ring)
-    have hp := hpay
-    change Real.log (N : ℝ) ^ loss *
-        (2 * (N : ℝ) / (R : ℝ) + 8 * (Q : ℝ) * Real.sqrt N) ≤
-      10 * (N : ℝ) / Real.log (N : ℝ) ^ A at hp
-    exact hsum.trans (by
-      calc
-        (K₁ + K₂) * Real.log (N : ℝ) ^ loss *
-            (2 * (N : ℝ) / (R : ℝ) + 8 * (Q : ℝ) * Real.sqrt N) =
-          (K₁ + K₂) * (Real.log (N : ℝ) ^ loss *
-            (2 * (N : ℝ) / (R : ℝ) + 8 * (Q : ℝ) * Real.sqrt N)) := by ring
-        _ ≤ (K₁ + K₂) * (10 * (N : ℝ) / Real.log (N : ℝ) ^ A) := by gcongr
-        _ = 10 * (K₁ + K₂) * (N : ℝ) / Real.log (N : ℝ) ^ A := by ring)
-  have hcard : ∀ d ∈ Finset.Icc (R + 1) Q,
-      Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
-    intro d hd
-    exact card_primitiveCharacter_le_totient d (by
-      have hdR := (Finset.mem_Icc.mp hd).1
-      omega)
-  have hRone : 1 ≤ R := by omega
-  have hsmallCauchy := apNormalizedPrimitiveMeanOn_high_sq_le
-    (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N Q R hcard
-  rw [← highConductorSet_eq_interval_blockL1 N Q C (by simpa only [R] using hRone)] at hsmallCauchy
-  have hsmallNonneg : 0 ≤ highConductorVaughanSmallMean N Q C (v N) := by
-    unfold highConductorVaughanSmallMean apNormalizedPrimitiveMeanOn
-    exact Finset.sum_nonneg fun d hd => mul_nonneg (inv_nonneg.mpr (by positivity))
-      (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _)
-  have hharmNonneg : 0 ≤ highConductorHarmonicFactor Q R := by
-    unfold highConductorHarmonicFactor
-    positivity
-  have hledgerNonneg : 0 ≤ primitivePrefixSquareLedgerOn
-      (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-      (highConductorSet N Q C) := by
-    unfold primitivePrefixSquareLedgerOn
-    exact Finset.sum_nonneg fun d hd =>
-      mul_nonneg (div_nonneg (by positivity) (by positivity))
-        (Finset.sum_nonneg fun ψ hψ =>
-          primitiveCharacterPrefixMaxSquare_nonneg _ _ _ _ _)
-  have hsmallSq :
-      (P * highConductorVaughanSmallMean N Q C (v N)) ^ 2 ≤
-        (K₀ * ((N : ℝ) / Real.log N ^ A)) ^ 2 := by
     calc
-      (P * highConductorVaughanSmallMean N Q C (v N)) ^ 2 =
-          P ^ 2 * highConductorVaughanSmallMean N Q C (v N) ^ 2 := by ring
-      _ ≤ P ^ 2 * (highConductorHarmonicFactor Q R *
-          primitivePrefixSquareLedgerOn
-            (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-            (highConductorSet N Q C)) :=
-        mul_le_mul_of_nonneg_left hsmallCauchy (sq_nonneg P)
-      _ ≤ P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-          primitivePrefixSquareLedgerOn
-            (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-            (highConductorSet N Q C)) := by
-        have hcore : 0 ≤ highConductorHarmonicFactor Q R *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-              (highConductorSet N Q C) :=
-          mul_nonneg hharmNonneg hledgerNonneg
-        apply mul_le_mul_of_nonneg_left _ (sq_nonneg P)
-        nlinarith only [hcore]
-      _ ≤ (K₀ * ((N : ℝ) / Real.log N ^ A)) ^ 2 := by
-        simpa only [hv, Nat.add_zero] using hsmallPay
-  have hlogPos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
+      _ ≤ (K₁ + K₂) * (Real.log (N : ℝ) ^ loss *
+          (2 * (N : ℝ) / (R : ℝ) + 8 * (Q : ℝ) * Real.sqrt N)) := by
+        nlinarith only [hI, hII]
+      _ ≤ (K₁ + K₂) * (10 * (N : ℝ) / Real.log (N : ℝ) ^ A) :=
+        mul_le_mul_of_nonneg_left hpay (add_nonneg hK₁.le hK₂.le)
+      _ = 10 * (K₁ + K₂) * (N : ℝ) / Real.log (N : ℝ) ^ A := by ring
   have hsmall :
       P * highConductorVaughanSmallMean N Q C (v N) ≤
         K₀ * ((N : ℝ) / Real.log N ^ A) := by
-    exact (sq_le_sq₀ (mul_nonneg hP hsmallNonneg) (by positivity)).mp hsmallSq
+    apply apNormalizedPrimitiveMeanOn_high_le_of_square_payment
+      _ N Q C P _ hR (by positivity)
+    simpa only [hv, Nat.add_zero] using hsmallPay
   calc
     P * (highConductorVaughanTypeIMean N Q C (u N) (v N) +
         highConductorVaughanTypeIIMean N Q C (u N) (v N) +
@@ -594,15 +540,12 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted
     _ = (10 * (K₁ + K₂) + K₀) * (N : ℝ) /
         Real.log (N : ℝ) ^ A := by ring
 
-/-- The production Abel/conductor envelope costs at most five logarithms.
-The proof actually gives a quadratic logarithm; exponent five is frozen as a
-stable reserve for canonical bare block sources. -/
-theorem productionAbelConductorEnvelope_le_logPow_five (B : ℕ) :
-    ∀ᶠ N : ℕ in Filter.atTop,
-      let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-      4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
-        48 * Real.log (N : ℝ) ^ 5 := by
-  filter_upwards [eventually_ge_atTop (3 : ℕ)] with N hN
+/-- The common quadratic envelope used by chosen Type-I/II payments and by
+bare block sources. The modulus is the actual Pan cutoff, including `Q = 0`. -/
+theorem productionAbelConductorEnvelope_le_logPow_two (B N : ℕ) (hN : 3 ≤ N) :
+    let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+    4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
+      48 * Real.log (N : ℝ) ^ 2 := by
   dsimp only
   let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
   have hlog : 1 ≤ Real.log (N : ℝ) := by
@@ -618,7 +561,7 @@ theorem productionAbelConductorEnvelope_le_logPow_five (B : ℕ) :
     linarith
   by_cases hQ0 : Q = 0
   · simp [Q, hQ0, conductorHarmonicFactor]
-    exact pow_nonneg (zero_le_one.trans hlog) 5
+    exact pow_nonneg (zero_le_one.trans hlog) 2
   · have hQpos : 0 < Q := Nat.pos_of_ne_zero hQ0
     have hQsq : Q ^ 2 ≤ N := by
       simpa [Q] using MathlibNt.SieveTheory.LiuWeight.panModulusCutoff_sq_le
@@ -634,16 +577,24 @@ theorem productionAbelConductorEnvelope_le_logPow_five (B : ℕ) :
     have hH : conductorHarmonicFactor Q ≤ 2 * Real.log (N : ℝ) :=
       (conductorHarmonicFactor_le Q).trans (by linarith)
     have hH0 : 0 ≤ conductorHarmonicFactor Q := conductorHarmonicFactor_nonneg Q
-    have hPquad :
-        4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
-          48 * Real.log (N : ℝ) ^ 2 := by
-      calc
-        _ ≤ 4 * 3 * (2 * Real.log (N : ℝ)) ^ 2 := by
-          gcongr
-        _ = 48 * Real.log (N : ℝ) ^ 2 := by ring
-    have hpows : Real.log (N : ℝ) ^ 2 ≤ Real.log (N : ℝ) ^ 5 :=
-      pow_le_pow_right₀ hlog (by norm_num)
-    exact hPquad.trans (mul_le_mul_of_nonneg_left hpows (by norm_num))
+    calc
+      _ ≤ 4 * 3 * (2 * Real.log (N : ℝ)) ^ 2 := by gcongr
+      _ = 48 * Real.log (N : ℝ) ^ 2 := by ring
+
+/-- The production Abel/conductor envelope costs at most five logarithms.
+The proof actually gives a quadratic logarithm; exponent five is frozen as a
+stable reserve for canonical bare block sources. -/
+theorem productionAbelConductorEnvelope_le_logPow_five (B : ℕ) :
+    ∀ᶠ N : ℕ in Filter.atTop,
+      let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+      4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
+        48 * Real.log (N : ℝ) ^ 5 := by
+  filter_upwards [eventually_ge_atTop (3 : ℕ)] with N hN
+  have hlog : 1 ≤ Real.log (N : ℝ) := by
+    exact ((Real.lt_log_iff_exp_lt (by positivity : (0 : ℝ) < N)).2
+      (Real.exp_one_lt_three.trans_le (by exact_mod_cast hN))).le
+  exact (productionAbelConductorEnvelope_le_logPow_two B N hN).trans
+    (mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hlog (by norm_num)) (by norm_num))
 
 /-- Canonical bare block source.  Its analytic hypotheses contain no
 Abel/conductor factor.  The selected exponents reserve the fixed five-log

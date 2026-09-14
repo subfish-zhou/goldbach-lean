@@ -1,5 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import MathlibNt.Analysis.LogScaleAbsorption
+import MathlibNt.Analysis.SieveNormalization
 import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
 import MathlibNt.SieveTheory.LiLiuGoldbachB10PaidUpper
 import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
@@ -360,32 +361,11 @@ theorem goldbachB10SiftedCount_normalized_upper
         AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S ≤
         (8 + δ) * SingularSeries.liuSingularSeries N * X / Real.log (N : ℝ) := by
     rw [hfactor]
-    have hmul :=
-      mul_le_mul_of_nonneg_left hV (by positivity : 0 ≤ X * (Real.exp Real.eulerMascheroniConstant * (1 + τ)))
     calc
       X * (Real.exp Real.eulerMascheroniConstant * (1 + τ)) *
           AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S
-        ≤ X * (Real.exp Real.eulerMascheroniConstant * (1 + τ)) *
-            (2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + τ) *
-              SingularSeries.liuSingularSeries N / Real.log Z) := hmul
-      _ = 2 * (1 + τ) ^ 2 * SingularSeries.liuSingularSeries N * X / Real.log Z := by
-        have hexp :
-            Real.exp Real.eulerMascheroniConstant *
-                Real.exp (-Real.eulerMascheroniConstant) = 1 := by
-          rw [← Real.exp_add]
-          norm_num
-        rw [div_eq_mul_inv]
-        calc
-          X * (Real.exp Real.eulerMascheroniConstant * (1 + τ)) *
-              (2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + τ) *
-                SingularSeries.liuSingularSeries N * (Real.log Z)⁻¹)
-            = X * ((Real.exp Real.eulerMascheroniConstant *
-                Real.exp (-Real.eulerMascheroniConstant)) *
-                (2 * (1 + τ) ^ 2 * SingularSeries.liuSingularSeries N * (Real.log Z)⁻¹)) := by
-                  ring
-          _ = 2 * (1 + τ) ^ 2 * SingularSeries.liuSingularSeries N * X / Real.log Z := by
-                rw [hexp]
-                ring
+        ≤ 2 * (1 + τ) ^ 2 * SingularSeries.liuSingularSeries N * X / Real.log Z :=
+          MathlibNt.Analysis.SieveNormalization.upper_exp_product hXnonneg (by positivity) hV
       _ = (SingularSeries.liuSingularSeries N * X) * (2 * (1 + τ) ^ 2 / Real.log Z) := by
         ring
       _ ≤ (SingularSeries.liuSingularSeries N * X) * ((8 + δ) / Real.log (N : ℝ)) := by
@@ -401,21 +381,9 @@ theorem goldbachB10SiftedCount_normalized_upper
       C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
         δ * SingularSeries.liuSingularSeries N * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hδseries :
-        δ * SingularSeries.liuUniversalProduct ≤
-          δ * SingularSeries.liuSingularSeries N := by
-      exact mul_le_mul_of_nonneg_left
-        (SingularSeries.liuUniversalProduct_le_liuSingularSeries N) hδ.le
-    have hmassNonneg : 0 ≤ (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by
-      positivity
-    have hErrS :
-        δ * SingularSeries.liuUniversalProduct * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) ≤
-          δ * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-      simpa [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using
-        (mul_le_mul_of_nonneg_right hδseries hmassNonneg)
-    exact hErrU.trans hErrS
+    apply hErrU.trans
+    gcongr
+    exact SingularSeries.liuUniversalProduct_le_liuSingularSeries N
   have hfinal :
       (goldbachB10SiftedCount N ε ((N : ℝ) ^ β) ((N : ℝ) ^ γ) Z : ℝ) ≤
         (8 + δ) * SingularSeries.liuSingularSeries N * X / Real.log (N : ℝ) +

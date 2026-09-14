@@ -876,7 +876,7 @@ private theorem norm_liuPanIntervalIntegralExpNegMulSincTail_le
               gcongr
               · exact Real.exp_le_one_iff.mpr (by
                   have hmul : 0 ≤ a * B := mul_nonneg ha.le hB_pos.le
-                  nlinarith)
+                  linarith only [hmul])
               · exact Real.abs_cos_le_one B
             _ = B⁻¹ := by ring
         · calc
@@ -888,7 +888,7 @@ private theorem norm_liuPanIntervalIntegralExpNegMulSincTail_le
               gcongr
               · exact Real.exp_le_one_iff.mpr (by
                   have hmul : 0 ≤ a * R := mul_nonneg ha.le hR_pos.le
-                  nlinarith)
+                  linarith only [hmul])
               · exact Real.abs_cos_le_one R
             _ = R⁻¹ := by ring
       _ ≤ R⁻¹ + R⁻¹ := by
@@ -975,7 +975,7 @@ private theorem norm_liuPanIntervalIntegralExpNegMulSincTail_le
                     (Real.exp_le_one_iff.mpr (by
                       have hmul : 0 ≤ a * x :=
                         mul_nonneg ha.le hx_pos.le
-                      nlinarith))
+                      linarith only [hmul]))
                     (inv_nonneg.mpr (sq_nonneg x))
                 _ = (x ^ 2)⁻¹ := by ring
       _ = R⁻¹ * (∫ x in R..B, a * Real.exp (-a * x)) +
@@ -995,7 +995,7 @@ private theorem norm_liuPanIntervalIntegralExpNegMulSincTail_le
         · exact (sub_le_self _ (Real.exp_pos _).le).trans
             (Real.exp_le_one_iff.mpr (by
               have hmul : 0 ≤ a * R := mul_nonneg ha.le hR_pos.le
-              nlinarith))
+              linarith only [hmul]))
         · exact sub_le_self _ (inv_nonneg.mpr hB_pos.le)
       _ = 2 * R⁻¹ := by ring
   rw [hrepr]
@@ -1174,10 +1174,10 @@ private theorem tendsto_liuPanIntegralIoiExpNegMulSinc_of_tendsto
   have hsum : ‖D - F‖ + ‖T‖ + ‖F - L‖ < ε := by
     have hsum_eta :
         ‖D - F‖ + ‖T‖ + ‖F - L‖ < η + η + η := by
-      nlinarith [hfinite_norm, htail_norm, hFR_norm]
+      linarith only [hfinite_norm, htail_norm, hFR_norm]
     have heta : η + η + η < ε := by
       dsimp [η]
-      nlinarith [hε]
+      linarith only [hε]
     exact lt_trans hsum_eta heta
   have hG : dist G L < ε := by
     simpa [Real.dist_eq, Real.norm_eq_abs] using
@@ -1558,7 +1558,7 @@ private theorem abs_liuPanPerronPoissonCosineIntegrand_le
       · positivity
     _ ≤ σ / t ^ 2 := by
       apply div_le_div_of_nonneg_left hσ.le (sq_pos_of_pos ht)
-      nlinarith [sq_nonneg σ]
+      nlinarith only [sq_nonneg σ]
 
 /-- The absolutely convergent cosine part of the paired Perron kernel has an
 explicit finite tail. -/
@@ -1631,10 +1631,10 @@ private theorem abs_liuPanPerronPoissonSineIntegrand_sub_le
       rw [div_le_div_iff₀ (mul_pos ht (by positivity))
         (mul_pos (by positivity) (by positivity))]
       have hamgm : 2 * σ * t ≤ σ ^ 2 + t ^ 2 := by
-        nlinarith [sq_nonneg (σ - t)]
+        nlinarith only [sq_nonneg (σ - t)]
       have hm := mul_le_mul_of_nonneg_left hamgm
         (mul_nonneg hσ.le ht.le)
-      nlinarith
+      nlinarith only [hm]
 
 /-- After removing the Dirichlet sine kernel, the remaining `t`-sine part is
 absolutely bounded by `σ / (2T)`.  Together with the sine-tail estimate this
@@ -3027,7 +3027,7 @@ private theorem liuPanPerronHalfStep_div_rpow_sigma_le_exp_two
     have hYR : (Y : ℝ) ≤ M := by exact_mod_cast hYM
     have hM3 : (3 : ℝ) ≤ M := by exact_mod_cast hM
     norm_num
-    nlinarith
+    nlinarith only [hYR, hM3]
   have hzM : liuPanPerronHalfStep Y / (n : ℝ) ≤ (M : ℝ) ^ 2 := by
     rw [div_le_iff₀ hnR]
     nlinarith [show (1 : ℝ) ≤ n by exact_mod_cast Nat.one_le_iff_ne_zero.mpr hn]

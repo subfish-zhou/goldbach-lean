@@ -1,3 +1,5 @@
+import MathlibNt.Analysis.LogGridEstimates
+import MathlibNt.Analysis.MovingIntervalIntegral
 import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridRegion
 
@@ -105,19 +107,14 @@ theorem intervalIntegrable_goldbachB9MainInner
 theorem integrableOn_goldbachB9LogDensity {s : Set (ℝ × ℝ)}
     (hs : MeasurableSet s) (hsub : s ⊆ goldbachB9LogAmbientBox) :
     IntegrableOn liuLogDensity s := by
-  apply ContinuousOn.integrableOn_of_subset_isCompact continuousOn_goldbachB9LogDensity
-    isCompact_goldbachB9LogAmbientBox hs hsub
-  exact (lt_of_le_of_lt (measure_mono hsub)
-    isCompact_goldbachB9LogAmbientBox.measure_lt_top).ne
+  exact continuousOn_goldbachB9LogDensity.integrableOn_of_subset_isCompact isCompact_goldbachB9LogAmbientBox hs hsub
+    (ne_top_of_le_ne_top isCompact_goldbachB9LogAmbientBox.measure_ne_top (measure_mono hsub))
 
 theorem integrableOn_goldbachB9LogIntegrand {s : Set (ℝ × ℝ)}
     (hs : MeasurableSet s) (hsub : s ⊆ goldbachB9LogAmbientBox) :
     IntegrableOn liuLogIntegrand s := by
-  apply ContinuousOn.integrableOn_of_subset_isCompact
-    continuousOn_goldbachB9LogIntegrand
-    isCompact_goldbachB9LogAmbientBox hs hsub
-  exact (lt_of_le_of_lt (measure_mono hsub)
-    isCompact_goldbachB9LogAmbientBox.measure_lt_top).ne
+  exact continuousOn_goldbachB9LogIntegrand.integrableOn_of_subset_isCompact isCompact_goldbachB9LogAmbientBox hs hsub
+    (ne_top_of_le_ne_top isCompact_goldbachB9LogAmbientBox.measure_ne_top (measure_mono hsub))
 
 theorem integrable_goldbachB9SourceIndicator :
     Integrable (goldbachB9LogSourceRegion.indicator liuLogIntegrand) :=
@@ -144,21 +141,9 @@ theorem goldbachB9SourceIndicator_integral_section (u : ℝ) :
     (∫ v, goldbachB9LogSourceRegion.indicator liuLogIntegrand (u, v)) =
       (Ioc (4 / 53 : ℝ) (1 / 3)).indicator
         (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), liuLogIntegrand (u, v)) u := by
-  by_cases hu : u ∈ Ioc (4 / 53 : ℝ) (1 / 3)
-  · rw [indicator_of_mem hu, ← integral_indicator measurableSet_Ioc]
-    apply integral_congr_ae
-    filter_upwards with v
-    have hmem : (u, v) ∈ goldbachB9LogSourceRegion ↔ v ∈ Ioc (1 / 3) ((1 - u) / 2) :=
-      and_iff_right hu
-    change goldbachB9LogSourceRegion.indicator liuLogIntegrand (u, v) =
-      (Ioc (1 / 3) ((1 - u) / 2)).indicator (fun v => liuLogIntegrand (u, v)) v
-    by_cases hv : v ∈ Ioc (1 / 3) ((1 - u) / 2)
-    · rw [indicator_of_mem (hmem.mpr hv), indicator_of_mem hv]
-    · rw [indicator_of_notMem (fun h => hv (hmem.mp h)), indicator_of_notMem hv]
-  · rw [indicator_of_notMem hu]
-    apply integral_eq_zero_of_ae
-    filter_upwards with v
-    exact indicator_of_notMem (fun h => hu h.1) _
+  exact MathlibNt.Analysis.integral_indicator_moving_Ioc_section
+    (Ioc (4 / 53 : ℝ) (1 / 3)) (fun _ => (1 / 3 : ℝ))
+    (fun u => (1 - u) / 2) liuLogIntegrand u
 
 theorem intervalIntegrable_goldbachB9MainOuter :
     IntervalIntegrable
@@ -184,21 +169,11 @@ theorem intervalIntegrable_goldbachB9MainOuter :
 theorem goldbachB9MainIntegral_eq_setIntegral :
     goldbachB9MainIntegral = ∫ x in goldbachB9LogSourceRegion, liuLogIntegrand x := by
   rw [goldbachB9MainIntegral_eq_iteratedSetIntegral]
-  let F := goldbachB9LogSourceRegion.indicator liuLogIntegrand
-  have hF : Integrable F := integrable_goldbachB9SourceIndicator
-  have hFubini : (∫ z, F z) = ∫ u, ∫ v, F (u, v) := by
-    rw [Measure.volume_eq_prod ℝ ℝ] at hF ⊢
-    exact integral_prod F hF
-  calc
-    _ = ∫ u, (Ioc (4 / 53 : ℝ) (1 / 3)).indicator
-        (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), liuLogIntegrand (u, v)) u := by
-      rw [integral_indicator measurableSet_Ioc]
-    _ = ∫ u, ∫ v, F (u, v) := by
-      apply integral_congr_ae
-      filter_upwards with u
-      exact (goldbachB9SourceIndicator_integral_section u).symm
-    _ = ∫ z, F z := hFubini.symm
-    _ = _ := integral_indicator measurableSet_goldbachB9LogSourceRegion
+  exact (MathlibNt.Analysis.setIntegral_moving_Ioc_eq_iterated
+    (Ioc (4 / 53 : ℝ) (1 / 3)) (fun _ => (1 / 3 : ℝ)) (fun u => (1 - u) / 2)
+    liuLogIntegrand measurableSet_Ioc measurableSet_goldbachB9LogSourceRegion
+    (integrableOn_goldbachB9LogIntegrand measurableSet_goldbachB9LogSourceRegion
+      goldbachB9LogSourceRegion_subset_ambientBox)).symm
 
 theorem goldbachB9MainIntegral_nonneg : 0 ≤ goldbachB9MainIntegral := by
   rw [goldbachB9MainIntegral_eq_setIntegral]
@@ -238,26 +213,14 @@ theorem goldbachB9LogGridUpperIntegrand_eq_of_mem {n : ℕ} (hn : 0 < n)
     goldbachB9LogGridUpperIntegrand n x =
       (1 / (1 - goldbachB9AlphaGridPoint n (q.1 + 1) -
         goldbachB9BetaGridPoint n (q.2 + 1))) * liuLogDensity x := by
-  classical
   unfold goldbachB9LogGridUpperIntegrand
-  rw [Finset.sum_eq_single q]
-  · rw [indicator_of_mem hx]
-  · intro r _ hrq
-    have hnot : x ∉ goldbachB9LogGridCell n r := fun hxr =>
-      Set.disjoint_left.mp
-        (goldbachB9LogGridCell_pairwiseDisjoint hn (mem_univ q) (mem_univ r) hrq.symm)
-        hx hxr
-    rw [indicator_of_notMem hnot, mul_zero]
-  · exact fun h => (h hq).elim
+  exact MathlibNt.Analysis.LogGridEstimates.weighted_sum_eq_of_mem _ _ _ _
+    (goldbachB9LogGridCell_pairwiseDisjoint hn) hq hx
 
 theorem goldbachB9LogGridUpperIntegrand_eq_zero {n : ℕ} {x : ℝ × ℝ}
     (hx : x ∉ goldbachB9LogGridRegion n) : goldbachB9LogGridUpperIntegrand n x = 0 := by
-  classical
-  apply Finset.sum_eq_zero
-  intro q hq
-  have hnot : x ∉ goldbachB9LogGridCell n q :=
-    fun h => hx (Set.mem_iUnion₂.mpr ⟨q, hq, h⟩)
-  rw [indicator_of_notMem hnot, mul_zero]
+  unfold goldbachB9LogGridUpperIntegrand
+  exact MathlibNt.Analysis.LogGridEstimates.weighted_sum_zero _ _ _ _ hx
 
 private theorem b9CornerKernel_le_six {n : ℕ} (hn : 0 < n) (q : Fin n × Fin n) :
     1 / (1 - goldbachB9AlphaGridPoint n (q.1 + 1) -
@@ -282,36 +245,15 @@ theorem goldbachB9LogGrid_kernel_variation_step {n : ℕ} (hn : 0 < n)
     1 / (1 - goldbachB9AlphaGridPoint n (q.1 + 1) -
       goldbachB9BetaGridPoint n (q.2 + 1)) - liuLogKernel x ≤
         36 * (goldbachB9AlphaGridStep n + goldbachB9BetaGridStep n) := by
-  let c := 1 - goldbachB9AlphaGridPoint n (q.1 + 1) -
-    goldbachB9BetaGridPoint n (q.2 + 1)
-  let d := 1 - x.1 - x.2
-  have hc : (1 / 6 : ℝ) ≤ c := goldbachB9LogGridCell_cornerGap_ge hn q
-  have hcd : c ≤ d := by dsimp [c, d]; linarith [hx.1.2, hx.2.2]
-  have hd : (1 / 6 : ℝ) ≤ d := hc.trans hcd
-  have hcpos : 0 < c := by linarith
-  have hdpos : 0 < d := by linarith
-  have hdelta : d - c ≤ goldbachB9AlphaGridStep n + goldbachB9BetaGridStep n := by
-    dsimp [c, d]
-    rw [goldbachB9AlphaGridPoint_succ, goldbachB9BetaGridPoint_succ]
-    linarith [hx.1.1, hx.2.1]
-  have hprod : (1 / 36 : ℝ) ≤ c * d := by
-    nlinarith [mul_nonneg (sub_nonneg.mpr hc) (sub_nonneg.mpr hd)]
-  have hformula : 1 / c - liuLogKernel x = (d - c) / (c * d) := by
-    change 1 / c - 1 / d = (d - c) / (c * d)
-    field_simp [hcpos.ne', hdpos.ne']
-  change 0 ≤ 1 / c - liuLogKernel x ∧ 1 / c - liuLogKernel x ≤
-    36 * (goldbachB9AlphaGridStep n + goldbachB9BetaGridStep n)
-  rw [hformula]
-  constructor
-  · exact div_nonneg (sub_nonneg.mpr hcd) (mul_pos hcpos hdpos).le
-  · have hinv : 1 / (c * d) ≤ 36 := by
-      simpa using one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 1 / 36) hprod
-    calc
-      (d - c) / (c * d) = (d - c) * (1 / (c * d)) := by ring
-      _ ≤ (goldbachB9AlphaGridStep n + goldbachB9BetaGridStep n) * 36 :=
-        mul_le_mul hdelta hinv (one_div_pos.mpr (mul_pos hcpos hdpos)).le
-          (add_nonneg (goldbachB9AlphaGridStep_pos hn).le (goldbachB9BetaGridStep_pos hn).le)
-      _ = _ := mul_comm _ _
+  simp only [goldbachB9LogGridCell, goldbachB9AlphaGridPoint_succ, goldbachB9BetaGridPoint_succ] at hx
+  simp only [goldbachB9AlphaGridPoint_succ, goldbachB9BetaGridPoint_succ, liuLogKernel]
+  apply MathlibNt.Analysis.LogGridEstimates.cell_reciprocal_variation hx
+    (l := 1 / 6) (by norm_num) ?_ (by have := goldbachB9AlphaGridStep_pos hn; have := goldbachB9BetaGridStep_pos hn; positivity) ?_
+  · have h := goldbachB9LogGridCell_cornerGap_ge hn q
+    rw [goldbachB9AlphaGridPoint_succ, goldbachB9BetaGridPoint_succ] at h
+    linarith
+  · ring_nf
+    exact le_rfl
 
 theorem goldbachB9LogGrid_kernel_error (n : ℕ) :
     36 * (goldbachB9AlphaGridStep n + goldbachB9BetaGridStep n) =
@@ -359,32 +301,23 @@ theorem goldbachB9LogGridErrorConstant_pos : (0 : ℝ) < 10000 := by norm_num
 /-- One-sided structural error for every positive mesh size, not an assumed limit. -/
 theorem goldbachB9LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
     goldbachB9LogGridUpperSum n - goldbachB9MainIntegral ≤ 10000 / (n : ℝ) := by
-  classical
-  let E : Fin 3 → Set (ℝ × ℝ) :=
-    ![goldbachB9LeftStrip n, goldbachB9BottomStrip n, goldbachB9ObliqueStrip n]
-  have hEm : ∀ i, MeasurableSet (E i) := by
-    intro i
-    fin_cases i
-    · exact measurableSet_goldbachB9LeftStrip n
-    · exact measurableSet_goldbachB9BottomStrip n
-    · exact measurableSet_goldbachB9ObliqueStrip n
-  have hEf : ∀ i, volume (E i) ≠ ∞ := by
-    intro i
-    fin_cases i <;> simp [E, volume_goldbachB9LeftStrip,
-      volume_goldbachB9BottomStrip, volume_goldbachB9ObliqueStrip]
-  have hAf : volume b9UnitBox ≠ ∞ := by
-    change volume (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) ≠ ∞
-    rw [volume_b9UnitBox]
-    norm_num
-  have h := MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover
-    volume (goldbachB9LogGridRegion n) goldbachB9LogSourceRegion b9UnitBox E
+  have h := MathlibNt.Analysis.LogGridEstimates.integral_sub_le_three_strips
+    (goldbachB9LogGridRegion n) goldbachB9LogSourceRegion
+    (Set.Icc (0 : ℝ) 1 ×ˢ Set.Icc (0 : ℝ) 1)
+    (goldbachB9LeftStrip n) (goldbachB9BottomStrip n) (goldbachB9ObliqueStrip n)
     (goldbachB9LogGridUpperIntegrand n) liuLogIntegrand (1600 / (n : ℝ)) 480
+    ((17 / 240 : ℝ) / n) ((41 / 636 : ℝ) / n) ((1927 / 19080 : ℝ) / n)
     (integrable_goldbachB9LogGridUpperIntegrand n hn)
     (integrableOn_goldbachB9LogIntegrand measurableSet_goldbachB9LogSourceRegion
       goldbachB9LogSourceRegion_subset_ambientBox)
     measurableSet_goldbachB9LogSourceRegion (measurableSet_Icc.prod measurableSet_Icc)
-    hAf hEm hEf (by positivity) (by norm_num)
-    (fun x hx => (goldbachB9LogIntegrand_bounds
+    volume_b9UnitBox
+    (measurableSet_goldbachB9LeftStrip n) (measurableSet_goldbachB9BottomStrip n)
+    (measurableSet_goldbachB9ObliqueStrip n)
+    (volume_goldbachB9LeftStrip n) (volume_goldbachB9BottomStrip n)
+    (volume_goldbachB9ObliqueStrip n)
+    (by positivity) (by positivity) (by positivity) (by positivity) (by norm_num)
+    (fun _ hx => (goldbachB9LogIntegrand_bounds
       (goldbachB9LogSourceRegion_subset_ambientBox hx)).1)
     (fun _ hx => goldbachB9LogGridUpperIntegrand_eq_zero hx)
     (by
@@ -393,25 +326,11 @@ theorem goldbachB9LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
       exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
         ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
     (fun _ hx => goldbachB9LogGridUpperIntegrand_le_integrand_add hn hx.1)
-    (by
-      intro x hx
-      rcases goldbachB9LogGridRegion_excess_subset hn hx with (hl | hd) | ho
-      · exact ⟨0, hl⟩
-      · exact ⟨1, hd⟩
-      · exact ⟨2, ho⟩)
-    (fun _ hx => goldbachB9LogGridUpperIntegrand_le hn hx.1)
-  rw [← goldbachB9LogGridUpperSum_eq_integral n hn,
-    ← goldbachB9MainIntegral_eq_setIntegral, Fin.sum_univ_three] at h
-  dsimp [E, b9UnitBox] at h
-  simp only [Measure.real_def, volume_b9UnitBox, volume_goldbachB9LeftStrip,
-    volume_goldbachB9BottomStrip, volume_goldbachB9ObliqueStrip,
-    ENNReal.toReal_one, one_mul] at h
-  rw [ENNReal.toReal_ofReal (by positivity : 0 ≤ (17 / 240 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (41 / 636 : ℝ) / n),
-    ENNReal.toReal_ofReal (by positivity : 0 ≤ (1927 / 19080 : ℝ) / n)] at h
+    (goldbachB9LogGridRegion_excess_subset hn) (fun _ hx => goldbachB9LogGridUpperIntegrand_le hn hx.1)
+  rw [← goldbachB9LogGridUpperSum_eq_integral n hn, ← goldbachB9MainIntegral_eq_setIntegral] at h
   refine h.trans ?_
   have hnreal : (0 : ℝ) < n := by exact_mod_cast hn
-  field_simp [hnreal.ne']
+  field_simp
   norm_num
 
 theorem exists_goldbachB9LogGridUpperSum_le_mainIntegral_add

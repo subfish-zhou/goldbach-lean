@@ -1,3 +1,5 @@
+import MathlibNt.Tactic.ElementaryDeriv
+import MathlibNt.Tactic.PolynomialDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticPrimitives
 import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
 
@@ -83,7 +85,9 @@ def lowH (x : ℝ) : ℝ :=
 
 theorem lowH_deriv (x : ℝ) : HasDerivAt lowH (lowQ x) x := by
   unfold lowH lowQ
-  convert! (((((((((((((((((((((((((((((((((((hasDerivAt_pow 1 x).const_mul (-1809510726609895988793184077301978828901765089329094633616623 / 2551169745882295562347385812285819815260913240800923898604600 : ℝ)).add ((hasDerivAt_pow 2 x).const_mul (62396921607237792717006347493171683755233278942382573572987 / 154616348235290640142265806805201200924903832775813569612400 : ℝ))).add ((hasDerivAt_pow 3 x).const_mul (-818718432703970092463444682478323569793355887876868316203 / 7028015828876847279193900309327327314768356035264253164200 : ℝ))).add ((hasDerivAt_pow 4 x).const_mul (14768038237154433688023187692112063106344923269194207907 / 283960235510175647644197992296053628879529536778353663200 : ℝ))).add ((hasDerivAt_pow 5 x).const_mul (-305248275771003713635714811009572844989243376539488733 / 10756069526900592713795378496062637457557936999180063000 : ℝ))).add ((hasDerivAt_pow 6 x).const_mul (6816813120758544361991759518929188634953931260265107 / 391129800978203371410741036220459543911197709061093200 : ℝ))).add ((hasDerivAt_pow 7 x).const_mul (-160133440758301650143252045438083220379408030227323 / 13827821246704159595329228553248569734234262441553800 : ℝ))).add ((hasDerivAt_pow 8 x).const_mul (27300008486236884685375100825572986089746878854909 / 3352199090110099295837388740181471450723457561588800 : ℝ))).add ((hasDerivAt_pow 9 x).const_mul (-341679676405635200246715533777525643376044649223 / 57139757217785783451773671707638717910058935708900 : ℝ))).add ((hasDerivAt_pow 10 x).const_mul (17482830256818414890176457447871211047000638249 / 3847795098840793498435937488729879993943362674000 : ℝ))).add ((hasDerivAt_pow 11 x).const_mul (-455431116179914938801642690205142143615218841 / 128259836628026449947864582957662666464778755800 : ℝ))).add ((hasDerivAt_pow 12 x).const_mul (12049353489588789569738474556584762818741409 / 4239994599273601651169077122567360874868719200 : ℝ))).add ((hasDerivAt_pow 13 x).const_mul (-323192731805882989970756412727771321621771 / 139191741895345508750500006548928513568922600 : ℝ))).add ((hasDerivAt_pow 14 x).const_mul (8777853468798632845511018133425010655649 / 4542387847400552733116550330268063379871600 : ℝ))).add ((hasDerivAt_pow 15 x).const_mul (-241211264969122012629858765139647915481 / 147480124915602361464823062671041018827000 : ℝ))).add ((hasDerivAt_pow 16 x).const_mul (6703178541183710764304674849686370169 / 4767034340706338956438725258053851113600 : ℝ))).add ((hasDerivAt_pow 17 x).const_mul (-376673334364926551337845297498954927 / 306968120424271826740372459798922230800 : ℝ))).add ((hasDerivAt_pow 18 x).const_mul (5349784399531486944598735964668019 / 4924622252795804707064798820303565200 : ℝ))).add ((hasDerivAt_pow 19 x).const_mul (-9037929053158019603344808021483 / 9265975718272953994279181777160600 : ℝ))).add ((hasDerivAt_pow 20 x).const_mul (262481226420584887595415994027 / 295565413661019266165205160356000 : ℝ))).add ((hasDerivAt_pow 21 x).const_mul (-405791361910265039535761867 / 494966003738549010324506249400 : ℝ))).add ((hasDerivAt_pow 22 x).const_mul (12057681633864995849483593 / 15713206467890444772206547600 : ℝ))).add ((hasDerivAt_pow 23 x).const_mul (-362472925601899106521817 / 497801306833994806832989800 : ℝ))).add ((hasDerivAt_pow 24 x).const_mul (11024108305494210389473 / 15740752785264657923572800 : ℝ))).add ((hasDerivAt_pow 25 x).const_mul (-7373274076612205747 / 10801460793577526572500 : ℝ))).add ((hasDerivAt_pow 26 x).const_mul (458839771749910619 / 680819346989128947600 : ℝ))).add ((hasDerivAt_pow 27 x).const_mul (-2886583470958727 / 4284877009022489880 : ℝ))).add ((hasDerivAt_pow 28 x).const_mul (7057072434691 / 10357986381130080 : ℝ))).add ((hasDerivAt_pow 29 x).const_mul (-6567749570881 / 9427561197543720 : ℝ))).add ((hasDerivAt_pow 30 x).const_mul (30381253697 / 42219261968400 : ℝ))).add ((hasDerivAt_pow 31 x).const_mul (-34201733 / 45586803240 : ℝ))).add ((hasDerivAt_pow 32 x).const_mul (224969 / 285196032 : ℝ))).add ((hasDerivAt_pow 33 x).const_mul (-961 / 1149984 : ℝ))).add ((hasDerivAt_pow 34 x).const_mul (1 / 1122 : ℝ))) using 1; ring
+  polynomial_deriv
+  norm_num
+  ring
 
 def highH (x : ℝ) : ℝ :=
   (1 / 2 : ℝ) * x^2 +
@@ -122,7 +126,9 @@ def highH (x : ℝ) : ℝ :=
 
 theorem highH_deriv (x : ℝ) : HasDerivAt highH (S3Correction.L x) x := by
   unfold highH S3Correction.L
-  convert! ((((((((((((((((((((((((((((((((((hasDerivAt_pow 2 x).const_mul (1 / 2 : ℝ)).add ((hasDerivAt_pow 3 x).const_mul (-1 / 6 : ℝ))).add ((hasDerivAt_pow 4 x).const_mul (1 / 12 : ℝ))).add ((hasDerivAt_pow 5 x).const_mul (-1 / 20 : ℝ))).add ((hasDerivAt_pow 6 x).const_mul (1 / 30 : ℝ))).add ((hasDerivAt_pow 7 x).const_mul (-1 / 42 : ℝ))).add ((hasDerivAt_pow 8 x).const_mul (1 / 56 : ℝ))).add ((hasDerivAt_pow 9 x).const_mul (-1 / 72 : ℝ))).add ((hasDerivAt_pow 10 x).const_mul (1 / 90 : ℝ))).add ((hasDerivAt_pow 11 x).const_mul (-1 / 110 : ℝ))).add ((hasDerivAt_pow 12 x).const_mul (1 / 132 : ℝ))).add ((hasDerivAt_pow 13 x).const_mul (-1 / 156 : ℝ))).add ((hasDerivAt_pow 14 x).const_mul (1 / 182 : ℝ))).add ((hasDerivAt_pow 15 x).const_mul (-1 / 210 : ℝ))).add ((hasDerivAt_pow 16 x).const_mul (1 / 240 : ℝ))).add ((hasDerivAt_pow 17 x).const_mul (-1 / 272 : ℝ))).add ((hasDerivAt_pow 18 x).const_mul (1 / 306 : ℝ))).add ((hasDerivAt_pow 19 x).const_mul (-1 / 342 : ℝ))).add ((hasDerivAt_pow 20 x).const_mul (1 / 380 : ℝ))).add ((hasDerivAt_pow 21 x).const_mul (-1 / 420 : ℝ))).add ((hasDerivAt_pow 22 x).const_mul (1 / 462 : ℝ))).add ((hasDerivAt_pow 23 x).const_mul (-1 / 506 : ℝ))).add ((hasDerivAt_pow 24 x).const_mul (1 / 552 : ℝ))).add ((hasDerivAt_pow 25 x).const_mul (-1 / 600 : ℝ))).add ((hasDerivAt_pow 26 x).const_mul (1 / 650 : ℝ))).add ((hasDerivAt_pow 27 x).const_mul (-1 / 702 : ℝ))).add ((hasDerivAt_pow 28 x).const_mul (1 / 756 : ℝ))).add ((hasDerivAt_pow 29 x).const_mul (-1 / 812 : ℝ))).add ((hasDerivAt_pow 30 x).const_mul (1 / 870 : ℝ))).add ((hasDerivAt_pow 31 x).const_mul (-1 / 930 : ℝ))).add ((hasDerivAt_pow 32 x).const_mul (1 / 992 : ℝ))).add ((hasDerivAt_pow 33 x).const_mul (-1 / 1056 : ℝ))).add ((hasDerivAt_pow 34 x).const_mul (1 / 1122 : ℝ))) using 1; ring
+  polynomial_deriv
+  norm_num
+  ring
 
 def lowF (x : ℝ) : ℝ := (33/4 : ℝ)*(lowH x + (52475811071686983675002338241757386038151187590543744374882067 / 84188601614115753557463731805432053903610136946430488653951800 : ℝ)*Real.log (x+29/33))
 def highF (x : ℝ) : ℝ := (33/4 : ℝ)*(highH x - x + Real.log (1+x))
@@ -137,18 +143,16 @@ theorem low_division (x : ℝ) (hx : x+29/33 ≠ 0) :
 theorem lowF_deriv (x : ℝ) (hx : 0 ≤ x) :
     HasDerivAt lowF ((33/4 : ℝ)*((1+x)*S3Correction.L x-x)/(x+29/33)) x := by
   have hn : x+29/33 ≠ 0 := by linarith
-  have hl := (Real.hasDerivAt_log hn).comp x ((hasDerivAt_id x).add_const (29/33))
   unfold lowF
-  convert! ((lowH_deriv x).add (hl.const_mul (52475811071686983675002338241757386038151187590543744374882067 / 84188601614115753557463731805432053903610136946430488653951800 : ℝ))).const_mul (33/4 : ℝ) using 1
+  elementary_deriv [lowH_deriv x]
   rw [mul_div_assoc, low_division x hn]
-  simp only [mul_one, div_eq_mul_inv]
+  ring
 
 theorem highF_deriv (x : ℝ) (hx : 0 ≤ x) :
     HasDerivAt highF ((33/4 : ℝ)*(S3Correction.L x-x/(1+x))) x := by
   have hn : 1+x ≠ 0 := by linarith
-  have hl := (Real.hasDerivAt_log hn).comp x ((hasDerivAt_id x).const_add 1)
   unfold highF
-  convert! (((highH_deriv x).sub (hasDerivAt_id x)).add hl).const_mul (33/4 : ℝ) using 1
+  elementary_deriv [highH_deriv x]
   field_simp
   ring
 

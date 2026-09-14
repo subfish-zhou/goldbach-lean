@@ -42,28 +42,10 @@ theorem goldbachG11GoodSwitchedBodies_sum_product (N : ℕ) (z b : ℝ) (f : ℕ
       ∑ m ∈ goldbachG11ProductSupport N z b,
         (goldbachG11ProductCoefficient N z b m : ℤ) * f m := by
   classical
-  have hfilter : (goldbachG11GoodSwitchedBodies N z b).filter
-      (fun u => goldbachG11SwitchedBodyProd u ∈ goldbachG11ProductSupport N z b) =
-        goldbachG11GoodSwitchedBodies N z b := by
-    apply Finset.filter_eq_self.mpr
-    intro u hu
-    exact mem_goldbachG11ProductSupport_iff.mpr ⟨u, hu, rfl⟩
-  have hfiber := Finset.sum_fiberwise_eq_sum_filter
-    (goldbachG11GoodSwitchedBodies N z b) (goldbachG11ProductSupport N z b)
-    goldbachG11SwitchedBodyProd (fun u => f (goldbachG11SwitchedBodyProd u))
-  rw [hfilter] at hfiber
-  rw [← hfiber]
-  apply Finset.sum_congr rfl
-  intro m _
-  calc
-    (∑ u ∈ (goldbachG11GoodSwitchedBodies N z b).filter
-        (fun u => goldbachG11SwitchedBodyProd u = m), f (goldbachG11SwitchedBodyProd u)) =
-        ∑ _u ∈ goldbachG11ProductFiber N z b m, f m := by
-      apply Finset.sum_congr rfl
-      intro u hu
-      rw [(mem_goldbachG11ProductFiber_iff.mp hu).2]
-    _ = (goldbachG11ProductCoefficient N z b m : ℤ) * f m := by
-      simp [goldbachG11ProductCoefficient]
+  simpa [goldbachG11ProductSupport, goldbachG11ProductCoefficient,
+    goldbachG11ProductFiber] using
+    (Finset.sum_fiberwise_of_maps_to' (s := goldbachG11GoodSwitchedBodies N z b)
+      (fun _ hu => Finset.mem_image_of_mem goldbachG11SwitchedBodyProd hu) f).symm
 
 theorem goldbachG11GoodSwitchedTotal_eq_product_sum (N : ℕ) (eps z b : ℝ) :
     goldbachG11GoodSwitchedTotal N eps z b =

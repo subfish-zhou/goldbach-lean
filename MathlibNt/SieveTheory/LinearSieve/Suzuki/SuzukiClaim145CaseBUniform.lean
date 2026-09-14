@@ -2,6 +2,7 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterf
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBAllS
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import MathlibNt.Analysis.RealLogPowerThreshold
 
 open scoped Classical BigOperators
 open Filter Finset Topology
@@ -68,27 +69,14 @@ lemma abs_logQ_bound (K : ℝ) (hK : 2 ≤ K) :
   let Q := log 2 / (1 + K / log 2)
   |log Q| ≤ log K + |log (1 + 1 / log 2)| + 2 * |log (log 2)| := by
   intro Q
-  have h_logK_nonneg : 0 ≤ log K := log_nonneg (by linarith)
-  have h_pos1 : 0 < log 2 := log_pos (by norm_num)
-  have h_pos2 : 0 < 1 + K / log 2 := by positivity
-  have h_logQ : log Q = log (log 2) - log (1 + K / log 2) := by
+  have hlog2 : 0 < log 2 := log_two_pos
+  have hden : 0 < 1 + K / log 2 := by positivity
+  have hQ : log Q = -(-log (log 2) + log (1 + K / log 2)) := by
     dsimp [Q]
-    rw [log_div (ne_of_gt h_pos1) (ne_of_gt h_pos2)]
-  have h_upper : log Q ≤ log K + |log (1 + 1 / log 2)| + 2 * |log (log 2)| := by
-    rw [h_logQ]
-    have h1 := log_bound_lower K hK
-    have h3 : log (log 2) ≤ |log (log 2)| := le_abs_self _
-    have h5 : 0 ≤ |log (1 + 1 / log 2)| := abs_nonneg _
-    linarith
-  have h_lower : -(log K + |log (1 + 1 / log 2)| + 2 * |log (log 2)|) ≤ log Q := by
-    rw [h_logQ]
-    have h1 := log_bound K hK
-    have h2 : log (1 + 1 / log 2) ≤ |log (1 + 1 / log 2)| := le_abs_self _
-    have h3 : -log (log 2) ≤ |log (log 2)| := neg_le_abs _
-    have h4 : -|log (log 2)| ≤ log (log 2) := neg_abs_le _
-    have h5 : 0 ≤ |log (log 2)| := abs_nonneg _
-    linarith
-  exact abs_le.mpr ⟨h_lower, h_upper⟩
+    rw [log_div hlog2.ne' hden.ne']
+    ring
+  rw [hQ, abs_neg]
+  exact abs_B_bound K hK
 
 lemma q0_bound (K : ℝ) (hK : 2 ≤ K) (Θ : ℝ) (hΘ : 1 ≤ Θ) (hB : |-log (log 2) + log (1 + K / log 2)| ≤ log K + (|log (1 + 1 / log 2)| + 2 * |log (log 2)|)) (hQ_pos : |log (1 / ((1 / log 2) * (1 + K / log 2)))| ≤ log K + (|log (1 + 1 / log 2)| + 2 * |log (log 2)|)) :
   let C := |log (1 + 1 / log 2)| + 2 * |log (log 2)|
@@ -99,28 +87,19 @@ lemma q0_bound (K : ℝ) (hK : 2 ≤ K) (Θ : ℝ) (hΘ : 1 ≤ Θ) (hB : |-log 
   q0 ≤ Θ * log K + C_q0 := by
   intro C C_q0 B Q q0
   have h_logK_nonneg : 0 ≤ log K := log_nonneg (by linarith)
-  have h_logK_le_Θ : log K ≤ Θ * log K := by
-    calc log K = 1 * log K := by ring
-      _ ≤ Θ * log K := mul_le_mul_of_nonneg_right hΘ h_logK_nonneg
+  have h_logK_le_Θ : log K ≤ Θ * log K :=
+    le_mul_of_one_le_left h_logK_nonneg hΘ
   have h_pos : 0 ≤ Θ * log K := by positivity
-  dsimp [q0, C_q0]
-  apply max_le
-  · linarith [le_max_left 6 (max (C + 2) (max (C + 9) (exp 1 + 2)))]
-  · apply max_le
-    · have h_max1 : C + 2 ≤ max (C + 2) (max (C + 9) (exp 1 + 2)) := le_max_left _ _
-      have h_max2 : max (C + 2) (max (C + 9) (exp 1 + 2)) ≤ max 6 (max (C + 2) (max (C + 9) (exp 1 + 2))) := le_max_right _ _
-      have hh1 : |B| + 2 ≤ log K + C + 2 := by linarith
-      linarith
-    · apply max_le
-      · have h_max3 : C + 9 ≤ max (C + 9) (exp 1 + 2) := le_max_left _ _
-        have h_max4 : max (C + 9) (exp 1 + 2) ≤ max (C + 2) (max (C + 9) (exp 1 + 2)) := le_max_right _ _
-        have h_max5 : max (C + 2) (max (C + 9) (exp 1 + 2)) ≤ max 6 (max (C + 2) (max (C + 9) (exp 1 + 2))) := le_max_right _ _
-        have hh2 : 9 + |log Q| ≤ log K + C + 9 := by linarith
-        linarith
-      · have h_max6 : exp 1 + 2 ≤ max (C + 9) (exp 1 + 2) := le_max_right _ _
-        have h_max7 : max (C + 9) (exp 1 + 2) ≤ max (C + 2) (max (C + 9) (exp 1 + 2)) := le_max_right _ _
-        have h_max8 : max (C + 2) (max (C + 9) (exp 1 + 2)) ≤ max 6 (max (C + 2) (max (C + 9) (exp 1 + 2))) := le_max_right _ _
-        linarith
+  have hmax : 6 ≤ C_q0 ∧ C + 2 ≤ C_q0 ∧ C + 9 ≤ C_q0 ∧ exp 1 + 2 ≤ C_q0 := by
+    dsimp [C_q0]
+    exact ⟨le_max_left _ _, (le_max_left _ _).trans (le_max_right _ _),
+      (le_max_left _ _).trans ((le_max_right _ _).trans (le_max_right _ _)),
+      (le_max_right _ _).trans ((le_max_right _ _).trans (le_max_right _ _))⟩
+  dsimp [q0]
+  simp only [max_le_iff]
+  dsimp [B, Q, C] at *
+  rcases hmax with ⟨h6, h2, h9, he⟩
+  exact ⟨by linarith, by linarith, by linarith, by linarith⟩
 
 /-- Claim 14.5 Case B with the analytic constants selected uniformly before the
 varying bounding sieve.  The proof's threshold construction uses only the
@@ -151,14 +130,9 @@ theorem claim145_caseB_uniform_in_S
     have h := one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 1)
       (show (1 : ℝ) ≤ d by linarith)
     simpa using h
-  have hdom0 := (isLittleO_log_rpow_rpow_atTop 2 ha).bound (show (0 : ℝ) < 1 / 2 by norm_num)
   have hdom : ∀ᶠ x : ℝ in atTop, 2 * (Real.log x) ^ 2 ≤ x ^ a := by
-    filter_upwards [hdom0, eventually_ge_atTop (1 : ℝ)] with x hxdom hx1
-    have hxpow : 0 ≤ x ^ a := Real.rpow_nonneg (by linarith) _
-    rw [Real.rpow_two] at hxdom
-    change |(Real.log x) ^ 2| ≤ 1 / 2 * |x ^ a| at hxdom
-    rw [abs_of_nonneg (sq_nonneg _), abs_of_nonneg hxpow] at hxdom
-    nlinarith
+    simpa only [Real.rpow_two] using
+      MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow 2 2 ha
   obtain ⟨X, hX⟩ := eventually_atTop.1 hdom
   let r0 : ℝ := (C + 2 + Real.log 2) / (d - 4)
   let C_bound := |Real.log (1 + 1 / Real.log 2)| + 2 * |Real.log (Real.log 2)|
@@ -284,23 +258,11 @@ theorem claim145_caseB_uniform_in_S
   have hqB : |B| + 2 ≤ q := (le_max_left _ _).trans ((le_max_right 6 _).trans hq_q0)
   have hqQ : 9 + |Real.log Q| ≤ q := (le_max_left _ _).trans ((le_max_right _ _).trans ((le_max_right 6 _).trans hq_q0))
   have hqe : Real.exp 1 + 2 ≤ q := (le_max_right _ _).trans ((le_max_right _ _).trans ((le_max_right 6 _).trans hq_q0))
-  have hMq : M ≤ q := by
-    dsimp [q, x]
-    exact (le_max_left M 0).trans hqM
-  have hr : r0 ≤ Real.log q := by simpa [r0, q, x] using hr
-  have hlog27D : Real.log (27 * D_real) = Real.log 27 + x := by
-    dsimp [x]
-    rw [Real.log_mul (by norm_num : (27 : ℝ) ≠ 0) (ne_of_gt hDpos)]
-  have hinnerLower : x ≤ Real.log (27 * D_real) := by
-    rw [hlog27D]
-    exact le_add_of_nonneg_left (Real.log_nonneg (by norm_num))
   have hinnerUpper : Real.log (27 * D_real) ≤ 2 * x := by
     rw [hlog27D]
     linarith
   have hinnerPos : 0 < Real.log (27 * D_real) := hx.trans_le hinnerLower
-  have hellLower : q ≤ ell := by
-    dsimp [q, ell]
-    exact Real.log_le_log hx hinnerLower
+  have hellLower : q ≤ ell := hq_ell
   have hellUpper : ell ≤ 2 * q := by
     have h := Real.log_le_log hinnerPos hinnerUpper
     have hlog2leq : Real.log 2 ≤ q := by
@@ -396,28 +358,13 @@ theorem claim145_caseB_uniform_in_S
     dsimp [q] at hlog2le
     linarith
   have hloglog3σ : Real.log (Real.log (3 * σ)) ≤ 2 * Real.log q := by
-    have h3σ : 0 < 3 * σ := by positivity
-    have h6xq : 3 * σ ≤ 6 * x * q := by linarith only [hσUpper]
-    have h6pos : 0 < 6 * x * q := by positivity
-    have hlogfirst := Real.log_le_log h3σ h6xq
-    rw [Real.log_mul (by positivity : (6 * x : ℝ) ≠ 0) (ne_of_gt hq),
-      Real.log_mul (by norm_num : (6 : ℝ) ≠ 0) (ne_of_gt hx)] at hlogfirst
-    have hlog6le : Real.log 6 ≤ q := by
-      have hq6 : (6 : ℝ) ≤ q := by
-        dsimp [q, x]
-        exact (le_max_left _ _).trans hq_q0
-      exact (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 6)).trans (by linarith)
-    have hlogqle : Real.log q ≤ q := (Real.log_le_sub_one_of_pos hq).trans (sub_le_self q zero_le_one)
-    have hinner : Real.log (3 * σ) ≤ 3 * q := by
-      dsimp [q] at hlog6le
-      linarith
+    have hinner : Real.log (3 * σ) ≤ q ^ 2 := by
+      rw [Real.log_mul (by norm_num : (3 : ℝ) ≠ 0) hσpos.ne']
+      have hlog3 := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 3)
+      nlinarith only [hlogsσ, hlog3, hq4, sq_nonneg (q - 2)]
     have hinnerpos : 0 < Real.log (3 * σ) := Real.log_pos (by linarith only [hσ4])
-    have h3qpos : 0 < 3 * q := by positivity
-    have hsecond := Real.log_le_log hinnerpos hinner
-    have hlog3le : Real.log 3 ≤ Real.log q :=
-      Real.strictMonoOn_log.monotoneOn (by norm_num) hq (by linarith : (3 : ℝ) ≤ q)
-    rw [Real.log_mul (by norm_num : (3 : ℝ) ≠ 0) (ne_of_gt hq)] at hsecond
-    linarith
+    have hh := Real.log_le_log hinnerpos hinner
+    simpa only [Real.log_pow, Nat.cast_ofNat] using hh
   have hlogL : Real.log L ≤ 2 * Real.log q := by
     have hq2pos : 0 < q ^ 2 := sq_pos_of_pos hq
     have h := Real.log_le_log (by linarith : 0 < L) hLsq
@@ -545,13 +492,7 @@ theorem claim145_caseB_uniform_in_S
     have hnonneg : 0 ≤ Q / x ^ 3 := by positivity
     have hmul := mul_le_mul_of_nonneg_left hVedge hnonneg
     have hVpos : 0 < claim14_5VProduct S D_real := by
-      unfold claim14_5VProduct
-      apply Finset.prod_pos
-      intro p hp
-      have hpS : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hp).1
-      have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-      have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
-      exact sub_pos.mpr (S.nu_lt_one_of_prime p hpprime hpdiv)
+      simpa [claim14_5VProduct, suzukiVProduct] using suzukiVProduct_pos S D_real
     calc
       Q / x ^ 3 ≤ (claim14_5VProduct S D_real * (A * x)) * (Q / x ^ 3) := by
         simpa [mul_comm, mul_left_comm, mul_assoc] using hmul
@@ -588,13 +529,7 @@ theorem claim145_caseB_uniform_in_S
   have h_cond4 : Real.exp (suzukiSourceL D_real K + (s - 2) * (1 + Real.log (suzukiSourceL D_real K) - Real.log (s - 2))) ≤ 1 * (claim14_5VProduct S D_real * (Real.exp (Real.sqrt K) / (Real.log D_real * σ)) * ((1 + s ^ d / Real.log D_real) ^ s * s * proposition131iiLowerProfile C s) * (Real.log D_real) ^ (-Δ)) := by
     rw [← hprofile] at hscalarCore
     have hVnonneg : 0 ≤ claim14_5VProduct S D_real := by
-      unfold claim14_5VProduct
-      apply Finset.prod_nonneg
-      intro p hp
-      have hpS : p ∈ S.prodPrimes.primeFactors := (Finset.mem_filter.mp hp).1
-      have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-      have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hpS).2.1
-      exact sub_nonneg.mpr (S.nu_lt_one_of_prime p hpprime hpdiv).le
+      simpa [claim14_5VProduct, suzukiVProduct] using (suzukiVProduct_pos S D_real).le
     have hprofnonneg : 0 ≤ proposition131iiLowerProfile C s := by
       unfold proposition131iiLowerProfile
       exact (Real.exp_pos _).le
@@ -603,24 +538,10 @@ theorem claim145_caseB_uniform_in_S
         C145 * (claim14_5VProduct S D_real * (Real.exp (Real.sqrt K) / x)) *
           x ^ (-Δ) * (b ^ s * proposition131iiLowerProfile C s) := by
       positivity
-    have hratio : 1 ≤ s / σ := by
-      apply (le_div_iff₀ hσpos).2
-      simpa using hsigma
-    have hlift :
-        C145 * (claim14_5VProduct S D_real * (Real.exp (Real.sqrt K) / x)) *
-            x ^ (-Δ) * (b ^ s * proposition131iiLowerProfile C s) ≤
-          C145 * (claim14_5VProduct S D_real *
-            (Real.exp (Real.sqrt K) / (x * σ))) *
-            (b ^ s * s * proposition131iiLowerProfile C s) * x ^ (-Δ) := by
-      calc
-        _ = (C145 * (claim14_5VProduct S D_real * (Real.exp (Real.sqrt K) / x)) *
-            x ^ (-Δ) * (b ^ s * proposition131iiLowerProfile C s)) * 1 := by ring
-        _ ≤ (C145 * (claim14_5VProduct S D_real * (Real.exp (Real.sqrt K) / x)) *
-            x ^ (-Δ) * (b ^ s * proposition131iiLowerProfile C s)) * (s / σ) :=
-          mul_le_mul_of_nonneg_left hratio holdnonneg
-        _ = _ := by field_simp [ne_of_gt hx, ne_of_gt hσpos]
-    have hdesired := hscalarCore.trans hlift
-    simpa only [σ, L, b, x, mul_assoc] using hdesired
+    convert hscalarCore.trans (le_mul_of_one_le_right holdnonneg hu1) using 1
+    · rfl
+    · dsimp [C145, b, x, u]
+      field_simp [ne_of_gt hx, ne_of_gt hσpos]
   exact suzukiLemma14_3_le_claim145Scale_of_scalar_at S H hlocal hD h_cond1 hs h_cond2 hKpos hC145 hprop h_cond3 h_cond4
 
 /-- Compatibility specialization of the uniform-in-`S` Case-B theorem. -/

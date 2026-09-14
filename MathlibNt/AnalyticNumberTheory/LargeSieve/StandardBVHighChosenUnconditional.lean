@@ -195,13 +195,6 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
         Real.log_le_log (by positivity) (by exact_mod_cast hpoly)
       _ = 2 * x := by rw [Nat.cast_mul, Real.log_mul (by positivity) (by positivity)]; ring
       _ ≤ 3 * x := by nlinarith
-  have hH : conductorHarmonicFactor Q ≤ 2 * x := by
-    have hlogQ : Real.log (Q : ℝ) ≤ x := by
-      dsimp [x]
-      exact Real.log_le_log (by exact_mod_cast hQpos) (by exact_mod_cast hQleN)
-    exact (conductorHarmonicFactor_le Q).trans (by linarith)
-  have habel : discreteAbelAmplifierPrefixMax N ≤ 3 :=
-    chosen_discreteAbelAmplifierPrefixMax_le_three N
   have hQpay : (Q : ℝ) * Real.sqrt N ≤ (N : ℝ) / x ^ B := by
     have hq : (Q : ℝ) ≤ Real.sqrt N / x ^ B := by
       calc
@@ -282,15 +275,8 @@ theorem standardBVHighChosenUnconditional_typeII (A : ℕ) :
     exact haggregate.trans (by gcongr)
   have houter :
       4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
-        48 * x ^ 2 := by
-    have hH0 : 0 ≤ conductorHarmonicFactor Q := conductorHarmonicFactor_nonneg Q
-    have hHsq : conductorHarmonicFactor Q ^ 2 ≤ (2 * x) ^ 2 :=
-      pow_le_pow_left₀ hH0 hH 2
-    calc
-      _ ≤ 4 * 3 * (2 * x) ^ 2 := by
-        exact mul_le_mul (mul_le_mul_of_nonneg_left habel (by norm_num)) hHsq
-          (sq_nonneg _) (by positivity)
-      _ = 48 * x ^ 2 := by ring
+        48 * x ^ 2 :=
+    productionAbelConductorEnvelope_le_logPow_two B N (by omega)
   have hnonneg : 0 ≤ highConductorVaughanTypeIIMean N Q C R R := by
     unfold highConductorVaughanTypeIIMean apNormalizedPrimitiveMeanOn
     exact Finset.sum_nonneg fun d hd =>
@@ -372,34 +358,20 @@ theorem standardBVHighChosenUnconditional_typeI (A : ℕ) :
       (R : ℝ) * Real.log (N + 1 : ℕ) +
           (R : ℝ) * R * Real.log (R + 1 : ℕ) ≤
         4 * x ^ (2 * C + 1) := by
+    have hRmajor : (R : ℝ) ≤ (x ^ C) ^ 2 :=
+      hRcast.trans (by nlinarith only [hRCone])
     have hR2 : (R : ℝ) ^ 2 ≤ (x ^ C) ^ 2 :=
       pow_le_pow_left₀ hRC hRcast 2
-    have hfirst : (R : ℝ) * Real.log (N + 1 : ℕ) ≤ 2 * x ^ (2 * C + 1) := by
-      calc
-        (R : ℝ) * Real.log (N + 1 : ℕ) ≤ (x ^ C) * (2 * x) :=
-          mul_le_mul hRcast hlogN1
-            (Real.log_nonneg (by exact_mod_cast (show 1 ≤ N + 1 by omega)))
-            (pow_nonneg hx0.le _)
-        _ ≤ 2 * x ^ (2 * C + 1) := by
-          calc
-            x ^ C * (2 * x) ≤ x ^ C * x ^ C * (2 * x) := by
-              apply mul_le_mul_of_nonneg_right _ (by positivity)
-              calc
-                x ^ C = x ^ C * 1 := by ring
-                _ ≤ x ^ C * x ^ C :=
-                  mul_le_mul_of_nonneg_left hRCone (pow_nonneg hx0.le _)
-            _ = 2 * x ^ (2 * C + 1) := by
-              rw [show 2 * C + 1 = C + C + 1 by omega, pow_add, pow_succ]
-              ring
-    have hsecond : (R : ℝ) * R * Real.log (R + 1 : ℕ) ≤
-        2 * x ^ (2 * C + 1) := by
-      calc
-        (R : ℝ) * R * Real.log (R + 1 : ℕ) = (R : ℝ) ^ 2 * Real.log (R + 1 : ℕ) := by ring
-        _ ≤ (x ^ C) ^ 2 * (2 * x) :=
-          mul_le_mul hR2 hlogR1
-            (Real.log_nonneg (by exact_mod_cast (show 1 ≤ R + 1 by omega))) (sq_nonneg _)
-        _ = 2 * x ^ (2 * C + 1) := by rw [← pow_mul, pow_succ]; ring
-    linarith
+    calc
+      _ = (R : ℝ) * Real.log (N + 1 : ℕ) +
+          (R : ℝ) ^ 2 * Real.log (R + 1 : ℕ) := by ring
+      _ ≤ (x ^ C) ^ 2 * (2 * x) + (x ^ C) ^ 2 * (2 * x) := by
+        apply add_le_add
+        · exact mul_le_mul hRmajor hlogN1 (by positivity) (sq_nonneg _)
+        · exact mul_le_mul hR2 hlogR1 (by positivity) (sq_nonneg _)
+      _ = 4 * x ^ (2 * C + 1) := by
+        rw [show 2 * C + 1 = C + C + 1 by omega, pow_succ, pow_add]
+        ring
   have hQcast : (Q : ℝ) ≤ Real.sqrt N / x ^ B := by
     calc
       (Q : ℝ) ≤ (N : ℝ) ^ (1 / 2 : ℝ) / Real.log N ^ (B : ℝ) :=
@@ -426,30 +398,10 @@ theorem standardBVHighChosenUnconditional_typeI (A : ℕ) :
         mul_le_mul (mul_le_mul_of_nonneg_left hQsq (by norm_num)) hcore
           (by positivity) (by positivity)
       _ = 24 * ((N : ℝ) / x ^ (2 * B)) * x ^ (2 * C + 1) := by ring
-  have hH : conductorHarmonicFactor Q ≤ 2 * x := by
-    by_cases hQ : Q = 0
-    · simp [hQ, conductorHarmonicFactor, x, hx0.le]
-    · have hQleN : Q ≤ N := by
-        have hqreal : (Q : ℝ) ≤ Real.sqrt N := hQcast.trans (div_le_self (Real.sqrt_nonneg _) (one_le_pow₀ hx1))
-        have hsle : Real.sqrt N ≤ (N : ℝ) := by
-          have hsSq : Real.sqrt N ^ 2 = (N : ℝ) := Real.sq_sqrt (by positivity)
-          nlinarith [Real.sqrt_nonneg (N : ℝ), show (1 : ℝ) ≤ N by exact_mod_cast (show 1 ≤ N by omega)]
-        exact_mod_cast hqreal.trans hsle
-      exact (conductorHarmonicFactor_le Q).trans (by
-        have hQposR : (0 : ℝ) < Q := by exact_mod_cast (Nat.pos_of_ne_zero hQ)
-        have hQleNR : (Q : ℝ) ≤ N := by exact_mod_cast hQleN
-        have hlogQN := Real.log_le_log hQposR hQleNR
-        dsimp [x] at *
-        linarith)
-  have habel : discreteAbelAmplifierPrefixMax N ≤ 3 :=
-    chosen_discreteAbelAmplifierPrefixMax_le_three N
-  have houter : 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
-      48 * x ^ 2 := by
-    have hH0 : 0 ≤ conductorHarmonicFactor Q := conductorHarmonicFactor_nonneg Q
-    calc
-      _ ≤ 4 * 3 * (2 * x) ^ 2 := by
-        gcongr
-      _ = 48 * x ^ 2 := by ring
+  have houter :
+      4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2 ≤
+        48 * x ^ 2 :=
+    productionAbelConductorEnvelope_le_logPow_two B N (by omega)
   have hscale : ((N : ℝ) / x ^ (2 * B)) * x ^ (2 * C + 3) ≤
       (N : ℝ) / x ^ A := by
     rw [div_mul_eq_mul_div, div_le_div_iff₀ (pow_pos hx0 _) (pow_pos hx0 _)]
@@ -552,71 +504,11 @@ theorem standardBVHighChosenUnconditional_small (A : ℕ) :
       have hC : 0 < C := by dsimp [C]; omega
       exact one_lt_pow₀ hlog hC.ne'
     exact Nat.floor_pos.mpr hpow.le
-  have hP : 0 ≤ P := by
-    dsimp [P]
-    have ha : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-      have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-        unfold discreteAbelAmplifier
-        positivity
-      exact h0.trans (by
-        unfold discreteAbelAmplifierPrefixMax
-        exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
-    positivity
-  have hcard : ∀ d ∈ Finset.Icc (R + 1) Q,
-      Fintype.card (PrimitiveCharacter d) ≤ d.totient := by
-    intro d hd
-    exact card_primitiveCharacter_le_totient d (by
-      have hdR := (Finset.mem_Icc.mp hd).1
-      omega)
-  have hRone : 1 ≤ R := by omega
-  have hsmallCauchy := apNormalizedPrimitiveMeanOn_high_sq_le
-    (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N Q R hcard
-  rw [← highConductorSet_eq_interval_highChosenUnconditional N Q C
-    (by simpa only [R] using hRone)] at hsmallCauchy
-  have hsmallNonneg : 0 ≤ highConductorVaughanSmallMean N Q C (v N) := by
-    unfold highConductorVaughanSmallMean apNormalizedPrimitiveMeanOn
-    exact Finset.sum_nonneg fun d hd => mul_nonneg (inv_nonneg.mpr (by positivity))
-      (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _)
-  have hharmNonneg : 0 ≤ highConductorHarmonicFactor Q R := by
-    unfold highConductorHarmonicFactor
-    positivity
-  have hledgerNonneg : 0 ≤ primitivePrefixSquareLedgerOn
-      (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-      (highConductorSet N Q C) := by
-    unfold primitivePrefixSquareLedgerOn
-    exact Finset.sum_nonneg fun d hd =>
-      mul_nonneg (div_nonneg (by positivity) (by positivity))
-        (Finset.sum_nonneg fun ψ hψ =>
-          primitiveCharacterPrefixMaxSquare_nonneg _ _ _ _ _)
-  have hsmallSq :
-      (P * highConductorVaughanSmallMean N Q C (v N)) ^ 2 ≤
-        (K₀ * ((N : ℝ) / Real.log N ^ A)) ^ 2 := by
-    calc
-      (P * highConductorVaughanSmallMean N Q C (v N)) ^ 2 =
-          P ^ 2 * highConductorVaughanSmallMean N Q C (v N) ^ 2 := by ring
-      _ ≤ P ^ 2 * (highConductorHarmonicFactor Q R *
-          primitivePrefixSquareLedgerOn
-            (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-            (highConductorSet N Q C)) :=
-        mul_le_mul_of_nonneg_left hsmallCauchy (sq_nonneg P)
-      _ ≤ P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-          primitivePrefixSquareLedgerOn
-            (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-            (highConductorSet N Q C)) := by
-        have hcore : 0 ≤ highConductorHarmonicFactor Q R *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) N
-              (highConductorSet N Q C) :=
-          mul_nonneg hharmNonneg hledgerNonneg
-        apply mul_le_mul_of_nonneg_left _ (sq_nonneg P)
-        nlinarith only [hcore]
-      _ ≤ (K₀ * ((N : ℝ) / Real.log N ^ A)) ^ 2 := by
-        simpa only [Nat.add_zero] using hsmallPay
-  have hlogPos : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
   have hsmall : P * highConductorVaughanSmallMean N Q C (v N) ≤
-      K₀ * ((N : ℝ) / Real.log N ^ A) :=
-    (sq_le_sq₀ (mul_nonneg hP hsmallNonneg) (by positivity)).mp hsmallSq
+      K₀ * ((N : ℝ) / Real.log N ^ A) := by
+    apply apNormalizedPrimitiveMeanOn_high_le_of_square_payment
+      _ N Q C P _ hR (by positivity)
+    simpa only [Nat.add_zero] using hsmallPay
   calc
     P * highConductorVaughanSmallMean N Q C (v N) ≤
         K₀ * ((N : ℝ) / Real.log N ^ A) := hsmall

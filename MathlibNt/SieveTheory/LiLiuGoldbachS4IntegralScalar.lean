@@ -1,3 +1,4 @@
+import MathlibNt.Tactic.PolynomialDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction
 import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -112,8 +113,8 @@ private def s4Primitive (y : ℝ) : ℝ :=
 private lemma s4Primitive_deriv (y : ℝ) :
     HasDerivAt s4Primitive (s4LogPoly y * s4GeomPoly y) y := by
   unfold s4Primitive
-  convert! (((((((((((((((((((((((hasDerivAt_id y).pow 2).const_mul (1/1 : ℝ)).add (((hasDerivAt_id y).pow 3).const_mul (2/3 : ℝ))).add (((hasDerivAt_id y).pow 4).const_mul (2/3 : ℝ))).add (((hasDerivAt_id y).pow 5).const_mul (8/15 : ℝ))).add (((hasDerivAt_id y).pow 6).const_mul (23/45 : ℝ))).add (((hasDerivAt_id y).pow 7).const_mul (46/105 : ℝ))).add (((hasDerivAt_id y).pow 8).const_mul (44/105 : ℝ))).add (((hasDerivAt_id y).pow 9).const_mul (352/945 : ℝ))).add (((hasDerivAt_id y).pow 10).const_mul (563/1575 : ℝ))).add (((hasDerivAt_id y).pow 11).const_mul (1126/3465 : ℝ))).add (((hasDerivAt_id y).pow 12).const_mul (502/945 : ℝ))).add (((hasDerivAt_id y).pow 13).const_mul (1168/4095 : ℝ))).add (((hasDerivAt_id y).pow 14).const_mul (619/2205 : ℝ))).add (((hasDerivAt_id y).pow 15).const_mul (958/4725 : ℝ))).add (((hasDerivAt_id y).pow 16).const_mul (25/126 : ℝ))).add (((hasDerivAt_id y).pow 17).const_mul (832/5355 : ℝ))).add (((hasDerivAt_id y).pow 18).const_mul (431/2835 : ℝ))).add (((hasDerivAt_id y).pow 19).const_mul (106/855 : ℝ))).add (((hasDerivAt_id y).pow 20).const_mul (82/675 : ℝ))).add (((hasDerivAt_id y).pow 21).const_mul (32/315 : ℝ))).add (((hasDerivAt_id y).pow 22).const_mul (64/495 : ℝ))) using 1
-  norm_num [id, s4LogPoly, s4GeomPoly]
+  polynomial_deriv
+  norm_num [s4LogPoly, s4GeomPoly]
   ring
 
 private lemma s4Primitive_endpoint :

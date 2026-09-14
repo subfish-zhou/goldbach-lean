@@ -1,3 +1,4 @@
+import MathlibNt.Tactic.ElementaryDeriv
 import MathlibNt.SieveTheory.Switching.ScreenedDarboux
 
 /-!
@@ -1267,42 +1268,9 @@ theorem hasDerivAt_upperRosserAlternatingPairNormalizedInnerRaw
       ((-r ^ 2 / y ^ 3 - 3 * r / y ^ 2 +
         (1 / (y + r) - 1 / y)) / r ^ 2) y := by
   unfold upperRosserAlternatingPairNormalizedInnerRaw
-  have hy2 : 2 * y ^ 2 ≠ 0 := by positivity
-  have hratio : (y + r) / (2 * y) ≠ 0 := by positivity
-  have hterm1 :=
-    (hasDerivAt_const y (r ^ 2)).div
-      ((hasDerivAt_const y (2 : ℝ)).mul ((hasDerivAt_id y).pow 2)) hy2
-  change HasDerivAt (fun y : ℝ => r ^ 2 / (2 * y ^ 2)) _ y at hterm1
-  simp only [id_eq, Pi.mul_apply, Pi.pow_apply] at hterm1
-  have hterm1' :
-      HasDerivAt (fun y : ℝ => r ^ 2 / (2 * y ^ 2))
-        (-r ^ 2 / y ^ 3) y := by
-    convert hterm1 using 1
-    field_simp [hy.ne']
-    ring
-  have hterm2 :=
-    (hasDerivAt_const y (3 * r)).div (hasDerivAt_id y) hy.ne'
-  change HasDerivAt (fun y : ℝ => 3 * r / y) _ y at hterm2
-  simp only [id_eq] at hterm2
-  have hterm2' :
-      HasDerivAt (fun y : ℝ => 3 * r / y) (-3 * r / y ^ 2) y := by
-    convert hterm2 using 1
-    field_simp [hy.ne']
-    ring
-  have hlog :=
-    ((hasDerivAt_id y).add_const r).div
-      (HasDerivAt.const_mul (2 : ℝ) (hasDerivAt_id y)) (by positivity)
-  change HasDerivAt (fun y : ℝ => (y + r) / (2 * y)) _ y at hlog
-  simp only [id_eq] at hlog
-  have hlog' :
-      HasDerivAt (fun y : ℝ => Real.log ((y + r) / (2 * y)))
-        (1 / (y + r) - 1 / y) y := by
-    convert hlog.log hratio using 1
-    field_simp [hy.ne', (by linarith : y + r ≠ 0)]
-  convert
-    (((hterm1'.add hterm2').sub (hasDerivAt_const y (7 / 2 : ℝ))).add
-      hlog').div_const (r ^ 2) using 1
-  all_goals first | rfl | ring
+  elementary_deriv []
+  field_simp [hy.ne', (by linarith : y + r ≠ 0)]
+  ring
 
 theorem abs_upperRosserAlternatingPairNormalizedInnerRaw_deriv_le
     {r y : ℝ} (hr : 3 ≤ r) (hy : 1 ≤ y) :

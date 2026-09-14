@@ -1,6 +1,7 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
 import MathlibNt.SieveTheory.LiuSingularSeries
 import MathlibNt.SieveTheory.MertensTheorem
+import MathlibNt.SieveTheory.Arithmetic.GoldbachLiuProductBridge
 
 noncomputable section
 
@@ -99,33 +100,12 @@ private theorem B10SieveProduct_absConst_div_log_le
     (hZA : 2 * Real.exp (|C| / (δ * Real.exp (-Real.eulerMascheroniConstant))) ≤ Z) :
     |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) ≤
       δ * Real.exp (-Real.eulerMascheroniConstant) := by
-  have hE : 0 < Real.exp (-Real.eulerMascheroniConstant) := Real.exp_pos _
-  have hL :
-      |C| / (δ * Real.exp (-Real.eulerMascheroniConstant)) ≤
-        Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) :=
-    B10SieveProduct_log_lower_of_two_mul_exp_le (by linarith) hZA
-  have hδE : 0 < δ * Real.exp (-Real.eulerMascheroniConstant) := mul_pos hδ hE
   have hceil4r : (4 : ℝ) ≤ (Nat.ceil Z : ℝ) := hZ.trans (Nat.le_ceil Z)
   have hceil4 : 4 ≤ Nat.ceil Z := by exact_mod_cast hceil4r
-  have harg1 : (1 : ℝ) < ((Nat.ceil Z - 1 : ℕ) : ℝ) := by
-    exact_mod_cast (show 1 < Nat.ceil Z - 1 by omega)
-  have hlogpos : 0 < Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) := Real.log_pos harg1
-  have hmul := mul_le_mul_of_nonneg_left hL hδE.le
-  have hcancel :
-      (δ * Real.exp (-Real.eulerMascheroniConstant)) *
-          (|C| / (δ * Real.exp (-Real.eulerMascheroniConstant))) = |C| := by
-    field_simp [hδ.ne', (Real.exp_pos _).ne']
-  have hbound' :
-      (δ * Real.exp (-Real.eulerMascheroniConstant)) *
-          (|C| / (δ * Real.exp (-Real.eulerMascheroniConstant))) ≤
-      (δ * Real.exp (-Real.eulerMascheroniConstant)) *
-        Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) := hmul
-  have hbound : |C| ≤
-      (δ * Real.exp (-Real.eulerMascheroniConstant)) *
-        Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) := by
-    simpa [hcancel] using hbound'
-  exact (div_le_iff₀ hlogpos).2 <| by
-    simpa [mul_assoc, mul_left_comm, mul_comm] using hbound
+  have hlogpos : 0 < Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) :=
+    Real.log_pos (by exact_mod_cast (show 1 < Nat.ceil Z - 1 by omega))
+  exact (div_le_comm₀ hlogpos (mul_pos hδ (Real.exp_pos _))).2
+    (B10SieveProduct_log_lower_of_two_mul_exp_le (by linarith) hZA)
 
 theorem goldbachB10PrimeProduct_log_le_liuSingularSeries
     (η : ℝ) (hη : 0 < η) :
@@ -146,7 +126,7 @@ theorem goldbachB10PrimeProduct_log_le_liuSingularSeries
     nlinarith
   have hδcube : (1 + δ) ^ 3 ≤ 1 + η :=
     B10SieveProduct_one_add_cube_le hδ0 hδ1 hδη
-  obtain ⟨C, hC⟩ := MertensTheorem.sieve_product_asymptotic
+  obtain ⟨C, hC⟩ := GoldbachLiuProductBridge.exists_log_bounds
   obtain ⟨T, hT⟩ := eventually_atTop.mp
     (SingularSeries.eventually_liuSingularSeriesTruncated_le δ hδ)
   let logThreshold : ℝ := 2 * Real.exp (Real.log 2 / δ)
@@ -168,12 +148,6 @@ theorem goldbachB10PrimeProduct_log_le_liuSingularSeries
     have hzNat : 3 ≤ Nat.ceil Z := by
       exact_mod_cast (show (3 : ℝ) ≤ (Nat.ceil Z : ℝ) from
         (show (3 : ℝ) ≤ Z by linarith).trans (Nat.le_ceil Z))
-    have hzTrunc : 2 ≤ Nat.ceil Z - 1 := by omega
-    have hlogArg1 : (1 : ℝ) < (((Nat.ceil Z - 1 : ℕ) : ℝ)) := by
-      exact_mod_cast (show 1 < Nat.ceil Z - 1 by omega)
-    have hlogArgPos : 0 < (((Nat.ceil Z - 1 : ℕ) : ℝ)) := by linarith
-    have hlogPos : 0 < Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) := Real.log_pos hlogArg1
-    have hlogZPos : 0 < Real.log Z := Real.log_pos (by linarith)
     have hTnat1 : T + 1 ≤ Nat.ceil Z := by
       exact_mod_cast (hZT.trans (Nat.le_ceil Z))
     have hTnat : T ≤ Nat.ceil Z - 1 := by omega
@@ -181,100 +155,8 @@ theorem goldbachB10PrimeProduct_log_le_liuSingularSeries
         SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) ≤
           (1 + δ) * SingularSeries.liuSingularSeries N := by
       exact hT (Nat.ceil Z - 1) hTnat N (by omega)
-    have hsieveAbs :
-        |goldbachB10PrimeProduct N Z -
-            SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))| ≤
-          |C| * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-            (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by
-      have hbase := hC N (Nat.ceil Z) hzNat _hEven hN
-      calc
-        |goldbachB10PrimeProduct N Z -
-            SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))|
-          = |MertensTheorem.goldbachSieveProduct N (Nat.ceil Z) -
-              SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) *
-                Real.exp (-Real.eulerMascheroniConstant) /
-                  Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))| := by
-              rfl
-        _ ≤ C * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-              (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := hbase
-        _ ≤ |C| * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-              (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by
-              have hSpos :
-                  0 < SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) :=
-                SingularSeries.singularSeriesTruncated_pos N (Nat.ceil Z - 1) (by omega)
-              have hterm :
-                  0 ≤ SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                    (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by
-                positivity
-              have hCabs :
-                  C * (SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                      (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) ≤
-                    |C| * (SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                      (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) :=
-                mul_le_mul_of_nonneg_right (le_abs_self C) hterm
-              calc
-                C * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                    (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2
-                  = C * (SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                      (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) := by ring
-                _ ≤ |C| * (SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                      (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) := hCabs
-                _ = |C| * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                      (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by ring
-    have hLegacyToLiu :
-        SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) =
-          2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) :=
-      SingularSeries.singularSeriesTruncated_eq_two_mul_liuSingularSeriesTruncated
-        N (Nat.ceil Z - 1) _hEven hzTrunc
-    have hPrimeUpper :
-        goldbachB10PrimeProduct N Z ≤
-          2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-            (Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-              |C| / (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) := by
-      have hsub :
-          goldbachB10PrimeProduct N Z -
-              SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) *
-                Real.exp (-Real.eulerMascheroniConstant) /
-                  Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) ≤
-            |C| * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-              (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by
-        exact (le_abs_self _).trans hsieveAbs
-      have hupper :
-          goldbachB10PrimeProduct N Z ≤
-            SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-              |C| * SingularSeries.singularSeriesTruncated N (Nat.ceil Z - 1) /
-                (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by
-        linarith
-      rw [hLegacyToLiu] at hupper
-      have hrew :
-          2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-            |C| * (2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1)) /
-              (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 =
-          2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-            (Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-              |C| / (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) := by
-        ring
-      calc
-        goldbachB10PrimeProduct N Z
-          ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-            |C| * (2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1)) /
-              (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := hupper
-        _ = 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              (Real.exp (-Real.eulerMascheroniConstant) /
-                  Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-                |C| / (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) := hrew
+    -- Share the exact Liu-normalized product bound with the S1 lower estimate.
+    have hPrimeUpper := (hC N (Nat.ceil Z) hzNat _hEven hN).2
     have hLogTransport :
         Real.log Z ≤
           (1 + δ) * Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) :=
@@ -286,21 +168,8 @@ theorem goldbachB10PrimeProduct_log_le_liuSingularSeries
     have hTruncPos :
         0 ≤ SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) := by
       exact (SingularSeries.liuSingularSeriesTruncated_pos N (Nat.ceil Z - 1)).le
-    have hBracketNonneg :
-        0 ≤ Real.exp (-Real.eulerMascheroniConstant) /
-              Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-            |C| / (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2 := by
-      positivity
-    have hMul1 :
-        goldbachB10PrimeProduct N Z * Real.log Z ≤
-          2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-            (Real.exp (-Real.eulerMascheroniConstant) /
-                Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-              |C| / (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) *
-            ((1 + δ) * Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) := by
-      have hmul := mul_le_mul_of_nonneg_right hPrimeUpper hlogZPos.le
-      exact hmul.trans <| by
-        gcongr
+    have hVnonneg : 0 ≤ goldbachB10PrimeProduct N Z :=
+      GoldbachLiuProductBridge.product_nonneg _hEven
     have hMul2 :
         goldbachB10PrimeProduct N Z * Real.log Z ≤
           2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
@@ -309,69 +178,41 @@ theorem goldbachB10PrimeProduct_log_le_liuSingularSeries
               |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) := by
       calc
         goldbachB10PrimeProduct N Z * Real.log Z
-          ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              (Real.exp (-Real.eulerMascheroniConstant) /
-                  Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) +
-                |C| / (Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) ^ 2) *
-              ((1 + δ) * Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) := hMul1
-        _ = 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              (1 + δ) *
-              (Real.exp (-Real.eulerMascheroniConstant) +
-                |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) := by
-              field_simp [hlogPos.ne']
-    have hMul3 :
-        goldbachB10PrimeProduct N Z * Real.log Z ≤
-          2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-            Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 := by
-      have hsum :
-          Real.exp (-Real.eulerMascheroniConstant) +
-              |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) ≤
-            Real.exp (-Real.eulerMascheroniConstant) + δ * Real.exp (-Real.eulerMascheroniConstant) := by
-        linarith
-      calc
-        goldbachB10PrimeProduct N Z * Real.log Z
-          ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              (1 + δ) *
-              (Real.exp (-Real.eulerMascheroniConstant) +
-                |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) := hMul2
-        _ ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              (1 + δ) *
-              (Real.exp (-Real.eulerMascheroniConstant) +
-                δ * Real.exp (-Real.eulerMascheroniConstant)) := by
-              gcongr
-        _ = 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 := by
-              ring
-    have hCoeffNonneg :
-        0 ≤ 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 := by
-      positivity
-    have hMul4 :
-        goldbachB10PrimeProduct N Z * Real.log Z ≤
-          2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 3 *
-            SingularSeries.liuSingularSeries N := by
-      calc
-        goldbachB10PrimeProduct N Z * Real.log Z
-          ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
-              Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 := hMul3
-        _ ≤ 2 * ((1 + δ) * SingularSeries.liuSingularSeries N) *
-              Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 := by
-              gcongr
-        _ = 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 3 *
-              SingularSeries.liuSingularSeries N := by
-              ring
-    have hfinalCoeff :
-        2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 3 *
-            SingularSeries.liuSingularSeries N ≤
-          2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + η) *
-            SingularSeries.liuSingularSeries N := by
-      have hliuNonneg : 0 ≤ SingularSeries.liuSingularSeries N := by
-        exact (SingularSeries.liuSingularSeries_pos N).le
-      have hcoef :
-          2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 3 ≤
-            2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + η) := by
-        gcongr
-      exact mul_le_mul_of_nonneg_right hcoef hliuNonneg
-    exact hMul4.trans hfinalCoeff
+          ≤ goldbachB10PrimeProduct N Z *
+              ((1 + δ) * Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) :=
+            mul_le_mul_of_nonneg_left hLogTransport hVnonneg
+        _ = (goldbachB10PrimeProduct N Z * Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) *
+            (1 + δ) := by ring
+        _ ≤ (2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
+            (Real.exp (-Real.eulerMascheroniConstant) +
+              |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)))) * (1 + δ) :=
+            mul_le_mul_of_nonneg_right hPrimeUpper (by positivity)
+        _ = _ := by ring
+    have hErrorFactor :
+        Real.exp (-Real.eulerMascheroniConstant) +
+            |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ)) ≤
+          Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) := by
+      linarith only [hErrTransport]
+    have hliuNonneg := (SingularSeries.liuSingularSeries_pos N).le
+    -- Pay the logarithm, Mertens error, and finite truncation by one factor
+    -- `1 + δ` each, then use the chosen cubic budget.
+    calc
+      goldbachB10PrimeProduct N Z * Real.log Z
+        ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
+            (1 + δ) * (Real.exp (-Real.eulerMascheroniConstant) +
+              |C| / Real.log (((Nat.ceil Z - 1 : ℕ) : ℝ))) := hMul2
+      _ ≤ 2 * SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) *
+            (1 + δ) * (Real.exp (-Real.eulerMascheroniConstant) * (1 + δ)) :=
+          mul_le_mul_of_nonneg_left hErrorFactor (by positivity)
+      _ = 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 *
+            SingularSeries.liuSingularSeriesTruncated N (Nat.ceil Z - 1) := by ring
+      _ ≤ 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 2 *
+            ((1 + δ) * SingularSeries.liuSingularSeries N) :=
+          mul_le_mul_of_nonneg_left hliuTrunc (by positivity)
+      _ = 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + δ) ^ 3 *
+            SingularSeries.liuSingularSeries N := by ring
+      _ ≤ 2 * Real.exp (-Real.eulerMascheroniConstant) * (1 + η) *
+            SingularSeries.liuSingularSeries N := by gcongr
 
 theorem goldbachB10BoundingSieve_sieveProductPrimeFactors_log_le_liuSingularSeries
     (η : ℝ) (hη : 0 < η) :

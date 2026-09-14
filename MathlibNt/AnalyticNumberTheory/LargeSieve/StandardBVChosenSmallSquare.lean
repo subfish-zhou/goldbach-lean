@@ -54,16 +54,13 @@ lemma highConductorSet_subset_Icc_one (N Q C : ℕ) :
   have hd2 := (Finset.mem_Icc.mp hd').1
   exact Finset.mem_Icc.mpr ⟨by omega, (Finset.mem_Icc.mp hd').2⟩
 
-/-- Ordinary primitive prefix-maximal large sieve, specialized to the exact
-production small coefficient. -/
-theorem standardBVChosenSmall_squareLedger_le (N Q C : ℕ) (hQ : 0 < Q) :
+/-- Coefficient-faithful small-lane energy estimate, before choosing a cutoff. -/
+theorem standardBVSmall_squareLedger_energy_le (N Q C v : ℕ) (hQ : 0 < Q) :
     primitivePrefixSquareLedgerOn
-        (vaughanSmallCoeff vaughanUnitIntegerCoeff (standardBVBalancedSmallCutoff N)) N
+        (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
         (highConductorSet N Q C) ≤
       (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-        ((standardBVBalancedSmallCutoff N : ℝ) *
-          Real.log ((standardBVBalancedSmallCutoff N + 1 : ℕ) : ℝ) ^ 2) := by
-  let v := standardBVBalancedSmallCutoff N
+        ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) := by
   have hledger : primitivePrefixSquareLedgerOn
       (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N (highConductorSet N Q C) ≤
       (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
@@ -86,6 +83,17 @@ theorem standardBVChosenSmall_squareLedger_le (N Q C : ℕ) (hQ : 0 < Q) :
   · unfold primitiveLargeSieveConstant
     positivity
 
+/-- Ordinary primitive prefix-maximal large sieve, specialized to the exact
+production small coefficient. -/
+theorem standardBVChosenSmall_squareLedger_le (N Q C : ℕ) (hQ : 0 < Q) :
+    primitivePrefixSquareLedgerOn
+        (vaughanSmallCoeff vaughanUnitIntegerCoeff (standardBVBalancedSmallCutoff N)) N
+        (highConductorSet N Q C) ≤
+      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
+        ((standardBVBalancedSmallCutoff N : ℝ) *
+          Real.log ((standardBVBalancedSmallCutoff N + 1 : ℕ) : ℝ) ^ 2) := by
+  exact standardBVSmall_squareLedger_energy_le N Q C (standardBVBalancedSmallCutoff N) hQ
+
 /-- At the chosen endpoint, the exact production small coefficient is zero. -/
 theorem standardBVChosenSmallCoeff_eq_zero (N : ℕ) :
     vaughanSmallCoeff vaughanUnitIntegerCoeff (standardBVChosenSmallCutoff N) = 0 := by
@@ -97,34 +105,21 @@ theorem standardBVChosenSmallCoeff_eq_zero (N : ℕ) :
     rcases hn with hn | hn <;> simp [hn]
   · rfl
 
-set_option maxHeartbeats 1000000 in
-/-- The complete weighted small square ledger is paid unconditionally with the
-production balanced cutoff and no coefficient zeroing. -/
-theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
-    ∃ K₀ : ℝ, 0 < K₀ ∧
-      ∀ᶠ N : ℕ in Filter.atTop,
-        let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-        let R := logConductorThreshold N C
-        let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-        let X := (N : ℝ) / Real.log N ^ (A + κ)
-        P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff
-                (standardBVBalancedSmallCutoff N)) N
-              (highConductorSet N Q C)) ≤ (K₀ * X) ^ 2 := by
+/-- Uniform envelope for the complete weighted square ledger.  The coefficient
+is unchanged; only its energy is bounded.  The logarithmic costs are respectively
+4 (squared conductor amplifier), 1 (high harmonic), 2 (prefix maximum),
+1 (large sieve), and 2 (small-coefficient energy). -/
+theorem standardBVSmall_weightedSquareLedger_le_log
+    (N Q R C v : ℕ) (hN : 8 ≤ N) (hQpos : 0 < Q) (hQsq : Q ^ 2 ≤ N)
+    (hvN : v ≤ N) (hvSqrt : (v : ℝ) ≤ Real.sqrt N) :
+    (4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2) ^ 2 *
+        (3 * highConductorHarmonicFactor Q R *
+          primitivePrefixSquareLedgerOn
+            (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N (highConductorSet N Q C)) ≤
+      497664 * (15 + 4 / Real.log 2) * (N : ℝ) * Real.sqrt N *
+        Real.log (N : ℝ) ^ 10 := by
   let cLS : ℝ := 15 + 4 / Real.log 2
-  let M : ℝ := 1000000 * cLS
-  let K₀ : ℝ := Real.sqrt M + 1
-  refine ⟨K₀, by positivity, ?_⟩
-  filter_upwards [eventually_ge_atTop (8 : ℕ),
-    log_pow_le_sqrt_eventually (10 + 2 * (A + κ)),
-    log_pow_le_sqrt_eventually B] with N hN hlogPay hcutGrow
-  dsimp only
-  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  let R := logConductorThreshold N C
   let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-  let X := (N : ℝ) / Real.log N ^ (A + κ)
-  let v := standardBVBalancedSmallCutoff N
   have hlog : 1 ≤ Real.log (N : ℝ) := by
     have he1 : Real.exp 1 < (3 : ℝ) :=
       Real.exp_one_lt_d9.trans (by norm_num)
@@ -132,23 +127,7 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
       (he1.trans_le (by exact_mod_cast (show 3 ≤ N by omega))) |>.le
   have hlogPos : 0 < Real.log (N : ℝ) :=
     lt_of_lt_of_le zero_lt_one hlog
-  have hQone : 1 ≤ Q := by
-    dsimp [Q, MathlibNt.SieveTheory.LiuWeight.panModulusCutoff]
-    have hdenPos : 0 < Real.log (N : ℝ) ^ (B : ℝ) := by
-      simpa [Real.rpow_natCast] using pow_pos hlogPos B
-    have hcutGrow' : Real.log (N : ℝ) ^ (B : ℝ) ≤ (N : ℝ) ^ (1 / 2 : ℝ) := by
-      simpa [Real.sqrt_eq_rpow, Real.rpow_natCast] using hcutGrow
-    have hratioReal : (1 : ℝ) ≤
-        (N : ℝ) ^ (1 / 2 : ℝ) / Real.log (N : ℝ) ^ (B : ℝ) :=
-      (one_le_div₀ hdenPos).2 hcutGrow'
-    have hratio : ((1 : ℕ) : ℝ) ≤
-        (N : ℝ) ^ (1 / 2 : ℝ) / Real.log (N : ℝ) ^ (B : ℝ) := by
-      simpa using hratioReal
-    exact Nat.le_floor hratio
-  have hQpos : 0 < Q := by omega
-  have hQsq : Q ^ 2 ≤ N := by
-    simpa [Q] using MathlibNt.SieveTheory.LiuWeight.panModulusCutoff_sq_le
-      N (B : ℝ) (by omega) (by positivity : 0 ≤ (B : ℝ))
+  have hQone : 1 ≤ Q := hQpos
   have hQle : Q ≤ N := by
     calc
       Q = Q * 1 := by simp
@@ -174,22 +153,12 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
   have hP : P ^ 2 ≤ 144 * conductorHarmonicFactor Q ^ 4 := by
     have hP1 : P ≤ 12 * conductorHarmonicFactor Q ^ 2 := by
       dsimp [P]
-      calc
-        4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-            ≤ (4 * 3) * conductorHarmonicFactor Q ^ 2 :=
-          mul_le_mul_of_nonneg_right
-            (mul_le_mul_of_nonneg_left habel (by norm_num)) (sq_nonneg _)
-        _ = 12 * conductorHarmonicFactor Q ^ 2 := by ring
+      nlinarith [habel, sq_nonneg (conductorHarmonicFactor Q)]
     have hP0 : 0 ≤ P := by
       dsimp [P]
-      have hA0 : 0 ≤ discreteAbelAmplifierPrefixMax N := by
-        have h0 : 0 ≤ discreteAbelAmplifier 0 := by
-          unfold discreteAbelAmplifier
-          positivity
-        exact h0.trans (by
-          unfold discreteAbelAmplifierPrefixMax
-          exact Finset.le_max' _ _ (Finset.mem_image.mpr ⟨0, by simp, rfl⟩))
-      exact mul_nonneg (mul_nonneg (by norm_num) hA0) (sq_nonneg _)
+      exact mul_nonneg
+        (mul_nonneg (by norm_num) (discreteAbelAmplifierPrefixMax_nonneg N))
+        (sq_nonneg _)
     calc
       P ^ 2 ≤ (12 * conductorHarmonicFactor Q ^ 2) ^ 2 :=
         pow_le_pow_left₀ hP0 hP1 2
@@ -198,7 +167,7 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
     exact pow_le_pow_left₀ (conductorHarmonicFactor_nonneg Q) hH 4
   have hlog2N : (Nat.log2 N : ℝ) ≤ 2 * Real.log (N : ℝ) :=
     natLog2_cast_le_two_log (by omega)
-  have hlog2N1 : (((Nat.log2 N + 1 : ℕ) : ℝ)) ≤ 3 * Real.log (N : ℝ) := by
+  have hlog2N1 : ((Nat.log2 N + 1 : ℕ) : ℝ) ≤ 3 * Real.log (N : ℝ) := by
     push_cast
     linarith only [hlog2N, hlog]
   have hlog2Sq : (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) ≤ 9 * Real.log (N : ℝ) ^ 2 := by
@@ -206,10 +175,6 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
       (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) ≤ (3 * Real.log (N : ℝ)) ^ 2 :=
         pow_le_pow_left₀ (by positivity) hlog2N1 2
       _ = 9 * Real.log (N : ℝ) ^ 2 := by ring
-  have hvN : v ≤ N := by
-    simpa [v] using standardBVBalancedSmallCutoff_le N
-  have hvSqrt : (v : ℝ) ≤ Real.sqrt N := by
-    simpa [v] using standardBVBalancedSmallCutoff_cast_le_sqrt N
   have hlogv : Real.log ((v + 1 : ℕ) : ℝ) ≤ 2 * Real.log (N : ℝ) := by
     have hv1 : v + 1 ≤ N + 1 := Nat.succ_le_succ hvN
     have hlogvN1 : Real.log ((v + 1 : ℕ) : ℝ) ≤ Real.log (N + 1 : ℕ) :=
@@ -245,265 +210,131 @@ theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
       _ = 4 * Real.sqrt N * Real.log (N : ℝ) ^ 2 := by ring
   have hPLC : primitiveLargeSieveConstant N Q ≤ cLS * (N : ℝ) * Real.log (N : ℝ) := by
     have hlog2 : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
-    have hQsq1 : (1 : ℝ) ≤ (Q : ℝ) ^ 2 := by
-      have : (1 : ℝ) ≤ (Q : ℝ) := by exact_mod_cast hQone
-      nlinarith
-    have hceil :
-        ((Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℕ) : ℝ) ≤
-          2 * Real.log (N : ℝ) / Real.log 2 + 1 := by
-      have hx0 : 0 ≤ Real.log ((Q : ℝ) ^ 2) / Real.log 2 :=
-        div_nonneg (Real.log_nonneg hQsq1) hlog2.le
-      have hlogQ : Real.log (Q : ℝ) ≤ Real.log (N : ℝ) :=
-        Real.log_le_log (by exact_mod_cast hQpos) (by exact_mod_cast hQle)
-      have hquotlog : 2 * Real.log (Q : ℝ) / Real.log 2 ≤
-          2 * Real.log (N : ℝ) / Real.log 2 :=
-        (div_le_div_iff_of_pos_right hlog2).2
-          (mul_le_mul_of_nonneg_left hlogQ (by norm_num))
-      calc
-        ((Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℕ) : ℝ) ≤
-            Real.log ((Q : ℝ) ^ 2) / Real.log 2 + 1 := (Nat.ceil_lt_add_one hx0).le
-        _ = 2 * Real.log (Q : ℝ) / Real.log 2 + 1 := by
-          rw [Real.log_pow]
-          norm_num
-        _ ≤ 2 * Real.log (N : ℝ) / Real.log 2 + 1 := by linarith
     have hQsqR : (Q : ℝ) ^ 2 ≤ (N : ℝ) := by exact_mod_cast hQsq
-    unfold primitiveLargeSieveConstant cLS
+    have hQsq1 : (1 : ℝ) ≤ (Q : ℝ) ^ 2 := by exact_mod_cast (one_le_pow₀ hQone)
+    have hceil := (Nat.ceil_lt_add_one
+      (div_nonneg (Real.log_nonneg hQsq1) hlog2.le)).le
+    have hlogQ := Real.log_le_log (by positivity : (0 : ℝ) < (Q : ℝ) ^ 2) hQsqR
+    have hcoef :
+        2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12 ≤
+          (4 / Real.log 2) * Real.log (N : ℝ) + 14 := by
+      have hquot := (div_le_div_iff_of_pos_right hlog2).2 hlogQ
+      have hquot0 : 0 ≤ Real.log (N : ℝ) / Real.log 2 := by positivity
+      calc
+        _ ≤ 4 * (Real.log (N : ℝ) / Real.log 2) + 14 := by
+          linarith only [hceil, hquot, hquot0]
+        _ = _ := by ring
+    unfold primitiveLargeSieveConstant
     calc
       (N : ℝ) +
-          (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-            (Q : ℝ) ^ 2 ≤
-        (N : ℝ) + (((4 / Real.log 2) * Real.log (N : ℝ) + 14) * N) := by
-          have hcoef :
-              2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12 ≤
-                (4 / Real.log 2) * Real.log (N : ℝ) + 14 := by
-            calc
-              2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12 ≤
-                  2 * (2 * Real.log (N : ℝ) / Real.log 2 + 1) + 12 := by
-                    gcongr
-              _ = (4 / Real.log 2) * Real.log (N : ℝ) + 14 := by ring
-          have hcoef0 :
-              0 ≤ (4 / Real.log 2) * Real.log (N : ℝ) + 14 := by
-            positivity
-          have hmul :
-              (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-                  (Q : ℝ) ^ 2 ≤
-                ((4 / Real.log 2) * Real.log (N : ℝ) + 14) * N := by
-            exact mul_le_mul hcoef hQsqR (by positivity) hcoef0
-          linarith
-      _ = (N : ℝ) * ((4 / Real.log 2) * Real.log (N : ℝ) + 15) := by ring
-      _ ≤ (N : ℝ) * ((15 + 4 / Real.log 2) * Real.log (N : ℝ)) := by
-          have h15 : (15 : ℝ) ≤ 15 * Real.log (N : ℝ) := by nlinarith [hlog]
-          have hinner :
-              (4 / Real.log 2) * Real.log (N : ℝ) + 15 ≤
-                (4 / Real.log 2) * Real.log (N : ℝ) + 15 * Real.log (N : ℝ) := by
-            linarith
-          calc
-            (N : ℝ) * ((4 / Real.log 2) * Real.log (N : ℝ) + 15)
-                ≤ (N : ℝ) * ((4 / Real.log 2) * Real.log (N : ℝ) + 15 * Real.log (N : ℝ)) :=
-                  mul_le_mul_of_nonneg_left hinner (by positivity)
-            _ = (N : ℝ) * ((15 + 4 / Real.log 2) * Real.log (N : ℝ)) := by ring
-      _ = (15 + 4 / Real.log 2) * (N : ℝ) * Real.log (N : ℝ) := by ring
+          (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) * (Q : ℝ) ^ 2
+          ≤ (N : ℝ) + ((4 / Real.log 2) * Real.log (N : ℝ) + 14) * N := by
+            gcongr
+      _ ≤ cLS * (N : ℝ) * Real.log (N : ℝ) := by
+        dsimp [cLS]
+        nlinarith only [mul_nonneg (Nat.cast_nonneg N) (sub_nonneg.mpr hlog)]
   have hPLC0 : 0 ≤ primitiveLargeSieveConstant N Q := by
     unfold primitiveLargeSieveConstant
     positivity
-  have hledger := standardBVChosenSmall_squareLedger_le N Q C hQpos
-  have htop :
-      P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-          primitivePrefixSquareLedgerOn
-            (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
-            (highConductorSet N Q C)) ≤
-        M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := by
-    have hratio :
-        P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
-              (highConductorSet N Q C)) ≤
-          497664 * cLS * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := by
-      have hledger' :
-          primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
-              (highConductorSet N Q C) ≤
-            (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-              ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) := by
-        simpa [v] using hledger
-      calc
-        P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
-              (highConductorSet N Q C))
-            ≤ P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-                ((((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-                  primitiveLargeSieveConstant N Q *
-                  ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2))) := by
-                have hmult0 : 0 ≤ 3 * highConductorHarmonicFactor Q R := by
-                  exact mul_nonneg (by norm_num) hHH0
-                have hleft := mul_le_mul_of_nonneg_left hledger' hmult0
-                exact mul_le_mul_of_nonneg_left hleft (sq_nonneg P)
-        _ ≤ (144 * conductorHarmonicFactor Q ^ 4) *
-            (3 * conductorHarmonicFactor Q *
-              (9 * Real.log (N : ℝ) ^ 2 *
-                (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2))) := by
-              have hcoef :
-                  3 * highConductorHarmonicFactor Q R ≤ 3 * conductorHarmonicFactor Q := by
-                exact mul_le_mul_of_nonneg_left
-                  (highConductorHarmonicFactor_le Q R) (by norm_num)
-              have hcore :
-                  (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-                      ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) ≤
-                    9 * Real.log (N : ℝ) ^ 2 *
-                      (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                      (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2) := by
-                gcongr
-              have hcore0 :
-                  0 ≤ (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-                    ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) := by
-                have hv0 : 0 ≤ (v : ℝ) := by positivity
-                have hlogvSq0 : 0 ≤ Real.log ((v + 1 : ℕ) : ℝ) ^ 2 := sq_nonneg _
-                have hV0 : 0 ≤ (v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2 :=
-                  mul_nonneg hv0 hlogvSq0
-                exact mul_nonneg (mul_nonneg (by positivity) hPLC0) hV0
-              have hcoef0 : 0 ≤ 3 * conductorHarmonicFactor Q :=
-                mul_nonneg (by norm_num) hH0
-              have hmid :
-                  3 * highConductorHarmonicFactor Q R *
-                      ((((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-                        ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2)) ≤
-                    3 * conductorHarmonicFactor Q *
-                      (9 * Real.log (N : ℝ) ^ 2 *
-                        (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                        (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2)) := by
-                exact mul_le_mul hcoef hcore hcore0 hcoef0
-              have hmid0 :
-                  0 ≤ 3 * highConductorHarmonicFactor Q R *
-                    ((((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-                      ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2)) := by
-                have hcoef0 : 0 ≤ 3 * highConductorHarmonicFactor Q R := by
-                  exact mul_nonneg (by norm_num) hHH0
-                exact mul_nonneg hcoef0 hcore0
-              have hleft0 : 0 ≤ 144 * conductorHarmonicFactor Q ^ 4 := by positivity
-              exact mul_le_mul hP hmid hmid0 hleft0
-        _ ≤ (144 * (2 * Real.log (N : ℝ)) ^ 4) *
-            (3 * (2 * Real.log (N : ℝ)) *
-              (9 * Real.log (N : ℝ) ^ 2 *
-                (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2))) := by
-              have hpow :
-                  144 * conductorHarmonicFactor Q ^ 4 ≤
-                    144 * (2 * Real.log (N : ℝ)) ^ 4 := by
-                exact mul_le_mul_of_nonneg_left hHpow4 (by positivity)
-              have hbulk0 :
-                  0 ≤ 9 * Real.log (N : ℝ) ^ 2 *
-                    (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                    (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2) := by
-                positivity
-              have hcond :
-                  3 * conductorHarmonicFactor Q ≤ 3 * (2 * Real.log (N : ℝ)) := by
-                exact mul_le_mul_of_nonneg_left hH (by norm_num)
-              have hcondMul :
-                  3 * conductorHarmonicFactor Q *
-                      (9 * Real.log (N : ℝ) ^ 2 *
-                        (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                        (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2)) ≤
-                    3 * (2 * Real.log (N : ℝ)) *
-                      (9 * Real.log (N : ℝ) ^ 2 *
-                        (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                        (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2)) := by
-                exact mul_le_mul_of_nonneg_right hcond hbulk0
-              have hcondMul0 :
-                  0 ≤ 3 * conductorHarmonicFactor Q *
-                    (9 * Real.log (N : ℝ) ^ 2 *
-                      (cLS * (N : ℝ) * Real.log (N : ℝ)) *
-                      (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2)) := by
-                exact mul_nonneg (mul_nonneg (by norm_num) hH0) hbulk0
-              have hpowR0 : 0 ≤ 144 * (2 * Real.log (N : ℝ)) ^ 4 := by positivity
-              exact mul_le_mul hpow hcondMul hcondMul0 hpowR0
-        _ = 497664 * cLS * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := by
-            ring
-    have hcLS0 : 0 ≤ cLS := by
-      dsimp [cLS]
-      positivity
-    have hconst : (497664 : ℝ) * cLS ≤ M := by
-      dsimp [M]
-      exact mul_le_mul_of_nonneg_right (by norm_num) hcLS0
-    have hmul :
-        497664 * cLS * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 ≤
-          M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := by
-      have hfac0 : 0 ≤ (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := by positivity
-      have hmul' := mul_le_mul_of_nonneg_right hconst hfac0
-      simpa [mul_assoc, mul_left_comm, mul_comm] using hmul'
-    exact hratio.trans hmul
-  have hlogDiv : Real.log (N : ℝ) ^ 10 ≤
-      Real.sqrt N / Real.log N ^ (2 * (A + κ)) := by
-    have hden : 0 < Real.log (N : ℝ) ^ (2 * (A + κ)) := by
-      exact pow_pos hlogPos _
-    apply (le_div_iff₀ hden).2
-    simpa [pow_add, mul_assoc, mul_left_comm, mul_comm] using hlogPay
-  have hMtoTarget :
-      M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 ≤
-        K₀ ^ 2 * ((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ)) := by
-    have hmain :
-        M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 ≤
-          M * (N : ℝ) * Real.sqrt N *
-            (Real.sqrt N / Real.log N ^ (2 * (A + κ))) := by
-      gcongr
-    have hsqrt : Real.sqrt N * Real.sqrt N = (N : ℝ) := by
-      exact Real.mul_self_sqrt (Nat.cast_nonneg N)
-    have hmain' :
-        M * (N : ℝ) * Real.sqrt N *
-            (Real.sqrt N / Real.log N ^ (2 * (A + κ))) =
-          M * (((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ))) := by
-      calc
-        M * (N : ℝ) * Real.sqrt N *
-            (Real.sqrt N / Real.log N ^ (2 * (A + κ)))
-            = M * (((N : ℝ) * (Real.sqrt N * Real.sqrt N)) /
-                Real.log N ^ (2 * (A + κ))) := by ring
-        _ = M * (((N : ℝ) * (N : ℝ)) / Real.log N ^ (2 * (A + κ))) := by
-          rw [hsqrt]
-        _ = M * (((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ))) := by ring
-    have hKsq : M ≤ K₀ ^ 2 := by
-      have hM0 : 0 ≤ M := by
-        dsimp [M, cLS]
-        positivity
-      dsimp [K₀]
-      calc
-        M = (Real.sqrt M) ^ 2 := by
-          symm
-          exact Real.sq_sqrt hM0
-        _ ≤ (Real.sqrt M) ^ 2 + 2 * Real.sqrt M + 1 := by
-          nlinarith [Real.sqrt_nonneg M]
-        _ = (Real.sqrt M + 1) ^ 2 := by ring
-    have hfrac0 : 0 ≤ ((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ)) := by
-      have hden : 0 < Real.log N ^ (2 * (A + κ)) := pow_pos hlogPos _
-      exact div_nonneg (sq_nonneg (N : ℝ)) hden.le
-    let T : ℝ := ((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ))
-    have hcoef :
-        M * T ≤ K₀ ^ 2 * T := by
-      exact mul_le_mul_of_nonneg_right hKsq (by simpa [T] using hfrac0)
-    calc
-      M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10
-          ≤ M * (N : ℝ) * Real.sqrt N *
-              (Real.sqrt N / Real.log N ^ (2 * (A + κ))) := hmain
-      _ = M * T := by simpa [T] using hmain'
-      _ ≤ K₀ ^ 2 * T := hcoef
-      _ = K₀ ^ 2 * ((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ)) := by ring
-  have hX :
-      K₀ ^ 2 * ((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ)) = (K₀ * X) ^ 2 := by
-    dsimp [X]
-    ring
+  have hledger := standardBVSmall_squareLedger_energy_le N Q C v hQpos
   calc
     P ^ 2 * (3 * highConductorHarmonicFactor Q R *
         primitivePrefixSquareLedgerOn
-          (vaughanSmallCoeff vaughanUnitIntegerCoeff
-            (standardBVBalancedSmallCutoff N)) N
-          (highConductorSet N Q C))
-        = P ^ 2 * (3 * highConductorHarmonicFactor Q R *
+          (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N (highConductorSet N Q C))
+        ≤ P ^ 2 * (3 * highConductorHarmonicFactor Q R *
+          ((((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
+            ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2))) := by
+              gcongr
+    _ ≤ (144 * (2 * Real.log (N : ℝ)) ^ 4) *
+        (3 * (2 * Real.log (N : ℝ)) *
+          (9 * Real.log (N : ℝ) ^ 2 * (cLS * (N : ℝ) * Real.log (N : ℝ)) *
+            (4 * Real.sqrt N * Real.log (N : ℝ) ^ 2))) := by
+              have hPlog := hP.trans (mul_le_mul_of_nonneg_left hHpow4 (by norm_num))
+              gcongr
+    _ = 497664 * cLS * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := by ring
+
+/-- One payment theorem for all eventually balanced-bounded small cutoffs. -/
+theorem standardBVSmall_weightedSquareLedger_payable
+    (cutoff : ℕ → ℕ)
+    (hcutoff : ∀ᶠ N : ℕ in Filter.atTop,
+      cutoff N ≤ standardBVBalancedSmallCutoff N)
+    (A κ B C : ℕ) :
+    ∃ K₀ : ℝ, 0 < K₀ ∧
+      ∀ᶠ N : ℕ in Filter.atTop,
+        let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+        let R := logConductorThreshold N C
+        let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
+        let X := (N : ℝ) / Real.log N ^ (A + κ)
+        P ^ 2 * (3 * highConductorHarmonicFactor Q R *
             primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
-              (highConductorSet N Q C)) := by rfl
-    _ ≤ M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10 := htop
-    _ ≤ K₀ ^ 2 * ((N : ℝ) ^ 2) / Real.log N ^ (2 * (A + κ)) := hMtoTarget
-    _ = (K₀ * X) ^ 2 := hX
+              (vaughanSmallCoeff vaughanUnitIntegerCoeff
+                (cutoff N)) N
+              (highConductorSet N Q C)) ≤ (K₀ * X) ^ 2 := by
+  let M : ℝ := 497664 * (15 + 4 / Real.log 2)
+  let K₀ : ℝ := Real.sqrt M + 1
+  have hM : 0 ≤ M := by dsimp [M]; positivity
+  have hK : M ≤ K₀ ^ 2 := by
+    dsimp [K₀]
+    nlinarith only [Real.sq_sqrt hM, Real.sqrt_nonneg M]
+  refine ⟨K₀, by positivity, ?_⟩
+  filter_upwards [hcutoff, eventually_ge_atTop (8 : ℕ),
+    log_pow_le_sqrt_eventually (10 + 2 * (A + κ)),
+    log_pow_le_sqrt_eventually B] with N hcut hN hlogPay hcutGrow
+  dsimp only
+  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+  have hlogPos : 0 < Real.log (N : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
+  have hQone : 1 ≤ Q := by
+    dsimp [Q, MathlibNt.SieveTheory.LiuWeight.panModulusCutoff]
+    have hdenPos : 0 < Real.log (N : ℝ) ^ (B : ℝ) := by
+      simpa [Real.rpow_natCast] using pow_pos hlogPos B
+    have hcutGrow' : Real.log (N : ℝ) ^ (B : ℝ) ≤ (N : ℝ) ^ (1 / 2 : ℝ) := by
+      simpa [Real.sqrt_eq_rpow, Real.rpow_natCast] using hcutGrow
+    apply Nat.le_floor
+    simpa only [Nat.cast_one] using (one_le_div₀ hdenPos).2 hcutGrow'
+  have hQpos : 0 < Q := by omega
+  have hQsq : Q ^ 2 ≤ N := by
+    simpa [Q] using MathlibNt.SieveTheory.LiuWeight.panModulusCutoff_sq_le
+      N (B : ℝ) (by omega) (by positivity : 0 ≤ (B : ℝ))
+  have hvN := hcut.trans (standardBVBalancedSmallCutoff_le N)
+  have hvSqrt : (cutoff N : ℝ) ≤ Real.sqrt N :=
+    (Nat.cast_le.mpr hcut).trans (standardBVBalancedSmallCutoff_cast_le_sqrt N)
+  have htop := standardBVSmall_weightedSquareLedger_le_log N Q
+    (logConductorThreshold N C) C (cutoff N) hN hQpos hQsq hvN hvSqrt
+  have hlogDiv : Real.log (N : ℝ) ^ 10 ≤
+      Real.sqrt N / Real.log N ^ (2 * (A + κ)) := by
+    apply (le_div_iff₀ (pow_pos hlogPos _)).2
+    simpa only [pow_add] using hlogPay
+  refine htop.trans ?_
+  calc
+    M * (N : ℝ) * Real.sqrt N * Real.log (N : ℝ) ^ 10
+        ≤ M * (N : ℝ) * Real.sqrt N *
+          (Real.sqrt N / Real.log N ^ (2 * (A + κ))) := by gcongr
+    _ = M * ((N : ℝ) ^ 2 / Real.log N ^ (2 * (A + κ))) := by
+      calc
+        _ = M * ((N : ℝ) * (Real.sqrt N * Real.sqrt N) /
+            Real.log N ^ (2 * (A + κ))) := by ring
+        _ = _ := by rw [Real.mul_self_sqrt (Nat.cast_nonneg N)]; ring
+    _ ≤ K₀ ^ 2 * ((N : ℝ) ^ 2 / Real.log N ^ (2 * (A + κ))) := by gcongr
+    _ = (K₀ * ((N : ℝ) / Real.log N ^ (A + κ))) ^ 2 := by ring
+
+set_option maxHeartbeats 1000000 in
+/-- The complete weighted small square ledger is paid unconditionally with the
+production balanced cutoff and no coefficient zeroing. -/
+theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
+    ∃ K₀ : ℝ, 0 < K₀ ∧
+      ∀ᶠ N : ℕ in Filter.atTop,
+        let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
+        let R := logConductorThreshold N C
+        let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
+        let X := (N : ℝ) / Real.log N ^ (A + κ)
+        P ^ 2 * (3 * highConductorHarmonicFactor Q R *
+            primitivePrefixSquareLedgerOn
+              (vaughanSmallCoeff vaughanUnitIntegerCoeff
+                (standardBVBalancedSmallCutoff N)) N
+              (highConductorSet N Q C)) ≤ (K₀ * X) ^ 2 := by
+  exact standardBVSmall_weightedSquareLedger_payable standardBVBalancedSmallCutoff
+    (Filter.Eventually.of_forall fun _ => le_rfl) A κ B C
 
 end
 end AnalyticNumberTheory.LargeSieve

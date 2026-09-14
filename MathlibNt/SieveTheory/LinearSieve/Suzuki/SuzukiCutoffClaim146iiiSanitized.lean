@@ -54,248 +54,111 @@ private lemma source_cutoff_case_one_bound
 theorem exists_sourceCutoffLogDomination
     {K A d : ℝ} (hd : 0 < d) (hK : 1 ≤ K) (hA : 1 ≤ A) :
     ∃ M : ℝ, SourceCutoffLogDomination K A d M := by
-  let B : ℝ := 2 * (d + 1) * K ^ 2 * A
-  let M : ℝ := max 2 (Real.exp B)
-  have hK0 : 0 ≤ K := zero_le_one.trans hK
-  have hA0 : 0 ≤ A := zero_le_one.trans hA
-  have hB0 : 0 ≤ B := by
-    dsimp [B]
-    positivity
-  have hM1 : 1 < M := by
-    dsimp [M]
-    have : (1 : ℝ) < 2 := by norm_num
-    exact this.trans_le (le_max_left _ _)
-  obtain ⟨Ds, hDs, hsource⟩ :=
-    exists_sourceSigma_fixed_lower_threshold d M hd.le
-  let c₀ : ℝ := B * (1 + (d + 1) * Real.log 2)
-  let c₁ : ℝ := B * d
-  let Y : ℝ := max 1 (max (2 * d * c₀) ((4 * d * c₁) ^ 2))
-  let X : ℝ := max 2 (max (Real.log 27) (Real.exp Y))
-  let Dg : ℝ := Real.exp X
-  let D₀ : ℝ := max Ds Dg
-  have hDg : 1 < Dg := by
-    dsimp [Dg, X]
-    apply Real.one_lt_exp_iff.mpr
-    have : (0 : ℝ) < 2 := by norm_num
-    exact this.trans_le (le_max_left _ _)
-  have hD₀ : 1 < D₀ := hDs.trans_le (le_max_left _ _)
-  refine ⟨M, hd, hM1, D₀, hD₀, ?_⟩
+  let C := 2 * (d + 1) * K ^ 2 * A
+  have hC : 0 < C := by dsimp [C]; positivity
+  let e := min (d / 2) (1 / (4 * C))
+  have he : 0 < e := lt_min (by positivity) (by positivity)
+  have hed : e < d := (min_le_left _ _).trans_lt (by linarith)
+  have heC : C * e ≤ 1 / 4 := by
+    calc
+      C * e ≤ C * (1 / (4 * C)) :=
+        mul_le_mul_of_nonneg_left (min_le_right _ _) hC.le
+      _ = 1 / 4 := by field_simp
+  let q := d - e
+  have hq : 0 < q := sub_pos.mpr hed
+  let r := 1 / q - 1 / d
+  have hr : 0 < r := by
+    dsimp [r]
+    exact sub_pos.mpr (one_div_lt_one_div_of_lt hq (by dsimp [q]; linarith))
+  let X := max 2 (max (Real.log 27) ((4 / r) ^ (1 / (r / 2))))
+  let M := Real.exp (4 * C + 1)
+  have hM : 1 < M := Real.one_lt_exp_iff.mpr (by positivity)
+  obtain ⟨D₁, hD₁, hlower⟩ := exists_sourceSigma_fixed_lower_threshold d M hd.le
+  refine ⟨M, hd, hM, max D₁ (Real.exp X), hD₁.trans_le (le_max_left _ _), ?_⟩
   intro D hD
-  have hDsD : Ds ≤ D := (le_max_left Ds Dg).trans hD
-  have hDgD : Dg ≤ D := (le_max_right Ds Dg).trans hD
-  have hMσ : M ≤ sourceSigma D d := hsource D hDsD
-  refine ⟨hMσ, ?_⟩
-  intro t hMt htσ
-  let x : ℝ := Real.log D
-  let y : ℝ := Real.log x
-  let L : ℝ := Real.log (Real.log (27 * D))
-  have hD1 : 1 < D := hD₀.trans_le hD
-  have hx0 : 0 < x := by
-    dsimp [x]
-    exact Real.log_pos hD1
-  have hXle : X ≤ x := by
-    have hDpos : 0 < D := zero_lt_one.trans hD1
-    have : Real.exp X ≤ D := by simpa [Dg] using hDgD
-    exact (Real.le_log_iff_exp_le hDpos).2 this
-  have hx2 : 2 ≤ x := (le_max_left _ _).trans hXle
-  have hlog27x : Real.log 27 ≤ x :=
-    (le_max_left (Real.log 27) (Real.exp Y)).trans ((le_max_right 2 _).trans hXle)
-  have hxy : Y ≤ y := by
-    have hEy : Real.exp Y ≤ x :=
-      (le_max_right (Real.log 27) (Real.exp Y)).trans ((le_max_right 2 _).trans hXle)
-    dsimp [y]
-    rw [← Real.log_exp Y]
-    exact Real.log_le_log (Real.exp_pos Y) hEy
-  have hy1 : 1 ≤ y := (le_max_left _ _).trans hxy
-  have hy0 : 0 < y := zero_lt_one.trans_le hy1
-  have hL0 : 0 < L := by
-    dsimp [L]
-    apply Real.log_pos
-    rw [Real.log_mul (by norm_num : (27 : ℝ) ≠ 0) (ne_of_gt (zero_lt_one.trans hD1))]
-    have hlog27 : 0 < Real.log (27 : ℝ) := Real.log_pos (by norm_num)
-    linarith
-  have ht0 : 0 < t := zero_lt_one.trans hM1 |> fun h => h.trans_le hMt
-  have hxp0 : 0 < x ^ (1 / d) := Real.rpow_pos_of_pos hx0 _
-  have htσ' : t ≤ x ^ (1 / d) * L := by
-    simpa [x, L, sourceSigma] using htσ
-  by_cases hcut : t ≤ x ^ (1 / d)
-  · have hz1 : t ^ d / x ≤ 1 := by
-      simpa [x] using
-        source_cutoff_case_one_bound (D := D) (Real.log_pos hD1) hd ht0 hcut
-    have hlogu : Real.log (1 + t ^ d / x) ≤ 1 := by
-      have hpos : 0 < 1 + t ^ d / x := by
-        have : 0 ≤ t ^ d / x := div_nonneg (Real.rpow_nonneg ht0.le _) hx0.le
-        linarith
-      have hle : Real.log (1 + t ^ d / x) ≤ t ^ d / x := by
-        linarith [Real.log_le_sub_one_of_pos hpos]
-      exact hle.trans hz1
-    have hmax : max 1 (Real.log (1 + t ^ d / x)) ≤ 1 := by
-      exact (max_le_iff.2 ⟨le_rfl, hlogu⟩)
-    have hBt : B ≤ Real.log (Real.exp 1 * t) := by
-      have hExp : Real.exp B ≤ t := (le_max_right 2 (Real.exp B)).trans hMt
-      have hlogt : B ≤ Real.log t := by
-        rw [← Real.log_exp B]
-        exact Real.strictMonoOn_log.monotoneOn (Real.exp_pos B) ht0 hExp
-      rw [Real.log_mul (Real.exp_ne_zero 1) (ne_of_gt ht0), Real.log_exp]
-      linarith
+  refine ⟨hlower D ((le_max_left _ _).trans hD), ?_⟩
+  have hDX : Real.exp X ≤ D := (le_max_right _ _).trans hD
+  have hDpos : 0 < D := (Real.exp_pos X).trans_le hDX
+  have hX : X ≤ Real.log D := (Real.le_log_iff_exp_le hDpos).mpr hDX
+  let x := Real.log D
+  have hx2 : 2 ≤ x := (le_max_left _ _).trans hX
+  have hx : 0 < x := by linarith
+  have hx27 : Real.log 27 ≤ x :=
+    (le_max_left _ _).trans ((le_max_right _ _).trans hX)
+  have hxroot : (4 / r) ^ (1 / (r / 2)) ≤ x :=
+    (le_max_right _ _).trans ((le_max_right _ _).trans hX)
+  have hxpow : 4 / r ≤ x ^ (r / 2) := by
+    apply (Real.rpow_inv_le_iff_of_pos (by positivity) hx.le (by positivity)).mp
+    simpa only [one_div] using hxroot
+  -- A positive power absorbs the iterated logarithm at the actual source cutoff.
+  have hlog : 2 * Real.log x ≤ x ^ r := by
     calc
-      2 * (d + 1) * K ^ 2 * A * max 1 (Real.log (1 + t ^ d / Real.log D))
-          = B * max 1 (Real.log (1 + t ^ d / x)) := by
-              dsimp [B, x]
-      _ ≤ B * 1 := by
-        gcongr
-      _ = B := by ring
-      _ ≤ Real.log (Real.exp 1 * t) := hBt
-  · have hcut' : x ^ (1 / d) < t := lt_of_not_ge hcut
-    have hz1 : 1 ≤ t ^ d / x := by
-      rw [one_le_div hx0]
-      have hp := Real.rpow_le_rpow (Real.rpow_nonneg hx0.le _) hcut'.le hd.le
-      have hxpow : (x ^ (1 / d)) ^ d = x := by
-        rw [← Real.rpow_mul hx0.le]
-        have : (1 / d) * d = 1 := by field_simp
-        rw [this, Real.rpow_one]
-      rwa [hxpow] at hp
-    have hbasePos : 0 < 1 + t ^ d / x := by
-      have : 0 ≤ t ^ d / x := div_nonneg (Real.rpow_nonneg ht0.le _) hx0.le
-      linarith
-    have huz : 0 < t ^ d / x := lt_of_lt_of_le zero_lt_one hz1
-    have hlogUpper : Real.log (1 + t ^ d / x) ≤
-        Real.log 2 + Real.log (t ^ d / x) := by
-      have h2z : 1 + t ^ d / x ≤ 2 * (t ^ d / x) := by linarith
-      have h2zpos : 0 < 2 * (t ^ d / x) := by positivity
-      have hmono := Real.strictMonoOn_log.monotoneOn hbasePos h2zpos h2z
-      rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (ne_of_gt huz)] at hmono
-      exact hmono
-    have hLpow : t ^ d / x ≤ L ^ d := by
-      rw [div_le_iff₀ hx0]
-      have htd : t ^ d ≤ (x ^ (1 / d) * L) ^ d :=
-        Real.rpow_le_rpow ht0.le htσ' hd.le
-      calc
-        t ^ d ≤ (x ^ (1 / d) * L) ^ d := htd
-        _ = x * L ^ d := by
-          rw [Real.mul_rpow (Real.rpow_nonneg hx0.le _) hL0.le]
-          rw [← Real.rpow_mul hx0.le]
-          have : (1 / d) * d = 1 := by field_simp
-          rw [this, Real.rpow_one]
-        _ = L ^ d * x := by ring
-    have hlogRatio : Real.log (t ^ d / x) ≤ d * Real.log L := by
-      have hmono := Real.strictMonoOn_log.monotoneOn huz
-        (Real.rpow_pos_of_pos hL0 d) hLpow
-      rwa [Real.log_rpow hL0] at hmono
-    have hlog27D : Real.log (27 * D) = Real.log 27 + x := by
-      dsimp [x]
-      rw [Real.log_mul (by norm_num : (27 : ℝ) ≠ 0) (ne_of_gt (zero_lt_one.trans hD1))]
-    have hinnerLe : Real.log (27 * D) ≤ 2 * x := by
-      rw [hlog27D]
-      linarith
-    have hLle : L ≤ Real.log (2 * x) := by
-      dsimp [L]
-      have hleft : 0 < Real.log (27 * D) := by
-        rw [hlog27D]
-        have hlog27 : 0 < Real.log (27 : ℝ) := Real.log_pos (by norm_num)
-        linarith
-      have hright : 0 < 2 * x := by positivity
-      exact Real.strictMonoOn_log.monotoneOn hleft hright hinnerLe
-    have hlog2le1 : Real.log 2 ≤ 1 := by
-      linarith [Real.log_le_sub_one_of_pos (by norm_num : 0 < (2 : ℝ))]
-    have hlog2x : Real.log (2 * x) = Real.log 2 + y := by
-      dsimp [y]
-      rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (ne_of_gt hx0)]
-    have hLle2y : L ≤ 2 * y := by
-      rw [hlog2x] at hLle
-      linarith
-    have hlogL : Real.log L ≤ Real.log 2 + Real.log y := by
-      have h2ypos : 0 < 2 * y := by positivity
-      have hmono := Real.strictMonoOn_log.monotoneOn hL0 h2ypos hLle2y
-      rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (ne_of_gt hy0)] at hmono
-      exact hmono
-    have hylog : Real.log y ≤ 2 * y ^ (1 / 2 : ℝ) := by
-      have h := Real.log_le_rpow_div hy0.le (by positivity : 0 < (1 / 2 : ℝ))
-      simpa [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc] using h
-    have hc₀bound : c₀ ≤ y / (2 * d) := by
-      apply (le_div_iff₀ (by positivity : 0 < 2 * d)).2
-      have hYc₀ : 2 * d * c₀ ≤ y := by
-        exact (le_max_left (2 * d * c₀) ((4 * d * c₁) ^ 2)).trans
-          ((le_max_right 1 (max (2 * d * c₀) ((4 * d * c₁) ^ 2))).trans hxy)
-      linarith
-    have hc₁sqrt : 2 * c₁ * y ^ (1 / 2 : ℝ) ≤ y / (2 * d) := by
-      have hYc₁ : (4 * d * c₁) ^ 2 ≤ y := by
-        exact (le_max_right (2 * d * c₀) ((4 * d * c₁) ^ 2)).trans
-          ((le_max_right 1 (max (2 * d * c₀) ((4 * d * c₁) ^ 2))).trans hxy)
-      have hroot : 4 * d * c₁ ≤ y ^ (1 / 2 : ℝ) := by
-        apply le_of_sq_le_sq _ (Real.rpow_nonneg hy0.le _)
-        calc
-          (4 * d * c₁) ^ 2 ≤ y := hYc₁
-          _ = (y ^ (1 / 2 : ℝ)) ^ 2 := by
-            rw [← Real.rpow_natCast, ← Real.rpow_mul hy0.le]
-            norm_num
-      have hmul : (4 * d * c₁) * y ^ (1 / 2 : ℝ) ≤ y := by
-        have hyroot0 : 0 ≤ y ^ (1 / 2 : ℝ) := Real.rpow_nonneg hy0.le _
-        calc
-          (4 * d * c₁) * y ^ (1 / 2 : ℝ) ≤
-              y ^ (1 / 2 : ℝ) * y ^ (1 / 2 : ℝ) := by
-                exact mul_le_mul_of_nonneg_right hroot hyroot0
-          _ = y := by
-            rw [← Real.rpow_add hy0]
-            norm_num
-      apply (le_div_iff₀ (by positivity : 0 < 2 * d)).2
-      have : (2 * c₁ * y ^ (1 / 2 : ℝ)) * (2 * d) ≤ y := by
-        calc
-          (2 * c₁ * y ^ (1 / 2 : ℝ)) * (2 * d) =
-              (4 * d * c₁) * y ^ (1 / 2 : ℝ) := by ring
-          _ ≤ y := hmul
-      simpa [mul_assoc, mul_left_comm, mul_comm] using this
-    have hc₁bound : c₁ * Real.log y ≤ y / (2 * d) := by
-      calc
-        c₁ * Real.log y ≤ c₁ * (2 * y ^ (1 / 2 : ℝ)) := by
-          gcongr
-        _ = 2 * c₁ * y ^ (1 / 2 : ℝ) := by ring
-        _ ≤ y / (2 * d) := hc₁sqrt
-    have hmainY : B * (1 + Real.log 2 + d * Real.log L) ≤ y / d := by
-      have hstep :
-          B * (1 + Real.log 2 + d * Real.log L) ≤ c₀ + c₁ * Real.log y := by
-        calc
-          B * (1 + Real.log 2 + d * Real.log L) ≤
-              B * (1 + Real.log 2 + d * (Real.log 2 + Real.log y)) := by
-                gcongr
-          _ = c₀ + c₁ * Real.log y := by
-                dsimp [c₀, c₁]
-                ring
-      calc
-        B * (1 + Real.log 2 + d * Real.log L) ≤ c₀ + c₁ * Real.log y := hstep
-        _ ≤ y / (2 * d) + y / (2 * d) := add_le_add hc₀bound hc₁bound
-        _ = y / d := by
-          ring_nf
-    have hlogtLower : y / d ≤ Real.log t := by
-      have hmono := Real.strictMonoOn_log.monotoneOn hxp0 ht0 hcut'.le
-      rw [Real.log_rpow hx0] at hmono
-      simpa [y, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc] using hmono
-    have hmax :
-        max 1 (Real.log (1 + t ^ d / x)) ≤ 1 + Real.log 2 + d * Real.log L := by
-      calc
-        max 1 (Real.log (1 + t ^ d / x)) ≤ 1 + Real.log (1 + t ^ d / x) :=
-          max_one_le_one_add _ (by
-            have : 1 ≤ 1 + t ^ d / x := by
-              have hz0 : 0 ≤ t ^ d / x :=
-                div_nonneg (Real.rpow_nonneg ht0.le _) hx0.le
-              linarith
-            exact Real.log_nonneg this)
-        _ ≤ 1 + (Real.log 2 + Real.log (t ^ d / x)) :=
-          add_le_add le_rfl hlogUpper
-        _ ≤ 1 + (Real.log 2 + d * Real.log L) :=
-          add_le_add le_rfl (add_le_add le_rfl hlogRatio)
-        _ = 1 + Real.log 2 + d * Real.log L := by ring
+      2 * Real.log x ≤ 2 * (x ^ (r / 2) / (r / 2)) :=
+        mul_le_mul_of_nonneg_left (Real.log_le_rpow_div hx.le (by positivity)) (by norm_num)
+      _ = (4 / r) * x ^ (r / 2) := by ring
+      _ ≤ x ^ (r / 2) * x ^ (r / 2) :=
+        mul_le_mul_of_nonneg_right hxpow (Real.rpow_nonneg hx.le _)
+      _ = x ^ r := by rw [← Real.rpow_add hx]; congr 1; ring
+  have hinner : Real.log (27 * D) = Real.log 27 + x :=
+    Real.log_mul (by norm_num) hDpos.ne'
+  have hinnerpos : 0 < Real.log (27 * D) := by
+    rw [hinner]
+    exact add_pos (Real.log_pos (by norm_num)) hx
+  have hll : Real.log (Real.log (27 * D)) ≤ x ^ r := by
     calc
-      2 * (d + 1) * K ^ 2 * A * max 1 (Real.log (1 + t ^ d / Real.log D))
-          = B * max 1 (Real.log (1 + t ^ d / x)) := by
-              dsimp [B, x]
-      _ ≤ B * (1 + Real.log 2 + d * Real.log L) := by
-        gcongr
-      _ ≤ y / d := hmainY
-      _ ≤ Real.log t := hlogtLower
-      _ ≤ Real.log (Real.exp 1 * t) := by
-        rw [Real.log_mul (Real.exp_ne_zero 1) (ne_of_gt ht0), Real.log_exp]
+      Real.log (Real.log (27 * D)) ≤ Real.log (2 * x) :=
+        Real.log_le_log hinnerpos (by rw [hinner]; linarith)
+      _ = Real.log 2 + Real.log x := Real.log_mul (by norm_num) hx.ne'
+      _ ≤ 2 * Real.log x := by
+        have := Real.log_le_log (by norm_num : (0:ℝ) < 2) hx2
         linarith
+      _ ≤ x ^ r := hlog
+  have hsigma : sourceSigma D d ≤ x ^ (1 / q) := by
+    calc
+      sourceSigma D d ≤ x ^ (1 / d) * x ^ r := by
+        simpa only [sourceSigma] using
+          mul_le_mul_of_nonneg_left hll (Real.rpow_nonneg hx.le _)
+      _ = x ^ (1 / q) := by
+        rw [← Real.rpow_add hx]
+        congr 1
+        dsimp [r]
+        ring
+  intro t ht hts
+  have ht1 : 1 < t := hM.trans_le ht
+  have ht0 : 0 < t := zero_lt_one.trans ht1
+  have hlt : 4 * C + 1 ≤ Real.log t := (Real.le_log_iff_exp_le ht0).mpr ht
+  have hlogt : 0 ≤ Real.log t := (Real.log_pos ht1).le
+  have htpow : t ^ q ≤ x := by
+    have := Real.rpow_le_rpow ht0.le (hts.trans hsigma) hq.le
+    simpa only [← Real.rpow_mul hx.le, one_div_mul_cancel hq.ne', Real.rpow_one] using this
+  have hratio : t ^ d / Real.log D ≤ t ^ e := by
+    apply (div_le_iff₀ hx).mpr
+    calc
+      t ^ d = t ^ e * t ^ q := by
+        rw [← Real.rpow_add ht0]
+        congr 1
+        dsimp [q]
+        ring
+      _ ≤ t ^ e * x := mul_le_mul_of_nonneg_left htpow (Real.rpow_nonneg ht0.le _)
+  have hte : 1 ≤ t ^ e := Real.one_le_rpow ht1.le he.le
+  have hlogratio : Real.log (1 + t ^ d / Real.log D) ≤ Real.log 2 + e * Real.log t := by
+    calc
+      Real.log (1 + t ^ d / Real.log D) ≤ Real.log (2 * t ^ e) :=
+        Real.log_le_log (by positivity) (by linarith)
+      _ = Real.log 2 + e * Real.log t := by
+        rw [Real.log_mul (by norm_num) (Real.rpow_pos_of_pos ht0 e).ne', Real.log_rpow ht0]
+  have hC1 : C ≤ Real.log t := by linarith only [hlt, hC]
+  have hClog : C * Real.log (1 + t ^ d / Real.log D) ≤ Real.log t := by
+    have hce := mul_le_mul_of_nonneg_right heC hlogt
+    have hcb := mul_le_mul_of_nonneg_left
+      (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)) hC.le
+    have hmain := mul_le_mul_of_nonneg_left hlogratio hC.le
+    linarith only [hce, hcb, hmain, hlt, hlogt]
+  change C * max 1 (Real.log (1 + t ^ d / Real.log D)) ≤ _
+  rw [mul_max_of_nonneg _ _ hC.le, mul_one]
+  have hmax := max_le hC1 hClog
+  rw [Real.log_mul (Real.exp_ne_zero 1) ht0.ne', Real.log_exp]
+  exact hmax.trans (le_add_of_nonneg_left zero_le_one)
 
 private lemma slope_le_log
     {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d) (ht : 0 < t) :

@@ -42,21 +42,9 @@ theorem goldbachB9HighSourceIndicator_integral_section (u : ℝ) :
     (∫ v, goldbachB9HighLogSourceRegion.indicator liuLogIntegrand (u, v)) =
       (Ioc (1 / 10 : ℝ) (1 / 3)).indicator
         (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), liuLogIntegrand (u, v)) u := by
-  by_cases hu : u ∈ Ioc (1 / 10 : ℝ) (1 / 3)
-  · rw [indicator_of_mem hu, ← integral_indicator measurableSet_Ioc]
-    apply integral_congr_ae
-    filter_upwards with v
-    have hmem : (u, v) ∈ goldbachB9HighLogSourceRegion ↔
-        v ∈ Ioc (1 / 3) ((1 - u) / 2) := and_iff_right hu
-    change goldbachB9HighLogSourceRegion.indicator liuLogIntegrand (u, v) =
-      (Ioc (1 / 3) ((1 - u) / 2)).indicator (fun v => liuLogIntegrand (u, v)) v
-    by_cases hv : v ∈ Ioc (1 / 3) ((1 - u) / 2)
-    · rw [indicator_of_mem (hmem.mpr hv), indicator_of_mem hv]
-    · rw [indicator_of_notMem (fun h => hv (hmem.mp h)), indicator_of_notMem hv]
-  · rw [indicator_of_notMem hu]
-    apply integral_eq_zero_of_ae
-    filter_upwards with v
-    exact indicator_of_notMem (fun h => hu h.1) _
+  exact MathlibNt.Analysis.integral_indicator_moving_Ioc_section
+    (Ioc (1 / 10 : ℝ) (1 / 3)) (fun _ => (1 / 3 : ℝ))
+    (fun u => (1 - u) / 2) liuLogIntegrand u
 
 theorem intervalIntegrable_goldbachB9HighMainOuter :
     IntervalIntegrable
@@ -83,21 +71,11 @@ theorem goldbachB9HighMainIntegral_eq_setIntegral :
     goldbachB9HighMainIntegral =
       ∫ x in goldbachB9HighLogSourceRegion, liuLogIntegrand x := by
   rw [goldbachB9HighMainIntegral_eq_iteratedSetIntegral]
-  let F := goldbachB9HighLogSourceRegion.indicator liuLogIntegrand
-  have hF : Integrable F := integrable_goldbachB9HighSourceIndicator
-  have hFubini : (∫ z, F z) = ∫ u, ∫ v, F (u, v) := by
-    rw [Measure.volume_eq_prod ℝ ℝ] at hF ⊢
-    exact integral_prod F hF
-  calc
-    _ = ∫ u, (Ioc (1 / 10 : ℝ) (1 / 3)).indicator
-        (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), liuLogIntegrand (u, v)) u := by
-      rw [integral_indicator measurableSet_Ioc]
-    _ = ∫ u, ∫ v, F (u, v) := by
-      apply integral_congr_ae
-      filter_upwards with u
-      exact (goldbachB9HighSourceIndicator_integral_section u).symm
-    _ = ∫ z, F z := hFubini.symm
-    _ = _ := integral_indicator measurableSet_goldbachB9HighLogSourceRegion
+  exact (MathlibNt.Analysis.setIntegral_moving_Ioc_eq_iterated
+    (Ioc (1 / 10 : ℝ) (1 / 3)) (fun _ => (1 / 3 : ℝ)) (fun u => (1 - u) / 2)
+    liuLogIntegrand measurableSet_Ioc measurableSet_goldbachB9HighLogSourceRegion
+    (integrableOn_goldbachB9LogIntegrand measurableSet_goldbachB9HighLogSourceRegion
+      goldbachB9HighLogSourceRegion_subset_ambientBox)).symm
 
 theorem goldbachB9HighMainIntegral_nonneg : 0 ≤ goldbachB9HighMainIntegral := by
   rw [goldbachB9HighMainIntegral_eq_setIntegral]

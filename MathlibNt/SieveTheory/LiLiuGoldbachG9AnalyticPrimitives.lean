@@ -1,3 +1,5 @@
+import MathlibNt.Tactic.ElementaryDeriv
+import MathlibNt.Tactic.PolynomialDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticEnvelope
 
 open Set MeasureTheory
@@ -80,7 +82,9 @@ def primitive1 (u : ℝ) : ℝ :=
 
 theorem H1_deriv (u : ℝ) : HasDerivAt H1 (Q1 u) u := by
   unfold H1 Q1
-  convert! (((((((((((((((((((((((((((((((((hasDerivAt_pow 1 u).const_mul (2877606340315596112131 / 5348279736800 : ℝ)).add ((hasDerivAt_pow 2 u).const_mul (2877606725391737161731 / 10696559473600 : ℝ))).add ((hasDerivAt_pow 3 u).const_mul (959198134318407858177 / 5348279736800 : ℝ))).add ((hasDerivAt_pow 4 u).const_mul (2877875989883366094531 / 21393118947200 : ℝ))).add ((hasDerivAt_pow 5 u).const_mul (2872895800151171617731 / 26741398684000 : ℝ))).add ((hasDerivAt_pow 6 u).const_mul (981260975550809427777 / 10696559473600 : ℝ))).add ((hasDerivAt_pow 7 u).const_mul (2109575153870332571331 / 37437958157600 : ℝ))).add ((hasDerivAt_pow 8 u).const_mul (10383829637573552983731 / 42786237894400 : ℝ))).add ((hasDerivAt_pow 9 u).const_mul (-6642572221294044677541 / 5348279736800 : ℝ))).add ((hasDerivAt_pow 10 u).const_mul (454486319565088525777971 / 53482797368000 : ℝ))).add ((hasDerivAt_pow 11 u).const_mul (-2830385515407099703572429 / 58831077104800 : ℝ))).add ((hasDerivAt_pow 12 u).const_mul (5191089640540207555378257 / 21393118947200 : ℝ))).add ((hasDerivAt_pow 13 u).const_mul (-75309618155383743146134029 / 69527636578400 : ℝ))).add ((hasDerivAt_pow 14 u).const_mul (321745419062393213085107571 / 74875916315200 : ℝ))).add ((hasDerivAt_pow 15 u).const_mul (-405648397139521827547206063 / 26741398684000 : ℝ))).add ((hasDerivAt_pow 16 u).const_mul (4081168435554664274222451711 / 85572475788800 : ℝ))).add ((hasDerivAt_pow 17 u).const_mul (-42012591825394952371440801 / 314604690400 : ℝ))).add ((hasDerivAt_pow 18 u).const_mul (209366836975403064906312087 / 629209380800 : ℝ))).add ((hasDerivAt_pow 19 u).const_mul (-231740521439330956241532843 / 314604690400 : ℝ))).add ((hasDerivAt_pow 20 u).const_mul (478548591158874008366290197 / 331162832000 : ℝ))).add ((hasDerivAt_pow 21 u).const_mul (-290145539257757778107166201 / 115906991200 : ℝ))).add ((hasDerivAt_pow 22 u).const_mul (1388228819773724533783435797 / 364279115200 : ℝ))).add ((hasDerivAt_pow 23 u).const_mul (-83895631809731253807222861 / 16558141600 : ℝ))).add ((hasDerivAt_pow 24 u).const_mul (33608554975559688976008513 / 5759353600 : ℝ))).add ((hasDerivAt_pow 25 u).const_mul (-20735670042279641789346393 / 3599596000 : ℝ))).add ((hasDerivAt_pow 26 u).const_mul (1384044232346431030110339 / 287967680 : ℝ))).add ((hasDerivAt_pow 27 u).const_mul (-36833789847383196792903 / 11075680 : ℝ))).add ((hasDerivAt_pow 28 u).const_mul (11762177213170469228211 / 6328960 : ℝ))).add ((hasDerivAt_pow 29 u).const_mul (-1276159150445091608727 / 1582240 : ℝ))).add ((hasDerivAt_pow 30 u).const_mul (5571208143349107291 / 21824 : ℝ))).add ((hasDerivAt_pow 31 u).const_mul (-572583238355218869 / 10912 : ℝ))).add ((hasDerivAt_pow 32 u).const_mul (1853020188851841 / 352 : ℝ))) using 1; norm_num; ring
+  polynomial_deriv
+  norm_num
+  ring
 
 theorem partial_fraction1 (u : ℝ) (hu : u ≠ 0) (hv : 1-u ≠ 0) :
     S3Correction.L (1-3*u)/(u*(1-u)^1) =
@@ -91,13 +95,8 @@ theorem partial_fraction1 (u : ℝ) (hu : u ≠ 0) (hv : 1-u ≠ 0) :
 
 theorem primitive1_deriv (u : ℝ) (hu : u ≠ 0) (hv : 1-u ≠ 0) :
     HasDerivAt primitive1 (S3Correction.L (1-3*u)/(u*(1-u)^1)) u := by
-  have hl : HasDerivAt (fun x : ℝ => Real.log (1-x)) (-(1-u)⁻¹) u := by
-    convert! (Real.hasDerivAt_log hv).comp u ((hasDerivAt_id u).const_sub 1) using 1; ring
-  have hi : HasDerivAt (fun x : ℝ => (0 / 1 : ℝ)/(1-x)) ((0 / 1 : ℝ)/(1-u)^2) u := by
-    convert! ((hasDerivAt_const u (0 / 1 : ℝ)).div ((hasDerivAt_id u).const_sub 1) hv) using 1; simp only [id_eq]; ring
   unfold primitive1
-  convert! (((H1_deriv u).add ((Real.hasDerivAt_log hu).const_mul (14606816124167 / 20629078984800 : ℝ))).sub
-    (hl.const_mul (-2427980359983876276224 / 4512611027925 : ℝ))).add hi using 1
+  elementary_deriv [H1_deriv u]
   rw [partial_fraction1 u hu hv]
   ring
 
@@ -184,7 +183,9 @@ def primitive2 (u : ℝ) : ℝ :=
 
 theorem H2_deriv (u : ℝ) : HasDerivAt H2 (Q2 u) u := by
   unfold H2 Q2
-  convert! ((((((((((((((((((((((((((((((((hasDerivAt_pow 1 u).const_mul (-66034453321886027755869 / 2674139868400 : ℝ)).add ((hasDerivAt_pow 2 u).const_mul (-129191299918380318350007 / 10696559473600 : ℝ))).add ((hasDerivAt_pow 3 u).const_mul (-10526142126285424564623 / 1337069934200 : ℝ))).add ((hasDerivAt_pow 4 u).const_mul (-24687165905108345736189 / 4278623789440 : ℝ))).add ((hasDerivAt_pow 5 u).const_mul (-60281466862695278531607 / 13370699342000 : ℝ))).add ((hasDerivAt_pow 6 u).const_mul (-5600911942797053751423 / 1528079924800 : ℝ))).add ((hasDerivAt_pow 7 u).const_mul (-14438696955608474526069 / 4679744769700 : ℝ))).add ((hasDerivAt_pow 8 u).const_mul (-105125746007294243224821 / 42786237894400 : ℝ))).add ((hasDerivAt_pow 9 u).const_mul (-1832321066654896059141 / 534827973680 : ℝ))).add ((hasDerivAt_pow 10 u).const_mul (26325220324195261859571 / 4862072488000 : ℝ))).add ((hasDerivAt_pow 11 u).const_mul (-635202022960237955779287 / 14707769276200 : ℝ))).add ((hasDerivAt_pow 12 u).const_mul (334165662302042842128657 / 1645624534400 : ℝ))).add ((hasDerivAt_pow 13 u).const_mul (-4448368380400290878794029 / 4966259755600 : ℝ))).add ((hasDerivAt_pow 14 u).const_mul (51893652347357828156398233 / 14975183263040 : ℝ))).add ((hasDerivAt_pow 15 u).const_mul (-19947436035037007122075563 / 1671337417750 : ℝ))).add ((hasDerivAt_pow 16 u).const_mul (183746559168993407786048511 / 5033675046400 : ℝ))).add ((hasDerivAt_pow 17 u).const_mul (-15601985348903552427307209 / 157302345200 : ℝ))).add ((hasDerivAt_pow 18 u).const_mul (7917158075531618722972887 / 33116283200 : ℝ))).add ((hasDerivAt_pow 19 u).const_mul (-8024304937977319386738843 / 15730234520 : ℝ))).add ((hasDerivAt_pow 20 u).const_mul (45437498914189660090216191 / 47308976000 : ℝ))).add ((hasDerivAt_pow 21 u).const_mul (-8369304929908268389242201 / 5268499600 : ℝ))).add ((hasDerivAt_pow 22 u).const_mul (36341508452164296525802197 / 15838222400 : ℝ))).add ((hasDerivAt_pow 23 u).const_mul (-5944265419695869660177583 / 2069767700 : ℝ))).add ((hasDerivAt_pow 24 u).const_mul (710287220921494795288065 / 230374144 : ℝ))).add ((hasDerivAt_pow 25 u).const_mul (-387744681863739225385593 / 138446000 : ℝ))).add ((hasDerivAt_pow 26 u).const_mul (608554868618952579339153 / 287967680 : ℝ))).add ((hasDerivAt_pow 27 u).const_mul (-510525737116922928663 / 395560 : ℝ))).add ((hasDerivAt_pow 28 u).const_mul (937877961502262355237 / 1527680 : ℝ))).add ((hasDerivAt_pow 29 u).const_mul (-33828118894282925349 / 158224 : ℝ))).add ((hasDerivAt_pow 30 u).const_mul (171095530770653319 / 3520 : ℝ))).add ((hasDerivAt_pow 31 u).const_mul (-1853020188851841 / 341 : ℝ))) using 1; norm_num; ring
+  polynomial_deriv
+  norm_num
+  ring
 
 theorem partial_fraction2 (u : ℝ) (hu : u ≠ 0) (hv : 1-u ≠ 0) :
     S3Correction.L (1-3*u)/(u*(1-u)^2) =
@@ -195,13 +196,8 @@ theorem partial_fraction2 (u : ℝ) (hu : u ≠ 0) (hv : 1-u ≠ 0) :
 
 theorem primitive2_deriv (u : ℝ) (hu : u ≠ 0) (hv : 1-u ≠ 0) :
     HasDerivAt primitive2 (S3Correction.L (1-3*u)/(u*(1-u)^2)) u := by
-  have hl : HasDerivAt (fun x : ℝ => Real.log (1-x)) (-(1-u)⁻¹) u := by
-    convert! (Real.hasDerivAt_log hv).comp u ((hasDerivAt_id u).const_sub 1) using 1; ring
-  have hi : HasDerivAt (fun x : ℝ => (-2427980359983876276224 / 4512611027925 : ℝ)/(1-x)) ((-2427980359983876276224 / 4512611027925 : ℝ)/(1-u)^2) u := by
-    convert! ((hasDerivAt_const u (-2427980359983876276224 / 4512611027925 : ℝ)).div ((hasDerivAt_id u).const_sub 1) hv) using 1; simp only [id_eq]; ring
   unfold primitive2
-  convert! (((H2_deriv u).add ((Real.hasDerivAt_log hu).const_mul (14606816124167 / 20629078984800 : ℝ))).sub
-    (hl.const_mul (113861120333519197084801 / 4512611027925 : ℝ))).add hi using 1
+  elementary_deriv [H2_deriv u]
   rw [partial_fraction2 u hu hv]
   ring
 

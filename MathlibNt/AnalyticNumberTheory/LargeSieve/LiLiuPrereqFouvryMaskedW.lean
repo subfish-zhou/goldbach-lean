@@ -162,4 +162,85 @@ theorem wGCDLargeSum_eq_original_sub_zero_sub_tail
     (fun t ↦ ¬(wGCDTuple t).Small Y) (fun q hq ↦ (hQ q hq).ne')
   linarith
 
+/-! ## Weighted dyadic payment
+
+The same-mask extraction above also transports a dyadic power saving and
+a paid tail to a logarithmic bound. No geometric or moment estimate is
+assumed beyond the explicit scalar hypotheses below.
+-/
+
+open Finset
+
+/-- Convert a dyadic power saving and a paid tail into a logarithmic bound. -/
+theorem wMaskedTruncated_dyadic_power_payment
+    {M T x E b : ℝ} {u A : ℕ}
+    (hM0 : 0 < M) (hT0 : 0 < T) (hx0 : 0 < x)
+    (hMT : M * (2 * T) ≤ x) (hlog : 2 ≤ Real.log x)
+    (hα0 : 0 ≤ E) (hAlpha : E ≤ 2 * M * (1 + Real.log x) ^ u)
+    (hpay : 4 * (1 + Real.log x) ^ (u + (A + 1)) * x ^ b ≤ 1)
+    (cutoff : ℕ → ℕ → ℕ) (N Q : Finset ℕ)
+    (β c : ℕ → ℝ) (a : ℤ) (P : WOriginalTuple → Prop)
+    (hQpos : ∀ q ∈ Q, q ≠ 0)
+    (hheadPower : |wMaskedOriginal M N Q β c a P| +
+      |wMaskedZeroMode M N Q β c a P| ≤ 2 * M * (2 * T) ^ 2 * x ^ b)
+    (htailPay : E * |wMaskedTail M cutoff N Q β c a P| ≤
+      x ^ 2 / Real.log x ^ (A + 1)) :
+    E * |wMaskedTruncated M cutoff N Q β c a P| ≤ x ^ 2 / Real.log x ^ A := by
+  let H := 1 + Real.log x
+  have hH : 0 ≤ H := by dsimp [H]; linarith
+  have hlog0 : 0 < Real.log x := by linarith
+  have hheadPay :
+      E *
+          (|wMaskedOriginal M N Q β c a P| +
+            |wMaskedZeroMode M N Q β c a P|) ≤
+        x ^ 2 / Real.log x ^ (A + 1) := by
+    apply (le_div_iff₀ (pow_pos hlog0 (A + 1))).mpr
+    calc
+      _ ≤ (2 * M * H ^ u) *
+          (2 * M * (2 * T) ^ 2 * x ^ b) * H ^ (A + 1) := by
+        apply mul_le_mul
+          (mul_le_mul hAlpha hheadPower (by positivity) (by positivity))
+          (pow_le_pow_left₀ hlog0.le (by dsimp [H]; linarith) _) (by positivity)
+          (by positivity)
+      _ = (M * (2 * T)) ^ 2 *
+          (4 * H ^ (u + (A + 1)) * x ^ b) := by
+        rw [pow_add]
+        ring
+      _ ≤ x ^ 2 * 1 :=
+        mul_le_mul (pow_le_pow_left₀ (by positivity) hMT 2)
+          hpay (by positivity) (sq_nonneg _)
+      _ = _ := mul_one _
+  have he := wMaskedOriginal_eq_zero_add_truncated_add_tail hM0
+    cutoff N Q β c a P
+    hQpos
+  have htrunc :
+      wMaskedTruncated M cutoff N Q β c a P =
+        (wMaskedOriginal M N Q β c a P -
+          wMaskedZeroMode M N Q β c a P) -
+            wMaskedTail M cutoff N Q β c a P := by
+    linarith
+  have htri :
+      |wMaskedTruncated M cutoff N Q β c a P| ≤
+        |wMaskedOriginal M N Q β c a P| +
+          |wMaskedZeroMode M N Q β c a P| +
+            |wMaskedTail M cutoff N Q β c a P| := by
+    rw [htrunc]
+    exact (abs_sub _ _).trans (add_le_add (abs_sub _ _) le_rfl)
+  have htwo : 2 * (x ^ 2 / Real.log x ^ (A + 1)) ≤
+      x ^ 2 / Real.log x ^ A := by
+    rw [pow_succ (Real.log x) A, div_mul_eq_div_div, ← mul_div_assoc]
+    apply (div_le_iff₀ hlog0).mpr
+    simpa only [mul_comm] using
+      mul_le_mul_of_nonneg_left hlog (by positivity : 0 ≤ x ^ 2 / Real.log x ^ A)
+  calc
+    _ ≤ E *
+        (|wMaskedOriginal M N Q β c a P| +
+          |wMaskedZeroMode M N Q β c a P| +
+            |wMaskedTail M cutoff N Q β c a P|) :=
+      mul_le_mul_of_nonneg_left htri hα0
+    _ ≤ 2 * (x ^ 2 / Real.log x ^ (A + 1)) := by
+      rw [mul_add]
+      linarith
+    _ ≤ _ := htwo
+
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

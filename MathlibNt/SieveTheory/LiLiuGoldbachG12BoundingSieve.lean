@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass
 import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
 
@@ -42,18 +43,7 @@ theorem goldbachG12LinkedOutput_sum (N : ℕ) (ε : ℝ) (P : ℕ → Prop) [Dec
   classical
   let A := goldbachG12LinkedAtoms N ε
   let out := goldbachG12LinkedOutput N
-  let T := (A.image out).filter P
-  have hf := Finset.sum_fiberwise_eq_sum_filter A T out
-    (fun x => goldbachG12NormalizedCoefficient N x.1)
-  have hfilter : A.filter (fun x => out x ∈ T) = A.filter (fun x => P (out x)) := by
-    ext x
-    simp only [mem_filter]
-    constructor
-    · rintro ⟨hx, hT⟩
-      exact ⟨hx, (mem_filter.mp hT).2⟩
-    · rintro ⟨hx, hp⟩
-      exact ⟨hx, mem_filter.mpr ⟨mem_image.mpr ⟨x, hx, rfl⟩, hp⟩⟩
-  rw [hfilter] at hf
+  have hf := MathlibNt.SieveTheory.sum_fibres_filter_image A out P (fun x => goldbachG12NormalizedCoefficient N x.1)
   calc
     _ = ∑ x ∈ A.filter (fun x => P (out x)),
         goldbachG12NormalizedCoefficient N x.1 := hf

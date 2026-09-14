@@ -2,6 +2,7 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedNonquadra
 import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedPsiClose
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
+import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPointwiseSWPaymentCore
 
 open Set Function Filter Complex Real MeasureTheory
 
@@ -390,6 +391,53 @@ private theorem eventually_log_pow_le_sqrt_nat (k : ℕ) :
     ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ k ≤ Real.sqrt N := by
   exact log_pow_le_sqrt_eventually k
 
+/-- Common scalar payments for the right tails and smoothing removal.
+Only the shared height and smoothing exponents enter; the left-edge decay and
+any additional quadratic base payment remain in their respective branches. -/
+theorem pointwiseSW_tail_smoothing_payments
+    {X L : ℝ} {D P : ℕ} (hX : 0 ≤ X) (hL : 2 ≤ L) (hDP : D + 20 ≤ P) :
+    Real.exp 1 * X * (1 + L ^ 2) /
+        ((L ^ (P + 3))⁻¹ * L ^ (2 * P + 30)) ≤ X / L ^ D ∧
+      (L ^ (P + 3))⁻¹ * X * L ≤ X / L ^ D := by
+  have hLpos : 0 < L := by linarith
+  have hL1 : 1 ≤ L := by linarith
+  have htailPower : 8 * L ^ 2 ≤ L ^ (2 * P + 30) / (L ^ D * L ^ (P + 3)) := by
+    apply (le_div_iff₀ (by positivity)).2
+    have h8 : (8 : ℝ) ≤ L ^ 3 := by
+      calc
+        (8 : ℝ) = 2 ^ 3 := by norm_num
+        _ ≤ L ^ 3 := pow_le_pow_left₀ (by norm_num) hL 3
+    calc
+      _ ≤ (L ^ 3 * L ^ 2) * (L ^ D * L ^ (P + 3)) := by gcongr
+      _ = L ^ (D + (P + 3) + 5) := by
+        simp only [← pow_add]
+        congr 1
+        omega
+      _ ≤ L ^ (2 * P + 30) := pow_le_pow_right₀ hL1 (by omega)
+  constructor
+  · rw [div_le_iff₀ (by positivity : 0 < (L ^ (P + 3))⁻¹ * L ^ (2 * P + 30))]
+    calc
+      Real.exp 1 * X * (1 + L ^ 2) ≤ 8 * X * L ^ 2 := by
+        have he : Real.exp 1 ≤ 4 := Real.exp_one_lt_d9.le.trans (by norm_num)
+        have htwo : 1 + L ^ 2 ≤ 2 * L ^ 2 := by nlinarith [sq_nonneg L]
+        calc
+          _ ≤ 4 * X * (2 * L ^ 2) := by gcongr
+          _ = _ := by ring
+      _ = X * (8 * L ^ 2) := by ring
+      _ ≤ X * (L ^ (2 * P + 30) / (L ^ D * L ^ (P + 3))) :=
+        mul_le_mul_of_nonneg_left htailPower hX
+      _ = _ := by simp only [div_eq_mul_inv, mul_inv_rev]; ring
+  · have hsmoothPower : L * L ^ D ≤ L ^ (P + 3) := by
+      rw [← pow_succ']
+      exact pow_le_pow_right₀ hL1 (by omega)
+    have hratio : L / L ^ (P + 3) ≤ 1 / L ^ D := by
+      apply (div_le_div_iff₀ (pow_pos hLpos _) (pow_pos hLpos _)).2
+      simpa only [one_mul] using hsmoothPower
+    calc
+      (L ^ (P + 3))⁻¹ * X * L = X * (L / L ^ (P + 3)) := by ring
+      _ ≤ X * (1 / L ^ D) := mul_le_mul_of_nonneg_left hratio hX
+      _ = X / L ^ D := by ring
+
 /-- At the strengthened loss `P = D + 20`, the prescribed polylogarithmic
 height, reciprocal-log displacement, and smoothing width pay all four contour
 terms against the common target `N / log(N)^D`, uniformly in the conductor. -/
@@ -480,67 +528,23 @@ theorem eventually_nonquadraticPointwiseSW_four_payments (C D : ℕ) :
         ring_nf
         gcongr
         omega
+  have hcommon := pointwiseSW_tail_smoothing_payments (X := (N : ℝ))
+    (D := D) (P := P) hNpos.le (by linarith : 2 ≤ L) (by dsimp only [P]; omega)
+  have htailPay :
+      (N : ℝ) ^ (1 + d) * (1 + d⁻¹ ^ 2) / (ε * T) ≤ R := by
+    rw [hNpow, hd, heps, hT, inv_inv]
+    exact hcommon.1
   have hhorizPay :
       (dirichletLTwistedSmoothedConductorLogLM q T) ^ 11 *
           (N : ℝ) ^ (1 + d) / (ε * (1 + T ^ 2)) ≤ R := by
-    rw [hNpow, heps, hT]
-    have hden : 0 < (L ^ (P + 3))⁻¹ * (1 + (L ^ B) ^ 2) := by positivity
-    rw [div_le_iff₀ hden]
-    calc
-      (dirichletLTwistedSmoothedConductorLogLM q T) ^ 11 * (Real.exp 1 * N) ≤
-          L ^ 12 * (4 * N) := by gcongr; exact Real.exp_one_lt_d9.le.trans (by norm_num)
-      _ ≤ R * ((L ^ (P + 3))⁻¹ * (1 + (L ^ B) ^ 2)) := by
-        dsimp only [R]
-        field_simp
-        dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]
-        ring_nf
-        calc
-          L ^ 35 * L ^ (D * 2) * 4 ≤ L ^ 35 * L ^ (D * 2) * L := by gcongr
-          _ ≤ L ^ 140 * L ^ (D * 4) := by
-            calc
-              L ^ 35 * L ^ (D * 2) * L = L ^ 36 * L ^ (D * 2) := by ring
-              _ ≤ L ^ 140 * L ^ (D * 4) :=
-                mul_le_mul
-                  (pow_le_pow_right₀ hL1 (by norm_num))
-                  (pow_le_pow_right₀ hL1 (show D * 2 ≤ D * 4 by omega))
-                  (pow_nonneg hLpos.le _) (pow_nonneg hLpos.le _)
-          _ ≤ 1 + L ^ 140 * L ^ (D * 4) := by linarith
-  have htailPay :
-      (N : ℝ) ^ (1 + d) * (1 + d⁻¹ ^ 2) / (ε * T) ≤ R := by
-    rw [hNpow, hd, heps, hT]
-    have hdinv : (L⁻¹)⁻¹ = L := inv_inv L
-    rw [hdinv]
-    have hden : 0 < (L ^ (P + 3))⁻¹ * L ^ B := by positivity
-    rw [div_le_iff₀ hden]
-    calc
-      Real.exp 1 * N * (1 + L ^ 2) ≤ 8 * N * L ^ 2 := by
-        have he : Real.exp 1 ≤ 4 := Real.exp_one_lt_d9.le.trans (by norm_num)
-        have htwo : 1 + L ^ 2 ≤ 2 * L ^ 2 := by nlinarith [sq_nonneg L, hL1]
-        calc
-          _ ≤ 4 * N * (1 + L ^ 2) := by gcongr
-          _ ≤ 4 * N * (2 * L ^ 2) := by gcongr
-          _ = 8 * N * L ^ 2 := by ring
-      _ ≤ R * ((L ^ (P + 3))⁻¹ * L ^ B) := by
-        dsimp only [R]
-        field_simp
-        dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]
-        ring_nf
-        have h8L2 : (8 : ℝ) ≤ L ^ 2 := by
-          calc
-            (8 : ℝ) ≤ 4 ^ 2 := by norm_num
-            _ ≤ L ^ 2 := by gcongr
-        calc
-          L ^ 25 * L ^ (D * 2) * 8 ≤ L ^ 25 * L ^ (D * 2) * L ^ 2 := by gcongr
-          _ = L ^ 27 * L ^ (D * 2) := by ring
-          _ ≤ L ^ 70 * L ^ (D * 2) :=
-            mul_le_mul_of_nonneg_right (pow_le_pow_right₀ hL1 (by omega))
-              (pow_nonneg hLpos.le _)
-  have hsmoothPay : ε * (N : ℝ) * L ≤ R := by
-    rw [heps]
-    dsimp only [R]
-    field_simp
-    rw [mul_comm L, ← pow_succ]
-    exact pow_le_pow_right₀ hL1 (by omega)
+    apply (pointwiseSW_horizontal_le_tail (L := d⁻¹)
+      (Real.rpow_nonneg hNpos.le _) (by rw [heps]; positivity)
+      (by rw [hT]; positivity) ?_).trans htailPay
+    exact hLM11.trans (by
+      rw [hT]
+      exact pow_le_pow_right₀ hL1 (by
+        dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]; omega))
+  have hsmoothPay : ε * (N : ℝ) * L ≤ R := hcommon.2
   have hT3 : 3 ≤ T := by
     rw [hT]
     have hLB : L ≤ L ^ B := by

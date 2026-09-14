@@ -1,6 +1,7 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalExactPrefix
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LandauSiegelToLowSWConditionalAdapter
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
+import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPointwiseSWPaymentCore
 
 open Set Function Filter Complex Real MeasureTheory
 
@@ -240,87 +241,25 @@ theorem exists_dirichletLTwistedSmoothedQuadraticPointwiseContourNormBounds
   have ha : (1 / 2 : ℝ) ≤ a := by
     dsimp only [a, dirichletLTwistedSmoothedQuadraticConditionalLeft]
     linarith only [hw2]
-  have horizontalPoint (σ t : ℝ) (hσa : a ≤ σ) (hσb : σ ≤ 1 + δ) (ht' : |t| = T) :
-      ‖DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X (σ + t * I)‖ ≤
-        (2 * Q) * (2 * M / (ε * (1 + T ^ 2))) * X ^ (1 + δ) := by
-    have hlog := norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
-      Z hZ hzeta χ hquad hχ hA hAc hAhalf hAsmall hc hη
-      hT hSiegel ht'
-      (by simpa only [a] using hσa) (hσb.trans hb)
-    have hm := hMellin (1 / 2) (by norm_num) (σ + t * I)
-      (by simp; linarith) (by simp; linarith [hσb, hδ1]) ε hε hε1
-    have hnormsq : T ^ 2 ≤ ‖(σ : ℂ) + t * I‖ ^ 2 := by
-      rw [Complex.sq_norm]
-      simp [Complex.normSq_apply]
-      have ht2 := congrArg (fun u : ℝ => u ^ 2) ht'
-      rw [sq_abs] at ht2
-      nlinarith [sq_nonneg σ]
-    have hinvDen : (T ^ 2)⁻¹ ≤ 2 * (1 + T ^ 2)⁻¹ := by
-      rw [show (T ^ 2)⁻¹ = 1 / T ^ 2 by rw [one_div],
-        show 2 * (1 + T ^ 2)⁻¹ = 2 / (1 + T ^ 2) by rw [div_eq_mul_inv]]
-      rw [div_le_div_iff₀ (sq_pos_of_pos hT0) (by positivity)]
-      nlinarith [sq_nonneg T]
-    have hm' : ‖mellin (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + t * I)‖ ≤
-        2 * M / (ε * (1 + T ^ 2)) := by
-      calc
-        _ ≤ M * (ε * ‖(σ : ℂ) + t * I‖ ^ 2)⁻¹ := hm
-        _ ≤ M * (2 / (ε * (1 + T ^ 2))) := by
-          gcongr
-          rw [mul_inv_rev]
-          calc
-            (‖(σ : ℂ) + t * I‖ ^ 2)⁻¹ * ε⁻¹ ≤
-                (2 * (1 + T ^ 2)⁻¹) * ε⁻¹ := by
-              gcongr
-              exact (inv_anti₀ (sq_pos_of_pos hT0) hnormsq).trans hinvDen
-            _ = 2 / (ε * (1 + T ^ 2)) := by field_simp [hε.ne']
-        _ = 2 * M / (ε * (1 + T ^ 2)) := by ring
-    have hXnorm : ‖(X : ℂ) ^ ((σ : ℂ) + t * I)‖ = X ^ σ := by
-      rw [Complex.norm_cpow_eq_rpow_re_of_pos hX0]
-      simp
-    have hXpow : X ^ σ ≤ X ^ (1 + δ) := Real.rpow_le_rpow_of_exponent_le hX hσb
-    dsimp only [DirichletCharacter.twistedSmoothedPerronIntegrand]
-    rw [norm_mul, norm_mul, hXnorm]
-    have hlog' : ‖-deriv χ.LFunction (σ + I * t) / χ.LFunction (σ + I * t)‖ ≤
-        2 * Q := by
-      simpa only [neg_div, norm_neg, Q, mul_comm] using hlog
-    have hst : ((σ : ℂ) + t * I) = ((σ : ℂ) + I * t) := by ring
-    have hlog'' : ‖-deriv χ.LFunction (σ + t * I) / χ.LFunction (σ + t * I)‖ ≤
-        2 * Q := by
-      simpa only [hst] using hlog'
-    calc
-      _ ≤ (2 * Q) * (2 * M / (ε * (1 + T ^ 2))) * X ^ σ := by
-        have hprod :
-            ‖-deriv χ.LFunction (σ + t * I) / χ.LFunction (σ + t * I)‖ *
-                ‖mellin (fun x ↦ (Smooth1 ν ε x : ℂ)) (σ + t * I)‖ ≤
-              (2 * Q) * (2 * M / (ε * (1 + T ^ 2))) := by
-          simpa only [mul_assoc, mul_left_comm] using
-            (mul_le_mul hlog'' hm' (norm_nonneg _) (by positivity))
-        exact mul_le_mul_of_nonneg_right hprod (Real.rpow_nonneg hX0.le _)
-      _ ≤ _ := by gcongr
   have horizontalBound (t : ℝ) (ht' : |t| = T) :
       ‖HIntegral (DirichletCharacter.twistedSmoothedPerronIntegrand χ ν ε X) a (1 + δ) t‖ ≤
         (C₀ + 16 * M) * Q * X ^ (1 + δ) / (ε * (1 + T ^ 2)) := by
     have hab : a ≤ 1 + δ := by
       dsimp only [a, dirichletLTwistedSmoothedQuadraticConditionalLeft]
       linarith
-    rw [HIntegral]
+    have hbound := norm_twistedSmoothedPerron_horizontal_le_of_logDeriv_bound hM.le hε
+      (fun s hs hs2 => hMellin (1 / 2) (by norm_num) s hs hs2 ε hε hε1)
+      χ ha hab (by linarith) (by linarith) ht' hX (show 0 ≤ 2 * Q by positivity)
+      (fun σ hσa hσb => by
+        simpa only [Q, mul_comm] using
+          norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
+            Z hZ hzeta χ hquad hχ hA hAc hAhalf hAsmall hc hη hT hSiegel ht'
+            (by simpa only [a] using hσa) (hσb.trans hb))
     calc
-      _ ≤ ((2 * Q) * (2 * M / (ε * (1 + T ^ 2))) * X ^ (1 + δ)) * |(1 + δ) - a| := by
-        apply intervalIntegral.norm_integral_le_of_norm_le_const
-        intro σ hσ
-        rw [uIoc_of_le hab] at hσ
-        exact horizontalPoint σ t hσ.1.le hσ.2 ht'
-      _ ≤ (C₀ + 16 * M) * Q * X ^ (1 + δ) / (ε * (1 + T ^ 2)) := by
-        have hlen : |(1 + δ) - a| ≤ 2 := by
-          rw [abs_of_nonneg (sub_nonneg.mpr hab)]
-          linarith [ha, hδ1]
-        have hden : 0 < ε * (1 + T ^ 2) := by positivity
-        calc
-          _ ≤ ((2 * Q) * (2 * M / (ε * (1 + T ^ 2))) * X ^ (1 + δ)) * 2 := by
-            gcongr
-          _ ≤ (C₀ + 16 * M) * Q * X ^ (1 + δ) / (ε * (1 + T ^ 2)) := by
-            field_simp [hden.ne']
-            nlinarith [Real.rpow_nonneg hX0.le (1 + δ)]
+      _ ≤ 4 * M * (2 * Q) * X ^ (1 + δ) / (ε * (1 + T ^ 2)) := hbound
+      _ ≤ _ := by
+        apply div_le_div_of_nonneg_right _ (by positivity)
+        nlinarith [mul_nonneg hQ (Real.rpow_nonneg hX0.le (1 + δ))]
   exact ⟨hvertical,
     horizontalBound T (by simp [abs_of_nonneg hT0.le]),
     horizontalBound (-T) (by rw [abs_neg, abs_of_nonneg hT0.le])⟩
@@ -449,73 +388,29 @@ theorem exists_dirichletLTwistedSmoothedQuadraticPointwiseErrorAssembly
     χ hAA₀ hA hc hη hT0 hχ hw hw2 hwidthle
       (hzero q χ T hquad hχ hT0 hSiegel) hT0 hδ hδwidth
       diffν νpos suppν mass_one hX0 hε hε1
-  have hsplit := quadratic_integral_lower_middle_upper
-    (fun t : ℝ => F (((1 + δ : ℝ) : ℂ) + t * I)) hf hT0.le
   have htlow : ‖∫ t in Iic (-T), F (((1 + δ : ℝ) : ℂ) + t * I)‖ ≤ Ctail * Etail := by
     dsimp only [F, Etail]
     convert ht.1 using 1; ring
   have htupper : ‖∫ t in Ici T, F (((1 + δ : ℝ) : ℂ) + t * I)‖ ≤ Ctail * Etail := by
     dsimp only [F, Etail]
     convert ht.2 using 1; ring
-  have hmid : ‖∫ t in Ioc (-T) T, F (((1 + δ : ℝ) : ℂ) + t * I)‖ =
-      ‖VIntegral F (1 + δ) (-T) T‖ := by
-    rw [VIntegral, norm_smul, norm_I, one_mul,
-      intervalIntegral.integral_of_le (by linarith : -T ≤ T)]
-  have hv : ‖VIntegral F (1 + δ) (-T) T‖ ≤ C * Eleft + C * Ehoriz + C * Ehoriz := by
-    have heq : VIntegral F (1 + δ) (-T) T =
-        VIntegral F a (-T) T + HIntegral F a (1 + δ) T -
-          HIntegral F a (1 + δ) (-T) := by
-      simpa only [F, a] using (by linear_combination hshift)
-    have hleft : ‖VIntegral F a (-T) T‖ ≤ C * Eleft := by
-      dsimp only [F, a, Eleft, Q]
-      convert hct.1 using 1; (try ring)
-    have htop : ‖HIntegral F a (1 + δ) T‖ ≤ C * Ehoriz := by
-      dsimp only [F, a, Ehoriz, Q]
-      convert hct.2.1 using 1; (try ring)
-    have hbottom : ‖HIntegral F a (1 + δ) (-T)‖ ≤ C * Ehoriz := by
-      dsimp only [F, a, Ehoriz, Q]
-      convert hct.2.2 using 1; (try ring)
-    rw [heq]
-    calc
-      _ ≤ ‖VIntegral F a (-T) T‖ + ‖HIntegral F a (1 + δ) T‖ +
-          ‖HIntegral F a (1 + δ) (-T)‖ := by
-        calc
-          _ ≤ ‖VIntegral F a (-T) T + HIntegral F a (1 + δ) T‖ +
-              ‖HIntegral F a (1 + δ) (-T)‖ := by
-            simpa only [sub_eq_add_neg, norm_neg] using
-              norm_add_le (VIntegral F a (-T) T + HIntegral F a (1 + δ) T)
-                (-HIntegral F a (1 + δ) (-T))
-          _ ≤ _ := add_le_add (norm_add_le _ _) (le_refl _)
-      _ ≤ C * Eleft + C * Ehoriz + C * Ehoriz :=
-        add_le_add (add_le_add hleft htop) hbottom
-  have hfull : ‖∫ t : ℝ, F (((1 + δ : ℝ) : ℂ) + t * I)‖ ≤
-      Ctail * Etail + (C * Eleft + C * Ehoriz + C * Ehoriz) + Ctail * Etail := by
-    rw [← hsplit]
-    calc
-      _ ≤ ‖∫ t in Iic (-T), F (((1 + δ : ℝ) : ℂ) + t * I)‖ +
-          ‖∫ t in Ioc (-T) T, F (((1 + δ : ℝ) : ℂ) + t * I)‖ +
-          ‖∫ t in Ici T, F (((1 + δ : ℝ) : ℂ) + t * I)‖ :=
-        (norm_add_le _ _).trans (add_le_add (norm_add_le _ _) (le_refl _))
-      _ ≤ _ := by rw [hmid]; exact add_le_add (add_le_add htlow hv) htupper
-  have hnorm : ‖(1 / (2 * (Real.pi : ℂ) * I) : ℂ)‖ ≤ 1 := by
-    rw [norm_div, norm_one, norm_mul, norm_mul, Complex.norm_ofNat,
-      Complex.norm_real, norm_I]
-    norm_num
-    rw [abs_of_pos Real.pi_pos]
-    have hinv : Real.pi⁻¹ ≤ 1 :=
-      (inv_le_one₀ Real.pi_pos).2 (by linarith [Real.pi_gt_three])
-    nlinarith [inv_nonneg.mpr Real.pi_pos.le]
-  have hnormalized : ‖VerticalIntegral' F (1 + δ)‖ ≤
-      ‖∫ t : ℝ, F (((1 + δ : ℝ) : ℂ) + t * I)‖ := by
-    rw [VerticalIntegral', VerticalIntegral, norm_smul, norm_smul, norm_I, one_mul]
-    exact mul_le_of_le_one_left (norm_nonneg _) hnorm
+  have hleft : ‖VIntegral F a (-T) T‖ ≤ C * Eleft := by
+    dsimp only [F, a, Eleft, Q]
+    convert hct.1 using 1; (try ring)
+  have htop : ‖HIntegral F a (1 + δ) T‖ ≤ C * Ehoriz := by
+    dsimp only [F, a, Ehoriz, Q]
+    convert hct.2.1 using 1; (try ring)
+  have hbottom : ‖HIntegral F a (1 + δ) (-T)‖ ≤ C * Ehoriz := by
+    dsimp only [F, a, Ehoriz, Q]
+    convert hct.2.2 using 1; (try ring)
+  have hfull := norm_verticalIntegral'_le_of_finite_contour_bounds F hT0.le hf
+    hshift hleft htop hbottom htlow htupper
   have hEleft : 0 ≤ Eleft := by dsimp only [Eleft, Q]; positivity
   have hEhoriz : 0 ≤ Ehoriz := by dsimp only [Ehoriz, Q]; positivity
   have hEtail : 0 ≤ Etail := by dsimp only [Etail]; positivity
   rw [hp]
   change ‖VerticalIntegral' F (1 + δ)‖ ≤ _
   calc
-    _ ≤ ‖∫ t : ℝ, F (((1 + δ : ℝ) : ℂ) + t * I)‖ := hnormalized
     _ ≤ Ctail * Etail + (C * Eleft + C * Ehoriz + C * Ehoriz) +
         Ctail * Etail := hfull
     _ ≤ 2 * (C + Ctail) * (Eleft + Ehoriz + Etail) := by
@@ -1098,65 +993,20 @@ theorem eventually_quadraticPointwiseSW_four_payments
               Real.sqrt_nonneg (N : ℝ)]
   have hNpow : (N : ℝ) ^ (1 + δ) = Real.exp 1 * N := by
     simpa only [hδ] using rpow_one_add_inv_log_nat N (by omega)
-  have hhoriz : Q * (N : ℝ) ^ (1 + δ) / (ε * (1 + T ^ 2)) ≤ R := by
-    rw [hNpow, hε, hT]
-    have hden : 0 < (L ^ (P + 3))⁻¹ * (1 + (L ^ B) ^ 2) := by positivity
-    rw [div_le_iff₀ hden]
-    calc
-      Q * (Real.exp 1 * N) ≤ L * (4 * N) := by
-        gcongr
-        exact Real.exp_one_lt_d9.le.trans (by norm_num)
-      _ ≤ R * ((L ^ (P + 3))⁻¹ * (1 + (L ^ B) ^ 2)) := by
-        dsimp only [R]
-        field_simp
-        dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]
-        ring_nf
-        have h4L : (4 : ℝ) ≤ L ^ 2 := by nlinarith
-        calc
-          L ^ 44 * L ^ (D * 2) * 4 ≤ L ^ 44 * L ^ (D * 2) * L ^ 2 := by gcongr
-          _ = L ^ 46 * L ^ (D * 2) := by ring
-          _ ≤ L ^ 180 * L ^ (D * 4) := by
-            exact mul_le_mul
-              (pow_le_pow_right₀ hL1 (show 46 ≤ 180 by omega))
-              (pow_le_pow_right₀ hL1 (show D * 2 ≤ D * 4 by omega))
-              (pow_nonneg hLpos.le _) (pow_nonneg hLpos.le _)
-          _ ≤ L ^ 220 * L ^ (D * 4) :=
-            mul_le_mul_of_nonneg_right (pow_le_pow_right₀ hL1 (by omega))
-              (pow_nonneg hLpos.le _)
-          _ ≤ 1 + L ^ 220 * L ^ (D * 4) := by linarith
+  have hcommon := pointwiseSW_tail_smoothing_payments (X := (N : ℝ))
+    (D := D) (P := P) (by positivity) hL2 (by dsimp only [P]; omega)
   have htail : (N : ℝ) ^ (1 + δ) * (1 + δ⁻¹ ^ 2) / (ε * T) ≤ R := by
     rw [hNpow, hδ, hε, hT, inv_inv]
-    have hden : 0 < (L ^ (P + 3))⁻¹ * L ^ B := by positivity
-    rw [div_le_iff₀ hden]
-    calc
-      Real.exp 1 * N * (1 + L ^ 2) ≤ 8 * N * L ^ 2 := by
-        have he : Real.exp 1 ≤ 4 := Real.exp_one_lt_d9.le.trans (by norm_num)
-        have htwo : 1 + L ^ 2 ≤ 2 * L ^ 2 := by nlinarith
-        calc
-          _ ≤ 4 * N * (1 + L ^ 2) := by gcongr
-          _ ≤ 4 * N * (2 * L ^ 2) := by gcongr
-          _ = 8 * N * L ^ 2 := by ring
-      _ ≤ R * ((L ^ (P + 3))⁻¹ * L ^ B) := by
-        dsimp only [R]
-        field_simp
-        dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]
-        ring_nf
-        have h8L3 : (8 : ℝ) ≤ L ^ 3 := by
-          calc
-            (8 : ℝ) = 2 ^ 3 := by norm_num
-            _ ≤ L ^ 3 := pow_le_pow_left₀ (by norm_num) hL2 3
-        calc
-          L ^ 45 * L ^ (D * 2) * 8 ≤ L ^ 45 * L ^ (D * 2) * L ^ 3 := by gcongr
-          _ = L ^ 48 * L ^ (D * 2) := by ring
-          _ ≤ L ^ 110 * L ^ (D * 2) :=
-            mul_le_mul_of_nonneg_right (pow_le_pow_right₀ hL1 (by omega))
-              (pow_nonneg hLpos.le _)
-  have hsmooth : ε * (N : ℝ) * L ≤ R := by
-    rw [hε]
-    dsimp only [R]
-    field_simp
-    rw [mul_comm L, ← pow_succ]
-    exact pow_le_pow_right₀ hL1 (by omega)
+    exact hcommon.1
+  have hhoriz : Q * (N : ℝ) ^ (1 + δ) / (ε * (1 + T ^ 2)) ≤ R := by
+    apply (pointwiseSW_horizontal_le_tail (L := δ⁻¹)
+      (Real.rpow_nonneg hNpos.le _) (by rw [hε]; positivity)
+      (by rw [hT]; positivity) ?_).trans htail
+    exact hQ.trans (by
+      rw [hT]
+      simpa only [pow_one] using pow_le_pow_right₀ hL1 (show 1 ≤ B by
+        dsimp only [B, P, nonquadraticPointwiseSWHeightExponent]; omega))
+  have hsmooth : ε * (N : ℝ) * L ≤ R := hcommon.2
   have hT3 : 3 ≤ T := by
     rw [hT]
     exact hL3.trans

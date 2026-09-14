@@ -1,5 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper
 import MathlibNt.Analysis.LogScaleAbsorption
+import MathlibNt.Analysis.SieveNormalization
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Data.Nat.Cast.Order.Field
 import Mathlib.Data.Nat.Factors
@@ -394,111 +395,33 @@ theorem goldbachS2SwitchedSiftedCount_normalized_upper_nine_nineteen_sub
           (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V ≤
         8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
           goldbachS2SwitchedMainMass N T / Real.log (N : ℝ) := by
-    have hfacNonneg :
-        0 ≤ goldbachS2SwitchedMainMass N T *
-          (Real.exp Real.eulerMascheroniConstant * (1 + η)) := by
-      have hmass := goldbachS2SwitchedMainMass_nonneg N T
-      positivity
-    have hmul :
-        goldbachS2SwitchedMainMass N T *
-            (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V ≤
-          goldbachS2SwitchedMainMass N T *
-            (Real.exp Real.eulerMascheroniConstant * (1 + η)) *
-            (8 * Real.exp (-Real.eulerMascheroniConstant) * (1 + η) *
-              SingularSeries.liuSingularSeries N / Real.log (N : ℝ)) := by
-      exact mul_le_mul_of_nonneg_left hV hfacNonneg
-    calc
-      goldbachS2SwitchedMainMass N T *
-          (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V
-        ≤ goldbachS2SwitchedMainMass N T *
-            (Real.exp Real.eulerMascheroniConstant * (1 + η)) *
-            (8 * Real.exp (-Real.eulerMascheroniConstant) * (1 + η) *
-              SingularSeries.liuSingularSeries N / Real.log (N : ℝ)) := hmul
-      _ = 8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
-            goldbachS2SwitchedMainMass N T / Real.log (N : ℝ) := by
-          rw [div_eq_mul_inv]
-          have hexp :
-              Real.exp Real.eulerMascheroniConstant *
-                  Real.exp (-Real.eulerMascheroniConstant) = 1 := by
-            rw [← Real.exp_add]
-            norm_num
-          calc
-            goldbachS2SwitchedMainMass N T *
-                (Real.exp Real.eulerMascheroniConstant * (1 + η)) *
-                (8 * Real.exp (-Real.eulerMascheroniConstant) * (1 + η) *
-                  SingularSeries.liuSingularSeries N * (Real.log (N : ℝ))⁻¹)
-              = goldbachS2SwitchedMainMass N T *
-                  ((Real.exp Real.eulerMascheroniConstant *
-                    Real.exp (-Real.eulerMascheroniConstant)) *
-                    (8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
-                      (Real.log (N : ℝ))⁻¹)) := by ring
-            _ = 8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
-                  goldbachS2SwitchedMainMass N T / Real.log (N : ℝ) := by
-                  rw [hexp]
-                  ring
+    exact MathlibNt.Analysis.SieveNormalization.upper_exp_product
+      (goldbachS2SwitchedMainMass_nonneg N T) (by positivity) hV
   have hMain :
       goldbachS2SwitchedMainMass N T *
           (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V ≤
         (8 * K + δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hcoefNonneg :
-        0 ≤ 8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N /
-          Real.log (N : ℝ) := by
-      exact div_nonneg
-        (mul_nonneg (by positivity) (SingularSeries.liuSingularSeries_pos N).le)
-        hlogNpos.le
-    have hmulX :=
-      mul_le_mul_of_nonneg_left hX hcoefNonneg
-    have hXstep :
-        8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
-            goldbachS2SwitchedMainMass N T / Real.log (N : ℝ) ≤
-          (8 * (1 + η) ^ 2 * (K + η)) * SingularSeries.liuSingularSeries N *
-            (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by
-      calc
-        8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
-            goldbachS2SwitchedMainMass N T / Real.log (N : ℝ)
-          = (8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N /
-              Real.log (N : ℝ)) * goldbachS2SwitchedMainMass N T := by ring
-        _ ≤ (8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N /
-              Real.log (N : ℝ)) *
-            ((K + η) * ((N : ℝ) / Real.log (N : ℝ))) := by
-              simpa [mul_assoc, mul_left_comm, mul_comm] using hmulX
-        _ = (8 * (1 + η) ^ 2 * (K + η)) * SingularSeries.liuSingularSeries N *
-              (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by
-              rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.rpow_add hlogNpos, Real.rpow_one]
-              ring
-    have hCoeff :
-        8 * (1 + η) ^ 2 * (K + η) ≤ 8 * K + δ / 2 := by
-      exact S2NormalizedUpper_main_coefficient_le hK0 hK1 hη0 hη1 hηδ
-    let Y : ℝ :=
-      SingularSeries.liuSingularSeries N * (N : ℝ) /
-        Real.log (N : ℝ) ^ (2 : ℝ)
-    have hScale :
-        0 ≤ SingularSeries.liuSingularSeries N * (N : ℝ) /
-          Real.log (N : ℝ) ^ (2 : ℝ) := by
-      exact div_nonneg
-        (mul_nonneg (SingularSeries.liuSingularSeries_pos N).le (by positivity))
-        (by positivity)
-    have hCoeffStep0 :
-        (8 * (1 + η) ^ 2 * (K + η)) * Y ≤
-          (8 * K + δ / 2) * Y := by
-      exact mul_le_mul_of_nonneg_right hCoeff hScale
-    have hCoeffStep :
-        (8 * (1 + η) ^ 2 * (K + η)) * SingularSeries.liuSingularSeries N *
-            (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) ≤
-          (8 * K + δ / 2) * SingularSeries.liuSingularSeries N *
-            (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by
-      simpa [Y, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using hCoeffStep0
+    have hSeries := (SingularSeries.liuSingularSeries_pos N).le
+    have hXstep := mul_le_mul_of_nonneg_left hX
+      (show 0 ≤ 8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N /
+        Real.log (N : ℝ) by positivity)
+    have hCoeff := mul_le_mul_of_nonneg_right
+      (S2NormalizedUpper_main_coefficient_le hK0 hK1 hη0 hη1 hηδ)
+      (show 0 ≤ SingularSeries.liuSingularSeries N * (N : ℝ) /
+        Real.log (N : ℝ) ^ (2 : ℝ) by positivity)
+    apply hMainStep.trans
     calc
-      goldbachS2SwitchedMainMass N T *
-          (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V
-        ≤ 8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N *
-            goldbachS2SwitchedMainMass N T / Real.log (N : ℝ) := hMainStep
-      _ ≤ (8 * (1 + η) ^ 2 * (K + η)) * SingularSeries.liuSingularSeries N *
-            (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := hXstep
-      _ ≤ (8 * K + δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-            exact hCoeffStep
+      _ = (8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N /
+          Real.log (N : ℝ)) * goldbachS2SwitchedMainMass N T := by ring
+      _ ≤ (8 * (1 + η) ^ 2 * SingularSeries.liuSingularSeries N /
+          Real.log (N : ℝ)) * ((K + η) * ((N : ℝ) / Real.log (N : ℝ))) := hXstep
+      _ = (8 * (1 + η) ^ 2 * (K + η)) *
+          (SingularSeries.liuSingularSeries N * (N : ℝ) /
+            Real.log (N : ℝ) ^ (2 : ℝ)) := by rw [Real.rpow_two]; ring
+      _ ≤ (8 * K + δ / 2) * (SingularSeries.liuSingularSeries N * (N : ℝ) /
+          Real.log (N : ℝ) ^ (2 : ℝ)) := hCoeff
+      _ = _ := by ring
   have hErrU :
       C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
         (δ / 2) * SingularSeries.liuUniversalProduct * (N : ℝ) /
@@ -507,59 +430,14 @@ theorem goldbachS2SwitchedSiftedCount_normalized_upper_nine_nineteen_sub
       C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
         (δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hδseries :
-        (δ / 2) * SingularSeries.liuUniversalProduct ≤
-          (δ / 2) * SingularSeries.liuSingularSeries N := by
-      exact mul_le_mul_of_nonneg_left
-        (SingularSeries.liuUniversalProduct_le_liuSingularSeries N) (by positivity)
-    have hscale :
-        0 ≤ (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by positivity
-    have hstep :
-        (δ / 2) * SingularSeries.liuUniversalProduct * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) ≤
-          (δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-      simpa [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using
-        (mul_le_mul_of_nonneg_right hδseries hscale)
-    exact hErrU.trans hstep
+    apply hErrU.trans
+    gcongr
+    exact SingularSeries.liuUniversalProduct_le_liuSingularSeries N
   have hfinal :
       (goldbachS2SwitchedSiftedCount N T Z : ℝ) ≤
         (8 * K + δ) * SingularSeries.liuSingularSeries N * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hsum :
-        goldbachS2SwitchedMainMass N T *
-            (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V +
-          C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
-        (8 * K + δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) +
-          (δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-      exact add_le_add hMain hErr
-    have hEq :
-        (8 * K + δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) +
-          (δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) =
-        (8 * K + δ) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-          Real.log (N : ℝ) ^ (2 : ℝ) := by
-      ring
-    have hmid :
-        goldbachS2SwitchedMainMass N T *
-            (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V +
-          C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
-        (8 * K + δ) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-          Real.log (N : ℝ) ^ (2 : ℝ) := by
-      calc
-        goldbachS2SwitchedMainMass N T *
-            (Real.exp Real.eulerMascheroniConstant * (1 + η)) * V +
-          C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ)
-          ≤ (8 * K + δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-              Real.log (N : ℝ) ^ (2 : ℝ) +
-            (δ / 2) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-              Real.log (N : ℝ) ^ (2 : ℝ) := hsum
-        _ = (8 * K + δ) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-              Real.log (N : ℝ) ^ (2 : ℝ) := hEq
-    exact hpaidBound.trans hmid
+    exact (hpaidBound.trans (add_le_add hMain hErr)).trans_eq (by ring)
   simpa [Z, T, K, τ] using hfinal
 
 /-- The genuine finite `S2` count inherits the normalized switched upper bound
@@ -660,60 +538,20 @@ theorem goldbachS2_normalized_upper_nine_nineteen_sub
       (N.primeFactors.card : ℝ) ≤
         (δ / 4) * SingularSeries.liuUniversalProduct * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := hpf N hNpf'
-  have hseriesQuarter :
-      (δ / 4) * SingularSeries.liuUniversalProduct ≤
-        (δ / 4) * SingularSeries.liuSingularSeries N := by
-    exact mul_le_mul_of_nonneg_left
-      (SingularSeries.liuUniversalProduct_le_liuSingularSeries N) (by positivity)
-  have hscale :
-      0 ≤ (N : ℝ) / Real.log (N : ℝ) ^ (2 : ℝ) := by positivity
   have hceilS :
       (Nat.ceil Z : ℝ) ≤
         (δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hstep :
-        (δ / 4) * SingularSeries.liuUniversalProduct * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) ≤
-          (δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-      simpa [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using
-        (mul_le_mul_of_nonneg_right hseriesQuarter hscale)
-    exact hceilU.trans hstep
+    apply hceilU.trans
+    gcongr
+    exact SingularSeries.liuUniversalProduct_le_liuSingularSeries N
   have hpfS :
       (N.primeFactors.card : ℝ) ≤
         (δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-    have hstep :
-        (δ / 4) * SingularSeries.liuUniversalProduct * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) ≤
-          (δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-      simpa [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using
-        (mul_le_mul_of_nonneg_right hseriesQuarter hscale)
-    exact hpfU.trans hstep
-  have hsum :
-      (goldbachS2SwitchedSiftedCount N T Z : ℝ) + (Nat.ceil Z : ℝ) +
-          (N.primeFactors.card : ℝ) ≤
-        (8 * Real.log ((1 - ((9 : ℝ) / 19 - ε)) / ((9 : ℝ) / 19 - ε)) + δ / 2) *
-            SingularSeries.liuSingularSeries N * (N : ℝ) /
-              Real.log (N : ℝ) ^ (2 : ℝ) +
-          ((δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-              Real.log (N : ℝ) ^ (2 : ℝ) +
-            (δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-              Real.log (N : ℝ) ^ (2 : ℝ)) := by
-    nlinarith [hswitch', hceilS, hpfS]
-  have hfinalEq :
-      (8 * Real.log ((1 - ((9 : ℝ) / 19 - ε)) / ((9 : ℝ) / 19 - ε)) + δ / 2) *
-          SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) +
-        ((δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) +
-          (δ / 4) * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ)) =
-      (8 * Real.log ((1 - ((9 : ℝ) / 19 - ε)) / ((9 : ℝ) / 19 - ε)) + δ) *
-          SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-    ring
-  exact hbridgeR.trans <| hsum.trans_eq hfinalEq
+    apply hpfU.trans
+    gcongr
+    exact SingularSeries.liuUniversalProduct_le_liuSingularSeries N
+  exact (hbridgeR.trans (add_le_add (add_le_add hswitch' hceilS) hpfS)).trans_eq (by ring)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

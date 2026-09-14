@@ -3874,97 +3874,32 @@ theorem selbergRealPsi_le_rankin_logSq
     selbergRealPsi xi z ≤
       Real.exp (24 * Real.exp 1) *
         (xi * Real.exp (-2 * Real.log xi / (Real.log z) ^ 2)) := by
-  have hxiPos : 0 < xi := lt_of_lt_of_le zero_lt_one hxi
-  have hzPos : 0 < z := lt_of_lt_of_le zero_lt_one hz
-  have hlogPos : 0 < Real.log z := lt_of_lt_of_le (by norm_num) hlog
-  have hlogNe : Real.log z ≠ 0 := ne_of_gt hlogPos
-  have hlogXi : 0 ≤ Real.log xi := Real.log_nonneg hxi
-  by_cases hzFive : Real.log z ≤ 5
-  · refine
-      (selbergRealPsi_le_vinogradovRankin hxiPos.le hz hlog).trans ?_
-    rw [vinogradovRankin_expr_eq hxiPos hzPos hlogNe,
-      rankinLogSq_target_eq hxiPos]
+  have hx : 0 < xi := zero_lt_one.trans_le hxi
+  have hZ : 0 < Real.log z := by linarith
+  have hZsq : 0 < Real.log z ^ 2 := sq_pos_of_pos hZ
+  -- Below this scale the ambient count suffices; above it Rankin wins
+  -- uniformly for every log z >= 2, with no second split in z.
+  by_cases hsmall : Real.log xi ≤ 12 * Real.exp 1 * Real.log z ^ 2
+  · refine (selbergRealPsi_le_self hx.le).trans ?_
+    rw [rankinLogSq_target_eq hx]
+    conv_lhs => rw [← Real.exp_log hx]
     apply Real.exp_le_exp.mpr
-    have hcoef : 0 ≤
-        1 / Real.log z - 2 / (Real.log z) ^ 2 := by
-      rw [show 1 / Real.log z - 2 / (Real.log z) ^ 2 =
-        (Real.log z - 2) / (Real.log z) ^ 2 by field_simp]
-      positivity
-    have hdiff :
-        24 * Real.exp 1 +
-            (Real.log xi + -2 * Real.log xi / (Real.log z) ^ 2) -
-          ((1 - 1 / Real.log z) * Real.log xi +
-            4 * (Real.exp 1 * (1 + Real.log z))) =
-          4 * Real.exp 1 * (5 - Real.log z) +
-            Real.log xi *
-              (1 / Real.log z - 2 / (Real.log z) ^ 2) := by ring
-    rw [← sub_nonneg, hdiff]
-    positivity
-  · have hzFive' : 5 ≤ Real.log z := le_of_not_ge hzFive
-    by_cases hxiSmall :
-        Real.log xi ≤ 8 * Real.exp 1 * (Real.log z) ^ 2
-    · refine (selbergRealPsi_le_self hxiPos.le).trans ?_
-      rw [rankinLogSq_target_eq hxiPos]
-      have hsqPos : 0 < (Real.log z) ^ 2 := sq_pos_of_pos hlogPos
-      have hquot :
-          2 * Real.log xi / (Real.log z) ^ 2 ≤
-            16 * Real.exp 1 := by
-        rw [div_le_iff₀ hsqPos]
-        nlinarith
-      have hmargin :
-          0 ≤ 24 * Real.exp 1 -
-            2 * Real.log xi / (Real.log z) ^ 2 := by
-        nlinarith [Real.exp_pos 1]
-      calc
-        xi = Real.exp (Real.log xi) := (Real.exp_log hxiPos).symm
-        _ ≤ Real.exp
-            (24 * Real.exp 1 +
-              (Real.log xi +
-                (-2 * Real.log xi / (Real.log z) ^ 2))) := by
-          apply Real.exp_le_exp.mpr
-          rw [show
-            24 * Real.exp 1 +
-                (Real.log xi +
-                  (-2 * Real.log xi / (Real.log z) ^ 2)) =
-              Real.log xi +
-                (24 * Real.exp 1 -
-                  2 * Real.log xi / (Real.log z) ^ 2) by ring]
-          linarith
-    · refine
-        (selbergRealPsi_le_vinogradovRankin hxiPos.le hz hlog).trans ?_
-      rw [vinogradovRankin_expr_eq hxiPos hzPos hlogNe,
-        rankinLogSq_target_eq hxiPos]
-      apply Real.exp_le_exp.mpr
-      have hxiLarge :
-          8 * Real.exp 1 * (Real.log z) ^ 2 ≤ Real.log xi :=
-        le_of_not_ge hxiSmall
-      have hcoef : 0 ≤
-          1 / Real.log z - 2 / (Real.log z) ^ 2 := by
-        rw [show 1 / Real.log z - 2 / (Real.log z) ^ 2 =
-          (Real.log z - 2) / (Real.log z) ^ 2 by field_simp]
-        positivity
-      have hcoefLower :
-          8 * Real.exp 1 * (Real.log z - 2) ≤
-            Real.log xi *
-              (1 / Real.log z - 2 / (Real.log z) ^ 2) := by
-        calc
-          8 * Real.exp 1 * (Real.log z - 2) =
-              (8 * Real.exp 1 * (Real.log z) ^ 2) *
-                (1 / Real.log z - 2 / (Real.log z) ^ 2) := by
-            field_simp
-          _ ≤ Real.log xi *
-                (1 / Real.log z - 2 / (Real.log z) ^ 2) :=
-            mul_le_mul_of_nonneg_right hxiLarge hcoef
-      have hdiff :
-          24 * Real.exp 1 +
-              (Real.log xi + -2 * Real.log xi / (Real.log z) ^ 2) -
-            ((1 - 1 / Real.log z) * Real.log xi +
-              4 * (Real.exp 1 * (1 + Real.log z))) =
-            4 * Real.exp 1 * (5 - Real.log z) +
-              Real.log xi *
-                (1 / Real.log z - 2 / (Real.log z) ^ 2) := by ring
-      rw [← sub_nonneg, hdiff]
-      nlinarith [Real.exp_pos 1]
+    have hquot : 2 * Real.log xi / Real.log z ^ 2 ≤ 24 * Real.exp 1 :=
+      (div_le_iff₀ hZsq).mpr (by nlinarith only [hsmall])
+    rw [show -2 * Real.log xi / Real.log z ^ 2 =
+      -(2 * Real.log xi / Real.log z ^ 2) by ring]
+    linarith
+  · refine (selbergRealPsi_le_vinogradovRankin hx.le hz hlog).trans ?_
+    rw [vinogradovRankin_expr_eq hx (zero_lt_one.trans_le hz) hZ.ne',
+      rankinLogSq_target_eq hx]
+    apply Real.exp_le_exp.mpr
+    have hm := mul_le_mul_of_nonneg_right (le_of_not_ge hsmall)
+      (sub_nonneg.mpr hlog)
+    have hp : 0 ≤ 4 * Real.exp 1 * Real.log z ^ 2 * (2 * Real.log z - 1) :=
+      mul_nonneg (by positivity) (by linarith)
+    apply (mul_le_mul_iff_of_pos_right hZsq).mp
+    field_simp [hZ.ne']
+    nlinarith only [hm, hp]
 
 /-- Dividing the logarithmic-square Rankin estimate by the square from partial
 summation gives the power majorant used below. -/
@@ -4038,50 +3973,17 @@ theorem integral_selbergRealPsi_div_sq_le_rankin_logSq
             (-2 / (Real.log z) ^ 2)) := by
   have hnPos : (0 : ℝ) < n := by exact_mod_cast hn
   have hnmReal : (n : ℝ) ≤ m := by exact_mod_cast hnm
-  have hnotzero :
-      (0 : ℝ) ∉ Set.uIcc (n : ℝ) m :=
-    Set.notMem_uIcc_of_lt hnPos (hnPos.trans_le hnmReal)
   have hRpowInt : IntervalIntegrable
-      (fun t : ℝ => t ^ (-1 - 2 / (Real.log z) ^ 2))
+      (fun t : ℝ => t ^ (-1 - 2 / Real.log z ^ 2))
       MeasureTheory.volume (n : ℝ) m :=
     intervalIntegral.intervalIntegrable_rpow
-      (r := -1 - 2 / (Real.log z) ^ 2) (Or.inr hnotzero)
-  have hRhsInt : MeasureTheory.IntegrableOn
-      (fun t : ℝ => Real.exp (24 * Real.exp 1) *
-        t ^ (-1 - 2 / (Real.log z) ^ 2))
-      (Set.Ioc (n : ℝ) m) :=
-    hRpowInt.const_mul _ |>.1
-  have hPsiMeas : Measurable (fun t : ℝ => selbergRealPsi t z) := by
-    change Measurable (fun t : ℝ => selbergPsi ⌊t⌋₊ z)
-    exact (measurable_of_countable (fun q : ℕ => selbergPsi q z)).comp
-      Nat.measurable_floor
-  have hLhsMeas : Measurable
-      (fun t : ℝ => selbergRealPsi t z / t ^ 2) :=
-    hPsiMeas.div (measurable_id.pow_const 2)
-  have hLhsInt : MeasureTheory.IntegrableOn
-      (fun t : ℝ => selbergRealPsi t z / t ^ 2)
-      (Set.Ioc (n : ℝ) m) := by
-    refine hRhsInt.mono_nonneg hLhsMeas.aestronglyMeasurable.restrict
-      (Filter.Eventually.of_forall fun t => by
-        apply div_nonneg
-        · unfold selbergRealPsi
-          positivity
-        · positivity) ?_
-    filter_upwards [MeasureTheory.self_mem_ae_restrict measurableSet_Ioc] with t ht
-    exact selbergRealPsi_div_sq_le_rankin_logSq (by
-      exact (show (n : ℝ) < t from ht.1).le.trans'
-        (by exact_mod_cast hn)) hz hlog
-  calc
-    (∫ t in Set.Ioc (n : ℝ) m, selbergRealPsi t z / t ^ 2) ≤
-        ∫ t in Set.Ioc (n : ℝ) m,
-          Real.exp (24 * Real.exp 1) *
-            t ^ (-1 - 2 / (Real.log z) ^ 2) :=
-      MeasureTheory.setIntegral_mono_on hLhsInt hRhsInt measurableSet_Ioc
-        (fun t ht => selbergRealPsi_div_sq_le_rankin_logSq
-          ((show (n : ℝ) < t from ht.1).le.trans'
-            (by exact_mod_cast hn))
-          hz hlog)
-    _ = _ := integral_rankinLogSqMajorant hn hnm hlog
+      (Or.inr (Set.notMem_uIcc_of_lt hnPos (hnPos.trans_le hnmReal)))
+  rw [← integral_rankinLogSqMajorant hn hnm hlog]
+  apply MeasureTheory.setIntegral_mono_of_nonneg
+    (fun t _ => div_nonneg (by unfold selbergRealPsi; positivity) (sq_nonneg t))
+    (fun t ht => selbergRealPsi_div_sq_le_rankin_logSq
+      ((show (n : ℝ) < t from ht.1).le.trans' (by exact_mod_cast hn)) hz hlog)
+    (hRpowInt.const_mul _).1
 
 private lemma integral_selbergRealPsi_div_sq_le_rankin_logSq_coarse
     {n m : ℕ} {z : ℝ}
@@ -4255,11 +4157,54 @@ theorem sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin_logSq
       (by exact_mod_cast hn : (0 : ℝ) < n)] at hUpperRpow
     convert hUpperRpow using 1; ring
 
-/-- Before weakening the elementary Rankin estimate to logarithmic-square
-decay, the same finite Abel identity retains the sharper decay
-`exp (-log n / log z)`.  This is the estimate used in the genuinely
-large-`y` branch of the auxiliary logarithmic-square bound; retaining it prevents the
-`log z` factor from surviving after division by the harmonic lower bound. -/
+/-- A direct weighted-tail estimate on the actual smooth carrier. The bound
+is finite before taking the Euler limit, and is uniform in both cutoffs. -/
+private theorem selbergSmoothReciprocalTail_le_moment
+    {n : ℕ} {z delta : ℝ} (hn : 1 ≤ n) (hz : 1 < z)
+    (hd : 0 ≤ delta) (hdOne : delta < 1) :
+    (sieveProduct 1 z)⁻¹ - selbergSmoothReciprocalSum n z ≤
+      (n : ℝ) ^ (-delta) *
+        ∏ p ∈ siftingPrimes 1 z, (1 - (p : ℝ) ^ (-(1 - delta)))⁻¹ := by
+  have hnPos : (0 : ℝ) < n := by exact_mod_cast hn
+  apply le_of_tendsto ((tendsto_selbergSmoothReciprocalSum z hz).sub_const _)
+  filter_upwards [Filter.eventually_ge_atTop n] with m hnm
+  have hsub := selbergPsiCarrier_mono (z₁ := z) hnm le_rfl
+  calc
+    selbergSmoothReciprocalSum m z - selbergSmoothReciprocalSum n z =
+        ∑ q ∈ selbergPsiCarrier m z \ selbergPsiCarrier n z, 1 / (q : ℝ) := by
+      exact (Finset.sum_sdiff_eq_sub hsub).symm
+    _ ≤ ∑ q ∈ selbergPsiCarrier m z \ selbergPsiCarrier n z,
+        (n : ℝ) ^ (-delta) * (q : ℝ) ^ (-(1 - delta)) := by
+      apply Finset.sum_le_sum
+      intro q hq
+      obtain ⟨hqm, hqn⟩ := Finset.mem_sdiff.mp hq
+      have hdata := (mem_selbergPsiCarrier_iff_factoredNumbers hz).mp hqm
+      have hnq : n ≤ q := by
+        by_contra h
+        exact hqn ((mem_selbergPsiCarrier_iff_factoredNumbers hz).mpr
+          ⟨by omega, hdata.2⟩)
+      have hqPos : (0 : ℝ) < q := hnPos.trans_le (by exact_mod_cast hnq)
+      calc
+        1 / (q : ℝ) = (q : ℝ) ^ (-delta) * (q : ℝ) ^ (-(1 - delta)) := by
+          rw [← Real.rpow_add hqPos,
+            show -delta + -(1 - delta) = (-1 : ℝ) by ring,
+            Real.rpow_neg_one, one_div]
+        _ ≤ _ := mul_le_mul_of_nonneg_right
+          (Real.rpow_le_rpow_of_nonpos hnPos (by exact_mod_cast hnq) (neg_nonpos.mpr hd))
+          (Real.rpow_nonneg (Nat.cast_nonneg q) _)
+    _ ≤ ∑ q ∈ selbergPsiCarrier m z,
+        (n : ℝ) ^ (-delta) * (q : ℝ) ^ (-(1 - delta)) :=
+      Finset.sum_le_sum_of_subset_of_nonneg Finset.sdiff_subset (by intros; positivity)
+    _ = (n : ℝ) ^ (-delta) * selbergSmoothRpowSum m z (1 - delta) := by
+      rw [selbergSmoothRpowSum, Finset.mul_sum]
+    _ ≤ _ := mul_le_mul_of_nonneg_left
+      (selbergSmoothRpowSum_le_eulerProduct hz (sub_pos.mpr hdOne))
+      (Real.rpow_nonneg (Nat.cast_nonneg n) _)
+
+/-- Direct Rankin weighting of the finite smooth tail retains the sharper
+decay `exp (-log n / log z)`, without an Abel integral or endpoint error.
+This proves the original bound used by the large-ratio branch (with its
+literal constant), by weakening the stronger direct moment bound. -/
 theorem sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin
     {n : ℕ} {z : ℝ}
     (hn : 1 ≤ n) (hz : 1 ≤ z) (hlog : 2 ≤ Real.log z) :
@@ -4268,257 +4213,41 @@ theorem sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin
         2 * Real.log z *
           Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
           Real.exp (-Real.log n / Real.log z) := by
-  have hzStrict : 1 < z := by
-    exact (Real.log_pos_iff (zero_le_one.trans hz)).mp
-      (lt_of_lt_of_le (by norm_num) hlog)
-  have hlogPos : 0 < Real.log z :=
-    lt_of_lt_of_le (by norm_num) hlog
-  have hlogNe : Real.log z ≠ 0 := ne_of_gt hlogPos
-  have hTend := tendsto_selbergSmoothReciprocalSum z hzStrict
-  have hMono : ∀ m ≥ n,
-      selbergSmoothReciprocalSum n z ≤
-        selbergSmoothReciprocalSum m z := by
-    intro m hnm
-    unfold selbergSmoothReciprocalSum
-    apply Finset.sum_le_sum_of_subset_of_nonneg
-      (selbergPsiCarrier_mono hnm le_rfl)
-    intro q _hq _hqNot
-    positivity
-  have hLower :
-      selbergSmoothReciprocalSum n z ≤ (sieveProduct 1 z)⁻¹ := by
-    apply ge_of_tendsto hTend
+  have hZ : 0 < Real.log z := by linarith
+  have hzOne : 1 < z := (Real.log_pos_iff (zero_le_one.trans hz)).mp hZ
+  have hd : 1 / Real.log z < 1 := (div_lt_one hZ).mpr (by linarith)
+  have hLower : selbergSmoothReciprocalSum n z ≤ (sieveProduct 1 z)⁻¹ := by
+    apply ge_of_tendsto (tendsto_selbergSmoothReciprocalSum z hzOne)
     filter_upwards [Filter.eventually_ge_atTop n] with m hm
-    exact hMono m hm
-  constructor
-  · exact sub_nonneg.mpr hLower
-  · have hFinite : ∀ m ≥ n,
-        selbergSmoothReciprocalSum m z -
-            selbergSmoothReciprocalSum n z ≤
-          2 * Real.log z *
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-            (n : ℝ) ^ (-1 / Real.log z) := by
-      intro m hnm
-      have hnPos : (0 : ℝ) < n := by exact_mod_cast hn
-      have hmPos : (0 : ℝ) < m :=
-        hnPos.trans_le (by exact_mod_cast hnm)
-      have hnmReal : (n : ℝ) ≤ m := by exact_mod_cast hnm
-      have hPsiMeas :
-          Measurable (fun t : ℝ => selbergRealPsi t z) := by
-        change Measurable (fun t : ℝ => selbergPsi ⌊t⌋₊ z)
-        exact
-          (measurable_of_countable (fun q : ℕ => selbergPsi q z)).comp
-            Nat.measurable_floor
-      have hMajorant : ∀ t : ℝ, 1 ≤ t →
-          selbergRealPsi t z / t ^ 2 ≤
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              t ^ (-1 - 1 / Real.log z) := by
-        intro t ht
-        have htPos : 0 < t := zero_lt_one.trans_le ht
-        have hPsi :=
-          selbergRealPsi_le_vinogradovRankin htPos.le hz hlog
-        calc
-          selbergRealPsi t z / t ^ 2 ≤
-              (t ^ (1 - 1 / Real.log z) *
-                Real.exp (4 * (z ^ (1 / Real.log z) *
-                  (1 + Real.log z)))) / t ^ 2 :=
-            div_le_div_of_nonneg_right hPsi (sq_nonneg t)
-          _ = Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                t ^ (-1 - 1 / Real.log z) := by
-            have hzPos : 0 < z := zero_lt_one.trans hzStrict
-            rw [Real.rpow_def_of_pos hzPos]
-            have hzexp : Real.log z * (1 / Real.log z) = 1 := by
-              field_simp
-            rw [hzexp]
-            field_simp [htPos.ne']
-            calc
-              t ^ ((Real.log z - 1) / Real.log z) =
-                  t ^ (2 + ((-Real.log z - 1) / Real.log z)) := by
-                congr 1
-                field_simp [hlogNe]
-                ring
-              _ = t ^ 2 *
-                  t ^ ((-Real.log z - 1) / Real.log z) :=
-                by simpa using
-                  (Real.rpow_add htPos 2
-                    ((-Real.log z - 1) / Real.log z))
-      have hnotzero :
-          (0 : ℝ) ∉ Set.uIcc (n : ℝ) m :=
-        Set.notMem_uIcc_of_lt hnPos (hnPos.trans_le hnmReal)
-      have hRpowInt : IntervalIntegrable
-          (fun t : ℝ => t ^ (-1 - 1 / Real.log z))
-          MeasureTheory.volume (n : ℝ) m :=
-        intervalIntegral.intervalIntegrable_rpow
-          (r := -1 - 1 / Real.log z) (Or.inr hnotzero)
-      have hRhsInt : MeasureTheory.IntegrableOn
-          (fun t : ℝ =>
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              t ^ (-1 - 1 / Real.log z))
-          (Set.Ioc (n : ℝ) m) :=
-        hRpowInt.const_mul _ |>.1
-      have hLhsMeas : Measurable
-          (fun t : ℝ => selbergRealPsi t z / t ^ 2) :=
-        hPsiMeas.div (measurable_id.pow_const 2)
-      have hLhsInt : MeasureTheory.IntegrableOn
-          (fun t : ℝ => selbergRealPsi t z / t ^ 2)
-          (Set.Ioc (n : ℝ) m) := by
-        refine hRhsInt.mono_nonneg
-          hLhsMeas.aestronglyMeasurable.restrict
-          (Filter.Eventually.of_forall fun t => by
-            apply div_nonneg
-            · unfold selbergRealPsi
-              positivity
-            · positivity) ?_
-        filter_upwards
-          [MeasureTheory.self_mem_ae_restrict measurableSet_Ioc] with t ht
-        exact hMajorant t
-          ((show (n : ℝ) < t from ht.1).le.trans'
-            (by exact_mod_cast hn))
-      have hIntegral :
-          (∫ t in Set.Ioc (n : ℝ) m,
-              selbergRealPsi t z / t ^ 2) ≤
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              Real.log z * (n : ℝ) ^ (-1 / Real.log z) := by
-        have hexponent :
-            -1 - 1 / Real.log z + 1 = -1 / Real.log z := by ring
-        calc
-          (∫ t in Set.Ioc (n : ℝ) m,
-              selbergRealPsi t z / t ^ 2) ≤
-              ∫ t in Set.Ioc (n : ℝ) m,
-                Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                  t ^ (-1 - 1 / Real.log z) :=
-            MeasureTheory.setIntegral_mono_on hLhsInt hRhsInt
-              measurableSet_Ioc (fun t ht => hMajorant t
-                ((show (n : ℝ) < t from ht.1).le.trans'
-                  (by exact_mod_cast hn)))
-          _ = Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                (((m : ℝ) ^ (-1 / Real.log z) -
-                  (n : ℝ) ^ (-1 / Real.log z)) /
-                    (-1 / Real.log z)) := by
-            rw [← intervalIntegral.integral_of_le hnmReal,
-              intervalIntegral.integral_const_mul, integral_rpow,
-              hexponent]
-            · refine Or.inr ⟨?_, hnotzero⟩
-              intro heq
-              field_simp [hlogNe] at heq
-              linarith
-          _ ≤ Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                Real.log z * (n : ℝ) ^ (-1 / Real.log z) := by
-            have hmRpow : 0 ≤
-                (m : ℝ) ^ (-1 / Real.log z) := by positivity
-            have hnRpow : 0 ≤
-                (n : ℝ) ^ (-1 / Real.log z) := by positivity
-            have hquotEq :
-                ((m : ℝ) ^ (-1 / Real.log z) -
-                    (n : ℝ) ^ (-1 / Real.log z)) /
-                    (-1 / Real.log z) =
-                  Real.log z *
-                    ((n : ℝ) ^ (-1 / Real.log z) -
-                      (m : ℝ) ^ (-1 / Real.log z)) := by
-              field_simp [hlogNe]
-              ring
-            have hquot :
-                ((m : ℝ) ^ (-1 / Real.log z) -
-                    (n : ℝ) ^ (-1 / Real.log z)) /
-                    (-1 / Real.log z) ≤
-                  Real.log z * (n : ℝ) ^ (-1 / Real.log z) := by
-              rw [hquotEq]
-              nlinarith
-            nlinarith [Real.exp_pos
-              (4 * (Real.exp 1 * (1 + Real.log z)))]
-      have hEndpoint :
-          selbergPsi m z / (m : ℝ) ≤
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              (n : ℝ) ^ (-1 / Real.log z) := by
-        have hPsi :=
-          selbergRealPsi_le_vinogradovRankin
-            (xi := (m : ℝ)) hmPos.le hz hlog
-        rw [selbergRealPsi_eq_floor, Nat.floor_natCast] at hPsi
-        have hRewrite :
-            (m : ℝ) ^ (1 - 1 / Real.log z) *
-                Real.exp (4 * (z ^ (1 / Real.log z) *
-                  (1 + Real.log z))) / (m : ℝ) =
-              Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                (m : ℝ) ^ (-1 / Real.log z) := by
-          have hzPos : 0 < z := zero_lt_one.trans hzStrict
-          rw [Real.rpow_def_of_pos hzPos]
-          have hzexp : Real.log z * (1 / Real.log z) = 1 := by
-            field_simp
-          rw [hzexp]
-          field_simp [hmPos.ne']
-          calc
-            (m : ℝ) ^ ((Real.log z - 1) / Real.log z) =
-                (m : ℝ) ^ (1 + (-(1 / Real.log z))) := by
-              congr 1
-              field_simp [hlogNe]
-              ring
-            _ = (m : ℝ) ^ (1 : ℝ) *
-                (m : ℝ) ^ (-(1 / Real.log z)) :=
-              Real.rpow_add hmPos (1 : ℝ) (-(1 / Real.log z))
-            _ = (m : ℝ) *
-                (m : ℝ) ^ (-(1 / Real.log z)) := by
-              rw [Real.rpow_one]
-        calc
-          selbergPsi m z / (m : ℝ) ≤
-              (m : ℝ) ^ (1 - 1 / Real.log z) *
-                  Real.exp (4 * (z ^ (1 / Real.log z) *
-                    (1 + Real.log z))) / (m : ℝ) :=
-            div_le_div_of_nonneg_right hPsi (Nat.cast_nonneg m)
-          _ = Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                (m : ℝ) ^ (-1 / Real.log z) := hRewrite
-          _ ≤ Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                (n : ℝ) ^ (-1 / Real.log z) := by
-            apply mul_le_mul_of_nonneg_left _ (Real.exp_pos _).le
-            exact Real.rpow_le_rpow_of_nonpos hnPos hnmReal
-              (div_nonpos_of_nonpos_of_nonneg (by norm_num) hlogPos.le)
-      rw [selbergSmoothReciprocalSum_sub_eq_psi_div_add_integral
-        hzStrict hn hnm]
-      have hnEndpoint :
-          0 ≤ selbergPsi n z / (n : ℝ) := by
-        exact div_nonneg (by unfold selbergPsi; positivity) hnPos.le
-      have hlogTwo : 1 ≤ Real.log z := by linarith
-      have hRpowNonneg :
-          0 ≤ (n : ℝ) ^ (-1 / Real.log z) := by positivity
-      calc
-        selbergPsi m z / (m : ℝ) - selbergPsi n z / (n : ℝ) +
-              ∫ t in Set.Ioc (n : ℝ) m,
-                selbergRealPsi t z / t ^ 2 ≤
-            selbergPsi m z / (m : ℝ) +
-              ∫ t in Set.Ioc (n : ℝ) m,
-                selbergRealPsi t z / t ^ 2 := by linarith
-        _ ≤ Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              (n : ℝ) ^ (-1 / Real.log z) +
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              Real.log z * (n : ℝ) ^ (-1 / Real.log z) :=
-          add_le_add hEndpoint hIntegral
-        _ ≤ 2 * Real.log z *
-              Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-              (n : ℝ) ^ (-1 / Real.log z) := by
-          calc
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                  (n : ℝ) ^ (-1 / Real.log z) +
-                Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                  Real.log z * (n : ℝ) ^ (-1 / Real.log z) =
-                (1 + Real.log z) *
-                  (Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                    (n : ℝ) ^ (-1 / Real.log z)) := by ring
-            _ ≤ (2 * Real.log z) *
-                  (Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-                    (n : ℝ) ^ (-1 / Real.log z)) :=
-              mul_le_mul_of_nonneg_right (by linarith)
-                (mul_nonneg (Real.exp_pos _).le hRpowNonneg)
-            _ = _ := by ring
-    have hUpperRpow :
-        (sieveProduct 1 z)⁻¹ - selbergSmoothReciprocalSum n z ≤
-          2 * Real.log z *
-            Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
-            (n : ℝ) ^ (-1 / Real.log z) := by
-      apply le_of_tendsto (hTend.sub_const
-        (selbergSmoothReciprocalSum n z))
-      filter_upwards [Filter.eventually_ge_atTop n] with m hm
-      exact hFinite m hm
-    rw [Real.rpow_def_of_pos
-      (by exact_mod_cast hn : (0 : ℝ) < n)] at hUpperRpow
-    convert hUpperRpow using 1; ring
+    exact Finset.sum_le_sum_of_subset_of_nonneg (selbergPsiCarrier_mono hm le_rfl)
+      (by intros; positivity)
+  refine ⟨sub_nonneg.mpr hLower, ?_⟩
+  have htail := selbergSmoothReciprocalTail_le_moment hn hzOne
+    (by positivity : 0 ≤ 1 / Real.log z) hd
+  have hprod := vinogradovRankinEulerProduct_le hz hlog
+  have hexp : z ^ (1 / Real.log z) = Real.exp 1 := by
+    rw [Real.rpow_def_of_pos (zero_lt_one.trans hzOne)]
+    congr 1
+    field_simp
+  rw [hexp] at hprod
+  have hnPos : (0 : ℝ) < n := by exact_mod_cast hn
+  have hnexp : (n : ℝ) ^ (-(1 / Real.log z)) =
+      Real.exp (-Real.log n / Real.log z) := by
+    rw [Real.rpow_def_of_pos hnPos]
+    congr 1
+    ring
+  calc
+    (sieveProduct 1 z)⁻¹ - selbergSmoothReciprocalSum n z ≤
+        (n : ℝ) ^ (-(1 / Real.log z)) *
+          Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) :=
+      htail.trans (mul_le_mul_of_nonneg_left hprod (by positivity))
+    _ = Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
+          Real.exp (-Real.log n / Real.log z) := by rw [hnexp, mul_comm]
+    _ ≤ _ := by
+      have hscale : 1 ≤ 2 * Real.log z := by linarith
+      nlinarith [mul_le_mul_of_nonneg_right hscale
+        (show 0 ≤ Real.exp (4 * (Real.exp 1 * (1 + Real.log z))) *
+          Real.exp (-Real.log n / Real.log z) by positivity)]
 
 /-- Below the sifting cutoff every positive integer is smooth, so the source's
 real `Psi` carrier is the full interval through `floor xi`. -/
@@ -4986,6 +4715,71 @@ theorem sieveProduct_one_le (k : ℕ) (z : ℝ) :
     (mul_le_mul_of_nonneg_left hratio
       (sieveProduct_pos k z).le).trans_eq (mul_one _)
 
+/-- Mertens inversion pays for every omitted-prime product, with the same
+constant and without any dependence on the source or sifting cutoff. -/
+private theorem sieveProduct_inv_le_of_one_inv_le
+    {E B z : ℝ} (k : ℕ)
+    (hInv : (sieveProduct 1 z)⁻¹ ≤ E * Real.log z + B) :
+    (sieveProduct k z)⁻¹ ≤ E * Real.log z + B := by
+  simpa only [one_div] using
+    (one_div_le_one_div_of_le (sieveProduct_pos 1 z)
+      (sieveProduct_one_le k z)).trans (by simpa only [one_div] using hInv)
+
+private theorem sieveProduct_inv_div_log_le
+    {E B z : ℝ} (k : ℕ) (hB : 0 ≤ B) (hlog : 2 ≤ Real.log z)
+    (hInv : (sieveProduct 1 z)⁻¹ ≤ E * Real.log z + B) :
+    (sieveProduct k z)⁻¹ / Real.log z ≤ E + B / 2 := by
+  apply (div_le_iff₀ (by linarith : 0 < Real.log z)).2
+  exact (sieveProduct_inv_le_of_one_inv_le k hInv).trans (by nlinarith)
+
+/-- Normalize Theorem 2 once at the literal `(4.1)` cutoff. Both ratio
+branches use this identity, so the cutoff error is paid on the same scale. -/
+private theorem RegularSource.siftedCount_le_fourOne_normalized
+    (source : RegularSource) {z : ℝ} (hz : 0 < z)
+    (hlog : 2 ≤ Real.log z) (hzy : Real.log z ≤ Real.log source.y) :
+    siftedCount source.carrier source.k z ≤
+      source.y * sieveProduct source.k z *
+        ((sieveProduct 1 z)⁻¹ /
+            selbergRealSmoothReciprocalSum (fourOneCutoff source.y z) z +
+          (selbergRealPsi (fourOneCutoff source.y z) z ^ 2 /
+            fourOneCutoff source.y z ^ 2) *
+            ((sieveProduct source.k z)⁻¹ / Real.log z)) := by
+  have hZ : 0 < Real.log z := by linarith
+  have hzOne : 1 < z := (Real.log_pos_iff hz.le).mp hZ
+  have hy : 0 < source.y := zero_lt_one.trans source.one_lt_y
+  have hpow : 1 < z ^ (1 / 4 : ℝ) := by
+    simpa only [Real.rpow_zero] using
+      Real.rpow_lt_rpow_of_exponent_lt hzOne (by norm_num : (0 : ℝ) < 1 / 4)
+  have hxi := hpow.trans_le (rpow_quarter_le_fourOneCutoff hy hz hlog hzy)
+  have hT : 0 < selbergRealSmoothReciprocalSum (fourOneCutoff source.y z) z :=
+    (by positivity : 0 < Real.log z / 4).trans_le
+      (quarter_log_le_fourOneSmoothReciprocalSum hy hz hlog hzy)
+  convert source.siftedCount_le_theoremTwo hzOne hxi using 1
+  rw [fourOneCutoff_sq hy.le hZ]
+  field_simp [hy.ne', hZ.ne', hT.ne', (sieveProduct_pos source.k z).ne',
+    (sieveProduct_pos 1 z).ne']
+
+/-- The squared relative smooth-count error, independently of its later
+source normalization. -/
+private theorem selbergRealPsi_sq_div_sq_le_rankin_logSq
+    {xi z : ℝ} (hxi : 1 ≤ xi) (hz : 1 ≤ z) (hlog : 2 ≤ Real.log z) :
+    selbergRealPsi xi z ^ 2 / xi ^ 2 ≤
+      Real.exp (24 * Real.exp 1) ^ 2 *
+        Real.exp (-4 * Real.log xi / Real.log z ^ 2) := by
+  have hx : 0 < xi := zero_lt_one.trans_le hxi
+  have h := selbergRealPsi_le_rankin_logSq hxi hz hlog
+  have hp : 0 ≤ selbergRealPsi xi z := by unfold selbergRealPsi; positivity
+  have hs := (sq_le_sq₀ hp (by positivity)).mpr h
+  have he : Real.exp (-2 * Real.log xi / Real.log z ^ 2) ^ 2 =
+      Real.exp (-4 * Real.log xi / Real.log z ^ 2) := by
+    rw [pow_two, ← Real.exp_add]
+    congr 1
+    ring
+  apply (div_le_iff₀ (sq_pos_of_pos hx)).mpr
+  simp only [mul_pow, he] at hs
+  convert hs using 1
+  ring
+
 /-- The complementary-ratio branch of the auxiliary logarithmic-square bound.
 Theorem 2, the source cutoff `xi^2 = y / log z`, and the harmonic denominator
 give a uniform multiple of the main term; bounded
@@ -4998,162 +4792,49 @@ theorem RegularSource.exists_siftedCount_le_rankin_logSq_of_ratio_le :
         source.y * sieveProduct source.k z *
           (1 + C * Real.exp
             (-Real.log source.y / Real.log z ^ 2)) := by
-  obtain ⟨B, hB, hInv⟩ :=
-    exists_sieveProduct_one_inv_le_exp_mul_log_add
+  obtain ⟨B, hB, hInv⟩ := exists_sieveProduct_one_inv_le_exp_mul_log_add
   let E := Real.exp Real.eulerMascheroniConstant
   let K := 32 * Real.exp 1 + 2
   let Q := 5 * E + 5 * B / 2
-  let C := Q * Real.exp K
-  have hE : 0 < E := by
-    dsimp [E]
-    positivity
-  have hK : 0 < K := by
-    dsimp [K]
-    positivity
-  have hQ : 0 < Q := by
-    dsimp [Q]
-    positivity
-  refine
-    ⟨C, by dsimp [C]; positivity,
-      fun source z hzPos hlog hzy hratio => ?_⟩
-  let Z := Real.log z
-  let L := Real.log source.y
+  refine ⟨Q * Real.exp K, by dsimp [Q, E]; positivity,
+    fun source z hz hlog hzy hratio => ?_⟩
   let xi := fourOneCutoff source.y z
   let T := selbergRealSmoothReciprocalSum xi z
-  let R := sieveProduct source.k z
-  have hZ : 0 < Z := by
-    dsimp [Z]
+  have hZ : 0 < Real.log z := by linarith
+  have hzOne : 1 < z := (Real.log_pos_iff hz.le).mp hZ
+  have hy : 0 < source.y := zero_lt_one.trans source.one_lt_y
+  have hTLower : Real.log z / 4 ≤ T :=
+    quarter_log_le_fourOneSmoothReciprocalSum hy hz hlog hzy
+  have hT : 0 < T := (by positivity : 0 < Real.log z / 4).trans_le hTLower
+  have hI : (sieveProduct 1 z)⁻¹ ≤ E * Real.log z + B := hInv z hzOne
+  have hMain : (sieveProduct 1 z)⁻¹ / T ≤ 4 * E + 2 * B := by
+    apply (div_le_iff₀ hT).mpr
+    exact hI.trans ((show E * Real.log z + B ≤
+      (4 * E + 2 * B) * (Real.log z / 4) by nlinarith).trans
+        (mul_le_mul_of_nonneg_left hTLower (by dsimp [E]; positivity)))
+  have hXi : 0 ≤ xi := Real.sqrt_nonneg _
+  have hPsi : selbergRealPsi xi z ^ 2 / xi ^ 2 ≤ 1 := by
+    apply div_le_one_of_le₀ _ (sq_nonneg xi)
+    have hp : 0 ≤ selbergRealPsi xi z := by unfold selbergRealPsi; positivity
+    nlinarith [selbergRealPsi_le_self (z := z) hXi]
+  have hPay := sieveProduct_inv_div_log_le source.k hB.le hlog hI
+  have hBound := source.siftedCount_le_fourOne_normalized hz hlog hzy
+  have hQ : (sieveProduct 1 z)⁻¹ / T +
+      (selbergRealPsi xi z ^ 2 / xi ^ 2) *
+        ((sieveProduct source.k z)⁻¹ / Real.log z) ≤ Q := by
+    have hmul := mul_le_mul_of_nonneg_right hPsi
+      (div_nonneg (inv_nonneg.mpr (sieveProduct_pos source.k z).le) hZ.le)
+    dsimp [Q]
     linarith
-  have hzOne : 1 < z := by
-    exact (Real.log_pos_iff hzPos.le).mp (by
-      dsimp [Z] at hZ
-      exact hZ)
-  have hyPos : 0 < source.y := zero_lt_one.trans source.one_lt_y
-  have hXiLower :
-      z ^ (1 / 4 : ℝ) ≤ xi := by
-    exact rpow_quarter_le_fourOneCutoff hyPos hzPos hlog hzy
-  have hPowOne : 1 < z ^ (1 / 4 : ℝ) := by
-    simpa only [Real.rpow_zero] using
-      Real.rpow_lt_rpow_of_exponent_lt hzOne
-        (by norm_num : (0 : ℝ) < 1 / 4)
-  have hXiOne : 1 < xi := hPowOne.trans_le hXiLower
-  have hXiNonneg : 0 ≤ xi := zero_le_one.trans hXiOne.le
-  have hTLower : Z / 4 ≤ T := by
-    simpa [Z, xi, T] using
-      quarter_log_le_fourOneSmoothReciprocalSum
-        hyPos hzPos hlog hzy
-  have hTPos : 0 < T := (by positivity : 0 < Z / 4).trans_le hTLower
-  have hRPos : 0 < R := by
-    dsimp [R]
-    exact sieveProduct_pos source.k z
-  have hInvOne :
-      (sieveProduct 1 z)⁻¹ ≤ E * Z + B := by
-    simpa [E, Z] using hInv z hzOne
-  have hRatioMain :
-      (sieveProduct 1 z)⁻¹ / T ≤ 4 * E + 2 * B := by
-    apply (div_le_iff₀ hTPos).2
-    calc
-      (sieveProduct 1 z)⁻¹ ≤ E * Z + B := hInvOne
-      _ ≤ (4 * E + 2 * B) * (Z / 4) := by
-        nlinarith [hB.le, hE.le]
-      _ ≤ (4 * E + 2 * B) * T :=
-        mul_le_mul_of_nonneg_left hTLower (by positivity)
-  have hBase := source.siftedCount_le_theoremTwo hzOne hXiOne
-  have hMain :
-      source.y * R /
-          (sieveProduct 1 z * T) ≤
-        source.y * R * (4 * E + 2 * B) := by
-    calc
-      source.y * R /
-            (sieveProduct 1 z * T) =
-          source.y * R * ((sieveProduct 1 z)⁻¹ / T) := by
-        field_simp [(sieveProduct_pos 1 z).ne', hTPos.ne']
-      _ ≤ source.y * R * (4 * E + 2 * B) :=
-        mul_le_mul_of_nonneg_left hRatioMain
-          (mul_nonneg hyPos.le hRPos.le)
-  have hRInv :
-      R⁻¹ ≤ E * Z + B := by
-    have hProduct :=
-      one_div_le_one_div_of_le (sieveProduct_pos 1 z)
-        (sieveProduct_one_le source.k z)
-    rw [inv_eq_one_div]
-    exact hProduct.trans (by
-      simpa only [inv_eq_one_div] using hInvOne)
-  have hRPay :
-      1 ≤ R * (E * Z + B) := by
-    simpa [mul_comm] using
-      (inv_le_iff_one_le_mul₀ hRPos).mp hRInv
-  have hCoeff :
-      E * Z + B ≤ Z * (E + B / 2) := by
-    nlinarith [hB.le]
-  have hPay :
-      source.y / Z ≤ source.y * R * (E + B / 2) := by
-    apply (div_le_iff₀ hZ).2
-    have hRPay' : 1 ≤ R * (Z * (E + B / 2)) :=
-      hRPay.trans
-        (mul_le_mul_of_nonneg_left hCoeff hRPos.le)
-    calc
-      source.y = source.y * 1 := by ring
-      _ ≤ source.y * (R * (Z * (E + B / 2))) :=
-        mul_le_mul_of_nonneg_left hRPay' hyPos.le
-      _ = source.y * R * (E + B / 2) * Z := by ring
-  have hXiSq : xi ^ 2 = source.y / Z := by
-    simpa [xi, Z] using fourOneCutoff_sq hyPos.le hZ
-  have hPsi :
-      selbergRealPsi xi z ^ 2 ≤
-        source.y * R * (E + B / 2) := by
-    have hPsiSelf := selbergRealPsi_le_self (z := z) hXiNonneg
-    have hPsiNonneg : 0 ≤ selbergRealPsi xi z := by
-      unfold selbergRealPsi
-      exact Nat.cast_nonneg _
-    calc
-      selbergRealPsi xi z ^ 2 ≤ xi ^ 2 := by nlinarith
-      _ = source.y / Z := hXiSq
-      _ ≤ source.y * R * (E + B / 2) := hPay
-  have hUniform :
-      siftedCount source.carrier source.k z ≤ source.y * R * Q := by
-    calc
-      siftedCount source.carrier source.k z ≤
-          source.y * R /
-              (sieveProduct 1 z * T) +
-            selbergRealPsi xi z ^ 2 := by
-        simpa [xi, T, R] using hBase
-      _ ≤ source.y * R * (4 * E + 2 * B) +
-          source.y * R * (E + B / 2) :=
-        add_le_add hMain hPsi
-      _ = source.y * R * Q := by
-        dsimp [Q]
-        ring
-  have hExp :
-      Q ≤ C * Real.exp (-L / Z ^ 2) := by
-    have hExpMono :
-        Real.exp (-K) ≤ Real.exp (-L / Z ^ 2) :=
-      Real.exp_le_exp.mpr (by
-        have hratio' : L / Z ^ 2 ≤ K := by
-          simpa only [L, Z, K] using hratio
-        calc
-          -K ≤ -(L / Z ^ 2) := neg_le_neg hratio'
-          _ = -L / Z ^ 2 := by ring)
-    calc
-      Q = C * Real.exp (-K) := by
-        dsimp [C]
-        rw [mul_assoc, ← Real.exp_add]
-        simp
-      _ ≤ C * Real.exp (-L / Z ^ 2) :=
-        mul_le_mul_of_nonneg_left hExpMono (by
-          dsimp [C]
-          positivity)
-  calc
-    siftedCount source.carrier source.k z ≤ source.y * R * Q :=
-      hUniform
-    _ ≤ source.y * R *
-        (1 + C * Real.exp (-L / Z ^ 2)) := by
-      apply mul_le_mul_of_nonneg_left _ (mul_nonneg hyPos.le hRPos.le)
-      linarith
-    _ = source.y * sieveProduct source.k z *
-        (1 + C * Real.exp
-          (-Real.log source.y / Real.log z ^ 2)) := by
-      rfl
+  have hExp : Q ≤ Q * Real.exp K *
+      Real.exp (-Real.log source.y / Real.log z ^ 2) := by
+    rw [mul_assoc, ← Real.exp_add]
+    have h : 1 ≤ Real.exp (K + -Real.log source.y / Real.log z ^ 2) :=
+      Real.one_le_exp (by dsimp [K]; rw [neg_div]; linarith)
+    simpa only [mul_one] using mul_le_mul_of_nonneg_left h
+      (show 0 ≤ Q by dsimp [Q, E]; positivity)
+  exact hBound.trans (mul_le_mul_of_nonneg_left
+    (hQ.trans (by linarith)) (mul_nonneg hy.le (sieveProduct_pos source.k z).le))
 
 set_option maxHeartbeats 800000
 
@@ -5339,148 +5020,44 @@ theorem RegularSource.exists_siftedCount_le_rankin_logSq_of_ratio_ge :
         rw [mul_assoc, ← Real.exp_add]
         congr 2
         ring
-  have hBase :=
-    source.siftedCount_le_theoremTwo hzOne (by linarith : 1 < xi)
-  have hMainIdentity :
-      source.y * R / (sieveProduct 1 z * T) =
-        source.y * R *
-          (1 + ((sieveProduct 1 z)⁻¹ - T) / T) := by
-    field_simp [(sieveProduct_pos 1 z).ne', hTPos.ne']
-    ring
-  have hMain :
-      source.y * R / (sieveProduct 1 z * T) ≤
-        source.y * R *
-          (1 + Ctail * Real.exp (-L / Z ^ 2)) := by
-    rw [hMainIdentity]
-    apply mul_le_mul_of_nonneg_left _ (mul_nonneg hyPos.le hRPos.le)
-    linarith
-  have hInvOne :
-      (sieveProduct 1 z)⁻¹ ≤ E * Z + B := by
-    simpa [E, Z] using hInv z hzOne
-  have hRInv :
-      R⁻¹ ≤ E * Z + B := by
-    have hProduct :=
-      one_div_le_one_div_of_le (sieveProduct_pos 1 z)
-        (sieveProduct_one_le source.k z)
-    rw [inv_eq_one_div]
-    exact hProduct.trans (by
-      simpa only [inv_eq_one_div] using hInvOne)
-  have hRPay :
-      1 ≤ R * (E * Z + B) := by
-    simpa [mul_comm] using
-      (inv_le_iff_one_le_mul₀ hRPos).mp hRInv
-  have hCoeff :
-      E * Z + B ≤ Z * (E + B / 2) := by
-    nlinarith [hB.le]
-  have hPay :
-      source.y / Z ≤ source.y * R * (E + B / 2) := by
-    apply (div_le_iff₀ hZ).2
-    have hRPay' : 1 ≤ R * (Z * (E + B / 2)) :=
-      hRPay.trans
-        (mul_le_mul_of_nonneg_left hCoeff hRPos.le)
-    nlinarith [mul_le_mul_of_nonneg_left hRPay' hyPos.le]
-  have hXiSq : xi ^ 2 = source.y / Z := by
-    simpa [xi, Z] using fourOneCutoff_sq hyPos.le hZ
-  have hPsiExponent :
-      -4 * Real.log xi / Z ^ 2 ≤ 1 - L / Z ^ 2 := by
+  have hPsiExponent : -4 * Real.log xi / Z ^ 2 ≤ 1 - L / Z ^ 2 := by
     rw [hLogXi]
-    have hRatioNonneg : 0 ≤ L / Z ^ 2 :=
-      le_trans (by positivity : 0 ≤ K) (by
-        simpa only [K, L, Z] using hratio)
-    rw [show
-      -4 * ((L - Real.log Z) / 2) / Z ^ 2 =
-        (-2 * L + 2 * Real.log Z) / Z ^ 2 by ring]
-    rw [show
-      1 - L / Z ^ 2 = (Z ^ 2 - L) / Z ^ 2 by
-        field_simp [hZ.ne']]
-    apply (div_le_div_iff_of_pos_right hZsq).2
-    have hLogBound : 2 * Real.log Z ≤ Z ^ 2 := by
-      nlinarith [sq_nonneg (Z - 1)]
-    nlinarith
-  have hPsiExp :
-      Real.exp (-4 * Real.log xi / Z ^ 2) ≤
-        Real.exp 1 * Real.exp (-L / Z ^ 2) := by
+    have hL : 0 ≤ L := (Real.log_pos source.one_lt_y).le
+    apply (div_le_iff₀ hZsq).mpr
+    field_simp [hZ.ne']
+    nlinarith [sq_nonneg (Z - 1)]
+  have hPsiExp : Real.exp (-4 * Real.log xi / Z ^ 2) ≤
+      Real.exp 1 * Real.exp (-L / Z ^ 2) := by
+    rw [← Real.exp_add]
+    exact Real.exp_le_exp.mpr (by convert hPsiExponent using 1; ring)
+  have hPsiBound := selbergRealPsi_sq_div_sq_le_rankin_logSq
+    (by linarith : 1 ≤ xi) hzOne.le hlog
+  have hPsi : selbergRealPsi xi z ^ 2 / xi ^ 2 ≤
+      A ^ 2 * (Real.exp 1 * Real.exp (-L / Z ^ 2)) :=
+    hPsiBound.trans (mul_le_mul_of_nonneg_left hPsiExp (sq_nonneg A))
+  have hI : (sieveProduct 1 z)⁻¹ ≤ E * Z + B := hInv z hzOne
+  have hPay := sieveProduct_inv_div_log_le source.k hB.le hlog hI
+  have hError : (selbergRealPsi xi z ^ 2 / xi ^ 2) * (R⁻¹ / Z) ≤
+      Cpsi * Real.exp (-L / Z ^ 2) := by
     calc
-      Real.exp (-4 * Real.log xi / Z ^ 2) ≤
-          Real.exp (1 - L / Z ^ 2) :=
-        Real.exp_le_exp.mpr hPsiExponent
-      _ = Real.exp 1 * Real.exp (-L / Z ^ 2) := by
-        rw [← Real.exp_add]
-        congr 1
-        ring
-  have hVinogradov :=
-    selbergRealPsi_le_rankin_logSq
-      (by linarith : 1 ≤ xi) hzOne.le hlog
-  have hPsiNonneg : 0 ≤ selbergRealPsi xi z := by
-    unfold selbergRealPsi
-    exact Nat.cast_nonneg _
-  have hVinogradovNonneg :
-      0 ≤ A * (xi * Real.exp (-2 * Real.log xi / Z ^ 2)) := by
-    positivity
-  have hVinogradov' :
-      selbergRealPsi xi z ≤
-        A * (xi * Real.exp (-2 * Real.log xi / Z ^ 2)) := by
-    simpa only [A, Z] using hVinogradov
-  have hPsiSq :
-      selbergRealPsi xi z ^ 2 ≤
-        A ^ 2 * xi ^ 2 *
-          Real.exp (-4 * Real.log xi / Z ^ 2) := by
-    calc
-      selbergRealPsi xi z ^ 2 ≤
-          (A * (xi * Real.exp
-            (-2 * Real.log xi / Z ^ 2))) ^ 2 :=
-        (sq_le_sq₀ hPsiNonneg hVinogradovNonneg).2 hVinogradov'
-      _ = A ^ 2 * xi ^ 2 *
-          Real.exp (-4 * Real.log xi / Z ^ 2) := by
-        have hExpSq :
-          Real.exp (-2 * Real.log xi / Z ^ 2) ^ 2 =
-            Real.exp (-4 * Real.log xi / Z ^ 2) := by
-          rw [pow_two, ← Real.exp_add]
-          congr 1
-          ring
-        calc
-          (A * (xi * Real.exp
-              (-2 * Real.log xi / Z ^ 2))) ^ 2 =
-              A ^ 2 * xi ^ 2 *
-                Real.exp (-2 * Real.log xi / Z ^ 2) ^ 2 := by ring
-          _ = _ := by rw [hExpSq]
-  have hPsi :
-      selbergRealPsi xi z ^ 2 ≤
-        source.y * R * Cpsi * Real.exp (-L / Z ^ 2) := by
-    calc
-      selbergRealPsi xi z ^ 2 ≤
-          A ^ 2 * xi ^ 2 *
-            Real.exp (-4 * Real.log xi / Z ^ 2) := hPsiSq
-      _ ≤ A ^ 2 * xi ^ 2 *
-            (Real.exp 1 * Real.exp (-L / Z ^ 2)) :=
-        mul_le_mul_of_nonneg_left hPsiExp (by positivity)
-      _ = A ^ 2 * (source.y / Z) *
-            (Real.exp 1 * Real.exp (-L / Z ^ 2)) := by
-        rw [hXiSq]
-      _ ≤ A ^ 2 * (source.y * R * (E + B / 2)) *
-            (Real.exp 1 * Real.exp (-L / Z ^ 2)) := by
-        gcongr
-      _ = source.y * R * Cpsi * Real.exp (-L / Z ^ 2) := by
-        dsimp [Cpsi]
-        ring
-  calc
-    siftedCount source.carrier source.k z ≤
-        source.y * R /
-            (sieveProduct 1 z * T) +
-          selbergRealPsi xi z ^ 2 := by
-      simpa [xi, T, R] using hBase
-    _ ≤ source.y * R *
-          (1 + Ctail * Real.exp (-L / Z ^ 2)) +
-        source.y * R * Cpsi * Real.exp (-L / Z ^ 2) :=
-      add_le_add hMain hPsi
-    _ = source.y * R *
-        (1 + C * Real.exp (-L / Z ^ 2)) := by
-      dsimp [C]
-      ring
-    _ = source.y * sieveProduct source.k z *
-        (1 + C * Real.exp
-          (-Real.log source.y / Real.log z ^ 2)) := by
-      rfl
+      _ ≤ (A ^ 2 * (Real.exp 1 * Real.exp (-L / Z ^ 2))) * (E + B / 2) :=
+        mul_le_mul hPsi hPay
+          (div_nonneg (inv_nonneg.mpr hRPos.le) hZ.le) (by positivity)
+      _ = _ := by dsimp [Cpsi]; ring
+  have hMain : (sieveProduct 1 z)⁻¹ / T ≤
+      1 + Ctail * Real.exp (-L / Z ^ 2) := by
+    have hid : (sieveProduct 1 z)⁻¹ / T =
+        1 + ((sieveProduct 1 z)⁻¹ - T) / T := by field_simp; ring
+    rw [hid]
+    linarith
+  have hCoefficient := add_le_add hMain hError
+  have hTarget : (sieveProduct 1 z)⁻¹ / T +
+      (selbergRealPsi xi z ^ 2 / xi ^ 2) * (R⁻¹ / Z) ≤
+        1 + C * Real.exp (-L / Z ^ 2) := by
+    dsimp [C]
+    nlinarith only [hCoefficient]
+  exact (source.siftedCount_le_fourOne_normalized hzPos hlog hzy).trans
+    (mul_le_mul_of_nonneg_left hTarget (mul_nonneg hyPos.le hRPos.le))
 
 set_option maxHeartbeats 200000
 
@@ -5571,50 +5148,16 @@ theorem RegularSource.exists_siftedCount_le_rankin_logSq :
           (1 + C * Real.exp
             (-Real.log source.y / Real.log z ^ 2)) := by
         rfl
-  · have hZTwo : 2 ≤ Z := le_of_not_ge hBound
-    by_cases hRatio :
-        L / Z ^ 2 ≤ 32 * Real.exp 1 + 2
-    · have hCase :=
-        hSmall source hzPos (by simpa only [Z] using hZTwo) hzy
-          (by simpa only [L, Z] using hRatio)
-      have hCsmallC : Csmall ≤ C := by
-        dsimp [C]
-        linarith [hCbounded, hClarge]
-      calc
-        siftedCount source.carrier source.k z ≤
-            source.y * R *
-              (1 + Csmall * e) := by
-          simpa only [R, e, L, Z] using hCase
-        _ ≤ source.y * R * (1 + C * e) := by
-          apply mul_le_mul_of_nonneg_left _
-            (mul_nonneg hyPos.le hRPos.le)
-          gcongr
-        _ = source.y * sieveProduct source.k z *
-            (1 + C * Real.exp
-              (-Real.log source.y / Real.log z ^ 2)) := by
-          rfl
-    · have hRatio' :
-          32 * Real.exp 1 + 2 ≤ L / Z ^ 2 :=
-        le_of_not_ge hRatio
-      have hCase :=
-        hLarge source hzPos (by simpa only [Z] using hZTwo) hzy
-          (by simpa only [L, Z] using hRatio')
-      have hClargeC : Clarge ≤ C := by
-        dsimp [C]
-        linarith [hCbounded, hCsmall]
-      calc
-        siftedCount source.carrier source.k z ≤
-            source.y * R *
-              (1 + Clarge * e) := by
-          simpa only [R, e, L, Z] using hCase
-        _ ≤ source.y * R * (1 + C * e) := by
-          apply mul_le_mul_of_nonneg_left _
-            (mul_nonneg hyPos.le hRPos.le)
-          gcongr
-        _ = source.y * sieveProduct source.k z *
-            (1 + C * Real.exp
-              (-Real.log source.y / Real.log z ^ 2)) := by
-          rfl
+  · have hZTwo : 2 ≤ Real.log z := le_of_not_ge hBound
+    by_cases hRatio : L / Z ^ 2 ≤ 32 * Real.exp 1 + 2
+    · refine (hSmall source hzPos hZTwo hzy hRatio).trans ?_
+      apply mul_le_mul_of_nonneg_left _ (mul_nonneg hyPos.le hRPos.le)
+      have hc : Csmall ≤ C := by dsimp [C]; linarith [hCbounded, hClarge]
+      gcongr
+    · refine (hLarge source hzPos hZTwo hzy (le_of_not_ge hRatio)).trans ?_
+      apply mul_le_mul_of_nonneg_left _ (mul_nonneg hyPos.le hRPos.le)
+      have hc : Clarge ≤ C := by dsimp [C]; linarith [hCbounded, hCsmall]
+      gcongr
 
 /-- The `d = 1` case of the printed regularity hypothesis bounds the whole
 source, hence every sifted subset, by `y + 1`. -/
@@ -5929,103 +5472,38 @@ theorem RegularSource.exists_siftedCount_le_threeNine_of_log_ge :
           2 * E * Real.log z / L +
             (8 * E + 12 * B) * Real.log z * G / L ^ 2 := by
         ring
-  have hInvProduct :=
-    (one_div_le_one_div_of_le (sieveProduct_pos 1 z)
-      (sieveProduct_one_le source.k z))
-  have hRInv :
-      (sieveProduct source.k z)⁻¹ ≤ E * Real.log z + B₀ := by
-    rw [inv_eq_one_div]
-    calc
-      1 / sieveProduct source.k z ≤ 1 / sieveProduct 1 z := hInvProduct
-      _ ≤ E * Real.log z + B₀ := by
-        dsimp [E]
-        simpa only [inv_eq_one_div] using hInvProductOne z hzOne
-  have hRPay :
-      1 ≤ sieveProduct source.k z *
-          (E + 2 * B₀) * Real.log z * G := by
-    have hInvOne :
-        1 ≤ sieveProduct source.k z * (E * Real.log z + B₀) := by
-      simpa [mul_comm] using
-        (inv_le_iff_one_le_mul₀ (sieveProduct_pos source.k z)).mp hRInv
-    have hAbsorb :
-        E * Real.log z + B₀ ≤ (E + 2 * B₀) * Real.log z * G := by
-      have hLogZHalf : 1 / 2 ≤ Real.log z := by
-        linarith
-      have hEG :
-          E * Real.log z ≤ E * Real.log z * G :=
-        by
-          simpa only [mul_one] using
-            mul_le_mul_of_nonneg_left hG
-              (mul_nonneg hE.le hLogZ.le)
-      have hTwoZG : 1 ≤ 2 * Real.log z * G := by
-        calc
-          1 ≤ 2 * Real.log z := by linarith
-          _ ≤ 2 * Real.log z * G :=
-            by
-              simpa only [mul_one] using
-                mul_le_mul_of_nonneg_left hG
-                  (show 0 ≤ 2 * Real.log z by positivity)
-      have hBG : B₀ ≤ 2 * B₀ * Real.log z * G := by
-        nlinarith [mul_le_mul_of_nonneg_left hTwoZG hB₀.le]
-      nlinarith
-    simpa [mul_assoc] using hInvOne.trans
-      (mul_le_mul_of_nonneg_left hAbsorb
-        (sieveProduct_pos source.k z).le)
-  have hXiSq :
-      xi ^ 2 ≤
-        source.y * sieveProduct source.k z *
-          ((E + 2 * B₀) * Real.log z * G / L ^ 2) := by
-    have hXiSqEq :
-        xi ^ 2 = source.y / (1 + L ^ 2) := by
-      simpa [xi, L] using threeNineCutoff_sq hy0.le
-    have hDen :
-        source.y / (1 + L ^ 2) ≤ source.y / L ^ 2 := by
-      exact div_le_div_of_nonneg_left hy0.le (sq_pos_of_pos hL)
-        (by linarith : L ^ 2 ≤ 1 + L ^ 2)
-    rw [hXiSqEq]
-    calc
-      source.y / (1 + L ^ 2) ≤ source.y / L ^ 2 := hDen
-      _ ≤ source.y *
-          (sieveProduct source.k z *
-            ((E + 2 * B₀) * Real.log z * G)) / L ^ 2 := by
-        exact
-          div_le_div_of_nonneg_right
-            (by
-              simpa [mul_assoc] using
-                mul_le_mul_of_nonneg_left hRPay hy0.le)
-            (sq_nonneg L)
-      _ = source.y * sieveProduct source.k z *
-          ((E + 2 * B₀) * Real.log z * G / L ^ 2) := by ring
-  have hScaledCoefficient :
-      source.y * sieveProduct source.k z *
-          ((E * Real.log z + B) / Real.log xi) ≤
-        source.y * sieveProduct source.k z *
-          (2 * E * Real.log z / L +
-            (8 * E + 12 * B) * Real.log z * G / L ^ 2) :=
-    mul_le_mul_of_nonneg_left hCoefficient
-      (mul_nonneg hy0.le (sieveProduct_pos source.k z).le)
+  have hR := sieveProduct_pos source.k z
+  have hRInv : (sieveProduct source.k z)⁻¹ ≤ E * Real.log z + B₀ :=
+    sieveProduct_inv_le_of_one_inv_le source.k (hInvProductOne z hzOne)
+  have hRPay : 1 ≤ sieveProduct source.k z *
+      ((E + 2 * B₀) * Real.log z * G) := by
+    have hOne : 1 ≤ sieveProduct source.k z * (E * Real.log z + B₀) := by
+      simpa [mul_comm] using (inv_le_iff_one_le_mul₀ hR).mp hRInv
+    apply hOne.trans (mul_le_mul_of_nonneg_left _ hR.le)
+    have hEG : E * Real.log z ≤ E * Real.log z * G := by
+      simpa using mul_le_mul_of_nonneg_left hG (mul_nonneg hE.le hLogZ.le)
+    have hZG : 1 ≤ 2 * Real.log z * G := by nlinarith
+    nlinarith [mul_le_mul_of_nonneg_left hZG hB₀.le]
+  have hXiSq : xi ^ 2 ≤ source.y * sieveProduct source.k z *
+      ((E + 2 * B₀) * Real.log z * G / L ^ 2) := by
+    have hden := div_le_div_of_nonneg_left hy0.le (sq_pos_of_pos hL)
+      (by linarith : L ^ 2 ≤ 1 + L ^ 2)
+    have hpay := mul_le_mul_of_nonneg_left hRPay hy0.le
+    rw [show xi ^ 2 = source.y / (1 + L ^ 2) from threeNineCutoff_sq hy0.le]
+    refine hden.trans ?_
+    apply (div_le_iff₀ (sq_pos_of_pos hL)).mpr
+    field_simp [hL.ne']
+    nlinarith only [hRPay]
+  have hM : 0 ≤ source.y * sieveProduct source.k z := mul_nonneg hy0.le hR.le
   calc
-    siftedCount source.carrier source.k z ≤
-        source.y * sieveProduct source.k z *
-            ((E * Real.log z + B) / Real.log xi) + xi ^ 2 := by
-      simpa [E, xi] using hBase
+    siftedCount source.carrier source.k z ≤ source.y * sieveProduct source.k z *
+        ((E * Real.log z + B) / Real.log xi) + xi ^ 2 := hBase
     _ ≤ source.y * sieveProduct source.k z *
-          (2 * E * Real.log z / L +
-            (8 * E + 12 * B) * Real.log z * G / L ^ 2) +
+        (2 * E * Real.log z / L + (8 * E + 12 * B) * Real.log z * G / L ^ 2) +
           source.y * sieveProduct source.k z *
             ((E + 2 * B₀) * Real.log z * G / L ^ 2) :=
-      add_le_add hScaledCoefficient hXiSq
-    _ = source.y * sieveProduct source.k z *
-          (2 * E * Real.log z / L +
-            c₁ * Real.log z * G / L ^ 2) := by
-      dsimp [c₁]
-      ring
-    _ = source.y * sieveProduct source.k z *
-          (2 * Real.exp Real.eulerMascheroniConstant * Real.log z /
-              Real.log source.y +
-            c₁ * Real.log z * Real.log (Real.log (3 * source.y)) /
-              Real.log source.y ^ 2) := by
-      rfl
+      add_le_add (mul_le_mul_of_nonneg_left hCoefficient hM) hXiSq
+    _ = _ := by dsimp [c₁, E, L, G]; ring
 
 /-- The source corollary `(3.9)` with one absolute constant.  The large range
 uses the paper's literal optimized cutoff; the complementary bounded range is
@@ -6090,170 +5568,49 @@ theorem RegularSource.exists_siftedCount_le_threeNine :
       (Real.strictMonoOn_log.monotoneOn (by norm_num)
         (mul_pos (by norm_num) hy0) hThreeLe)
   have hG : 0 < G := hG₀.trans_le hG₀G
+  have hR := sieveProduct_pos source.k z
+  have hM : 0 ≤ source.y * sieveProduct source.k z := mul_nonneg hy0.le hR.le
+  have hCle : C ≤ c₁ := by
+    dsimp [c₁]
+    exact le_add_of_nonneg_right (by positivity)
   by_cases hyLarge : 64 ≤ L
-  · have hBound := hLarge source (by simpa [L] using hyLarge) hz
-    have hCle : C ≤ c₁ := by
-      dsimp [c₁]
-      have : 0 ≤ (8192 * E + 256 * B) / G₀ := by positivity
-      linarith
-    have hErrorNonneg :
-        0 ≤ Real.log z * G / L ^ 2 := by positivity
-    have hError :
-        C * Real.log z * G / L ^ 2 ≤
-          c₁ * Real.log z * G / L ^ 2 := by
+  · refine (hLarge source hyLarge hz).trans ?_
+    apply mul_le_mul_of_nonneg_left _ hM
+    dsimp [E, L, G] at *
+    gcongr
+  · have hRInv : (sieveProduct source.k z)⁻¹ ≤ E * Real.log z + B :=
+      sieveProduct_inv_le_of_one_inv_le source.k (hInvProductOne z hzOne)
+    have hRPay : 1 ≤ sieveProduct source.k z * (E * Real.log z + B) := by
+      simpa [mul_comm] using (inv_le_iff_one_le_mul₀ hR).mp hRInv
+    have hNumerator : 2 * L ^ 2 * (E * Real.log z + B) ≤
+        (8192 * E + 256 * B) * Real.log z := by
+      have hsq : 2 * L ^ 2 ≤ 8192 := by nlinarith [sq_nonneg (L - 64)]
+      have hlin : 2 * L ^ 2 ≤ 256 * Real.log z := by nlinarith
+      have h₁ := mul_le_mul_of_nonneg_right hsq (mul_nonneg hE.le hLogZ.le)
+      have h₂ := mul_le_mul_of_nonneg_right hlin hB.le
+      nlinarith only [h₁, h₂]
+    have hCoefficient : 2 * L ^ 2 * (E * Real.log z + B) ≤
+        c₁ * Real.log z * G := by
       calc
-        C * Real.log z * G / L ^ 2 =
-            C * (Real.log z * G / L ^ 2) := by ring
-        _ ≤ c₁ * (Real.log z * G / L ^ 2) :=
-          mul_le_mul_of_nonneg_right hCle hErrorNonneg
-        _ = c₁ * Real.log z * G / L ^ 2 := by ring
-    have hBracket :
-        2 * E * Real.log z / L +
-            C * Real.log z * G / L ^ 2 ≤
-          2 * E * Real.log z / L +
-            c₁ * Real.log z * G / L ^ 2 :=
-      add_le_add le_rfl hError
-    calc
-      siftedCount source.carrier source.k z ≤
-          source.y * sieveProduct source.k z *
-            (2 * E * Real.log z / L +
-              C * Real.log z * G / L ^ 2) := by
-        simpa [E, L, G] using hBound
-      _ ≤ source.y * sieveProduct source.k z *
-            (2 * E * Real.log z / L +
-              c₁ * Real.log z * G / L ^ 2) :=
-        mul_le_mul_of_nonneg_left hBracket
-          (mul_nonneg hy0.le (sieveProduct_pos source.k z).le)
-      _ = source.y * sieveProduct source.k z *
-          (2 * Real.exp Real.eulerMascheroniConstant * Real.log z /
-              Real.log source.y +
-            c₁ * Real.log z * Real.log (Real.log (3 * source.y)) /
-              Real.log source.y ^ 2) := by
-        rfl
-  · have hySmall : L < 64 := lt_of_not_ge hyLarge
-    have hInvProduct :=
-      one_div_le_one_div_of_le (sieveProduct_pos 1 z)
-        (sieveProduct_one_le source.k z)
-    have hRInv :
-        (sieveProduct source.k z)⁻¹ ≤ E * Real.log z + B := by
-      rw [inv_eq_one_div]
-      calc
-        1 / sieveProduct source.k z ≤ 1 / sieveProduct 1 z := hInvProduct
-        _ ≤ E * Real.log z + B := by
-          dsimp [E]
-          simpa only [inv_eq_one_div] using hInvProductOne z hzOne
-    have hInvOne :
-        1 ≤ sieveProduct source.k z * (E * Real.log z + B) := by
-      simpa [mul_comm] using
-        (inv_le_iff_one_le_mul₀ (sieveProduct_pos source.k z)).mp hRInv
-    have hLsqConst : 2 * L ^ 2 ≤ 8192 := by
-      nlinarith [sq_nonneg (L - 64)]
-    have hMainBeforeG :
-        2 * L ^ 2 * (E * Real.log z) ≤
-          8192 * E * Real.log z :=
-      by
-        simpa only [mul_assoc] using
-          mul_le_mul_of_nonneg_right hLsqConst
-            (mul_nonneg hE.le hLogZ.le)
-    have hMain :
-        2 * L ^ 2 * (E * Real.log z) ≤
-          8192 * E * Real.log z :=
-      hMainBeforeG
-    have hLsqLinear : 2 * L ^ 2 ≤ 128 * L := by
-      nlinarith
-    have hBLinear :
-        2 * L ^ 2 * B ≤ 128 * L * B :=
-      mul_le_mul_of_nonneg_right hLsqLinear hB.le
-    have hLZ : 128 * L ≤ 256 * Real.log z := by
-      linarith
-    have hBBeforeG :
-        2 * L ^ 2 * B ≤ 256 * B * Real.log z := by
-      calc
-        2 * L ^ 2 * B ≤ 128 * L * B := hBLinear
-        _ ≤ 256 * Real.log z * B :=
-          mul_le_mul_of_nonneg_right hLZ hB.le
-        _ = 256 * B * Real.log z := by ring
-    have hBTerm :
-        2 * L ^ 2 * B ≤ 256 * B * Real.log z :=
-      hBBeforeG
-    have hNumerator :
-        2 * L ^ 2 * (E * Real.log z + B) ≤
-          (8192 * E + 256 * B) * Real.log z := by
-      calc
-        2 * L ^ 2 * (E * Real.log z + B) =
-            2 * L ^ 2 * (E * Real.log z) + 2 * L ^ 2 * B := by ring
-        _ ≤ 8192 * E * Real.log z + 256 * B * Real.log z :=
-          add_le_add hMain hBTerm
-        _ = (8192 * E + 256 * B) * Real.log z := by ring
-    have hCoefficient :
-        2 * L ^ 2 * (E * Real.log z + B) ≤
-          c₁ * Real.log z * G := by
-      calc
-        2 * L ^ 2 * (E * Real.log z + B) ≤
-            (8192 * E + 256 * B) * Real.log z := hNumerator
+        _ ≤ (8192 * E + 256 * B) * Real.log z := hNumerator
         _ = ((8192 * E + 256 * B) / G₀) * Real.log z * G₀ := by
           field_simp [hG₀.ne']
-        _ ≤ ((8192 * E + 256 * B) / G₀) * Real.log z * G := by
-          exact mul_le_mul_of_nonneg_left hG₀G
-            (mul_nonneg (div_nonneg (by positivity) hG₀.le) hLogZ.le)
         _ ≤ c₁ * Real.log z * G := by
-          have hc :
-              (8192 * E + 256 * B) / G₀ ≤ c₁ := by
-            dsimp [c₁]
-            linarith
-          exact
-            mul_le_mul_of_nonneg_right
-              (mul_le_mul_of_nonneg_right hc hLogZ.le) hG.le
-    have hPay :
-        2 * L ^ 2 ≤
-          sieveProduct source.k z * c₁ * Real.log z * G := by
-      calc
-        2 * L ^ 2 ≤
-            2 * L ^ 2 *
-              (sieveProduct source.k z * (E * Real.log z + B)) :=
-          by
-            simpa only [mul_one] using
-              mul_le_mul_of_nonneg_left hInvOne
-                (show 0 ≤ 2 * L ^ 2 by positivity)
-        _ = sieveProduct source.k z *
-              (2 * L ^ 2 * (E * Real.log z + B)) := by ring
-        _ ≤ sieveProduct source.k z * (c₁ * Real.log z * G) :=
-          mul_le_mul_of_nonneg_left hCoefficient
-            (sieveProduct_pos source.k z).le
-        _ = sieveProduct source.k z * c₁ * Real.log z * G := by ring
-    have hTwo :
-        2 ≤ sieveProduct source.k z * c₁ * Real.log z * G / L ^ 2 := by
-      exact (le_div_iff₀ (sq_pos_of_pos hL)).2 (by simpa using hPay)
-    have hCard : source.y + 1 ≤ 2 * source.y := by linarith
-    have hCount :
-        siftedCount source.carrier source.k z ≤ 2 * source.y :=
-      (source.siftedCount_le_y_add_one z).trans hCard
-    have hBounded :
-        2 * source.y ≤
-          source.y *
-            (sieveProduct source.k z * c₁ * Real.log z * G / L ^ 2) :=
-      by
-        simpa only [mul_comm] using
-          mul_le_mul_of_nonneg_left hTwo hy0.le
-    have hLeading : 0 ≤ 2 * E * Real.log z / L := by positivity
+          have hc : (8192 * E + 256 * B) / G₀ ≤ c₁ := by dsimp [c₁]; linarith
+          gcongr
+    have hBracket : 2 * (E * Real.log z + B) ≤
+        2 * E * Real.log z / L + c₁ * Real.log z * G / L ^ 2 := by
+      have hError : 2 * (E * Real.log z + B) ≤ c₁ * Real.log z * G / L ^ 2 :=
+        (le_div_iff₀ (sq_pos_of_pos hL)).mpr (by nlinarith only [hCoefficient])
+      exact hError.trans (le_add_of_nonneg_left (by positivity))
     calc
-      siftedCount source.carrier source.k z ≤ 2 * source.y := hCount
-      _ ≤ source.y *
-          (sieveProduct source.k z * c₁ * Real.log z * G / L ^ 2) :=
-        hBounded
-      _ = source.y * sieveProduct source.k z *
-          (c₁ * Real.log z * G / L ^ 2) := by ring
+      siftedCount source.carrier source.k z ≤ 2 * source.y :=
+        (source.siftedCount_le_y_add_one z).trans (by linarith)
+      _ ≤ source.y * sieveProduct source.k z * (2 * (E * Real.log z + B)) := by
+        nlinarith only [mul_le_mul_of_nonneg_left hRPay (by positivity : 0 ≤ 2 * source.y)]
       _ ≤ source.y * sieveProduct source.k z *
-          (2 * E * Real.log z / L +
-            c₁ * Real.log z * G / L ^ 2) :=
-        mul_le_mul_of_nonneg_left (le_add_of_nonneg_left hLeading)
-          (mul_nonneg hy0.le (sieveProduct_pos source.k z).le)
-      _ = source.y * sieveProduct source.k z *
-          (2 * Real.exp Real.eulerMascheroniConstant * Real.log z /
-              Real.log source.y +
-            c₁ * Real.log z * Real.log (Real.log (3 * source.y)) /
-              Real.log source.y ^ 2) := by
-        rfl
+          (2 * E * Real.log z / L + c₁ * Real.log z * G / L ^ 2) :=
+        mul_le_mul_of_nonneg_left hBracket hM
 
 /-- Exact one-prime identity for the adapted finite Rosser coefficient at
 `1 / p`.  Its correspondence with the concrete source-count identity `(2.2)`

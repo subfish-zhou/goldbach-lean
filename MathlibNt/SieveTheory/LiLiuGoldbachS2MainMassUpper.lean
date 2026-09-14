@@ -323,222 +323,79 @@ theorem goldbachS2MainMassUpper
       goldbachS2MainMassUpperSum N τ ≤
         (Real.log ((1 - τ) / τ) + η) * ((N : ℝ) / Real.log (N : ℝ)) := by
   have hτ0 : 0 < τ := by linarith
-  obtain ⟨τ₀, hτ₀0, hτ₀τ, hkernelτ₀⟩ :=
-    S2MainMass_choose_lowerExponent (τ := τ) (η := η / 3) hτ0 hτu (by positivity)
-  have hτ₀u : τ₀ < (1 : ℝ) / 2 := hτ₀τ.trans hτu
-  have hmainLim :=
-    MertensTheorem.tendsto_weightedPrimeReciprocalLogSum
-      hτ₀0 hτ₀u (S2MainMass_logKernel_continuousOn hτ₀u)
-  have hmainEventually :
-      ∀ᶠ N : ℕ in atTop,
-        MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) ≤
-          Real.log ((1 - τ₀) / τ₀) + η / 3 := by
-    have hclose := (Metric.tendsto_nhds.1 hmainLim) (η / 3) (by positivity)
-    filter_upwards [hclose] with N hN
-    rw [S2MainMass_logKernel_integral hτ₀0 hτ₀u, Real.dist_eq] at hN
-    have hupper :
-        MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) -
-            Real.log ((1 - τ₀) / τ₀) < η / 3 := (abs_lt.mp hN).2
-    linarith
-  obtain ⟨Nmain, hNmain⟩ := eventually_atTop.mp hmainEventually
-  have hconstLim :=
-    MertensTheorem.tendsto_weightedPrimeReciprocalLogSum_const
-      (c := 1) hτ₀0 hτ₀u
-  have hconstEventually :
-      ∀ᶠ N : ℕ in atTop,
-        MertensTheorem.weightedPrimeReciprocalLogSum (fun _ : ℝ => 1) N τ₀ (1 / 2 : ℝ) ≤
-          Real.log (((1 / 2 : ℝ) / τ₀)) + 1 := by
-    have hclose := (Metric.tendsto_nhds.1 (by simpa using hconstLim)) 1 zero_lt_one
-    filter_upwards [hclose] with N hN
-    rw [Real.dist_eq] at hN
-    have hupper :
-        MertensTheorem.weightedPrimeReciprocalLogSum (fun _ : ℝ => 1) N τ₀ (1 / 2 : ℝ) -
-            Real.log (((1 / 2 : ℝ) / τ₀)) < 1 := by
-              simpa using (abs_lt.mp hN).2
-    linarith
-  obtain ⟨Nconst, hNconst⟩ := eventually_atTop.mp hconstEventually
-  obtain ⟨C, hC, hCrest⟩ :=
-    eventually_abs_liuLogarithmicIntegralRemainder_le (2 / Real.log 2)
-  obtain ⟨x₀, hx₀⟩ := eventually_atTop.mp hCrest
-  have hsqrtTendsto : Tendsto (fun N : ℕ => Real.sqrt (N : ℝ)) atTop atTop := by
-    have hpow :
-        Tendsto (fun N : ℕ => (N : ℝ) ^ ((1 : ℝ) / 2)) atTop atTop :=
-      (tendsto_rpow_atTop (show 0 < (1 : ℝ) / 2 by norm_num)).comp
-        tendsto_natCast_atTop_atTop
-    simpa [Real.sqrt_eq_rpow] using hpow
-  obtain ⟨Nsqrt, hNsqrt⟩ := eventually_atTop.mp
-    (hsqrtTendsto.eventually (eventually_ge_atTop (max x₀ 2)))
-  let K : ℝ := Real.log (((1 / 2 : ℝ) / τ₀)) + 1
-  have hKpos : 0 < K := by
-    have hratio : 1 < ((1 / 2 : ℝ) / τ₀) := (one_lt_div hτ₀0).2 hτ₀u
-    dsimp [K]
-    nlinarith [Real.log_pos hratio]
-  have hlogTendsto : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
-    Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  obtain ⟨Nlog, hNlog⟩ := eventually_atTop.mp
-    (hlogTendsto.eventually (eventually_ge_atTop (12 * C * K / η)))
-  let M : ℕ := max Nmain (max Nconst (max Nsqrt Nlog))
-  refine ⟨max 4 M,
-    le_max_left _ _, ?_⟩
+  obtain ⟨a, ha, haτ, hlog⟩ := S2MainMass_choose_lowerExponent hτ0 hτu (half_pos hη)
+  have hau : a < (1 : ℝ) / 2 := haτ.trans hτu
+  obtain ⟨C, hC, hrem⟩ := eventually_abs_liuLogarithmicIntegralRemainder_le (2 / Real.log 2)
+  let W := fun N => MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N a (1 / 2)
+  let R := fun N => MertensTheorem.weightedPrimeReciprocalLogSum (fun _ => 1) N a (1 / 2)
+  have hW : Tendsto W atTop (nhds (Real.log ((1 - a) / a))) := by
+    simpa only [W, S2MainMass_logKernel_integral ha hau] using
+      MertensTheorem.tendsto_weightedPrimeReciprocalLogSum ha hau
+        (S2MainMass_logKernel_continuousOn hau)
+  have hR := MertensTheorem.tendsto_weightedPrimeReciprocalLogSum_const
+    (c := (1 : ℝ)) ha hau
+  have hsmall : Tendsto (fun N : ℕ => 4 * C / Real.log N) atTop (nhds 0) :=
+    tendsto_const_nhds.div_atTop (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
+  have hbound : ∀ᶠ N : ℕ in atTop,
+      W N + (4 * C / Real.log N) * R N < Real.log ((1 - τ) / τ) + η := by
+    have hlim := hW.add (hsmall.mul hR)
+    simp only [zero_mul, add_zero] at hlim
+    exact hlim.eventually_lt_const (by linarith)
+  obtain ⟨x₀, hx₀⟩ := eventually_atTop.1 hrem
+  have hsqrt : ∀ᶠ N : ℕ in atTop, x₀ ≤ Real.sqrt (N : ℝ) :=
+    (Real.tendsto_sqrt_atTop.comp tendsto_natCast_atTop_atTop).eventually (eventually_ge_atTop x₀)
+  obtain ⟨N₀, hN₀⟩ := eventually_atTop.1 (hbound.and hsqrt)
+  refine ⟨max 4 N₀, le_max_left _ _, ?_⟩
   intro N hN
-  let S := goldbachS2Primes N ((N : ℝ) ^ τ)
-  let proxySum : ℝ :=
-    ∑ r ∈ S, ((N : ℝ) / (r : ℝ)) / Real.log ((N : ℝ) / (r : ℝ))
-  let remSum : ℝ :=
-    ∑ r ∈ S, |liuLogarithmicIntegralRemainder (2 / Real.log 2) ((N : ℝ) / (r : ℝ))|
   have hN4 : 4 ≤ N := (le_max_left _ _).trans hN
   have hN2 : 2 ≤ N := by omega
   have hN1 : 1 < N := by omega
-  have hM : M ≤ N := (le_max_right 4 M).trans hN
-  have hNmain' : Nmain ≤ N := (le_max_left _ _).trans hM
-  have hMconst : max Nconst (max Nsqrt Nlog) ≤ N := (le_max_right _ _).trans hM
-  have hNconst' : Nconst ≤ N := (le_max_left _ _).trans hMconst
-  have hMsqrt : max Nsqrt Nlog ≤ N := (le_max_right _ _).trans hMconst
-  have hNsqrt' : Nsqrt ≤ N := (le_max_left _ _).trans hMsqrt
-  have hNlog' : Nlog ≤ N := (le_max_right _ _).trans hMsqrt
-  have hNreal : (1 : ℝ) < N := by exact_mod_cast hN1
-  have hlogN : 0 < Real.log (N : ℝ) := Real.log_pos hNreal
-  have hNdivNonneg : 0 ≤ (N : ℝ) / Real.log (N : ℝ) := by positivity
-  have hsubset :=
-    S2MainMass_carrier_subset_window (N := N) hN1 hτ₀τ
-  have hsplit :
-      goldbachS2MainMassUpperSum N τ ≤ proxySum + remSum := by
-    unfold goldbachS2MainMassUpperSum proxySum remSum S
-    calc
-      ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
-          liuLogarithmicIntegral (2 / Real.log 2) ((N : ℝ) / (r : ℝ))
-        ≤ ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
-            (((N : ℝ) / (r : ℝ)) / Real.log ((N : ℝ) / (r : ℝ)) +
-              |liuLogarithmicIntegralRemainder (2 / Real.log 2) ((N : ℝ) / (r : ℝ))|) := by
-                refine Finset.sum_le_sum ?_
-                intro r hr
-                have hdecomp :
-                    liuLogarithmicIntegral (2 / Real.log 2) ((N : ℝ) / (r : ℝ)) =
-                      ((N : ℝ) / (r : ℝ)) / Real.log ((N : ℝ) / (r : ℝ)) +
-                        liuLogarithmicIntegralRemainder (2 / Real.log 2) ((N : ℝ) / (r : ℝ)) := by
-                  unfold liuLogarithmicIntegralRemainder
-                  ring
-                rw [hdecomp]
-                nlinarith [le_abs_self
-                  (liuLogarithmicIntegralRemainder (2 / Real.log 2) ((N : ℝ) / (r : ℝ)))]
-      _ = proxySum + remSum := by
-            rw [Finset.sum_add_distrib]
-  have hweightSubset :
-      ∑ r ∈ S, S2MainMassWindowWeight N r ≤
-        MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) := by
-    simpa [MertensTheorem.weightedPrimeReciprocalLogSum, S, S2MainMassWindowWeight] using
-      (Finset.sum_le_sum_of_subset_of_nonneg hsubset
-        (fun r hr _ => S2MainMass_window_weight_nonneg (τ := τ₀) hN2 hr))
-  have hproxy :
-      proxySum ≤
-        ((N : ℝ) / Real.log (N : ℝ)) *
-          MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) := by
-    unfold proxySum S
-    calc
-      ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
-          ((N : ℝ) / (r : ℝ)) / Real.log ((N : ℝ) / (r : ℝ))
-        = ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
-            ((N : ℝ) / Real.log (N : ℝ)) * S2MainMassWindowWeight N r := by
-              apply Finset.sum_congr rfl
-              intro r hr
-              rcases Finset.mem_filter.mp hr with ⟨_, hrPrime, _, _, hrSq⟩
-              exact S2MainMass_proxy_term_identity hN2 hrPrime.pos
-                (S2MainMass_prime_le_rpow_half_of_sq_le hrSq)
-      _ = ((N : ℝ) / Real.log (N : ℝ)) *
-            ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ), S2MainMassWindowWeight N r := by
-              rw [Finset.mul_sum]
-      _ ≤ ((N : ℝ) / Real.log (N : ℝ)) *
-            MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) := by
-              gcongr
-  have hmainBound' :
-      MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) ≤
-        Real.log ((1 - τ₀) / τ₀) + η / 3 := hNmain N hNmain'
-  have hconstBound :
-      MertensTheorem.weightedPrimeReciprocalLogSum (fun _ : ℝ => 1) N τ₀ (1 / 2 : ℝ) ≤ K := by
-    simpa [K] using hNconst N hNconst'
-  have hsqrtLarge : max x₀ 2 ≤ Real.sqrt (N : ℝ) := hNsqrt N hNsqrt'
-  have hrem :
-      remSum ≤ (η / 3) * ((N : ℝ) / Real.log (N : ℝ)) := by
-    have hconstSubset :
-        ∑ r ∈ S, ((1 : ℝ) / (r : ℝ)) ≤
-          MertensTheorem.weightedPrimeReciprocalLogSum (fun _ : ℝ => 1) N τ₀ (1 / 2 : ℝ) := by
-      simpa [MertensTheorem.weightedPrimeReciprocalLogSum, S] using
-        (Finset.sum_le_sum_of_subset_of_nonneg hsubset
-          (fun r hr _ => by
-            have hrPrime : r.Prime := (Finset.mem_filter.mp hr).2
-            positivity))
-    have hsumK : ∑ r ∈ S, ((1 : ℝ) / (r : ℝ)) ≤ K := hconstSubset.trans hconstBound
-    have hremRaw :
-        remSum ≤
-          (4 * C * ((N : ℝ) / Real.log (N : ℝ) ^ 2)) *
-            ∑ r ∈ S, ((1 : ℝ) / (r : ℝ)) := by
-      unfold remSum S
-      calc
-        ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
-            |liuLogarithmicIntegralRemainder (2 / Real.log 2) ((N : ℝ) / (r : ℝ))|
-          ≤ ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
-              (4 * C * ((N : ℝ) / Real.log (N : ℝ) ^ 2)) * ((1 : ℝ) / (r : ℝ)) := by
-                refine Finset.sum_le_sum ?_
-                intro r hr
-                rcases Finset.mem_filter.mp hr with ⟨_, hrPrime, _, _, hrSq⟩
-                have hrle : (r : ℝ) ≤ (N : ℝ) ^ ((1 : ℝ) / 2) :=
-                  S2MainMass_prime_le_rpow_half_of_sq_le hrSq
-                have hx0le : x₀ ≤ (N : ℝ) / (r : ℝ) := by
-                  have hsqrtle :=
-                    S2MainMass_sqrt_le_div_of_le_rpow_half
-                      (show 0 < N by omega) hrPrime.pos hrle
-                  exact ((le_max_left _ _).trans hsqrtLarge).trans hsqrtle
-                have hx2 : 2 ≤ (N : ℝ) / (r : ℝ) := by
-                  have hsqrtle :=
-                    S2MainMass_sqrt_le_div_of_le_rpow_half
-                      (show 0 < N by omega) hrPrime.pos hrle
-                  exact ((le_max_right _ _).trans hsqrtLarge).trans hsqrtle
-                exact S2MainMass_remainder_term_le (τ := τ) C hC hN4 hr (hx₀ _ hx0le hx2)
-        _ = (4 * C * ((N : ℝ) / Real.log (N : ℝ) ^ 2)) *
-              ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ), ((1 : ℝ) / (r : ℝ)) := by
-                rw [Finset.mul_sum]
-    calc
-      remSum
-        ≤ (4 * C * ((N : ℝ) / Real.log (N : ℝ) ^ 2)) *
-            ∑ r ∈ S, ((1 : ℝ) / (r : ℝ)) := hremRaw
-      _ ≤ (4 * C * ((N : ℝ) / Real.log (N : ℝ) ^ 2)) * K := by
-            exact mul_le_mul_of_nonneg_left hsumK (by positivity)
-      _ = ((4 * C * K) / Real.log (N : ℝ)) * ((N : ℝ) / Real.log (N : ℝ)) := by
-            field_simp [hlogN.ne']
-      _ ≤ (η / 3) * ((N : ℝ) / Real.log (N : ℝ)) := by
-            have hlogLower : 12 * C * K / η ≤ Real.log (N : ℝ) := hNlog N hNlog'
-            have hcoeff :
-                (4 * C * K) / Real.log (N : ℝ) ≤ η / 3 := by
-              apply (div_le_iff₀ hlogN).2
-              have htmp : 12 * C * K ≤ η * Real.log (N : ℝ) := by
-                simpa [mul_comm] using (div_le_iff₀ hη).mp hlogLower
-              nlinarith
-            exact mul_le_mul_of_nonneg_right hcoeff hNdivNonneg
-  have hproxyFinal :
-      proxySum ≤
-        (Real.log ((1 - τ) / τ) + 2 * η / 3) * ((N : ℝ) / Real.log (N : ℝ)) := by
-    calc
-      proxySum
-        ≤ ((N : ℝ) / Real.log (N : ℝ)) *
-            MertensTheorem.weightedPrimeReciprocalLogSum S2MainMassLogKernel N τ₀ (1 / 2 : ℝ) :=
-          hproxy
-      _ ≤ ((N : ℝ) / Real.log (N : ℝ)) * (Real.log ((1 - τ₀) / τ₀) + η / 3) := by
-            gcongr
-      _ ≤ ((N : ℝ) / Real.log (N : ℝ)) *
-            (Real.log ((1 - τ) / τ) + 2 * η / 3) := by
-            have hcoef :
-                Real.log ((1 - τ₀) / τ₀) + η / 3 ≤
-                  Real.log ((1 - τ) / τ) + 2 * η / 3 := by
-              linarith
-            gcongr
-      _ = (Real.log ((1 - τ) / τ) + 2 * η / 3) * ((N : ℝ) / Real.log (N : ℝ)) := by
-            ring
+  have hNr : (0 : ℝ) < N := by positivity
+  have hL : 0 < Real.log (N : ℝ) := Real.log_pos (by exact_mod_cast hN1)
+  have hscale : 0 ≤ (N : ℝ) / Real.log N := (div_pos hNr hL).le
+  obtain ⟨hboundN, hsqrtN⟩ := hN₀ N ((le_max_right _ _).trans hN)
+  let s := (Finset.Ioc (MertensTheorem.rpowFloor N a)
+    (MertensTheorem.rpowFloor N (1 / 2))).filter Nat.Prime
+  have hsub : goldbachS2Primes N ((N : ℝ) ^ τ) ⊆ s :=
+    S2MainMass_carrier_subset_window hN1 haτ
+  have hweight : ∀ r ∈ s, 0 ≤ S2MainMassWindowWeight N r :=
+    fun _ hr => S2MainMass_window_weight_nonneg hN2 hr
+  have hcoeff : 0 ≤ 4 * C / Real.log N := by positivity
   calc
-    goldbachS2MainMassUpperSum N τ ≤ proxySum + remSum := hsplit
-    _ ≤ (Real.log ((1 - τ) / τ) + 2 * η / 3) * ((N : ℝ) / Real.log (N : ℝ)) +
-          (η / 3) * ((N : ℝ) / Real.log (N : ℝ)) := add_le_add hproxyFinal hrem
-    _ = (Real.log ((1 - τ) / τ) + η) * ((N : ℝ) / Real.log (N : ℝ)) := by
-          ring
+    goldbachS2MainMassUpperSum N τ ≤
+        ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ τ),
+          ((N : ℝ) / Real.log N) *
+            (S2MainMassWindowWeight N r + (4 * C / Real.log N) * (1 / (r : ℝ))) := by
+      apply Finset.sum_le_sum
+      intro r hr
+      have hrdata := (Finset.mem_filter.1 hr).2
+      have hrpos : 0 < r := hrdata.1.pos
+      have hrle := S2MainMass_prime_le_rpow_half_of_sq_le hrdata.2.2.2
+      have hs := S2MainMass_sqrt_le_div_of_le_rpow_half (by omega) hrpos hrle
+      have hx2 : 2 ≤ (N : ℝ) / r := by
+        have : (2 : ℝ) ≤ Real.sqrt (N : ℝ) :=
+          (Real.le_sqrt (by norm_num) (by positivity)).2 (by exact_mod_cast hN4)
+        exact this.trans hs
+      have he := S2MainMass_remainder_term_le C hC hN4 hr
+        (hx₀ _ (hsqrtN.trans hs) hx2)
+      have hid := S2MainMass_proxy_term_identity hN2 hrpos hrle
+      have herr := le_abs_self (liuLogarithmicIntegralRemainder (2 / Real.log 2) ((N : ℝ) / r))
+      dsimp [liuLogarithmicIntegralRemainder] at herr
+      have hfactor : (4 * C * ((N : ℝ) / Real.log N ^ 2)) * (1 / (r : ℝ)) =
+          ((N : ℝ) / Real.log N) * ((4 * C / Real.log N) * (1 / (r : ℝ))) := by ring
+      rw [hfactor] at he
+      dsimp only [liuLogarithmicIntegralRemainder] at he
+      nlinarith
+    _ ≤ ∑ r ∈ s, ((N : ℝ) / Real.log N) *
+        (S2MainMassWindowWeight N r + (4 * C / Real.log N) * (1 / (r : ℝ))) := by
+      apply Finset.sum_le_sum_of_subset_of_nonneg hsub
+      intro r hr _
+      exact mul_nonneg hscale (add_nonneg (hweight r hr) (mul_nonneg hcoeff (by positivity)))
+    _ = ((N : ℝ) / Real.log N) * (W N + (4 * C / Real.log N) * R N) := by
+      simp only [← Finset.mul_sum, Finset.sum_add_distrib, W, R,
+        MertensTheorem.weightedPrimeReciprocalLogSum, S2MainMassWindowWeight, s]
+    _ ≤ (Real.log ((1 - τ) / τ) + η) * ((N : ℝ) / Real.log N) := by
+      simpa only [mul_comm] using mul_le_mul_of_nonneg_left hboundN.le hscale
 
 /-- Specialization of `goldbachS2MainMassUpper` to
 `τ = 9 / 19 - ε` under the task-local constraint `0 < ε < 2 / 15`. -/

@@ -1,3 +1,4 @@
+import MathlibNt.Analysis.LogGridEstimates
 import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGrid
 import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
 
@@ -125,25 +126,13 @@ theorem volume_goldbachB9BottomStrip (n : ℕ) :
 
 theorem volume_goldbachB9ObliqueStrip (n : ℕ) :
     volume (goldbachB9ObliqueStrip n) = ENNReal.ofReal ((1927 / 19080 : ℝ) / n) := by
-  classical
-  rw [Measure.volume_eq_prod ℝ ℝ,
-    Measure.prod_apply (measurableSet_goldbachB9ObliqueStrip n)]
-  have hfun : (fun u : ℝ => volume (Prod.mk u ⁻¹' goldbachB9ObliqueStrip n)) =
-      (Icc (4 / 53 : ℝ) (1 / 3)).indicator
-        (fun _ => ENNReal.ofReal
-          ((goldbachB9AlphaGridStep n + 2 * goldbachB9BetaGridStep n) / 2)) := by
-    funext u
-    rw [goldbachB9ObliqueStrip_section]
-    by_cases hu : u ∈ Icc (4 / 53 : ℝ) (1 / 3)
-    · rw [if_pos hu, indicator_of_mem hu, Real.volume_Ioo]
-      congr 1
-      ring
-    · rw [if_neg hu, indicator_of_notMem hu, measure_empty]
-  rw [hfun, lintegral_indicator measurableSet_Icc, setLIntegral_const, Real.volume_Icc,
-    ← ENNReal.ofReal_mul (by
-      unfold goldbachB9AlphaGridStep goldbachB9BetaGridStep
-        goldbachB9AlphaGridWidth goldbachB9BetaGridWidth
-      positivity)]
+  unfold goldbachB9ObliqueStrip
+  rw [MathlibNt.Analysis.LogGridEstimates.volume_strip (4 / 53) (1 / 3)
+    ((goldbachB9AlphaGridStep n + 2 * goldbachB9BetaGridStep n) / 2) (fun u => (1 - u) / 2)
+    (measurableSet_goldbachB9ObliqueStrip n) (by
+    unfold goldbachB9AlphaGridStep goldbachB9BetaGridStep
+      goldbachB9AlphaGridWidth goldbachB9BetaGridWidth
+    positivity)]
   congr 1
   unfold goldbachB9AlphaGridStep goldbachB9BetaGridStep
     goldbachB9AlphaGridWidth goldbachB9BetaGridWidth
@@ -152,34 +141,10 @@ theorem volume_goldbachB9ObliqueStrip (n : ℕ) :
 theorem goldbachB9LogGridCell_pairwiseDisjoint {n : ℕ} (hn : 0 < n) :
     (Set.univ : Set (Fin n × Fin n)).Pairwise
       (Function.onFun Disjoint (goldbachB9LogGridCell n)) := by
-  intro q _ r _ hqr
-  change Disjoint (goldbachB9LogGridCell n q) (goldbachB9LogGridCell n r)
-  rw [Set.disjoint_left]
-  intro x hxq hxr
-  change
-    x.1 ∈ Ioc (goldbachB9AlphaGridPoint n q.1) (goldbachB9AlphaGridPoint n (q.1 + 1)) ∧
-      x.2 ∈ Ioc (goldbachB9BetaGridPoint n q.2) (goldbachB9BetaGridPoint n (q.2 + 1))
-    at hxq
-  change
-    x.1 ∈ Ioc (goldbachB9AlphaGridPoint n r.1) (goldbachB9AlphaGridPoint n (r.1 + 1)) ∧
-      x.2 ∈ Ioc (goldbachB9BetaGridPoint n r.2) (goldbachB9BetaGridPoint n (r.2 + 1))
-    at hxr
-  by_cases hi : q.1 = r.1
-  · have hj : q.2 ≠ r.2 := fun h => hqr (Prod.ext hi h)
-    rcases lt_or_gt_of_ne hj with hjlt | hjgt
-    · have hle := goldbachB9BetaGridPoint_mono hn
-        (show (q.2 : ℕ) + 1 ≤ (r.2 : ℕ) by omega)
-      exact not_lt_of_ge hle (hxr.2.1.trans_le hxq.2.2)
-    · have hle := goldbachB9BetaGridPoint_mono hn
-        (show (r.2 : ℕ) + 1 ≤ (q.2 : ℕ) by omega)
-      exact not_lt_of_ge hle (hxq.2.1.trans_le hxr.2.2)
-  · rcases lt_or_gt_of_ne hi with hilt | higt
-    · have hle := goldbachB9AlphaGridPoint_mono hn
-        (show (q.1 : ℕ) + 1 ≤ (r.1 : ℕ) by omega)
-      exact not_lt_of_ge hle (hxr.1.1.trans_le hxq.1.2)
-    · have hle := goldbachB9AlphaGridPoint_mono hn
-        (show (r.1 : ℕ) + 1 ≤ (q.1 : ℕ) by omega)
-      exact not_lt_of_ge hle (hxq.1.1.trans_le hxr.1.2)
+  exact MathlibNt.Analysis.LogGridEstimates.cells_pairwiseDisjoint n
+    (goldbachB9AlphaGridPoint n) (goldbachB9BetaGridPoint n)
+    (fun _ _ h => goldbachB9AlphaGridPoint_mono hn h)
+    (fun _ _ h => goldbachB9BetaGridPoint_mono hn h)
 
 theorem goldbachB9LogGridCell_subset_ambientBox {n : ℕ} (hn : 0 < n)
     (q : Fin n × Fin n) : goldbachB9LogGridCell n q ⊆ goldbachB9LogAmbientBox := by

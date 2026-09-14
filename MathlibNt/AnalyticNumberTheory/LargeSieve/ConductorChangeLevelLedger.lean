@@ -343,83 +343,28 @@ theorem weighted_allCharacter_nonprincipal_prefix_ledger
           ((q : ℝ) / (q.totient : ℝ)) *
             ∑ _χ ∈ nonprincipalCharacters q,
               ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-  have hgroup := weighted_sum_nonprincipal_by_conductor Q
-    (fun d ψ => primitiveCharacterPrefixMaxSquare b M N d ψ)
+  -- Pay the bad-support correction for each character before summing.
+  have hchar {q : ℕ} (χ : DirichletCharacter ℂ q) :
+      characterPrefixMaxSquare χ b M N ≤
+        2 * primitiveCharacterPrefixMaxSquare b M N χ.conductor
+          (conductorPrimitiveCharacter χ) +
+        8 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
+    have hsplit := characterPrefixMaxSquare_le_conductor_add_error χ b M N
+    have hbad := conductorErrorPrefixMaxSquare_le_badSupport χ b M N
+    linarith
   calc
     _ ≤ ∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ ∈ nonprincipalCharacters q,
-          2 * (primitiveCharacterPrefixMaxSquare b M N χ.conductor
+        ((q : ℝ) / (q.totient : ℝ)) *
+          ∑ χ ∈ nonprincipalCharacters q,
+            (2 * primitiveCharacterPrefixMaxSquare b M N χ.conductor
               (conductorPrimitiveCharacter χ) +
-            conductorErrorPrefixMaxSquare χ b M N) := by
+            8 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2) := by
       gcongr with q hq χ hχ
-      exact characterPrefixMaxSquare_le_conductor_add_error χ b M N
-    _ = 2 * (∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q,
-            primitiveCharacterPrefixMaxSquare b M N χ.conductor
-              (conductorPrimitiveCharacter χ)) +
-        2 * (∑ q ∈ Finset.Icc 1 Q,
-          ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ ∈ nonprincipalCharacters q,
-              conductorErrorPrefixMaxSquare χ b M N) := by
+      exact hchar χ
+    _ = _ := by
+      rw [← weighted_sum_nonprincipal_by_conductor]
       simp only [mul_add, Finset.sum_add_distrib, Finset.mul_sum]
-      ring_nf
-    _ ≤ 2 * (∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q,
-            primitiveCharacterPrefixMaxSquare b M N χ.conductor
-              (conductorPrimitiveCharacter χ)) +
-        8 * (N : ℝ) *
-          ∑ q ∈ Finset.Icc 1 Q,
-            ((q : ℝ) / (q.totient : ℝ)) *
-              ∑ χ ∈ nonprincipalCharacters q,
-                ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-      have herr :
-          (∑ q ∈ Finset.Icc 1 Q,
-            ((q : ℝ) / (q.totient : ℝ)) *
-              ∑ χ ∈ nonprincipalCharacters q,
-                conductorErrorPrefixMaxSquare χ b M N) ≤
-            4 * (N : ℝ) *
-              ∑ q ∈ Finset.Icc 1 Q,
-                ((q : ℝ) / (q.totient : ℝ)) *
-                  ∑ χ ∈ nonprincipalCharacters q,
-                    ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-        calc
-          _ ≤ ∑ q ∈ Finset.Icc 1 Q,
-              ((q : ℝ) / (q.totient : ℝ)) *
-                ∑ χ ∈ nonprincipalCharacters q,
-                  (4 * (N : ℝ) *
-                    ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2) := by
-              apply Finset.sum_le_sum
-              intro q hq
-              apply mul_le_mul_of_nonneg_left
-              · exact Finset.sum_le_sum fun χ _ =>
-                  conductorErrorPrefixMaxSquare_le_badSupport χ b M N
-              · positivity
-          _ = _ := by
-              simp only [Finset.mul_sum]
-              apply Finset.sum_congr rfl
-              intro q hq
-              apply Finset.sum_congr rfl
-              intro χ hχ
-              apply Finset.sum_congr rfl
-              intro n hn
-              ring
-      calc
-        _ ≤ 2 * (∑ q ∈ Finset.Icc 1 Q,
-            ((q : ℝ) / (q.totient : ℝ)) *
-              ∑ χ ∈ nonprincipalCharacters q,
-                primitiveCharacterPrefixMaxSquare b M N χ.conductor
-                  (conductorPrimitiveCharacter χ)) +
-            2 * (4 * (N : ℝ) *
-              ∑ q ∈ Finset.Icc 1 Q,
-                ((q : ℝ) / (q.totient : ℝ)) *
-                  ∑ χ ∈ nonprincipalCharacters q,
-                    ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2) := by
-              gcongr
-        _ = _ := by ring
-    _ = _ := by rw [hgroup]
+      simp only [mul_assoc, mul_left_comm, mul_comm]
 
 /-- Principal/nonprincipal split with the principal maximal term kept literally.
 This theorem is bookkeeping only, not a PNT assertion. -/

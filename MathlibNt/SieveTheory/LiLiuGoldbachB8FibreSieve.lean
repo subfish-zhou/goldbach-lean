@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
 import MathlibNt.SieveTheory.LiuLogarithmicIntegral
 
@@ -61,17 +62,7 @@ private theorem B8FibreSieve_pushforward_sum
     (P : ℕ → Prop) [DecidablePred P] :
     ∑ n ∈ (A.image out).filter P, ((A.filter fun x => out x = n).card : ℝ) =
       ((A.filter fun x => P (out x)).card : ℝ) := by
-  have h := Finset.sum_fiberwise_eq_sum_filter A ((A.image out).filter P) out
-    (fun _ => (1 : ℝ))
-  have heq : A.filter (fun x => out x ∈ (A.image out).filter P) =
-      A.filter (fun x => P (out x)) := by
-    ext x
-    simp only [Finset.mem_filter]
-    constructor
-    · exact fun hx => ⟨hx.1, hx.2.2⟩
-    · exact fun hx => ⟨hx.1, Finset.mem_image.mpr ⟨x, hx.1, rfl⟩, hx.2⟩
-  rw [heq] at h
-  simpa using h
+  simpa using MathlibNt.SieveTheory.sum_fibres_filter_image A out P (fun _ => (1 : ℝ))
 
 theorem goldbachB8PlusWeight_sum_eq_card_atoms (N : ℕ) :
     ∑ p ∈ goldbachB8PlusSupport N, goldbachB8PlusWeight N p =

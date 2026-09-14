@@ -74,46 +74,23 @@ def rectangularCoefficientL1
 def weightedPrimitiveFamilyMass (S : Finset ℕ) : ℝ :=
   ∑ q ∈ S, ((q : ℝ) / (q.totient : ℝ)) * Fintype.card (PrimitiveCharacter q)
 
-/-- For `ε=M⁻²`, positive rectangular supports bounded by `M`, and a half-step
-parameter in `[1/2,M+1/2]`, the smoothed mean is bounded by the original
-rank-one LS right hand side.  The constants `2 log M`, `log M` from the two
-sine lanes contribute respectively `4 log M+1`, `3 log M+1` under
-`dampedPerronMajorant_integral_Ioi_le`, hence `7 log M+2` in total. -/
-theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
-    (a b : ℤ → ℂ) (y : ℝ) (Ma Mb : ℤ) (Na Nb Q M : ℕ)
-    (hQ : 0 < Q) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 Q)
-    (hM : 3 ≤ M) (hy0 : 1 / 2 ≤ y) (hyM : y ≤ (M : ℝ) + 1 / 2)
-    (hm1 : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), 1 ≤ m)
-    (hmM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), m ≤ (M : ℤ))
-    (hn1 : ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 1 ≤ n)
-    (hnM : ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), n ≤ (M : ℤ)) :
-    rectangularSmoothedKernelWeightedPrimitiveMean a b
-        (1 / (M : ℝ) ^ 2) y Ma Mb Na Nb S ≤
-      (1 / 2 + (7 * Real.log (M : ℝ) + 2) / Real.pi) *
-        rankOneRectangularLSRHS a b Ma Mb Na Nb Q := by
-  let ε : ℝ := 1 / (M : ℝ) ^ 2
-  let R : ℝ := rankOneRectangularLSRHS a b Ma Mb Na Nb Q
-  let sM : Finset ℤ := Finset.Icc (Ma + 1) (Ma + Na)
-  let sN : Finset ℤ := Finset.Icc (Mb + 1) (Mb + Nb)
-  have hMr : (0 : ℝ) < M := by exact_mod_cast (show 0 < M by omega)
-  have hε : 0 < ε := by dsimp [ε]; positivity
-  have hε1 : ε ≤ 1 := by
-    dsimp [ε]
-    rw [div_le_one (sq_pos_of_pos hMr)]
-    have hM1 : (1 : ℝ) ≤ M := by exact_mod_cast (show 1 ≤ M by omega)
-    nlinarith [sq_nonneg ((M : ℝ) - 1)]
-  have hy : 0 < y := lt_of_lt_of_le (by norm_num) hy0
-  have hm : ∀ m ∈ sM, 0 < m := by
-    intro m hm'
-    exact lt_of_lt_of_le Int.zero_lt_one (hm1 m hm')
-  have hn : ∀ n ∈ sN, 0 < n := by
-    intro n hn'
-    exact lt_of_lt_of_le Int.zero_lt_one (hn1 n hn')
-  have hlogM : 0 ≤ Real.log (M : ℝ) :=
-    Real.log_nonneg (by exact_mod_cast (show 1 ≤ M by omega))
-  have hR : 0 ≤ R := by
-    dsimp [R, rankOneRectangularLSRHS]
-    positivity
+/-- Exact damped Perron interchange, before any character mean estimate.
+The real cutoff is arbitrary, so the same identity applies to each selector value. -/
+theorem rectangularDampedPerron_integrable_formula
+    (a b : ℤ → ℂ) (ε y : ℝ) (hε : 0 < ε)
+    (Ma Mb : ℤ) (Na Nb : ℕ) :
+    ∀ q (χ : PrimitiveCharacter q),
+      IntegrableOn (fun t : ℝ => (Real.exp (-ε * t) : ℂ) *
+        rectangularKernelCharacterSum a b y t Ma Mb Na Nb q χ) (Set.Ioi 0) ∧
+      rectangularSmoothedKernelCharacterSum a b ε y Ma Mb Na Nb q χ =
+        (1 / 2 : ℂ) *
+          ((∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), a m * χ.1 (m : ZMod q)) *
+            (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), b n * χ.1 (n : ZMod q))) +
+        (1 / Real.pi : ℂ) * ∫ t in Set.Ioi (0 : ℝ),
+          (Real.exp (-ε * t) : ℂ) *
+            rectangularKernelCharacterSum a b y t Ma Mb Na Nb q χ := by
+  let sM := Finset.Icc (Ma + 1) (Ma + Na)
+  let sN := Finset.Icc (Mb + 1) (Mb + Nb)
   have hscalarInt : ∀ m n : ℤ, Integrable (fun t : ℝ =>
       Real.exp (-ε * t) *
         truncatedPerronIntegrand (Real.log (y / ((m * n : ℤ) : ℝ))) t)
@@ -228,6 +205,164 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
     rw [hformula]
     rw [hcast]
     ring
+  exact fun q χ => ⟨hFint q χ, hkernel q χ⟩
+
+/-- Two-sided energy scaling of the original aggregated rank-one large sieve.
+No estimate of individual character sums is substituted for this mean. -/
+theorem rankOneRectangularWeightedPrimitiveMean_le_scaled_energy
+    (a b c d : ℤ → ℂ) (Ma Mb : ℤ) (Na Nb Q : ℕ)
+    (hQ : 0 < Q) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 Q)
+    (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v)
+    (hc : ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖c m‖ ^ 2 ≤
+      u ^ 2 * ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖a m‖ ^ 2)
+    (hd : ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), ‖d n‖ ^ 2 ≤
+      v ^ 2 * ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), ‖b n‖ ^ 2) :
+    rankOneRectangularWeightedPrimitiveMean c d Ma Mb Na Nb S ≤
+      (u * v) * rankOneRectangularLSRHS a b Ma Mb Na Nb Q := by
+  have hsqrt (K A C r : ℝ) (hK : 0 ≤ K) (hr : 0 ≤ r)
+      (hC : C ≤ r ^ 2 * A) : Real.sqrt (K * C) ≤ r * Real.sqrt (K * A) := by
+    calc
+      Real.sqrt (K * C) ≤ Real.sqrt (K * (r ^ 2 * A)) :=
+        Real.sqrt_le_sqrt (mul_le_mul_of_nonneg_left hC hK)
+      _ = r * Real.sqrt (K * A) := by
+        rw [show K * (r ^ 2 * A) = r ^ 2 * (K * A) by ring,
+          Real.sqrt_mul (sq_nonneg r), Real.sqrt_sq hr]
+  refine (rankOneRectangularWeightedPrimitiveMean_le c d Ma Mb Na Nb Q hQ S hS).trans ?_
+  unfold rankOneRectangularLSRHS
+  calc
+    _ ≤ (u * Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
+          ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖a m‖ ^ 2)) *
+        (v * Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
+          ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), ‖b n‖ ^ 2)) :=
+      mul_le_mul (hsqrt _ _ _ _ (by unfold largeSieveBound; positivity) hu hc)
+        (hsqrt _ _ _ _ (by unfold largeSieveBound; positivity) hv hd)
+        (Real.sqrt_nonneg _) (mul_nonneg hu (Real.sqrt_nonneg _))
+    _ = _ := by ring
+
+/-- Integrability of the weighted primitive first moment. -/
+theorem dampedPerron_weighted_norm_integrable
+    (S : Finset ℕ) (w : ℕ → ℝ)
+    (F : (q : ℕ) → PrimitiveCharacter q → ℝ → ℂ) (μ : Measure ℝ)
+    (hF : ∀ q χ, Integrable (F q χ) μ) :
+    Integrable (fun t => ∑ q ∈ S, w q * ∑ χ, ‖F q χ t‖) μ :=
+  integrable_finsetSum S fun q _ =>
+    (integrable_finsetSum Finset.univ fun χ _ => (hF q χ).norm).const_mul _
+
+/-- Norm/integral interchange for the actual weighted primitive family. -/
+theorem dampedPerron_weighted_norm_integral_le
+    (S : Finset ℕ) (w : ℕ → ℝ) (hw : ∀ q ∈ S, 0 ≤ w q)
+    (F : (q : ℕ) → PrimitiveCharacter q → ℝ → ℂ) (μ : Measure ℝ)
+    (hF : ∀ q χ, Integrable (F q χ) μ) :
+    (∑ q ∈ S, w q * ∑ χ, ‖∫ t, F q χ t ∂μ‖) ≤
+      ∫ t, (∑ q ∈ S, w q * ∑ χ, ‖F q χ t‖) ∂μ := by
+  calc
+    _ ≤ ∑ q ∈ S, w q * ∑ χ, ∫ t, ‖F q χ t‖ ∂μ :=
+      Finset.sum_le_sum fun q hq => mul_le_mul_of_nonneg_left
+        (Finset.sum_le_sum fun χ _ => norm_integral_le_integral_norm _) (hw q hq)
+    _ = _ := by
+      rw [integral_finsetSum S]
+      · apply Finset.sum_congr rfl
+        intro q hq
+        rw [integral_const_mul, integral_finsetSum Finset.univ]
+        exact fun χ _ => (hF q χ).norm
+      · exact fun q _ =>
+          (integrable_finsetSum Finset.univ fun χ _ => (hF q χ).norm).const_mul _
+
+/-- Weighted norm subadditivity with the two real prefactors pulled out.
+This is used only after the exact Perron identity, not to replace a rank-one mean. -/
+theorem dampedPerron_weighted_norm_add_le
+    (S : Finset ℕ) (w : ℕ → ℝ) (hw : ∀ q ∈ S, 0 ≤ w q)
+    (D I : (q : ℕ) → PrimitiveCharacter q → ℂ)
+    (p r : ℝ) (hp : 0 ≤ p) (hr : 0 ≤ r) :
+    (∑ q ∈ S, w q * ∑ χ, ‖(p : ℂ) * D q χ + (r : ℂ) * I q χ‖) ≤
+      p * (∑ q ∈ S, w q * ∑ χ, ‖D q χ‖) +
+        r * (∑ q ∈ S, w q * ∑ χ, ‖I q χ‖) := by
+  calc
+    _ ≤ ∑ q ∈ S, w q * ∑ χ, (p * ‖D q χ‖ + r * ‖I q χ‖) := by
+      apply Finset.sum_le_sum
+      intro q hq
+      apply mul_le_mul_of_nonneg_left _ (hw q hq)
+      apply Finset.sum_le_sum
+      intro χ hχ
+      simpa only [norm_mul, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_nonneg hp, abs_of_nonneg hr] using
+        norm_add_le ((p : ℂ) * D q χ) ((r : ℂ) * I q χ)
+    _ = _ := by
+      simp only [Finset.mul_sum, Finset.sum_add_distrib, mul_add, mul_left_comm]
+
+/-- Integrate a two-frequency damped majorant without any sign assumption on
+its integrable minorant. Multiplicity of equal lanes is absorbed into `R`. -/
+theorem dampedPerron_integral_le_two_majorants
+    {ε L₁ L₂ R : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1)
+    (hL₁ : 0 ≤ L₁) (hL₂ : 0 ≤ L₂) (hR : 0 ≤ R)
+    {G : ℝ → ℝ} (hGint : IntegrableOn G (Set.Ioi 0))
+    (hG : ∀ t ∈ Set.Ioi (0 : ℝ), G t ≤
+      (dampedPerronMajorantIntegrand ε L₁ t +
+        dampedPerronMajorantIntegrand ε L₂ t) * R) :
+    (∫ t in Set.Ioi (0 : ℝ), G t) ≤
+      ((L₁ + Real.log (1 / ε) + 1) + (L₂ + Real.log (1 / ε) + 1)) * R := by
+  have h₁ := dampedPerronMajorant_integrableOn_Ioi hε hL₁
+  have h₂ := dampedPerronMajorant_integrableOn_Ioi hε hL₂
+  calc
+    (∫ t in Set.Ioi (0 : ℝ), G t) ≤
+        ∫ t in Set.Ioi (0 : ℝ),
+          (dampedPerronMajorantIntegrand ε L₁ t +
+            dampedPerronMajorantIntegrand ε L₂ t) * R :=
+      setIntegral_mono_on hGint ((h₁.add h₂).mul_const R) measurableSet_Ioi hG
+    _ = ((∫ t in Set.Ioi (0 : ℝ), dampedPerronMajorantIntegrand ε L₁ t) +
+          (∫ t in Set.Ioi (0 : ℝ), dampedPerronMajorantIntegrand ε L₂ t)) * R := by
+      rw [integral_mul_const, integral_add h₁ h₂]
+    _ ≤ _ := mul_le_mul_of_nonneg_right
+      (add_le_add (dampedPerronMajorant_integral_Ioi_le hε hε1 hL₁)
+        (dampedPerronMajorant_integral_Ioi_le hε hε1 hL₂)) hR
+
+/-- For `ε=M⁻²`, positive rectangular supports bounded by `M`, and a half-step
+parameter in `[1/2,M+1/2]`, the smoothed mean is bounded by the original
+rank-one LS right hand side.  The constants `2 log M`, `log M` from the two
+sine lanes contribute respectively `4 log M+1`, `3 log M+1` under
+`dampedPerronMajorant_integral_Ioi_le`, hence `7 log M+2` in total. -/
+theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
+    (a b : ℤ → ℂ) (y : ℝ) (Ma Mb : ℤ) (Na Nb Q M : ℕ)
+    (hQ : 0 < Q) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 Q)
+    (hM : 3 ≤ M) (hy0 : 1 / 2 ≤ y) (hyM : y ≤ (M : ℝ) + 1 / 2)
+    (hm1 : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), 1 ≤ m)
+    (hmM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), m ≤ (M : ℤ))
+    (hn1 : ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 1 ≤ n)
+    (hnM : ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), n ≤ (M : ℤ)) :
+    rectangularSmoothedKernelWeightedPrimitiveMean a b
+        (1 / (M : ℝ) ^ 2) y Ma Mb Na Nb S ≤
+      (1 / 2 + (7 * Real.log (M : ℝ) + 2) / Real.pi) *
+        rankOneRectangularLSRHS a b Ma Mb Na Nb Q := by
+  let ε : ℝ := 1 / (M : ℝ) ^ 2
+  let R : ℝ := rankOneRectangularLSRHS a b Ma Mb Na Nb Q
+  let sM : Finset ℤ := Finset.Icc (Ma + 1) (Ma + Na)
+  let sN : Finset ℤ := Finset.Icc (Mb + 1) (Mb + Nb)
+  have hMr : (0 : ℝ) < M := by exact_mod_cast (show 0 < M by omega)
+  have hε : 0 < ε := by dsimp [ε]; positivity
+  have hε1 : ε ≤ 1 := by
+    dsimp [ε]
+    rw [div_le_one (sq_pos_of_pos hMr)]
+    have hM1 : (1 : ℝ) ≤ M := by exact_mod_cast (show 1 ≤ M by omega)
+    nlinarith [sq_nonneg ((M : ℝ) - 1)]
+  have hy : 0 < y := lt_of_lt_of_le (by norm_num) hy0
+  have hm : ∀ m ∈ sM, 0 < m := by
+    intro m hm'
+    exact lt_of_lt_of_le Int.zero_lt_one (hm1 m hm')
+  have hn : ∀ n ∈ sN, 0 < n := by
+    intro n hn'
+    exact lt_of_lt_of_le Int.zero_lt_one (hn1 n hn')
+  have hlogM : 0 ≤ Real.log (M : ℝ) :=
+    Real.log_nonneg (by exact_mod_cast (show 1 ≤ M by omega))
+  have hR : 0 ≤ R := by
+    dsimp [R, rankOneRectangularLSRHS]
+    positivity
+  let F : (q : ℕ) → PrimitiveCharacter q → ℝ → ℂ := fun q χ t =>
+    (Real.exp (-ε * t) : ℂ) *
+      rectangularKernelCharacterSum a b y t Ma Mb Na Nb q χ
+  have hFint := fun q χ =>
+    (rectangularDampedPerron_integrable_formula a b ε y hε Ma Mb Na Nb q χ).1
+  have hkernel := fun q χ =>
+    (rectangularDampedPerron_integrable_formula a b ε y hε Ma Mb Na Nb q χ).2
   let w : ℕ → ℝ := fun q => (q : ℝ) / (q.totient : ℝ)
   let D : (q : ℕ) → PrimitiveCharacter q → ℂ := fun q χ =>
     ((∑ m ∈ sM, a m * χ.1 (m : ZMod q)) *
@@ -235,13 +370,7 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
   let G : ℝ → ℝ := fun t =>
     ∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, ‖F q χ t‖
   have hGint : IntegrableOn G (Set.Ioi 0) := by
-    dsimp only [G]
-    apply integrable_finsetSum
-    intro q hq
-    apply Integrable.const_mul
-    apply integrable_finsetSum
-    intro χ hχ
-    exact (hFint q χ).norm
+    exact dampedPerron_weighted_norm_integrable S w F _ hFint
   have hDmean :
       (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, ‖D q χ‖) =
         rankOneRectangularWeightedPrimitiveMean a b Ma Mb Na Nb S := by
@@ -256,30 +385,8 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
       (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
           ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) ≤
         ∫ t in Set.Ioi (0 : ℝ), G t := by
-    calc
-      (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
-          ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) ≤
-          ∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
-            ∫ t in Set.Ioi (0 : ℝ), ‖F q χ t‖ := by
-        apply Finset.sum_le_sum
-        intro q hq
-        apply mul_le_mul_of_nonneg_left
-        · apply Finset.sum_le_sum
-          intro χ hχ
-          exact MeasureTheory.norm_integral_le_integral_norm _
-        · dsimp [w]
-          positivity
-      _ = ∫ t in Set.Ioi (0 : ℝ), G t := by
-        dsimp only [G]
-        rw [integral_finsetSum S]
-        · apply Finset.sum_congr rfl
-          intro q hq
-          rw [MeasureTheory.integral_const_mul]
-          rw [integral_finsetSum Finset.univ]
-          intro χ hχ
-          exact (hFint q χ).norm
-        · intro q hq
-          exact (integrable_finsetSum Finset.univ fun χ hχ => (hFint q χ).norm).const_mul _
+    exact dampedPerron_weighted_norm_integral_le S w
+      (fun _ _ => by dsimp [w]; positivity) F _ hFint
   have hbase :
       rankOneRectangularWeightedPrimitiveMean a b Ma Mb Na Nb S ≤ R := by
     simpa only [R, rankOneRectangularLSRHS] using
@@ -295,41 +402,12 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
     intro t ht
     have hc : 0 ≤ min 1 (L₁ * t) :=
       le_min (by norm_num) (mul_nonneg hL₁ ht.le)
-    have heA := sum_norm_sq_leftSinTwist_Icc_le_of_halfstep
-      a y t Ma Na M hM hy0 hyM hm1 hmM
-    have heB := sum_norm_sq_rightCosTwist_le b t sN
-    have hls := rankOneRectangularWeightedPrimitiveMean_le
-      (leftSinTwist a y t) (rightCosTwist b t) Ma Mb Na Nb Q hQ S hS
-    calc
-      rankOneRectangularWeightedPrimitiveMean
-          (leftSinTwist a y t) (rightCosTwist b t) Ma Mb Na Nb S ≤
-          Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-            ∑ m ∈ sM, ‖leftSinTwist a y t m‖ ^ 2) *
-          Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-            ∑ n ∈ sN, ‖rightCosTwist b t n‖ ^ 2) := by simpa [sM, sN] using hls
-      _ ≤ Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-            ((min 1 (L₁ * t)) ^ 2 * ∑ m ∈ sM, ‖a m‖ ^ 2)) *
-          Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-            ∑ n ∈ sN, ‖b n‖ ^ 2) := by
-        gcongr
-        · unfold largeSieveBound
-          positivity
-        · simpa [L₁, abs_of_pos ht] using heA
-        · unfold largeSieveBound
-          positivity
-      _ = min 1 (L₁ * t) * R := by
-        have hA : 0 ≤ largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-            ∑ m ∈ sM, ‖a m‖ ^ 2 := by
-          unfold largeSieveBound
-          positivity
-        rw [show largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-              ((min 1 (L₁ * t)) ^ 2 * ∑ m ∈ sM, ‖a m‖ ^ 2) =
-            (min 1 (L₁ * t)) ^ 2 *
-              (largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-                ∑ m ∈ sM, ‖a m‖ ^ 2) by ring,
-          Real.sqrt_mul (sq_nonneg (min 1 (L₁ * t))), Real.sqrt_sq hc]
-        dsimp only [R, rankOneRectangularLSRHS]
-        ring
+    simpa only [one_mul, mul_one] using
+      rankOneRectangularWeightedPrimitiveMean_le_scaled_energy
+        a b (leftSinTwist a y t) (rightCosTwist b t) Ma Mb Na Nb Q hQ S hS
+        (min 1 (L₁ * t)) (1) hc (by norm_num)
+        (by simpa only [one_pow, one_mul, L₁, abs_of_pos ht] using sum_norm_sq_leftSinTwist_Icc_le_of_halfstep a y t Ma Na M hM hy0 hyM hm1 hmM)
+        (by simpa only [one_pow, one_mul, L₂, abs_of_pos ht] using sum_norm_sq_rightCosTwist_le b t sN)
   have hlane₂ : ∀ t : ℝ, 0 < t →
       rankOneRectangularWeightedPrimitiveMean
           (leftCosTwist a y t) (rightSinTwist b t) Ma Mb Na Nb S ≤
@@ -337,40 +415,12 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
     intro t ht
     have hc : 0 ≤ min 1 (L₂ * t) :=
       le_min (by norm_num) (mul_nonneg hL₂ ht.le)
-    have heA := sum_norm_sq_leftCosTwist_le a y t sM
-    have heB := sum_norm_sq_rightSinTwist_Icc_le b t Mb Nb M (by omega) hn1 hnM
-    have hls := rankOneRectangularWeightedPrimitiveMean_le
-      (leftCosTwist a y t) (rightSinTwist b t) Ma Mb Na Nb Q hQ S hS
-    calc
-      rankOneRectangularWeightedPrimitiveMean
-          (leftCosTwist a y t) (rightSinTwist b t) Ma Mb Na Nb S ≤
-          Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-            ∑ m ∈ sM, ‖leftCosTwist a y t m‖ ^ 2) *
-          Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-            ∑ n ∈ sN, ‖rightSinTwist b t n‖ ^ 2) := by simpa [sM, sN] using hls
-      _ ≤ Real.sqrt (largeSieveBound Na (1 / (Q : ℝ) ^ 2) *
-            ∑ m ∈ sM, ‖a m‖ ^ 2) *
-          Real.sqrt (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-            ((min 1 (L₂ * t)) ^ 2 * ∑ n ∈ sN, ‖b n‖ ^ 2)) := by
-        gcongr
-        · unfold largeSieveBound
-          positivity
-        · unfold largeSieveBound
-          positivity
-        · simpa [L₂, abs_of_pos ht] using heB
-      _ = min 1 (L₂ * t) * R := by
-        have hB : 0 ≤ largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-            ∑ n ∈ sN, ‖b n‖ ^ 2 := by
-          unfold largeSieveBound
-          positivity
-        rw [show largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-              ((min 1 (L₂ * t)) ^ 2 * ∑ n ∈ sN, ‖b n‖ ^ 2) =
-            (min 1 (L₂ * t)) ^ 2 *
-              (largeSieveBound Nb (1 / (Q : ℝ) ^ 2) *
-                ∑ n ∈ sN, ‖b n‖ ^ 2) by ring,
-          Real.sqrt_mul (sq_nonneg (min 1 (L₂ * t))), Real.sqrt_sq hc]
-        dsimp only [R, rankOneRectangularLSRHS]
-        ring
+    simpa only [one_mul, mul_one] using
+      rankOneRectangularWeightedPrimitiveMean_le_scaled_energy
+        a b (leftCosTwist a y t) (rightSinTwist b t) Ma Mb Na Nb Q hQ S hS
+        (1) (min 1 (L₂ * t)) (by norm_num) hc
+        (by simpa only [one_pow, one_mul, L₁, abs_of_pos ht] using sum_norm_sq_leftCosTwist_le a y t sM)
+        (by simpa only [one_pow, one_mul, L₂, abs_of_pos ht] using sum_norm_sq_rightSinTwist_Icc_le b t Mb Nb M (by omega) hn1 hnM)
   have hG : ∀ t ∈ Set.Ioi (0 : ℝ),
       G t ≤ (dampedPerronMajorantIntegrand ε L₁ t +
         dampedPerronMajorantIntegrand ε L₂ t) * R := by
@@ -486,27 +536,8 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
   have hmajorInt :
       (∫ t in Set.Ioi (0 : ℝ), G t) ≤
         ((L₁ + Real.log (1 / ε) + 1) +
-          (L₂ + Real.log (1 / ε) + 1)) * R := by
-    calc
-      (∫ t in Set.Ioi (0 : ℝ), G t) ≤
-          ∫ t in Set.Ioi (0 : ℝ),
-            (dampedPerronMajorantIntegrand ε L₁ t +
-              dampedPerronMajorantIntegrand ε L₂ t) * R := by
-        apply MeasureTheory.integral_mono_ae hGint
-        · exact ((dampedPerronMajorant_integrableOn_Ioi hε hL₁).add
-            (dampedPerronMajorant_integrableOn_Ioi hε hL₂)).mul_const R
-        · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-          exact hG t ht
-      _ = ((∫ t in Set.Ioi (0 : ℝ), dampedPerronMajorantIntegrand ε L₁ t) +
-            (∫ t in Set.Ioi (0 : ℝ), dampedPerronMajorantIntegrand ε L₂ t)) * R := by
-        rw [MeasureTheory.integral_mul_const, MeasureTheory.integral_add
-          (dampedPerronMajorant_integrableOn_Ioi hε hL₁)
-          (dampedPerronMajorant_integrableOn_Ioi hε hL₂)]
-      _ ≤ ((L₁ + Real.log (1 / ε) + 1) +
-            (L₂ + Real.log (1 / ε) + 1)) * R := by
-        gcongr
-        · exact dampedPerronMajorant_integral_Ioi_le hε hε1 hL₁
-        · exact dampedPerronMajorant_integral_Ioi_le hε hε1 hL₂
+          (L₂ + Real.log (1 / ε) + 1)) * R :=
+    dampedPerron_integral_le_two_majorants hε hε1 hL₁ hL₂ hR hGint hG
   have hlogε : Real.log (1 / ε) = 2 * Real.log (M : ℝ) := by
     dsimp only [ε]
     rw [show 1 / (1 / (M : ℝ) ^ 2) = (M : ℝ) ^ 2 by field_simp,
@@ -526,48 +557,11 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
       (1 / 2) * (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, ‖D q χ‖) +
         (1 / Real.pi) * (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
           ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) := by
-      calc
-        (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
-            ‖rectangularSmoothedKernelCharacterSum a b ε y Ma Mb Na Nb q χ‖) ≤
-            ∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
-              ((1 / 2) * ‖D q χ‖ + (1 / Real.pi) *
-                ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) := by
-          apply Finset.sum_le_sum
-          intro q hq
-          apply mul_le_mul_of_nonneg_left
-          · apply Finset.sum_le_sum
-            intro χ hχ
-            rw [hkernel q χ]
-            calc
-              ‖(1 / 2 : ℂ) * D q χ + (1 / Real.pi : ℂ) *
-                  ∫ t in Set.Ioi (0 : ℝ), F q χ t‖ ≤
-                  ‖(1 / 2 : ℂ) * D q χ‖ +
-                    ‖(1 / Real.pi : ℂ) * ∫ t in Set.Ioi (0 : ℝ), F q χ t‖ :=
-                norm_add_le _ _
-              _ = (1 / 2) * ‖D q χ‖ + (1 / Real.pi) *
-                  ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖ := by
-                have hhalf : ‖(1 / 2 : ℂ)‖ = (1 / 2 : ℝ) := by norm_num
-                have hpi : ‖(1 / Real.pi : ℂ)‖ = (1 / Real.pi : ℝ) := by
-                  rw [norm_div, norm_one, Complex.norm_real, Real.norm_eq_abs,
-                    abs_of_pos Real.pi_pos, one_div]
-                simp only [norm_mul, hhalf, hpi]
-          · dsimp [w]
-            positivity
-        _ = (1 / 2) * (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q, ‖D q χ‖) +
-              (1 / Real.pi) * (∑ q ∈ S, w q * ∑ χ : PrimitiveCharacter q,
-                ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) := by
-          rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
-          apply Finset.sum_congr rfl
-          intro q hq
-          calc
-            w q * ∑ χ : PrimitiveCharacter q,
-                ((1 / 2) * ‖D q χ‖ + (1 / Real.pi) *
-                  ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) =
-                w q * ((1 / 2) * ∑ χ : PrimitiveCharacter q, ‖D q χ‖ +
-                  (1 / Real.pi) * ∑ χ : PrimitiveCharacter q,
-                    ‖∫ t in Set.Ioi (0 : ℝ), F q χ t‖) := by
-              rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum]
-            _ = _ := by ring
+      simp_rw [hkernel]
+      simpa only [Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_ofNat] using
+        dampedPerron_weighted_norm_add_le S w (fun _ _ => by dsimp [w]; positivity)
+          D (fun q χ => ∫ t in Set.Ioi (0 : ℝ), F q χ t)
+          (1 / 2) (1 / Real.pi) (by positivity) (by positivity)
     _ ≤ (1 / 2) * R + (1 / Real.pi) * ((7 * Real.log (M : ℝ) + 2) * R) := by
       gcongr
       · rw [hDmean]
@@ -576,22 +570,19 @@ theorem rectangularSmoothedKernelWeightedPrimitiveMean_le
     _ = (1 / 2 + (7 * Real.log (M : ℝ) + 2) / Real.pi) * R := by ring
     _ = _ := rfl
 
-/-- Sharp-to-smoothed comparison with the error displayed explicitly.  The
-product-support bound is the exact hyperbolic support condition used to apply
-the half-step separation lemma to the integer `m*n`. -/
-theorem rectangularSharpHyperbolicWeightedPrimitiveMean_le_smoothed
-    (a b : ℤ → ℂ) (Y M : ℕ) (Ma Mb : ℤ) (Na Nb : ℕ) (S : Finset ℕ)
+/-- The half-step smoothing error for one rectangular character sum.
+The cutoff remains an argument, so it may later depend on the character. -/
+theorem rectangularSharpHyperbolicCharacterSum_norm_le_smoothed
+    (a b : ℤ → ℂ) (Y M : ℕ) (Ma Mb : ℤ) (Na Nb : ℕ)
     (hM : 1 ≤ M) (hYM : Y ≤ M)
     (hmnPos : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
       ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 0 < m * n)
-    (_hmnM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-      ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), m * n ≤ (M : ℤ)) :
-    rectangularSharpHyperbolicWeightedPrimitiveMean a b Y Ma Mb Na Nb S ≤
-      rectangularSmoothedKernelWeightedPrimitiveMean a b (1 / (M : ℝ) ^ 2)
+    (q : ℕ) (χ : PrimitiveCharacter q) :
+    ‖rectangularSharpHyperbolicCharacterSum a b Y Ma Mb Na Nb q χ‖ ≤
+      ‖rectangularSmoothedKernelCharacterSum a b (1 / (M : ℝ) ^ 2)
         (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y)
-        Ma Mb Na Nb S +
-      (8 / (Real.pi * (M : ℝ))) *
-        rectangularCoefficientL1 a b Ma Mb Na Nb * weightedPrimitiveFamilyMass S := by
+        Ma Mb Na Nb q χ‖ +
+      (8 / (Real.pi * (M : ℝ))) * rectangularCoefficientL1 a b Ma Mb Na Nb := by
   let ε : ℝ := 1 / (M : ℝ) ^ 2
   let E : ℝ := 8 / (Real.pi * (M : ℝ))
   have hMr : (0 : ℝ) < M := by exact_mod_cast (show 0 < M by omega)
@@ -685,65 +676,47 @@ theorem rectangularSharpHyperbolicWeightedPrimitiveMean_le_smoothed
           ‖a m‖ * ‖b n‖ * 1 * E := by
             gcongr
       _ = E * ‖a m‖ * ‖b n‖ := by ring
-  have hsingle : ∀ q (χ : PrimitiveCharacter q),
-      ‖rectangularSharpHyperbolicCharacterSum a b Y Ma Mb Na Nb q χ‖ ≤
-        ‖rectangularSmoothedKernelCharacterSum a b ε
-          (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y)
-          Ma Mb Na Nb q χ‖ + E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
-    intro q χ
-    let A := rectangularSharpHyperbolicCharacterSum a b Y Ma Mb Na Nb q χ
-    let B := rectangularSmoothedKernelCharacterSum a b ε
-      (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y) Ma Mb Na Nb q χ
-    calc
-      ‖A‖ = ‖B + (A - B)‖ := by congr 1; ring
-      _ ≤ ‖B‖ + ‖A - B‖ := norm_add_le _ _
-      _ ≤ ‖B‖ + E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
-        gcongr
-        dsimp [A, B, rectangularSharpHyperbolicCharacterSum,
-          rectangularSmoothedKernelCharacterSum]
-        rw [← Finset.sum_sub_distrib]
-        calc
-          ‖∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-              ((∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-                a m * b n * χ.1 ((m * n : ℤ) : ZMod q) *
-                  (if m * n ≤ (Y : ℤ) then 1 else 0)) -
-               ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-                a m * b n * χ.1 ((m * n : ℤ) : ZMod q) *
-                  (dampedArctanPerronKernel ε
-                    (Real.log (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y /
-                      ((m * n : ℤ) : ℝ))) : ℂ))‖ ≤
-              ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-                ‖(∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-                  a m * b n * χ.1 ((m * n : ℤ) : ZMod q) *
-                    (if m * n ≤ (Y : ℤ) then 1 else 0)) -
-                 ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-                  a m * b n * χ.1 ((m * n : ℤ) : ZMod q) *
-                    (dampedArctanPerronKernel ε
-                      (Real.log (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y /
-                        ((m * n : ℤ) : ℝ))) : ℂ)‖ := norm_sum_le _ _
-          _ ≤ ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-              ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-                E * ‖a m‖ * ‖b n‖ := by
-            apply Finset.sum_le_sum
-            intro m hm
-            rw [← Finset.sum_sub_distrib]
-            exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun n hn => hpoint q χ m hm n hn)
-          _ = E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
-            unfold rectangularCoefficientL1
-            calc
-              (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-                  ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-                    E * ‖a m‖ * ‖b n‖) =
-                  ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-                    E * ‖a m‖ *
-                      (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), ‖b n‖) := by
-                    apply Finset.sum_congr rfl
-                    intro m hm
-                    rw [Finset.mul_sum]
-              _ = E * (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖a m‖) *
-                    (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), ‖b n‖) := by
-                    rw [← Finset.sum_mul, ← Finset.mul_sum]
-              _ = _ := by ring
+  let A := rectangularSharpHyperbolicCharacterSum a b Y Ma Mb Na Nb q χ
+  let B := rectangularSmoothedKernelCharacterSum a b ε
+    (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y) Ma Mb Na Nb q χ
+  change ‖A‖ ≤ ‖B‖ + E * rectangularCoefficientL1 a b Ma Mb Na Nb
+  calc
+    ‖A‖ = ‖B + (A - B)‖ := by congr 1; ring
+    _ ≤ ‖B‖ + ‖A - B‖ := norm_add_le _ _
+    _ ≤ ‖B‖ + E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
+      apply add_le_add le_rfl
+      dsimp [A, B, rectangularSharpHyperbolicCharacterSum,
+        rectangularSmoothedKernelCharacterSum]
+      simp only [← Finset.sum_sub_distrib]
+      calc
+        _ ≤ ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
+            ∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), E * ‖a m‖ * ‖b n‖ :=
+          (norm_sum_le _ _).trans (Finset.sum_le_sum fun m hm =>
+            (norm_sum_le _ _).trans (Finset.sum_le_sum fun n hn => hpoint q χ m hm n hn))
+        _ = E * rectangularCoefficientL1 a b Ma Mb Na Nb := by
+          simp only [rectangularCoefficientL1, Finset.mul_sum, Finset.sum_mul, mul_assoc]
+          rw [Finset.sum_comm]
+
+/-- Sharp-to-smoothed comparison with the error displayed explicitly.  The
+product-support hypothesis is retained for compatibility; the half-step
+separation argument does not require this upper bound on `m*n`. -/
+theorem rectangularSharpHyperbolicWeightedPrimitiveMean_le_smoothed
+    (a b : ℤ → ℂ) (Y M : ℕ) (Ma Mb : ℤ) (Na Nb : ℕ) (S : Finset ℕ)
+    (hM : 1 ≤ M) (hYM : Y ≤ M)
+    (hmnPos : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
+      ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 0 < m * n)
+    (_hmnM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
+      ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), m * n ≤ (M : ℤ)) :
+    rectangularSharpHyperbolicWeightedPrimitiveMean a b Y Ma Mb Na Nb S ≤
+      rectangularSmoothedKernelWeightedPrimitiveMean a b (1 / (M : ℝ) ^ 2)
+        (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y)
+        Ma Mb Na Nb S +
+      (8 / (Real.pi * (M : ℝ))) *
+        rectangularCoefficientL1 a b Ma Mb Na Nb * weightedPrimitiveFamilyMass S := by
+  let ε : ℝ := 1 / (M : ℝ) ^ 2
+  let E : ℝ := 8 / (Real.pi * (M : ℝ))
+  have hsingle := rectangularSharpHyperbolicCharacterSum_norm_le_smoothed
+    a b Y M Ma Mb Na Nb hM hYM hmnPos
   unfold rectangularSharpHyperbolicWeightedPrimitiveMean
     rectangularSmoothedKernelWeightedPrimitiveMean weightedPrimitiveFamilyMass
   change _ ≤ _ + E * rectangularCoefficientL1 a b Ma Mb Na Nb * _

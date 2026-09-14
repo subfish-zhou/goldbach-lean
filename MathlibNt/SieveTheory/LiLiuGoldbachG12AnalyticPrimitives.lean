@@ -1,3 +1,4 @@
+import MathlibNt.Tactic.ElementaryDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticEnvelope
 
 noncomputable section
@@ -45,13 +46,11 @@ def densityPrimitive (u : ℝ) : ℝ :=
 
 theorem densityPrimitive_deriv {u : ℝ} (hu : 0 < u) :
     HasDerivAt densityPrimitive (density u) u := by
-  have hn : u ≠ 0 := ne_of_gt hu
-  have hb : (4/33 : ℝ)/u ≠ 0 := div_ne_zero (by norm_num) hn
-  have hq := (hasDerivAt_const u (4/33 : ℝ)).div (hasDerivAt_id u) hn
-  have hl := (Real.hasDerivAt_log hb).comp u hq
-  have h := ((Real.hasDerivAt_log hn).const_mul (33/4 : ℝ)).add
-    (((hasDerivAt_const u (2 : ℝ)).sub hl).div (hasDerivAt_id u) hn)
-  convert h using 1 <;> first | rfl | (dsimp [density]; field_simp; ring)
+  unfold densityPrimitive
+  elementary_deriv []
+  unfold density
+  field_simp
+  ring
 
 /-- FTC eliminates the full high-branch density integral exactly. -/
 theorem high_integral_exact :

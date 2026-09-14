@@ -4,6 +4,8 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeCo
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144SourceLargeLogFixedThreshold
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogUniform
 
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBudgetCore
+
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
 
@@ -248,68 +250,14 @@ theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_
     apply errorEnvelope_endpoint_le_of_claim14_6 hH.toSection13HatContract hDreal hi
     rw [hH.betaHat_eq]
     exact ⟨hEvenLower, by simpa [σ] using h2σ⟩
-  have hlog : 0 < Real.log (D : ℝ) := Real.log_pos hDreal
-  have hll : 0 < Real.log (Real.log (D : ℝ)) := by
-    apply Real.log_pos
-    have he : Real.exp 1 < (D : ℝ) := by
-      calc Real.exp 1 < 3 := by linarith [Real.exp_one_lt_d9]
-           _ ≤ (D : ℝ) := by exact_mod_cast hD3
-    exact (Real.lt_log_iff_exp_lt hDpos).2 he
-  have hlllog : Real.log (Real.log (D : ℝ)) ≤ Real.log (D : ℝ) := by
-    linarith [Real.log_le_sub_one_of_pos hlog]
-  have hzD : (z : ℝ) ≤ (D : ℝ) := by
-    exact_mod_cast (Nat.ceil_le.mpr (by
-      calc
-        (D : ℝ) ^ (1 / (2 : ℝ)) ≤ (D : ℝ) ^ (1 : ℝ) := by
-          apply Real.rpow_le_rpow_of_exponent_le hDreal.le
-          norm_num
-        _ = (D : ℝ) := by norm_num))
-  have hEσ0 : 0 ≤ errorEnvelope H M (D : ℝ) d σ :=
-    errorEnvelope_nonneg H M hDreal (by dsimp [σ]; linarith [h2σ])
-      (hH.positive _ _ (by dsimp [σ]; linarith [h2σ])).le
-  have hzeroDirect : suzukiSigmaZero S M D z ((D : ℝ) ^ (1 / σ)) ≤
-      caseISigmaZeroDirectRemainder S H M D CB K d Δ := by
-    have hCpos : 0 < C := by linarith [hC3]
-    have hzraw := hzeroRaw
-    have heq : (CB / C) * (C * claim14_5Scale S H M (D : ℝ) d Δ
-        (sourceSigma (D : ℝ) d) K (sourceSigma (D : ℝ) d)) =
-        caseISigmaZeroDirectRemainder S H M D CB K d Δ := by
-      unfold caseISigmaZeroDirectRemainder
-      field_simp [ne_of_gt hCpos]
-    rw [heq] at hzraw
-    simpa [σ] using hzraw
-  have hzeroSource := caseISigmaZeroDirectRemainder_le_sourceOrder
-    (S := S) (H := H) (N := M) (D := D) (z := z)
-    (C := C) (C145 := CB) (K := K) (d := d) (Δ := Δ)
-    hDreal hll hlllog hzD (by simpa [σ] using (show (0 : ℝ) <
-      sourceSigma (D : ℝ) d by linarith [h2σ]))
-    hCpos hCB.le (by simpa [σ] using hEσ0)
-  have hbudgetTransport : sigma12InheritedBudget S H M D z C K d Δ σ ≤
-      sigma12InheritedBudget S H M D z C K d Δ 2 := by
-    unfold sigma12InheritedBudget
-    apply mul_le_mul_of_nonneg_left hEtransport
-    exact mul_nonneg
-      (mul_nonneg
-        (mul_nonneg hCpos.le (Real.exp_pos _).le)
-        (suzukiVProduct_pos S (z : ℝ)).le)
-      (Real.rpow_nonneg (Real.log_nonneg hDreal.le) _)
   have hzeroUnit : suzukiSigmaZero S M D z ((D : ℝ) ^ (1 / σ)) ≤
       (CB / C) * caseI1423RemainderUnit
         (sigma12InheritedBudget S H M D z C K d Δ 2) (D : ℝ) σ := by
-    apply hzeroDirect.trans
-    calc
-      caseISigmaZeroDirectRemainder S H M D CB K d Δ ≤
-          caseISourceOrderCoefficient (CB / C) (D : ℝ) d *
-            sigma12InheritedBudget S H M D z C K d Δ σ := hzeroSource
-      _ ≤ caseISourceOrderCoefficient (CB / C) (D : ℝ) d *
-            sigma12InheritedBudget S H M D z C K d Δ 2 := by
-        apply mul_le_mul_of_nonneg_left hbudgetTransport
-        unfold caseISourceOrderCoefficient
-        exact div_nonneg (div_nonneg hCB.le hCpos.le) (by positivity)
-      _ = (CB / C) * caseI1423RemainderUnit
-          (sigma12InheritedBudget S H M D z C K d Δ 2) (D : ℝ) σ := by
-        simp [caseISourceOrderCoefficient, caseI1423RemainderUnit, σ]
-        ring
+    apply hzeroRaw.trans
+    have hscale := caseI_claim145Scale_le_transported_remainderUnit S H
+      (K := K) (Δ := Δ)
+      hH hD3 hCpos hCB.le (by norm_num : (1 : ℝ) ≤ 2) h2σ hEtransport
+    simpa only [← mul_assoc, div_mul_cancel₀ _ hCpos.ne'] using hscale
   have hAactual : 0 ≤ CB / C + 6 * L * R /
       (C * Real.exp (Real.sqrt K)) + 12 * R := by
     positivity
@@ -334,29 +282,13 @@ theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_
         (Real.rpow_nonneg (Real.log_nonneg hDreal.le) _))
       (errorEnvelope_nonneg H M hDreal (by norm_num)
         (hH.positive _ _ (by norm_num)).le)
-  have hunit : (CB / C + 6 * L * R / (C * Real.exp (Real.sqrt K)) + 12 * R) *
-        caseI1423RemainderUnit
-          (sigma12InheritedBudget S H M D z C K d Δ 2) (D : ℝ) σ =
-      caseISourceOrderCoefficient
-          (CB / C + 6 * L * R / (C * Real.exp (Real.sqrt K)) + 12 * R)
-          (D : ℝ) d * sigma12InheritedBudget S H M D z C K d Δ 2 := by
-    simp [caseI1423RemainderUnit, caseISourceOrderCoefficient, σ]
-    ring
   have hside : suzukiSigmaZero S M D z ((D : ℝ) ^ (1 / σ)) +
         suzukiVProduct S z * (6 * K ^ 2 * finiteSourceLayer 1 2 (M - 1) 1 /
           Real.log ((D : ℝ) ^ (1 / σ))) +
         caseI1423Sigma12Endpoint S H M D z C K d Δ 2 σ ≤
       (1 - q12.ρ) * sigma12InheritedBudget S H M D z C K d Δ 2 := by
-    have hsrcBound := add_le_add (add_le_add hzeroUnit hend.1) hend.2
-    calc
-      _ ≤ (CB / C + 6 * L * R / (C * Real.exp (Real.sqrt K)) + 12 * R) *
-          caseI1423RemainderUnit
-            (sigma12InheritedBudget S H M D z C K d Δ 2) (D : ℝ) σ := by
-        linarith
-      _ = _ := hunit
-      _ ≤ (1 - qgap.ρ) * sigma12InheritedBudget S H M D z C K d Δ 2 :=
-        mul_le_mul_of_nonneg_right hcoefGap hbudget
-      _ = _ := by rw [hqrho]
+    rw [hqrho]
+    exact caseI_three_remainders_le_gap hbudget hzeroUnit hend.1 hend.2 hcoefGap
   have h2raw := lemma144_sigmaTwo_eq_zero_of_kappaOne_caseI
     (N := M) S hD4 (by norm_num : (2 : ℝ) ≤ 2) hz
   have h2 : suzukiSigmaTwo S M D z ((D : ℝ) ^ (1 / (2 : ℝ))) = 0 := by

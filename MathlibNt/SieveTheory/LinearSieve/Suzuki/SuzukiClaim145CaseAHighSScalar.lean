@@ -1,6 +1,7 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowS
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
+import MathlibNt.Analysis.RealLogPowerThreshold
 
 open scoped Classical BigOperators
 open Filter Topology Asymptotics
@@ -210,56 +211,16 @@ theorem claim145_caseA_highS_log_gain_with_constant_eventually
   have hBpos : 0 < B := by
     dsimp [B]
     positivity
-  have htail := (isLittleO_log_rpow_rpow_atTop (2 * Θ + 3) hgap).bound
-    (show (0 : ℝ) < 1 / (B + 1) by positivity)
-  have hsqrtLarge := (isLittleO_log_rpow_rpow_atTop 3 (show (0 : ℝ) < 1 / 2 by norm_num)).bound
-    (show (0 : ℝ) < 1 / 4 by norm_num)
   have hS : ∀ᶠ t : ℝ in atTop,
-      B * (Real.log t) ^ (2 * Θ + 3) ≤ t ^ (d - 2 * Θ) := by
-    filter_upwards [htail, Filter.eventually_ge_atTop 2] with t htail' ht2
-    have ht0 : 0 < t := by linarith
-    have hpow : 0 ≤ t ^ (d - 2 * Θ) := Real.rpow_nonneg ht0.le _
-    change |(Real.log t) ^ (2 * Θ + 3)| ≤
-      1 / (B + 1) * |t ^ (d - 2 * Θ)| at htail'
-    rw [abs_of_nonneg (Real.rpow_nonneg (Real.log_nonneg (by linarith)) _),
-      abs_of_nonneg hpow] at htail'
-    have hscaled := mul_le_mul_of_nonneg_left htail' hBpos.le
-    have hfrac : B * (1 / (B + 1)) ≤ 1 := by
-      rw [div_eq_mul_inv, ← mul_assoc]
-      exact (div_le_one (by positivity : 0 < B + 1)).2 (by linarith)
-    calc
-      B * (Real.log t) ^ (2 * Θ + 3) ≤
-          (B * (1 / (B + 1))) * t ^ (d - 2 * Θ) := by
-        simpa only [mul_assoc] using hscaled
-      _ ≤ 1 * t ^ (d - 2 * Θ) := mul_le_mul_of_nonneg_right hfrac hpow
-      _ = _ := one_mul _
+      B * (Real.log t) ^ (2 * Θ + 3) ≤ t ^ (d - 2 * Θ) :=
+    MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow B (2 * Θ + 3) hgap
   rcases eventually_atTop.1 hS with ⟨S0, hS0⟩
   have hsqrtS : ∀ᶠ K : ℝ in atTop, S0 ≤ Real.sqrt K / Real.log K := by
-    have hM0 : 0 ≤ max S0 4 := le_trans (by norm_num) (le_max_right S0 4)
-    have hlarge :=
-      (isLittleO_log_rpow_rpow_atTop 1 (show (0 : ℝ) < 1 / 2 by norm_num)).bound
-        (show (0 : ℝ) < 1 / (max S0 4 + 1) by positivity)
-    filter_upwards [eventually_ge_atTop (1 : ℝ),
-      Real.tendsto_log_atTop.eventually_ge_atTop 1, hlarge]
-        with K hKone hlogK1' hlarge'
-    have hK0 : 0 < K := by linarith
-    have hlogK : 0 < Real.log K := zero_lt_one.trans_le hlogK1'
-    change |Real.log K ^ (1 : ℝ)| ≤
-      1 / (max S0 4 + 1) * |K ^ (1 / 2 : ℝ)| at hlarge'
-    rw [Real.rpow_one, abs_of_nonneg hlogK.le,
-      abs_of_nonneg (Real.rpow_nonneg hK0.le _), ← Real.sqrt_eq_rpow] at hlarge'
-    have hscaled := mul_le_mul_of_nonneg_left hlarge' hM0
-    have hfrac : max S0 4 / (max S0 4 + 1) ≤ 1 :=
-      (div_le_one (by positivity : 0 < max S0 4 + 1)).2 (by linarith)
-    have hsqrt0 : 0 ≤ Real.sqrt K := Real.sqrt_nonneg K
-    have hmain : max S0 4 * Real.log K ≤ Real.sqrt K := by
-      calc
-        _ ≤ max S0 4 * (1 / (max S0 4 + 1) * Real.sqrt K) := hscaled
-        _ = (max S0 4 / (max S0 4 + 1)) * Real.sqrt K := by field_simp
-        _ ≤ 1 * Real.sqrt K := mul_le_mul_of_nonneg_right hfrac hsqrt0
-        _ = _ := one_mul _
-    apply (le_div_iff₀ hlogK).2
-    exact (mul_le_mul_of_nonneg_right (le_max_left S0 4) hlogK.le).trans hmain
+    filter_upwards [MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow S0 1
+      (by norm_num : (0 : ℝ) < 1 / 2),
+      Real.tendsto_log_atTop.eventually_gt_atTop 0] with K hlarge hlogK
+    rw [Real.rpow_one, ← Real.sqrt_eq_rpow] at hlarge
+    exact (le_div_iff₀ hlogK).2 hlarge
   filter_upwards [eventually_ge_atTop (3 : ℝ),
       Real.tendsto_log_atTop.eventually_ge_atTop 1,
       claim145_caseA_highS_log_relation_eventually, hsqrtS]
@@ -455,32 +416,16 @@ theorem claim145_caseA_highS_front_factor_eventually_uniform_in_S
         |Real.log (Real.log 27 / Real.log 2 + 1)|)
   have hAσ : 0 ≤ Aσ := by dsimp [Aσ]; positivity
   have hpowGap : 0 < (d - 2 * Θ) / (2 * d) := by positivity
-  have hdom0 := (isLittleO_log_rpow_rpow_atTop 2 hpowGap).bound
-    (show (0 : ℝ) < 1 / (Aσ + 1) by positivity)
   have hdom : ∀ᶠ K : ℝ in atTop,
       Aσ * (Real.log K) ^ 2 ≤ K ^ ((d - 2 * Θ) / (2 * d)) := by
-    filter_upwards [hdom0, eventually_ge_atTop (1 : ℝ)] with K hK hK1
-    have hpow0 : 0 ≤ K ^ ((d - 2 * Θ) / (2 * d)) :=
-      Real.rpow_nonneg (by linarith) _
-    change |(Real.log K) ^ (2 : ℝ)| ≤
-      1 / (Aσ + 1) * |K ^ ((d - 2 * Θ) / (2 * d))| at hK
-    rw [Real.rpow_two, abs_of_nonneg (sq_nonneg _), abs_of_nonneg hpow0] at hK
-    have hscaled := mul_le_mul_of_nonneg_left hK hAσ
-    have hfrac : Aσ * (1 / (Aσ + 1)) ≤ 1 := by
-      rw [div_eq_mul_inv, ← mul_assoc]
-      exact (div_le_one (by positivity : 0 < Aσ + 1)).2 (by linarith)
-    calc
-      Aσ * (Real.log K) ^ 2 ≤
-          (Aσ * (1 / (Aσ + 1))) * K ^ ((d - 2 * Θ) / (2 * d)) := by
-            nlinarith
-      _ ≤ 1 * K ^ ((d - 2 * Θ) / (2 * d)) :=
-        mul_le_mul_of_nonneg_right hfrac hpow0
-      _ = _ := one_mul _
+    simpa only [Real.rpow_two] using
+      MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow Aσ 2 hpowGap
   let Q : ℝ := 3 * |Real.log C1| + |Real.log (Real.log 2)| + 3 * Θ + 2
   have hQ0 : 0 ≤ Q := by dsimp [Q]; positivity
-  have hprefLog0 := (isLittleO_log_rpow_rpow_atTop 1
-      (show (0 : ℝ) < 1 / 2 by norm_num)).bound
-    (show (0 : ℝ) < 1 / (4 * (Q + 1)) by positivity)
+  have hprefLog0 : ∀ᶠ K : ℝ in atTop, 4 * Q * Real.log K ≤ Real.sqrt K := by
+    simpa only [Real.rpow_one, ← Real.sqrt_eq_rpow] using
+      MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow (4 * Q) 1
+        (by norm_num : (0 : ℝ) < 1 / 2)
   have hpref0 : ∀ᶠ K : ℝ in atTop, ∀ D : ℝ, 2 ≤ D →
       Real.log D ≤ C1 * K ^ Θ →
       (Real.log D / Real.log 2) * (1 + K / Real.log 2) *
@@ -493,20 +438,7 @@ theorem claim145_caseA_highS_front_factor_eventually_uniform_in_S
     have hK1 : 1 < K := by linarith
     have hlogK : 0 < Real.log K := zero_lt_one.trans_le hlogK1
     have hsqrt0 : 0 ≤ Real.sqrt K := Real.sqrt_nonneg K
-    change |Real.log K ^ (1 : ℝ)| ≤
-      1 / (4 * (Q + 1)) * |K ^ (1 / 2 : ℝ)| at hsmallLog
-    rw [Real.rpow_one, abs_of_nonneg hlogK.le,
-      abs_of_nonneg (Real.rpow_nonneg hK0.le _), ← Real.sqrt_eq_rpow] at hsmallLog
-    have hscaled := mul_le_mul_of_nonneg_left hsmallLog hQ0
-    have hfrac : Q / (Q + 1) ≤ 1 :=
-      (div_le_one (by positivity : 0 < Q + 1)).2 (by linarith)
-    have hQlog : Q * Real.log K ≤ Real.sqrt K / 4 := by
-      calc
-        _ ≤ Q * (1 / (4 * (Q + 1)) * Real.sqrt K) := hscaled
-        _ = (Q / (Q + 1)) * (Real.sqrt K / 4) := by field_simp
-        _ ≤ 1 * (Real.sqrt K / 4) :=
-          mul_le_mul_of_nonneg_right hfrac (by positivity)
-        _ = _ := one_mul _
+    have hQlog : Q * Real.log K ≤ Real.sqrt K / 4 := by linarith
     have hQ : Q ≤ Real.sqrt K / 4 := by nlinarith
     intro D hD hsmall
     have hD1 : 1 < D := by linarith
@@ -517,63 +449,29 @@ theorem claim145_caseA_highS_front_factor_eventually_uniform_in_S
       have hh := Real.log_le_log hlogD hsmall
       rw [Real.log_mul (ne_of_gt hC1) (ne_of_gt hKpow), Real.log_rpow hK0 Θ] at hh
       exact hh
-    have hbaseK : 1 + K / Real.log 2 ≤ K ^ 2 := by
-      have hlog2half : (1 / 2 : ℝ) ≤ Real.log 2 := by
-        linarith [Real.log_two_gt_d9]
-      have hpart : K / Real.log 2 ≤ 2 * K := by
-        apply (div_le_iff₀ hlog2).2
-        nlinarith
-      nlinarith [sq_nonneg (K - 3)]
-    have hlogbase : Real.log (1 + K / Real.log 2) ≤ 2 * Real.log K := by
-      have hbpos : 0 < 1 + K / Real.log 2 := by positivity
-      have hh := Real.log_le_log hbpos hbaseK
-      rw [Real.log_pow] at hh
-      simpa using hh
-    have hc0 : 0 ≤ 2 + Δ := by linarith
-    have hc3 : 2 + Δ ≤ 3 := by linarith
-    have hmain := mul_le_mul_of_nonneg_left hloglogD hc0
-    have hCterm : (2 + Δ) * Real.log C1 ≤ 3 * |Real.log C1| := by
-      calc
-        _ ≤ (2 + Δ) * |Real.log C1| :=
-          mul_le_mul_of_nonneg_left (le_abs_self _) hc0
-        _ ≤ _ := mul_le_mul_of_nonneg_right hc3 (abs_nonneg _)
-    have hΘterm : (2 + Δ) * (Θ * Real.log K) ≤ 3 * Θ * Real.log K := by
-      nlinarith [mul_le_mul_of_nonneg_right hc3
-        (mul_nonneg hΘ hlogK.le)]
+    have hcap : Real.log (Real.log D) ≤ (|Real.log C1| + Θ) * Real.log K := by
+      have hc := (le_abs_self (Real.log C1)).trans
+        (le_mul_of_one_le_right (abs_nonneg _) hlogK1)
+      nlinarith only [hloglogD, hc]
+    have hpaid : (1 + Δ) * Real.log (Real.log D) ≤
+        2 * ((|Real.log C1| + Θ) * Real.log K) :=
+      (mul_le_mul_of_nonneg_left hcap (by linarith)).trans
+        (mul_le_mul_of_nonneg_right (by linarith : 1 + Δ ≤ 2) (by positivity))
+    have hL := claim145_caseA_highS_sourceL_le_logK hD hK3 hlogK1 hC1 hΘ hsmall
     let P := (Real.log D / Real.log 2) * (1 + K / Real.log 2) *
       (Real.log D) ^ (1 + Δ)
     have hPpos : 0 < P := by dsimp [P]; positivity
     have hlogP : Real.log P ≤ Q * (Real.log K + 1) := by
-      dsimp [P]
-      rw [Real.log_mul (by positivity : Real.log D / Real.log 2 *
-          (1 + K / Real.log 2) ≠ 0) (by positivity : Real.log D ^ (1 + Δ) ≠ 0),
-        Real.log_mul (by positivity : Real.log D / Real.log 2 ≠ 0)
-          (by positivity : 1 + K / Real.log 2 ≠ 0),
-        Real.log_div hlogD.ne' hlog2.ne', Real.log_rpow hlogD]
-      have hid : Real.log (Real.log D) - Real.log (Real.log 2) +
-          Real.log (1 + K / Real.log 2) + (1 + Δ) * Real.log (Real.log D) =
-          (2 + Δ) * Real.log (Real.log D) + Real.log (1 + K / Real.log 2) -
-            Real.log (Real.log 2) := by ring
+      have hid : Real.log P = suzukiSourceL D K +
+          (1 + Δ) * Real.log (Real.log D) := by
+        dsimp [P, suzukiSourceL]
+        rw [Real.log_mul (by positivity : Real.log D / Real.log 2 *
+            (1 + K / Real.log 2) ≠ 0) (by positivity : Real.log D ^ (1 + Δ) ≠ 0),
+          Real.log_mul (by positivity : Real.log D / Real.log 2 ≠ 0)
+            (by positivity : 1 + K / Real.log 2 ≠ 0), Real.log_rpow hlogD]
       rw [hid]
-      have hmain' : (2 + Δ) * Real.log (Real.log D) ≤
-          3 * |Real.log C1| + 3 * Θ * Real.log K := by
-        calc
-          _ ≤ (2 + Δ) * Real.log C1 + (2 + Δ) * (Θ * Real.log K) := by
-            nlinarith [hmain]
-          _ ≤ _ := by nlinarith [hCterm, hΘterm]
-      have hCscale : 3 * |Real.log C1| ≤
-          3 * |Real.log C1| * Real.log K :=
-        le_mul_of_one_le_right (by positivity) hlogK1
-      have hAscale : |Real.log (Real.log 2)| ≤
-          |Real.log (Real.log 2)| * Real.log K :=
-        le_mul_of_one_le_right (abs_nonneg _) hlogK1
-      have hsimple : (2 + Δ) * Real.log (Real.log D) +
-          Real.log (1 + K / Real.log 2) - Real.log (Real.log 2) ≤
-          Q * Real.log K := by
-        dsimp [Q]
-        nlinarith [hmain', hlogbase, hCscale, hAscale,
-          neg_le_abs (Real.log (Real.log 2))]
-      exact hsimple.trans (by nlinarith [mul_nonneg hQ0 hlogK.le])
+      dsimp [Q] at hQ0 ⊢
+      nlinarith only [hL, hpaid, hQ0]
     calc
       P = Real.exp (Real.log P) := (Real.exp_log hPpos).symm
       _ ≤ Real.exp (Real.sqrt K / 2) := by
@@ -657,12 +555,7 @@ theorem claim145_caseA_highS_front_factor_eventually_uniform_in_S
       (Real.exp (Real.sqrt K) / (Real.log D * sourceSigma D d)) * s *
         (Real.log D) ^ (-Δ) := by positivity
   have hV : 0 ≤ claim14_5VProduct S D := by
-    dsimp [claim14_5VProduct]
-    apply Finset.prod_nonneg
-    intro p hp
-    have hpS := (Finset.mem_filter.mp hp).1
-    exact sub_nonneg.mpr (S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hpS)
-      (Nat.mem_primeFactors.mp hpS).2.1).le
+    simpa [claim14_5VProduct, suzukiVProduct] using (suzukiVProduct_pos S D).le
   calc
     1 ≤ claim14_5VProduct S D *
         ((Real.log D / Real.log 2) * (1 + K / Real.log 2)) := hlocalFactor

@@ -2,7 +2,7 @@
 
 The mathematical chapters follow finite counts and the estimates they need.
 The source tree also factors recurring technical arguments into reusable
-interfaces. Three examples are useful when reading an individual proof:
+interfaces. The following examples are useful when reading an individual proof:
 \begin{itemize}
 \item A finite prime-pair transport theorem reindexes a supported integer
       sum by its unique admissible ordered prime pair. Concrete cutoffs,
@@ -15,9 +15,172 @@ interfaces. Three examples are useful when reading an individual proof:
       a common region with a finite cover of its boundary excess. It lives
       in \texttt{MathlibNt.Analysis.IntegralExcessCover}; each application
       supplies its actual measure, strips and logarithmic kernel.
+\item Filtered output sums retain every label in each fibre, with arbitrary
+      additive weights. \texttt{MathlibNt.SieveTheory.FiniteFibres} shares this
+      transport across the B8, B10, S2, G11 and G12 source models. Unlike the
+      injective prime-pair transport, it permits repeated outputs. The
+      integer and real product-grouping identities use Mathlib directly.
+\item Labelled incidence bounds in
+      \texttt{MathlibNt.SieveTheory.FiniteLabelCounting} count reverse
+      relation fibres, retaining repeated products as separate labels.
+      Its fixed-output sigma-fibre lemma keeps both positivity and the
+      product upper bound needed to cancel natural-number subtraction.
+\item \texttt{MathlibNt.SieveTheory.FiniteRealWindows} writes an arithmetic
+      window $(L,U]$ as a difference of closed prefixes. The predicate
+      retains primality and the product congruence in the G11/G12 uses;
+      $0\le L\le U\le N$ is supplied by the original geometric bounds.
+      These exact AP-window counts are separate library interfaces, not
+      dependencies of the current headline counting proof.
+\item \texttt{MathlibNt.Analysis.MovingIntervalIntegral} shares indicator-section
+      and Fubini arguments for B8/B9/B10, the Liu source triangle, the
+      weighted Fouvry G9 region and B9-high. For a measurable outer set
+      $s$ and measurable region
+      $R=\{(u,v):u\in s,\ l(u)<v\le r(u)\}$, an integrable real kernel on $R$
+      satisfies $\int_R f=\int_{u\in s}\int_{v\in(l(u),r(u)]}f(u,v)$.
+      No endpoint ordering or continuity is added; empty sections remain
+      empty. Each application still proves its own kernel integrability
+      and its conversion from oriented interval integrals. This continuous
+      identity makes no assertion about discrete prime boundary atoms.
+\item \texttt{MathlibNt.Analysis.LogGridEstimates} shares reciprocal-kernel
+      variation, exact half-open cell disjointness, weighted cell evaluation
+      and strip integration across Liu and B8/B9/B10. The true logarithmic
+      density and the application-specific excess cover are retained. Its
+      three-strip bound is one-sided; Liu and B10 still supply separate
+      lower bounds before concluding convergence.
+\item The boundary regularity development first proves joint continuity of
+      the complete moving integral under a fixed local integrable majorant.
+      Compactness supplies the original uniform moduli without repeatedly
+      splitting common intervals and short boundary strips. Positive lower
+      screens, the original depth induction and the zero-depth jump sets
+      remain; no explicit rate follows from this compactness argument.
+\item The Jurkat--Richert auxiliary estimates bound a smooth reciprocal tail
+      by a finite weighted moment and its Euler-product bound, taking the
+      finite upper endpoint to infinity with all other parameters fixed.
+      A shared normalization of the existing Selberg estimate at the (4.1)
+      cutoff keeps its complete squared-count error in both ratio branches.
+      The original cutoff definitions, constants and threshold order remain.
+      The auxiliary bounds now share these finite-moment and normalization steps.
+\item The damped Perron estimates share a two-majorant integral bound and a
+      single-character sharp-to-smoothed comparison. With natural $M\ge3$, rectangular
+      coordinates in $[1,M]$, $Q>0$ and $S\subseteq[1,Q]$, smoothing at
+      $\epsilon=M^{-2}$ gives the factors $1/2+(7\log M+2)/\pi$ for a common
+      real smoothing parameter in $[1/2,M+1/2]$ and $1/2+(14\log M+4)/\pi$ for
+      natural-valued selectors $Y(q,\chi)\le M$. These multiply the same
+      aggregate rank-one large-sieve bound; the selector keeps four rank-one
+      contributions. Applying the sharp comparison at each cutoff and summing
+      with the nonnegative weight $q/\varphi(q)$ adds $8/(\pi M)$ times the
+      product of the rectangular coefficient $L^1$ mass and weighted family mass. The
+      single-character comparison uses natural $M\ge1$, natural $Y\le M$ and positive
+      products; the aggregate sharp interfaces retain $mn\le M$.
+\item \texttt{MathlibNt.Analysis.SieveNormalization} isolates elementary
+      lower-bound multiplication and upper-bound exponential cancellation.
+      The four Li--Liu applications retain their actual counts, main masses,
+      singular series, remainder budgets and parameter ranges; the alpha
+      case reuses the existing inverse-log absorption estimate.
+\item \texttt{MathlibNt.Analysis.RealLogPowerThreshold} packages eventual
+      domination of a fixed multiple of a real log power by a positive power.
+      The Suzuki applications preserve thresholds before the varying sieve,
+      the same-constant contract and the moving-depth domain. The remaining
+      local algebraic compression is not a new analytic estimate.
+\item \texttt{MathlibNt.Tactic.PolynomialDeriv} and
+      \texttt{MathlibNt.Tactic.ElementaryDeriv} replace repeated derivative-rule
+      assembly by kernel-checked proof generation. Polynomial formulas reuse
+      Mathlib's polynomial derivative theorem; logarithmic and rational formulas
+      retain their actual nonzero conditions and final algebraic identities.
+      These tools change proof maintenance, not the sieve constants or ranges.
 \end{itemize}
-These interfaces support the proof chapters without changing the counting
-objects, factor-size constraints, signed sums or endpoint conventions.
+These interfaces preserve the counting objects, factor-size constraints,
+signed sums and endpoint conventions. Both current quantitative entry points
+consume the log-grid layer. The rewritten boundary-regularity and Rankin
+proof bodies are used through their library interfaces, not by either
+current headline quantitative proof.
+The shared Perron and Suzuki arguments occur in both quantitative chains;
+these four count normalizations occur in the Li--Liu chain. The formal proofs
+share these analytic and algebraic steps.
+
+The prime-number-theorem implementation shares the three-factor norm estimate
+and the right-contour power identity. It recombines the nine contour pieces
+with their original signs before taking norms, and separately records the
+smoothing, outer, shifted and central error bounds. In particular, the two
+infinite right-contour tails have scale $X\log X/(\epsilon T)$.
+
+For a real interval $[z_1,z_2)$ with $2\le z_1\le z_2$, the inverse-product
+argument takes $k=\max(2,\lceil z_1\rceil-1)$ and
+$n=\max(k,\lfloor z_2\rfloor)$. The same integer comparison applies to empty
+prime sets and small real endpoints. The resulting constant is chosen before
+the finite prime set and the two real endpoints.
+
+The finite-product bridge writes the actual sieve product as $2S_mP_m$,
+where $m=Z-1$, $S_m$ is Liu's odd-prime truncation and $P_m$ is the ordinary
+prime product up to $m$. Multiplication by $\log m$ gives both signs of the
+Mertens estimate in one place. The lower and upper consumers retain their
+own finite-to-infinite truncation comparisons and original parameter domains.
+
+The Siegel--Walfisz estimates share a horizontal Mellin--Bochner bound,
+the signed three-edge contour identity with two tails, and scalar tail and
+smoothing estimates. Each application supplies its zero-free region and
+logarithmic-derivative bound. The quadratic argument also retains the base
+term used when transporting from a negative left exponent.
+
+For small cutoffs, the Bombieri--Vinogradov argument bounds the actual
+weighted coefficient energy, then the complete squared-error expression,
+and finally absorbs logarithmic powers. The balanced and adaptive cases use the same
+estimate with their actual cutoff. The adaptive cutoff is eventually bounded
+by the balanced cutoff; monotonicity is not required. The modulus weight,
+prefix maxima and harmonic factors stay in the expression being estimated.
+
+The \sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean}{high-conductor estimates}
+reuse the quadratic Abel/conductor envelope from the
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean}{block first-moment module}.
+Writing $A_N$ for the Abel amplifier prefix maximum and $H_Q$ for the
+conductor harmonic factor, it gives $4A_NH_Q^2\le48(\log N)^2$ for natural
+$B$, $N\ge3$ and the actual Pan cutoff $Q$ at exponent $B$,
+including $Q=0$. The chosen Type-I and Type-II estimates use this bound
+directly; bare block sources keep the five-log reserve through its existing
+corollary. The block assembler and the chosen small-term estimate also share
+the square-to-first-moment step: at conductor threshold at least one,
+$P^2(3HL)\le Z^2$ with $Z\ge0$ gives $P\,\mathrm{mean}\le Z$, where $H$ is the
+high-conductor harmonic factor and $L$ is the actual primitive prefix-square
+ledger on the same high-conductor set. The factor three stays in the payment.
+This square comparison permits signed $P$; the first-moment block estimates
+use a nonnegative multiplier.
+
+For each character, the library's
+\sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorChangeLevelLedger.lean}{conductor-change ledger}
+bounds its prefix maximum square by twice its primitive-conductor prefix
+maximum square plus $8N$ times the coefficient energy on integers in $(M,M+N]$ not
+coprime to the original modulus. It then sums with $q/\varphi(q)$ and regroups
+the primitive term by conductor, avoiding a repeated error estimate under
+nested sums. The principal term stays in its separate exact splitting identity.
+
+The library's \sourcefile{MathlibNt/AnalyticNumberTheory/LargeSieve/ImprimitiveConductorWeightLinear.lean}{linear conductor transport}
+applies the existing theorem for an arbitrary nonnegative family $F(d,\psi)$
+directly to the primitive prefix maximum square. For natural $D>0$, the
+imprimitive-weighted sum on $[D,2D]$ is bounded by the primitive-weighted sum
+on $[1,2D]$ times $(Q/D)H_{Q/D}$, with natural-number division and the same
+harmonic factor as above. This specialization supplies nonnegativity and
+avoids repeating the weight comparison and conductor-window enlargement.
+
+The Suzuki Case-I endpoint core uses the application's envelope-transport
+inequality at a fixed sieve level to normalize the endpoint estimate. It then
+combines three source-order remainders against the same nonnegative budget. Its strict and even-endpoint consumers retain separate
+domains, with thresholds chosen before the varying sieve.
+
+Write $\theta(x)=\sum_{p\le x}\log p$, summing over primes, and let $\pi(x)$
+count primes at most $x$.
+In the \sourcefile{PrimeNumberTheoremAnd/Consequences.lean}{prime-counting consequences}, Abel summation and the
+Chebyshev remainder estimate give $\pi(x)\sim x/\log x$ from
+$\theta(x)\sim x$. The logarithmic integral has the same scale: on $t>1$,
+\[
+  \left(\frac{t}{\log t}\right)'
+    =\frac1{\log t}-\frac1{(\log t)^2},
+\]
+so the fundamental theorem of calculus and the squared-log integral bound give
+$\int_2^x dt/\log t\sim x/\log x$, and hence
+$\pi(x)\sim\int_2^x dt/\log t$. The endpoint identity includes $2\le a\le b$
+with $a=b$ allowed. The Blueprint's epsilon-and-cutoff presentation gives
+another proof of this asymptotic comparison; the Lean implementation chains
+these equivalences. The legacy matcher interface is maintained separately.
 
 \section{Finding and checking a declaration}
 
@@ -60,3 +223,15 @@ that artifact's original source links. Online deployment is a separate
 step from generation and local verification.
 
 \url{https://github.com/subfish-zhou/goldbach-lean}
+
+
+\paragraph{Character estimates and shared payments.}
+The reduced-residue character estimate specializes the existing Parseval identity on units. The primitive-character estimate retains its separate direct orthogonal-family Bessel argument, using the existing inner-product and energy identifications. These are distinct proof routes. In the pointwise Siegel--Walfisz estimates, the horizontal contour edges are controlled by the tail term. The shared masked dyadic payment for the Fouvry estimates belongs to the existing MaskedW module; the callers retain their geometric hypotheses and threshold choices.
+
+
+\paragraph{S2 limit budget and Vaughan cell estimate.}
+The S2 main-mass estimate combines the weighted logarithmic-kernel limit with its vanishing remainder contribution before choosing the final threshold. The comparison still uses the actual prime carrier, a larger prime window with nonnegative weights, and the original logarithmic coefficient. For the Vaughan all-aspect cell estimate, one local symmetric square-root estimate controls both cross terms. The argument retains the actual conductor cell, active rectangles, normalization, and the original four-term bound; the symmetric estimate is local to the proof rather than a new public interface.
+
+
+\paragraph{Weighted Perron norms and the S1 error budget.}
+The selector estimate first bounds the nonnegative weighted sum of norms of the damped Perron integrals. The four selector-independent phase twists are controlled by the rank-one large-sieve energy bridge, and the two integrable majorants preserve the exact coefficient 14 log M + 4 before the signed Perron identity is averaged. The fixed-s S1 bound keeps the true carrier, sieve product and singular-series normalization: density and main-mass losses share the scalar delta budget, while half of that budget absorbs the paid Bombieri--Vinogradov remainder. A common threshold combines these estimates; S1 depends transitively on the selector rather than forming an independent branch.

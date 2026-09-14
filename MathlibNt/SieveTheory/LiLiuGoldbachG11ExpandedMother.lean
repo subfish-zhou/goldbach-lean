@@ -11,24 +11,11 @@ invalid cast of the integer-valued grouping theorem. -/
 theorem goldbachG11GoodSwitchedBodies_sum_product_real (N : ℕ) (z b : ℝ) (f : ℕ → ℝ) :
     (∑ u ∈ goldbachG11GoodSwitchedBodies N z b,f (goldbachG11SwitchedBodyProd u)) =
       ∑ m ∈ goldbachG11ProductSupport N z b,(goldbachG11ProductCoefficient N z b m : ℝ)*f m := by
-  have hs : (goldbachG11GoodSwitchedBodies N z b).filter
-      (fun u => goldbachG11SwitchedBodyProd u ∈ goldbachG11ProductSupport N z b) =
-      goldbachG11GoodSwitchedBodies N z b := by
-    apply filter_eq_self.mpr
-    intro u hu
-    exact mem_goldbachG11ProductSupport_iff.mpr ⟨u,hu,rfl⟩
-  have hf := sum_fiberwise_eq_sum_filter (goldbachG11GoodSwitchedBodies N z b)
-    (goldbachG11ProductSupport N z b) goldbachG11SwitchedBodyProd (fun u => f (goldbachG11SwitchedBodyProd u))
-  rw [hs] at hf
-  rw [← hf]
-  apply sum_congr rfl
-  intro m _
-  calc
-    _ = ∑ _u ∈ goldbachG11ProductFiber N z b m,f m := by
-      apply sum_congr rfl
-      intro u hu
-      rw [(mem_goldbachG11ProductFiber_iff.mp hu).2]
-    _ = _ := by simp [goldbachG11ProductCoefficient]
+  classical
+  simpa [goldbachG11ProductSupport, goldbachG11ProductCoefficient,
+    goldbachG11ProductFiber] using
+    (Finset.sum_fiberwise_of_maps_to' (s := goldbachG11GoodSwitchedBodies N z b)
+      (fun _ hu => Finset.mem_image_of_mem goldbachG11SwitchedBodyProd hu) f).symm
 
 def goldbachG11ExpandedPrimeWindow (N : ℕ) (ρ : ℝ) (m : ℕ) : Finset ℕ :=
   (range (2*N+1)).filter fun p => p.Prime ∧ (N : ℝ)^(4/53 : ℝ) ≤ (p : ℝ) ∧

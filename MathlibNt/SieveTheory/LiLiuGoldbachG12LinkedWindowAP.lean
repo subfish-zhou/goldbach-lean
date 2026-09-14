@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteRealWindows
 import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
 import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindowAP
 
@@ -10,35 +11,17 @@ theorem goldbachG12LinkedAPWindow_eq_sdiff {N m : ℕ} {ε : ℝ} (d b : ℕ)
       scaledPrimeSet ((m : ℝ)*goldbachG11PiLiHi N m) d b m \
         scaledPrimeSet ((m : ℝ)*goldbachG11PiLiLo N ε m) d b m := by
   classical
-  have hs := goldbachG12ActiveProductSupport_mem_full hm
-  have hm0 := (goldbachG11ProductSupport_data hs).1
-  have hmR : (0 : ℝ) < m := by exact_mod_cast hm0
+  have hm0 := (goldbachG12ActiveProductSupport_data hm).1
+  have hmR : (m : ℝ) ≠ 0 := by exact_mod_cast hm0.ne'
   obtain ⟨hzlo, hlh, hhiN⟩ := goldbachG12PiLiEndpoints_bounds hN hm
-  have hlo0 : 0 ≤ goldbachG11PiLiLo N ε m :=
-    (Real.rpow_nonneg (Nat.cast_nonneg N) _).trans hzlo
-  have hhi0 := hlo0.trans hlh
-  ext r
-  simp only [goldbachG11LinkedAPWindow, goldbachG11LinkedPrimeWindow,
-    Finset.mem_filter, Finset.mem_range, Finset.mem_sdiff,
-    mem_scaledPrimeSet (mul_nonneg hmR.le hhi0) hm0,
-    mem_scaledPrimeSet (mul_nonneg hmR.le hlo0) hm0]
-  constructor
-  · rintro ⟨⟨_, hp, hl, hh⟩, hc⟩
-    refine ⟨⟨hp, mul_le_mul_of_nonneg_left hh hmR.le, hc⟩, ?_⟩
-    rintro ⟨_, hbad, _⟩
-    have := mul_lt_mul_of_pos_left hl hmR
-    linarith
-  · rintro ⟨⟨hp, hh, hc⟩, hnlo⟩
-    have hlprod : (m : ℝ)*goldbachG11PiLiLo N ε m < (m : ℝ)*r := by
-      by_contra h
-      exact hnlo ⟨hp, le_of_not_gt h, hc⟩
-    have hl : goldbachG11PiLiLo N ε m < (r : ℝ) := by nlinarith
-    have hhr : (r : ℝ) ≤ goldbachG11PiLiHi N m := by nlinarith
-    have hrm : (r : ℝ)*(m : ℝ) ≤ N := (le_div_iff₀ hmR).mp (hhr.trans hhiN)
-    have hrmN : r*m ≤ N := by exact_mod_cast hrm
-    have hrN : r ≤ N := by
-      nlinarith [Nat.mul_le_mul_left r (show 1 ≤ m by omega)]
-    exact ⟨⟨Nat.lt_succ_of_le hrN, hp, hl, hhr⟩, hc⟩
+  have hlo0 := (Real.rpow_nonneg (Nat.cast_nonneg N) ((4 : ℝ) / 53)).trans hzlo
+  have hhi : goldbachG11PiLiHi N m ≤ N :=
+    hhiN.trans (div_le_self (Nat.cast_nonneg N) (by exact_mod_cast hm0))
+  simpa only [goldbachG11LinkedAPWindow, goldbachG11LinkedPrimeWindow,
+    Finset.filter_filter, scaledPrimeSet, mul_div_cancel_left₀ _ hmR,
+    and_assoc, and_left_comm, and_comm] using
+    filter_range_real_window_eq_sdiff N (goldbachG11PiLiLo N ε m) (goldbachG11PiLiHi N m)
+      (fun r => r.Prime ∧ m*r ≡ b [MOD d]) hlo0 hlh hhi
 
 /-- Exact count difference, retaining the closed high endpoint and inverse residue. -/
 theorem goldbachG12LinkedAPWindow_card_eq_inverse {N m : ℕ} {ε : ℝ} (d b : ℕ)

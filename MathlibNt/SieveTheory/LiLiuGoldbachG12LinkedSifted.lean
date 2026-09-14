@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteLabelCounting
 import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundingSieve
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -9,25 +10,11 @@ noncomputable section
 theorem goldbachG12LinkedOutputFiber_injOn (N p : ℕ) (ε : ℝ) :
     Set.InjOn (fun x : GoldbachG12LinkedAtom => x.2)
       ((goldbachG12LinkedAtoms N ε).filter (fun x => goldbachG12LinkedOutput N x = p)) := by
-  intro x hx y hy he
-  obtain ⟨hx, hxp⟩ := mem_filter.mp hx
-  obtain ⟨hy, hyp⟩ := mem_filter.mp hy
-  obtain ⟨hxm, hxr⟩ := mem_sigma.mp hx
-  obtain ⟨hym, hyr⟩ := mem_sigma.mp hy
-  have hxl := goldbachG12LinkedPrimeWindow_product_le hxm hxr
-  have hyl := goldbachG12LinkedPrimeWindow_product_le hym hyr
-  have hrp := (mem_filter.mp hxr).2.1
-  rcases x with ⟨m, r⟩
-  rcases y with ⟨m', r'⟩
-  dsimp at he
-  subst r'
-  dsimp at hxl hyl
-  have hprod : r*m = r*m' := by
-    dsimp [goldbachG12LinkedOutput] at hxp hyp
-    omega
-  have hmm : m = m' := Nat.eq_of_mul_eq_mul_left hrp.pos hprod
-  subst m'
-  rfl
+  apply sigma_snd_injOn_sub_mul_fiber
+  · intro x hx
+    exact (mem_filter.mp (mem_sigma.mp hx).2).2.1.pos
+  · intro x hx
+    exact goldbachG12LinkedPrimeWindow_product_le (mem_sigma.mp hx).1 (mem_sigma.mp hx).2
 
 theorem goldbachG12LinkedOutputFiber_card_le_twenty {N : ℕ} (hN : 2 ≤ N)
     (ε : ℝ) (p : ℕ) :

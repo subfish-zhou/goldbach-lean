@@ -861,7 +861,7 @@ theorem chenZ_le_N_add_one (N : ℕ) (hN2 : 2 ≤ N) :
 end Internal
 
 /-- The product of pairwise coprime prime divisors of `N` divides `N`. -/
-private theorem prod_dvd_of_prime_divisors {s : Finset ℕ} (hdiv : ∀ p ∈ s, p ∣ N)
+private theorem prod_dvd_of_prime_divisors {N : ℕ} {s : Finset ℕ} (hdiv : ∀ p ∈ s, p ∣ N)
     (hprime : ∀ p ∈ s, p.Prime) : (∏ p ∈ s, p) ∣ N := by
   classical
   induction s using Finset.induction_on with

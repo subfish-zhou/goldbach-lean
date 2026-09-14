@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteLabelCounting
 import MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionFibers
 import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
 
@@ -84,36 +85,8 @@ private theorem Quadruple_sum_card_le (N : ℕ) (b : ℝ) (F : GoldbachG11Label 
     (∑ v ∈ goldbachG11Labels N ((N : ℝ) ^ ((4 : ℝ) / 53))
       b, (F v).card) ≤ 160000 * T.card := by
   classical
-  let X := (goldbachG11Labels N ((N : ℝ) ^ ((4 : ℝ) / 53))
-    b).sigma F
-  have hmaps : ∀ x ∈ X, x.2 ∈ T := by
-    intro x hx
-    obtain ⟨hv, hn⟩ := Finset.mem_sigma.mp hx
-    exact (hmap x.1 hv x.2 hn).1
-  have hfiber : ∀ n ∈ T, (X.filter fun x => x.2 = n).card ≤ 160000 := by
-    intro n hn
-    have hto : Set.MapsTo (fun x : Σ _v : GoldbachG11Label, ℕ => x.1)
-        (X.filter fun x => x.2 = n) (goldbachQuadrupleDivisorFiber N n b) := by
-      intro x hx
-      obtain ⟨hx, heq⟩ := Finset.mem_filter.mp hx
-      obtain ⟨hv, hxn⟩ := Finset.mem_sigma.mp hx
-      exact Finset.mem_filter.mpr ⟨hv, heq ▸ (hmap x.1 hv x.2 hxn).2⟩
-    have hinj : Set.InjOn (fun x : Σ _v : GoldbachG11Label, ℕ => x.1)
-        (X.filter fun x => x.2 = n) := by
-      intro x hx y hy hxy
-      exact Sigma.ext hxy (heq_of_eq
-        ((Finset.mem_filter.mp hx).2.trans (Finset.mem_filter.mp hy).2.symm))
-    exact (Finset.card_le_card_of_injOn _ hto hinj).trans
-      (goldbachQuadrupleDivisorFiber_card_le (hT n hn).1 (hT n hn).2)
-  have hfilter : X.filter (fun x => x.2 ∈ T) = X := Finset.filter_eq_self.mpr hmaps
-  have heq : (∑ n ∈ T, (X.filter fun x => x.2 = n).card) = X.card := by
-    simpa [hfilter] using
-      Finset.sum_fiberwise_eq_sum_filter X T (fun x => x.2) (fun _ => (1 : ℕ))
-  calc
-    _ = X.card := (Finset.card_sigma _ _).symm
-    _ = ∑ n ∈ T, (X.filter fun x => x.2 = n).card := heq.symm
-    _ ≤ ∑ _n ∈ T, 160000 := Finset.sum_le_sum hfiber
-    _ = 160000 * T.card := by simp [mul_comm]
+  exact sum_card_le_of_relation _ T F (fun v n => goldbachG11LabelProd v ∣ n)
+    160000 hmap (fun n hn => goldbachQuadrupleDivisorFiber_card_le (hT n hn).1 (hT n hn).2)
 
 theorem goldbachQuadrupleRSquareCount_sum_le (N : ℕ) (eps b : ℝ) (heps : 0 ≤ eps) :
     (∑ v ∈ goldbachG11Labels N ((N : ℝ) ^ ((4 : ℝ) / 53))

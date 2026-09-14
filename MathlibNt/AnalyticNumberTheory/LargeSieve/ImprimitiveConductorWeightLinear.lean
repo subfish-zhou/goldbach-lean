@@ -274,63 +274,9 @@ theorem imprimitive_conductor_window_prefix_le_linear
           ((d : ℝ) / (d.totient : ℝ)) *
             ∑ ψ : PrimitiveCharacter d,
               primitiveCharacterPrefixMaxSquare b M N d ψ := by
-  calc
-    (∑ d ∈ Finset.Icc D (2 * D),
-      imprimitiveConductorWeight Q d *
-        ∑ ψ : PrimitiveCharacter d,
-          primitiveCharacterPrefixMaxSquare b M N d ψ)
-      ≤ ∑ d ∈ Finset.Icc D (2 * D),
-          ((Q / D : ℕ) : ℝ) * conductorHarmonicFactor (Q / D) *
-            (((d : ℝ) / (d.totient : ℝ)) *
-              ∑ ψ : PrimitiveCharacter d,
-                primitiveCharacterPrefixMaxSquare b M N d ψ) := by
-        apply Finset.sum_le_sum
-        intro d hdmem
-        have hd : 0 < d := hD.trans_le (Finset.mem_Icc.mp hdmem).1
-        have hdiv : Q / d ≤ Q / D :=
-          Nat.div_le_div_left (Finset.mem_Icc.mp hdmem).1 hD
-        have hharm : conductorHarmonicFactor (Q / d) ≤
-            conductorHarmonicFactor (Q / D) :=
-          conductorHarmonicFactor_mono hdiv
-        have hsum : 0 ≤ ∑ ψ : PrimitiveCharacter d,
-            primitiveCharacterPrefixMaxSquare b M N d ψ :=
-          Finset.sum_nonneg fun ψ _ =>
-            primitiveCharacterPrefixMaxSquare_nonneg b M N d ψ
-        have hsmall0 : 0 ≤ conductorHarmonicFactor (Q / d) :=
-          conductorHarmonicFactor_nonneg _
-        have hbig0 : 0 ≤ conductorHarmonicFactor (Q / D) :=
-          conductorHarmonicFactor_nonneg _
-        calc
-          imprimitiveConductorWeight Q d * ∑ ψ : PrimitiveCharacter d,
-              primitiveCharacterPrefixMaxSquare b M N d ψ
-            ≤ (((d : ℝ) / (d.totient : ℝ)) * ((Q / d : ℕ) : ℝ) *
-                conductorHarmonicFactor (Q / d)) *
-                ∑ ψ : PrimitiveCharacter d,
-                  primitiveCharacterPrefixMaxSquare b M N d ψ := by
-              gcongr
-              exact imprimitiveConductorWeight_le_linear_harmonic Q d hd
-          _ ≤ (((d : ℝ) / (d.totient : ℝ)) * ((Q / D : ℕ) : ℝ) *
-                conductorHarmonicFactor (Q / D)) *
-                ∑ ψ : PrimitiveCharacter d,
-                  primitiveCharacterPrefixMaxSquare b M N d ψ := by
-              gcongr
-          _ = _ := by ring
-    _ ≤ ∑ d ∈ Finset.Icc 1 (2 * D),
-          ((Q / D : ℕ) : ℝ) * conductorHarmonicFactor (Q / D) *
-            (((d : ℝ) / (d.totient : ℝ)) *
-              ∑ ψ : PrimitiveCharacter d,
-                primitiveCharacterPrefixMaxSquare b M N d ψ) := by
-        apply Finset.sum_le_sum_of_subset_of_nonneg
-        · intro d hd
-          exact Finset.mem_Icc.mpr ⟨hD.trans_le (Finset.mem_Icc.mp hd).1,
-            (Finset.mem_Icc.mp hd).2⟩
-        · intro d hd hnot
-          exact mul_nonneg
-            (mul_nonneg (by positivity) (conductorHarmonicFactor_nonneg _))
-            (mul_nonneg (div_nonneg (by positivity) (by positivity))
-              (Finset.sum_nonneg fun ψ _ =>
-                primitiveCharacterPrefixMaxSquare_nonneg b M N d ψ))
-    _ = _ := by rw [Finset.mul_sum]
+  exact imprimitive_conductor_window_le_weighted_primitive_linear
+    (fun d ψ => primitiveCharacterPrefixMaxSquare b M N d ψ)
+    (fun d ψ => primitiveCharacterPrefixMaxSquare_nonneg b M N d ψ) Q D hD
 
 /-- The strong conductor transport connected to the existing primitive maximal LS. -/
 theorem imprimitive_conductor_window_prefix_large_sieve_linear

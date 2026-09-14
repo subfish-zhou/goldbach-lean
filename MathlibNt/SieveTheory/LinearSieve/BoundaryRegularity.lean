@@ -334,6 +334,129 @@ theorem integral_inv_mul_upperRosserBoundaryMassAux_le
   rw [Real.norm_eq_abs] at hnorm
   exact (le_abs_self _).trans hnorm
 
+/-- A moving open interval can be handled by one fixed integrable envelope.
+Only interior pointwise continuity is needed: the two endpoint slices are null. -/
+private theorem continuousAt_screened_integral
+    {X : Type*} [TopologicalSpace X] [FirstCountableTopology X]
+    {p₀ : X} {l u : X → ℝ} {f : X → ℝ → ℝ} {c C : ℝ}
+    (hl : ContinuousAt l p₀) (hu : ContinuousAt u p₀) (hC : 0 ≤ C)
+    (hscreen : ∀ᶠ p in nhds p₀, c ≤ l p ∧ u p ≤ 1)
+    (hmeas : ∀ p, MeasureTheory.StronglyMeasurable (f p))
+    (hbound : ∀ᶠ p in nhds p₀, ∀ x ∈ Set.Ioo (l p) (u p), ‖f p x‖ ≤ C)
+    (hcont : ∀ᵐ x ∂MeasureTheory.volume,
+      x ∈ Set.Ioo (l p₀) (u p₀) → ContinuousAt (fun p => f p x) p₀) :
+    ContinuousAt (fun p => ∫ x in Set.Ioo (l p) (u p), f p x) p₀ := by
+  let F := fun p => (Set.Ioo (l p) (u p)).indicator (f p)
+  have hF : ContinuousAt (fun p => ∫ x, F p x) p₀ := by
+    apply MeasureTheory.continuousAt_of_dominated
+      (bound := (Set.Ioo c 1).indicator (fun _ : ℝ => C))
+    · exact Filter.Eventually.of_forall fun p =>
+        ((hmeas p).indicator measurableSet_Ioo).aestronglyMeasurable
+    · filter_upwards [hscreen, hbound] with p hp hb
+      filter_upwards with x
+      by_cases hx : x ∈ Set.Ioo (l p) (u p)
+      · have hx' : x ∈ Set.Ioo c 1 := ⟨hp.1.trans_lt hx.1, hx.2.trans_le hp.2⟩
+        simpa only [F, Set.indicator_of_mem hx, Set.indicator_of_mem hx'] using hb x hx
+      · simpa only [F, Set.indicator_of_notMem hx, norm_zero] using
+          Set.indicator_nonneg (fun _ _ => hC) x
+    · exact (MeasureTheory.integrableOn_const (by
+        rw [Real.volume_Ioo]
+        exact ENNReal.ofReal_ne_top)).integrable_indicator measurableSet_Ioo
+    · filter_upwards [hcont, MeasureTheory.volume.ae_ne (l p₀),
+        MeasureTheory.volume.ae_ne (u p₀)] with x hxcont hxl hxu
+      by_cases hx : x ∈ Set.Ioo (l p₀) (u p₀)
+      · apply (hxcont hx).congr_of_eventuallyEq
+        filter_upwards [hl (Iio_mem_nhds hx.1), hu (Ioi_mem_nhds hx.2)] with p hp hq
+        exact Set.indicator_of_mem (show x ∈ Set.Ioo (l p) (u p) from ⟨hp, hq⟩) _
+      · have hout : x < l p₀ ∨ u p₀ < x := by
+          rcases lt_or_gt_of_ne hxl with h | h
+          · exact Or.inl h
+          · exact Or.inr (lt_of_le_of_ne (not_lt.mp (fun h' => hx ⟨h, h'⟩)) hxu.symm)
+        apply (show (fun p => F p x) =ᶠ[nhds p₀] (fun _ => (0 : ℝ)) from ?_).continuousAt
+        rcases hout with h | h
+        · filter_upwards [hl (Ioi_mem_nhds h)] with p hp
+          exact Set.indicator_of_notMem (fun hx => (hx.1.trans hp).false) _
+        · filter_upwards [hu (Iio_mem_nhds h)] with p hp
+          exact Set.indicator_of_notMem (fun hx => (hx.2.trans hp).false) _
+  convert hF using 1
+  funext p
+  exact (MeasureTheory.integral_indicator measurableSet_Ioo).symm
+
+/-- Joint continuity of the inner integral, with arbitrary continuous parameter
+maps. This lemma is below the positive-depth induction and uses only an AE
+continuity hypothesis for the preceding mass. -/
+private theorem continuousAt_rosser_inner_parametric
+    {X : Type*} [TopologicalSpace X] [FirstCountableTopology X]
+    (k : ℕ) {p₀ : X} {s a b : X → ℝ}
+    (ha : ContinuousAt a p₀) (hb : ContinuousAt b p₀)
+    (ha₀ : 0 < a p₀) (hb₁ : ∀ᶠ p in nhds p₀, b p ≤ 1)
+    (hcont : ∀ᵐ x ∂MeasureTheory.volume,
+      x ∈ Set.Ioo (a p₀) (b p₀) → ContinuousAt
+        (fun p => upperRosserBoundaryMassAux k (s p - b p - x) (a p) x) p₀) :
+    ContinuousAt (fun p => ∫ x in Set.Ioo (a p) (b p),
+      x⁻¹ * upperRosserBoundaryMassAux k (s p - b p - x) (a p) x) p₀ := by
+  let c := a p₀ / 2
+  have hc : 0 < c := half_pos ha₀
+  have hcut : ∀ᶠ p in nhds p₀, c ≤ a p := by
+    have hlt : ∀ᶠ p in nhds p₀, c < a p :=
+      ha (Ioi_mem_nhds (show c < a p₀ by dsimp [c]; linarith))
+    exact hlt.mono fun _ h => h.le
+  apply continuousAt_screened_integral ha hb
+    (c := c) (C := c⁻¹ * (c⁻¹ * c⁻¹) ^ k) (by positivity) (hcut.and hb₁)
+  · intro p
+    exact measurable_id.inv.stronglyMeasurable.mul
+      ((stronglyMeasurable_upperRosserBoundaryMassAux k).comp_measurable
+        (show Measurable (fun x : ℝ => ((s p - b p - x, a p), x)) by fun_prop))
+  · filter_upwards [hcut, hb₁] with p hp hp₁ x hx
+    have hxpos := hc.trans_le (hp.trans hx.1.le)
+    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (inv_nonneg.mpr hxpos.le)
+      (upperRosserBoundaryMassAux_nonneg k (hc.le.trans hp)))]
+    exact mul_le_mul ((inv_le_inv₀ hxpos hc).2 (hp.trans hx.1.le))
+      (upperRosserBoundaryMassAux_le_of_lower_bound k hc hp (hx.2.le.trans hp₁))
+      (upperRosserBoundaryMassAux_nonneg k (hc.le.trans hp)) (inv_nonneg.mpr hc.le)
+  · filter_upwards [hcont] with x hx hmem
+    exact continuousAt_const.mul (hx hmem)
+
+/-- The same screened dominated-integral theorem handles the outer recursive
+step, without imposing continuity on the preceding depth-zero mass. -/
+private theorem continuousAt_rosser_outer_parametric
+    {X : Type*} [TopologicalSpace X] [FirstCountableTopology X]
+    (k : ℕ) {p₀ : X} {s a u : X → ℝ}
+    (ha : ContinuousAt a p₀) (hu : ContinuousAt u p₀)
+    (ha₀ : 0 < a p₀) (hu₁ : ∀ᶠ p in nhds p₀, u p ≤ 1)
+    (hinner : ∀ᵐ x₀ ∂MeasureTheory.volume,
+      x₀ ∈ Set.Ioo (a p₀) (u p₀) → ContinuousAt
+        (fun p => ∫ x₁ in Set.Ioo (a p) x₀,
+          x₁⁻¹ * upperRosserBoundaryMassAux k (s p - x₀ - x₁) (a p) x₁) p₀) :
+    ContinuousAt (fun p => ∫ x₀ in Set.Ioo (a p) (u p),
+      x₀⁻¹ * ∫ x₁ in Set.Ioo (a p) x₀,
+        x₁⁻¹ * upperRosserBoundaryMassAux k (s p - x₀ - x₁) (a p) x₁) p₀ := by
+  let c := a p₀ / 2
+  have hc : 0 < c := half_pos ha₀
+  have hcut : ∀ᶠ p in nhds p₀, c ≤ a p := by
+    have hlt : ∀ᶠ p in nhds p₀, c < a p :=
+      ha (Ioi_mem_nhds (show c < a p₀ by dsimp [c]; linarith))
+    exact hlt.mono fun _ h => h.le
+  apply continuousAt_screened_integral ha hu
+    (c := c) (C := c⁻¹ * (c⁻¹ * (c⁻¹ * c⁻¹) ^ k)) (by positivity) (hcut.and hu₁)
+  · intro p
+    exact measurable_id.inv.stronglyMeasurable.mul
+      ((stronglyMeasurable_integral_inv_mul_upperRosserBoundaryMassAux k).comp_measurable
+        (show Measurable (fun x₀ : ℝ => ((s p, a p), x₀)) by fun_prop))
+  · filter_upwards [hcut, hu₁] with p hp hp₁ x hx
+    have hap : 0 < a p := hc.trans_le hp
+    have hxpos : 0 < x := hap.trans hx.1
+    have hinv : (a p)⁻¹ ≤ c⁻¹ := (inv_le_inv₀ hap hc).2 hp
+    rw [norm_mul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hxpos)]
+    apply mul_le_mul ((inv_le_inv₀ hxpos hc).2 (hp.trans hx.1.le)) _ (norm_nonneg _)
+      (inv_nonneg.mpr hc.le)
+    exact (norm_integral_inv_mul_upperRosserBoundaryMassAux_le k hap
+      (hx.2.le.trans hp₁)).trans (mul_le_mul hinv
+        (pow_le_pow_left₀ (by positivity) (mul_le_mul hinv hinv (by positivity) (by positivity)) k)
+        (by positivity) (by positivity))
+  · filter_upwards [hinner] with x hx hmem
+    exact continuousAt_const.mul (hx hmem)
+
 /-- Dominated convergence for the inner integral in one Rosser pair.  It is
 enough that the residual mass be continuous in its level almost everywhere in
 the peeled inner coordinate. -/
@@ -344,34 +467,12 @@ theorem continuousAt_integral_inv_mul_upperRosserBoundaryMassAux_level_of_ae
         (s - x₀ - x₁)) :
     ContinuousAt (fun t => ∫ x₁ in Set.Ioo a x₀,
       x₁⁻¹ * upperRosserBoundaryMassAux k (t - x₀ - x₁) a x₁) s := by
-  apply MeasureTheory.continuousAt_of_dominated
-    (bound := fun _ : ℝ => a⁻¹ * (a⁻¹ * a⁻¹) ^ k)
-  · filter_upwards with t
-    have hmass := (stronglyMeasurable_upperRosserBoundaryMassAux k).comp_measurable
-      (show Measurable (fun x₁ : ℝ => ((t - x₀ - x₁, a), x₁)) by fun_prop)
-    exact
-      (measurable_id.inv.stronglyMeasurable.mul hmass).aestronglyMeasurable.mono_measure
-        MeasureTheory.Measure.restrict_le_self
-  · filter_upwards with t
-    filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
-    have hx₁pos : 0 < x₁ := ha.trans hx₁.1
-    have hx₁inv : x₁⁻¹ ≤ a⁻¹ := (inv_le_inv₀ hx₁pos ha).2 hx₁.1.le
-    have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow k
-      (s := t - x₀ - x₁) ha (hx₁.2.le.trans hx₀)
-    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg
-      (inv_nonneg.mpr hx₁pos.le) (upperRosserBoundaryMassAux_nonneg k ha.le))]
-    exact mul_le_mul hx₁inv hmass
-      (upperRosserBoundaryMassAux_nonneg k ha.le) (inv_nonneg.mpr ha.le)
-  · exact MeasureTheory.integrableOn_const (by
-      rw [Real.volume_Ioo]
-      exact ENNReal.ofReal_ne_top)
-  · filter_upwards [hcont] with x₁ hx₁
-    have hmap : ContinuousAt (fun t : ℝ => t - x₀ - x₁) s := by fun_prop
-    have hmass : ContinuousAt
-        ((fun r => upperRosserBoundaryMassAux k r a x₁) ∘
-          (fun t : ℝ => t - x₀ - x₁)) s :=
-      ContinuousAt.comp hx₁ hmap
-    exact continuousAt_const.mul (by simpa [Function.comp_def] using hmass)
+  apply continuousAt_rosser_inner_parametric k continuousAt_const continuousAt_const ha
+    (Filter.Eventually.of_forall fun _ => hx₀)
+  have hcont' := (MeasureTheory.ae_restrict_iff' measurableSet_Ioo).mp hcont
+  filter_upwards [hcont'] with x hx hmem
+  exact (hx hmem).comp (x := s)
+    (show ContinuousAt (fun t : ℝ => t - x₀ - x) s by fun_prop)
 
 /-- Dominated convergence for the inner Rosser integral when both the residual
 level and the positive lower cutoff vary.  The moving lower face is negligible,
@@ -384,97 +485,11 @@ theorem
         upperRosserBoundaryMassAux k (p.1 - x₀ - x₁) p.2 x₁) (s, a)) :
     ContinuousAt (fun p : ℝ × ℝ => ∫ x₁ in Set.Ioo p.2 x₀,
       x₁⁻¹ * upperRosserBoundaryMassAux k (p.1 - x₀ - x₁) p.2 x₁) (s, a) := by
-  let c := a / 2
-  let C := c⁻¹ * (c⁻¹ * c⁻¹) ^ k
-  let F : (ℝ × ℝ) → ℝ → ℝ := fun p x₁ =>
-    (Set.Ioo p.2 x₀).indicator
-      (fun x₁ => x₁⁻¹ *
-        upperRosserBoundaryMassAux k (p.1 - x₀ - x₁) p.2 x₁) x₁
-  have hc : 0 < c := half_pos ha
-  have hcutoff :
-      ∀ᶠ p : ℝ × ℝ in nhds (s, a), c < p.2 :=
-    continuousAt_snd (Ioi_mem_nhds (by dsimp [c]; linarith))
-  have hcont' : ∀ᵐ x₁ ∂MeasureTheory.volume, x₁ ∈ Set.Iio 1 →
-      ContinuousAt (fun p : ℝ × ℝ =>
-        upperRosserBoundaryMassAux k (p.1 - x₀ - x₁) p.2 x₁) (s, a) := by
-    simpa only [MeasureTheory.ae_restrict_iff' measurableSet_Iio] using hcont
-  have hF : ContinuousAt (fun p => ∫ x₁, F p x₁) (s, a) := by
-    apply MeasureTheory.continuousAt_of_dominated
-      (bound := (Set.Ioo c 1).indicator (fun _ : ℝ => C))
-    · filter_upwards with p
-      have hmass :=
-        (stronglyMeasurable_upperRosserBoundaryMassAux k).comp_measurable
-          (show Measurable (fun x₁ : ℝ =>
-            ((p.1 - x₀ - x₁, p.2), x₁)) by fun_prop)
-      exact
-        (measurable_id.inv.stronglyMeasurable.mul hmass).indicator
-          measurableSet_Ioo |>.aestronglyMeasurable
-    · filter_upwards [hcutoff] with p hp
-      filter_upwards with x₁
-      by_cases hx : x₁ ∈ Set.Ioo p.2 x₀
-      · have hxc : c < x₁ := hp.trans hx.1
-        have hmass := upperRosserBoundaryMassAux_le_of_lower_bound
-          k (s := p.1 - x₀ - x₁) hc hp.le (hx.2.le.trans hx₀)
-        have hxpos : 0 < x₁ := hc.trans hxc
-        have hxinv : x₁⁻¹ ≤ c⁻¹ :=
-          (inv_le_inv₀ hxpos hc).2 hxc.le
-        have hnonneg := upperRosserBoundaryMassAux_nonneg
-          k (s := p.1 - x₀ - x₁) (b := x₁) (hc.le.trans hp.le)
-        rw [show F p x₁ =
-            x₁⁻¹ * upperRosserBoundaryMassAux k
-              (p.1 - x₀ - x₁) p.2 x₁ by simp [F, hx],
-          Real.norm_eq_abs, abs_of_nonneg
-            (mul_nonneg (inv_nonneg.mpr hxpos.le) hnonneg),
-          show (Set.Ioo c 1).indicator (fun _ : ℝ => C) x₁ = C by
-            simp [hxc, hx.2.trans_le hx₀]]
-        exact mul_le_mul hxinv hmass hnonneg (inv_nonneg.mpr hc.le)
-      · rw [show F p x₁ = 0 by simp [F, hx], norm_zero]
-        exact Set.indicator_nonneg (fun _ _ => by
-          dsimp [C]
-          positivity) x₁
-    · have hconst : MeasureTheory.IntegrableOn
-        (fun _ : ℝ => C) (Set.Ioo c 1) :=
-        MeasureTheory.integrableOn_const (by
-        rw [Real.volume_Ioo]
-        exact ENNReal.ofReal_ne_top)
-      exact hconst.integrable_indicator measurableSet_Ioo
-    · filter_upwards [hcont', MeasureTheory.volume.ae_ne a,
-        MeasureTheory.volume.ae_ne x₀] with x₁ hxcont' hxa hxx₀
-      by_cases hx : x₁ ∈ Set.Ioo a x₀
-      · have hxone : x₁ ∈ Set.Iio 1 := hx.2.trans_le hx₀
-        have hxcont := hxcont' hxone
-        have heventually :
-            ∀ᶠ p : ℝ × ℝ in nhds (s, a), p.2 < x₁ :=
-          continuousAt_snd (Iio_mem_nhds hx.1)
-        have hprod : ContinuousAt (fun p : ℝ × ℝ =>
-            x₁⁻¹ * upperRosserBoundaryMassAux k
-              (p.1 - x₀ - x₁) p.2 x₁) (s, a) :=
-          continuousAt_const.mul hxcont
-        apply hprod.congr_of_eventuallyEq
-        filter_upwards [heventually] with p hp
-        have hmem : x₁ ∈ Set.Ioo p.2 x₀ := ⟨hp, hx.2⟩
-        simp [F, hmem]
-      · have hxleft : x₁ < a ∨ x₀ < x₁ := by
-          rcases lt_or_gt_of_ne hxa with hxa' | hax
-          · exact Or.inl hxa'
-          · rcases lt_or_gt_of_ne hxx₀ with hxx₀' | hx₀x
-            · exact (hx ⟨hax, hxx₀'⟩).elim
-            · exact Or.inr hx₀x
-        rcases hxleft with hxa' | hx₀x
-        · have heventually :
-              ∀ᶠ p : ℝ × ℝ in nhds (s, a), x₁ < p.2 :=
-            continuousAt_snd (Ioi_mem_nhds hxa')
-          apply (show (fun p => F p x₁) =ᶠ[nhds (s, a)]
-              (fun _ => (0 : ℝ)) by
-            filter_upwards [heventually] with p hp
-            simp [F, not_lt.mpr hp.le]).continuousAt
-        · apply (show (fun p => F p x₁) =ᶠ[nhds (s, a)]
-              (fun _ => (0 : ℝ)) by
-            filter_upwards with p
-            simp [F, not_lt.mpr hx₀x.le]).continuousAt
-  convert hF using 1
-  funext p
-  rw [← MeasureTheory.integral_indicator measurableSet_Ioo]
+  apply continuousAt_rosser_inner_parametric k continuousAt_snd continuousAt_const ha
+    (Filter.Eventually.of_forall fun _ => hx₀)
+  have hcont' := (MeasureTheory.ae_restrict_iff' measurableSet_Iio).mp hcont
+  filter_upwards [hcont'] with x hx hmem
+  exact hx (hmem.2.trans_le hx₀)
 
 /-- Dominated convergence for one complete Rosser pair when the residual level
 and positive lower cutoff vary jointly.  The three moving outer faces are null,
@@ -488,158 +503,12 @@ theorem continuousAt_upperRosserBoundaryMassAux_succ_level_lower_of_ae
     ContinuousAt
       (fun p : ℝ × ℝ => upperRosserBoundaryMassAux (k + 1) p.1 p.2 b)
       (s, a) := by
-  let c := a / 2
-  let C := (c⁻¹ * c⁻¹) ^ (k + 1)
-  let inner : (ℝ × ℝ) → ℝ → ℝ := fun p x₀ => ∫ x₁ in Set.Ioo p.2 x₀,
-    x₁⁻¹ * upperRosserBoundaryMassAux k (p.1 - x₀ - x₁) p.2 x₁
-  let F : (ℝ × ℝ) → ℝ → ℝ := fun p x₀ =>
-    (Set.Ioo p.2 (min b (p.1 / 3))).indicator
-      (fun x₀ => x₀⁻¹ * inner p x₀) x₀
-  have hc : 0 < c := half_pos ha
-  have hcutoff :
-      ∀ᶠ p : ℝ × ℝ in nhds (s, a), c < p.2 :=
-    continuousAt_snd (Ioi_mem_nhds (by dsimp [c]; linarith))
-  have hinner' : ∀ᵐ x₀ ∂MeasureTheory.volume, x₀ ∈ Set.Iio 1 →
-      ContinuousAt (fun p : ℝ × ℝ => ∫ x₁ in Set.Ioo p.2 x₀,
-        x₁⁻¹ * upperRosserBoundaryMassAux k
-          (p.1 - x₀ - x₁) p.2 x₁) (s, a) := by
-    simpa only [MeasureTheory.ae_restrict_iff' measurableSet_Iio] using hinner
-  have hF : ContinuousAt (fun p => ∫ x₀, F p x₀) (s, a) := by
-    apply MeasureTheory.continuousAt_of_dominated
-      (bound := (Set.Ioo c 1).indicator (fun _ : ℝ => C))
-    · filter_upwards with p
-      have hinnerMeas :=
-        (stronglyMeasurable_integral_inv_mul_upperRosserBoundaryMassAux k).comp_measurable
-          (show Measurable (fun x₀ : ℝ => ((p.1, p.2), x₀)) by fun_prop)
-      have hinnerMeas' :
-          MeasureTheory.StronglyMeasurable (fun x₀ => inner p x₀) := by
-        convert hinnerMeas using 1
-        funext x₀
-        rfl
-      exact
-        (measurable_id.inv.stronglyMeasurable.mul hinnerMeas').indicator
-          measurableSet_Ioo |>.aestronglyMeasurable
-    · filter_upwards [hcutoff] with p hp
-      filter_upwards with x₀
-      by_cases hx : x₀ ∈ Set.Ioo p.2 (min b (p.1 / 3))
-      · have hxc : c < x₀ := hp.trans hx.1
-        have hxpos : 0 < x₀ := hc.trans hxc
-        have hxupperlt : x₀ < 1 :=
-          (hx.2.trans_le (min_le_left _ _)).trans_le hb
-        have hxupper : x₀ ≤ 1 := hxupperlt.le
-        have hxinv : x₀⁻¹ ≤ c⁻¹ :=
-          (inv_le_inv₀ hxpos hc).2 hxc.le
-        have hinnerNorm :
-            ‖inner p x₀‖ ≤ c⁻¹ * (c⁻¹ * c⁻¹) ^ k := by
-          dsimp only [inner]
-          calc
-            ‖∫ x₁ in Set.Ioo p.2 x₀,
-                x₁⁻¹ * upperRosserBoundaryMassAux k
-                  (p.1 - x₀ - x₁) p.2 x₁‖ ≤
-                (c⁻¹ * (c⁻¹ * c⁻¹) ^ k) *
-                  MeasureTheory.volume.real (Set.Ioo p.2 x₀) := by
-              apply MeasureTheory.norm_setIntegral_le_of_norm_le_const_ae
-              · rw [Real.volume_Ioo]
-                exact ENNReal.ofReal_lt_top
-              · filter_upwards
-                  [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
-                have hx₁c : c < x₁ := hp.trans hx₁.1
-                have hx₁pos : 0 < x₁ := hc.trans hx₁c
-                have hx₁inv : x₁⁻¹ ≤ c⁻¹ :=
-                  (inv_le_inv₀ hx₁pos hc).2 hx₁c.le
-                have hmass := upperRosserBoundaryMassAux_le_of_lower_bound
-                  k (s := p.1 - x₀ - x₁) hc hp.le
-                    (hx₁.2.le.trans hxupper)
-                have hnonneg := upperRosserBoundaryMassAux_nonneg
-                  k (s := p.1 - x₀ - x₁) (b := x₁) (hc.le.trans hp.le)
-                rw [Real.norm_eq_abs, abs_of_nonneg
-                  (mul_nonneg (inv_nonneg.mpr hx₁pos.le) hnonneg)]
-                exact mul_le_mul hx₁inv hmass hnonneg (inv_nonneg.mpr hc.le)
-            _ ≤ c⁻¹ * (c⁻¹ * c⁻¹) ^ k := by
-              apply mul_le_of_le_one_right
-              · positivity
-              · exact volume_Ioo_real_le_one (hc.trans hp) hxupper
-        rw [show F p x₀ = x₀⁻¹ * inner p x₀ by simp [F, hx],
-          Real.norm_eq_abs, abs_mul, abs_of_pos (inv_pos.mpr hxpos),
-          show (Set.Ioo c 1).indicator (fun _ : ℝ => C) x₀ = C by
-            simp [hxc, hxupperlt]]
-        calc
-          x₀⁻¹ * ‖inner p x₀‖ ≤
-              c⁻¹ * (c⁻¹ * (c⁻¹ * c⁻¹) ^ k) :=
-            mul_le_mul hxinv hinnerNorm (norm_nonneg _) (inv_nonneg.mpr hc.le)
-          _ = C := by
-            dsimp [C]
-            rw [pow_succ]
-            ring
-      · rw [show F p x₀ = 0 by simp [F, hx], norm_zero]
-        exact Set.indicator_nonneg (fun _ _ => by
-          dsimp [C]
-          positivity) x₀
-    · have hconst : MeasureTheory.IntegrableOn
-          (fun _ : ℝ => C) (Set.Ioo c 1) :=
-        MeasureTheory.integrableOn_const (by
-          rw [Real.volume_Ioo]
-          exact ENNReal.ofReal_ne_top)
-      exact hconst.integrable_indicator measurableSet_Ioo
-    · filter_upwards [hinner', MeasureTheory.volume.ae_ne a,
-        MeasureTheory.volume.ae_ne b,
-        MeasureTheory.volume.ae_ne (s / 3)] with x₀ hxinner' hxa hxb hxs
-      by_cases hx : x₀ ∈ Set.Ioo a (min b (s / 3))
-      · have hxb' : x₀ < b := hx.2.trans_le (min_le_left _ _)
-        have hxone : x₀ ∈ Set.Iio 1 := hxb'.trans_le hb
-        have hxinner := hxinner' hxone
-        have hxs' : 3 * x₀ < s := by
-          have := hx.2.trans_le (min_le_right _ _)
-          linarith
-        have hlower :
-            ∀ᶠ p : ℝ × ℝ in nhds (s, a), p.2 < x₀ :=
-          continuousAt_snd (Iio_mem_nhds hx.1)
-        have hlevel :
-            ∀ᶠ p : ℝ × ℝ in nhds (s, a), 3 * x₀ < p.1 :=
-          continuousAt_fst (Ioi_mem_nhds hxs')
-        have hprod : ContinuousAt
-            (fun p : ℝ × ℝ => x₀⁻¹ * inner p x₀) (s, a) :=
-          continuousAt_const.mul hxinner
-        apply hprod.congr_of_eventuallyEq
-        filter_upwards [hlower, hlevel] with p hpLower hpLevel
-        have hmem : x₀ ∈ Set.Ioo p.2 (min b (p.1 / 3)) := by
-          constructor
-          · exact hpLower
-          · rw [lt_min_iff]
-            exact ⟨hxb', by linarith⟩
-        simp [F, hmem]
-      · have hxoutside : x₀ < a ∨ b < x₀ ∨ s / 3 < x₀ := by
-          rcases lt_or_gt_of_ne hxa with hxa' | hax
-          · exact Or.inl hxa'
-          · rcases lt_or_gt_of_ne hxb with hxb' | hbx
-            · rcases lt_or_gt_of_ne hxs with hxs' | hsx
-              · exact (hx ⟨hax, lt_min hxb' hxs'⟩).elim
-              · exact Or.inr (Or.inr hsx)
-            · exact Or.inr (Or.inl hbx)
-        rcases hxoutside with hxa' | hxb' | hxs'
-        · have heventually :
-              ∀ᶠ p : ℝ × ℝ in nhds (s, a), x₀ < p.2 :=
-            continuousAt_snd (Ioi_mem_nhds hxa')
-          apply (show (fun p => F p x₀) =ᶠ[nhds (s, a)]
-              (fun _ => (0 : ℝ)) by
-            filter_upwards [heventually] with p hp
-            simp [F, not_lt.mpr hp.le]).continuousAt
-        · apply (show (fun p => F p x₀) =ᶠ[nhds (s, a)]
-              (fun _ => (0 : ℝ)) by
-            filter_upwards with p
-            simp [F, not_lt.mpr hxb'.le]).continuousAt
-        · have heventually :
-              ∀ᶠ p : ℝ × ℝ in nhds (s, a), p.1 < 3 * x₀ :=
-            continuousAt_fst (Iio_mem_nhds (by linarith))
-          apply (show (fun p => F p x₀) =ᶠ[nhds (s, a)]
-              (fun _ => (0 : ℝ)) by
-            filter_upwards [heventually] with p hp
-            have hnot : ¬x₀ < p.1 / 3 := by linarith
-            simp [F, hnot]).continuousAt
-  apply hF.congr_of_eventuallyEq
-  filter_upwards with p
-  rw [upperRosserBoundaryMassAux_succ,
-    ← MeasureTheory.integral_indicator measurableSet_Ioo]
+  simp_rw [upperRosserBoundaryMassAux_succ]
+  apply continuousAt_rosser_outer_parametric k continuousAt_snd (by fun_prop) ha
+    (Filter.Eventually.of_forall fun p => (min_le_left b (p.1 / 3)).trans hb)
+  have hinner' := (MeasureTheory.ae_restrict_iff' measurableSet_Iio).mp hinner
+  filter_upwards [hinner'] with x hx hmem
+  exact hx ((hmem.2.trans_le (min_le_left _ _)).trans_le hb)
 
 /-- Every positive-depth recursive Rosser mass is jointly continuous in the
 residual level and positive lower cutoff.  At the first positive depth, the two
@@ -694,6 +563,93 @@ theorem continuousAt_upperRosserBoundaryMassAux_level_lower_succ
         (ih (s := s - x₀ - x₁) (a := a) (b := x₁) ha hx₁.le).comp
           (x := (s, a)) hmap
 
+/-- Once the lower/level induction is available, all three parameters of the
+inner integral can move together. The depth-zero case still excludes precisely
+the two affine null slices; no positive-depth theorem is used at depth zero. -/
+private theorem continuousAt_rosser_inner
+    {X : Type*} [TopologicalSpace X] [FirstCountableTopology X]
+    (k : ℕ) {p₀ : X} {s a b : X → ℝ}
+    (hs : ContinuousAt s p₀) (ha : ContinuousAt a p₀) (hb : ContinuousAt b p₀)
+    (ha₀ : 0 < a p₀) (hb₁ : ∀ᶠ p in nhds p₀, b p ≤ 1) :
+    ContinuousAt (fun p => ∫ x in Set.Ioo (a p) (b p),
+      x⁻¹ * upperRosserBoundaryMassAux k (s p - b p - x) (a p) x) p₀ := by
+  have hb₀ : b p₀ ≤ 1 := hb₁.self_of_nhds
+  apply continuousAt_rosser_inner_parametric k ha hb ha₀ hb₁
+  cases k with
+  | zero =>
+      filter_upwards [MeasureTheory.volume.ae_ne (s p₀ - b p₀),
+        MeasureTheory.volume.ae_ne (s p₀ - b p₀ - 3 * a p₀)] with x hx₀ hx₃ _
+      exact (continuousAt_upperRosserBoundaryMassAux_zero_level_lower
+        (s := s p₀ - b p₀ - x) (a := a p₀) (b := x) (by intro h; apply hx₀; linarith)
+        (by intro h; apply hx₃; linarith)).comp
+        (x := p₀) (((hs.sub hb).sub (continuousAt_const (y := x))).prodMk ha)
+  | succ k =>
+      filter_upwards with x hx
+      exact (continuousAt_upperRosserBoundaryMassAux_level_lower_succ k
+        (s := s p₀ - b p₀ - x) (a := a p₀) (b := x) ha₀ (hx.2.le.trans hb₀)).comp
+        (x := p₀) (((hs.sub hb).sub (continuousAt_const (y := x))).prodMk ha)
+
+/-- Clipping only the inherited upper face yields joint continuity on the full
+open positive-lower-cutoff domain. Specializations below recover the unmodified
+mass whenever the inherited upper face is at most one. -/
+private theorem continuousAt_rosser_mass_joint
+    (k : ℕ) {p : (ℝ × ℝ) × ℝ} (ha : 0 < p.1.2) :
+    ContinuousAt (fun q : (ℝ × ℝ) × ℝ =>
+      upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 (min q.2 1)) p := by
+  simp_rw [upperRosserBoundaryMassAux_succ]
+  apply continuousAt_rosser_outer_parametric k
+    (continuousAt_fst.snd) (by fun_prop) ha
+    (Filter.Eventually.of_forall fun q =>
+      (min_le_left (min q.2 1) (q.1.1 / 3)).trans (min_le_right q.2 1))
+  filter_upwards with x hx
+  exact continuousAt_rosser_inner k (continuousAt_fst.fst) (continuousAt_fst.snd)
+    continuousAt_const ha (Filter.Eventually.of_forall fun _ =>
+      hx.2.le.trans ((min_le_left _ _).trans (min_le_right _ _)))
+
+/-- A single compact-box modulus controls the complete moving inner integral,
+including reversed or coincident endpoints, where the open interval is empty. -/
+private theorem rosser_inner_joint_modulus
+    (k : ℕ) {s₀ s₁ c ε : ℝ} (hc : 0 < c) (hε : 0 < ε) :
+    ∃ δ > 0,
+      ∀ p ∈ (Set.Icc s₀ s₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1,
+      ∀ q ∈ (Set.Icc s₀ s₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1,
+        dist p q < δ →
+        |(∫ x in Set.Ioo p.1.2 p.2, x⁻¹ *
+            upperRosserBoundaryMassAux k (p.1.1 - p.2 - x) p.1.2 x) -
+          ∫ x in Set.Ioo q.1.2 q.2, x⁻¹ *
+            upperRosserBoundaryMassAux k (q.1.1 - q.2 - x) q.1.2 x| < ε := by
+  have hcont : ContinuousOn (fun p : (ℝ × ℝ) × ℝ =>
+      ∫ x in Set.Ioo p.1.2 p.2, x⁻¹ *
+        upperRosserBoundaryMassAux k (p.1.1 - p.2 - x) p.1.2 x)
+      ((Set.Icc s₀ s₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1) := by
+    have hclip : ContinuousOn (fun p : (ℝ × ℝ) × ℝ =>
+        ∫ x in Set.Ioo p.1.2 (min p.2 1), x⁻¹ *
+          upperRosserBoundaryMassAux k (p.1.1 - min p.2 1 - x) p.1.2 x)
+        ((Set.Icc s₀ s₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1) := by
+      intro p hp
+      exact (continuousAt_rosser_inner k (continuousAt_fst.fst) (continuousAt_fst.snd)
+        (continuousAt_snd.min continuousAt_const) (hc.trans_le hp.1.2.1)
+        (Filter.Eventually.of_forall fun q => min_le_right q.2 1)).continuousWithinAt
+    exact hclip.congr fun p hp => by simp only [min_eq_left hp.2.2]
+  simpa only [Real.dist_eq] using Metric.uniformContinuousOn_iff.mp
+    (((isCompact_Icc.prod isCompact_Icc).prod isCompact_Icc).uniformContinuousOn_of_continuous
+      hcont) ε hε
+
+/-- Restriction and continuous parameter substitution recover the original,
+unclipped mass on any domain whose upper faces stay below one. -/
+private theorem continuousOn_rosser_mass
+    {X : Type*} [TopologicalSpace X] (k : ℕ) {S : Set X} {s a b : X → ℝ}
+    (hs : ContinuousOn s S) (ha : ContinuousOn a S) (hb : ContinuousOn b S)
+    (hapos : ∀ p ∈ S, 0 < a p) (hble : ∀ p ∈ S, b p ≤ 1) :
+    ContinuousOn (fun p => upperRosserBoundaryMassAux (k + 1) (s p) (a p) (b p)) S := by
+  have hclip : ContinuousOn
+      (fun p => upperRosserBoundaryMassAux (k + 1) (s p) (a p) (min (b p) 1)) S := by
+    intro p hp
+    exact (continuousAt_rosser_mass_joint k
+      (p := ((s p, a p), b p)) (hapos p hp)).comp_continuousWithinAt (x := p)
+      (((hs p hp).prodMk (ha p hp)).prodMk (hb p hp))
+  exact hclip.congr fun p hp => by simp only [min_eq_left (hble p hp)]
+
 /-- Positive-depth recursive Rosser mass is jointly continuous in residual level
 and lower cutoff on every compact box screened away from zero. -/
 theorem continuousOn_upperRosserBoundaryMassAux_level_lower_succ
@@ -732,70 +688,12 @@ theorem continuousAt_upperRosserBoundaryMassAux_succ_level_of_ae
       ContinuousAt (fun t => ∫ x₁ in Set.Ioo a x₀,
         x₁⁻¹ * upperRosserBoundaryMassAux k (t - x₀ - x₁) a x₁) s) :
     ContinuousAt (fun t => upperRosserBoundaryMassAux (k + 1) t a b) s := by
-  let inner : ℝ → ℝ → ℝ := fun t x₀ => ∫ x₁ in Set.Ioo a x₀,
-    x₁⁻¹ * upperRosserBoundaryMassAux k (t - x₀ - x₁) a x₁
-  let F : ℝ → ℝ → ℝ := fun t x₀ =>
-    (Set.Iio (t / 3)).indicator (fun x₀ => x₀⁻¹ * inner t x₀) x₀
-  have hF : ContinuousAt (fun t => ∫ x₀ in Set.Ioo a b, F t x₀) s := by
-    apply MeasureTheory.continuousAt_of_dominated
-      (bound := fun _ : ℝ => (a⁻¹ * a⁻¹) ^ (k + 1))
-    · filter_upwards with t
-      have hinnerMeas :=
-        (stronglyMeasurable_integral_inv_mul_upperRosserBoundaryMassAux k).comp_measurable
-          (show Measurable (fun x₀ : ℝ => ((t, a), x₀)) by fun_prop)
-      have hinnerMeas' :
-          MeasureTheory.StronglyMeasurable (fun x₀ => inner t x₀) := by
-        convert hinnerMeas using 1
-        funext x₀
-        rfl
-      have hmeas : MeasureTheory.StronglyMeasurable
-          (fun x₀ => x₀⁻¹ * inner t x₀) :=
-        measurable_id.inv.stronglyMeasurable.mul hinnerMeas'
-      exact (hmeas.indicator measurableSet_Iio).aestronglyMeasurable.mono_measure
-        MeasureTheory.Measure.restrict_le_self
-    · filter_upwards with t
-      filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₀ hx₀
-      by_cases hface : x₀ ∈ Set.Iio (t / 3)
-      · rw [show F t x₀ = x₀⁻¹ * inner t x₀ by simp [F, hface]]
-        have hx₀pos : 0 < x₀ := ha.trans hx₀.1
-        have hx₀inv : x₀⁻¹ ≤ a⁻¹ := (inv_le_inv₀ hx₀pos ha).2 hx₀.1.le
-        have hx₀upper : x₀ ≤ 1 := hx₀.2.le.trans hb
-        have hinnerNorm :
-            ‖inner t x₀‖ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k :=
-          norm_integral_inv_mul_upperRosserBoundaryMassAux_le k (s := t) ha hx₀upper
-        rw [Real.norm_eq_abs, abs_mul, abs_of_pos (inv_pos.mpr hx₀pos)]
-        calc
-          x₀⁻¹ * ‖inner t x₀‖ ≤
-              a⁻¹ * (a⁻¹ * (a⁻¹ * a⁻¹) ^ k) :=
-            mul_le_mul hx₀inv hinnerNorm (norm_nonneg _) (inv_nonneg.mpr ha.le)
-          _ = (a⁻¹ * a⁻¹) ^ (k + 1) := by
-            rw [pow_succ]
-            ring
-      · rw [show F t x₀ = 0 by simp [F, hface], norm_zero]
-        positivity
-    · exact MeasureTheory.integrableOn_const (by
-        rw [Real.volume_Ioo]
-        exact ENNReal.ofReal_ne_top)
-    · filter_upwards [hinner,
-        (MeasureTheory.volume.restrict (Set.Ioo a b)).ae_ne (s / 3)] with
-          x₀ hxinner hne
-      rcases lt_or_gt_of_ne hne with hxs | hsx
-      · have hst : 3 * x₀ < s := by linarith
-        have heq : (fun t => F t x₀) =ᶠ[nhds s]
-            (fun t => x₀⁻¹ * inner t x₀) := by
-          filter_upwards [lt_mem_nhds hst] with t ht
-          have hxt : x₀ < t / 3 := by linarith
-          simp [F, hxt]
-        exact (continuousAt_const.mul hxinner).congr_of_eventuallyEq heq
-      · have hst : s < 3 * x₀ := by linarith
-        apply (show (fun t => F t x₀) =ᶠ[nhds s] (fun _ => (0 : ℝ)) by
-          filter_upwards [eventually_lt_nhds hst] with t ht
-          have hxt : ¬x₀ < t / 3 := by linarith
-          simp [F, hxt]).continuousAt
-  exact hF.congr_of_eventuallyEq (by
-    filter_upwards with t
-    rw [upperRosserBoundaryMassAux_succ,
-      MeasureTheory.setIntegral_indicator measurableSet_Iio, Set.Ioo_inter_Iio])
+  simp_rw [upperRosserBoundaryMassAux_succ]
+  apply continuousAt_rosser_outer_parametric k continuousAt_const (by fun_prop) ha
+    (Filter.Eventually.of_forall fun t => (min_le_left b (t / 3)).trans hb)
+  have hinner' := (MeasureTheory.ae_restrict_iff' measurableSet_Ioo).mp hinner
+  filter_upwards [hinner'] with x hx hmem
+  exact hx ⟨hmem.1, hmem.2.trans_le (min_le_left _ _)⟩
 
 /-- Every positive-depth recursive Rosser boundary mass is continuous in its
 residual level.  At depth zero there are two affine jumps; after one peeled
@@ -804,35 +702,11 @@ smooths them. -/
 theorem continuous_upperRosserBoundaryMassAux_level_succ
     (k : ℕ) {a b : ℝ} (ha : 0 < a) (hb : b ≤ 1) :
     Continuous (fun s => upperRosserBoundaryMassAux (k + 1) s a b) := by
-  induction k generalizing a b with
-  | zero =>
-      rw [continuous_iff_continuousAt]
-      intro s
-      apply continuousAt_upperRosserBoundaryMassAux_succ_level_of_ae 0 ha hb
-      filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₀ hx₀
-      apply continuousAt_integral_inv_mul_upperRosserBoundaryMassAux_level_of_ae
-        0 ha (hx₀.2.le.trans hb)
-      filter_upwards [
-          (MeasureTheory.volume.restrict (Set.Ioo a x₀)).ae_ne (s - x₀),
-          (MeasureTheory.volume.restrict (Set.Ioo a x₀)).ae_ne
-            (s - x₀ - 3 * a)] with x₁ hx₁zero hx₁terminal
-      apply continuousAt_upperRosserBoundaryMassAux_zero_level
-      · intro h
-        apply hx₁zero
-        linarith
-      · intro h
-        apply hx₁terminal
-        linarith
-  | succ k ih =>
-      rw [continuous_iff_continuousAt]
-      intro s
-      apply
-        continuousAt_upperRosserBoundaryMassAux_succ_level_of_ae (k + 1) ha hb
-      filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₀ hx₀
-      apply continuousAt_integral_inv_mul_upperRosserBoundaryMassAux_level_of_ae
-        (k + 1) ha (hx₀.2.le.trans hb)
-      filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x₁ hx₁
-      exact (ih ha (hx₁.2.le.trans (hx₀.2.le.trans hb))).continuousAt
+  rw [continuous_iff_continuousAt]
+  intro s
+  exact (continuousAt_upperRosserBoundaryMassAux_level_lower_succ k (s := s) ha hb).comp
+    (x := s)
+    (continuousAt_id.prodMk continuousAt_const)
 
 /-- The inner integral in one Rosser pair is jointly continuous in the residual
 level and the peeled outer coordinate once the residual boundary mass has
@@ -843,93 +717,14 @@ theorem continuousOn_integral_inv_mul_upperRosserBoundaryMassAux_outer_succ
     ContinuousOn (fun p : ℝ × ℝ => ∫ x₁ in Set.Ioo a p.2,
       x₁⁻¹ * upperRosserBoundaryMassAux (k + 1) (p.1 - p.2 - x₁) a x₁)
       (Set.univ ×ˢ Set.Icc a 1) := by
-  let C := a⁻¹ * (a⁻¹ * a⁻¹) ^ (k + 1)
-  let F : (ℝ × ℝ) → ℝ → ℝ := fun p x₁ =>
-    (Set.Ioo a (min p.2 1)).indicator
-      (fun x₁ => x₁⁻¹ *
-       upperRosserBoundaryMassAux (k + 1) (p.1 - p.2 - x₁) a x₁) x₁
-  have hF : Continuous (fun p => ∫ x₁, F p x₁) := by
+  have hclip : Continuous (fun p : ℝ × ℝ => ∫ x in Set.Ioo a (min p.2 1),
+      x⁻¹ * upperRosserBoundaryMassAux (k + 1) (p.1 - min p.2 1 - x) a x) := by
     rw [continuous_iff_continuousAt]
-    intro p₀
-    apply MeasureTheory.continuousAt_of_dominated
-      (bound := (Set.Ioo a 1).indicator (fun _ : ℝ => C))
-    · filter_upwards with p
-      have hmass :=
-       (stronglyMeasurable_upperRosserBoundaryMassAux (k + 1)).comp_measurable
-         (show Measurable (fun x₁ : ℝ => ((p.1 - p.2 - x₁, a), x₁)) by fun_prop)
-      exact
-       (measurable_id.inv.stronglyMeasurable.mul hmass).indicator
-         measurableSet_Ioo |>.aestronglyMeasurable
-    · filter_upwards with p
-      filter_upwards with x₁
-      by_cases hx : x₁ ∈ Set.Ioo a (min p.2 1)
-      · have hxpos : 0 < x₁ := ha.trans hx.1
-        have hxoneLt : x₁ < 1 := hx.2.trans_le (min_le_right _ _)
-        have hxone : x₁ ≤ 1 := hxoneLt.le
-        have hxinv : x₁⁻¹ ≤ a⁻¹ :=
-          (inv_le_inv₀ hxpos ha).2 hx.1.le
-        have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow (k + 1)
-          (s := p.1 - p.2 - x₁) ha hxone
-        have hnonneg := upperRosserBoundaryMassAux_nonneg
-          (k + 1) (s := p.1 - p.2 - x₁) (b := x₁) ha.le
-        rw [show F p x₁ = x₁⁻¹ * upperRosserBoundaryMassAux (k + 1)
-              (p.1 - p.2 - x₁) a x₁ by simp [F, hx],
-          Real.norm_eq_abs, abs_of_nonneg
-            (mul_nonneg (inv_nonneg.mpr hxpos.le) hnonneg),
-          show (Set.Ioo a 1).indicator (fun _ : ℝ => C) x₁ = C by
-            simp [hx.1, hxoneLt]]
-        exact mul_le_mul hxinv hmass hnonneg (inv_nonneg.mpr ha.le)
-      · rw [show F p x₁ = 0 by simp [F, hx], norm_zero]
-        exact Set.indicator_nonneg (fun _ _ => by
-          dsimp [C]
-          positivity) x₁
-    · have hconst : MeasureTheory.IntegrableOn
-         (fun _ : ℝ => C) (Set.Ioo a 1) :=
-       MeasureTheory.integrableOn_const (by
-         rw [Real.volume_Ioo]
-         exact ENNReal.ofReal_ne_top)
-      exact hconst.integrable_indicator measurableSet_Ioo
-    · filter_upwards [MeasureTheory.volume.ae_ne (min p₀.2 1)] with x₁ hne
-      by_cases hx : x₁ ∈ Set.Ioo a (min p₀.2 1)
-      · have hxone : x₁ ≤ 1 := hx.2.le.trans (min_le_right _ _)
-        have hmap : ContinuousAt
-            (fun p : ℝ × ℝ => p.1 - p.2 - x₁) p₀ := by fun_prop
-        have hmass : ContinuousAt
-            (fun p : ℝ × ℝ => upperRosserBoundaryMassAux (k + 1)
-              (p.1 - p.2 - x₁) a x₁) p₀ :=
-          (continuous_upperRosserBoundaryMassAux_level_succ k ha hxone).continuousAt.comp
-            hmap
-        have hprod : ContinuousAt (fun p : ℝ × ℝ => x₁⁻¹ *
-            upperRosserBoundaryMassAux (k + 1) (p.1 - p.2 - x₁) a x₁) p₀ :=
-          continuousAt_const.mul hmass
-        have heventually : ∀ᶠ p in nhds p₀, x₁ < min p.2 1 :=
-          (continuousAt_snd.min continuousAt_const) (Ioi_mem_nhds hx.2)
-        apply hprod.congr_of_eventuallyEq
-        filter_upwards [heventually] with p hp
-        have hmem : x₁ ∈ Set.Ioo a (min p.2 1) := ⟨hx.1, hp⟩
-        simp [F, hmem]
-      · rcases le_or_gt x₁ a with hxa | hax
-        · apply (show (fun p => F p x₁) =ᶠ[nhds p₀] (fun _ => (0 : ℝ)) by
-            filter_upwards with p
-            simp [F, not_lt.mpr hxa]).continuousAt
-        · have hupperle : min p₀.2 1 ≤ x₁ := by
-            by_contra hnot
-            exact hx ⟨hax, lt_of_not_ge hnot⟩
-          have hupper : min p₀.2 1 < x₁ := hupperle.lt_of_ne hne.symm
-          have heventually : ∀ᶠ p in nhds p₀, min p.2 1 < x₁ :=
-            (continuousAt_snd.min continuousAt_const) (Iio_mem_nhds hupper)
-          apply (show (fun p => F p x₁) =ᶠ[nhds p₀] (fun _ => (0 : ℝ)) by
-            filter_upwards [heventually] with p hp
-            simp [F, not_lt.mpr hp.le]).continuousAt
-  apply hF.continuousOn.congr
-  intro p hp
-  change (∫ x₁ in Set.Ioo a p.2,
-      x₁⁻¹ * upperRosserBoundaryMassAux (k + 1) (p.1 - p.2 - x₁) a x₁) =
-    ∫ x₁, (Set.Ioo a (min p.2 1)).indicator
-      (fun x₁ => x₁⁻¹ * upperRosserBoundaryMassAux (k + 1)
-       (p.1 - p.2 - x₁) a x₁) x₁
-  rw [show min p.2 1 = p.2 by exact min_eq_left hp.2.2]
-  rw [← MeasureTheory.integral_indicator measurableSet_Ioo]
+    intro p
+    exact continuousAt_rosser_inner (k + 1) continuousAt_fst continuousAt_const
+      (continuousAt_snd.min continuousAt_const) ha
+      (Filter.Eventually.of_forall fun q => min_le_right q.2 1)
+  exact hclip.continuousOn.congr fun p hp => by simp only [min_eq_left hp.2.2]
 
 /-- On compact level and outer-coordinate ranges, the positive-depth inner
 Rosser integral has a uniform modulus. -/
@@ -1034,45 +829,8 @@ theorem continuousOn_upperRosserBoundaryMassAux_upper
       simp only [upperRosserBoundaryMassAux_zero]
       fun_prop
   | succ k =>
-      by_cases hsa : s / 3 ≤ a
-      · have hzero :
-            (fun b => upperRosserBoundaryMassAux (k + 1) s a b) =
-              fun _ => 0 := by
-          funext b
-          rw [upperRosserBoundaryMassAux_succ]
-          have hempty : Set.Ioo a (min b (s / 3)) = ∅ :=
-            Set.Ioo_eq_empty (by linarith [min_le_right b (s / 3)])
-          rw [hempty, MeasureTheory.Measure.restrict_empty,
-            MeasureTheory.integral_zero_measure]
-        rw [hzero]
-        exact continuousOn_const
-      · have has : a ≤ s / 3 := le_of_not_ge hsa
-        let f : ℝ → ℝ := fun x₀ => x₀⁻¹ * ∫ x₁ in Set.Ioo a x₀,
-          x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁
-        have hfIoo : MeasureTheory.IntegrableOn f (Set.Ioo a 1) := by
-          exact
-            integrableOn_outer_integrand_upperRosserBoundaryMassAux k ha le_rfl
-        have hfIcc : MeasureTheory.IntegrableOn f (Set.Icc a 1) :=
-          (integrableOn_Icc_iff_integrableOn_Ioo).2 hfIoo
-        have hprimitive :
-            ContinuousOn (fun u => ∫ x in Set.Ioc a u, f x) (Set.Icc a 1) :=
-          intervalIntegral.continuousOn_primitive hfIcc
-        have hmin : ContinuousOn (fun b : ℝ => min b (s / 3))
-            (Set.Icc a 1) :=
-          (continuous_id.min continuous_const).continuousOn
-        have hmaps : Set.MapsTo (fun b : ℝ => min b (s / 3))
-            (Set.Icc a 1) (Set.Icc a 1) := by
-          intro b hb
-          exact ⟨le_min hb.1 has, (min_le_left _ _).trans hb.2⟩
-        apply (hprimitive.comp hmin hmaps).congr
-        intro b _
-        change upperRosserBoundaryMassAux (k + 1) s a b =
-          ∫ x₀ in Set.Ioc a (min b (s / 3)),
-            x₀⁻¹ * ∫ x₁ in Set.Ioo a x₀,
-              x₁⁻¹ *
-                upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁
-        rw [upperRosserBoundaryMassAux_succ]
-        exact (MeasureTheory.integral_Ioc_eq_integral_Ioo).symm
+      exact continuousOn_rosser_mass k continuousOn_const continuousOn_const continuousOn_id
+        (fun _ _ => ha) (fun _ hb => hb.2)
 
 /-- On a positive screen, the cutoff dependence of every finite-depth boundary
 mass has a modulus uniform across the whole inherited-cutoff interval. -/
@@ -1191,109 +949,16 @@ theorem exists_upperRosserBoundaryMassAux_inner_cell_majorant_succ
   · exact hlrδ
 
 /-- At positive residual depth, the residual level and inherited upper cutoff
-vary jointly continuously on every compact screened rectangle.  Monotonicity in
-the upper cutoff lets the two separate continuity estimates be combined without
-requiring any regularity of the depth-zero integrand. -/
+vary jointly continuously on every compact screened rectangle. This is a
+restriction of joint dominated-integral continuity; the depth-zero jumps have
+already been handled on null slices in the foundational induction. -/
 theorem continuousOn_upperRosserBoundaryMassAux_level_upper_succ
     (k : ℕ) {a r₀ r₁ : ℝ} (ha : 0 < a) :
     ContinuousOn
       (fun p : ℝ × ℝ => upperRosserBoundaryMassAux (k + 1) p.1 a p.2)
       (Set.Icc r₀ r₁ ×ˢ Set.Icc a 1) := by
-  intro p hp
-  rw [Metric.continuousWithinAt_iff]
-  intro ε hε
-  have hεthird : 0 < ε / 3 := div_pos hε (by norm_num)
-  have hcutAt :=
-    (continuousOn_upperRosserBoundaryMassAux_upper
-      (k + 1) (s := p.1) ha) p.2 hp.2
-  rw [Metric.continuousWithinAt_iff] at hcutAt
-  obtain ⟨δb, hδb, hcut⟩ := hcutAt (ε / 3) hεthird
-  let blo : ℝ := max a (p.2 - δb / 2)
-  let bhi : ℝ := min 1 (p.2 + δb / 2)
-  have hpa : a ≤ p.2 := hp.2.1
-  have hpone : p.2 ≤ 1 := hp.2.2
-  have haone : a ≤ 1 := hpa.trans hpone
-  have hblo : blo ∈ Set.Icc a 1 := by
-    constructor
-    · exact le_max_left _ _
-    · exact max_le haone (by linarith [hpone, hδb])
-  have hbhi : bhi ∈ Set.Icc a 1 := by
-    constructor
-    · exact le_min haone (by linarith [hpa, hδb])
-    · exact min_le_left _ _
-  have hblo_le : blo ≤ p.2 := by
-    exact max_le hp.2.1 (by linarith)
-  have hle_bhi : p.2 ≤ bhi := by
-    exact le_min hp.2.2 (by linarith)
-  have hdist_blo : dist blo p.2 < δb := by
-    rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hblo_le)]
-    have hlo := le_max_right a (p.2 - δb / 2)
-    linarith
-  have hdist_bhi : dist bhi p.2 < δb := by
-    rw [Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hle_bhi)]
-    have hhi := min_le_right (1 : ℝ) (p.2 + δb / 2)
-    linarith
-  have hcutLo := hcut hblo hdist_blo
-  have hcutHi := hcut hbhi hdist_bhi
-  have hlevelLo : ContinuousAt
-      (fun t => upperRosserBoundaryMassAux (k + 1) t a blo) p.1 :=
-    (continuous_upperRosserBoundaryMassAux_level_succ k ha hblo.2).continuousAt
-  have hlevelHi : ContinuousAt
-      (fun t => upperRosserBoundaryMassAux (k + 1) t a bhi) p.1 :=
-    (continuous_upperRosserBoundaryMassAux_level_succ k ha hbhi.2).continuousAt
-  rw [Metric.continuousAt_iff] at hlevelLo hlevelHi
-  obtain ⟨δlo, hδlo, hresLo⟩ := hlevelLo (ε / 3) hεthird
-  obtain ⟨δhi, hδhi, hresHi⟩ := hlevelHi (ε / 3) hεthird
-  refine ⟨min (δb / 2) (min δlo δhi), by positivity, ?_⟩
-  intro q hq hdist
-  rw [Prod.dist_eq, max_lt_iff] at hdist
-  have hqLevel : dist q.1 p.1 < δlo ∧ dist q.1 p.1 < δhi :=
-    ⟨hdist.1.trans_le ((min_le_right _ _).trans (min_le_left _ _)),
-      hdist.1.trans_le ((min_le_right _ _).trans (min_le_right _ _))⟩
-  have hqUpperDist : dist q.2 p.2 < δb / 2 :=
-    hdist.2.trans_le (min_le_left _ _)
-  have hqUpperAbs : |q.2 - p.2| < δb / 2 := by
-    simpa [Real.dist_eq] using hqUpperDist
-  have hbloq : blo ≤ q.2 := by
-    apply max_le hq.2.1
-    rw [abs_lt] at hqUpperAbs
-    linarith
-  have hqbhi : q.2 ≤ bhi := by
-    apply le_min hq.2.2
-    rw [abs_lt] at hqUpperAbs
-    linarith
-  have hmonoLo :
-      upperRosserBoundaryMassAux (k + 1) q.1 a blo ≤
-        upperRosserBoundaryMassAux (k + 1) q.1 a q.2 :=
-    upperRosserBoundaryMassAux_mono_upper (k + 1) ha hbloq hq.2.2
-  have hmonoHi :
-      upperRosserBoundaryMassAux (k + 1) q.1 a q.2 ≤
-        upperRosserBoundaryMassAux (k + 1) q.1 a bhi :=
-    upperRosserBoundaryMassAux_mono_upper (k + 1) ha hqbhi hbhi.2
-  have hresLo' := hresLo hqLevel.1
-  have hresHi' := hresHi hqLevel.2
-  rw [Real.dist_eq] at hcutLo hcutHi hresLo' hresHi' ⊢
-  rw [abs_lt]
-  constructor
-  · have hcutLoOne :=
-      le_abs_self
-        (upperRosserBoundaryMassAux (k + 1) p.1 a p.2 -
-          upperRosserBoundaryMassAux (k + 1) p.1 a blo)
-    have hresLoOne :=
-      le_abs_self
-        (upperRosserBoundaryMassAux (k + 1) p.1 a blo -
-          upperRosserBoundaryMassAux (k + 1) q.1 a blo)
-    rw [abs_sub_comm] at hcutLo hresLo'
-    linarith
-  · have hresHiOne :=
-      le_abs_self
-        (upperRosserBoundaryMassAux (k + 1) q.1 a bhi -
-          upperRosserBoundaryMassAux (k + 1) p.1 a bhi)
-    have hcutHiOne :=
-      le_abs_self
-        (upperRosserBoundaryMassAux (k + 1) p.1 a bhi -
-          upperRosserBoundaryMassAux (k + 1) p.1 a p.2)
-    linarith
+  exact continuousOn_rosser_mass k continuousOn_fst continuousOn_const continuousOn_snd
+    (fun _ _ => ha) (fun _ hp => hp.2.2)
 
 /-- Quantitative joint modulus for positive-depth residual mass on a compact
 level/cutoff rectangle. -/
@@ -1313,7 +978,8 @@ theorem exists_upperRosserBoundaryMassAux_level_upper_modulus_succ
 
 /-- At fixed residual level and positive lower cutoff, the inherited upper face
 varies continuously on any compact interval below the global cutoff, including
-the part where that face lies below the lower cutoff and the mass vanishes. -/
+the part where that face lies below the lower cutoff. At positive depth the mass
+vanishes there; at depth zero it is independent of the inherited upper face. -/
 theorem continuousOn_upperRosserBoundaryMassAux_upper_global
     (k : ℕ) {s a c : ℝ} (ha : 0 < a) :
     ContinuousOn (fun b => upperRosserBoundaryMassAux k s a b) (Set.Icc c 1) := by
@@ -1322,46 +988,8 @@ theorem continuousOn_upperRosserBoundaryMassAux_upper_global
       simp only [upperRosserBoundaryMassAux_zero]
       fun_prop
   | succ k =>
-      by_cases ha1 : a ≤ 1
-      · let f : ℝ → ℝ := fun x₀ => x₀⁻¹ * ∫ x₁ in Set.Ioo a x₀,
-          x₁⁻¹ * upperRosserBoundaryMassAux k (s - x₀ - x₁) a x₁
-        have hfIoo : MeasureTheory.IntegrableOn f (Set.Ioo a 1) :=
-          integrableOn_outer_integrand_upperRosserBoundaryMassAux k ha le_rfl
-        have hfIcc : MeasureTheory.IntegrableOn f (Set.Icc a 1) :=
-          (integrableOn_Icc_iff_integrableOn_Ioo).2 hfIoo
-        have hprimitive :
-            ContinuousOn (fun u => ∫ x in Set.Ioc a u, f x) (Set.Icc a 1) :=
-          intervalIntegral.continuousOn_primitive hfIcc
-        let endpoint : ℝ → ℝ := fun b => max a (min b (s / 3))
-        have hendpoint : ContinuousOn endpoint (Set.Icc c 1) :=
-          (continuous_const.max (continuous_id.min continuous_const)).continuousOn
-        have hmaps : Set.MapsTo endpoint (Set.Icc c 1) (Set.Icc a 1) := by
-          intro b hb
-          exact ⟨le_max_left _ _,
-            max_le ha1 ((min_le_left b (s / 3)).trans hb.2)⟩
-        apply (hprimitive.comp hendpoint hmaps).congr
-        intro b hb
-        change upperRosserBoundaryMassAux (k + 1) s a b =
-          ∫ x₀ in Set.Ioc a (endpoint b), f x₀
-        rw [upperRosserBoundaryMassAux_succ,
-          MeasureTheory.integral_Ioc_eq_integral_Ioo]
-        by_cases h : a < min b (s / 3)
-        · rw [show endpoint b = min b (s / 3) by
-            simp [endpoint, max_eq_right h.le]]
-        · have hle : min b (s / 3) ≤ a := le_of_not_gt h
-          rw [show endpoint b = a by simp [endpoint, max_eq_left hle],
-            Set.Ioo_eq_empty (not_lt.mpr hle), Set.Ioo_self,
-            MeasureTheory.Measure.restrict_empty,
-            MeasureTheory.integral_zero_measure]
-      · refine ContinuousOn.congr (f := fun _ : ℝ => 0) continuousOn_const ?_
-        intro b hb
-        change upperRosserBoundaryMassAux (k + 1) s a b = 0
-        rw [upperRosserBoundaryMassAux_succ]
-        have hle : min b (s / 3) ≤ a :=
-          (min_le_left b (s / 3)).trans (hb.2.trans (le_of_not_ge ha1))
-        rw [Set.Ioo_eq_empty (not_lt.mpr hle),
-          MeasureTheory.Measure.restrict_empty,
-          MeasureTheory.integral_zero_measure]
+      exact continuousOn_rosser_mass k continuousOn_const continuousOn_const continuousOn_id
+        (fun _ _ => ha) (fun _ hb => hb.2)
 
 /-- Positive-depth residual mass has one uniform modulus in the residual level,
 lower cutoff, and inherited upper face on every screened compact box. -/
@@ -1373,112 +1001,14 @@ theorem exists_upperRosserBoundaryMassAux_level_lower_upper_modulus_succ
         dist p q < δ →
           |upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 p.2 -
             upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 q.2| < ε := by
-  let C := (Set.Icc r₀ r₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1
-  have hcontinuous : ContinuousOn
-      (fun p : (ℝ × ℝ) × ℝ =>
-        upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 p.2) C := by
-    intro p hp
-    rw [Metric.continuousWithinAt_iff]
-    intro η hη
-    have hηthird : 0 < η / 3 := div_pos hη (by norm_num)
-    have hcutAt :=
-      (continuousOn_upperRosserBoundaryMassAux_upper_global
-        (k + 1) (s := p.1.1) (a := p.1.2)
-        (c := c) (hc.trans_le hp.1.2.1)) p.2 hp.2
-    rw [Metric.continuousWithinAt_iff] at hcutAt
-    obtain ⟨δb, hδb, hcut⟩ := hcutAt (η / 3) hηthird
-    let blo : ℝ := max c (p.2 - δb / 2)
-    let bhi : ℝ := min 1 (p.2 + δb / 2)
-    have hblo : blo ∈ Set.Icc c 1 := by
-      constructor
-      · exact le_max_left _ _
-      · exact max_le (by linarith [hp.2.1, hp.2.2])
-          (by linarith [hp.2.2, hδb])
-    have hbhi : bhi ∈ Set.Icc c 1 := by
-      constructor
-      · exact le_min (by linarith [hp.2.1, hp.2.2])
-          (by linarith [hp.2.1, hδb])
-      · exact min_le_left _ _
-    have hblo_le : blo ≤ p.2 :=
-      max_le hp.2.1 (by linarith)
-    have hle_bhi : p.2 ≤ bhi :=
-      le_min hp.2.2 (by linarith)
-    have hdist_blo : dist blo p.2 < δb := by
-      rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hblo_le)]
-      have hlo := le_max_right c (p.2 - δb / 2)
-      linarith
-    have hdist_bhi : dist bhi p.2 < δb := by
-      rw [Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hle_bhi)]
-      have hhi := min_le_right (1 : ℝ) (p.2 + δb / 2)
-      linarith
-    have hcutLo := hcut hblo hdist_blo
-    have hcutHi := hcut hbhi hdist_bhi
-    have hlowerLo : ContinuousAt
-        (fun q : ℝ × ℝ =>
-          upperRosserBoundaryMassAux (k + 1) q.1 q.2 blo) p.1 :=
-      continuousAt_upperRosserBoundaryMassAux_level_lower_succ
-        k (hc.trans_le hp.1.2.1) hblo.2
-    have hlowerHi : ContinuousAt
-        (fun q : ℝ × ℝ =>
-          upperRosserBoundaryMassAux (k + 1) q.1 q.2 bhi) p.1 :=
-      continuousAt_upperRosserBoundaryMassAux_level_lower_succ
-        k (hc.trans_le hp.1.2.1) hbhi.2
-    rw [Metric.continuousAt_iff] at hlowerLo hlowerHi
-    obtain ⟨δlo, hδlo, hresLo⟩ := hlowerLo (η / 3) hηthird
-    obtain ⟨δhi, hδhi, hresHi⟩ := hlowerHi (η / 3) hηthird
-    refine ⟨min (δb / 2) (min δlo δhi), by positivity, ?_⟩
-    intro q hq hdist
-    rw [Prod.dist_eq, max_lt_iff] at hdist
-    have hqParams : dist q.1 p.1 < δlo ∧ dist q.1 p.1 < δhi :=
-      ⟨hdist.1.trans_le ((min_le_right _ _).trans (min_le_left _ _)),
-        hdist.1.trans_le ((min_le_right _ _).trans (min_le_right _ _))⟩
-    have hqUpperDist : dist q.2 p.2 < δb / 2 :=
-      hdist.2.trans_le (min_le_left _ _)
-    have hqUpperAbs : |q.2 - p.2| < δb / 2 := by
-      simpa [Real.dist_eq] using hqUpperDist
-    have hbloq : blo ≤ q.2 := by
-      apply max_le hq.2.1
-      rw [abs_lt] at hqUpperAbs
-      linarith
-    have hqbhi : q.2 ≤ bhi := by
-      apply le_min hq.2.2
-      rw [abs_lt] at hqUpperAbs
-      linarith
-    have hmonoLo :
-        upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 blo ≤
-          upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 q.2 :=
-      upperRosserBoundaryMassAux_mono_upper
-        (k + 1) (hc.trans_le hq.1.2.1) hbloq hq.2.2
-    have hmonoHi :
-        upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 q.2 ≤
-          upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 bhi :=
-      upperRosserBoundaryMassAux_mono_upper
-        (k + 1) (hc.trans_le hq.1.2.1) hqbhi hbhi.2
-    have hresLo' := hresLo hqParams.1
-    have hresHi' := hresHi hqParams.2
-    rw [Real.dist_eq] at hcutLo hcutHi hresLo' hresHi' ⊢
-    rw [abs_lt]
-    constructor
-    · have hcutLoOne := le_abs_self
-          (upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 p.2 -
-            upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 blo)
-      have hresLoOne := le_abs_self
-          (upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 blo -
-            upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 blo)
-      rw [abs_sub_comm] at hcutLo hresLo'
-      linarith
-    · have hresHiOne := le_abs_self
-          (upperRosserBoundaryMassAux (k + 1) q.1.1 q.1.2 bhi -
-            upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 bhi)
-      have hcutHiOne := le_abs_self
-          (upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 bhi -
-            upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 p.2)
-      linarith
-  have hcompact : IsCompact C :=
-    (isCompact_Icc.prod isCompact_Icc).prod isCompact_Icc
-  have huniform := hcompact.uniformContinuousOn_of_continuous hcontinuous
-  simpa [C, Real.dist_eq] using
-    (Metric.uniformContinuousOn_iff.mp huniform ε hε)
+  have hcont : ContinuousOn (fun p : (ℝ × ℝ) × ℝ =>
+      upperRosserBoundaryMassAux (k + 1) p.1.1 p.1.2 p.2)
+      ((Set.Icc r₀ r₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1) :=
+    continuousOn_rosser_mass k (by fun_prop) (by fun_prop) continuousOn_snd
+      (fun _ hp => hc.trans_le hp.1.2.1) (fun _ hp => hp.2.2)
+  simpa only [Real.dist_eq] using Metric.uniformContinuousOn_iff.mp
+    (((isCompact_Icc.prod isCompact_Icc).prod isCompact_Icc).uniformContinuousOn_of_continuous
+      hcont) ε hε
 
 /-- Moving the positive lower cutoff of a positive-depth inner Rosser integral
 through a sufficiently short interval changes the integral by an arbitrarily
@@ -1494,192 +1024,17 @@ theorem exists_integral_inv_mul_upperRosserBoundaryMassAux_lower_modulus_succ
           upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) l x) ≤
         (∫ x in Set.Ioo a x₀, x⁻¹ *
           upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x) + ε := by
-  let B : ℝ := c⁻¹ * (c⁻¹ * c⁻¹) ^ (k + 1)
-  have hB : 0 < B := by
-    dsimp [B]
-    positivity
-  obtain ⟨δMass, hδMass, hmod⟩ :=
-    exists_upperRosserBoundaryMassAux_level_lower_upper_modulus_succ
-      k (r₀ := s₀ - 2) (r₁ := s₁ - 2 * c) (c := c)
-        (ε := ε * c / 4) hc (by positivity)
-  let δ := min δMass (ε / (4 * B))
-  have hδ : 0 < δ := lt_min hδMass (by positivity)
+  obtain ⟨δ, hδ, hmod⟩ := rosser_inner_joint_modulus (k + 1)
+    (s₀ := s₀) (s₁ := s₁) hc hε
   refine ⟨δ, hδ, ?_⟩
   intro s x₀ l a hs hx₀ hl ha hla hwidth
-  let gL : ℝ → ℝ := fun x => x⁻¹ *
-    upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) l x
-  let gA : ℝ → ℝ := fun x => x⁻¹ *
-    upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x
-  have hintL : MeasureTheory.IntegrableOn gL (Set.Ioo l x₀) := by
-    simpa [gL] using
-      integrableOn_inv_mul_upperRosserBoundaryMassAux
-        (k + 1) (s := s - x₀) (a := l) (b := x₀)
-          (hc.trans_le hl.1) hx₀.2
-  have hintA : MeasureTheory.IntegrableOn gA (Set.Ioo a x₀) := by
-    simpa [gA] using
-      integrableOn_inv_mul_upperRosserBoundaryMassAux
-        (k + 1) (s := s - x₀) (a := a) (b := x₀)
-          (hc.trans_le ha.1) hx₀.2
-  have hgLBound : ∀ x ∈ Set.Ioo l x₀, 0 ≤ gL x ∧ gL x ≤ B := by
-    intro x hx
-    have hxpos : 0 < x := hc.trans_le hl.1 |>.trans hx.1
-    have hxinv : x⁻¹ ≤ c⁻¹ := (inv_le_inv₀ hxpos hc).2 (hl.1.trans hx.1.le)
-    have hmassNonneg :
-        0 ≤ upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) l x :=
-      upperRosserBoundaryMassAux_nonneg (k + 1) (hc.le.trans hl.1)
-    have hmass :
-        upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) l x ≤
-          (c⁻¹ * c⁻¹) ^ (k + 1) :=
-      upperRosserBoundaryMassAux_le_of_lower_bound
-        (k + 1) hc hl.1 (hx.2.le.trans hx₀.2)
-    exact ⟨mul_nonneg (inv_nonneg.mpr hxpos.le) hmassNonneg,
-      by
-        dsimp [gL, B]
-        exact mul_le_mul hxinv hmass hmassNonneg (inv_nonneg.mpr hc.le)⟩
-  have hshort : ∀ {u : ℝ}, l ≤ u → u ≤ a → u ≤ x₀ →
-      (∫ x in Set.Ioo l u, gL x) ≤ ε / 4 := by
-    intro u hlu hua hux₀
-    have hintLU : MeasureTheory.IntegrableOn gL (Set.Ioo l u) :=
-      hintL.mono_set fun x hx => ⟨hx.1, hx.2.trans_le hux₀⟩
-    have hconst :
-        MeasureTheory.IntegrableOn (fun _ : ℝ => B) (Set.Ioo l u) :=
-      MeasureTheory.integrableOn_const (by
-        rw [Real.volume_Ioo]
-        exact ENNReal.ofReal_ne_top)
-    calc
-      (∫ x in Set.Ioo l u, gL x) ≤ ∫ _x in Set.Ioo l u, B := by
-        apply MeasureTheory.setIntegral_mono_on hintLU hconst measurableSet_Ioo
-        intro x hx
-        exact (hgLBound x ⟨hx.1, hx.2.trans_le hux₀⟩).2
-      _ = (u - l) * B := by
-        rw [MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-          Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hlu)]
-        rfl
-      _ ≤ ε / 4 := by
-        have hbudget : a - l < ε / (4 * B) :=
-          hwidth.trans_le (min_le_right _ _)
-        have hubudget : u - l < ε / (4 * B) := by linarith
-        have := mul_lt_mul_of_pos_right hubudget hB
-        have hcancel : ε / (4 * B) * B = ε / 4 := by
-          field_simp [hB.ne']
-        rw [hcancel] at this
-        linarith
-  by_cases hax₀ : a ≤ x₀
-  · have hintLCommon : MeasureTheory.IntegrableOn gL (Set.Ioo a x₀) :=
-      hintL.mono_set fun x hx => ⟨hla.trans_lt hx.1, hx.2⟩
-    have hcommonPoint : ∀ x ∈ Set.Ioo a x₀, gL x ≤ gA x + ε / 4 := by
-      intro x hx
-      have hxmem : x ∈ Set.Icc c 1 :=
-        ⟨ha.1.trans hx.1.le, hx.2.le.trans hx₀.2⟩
-      have hres : s - x₀ - x ∈ Set.Icc (s₀ - 2) (s₁ - 2 * c) := by
-        constructor
-        · linarith [hs.1, hx₀.2, hxmem.2]
-        · linarith [hs.2, hx₀.1, hxmem.1]
-      have hp :
-          ((s - x₀ - x, l), x) ∈
-            (Set.Icc (s₀ - 2) (s₁ - 2 * c) ×ˢ Set.Icc c 1) ×ˢ
-              Set.Icc c 1 :=
-        ⟨⟨hres, hl⟩, hxmem⟩
-      have hq :
-          ((s - x₀ - x, a), x) ∈
-            (Set.Icc (s₀ - 2) (s₁ - 2 * c) ×ˢ Set.Icc c 1) ×ˢ
-              Set.Icc c 1 :=
-        ⟨⟨hres, ha⟩, hxmem⟩
-      have hdist :
-          dist ((s - x₀ - x, l), x) ((s - x₀ - x, a), x) < δMass := by
-        calc
-          dist ((s - x₀ - x, l), x) ((s - x₀ - x, a), x) =
-              max (max (dist (s - x₀ - x) (s - x₀ - x)) (dist l a))
-                (dist x x) := by rw [Prod.dist_eq, Prod.dist_eq]
-          _ = a - l := by
-            simp [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hla),
-              sub_nonneg.mpr hla]
-          _ < δMass := hwidth.trans_le (min_le_left _ _)
-      have hclose := hmod _ hp _ hq hdist
-      have hmassLe :=
-        le_abs_self
-          (upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) l x -
-            upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x)
-      have hmass :
-          upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) l x ≤
-            upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x +
-              ε * c / 4 := by
-        linarith
-      have hxinv : x⁻¹ ≤ c⁻¹ :=
-        (inv_le_inv₀ (hc.trans_le hxmem.1) hc).2 hxmem.1
-      have hmassA :
-          0 ≤ upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x :=
-        upperRosserBoundaryMassAux_nonneg (k + 1) (hc.le.trans ha.1)
-      calc
-        gL x ≤ x⁻¹ *
-            (upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x +
-              ε * c / 4) :=
-          mul_le_mul_of_nonneg_left hmass (inv_nonneg.mpr (hc.le.trans hxmem.1))
-        _ = gA x + x⁻¹ * (ε * c / 4) := by
-          dsimp [gL, gA]
-          ring
-        _ ≤ gA x + c⁻¹ * (ε * c / 4) := by
-          gcongr
-        _ = gA x + ε / 4 := by
-          field_simp [hc.ne']
-    have hconst :
-        MeasureTheory.IntegrableOn (fun _ : ℝ => ε / 4) (Set.Ioo a x₀) :=
-      MeasureTheory.integrableOn_const (by
-        rw [Real.volume_Ioo]
-        exact ENNReal.ofReal_ne_top)
-    have hcommon :
-        (∫ x in Set.Ioo a x₀, gL x) ≤
-          (∫ x in Set.Ioo a x₀, gA x) + ε / 4 := by
-      calc
-        (∫ x in Set.Ioo a x₀, gL x) ≤
-            ∫ x in Set.Ioo a x₀, (gA x + ε / 4) := by
-          apply MeasureTheory.setIntegral_mono_on
-            hintLCommon (hintA.add hconst) measurableSet_Ioo
-          exact hcommonPoint
-        _ = (∫ x in Set.Ioo a x₀, gA x) +
-            (x₀ - a) * (ε / 4) := by
-          rw [MeasureTheory.integral_add hintA hconst,
-            MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-            Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hax₀)]
-          rfl
-        _ ≤ (∫ x in Set.Ioo a x₀, gA x) + ε / 4 := by
-          have hlength : x₀ - a ≤ 1 := by linarith [hx₀.2, ha.1]
-          gcongr
-          exact mul_le_of_le_one_left (div_nonneg hε.le (by norm_num)) hlength
-    have hintLA : MeasureTheory.IntegrableOn gL (Set.Ioo l a) :=
-      hintL.mono_set fun x hx => ⟨hx.1, hx.2.trans_le hax₀⟩
-    have hdecomp :
-        (∫ x in Set.Ioo l x₀, gL x) =
-          (∫ x in Set.Ioo l a, gL x) + ∫ x in Set.Ioo a x₀, gL x := by
-      calc
-        (∫ x in Set.Ioo l x₀, gL x) = ∫ x in l..x₀, gL x := by
-          rw [intervalIntegral.integral_of_le (hla.trans hax₀),
-            MeasureTheory.integral_Ioc_eq_integral_Ioo]
-        _ = (∫ x in l..a, gL x) + ∫ x in a..x₀, gL x :=
-          (intervalIntegral.integral_add_adjacent_intervals
-            ((intervalIntegrable_iff_integrableOn_Ioo_of_le hla).2 hintLA)
-            ((intervalIntegrable_iff_integrableOn_Ioo_of_le hax₀).2
-              hintLCommon)).symm
-        _ = (∫ x in Set.Ioo l a, gL x) +
-            ∫ x in Set.Ioo a x₀, gL x := by
-          rw [intervalIntegral.integral_of_le hla,
-            intervalIntegral.integral_of_le hax₀]
-          simp_rw [MeasureTheory.integral_Ioc_eq_integral_Ioo]
-    change (∫ x in Set.Ioo l x₀, gL x) ≤
-      (∫ x in Set.Ioo a x₀, gA x) + ε
-    rw [hdecomp]
-    linarith [hshort hla le_rfl hax₀]
-  · have hx₀a : x₀ ≤ a := le_of_not_ge hax₀
-    have hempty : Set.Ioo a x₀ = ∅ := Set.Ioo_eq_empty (not_lt.mpr hx₀a)
-    change (∫ x in Set.Ioo l x₀, gL x) ≤
-      (∫ x in Set.Ioo a x₀, gA x) + ε
-    rw [hempty, MeasureTheory.Measure.restrict_empty,
-      MeasureTheory.integral_zero_measure, zero_add]
-    by_cases hlx₀ : l ≤ x₀
-    · exact (hshort hlx₀ hx₀a le_rfl).trans (by linarith)
-    · rw [Set.Ioo_eq_empty (not_lt.mpr (le_of_not_ge hlx₀)),
-        MeasureTheory.Measure.restrict_empty, MeasureTheory.integral_zero_measure]
-      exact hε.le
+  have hdist : dist ((s, l), x₀) ((s, a), x₀) < δ := by
+    simpa [Prod.dist_eq, Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hla),
+      sub_nonneg.mpr hla] using hwidth
+  have hclose := hmod ((s, l), x₀) ⟨⟨hs, hl⟩, hx₀⟩
+    ((s, a), x₀) ⟨⟨hs, ha⟩, hx₀⟩ hdist
+  dsimp only at hclose
+  linarith [(abs_lt.mp hclose).2]
 
 /-- Increasing the outer endpoint of a positive-depth inner Rosser integral by
 a short amount has uniformly small cost, simultaneously for every lower cutoff
@@ -1694,183 +1049,20 @@ theorem exists_integral_inv_mul_upperRosserBoundaryMassAux_outer_endpoint_modulu
           upperRosserBoundaryMassAux (k + 1) (s - y₀ - x) a x) ≤
         (∫ x in Set.Ioo a x₀, x⁻¹ *
           upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x) + ε := by
-  let B : ℝ := c⁻¹ * (c⁻¹ * c⁻¹) ^ (k + 1)
-  have hB : 0 < B := by
-    dsimp [B]
-    positivity
-  obtain ⟨δMass, hδMass, hmod⟩ :=
-    exists_upperRosserBoundaryMassAux_level_lower_upper_modulus_succ
-      k (r₀ := s₀ - 2) (r₁ := s₁ - 2 * c) (c := c)
-        (ε := ε * c / 4) hc (by positivity)
-  let δ := min δMass (ε / (4 * B))
-  have hδ : 0 < δ := lt_min hδMass (by positivity)
+  obtain ⟨δ, hδ, hmod⟩ := rosser_inner_joint_modulus (k + 1)
+    (s₀ := s₀) (s₁ := s₁) hc hε
   refine ⟨δ, hδ, ?_⟩
-  intro s a x₀ y₀ hs ha hx₀ hy₀ hax hxy hwidth
-  let gX : ℝ → ℝ := fun x => x⁻¹ *
-    upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x
-  let gY : ℝ → ℝ := fun x => x⁻¹ *
-    upperRosserBoundaryMassAux (k + 1) (s - y₀ - x) a x
-  have hintX : MeasureTheory.IntegrableOn gX (Set.Ioo a x₀) := by
-    simpa [gX] using
-      integrableOn_inv_mul_upperRosserBoundaryMassAux
-        (k + 1) (s := s - x₀) (a := a) (b := x₀)
-          (hc.trans_le ha.1) hx₀.2
-  have hintY : MeasureTheory.IntegrableOn gY (Set.Ioo a y₀) := by
-    simpa [gY] using
-      integrableOn_inv_mul_upperRosserBoundaryMassAux
-        (k + 1) (s := s - y₀) (a := a) (b := y₀)
-          (hc.trans_le ha.1) hy₀.2
-  have hgYBound : ∀ t ∈ Set.Ioo a y₀, 0 ≤ gY t ∧ gY t ≤ B := by
-    intro t ht
-    have htpos : 0 < t := hc.trans_le ha.1 |>.trans ht.1
-    have htinv : t⁻¹ ≤ c⁻¹ :=
-      (inv_le_inv₀ htpos hc).2 (ha.1.trans ht.1.le)
-    have hmassNonneg :
-        0 ≤ upperRosserBoundaryMassAux (k + 1) (s - y₀ - t) a t :=
-      upperRosserBoundaryMassAux_nonneg (k + 1) (hc.le.trans ha.1)
-    have hmass :
-        upperRosserBoundaryMassAux (k + 1) (s - y₀ - t) a t ≤
-          (c⁻¹ * c⁻¹) ^ (k + 1) :=
-      upperRosserBoundaryMassAux_le_of_lower_bound
-        (k + 1) hc ha.1 (ht.2.le.trans hy₀.2)
-    exact ⟨mul_nonneg (inv_nonneg.mpr htpos.le) hmassNonneg,
-      by
-        dsimp [gY, B]
-        exact mul_le_mul htinv hmass hmassNonneg (inv_nonneg.mpr hc.le)⟩
-  have hcommonPoint : ∀ t ∈ Set.Ioo a x₀, gY t ≤ gX t + ε / 4 := by
-    intro t ht
-    have htmem : t ∈ Set.Icc c 1 :=
-      ⟨ha.1.trans ht.1.le, ht.2.le.trans hx₀.2⟩
-    have hresY : s - y₀ - t ∈ Set.Icc (s₀ - 2) (s₁ - 2 * c) := by
-      constructor
-      · linarith [hs.1, hy₀.2, htmem.2]
-      · linarith [hs.2, hy₀.1, htmem.1]
-    have hresX : s - x₀ - t ∈ Set.Icc (s₀ - 2) (s₁ - 2 * c) := by
-      constructor
-      · linarith [hs.1, hx₀.2, htmem.2]
-      · linarith [hs.2, hx₀.1, htmem.1]
-    have hp :
-        ((s - y₀ - t, a), t) ∈
-          (Set.Icc (s₀ - 2) (s₁ - 2 * c) ×ˢ Set.Icc c 1) ×ˢ
-            Set.Icc c 1 :=
-      ⟨⟨hresY, ha⟩, htmem⟩
-    have hq :
-        ((s - x₀ - t, a), t) ∈
-          (Set.Icc (s₀ - 2) (s₁ - 2 * c) ×ˢ Set.Icc c 1) ×ˢ
-            Set.Icc c 1 :=
-      ⟨⟨hresX, ha⟩, htmem⟩
-    have hdist :
-        dist ((s - y₀ - t, a), t) ((s - x₀ - t, a), t) < δMass := by
-      calc
-        dist ((s - y₀ - t, a), t) ((s - x₀ - t, a), t) =
-            y₀ - x₀ := by
-          rw [Prod.dist_eq, Prod.dist_eq]
-          simp only [dist_self, Real.dist_eq]
-          rw [show |s - y₀ - t - (s - x₀ - t)| = y₀ - x₀ by
-            rw [abs_of_nonpos (by linarith)]
-            ring]
-          simp [sub_nonneg.mpr hxy]
-        _ < δMass := hwidth.trans_le (min_le_left _ _)
-    have hclose := hmod _ hp _ hq hdist
-    have hmassLe := le_abs_self
-      (upperRosserBoundaryMassAux (k + 1) (s - y₀ - t) a t -
-        upperRosserBoundaryMassAux (k + 1) (s - x₀ - t) a t)
-    have hmass :
-        upperRosserBoundaryMassAux (k + 1) (s - y₀ - t) a t ≤
-          upperRosserBoundaryMassAux (k + 1) (s - x₀ - t) a t +
-            ε * c / 4 := by
-      linarith
-    have htinv : t⁻¹ ≤ c⁻¹ :=
-      (inv_le_inv₀ (hc.trans_le htmem.1) hc).2 htmem.1
-    calc
-      gY t ≤ t⁻¹ *
-          (upperRosserBoundaryMassAux (k + 1) (s - x₀ - t) a t +
-            ε * c / 4) :=
-        mul_le_mul_of_nonneg_left hmass
-          (inv_nonneg.mpr (hc.le.trans htmem.1))
-      _ = gX t + t⁻¹ * (ε * c / 4) := by
-        dsimp [gX, gY]
-        ring
-      _ ≤ gX t + c⁻¹ * (ε * c / 4) := by
-        gcongr
-      _ = gX t + ε / 4 := by
-        field_simp [hc.ne']
-  have hintYCommon : MeasureTheory.IntegrableOn gY (Set.Ioo a x₀) :=
-    hintY.mono_set fun t ht => ⟨ht.1, ht.2.trans_le hxy⟩
-  have hconstQuarter :
-      MeasureTheory.IntegrableOn (fun _ : ℝ => ε / 4) (Set.Ioo a x₀) :=
-    MeasureTheory.integrableOn_const (by
-      rw [Real.volume_Ioo]
-      exact ENNReal.ofReal_ne_top)
-  have hcommon :
-      (∫ t in Set.Ioo a x₀, gY t) ≤
-        (∫ t in Set.Ioo a x₀, gX t) + ε / 4 := by
-    calc
-      (∫ t in Set.Ioo a x₀, gY t) ≤
-          ∫ t in Set.Ioo a x₀, (gX t + ε / 4) := by
-        apply MeasureTheory.setIntegral_mono_on
-          hintYCommon (hintX.add hconstQuarter) measurableSet_Ioo
-        exact hcommonPoint
-      _ = (∫ t in Set.Ioo a x₀, gX t) +
-          (x₀ - a) * (ε / 4) := by
-        rw [MeasureTheory.integral_add hintX hconstQuarter,
-          MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-          Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hax)]
-        rfl
-      _ ≤ (∫ t in Set.Ioo a x₀, gX t) + ε / 4 := by
-        have hlength : x₀ - a ≤ 1 := by linarith [hx₀.2, ha.1]
-        gcongr
-        exact mul_le_of_le_one_left (div_nonneg hε.le (by norm_num)) hlength
-  have hintYShort : MeasureTheory.IntegrableOn gY (Set.Ioo x₀ y₀) :=
-    hintY.mono_set fun t ht => ⟨hax.trans_lt ht.1, ht.2⟩
-  have hconstB :
-      MeasureTheory.IntegrableOn (fun _ : ℝ => B) (Set.Ioo x₀ y₀) :=
-    MeasureTheory.integrableOn_const (by
-      rw [Real.volume_Ioo]
-      exact ENNReal.ofReal_ne_top)
-  have hshort : (∫ t in Set.Ioo x₀ y₀, gY t) ≤ ε / 4 := by
-    calc
-      (∫ t in Set.Ioo x₀ y₀, gY t) ≤ ∫ _t in Set.Ioo x₀ y₀, B := by
-        apply MeasureTheory.setIntegral_mono_on
-          hintYShort hconstB measurableSet_Ioo
-        intro t ht
-        exact (hgYBound t ⟨hax.trans_lt ht.1, ht.2⟩).2
-      _ = (y₀ - x₀) * B := by
-        rw [MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-          Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hxy)]
-        rfl
-      _ ≤ ε / 4 := by
-        have hbudget : y₀ - x₀ < ε / (4 * B) :=
-          hwidth.trans_le (min_le_right _ _)
-        have hmul := mul_lt_mul_of_pos_right hbudget hB
-        have hcancel : ε / (4 * B) * B = ε / 4 := by
-          field_simp [hB.ne']
-        rw [hcancel] at hmul
-        exact hmul.le
-  have hdecomp :
-      (∫ t in Set.Ioo a y₀, gY t) =
-        (∫ t in Set.Ioo a x₀, gY t) + ∫ t in Set.Ioo x₀ y₀, gY t := by
-    calc
-      (∫ t in Set.Ioo a y₀, gY t) = ∫ t in a..y₀, gY t := by
-        rw [intervalIntegral.integral_of_le (hax.trans hxy),
-          MeasureTheory.integral_Ioc_eq_integral_Ioo]
-      _ = (∫ t in a..x₀, gY t) + ∫ t in x₀..y₀, gY t :=
-        (intervalIntegral.integral_add_adjacent_intervals
-          ((intervalIntegrable_iff_integrableOn_Ioo_of_le hax).2 hintYCommon)
-          ((intervalIntegrable_iff_integrableOn_Ioo_of_le hxy).2
-            hintYShort)).symm
-      _ = (∫ t in Set.Ioo a x₀, gY t) +
-          ∫ t in Set.Ioo x₀ y₀, gY t := by
-        rw [intervalIntegral.integral_of_le hax,
-          intervalIntegral.integral_of_le hxy]
-        simp_rw [MeasureTheory.integral_Ioc_eq_integral_Ioo]
-  dsimp [gY, gX] at hdecomp hcommon hshort ⊢
-  rw [hdecomp]
-  linarith
+  intro s a x₀ y₀ hs ha hx₀ hy₀ _hax hxy hwidth
+  have hdist : dist ((s, a), y₀) ((s, a), x₀) < δ := by
+    simpa [Prod.dist_eq, Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hxy), hδ] using hwidth
+  have hclose := hmod ((s, a), y₀) ⟨⟨hs, ha⟩, hy₀⟩
+    ((s, a), x₀) ⟨⟨hs, ha⟩, hx₀⟩ hdist
+  dsimp only at hclose
+  linarith [(abs_lt.mp hclose).2]
 
-/-- The outer-endpoint modulus also covers the unique mesh cell crossing the
-moving lower cutoff: below the cutoff the integral vanishes, while the
-remaining strip has uniformly bounded length. -/
+/-- The joint inner-integral modulus also covers a mesh cell crossing the
+moving lower cutoff. Empty and coincident intervals need no separate strip
+estimate because the moving-interval continuity theorem includes them. -/
 theorem
     exists_integral_inv_mul_upperRosserBoundaryMassAux_outer_endpoint_modulus_succ_global
     (k : ℕ) {s₀ s₁ c ε : ℝ} (hc : 0 < c) (hε : 0 < ε) :
@@ -1882,78 +1074,16 @@ theorem
           upperRosserBoundaryMassAux (k + 1) (s - y₀ - x) a x) ≤
         (∫ x in Set.Ioo a x₀, x⁻¹ *
           upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x) + ε := by
-  let B : ℝ := c⁻¹ * (c⁻¹ * c⁻¹) ^ (k + 1)
-  have hB : 0 < B := by
-    dsimp [B]
-    positivity
-  obtain ⟨δEndpoint, hδEndpoint, hendpoint⟩ :=
-    exists_integral_inv_mul_upperRosserBoundaryMassAux_outer_endpoint_modulus_succ
-      k (s₀ := s₀) (s₁ := s₁) hc hε
-  let δ := min δEndpoint (ε / B)
-  have hδ : 0 < δ := lt_min hδEndpoint (div_pos hε hB)
+  obtain ⟨δ, hδ, hmod⟩ := rosser_inner_joint_modulus (k + 1)
+    (s₀ := s₀) (s₁ := s₁) hc hε
   refine ⟨δ, hδ, ?_⟩
   intro s a x₀ y₀ hs ha hx₀ hy₀ hxy hwidth
-  by_cases hax : a ≤ x₀
-  · exact hendpoint hs ha hx₀ hy₀ hax hxy
-      (hwidth.trans_le (min_le_left _ _))
-  · have hxa : x₀ < a := lt_of_not_ge hax
-    have hemptyX : Set.Ioo a x₀ = ∅ := Set.Ioo_eq_empty (not_lt.mpr hxa.le)
-    by_cases hay : a < y₀
-    · let gY : ℝ → ℝ := fun x => x⁻¹ *
-        upperRosserBoundaryMassAux (k + 1) (s - y₀ - x) a x
-      have hintY : MeasureTheory.IntegrableOn gY (Set.Ioo a y₀) := by
-        simpa [gY] using
-          integrableOn_inv_mul_upperRosserBoundaryMassAux
-            (k + 1) (s := s - y₀) (a := a) (b := y₀)
-              (hc.trans_le ha.1) hy₀.2
-      have hbound : ∀ t ∈ Set.Ioo a y₀, gY t ≤ B := by
-        intro t ht
-        have htpos : 0 < t := hc.trans_le ha.1 |>.trans ht.1
-        have htinv : t⁻¹ ≤ c⁻¹ :=
-          (inv_le_inv₀ htpos hc).2 (ha.1.trans ht.1.le)
-        have hmassNonneg :
-            0 ≤ upperRosserBoundaryMassAux (k + 1) (s - y₀ - t) a t :=
-          upperRosserBoundaryMassAux_nonneg (k + 1) (hc.le.trans ha.1)
-        have hmass :
-            upperRosserBoundaryMassAux (k + 1) (s - y₀ - t) a t ≤
-              (c⁻¹ * c⁻¹) ^ (k + 1) :=
-          upperRosserBoundaryMassAux_le_of_lower_bound
-            (k + 1) hc ha.1 (ht.2.le.trans hy₀.2)
-        dsimp [gY, B]
-        exact mul_le_mul htinv hmass hmassNonneg (inv_nonneg.mpr hc.le)
-      have hconst :
-          MeasureTheory.IntegrableOn (fun _ : ℝ => B) (Set.Ioo a y₀) :=
-        MeasureTheory.integrableOn_const (by
-          rw [Real.volume_Ioo]
-          exact ENNReal.ofReal_ne_top)
-      have hintegral : (∫ t in Set.Ioo a y₀, gY t) ≤ B * (y₀ - a) := by
-        calc
-          (∫ t in Set.Ioo a y₀, gY t) ≤ ∫ _t in Set.Ioo a y₀, B := by
-            apply MeasureTheory.setIntegral_mono_on
-              hintY hconst measurableSet_Ioo
-            exact hbound
-          _ = (y₀ - a) * B := by
-            rw [MeasureTheory.setIntegral_const, MeasureTheory.Measure.real_def,
-              Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr hay.le)]
-            rfl
-          _ = B * (y₀ - a) := by ring
-      have hlength : y₀ - a ≤ y₀ - x₀ := by linarith
-      have hbudget : y₀ - x₀ < ε / B :=
-        hwidth.trans_le (min_le_right _ _)
-      have hstrip : B * (y₀ - a) < ε := by
-        calc
-          B * (y₀ - a) ≤ B * (y₀ - x₀) :=
-            mul_le_mul_of_nonneg_left hlength hB.le
-          _ < B * (ε / B) := mul_lt_mul_of_pos_left hbudget hB
-          _ = ε := by field_simp [hB.ne']
-      rw [hemptyX, MeasureTheory.Measure.restrict_empty,
-        MeasureTheory.integral_zero_measure, zero_add]
-      exact (by simpa [gY] using (hintegral.trans_lt hstrip).le)
-    · have hya : y₀ ≤ a := le_of_not_gt hay
-      have hemptyY : Set.Ioo a y₀ = ∅ := Set.Ioo_eq_empty (not_lt.mpr hya)
-      simp only [hemptyX, hemptyY, MeasureTheory.Measure.restrict_empty,
-        MeasureTheory.integral_zero_measure]
-      simpa using hε.le
+  have hdist : dist ((s, a), y₀) ((s, a), x₀) < δ := by
+    simpa [Prod.dist_eq, Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hxy), hδ] using hwidth
+  have hclose := hmod ((s, a), y₀) ⟨⟨hs, ha⟩, hy₀⟩
+    ((s, a), x₀) ⟨⟨hs, ha⟩, hx₀⟩ hdist
+  dsimp only at hclose
+  linarith [(abs_lt.mp hclose).2]
 
 
 end MathlibNt.SieveTheory.LinearSieve

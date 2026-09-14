@@ -8,10 +8,15 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    # A cold build has a separate budget from documentation; this is not a speedup.
+    timeout-minutes: 180
     env:
       LEAN_NUM_THREADS: "2"
     steps:
@@ -25,8 +30,33 @@ jobs:
           printf '%s\n' "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Fetch dependency cache
         run: lake exe cache get
+      - name: Restore project build cache
+        id: project-cache
+        uses: actions/cache@v4
+        with:
+          path: .lake/build
+          key: lean-project-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-${{ github.sha }}
+          restore-keys: |
+            lean-project-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-
+      - name: Record runner and exact cache-hit context
+        env:
+          PROJECT_CACHE_EXACT_HIT: ${{ steps.project-cache.outputs.cache-hit }}
+        run: |
+          {
+            git rev-parse HEAD
+            printf 'project-cache-exact-hit=%s\n' "$PROJECT_CACHE_EXACT_HIT"
+            lscpu
+            free -h
+            df -h .
+            lean --version
+            lake --version
+            if test -d .lake/build; then du -sh .lake/build; fi
+          } | tee "$RUNNER_TEMP/runner-context.log"
+      # Always run Lake, even on an exact cache hit. Source and dependency traces
+      # determine which modules must be rebuilt; cached outputs do not skip checks.
       - name: Build all libraries without warnings
-        run: lake --wfail build
+        timeout-minutes: 160
+        run: /usr/bin/time -v lake --wfail build 2>&1 | tee "$RUNNER_TEMP/lean-build.log"
       - name: Check sources, statements and axioms
         run: python3 scripts/check.py
       - name: Test verification scripts
@@ -38,6 +68,71 @@ jobs:
           lake env leanchecker --verbose Goldbach.OnePlusOneNine
           lake env leanchecker --verbose Goldbach.OnePlusOneNineChecks
           lake env leanchecker --verbose Goldbach.All
+      - name: Pack verified project artifacts
+        run: |
+          git rev-parse HEAD > "$RUNNER_TEMP/build-source.txt"
+          sha256sum lean-toolchain lake-manifest.json lakefile.toml > "$RUNNER_TEMP/build-config.sha256"
+          tar -cf "$RUNNER_TEMP/lean-build.tar" .lake/build
+      - name: Upload verified project artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-build-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/lean-build.tar
+            ${{ runner.temp }}/build-source.txt
+            ${{ runner.temp }}/build-config.sha256
+          compression-level: 1
+          retention-days: 2
+          if-no-files-found: error
+      - name: Upload build timing log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-build-timing-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/lean-build.log
+            ${{ runner.temp }}/runner-context.log
+          if-no-files-found: ignore
+
+  documentation:
+    name: Build and validate documentation
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      LEAN_NUM_THREADS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          printf '%s\n' "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch dependency cache
+        run: lake exe cache get
+      # Artifacts are downloaded only from the successful prerequisite job of
+      # this same workflow run, not from a previous successful branch build.
+      - name: Download verified project artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: lean-build-${{ github.sha }}
+          path: ${{ runner.temp }}/verified-build
+      - name: Check artifact revision and restore build
+        run: |
+          read -r built_revision < "$RUNNER_TEMP/verified-build/build-source.txt"
+          test "$built_revision" = "$(git rev-parse HEAD)"
+          sha256sum --check "$RUNNER_TEMP/verified-build/build-config.sha256"
+          tar -xf "$RUNNER_TEMP/verified-build/lean-build.tar"
+      - name: Restore documentation compiler cache
+        uses: actions/cache@v4
+        with:
+          # Cache the compiler and pinned dependencies, never old generated pages.
+          path: |
+            docbuild/.lake/packages
+            docbuild/.lake/build/bin
+            docbuild/.lake/build/lib
+            docbuild/.lake/build/ir
+          key: lean-docgen-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('docbuild/lean-toolchain', 'docbuild/lake-manifest.json', 'docbuild/lakefile.toml', 'docbuild/*.lean') }}
       - name: Install blueprint renderer
         run: |
           sudo apt-get update
@@ -59,18 +154,25 @@ jobs:
           path: blueprint/web
           if-no-files-found: error
       - name: Build and validate Lean API documentation
-        run: python3 scripts/build_docs.py --output docbuild/.lake/build/api
+        run: /usr/bin/time -v python3 scripts/build_docs.py --output docbuild/.lake/build/api 2>&1 | tee "$RUNNER_TEMP/api-build.log"
       - name: Assemble and validate project homepage and documentation
         run: python3 scripts/build_site.py --api docbuild/.lake/build/api --blueprint blueprint/web --output docbuild/.lake/build/site
       - name: Upload complete documentation website
         uses: actions/upload-pages-artifact@v3
         with:
           path: docbuild/.lake/build/site
+      - name: Upload documentation timing log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-api-timing-${{ github.sha }}
+          path: ${{ runner.temp }}/api-build.log
+          if-no-files-found: ignore
 
   deploy:
     name: Publish documentation
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: verify
+    needs: [verify, documentation]
     runs-on: ubuntu-latest
     permissions:
       pages: write

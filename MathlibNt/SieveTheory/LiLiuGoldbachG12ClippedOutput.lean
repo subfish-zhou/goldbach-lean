@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
 import MathlibNt.SieveTheory.LiLiuGoldbachG12RosserFactor
 
@@ -63,17 +64,7 @@ theorem output_sum (N : ℕ) (g L U : ℕ → ℝ) (P : ℕ → Prop) [Decidable
       (((window N L U m).filter (fun r => P (N-r*m))).card : ℝ) := by
   let A := atoms N L U
   let out := goldbachG12LinkedOutput N
-  let T := (A.image out).filter P
-  have hf := Finset.sum_fiberwise_eq_sum_filter A T out (fun x => g x.1)
-  have hfilter : A.filter (fun x => out x ∈ T) = A.filter (fun x => P (out x)) := by
-    ext x
-    simp only [mem_filter]
-    constructor
-    · rintro ⟨hx,hT⟩
-      exact ⟨hx,(mem_filter.mp hT).2⟩
-    · rintro ⟨hx,hp⟩
-      exact ⟨hx,mem_filter.mpr ⟨mem_image.mpr ⟨x,hx,rfl⟩,hp⟩⟩
-  rw [hfilter] at hf
+  have hf := MathlibNt.SieveTheory.sum_fibres_filter_image A out P (fun x => g x.1)
   calc
     _ = ∑ x ∈ A.filter (fun x => P (out x)), g x.1 := hf
     _ = _ := by

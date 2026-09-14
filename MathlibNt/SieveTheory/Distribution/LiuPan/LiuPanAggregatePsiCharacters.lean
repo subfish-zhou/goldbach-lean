@@ -89,7 +89,7 @@ theorem liuPanSourceCharacterPrefix_eq_coprime
   apply sum_congr rfl
   intro a ha
   by_cases hcop : a.Coprime q
-  · simp [hcop]
+  · rw [if_pos hcop]
   · rw [if_neg hcop,
       χ.map_nonunit ((ZMod.isUnit_iff_coprime a q).not.mpr hcop), mul_zero]
 
@@ -106,7 +106,9 @@ theorem liuPanAPPsi_complex_eq_characterMean
   rw [Complex.ofReal_sum]
   apply sum_congr rfl
   intro n hn
-  by_cases hmod : n ≡ l [MOD q] <;> simp [hmod]
+  by_cases hmod : n ≡ l [MOD q]
+  · rw [if_pos hmod, if_pos hmod, mul_one]
+  · rw [if_neg hmod, if_neg hmod, Complex.ofReal_zero, mul_zero]
 
 /-- Moving the inverse source residue through conjugation produces the source
 character and leaves the common residue phase outside. -/
@@ -119,7 +121,7 @@ theorem star_dirichletCharacter_natInvMod_mul
     exact (ZMod.natCast_eq_natCast_iff _ _ q).mpr (natInvMod_congr hcop)
   have hinvunit : IsUnit (natInvMod q a : ZMod q) := by
     apply IsUnit.of_mul_eq_one (a : ZMod q)
-    simpa [mul_comm] using hprod
+    exact (mul_comm _ _).trans hprod
   have hchar :
       χ (a : ZMod q) * χ (natInvMod q a : ZMod q) = 1 := by
     rw [← map_mul, hprod, map_one]
@@ -171,7 +173,7 @@ theorem liuPanAggregateAPPsiComplex_eq_characterMean
           liuPanAPPsi_complex_eq_characterMean hq
             (isUnit_natInvMod_mul_residue hq hcop
               ((ZMod.isUnit_iff_coprime l q).mp hl))]
-      · simp [hcop]
+      · simp only [if_neg hcop]
     _ = ∑ a ∈ Icc 1 A, ∑ χ : DirichletCharacter ℂ q,
           if a.Coprime q then
             (Nat.totient q : ℂ)⁻¹ * star (χ (l : ZMod q)) *
@@ -186,7 +188,7 @@ theorem liuPanAggregateAPPsiComplex_eq_characterMean
         apply sum_congr rfl
         intro χ hχ
         ring
-      · simp [hcop]
+      · simp only [if_neg hcop, sum_const_zero]
     _ = ∑ χ : DirichletCharacter ℂ q, ∑ a ∈ Icc 1 A,
           if a.Coprime q then
             (Nat.totient q : ℂ)⁻¹ * star (χ (l : ZMod q)) *
@@ -202,8 +204,9 @@ theorem liuPanAggregateAPPsiComplex_eq_characterMean
       simp only [mul_sum, sum_mul]
       apply sum_congr rfl
       intro a ha
-      by_cases hcop : a.Coprime q <;> simp [hcop]
-      ring_nf
+      by_cases hcop : a.Coprime q
+      · simp only [if_pos hcop, mul_assoc]
+      · rw [if_neg hcop, if_neg hcop, mul_zero, zero_mul, mul_zero]
 
 /-- The principal source prefix is the source sum restricted to units modulo
 `q`; in particular it is not generally the unrestricted source sum. -/
@@ -217,7 +220,7 @@ theorem liuPanSourceCharacterPrefix_one_eq_coprime
   by_cases hcop : a.Coprime q
   · rw [if_pos hcop, if_pos hcop,
       MulChar.one_apply ((ZMod.isUnit_iff_coprime a q).mpr hcop), mul_one]
-  · simp [hcop]
+  · simp only [if_neg hcop]
 
 /-- Complexification commutes with the source-aggregate AP psi sum. -/
 theorem liuPanAggregateAPPsiComplex_eq_real
@@ -231,7 +234,7 @@ theorem liuPanAggregateAPPsiComplex_eq_real
   intro a ha
   by_cases hcop : a.Coprime q
   · simp only [if_pos hcop, Complex.ofReal_mul]
-  · simp [hcop]
+  · simp only [if_neg hcop, Complex.ofReal_zero]
 
 /-- The real aggregate discrepancy is the complex AP aggregate minus the exact
 principal source main term. -/
@@ -256,7 +259,7 @@ theorem liuPanAggregateAPPsiDiscrepancy_complex_eq
       · simp only [if_pos hcop, Complex.ofReal_mul]
         push_cast
         rfl
-      · simp [hcop]
+      · simp only [if_neg hcop, Complex.ofReal_zero]
     _ = (∑ a ∈ Icc 1 A, if a.Coprime q then
           (f a : ℂ) *
             (liuPanAPPsi t q (natInvMod q a * l % q) : ℂ)
@@ -270,7 +273,7 @@ theorem liuPanAggregateAPPsiDiscrepancy_complex_eq
       by_cases hcop : a.Coprime q
       · simp only [if_pos hcop]
         ring
-      · simp [hcop]
+      · simp only [if_neg hcop, sub_self]
     _ = _ := by
       unfold liuPanAggregateAPPsiComplex
       rw [liuPanSourceCharacterPrefix_one_eq_coprime]
@@ -280,9 +283,8 @@ theorem liuPanAggregateAPPsiDiscrepancy_complex_eq
       intro a ha
       by_cases hcop : a.Coprime q
       · rw [if_pos hcop, if_pos hcop]
-        ring
-      · rw [if_neg hcop, if_neg hcop]
-        simp
+        rfl
+      · rw [if_neg hcop, if_neg hcop, zero_mul, zero_mul]
 
 /-- The exact principal-character contribution to the aggregate discrepancy. -/
 noncomputable def liuPanAggregatePrincipalPsiTerm
@@ -755,10 +757,12 @@ theorem eventually_abs_liuPanLogPNTError_le_div_log_pow (A : ℕ) :
   intro t ht
   set L : ℕ := t.sqrt
   have hMt : M ^ 2 ≤ t := ht
-  have hM3 : 3 ≤ M := by simp [M]
-  have hN₁M : N₁ ≤ M := by simp [M]
-  have hN₂M : N₂ ≤ M := by simp [M]
-  have hN₃M : N₃ ≤ M := by simp [M]
+  have hM3 : 3 ≤ M := le_max_left _ _
+  have hN₁M : N₁ ≤ M := (le_max_left _ _).trans (le_max_right _ _)
+  have hN₂M : N₂ ≤ M :=
+    (le_max_left _ _).trans ((le_max_right _ _).trans (le_max_right _ _))
+  have hN₃M : N₃ ≤ M :=
+    (le_max_right _ _).trans ((le_max_right _ _).trans (le_max_right _ _))
   have hML : M ≤ L := by
     apply Nat.not_lt.mp
     intro hLM
@@ -1325,6 +1329,52 @@ theorem liuPanAggregatePrincipalNoncoprimePsiTerm_eq_real
     liuPanAggregatePrincipalNoncoprimePsiTerm t A 0 f = 0 := by
   simp [liuPanAggregatePrincipalNoncoprimePsiTerm]
 
+-- These scalar identities keep the large character and PNT terms opaque.
+private theorem liuPan_scalar_coprime_sum (A q : ℕ) (f : ℕ → ℝ) (c : ℝ) :
+    (∑ a ∈ Icc 1 A, if a.Coprime q then f a * c else 0) =
+      (∑ a ∈ Icc 1 A, if a.Coprime q then f a else 0) * c := by
+  simp only [sum_mul, ite_mul, zero_mul]
+
+private theorem liuPan_scalar_endpoint_shell
+    (y X q : ℕ) (f g c : ℕ → ℝ) (hg0 : g 0 = 0) :
+    (∑ a ∈ Icc 1 X, if a.Coprime q then f a * g (y / a) * c (y / a) else 0) =
+      ∑ k ∈ Icc 1 y, g k *
+        ((∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X k),
+            if a.Coprime q then f a else 0) * c k -
+          (∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (k + 1)),
+            if a.Coprime q then f a else 0) * c k) := by
+  have h := sum_source_eq_sum_quotient_shells y X g
+    (fun k a => if a.Coprime q then f a * c k else 0) hg0
+  simp only [liuPan_scalar_coprime_sum] at h
+  convert h using 1
+  apply sum_congr rfl
+  intro a ha
+  by_cases hcop : a.Coprime q
+  · simp only [if_pos hcop]
+    exact mul_right_comm (f a) (g (y / a)) (c (y / a)) |>.trans
+      (mul_comm (f a * c (y / a)) (g (y / a)))
+  · simp only [if_neg hcop, mul_zero]
+
+private theorem liuPan_scalar_prefix_swap
+    (y X q : ℕ) (f w c : ℕ → ℝ) :
+    (∑ a ∈ Icc 1 X, if a.Coprime q then
+      f a * (∑ n ∈ range (y / a), w n * c n) else 0) =
+      ∑ n ∈ range y, w n *
+        ((∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (n + 1)),
+          if a.Coprime q then f a else 0) * c n) := by
+  have h := sum_source_prefix_eq_sum_aggregate_prefix y X w
+    (fun n a => if a.Coprime q then f a * c n else 0)
+  simp only [liuPan_scalar_coprime_sum] at h
+  rw [← h]
+  apply sum_congr rfl
+  intro a ha
+  by_cases hcop : a.Coprime q
+  · simp only [if_pos hcop, mul_sum]
+    apply sum_congr rfl
+    intro n hn
+    exact mul_left_comm (f a) (w n) (c n)
+  · simp only [if_neg hcop, mul_zero, sum_const_zero]
+
 /-- The source-aggregated endpoint shell for a scalar noncoprime correction. -/
 theorem liuPanAggregateNoncoprimePsiCorrection_endpoint_shell
     (y X q : ℕ) (f g : ℕ → ℝ) (hg0 : g 0 = 0) :
@@ -1336,30 +1386,7 @@ theorem liuPanAggregateNoncoprimePsiCorrection_endpoint_shell
             (liuPanAbelSourceCutoff y X k) q f -
           liuPanAggregateNoncoprimePsiCorrection k
             (liuPanAbelSourceCutoff y X (k + 1)) q f) := by
-  have hsum (k A : ℕ) :
-      (∑ a ∈ Icc 1 A, if a.Coprime q then
-        f a * liuPanPsiNoncoprimeCorrection k q
-      else 0) = liuPanAggregateNoncoprimePsiCorrection k A q f := by
-    unfold liuPanAggregateNoncoprimePsiCorrection
-    rw [sum_mul]
-    apply sum_congr rfl
-    intro a ha
-    by_cases hcop : a.Coprime q <;> simp [hcop]
-  calc
-    _ = ∑ k ∈ Icc 1 y, g k *
-        ((∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X k),
-          if a.Coprime q then f a * liuPanPsiNoncoprimeCorrection k q else 0) -
-        ∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (k + 1)),
-          if a.Coprime q then f a * liuPanPsiNoncoprimeCorrection k q else 0) := by
-      simpa only [mul_assoc, mul_left_comm, mul_comm, mul_ite, mul_zero] using
-        (sum_source_eq_sum_quotient_shells y X g
-          (fun k a => if a.Coprime q then
-            f a * liuPanPsiNoncoprimeCorrection k q
-          else 0) hg0)
-    _ = _ := by
-      apply sum_congr rfl
-      intro k hk
-      rw [hsum, hsum]
+  exact liuPan_scalar_endpoint_shell y X q f g (fun k => liuPanPsiNoncoprimeCorrection k q) hg0
 
 /-- Swapping the source sum with scalar noncoprime correction prefixes retains
 the shared Abel source cutoff. -/
@@ -1372,37 +1399,7 @@ theorem liuPanAggregateNoncoprimePsiCorrection_prefix_swap
       ∑ n ∈ range y, w n *
         liuPanAggregateNoncoprimePsiCorrection n
           (liuPanAbelSourceCutoff y X (n + 1)) q f := by
-  calc
-    _ = ∑ a ∈ Icc 1 X, ∑ n ∈ range (y / a), w n *
-          (if a.Coprime q then
-            f a * liuPanPsiNoncoprimeCorrection n q
-          else 0) := by
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop, Finset.mul_sum]
-        apply sum_congr rfl
-        intro n hn
-        ring
-      · simp [hcop]
-    _ = ∑ n ∈ range y, w n *
-          ∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (n + 1)),
-            (if a.Coprime q then
-              f a * liuPanPsiNoncoprimeCorrection n q
-            else 0) :=
-      sum_source_prefix_eq_sum_aggregate_prefix y X w
-        (fun n a => if a.Coprime q then
-          f a * liuPanPsiNoncoprimeCorrection n q
-        else 0)
-    _ = _ := by
-      apply sum_congr rfl
-      intro n hn
-      unfold liuPanAggregateNoncoprimePsiCorrection
-      rw [sum_mul]
-      apply congrArg (fun z => w n * z)
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q <;> simp [hcop]
+  exact liuPan_scalar_prefix_swap y X q f w (fun k => liuPanPsiNoncoprimeCorrection k q)
 
 /-- Exact principal split into the ordinary PNT error and the modulus-
 noncoprime correction. -/
@@ -1573,7 +1570,7 @@ private theorem sum_liuPanNonprincipalCharacters_by_conductor
   refine (sum_fiberwise_of_maps_to ?_ G).symm
   intro χ hχ
   have hχne : χ ≠ 1 := by
-    simpa [liuPanPrimePowerNonprincipalCharacters] using hχ
+    exact (mem_erase.mp hχ).1
   have hdne : χ.conductor ≠ 1 := fun hd =>
     hχne (DirichletCharacter.eq_one_iff_conductor_eq_one.mpr hd)
   have hdpos : 0 < χ.conductor := Nat.pos_of_ne_zero χ.conductor_ne_zero
@@ -1639,8 +1636,7 @@ theorem liuPanAggregatePsiConductorSum_eq_primitiveLiftSum
       rw [filter_eq_empty_iff]
       intro χ hχ hcond
       exact hdq (hcond ▸ χ.conductor_dvd_level)
-    rw [hempty]
-    simp
+    rw [hempty, sum_empty]
 
 /-! ## Substitution into the aggregate Abel term -/
 
@@ -1723,28 +1719,7 @@ theorem liuPanAggregatePNTError_endpoint_shell
             (liuPanAbelSourceCutoff y X k) q f -
           liuPanAggregatePNTError k
             (liuPanAbelSourceCutoff y X (k + 1)) q f) := by
-  have hsum (k A : ℕ) :
-      (∑ a ∈ Icc 1 A, if a.Coprime q then
-        f a * liuPanPNTError k
-      else 0) = liuPanAggregatePNTError k A q f := by
-    unfold liuPanAggregatePNTError
-    rw [sum_mul]
-    apply sum_congr rfl
-    intro a ha
-    by_cases hcop : a.Coprime q <;> simp [hcop]
-  calc
-    _ = ∑ k ∈ Icc 1 y, g k *
-        ((∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X k),
-          if a.Coprime q then f a * liuPanPNTError k else 0) -
-        ∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (k + 1)),
-          if a.Coprime q then f a * liuPanPNTError k else 0) := by
-      simpa only [mul_assoc, mul_left_comm, mul_comm, mul_ite, mul_zero] using
-        (sum_source_eq_sum_quotient_shells y X g
-          (fun k a => if a.Coprime q then f a * liuPanPNTError k else 0) hg0)
-    _ = _ := by
-      apply sum_congr rfl
-      intro k hk
-      rw [hsum, hsum]
+  exact liuPan_scalar_endpoint_shell y X q f g liuPanPNTError hg0
 
 /-- Swapping source summation with ordinary PNT prefixes retains the shared
 Abel source cutoff. -/
@@ -1756,31 +1731,7 @@ theorem liuPanAggregatePNTError_prefix_swap
       ∑ n ∈ range y, w n *
         liuPanAggregatePNTError n
           (liuPanAbelSourceCutoff y X (n + 1)) q f := by
-  calc
-    _ = ∑ a ∈ Icc 1 X, ∑ n ∈ range (y / a), w n *
-          (if a.Coprime q then f a * liuPanPNTError n else 0) := by
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop, Finset.mul_sum]
-        apply sum_congr rfl
-        intro n hn
-        ring
-      · simp [hcop]
-    _ = ∑ n ∈ range y, w n *
-        ∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (n + 1)),
-          (if a.Coprime q then f a * liuPanPNTError n else 0) :=
-      sum_source_prefix_eq_sum_aggregate_prefix y X w
-        (fun n a => if a.Coprime q then f a * liuPanPNTError n else 0)
-    _ = _ := by
-      apply sum_congr rfl
-      intro n hn
-      unfold liuPanAggregatePNTError
-      rw [sum_mul]
-      apply congrArg (fun z => w n * z)
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q <;> simp [hcop]
+  exact liuPan_scalar_prefix_swap y X q f w liuPanPNTError
 
 /-- The ordinary PNT Abel aggregate is exactly the source convolution with the
 totalized inverse-log PNT remainder. -/
@@ -1830,15 +1781,7 @@ theorem liuPanAggregateInverseLogPrincipalPNTTerm_eq_real
     liuPanAggregateInverseLogPNTError
   simp_rw [liuPanAggregatePrincipalPNTTerm_eq_real]
   push_cast
-  ring_nf
-  rw [Finset.mul_sum, Finset.mul_sum]
-  congr 1
-  · apply sum_congr rfl
-    intro n hn
-    ring
-  · apply sum_congr rfl
-    intro n hn
-    ring
+  simp only [add_div, sum_div, ← sub_div, mul_div_assoc]
 
 /-- Exact real source form of the ordinary principal/PNT term.  In particular,
 the same `y / a` quotient remains inside the totalized Abel remainder. -/
@@ -2216,15 +2159,7 @@ theorem liuPanAggregateInverseLogPrincipalNoncoprimePsiTerm_eq_real
     liuPanAggregateInverseLogNoncoprimeCorrection
   simp_rw [liuPanAggregatePrincipalNoncoprimePsiTerm_eq_real]
   push_cast
-  ring_nf
-  rw [Finset.mul_sum, Finset.mul_sum]
-  congr 1
-  · apply sum_congr rfl
-    intro n hn
-    ring
-  · apply sum_congr rfl
-    intro n hn
-    ring
+  simp only [add_div, sum_div, ← sub_div, mul_div_assoc]
 
 /-- The shared-`y` principal noncoprime term also vanishes canonically at
 modulus zero. -/
@@ -2818,8 +2753,7 @@ theorem liuPanAggregateLogLambdaConductorSum_eq_primitiveLiftSum
       rw [filter_eq_empty_iff]
       intro χ hχ hcond
       exact hdq (hcond ▸ χ.conductor_dvd_level)
-    rw [hempty]
-    simp
+    rw [hempty, sum_empty]
 
 /-- Primitive conductors at most `D₀`, retained in their exact lifted hyperbola
 form. -/

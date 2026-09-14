@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence
 import MathlibNt.SieveTheory.LinearSieve
 import Mathlib.Data.Nat.Cast.Order.Field
@@ -105,34 +106,7 @@ private theorem B10FibreSieve_pushforward_sum_eq_card_filter
     (A : Finset α) (out : α → ℕ) (P : ℕ → Prop) [DecidablePred P] :
     ∑ n ∈ (A.image out).filter P, (((A.filter fun x => out x = n).card : ℕ) : ℝ) =
       (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := by
-  let U : Finset ℕ := (A.image out).filter P
-  have hfiberwise :=
-    Finset.sum_fiberwise_eq_sum_filter A U out (fun _ => (1 : ℝ))
-  have hfilter :
-      A.filter (fun x => out x ∈ U) = A.filter (fun x => P (out x)) := by
-    ext x
-    constructor
-    · intro hx
-      rcases Finset.mem_filter.mp hx with ⟨hxA, hxU⟩
-      exact Finset.mem_filter.mpr
-        ⟨hxA, (Finset.mem_filter.mp hxU).2⟩
-    · intro hx
-      rcases Finset.mem_filter.mp hx with ⟨hxA, hxP⟩
-      refine Finset.mem_filter.mpr ?_
-      refine ⟨hxA, Finset.mem_filter.mpr ?_⟩
-      exact ⟨Finset.mem_image.mpr ⟨x, hxA, rfl⟩, hxP⟩
-  rw [hfilter] at hfiberwise
-  have hsum :
-      ∑ n ∈ U, ∑ x ∈ A.filter (fun x => out x = n), (1 : ℝ) =
-        (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := by
-    simpa [U] using hfiberwise
-  calc
-    ∑ n ∈ (A.image out).filter P, (((A.filter fun x => out x = n).card : ℕ) : ℝ)
-        = ∑ n ∈ U, ∑ x ∈ A.filter (fun x => out x = n), (1 : ℝ) := by
-            refine Finset.sum_congr rfl ?_
-            intro n hn
-            simp
-    _ = (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := hsum
+  simpa using MathlibNt.SieveTheory.sum_fibres_filter_image A out P (fun _ => (1 : ℝ))
 
 theorem goldbachB10_coprime_prodPrimes_iff_literalHPoint
     (N : ℕ) (Z : ℝ) (n : ℕ) :

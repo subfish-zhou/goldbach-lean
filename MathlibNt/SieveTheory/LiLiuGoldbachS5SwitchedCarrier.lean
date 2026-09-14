@@ -187,11 +187,9 @@ private theorem S5_card_le_mul_of_fibers {α : Type*} [DecidableEq α]
     (hmaps : ∀ x ∈ A, f x ∈ T)
     (hfiber : ∀ p ∈ T, (A.filter fun x => f x = p).card ≤ k) :
     A.card ≤ T.card * k := by
-  have heq : (∑ p ∈ T, (A.filter fun x => f x = p).card) = A.card := by
-    have hfilter : A.filter (fun x => f x ∈ T) = A := Finset.filter_eq_self.mpr hmaps
-    simpa [hfilter] using Finset.sum_fiberwise_eq_sum_filter A T f (fun _ => (1 : ℕ))
   calc
-    A.card = ∑ p ∈ T, (A.filter fun x => f x = p).card := heq.symm
+    A.card = ∑ p ∈ T, (A.filter fun x => f x = p).card :=
+      Finset.card_eq_sum_card_fiberwise hmaps
     _ ≤ ∑ _p ∈ T, k := Finset.sum_le_sum hfiber
     _ = T.card * k := by simp
 

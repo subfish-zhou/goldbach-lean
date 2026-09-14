@@ -97,27 +97,9 @@ theorem goldbachG12GoodCross_sum_product (N : ℕ) (z b c : ℝ) (f : ℕ → �
       ∑ m ∈ goldbachG12ProductSupport N z b c,
         (goldbachG12ProductCoefficient N z b c m : ℤ)*f m := by
   classical
-  have hh : (goldbachG12GoodCrossBodies N z b c).filter
-      (fun u => goldbachG11SwitchedBodyProd u ∈ goldbachG12ProductSupport N z b c) =
-      goldbachG12GoodCrossBodies N z b c := by
-    apply Finset.filter_eq_self.mpr
-    intro u hu
-    exact Finset.mem_image.mpr ⟨u,hu,rfl⟩
-  have hf := Finset.sum_fiberwise_eq_sum_filter (goldbachG12GoodCrossBodies N z b c)
-    (goldbachG12ProductSupport N z b c) goldbachG11SwitchedBodyProd
-    (fun u => f (goldbachG11SwitchedBodyProd u))
-  rw [hh] at hf
-  rw [← hf]
-  apply Finset.sum_congr rfl
-  intro m _
-  rw [goldbachG12ProductCoefficient_eq_card]
-  calc
-    _ = ∑ _u ∈ (goldbachG12GoodCrossBodies N z b c).filter
-        (fun u => goldbachG11SwitchedBodyProd u = m), f m := by
-      apply Finset.sum_congr rfl
-      intro u hu
-      rw [(Finset.mem_filter.mp hu).2]
-    _ = _ := by simp
+  simpa [goldbachG12ProductSupport, goldbachG12ProductCoefficient_eq_card] using
+    (Finset.sum_fiberwise_of_maps_to' (s := goldbachG12GoodCrossBodies N z b c)
+      (fun _ hu => Finset.mem_image_of_mem goldbachG11SwitchedBodyProd hu) f).symm
 
 theorem goldbachG12GoodCrossTotal_eq_product_sum (N : ℕ) (ε z b c : ℝ) :
     goldbachG12GoodCrossTotal N ε z b c =

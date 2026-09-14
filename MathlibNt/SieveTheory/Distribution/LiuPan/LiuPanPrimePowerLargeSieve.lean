@@ -949,8 +949,7 @@ theorem primitiveCharacterDyadicMaxMean_le_aligned
     primitiveCharacterDyadicMaxMean Q a N ≤
         ∑ q ∈ s, ((q : ℝ) / (q.totient : ℝ)) *
           ∑ χ ∈ t q, ∑ b ∈ u, F q χ b := by
-      simpa [s, t, u, F] using
-        primitiveCharacterDyadicMaxMean_le_alignedIndices Q a N
+      exact primitiveCharacterDyadicMaxMean_le_alignedIndices Q a N
     _ = ∑ b ∈ u, ∑ q ∈ s, ((q : ℝ) / (q.totient : ℝ)) *
           ∑ χ ∈ t q, F q χ b := by
       calc
@@ -963,7 +962,7 @@ theorem primitiveCharacterDyadicMaxMean_le_aligned
                 (fun q χ b => ((q : ℝ) / (q.totient : ℝ)) * F q χ b)
         _ = _ := by simp_rw [Finset.mul_sum]
     _ = _ := by
-      simpa [s, t, u, F, Nat.add_mul] using
+      simpa only [s, t, u, F, Nat.add_mul, one_mul] using
         alignedDyadicBlockIndices_sum N
           (fun b => ∑ q ∈ s, ((q : ℝ) / (q.totient : ℝ)) *
             ∑ χ ∈ t q, F q χ b)
@@ -1065,8 +1064,8 @@ theorem largeSieveBound_le_mul_log_of_sq_le
     exact Real.exp_one_lt_three.le.trans
       (by exact_mod_cast (show 3 ≤ N + 2 by omega))
   have hQsqone : (1 : ℝ) ≤ (Q : ℝ) ^ 2 := by
-    have : (1 : ℝ) ≤ Q := by exact_mod_cast hQ
-    nlinarith
+    have h : (1 : ℝ) ≤ Q := by exact_mod_cast hQ
+    exact one_le_pow₀ h
   have hx0 : 0 ≤ Real.log ((Q : ℝ) ^ 2) / Real.log 2 :=
     div_nonneg (Real.log_nonneg hQsqone) hlog2.le
   have hceil :=
@@ -1083,7 +1082,7 @@ theorem largeSieveBound_le_mul_log_of_sq_le
       _ = 2 * Real.log (Q : ℝ) / Real.log 2 + 1 := by
         rw [Real.log_pow]
         norm_num
-      _ ≤ _ := by linarith
+      _ ≤ _ := add_le_add hquotlog le_rfl
   have hQsqR : ((Q : ℝ) ^ 2) ≤ N := by exact_mod_cast hQsq
   unfold largeSieveBound
   rw [show (1 / (1 / (Q : ℝ) ^ 2)) = (Q : ℝ) ^ 2 by field_simp]
@@ -1092,7 +1091,7 @@ theorem largeSieveBound_le_mul_log_of_sq_le
         (4 / Real.log 2) * Real.log (N + 2 : ℕ) + 14 := by
     calc
       _ ≤ 2 * (2 * Real.log (N + 2 : ℕ) / Real.log 2 + 1) + 12 := by
-        nlinarith
+        linarith only [hceil']
       _ = _ := by ring
   rw [div_eq_mul_inv, inv_div, div_one]
   calc
@@ -1104,12 +1103,12 @@ theorem largeSieveBound_le_mul_log_of_sq_le
       apply add_le_add
       · norm_num
         have hNr : (1 : ℝ) ≤ N := by exact_mod_cast hN
-        linarith
+        linarith only [hNr]
       · exact mul_le_mul hnum hQsqR (by positivity) (by positivity)
     _ ≤ (17 + 4 / Real.log 2) * N * Real.log (N + 2 : ℕ) := by
       have hNr : (0 : ℝ) ≤ N := by positivity
       have hc : 0 ≤ 4 / Real.log 2 := by positivity
-      nlinarith
+      nlinarith only [mul_nonneg hNr (sub_nonneg.mpr hlogN)]
 
 namespace LiuWeight
 
@@ -1198,7 +1197,7 @@ theorem liuPanPrimePowerDilatedPrefixMaxMean_sqrt_le
     Real.sqrt (primitiveCharacterPrefixMaxMean Q
         (fun m => (liuPanPrimePowerCoefficient N (e * m) : ℂ))
         (N / e + 1)) ≤ Real.sqrt (Le ^ 2 * (Se * E)) := by
-      simpa [Le, Se, E] using hmain
+      exact hmain
     _ = Le * Real.sqrt (Se * E) := by
       rw [Real.sqrt_mul (sq_nonneg Le), Real.sqrt_sq (by positivity)]
     _ ≤ L * Real.sqrt (S * E) := by
@@ -1727,7 +1726,7 @@ theorem liuPanPrimePowerWeight_sqrt_totient_factor
   have hright :
       0 ≤ Real.sqrt (W ^ 2 / d) * Real.sqrt ((d : ℝ) / d.totient) :=
     mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
-  nlinarith
+  exact (sq_eq_sq₀ hleft hright).mp heq
 
 /-- Squaring the squarefree modulus weight gives exactly the `J₉` summand. -/
 theorem liuPanPrimePowerModulusWeight_sq_div_eq_J9_term (d : ℕ) :
@@ -2264,7 +2263,8 @@ theorem liuPanPrimePowerPrimitiveLiftPrefixTransfer_eq_dilation
   intro d hd
   apply sum_congr rfl
   intro q hq
-  congr 1
+  apply congrArg (fun x : ℝ =>
+    liuPanPrimePowerModulusWeight q * (Nat.totient q : ℝ)⁻¹ * x)
   by_cases hd1 : d = 1
   · simp [hd1]
   · simp only [dif_neg hd1, if_neg hd1]
@@ -2740,8 +2740,10 @@ theorem
       _ ≤ 1 + 2 * Real.log N / Real.log 2 := by gcongr
       _ ≤ DL * Real.log N := by
         dsimp [DL]
-        field_simp
-        nlinarith
+        calc
+          1 + 2 * Real.log N / Real.log 2 ≤
+              Real.log N + 2 * Real.log N / Real.log 2 := add_le_add hL le_rfl
+          _ = (1 + 2 / Real.log 2) * Real.log N := by ring
   have hratio :
       1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2 ≤
         (1 + 4 / Real.log 2 ^ 2) * Real.log N ^ 2 := by
@@ -2755,8 +2757,11 @@ theorem
       _ ≤ (1 + 4 / Real.log 2 ^ 2) * Real.log N ^ 2 := by
         have hLsq : (1 : ℝ) ≤ Real.log N ^ 2 := by
           exact one_le_pow₀ hL
-        field_simp
-        nlinarith
+        calc
+          1 + (2 * Real.log N / Real.log 2) ^ 2 ≤
+              Real.log N ^ 2 + (2 * Real.log N / Real.log 2) ^ 2 :=
+            add_le_add hLsq le_rfl
+          _ = (1 + 4 / Real.log 2 ^ 2) * Real.log N ^ 2 := by ring
   have hinner :
       ((17 + 4 / Real.log 2) * N * Real.log (N + 2 : ℕ)) *
           ((1 + (Real.log (N + 1 : ℕ) / Real.log 2) ^ 2) *
