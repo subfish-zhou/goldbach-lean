@@ -55,6 +55,7 @@ for n in order:
   try:rc=subprocess.run(cmd,cwd=ROOT/'src',env=env,stdout=f,stderr=subprocess.STDOUT,timeout=args.timeout).returncode
   except subprocess.TimeoutExpired:rc=124
  r={'module':n,'exit_code':rc,'source_sha256':sha(source),'object_sha256':sha(obj) if obj.exists() else None,'dependencies':deps,'log':str(log.relative_to(ROOT)),'log_sha256':sha(log),'command':cmd,'seconds':time.time()-start}
+ save(log.with_suffix('.json'),r)
  save(receipt,r);count+=1
  print(n,rc,round(r['seconds'],2),flush=True)
  if rc:

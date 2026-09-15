@@ -10140,7 +10140,7 @@
   },
   {
     "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
-    "source_sha256": "973f1e62cb1432211626394be9678c721c350deb7a24980e4d804a48ad3a82ce",
+    "source_sha256": "03af14bdabe55a6458fce77422bb46257b77f49d1c73e5102cc677d81d270eff",
     "object_sha256": "b0a4197261f1a4589d3393a3f9419f8959ba668e8f1c913dcefe5c3eb0aa84eb",
     "imports": [
       "Init",
@@ -10151,7 +10151,9 @@
       "Mathlib.Tactic"
     ],
     "matching_source_variants": 2,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "973f1e62cb1432211626394be9678c721c350deb7a24980e4d804a48ad3a82ce",
+    "integration_adaptation": "Remove unnecessary simpa and its unused local bound; statement and definitions unchanged; warningAsError retained."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.FourthRowMotherNine",
