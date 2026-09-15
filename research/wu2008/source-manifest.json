@@ -9449,7 +9449,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.Arithmetic.SingularSeries",
-    "source_sha256": "1a2869364a0d48df4fff18ad47a17d2344d469575d98332d295a3d6c241f63ed",
+    "source_sha256": "55f7a3c7f7b721f41ae8bb2f677d171d3dabcdccd0bb372578d34aff36b43bc4",
     "object_sha256": "433a9bd944dfcc0f87dcc730bab09b9779ddc55659cfc128dd75635e1c60d061",
     "imports": [
       "Init",
@@ -9471,7 +9471,15 @@
       "Mathlib.Tactic.Ring"
     ],
     "matching_source_variants": 3,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "versioned_source_rebuilt_nonprivate_interface_compared",
+    "rejected_source_sha256": "1a2869364a0d48df4fff18ad47a17d2344d469575d98332d295a3d6c241f63ed",
+    "integration_adaptation": "Restore MathlibNt namespace source from versioned 1plus2 release; reject same-basename AnalyticNumberTheory source with identical imports. Explicitly reference retained hypotheses within proofs (preserve named binders), combine consecutive intros; strict lint remains enabled.",
+    "recovered_source_sha256": "634d57434c3344612b17562073b7c048a1cb971947be326dd8055dcea6df5fbd",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 32,
+      "missing_or_type_or_definition_differences": 0,
+      "scope": "old nonprivate names and types, definition values; not proof-body or full dependency audit"
+    }
   },
   {
     "module": "AnalyticNumberTheory",

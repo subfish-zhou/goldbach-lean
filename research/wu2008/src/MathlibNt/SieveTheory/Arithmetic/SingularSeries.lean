@@ -14,25 +14,25 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
-/-! # AnalyticNumberTheory.Sieve.SingularSeries
+/-!
+# MathlibNt.SieveTheory.SingularSeries
 
-## Goldbach singular-series factors and finite products
+## Sieve-normalized finite Goldbach factor
 
-The classical Chen bounds contain the singular-series factor
+This file retains the finite factor used by the legacy Chen sieve development.
+It is not Liu's source singular series: it includes the local factor at `p = 2`,
+and `singularSeries N` is truncated at `N` rather than an infinite product.
 
-  𝔖(N) = Π_{p|N, p>2} (p-1)/(p-2) · Π_{p>2} (1 - 1/(p-1)²),
+The corresponding odd-prime infinite expression in the literature is
 
-whose second product is the twin-prime constant `C₂ ≈ 0.66016...`.
-For even `N`, the local factors used in this module are:
-  - `p = 2`: 2;
-  - `p > 2`, `p | N`: `p/(p-1)`;
-  - `p > 2`, `p ∤ N`: `p(p-2)/(p-1)²`.
+  𝔖_odd(N) = Π_{p | N, p > 2} (p-1)/(p-2) · Π_{p > 2} (1 - 1/(p-1)²).
 
-Thus the local-factor product includes the factor 2, unlike the
-normalization of `𝔖(N)` displayed above. The implemented
-`singularSeries N` is the finite product truncated at `z=N`,
-not an infinite-product limit. All results below concern these
-defined finite products.
+The second product is the twin-prime constant C₂ ≈ 0.66016...
+
+For even N, the local factors used in this file simplify to:
+  - p = 2: the factor is 2;
+  - p > 2, p | N: the factor is p/(p-1);
+  - p > 2, p ∤ N: the factor is p(p-2)/(p-1)².
 
 References:
   - Chen, J.R. (1973), Sci. Sinica 16, 157-176
@@ -40,18 +40,19 @@ References:
   - Halberstam & Richert, "Sieve Methods" (1974)
 -/
 
-namespace AnalyticNumberTheory.Sieve
+namespace MathlibNt.SieveTheory.SingularSeries
 
 open Nat Real Finset
 
 /-! ## 1. Local factors -/
 
-/-- Singular-series local factor at an odd prime `p`:
-if `p | N`, then
-`g(p,N) = (p-1)/(p-2)·(1-1/(p-1)²) = p/(p-1)`;
-otherwise `g(p,N) = 1-1/(p-1)² = p(p-2)/(p-1)²`.
-The prime 2 is treated separately, with factor 2 for even `N`
-and factor 1 for odd `N` in this definition. -/
+/-- The local factor of the singular series at a prime p.
+
+For p > 2:
+  - if p | N:  g(p, N) = (p-1)/(p-2) · (1 - 1/(p-1)²) = p/(p-1);
+  - if p ∤ N:  g(p, N) = (1 - 1/(p-1)²) = p(p-2)/(p-1)².
+
+The factor at p = 2 is handled separately (it is 2 for even N). -/
 noncomputable def localFactor (p N : ℕ) : ℝ :=
   if p = 2 then
     if 2 ∣ N then 2 else 1
@@ -61,32 +62,46 @@ noncomputable def localFactor (p N : ℕ) : ℝ :=
     else
       (p : ℝ) * (p - 2) / ((p - 1) ^ 2)
 
-/-- The factor at 2 is 2 for even `N`. -/
+/-- The factor at p = 2 is 2 for even N. -/
 theorem localFactor_two (hN : Even N) : localFactor 2 N = 2 := by
-  simp [localFactor, hN.two_dvd]
+  unfold localFactor
+  rw [if_pos rfl]
+  obtain ⟨k, hk⟩ := hN
+  rw [if_pos ⟨k, by omega⟩]
 
-/-- The factor at 2 is 1 for odd `N`. -/
+/-- The factor at p = 2 is 1 for odd N. -/
 theorem localFactor_two_odd (hN : Odd N) : localFactor 2 N = 1 := by
-  simp [localFactor, hN.not_two_dvd_nat]
+  unfold localFactor
+  rw [if_pos rfl]
+  have h : ¬ (2 : ℕ) ∣ N := by
+    rintro ⟨k, hk⟩
+    rw [hk] at hN
+    obtain ⟨m, hm⟩ := hN
+    omega
+  rw [if_neg h]
 
-/-- For a prime `p > 2` dividing `N`, the factor is `p/(p-1)`. -/
-theorem localFactor_of_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
+/-- For a prime p > 2 with p | N, the factor is p/(p-1). -/
+theorem localFactor_of_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
     localFactor p N = (p : ℝ) / (p - 1) := by
+  have _ := hp
   simp [localFactor, ne_of_gt hp2, hpdvd]
 
-/-- For a prime `p > 2` not dividing `N`,
-the factor is `p(p-2)/(p-1)²`. -/
-theorem localFactor_of_not_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
+/-- For a prime p > 2 with p ∤ N, the factor is p(p-2)/(p-1)². -/
+theorem localFactor_of_not_dvd {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N = (p : ℝ) * (p - 2) / ((p - 1) ^ 2) := by
+  have _ := hp
   simp [localFactor, ne_of_gt hp2, hpn]
 
 /-! ## 2. Positivity of local factors -/
 
-/-- Every prime local factor is positive. -/
+/-- All local factors at primes are positive. -/
 theorem localFactor_pos {p N : ℕ} (hp : p.Prime) : 0 < localFactor p N := by
   by_cases h2 : p = 2
   · simp [localFactor, h2]; split_ifs <;> linarith
-  · have hp2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm h2)
+  · have hp2 : 2 < p := by
+      rcases hp.eq_two_or_odd' with h | h
+      · omega
+      · have : 2 ≤ p := hp.two_le; omega
     by_cases hpdvd : p ∣ N
     · rw [localFactor_of_dvd hp hp2 hpdvd]
       have hp2le : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
@@ -94,42 +109,42 @@ theorem localFactor_pos {p N : ℕ} (hp : p.Prime) : 0 < localFactor p N := by
     · rw [localFactor_of_not_dvd hp hp2 hpdvd]
       have hp_pos : (0 : ℝ) < p := by exact_mod_cast hp.pos
       have hp2_pos : (0 : ℝ) < p - 2 := by
-        exact sub_pos.mpr (by exact_mod_cast hp2)
+        have : (2 : ℝ) < p := by exact_mod_cast hp2
+        linarith
       have hp1_pos : (0 : ℝ) < p - 1 := by
-        exact sub_pos.mpr (by exact_mod_cast hp.one_lt)
+        have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
+        linarith
       exact div_pos (mul_pos hp_pos hp2_pos) (sq_pos_of_pos hp1_pos)
 
 /-! ## 3. Truncated singular series -/
 
-/-- Truncated local-factor product:
-`𝔖(N,z) = Π_{p≤z, p.Prime} localFactor p N`.
-The classical infinite product is obtained by a convergence argument
-as `z → ∞`, with the normalization of these local factors;
-that limiting identification is not part of this definition. -/
+/-- The truncated singular series is the product of local factors at primes p ≤ z:
+
+  𝔖(N, z) = Π_{p ≤ z, p.Prime} localFactor p N.
+
+For fixed positive N, the limit as z → ∞ is the corresponding sieve-normalized
+infinite product. This is distinct from the finite proxy `singularSeries N`,
+which uses z = N; no convergence theorem is asserted by this definition. -/
 noncomputable def singularSeriesTruncated (N z : ℕ) : ℝ :=
   ((range (z + 1)).filter Nat.Prime).prod (fun p => localFactor p N)
 
-/-- The truncated singular series is positive, since all factors
-are positive. -/
-theorem singularSeriesTruncated_pos (N z : ℕ) (_hz : 1 ≤ z) :
+/-- The truncated singular series is positive, since all its factors are positive. -/
+theorem singularSeriesTruncated_pos (N z : ℕ) (hz : 1 ≤ z) :
     0 < singularSeriesTruncated N z := by
+  have _ := hz
   unfold singularSeriesTruncated
   apply Finset.prod_pos
   intro p hp
   have hp_prime : p.Prime := by simp_all
   exact localFactor_pos hp_prime
 
-/-! ## 4. Finite singular-series proxy -/
+/-! ## 4. The finite singular-series proxy -/
 
-/-- Finite singular-series proxy, truncated at `z=N`.
-The classical full series is a limit
-`lim_{z→∞} 𝔖(N,z)`, requiring an infinite-product convergence
-argument. Mertens-type estimates such as
-`Σ_{p≤x}1/p ~ log log x` are relevant to quantitative
-singular-series analysis; this definition does not take that limit. -/
+/-- Legacy finite sieve-normalized proxy, obtained by truncating at `N`.
+
+This is deliberately kept for compatibility with the existing Chen APIs. It is
+not Liu's odd-prime infinite singular series. -/
 noncomputable def singularSeries (N : ℕ) : ℝ :=
-  -- Use the finite truncated product at the specified cutoff.
-  -- The cutoff is z = N; an infinite-product definition would require a separate convergence argument.
   singularSeriesTruncated N N
 
 /-- The finite singular-series proxy is positive. -/
@@ -137,11 +152,13 @@ theorem singularSeries_pos (N : ℕ) (hN : 2 ≤ N) :
     0 < singularSeries N := by
   exact singularSeriesTruncated_pos N N (by omega : 1 ≤ N)
 
-/-! ## 5. Explicit even case -/
+/-! ## 5. Explicit formula in the even case -/
 
-/-- For even `N`, truncating at 2 gives exactly the factor 2. -/
-theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (_hN2 : 2 ≤ N) :
+/-- For even N, the singular series contains the factor 2 at p = 2;
+the truncation at 2 consists of this factor alone. -/
+theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (hN2 : 2 ≤ N) :
     singularSeriesTruncated N 2 = 2 := by
+  have _ := hN2
   unfold singularSeriesTruncated
   have h_range : (range 3).filter Nat.Prime = {2} := by decide
   rw [h_range]
@@ -149,8 +166,7 @@ theorem singularSeries_even_factor (N : ℕ) (hN : Even N) (_hN2 : 2 ≤ N) :
 
 /-! ## 6. Upper bounds for local factors -/
 
-/-- For a prime `p > 2` dividing `N`, `p/(p-1) ≤ 3/2`,
-since `p ≥ 3`. -/
+/-- For a prime p > 2 with p | N, the factor p/(p-1) ≤ 3/2, since p ≥ 3. -/
 theorem localFactor_dvd_le {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
     localFactor p N ≤ 3 / 2 := by
   rw [localFactor_of_dvd hp hp2 hpdvd]
@@ -158,26 +174,33 @@ theorem localFactor_dvd_le {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpdvd : p �
   have hp1 : (0 : ℝ) < p - 1 := by
     have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
     linarith
-  apply (div_le_iff₀ hp1).2
-  have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-  linarith
+  have : (p : ℝ) / (p - 1) ≤ 3 / 2 := by
+    field_simp
+    have : (2 : ℝ) * p ≤ 3 * (p - 1) := by
+      have hp3' : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+      nlinarith
+    linarith
+  exact this
 
-/-- For a prime `p > 2` not dividing `N`,
-`p(p-2)/(p-1)² < 1`, since `p ≥ 3`. -/
+/-- For a prime p > 2 with p ∤ N, the factor p(p-2)/(p-1)² < 1, since p ≥ 3. -/
 theorem localFactor_not_dvd_lt_one {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N < 1 := by
   rw [localFactor_of_not_dvd hp hp2 hpn]
+  have hp3 : 3 ≤ p := by omega
   have hp1_pos : (0 : ℝ) < p - 1 := by
     have : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
     linarith
-  -- The positive denominator exceeds the numerator by exactly one.
-  apply (div_lt_one (sq_pos_of_pos hp1_pos)).2
-  nlinarith
+  have : (p : ℝ) * (p - 2) / ((p - 1) ^ 2) < 1 := by
+    field_simp
+    have h : (p : ℝ) * (p - 2) < (p - 1) * (p - 1) := by
+      have hp_cast : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+      nlinarith
+    linarith
+  exact this
 
-/-! ## 7. Elementary singular-series bounds -/
+/-! ## 7. Bounds for the singular series (elementary proofs) -/
 
-/-- For an odd prime `p`,
-`localFactor p N ≥ 1-1/(p-1)²`. -/
+/-- Lower bound at an odd prime p > 2: localFactor p N ≥ 1 - 1/(p-1)². -/
 private lemma localFactor_ge_square {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
     1 - 1 / ((p : ℝ) - 1) ^ 2 ≤ localFactor p N := by
   by_cases hpdvd : p ∣ N
@@ -194,8 +217,8 @@ private lemma localFactor_ge_square {p N : ℕ} (hp : p.Prime) (hp2 : 2 < p) :
     field_simp [ne_of_gt hp1_pos]
     nlinarith
 
-/-- Telescoping product A: `∏_{k<n} (k+1)/(k+2) = 1/(n+1)`. -/
-lemma telescope_a (n : ℕ) :
+/-- Telescoping product (A): ∏_{k<n} (k+1)/(k+2) = 1/(n+1). -/
+private lemma telescope_a (n : ℕ) :
     (Finset.range n).prod (fun k : ℕ => ((k : ℝ) + 1) / ((k : ℝ) + 2)) =
       1 / ((n : ℝ) + 1) := by
   induction n with
@@ -208,8 +231,8 @@ lemma telescope_a (n : ℕ) :
       field_simp [hn1, hn2]
       ring
 
-/-- Telescoping product B: `∏_{k<n} (k+3)/(k+2) = (n+2)/2`. -/
-lemma telescope_b (n : ℕ) :
+/-- Telescoping product (B): ∏_{k<n} (k+3)/(k+2) = (n+2)/2. -/
+private lemma telescope_b (n : ℕ) :
     (Finset.range n).prod (fun k : ℕ => ((k : ℝ) + 3) / ((k : ℝ) + 2)) =
       ((n : ℝ) + 2) / 2 := by
   induction n with
@@ -221,9 +244,8 @@ lemma telescope_b (n : ℕ) :
       field_simp [hn2]
       ring
 
-/-- Telescoping product:
-`∏_{n=2}^{N-1} (1-1/n²) = N/(2(N-1))` for `N ≥ 2`. -/
-lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
+/-- Telescoping product: ∏_{n=2}^{N-1} (1 - 1/n²) = N / (2(N-1)) for N ≥ 2. -/
+private lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
     (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) =
       (N : ℝ) / (2 * ((N : ℝ) - 1)) := by
   rw [Finset.prod_Ico_eq_prod_range (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) 2 N]
@@ -261,10 +283,9 @@ lemma int_square_product (N : ℕ) (hN : 2 ≤ N) :
     linarith
   field_simp [hN1]
 
-/-- The prime-indexed product is at least the full integer product:
-`∏_{3≤p≤N, p prime} (1-1/(p-1)²)
- ≥ ∏_{n=2}^{N-1} (1-1/n²)`. -/
-lemma prime_square_product_ge_int (N : ℕ) :
+/-- The product over primes dominates the product over all integers:
+∏_{3 ≤ p ≤ N, p prime} (1 - 1/(p-1)²) ≥ ∏_{n=2}^{N-1} (1 - 1/n²). -/
+private lemma prime_square_product_ge_int (N : ℕ) :
     (Finset.Ico 2 N).prod (fun n : ℕ => (1 : ℝ) - 1 / (n : ℝ) ^ 2) ≤
       ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
         (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := by
@@ -325,37 +346,47 @@ lemma prime_square_product_ge_int (N : ℕ) :
       rw [hcast]
   exact le_trans h_int_le_T hreindex.le
 
-/-- Every prime local factor is at most 2. -/
+/-- The local factor is at most 2 for every prime p. -/
 private lemma localFactor_le_two {p N : ℕ} (hp : p.Prime) : localFactor p N ≤ 2 := by
   by_cases h2 : p = 2
   · subst h2
     unfold localFactor
     split_ifs <;> norm_num
-  · have hp2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm h2)
+  · have hp2 : 2 < p := by
+      rcases hp.eq_two_or_odd' with h | h
+      · exact absurd h h2
+      · have : 2 ≤ p := hp.two_le
+        omega
     by_cases hpdvd : p ∣ N
-    · exact (localFactor_dvd_le hp hp2 hpdvd).trans (by norm_num)
+    · rw [localFactor_of_dvd hp hp2 hpdvd]
+      have hp2' : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
+      have hp1 : (0 : ℝ) < (p : ℝ) - 1 := by linarith
+      field_simp [ne_of_gt hp1]
+      nlinarith
     · exact le_trans (le_of_lt (localFactor_not_dvd_lt_one hp hp2 hpdvd)) (by norm_num)
 
-/-- If the prime `p` does not divide `N`, its local factor is at most 1. -/
+/-- The local factor is at most 1 when the prime p does not divide N. -/
 private lemma localFactor_le_one_of_not_dvd {p N : ℕ} (hp : p.Prime) (hpn : ¬ p ∣ N) :
     localFactor p N ≤ 1 := by
   by_cases h2 : p = 2
   · subst h2
     unfold localFactor
     simp [hpn]
-  · have hp2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm h2)
+  · have hp2 : 2 < p := by
+      rcases hp.eq_two_or_odd' with h | h
+      · exact absurd h h2
+      · have : 2 ≤ p := hp.two_le
+        omega
     exact le_of_lt (localFactor_not_dvd_lt_one hp hp2 hpn)
 
-/-- **Positive lower bound for even N**: the finite proxy is at
-least 1 for every even `N ≥ 2`.
-Its product is
-`2·∏_{p≤N, p|N, p>2} p/(p-1)
- ·∏_{p≤N, p∤N, p>2} p(p-2)/(p-1)²`.
-The divisor factors are at least 1, and
-`∏_{2<p≤N}(1-1/(p-1)²)
- ≥ ∏_{n=2}^{N-1}(1-1/n²)
- = N/(2(N-1)) ≥ 1/2`.
-Thus the product is at least `2·1·1/2 = 1`. -/
+/-- A positive lower bound for the finite singular series: 𝔖(N) ≥ 1
+for every even N ≥ 2.
+
+Elementary proof: for even N, with all prime products restricted to p ≤ N,
+𝔖(N) = 2 · ∏_{p|N, p>2} p/(p-1) · ∏_{p∤N, p>2} p(p-2)/(p-1)².
+Here p/(p-1) ≥ 1, and the prime product ∏_{2<p≤N} (1 - 1/(p-1)²)
+is at least ∏_{n=2}^{N-1} (1 - 1/n²) = N/(2(N-1)) ≥ 1/2
+by telescoping. Thus 𝔖(N) ≥ 2 · 1 · 1/2 = 1. -/
 theorem singularSeries_bounded_below :
     ∃ c : ℝ, 0 < c ∧ ∀ N : ℕ, 2 ≤ N → Even N → c ≤ singularSeries N := by
   refine ⟨1, by norm_num, ?_⟩
@@ -370,12 +401,30 @@ theorem singularSeries_bounded_below :
   have hfilter_eq : A \ {2} = (range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p) := by
     rw [hA_def]
     ext p
-    simp only [mem_sdiff, mem_filter, mem_singleton]
     constructor
-    · rintro ⟨⟨hp_range, hp⟩, hp_ne⟩
-      exact ⟨hp_range, hp, lt_of_le_of_ne hp.two_le (Ne.symm hp_ne)⟩
-    · rintro ⟨hp_range, hp, hp2⟩
-      exact ⟨⟨hp_range, hp⟩, ne_of_gt hp2⟩
+    · intro hp
+      rw [mem_sdiff, mem_filter] at hp
+      rcases hp with ⟨hp_mem, hp_ne⟩
+      rcases hp_mem with ⟨hp_range, hp_prime⟩
+      rw [mem_filter]
+      refine ⟨hp_range, hp_prime, ?_⟩
+      have hp_ne' : p ≠ 2 := by
+        intro h
+        exact hp_ne (by simp [h])
+      rcases hp_prime.eq_two_or_odd' with h2 | hodd
+      · exact absurd h2 hp_ne'
+      · have : 2 ≤ p := hp_prime.two_le
+        omega
+    · intro hp
+      rw [mem_filter] at hp
+      rcases hp with ⟨hp_range, hp_props⟩
+      rcases hp_props with ⟨hp_prime, hp2⟩
+      rw [mem_sdiff, mem_filter]
+      constructor
+      · exact ⟨hp_range, hp_prime⟩
+      · intro hp_mem2
+        have hp_eq2 : p = 2 := by simpa using hp_mem2
+        omega
   rw [hfilter_eq]
   have hfac : ((range (N + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
         (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) ≤
@@ -415,16 +464,15 @@ theorem singularSeries_bounded_below :
         (fun p => localFactor p N) :=
           mul_le_mul_of_nonneg_left hfac (by norm_num)
 
-/-- **Upper bound for the finite proxy**: for `N ≥ 2`,
-the local-factor estimates give `𝔖(N) ≤ 2^{ω(N)}`
-and in particular the stated bound `≤ 2N`.
-Each factor at a prime dividing `N` is at most 2; the others
-are at most 1. The coarser `2^{ω(N)+1} ≤ 2N` also suffices.
+/-- Upper bound for the truncated definition: 𝔖(N) ≤ 2^ω(N) ≤ 2N.
 
-An absolute bound `𝔖(N) ≤ C` is false. For primorials
-`N = 2·3·5·7·...·x`, the divisor-prime product
-`∏_{p|N} p/(p-1)` has order `log log N` and is unbounded;
-the remaining twin-prime-type factors do not remove that growth. -/
+A bound 𝔖(N) ≤ C with an absolute constant C is **false**: along primorials
+(products of all primes up to x, such as 2·3·5·7·...),
+the factors ∏_{p|N} p/(p-1) grow on the order of log log N, while the
+remaining product stays bounded away from zero, so 𝔖(N) is unbounded.
+The elementary bound uses local factors ≤ 2 when p | N and ≤ 1 otherwise.
+It gives 𝔖(N) ≤ 2^ω(N), and hence also the looser bound
+𝔖(N) ≤ 2^{ω(N)+1} ≤ 2N. -/
 theorem singularSeries_bounded_above :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ N : ℕ, 2 ≤ N → singularSeries N ≤ C * (N : ℝ) := by
   refine ⟨2, by norm_num, ?_⟩
@@ -433,7 +481,7 @@ theorem singularSeries_bounded_above :
   set A := (range (N + 1)).filter Nat.Prime with hA_def
   have hsplit := Finset.prod_filter_mul_prod_filter_not A (fun p => p ∣ N)
     (fun p => localFactor p N)
-  -- For p|N, each local factor is at most 2, with ω(N) such primes.
+  -- First part (p | N): each of the ω(N) factors is at most 2.
   have h1 : (A.filter (fun p => p ∣ N)).prod (fun p => localFactor p N) ≤
       (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by
     calc
@@ -456,7 +504,7 @@ theorem singularSeries_bounded_above :
                 exact localFactor_le_two hpPrime
       _ = (2 : ℝ) ^ (A.filter (fun p => p ∣ N)).card := by
               rw [Finset.prod_const]
-  -- For p not dividing N, each local factor is at most 1.
+  -- Second part (p ∤ N): each factor is at most 1.
   have h2 : (A.filter (fun p => ¬ p ∣ N)).prod (fun p => localFactor p N) ≤ 1 := by
     apply Finset.prod_le_one
     · intro p hp
@@ -529,128 +577,35 @@ theorem singularSeries_bounded_above :
         have hN0 : (0 : ℝ) ≤ N := by exact_mod_cast (by omega : 0 ≤ N)
         nlinarith
 
-/-! ## 7.5 Uniform lower bound for truncated products -/
-
-/-- **Uniform truncated-product lower bound**:
-`𝔖(N,z) ≥ 1/2` for every `N` and `z ≥ 2`.
-Write the product as
-`localFactor(2,N)·∏_{2<p≤z} localFactor(p,N)`.
-The factor at 2 is at least 1, and for odd primes
-`localFactor(p,N) ≥ 1-1/(p-1)²`
-(the divisor case is at least 1, and the nondivisor case is equality).
-Therefore
-`𝔖(N,z) ≥ ∏_{2<p≤z}(1-1/(p-1)²)
- ≥ ∏_{n=2}^{z-1}(1-1/n²) = z/(2(z-1)) ≥ 1/2`.
-This supplies the twin-prime-constant-scale input `c_S = 1/2`
-for `CorrectedChenMainTermLower`. -/
-theorem singularSeriesTruncated_ge_half (N z : ℕ) (hz : 2 ≤ z) :
-    (1 : ℝ) / 2 ≤ singularSeriesTruncated N z := by
-  unfold singularSeriesTruncated
-  set A := (range (z + 1)).filter Nat.Prime with hA_def
-  have h2mem : 2 ∈ A := by
-    rw [hA_def]
-    simp [mem_filter, hz, Nat.prime_two]
-  have hfilter_eq : A \ {2} = (range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p) := by
-    rw [hA_def]
-    ext p
-    simp only [mem_sdiff, mem_filter, mem_singleton]
-    constructor
-    · rintro ⟨⟨hp_range, hp⟩, hp_ne⟩
-      exact ⟨hp_range, hp, lt_of_le_of_ne hp.two_le (Ne.symm hp_ne)⟩
-    · rintro ⟨hp_range, hp, hp2⟩
-      exact ⟨⟨hp_range, hp⟩, ne_of_gt hp2⟩
-  -- Odd-prime product comparison: ∏(1-1/(p-1)²) ≤ ∏ localFactor(p,N).
-  have hfac : ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) ≤
-      ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => localFactor p N) := by
-    apply Finset.prod_le_prod
-    · intro p hp
-      rw [mem_filter] at hp
-      have hp3 : 3 ≤ p := by omega
-      have hp1_ge : (1 : ℝ) ≤ ((p : ℝ) - 1) ^ 2 := by
-        have : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-          have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-          linarith
-        nlinarith
-      have hdiv : 1 / ((p : ℝ) - 1) ^ 2 ≤ 1 := by
-        exact div_le_one_of_le₀ hp1_ge (sq_nonneg ((p : ℝ) - 1))
-      linarith
-    · intro p hp
-      rw [mem_filter] at hp
-      exact localFactor_ge_square hp.2.1 hp.2.2
-  -- Telescoping comparison: ∏_{n=2}^{z-1}(1-1/n²) = z/(2(z-1)).
-  have htel : (z : ℝ) / (2 * ((z : ℝ) - 1)) ≤
-      ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := by
-    rw [← int_square_product z hz]
-    exact prime_square_product_ge_int z
-  -- localFactor(2,N) ≥ 1
-  have h2ge1 : (1 : ℝ) ≤ localFactor 2 N := by
-    unfold localFactor
-    simp
-    split_ifs <;> norm_num
-  -- Combine the bounds.
-  calc
-    (1 : ℝ) / 2 ≤ (z : ℝ) / (2 * ((z : ℝ) - 1)) := by
-      have hz1 : (0 : ℝ) < (z : ℝ) - 1 := by
-        have : (2 : ℝ) ≤ z := by exact_mod_cast hz
-        linarith
-      have hz2 : (z : ℝ) - 1 ≠ 0 := ne_of_gt hz1
-      field_simp [hz2]
-      linarith
-    _ ≤ ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => 1 - 1 / ((p : ℝ) - 1) ^ 2) := htel
-    _ ≤ ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-        (fun p => localFactor p N) := hfac
-    _ ≤ localFactor 2 N *
-          ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-            (fun p => localFactor p N) := by
-      have hprod_pos : (0 : ℝ) ≤
-          ((range (z + 1)).filter (fun p => Nat.Prime p ∧ 2 < p)).prod
-            (fun p => localFactor p N) := by
-        apply Finset.prod_nonneg
-        intro p hp
-        rw [mem_filter] at hp
-        exact le_of_lt (localFactor_pos hp.2.1)
-      exact le_mul_of_one_le_left hprod_pos h2ge1
-    _ = singularSeriesTruncated N z := by
-      unfold singularSeriesTruncated
-      rw [Finset.prod_eq_mul_prod_sdiff_singleton_of_mem h2mem]
-      congr 1
-      rw [hfilter_eq]
-
-/-! ## 8. Scope and applications -/
+/-! ## 8. Mathematical scope -/
 
 /-
-This module defines `localFactor p N`,
-`singularSeriesTruncated N z`, and the finite proxy
-`singularSeries N = singularSeriesTruncated N N`.
-An infinite-product definition and its limiting identification
-are separate from these finite definitions.
+**Finite singular-series definitions and bounds**:
 
-Positivity is proved by `localFactor_pos`,
-`singularSeriesTruncated_pos`, and `singularSeries_pos`.
-The elementary bounds are:
-- `singularSeries_bounded_above`: `𝔖(N) ≤ 2^{ω(N)} ≤ 2N` for `N ≥ 2`,
-  by separating divisor and nondivisor primes. A constant upper
-  bound is impossible along primorials, where growth has order
-  `log log N`.
-- `singularSeries_bounded_below`: `𝔖(N) ≥ 1` for even `N ≥ 2`,
-  using comparison with the telescoping integer product
-  `∏(1-1/n²) = N/(2(N-1)) ≥ 1/2`.
-- `singularSeriesTruncated_ge_half`: `𝔖(N,z) ≥ 1/2`
-  for any `N` and `z ≥ 2`, supplying the uniform product lower
-  bound needed in the Chen main term.
-These finite bounds require neither Mertens' theorem nor the PNT.
+1. **Definitions**:
+   - `localFactor p N`: the local factor at a prime p
+   - `singularSeriesTruncated N z`: the truncated singular series (p ≤ z)
+   - `singularSeries N`: legacy finite sieve-normalized proxy (truncated at `N`)
 
-In the classical Chen application, consistently normalized
-singular-series factors occur in
-`W(N) ≥ 2.6408 𝔖(N) N/log²N` (Jurkat--Richert) and
-`Ω ≤ 3.9404 𝔖(N) N/log²N` (Selberg and large-sieve input).
-Positivity then gives `W(N) - Ω/2 > 0`.
-Those numerical analytic bounds are not proved by the finite
-product estimates alone.
+2. **Positivity**:
+   - `localFactor_pos`: positivity of local factors at primes
+   - `singularSeriesTruncated_pos`: positivity of the truncated singular series
+   - `singularSeries_pos`: positivity of the finite proxy
+
+3. **Elementary bounds**:
+   - `singularSeries_bounded_above`: 𝔖(N) ≤ 2^ω(N) ≤ 2N for N ≥ 2
+     (a uniform absolute bound is false: along primorials the series grows
+     on the order of log log N; the proof separates factors ≤ 2 from those ≤ 1)
+   - `singularSeries_bounded_below`: 𝔖(N) ≥ 1 for even N ≥ 2
+     (the prime product dominates the integer product, and telescoping gives
+     ∏(1-1/n²) = N/(2(N-1)) ≥ 1/2)
+   - Neither proof requires Mertens' theorems or the prime number theorem.
+
+4. **Role in Chen's sieve estimates**:
+   - W(N) ≥ 2.6408 𝔖(N) N/log²N (Jurkat-Richert lower bound)
+   - Ω ≤ 3.9404 𝔖(N) N/log²N (Selberg sieve and large-sieve upper bound)
+   - These bounds imply W(N) - Ω/2 > 0 using 𝔖(N) > 0
+     in the sufficiently large range.
 -/
 
-end AnalyticNumberTheory.Sieve
+end MathlibNt.SieveTheory.SingularSeries
