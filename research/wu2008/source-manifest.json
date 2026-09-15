@@ -19362,7 +19362,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead",
-    "source_sha256": "1d0c03e15cb4c19c56e5a075e789968a17b4f44f4ec0b6a2e1bfcee8bcb5bfde",
+    "source_sha256": "26d42128a9cf2fdb91e3bab9cdc0b4b29cc1de2004faf01c47f7afebd85c4de8",
     "object_sha256": "2dc47a4fb58543f353fb29d49acbeb0cf48c7c36fd26bc6c65af6019d59f8d96",
     "imports": [
       "Init",
@@ -19371,7 +19371,14 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaCompactHead"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "1d0c03e15cb4c19c56e5a075e789968a17b4f44f4ec0b6a2e1bfcee8bcb5bfde",
+    "integration_adaptation": "Reuse two identically typed imported limit lemmas instead of private duplicates; retain hd hypothesis and remove a no-op ring. Original source preserved; mathematical statements and strict settings unchanged.",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 10,
+      "missing_or_type_or_definition_differences": 0,
+      "scope": "old nonprivate names/types and definition values; not private proof-body or full dependency audit"
+    }
   },
   {
     "module": "MathlibNt.SieveTheory.LiLiuPrereqWFSignedRounding",

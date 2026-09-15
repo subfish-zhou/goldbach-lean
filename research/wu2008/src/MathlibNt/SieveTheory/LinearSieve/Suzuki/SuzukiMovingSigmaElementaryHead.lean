@@ -47,19 +47,13 @@ theorem exists_sourceSigma_fixed_lower_threshold
     _ ≤ (Real.log D) ^ (1 / d) * Real.log (Real.log (27 * D)) := by
       nlinarith [mul_nonneg (sub_nonneg.mpr hpow1) hll0]
 
-private lemma tendsto_fixed_perturbation
-    (d t : ℝ) :
-    Tendsto (fun D : ℝ => perturbation D d 0 t) atTop (𝓝 1) := by
-  have hdiv : Tendsto (fun D : ℝ => t ^ d / Real.log D) atTop (𝓝 0) :=
-    Real.tendsto_log_atTop.const_div_atTop (t ^ d)
-  have hbase : Tendsto (fun D : ℝ => 1 + t ^ d / Real.log D) atTop (𝓝 1) := by
-    simpa using tendsto_const_nhds.add hdiv
-  simpa [perturbation] using hbase.rpow_const (Or.inl one_ne_zero)
+/- Reuse the identical tendsto_fixed_perturbation from SuzukiClaim146Quantitative. -/
 
 /-- The elementary fixed-compact perturbation input used by the source assembly. -/
 theorem fixedCompactPerturbationContract
     {d M : ℝ} (hd : 0 ≤ d) (hM : 4 ≤ M) :
     FixedCompactPerturbationContract d M := by
+  have _ := hd
   have htpos : 0 < M + 2 := by linarith
   have hev : ∀ᶠ D : ℝ in atTop, perturbation D d 0 (M + 2) < 2 :=
     (tendsto_order.1 (tendsto_fixed_perturbation d (M + 2))).2 2 (by norm_num)
@@ -118,13 +112,7 @@ private lemma fixed_gap_rpow_margin
     nlinarith
   exact hlinear.trans_lt hstrict
 
-private lemma tendsto_source_weight (gap : ℝ) :
-    Tendsto (fun σ : ℝ => (1 - 1 / σ) ^ gap) atTop (𝓝 1) := by
-  have hinv : Tendsto (fun σ : ℝ => 1 / σ) atTop (𝓝 0) := by
-    simpa [one_div] using tendsto_inv_atTop_zero
-  have hbase : Tendsto (fun σ : ℝ => 1 - 1 / σ) atTop (𝓝 1) := by
-    simpa using tendsto_const_nhds.sub hinv
-  simpa using hbase.rpow_const (Or.inl one_ne_zero)
+/- Reuse the identical tendsto_source_weight from SuzukiMovingSigmaClaim146SourceAssembly. -/
 
 /-- Corrected fixed-head source contract, with `gap = 1 - Δ`.  All thresholds
 are chosen after the fixed cutoff `M`; no fixed-endpoint theorem is diagonalized. -/
@@ -312,7 +300,6 @@ theorem lemma133WeightedHeadContract_corrected
         rw [show 1 - Δ = 1 + (-Δ) by ring,
           Real.rpow_add (div_pos htm0 ht0), Real.rpow_one]
         field_simp [ne_of_gt ht0, ne_of_gt htm0]
-        <;> ring
       _ ≤ (C * b ^ θ) * hatTailIntegrand H sign t :=
         mul_le_mul_of_nonneg_right hfac htail0
       _ = C * (b ^ θ * hatTailIntegrand H sign t) := by ring
