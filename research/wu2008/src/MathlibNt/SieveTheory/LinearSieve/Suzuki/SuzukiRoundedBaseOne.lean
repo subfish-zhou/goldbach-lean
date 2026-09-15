@@ -152,7 +152,7 @@ theorem suzukiSourceV_one_le_V_natCeil_mul_fOne_add_localError
       rfl hroot2 hK hlocal
   rw [roundedBaseOne_sourceV_one_eq_realVOne S hz]
   rw [roundedBaseOne_V_natCeil_eq_real S hz]
-  convert hbase using 1 <;> ring
+  convert hbase using 1; ring
 
 
 end MathlibNt.SieveTheory

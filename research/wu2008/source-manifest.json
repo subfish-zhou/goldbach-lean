@@ -27986,7 +27986,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedBaseOne",
-    "source_sha256": "9b3dcc40cd47c1171b7fc1c3b489cd6c8020b37916df61a6c787843cc5201b80",
+    "source_sha256": "e20ab4b90694be6aa5eb257daaa6091289cac0c0e7daec6ab583690e37d640df",
     "object_sha256": "09d5202aa6aae944d124812991796c2666ca569acbffd494b8e86cd2bd398e3c",
     "imports": [
       "Init",
@@ -27995,7 +27995,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "9b3dcc40cd47c1171b7fc1c3b489cd6c8020b37916df61a6c787843cc5201b80",
+    "integration_adaptation": "Remove unnecessary sequence focus after convert; statement, cutoff geometry and strict settings unchanged."
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132OddLowStrip",
