@@ -391,3 +391,187 @@ set_option pp.universes true
 #print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_child_mass
 #check @Wu18938Campaign.M1.Confirmed.Pair.packing_relative_mass
 #print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_relative_mass
+#check @Wu18938Campaign.M1.Confirmed.Rebox.upperMain
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.upperMain
+#check @Wu18938Campaign.M1.Confirmed.Rebox.s1_le_t_sub_one
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.s1_le_t_sub_one
+#check @Wu18938Campaign.M1.Confirmed.Rebox.actual_to_raw
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.actual_to_raw
+#check @Wu18938Campaign.M1.Confirmed.Rebox.upper_node_to_raw
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.upper_node_to_raw
+#check @Wu18938Campaign.M1.Confirmed.Rebox.buchstab_cutoff_atom
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.buchstab_cutoff_atom
+#check @Wu18938Campaign.M1.Confirmed.Rebox.buchstab_cutoff_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.buchstab_cutoff_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.shifted_parameter_mem
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.shifted_parameter_mem
+#check @Wu18938Campaign.M1.Confirmed.Rebox.shifted_prime_integral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.shifted_prime_integral
+#check @Wu18938Campaign.M1.Confirmed.Rebox.shiftedPrime_to_source
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.shiftedPrime_to_source
+#check @Wu18938Campaign.M1.Confirmed.Rebox.shiftedPrime
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.shiftedPrime
+#check @Wu18938Campaign.M1.Confirmed.Rebox.shiftedBoundary
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.shiftedBoundary
+#check @Wu18938Campaign.M1.Confirmed.Rebox.upperMain_to_prime
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.upperMain_to_prime
+#check @Wu18938Campaign.M1.Confirmed.Rebox.shifted_boundary_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.shifted_boundary_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.upper_node_integral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.upper_node_integral
+#check @Wu18938Campaign.M1.Confirmed.Rebox.lower_node_update
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.lower_node_update
+#check @Wu18938Campaign.M1.Confirmed.roughBox_upper_main_bounded
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_upper_main_bounded
+#check @Wu18938Campaign.M1.Confirmed.roughBox_upper_leaf_bounded
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_upper_leaf_bounded
+#check @Wu18938Campaign.M1.Confirmed.roughBox_upper_main_four
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_upper_main_four
+#check @Wu18938Campaign.M1.Confirmed.roughBox_upper_leaf_four
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_upper_leaf_four
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seed_reciprocal_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seed_reciprocal_bounds
+#check @Wu18938Campaign.M1.Confirmed.Rebox.lower_seed_cancellation
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.lower_seed_cancellation
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seed_lower
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seed_lower
+#check @Wu18938Campaign.M1.Confirmed.Rebox.omega3_envelope
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.omega3_envelope
+#check @Wu18938Campaign.M1.Confirmed.Rebox.first_classical_update
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.first_classical_update
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seed_upper
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seed_upper
+#check @Wu18938Campaign.M1.Confirmed.Rebox.omega3_scaled
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.omega3_scaled
+#check @Wu18938Campaign.M1.Confirmed.Rebox.first_classical_update_bounded
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.first_classical_update_bounded
+#check @Wu18938Campaign.M1.Confirmed.Rebox.first_seed_update
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.first_seed_update
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_mono
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_mono
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_bounds
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_eq
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_eq
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_log
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_log
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_node
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_node
+#check @Wu18938Campaign.M1.Confirmed.Rebox.omega2_kernel_geometry
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.omega2_kernel_geometry
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_integral_error
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classicalProfile_integral_error
+#check @Wu18938Campaign.M1.Confirmed.Rebox.classical_omega2
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.classical_omega2
+#check @Wu18938Campaign.M1.Confirmed.Rebox.nodeMain
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.nodeMain
+#check @Wu18938Campaign.M1.Confirmed.Rebox.raw_to_actual
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.raw_to_actual
+#check @Wu18938Campaign.M1.Confirmed.Rebox.node_to_omega2
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.node_to_omega2
+#check @Wu18938Campaign.M1.Confirmed.Rebox.boundaryAbsolute
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.boundaryAbsolute
+#check @Wu18938Campaign.M1.Confirmed.Rebox.absolute_boundary_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.absolute_boundary_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.window_split
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.window_split
+#check @Wu18938Campaign.M1.Confirmed.Rebox.prime_to_geometric
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.prime_to_geometric
+#check @Wu18938Campaign.M1.Confirmed.Rebox.cutoff_atom
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.cutoff_atom
+#check @Wu18938Campaign.M1.Confirmed.Rebox.cutoff_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.cutoff_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.terminal_geometry
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.terminal_geometry
+#check @Wu18938Campaign.M1.Confirmed.Rebox.boundary_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.boundary_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.window_geometry
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.window_geometry
+#check @Wu18938Campaign.M1.Confirmed.Rebox.theta_nonneg
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.theta_nonneg
+#check @Wu18938Campaign.M1.Confirmed.Rebox.prime_integral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.prime_integral
+#check @Wu18938Campaign.M1.Confirmed.Rebox.repeated_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.repeated_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.geometricPrime
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.geometricPrime
+#check @Wu18938Campaign.M1.Confirmed.Rebox.geometric_to_node
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.geometric_to_node
+#check @Wu18938Campaign.M1.Confirmed.Rebox.node_integral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.node_integral
+#check @Wu18938Campaign.M1.Confirmed.Rebox.first_node_update
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.first_node_update
+#check @Wu18938Campaign.M1.Confirmed.rectangle_area_le_integral
+#print axioms Wu18938Campaign.M1.Confirmed.rectangle_area_le_integral
+#check @Wu18938Campaign.M1.Confirmed.originalRow1Rectangle
+#print axioms Wu18938Campaign.M1.Confirmed.originalRow1Rectangle
+#check @Wu18938Campaign.M1.Confirmed.originalRow1Rectangle_positive
+#print axioms Wu18938Campaign.M1.Confirmed.originalRow1Rectangle_positive
+#check @Wu18938Campaign.M1.Confirmed.original_row1_finite_update
+#print axioms Wu18938Campaign.M1.Confirmed.original_row1_finite_update
+#check @Wu18938Campaign.M1.Confirmed.Pair.term_packing_seed
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.term_packing_seed
+#check @Wu18938Campaign.M1.Confirmed.Pair.gamma_rectangle_seed
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.gamma_rectangle_seed
+#check @Wu18938Campaign.M1.Confirmed.Pair.rectangle_seed
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.rectangle_seed
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_seed
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_seed
+#check @Wu18938Campaign.M1.Confirmed.RoughBox.weaken
+#print axioms Wu18938Campaign.M1.Confirmed.RoughBox.weaken
+#check @Wu18938Campaign.M1.Confirmed.Pair.gain_mesh
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.gain_mesh
+#check @Wu18938Campaign.M1.Confirmed.Pair.coordinate_drift
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.coordinate_drift
+#check @Wu18938Campaign.M1.Confirmed.Pair.micro_source
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.micro_source
+#check @Wu18938Campaign.M1.Confirmed.Pair.rectangle_admitted
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.rectangle_admitted
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_admitted
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_admitted
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_inner
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_inner
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_mass_lower
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_mass_lower
+#check @Wu18938Campaign.M1.Confirmed.Pair.cell_seed
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.cell_seed
+#check @Wu18938Campaign.M1.Confirmed.Pair.term_seed_subtract
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.term_seed_subtract
+#check @Wu18938Campaign.M1.Confirmed.Rebox.single_support
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.single_support
+#check @Wu18938Campaign.M1.Confirmed.Rebox.single_sum
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.single_sum
+#check @Wu18938Campaign.M1.Confirmed.Rebox.child
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.child
+#check @Wu18938Campaign.M1.Confirmed.Rebox.block_lower
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.block_lower
+#check @Wu18938Campaign.M1.Confirmed.Rebox.mesh_log
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.mesh_log
+#check @Wu18938Campaign.M1.Confirmed.Rebox.scale
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.scale
+#check @Wu18938Campaign.M1.Confirmed.Rebox.parameter_width
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.parameter_width
+#check @Wu18938Campaign.M1.Confirmed.roughBox_joint_theta
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_joint_theta
+#check @Wu18938Campaign.M1.Confirmed.gamma_sum_dictionary
+#print axioms Wu18938Campaign.M1.Confirmed.gamma_sum_dictionary
+#check @Wu18938Campaign.M1.Confirmed.roughBox_four_gamma_seed
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_four_gamma_seed
+#check @Wu18938Campaign.M1.Confirmed.roughBox_second_finite_update
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_second_finite_update
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seedProfile
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_mono
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_mono
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_bounds
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_log
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_log
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_node
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_node
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_integral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_integral
+#check @Wu18938Campaign.M1.Confirmed.Rebox.seed_omega2
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.seed_omega2

@@ -57,9 +57,11 @@ theorem rectangle_seed (p : SecondFunctionalParameters) (hp : AnalyticParameters
     apply (rpow_le_rpow_of_exponent_le hN1 _).trans hdiv
     have hh := mul_le_mul_of_nonneg_left
       (min_le_left (1 / p.S) ((1 - 2 / p.kappa3) / 2)) (show 0 ≤ η / 4 by positivity)
-    convert hh using 1 <;> ring
+    calc
+      _ ≤ (η / 4) * (1 / p.S) := hh
+      _ = η / (4 * p.S) := by ring
   have hU (U E : ℝ) (hE : E ≤ 1) (hU : U ≤ (gamma5GainScale N δ V) ^ E) : U ≤ N :=
-    hU.trans ((by simpa only [rpow_one] using rpow_le_rpow_of_exponent_le hR.le hE :
+    hU.trans ((by simpa only [rpow_one,gamma5GainScale] using rpow_le_rpow_of_exponent_le hR.le hE :
       (gamma5GainScale N δ V) ^ E ≤ gamma5GainScale N δ V).trans hRN)
   refine ⟨hsub,h0 N (by omega) heven i Δ P Q V hweak
     (hlow P r.A r.lowerP_lt_A.le hPA)

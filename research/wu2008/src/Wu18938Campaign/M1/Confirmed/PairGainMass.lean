@@ -47,7 +47,8 @@ theorem packing_inner (m : ℕ) {η δ τ : ℝ}
   have hsmall : ((m : ℝ) + 1) * gamma5GainStep (gamma5GainScale N δ V) Δ < τ / 2 := by
     simpa only [gamma5GainStep,mul_div_assoc] using hm
   have hstepτ : gamma5GainStep (gamma5GainScale N δ V) Δ < τ / 2 :=
-    (le_mul_of_one_le_left hstep.le (by positivity : (1 : ℝ) ≤ m + 1)).trans_lt hsmall
+    (le_mul_of_one_le_left hstep.le
+      (by linarith [Nat.cast_nonneg (α := ℝ) m] : (1 : ℝ) ≤ m + 1)).trans_lt hsmall
   have him : (i : ℝ) ≤ (m : ℝ) + 1 := by exact_mod_cast hb.depth.trans (Nat.le_succ m)
   have hime : (i : ℝ) * log Δ / log (gamma5GainScale N δ V) < τ / 2 := by
     simpa only [gamma5GainStep,mul_div_assoc] using
