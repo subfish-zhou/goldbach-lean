@@ -14349,7 +14349,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniformAbel",
-    "source_sha256": "5f0e6fee5e31a2b0b5abf46c279985753b98e7820a22e0318387c392aaa1ec35",
+    "source_sha256": "977c030553f7aff1326727e397fbac38041b498bf5179778269f8a9afb50171c",
     "object_sha256": "7f09c2d76bf857ba3adba7ae1cfeeaae7592c80912721f3306ea04c4e82d23fa",
     "imports": [
       "Init",
@@ -14359,7 +14359,15 @@
       "MathlibNt.SieveTheory.LiLiuPrereqBuchstabIntegral"
     ],
     "matching_source_variants": 3,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "versioned_source_rebuilt_nonprivate_interface_compared",
+    "recovered_source_sha256": "5f0e6fee5e31a2b0b5abf46c279985753b98e7820a22e0318387c392aaa1ec35",
+    "integration_adaptation": "Restore existing fixed-cap Buchstab source variant with through-100 compatibility APIs; required by actual Wu2008 consumer. Rebuild from new tree only.",
+    "restored_variant_source": "/home/azureuser/wu18938-workers/dependency-seed/buchstab-fixed-78541bae526a/source/MathlibNt/SieveTheory/LiLiuPrereqBuchstabUniformAbel.lean",
+    "restored_variant_sha256": "977c030553f7aff1326727e397fbac38041b498bf5179778269f8a9afb50171c",
+    "old_object_interface_check": {
+      "checked_old_nonprivate_constants": 52,
+      "differences": []
+    }
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.SixthReciprocalPayment",
@@ -22976,7 +22984,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniform",
-    "source_sha256": "d3653d3586d0f4130b14a2fbfb4370eb92666240f66e987b864e8ac5af2c7ec2",
+    "source_sha256": "806e383e8c845dcdaeba768728a350f202b90500a06adbf153df17e452ab5cf3",
     "object_sha256": "976cb41c36403639273b7400e6b7b5e9b3d49d38a9619490259424ede76cb284",
     "imports": [
       "Init",
@@ -22984,7 +22992,15 @@
       "MathlibNt.SieveTheory.LiLiuPrereqBuchstabBands"
     ],
     "matching_source_variants": 3,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "versioned_source_rebuilt_nonprivate_interface_compared",
+    "recovered_source_sha256": "d3653d3586d0f4130b14a2fbfb4370eb92666240f66e987b864e8ac5af2c7ec2",
+    "integration_adaptation": "Restore existing fixed-cap Buchstab source variant with through-100 compatibility APIs; required by actual Wu2008 consumer. Rebuild from new tree only.",
+    "restored_variant_source": "/home/azureuser/wu18938-workers/dependency-seed/buchstab-fixed-78541bae526a/source/MathlibNt/SieveTheory/LiLiuPrereqBuchstabUniform.lean",
+    "restored_variant_sha256": "806e383e8c845dcdaeba768728a350f202b90500a06adbf153df17e452ab5cf3",
+    "old_object_interface_check": {
+      "checked_old_nonprivate_constants": 28,
+      "differences": []
+    }
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.VariableCoefficientBalance",
@@ -23435,7 +23451,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LiLiuPrereqBuchstabBands",
-    "source_sha256": "d49e99a507bf9b1ac228b2809d8e70682467a54447701859cf8a1e48e964be62",
+    "source_sha256": "9a2a75d16e9af2cd738d9aeced540df6d1e04d2e9859a0afa006a9c3147af659",
     "object_sha256": "59a22e38014328edc21758b1f329b79b6d680b45d69d2c5d85819eab3fdb9781",
     "imports": [
       "Init",
@@ -23444,7 +23460,15 @@
       "MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniformAbel"
     ],
     "matching_source_variants": 3,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "versioned_source_rebuilt_nonprivate_interface_compared",
+    "recovered_source_sha256": "d49e99a507bf9b1ac228b2809d8e70682467a54447701859cf8a1e48e964be62",
+    "integration_adaptation": "Restore existing fixed-cap Buchstab source variant with through-100 compatibility APIs; required by actual Wu2008 consumer. Rebuild from new tree only.",
+    "restored_variant_source": "/home/azureuser/wu18938-workers/dependency-seed/buchstab-fixed-78541bae526a/source/MathlibNt/SieveTheory/LiLiuPrereqBuchstabBands.lean",
+    "restored_variant_sha256": "9a2a75d16e9af2cd738d9aeced540df6d1e04d2e9859a0afa006a9c3147af659",
+    "old_object_interface_check": {
+      "checked_old_nonprivate_constants": 34,
+      "differences": []
+    }
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.SecondFunctionalLowerTripleUnitNegligible",

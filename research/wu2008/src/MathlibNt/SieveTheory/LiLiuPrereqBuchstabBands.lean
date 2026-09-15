@@ -296,9 +296,9 @@ private theorem roughCount_base_band_error (n : ℕ) {x y : ℝ}
   exact (roughCount_base_remainder_error hy hyx hsq).trans
     (mul_le_mul_of_nonneg_right (by linarith [buchstabBandConstant_ge n]) (by positivity))
 
-/-- The actual finite-band induction, with no rough-count estimate among its
-hypotheses. The same explicit constant works for all real `x,y` in the band. -/
-theorem roughCount_buchstab_band_error (k : ℕ) (hk : k ≤ 100) {x y : ℝ}
+/-- The actual finite-band induction for every fixed natural cap, with no
+rough-count estimate among its hypotheses. The constant precedes `x,y`. -/
+theorem roughCount_buchstab_band_error_fixed (k : ℕ) {x y : ℝ}
     (hy : primeErrorStart ≤ y) (hyx : y ≤ x) (hxy : x ≤ y ^ k) :
     |(roughCount x y : ℝ) -
         x * buchstab (Real.log x / Real.log y) / Real.log y| ≤
@@ -322,8 +322,6 @@ theorem roughCount_buchstab_band_error (k : ℕ) (hk : k ≤ 100) {x y : ℝ}
     have hC : 0 ≤ buchstabBandConstant k := by linarith [buchstabBandConstant_ge k]
     have hr := buchstabRemainder_nonneg hy
     have hcommon : 0 ≤ buchstabRemainder y * (x / Real.log y) := by positivity
-    have hU : Real.log x / Real.log y ≤ 100 :=
-      (log_ratio_le_of_le_pow hy hyx hxy).trans (by exact_mod_cast hk)
     have hrec :
         |(∑ p ∈ primesIco y (Real.sqrt x), (roughCount (x / p) p : ℝ)) -
           ∑ p ∈ primesIco y (Real.sqrt x), buchstabPrimeKernel x p| ≤
@@ -342,14 +340,14 @@ theorem roughCount_buchstab_band_error (k : ℕ) (hk : k ≤ 100) {x y : ℝ}
           obtain ⟨hpstart, hpx, hxp⟩ := buchstab_subproblem_band hy hxy hp
           have hp1 : 1 < (p : ℝ) := by linarith [primeErrorStart_spec.1]
           rw [buchstabPrimeKernel_eq_subproblem hx0 hp1]
-          exact ih (by omega) hpstart hpx hxp
+          exact ih hpstart hpx hxp
         _ = buchstabBandConstant k *
             ∑ p ∈ primesIco y (Real.sqrt x),
               (buchstabRemainder p * ((x / p) / Real.log p) + (p : ℝ) / Real.log p) := by
           rw [Finset.mul_sum]
         _ ≤ _ := mul_le_mul_of_nonneg_left (sum_buchstabRemainder_errors_le hy hxy2) hC
     have hterminal := roughCount_sqrt_error_le hy hxy2
-    have hkernel := buchstabPrimeKernel_sum_Ico_error_le hy hxy2 hU
+    have hkernel := buchstabPrimeKernel_sum_Ico_error_le_global hy hxy2
     change _ ≤ 106 * buchstabRemainder y * (x / Real.log y) at hkernel
     have he :
         (roughCount x y : ℝ) - x * buchstab (Real.log x / Real.log y) / Real.log y =
@@ -385,6 +383,16 @@ theorem roughCount_buchstab_band_error (k : ℕ) (hk : k ≤ 100) {x y : ℝ}
     have hboundary : 0 ≤ y / Real.log y := by positivity
     have hconstant := buchstabBandConstant_ge k
     nlinarith
+
+/-- The accepted finite-band API, retained with its original cap hypothesis. -/
+theorem roughCount_buchstab_band_error (k : ℕ) (hk : k ≤ 100) {x y : ℝ}
+    (hy : primeErrorStart ≤ y) (hyx : y ≤ x) (hxy : x ≤ y ^ k) :
+    |(roughCount x y : ℝ) -
+        x * buchstab (Real.log x / Real.log y) / Real.log y| ≤
+      buchstabBandConstant k *
+        (buchstabRemainder y * (x / Real.log y) + y / Real.log y) := by
+  have _ := hk
+  exact roughCount_buchstab_band_error_fixed k hy hyx hxy
 
 /-- In particular, there is one constant for the entire band through `100`. -/
 theorem roughCount_buchstab_band_100 :
