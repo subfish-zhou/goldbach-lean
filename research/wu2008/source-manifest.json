@@ -30649,7 +30649,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource",
-    "source_sha256": "bdf0b726409d1e497e5ea4d479b8f72b47106cdeeaf7258b33774d3884f4c212",
+    "source_sha256": "4d759976ddc763435cc94bb6022954ce46eb2eafa666104ba9d4df6b1f00f717",
     "object_sha256": "c84f2ef5dca5a285a3e81d8ec3362b9a0fc832b2bba9866c191749b887ed297c",
     "imports": [
       "Init",
@@ -30659,7 +30659,14 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaGeometryEventually"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "bdf0b726409d1e497e5ea4d479b8f72b47106cdeeaf7258b33774d3884f4c212",
+    "integration_adaptation": "Reuse imported identical qD_eq_dde_main instead of conflicting private duplicate; exact signature checked. Remove unnecessary sequence focus; public definitions and statements unchanged.",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 10,
+      "missing_or_type_or_definition_differences": 0,
+      "scope": "old nonprivate names/types and definition values; not private proof-body or full dependency audit"
+    }
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor",
