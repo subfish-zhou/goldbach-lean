@@ -91,6 +91,18 @@ theorem primitiveCharacterPrefixSquare_le_max (b : ℤ → ℂ) (M : ℤ)
   apply Finset.le_max'
   exact Finset.mem_image.mpr ⟨y, by simpa [Finset.mem_range] using hy, rfl⟩
 
+/-- Primitive prefix maxima are nonnegative. -/
+theorem primitiveCharacterPrefixMaxSquare_nonneg
+    (b : ℤ → ℂ) (M : ℤ) (N d : ℕ) (ψ : PrimitiveCharacter d) :
+    0 ≤ primitiveCharacterPrefixMaxSquare b M N d ψ := by
+  unfold primitiveCharacterPrefixMaxSquare
+  have h := Finset.le_max'
+    ((Finset.range (N + 1)).image
+      (fun y => primitiveCharacterPrefixSquare b M y d ψ))
+    (primitiveCharacterPrefixSquare b M 0 d ψ)
+    (Finset.mem_image.mpr ⟨0, by simp, rfl⟩)
+  simpa [primitiveCharacterPrefixSquare] using h
+
 /-- **Finite Rademacher--Menshov transfer for primitive characters.**
 
 The interval indexed by `i` is `(blockStart i, blockStart i + blockLength i]`.
