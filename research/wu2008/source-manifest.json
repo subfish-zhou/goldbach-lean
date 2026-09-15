@@ -11078,7 +11078,7 @@
   },
   {
     "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
-    "source_sha256": "0ca7fe2ba44cfcaa127b65312ad49d30d693de947ccce93a0a9cf43a5e4573f2",
+    "source_sha256": "5a37df005b84e9dd1a44f973736f5d70d13d081fe172db3dda374a82d8d12599",
     "object_sha256": "e567b997f246ba795b1c5e106f3d6c5d5c559cdcf62a478b970dfccbfe8cf00a",
     "imports": [
       "Init",
@@ -11089,7 +11089,9 @@
       "Mathlib.Tactic"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "0ca7fe2ba44cfcaa127b65312ad49d30d693de947ccce93a0a9cf43a5e4573f2",
+    "integration_adaptation": "Remove unnecessary simpa and its unused local bound; statement and definitions unchanged; warningAsError retained."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.ClassicalRemainingBounds",

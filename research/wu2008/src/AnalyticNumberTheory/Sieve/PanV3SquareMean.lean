@@ -716,8 +716,7 @@ theorem vaughanThird_l2_sum_le (u v : ℕ) : ∃ C : ℝ, 0 < C ∧ ∀ N : ℕ,
           have hlog : 0 ≤ Real.log (N + 1) := Real.log_nonneg (by exact_mod_cast (show 1 ≤ N + 1 by omega))
           have hle1 : (Real.log (N + 1)) ^ 2 ≤ (1 + Real.log (N + 1)) ^ 2 := by
             exact sq_le_sq.mpr (by
-              have h1 : Real.log (N + 1) ≤ 1 + Real.log (N + 1) := by linarith
-              simpa [abs_of_nonneg hlog, abs_of_nonneg (by linarith : 0 ≤ 1 + Real.log (N + 1))] using h1)
+              simp [abs_of_nonneg hlog, abs_of_nonneg (by linarith : 0 ≤ 1 + Real.log (N + 1))])
           have hle2 : (1 + Real.log (N + 1)) ^ 3 ≤ (1 + Real.log (N + 1)) ^ 5 := by
             have hc : 1 ≤ 1 + Real.log (N + 1) := by linarith
             have hcpos : 0 ≤ 1 + Real.log (N + 1) := by linarith
