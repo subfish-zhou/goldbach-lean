@@ -26370,7 +26370,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseAHighSScalar",
-    "source_sha256": "7907935a3eb391fc23a3ee7d6c6861f6091c3921816d2ae769e1b06fe6452bd5",
+    "source_sha256": "b6196bf45a7a88d1a3666c268f0bbc60efa827d6e41ba293b7eda1dc221e692e",
     "object_sha256": "a7648ea94d7dcaf3f1ab7c47896938c2f90ea399813593e8a4668d447ebaa799",
     "imports": [
       "Init",
@@ -26380,7 +26380,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface"
     ],
     "matching_source_variants": 2,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "7907935a3eb391fc23a3ee7d6c6861f6091c3921816d2ae769e1b06fe6452bd5",
+    "integration_adaptation": "Explicitly reference retained h\u0398 and hC1 hypotheses to satisfy unused-variable linter; public binders, mathematical statements, constants and strict checks unchanged."
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBridge",

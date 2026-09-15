@@ -28,6 +28,7 @@ theorem claim145_caseA_highS_sourceL_le_logK
     (hsmall : Real.log D ≤ C1 * K ^ Θ) :
     suzukiSourceL D K ≤
       (Θ + 2 + |Real.log C1| + |Real.log (Real.log 2)|) * Real.log K := by
+  have _ := hΘ
   have hD1 : 1 < D := by linarith
   have hD0 : 0 < D := by linarith
   have hK0 : 0 < K := by linarith
@@ -74,6 +75,7 @@ theorem claim145_caseA_highS_sourceSigma_le_Kbound
       (C1 ^ (1 / d)) *
         (Θ + |Real.log C1| + |Real.log (Real.log 2)| + |Real.log (Real.log 27 / Real.log 2 + 1)|)
         * K ^ (Θ / d) * Real.log K := by
+  have _ := hΘ
   let R : ℝ := Real.log 27 / Real.log 2 + 1
   have hD1 : 1 < D := by linarith
   have hD0 : 0 < D := by linarith
@@ -169,6 +171,7 @@ theorem claim145_caseA_highS_log_gain_of_growth_with_constant
     s * (Real.log (Real.log (3 * K)) +
         2 * Real.log (Real.log (3 * s)) + A) ≤
       s * Real.log (1 + s ^ d / Real.log D) := by
+  have _ := hC1
   have hlogD : 0 < Real.log D := Real.log_pos hD
   have hlogK3 : 0 < Real.log (3 * K) := Real.log_pos (by nlinarith)
   have hlogs3 : 0 < Real.log (3 * s) := Real.log_pos (by nlinarith)
