@@ -1,0 +1,10 @@
+{
+  "source_collection": "verified",
+  "worktree_source_preservation": "verified_by_hash_and_independent_restore",
+  "original_worktrees_deleted": false,
+  "default_goldbach_targets_changed": false,
+  "fresh_standalone_lean_rebuild": "in_progress",
+  "global_wu18938_theorem_complete": false,
+  "source_snapshot_commit": "0c3e53300a48e7dfb16ffc645adcde8fd8a4badd",
+  "note": "Do not infer full source-layout build acceptance from the preserved parent-level kernel receipts."
+}
