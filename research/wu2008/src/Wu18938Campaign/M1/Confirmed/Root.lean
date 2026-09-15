@@ -13,3 +13,9 @@ import Wu18938Campaign.M1.Confirmed.OmegaRemainders
 import Wu18938Campaign.M1.Confirmed.OmegaBuchstab
 import Wu18938Campaign.M1.Confirmed.OmegaIntegral
 import Wu18938Campaign.M1.Confirmed.OmegaMother
+import Wu18938Campaign.M1.Confirmed.PairClassical
+import Wu18938Campaign.M1.Confirmed.PairSource
+import Wu18938Campaign.M1.Confirmed.FirstFunctional
+import Wu18938Campaign.M1.Confirmed.PairMass
+import Wu18938Campaign.M1.Confirmed.PairMother
+import Wu18938Campaign.M1.Confirmed.PairChildren

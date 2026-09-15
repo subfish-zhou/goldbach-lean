@@ -1,10 +1,10 @@
 {
-  "checkpoint_utc": "2026-09-15T21:36:25.799950+00:00",
-  "base_commit": "3fc7db9a0f09f7a99edcc5e7cdfef8a9e4511c6d",
+  "checkpoint_utc": "2026-09-15T21:56:34.334944+00:00",
+  "base_commit": "90bf5594a3ad1742dd2c2d1e29d2d270be6b51bb",
   "complete_theorem_accepted": false,
   "natural_language_route_accepted": true,
   "lean_full_chain_complete": false,
-  "mathematical_manuscripts": 14,
+  "mathematical_manuscripts": 15,
   "files": [
     {
       "file": "research/wu2008/proofs/M1/PROOF.md",
@@ -81,6 +81,13 @@
       "status": "accepted mathematical completion scope and explicit exclusions",
       "sha256": "721663cbcbde6a7c7bfe809e5b9d8c58aff7cc3724c00827715fafaecfb72527",
       "original_manuscript_sha256": "78844660128244a8f355a16acfa733ce6202176435c31348b90a22d1c9ffd941",
+      "publication_edit": "status header and non-mathematical path/tool-label sanitization"
+    },
+    {
+      "file": "research/wu2008/proofs/LEAN-INTEGRATION-STATUS.md",
+      "status": "accepted local Lean consumers and their remaining mathematical inputs; full Lean route incomplete",
+      "sha256": "1d57416a1c90d9a90fe181694cde5a0e12147c350db6d9bfc63ee409a0697d10",
+      "original_manuscript_sha256": "505148e661123ae66d9186619e573ca082723705b934c8199b79ff9175a714f2",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
     {
