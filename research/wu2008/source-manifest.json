@@ -31510,7 +31510,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1055UniformStationary",
-    "source_sha256": "6d94b03d7811b1144161712c05a09cb84cf98ee69a814f0f08b3d57092553832",
+    "source_sha256": "88e3c51843cef77c49fcb38067fc90b147a4388e4ad73400531fe3f043e9ea6a",
     "object_sha256": "7f6e4d7df408caf78d164f742479675f3610a12a752f3152e24a8f8a9a98d1aa",
     "imports": [
       "Init",
@@ -31519,7 +31519,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "6d94b03d7811b1144161712c05a09cb84cf98ee69a814f0f08b3d57092553832",
+    "integration_adaptation": "Replace unnecessary sequence focus after field_simp with sequential ring; mathematical statements, definitions and strict checks unchanged."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.FourRoughIntegral",
