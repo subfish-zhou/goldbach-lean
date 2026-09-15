@@ -1,0 +1,29 @@
+import Wu08FourMotherTerminal
+import FifthLogTotalMagnitude
+
+namespace WuTarget.W14
+
+#check Wu08TerminalAlignment.second_exact
+#check Wu08OriginalFirstSteps.C_nonneg
+#check Wu2008DoubleSieve.FifthLogTotalMagnitude.endpoint_logs
+#check Wu2008DoubleSieve.FifthLogTotalMagnitude.integral_bounds
+#check Wu2008DoubleSieve.FifthLogTotalMagnitude.log_ratio_bounds
+#check Wu2008DoubleSieve.FifthActualIntegralRecovery.integral_distance
+#check PositiveSecondPayment.second_actual_count
+#check PositiveCoreResume.fifth_count
+#check PositiveCoreResume.fifth_gain_seed_lower
+#check Wu2008DoubleSieve.FifthLogTotalMagnitude.endpoint_comparison
+#check Wu2008DoubleSieve.fifthH_triangle_constant
+#check Wu08FourMother.ordinary_P2
+#print Wu2008DoubleSieve.SharpLogRecurrence.lowerLog
+#print Wu2008DoubleSieve.SharpLogRecurrence.upperLog
+#print Wu2008DoubleSieve.SharpMassBalance.a
+#print Wu2008DoubleSieve.SharpMassBalance.b
+#print Wu2008DoubleSieve.SharpMassBalance.s0
+#print Wu08FourMother.Qoriginal
+#print axioms Wu08FourMother.ordinary_P2
+#print axioms PositiveSecondPayment.second_actual_count
+#print axioms PositiveCoreResume.fifth_count
+#print axioms Wu2008DoubleSieve.FifthLogTotalMagnitude.integral_bounds
+
+end WuTarget.W14

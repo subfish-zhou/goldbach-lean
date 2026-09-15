@@ -1,0 +1,22 @@
+import Wu08FourMotherTerminal
+import MathlibNt.Wu2008DoubleSieve.FourLogAffineRational
+
+namespace WuTarget.W13
+
+#check Wu08OriginalFourWeights.original10
+#check Wu08OriginalFourWeights.original11
+#check Wu08FourMother.originalIntegral_false
+#check Wu08FourMother.originalIntegral_true
+#check Wu08FourMother.ordinary_P2_parameters
+#check Wu08FourMother.Qoriginal
+#check Wu2008DoubleSieve.FourLogAffine.outer10_upper
+#check Wu2008DoubleSieve.FourLogAffine.outer11_upper
+#check Wu2008DoubleSieve.FourLogAffine.fixed_log_bounds
+#check Wu2008DoubleSieve.FourLogAffine.integral_two_tails
+#check Wu2008DoubleSieve.SharpLogRecurrence.log_lower
+#check Wu2008DoubleSieve.SharpLogRecurrence.log_upper
+#print axioms Wu08FourMother.ordinary_P2_parameters
+#print axioms Wu2008DoubleSieve.FourLogAffine.outer10_upper
+#print axioms Wu2008DoubleSieve.FourLogAffine.outer11_upper
+
+end WuTarget.W13

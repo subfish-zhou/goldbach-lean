@@ -1,0 +1,24 @@
+import WSourceClosureBudget
+import W09PaidRowsV2
+import MathlibNt.Wu2008DoubleSieve.SecondFunctionalCoupledFeedback
+
+namespace WuSource.SrcSingle
+open Wu2008DoubleSieve
+#check @BaseLowerCounts.fixed_delta_li_with_h
+#check @wuImprovementLimit_lower_cross
+#check @wuImprovementLimit_lower_antitone
+#check @wuImprovementLimit_upper_antitone
+#check @SingleUpperClassicalLimit.Gdelta
+#check @SingleUpperClassicalLimit.Glin
+#print wuSourceBox
+#print firstFunctionalGainPsi
+#print wuImprovementLimit_firstFunctionalGain_source
+#print HighSixLowHJoin.actual_pair_integral_psi_upper
+#print SecondFunctionalCoupledFeedback.mother
+#print wuBoxPhi
+#print sourceSieveCarrier
+#print wuImprovementLimit
+#print SingleUpperCounts.U
+#print truncatedSixthMassScale
+#print BaseLowerCounts.fixed_delta_li_with_h
+end WuSource.SrcSingle

@@ -1,0 +1,25 @@
+import W04ClippedCells
+import W04CoupledMatrix
+import W04ExactMatrix
+import W04Audit
+
+namespace WuTarget.W04
+
+#check extraTable_le_kernel
+#print axioms extraTable_le_kernel
+#check elementary_add_extra_le_feedbackMatrix
+#print axioms elementary_add_extra_le_feedbackMatrix
+#check explicit_augmentedMatrix_le
+#print axioms explicit_augmentedMatrix_le
+#check augmentedMatrix_eq_old_of_first
+#print axioms augmentedMatrix_eq_old_of_first
+#check actual_augmented_system
+#print axioms actual_augmented_system
+#check augmented_same_delta
+#print axioms augmented_same_delta
+#check augmented_paid_update
+#print axioms augmented_paid_update
+#check coupled_rows_strictly_improve
+#print axioms coupled_rows_strictly_improve
+
+end WuTarget.W04

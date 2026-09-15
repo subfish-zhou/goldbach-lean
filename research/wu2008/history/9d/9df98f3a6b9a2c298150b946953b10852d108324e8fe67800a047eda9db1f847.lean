@@ -1,0 +1,16 @@
+import BuchstabSeedTightLower
+
+namespace WuSource.SrcBuchstabLower
+
+#print Wu2008DoubleSieve.BuchstabSeedTightLower.lower
+#print Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_true_lower
+#check Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_seed_lower
+#check Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_lower_step
+#check Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_lower_prefix
+#print LiLiuPrereqBuchstab.buchstab
+#print axioms Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_seed_lower
+#print axioms Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_lower_step
+#print axioms Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_lower_prefix
+#print axioms Wu2008DoubleSieve.BuchstabSeedTightLower.buchstab_true_lower
+
+end WuSource.SrcBuchstabLower

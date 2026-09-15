@@ -1,0 +1,66 @@
+{
+  "global_theorem_proved": false,
+  "scope": "Wu04/Wu08 source-route recovery, not a proof of the final 1.8938 theorem",
+  "tasks": [
+    {
+      "task": "R2Fouvry",
+      "status": "parent_kernel_accepted_high_product_prefix_only_provider_source_identity_pending",
+      "global_complete": false
+    },
+    {
+      "task": "R2Gamma5",
+      "status": "parent_accepted_count_transport_and_full_unmasked_H_mass_prefix_full_gain_pending",
+      "global_complete": false
+    },
+    {
+      "task": "R2GammaHigh",
+      "status": "parent_accepted_actual_signed_eight_original_normalization_thirteen_pending",
+      "global_complete": false
+    },
+    {
+      "task": "R2Matrix",
+      "status": "recovery_kernel_verified_partial_mathematics",
+      "global_complete": false
+    },
+    {
+      "task": "R2Mother",
+      "status": "recovery_kernel_verified_partial_mathematics",
+      "global_complete": false
+    },
+    {
+      "task": "R2OmegaHigh",
+      "status": "parent_accepted_four_fixed_Psi1_high_windows_actual_count_closed",
+      "global_complete": false
+    },
+    {
+      "task": "R2PsiCosts",
+      "status": "parent_accepted_thirteen_independent_cost_bounds_two_extensions_source_identity_pending",
+      "global_complete": false
+    },
+    {
+      "task": "R2RawMother",
+      "status": "parent_accepted_exact_raw_prefix_difference_and_floor_bound_original_asymptotic_mother_pending",
+      "global_complete": false
+    },
+    {
+      "task": "R2SixthCount",
+      "status": "parent_accepted_actual_carriers_c_branch_and_nonempty_support_obstruction_ab_lower_pending",
+      "global_complete": false
+    },
+    {
+      "task": "R2SourceCarriers",
+      "status": "parent_accepted_bounded_source_review_with_literal_carrier_obstructions",
+      "global_complete": false
+    },
+    {
+      "task": "R2SourceCore",
+      "status": "source_contract_review_accepted_with_explicit_method_and_export_boundaries",
+      "global_complete": false
+    },
+    {
+      "task": "R2Xi",
+      "status": "parent_accepted_full_original_integral_kernels_and_actual_Xi1_actual_Xi2_pending",
+      "global_complete": false
+    }
+  ]
+}

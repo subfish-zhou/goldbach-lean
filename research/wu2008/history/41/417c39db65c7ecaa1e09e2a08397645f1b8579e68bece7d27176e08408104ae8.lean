@@ -1,0 +1,29 @@
+import WSrcSixthGainOriginal
+import ClassicalLossBottleneck
+
+#print Wu08TerminalAlignment.sixthMain
+#print Wu2008DoubleSieve.wuLowerCoefficient
+#print Wu2008DoubleSieve.truncatedSixthZeroDeltaRegular
+#check @WuTarget.Wu08FifthSource.coefficient_initial
+#check @WuTarget.Wu08FifthSource.coefficient_recurrence
+#check @WuSource.SrcSixthGain.paper_inner
+#check @WuSource.SrcSixthGain.raw_integrable
+#check @WuSource.SrcSixthGain.rectangle_integral
+#check @WuSource.SrcSixthGain.original_whole_source_lower
+#check @WuSource.SrcSixthGain.first_fourteen
+#check @WuSource.SrcSixthGain.fifteenth_crossing
+#check @WuSource.SrcSixthGain.middle_five
+#check @WuSource.SrcSixthGain.last_truncated
+#check @Wu2008DoubleSieve.ClassicalLossBottleneck.sixth_actual_domain
+#print Wu2008DoubleSieve.truncatedSixthLowerF6lin
+#print Wu2008DoubleSieve.truncatedSixthZeroDeltaExtension
+#print Wu2008DoubleSieve.truncatedSixthMassClip
+#print Wu2008DoubleSieve.truncatedSixthMassDenominator
+#print MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.jr1965f
+#check @Wu2008DoubleSieve.truncatedSixthZeroDelta_extension_eq
+#check @Wu2008DoubleSieve.truncatedSixthZeroDelta_clip_zero
+#print prefix MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.jr1965f
+#print axioms WuSource.SrcSixthGain.original_whole_source_lower
+#print axioms WuTarget.Wu08FifthSource.coefficient_initial
+#print axioms WuTarget.Wu08FifthSource.coefficient_recurrence
+#print axioms Wu2008DoubleSieve.ClassicalLossBottleneck.sixth_actual_domain

@@ -1,0 +1,18 @@
+import W03Weights
+
+namespace WuTarget.W03
+
+#check Wu2008DoubleSieve.truncatedSixthMass_integral_eq_interval
+#check intervalIntegral.integral_congr_ae
+#check intervalIntegral.integral_congr_ae'
+#check intervalIntegral.integral_congr_uIoo
+#check MeasureTheory.ae_neq
+#check MeasureTheory.integral_congr_ae
+#check intervalIntegral.integral_nonneg
+#check MeasureTheory.integral_eq_zero_of_ae
+#check MeasureTheory.integral_eq_zero_of_support_subset
+#check intervalIntegral.integral_eq_zero_of_ae
+#check intervalIntegral.integral_add_adjacent_intervals
+#check intervalIntegral.integral_eq_sub_of_hasDerivAt
+
+end WuTarget.W03

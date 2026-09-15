@@ -1,0 +1,485 @@
+[
+  {
+    "id": "worktree-000",
+    "label": "seed",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/master",
+    "preserved_source_records": 22
+  },
+  {
+    "id": "worktree-001",
+    "label": "00-parent-acceptance",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/parent-acceptance",
+    "preserved_source_records": 55
+  },
+  {
+    "id": "worktree-002",
+    "label": "01-weighted-consumer",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-01",
+    "preserved_source_records": 61
+  },
+  {
+    "id": "worktree-003",
+    "label": "02-transfer-coefficients",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-02",
+    "preserved_source_records": 46
+  },
+  {
+    "id": "worktree-004",
+    "label": "03-gamma-weights",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-03",
+    "preserved_source_records": 50
+  },
+  {
+    "id": "worktree-005",
+    "label": "04-coupled-extra-e",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-04",
+    "preserved_source_records": 41
+  },
+  {
+    "id": "worktree-006",
+    "label": "05-j-feedback",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-05",
+    "preserved_source_records": 51
+  },
+  {
+    "id": "worktree-007",
+    "label": "06-sigma-profile",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-06",
+    "preserved_source_records": 42
+  },
+  {
+    "id": "worktree-008",
+    "label": "07-density-feedback",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-07",
+    "preserved_source_records": 56
+  },
+  {
+    "id": "worktree-009",
+    "label": "08-e-envelope",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-08",
+    "preserved_source_records": 52
+  },
+  {
+    "id": "worktree-010",
+    "label": "09-forcing-slack",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-09",
+    "preserved_source_records": 56
+  },
+  {
+    "id": "worktree-011",
+    "label": "10-first-main",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-10",
+    "preserved_source_records": 80
+  },
+  {
+    "id": "worktree-012",
+    "label": "11-third-fourth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-11",
+    "preserved_source_records": 35
+  },
+  {
+    "id": "worktree-013",
+    "label": "12-seventh-ninth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-12",
+    "preserved_source_records": 39
+  },
+  {
+    "id": "worktree-014",
+    "label": "13-original-ten-eleven",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-13",
+    "preserved_source_records": 41
+  },
+  {
+    "id": "worktree-015",
+    "label": "14-second-fifth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-14",
+    "preserved_source_records": 40
+  },
+  {
+    "id": "worktree-016",
+    "label": "15-independent-gains",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-15",
+    "preserved_source_records": 43
+  },
+  {
+    "id": "worktree-017",
+    "label": "16-refined-exit",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/worker-16",
+    "preserved_source_records": 42
+  },
+  {
+    "id": "worktree-018",
+    "label": "SrcBuchstab",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcbuchstab",
+    "preserved_source_records": 62
+  },
+  {
+    "id": "worktree-019",
+    "label": "SrcFifthGain",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcfifthgain",
+    "preserved_source_records": 77
+  },
+  {
+    "id": "worktree-020",
+    "label": "SrcFour",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcfour",
+    "preserved_source_records": 117
+  },
+  {
+    "id": "worktree-021",
+    "label": "SrcGrid",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcgrid",
+    "preserved_source_records": 33
+  },
+  {
+    "id": "worktree-022",
+    "label": "SrcNine",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcnine",
+    "preserved_source_records": 74
+  },
+  {
+    "id": "worktree-023",
+    "label": "SrcSingle",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcsingle",
+    "preserved_source_records": 97
+  },
+  {
+    "id": "worktree-024",
+    "label": "SrcSixthGain",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-close-srcsixthgain",
+    "preserved_source_records": 71
+  },
+  {
+    "id": "worktree-025",
+    "label": "A01Exit",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-fullgap-a01exit",
+    "preserved_source_records": 22
+  },
+  {
+    "id": "worktree-026",
+    "label": "A02Analytic",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-fullgap-a02analytic",
+    "preserved_source_records": 22
+  },
+  {
+    "id": "worktree-027",
+    "label": "A03Numbers",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-fullgap-a03numbers",
+    "preserved_source_records": 22
+  },
+  {
+    "id": "worktree-028",
+    "label": "A04Feedback",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/wu08-fullgap-a04feedback",
+    "preserved_source_records": 22
+  },
+  {
+    "id": "worktree-029",
+    "label": "RMapMDebit",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 46
+  },
+  {
+    "id": "worktree-030",
+    "label": "RMapMFifth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 36
+  },
+  {
+    "id": "worktree-031",
+    "label": "RMapMFirst",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 51
+  },
+  {
+    "id": "worktree-032",
+    "label": "RMapMMatrix",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 45
+  },
+  {
+    "id": "worktree-033",
+    "label": "RMapMSigma",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 51
+  },
+  {
+    "id": "worktree-034",
+    "label": "RMapMSixth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 50
+  },
+  {
+    "id": "worktree-035",
+    "label": "RMapSBasics",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-036",
+    "label": "RMapSFour",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-037",
+    "label": "RMapSHigh",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-038",
+    "label": "RMapSMean",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-039",
+    "label": "RMapSNine",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-040",
+    "label": "RMapSOmega",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-041",
+    "label": "RMapSmoke",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-042",
+    "label": "R2Fouvry",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 41
+  },
+  {
+    "id": "worktree-043",
+    "label": "R2Gamma5",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 39
+  },
+  {
+    "id": "worktree-044",
+    "label": "R2GammaHigh",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 59
+  },
+  {
+    "id": "worktree-045",
+    "label": "R2Matrix",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 53
+  },
+  {
+    "id": "worktree-046",
+    "label": "R2Mother",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 42
+  },
+  {
+    "id": "worktree-047",
+    "label": "R2OmegaHigh",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 59
+  },
+  {
+    "id": "worktree-048",
+    "label": "R2PsiCosts",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 53
+  },
+  {
+    "id": "worktree-049",
+    "label": "R2RawMother",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 42
+  },
+  {
+    "id": "worktree-050",
+    "label": "R2SixthCount",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 39
+  },
+  {
+    "id": "worktree-051",
+    "label": "R2Smoke",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-052",
+    "label": "R2SourceCarriers",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-053",
+    "label": "R2SourceCore",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 24
+  },
+  {
+    "id": "worktree-054",
+    "label": "R2Xi",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": null,
+    "preserved_source_records": 82
+  },
+  {
+    "id": "worktree-055",
+    "label": "E01Baseline",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e01baseline",
+    "preserved_source_records": 32
+  },
+  {
+    "id": "worktree-056",
+    "label": "E02JointCredit",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e02jointcredit",
+    "preserved_source_records": 41
+  },
+  {
+    "id": "worktree-057",
+    "label": "E03Sigma",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e03sigma",
+    "preserved_source_records": 30
+  },
+  {
+    "id": "worktree-058",
+    "label": "E04Continuous",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e04continuous",
+    "preserved_source_records": 34
+  },
+  {
+    "id": "worktree-059",
+    "label": "E05Sixth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e05sixth",
+    "preserved_source_records": 53
+  },
+  {
+    "id": "worktree-060",
+    "label": "E06Second",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e06second",
+    "preserved_source_records": 31
+  },
+  {
+    "id": "worktree-061",
+    "label": "E07Fifth",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e07fifth",
+    "preserved_source_records": 67
+  },
+  {
+    "id": "worktree-062",
+    "label": "E08Debit",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e08debit",
+    "preserved_source_records": 35
+  },
+  {
+    "id": "worktree-063",
+    "label": "E09JointMain",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e09jointmain",
+    "preserved_source_records": 73
+  },
+  {
+    "id": "worktree-064",
+    "label": "E10Four",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/evening-e10four",
+    "preserved_source_records": 60
+  },
+  {
+    "id": "worktree-065",
+    "label": "W11Credit",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/w11credit-next",
+    "preserved_source_records": 33
+  },
+  {
+    "id": "worktree-066",
+    "label": "W13Tight",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/w13tight-next",
+    "preserved_source_records": 38
+  },
+  {
+    "id": "worktree-067",
+    "label": "W17Joint",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/w17joint-next",
+    "preserved_source_records": 47
+  },
+  {
+    "id": "worktree-068",
+    "label": "worktree",
+    "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
+    "branch": "refs/heads/parent-secondary-acceptance",
+    "preserved_source_records": 1054
+  }
+]

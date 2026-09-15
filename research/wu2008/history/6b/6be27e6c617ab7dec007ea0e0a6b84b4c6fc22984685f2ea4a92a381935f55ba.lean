@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.FourSeventhsBuchstab
+import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBounds
+
+namespace WuSource.SrcBuchstab
+
+#print LiLiuPrereqBuchstab.buchstab
+#check LiLiuPrereqBuchstab.hasDerivAt_buchstab
+#check LiLiuPrereqBuchstab.buchstab_eq_log_div
+#check Wu2008DoubleSieve.SecondFunctionalFourSevenths.buchstab_increment
+#check Wu2008DoubleSieve.SecondFunctionalJointTail.buchstab_integral_identity
+#print axioms Wu2008DoubleSieve.SecondFunctionalFourSevenths.buchstab_increment
+#print axioms Wu2008DoubleSieve.SecondFunctionalFourSevenths.buchstab_le_four_sevenths
+
+end WuSource.SrcBuchstab

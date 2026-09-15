@@ -1,0 +1,28 @@
+import Wu04CurvePaid
+
+#print LiLiuPrereqBuchstab.buchstab
+#print Wu2008DoubleSieve.FourPrimeContinuous.D16
+#print Wu2008DoubleSieve.FourPrimeContinuous.D17
+#print Wu2008DoubleSieve.FourPrimeContinuous.D18
+#print Wu2008DoubleSieve.FourPrimeContinuous.D19
+#print Wu2008DoubleSieve.FourPrimeContinuous.K16
+#print Wu2008DoubleSieve.FourPrimeContinuous.G
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.lowerMass
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.fourMass
+#print LiLiuPrereqBuchstab.approx
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.geometricMass
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.geometricWeight
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.massDomainFour
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.massDomain20
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.massDomain21
+#check @Wu2008DoubleSieve.SecondFunctionalJointTail.geometricWeight_integrable
+#check @Wu2008DoubleSieve.SecondFunctionalJointTail.massDomain20_subset_cube
+#check @Wu2008DoubleSieve.SecondFunctionalJointTail.massDomain21_subset_cube
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.highMass20
+#print Wu2008DoubleSieve.SecondFunctionalJointTail.highMass21
+#check @Wu2008DoubleSieve.HighNonunitLegal.weighted_formula
+#check @Wu2008DoubleSieve.omega3XIntegralEnvelope
+#check @Wu2008DoubleSieve.omega3XIntegral_bounds
+#check @Wu2008DoubleSieve.SecondFunctionalFourSevenths.four_mass_bound
+#check @Wu2008DoubleSieve.SecondFunctionalFourSevenths.original_lower_sum_bound
+#print axioms Wu04CurvePaid.publication_budget

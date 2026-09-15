@@ -1,0 +1,20 @@
+import Wu08FourMotherTerminal
+import BaseGSharedActualRecovery
+
+namespace WuTarget.W11
+
+#check Wu2008DoubleSieve.GCurvatureChord.full_G_upper
+#check Wu2008DoubleSieve.GCurvatureChord.full_G_rational
+#check Wu2008DoubleSieve.GCurvatureChord.deltaG_exact
+#check Wu2008DoubleSieve.BaseGSharedActualRecovery.shared_recovery
+#print Wu2008DoubleSieve.Phase23.gModel
+#print Wu2008DoubleSieve.Phase23.alphaModel
+#print Wu2008DoubleSieve.SharedRationalEnvelope.deltaShared
+#print Wu2008DoubleSieve.AnalyticTotalThreshold.sharedLoss
+#check Wu2008DoubleSieve.ClassicalSingleBounds.high_integral_eq
+#check Wu2008DoubleSieve.HighSixPhase6.original_scale_positive
+#print axioms Wu2008DoubleSieve.GCurvatureChord.full_G_rational
+#print axioms Wu2008DoubleSieve.BaseGSharedActualRecovery.shared_recovery
+#print axioms Wu08FourMother.ordinary_P2_parameters
+
+end WuTarget.W11

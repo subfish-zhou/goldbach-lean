@@ -1,0 +1,15 @@
+import SrcSixthGainReduction
+open MeasureTheory
+#check setIntegral_indicator
+#check intervalIntegral.integral_indicator
+#check IntervalIntegrable.bdd_mul
+#check IntervalIntegrable.mul_continuousOn
+#check MeasureTheory.Integrable.bdd_mul
+#check MeasureTheory.IntegrableOn.mul_continuousOn
+#check MeasureTheory.integrableOn_Icc_iff_integrableOn_Ioc
+#check intervalIntegral.integral_finsetSum
+#check intervalIntegral.integral_indicator_ae
+#check Set.indicator_mul_right
+#check Set.indicator_mul_left
+#check ContinuousOn.integrableOn_Icc
+#check IntervalIntegrable.mono_set

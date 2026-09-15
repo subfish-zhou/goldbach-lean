@@ -1,0 +1,94 @@
+import TailRationalBasis
+
+noncomputable section
+open Real Set MeasureTheory TailRationalBasis
+open scoped Interval
+namespace TailFiniteFTC.AB11
+
+def c0_1 : ℝ := 331787540127395888738166094011832162497832033222425005550991569847928877904681700/708102700891592428986041593640824874907798981144679743874946679571608243851481
+def c0_2 : ℝ := -39022720017182915445293636185822247619679415797295241964091020760128/350698504362689951145202383758938666051586187274838936158467712287
+def c0_3 : ℝ := 1368271078393132148085804433521970244910636150480069476/57896234923440779858083656439435680815753180550941283
+def c0_4 : ℝ := -112119623335852004278174239797447381108704/28673980441419182237596310976311122553541
+def c0_5 : ℝ := 1728979346159025369001335408/4733739913842550150400521969
+def c2_1 : ℝ := -30569914197192165868865298518583705234867873593354999532852800/428416170488283573418649574387134435532544647263544419691261
+def c2_2 : ℝ := -35928476744006072016536986333317422286048957706112/1050922045368353149624788308873247338503837500951
+def c2_3 : ℝ := -451140515448038216512483994480423738368/23201585266125396897707388463132926669
+def c2_4 : ℝ := 832520987742463606037447680/170743257070859667435110037
+def c4_1 : ℝ := -3513015198267807521579467596435021592204006400/60641134626771034088901218789275702689313285629
+def c4_2 : ℝ := -1837800910132320825799107930317696/63595588172892666746470128481940793
+def c4_3 : ℝ := 0
+def c4_4 : ℝ := 0
+def c5_1 : ℝ := 6483269128955743258429529563183957081309961895197548051681797387701459353600/1580362367683661770962790657172066793079082504485451678892182294610503470623
+def c5_2 : ℝ := 856990635807665412631811337339424706404927670966749019300151296/428509365251388682206795169094109565746901959623445581573699091
+def c5_3 : ℝ := 32900985802487734488389146651795101356630274921496576/8714153785056290673934480384569621457269326138178525
+def c5_4 : ℝ := 181627380851419643475437956499997708829696/59070257927783441021888324907286913060625
+def g0 : ℝ := -33489027202274149958502824120360014491749632502510809296560000/4399032598652704181277774314998637899045698991385113303743
+def f0 : ℝ := -130214645893953499905408789574732284043463774504663247312500/269328526448124745792516794795834973410961162737864079821
+def g2 : ℝ := 209882829604042884292535552364559935830172416711321678177395457600000/22160750790195770568156043604145794972569295828587597716141465021
+def f2 : ℝ := 114805690333919054933930251111515861729246107587515356508339904000000/66482252370587311704468130812437384917707887485762793148424395063
+
+def kernel (u : ℝ) : ℝ := ((36020403044979695187527821/3307500000000000000)+(-168911804590077320435708501/7441875000000000000)*u+(16464564430971311257139741/1984500000000000000)*u^2+(166674037133775995342793889/12757500000000000000)*u^3+(-357071369486233961518799671/34020000000000000000)*u^4+(-81806631076655738540317727/51030000000000000000)*u^5+(712676315527108717079288543/204120000000000000000)*u^6+(-19046055973629192296306999/57153600000000000000)*u^7+(-12499748470719186757834301729/22861440000000000000000)*u^8+(18926408459065473795151327/178605000000000000000)*u^9+(23857573539370765302571/510300000000000000)*u^10+(-6859355296772558831/637875000000000)*u^11+(-12209498883530569/5103000000000)*u^12+(1571303220371/3189375000)*u^13+(164737204301/2232562500)*u^14+(-185246072/22325625)*u^15+(-990436/893025)*u^16)/((u-(0))^5*(u-(-2))^4*(u-(-1327/200))^2*(u-(-1727/600))^4*((u^2+16*u+4))*(F1BFullFTC.quadOne u))
+def partialValue (u : ℝ) : ℝ := (FirstCRationalPayment.poleKernel (0) c0_1 c0_2 c0_3 u+c0_4/(u-(0))^4)+c0_5/(u-(0))^5+(FirstCRationalPayment.poleKernel (-2) c2_1 c2_2 c2_3 u+c2_4/(u-(-2))^4)+(FirstCRationalPayment.poleKernel (-1327/200) c4_1 c4_2 c4_3 u+c4_4/(u-(-1327/200))^4)+(FirstCRationalPayment.poleKernel (-1727/600) c5_1 c5_2 c5_3 u+c5_4/(u-(-1727/600))^4)+(f0*u+g0)/((u^2+16*u+4))+(f2*u+g2)/(F1BFullFTC.quadOne u)
+def primitive (u : ℝ) : ℝ := F1FreshFTC.pole4 (0) c0_1 c0_2 c0_3 c0_4 u+fifthPrimitive (0) c0_5 u+F1FreshFTC.pole4 (-2) c2_1 c2_2 c2_3 c2_4 u+F1FreshFTC.pole4 (-1327/200) c4_1 c4_2 c4_3 c4_4 u+F1FreshFTC.pole4 (-1727/600) c5_1 c5_2 c5_3 c5_4 u+F1JointFTC.quadraticPrimitive f0 g0 u+F1BFullFTC.quadPrimitiveOne f2 g2 u
+
+theorem source_exact {u : ℝ} (hu : 2 ≤ u) :
+    ActualTailVariation.floor (u/2)*F1JointFTC.low (((1127/200)+u+1)/(2*(u+1)))/u=kernel u := by
+  have hu0 : 0 < u := by linarith
+  have hum : 0 < u-1 := by linarith
+  have ht : 0 < 3*u-2 := by linarith
+  have ht' : 0 < u-2/3 := by linarith
+  have hq : 0 < 21*u^2-24*u+4 := by nlinarith [sq_nonneg (u-2)]
+  rw [low_rational (show 0 < (((1127/200)+u+1)/(2*(u+1))) by positivity)]
+  unfold ActualTailVariation.floor ActualTailVariation.denominator lowNumerator kernel
+    F1BFullFTC.quadOne
+  simp only [neg_div, sub_neg_eq_add, sub_zero]
+  field_simp (disch := positivity)
+  ring
+
+theorem partial_exact {u : ℝ} (hu : 2 ≤ u) : kernel u=partialValue u := by
+  have hu0 : 0 < u := by linarith
+  have hum : 0 < u-1 := by linarith
+  have ht : 0 < 3*u-2 := by linarith
+  have ht' : 0 < u-2/3 := by linarith
+  have hq : 0 < 21*u^2-24*u+4 := by nlinarith [sq_nonneg (u-2)]
+  unfold kernel partialValue FirstCRationalPayment.poleKernel
+    F1BFullFTC.quadOne
+  simp only [neg_div, sub_neg_eq_add, sub_zero]
+  field_simp (disch := positivity)
+  unfold c0_1 c0_2 c0_3 c0_4 c0_5 c2_1 c2_2 c2_3 c2_4 c4_1 c4_2 c4_3 c4_4 c5_1 c5_2 c5_3 c5_4 g0 f0 g2 f2
+  ring
+
+theorem primitive_deriv {u : ℝ} (hu : 2 ≤ u) : HasDerivAt primitive (kernel u) u := by
+  have h0 := F1FreshFTC.pole4_deriv (0) c0_1 c0_2 c0_3 c0_4 u (by linarith)
+  have h1 := fifthPrimitive_deriv (0) c0_5 u (by linarith)
+  have h2 := F1FreshFTC.pole4_deriv (-2) c2_1 c2_2 c2_3 c2_4 u (by linarith)
+  have h3 := F1FreshFTC.pole4_deriv (-1327/200) c4_1 c4_2 c4_3 c4_4 u (by linarith)
+  have h4 := F1FreshFTC.pole4_deriv (-1727/600) c5_1 c5_2 c5_3 c5_4 u (by linarith)
+  have h5 := F1JointFTC.quadraticPrimitive_deriv f0 g0 hu
+  have h6 := F1BFullFTC.quadPrimitiveOne_deriv f2 g2 hu
+  rw [partial_exact hu]
+  exact ((((((h0.add h1).add h2).add h3).add h4).add h5).add h6)
+
+theorem kernel_continuousOn : ContinuousOn kernel (Icc 2 (927/200)) := by
+  intro u hu
+  have hu := hu.1
+  have hu0 : 0 < u := by linarith
+  have hum : 0 < u-1 := by linarith
+  have ht : 0 < 3*u-2 := by linarith
+  have ht' : 0 < u-2/3 := by linarith
+  have hq : 0 < 21*u^2-24*u+4 := by nlinarith [sq_nonneg (u-2)]
+  apply ContinuousAt.continuousWithinAt
+  unfold kernel F1BFullFTC.quadOne
+  simp only [neg_div, sub_neg_eq_add, sub_zero]
+  fun_prop (disch := positivity)
+
+def mass : ℝ := primitive (927/200)-primitive 2
+
+theorem integral_exact : (∫ u in (2:ℝ)..(927/200),kernel u)=mass := by
+  apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+  · intro u hu
+    apply primitive_deriv
+    rw [uIcc_of_le (by norm_num : (2:ℝ)≤927/200)] at hu
+    exact hu.1
+  · exact kernel_continuousOn.intervalIntegrable_of_Icc (by norm_num)
+end TailFiniteFTC.AB11
