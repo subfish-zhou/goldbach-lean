@@ -176,6 +176,7 @@ theorem caseI1423EndpointSourceBounds_of_sourceScalar
     (hC : 0 < C)
     (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
     CaseI1423EndpointSourceBoundsSourceLargeLog S H C K d Δ := by
+  have _ := hd
   obtain ⟨L, hL, hfinite⟩ :=
     finiteSourceLayer_pred_le_uniform_oppositeHat
       (lemma132_finiteLayerHatUniform_slack hH)

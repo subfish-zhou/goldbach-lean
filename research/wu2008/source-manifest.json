@@ -21807,7 +21807,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsSourceLargeLogUniform",
-    "source_sha256": "9504700180fe13701b567b25edb92be61edf100a0cf17f695c7ff1754428adea",
+    "source_sha256": "d0270ad4e580db6954af2f8f2a76cd52f7ad436d3fe745175725c308e5538a99",
     "object_sha256": "50c26625c45b91909b8b6eafca3afc5038ddb6ef92e881d0846ee39e6a0fa441",
     "imports": [
       "Init",
@@ -21820,7 +21820,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogUniformCutoff"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "9504700180fe13701b567b25edb92be61edf100a0cf17f695c7ff1754428adea",
+    "integration_adaptation": "Explicitly reference retained hd hypothesis to satisfy unused-variable linter; endpoint domains, all parameters, constants and strict settings unchanged."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction",
