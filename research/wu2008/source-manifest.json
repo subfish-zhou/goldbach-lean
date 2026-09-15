@@ -25077,7 +25077,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.Switching.CorrectedSievePanBridge",
-    "source_sha256": "fb4c8b120316de5988d095e36633c9af180b689202f778ffd0ec9dfc506d7000",
+    "source_sha256": "2bdf785fe145a41fc68c164fa9f303be7531cca1ba9eac3ff7cda06ea0145f08",
     "object_sha256": "4b891d9027b227c751e86a55cb44916cbc4b3cb2ce10471b536cfff0b0155757",
     "imports": [
       "Init",
@@ -25085,7 +25085,9 @@
       "MathlibNt.SieveTheory.Switching.Weights"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "fb4c8b120316de5988d095e36633c9af180b689202f778ffd0ec9dfc506d7000",
+    "integration_adaptation": "Explicitly reference retained private hypothesis; remove no-op change and unused zero_rpow simp arguments; no changes to declarations or strict settings."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.SecondFunctionalLabelledMissingMass",
