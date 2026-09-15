@@ -31089,7 +31089,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVElementaryPayments",
-    "source_sha256": "315a6b7a90cf1aad48d679ebbeeb06156a7f4d45b611c8eb23f9efc7379b2abc",
+    "source_sha256": "987b00e9f59ae976073c4750f14919486f43d8d723a9abf7b2562e076e463c44",
     "object_sha256": "7f073592ffbcc514f1d2e08ba631b30b170f493171b05b8d4c3810704a933cf6",
     "imports": [
       "Init",
@@ -31097,7 +31097,9 @@
       "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "315a6b7a90cf1aad48d679ebbeeb06156a7f4d45b611c8eb23f9efc7379b2abc",
+    "integration_adaptation": "Remove two no-op norm_cast tactics after gcongr; statements, definitions and strict warning settings unchanged."
   },
   {
     "module": "Hf4DEEndpointE3",
