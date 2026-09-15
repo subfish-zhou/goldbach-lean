@@ -42226,7 +42226,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973MellinMoment",
-    "source_sha256": "218db0113c4b9d544f9eaa810caf04cb88b1afbfda9de52d445a2ac3b79a04bd",
+    "source_sha256": "d31014f5635bd3eb5b26f61785465d7a546607c52c66fd1ba12716e90791a900",
     "object_sha256": "f6aaf2c58f1600528cd5f623928b3446cc745536f7c6c72c69123aa952c50640",
     "imports": [
       "Init",
@@ -42236,7 +42236,9 @@
       "Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "218db0113c4b9d544f9eaa810caf04cb88b1afbfda9de52d445a2ac3b79a04bd",
+    "integration_adaptation": "Use simp at the contradictory hypothesis and remove unnecessary convert sequence focus; public statements, definitions and strict checks unchanged."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGateNormalization",
