@@ -23281,7 +23281,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual",
-    "source_sha256": "a742a79a5cb6a86ea1bc1bdbf296cc6a64a5c94a45a0edef441814d619f24016",
+    "source_sha256": "66cec589b30e0e2ae7dfa6ccbb17e40795ed5936b178fe5f634b0fa54bc105af",
     "object_sha256": "cecf0cf8f6d1542856420b8ebc6e101ee6182c2239ba7357a16dcbda09082a82",
     "imports": [
       "Init",
@@ -23289,7 +23289,18 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "a742a79a5cb6a86ea1bc1bdbf296cc6a64a5c94a45a0edef441814d619f24016",
+    "integration_adaptation": "Use the three already-imported shared scalar comparison declarations; duplicate signatures checked, raw original source retained. No mathematical condition removed.",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 12,
+      "missing_or_type_or_definition_differences": 0,
+      "new_owners": [
+        "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual",
+        "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal"
+      ],
+      "scope": "old nonprivate names/types and definition values across two rebuilt module owners; not full dependency or proof-body audit"
+    }
   },
   {
     "module": "SigmaRationalOuterPolePrimitive",
@@ -24771,7 +24782,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal",
-    "source_sha256": "99415228aa6ca8dca06ead077d8358fc62da25283cb7b9ab5b27305f204735a1",
+    "source_sha256": "4049b612315b50e8c9d2834bd575ed71dfac013c01797760ed9a5baa38539e22",
     "object_sha256": "916a796552efce6af4f37f2011ea84b1ac01a25617e06cc6fc3f5260b11f84c6",
     "imports": [
       "Init",
@@ -24781,7 +24792,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerInternal"
     ],
     "matching_source_variants": 2,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "99415228aa6ca8dca06ead077d8358fc62da25283cb7b9ab5b27305f204735a1",
+    "integration_adaptation": "Preserve old named hq argument of shared Case-B scalar comparison and explicitly reference it; type and proof unchanged otherwise."
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorObjects",

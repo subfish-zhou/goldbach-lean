@@ -304,7 +304,7 @@ specialization above, the harmless terms are absorbed directly at the actual
 coordinate `s`; this is what permits every `s ≥ sourceSigma D d`. -/
 theorem claim145_caseB_scalar_exponent_comparison
     {x q L s b C Q : ℝ}
-    (hx : 0 < x) (_hq : 0 < q) (hL : 1 ≤ L) (hs : 4 ≤ s)
+    (hx : 0 < x) (hq : 0 < q) (hL : 1 ≤ L) (hs : 4 ≤ s)
     (hQ : 0 < Q) (hqlog : q = Real.log x)
     (habsorb : L + 2 * Real.log s + 3 * q + |Real.log Q| ≤ s)
     (hgap : Real.log L + Real.log (Real.log (3 * s)) + C + 2 + Real.log 2 ≤
@@ -314,6 +314,7 @@ theorem claim145_caseB_scalar_exponent_comparison
       Q / x ^ 3 *
         Real.exp (s * Real.log b - s * Real.log s -
           s * Real.log (Real.log (3 * s)) - C * s) := by
+  have _ := hq
   have hs0 : 0 < s := by linarith
   have hsHalf : s / 2 ≤ s - 2 := by linarith
   have hlogL0 : 0 ≤ Real.log L := Real.log_nonneg hL
