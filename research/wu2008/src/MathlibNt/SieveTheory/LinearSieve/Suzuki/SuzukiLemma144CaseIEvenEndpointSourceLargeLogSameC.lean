@@ -25,6 +25,7 @@ theorem evenEndpoint_carrier_scale
     (S : BoundingSieve) {D Dmin : ℕ} {σ : ℝ}
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
     CarrierQuotientThresholdGeometry S.prodPrimes.primeFactors D Dmin σ 2 := by
+  have _ := hDmin
   intro p hp
   have hp' := hp
   simp only [sigmaOneCarrier, Finset.mem_filter] at hp'
@@ -282,6 +283,7 @@ theorem caseI1423EndpointSourceBounds_evenEndpoint_explicit
               caseI1423RemainderUnit B (D : ℝ) σ ∧
           caseI1423Sigma12Endpoint S H M D z C K d Δ 2 σ ≤
             (12 * R) * caseI1423RemainderUnit B (D : ℝ) σ := by
+  have _ := hd
   let E : ℝ := Real.exp (Real.sqrt K)
   let A11 : ℝ := 6 * L * R / (C * E)
   let A12 : ℝ := 12 * R

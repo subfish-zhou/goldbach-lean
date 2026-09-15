@@ -17916,7 +17916,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC",
-    "source_sha256": "502db9dc7df0048c5eb91cca1d2f17d4ced5c896e1002557a90c5afe9c14c743",
+    "source_sha256": "bd3c2fa73f1f83345263757442a64fe881198b80a9c934425a2b2839d43344e3",
     "object_sha256": "ccc86b00b61689fc12a9bb48fc3c8413348d20eb59a796707a1a360a4571241a",
     "imports": [
       "Init",
@@ -17934,7 +17934,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsSourceLargeLogUniform"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "502db9dc7df0048c5eb91cca1d2f17d4ced5c896e1002557a90c5afe9c14c743",
+    "integration_adaptation": "Explicitly reference retained hDmin and hd hypotheses for strict unused-variable checks; public parameters, closed endpoints and estimates unchanged."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
