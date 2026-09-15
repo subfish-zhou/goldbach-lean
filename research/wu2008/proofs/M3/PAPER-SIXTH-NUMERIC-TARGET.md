@@ -1,4 +1,4 @@
-> **Checkpoint status:** complete sixth-term candidate; mathematical review pending, NOT accepted.
+> **Checkpoint status:** analytic candidate requires SIXTH-ANALYTIC-SUPPLEMENT; original stronger numeric endpoint NOT accepted; use separate certified sufficient endpoint.
 > 本文保存该阶段的数学正文；文中旧的完成声明不覆盖本检查点状态。引用输入、候选证明和已确认结果分别记账。
 
 # 原第六项数值目标：保留高标签的有限双筛更新

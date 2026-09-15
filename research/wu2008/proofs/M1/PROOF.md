@@ -65,7 +65,7 @@
 
 **定义。** 对素数标签的乘积 \(d\)，令
 \[
- Q(d;t)=\#\{p\leq N:p\text{ 素},\ d\mid n=N-p,\ 
+ Q(d;t)=\#\{p\leq N:p\text{ 素},\ d\mid n=N-p,\
               \ell\mid n/d,\ \ell\nmid N\Rightarrow \ell\geq t\}.
                                                                \tag{2.1}
 \]

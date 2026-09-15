@@ -12,7 +12,7 @@ open scoped Classical
 
 theorem sixth_region_eq_published (x y : ℝ) :
     truncatedSixthLowerRegion 0 x y ↔ (x, y) ∈ publishedReducedDomain := by
-  simp only [truncatedSixthLowerRegion, publishedReducedDomain, mem_setOf_eq,
+  simp only [truncatedSixthLowerRegion, publishedReducedDomain, mem_ofPred_eq,
     truncatedSixthLowerC, sub_zero]
   change (alpha ≤ x ∧ x ≤ beta ∧ beta ≤ y ∧
     y ≤ 1 / 2 - 3 * alpha ∧ x + y ≤ 1 / 2 - 2 * alpha) ↔

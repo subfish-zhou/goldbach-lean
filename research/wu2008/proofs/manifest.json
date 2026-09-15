@@ -1,13 +1,13 @@
 {
-  "checkpoint_utc": "2026-09-15T19:49:11.795295+00:00",
-  "base_commit": "b505a68c8706aba69e1d8942f1eacc9286ff0377",
+  "checkpoint_utc": "2026-09-15T20:05:06.905918+00:00",
+  "base_commit": "d8de89bfbe84607522ec9ee9a69bff25be84a933",
   "complete_theorem_accepted": false,
-  "mathematical_manuscripts": 10,
+  "mathematical_manuscripts": 13,
   "files": [
     {
       "file": "research/wu2008/proofs/M1/PROOF.md",
       "status": "historical reconstruction draft; superseded",
-      "sha256": "5fe8bb201b10da62e0cbf3799e30b305db8069d7d7e88f8fe3d4efb1be0a6909",
+      "sha256": "e0849ff89b7d31f60052e7b6686ee09b9c1979d37b5353b2b8ad0ad97c613d5f",
       "original_manuscript_sha256": "1d092574ff626aabfea983571228cea88f2b2099b61e1ba48ed8a5d48061e683",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
@@ -48,9 +48,30 @@
     },
     {
       "file": "research/wu2008/proofs/M3/PAPER-SIXTH-NUMERIC-TARGET.md",
-      "status": "complete sixth-term candidate; mathematical review pending, NOT accepted",
-      "sha256": "3514a43416341de252d58e719f410f6dee07cb13791e5118829c9729613b5fac",
+      "status": "analytic candidate requires SIXTH-ANALYTIC-SUPPLEMENT; original stronger numeric endpoint NOT accepted; use separate certified sufficient endpoint",
+      "sha256": "535b53d5fb1ceea75e57bc6aad58feb59007aca769246d355d2924f70cdd7779",
       "original_manuscript_sha256": "1bcf6bf4ec08f0b60f08ee1988018fe7aa3b2779031875d21a85fe695835e63a",
+      "publication_edit": "status header and non-mathematical path/tool-label sanitization"
+    },
+    {
+      "file": "research/wu2008/proofs/SIXTH-ANALYTIC-SUPPLEMENT.md",
+      "status": "reviewed mathematical supplements: actual transport to the fixed table vector",
+      "sha256": "4f8668d982dc525ac157dc566794870fb9918261e271bb0ab481dbef5da3e914",
+      "original_manuscript_sha256": "08b9f87a92fa3a5a3ffbcb8dda01e0bb9c0e387016aada5b6869b1d60d744c3b",
+      "publication_edit": "status header and non-mathematical path/tool-label sanitization"
+    },
+    {
+      "file": "research/wu2008/proofs/TABLE-GAIN-CERTIFICATE.md",
+      "status": "directed rational certificate for the original fixed table gain; generator and verifier passed",
+      "sha256": "d84cadfef9dfedd8bddef352a644696d0a929046f9b40dba0947a7aceccb580f",
+      "original_manuscript_sha256": "f66cf0798115b9c16ccdbfc1339ddea779c3b17ebaf0aac7da8f0db80bbea346",
+      "publication_edit": "status header and non-mathematical path/tool-label sanitization"
+    },
+    {
+      "file": "research/wu2008/proofs/PAPER-ROUTE-ASSEMBLY.md",
+      "status": "assembled natural-language proof under explicit cited inputs; final cross-check pending; not Lean closure",
+      "sha256": "5313ab8422802f88cdb5db9cb09ab98beff03cc4abb273d3ea290ecac1422aa0",
+      "original_manuscript_sha256": "ac3b4014ac04fe19c3b7f54f90a2826572e2cf110fc1314d1d20c731632a8390",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
     {
@@ -73,6 +94,16 @@
       "sha256": "b88d8ad783f22556727a335fd2496dd9e68e7ad1fe74a8a5f1f29f940d173304",
       "original_manuscript_sha256": "7e711a90e4a0e664f8044571cac0ee670f61d52b23ab4488b44df6f3609490be",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
+    }
+  ],
+  "certificates": [
+    {
+      "file": "research/wu2008/proofs/certificates/sixth_table_gain.py",
+      "sha256": "bee4e179e82438dba5ab6afb458afe2009f13679473afeee1b3b17f06db5a8ce"
+    },
+    {
+      "file": "research/wu2008/proofs/certificates/sixth_table_gain.json",
+      "sha256": "6819b6be176460ea3920a67a853e0b1b52275d798993ae1b2afbd1359155a26e"
     }
   ]
 }
