@@ -138,7 +138,7 @@ private theorem sourceLargeLog_core_decay
           x ^ (1 / d * (2 : ℝ)) * (4 * x ^ (1 / d)) =
               4 * (x ^ (1 / d * 2) * x ^ (1 / d)) := by ring
           _ = 4 * x ^ (1 / d * 2 + 1 / d) := by rw [Real.rpow_add hx0]
-          _ = 4 * x ^ (3 / d) := by congr 2 <;> ring
+          _ = 4 * x ^ (3 / d) := by congr 2; ring
   have hKTheta : K ^ Θ < x := by
     calc
       K ^ Θ ≤ C1 * K ^ Θ := by
@@ -212,6 +212,7 @@ private theorem perturbation_three_le_one_add_seven_ratio_sourceLarge
     {D d : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d)
     (hsmall : 3 ^ d ≤ Real.log D) :
     perturbation D d 0 3 ≤ 1 + 7 * (3 ^ d / Real.log D) := by
+  have _ := hd
   let u : ℝ := 3 ^ d / Real.log D
   have hu0 : 0 ≤ u := div_nonneg (Real.rpow_nonneg (by norm_num) _) hlog.le
   have hu1 : u ≤ 1 := (div_le_one hlog).2 hsmall

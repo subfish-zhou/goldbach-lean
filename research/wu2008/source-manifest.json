@@ -18945,7 +18945,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform",
-    "source_sha256": "877c230a33c709754c4b85852bcd1a04d27fe7276ccdfd3f767e218da2472b47",
+    "source_sha256": "d6ba8d81fe332cf7f24400f830ec9c0d3f6489668dd59013bfa3da4953a928dc",
     "object_sha256": "7cea82efdbf75215d19aa1ef5a7b0aa65d4c6fd5ccc64e49e2aa30a3ab1a3423",
     "imports": [
       "Init",
@@ -18956,7 +18956,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioCoefficients"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "877c230a33c709754c4b85852bcd1a04d27fe7276ccdfd3f767e218da2472b47",
+    "integration_adaptation": "Remove unnecessary sequence focus and explicitly reference retained hd hypothesis; all mathematical statements, constants and strict settings unchanged."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.PrimeCoefficientHalfOpen",
