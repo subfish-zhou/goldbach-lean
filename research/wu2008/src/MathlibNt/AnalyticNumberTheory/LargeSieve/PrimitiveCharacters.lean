@@ -39,6 +39,17 @@ abbrev PrimitiveCharacter (q : ℕ) :=
 noncomputable instance (q : ℕ) : Fintype (PrimitiveCharacter q) :=
   Fintype.ofFinite _
 
+/-- A positive modulus has at most its totient many primitive characters. -/
+theorem primitiveCharacter_card_le_totient_basic (q : ℕ) (hq : 0 < q) :
+    Fintype.card (PrimitiveCharacter q) ≤ q.totient := by
+  let : NeZero q := ⟨hq.ne'⟩
+  calc
+    Fintype.card (PrimitiveCharacter q) ≤
+        Fintype.card (DirichletCharacter ℂ q) := Fintype.card_subtype_le _
+    _ = q.totient := by
+      rw [← Nat.card_eq_fintype_card]
+      exact DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity ℂ q
+
 /-- Primitive characters as a filtered finset of all characters modulo `q`.
 This form is useful when applying an all-character estimate. -/
 noncomputable def primitiveCharacters (q : ℕ) :

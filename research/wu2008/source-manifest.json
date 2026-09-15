@@ -29353,7 +29353,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters",
-    "source_sha256": "595cdf938c9c904f4f1da9f8ff9792b3834024e21356f1de96b7927cf04aa0f4",
+    "source_sha256": "31f09379e552de6bb25912f3f4e6327aa4831de8399499956646b9b9c8c9f216",
     "object_sha256": "823f629646e95929447fde13bd2621afe1ceabbc658bbeeb5e83130018a04c21",
     "imports": [
       "Init",
@@ -29362,7 +29362,16 @@
       "Mathlib.NumberTheory.DirichletCharacter.GaussSum"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "595cdf938c9c904f4f1da9f8ff9792b3834024e21356f1de96b7927cf04aa0f4",
+    "integration_adaptation": "Extract verbatim primitiveCharacter_card_le_totient_basic from release source; existing declarations and imports unchanged.",
+    "added_proof_source_sha256": "b126e68a8ac10753fcda10ebee9e8e711354ddf5419e3f0c4f3be5ac7774d9ee",
+    "added_proof_fragment_sha256": "9772ae0bafabc98c648eb1c00499acaceec6a176206708035b8a42ca4eaa77a4",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 34,
+      "missing_or_type_or_definition_differences": 0,
+      "scope": "old nonprivate names and types, definition values; added proof separately recorded, not full dependency audit"
+    }
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.LastPrimeFourProfiles",
