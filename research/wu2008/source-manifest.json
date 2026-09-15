@@ -26149,7 +26149,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz",
-    "source_sha256": "9fdb74d198d073eab22a4f9748853547cf554cdf2688ff3370a27d29527c1e6c",
+    "source_sha256": "8ac40bcb500e607f63793ca9ae732dfe3e6486b3956d09adcf6b69f73a2c30b6",
     "object_sha256": "a547c61ed0d3aa05bab97b287c043c501a9d41d2d5ea685f2479243f531798b0",
     "imports": [
       "Init",
@@ -26159,7 +26159,9 @@
       "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload"
     ],
     "matching_source_variants": 2,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "9fdb74d198d073eab22a4f9748853547cf554cdf2688ff3370a27d29527c1e6c",
+    "integration_adaptation": "Remove unnecessary tactic sequence focus, combine consecutive intros, simplify exp positivity proof; preserve statements, definitions and strict warning settings."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedKeyBound",
