@@ -26309,7 +26309,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized",
-    "source_sha256": "5bf9398d1ed884b6f253bce70e629ab5422085ee2142f1ade133be0aadba5949",
+    "source_sha256": "9d4befca43fa95aecf8243f297f3dce69401c95d854100465aebe78268a469a5",
     "object_sha256": "ae2a46bbf5cd711f1230efe35642ebd7ee8569639574fa18cbe07a6d8dbedf1c",
     "imports": [
       "Init",
@@ -26320,7 +26320,14 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146SourceAssembly"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "5bf9398d1ed884b6f253bce70e629ab5422085ee2142f1ade133be0aadba5949",
+    "integration_adaptation": "Reuse three identically typed imported lemmas instead of private duplicates; retain hypotheses and remove unnecessary tactic sequence focus. No mathematical assumption or strict setting changed.",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 33,
+      "missing_or_type_or_definition_differences": 0,
+      "scope": "old nonprivate names/types and definition values; not private proof-body or full dependency audit"
+    }
   },
   {
     "module": "Hf4DenEndpoint",

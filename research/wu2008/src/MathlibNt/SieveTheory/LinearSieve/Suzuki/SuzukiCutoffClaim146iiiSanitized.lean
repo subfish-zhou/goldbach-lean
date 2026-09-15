@@ -51,18 +51,13 @@ theorem exists_sourceSigma_fixed_lower_threshold
     _ ≤ (Real.log D) ^ (1 / d) * Real.log (Real.log (27 * D)) := by
       nlinarith [mul_nonneg (sub_nonneg.mpr hpow1) hll0]
 
-private lemma tendsto_fixed_perturbation
-    (d t : ℝ) :
-    Tendsto (fun D : ℝ => perturbation D d 0 t) atTop (𝓝 1) := by
-  have hdiv : Tendsto (fun D : ℝ => t ^ d / Real.log D) atTop (𝓝 0) :=
-    Real.tendsto_log_atTop.const_div_atTop (t ^ d)
-  have hbase : Tendsto (fun D : ℝ => 1 + t ^ d / Real.log D) atTop (𝓝 1) := by
-    simpa using tendsto_const_nhds.add hdiv
-  simpa [perturbation] using hbase.rpow_const (Or.inl one_ne_zero)
+/- Reuse the identical tendsto_fixed_perturbation from SuzukiClaim146Quantitative. -/
 
 theorem fixedCompactPerturbationContract
     {d M : ℝ} (hd : 0 ≤ d) (hM : 4 ≤ M) :
     FixedCompactPerturbationContract d M := by
+  have _ := hd
+  have _ := hM
   have hev : ∀ᶠ D : ℝ in atTop, perturbation D d 0 (M + 2) < 2 :=
     (tendsto_order.1 (tendsto_fixed_perturbation d (M + 2))).2 2 (by norm_num)
   obtain ⟨D₁, hD₁⟩ := (eventually_atTop.1 hev)
@@ -105,20 +100,14 @@ private lemma fixed_gap_rpow_margin
   have hlinear : x ^ p ≤ 1 - gap / (2 * (M + 2)) := by
     simp only [Real.one_rpow, mul_one] at hamgm
     dsimp [x, p] at hamgm ⊢
-    convert hamgm using 1 <;> field_simp [ne_of_gt hMp2] <;> ring
+    convert hamgm using 1; field_simp [ne_of_gt hMp2]; ring
   have hstrict : 1 - gap / (2 * (M + 2)) < 1 - gap / (4 * M) := by
     rw [sub_lt_sub_iff_left]
     rw [div_lt_div_iff₀ (mul_pos (by norm_num) hMpos) (mul_pos (by norm_num) hMp2)]
     nlinarith
   simpa [x, p] using hlinear.trans_lt hstrict
 
-private lemma tendsto_source_weight (gap : ℝ) :
-    Tendsto (fun σ : ℝ => (1 - 1 / σ) ^ gap) atTop (𝓝 1) := by
-  have hinv : Tendsto (fun σ : ℝ => 1 / σ) atTop (𝓝 0) := by
-    simpa [one_div] using tendsto_inv_atTop_zero
-  have hbase : Tendsto (fun σ : ℝ => 1 - 1 / σ) atTop (𝓝 1) := by
-    simpa using tendsto_const_nhds.sub hinv
-  simpa using hbase.rpow_const (Or.inl one_ne_zero)
+/- Reuse the identical tendsto_source_weight from SuzukiMovingSigmaClaim146SourceAssembly. -/
 
 theorem lemma133WeightedHeadContract_corrected
     {H : Section13HatLayers} (hH : Section13HatContract H 2)
@@ -872,6 +861,7 @@ private lemma qD_le_lambdaNegDeriv_mul_weightStrict
         ((t ^ d / Real.log D) / (1 + t ^ d / Real.log D))) :
     qD H sign.opposite D d Δ t ≤
       lambdaNegDerivStrict H sign D d t * ((t - 1) / t) ^ (1 - Δ) := by
+  have _ := hH
   have ht0 : 0 < t := zero_lt_one.trans ht
   let z : ℝ := t ^ d / Real.log D
   have hz0 : 0 ≤ z := div_nonneg (Real.rpow_nonneg ht0.le _) hlog.le
@@ -898,7 +888,7 @@ private lemma qD_le_lambdaNegDeriv_mul_weightStrict
   rw [qD_eq_dde_mainStrict sign hlog ht]
   dsimp [lambdaNegDerivStrict]
   apply mul_le_mul_of_nonneg_right _ hw0
-  convert mul_le_mul_of_nonneg_left hmain hp0 using 1 <;> ring
+  convert mul_le_mul_of_nonneg_left hmain hp0 using 1; ring
 
 private lemma continuousOn_lambdaNegDerivStrict
     {H : Section13HatLayers} {β D d a b : ℝ}
@@ -1137,23 +1127,7 @@ private lemma claim146iii_margin_of_le
   rw [div_lt_div_iff₀ (sq_pos_of_pos hMpos) (mul_pos (by norm_num) hMpos)]
   nlinarith [sq_nonneg M]
 
-private lemma lambda_pos_of_source_range
-    {H : Section13HatLayers} (hH : Section13HatContract H 2)
-    (sign : ErrorSign) {D d s : ℝ} (hD : 1 < D)
-    (hs : 2 + sign.epsilon ≤ s) :
-    0 < lambda H sign D d 0 s := by
-  have hs1 : 1 < s := by
-    cases sign <;> simp [ErrorSign.epsilon] at hs ⊢ <;> linarith
-  have hlog : 0 < Real.log D := Real.log_pos hD
-  rw [lambda_eq_perturb_mul_weightedHat]
-  apply mul_pos
-  · apply Real.rpow_pos_of_pos
-    have : 0 ≤ s ^ d / Real.log D :=
-      div_nonneg (Real.rpow_nonneg (zero_le_one.trans hs1.le) _) hlog.le
-    simpa only [add_zero] using
-      (add_pos_of_pos_of_nonneg (by norm_num : (0 : ℝ) < 1) this)
-  · exact mul_pos (sq_pos_of_pos (zero_lt_one.trans hs1))
-      (hH.positive sign s (zero_lt_one.trans hs1))
+/- Reuse the identical lambda_pos_of_source_range from SuzukiMovingSigmaClaim146SourceAssembly. -/
 
 theorem moving_claim14_6_iii_of_source_contract_and_cutoffMajorants
     {H : Section13HatLayers} (hH : Section13HatSourceContract H)
