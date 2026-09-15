@@ -9549,7 +9549,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.Selberg.SelbergUpperBound",
-    "source_sha256": "6e4a81e774897ec74a36251f9bd35e609f24cb5d3d3a10c39a4bbb7b84b317c2",
+    "source_sha256": "18026ceada0e04ba7b6fa95a1a5ff20385b1f650983453eec7632b4294f1c021",
     "object_sha256": "5b95d9f69cb25e7be9c70e7b41849e16b6efecbd223860e5cf34db19fb9c0a1f",
     "imports": [
       "Init",
@@ -9576,7 +9576,9 @@
       "MathlibNt.SieveTheory.Arithmetic.MertensTheorem"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "6e4a81e774897ec74a36251f9bd35e609f24cb5d3d3a10c39a4bbb7b84b317c2",
+    "integration_adaptation": "Preserve named hypotheses by explicit references; simplify contradiction and remove unused simp argument; statements and definitions unchanged, strict warnings retained."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.ClassicalLogFourBounds",

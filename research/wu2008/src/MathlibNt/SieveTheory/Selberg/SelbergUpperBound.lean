@@ -249,6 +249,8 @@ theorem main_term_bound (N : ℕ) (ε : ℝ) (hε : 0 < ε) (hε' : ε < 1/2)
             logarithmicIntegral_approx_term ((N : ℝ) / a)))) ≤
         3.94033 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 +
           C * (N : ℝ) / (log N) ^ 10 := by
+  have _ := hε
+  have _ := hε'
   have hlog : 0 < log (N : ℝ) :=
     Real.log_pos (by exact_mod_cast (by omega : 1 < N))
   have hscale : 0 < (N : ℝ) / (log N) ^ 10 :=
@@ -322,6 +324,7 @@ The proof below applies Mathlib's existing counting theorem. -/
 theorem lcm_pair_count (d : ℕ) (hd : d ≠ 0) (hsq : Squarefree d) :
     ((d.divisors ×ˢ d.divisors).filter (fun ⟨d₁, d₂⟩ => Nat.lcm d₁ d₂ = d)).card =
       3 ^ d.primeFactors.card := by
+  have _ := hd
   -- Apply Mathlib's Nat.card_pair_lcm_eq (Mathlib.Algebra.Order.Antidiag.Nat):
   -- for squarefree n, #{(d₁,d₂) ∈ divisors(n)² | lcm(d₁,d₂) = n} = 3^ω(n),
   -- where ω(n) = ArithmeticFunction.cardDistinctFactors n = n.primeFactorsList.dedup.length.
@@ -860,7 +863,7 @@ private lemma prime_inv_sq_minus_one_sum_le :
     have hple : p ≤ n := by
       by_cases hn0 : n = 0
       · subst n
-        exact False.elim (by simpa using hp)
+        simp at hp
       · exact Nat.le_of_dvd (Nat.pos_of_ne_zero hn0) hpdvd
     exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega : p < n + 1), hp'⟩
   have h1 : (∑ p ∈ n.primeFactors, 4 / (p : ℝ) ^ 2) ≤
@@ -1608,6 +1611,8 @@ theorem coprime_condition_implies_bounded_ap
     (N a d : ℕ) (hN : 2 ≤ N) (ha : 1 ≤ a) (hd : 1 ≤ d)
     (h_not_coprime : 1 < Nat.gcd a d) :
     primesInAP_weighted N a d (N % d) ≤ 1 := by
+  have _ := hN
+  have _ := hd
   -- Step 1: gcd(a,d) > 1 and a ≥ 1 imply a ≥ 2, since gcd(1,d) = 1.
   have ha_ge_2 : 2 ≤ a := by
     by_contra h
@@ -1617,7 +1622,7 @@ theorem coprime_condition_implies_bounded_ap
     | inl h0 => omega
     | inr h1 =>
       rw [h1] at h_not_coprime
-      simp [Nat.gcd_one_right] at h_not_coprime
+      simp at h_not_coprime
   -- Step 2: for a ≥ 2, a*p can be prime only if p = 1.
   unfold primesInAP_weighted
   apply Finset.card_le_one.mpr
@@ -1938,6 +1943,9 @@ private lemma r1_pair_unique (N : ℕ) {p₁ p₂ q₁ q₂ : ℕ}
     (hq₂low : (N : ℝ) ^ (1/3 : ℝ) < (q₂ : ℝ))
     (h : p₁ * p₂ = q₁ * q₂) :
     p₁ = q₁ ∧ p₂ = q₂ := by
+  have _ := hp₂prime
+  have _ := hp₂low
+  have _ := hq₁high
   have hpdvd : p₁ ∣ q₁ * q₂ := by
     rw [← h]
     exact dvd_mul_right p₁ p₂
