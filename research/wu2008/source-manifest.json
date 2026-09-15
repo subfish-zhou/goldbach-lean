@@ -41566,7 +41566,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma1PerronKernelCore",
-    "source_sha256": "bd198669634e52946d26d306d39780f70489b5fad310b309c97469bd5d9765f6",
+    "source_sha256": "f98d032b84526738dff9d8aa886019876760d39acf9e1a72fdc2169f77bfa902",
     "object_sha256": "ecbaffce9a2c86b70a2ea71d6df36b6a18faed7518bfd79650a11fae9a0bc5e6",
     "imports": [
       "Init",
@@ -41580,7 +41580,9 @@
       "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973MellinMoment"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "bd198669634e52946d26d306d39780f70489b5fad310b309c97469bd5d9765f6",
+    "integration_adaptation": "Replace deprecated push_neg by push Not and remove unused simp arguments; all mathematical statements, definitions and strict checks unchanged."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularMaximalShell",
