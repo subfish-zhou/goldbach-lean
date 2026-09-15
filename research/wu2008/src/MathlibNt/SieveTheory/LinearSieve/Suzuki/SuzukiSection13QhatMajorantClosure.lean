@@ -98,8 +98,8 @@ theorem canonicalXi_eventual_log_lower (c : ℝ) :
 /-- Canonical `ξ` package used by the first-crossing constructor. -/
 theorem canonicalXiTheorem : CanonicalXiTheorem xi where
   continuous := xi_continuous
-  positive := fun s hs => xi_pos hs
-  equation := fun s hs => xi_equation hs
+  positive := fun s hs => xi_pos (s := s) hs
+  equation := fun s hs => xi_equation (s := s) hs
   eventual_log_lower := canonicalXi_eventual_log_lower
 
 /-- The Section-13 source DDE, positivity and proved pairing identity give the

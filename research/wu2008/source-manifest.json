@@ -30098,7 +30098,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13QhatMajorantClosure",
-    "source_sha256": "384010e8322eca74df434e6f1c32ba8031b09446ed56d40d3264756fe762a031",
+    "source_sha256": "199962e29d98b3817696e76d453414b5d907a5ea6c5ae5d2f4af1422255ed343",
     "object_sha256": "1d1dd46f0f3ef4d4a2128f2ed095b0aa6f328e3cc23aaeee61d3a603baf74173",
     "imports": [
       "Init",
@@ -30107,7 +30107,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "384010e8322eca74df434e6f1c32ba8031b09446ed56d40d3264756fe762a031",
+    "integration_adaptation": "Explicitly pass inferred s in canonical xi proof fields; preserve declaration type and mathematical parameters, strict warnings retained."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.SecondFunctionalHighNonunitTupleLogs",
