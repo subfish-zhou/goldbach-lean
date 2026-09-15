@@ -1,4 +1,5 @@
 import Wu18938Campaign.M5.Root
+import Wu18938Campaign.M5.BindingAudit
 
 set_option pp.universes true
 set_option pp.fullNames true
@@ -101,6 +102,18 @@ set_option pp.fullNames true
 #print axioms Wu18938Campaign.M5.OriginalAnalytic.coefficient_bound
 #check @Wu18938Campaign.M5.OriginalAnalytic.original_ah_uniform_limit
 #print axioms Wu18938Campaign.M5.OriginalAnalytic.original_ah_uniform_limit
+#check @Wu18938Campaign.M5.OriginalAnalytic.mass_congr_on_envelope
+#print axioms Wu18938Campaign.M5.OriginalAnalytic.mass_congr_on_envelope
+#check @Wu18938Campaign.M5.OriginalAnalytic.mass_actual_coefficient
+#print axioms Wu18938Campaign.M5.OriginalAnalytic.mass_actual_coefficient
+#check @Wu18938Campaign.M5.LeafIdentity.window_eq
+#print axioms Wu18938Campaign.M5.LeafIdentity.window_eq
+#check @Wu18938Campaign.M5.LeafIdentity.atom_eq
+#print axioms Wu18938Campaign.M5.LeafIdentity.atom_eq
+#check @Wu18938Campaign.M5.LeafIdentity.pairCount_eq
+#print axioms Wu18938Campaign.M5.LeafIdentity.pairCount_eq
+#check @Wu18938Campaign.M5.LeafConsumer.actual_ah_count_truncation
+#print axioms Wu18938Campaign.M5.LeafConsumer.actual_ah_count_truncation
 #check @Wu18938Campaign.M5.LiteralIdentity.window_eq
 #print axioms Wu18938Campaign.M5.LiteralIdentity.window_eq
 #check @Wu18938Campaign.M5.LiteralIdentity.atom_eq
@@ -113,11 +126,48 @@ set_option pp.fullNames true
 #print axioms Wu18938Campaign.M5.LiteralIdentity.countA_eq
 #check @Wu18938Campaign.M5.LiteralIdentity.countB_eq
 #print axioms Wu18938Campaign.M5.LiteralIdentity.countB_eq
-#check @Wu18938Campaign.M5.OriginalConsumer.mass_congr_on_envelope
-#print axioms Wu18938Campaign.M5.OriginalConsumer.mass_congr_on_envelope
-#check @Wu18938Campaign.M5.OriginalConsumer.mass_actual_coefficient
-#print axioms Wu18938Campaign.M5.OriginalConsumer.mass_actual_coefficient
 #check @Wu18938Campaign.M5.OriginalConsumer.original_trimmed_count
 #print axioms Wu18938Campaign.M5.OriginalConsumer.original_trimmed_count
 #check @Wu18938Campaign.M5.OriginalConsumer.original_ah_count_truncation
 #print axioms Wu18938Campaign.M5.OriginalConsumer.original_ah_count_truncation
+
+#check @Wu18938Campaign.M5.SmallMotherDifference.endpointCoefficient
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.endpointCoefficient
+#check @Wu18938Campaign.M5.SmallMotherDifference.phi_difference_lower
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.phi_difference_lower
+#check @Wu18938Campaign.M5.SmallMotherDifference.selected_child_le_original
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.selected_child_le_original
+#check @Wu18938Campaign.M5.SmallMotherDifference.moving_window_subset
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.moving_window_subset
+#check @Wu18938Campaign.M5.SmallMotherDifference.phi_difference_le_rectangle
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.phi_difference_le_rectangle
+#check @Wu18938Campaign.M5.SmallMotherDifference.fixed_cutoff_bracket
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.fixed_cutoff_bracket
+#check @Wu18938Campaign.M5.SmallMotherDifference.rectangle_cell_lower
+#print axioms Wu18938Campaign.M5.SmallMotherDifference.rectangle_cell_lower
+#check @Wu18938Campaign.M5.SmallMotherPacking.motherMass
+#print axioms Wu18938Campaign.M5.SmallMotherPacking.motherMass
+#check @Wu18938Campaign.M5.SmallMotherPacking.rectangle_grid_sum
+#print axioms Wu18938Campaign.M5.SmallMotherPacking.rectangle_grid_sum
+#check @Wu18938Campaign.M5.SmallMotherPacking.rectangle_lower
+#print axioms Wu18938Campaign.M5.SmallMotherPacking.rectangle_lower
+#check @Wu18938Campaign.M5.SmallMotherOriginal.bMid
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.bMid
+#check @Wu18938Campaign.M5.SmallMotherOriginal.smallLower
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.smallLower
+#check @Wu18938Campaign.M5.SmallMotherOriginal.smallUpper
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.smallUpper
+#check @Wu18938Campaign.M5.SmallMotherOriginal.largeLower
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.largeLower
+#check @Wu18938Campaign.M5.SmallMotherOriginal.largeUpper
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.largeUpper
+#check @Wu18938Campaign.M5.SmallMotherOriginal.bandCoefficient
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.bandCoefficient
+#check @Wu18938Campaign.M5.SmallMotherOriginal.band_geometry
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.band_geometry
+#check @Wu18938Campaign.M5.SmallMotherOriginal.band_count_sum
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.band_count_sum
+#check @Wu18938Campaign.M5.SmallMotherOriginal.original_ab_endpoint_lower
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.original_ab_endpoint_lower
+#check @Wu18938Campaign.M5.SmallMotherOriginal.original_upsilon6_endpoint_lower
+#print axioms Wu18938Campaign.M5.SmallMotherOriginal.original_upsilon6_endpoint_lower

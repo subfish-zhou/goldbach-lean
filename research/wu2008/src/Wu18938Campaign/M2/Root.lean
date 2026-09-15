@@ -1,2 +1,5 @@
 import Wu18938Campaign.M2.RawArithmetic
 import Wu18938Campaign.M2.RawCount
+import Wu18938Campaign.M2.PowerConsumer
+import Wu18938Campaign.M2.SourceCountConsumer
+import Wu18938Campaign.M2.SourcePsiConsumer

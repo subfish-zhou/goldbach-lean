@@ -213,6 +213,7 @@ private theorem smooth_cell_integral {p : SecondFunctionalParameters} (hp : Full
   intro t ht
   have ht' : t ∈ Icc r.A r.B := by
     simpa only [uIcc_of_le r.bounds.2.1] using ht
+  dsimp only
   rw [max_eq_left (ht'.2.trans r.separated), min_eq_right r.bounds.2.2.2.2.1]
   apply intervalIntegral.integral_congr
   intro u hu

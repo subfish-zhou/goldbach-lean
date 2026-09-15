@@ -104,6 +104,6 @@ theorem paperSmallEighth_original_integral_add_low {e σ : ℝ}
   refine ⟨N₀, ?_⟩
   intro N hN hEven
   rw [paperSmallEighth_eq, U8Literal.physicalSmall_card_split N e, Nat.cast_add]
-  exact add_le_add_right (hN₀ N hN hEven) _
+  exact add_le_add (hN₀ N hN hEven) le_rfl
 
 end Wu18938Campaign.M6

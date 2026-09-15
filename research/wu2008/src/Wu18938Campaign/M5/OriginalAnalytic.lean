@@ -38,7 +38,8 @@ theorem coefficient_bound {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2)
     apply (div_le_iff₀ (by positivity : 0 < 2 * exp eulerMascheroniConstant)).mpr
     have hF := mul_le_mul_of_nonneg_left (jr1965F_le_delayConstant hs.1) hs0.le
     unfold jr1965DelayConstant at hF
-    nlinarith [exp_pos eulerMascheroniConstant]
+    exact hF.trans (mul_le_mul_of_nonneg_right
+      (hs.2.trans (by norm_num : (5 : ℝ) ≤ 10)) (by positivity))
   rw [abs_of_nonneg (add_nonneg ha hb.2.2.1)]
   linarith [hb.2.2.2]
 
@@ -54,5 +55,36 @@ theorem original_ah_uniform_limit {ε : ℝ} (hε : 0 < ε) :
   exact h η hη hηhi δ hδ.le hδhi (coefficient δ)
     (coefficient_measurable hδ (by linarith))
     (coefficient_bound hδ (by linarith))
+
+theorem mass_congr_on_envelope {f g : ℝ × ℝ → ℝ} {η : ℝ}
+    (hη : 0 ≤ η) (hfg : EqOn f g originalEnvelope) :
+    originalMass f η = originalMass g η := by
+  have ha : mass f (100 / 1327) (25 / 206) (25 / 206)
+      (1 / 2 - 2 * (25 / 206) - η) =
+      mass g (100 / 1327) (25 / 206) (25 / 206)
+        (1 / 2 - 2 * (25 / 206) - η) := by
+    apply setIntegral_congr_fun (rectangle_measurable _ _ _ _)
+    intro z hz
+    exact hfg ⟨hz.1, hz.2.1, by linarith [hz.2.2]⟩
+  have hb : mass f (100 / 1327) (3 * (100 / 1327) / 2)
+      (1 / 2 - 2 * (25 / 206)) (1 / 2 - 3 * (100 / 1327) - η) =
+      mass g (100 / 1327) (3 * (100 / 1327) / 2)
+        (1 / 2 - 2 * (25 / 206)) (1 / 2 - 3 * (100 / 1327) - η) := by
+    apply setIntegral_congr_fun (rectangle_measurable _ _ _ _)
+    intro z hz
+    exact hfg ⟨⟨hz.1.1, by linarith [hz.1.2]⟩,
+      (by norm_num : (25 / 206 : ℝ) ≤ 1 / 2 - 2 * (25 / 206)).trans hz.2.1,
+      by linarith [hz.2.2]⟩
+  simp only [originalMass, ha, hb]
+
+theorem mass_actual_coefficient {δ ρ η : ℝ}
+    (hρ : 0 ≤ ρ) (hρhi : ρ ≤ 1 / 100) (hη : 0 ≤ η) :
+    originalMass (kernel ρ (coefficient δ)) η =
+      originalMass (kernel ρ (fun s => wuLowerCoefficient s +
+        wuImprovementLimit false δ s)) η := by
+  apply mass_congr_on_envelope hη
+  intro z hz
+  unfold kernel
+  rw [coefficient_eq (envelope_parameter hρ hρhi hz)]
 
 end Wu18938Campaign.M5.OriginalAnalytic

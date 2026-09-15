@@ -15,6 +15,8 @@ set_option pp.all true
 #print axioms Wu18938Campaign.M6.high_prefix_paid
 #check @Wu18938Campaign.M6.high_prefix_normalized
 #print axioms Wu18938Campaign.M6.high_prefix_normalized
+#check @Wu18938Campaign.M6.paperSmallEighth_normalized_add_low
+#print axioms Wu18938Campaign.M6.paperSmallEighth_normalized_add_low
 #check @Wu18938Campaign.M6.high_prefix_original_integral
 #print axioms Wu18938Campaign.M6.high_prefix_original_integral
 #check @Wu18938Campaign.M6.paperSmallEighth_original_integral_add_low
@@ -44,7 +46,9 @@ run_cmd do
     `MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_signedError_c2,
     `U8Literal.Mesh.mesh_log_payment,
     `OriginalU8.actualCenter_normalized,
-    `OriginalU8.Weighted.original_mass_integral] do
+    `Wu18938Campaign.M6.paperSmallEighth_eq,
+    `OriginalU8.Weighted.original_mass_integral,
+    `Wu18938Campaign.M6.high_prefix_original_integral] do
     unless seen.contains n do throwError "MISSING_M6_PRODUCER {n}"
     logInfo m!"M6_PRODUCER_REACHED {n}"
   for n in [
@@ -53,4 +57,4 @@ run_cmd do
     `MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_signedError_kscale,
     `OriginalU8.Weighted.physicalSmall_original_integral] do
     if seen.contains n then throwError "UNADMITTED_M6_SHORTCUT_REACHED {n}"
-  logInfo "M6_STRICT_ORIGINAL_HIGH_PREFIX_CONE_PASS"
+  logInfo "M6_STRICT_ORIGINAL_HIGH_PREFIX_INTEGRAL_CONE_PASS"

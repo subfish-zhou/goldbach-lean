@@ -68,8 +68,9 @@ theorem fullIntegral_eq_original66 {p : SecondFunctionalParameters} (hp : FullPa
       have hv : (t, u) ∉ fullDomain p :=
         fun h => hn ⟨h.1, h.2.1.trans h.2.2⟩
       exact indicator_of_notMem hv _
+    dsimp only
     rw [hz]
-    exact integral_zero
+    exact integral_zero ℝ ℝ
   have hinner (t : ℝ) : Function.support (fun u => fullKernel p δ (t, u)) ⊆
       Icc t (1 / p.kappa2) := by
     intro u hu
@@ -85,12 +86,14 @@ theorem fullIntegral_eq_original66 {p : SecondFunctionalParameters} (hp : FullPa
   intro t ht
   have ht' : t ∈ Icc (1 / p.S) (1 / p.kappa2) := by
     simpa only [uIcc_of_le hab] using ht
+  dsimp only
   rw [truncatedSixthMass_integral_eq_interval ht'.2 (hinner t),
     ← intervalIntegral.integral_div]
   apply intervalIntegral.integral_congr
   intro u hu
   have hu' : u ∈ Icc t (1 / p.kappa2) := by
     simpa only [uIcc_of_le ht'.2] using hu
+  dsimp only
   rw [full_kernel_value hp δ ⟨ht'.1, hu'.1, hu'.2⟩,
     show p.S * (1 - t - u) = p.S - p.S * t - p.S * u by ring]
   simp only [div_eq_mul_inv, mul_inv_rev]

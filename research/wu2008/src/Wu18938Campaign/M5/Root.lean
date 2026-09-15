@@ -2,4 +2,6 @@ import Wu18938Campaign.M5.StrictCorner
 import Wu18938Campaign.M5.KernelCorner
 import Wu18938Campaign.M5.LiteralCount
 import Wu18938Campaign.M5.TruncationConsumer
+import Wu18938Campaign.M5.LeafConsumer
 import Wu18938Campaign.M5.OriginalConsumer
+import Wu18938Campaign.M5.SmallMotherOriginal

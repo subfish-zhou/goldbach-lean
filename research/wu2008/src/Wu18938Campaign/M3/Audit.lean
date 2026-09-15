@@ -30,6 +30,11 @@ set_option pp.notation false
 #check @Wu18938Campaign.M3.fullIntegral_eq_original66
 #check @Wu18938Campaign.M3.fullHMass_original66_lower
 #check @Wu18938Campaign.M3.original_four_count_with_defect
+#check @Wu18938Campaign.M3.original67_eq_gain
+#check @Wu18938Campaign.M3.original68_eq_gains
+#check @Wu18938Campaign.M3.original_feedback_difference
+#check @Wu18938Campaign.M3.original_functional_gap
+#check @Wu18938Campaign.M3.original_four_functional_comparison_iff
 
 #print axioms Wu18938Campaign.M3.FullCell
 #print axioms Wu18938Campaign.M3.FullCell.mk
@@ -55,3 +60,8 @@ set_option pp.notation false
 #print axioms Wu18938Campaign.M3.fullIntegral_eq_original66
 #print axioms Wu18938Campaign.M3.fullHMass_original66_lower
 #print axioms Wu18938Campaign.M3.original_four_count_with_defect
+#print axioms Wu18938Campaign.M3.original67_eq_gain
+#print axioms Wu18938Campaign.M3.original68_eq_gains
+#print axioms Wu18938Campaign.M3.original_feedback_difference
+#print axioms Wu18938Campaign.M3.original_functional_gap
+#print axioms Wu18938Campaign.M3.original_four_functional_comparison_iff

@@ -27,7 +27,7 @@ private theorem gamma9_coefficient_radius {ε : ℝ} (heps : 0 < ε) :
       (8 * psiLogWeight (j.castAdd 4))
   have hc (j : Fin 3) : ContinuousAt (f j) 0 := by
     dsimp only [f]
-    fun_prop
+    fun_prop (disch := norm_num)
   choose r hr hb using fun j => Metric.continuousAt_iff.mp (hc j) ε heps
   let R := min (1 / 100 : ℝ) (min (r 0) (min (r 1) (r 2)))
   have hR : 0 < R := lt_min (by norm_num) (lt_min (hr 0) (lt_min (hr 1) (hr 2)))

@@ -45,7 +45,14 @@ theorem six_label_rough_uniform {ε : ℝ} (heps : 0 < ε) :
     ((hlarge N (by omega)).trans hqlo) hx
   have h := hscalar N (by omega) D q hD hqlo
   rw [if_pos hDX, if_pos hDq] at h
-  change ((roughNumbers ((N : ℝ) / D) q).card : ℝ) ≤ _
-  nlinarith only [h, hu]
+  change ((roughNumbers ((N : ℝ) / D) q).card : ℝ) ≤
+    (buchstab (log ((N : ℝ) / D) / log q) + ε) * ((N : ℝ) / D) / log q
+  calc
+    _ ≤ 1 + (buchstab (log ((N : ℝ) / D) / log q) + ε / 2) *
+        ((N : ℝ) / D) / log q := h
+    _ ≤ (ε / 2) * ((N : ℝ) / D) / log q +
+        (buchstab (log ((N : ℝ) / D) / log q) + ε / 2) *
+          ((N : ℝ) / D) / log q := add_le_add hu le_rfl
+    _ = _ := by ring
 
 end Wu18938Campaign.M4

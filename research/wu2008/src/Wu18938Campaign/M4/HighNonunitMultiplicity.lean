@@ -92,7 +92,11 @@ theorem original_nonunit_fixed_cofactor {N : ℕ} {δ : ℝ} (j : Fin 3)
 def originalNonunitFamily (j : Fin 3) (N : ℕ) (δ : ℝ) (high : Bool) :
     LabelledPhysical.Family Profile N :=
   actualFamily N δ (Wu04RemainingCore.row j) (windows j N) high
-    (fun _ hd => (mem_primeWindow.mp (by simpa only [support_eq] using hd)).1.pos)
+    (by
+      intro d hd
+      have hdm : d ∈ psiPrimes (j.castAdd 4) N := by
+        simpa only [support_eq] using hd
+      exact (mem_primeWindow.mp hdm).1.pos)
 
 theorem original_nonunit_geometry {N : ℕ} {δ : ℝ} (j : Fin 3)
     (hN : 2 ≤ N) (hd : 0 < δ) (hh : δ ≤ 1 / 100) (high : Bool) {x : Profile}

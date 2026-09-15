@@ -26419,7 +26419,7 @@
     "matching_source_variants": 2,
     "source_binding": "matching_object_imports_rebuild_required",
     "recovered_source_sha256": "7907935a3eb391fc23a3ee7d6c6861f6091c3921816d2ae769e1b06fe6452bd5",
-    "integration_adaptation": "Explicitly reference retained h\u0398 and hC1 hypotheses to satisfy unused-variable linter; public binders, mathematical statements, constants and strict checks unchanged."
+    "integration_adaptation": "Explicitly reference retained hΘ and hC1 hypotheses to satisfy unused-variable linter; public binders, mathematical statements, constants and strict checks unchanged."
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBridge",
@@ -36389,7 +36389,7 @@
     "matching_source_variants": 1,
     "source_binding": "matching_object_imports_rebuild_required",
     "recovered_source_sha256": "d05e6cd7d1771a0f6d6f7ce468331d0116afb46eeb491796cc654e1d50491f5f",
-    "integration_adaptation": "Retain and explicitly reference h\u03c3upper and h\u03c7, remove unused simp arguments, use let for proof-local instance; statements and strict checks unchanged. Restore existing public conductor-block lower-bound lemma from formal repository, retaining original interfaces.",
+    "integration_adaptation": "Retain and explicitly reference hσupper and hχ, remove unused simp arguments, use let for proof-local instance; statements and strict checks unchanged. Restore existing public conductor-block lower-bound lemma from formal repository, retaining original interfaces.",
     "restored_public_lemma_source": "/home/azureuser/goldbach-v1-release/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973Lemma6Equation17AlphaBridge.lean",
     "old_object_interface_check": {
       "checked_old_nonprivate_constants": 17,
@@ -41673,16 +41673,17 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundary",
-    "source_sha256": "9dba25974c4de47f83c7bd758d957ff258c9bfdd9799cf321d095e99bea87d10",
+    "source_sha256": "c5195e64190411052aed4e7519e9afdd37c7d440f152894e761568e02c4b5862",
     "object_sha256": "7cff32dc29a4c74a6dfde4fad76c590700d0b2f66068cc8888a27dda58c1115d",
     "imports": [
+      "MathlibNt.Analysis.MovingIntervalIntegral",
       "Init",
       "Init",
       "MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralContinuous",
       "MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit"
     ],
     "matching_source_variants": 2,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "explicit_missing_import_restored_from_existing_release_proofs; mathematical_body_unchanged"
   },
   {
     "module": "HighConsumerPacking",
@@ -45999,5 +46000,17 @@
       "WRMapMSigmaRoot"
     ],
     "source_binding": "new_aggregate_no_new_mathematics"
+  },
+  {
+    "module": "MathlibNt.Analysis.MovingIntervalIntegral",
+    "source_sha256": "9905992e4664d4f689ad3a24c8bf5d3591a4d2de88ddf1df14a4016873741fb2",
+    "imports": [
+      "Mathlib.MeasureTheory.Integral.Prod",
+      "Mathlib.MeasureTheory.Integral.Bochner.Set"
+    ],
+    "source_binding": "exact_existing_release_source_copy",
+    "source_origin": "goldbach-lean/main/MathlibNt/Analysis/MovingIntervalIntegral.lean",
+    "matching_source_variants": 1,
+    "object_sha256": null
   }
 ]

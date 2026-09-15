@@ -1,1 +1,7 @@
-import Wu18938Campaign.M1.PaperAssembly
+import Wu18938Campaign.M1.Consumer
+import Wu18938Campaign.M1.ResidualClassification
+import Wu18938Campaign.M1.FourFactorSize
+import Wu18938Campaign.M1.FinitePointInstance
+import Wu18938Campaign.M1.TargetCount
+import Wu18938Campaign.M1.TailCount
+import Wu18938Campaign.M1.TailLevel

@@ -13,6 +13,7 @@ theorem physicalSmall_output_inj (N : ℕ) :
   rintro ⟨⟨a, b⟩, c⟩ hx ⟨⟨d, e⟩, f⟩ hy h
   obtain ⟨ha, hb, hc, _, _, _, _, _, hab, hbc, _, _, hprod, _⟩ := physicalSmall_data hx
   obtain ⟨hd, he, hf, _, _, _, _, _, hde, hef, _, _, hprod', _⟩ := physicalSmall_data hy
+  change output N a (b * c) = output N d (e * f) at h
   rw [output_eq_original hx, output_eq_original hy] at h
   have hp : a * b * c = d * e * f := by
     change a * b * c < N at hprod
@@ -61,6 +62,6 @@ theorem physicalPrefix_le_rectangles_paid_output (A : ℕ) {σ : ℝ} (hσ : 0 <
   refine ⟨N₀, hN₀, ?_⟩
   intro N hN e ρ hρ P hP hcut
   exact (physicalPrefix_le_rectangles_add_outputBad (by omega) e hρ P).trans
-    (add_le_add_left (hpay N hN e P hP hcut) _)
+    (add_le_add le_rfl (hpay N hN e P hP hcut))
 
 end Wu18938Campaign.M6

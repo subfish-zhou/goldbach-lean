@@ -61,6 +61,30 @@ theorem source_buchstab_product (N D M : ℕ) {z w : ℝ} (hzw : z ≤ w)
   intro q hq
   rw [(hcop q hq).lcm_eq_mul]
 
+theorem selected_first_carrier {N D M p : ℕ} {w : ℝ}
+    (hp : p.Prime) (hpM : p.Coprime M) (hpD : p ∣ D) (hpw : (p : ℝ) < w) :
+    (sourceSieveCarrier N D M p).filter
+        (fun ell => FirstDivisor (primeWindow M p w) (N - ell) p) =
+      sourceSieveCarrier N D M p := by
+  have hlcm : Nat.lcm D p = D := Nat.dvd_antisymm
+    (Nat.lcm_dvd_iff.mpr ⟨dvd_rfl, hpD⟩) (Nat.dvd_lcm_left D p)
+  rw [source_first_carrier N D M (mem_primeWindow.mpr ⟨hp, hpM, le_rfl, hpw⟩), hlcm]
+
+theorem selected_diagonal_mass {N D M p : ℕ} {w : ℝ}
+    (hp : p.Prime) (hpM : p.Coprime M) (hpD : p ∣ D) (hpw : (p : ℝ) < w) :
+    (∑ r ∈ primeWindow M p w, sourceSieveCount N (Nat.lcm D r) M r) =
+        sourceSieveCount N D M p ∧
+      (∑ r ∈ (primeWindow M p w).filter (fun r => p < r),
+        sourceSieveCount N (D * r) M r) = 0 := by
+  constructor
+  · rw [← source_buchstab_lcm N D M hpw.le]
+    simp [sourceSieveCount, sourceSieveCarrier_eq_empty_of_selected hp hpM hpD hpw]
+  · apply sum_eq_zero
+    intro r hr
+    have hpr := (mem_filter.mp hr).2
+    simp [sourceSieveCount, sourceSieveCarrier_eq_empty_of_selected hp hpM
+      (hpD.trans (dvd_mul_right D r)) (by exact_mod_cast hpr : (p : ℝ) < r)]
+
 theorem penultimate_buchstab (N A p q : ℕ)
     (hp : p.Prime) (hq : q.Prime) (hpq : p ≤ q) :
     sourceSieveCount N (A * p * q) (A * N) p -
@@ -69,8 +93,7 @@ theorem penultimate_buchstab (N A p q : ℕ)
         sourceSieveCount N (A * p * r * q) (A * p * N) r := by
   have he : sourceSieveCount N (A * p * q) (A * N) p =
       sourceSieveCount N (A * p * q) (A * p * N) p := by
-    unfold sourceSieveCount
-    congr 1
+    apply congrArg (fun s : Finset ℕ => (s.card : ℤ))
     ext ell
     have hs : Sifted (A * p * N) (N - ell) (p : ℝ) ↔
         Sifted (A * N) (N - ell) (p : ℝ) := by

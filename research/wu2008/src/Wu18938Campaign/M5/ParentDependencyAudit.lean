@@ -1,0 +1,8 @@
+import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundary
+
+set_option pp.fullNames true
+#check @MathlibNt.Analysis.integral_indicator_moving_Ioc_section
+#check @MathlibNt.Analysis.setIntegral_moving_Ioc_eq_iterated
+#print axioms MathlibNt.Analysis.integral_indicator_moving_Ioc_section
+#print axioms MathlibNt.Analysis.setIntegral_moving_Ioc_eq_iterated
+#print axioms MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RelaxedIntegralLow_eq_setIntegral
