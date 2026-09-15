@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3R1Source
+
+#check Wu2008DoubleSieve.omega3LayerLower_two
+#print axioms Wu2008DoubleSieve.omega3LayerLower_two
+#check Wu2008DoubleSieve.omega3_sieve_R1_log_saving
+#print axioms Wu2008DoubleSieve.omega3_sieve_R1_log_saving
+#check Wu2008DoubleSieve.omega3_sieve_R1_relative
+#print axioms Wu2008DoubleSieve.omega3_sieve_R1_relative

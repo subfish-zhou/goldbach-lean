@@ -1,0 +1,25 @@
+import MathlibNt.Wu2004MeanValue.SieveAsymptoticsProduct
+
+open Wu2004MeanValue
+#check sieveDensityProduct
+#print axioms sieveDensityProduct
+#check sieveDensityProduct_eq_goldbachSieveProduct
+#print axioms sieveDensityProduct_eq_goldbachSieveProduct
+#check sieveDensityProduct_nonneg
+#print axioms sieveDensityProduct_nonneg
+#check sieveMertensCutoff
+#print axioms sieveMertensCutoff
+#check tendsto_sieveMertensCutoff_atTop
+#print axioms tendsto_sieveMertensCutoff_atTop
+#check sieveMertensCutoff_bounds
+#print axioms sieveMertensCutoff_bounds
+#check tendsto_log_sieveMertensCutoff_div_log
+#print axioms tendsto_log_sieveMertensCutoff_div_log
+#check tendsto_sieveMertensUpperCoefficient
+#print axioms tendsto_sieveMertensUpperCoefficient
+#check eventually_sieveDensityProduct_upper
+#print axioms eventually_sieveDensityProduct_upper
+#check exists_eventually_sieveDensityProduct_upperFactor
+#print axioms exists_eventually_sieveDensityProduct_upperFactor
+#check exists_sieveDensityProduct_upperFactor
+#print axioms exists_sieveDensityProduct_upperFactor

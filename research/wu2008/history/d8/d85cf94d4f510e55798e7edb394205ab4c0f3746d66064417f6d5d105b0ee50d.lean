@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.RelativeSieveRemainder
+
+#check Wu2008DoubleSieve.wu_signed_rosser_remainder_relative
+#print axioms Wu2008DoubleSieve.wu_signed_rosser_remainder_relative
+#check Wu2008DoubleSieve.wu_common_level_remainder_relative
+#print axioms Wu2008DoubleSieve.wu_common_level_remainder_relative

@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.ImprovementCrossLower
+
+#check Wu2008DoubleSieve.reboxingRawPrimeSum_lower_integral
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum_lower_integral
+#check Wu2008DoubleSieve.wuImprovementAt_upper_cross_eventually
+#print axioms Wu2008DoubleSieve.wuImprovementAt_upper_cross_eventually
+#check Wu2008DoubleSieve.wuImprovementAtInfinity_upper_cross
+#print axioms Wu2008DoubleSieve.wuImprovementAtInfinity_upper_cross
+#check Wu2008DoubleSieve.wuImprovementLimit_upper_cross
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_upper_cross
+#check Wu2008DoubleSieve.wu08_38
+#print axioms Wu2008DoubleSieve.wu08_38
+#check Wu2008DoubleSieve.wuImprovementLimit_upper_antitone
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_upper_antitone

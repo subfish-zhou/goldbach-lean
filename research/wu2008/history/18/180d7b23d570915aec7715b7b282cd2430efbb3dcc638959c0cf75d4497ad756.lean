@@ -1,0 +1,46 @@
+import MathlibNt.Wu2008DoubleSieve.ElevenTermAssembly
+
+open Wu2008DoubleSieve
+
+#check sum_s3_orderedTriples_descending
+#print axioms sum_s3_orderedTriples_descending
+#check sum_s3SecondRange_descending
+#print axioms sum_s3SecondRange_descending
+#check sum_primeWindow_split
+#print axioms sum_primeWindow_split
+#check finiteElevenExpression
+#print axioms finiteElevenExpression
+#check finiteElevenMixed
+#print axioms finiteElevenMixed
+#check s3PairRepeatedBudget
+#print axioms s3PairRepeatedBudget
+#check s3VariableSlack
+#print axioms s3VariableSlack
+#check s3VariableSlack_nonneg
+#print axioms s3VariableSlack_nonneg
+#check finiteElevenMixed_exact_lower_weights
+#print axioms finiteElevenMixed_exact_lower_weights
+#check lowerS2_eq_zero_of_cubic_cutoff
+#print axioms lowerS2_eq_zero_of_cubic_cutoff
+#check lowerWeightOuterSlack
+#print axioms lowerWeightOuterSlack
+#check lowerWeightOuterSlack_nonneg
+#print axioms lowerWeightOuterSlack_nonneg
+#check finiteElevenMixed_exact_count
+#print axioms finiteElevenMixed_exact_count
+#check finiteElevenExpression_sub
+#print axioms finiteElevenExpression_sub
+#check finiteElevenUnscaled
+#print axioms finiteElevenUnscaled
+#check finiteElevenMixed_eq_unscaled_add_signed_transport
+#print axioms finiteElevenMixed_eq_unscaled_add_signed_transport
+#check finiteAssemblyGains
+#print axioms finiteAssemblyGains
+#check finiteAssemblyGains_nonneg
+#print axioms finiteAssemblyGains_nonneg
+#check finiteElevenMixed_exact_aggregate
+#print axioms finiteElevenMixed_exact_aggregate
+#check finiteElevenMixed_le_count_signed_paid
+#print axioms finiteElevenMixed_le_count_signed_paid
+#check finiteElevenExpression_le_count_signed_paid
+#print axioms finiteElevenExpression_le_count_signed_paid

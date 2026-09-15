@@ -1,0 +1,46 @@
+import MathlibNt.Wu2008DoubleSieve.NinthMainMass
+
+#check Wu2008DoubleSieve.J9_integrable
+#check Wu2008DoubleSieve.J9_nonneg
+#check Wu2008DoubleSieve.J9_eq_triangle_integral
+#check Wu2008DoubleSieve.P9_sharp_prefix_uniform
+#check Wu2008DoubleSieve.X9_sharp_pair_bound
+#check Wu2008DoubleSieve.X9_le_J9_add_epsilon
+
+#print axioms Wu2008DoubleSieve.ninthMainClip
+#print axioms Wu2008DoubleSieve.ninthMainTop
+#print axioms Wu2008DoubleSieve.ninthMainKernel
+#print axioms Wu2008DoubleSieve.ninthMainInner
+#print axioms Wu2008DoubleSieve.J9
+#print axioms Wu2008DoubleSieve.ninthMain_parameters
+#print axioms Wu2008DoubleSieve.ninthMainClip_bounds
+#print axioms Wu2008DoubleSieve.ninthMainClip_lipschitz
+#print axioms Wu2008DoubleSieve.ninthMainTop_bounds
+#print axioms Wu2008DoubleSieve.ninthMainKernel_den_pos
+#print axioms Wu2008DoubleSieve.ninthMainKernel_bound
+#print axioms Wu2008DoubleSieve.ninthMain_inverse_lipschitz
+#print axioms Wu2008DoubleSieve.ninthMainKernel_lipschitz_second
+#print axioms Wu2008DoubleSieve.ninthMainKernel_lipschitz_first
+#print axioms Wu2008DoubleSieve.ninthMainKernel_continuous
+#print axioms Wu2008DoubleSieve.ninthMainInner_regular
+#print axioms Wu2008DoubleSieve.ninthMainInner_continuous
+#print axioms Wu2008DoubleSieve.ninthMainInner_eq
+#print axioms Wu2008DoubleSieve.J9_integrable
+#print axioms Wu2008DoubleSieve.J9_eq_iterated
+#print axioms Wu2008DoubleSieve.J9_eq_triangle_integral
+#print axioms Wu2008DoubleSieve.J9_nonneg
+#print axioms Wu2008DoubleSieve.ninthMainCoordinate
+#print axioms Wu2008DoubleSieve.ninthMainPairSum
+#print axioms Wu2008DoubleSieve.ninthMainNestedSum
+#print axioms Wu2008DoubleSieve.ninthMain_coordinate_mem
+#print axioms Wu2008DoubleSieve.ninthMain_pair_mem
+#print axioms Wu2008DoubleSieve.ninthMainPairSum_le_nested
+#print axioms Wu2008DoubleSieve.ninthMainNestedSum_eventually_le
+#print axioms Wu2008DoubleSieve.ninthMainPairSum_eventually_le
+#print axioms Wu2008DoubleSieve.P9_card_le_primePi
+#print axioms Wu2008DoubleSieve.ninthMain_prefix_lower
+#print axioms Wu2008DoubleSieve.P9_sharp_prefix_uniform
+#print axioms Wu2008DoubleSieve.X9_eq_pair_profiles
+#print axioms Wu2008DoubleSieve.ninthMain_pair_prefix_normalization
+#print axioms Wu2008DoubleSieve.X9_sharp_pair_bound
+#print axioms Wu2008DoubleSieve.X9_le_J9_add_epsilon

@@ -1,0 +1,14 @@
+import MathlibNt.Wu2004MeanValue.CommonProfileEndpoints
+
+#check Wu2004MeanValue.actualAPSum_mul_coeff
+#print axioms Wu2004MeanValue.actualAPSum_mul_coeff
+#check Wu2004MeanValue.common_profile_weighted_real
+#print axioms Wu2004MeanValue.common_profile_weighted_real
+#check Wu2004MeanValue.common_profile_residueSup_real
+#print axioms Wu2004MeanValue.common_profile_residueSup_real
+#check Wu2004MeanValue.actualAPSum_div_profile
+#print axioms Wu2004MeanValue.actualAPSum_div_profile
+#check Wu2004MeanValue.common_profile_W1_tail_residueSup
+#print axioms Wu2004MeanValue.common_profile_W1_tail_residueSup
+#check Wu2004MeanValue.common_profile_block_residueSup
+#print axioms Wu2004MeanValue.common_profile_block_residueSup

@@ -1,0 +1,22 @@
+import MathlibNt.Wu2004MeanValue.CutoffSeparation
+import Mathlib.Tactic
+
+#check tendsto_pow_atTop_atTop_of_one_lt
+#check Nat.find_spec
+#check Nat.find_min'
+#check Real.log_pow
+#check Real.log_sqrt
+#check Real.log_le_sub_one_of_pos
+#check Nat.cast_le
+#check geom_sum_mul
+#check Finset.sum_range_succ
+#check Real.tendsto_sqrt_atTop
+#check Filter.Tendsto.const_mul_atTop
+#check Real.log_le_log
+#check Nat.find_min
+#check Real.sqrt_le_iff
+#check Real.log_nonpos
+#check Filter.eventually_atTop
+#check Filter.Eventually.filter_mono
+#check tendsto_natCast_atTop_atTop
+#check Real.isLittleO_log_id_atTop

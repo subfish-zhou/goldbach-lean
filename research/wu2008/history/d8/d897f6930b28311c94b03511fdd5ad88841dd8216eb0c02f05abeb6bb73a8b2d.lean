@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3CofactorSource
+
+#check Wu2008DoubleSieve.omega3_cofactor_labels_geometry
+#print axioms Wu2008DoubleSieve.omega3_cofactor_labels_geometry
+#check Wu2008DoubleSieve.omega3_cofactor_labels_subset
+#print axioms Wu2008DoubleSieve.omega3_cofactor_labels_subset
+#check Wu2008DoubleSieve.omega3_cofactor_labels_fibre_uniform
+#print axioms Wu2008DoubleSieve.omega3_cofactor_labels_fibre_uniform

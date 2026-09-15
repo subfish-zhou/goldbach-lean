@@ -1,0 +1,4 @@
+import MathlibNt.Wu2004MeanValue.BalancedAPWeightCount
+
+#check Wu2004MeanValue.balanced_scaledPrimeCount_sum_bound
+#print axioms Wu2004MeanValue.balanced_scaledPrimeCount_sum_bound

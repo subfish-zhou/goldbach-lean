@@ -1,0 +1,108 @@
+import MathlibNt.Wu2008DoubleSieve.Buchstab
+import MathlibNt.Wu2008DoubleSieve.CanonicalUpperDensity
+import MathlibNt.Wu2008DoubleSieve.Counting
+import MathlibNt.Wu2008DoubleSieve.SourceCarriers
+import MathlibNt.Wu2008DoubleSieve.LowerWeightSum
+import MathlibNt.Wu2008DoubleSieve.VariableS3
+import MathlibNt.Wu2008DoubleSieve.WuSourceLevel
+
+#check @Wu2008DoubleSieve.FirstDivisor
+#print axioms Wu2008DoubleSieve.FirstDivisor
+#check @Wu2008DoubleSieve.firstMass
+#print axioms Wu2008DoubleSieve.firstMass
+#check Wu2008DoubleSieve.ordinaryGoldbachBoundingSieve
+#print axioms Wu2008DoubleSieve.ordinaryGoldbachBoundingSieve
+#check MathlibNt.Wu2008DoubleSieve.wuPrimeComplements
+#print axioms MathlibNt.Wu2008DoubleSieve.wuPrimeComplements
+#check MathlibNt.Wu2008DoubleSieve.totalizedOmegaPrimeComplements
+#print axioms MathlibNt.Wu2008DoubleSieve.totalizedOmegaPrimeComplements
+#check @Wu2008DoubleSieve.orderedTriples
+#print axioms Wu2008DoubleSieve.orderedTriples
+#check @Wu2008DoubleSieve.firstTwoTriples
+#print axioms Wu2008DoubleSieve.firstTwoTriples
+#check @Wu2008DoubleSieve.divisorsIn
+#print axioms Wu2008DoubleSieve.divisorsIn
+#check @Wu2008DoubleSieve.siftedIndices
+#print axioms Wu2008DoubleSieve.siftedIndices
+#check @Wu2008DoubleSieve.tripleSurvives
+#print axioms Wu2008DoubleSieve.tripleSurvives
+#check @Wu2008DoubleSieve.singleMass
+#print axioms Wu2008DoubleSieve.singleMass
+#check @Wu2008DoubleSieve.tripleMass
+#print axioms Wu2008DoubleSieve.tripleMass
+#check Wu2008DoubleSieve.Sifted
+#print axioms Wu2008DoubleSieve.Sifted
+#check Wu2008DoubleSieve.primeWindow
+#print axioms Wu2008DoubleSieve.primeWindow
+#check Wu2008DoubleSieve.sieveCarrier
+#print axioms Wu2008DoubleSieve.sieveCarrier
+#check Wu2008DoubleSieve.sieveCount
+#print axioms Wu2008DoubleSieve.sieveCount
+#check Wu2008DoubleSieve.SiftedLE
+#print axioms Wu2008DoubleSieve.SiftedLE
+#check Wu2008DoubleSieve.sieveCarrierLE
+#print axioms Wu2008DoubleSieve.sieveCarrierLE
+#check Wu2008DoubleSieve.exceptionalGoldbach
+#print axioms Wu2008DoubleSieve.exceptionalGoldbach
+#check Wu2008DoubleSieve.lowerS2
+#print axioms Wu2008DoubleSieve.lowerS2
+#check Wu2008DoubleSieve.lowerS3
+#print axioms Wu2008DoubleSieve.lowerS3
+#check Wu2008DoubleSieve.lowerWeightRHS
+#print axioms Wu2008DoubleSieve.lowerWeightRHS
+#check Wu2008DoubleSieve.lowerPairs
+#print axioms Wu2008DoubleSieve.lowerPairs
+#check Wu2008DoubleSieve.lowerPairSurvives
+#print axioms Wu2008DoubleSieve.lowerPairSurvives
+#check Wu2008DoubleSieve.lowerPairPenalty
+#print axioms Wu2008DoubleSieve.lowerPairPenalty
+#check Wu2008DoubleSieve.lowerWeight
+#print axioms Wu2008DoubleSieve.lowerWeight
+#check Wu2008DoubleSieve.OddPrimes
+#print axioms Wu2008DoubleSieve.OddPrimes
+#check Wu2008DoubleSieve.wuSingularSeries
+#print axioms Wu2008DoubleSieve.wuSingularSeries
+#check Wu2008DoubleSieve.ordinaryRosserMainSum
+#print axioms Wu2008DoubleSieve.ordinaryRosserMainSum
+#check @Wu2008DoubleSieve.convolutionSieveCount
+#print axioms Wu2008DoubleSieve.convolutionSieveCount
+#check @Wu2008DoubleSieve.convolutionRosserMain
+#print axioms Wu2008DoubleSieve.convolutionRosserMain
+#check Wu2008DoubleSieve.goldbachDivisible
+#print axioms Wu2008DoubleSieve.goldbachDivisible
+#check Wu2008DoubleSieve.sourceSequenceCount
+#print axioms Wu2008DoubleSieve.sourceSequenceCount
+#check Wu2008DoubleSieve.sourceSequenceRemainder
+#print axioms Wu2008DoubleSieve.sourceSequenceRemainder
+#check Wu2008DoubleSieve.ordinarySievePrimeProduct
+#print axioms Wu2008DoubleSieve.ordinarySievePrimeProduct
+#check Wu2008DoubleSieve.ordinaryRosserWeight
+#print axioms Wu2008DoubleSieve.ordinaryRosserWeight
+#check Wu2008DoubleSieve.ordinaryRosserRemainder
+#print axioms Wu2008DoubleSieve.ordinaryRosserRemainder
+#check @Wu2008DoubleSieve.convolutionRosserRemainder
+#print axioms Wu2008DoubleSieve.convolutionRosserRemainder
+#check Wu2008DoubleSieve.sourceSieveCarrier
+#print axioms Wu2008DoubleSieve.sourceSieveCarrier
+#check Wu2008DoubleSieve.sourceSieveCarrierLE
+#print axioms Wu2008DoubleSieve.sourceSieveCarrierLE
+#check Wu2008DoubleSieve.sourceSieveCount
+#print axioms Wu2008DoubleSieve.sourceSieveCount
+#check Wu2008DoubleSieve.sourceSieveCountLE
+#print axioms Wu2008DoubleSieve.sourceSieveCountLE
+#check Wu2008DoubleSieve.sourceLowerWeightRHS
+#print axioms Wu2008DoubleSieve.sourceLowerWeightRHS
+#check Wu2008DoubleSieve.sourceVariableS3Main
+#print axioms Wu2008DoubleSieve.sourceVariableS3Main
+#check Wu2008DoubleSieve.variableS3CrossingCorrection
+#print axioms Wu2008DoubleSieve.variableS3CrossingCorrection
+#check Wu2008DoubleSieve.largePrimeSquareExceptions
+#print axioms Wu2008DoubleSieve.largePrimeSquareExceptions
+#check Wu2008DoubleSieve.squarefulSiftedGoldbach
+#print axioms Wu2008DoubleSieve.squarefulSiftedGoldbach
+#check Wu2008DoubleSieve.variableS3Main
+#print axioms Wu2008DoubleSieve.variableS3Main
+#check Wu2008DoubleSieve.variableS3Triples
+#print axioms Wu2008DoubleSieve.variableS3Triples
+#check @Wu2008DoubleSieve.wuCommonRosserLevel
+#print axioms Wu2008DoubleSieve.wuCommonRosserLevel

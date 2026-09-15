@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR3
+
+#check Wu2008DoubleSieve.reboxingR3_parameter_mem
+#print axioms Wu2008DoubleSieve.reboxingR3_parameter_mem
+#check Wu2008DoubleSieve.reboxing_totient_weight_le_four_div
+#print axioms Wu2008DoubleSieve.reboxing_totient_weight_le_four_div
+#check Wu2008DoubleSieve.reboxingR3
+#print axioms Wu2008DoubleSieve.reboxingR3
+#check Wu2008DoubleSieve.reboxingR3_relative
+#print axioms Wu2008DoubleSieve.reboxingR3_relative

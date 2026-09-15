@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedbackWeightedExchange
+
+#check Wu2008DoubleSieve.firstFeedbackWeighted_triangle
+#print axioms Wu2008DoubleSieve.firstFeedbackWeighted_triangle
+#check Wu2008DoubleSieve.firstFeedbackWeighted_exchange
+#print axioms Wu2008DoubleSieve.firstFeedbackWeighted_exchange

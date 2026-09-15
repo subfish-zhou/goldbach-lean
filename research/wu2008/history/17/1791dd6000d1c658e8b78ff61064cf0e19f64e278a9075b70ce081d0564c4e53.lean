@@ -1,0 +1,36 @@
+import MathlibNt.Wu2008DoubleSieve.SignedFiniteAssembly
+
+open Wu2008DoubleSieve
+
+#check s3PositiveTripleTerm
+#print axioms s3PositiveTripleTerm
+#check s3TripleModulusGain
+#print axioms s3TripleModulusGain
+#check s3ThirdCutoffGain
+#print axioms s3ThirdCutoffGain
+#check s3LeftoverTripleMass
+#print axioms s3LeftoverTripleMass
+#check s3RetainedTripleMass
+#print axioms s3RetainedTripleMass
+#check s3TripleModulusGain_nonneg
+#print axioms s3TripleModulusGain_nonneg
+#check s3ThirdCutoffGain_nonneg
+#print axioms s3ThirdCutoffGain_nonneg
+#check s3RetainedTripleMass_nonneg
+#print axioms s3RetainedTripleMass_nonneg
+#check s3_delta2_exact_retained
+#print axioms s3_delta2_exact_retained
+#check s3FourModulusGain
+#print axioms s3FourModulusGain
+#check s3FourModulusGain_nonneg
+#print axioms s3FourModulusGain_nonneg
+#check s3_fourprime_sum_exact_majorant
+#print axioms s3_fourprime_sum_exact_majorant
+#check s3Upsilon11MissingMass
+#print axioms s3Upsilon11MissingMass
+#check s3Upsilon11MissingMass_nonneg
+#print axioms s3Upsilon11MissingMass_nonneg
+#check s3_delta2_exact_moving
+#print axioms s3_delta2_exact_moving
+#check s3_delta2_exact_source_parameters
+#print axioms s3_delta2_exact_source_parameters

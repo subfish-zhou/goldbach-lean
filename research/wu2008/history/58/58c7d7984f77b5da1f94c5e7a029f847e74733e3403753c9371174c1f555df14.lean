@@ -1,0 +1,12 @@
+import MathlibNt.Wu2004MeanValue.EndpointConsumers
+
+#check Wu2004MeanValue.realMovingAmplitude_eq_natural
+#print axioms Wu2004MeanValue.realMovingAmplitude_eq_natural
+#check Wu2004MeanValue.naturalProfile_le
+#print axioms Wu2004MeanValue.naturalProfile_le
+#check Wu2004MeanValue.chosen_high_source_real_moving_profile_log_saving
+#print axioms Wu2004MeanValue.chosen_high_source_real_moving_profile_log_saving
+#check Wu2004MeanValue.block_prime_endpoint_domain
+#print axioms Wu2004MeanValue.block_prime_endpoint_domain
+#check Wu2004MeanValue.tail_prime_endpoint_domain
+#print axioms Wu2004MeanValue.tail_prime_endpoint_domain

@@ -1,0 +1,4 @@
+import MathlibNt.Wu2004MeanValue.PrimeCenteredDistribution
+
+#check Wu2004MeanValue.balanced_common_profile_primeCentered_natural
+#print axioms Wu2004MeanValue.balanced_common_profile_primeCentered_natural

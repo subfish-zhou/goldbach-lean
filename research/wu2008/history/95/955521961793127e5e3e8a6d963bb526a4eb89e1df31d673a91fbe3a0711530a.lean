@@ -1,0 +1,48 @@
+import MathlibNt.Wu2008DoubleSieve.S3FourPrimeCompletion
+
+open Wu2008DoubleSieve
+
+#check s3_repeated_first_mem_square
+#print axioms s3_repeated_first_mem_square
+#check s3_repeated_first_multiplicity_le
+#print axioms s3_repeated_first_multiplicity_le
+#check s3_repeated_first_mass_le
+#print axioms s3_repeated_first_mass_le
+#check s3_repeated_first_two_ranges_le
+#print axioms s3_repeated_first_two_ranges_le
+#check s3_delta2_ge_source_fourprime_paid
+#print axioms s3_delta2_ge_source_fourprime_paid
+#check s3Upsilon11Range
+#print axioms s3Upsilon11Range
+#check mem_s3Upsilon11Range
+#print axioms mem_s3Upsilon11Range
+#check sum_s3Upsilon11Range
+#print axioms sum_s3Upsilon11Range
+#check s3Upsilon11_mem_iff_of_second
+#print axioms s3Upsilon11_mem_iff_of_second
+#check s3Upsilon11Excess
+#print axioms s3Upsilon11Excess
+#check s3Upsilon11Excess_eq_sdiff
+#print axioms s3Upsilon11Excess_eq_sdiff
+#check s3Upsilon11_numeric_range_noninclusion
+#print axioms s3Upsilon11_numeric_range_noninclusion
+#check s3FourSourceTerm
+#print axioms s3FourSourceTerm
+#check s3Upsilon11Source
+#print axioms s3Upsilon11Source
+#check s3Upsilon11ExcessMass
+#print axioms s3Upsilon11ExcessMass
+#check s3_second_source_eq_moving_add_excess_sub_missing
+#print axioms s3_second_source_eq_moving_add_excess_sub_missing
+#check s3_second_source_le_moving_add_excess
+#print axioms s3_second_source_le_moving_add_excess
+#check s3_source_count_le_positive_multiples
+#print axioms s3_source_count_le_positive_multiples
+#check s3Upsilon11ExcessMultipleBudget
+#print axioms s3Upsilon11ExcessMultipleBudget
+#check s3Upsilon11ExcessMass_le_multiple_budget
+#print axioms s3Upsilon11ExcessMass_le_multiple_budget
+#check s3_second_source_le_moving_add_multiple_budget
+#print axioms s3_second_source_le_moving_add_multiple_budget
+#check s3_delta2_ge_moving_fourprime_with_budget
+#print axioms s3_delta2_ge_moving_fourprime_with_budget

@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SwitchingFibre
+
+#check Wu2008DoubleSieve.omega3_good_original_injects
+#print axioms Wu2008DoubleSieve.omega3_good_original_injects
+#check Wu2008DoubleSieve.omega3_fibre_switching_bound
+#print axioms Wu2008DoubleSieve.omega3_fibre_switching_bound

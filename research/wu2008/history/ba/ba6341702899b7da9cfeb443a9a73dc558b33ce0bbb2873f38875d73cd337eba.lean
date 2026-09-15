@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XFiniteReorder
+
+#check Wu2008DoubleSieve.omega3XPrimes
+#print axioms Wu2008DoubleSieve.omega3XPrimes
+#check Wu2008DoubleSieve.mem_omega3XPrimes
+#print axioms Wu2008DoubleSieve.mem_omega3XPrimes
+#check Wu2008DoubleSieve.omega3XNCountFibre
+#print axioms Wu2008DoubleSieve.omega3XNCountFibre
+#check Wu2008DoubleSieve.mem_omega3XNCountFibre
+#print axioms Wu2008DoubleSieve.mem_omega3XNCountFibre
+#check Wu2008DoubleSieve.omega3XScale
+#print axioms Wu2008DoubleSieve.omega3XScale
+#check Wu2008DoubleSieve.omega3X_full_label_iff
+#print axioms Wu2008DoubleSieve.omega3X_full_label_iff
+#check Wu2008DoubleSieve.omega3X_full_label_sum
+#print axioms Wu2008DoubleSieve.omega3X_full_label_sum
+#check Wu2008DoubleSieve.omega3SieveX_eq_prime_triple_sum
+#print axioms Wu2008DoubleSieve.omega3SieveX_eq_prime_triple_sum

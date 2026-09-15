@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2RawNormalized
+
+#check Wu2008DoubleSieve.omega2GeometricPrime
+#print axioms Wu2008DoubleSieve.omega2GeometricPrime
+#check Wu2008DoubleSieve.omega2GeometricPrime_le_main_add_repeated
+#print axioms Wu2008DoubleSieve.omega2GeometricPrime_le_main_add_repeated
+#check Wu2008DoubleSieve.omega2BoundaryAbsolute
+#print axioms Wu2008DoubleSieve.omega2BoundaryAbsolute
+#check Wu2008DoubleSieve.omega2BoundaryAbsolute_relative
+#print axioms Wu2008DoubleSieve.omega2BoundaryAbsolute_relative
+#check Wu2008DoubleSieve.omega2Prime_le_geometric_add_boundaries
+#print axioms Wu2008DoubleSieve.omega2Prime_le_geometric_add_boundaries
+#check Wu2008DoubleSieve.omega2Raw_lower_prime_all
+#print axioms Wu2008DoubleSieve.omega2Raw_lower_prime_all
+#check Wu2008DoubleSieve.omega2_prime_transport_relative
+#print axioms Wu2008DoubleSieve.omega2_prime_transport_relative
+#check Wu2008DoubleSieve.wuOmega2Sum_lower_normalized_prime
+#print axioms Wu2008DoubleSieve.wuOmega2Sum_lower_normalized_prime

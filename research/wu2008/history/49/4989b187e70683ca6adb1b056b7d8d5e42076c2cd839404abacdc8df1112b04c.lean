@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedbackAssemblyIntegral
+
+#check @Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_middle_intervalIntegrable
+#check @Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_assembly_integral
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_middle_intervalIntegrable
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_assembly_integral

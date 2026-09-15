@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.OriginalCounts
+
+#check Wu2004MeanValue.tailOriginalSum_sharp_upper
+#print axioms Wu2004MeanValue.tailOriginalSum_sharp_upper
+#check Wu2004MeanValue.originalTripleCount_small_product_upper
+#print axioms Wu2004MeanValue.originalTripleCount_small_product_upper

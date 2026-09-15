@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingEndpoints
+
+#check Wu2008DoubleSieve.reboxing_box_level_ge_lower
+#print axioms Wu2008DoubleSieve.reboxing_box_level_ge_lower
+#check Wu2008DoubleSieve.reboxing_endpoint_lower
+#print axioms Wu2008DoubleSieve.reboxing_endpoint_lower
+#check Wu2008DoubleSieve.reboxing_endpoint_squared_product
+#print axioms Wu2008DoubleSieve.reboxing_endpoint_squared_product

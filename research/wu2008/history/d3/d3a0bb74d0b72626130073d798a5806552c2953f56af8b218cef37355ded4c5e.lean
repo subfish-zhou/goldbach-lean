@@ -1,0 +1,43 @@
+import MathlibNt.Wu2008DoubleSieve.FourModulusTransportPayment
+
+#check Wu2008DoubleSieve.fourModulusDomain
+#check Wu2008DoubleSieve.fourModulus_domains_disjoint
+#check Wu2008DoubleSieve.fourModulus_moving_bound
+#check Wu2008DoubleSieve.fourModulusLoss_eq_filter
+#check Wu2008DoubleSieve.fourModulusLoss_first_square
+#check Wu2008DoubleSieve.fourModulus_divisor_fibre_le
+#check Wu2008DoubleSieve.fourModulusGain_le
+#check Wu2008DoubleSieve.fourModulus_original_two_sums_bounds
+#check Wu2008DoubleSieve.fourModulus_eleven_difference
+#check Wu2008DoubleSieve.fourModulus_eleven_bounds
+#check Wu2008DoubleSieve.fourModulus_eleven_relative
+#check Wu2008DoubleSieve.fourModulus_eleven_fixed_relative
+
+#print axioms Wu2008DoubleSieve.fourModulusDomain
+#print axioms Wu2008DoubleSieve.fourModulusProduct
+#print axioms Wu2008DoubleSieve.fourModulusQuotientTerm
+#print axioms Wu2008DoubleSieve.fourModulusLoss
+#print axioms Wu2008DoubleSieve.fourModulusGain
+#print axioms Wu2008DoubleSieve.fourModulus_domains_disjoint
+#print axioms Wu2008DoubleSieve.fourModulusDomain_labels
+#print axioms Wu2008DoubleSieve.fourModulus_moving_bound
+#print axioms Wu2008DoubleSieve.fourModulus_quotient_le_source
+#print axioms Wu2008DoubleSieve.fourModulusGain_nonneg
+#print axioms Wu2008DoubleSieve.fourModulus_quotient_subset_source
+#print axioms Wu2008DoubleSieve.fourModulus_difference_eq_card
+#print axioms Wu2008DoubleSieve.fourModulus_source_carrier
+#print axioms Wu2008DoubleSieve.fourModulusLoss_eq_filter
+#print axioms Wu2008DoubleSieve.fourModulusLoss_first_square
+#print axioms Wu2008DoubleSieve.fourModulusLoss_mem_square
+#print axioms Wu2008DoubleSieve.fourModulus_divisor_fibre_le
+#print axioms Wu2008DoubleSieve.fourModulus_loss_fibre_le
+#print axioms Wu2008DoubleSieve.fourModulusGain_le
+#print axioms Wu2008DoubleSieve.fourModulusGain_eq_two_sums
+#print axioms Wu2008DoubleSieve.fourModulusGain_eq_source_sub_quotient
+#print axioms Wu2008DoubleSieve.fourModulus_original_two_sums_bounds
+#print axioms Wu2008DoubleSieve.fourModulusQuotientEleven
+#print axioms Wu2008DoubleSieve.fourModulus_eleven_difference
+#print axioms Wu2008DoubleSieve.fourModulus_eleven_bounds
+#print axioms Wu2008DoubleSieve.fourModulus_power_budget
+#print axioms Wu2008DoubleSieve.fourModulus_eleven_relative
+#print axioms Wu2008DoubleSieve.fourModulus_eleven_fixed_relative

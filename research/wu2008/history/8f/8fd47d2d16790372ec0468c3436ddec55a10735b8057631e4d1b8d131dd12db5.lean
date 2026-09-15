@@ -1,0 +1,20 @@
+import MathlibNt.Wu2004MeanValue.RosserConsumer
+
+#check Wu2004MeanValue.indexedBoundingSieve_product
+#print axioms Wu2004MeanValue.indexedBoundingSieve_product
+#check Wu2004MeanValue.exists_indexedBoundingSieve_dimensionOne
+#print axioms Wu2004MeanValue.exists_indexedBoundingSieve_dimensionOne
+#check Wu2004MeanValue.sqrt_le_half_of_four_le
+#print axioms Wu2004MeanValue.sqrt_le_half_of_four_le
+#check Wu2004MeanValue.rosser_halfLevel_support
+#print axioms Wu2004MeanValue.rosser_halfLevel_support
+#check Wu2004MeanValue.indexed_upperRosser_certificate
+#print axioms Wu2004MeanValue.indexed_upperRosser_certificate
+#check Wu2004MeanValue.indexed_upperRosser_error_le
+#print axioms Wu2004MeanValue.indexed_upperRosser_error_le
+#check Wu2004MeanValue.indexedSiftedCount_le_rosser_main_add_error
+#print axioms Wu2004MeanValue.indexedSiftedCount_le_rosser_main_add_error
+#check Wu2004MeanValue.indexed_upperDensityFundamentalLemma
+#print axioms Wu2004MeanValue.indexed_upperDensityFundamentalLemma
+#check Wu2004MeanValue.indexedSiftedCount_upper_rosser
+#print axioms Wu2004MeanValue.indexedSiftedCount_upper_rosser

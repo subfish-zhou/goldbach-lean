@@ -1,0 +1,4 @@
+import MathlibNt.Wu2004MeanValue.BalancedLowPrefix
+
+#check Wu2004MeanValue.balanced_low_primePrefix_nat_div_max
+#print axioms Wu2004MeanValue.balanced_low_primePrefix_nat_div_max

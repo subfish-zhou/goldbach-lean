@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XNormalization
+
+#check Wu2008DoubleSieve.wuSingularSeries_le_of_dvd
+#print axioms Wu2008DoubleSieve.wuSingularSeries_le_of_dvd
+#check Wu2008DoubleSieve.wuSingularSeries_le_mul
+#print axioms Wu2008DoubleSieve.wuSingularSeries_le_mul
+#check Wu2008DoubleSieve.boxTheta_lower_singular_of_support
+#print axioms Wu2008DoubleSieve.boxTheta_lower_singular_of_support
+#check Wu2008DoubleSieve.omega3_source_theta_lower_singular
+#print axioms Wu2008DoubleSieve.omega3_source_theta_lower_singular

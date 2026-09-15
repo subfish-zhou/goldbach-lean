@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.VariableLevelGeometry
+
+#check Wu2008DoubleSieve.wuVariableRosserLevel
+#print axioms Wu2008DoubleSieve.wuVariableRosserLevel
+#check Wu2008DoubleSieve.wuVariableRosserLevel_eq_combined
+#print axioms Wu2008DoubleSieve.wuVariableRosserLevel_eq_combined
+#check Wu2008DoubleSieve.boxSquaredPrefixes_iff
+#print axioms Wu2008DoubleSieve.boxSquaredPrefixes_iff
+#check Wu2008DoubleSieve.log_div_log_rpow_eq
+#print axioms Wu2008DoubleSieve.log_div_log_rpow_eq
+#check Wu2008DoubleSieve.variableRosser_geometry
+#print axioms Wu2008DoubleSieve.variableRosser_geometry
+#check Wu2008DoubleSieve.wuVariableRosserLevel_geometry
+#print axioms Wu2008DoubleSieve.wuVariableRosserLevel_geometry
+#check Wu2008DoubleSieve.wuLocalCutoff_eventually_large
+#print axioms Wu2008DoubleSieve.wuLocalCutoff_eventually_large
+#check Wu2008DoubleSieve.wu_variable_level_remainder_relative
+#print axioms Wu2008DoubleSieve.wu_variable_level_remainder_relative

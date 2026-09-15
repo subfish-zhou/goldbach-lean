@@ -1,0 +1,20 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2RawBlocks
+
+#check Wu2008DoubleSieve.omega2_fixed_cutoff_atom_bound
+#print axioms Wu2008DoubleSieve.omega2_fixed_cutoff_atom_bound
+#check Wu2008DoubleSieve.omega2CutoffError
+#print axioms Wu2008DoubleSieve.omega2CutoffError
+#check Wu2008DoubleSieve.omega2CutoffError_relative
+#print axioms Wu2008DoubleSieve.omega2CutoffError_relative
+#check Wu2008DoubleSieve.omega2GeometricRaw
+#print axioms Wu2008DoubleSieve.omega2GeometricRaw
+#check Wu2008DoubleSieve.omega2GeometricRaw_eq_cutoff_sub_error
+#print axioms Wu2008DoubleSieve.omega2GeometricRaw_eq_cutoff_sub_error
+#check Wu2008DoubleSieve.omega2GeometricRaw_lower
+#print axioms Wu2008DoubleSieve.omega2GeometricRaw_lower
+#check Wu2008DoubleSieve.omega2_source_count_prime_modulus_eq
+#print axioms Wu2008DoubleSieve.omega2_source_count_prime_modulus_eq
+#check Wu2008DoubleSieve.omega2GeometricRaw_le_actual_add_left
+#print axioms Wu2008DoubleSieve.omega2GeometricRaw_le_actual_add_left
+#check Wu2008DoubleSieve.omega2Raw_lower_geometric
+#print axioms Wu2008DoubleSieve.omega2Raw_lower_geometric

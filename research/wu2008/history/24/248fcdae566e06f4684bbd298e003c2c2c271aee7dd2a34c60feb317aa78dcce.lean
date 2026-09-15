@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.PhiEndpoint
+
+#check Wu2008DoubleSieve.sourceSieveCount_eq_closed_add_loss
+#print axioms Wu2008DoubleSieve.sourceSieveCount_eq_closed_add_loss
+#check Wu2008DoubleSieve.sieveEndpointLoss_card_le_divisor
+#print axioms Wu2008DoubleSieve.sieveEndpointLoss_card_le_divisor
+#check Wu2008DoubleSieve.wuBoxPhi_sub_closed_eq
+#print axioms Wu2008DoubleSieve.wuBoxPhi_sub_closed_eq
+#check Wu2008DoubleSieve.wuBoxPhi_endpoint_le_mass
+#print axioms Wu2008DoubleSieve.wuBoxPhi_endpoint_le_mass
+#check Wu2008DoubleSieve.wu_boxPhi_endpoint_relative
+#print axioms Wu2008DoubleSieve.wu_boxPhi_endpoint_relative

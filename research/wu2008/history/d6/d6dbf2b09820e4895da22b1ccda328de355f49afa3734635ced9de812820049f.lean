@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LayerGeometry
+
+#check Wu2008DoubleSieve.omega3LayerLower
+#print axioms Wu2008DoubleSieve.omega3LayerLower
+#check Wu2008DoubleSieve.omega3LayerUpper
+#print axioms Wu2008DoubleSieve.omega3LayerUpper
+#check Wu2008DoubleSieve.omega3_cofactor_actual_profile_geometry
+#print axioms Wu2008DoubleSieve.omega3_cofactor_actual_profile_geometry
+#check Wu2008DoubleSieve.omega3Layer_prime_fibre_iff
+#print axioms Wu2008DoubleSieve.omega3Layer_prime_fibre_iff
+#check Wu2008DoubleSieve.omega3Layer_actual_geometry
+#print axioms Wu2008DoubleSieve.omega3Layer_actual_geometry
+#check Wu2008DoubleSieve.omega3Layer_profile_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_profile_sum

@@ -1,0 +1,22 @@
+import MathlibNt.Wu2008DoubleSieve.JointResidualObstruction
+
+open Wu2008DoubleSieve
+
+#check jointResidualClosedAtom_sum
+#print axioms jointResidualClosedAtom_sum
+#check jointResidual_expression_sum
+#print axioms jointResidual_expression_sum
+#check jointResidual_closed_exact
+#print axioms jointResidual_closed_exact
+#check jointResidual_closed_atom_obstruction
+#print axioms jointResidual_closed_atom_obstruction
+#check jointResidual_witness_squarefree
+#print axioms jointResidual_witness_squarefree
+#check jointResidual_witness_not_representation
+#print axioms jointResidual_witness_not_representation
+#check jointResidual_witness_cutoffs
+#print axioms jointResidual_witness_cutoffs
+#check jointResidual_witness_domain
+#print axioms jointResidual_witness_domain
+#check jointResidual_closed_source_pointwise_failure
+#print axioms jointResidual_closed_source_pointwise_failure

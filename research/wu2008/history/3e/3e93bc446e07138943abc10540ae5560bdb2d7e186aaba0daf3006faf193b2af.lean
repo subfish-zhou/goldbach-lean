@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.ClosedLowerWeightFactors
+
+#check Wu2008DoubleSieve.largePrimeDivisors
+#print axioms Wu2008DoubleSieve.largePrimeDivisors
+#check Wu2008DoubleSieve.mem_largePrimeDivisors
+#print axioms Wu2008DoubleSieve.mem_largePrimeDivisors
+#check Wu2008DoubleSieve.largePrimeDivisors_pow_card_le
+#print axioms Wu2008DoubleSieve.largePrimeDivisors_pow_card_le
+#check Wu2008DoubleSieve.largePrimeDivisors_card_le_inv
+#print axioms Wu2008DoubleSieve.largePrimeDivisors_card_le_inv
+#check Wu2008DoubleSieve.complement_pos_of_even
+#print axioms Wu2008DoubleSieve.complement_pos_of_even

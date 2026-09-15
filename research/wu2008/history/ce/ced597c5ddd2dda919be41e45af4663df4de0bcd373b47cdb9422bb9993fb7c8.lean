@@ -1,0 +1,37 @@
+import MathlibNt.Wu2008DoubleSieve.NinthProductProfileDistribution
+
+#check Wu2008DoubleSieve.T9_card_eq_product_profiles
+#check Wu2008DoubleSieve.ninth_fixed_cutoffs_ge
+#check Wu2008DoubleSieve.ninthProductSupport_geometry
+#check Wu2008DoubleSieve.ninth_product_profile_error_eq
+#check Wu2008DoubleSieve.ninth_product_profile_balanced_distribution
+
+#print axioms Wu2008DoubleSieve.ninthPairProduct
+#print axioms Wu2008DoubleSieve.ninth_ordered_prime_product_injective
+#print axioms Wu2008DoubleSieve.ninthPairProduct_injOn
+#print axioms Wu2008DoubleSieve.M9
+#print axioms Wu2008DoubleSieve.ninthProfileLower
+#print axioms Wu2008DoubleSieve.ninthProfileUpper
+#print axioms Wu2008DoubleSieve.ninthProfileLower_lt
+#print axioms Wu2008DoubleSieve.ninthProfileLower_lt_nat_iff
+#print axioms Wu2008DoubleSieve.ninthProfileUpper_nat_iff
+#print axioms Wu2008DoubleSieve.ninthPair_product_pos
+#print axioms Wu2008DoubleSieve.ninthPair_N_pos
+#print axioms Wu2008DoubleSieve.ninthPair_fibre_eq_profile
+#print axioms Wu2008DoubleSieve.T9_card_eq_product_profiles
+#print axioms Wu2008DoubleSieve.ninthProfileK1
+#print axioms Wu2008DoubleSieve.ninthProfileK2
+#print axioms Wu2008DoubleSieve.ninthProfileSigma
+#print axioms Wu2008DoubleSieve.ninthProfileW
+#print axioms Wu2008DoubleSieve.ninthProfileU
+#print axioms Wu2008DoubleSieve.ninthProductSupport
+#print axioms Wu2008DoubleSieve.ninth_rpow_512
+#print axioms Wu2008DoubleSieve.ninth_fixed_cutoffs_ge
+#print axioms Wu2008DoubleSieve.ninth_fixed_lower_ge_two
+#print axioms Wu2008DoubleSieve.ninthPair_product_sq_lt
+#print axioms Wu2008DoubleSieve.ninthProductSupport_balanced
+#print axioms Wu2008DoubleSieve.ninthPair_profile_interval
+#print axioms Wu2008DoubleSieve.ninthProductSupport_geometry
+#print axioms Wu2008DoubleSieve.T9_card_eq_ninth_product_profiles
+#print axioms Wu2008DoubleSieve.ninth_product_profile_error_eq
+#print axioms Wu2008DoubleSieve.ninth_product_profile_balanced_distribution

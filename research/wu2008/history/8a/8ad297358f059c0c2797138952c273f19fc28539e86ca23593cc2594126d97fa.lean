@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.JointResidualTransport
+
+open Wu2008DoubleSieve
+
+#check jointResidual_source_four_zero
+#print axioms jointResidual_source_four_zero
+#check jointResidual_source_four_sums_zero
+#print axioms jointResidual_source_four_sums_zero
+#check jointResidual_strict_transport
+#print axioms jointResidual_strict_transport
+#check jointResidual_strict_transport_nonpos
+#print axioms jointResidual_strict_transport_nonpos
+#check jointResidual_strict_consumer
+#print axioms jointResidual_strict_consumer

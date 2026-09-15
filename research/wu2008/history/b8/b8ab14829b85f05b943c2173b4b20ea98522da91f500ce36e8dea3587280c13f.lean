@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3FiniteError
+
+#check Wu2008DoubleSieve.omega3BadComplements
+#print axioms Wu2008DoubleSieve.omega3BadComplements
+#check Wu2008DoubleSieve.omega3_bad_complements_card_le
+#print axioms Wu2008DoubleSieve.omega3_bad_complements_card_le
+#check Wu2008DoubleSieve.omega3_labels_card_le_allowed_outputs
+#print axioms Wu2008DoubleSieve.omega3_labels_card_le_allowed_outputs
+#check Wu2008DoubleSieve.omega3_bad_labels_card_le
+#print axioms Wu2008DoubleSieve.omega3_bad_labels_card_le
+#check Wu2008DoubleSieve.omega3_bad_floor_sum_le
+#print axioms Wu2008DoubleSieve.omega3_bad_floor_sum_le
+#check Wu2008DoubleSieve.omega3_bad_labels_card_le_power
+#print axioms Wu2008DoubleSieve.omega3_bad_labels_card_le_power

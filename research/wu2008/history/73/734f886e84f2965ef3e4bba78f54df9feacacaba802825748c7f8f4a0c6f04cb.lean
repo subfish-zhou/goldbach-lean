@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaSwitchedDistributionCombined
+
+#check Wu2008DoubleSieve.omega3_switched_upper_remainders_paid
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_remainders_paid
+#check Wu2008DoubleSieve.wu04_first_weighted_switched_distribution
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_switched_distribution

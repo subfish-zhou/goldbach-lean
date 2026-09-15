@@ -1,0 +1,10 @@
+import MathlibNt.Wu2004MeanValue.BalancedAPWeight
+
+#check Wu2004MeanValue.balancedAPEnvelopeConstant
+#print axioms Wu2004MeanValue.balancedAPEnvelopeConstant
+#check Wu2004MeanValue.balancedAPEnvelopeConstant_nonneg
+#print axioms Wu2004MeanValue.balancedAPEnvelopeConstant_nonneg
+#check Wu2004MeanValue.balanced_modulus_mul_actualAPError_le
+#print axioms Wu2004MeanValue.balanced_modulus_mul_actualAPError_le
+#check Wu2004MeanValue.balanced_actualAP_weighted_log_saving_of_unweighted
+#print axioms Wu2004MeanValue.balanced_actualAP_weighted_log_saving_of_unweighted

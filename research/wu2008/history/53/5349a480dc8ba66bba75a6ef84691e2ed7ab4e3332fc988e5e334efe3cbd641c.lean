@@ -1,0 +1,31 @@
+import MathlibNt.Wu2004MeanValue.SieveAsymptotics
+
+open Wu2004MeanValue
+#check sieveAsymptoticQ
+#print axioms sieveAsymptoticQ
+#check sieveAsymptoticZ
+#print axioms sieveAsymptoticZ
+#check sieveAsymptoticRatio
+#print axioms sieveAsymptoticRatio
+#check sieveAsymptoticQ_pos
+#print axioms sieveAsymptoticQ_pos
+#check log_sieveAsymptoticQ
+#print axioms log_sieveAsymptoticQ
+#check tendsto_log_sieveAsymptoticQ_div_log
+#print axioms tendsto_log_sieveAsymptoticQ_div_log
+#check tendsto_log_sieveAsymptoticQ_atTop
+#print axioms tendsto_log_sieveAsymptoticQ_atTop
+#check tendsto_sieveAsymptoticQ_atTop
+#print axioms tendsto_sieveAsymptoticQ_atTop
+#check tendsto_sieveAsymptoticZ_atTop
+#print axioms tendsto_sieveAsymptoticZ_atTop
+#check tendsto_log_sieveAsymptoticZ_div_log
+#print axioms tendsto_log_sieveAsymptoticZ_div_log
+#check sieveAsymptoticRatio_eq
+#print axioms sieveAsymptoticRatio_eq
+#check tendsto_sieveAsymptoticRatio
+#print axioms tendsto_sieveAsymptoticRatio
+#check eventually_sieveAsymptoticRatio_mem
+#print axioms eventually_sieveAsymptoticRatio_mem
+#check tendsto_sieveAsymptoticUpperFactor
+#print axioms tendsto_sieveAsymptoticUpperFactor

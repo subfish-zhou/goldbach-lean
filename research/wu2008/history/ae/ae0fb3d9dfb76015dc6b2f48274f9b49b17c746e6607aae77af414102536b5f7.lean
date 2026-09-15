@@ -1,0 +1,28 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3FiniteErrorSource
+
+#check Wu2008DoubleSieve.Omega3FiniteLabel
+#print axioms Wu2008DoubleSieve.Omega3FiniteLabel
+#check Wu2008DoubleSieve.omega3FiniteLabels
+#print axioms Wu2008DoubleSieve.omega3FiniteLabels
+#check Wu2008DoubleSieve.omega3FiniteOutput
+#print axioms Wu2008DoubleSieve.omega3FiniteOutput
+#check Wu2008DoubleSieve.omega3FiniteTriple
+#print axioms Wu2008DoubleSieve.omega3FiniteTriple
+#check Wu2008DoubleSieve.omega3_finite_label_injective
+#print axioms Wu2008DoubleSieve.omega3_finite_label_injective
+#check Wu2008DoubleSieve.omega3_finite_filter_card
+#print axioms Wu2008DoubleSieve.omega3_finite_filter_card
+#check Wu2008DoubleSieve.omega3_finite_label_source
+#print axioms Wu2008DoubleSieve.omega3_finite_label_source
+#check Wu2008DoubleSieve.omega3_finite_output_lt
+#print axioms Wu2008DoubleSieve.omega3_finite_output_lt
+#check Wu2008DoubleSieve.omega3_finite_label_divisor
+#print axioms Wu2008DoubleSieve.omega3_finite_label_divisor
+#check Wu2008DoubleSieve.omega3_finite_triple_large
+#print axioms Wu2008DoubleSieve.omega3_finite_triple_large
+#check Wu2008DoubleSieve.omega3_source_filter_sum_le_outputs
+#print axioms Wu2008DoubleSieve.omega3_source_filter_sum_le_outputs
+#check Wu2008DoubleSieve.omega3_source_badD_sum_le
+#print axioms Wu2008DoubleSieve.omega3_source_badD_sum_le
+#check Wu2008DoubleSieve.omega3_source_badD_sum_le_power
+#print axioms Wu2008DoubleSieve.omega3_source_badD_sum_le_power

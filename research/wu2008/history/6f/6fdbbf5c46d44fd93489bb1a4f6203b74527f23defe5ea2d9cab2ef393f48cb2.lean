@@ -1,0 +1,22 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeOrderedQuadratureWeighted
+
+#check Wu2008DoubleSieve.primeOrderedSum
+#print axioms Wu2008DoubleSieve.primeOrderedSum
+#check Wu2008DoubleSieve.primeOrdered_coordinate_mem
+#print axioms Wu2008DoubleSieve.primeOrdered_coordinate_mem
+#check Wu2008DoubleSieve.primeOrderedSum_add
+#print axioms Wu2008DoubleSieve.primeOrderedSum_add
+#check Wu2008DoubleSieve.primeOrderedSum_self
+#print axioms Wu2008DoubleSieve.primeOrderedSum_self
+#check Wu2008DoubleSieve.primeOrdered_weighted_cell
+#print axioms Wu2008DoubleSieve.primeOrdered_weighted_cell
+#check Wu2008DoubleSieve.primeOrdered_weighted_partition_bound
+#print axioms Wu2008DoubleSieve.primeOrdered_weighted_partition_bound
+#check Wu2008DoubleSieve.primeOrderedClosedSum
+#print axioms Wu2008DoubleSieve.primeOrderedClosedSum
+#check Wu2008DoubleSieve.primeOrdered_closed_atom_bound
+#print axioms Wu2008DoubleSieve.primeOrdered_closed_atom_bound
+#check Wu2008DoubleSieve.primeOrdered_weighted_closed_partition_bound
+#print axioms Wu2008DoubleSieve.primeOrdered_weighted_closed_partition_bound
+#check Wu2008DoubleSieve.primeOrdered_weighted_uniform
+#print axioms Wu2008DoubleSieve.primeOrdered_weighted_uniform

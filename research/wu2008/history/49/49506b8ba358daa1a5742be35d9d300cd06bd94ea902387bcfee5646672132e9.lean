@@ -1,0 +1,4 @@
+import MathlibNt.Wu2004MeanValue.AllSourceOpen
+
+#check Wu2004MeanValue.common_profile_open_unit_natural
+#print axioms Wu2004MeanValue.common_profile_open_unit_natural

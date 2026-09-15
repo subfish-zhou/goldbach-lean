@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LayerActual
+
+#check Wu2008DoubleSieve.omega3LayerConstant_pos
+#print axioms Wu2008DoubleSieve.omega3LayerConstant_pos
+#check Wu2008DoubleSieve.omega3LayerNormalizedCoefficient
+#print axioms Wu2008DoubleSieve.omega3LayerNormalizedCoefficient
+#check Wu2008DoubleSieve.omega3LayerNormalizedCoefficient_bounds
+#print axioms Wu2008DoubleSieve.omega3LayerNormalizedCoefficient_bounds
+#check Wu2008DoubleSieve.omega3Layer_cofactor_test_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_cofactor_test_sum
+#check Wu2008DoubleSieve.omega3Layer_normalized_test_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_normalized_test_sum
+#check Wu2008DoubleSieve.omega3_cofactor_common_profile_layers
+#print axioms Wu2008DoubleSieve.omega3_cofactor_common_profile_layers

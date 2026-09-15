@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedbackIterated
+
+#check Wu2008DoubleSieve.firstFeedback_nested_continuous
+#print axioms Wu2008DoubleSieve.firstFeedback_nested_continuous
+#check Wu2008DoubleSieve.firstFeedback_iterated_intervalIntegrable
+#print axioms Wu2008DoubleSieve.firstFeedback_iterated_intervalIntegrable
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_iterated
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_iterated
+#check Wu2008DoubleSieve.firstFeedback_nested_split
+#print axioms Wu2008DoubleSieve.firstFeedback_nested_split

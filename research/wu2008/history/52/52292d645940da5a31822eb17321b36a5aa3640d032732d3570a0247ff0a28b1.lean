@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.PhiUpper
+
+#check Wu2008DoubleSieve.wuBoxPhi
+#print axioms Wu2008DoubleSieve.wuBoxPhi
+#check Wu2008DoubleSieve.wuBoxPhi_eq_tuple_sum
+#print axioms Wu2008DoubleSieve.wuBoxPhi_eq_tuple_sum
+#check Wu2008DoubleSieve.wuBoxPhi_nonneg
+#print axioms Wu2008DoubleSieve.wuBoxPhi_nonneg
+#check Wu2008DoubleSieve.canonical_upper_normalization_budget
+#print axioms Wu2008DoubleSieve.canonical_upper_normalization_budget
+#check Wu2008DoubleSieve.wu_variable_upper_main_relative
+#print axioms Wu2008DoubleSieve.wu_variable_upper_main_relative
+#check Wu2008DoubleSieve.wu_boxPhi_upper
+#print axioms Wu2008DoubleSieve.wu_boxPhi_upper

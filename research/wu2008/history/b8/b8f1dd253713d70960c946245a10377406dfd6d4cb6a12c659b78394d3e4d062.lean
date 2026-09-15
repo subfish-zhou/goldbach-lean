@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaSwitchedBuchstab
+
+#check Wu2008DoubleSieve.omega3X_buchstab_scaled
+#print axioms Wu2008DoubleSieve.omega3X_buchstab_scaled
+#check Wu2008DoubleSieve.omega3_switched_upper_buchstab
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_buchstab
+#check Wu2008DoubleSieve.wu04_first_weighted_switched_buchstab
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_switched_buchstab

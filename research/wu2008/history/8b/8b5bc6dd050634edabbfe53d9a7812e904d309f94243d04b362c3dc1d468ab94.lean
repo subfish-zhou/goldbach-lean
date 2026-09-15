@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3Multiplicity
+
+#check Wu2008DoubleSieve.omega3_prime_labels_card_le
+#print axioms Wu2008DoubleSieve.omega3_prime_labels_card_le
+#check Wu2008DoubleSieve.omega3_labels_card_le_outputs
+#print axioms Wu2008DoubleSieve.omega3_labels_card_le_outputs
+#check Wu2008DoubleSieve.omega3_cofactor_weighted_fibre_le
+#print axioms Wu2008DoubleSieve.omega3_cofactor_weighted_fibre_le

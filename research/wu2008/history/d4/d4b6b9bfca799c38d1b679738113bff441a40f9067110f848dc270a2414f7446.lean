@@ -1,0 +1,21 @@
+import MathlibNt.Wu2004MeanValue.CutoffSeparation
+
+#check Wu2004MeanValue.tail_real_sieve_cutoff_separation
+#print axioms Wu2004MeanValue.tail_real_sieve_cutoff_separation
+#check Wu2004MeanValue.block_real_sieve_cutoff_separation
+#print axioms Wu2004MeanValue.block_real_sieve_cutoff_separation
+
+#check Wu2004MeanValue.sqrt_modulus_le_quarter_power
+#print axioms Wu2004MeanValue.sqrt_modulus_le_quarter_power
+#check Wu2004MeanValue.tail_sieve_cutoff_separation
+#print axioms Wu2004MeanValue.tail_sieve_cutoff_separation
+#check Wu2004MeanValue.tail_sieve_cutoff_lt_source
+#print axioms Wu2004MeanValue.tail_sieve_cutoff_lt_source
+#check Wu2004MeanValue.block_sieve_cutoff_separation
+#print axioms Wu2004MeanValue.block_sieve_cutoff_separation
+#check Wu2004MeanValue.block_sieve_cutoff_lt_source
+#print axioms Wu2004MeanValue.block_sieve_cutoff_lt_source
+#check Wu2004MeanValue.block_source_exponent_range
+#print axioms Wu2004MeanValue.block_source_exponent_range
+#check Wu2004MeanValue.block_sieve_cutoff_lt_source_of_a
+#print axioms Wu2004MeanValue.block_sieve_cutoff_lt_source_of_a

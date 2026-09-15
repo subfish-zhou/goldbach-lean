@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeOrderedQuadratureIntegral
+
+#check Wu2008DoubleSieve.primeOrdered_continuous_of_lipschitz
+#print axioms Wu2008DoubleSieve.primeOrdered_continuous_of_lipschitz
+#check Wu2008DoubleSieve.primeOrdered_integrable
+#print axioms Wu2008DoubleSieve.primeOrdered_integrable
+#check Wu2008DoubleSieve.primeOrdered_integral_norm_le
+#print axioms Wu2008DoubleSieve.primeOrdered_integral_norm_le
+#check Wu2008DoubleSieve.primeOrdered_integral_norm_le_four
+#print axioms Wu2008DoubleSieve.primeOrdered_integral_norm_le_four
+#check Wu2008DoubleSieve.primeOrdered_integral_sub_bound
+#print axioms Wu2008DoubleSieve.primeOrdered_integral_sub_bound
+#check Wu2008DoubleSieve.primeOrdered_moving_integral_lipschitz
+#print axioms Wu2008DoubleSieve.primeOrdered_moving_integral_lipschitz

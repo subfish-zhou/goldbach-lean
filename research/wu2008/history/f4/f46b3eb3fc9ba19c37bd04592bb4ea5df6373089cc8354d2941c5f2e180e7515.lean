@@ -1,0 +1,28 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LayerBounded
+
+#check Wu2008DoubleSieve.omega3LayerConstant
+#print axioms Wu2008DoubleSieve.omega3LayerConstant
+#check Wu2008DoubleSieve.omega3LayerCount
+#print axioms Wu2008DoubleSieve.omega3LayerCount
+#check Wu2008DoubleSieve.omega3LayerConstant_nonneg
+#print axioms Wu2008DoubleSieve.omega3LayerConstant_nonneg
+#check Wu2008DoubleSieve.omega3_cofactor_label_coefficient_pos
+#print axioms Wu2008DoubleSieve.omega3_cofactor_label_coefficient_pos
+#check Wu2008DoubleSieve.omega3_cofactor_label_coefficient_integer
+#print axioms Wu2008DoubleSieve.omega3_cofactor_label_coefficient_integer
+#check Wu2008DoubleSieve.omega3_cofactor_fibre_card_le_weight
+#print axioms Wu2008DoubleSieve.omega3_cofactor_fibre_card_le_weight
+#check Wu2008DoubleSieve.omega3LayerCoefficient
+#print axioms Wu2008DoubleSieve.omega3LayerCoefficient
+#check Wu2008DoubleSieve.omega3LayerCoefficient_eq
+#print axioms Wu2008DoubleSieve.omega3LayerCoefficient_eq
+#check Wu2008DoubleSieve.omega3LayerCoefficient_integer
+#print axioms Wu2008DoubleSieve.omega3LayerCoefficient_integer
+#check Wu2008DoubleSieve.omega3LayerCoefficient_nonneg
+#print axioms Wu2008DoubleSieve.omega3LayerCoefficient_nonneg
+#check Wu2008DoubleSieve.omega3LayerCoefficient_le
+#print axioms Wu2008DoubleSieve.omega3LayerCoefficient_le
+#check Wu2008DoubleSieve.omega3Layer_weighted_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_weighted_sum
+#check Wu2008DoubleSieve.omega3_cofactor_layers_bounded
+#print axioms Wu2008DoubleSieve.omega3_cofactor_layers_bounded

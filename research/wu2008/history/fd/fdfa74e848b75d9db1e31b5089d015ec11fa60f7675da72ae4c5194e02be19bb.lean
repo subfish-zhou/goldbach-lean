@@ -1,0 +1,4 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaSwitchedCombined
+
+#check Wu2008DoubleSieve.wu04_first_weighted_switched
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_switched

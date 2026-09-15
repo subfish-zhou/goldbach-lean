@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SourceSieveFactor
+
+#check Wu2008DoubleSieve.omega3_source_sieve_geometry
+#print axioms Wu2008DoubleSieve.omega3_source_sieve_geometry
+#check Wu2008DoubleSieve.omega3_source_sqrt_log
+#print axioms Wu2008DoubleSieve.omega3_source_sqrt_log
+#check Wu2008DoubleSieve.omega3_source_le_sqrt_power
+#print axioms Wu2008DoubleSieve.omega3_source_le_sqrt_power
+#check Wu2008DoubleSieve.omega3_source_density_factor
+#print axioms Wu2008DoubleSieve.omega3_source_density_factor

@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientLogSubstitution
+
+#check Wu2008DoubleSieve.wuPrime_log_substitution
+#print axioms Wu2008DoubleSieve.wuPrime_log_substitution
+#check Wu2008DoubleSieve.wuPrime_log_intervalIntegrable
+#print axioms Wu2008DoubleSieve.wuPrime_log_intervalIntegrable
+#check Wu2008DoubleSieve.wuPrime_log_kernel_error
+#print axioms Wu2008DoubleSieve.wuPrime_log_kernel_error
+#check Wu2008DoubleSieve.wuPrimeRealWeight_log_error
+#print axioms Wu2008DoubleSieve.wuPrimeRealWeight_log_error
+#check Wu2008DoubleSieve.primeCoefficient_trueLi_to_log_integral
+#print axioms Wu2008DoubleSieve.primeCoefficient_trueLi_to_log_integral

@@ -481,5 +481,47 @@
     "head": "359168bb9d7f02bc9a294bc31163de81f655041e",
     "branch": "refs/heads/parent-secondary-acceptance",
     "preserved_source_records": 1054
+  },
+  {
+    "id": "worktree-069",
+    "label": "legacy-seed",
+    "head": "cead0774730491397022c67269a561b6a5e26189",
+    "branch": "refs/heads/main",
+    "preserved_source_records": 0
+  },
+  {
+    "id": "worktree-070",
+    "label": "legacy-parallel-gamma5-classical",
+    "head": "f218873dd6271dba5e2d0bdaf40ec9fec8023928",
+    "branch": "refs/heads/wu-gamma5-classical-parallel",
+    "preserved_source_records": 714
+  },
+  {
+    "id": "worktree-071",
+    "label": "legacy-parallel-positive-gain",
+    "head": "594459ecd11571b39b4afacbedde0751f484cd69",
+    "branch": "refs/heads/wu-positive-gain-parallel",
+    "preserved_source_records": 381
+  },
+  {
+    "id": "worktree-072",
+    "label": "legacy-parallel-signed-residual",
+    "head": "b223729d5338b3949a90176c739fa1c1158875ab",
+    "branch": "refs/heads/wu-signed-residual-parallel",
+    "preserved_source_records": 567
+  },
+  {
+    "id": "worktree-073",
+    "label": "legacy-wu18938-wu2004-lemma23",
+    "head": "49beacb0f9fa6740e6fb3642fbd30690ddc0b852",
+    "branch": "refs/heads/wu18938-wu2004-lemma23",
+    "preserved_source_records": 158
+  },
+  {
+    "id": "worktree-074",
+    "label": "legacy-wu18938-wu2008-0899",
+    "head": "ad35da6613301edd3fac98283985a393e412761f",
+    "branch": "refs/heads/wu18938-wu2008-0899",
+    "preserved_source_records": 418
   }
 ]

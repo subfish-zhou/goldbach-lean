@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingParameterWidth
+
+#check Wu2008DoubleSieve.reboxing_parameter_width
+#print axioms Wu2008DoubleSieve.reboxing_parameter_width
+#check Wu2008DoubleSieve.reboxing_source_parameter_width
+#print axioms Wu2008DoubleSieve.reboxing_source_parameter_width
+#check Wu2008DoubleSieve.reboxing_replacement_log_width
+#print axioms Wu2008DoubleSieve.reboxing_replacement_log_width

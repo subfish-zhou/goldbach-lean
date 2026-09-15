@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XBuchstabNormalization
+
+#check Wu2008DoubleSieve.omega3XBuchstabMain
+#print axioms Wu2008DoubleSieve.omega3XBuchstabMain
+#check Wu2008DoubleSieve.omega3X_buchstab_coordinates
+#print axioms Wu2008DoubleSieve.omega3X_buchstab_coordinates
+#check Wu2008DoubleSieve.omega3X_buchstab_main_term_bounds
+#print axioms Wu2008DoubleSieve.omega3X_buchstab_main_term_bounds

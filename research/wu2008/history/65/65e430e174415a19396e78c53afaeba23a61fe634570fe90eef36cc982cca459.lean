@@ -1,0 +1,28 @@
+import MathlibNt.Wu2004MeanValue.SmallReal
+
+#check Wu2004MeanValue.wu_weighted_sum_eq_squarefree
+#print axioms Wu2004MeanValue.wu_weighted_sum_eq_squarefree
+#check Wu2004MeanValue.small_weighted_prime_prefix_log_saving
+#print axioms Wu2004MeanValue.small_weighted_prime_prefix_log_saving
+#check Wu2004MeanValue.small_ebar_le_prime_prefix
+#print axioms Wu2004MeanValue.small_ebar_le_prime_prefix
+#check Wu2004MeanValue.small_ebar_sum_le_prefix
+#print axioms Wu2004MeanValue.small_ebar_sum_le_prefix
+#check Wu2004MeanValue.small_support_card_le
+#print axioms Wu2004MeanValue.small_support_card_le
+#check Wu2004MeanValue.smallModulusSup_le_prefix
+#print axioms Wu2004MeanValue.smallModulusSup_le_prefix
+#check Wu2004MeanValue.small_weighted_sup_log_saving
+#print axioms Wu2004MeanValue.small_weighted_sup_log_saving
+#check Wu2004MeanValue.small_sum_le_sup
+#print axioms Wu2004MeanValue.small_sum_le_sup
+#check Wu2004MeanValue.small_real_domain_to_natural
+#print axioms Wu2004MeanValue.small_real_domain_to_natural
+#check Wu2004MeanValue.small_real_sup_le_natural
+#print axioms Wu2004MeanValue.small_real_sup_le_natural
+#check Wu2004MeanValue.small_real_weighted_sup_log_saving
+#print axioms Wu2004MeanValue.small_real_weighted_sup_log_saving
+#check Wu2004MeanValue.small_real_sum_le_sup
+#print axioms Wu2004MeanValue.small_real_sum_le_sup
+#check Wu2004MeanValue.small_real_selected_ebar_log_saving
+#print axioms Wu2004MeanValue.small_real_selected_ebar_log_saving

@@ -1,0 +1,46 @@
+import MathlibNt.Wu2008DoubleSieve.SourceCarriers
+
+open Wu2008DoubleSieve
+
+#check sifted_mul_iff
+#print axioms sifted_mul_iff
+#check siftedLE_mul_iff
+#print axioms siftedLE_mul_iff
+#check sourceSieveCarrier_eq_ite
+#print axioms sourceSieveCarrier_eq_ite
+#check sourceSieveCarrierLE_eq_ite
+#print axioms sourceSieveCarrierLE_eq_ite
+#check siftedLE_of_dvd_modulus
+#print axioms siftedLE_of_dvd_modulus
+#check sourceSieveCarrier_of_dvd_modulus
+#print axioms sourceSieveCarrier_of_dvd_modulus
+#check sourceSieveCarrierLE_of_dvd_modulus
+#print axioms sourceSieveCarrierLE_of_dvd_modulus
+#check source_double_sieve_carriers
+#print axioms source_double_sieve_carriers
+#check sifted_selected_pair_iff
+#print axioms sifted_selected_pair_iff
+#check siftedLE_selected_pair_iff
+#print axioms siftedLE_selected_pair_iff
+#check source_pair_carrier
+#print axioms source_pair_carrier
+#check source_closed_pair_carrier
+#print axioms source_closed_pair_carrier
+#check source_closed_pair_at_selected_prime
+#print axioms source_closed_pair_at_selected_prime
+#check quotient_pair_count_eq_source_add_correction
+#print axioms quotient_pair_count_eq_source_add_correction
+#check sourceSieveCarrier_eq_empty_of_selected
+#print axioms sourceSieveCarrier_eq_empty_of_selected
+#check sifted_prime_of_le
+#print axioms sifted_prime_of_le
+#check source_strict_pair_carrier
+#print axioms source_strict_pair_carrier
+#check source_strict_triple_carrier
+#print axioms source_strict_triple_carrier
+#check sourceLowerWeightRHS_eq
+#print axioms sourceLowerWeightRHS_eq
+#check wu_lemma21_strict_source
+#print axioms wu_lemma21_strict_source
+#check variableS3Main_eq_source_add_correction
+#print axioms variableS3Main_eq_source_add_correction

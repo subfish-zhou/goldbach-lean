@@ -1,0 +1,14 @@
+import MathlibNt.Wu2004MeanValue.OriginalDyadicUniform
+
+#check Wu2004MeanValue.dyadicScale_twice_le
+#print axioms Wu2004MeanValue.dyadicScale_twice_le
+#check Wu2004MeanValue.real_block_cutoff_le_half
+#print axioms Wu2004MeanValue.real_block_cutoff_le_half
+#check Wu2004MeanValue.half_lt_sub_of_small_product
+#print axioms Wu2004MeanValue.half_lt_sub_of_small_product
+#check Wu2004MeanValue.eventually_dyadic_uniform
+#print axioms Wu2004MeanValue.eventually_dyadic_uniform
+#check Wu2004MeanValue.dyadic_uniform_threshold
+#print axioms Wu2004MeanValue.dyadic_uniform_threshold
+#check Wu2004MeanValue.dyadic_uniform_nat_threshold
+#print axioms Wu2004MeanValue.dyadic_uniform_nat_threshold

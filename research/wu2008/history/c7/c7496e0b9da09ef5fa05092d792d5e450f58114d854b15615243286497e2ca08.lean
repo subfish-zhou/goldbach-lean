@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR2Atom
+
+#check Wu2008DoubleSieve.reboxing_replacement_window_bounds
+#print axioms Wu2008DoubleSieve.reboxing_replacement_window_bounds
+#check Wu2008DoubleSieve.reboxing_source_difference_le_prime_mass
+#print axioms Wu2008DoubleSieve.reboxing_source_difference_le_prime_mass
+#check Wu2008DoubleSieve.reboxingR2_atom_bound
+#print axioms Wu2008DoubleSieve.reboxingR2_atom_bound

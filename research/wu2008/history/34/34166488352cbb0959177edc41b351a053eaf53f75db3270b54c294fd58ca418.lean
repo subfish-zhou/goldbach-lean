@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.CanonicalBoundedFactors
+
+#check Wu2008DoubleSieve.suzukiContinuousUpperFactor_eq_jr1965F_bounded
+#print axioms Wu2008DoubleSieve.suzukiContinuousUpperFactor_eq_jr1965F_bounded
+#check Wu2008DoubleSieve.suzukiContinuousLowerFactor_eq_jr1965f_bounded
+#print axioms Wu2008DoubleSieve.suzukiContinuousLowerFactor_eq_jr1965f_bounded

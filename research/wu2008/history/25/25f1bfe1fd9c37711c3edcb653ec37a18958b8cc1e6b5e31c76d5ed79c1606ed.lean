@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2EffectiveIntegral
+
+#check Wu2008DoubleSieve.omega2_integral_domain
+#print axioms Wu2008DoubleSieve.omega2_integral_domain
+#check Wu2008DoubleSieve.omega2_integral_intervalIntegrable
+#print axioms Wu2008DoubleSieve.omega2_integral_intervalIntegrable
+#check Wu2008DoubleSieve.omega2_effective_integral_eventually_integrable
+#print axioms Wu2008DoubleSieve.omega2_effective_integral_eventually_integrable

@@ -1,0 +1,17 @@
+import MathlibNt.Wu2004MeanValue.ActualPrincipal
+import MathlibNt.Wu2004MeanValue.SourceMasks
+
+#check Wu2004MeanValue.coprimePrincipalSum_div_le_principalModulusSup
+#print axioms Wu2004MeanValue.coprimePrincipalSum_div_le_principalModulusSup
+#check Wu2004MeanValue.principal_selected_unweighted_log_saving
+#print axioms Wu2004MeanValue.principal_selected_unweighted_log_saving
+#check Wu2004MeanValue.abs_sourceMask_le
+#print axioms Wu2004MeanValue.abs_sourceMask_le
+#check Wu2004MeanValue.actualAPSum_split_source
+#print axioms Wu2004MeanValue.actualAPSum_split_source
+#check Wu2004MeanValue.sourceMask_endpoint_extension
+#print axioms Wu2004MeanValue.sourceMask_endpoint_extension
+#check Wu2004MeanValue.ceil_log_source_cutoff
+#print axioms Wu2004MeanValue.ceil_log_source_cutoff
+#check Wu2004MeanValue.legal_source_endpoint_extension
+#print axioms Wu2004MeanValue.legal_source_endpoint_extension

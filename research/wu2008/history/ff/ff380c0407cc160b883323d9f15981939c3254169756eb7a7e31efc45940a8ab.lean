@@ -1,0 +1,30 @@
+import MathlibNt.Wu2004MeanValue.TailMass
+
+#check Wu2004MeanValue.tailPrimeModel
+#print axioms Wu2004MeanValue.tailPrimeModel
+#check Wu2004MeanValue.tailIntegral
+#print axioms Wu2004MeanValue.tailIntegral
+#check Wu2004MeanValue.tail_log_scale_le_half
+#print axioms Wu2004MeanValue.tail_log_scale_le_half
+#check Wu2004MeanValue.tail_proxy_eq_model_term
+#print axioms Wu2004MeanValue.tail_proxy_eq_model_term
+#check Wu2004MeanValue.tailPrimeModel_nonneg
+#print axioms Wu2004MeanValue.tailPrimeModel_nonneg
+#check Wu2004MeanValue.tendsto_tailPrimeModel
+#print axioms Wu2004MeanValue.tendsto_tailPrimeModel
+#check Wu2004MeanValue.eventually_power_le_tail_cutoff
+#print axioms Wu2004MeanValue.eventually_power_le_tail_cutoff
+#check Wu2004MeanValue.tailMass_le_model
+#print axioms Wu2004MeanValue.tailMass_le_model
+#check Wu2004MeanValue.eventually_tailMass_le_model
+#print axioms Wu2004MeanValue.eventually_tailMass_le_model
+#check Wu2004MeanValue.tailKernel_continuousOn
+#print axioms Wu2004MeanValue.tailKernel_continuousOn
+#check Wu2004MeanValue.tailIntegral_nonneg
+#print axioms Wu2004MeanValue.tailIntegral_nonneg
+#check Wu2004MeanValue.tailIntegral_lower_shift
+#print axioms Wu2004MeanValue.tailIntegral_lower_shift
+#check Wu2004MeanValue.exists_tailIntegral_lower_approx
+#print axioms Wu2004MeanValue.exists_tailIntegral_lower_approx
+#check Wu2004MeanValue.tailMass_sharp_upper
+#print axioms Wu2004MeanValue.tailMass_sharp_upper

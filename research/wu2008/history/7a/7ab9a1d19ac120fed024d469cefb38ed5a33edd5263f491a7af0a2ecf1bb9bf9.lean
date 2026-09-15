@@ -1,0 +1,30 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaWeighted
+
+#check Wu2008DoubleSieve.omega_source_single_carrier
+#print axioms Wu2008DoubleSieve.omega_source_single_carrier
+#check Wu2008DoubleSieve.omega_source_triple_carrier
+#print axioms Wu2008DoubleSieve.omega_source_triple_carrier
+#check Wu2008DoubleSieve.omega_selected_weight
+#print axioms Wu2008DoubleSieve.omega_selected_weight
+#check Wu2008DoubleSieve.wuOmegaRepeated
+#print axioms Wu2008DoubleSieve.wuOmegaRepeated
+#check Wu2008DoubleSieve.wuOmegaRepeatedSum
+#print axioms Wu2008DoubleSieve.wuOmegaRepeatedSum
+#check Wu2008DoubleSieve.omega_triple_sum_eq
+#print axioms Wu2008DoubleSieve.omega_triple_sum_eq
+#check Wu2008DoubleSieve.wuOmegaSelectedTriple
+#print axioms Wu2008DoubleSieve.wuOmegaSelectedTriple
+#check Wu2008DoubleSieve.wuOmegaSelectedSlack
+#print axioms Wu2008DoubleSieve.wuOmegaSelectedSlack
+#check Wu2008DoubleSieve.wuOmegaTripleWindowGain
+#print axioms Wu2008DoubleSieve.wuOmegaTripleWindowGain
+#check Wu2008DoubleSieve.wuOmegaSelectedSlack_nonneg
+#print axioms Wu2008DoubleSieve.wuOmegaSelectedSlack_nonneg
+#check Wu2008DoubleSieve.wuOmegaTripleWindowGain_nonneg
+#print axioms Wu2008DoubleSieve.wuOmegaTripleWindowGain_nonneg
+#check Wu2008DoubleSieve.wu_omega_weighted_decomposition
+#print axioms Wu2008DoubleSieve.wu_omega_weighted_decomposition
+#check Wu2008DoubleSieve.wu_omega_weighted_finite
+#print axioms Wu2008DoubleSieve.wu_omega_weighted_finite
+#check Wu2008DoubleSieve.wu_omega_weighted_box
+#print axioms Wu2008DoubleSieve.wu_omega_weighted_box

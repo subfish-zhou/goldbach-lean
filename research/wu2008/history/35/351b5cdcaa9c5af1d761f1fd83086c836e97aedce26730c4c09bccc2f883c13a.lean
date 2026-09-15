@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingRawUpper
+
+#check Wu2008DoubleSieve.reboxing_source_count_prime_modulus_eq
+#print axioms Wu2008DoubleSieve.reboxing_source_count_prime_modulus_eq
+#check Wu2008DoubleSieve.reboxingRawPrimeSum_le_blocks_add_R1
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum_le_blocks_add_R1
+#check Wu2008DoubleSieve.reboxingRawPrimeSum_upper_geometric
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum_upper_geometric

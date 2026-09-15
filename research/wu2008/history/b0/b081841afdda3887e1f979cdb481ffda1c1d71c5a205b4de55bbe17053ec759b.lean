@@ -1,0 +1,13 @@
+import MathlibNt.Wu2008DoubleSieve.NinthMainMass
+
+#check LiLiuPrereqBuchstab.primePi
+#check LiLiuPrereqBuchstab.primePi_error_le
+#check LiLiuPrereqBuchstab.tendsto_primeErrorEnvelope
+#check Wu2008DoubleSieve.primeOrdered_weighted_uniform
+#check Wu2008DoubleSieve.primeOrdered_integral_sub_bound
+#check Wu2008DoubleSieve.primeOrdered_integral_norm_le
+#check Wu2008DoubleSieve.primeOrdered_reciprocal_uniform
+#print axioms LiLiuPrereqBuchstab.primePi_error_le
+#print axioms LiLiuPrereqBuchstab.tendsto_primeErrorEnvelope
+#print axioms Wu2008DoubleSieve.primeOrdered_weighted_uniform
+#print axioms Wu2008DoubleSieve.primeOrdered_reciprocal_uniform

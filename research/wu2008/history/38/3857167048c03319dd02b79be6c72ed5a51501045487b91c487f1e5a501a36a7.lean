@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.BalancedAP
+
+#check Wu2004MeanValue.balanced_common_profile_unit_natural
+#print axioms Wu2004MeanValue.balanced_common_profile_unit_natural
+#check Wu2004MeanValue.balanced_common_profile_weighted_natural
+#print axioms Wu2004MeanValue.balanced_common_profile_weighted_natural

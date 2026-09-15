@@ -1,0 +1,42 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeOrderedQuadratureTriple
+
+#check Wu2008DoubleSieve.PrimeOrderedWeight
+#print axioms Wu2008DoubleSieve.PrimeOrderedWeight
+#check Wu2008DoubleSieve.PrimeOrderedWeight.mk
+#print axioms Wu2008DoubleSieve.PrimeOrderedWeight.mk
+#check Wu2008DoubleSieve.PrimeOrderedWeight.bound
+#print axioms Wu2008DoubleSieve.PrimeOrderedWeight.bound
+#check Wu2008DoubleSieve.PrimeOrderedWeight.first
+#print axioms Wu2008DoubleSieve.PrimeOrderedWeight.first
+#check Wu2008DoubleSieve.PrimeOrderedWeight.second
+#print axioms Wu2008DoubleSieve.PrimeOrderedWeight.second
+#check Wu2008DoubleSieve.PrimeOrderedWeight.third
+#print axioms Wu2008DoubleSieve.PrimeOrderedWeight.third
+#check Wu2008DoubleSieve.primeOrderedInnerIntegral
+#print axioms Wu2008DoubleSieve.primeOrderedInnerIntegral
+#check Wu2008DoubleSieve.primeOrderedMiddleIntegral
+#print axioms Wu2008DoubleSieve.primeOrderedMiddleIntegral
+#check Wu2008DoubleSieve.primeOrderedTripleIntegral
+#print axioms Wu2008DoubleSieve.primeOrderedTripleIntegral
+#check Wu2008DoubleSieve.primeOrdered_inner_regular
+#print axioms Wu2008DoubleSieve.primeOrdered_inner_regular
+#check Wu2008DoubleSieve.primeOrdered_middle_regular
+#print axioms Wu2008DoubleSieve.primeOrdered_middle_regular
+#check Wu2008DoubleSieve.primeOrderedNestedSum
+#print axioms Wu2008DoubleSieve.primeOrderedNestedSum
+#check Wu2008DoubleSieve.primeOrdered_nested_uniform
+#print axioms Wu2008DoubleSieve.primeOrdered_nested_uniform
+#check Wu2008DoubleSieve.primeOrderedTripleSum
+#print axioms Wu2008DoubleSieve.primeOrderedTripleSum
+#check Wu2008DoubleSieve.primeOrdered_coordinate_rpow
+#print axioms Wu2008DoubleSieve.primeOrdered_coordinate_rpow
+#check Wu2008DoubleSieve.primeOrderedTripleSum_eq_nested
+#print axioms Wu2008DoubleSieve.primeOrderedTripleSum_eq_nested
+#check Wu2008DoubleSieve.primeOrderedTripleIntegral_eq
+#print axioms Wu2008DoubleSieve.primeOrderedTripleIntegral_eq
+#check Wu2008DoubleSieve.primeOrderedTripleSum_self
+#print axioms Wu2008DoubleSieve.primeOrderedTripleSum_self
+#check Wu2008DoubleSieve.primeOrderedTripleIntegral_self
+#print axioms Wu2008DoubleSieve.primeOrderedTripleIntegral_self
+#check Wu2008DoubleSieve.primeOrdered_triple_uniform
+#print axioms Wu2008DoubleSieve.primeOrdered_triple_uniform

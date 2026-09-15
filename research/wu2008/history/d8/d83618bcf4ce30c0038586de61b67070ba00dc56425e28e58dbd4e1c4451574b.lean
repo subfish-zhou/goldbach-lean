@@ -1,0 +1,105 @@
+import MathlibNt.Wu2008DoubleSieve.S3CarrierMajorant
+
+open Wu2008DoubleSieve
+
+#check sifted_modulus_mul
+#print axioms sifted_modulus_mul
+#check siftedLE_modulus_mul
+#print axioms siftedLE_modulus_mul
+#check sifted_mul_modulus_iff
+#print axioms sifted_mul_modulus_iff
+#check siftedLE_mul_modulus_iff
+#print axioms siftedLE_mul_modulus_iff
+#check sieveCarrier_subset_mul_modulus
+#print axioms sieveCarrier_subset_mul_modulus
+#check sieveCarrierLE_subset_mul_modulus
+#print axioms sieveCarrierLE_subset_mul_modulus
+#check s3_sieveCount_le_mul_modulus
+#print axioms s3_sieveCount_le_mul_modulus
+#check sieveCountLE_le_mul_modulus
+#print axioms sieveCountLE_le_mul_modulus
+#check sieveCarrier_mul_modulus_difference
+#print axioms sieveCarrier_mul_modulus_difference
+#check sieveCarrierLE_mul_modulus_difference
+#print axioms sieveCarrierLE_mul_modulus_difference
+#check sieveCount_mul_modulus_eq_add_loss
+#print axioms sieveCount_mul_modulus_eq_add_loss
+#check sieveCountLE_mul_modulus_eq_add_loss
+#print axioms sieveCountLE_mul_modulus_eq_add_loss
+#check selected_pair_loss_square
+#print axioms selected_pair_loss_square
+#check selected_pair_closed_loss_square
+#print axioms selected_pair_closed_loss_square
+#check sifted_mul_modulus_of_le
+#print axioms sifted_mul_modulus_of_le
+#check source_pair_majorant_eq_add_loss
+#print axioms source_pair_majorant_eq_add_loss
+#check source_triple_majorant_eq_add_loss
+#print axioms source_triple_majorant_eq_add_loss
+#check selected_triple_loss_square
+#print axioms selected_triple_loss_square
+#check sieveCount_le_source_selected_modulus
+#print axioms sieveCount_le_source_selected_modulus
+#check variableS3Main_le_source_majorant
+#print axioms variableS3Main_le_source_majorant
+#check variableS3Triples_le_source_majorant
+#print axioms variableS3Triples_le_source_majorant
+#check lowerS3_le_source_majorants
+#print axioms lowerS3_le_source_majorants
+#check s3_third_cutoff_le_cuberoot
+#print axioms s3_third_cutoff_le_cuberoot
+#check mem_s3ThirdRange
+#print axioms mem_s3ThirdRange
+#check s3ThirdRange_subset_source_triples
+#print axioms s3ThirdRange_subset_source_triples
+#check sum_s3ThirdRange
+#print axioms sum_s3ThirdRange
+#check variableS3Triples_eq_third_range_sum
+#print axioms variableS3Triples_eq_third_range_sum
+#check mem_s3_ordered_triples
+#print axioms mem_s3_ordered_triples
+#check s3_ordered_triples_mono
+#print axioms s3_ordered_triples_mono
+#check s3_delta_ranges_disjoint
+#print axioms s3_delta_ranges_disjoint
+#check s3_triple_cutoff_difference
+#print axioms s3_triple_cutoff_difference
+#check s3_delta2_ge_fourprime_remainders
+#print axioms s3_delta2_ge_fourprime_remainders
+#check s3_fourprime_remainder_split
+#print axioms s3_fourprime_remainder_split
+#check mem_s3DistinctQuadruples
+#print axioms mem_s3DistinctQuadruples
+#check sum_s3DistinctQuadruples
+#print axioms sum_s3DistinctQuadruples
+#check s3_fourprime_sum_split
+#print axioms s3_fourprime_sum_split
+#check mem_s3_first_quadruples
+#print axioms mem_s3_first_quadruples
+#check mem_s3_second_quadruples
+#print axioms mem_s3_second_quadruples
+#check s3_distinct_fourprime_le_source_majorant
+#print axioms s3_distinct_fourprime_le_source_majorant
+#check s3_fourprime_sum_le_source_add_repeated
+#print axioms s3_fourprime_sum_le_source_add_repeated
+#check s3_delta2_ge_source_fourprime_add_repeated
+#print axioms s3_delta2_ge_source_fourprime_add_repeated
+
+#check s3SourceMajorantMain
+#print axioms s3SourceMajorantMain
+#check s3SourceMajorantTriples
+#print axioms s3SourceMajorantTriples
+#check s3ThirdRange
+#print axioms s3ThirdRange
+#check s3SecondRange
+#print axioms s3SecondRange
+#check s3FourPrimeRemainder
+#print axioms s3FourPrimeRemainder
+#check s3Delta2Quotient
+#print axioms s3Delta2Quotient
+#check s3DistinctQuadruples
+#print axioms s3DistinctQuadruples
+#check s3FourSourceMajorant
+#print axioms s3FourSourceMajorant
+#check s3RepeatedFirstPrimeMass
+#print axioms s3RepeatedFirstPrimeMass

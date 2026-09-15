@@ -1,0 +1,20 @@
+import MathlibNt.Wu2004MeanValue.OriginalTailSwitching
+
+#check Wu2004MeanValue.originalTailQuotient_pos
+#print axioms Wu2004MeanValue.originalTailQuotient_pos
+#check Wu2004MeanValue.originalTailComposite_leastPrime
+#print axioms Wu2004MeanValue.originalTailComposite_leastPrime
+#check Wu2004MeanValue.originalTailGood
+#print axioms Wu2004MeanValue.originalTailGood
+#check Wu2004MeanValue.originalTailSmall
+#print axioms Wu2004MeanValue.originalTailSmall
+#check Wu2004MeanValue.originalTailUnit
+#print axioms Wu2004MeanValue.originalTailUnit
+#check Wu2004MeanValue.originalTailGood_card_le
+#print axioms Wu2004MeanValue.originalTailGood_card_le
+#check Wu2004MeanValue.originalTailUnit_card_le
+#print axioms Wu2004MeanValue.originalTailUnit_card_le
+#check Wu2004MeanValue.originalTailSmall_card_le
+#print axioms Wu2004MeanValue.originalTailSmall_card_le
+#check Wu2004MeanValue.tailOriginalSum_le_sifted_add_rectangle
+#print axioms Wu2004MeanValue.tailOriginalSum_le_sifted_add_rectangle

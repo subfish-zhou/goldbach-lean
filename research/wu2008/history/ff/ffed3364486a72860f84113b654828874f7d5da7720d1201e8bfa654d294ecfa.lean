@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2PrimeIntegral
+
+#check Wu2008DoubleSieve.omega2_window_parameter_mem
+#print axioms Wu2008DoubleSieve.omega2_window_parameter_mem
+#check Wu2008DoubleSieve.omega2_box_prime_integral_uniform
+#print axioms Wu2008DoubleSieve.omega2_box_prime_integral_uniform
+#check Wu2008DoubleSieve.omega2_effective_prime_transport_relative
+#print axioms Wu2008DoubleSieve.omega2_effective_prime_transport_relative
+#check Wu2008DoubleSieve.omega2_effective_prime_integral_relative
+#print axioms Wu2008DoubleSieve.omega2_effective_prime_integral_relative

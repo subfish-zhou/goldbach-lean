@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SourceDensity
+
+#check Wu2008DoubleSieve.omega3_source_sqrt_tendsto
+#print axioms Wu2008DoubleSieve.omega3_source_sqrt_tendsto
+#check Wu2008DoubleSieve.omega3_source_rosser_density
+#print axioms Wu2008DoubleSieve.omega3_source_rosser_density

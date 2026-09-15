@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.AllSourceAP
+
+#check Wu2004MeanValue.large_actualAP_weighted
+#print axioms Wu2004MeanValue.large_actualAP_weighted
+#check Wu2004MeanValue.common_profile_unit_natural
+#print axioms Wu2004MeanValue.common_profile_unit_natural

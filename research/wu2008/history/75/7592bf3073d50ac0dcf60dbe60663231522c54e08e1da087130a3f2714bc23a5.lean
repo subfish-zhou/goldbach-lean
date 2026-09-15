@@ -1,0 +1,38 @@
+import MathlibNt.Wu2008DoubleSieve.ClosedLowerWeightEndpoints
+
+#check Wu2008DoubleSieve.sieveCountLE
+#print axioms Wu2008DoubleSieve.sieveCountLE
+#check Wu2008DoubleSieve.sieveEndpointLoss
+#print axioms Wu2008DoubleSieve.sieveEndpointLoss
+#check Wu2008DoubleSieve.mem_sieveEndpointLoss
+#print axioms Wu2008DoubleSieve.mem_sieveEndpointLoss
+#check Wu2008DoubleSieve.sieveCount_eq_closed_add_loss
+#print axioms Wu2008DoubleSieve.sieveCount_eq_closed_add_loss
+#check Wu2008DoubleSieve.sieveCountLE_le_strict
+#print axioms Wu2008DoubleSieve.sieveCountLE_le_strict
+#check Wu2008DoubleSieve.primeIndices
+#print axioms Wu2008DoubleSieve.primeIndices
+#check Wu2008DoubleSieve.mem_primeIndices
+#print axioms Wu2008DoubleSieve.mem_primeIndices
+#check Wu2008DoubleSieve.sieveEndpointLoss_subset_primeIndices
+#print axioms Wu2008DoubleSieve.sieveEndpointLoss_subset_primeIndices
+#check Wu2008DoubleSieve.endpoint_sum_cards_eq
+#print axioms Wu2008DoubleSieve.endpoint_sum_cards_eq
+#check Wu2008DoubleSieve.primeComplement_filter_card_le
+#print axioms Wu2008DoubleSieve.primeComplement_filter_card_le
+#check Wu2008DoubleSieve.fixedPrimeEndpoint
+#print axioms Wu2008DoubleSieve.fixedPrimeEndpoint
+#check Wu2008DoubleSieve.fixedPrimeEndpoint_card_le
+#print axioms Wu2008DoubleSieve.fixedPrimeEndpoint_card_le
+#check Wu2008DoubleSieve.single_endpoint_mem_fixed
+#print axioms Wu2008DoubleSieve.single_endpoint_mem_fixed
+#check Wu2008DoubleSieve.pair_endpoint_mem_square
+#print axioms Wu2008DoubleSieve.pair_endpoint_mem_square
+#check Wu2008DoubleSieve.single_endpoint_multiplicity_le
+#print axioms Wu2008DoubleSieve.single_endpoint_multiplicity_le
+#check Wu2008DoubleSieve.single_endpoint_sum_le
+#print axioms Wu2008DoubleSieve.single_endpoint_sum_le
+#check Wu2008DoubleSieve.pair_endpoint_multiplicity_le
+#print axioms Wu2008DoubleSieve.pair_endpoint_multiplicity_le
+#check Wu2008DoubleSieve.pair_endpoint_sum_le
+#print axioms Wu2008DoubleSieve.pair_endpoint_sum_le

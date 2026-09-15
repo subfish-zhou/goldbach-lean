@@ -1,0 +1,50 @@
+import MathlibNt.Wu2008DoubleSieve.TruncatedSixthPayment
+
+#print Wu2008DoubleSieve.truncatedSixthExpression
+#print Wu2008DoubleSieve.truncatedSixthFixedExpression
+#print Wu2008DoubleSieve.truncatedSixthErrorConstant
+#check Wu2008DoubleSieve.truncatedSixth_full_eq_original
+#check Wu2008DoubleSieve.truncatedSixth_full_sub_kept
+#check Wu2008DoubleSieve.truncatedSixth_moving_subset_rectangle
+#check Wu2008DoubleSieve.truncatedSixth_first_two
+#check Wu2008DoubleSieve.truncatedSixth_pair_carrier
+#check Wu2008DoubleSieve.truncatedSixthAtomMap_injOn
+#check Wu2008DoubleSieve.truncatedSixth_excess_le_omitted
+#check Wu2008DoubleSieve.truncatedSixth_le_count_explicit
+#check Wu2008DoubleSieve.truncatedSixth_le_count_power
+#check Wu2008DoubleSieve.truncatedSixth_fixed_le_count
+#check Wu2008DoubleSieve.truncatedSixth_fixed_relative
+
+#print axioms Wu2008DoubleSieve.truncatedSixthPairs
+#print axioms Wu2008DoubleSieve.truncatedSixthKept
+#print axioms Wu2008DoubleSieve.truncatedSixthOmitted
+#print axioms Wu2008DoubleSieve.truncatedSixthFullMass
+#print axioms Wu2008DoubleSieve.truncatedSixthMass
+#print axioms Wu2008DoubleSieve.truncatedSixthOmittedMass
+#print axioms Wu2008DoubleSieve.truncatedSixthExpression
+#print axioms Wu2008DoubleSieve.truncatedSixthExcessMass
+#print axioms Wu2008DoubleSieve.truncatedSixthExcessAtoms
+#print axioms Wu2008DoubleSieve.truncatedSixthOmittedAtoms
+#print axioms Wu2008DoubleSieve.truncatedSixth_full_eq_original
+#print axioms Wu2008DoubleSieve.truncatedSixth_full_sub_kept
+#print axioms Wu2008DoubleSieve.truncatedSixthExcessAtoms_card
+#print axioms Wu2008DoubleSieve.truncatedSixthOmittedAtoms_card
+#print axioms Wu2008DoubleSieve.truncatedSixth_moving_subset_rectangle
+#print axioms Wu2008DoubleSieve.truncatedSixth_rectangle_split
+#print axioms Wu2008DoubleSieve.truncatedSixth_first_two
+#print axioms Wu2008DoubleSieve.truncatedSixth_pair_carrier
+#print axioms Wu2008DoubleSieve.truncatedSixthAtomMap
+#print axioms Wu2008DoubleSieve.truncatedSixthAtomMap_mem
+#print axioms Wu2008DoubleSieve.truncatedSixthAtomMap_injOn
+#print axioms Wu2008DoubleSieve.truncatedSixth_excess_le_omitted
+#print axioms Wu2008DoubleSieve.truncatedSixth_quotient_lower_weights
+#print axioms Wu2008DoubleSieve.truncatedSixth_delta_exact
+#print axioms Wu2008DoubleSieve.truncatedSixth_le_lower_weights
+#print axioms Wu2008DoubleSieve.truncatedSixth_le_count_explicit
+#print axioms Wu2008DoubleSieve.truncatedSixth_le_count_power
+#print axioms Wu2008DoubleSieve.truncatedSixthFixedExpression
+#print axioms Wu2008DoubleSieve.truncatedSixthErrorConstant
+#print axioms Wu2008DoubleSieve.truncatedSixthErrorConstant_pos
+#print axioms Wu2008DoubleSieve.truncatedSixth_fixed_le_count
+#print axioms Wu2008DoubleSieve.truncatedSixth_error_eventually
+#print axioms Wu2008DoubleSieve.truncatedSixth_fixed_relative

@@ -1,0 +1,25 @@
+import MathlibNt.Wu2004MeanValue.IndexedSieve
+
+#check Wu2004MeanValue.indexedSiftedCount
+#check Wu2004MeanValue.tailSiftedCount
+#check Wu2004MeanValue.blockSiftedCount
+#check Wu2004MeanValue.indexedValueWeight
+#check Wu2004MeanValue.indexedBoundingSieve
+#check Wu2004MeanValue.indexedValueWeight_sum
+#print axioms Wu2004MeanValue.indexedValueWeight_sum
+#check Wu2004MeanValue.indexedValueWeight_sum_predicate
+#print axioms Wu2004MeanValue.indexedValueWeight_sum_predicate
+#check Wu2004MeanValue.prime_gt_two_of_dvd_siftingProduct
+#print axioms Wu2004MeanValue.prime_gt_two_of_dvd_siftingProduct
+#check Wu2004MeanValue.indexedBoundingSieve_weight_sum
+#print axioms Wu2004MeanValue.indexedBoundingSieve_weight_sum
+#check Wu2004MeanValue.indexedBoundingSieve_multSum
+#print axioms Wu2004MeanValue.indexedBoundingSieve_multSum
+#check Wu2004MeanValue.indexedBoundingSieve_siftedSum
+#print axioms Wu2004MeanValue.indexedBoundingSieve_siftedSum
+#check Wu2004MeanValue.indexedBoundingSieve_rem
+#print axioms Wu2004MeanValue.indexedBoundingSieve_rem
+#check Wu2004MeanValue.indexedBoundingSieve_mainSum
+#print axioms Wu2004MeanValue.indexedBoundingSieve_mainSum
+#check Wu2004MeanValue.siftingProduct_primeFactors
+#print axioms Wu2004MeanValue.siftingProduct_primeFactors

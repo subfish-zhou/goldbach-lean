@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.RefinementParameters
+
+#check Wu2004MeanValue.exists_fixed_eta_small_product_upper
+#print axioms Wu2004MeanValue.exists_fixed_eta_small_product_upper
+#check Wu2004MeanValue.eventually_refinement_unit_paid
+#print axioms Wu2004MeanValue.eventually_refinement_unit_paid

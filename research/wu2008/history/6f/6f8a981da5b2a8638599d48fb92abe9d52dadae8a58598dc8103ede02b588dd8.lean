@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedbackParameters
+
+#check Wu2008DoubleSieve.firstFeedback_parameter_domain
+#print axioms Wu2008DoubleSieve.firstFeedback_parameter_domain
+#check Wu2008DoubleSieve.firstFeedback_parameter_log_ratio
+#print axioms Wu2008DoubleSieve.firstFeedback_parameter_log_ratio
+#check Wu2008DoubleSieve.firstFeedback_parameter_inner_ratio
+#print axioms Wu2008DoubleSieve.firstFeedback_parameter_inner_ratio
+#check Wu2008DoubleSieve.firstFeedback_sigma_log_coefficient
+#print axioms Wu2008DoubleSieve.firstFeedback_sigma_log_coefficient
+#check Wu2008DoubleSieve.firstFeedback_tail_log_coefficient
+#print axioms Wu2008DoubleSieve.firstFeedback_tail_log_coefficient

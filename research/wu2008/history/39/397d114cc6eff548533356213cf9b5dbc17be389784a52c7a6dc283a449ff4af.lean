@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.BalancedPrimitive
+
+#check Wu2004MeanValue.balanced_commonPrimitiveSource_log_saving_of_split
+#print axioms Wu2004MeanValue.balanced_commonPrimitiveSource_log_saving_of_split
+#check Wu2004MeanValue.balanced_commonPrimitiveSource_log_saving_uniform_level
+#print axioms Wu2004MeanValue.balanced_commonPrimitiveSource_log_saving_uniform_level

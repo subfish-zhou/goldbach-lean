@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingPrimeTransport
+
+#check Wu2008DoubleSieve.primeWindow_mul_eq_filter
+#print axioms Wu2008DoubleSieve.primeWindow_mul_eq_filter
+#check Wu2008DoubleSieve.primeWindow_modulus_sum_difference
+#print axioms Wu2008DoubleSieve.primeWindow_modulus_sum_difference
+#check Wu2008DoubleSieve.reboxing_prime_transport_abs_le
+#print axioms Wu2008DoubleSieve.reboxing_prime_transport_abs_le
+#check Wu2008DoubleSieve.wu_buchstab_prime_window_bounds
+#print axioms Wu2008DoubleSieve.wu_buchstab_prime_window_bounds
+#check Wu2008DoubleSieve.wu_buchstab_prime_parameter_mem
+#print axioms Wu2008DoubleSieve.wu_buchstab_prime_parameter_mem
+#check Wu2008DoubleSieve.reboxingPrimeSum
+#print axioms Wu2008DoubleSieve.reboxingPrimeSum
+#check Wu2008DoubleSieve.reboxingPrimeSum_transport_bound
+#print axioms Wu2008DoubleSieve.reboxingPrimeSum_transport_bound

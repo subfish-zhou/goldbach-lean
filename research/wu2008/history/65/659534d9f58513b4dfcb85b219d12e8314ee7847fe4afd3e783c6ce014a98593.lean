@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingPermutation
+
+#check Wu2008DoubleSieve.convolutionCoeff_permute
+#print axioms Wu2008DoubleSieve.convolutionCoeff_permute
+#check Wu2008DoubleSieve.boxConvolutionSupport_permute
+#print axioms Wu2008DoubleSieve.boxConvolutionSupport_permute
+#check Wu2008DoubleSieve.boxTheta_permute
+#print axioms Wu2008DoubleSieve.boxTheta_permute
+#check Wu2008DoubleSieve.wuBoxPhi_permute
+#print axioms Wu2008DoubleSieve.wuBoxPhi_permute
+#check Wu2008DoubleSieve.wuBoxPhiLE_permute
+#print axioms Wu2008DoubleSieve.wuBoxPhiLE_permute
+#check Wu2008DoubleSieve.convolutionWuWindows_permute
+#print axioms Wu2008DoubleSieve.convolutionWuWindows_permute
+#check Wu2008DoubleSieve.convolutionCoeff_insert_permute
+#print axioms Wu2008DoubleSieve.convolutionCoeff_insert_permute

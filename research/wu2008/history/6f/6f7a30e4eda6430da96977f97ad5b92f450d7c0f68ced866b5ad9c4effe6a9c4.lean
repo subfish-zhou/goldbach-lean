@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFunctionalGainFinite
+
+#check Wu2008DoubleSieve.firstFunctionalGainPsiSlack
+#print axioms Wu2008DoubleSieve.firstFunctionalGainPsiSlack
+#check Wu2008DoubleSieve.firstFunctionalGainPsi
+#print axioms Wu2008DoubleSieve.firstFunctionalGainPsi
+#check Wu2008DoubleSieve.firstFunctionalGainPsiSlack_zero
+#print axioms Wu2008DoubleSieve.firstFunctionalGainPsiSlack_zero
+#check Wu2008DoubleSieve.firstFunctionalGain_admissible_eventually
+#print axioms Wu2008DoubleSieve.firstFunctionalGain_admissible_eventually
+#check Wu2008DoubleSieve.wuImprovementAt_firstFunctionalGain_eventually
+#print axioms Wu2008DoubleSieve.wuImprovementAt_firstFunctionalGain_eventually

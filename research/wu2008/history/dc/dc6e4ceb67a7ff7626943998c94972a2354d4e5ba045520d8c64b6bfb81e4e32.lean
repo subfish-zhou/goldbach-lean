@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingRawTransport
+
+#check @Wu2008DoubleSieve.reboxing_raw_repeated_fibre_le
+#print axioms Wu2008DoubleSieve.reboxing_raw_repeated_fibre_le
+#check @Wu2008DoubleSieve.reboxingRawPrimeSum
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum
+#check @Wu2008DoubleSieve.reboxingRawPrimeSum_difference_le_mass
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum_difference_le_mass
+#check @Wu2008DoubleSieve.wu_raw_prime_transport_relative
+#print axioms Wu2008DoubleSieve.wu_raw_prime_transport_relative

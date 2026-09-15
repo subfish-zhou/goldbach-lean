@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.RealOpen
+
+#check Wu2004MeanValue.common_profile_open_weighted_real
+#print axioms Wu2004MeanValue.common_profile_open_weighted_real
+#check Wu2004MeanValue.manuscript_block_open_weighted
+#print axioms Wu2004MeanValue.manuscript_block_open_weighted
+#check Wu2004MeanValue.manuscript_block_open_muSquare
+#print axioms Wu2004MeanValue.manuscript_block_open_muSquare

@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XIntegralEnvelope
+
+#check Wu2008DoubleSieve.omega3XIntegral_bounds
+#print axioms Wu2008DoubleSieve.omega3XIntegral_bounds
+#check Wu2008DoubleSieve.omega3XIntegral_nonneg
+#print axioms Wu2008DoubleSieve.omega3XIntegral_nonneg
+#check Wu2008DoubleSieve.omega3XIntegral_bddAbove
+#print axioms Wu2008DoubleSieve.omega3XIntegral_bddAbove
+#check Wu2008DoubleSieve.omega3XIntegralEnvelope
+#print axioms Wu2008DoubleSieve.omega3XIntegralEnvelope
+#check Wu2008DoubleSieve.omega3XIntegral_le_envelope
+#print axioms Wu2008DoubleSieve.omega3XIntegral_le_envelope
+#check Wu2008DoubleSieve.omega3XIntegralEnvelope_bounds
+#print axioms Wu2008DoubleSieve.omega3XIntegralEnvelope_bounds
+#check Wu2008DoubleSieve.omega3XIntegralEnvelope_self
+#print axioms Wu2008DoubleSieve.omega3XIntegralEnvelope_self
+#check Wu2008DoubleSieve.omega3XIntegral_source_le_envelope
+#print axioms Wu2008DoubleSieve.omega3XIntegral_source_le_envelope

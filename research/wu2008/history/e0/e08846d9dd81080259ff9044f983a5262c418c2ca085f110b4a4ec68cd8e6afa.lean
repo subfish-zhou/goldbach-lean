@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.CoefficientRecurrence
+
+#check Wu2008DoubleSieve.wuUpperCoefficient_div
+#print axioms Wu2008DoubleSieve.wuUpperCoefficient_div
+#check Wu2008DoubleSieve.wuLowerCoefficient_div
+#print axioms Wu2008DoubleSieve.wuLowerCoefficient_div
+#check Wu2008DoubleSieve.wuLowerCoefficient_sub_eq_integral
+#print axioms Wu2008DoubleSieve.wuLowerCoefficient_sub_eq_integral
+#check Wu2008DoubleSieve.wuUpperCoefficient_sub_eq_integral
+#print axioms Wu2008DoubleSieve.wuUpperCoefficient_sub_eq_integral
+#check Wu2008DoubleSieve.wuUpperCoefficient_div_intervalIntegrable
+#print axioms Wu2008DoubleSieve.wuUpperCoefficient_div_intervalIntegrable
+#check Wu2008DoubleSieve.wuLowerCoefficient_div_intervalIntegrable
+#print axioms Wu2008DoubleSieve.wuLowerCoefficient_div_intervalIntegrable

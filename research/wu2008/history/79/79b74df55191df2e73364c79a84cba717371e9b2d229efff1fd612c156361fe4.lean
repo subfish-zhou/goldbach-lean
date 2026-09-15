@@ -1,0 +1,16 @@
+import MathlibNt.Wu2004MeanValue.OriginalTailAsymptotics
+
+#check Wu2004MeanValue.originalTailPrimes_source_iff
+#print axioms Wu2004MeanValue.originalTailPrimes_source_iff
+#check Wu2004MeanValue.originalTailA_source_iff
+#print axioms Wu2004MeanValue.originalTailA_source_iff
+#check Wu2004MeanValue.eventually_tailSource_cube
+#print axioms Wu2004MeanValue.eventually_tailSource_cube
+#check Wu2004MeanValue.originalTailExceptionBudget
+#print axioms Wu2004MeanValue.originalTailExceptionBudget
+#check Wu2004MeanValue.originalTailExceptionBudget_le
+#print axioms Wu2004MeanValue.originalTailExceptionBudget_le
+#check Wu2004MeanValue.eventually_originalTailExceptionBudget_paid
+#print axioms Wu2004MeanValue.eventually_originalTailExceptionBudget_paid
+#check Wu2004MeanValue.tailOriginalSum_sharp_upper
+#print axioms Wu2004MeanValue.tailOriginalSum_sharp_upper

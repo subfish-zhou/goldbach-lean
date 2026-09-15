@@ -1,0 +1,30 @@
+import MathlibNt.Wu2008DoubleSieve.LowerWeights
+
+#check Wu2008DoubleSieve.firstTwoTriples_first_two_unique
+#print axioms Wu2008DoubleSieve.firstTwoTriples_first_two_unique
+#check Wu2008DoubleSieve.firstTwoTriples_card
+#print axioms Wu2008DoubleSieve.firstTwoTriples_card
+#check Wu2008DoubleSieve.two_sub_card_add_triples
+#print axioms Wu2008DoubleSieve.two_sub_card_add_triples
+#check Wu2008DoubleSieve.lowerPairPenalty_nonneg
+#print axioms Wu2008DoubleSieve.lowerPairPenalty_nonneg
+#check Wu2008DoubleSieve.lowerWeight_le_two
+#print axioms Wu2008DoubleSieve.lowerWeight_le_two
+#check Wu2008DoubleSieve.lowerWeight_nonpos_of_two_small
+#print axioms Wu2008DoubleSieve.lowerWeight_nonpos_of_two_small
+#check Wu2008DoubleSieve.first_two_lowerPairSurvives
+#print axioms Wu2008DoubleSieve.first_two_lowerPairSurvives
+#check Wu2008DoubleSieve.first_two_size_bound
+#print axioms Wu2008DoubleSieve.first_two_size_bound
+#check Wu2008DoubleSieve.primeFactor_ge_cutoff
+#print axioms Wu2008DoubleSieve.primeFactor_ge_cutoff
+#check Wu2008DoubleSieve.small_primeFactor_mem
+#print axioms Wu2008DoubleSieve.small_primeFactor_mem
+#check Wu2008DoubleSieve.lowerPairPenalty_ge_deficit
+#print axioms Wu2008DoubleSieve.lowerPairPenalty_ge_deficit
+#check Wu2008DoubleSieve.lowerWeight_nonpos_of_three_factors
+#print axioms Wu2008DoubleSieve.lowerWeight_nonpos_of_three_factors
+#check Wu2008DoubleSieve.primeFactors_card_eq_omega_of_squarefree
+#print axioms Wu2008DoubleSieve.primeFactors_card_eq_omega_of_squarefree
+#check Wu2008DoubleSieve.lowerWeight_le_omega_indicator
+#print axioms Wu2008DoubleSieve.lowerWeight_le_omega_indicator

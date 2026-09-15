@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3FiniteErrorWeighted
+
+#check Wu2008DoubleSieve.omega3_badDCount_le_floor_sum
+#print axioms Wu2008DoubleSieve.omega3_badDCount_le_floor_sum
+#check Wu2008DoubleSieve.omega3_badDCount_le_reciprocal_mass
+#print axioms Wu2008DoubleSieve.omega3_badDCount_le_reciprocal_mass
+#check Wu2008DoubleSieve.omega3_badNCount_le_allowed_outputs
+#print axioms Wu2008DoubleSieve.omega3_badNCount_le_allowed_outputs
+#check Wu2008DoubleSieve.omega3_badNCount_le_primeFactors
+#print axioms Wu2008DoubleSieve.omega3_badNCount_le_primeFactors
+#check Wu2008DoubleSieve.omega3_smallOutputCount_le_allowed_outputs
+#print axioms Wu2008DoubleSieve.omega3_smallOutputCount_le_allowed_outputs
+#check Wu2008DoubleSieve.omega3_smallOutputCount_le
+#print axioms Wu2008DoubleSieve.omega3_smallOutputCount_le

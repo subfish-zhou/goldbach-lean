@@ -1,0 +1,4 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XGeometryCompact
+
+#check Wu2008DoubleSieve.omega3X_fixed_compact_geometry
+#print axioms Wu2008DoubleSieve.omega3X_fixed_compact_geometry

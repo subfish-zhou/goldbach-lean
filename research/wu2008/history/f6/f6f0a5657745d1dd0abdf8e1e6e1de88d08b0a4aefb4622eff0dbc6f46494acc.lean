@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2IntegralTransform
+
+#check Wu2008DoubleSieve.omega2_coordinate_monotone
+#print axioms Wu2008DoubleSieve.omega2_coordinate_monotone
+#check Wu2008DoubleSieve.omega2_coordinate_mem
+#print axioms Wu2008DoubleSieve.omega2_coordinate_mem
+#check Wu2008DoubleSieve.omega2_transformed_coefficient
+#print axioms Wu2008DoubleSieve.omega2_transformed_coefficient
+#check Wu2008DoubleSieve.omega2_prime_coordinate
+#print axioms Wu2008DoubleSieve.omega2_prime_coordinate
+#check Wu2008DoubleSieve.omega2_integral_substitution
+#print axioms Wu2008DoubleSieve.omega2_integral_substitution
+#check Wu2008DoubleSieve.omega2_source_prime_integral_uniform
+#print axioms Wu2008DoubleSieve.omega2_source_prime_integral_uniform

@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.ClosedLowerWeight
+
+#check Wu2008DoubleSieve.closedLowerS2
+#print axioms Wu2008DoubleSieve.closedLowerS2
+#check Wu2008DoubleSieve.closedLowerS3
+#print axioms Wu2008DoubleSieve.closedLowerS3
+#check Wu2008DoubleSieve.closedLowerWeightRHS
+#print axioms Wu2008DoubleSieve.closedLowerWeightRHS
+#check Wu2008DoubleSieve.closed_lower_pair_sum_split
+#print axioms Wu2008DoubleSieve.closed_lower_pair_sum_split
+#check Wu2008DoubleSieve.closedLowerWeightRHS_le_strict_add_losses
+#print axioms Wu2008DoubleSieve.closedLowerWeightRHS_le_strict_add_losses
+#check Wu2008DoubleSieve.closedLowerWeightRHS_le_strict_add_paid_error
+#print axioms Wu2008DoubleSieve.closedLowerWeightRHS_le_strict_add_paid_error
+#check Wu2008DoubleSieve.wu_lemma21_closed
+#print axioms Wu2008DoubleSieve.wu_lemma21_closed

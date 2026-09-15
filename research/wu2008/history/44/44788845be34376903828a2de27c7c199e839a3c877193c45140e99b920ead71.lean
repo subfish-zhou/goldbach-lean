@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3ClosedEnlargement
+
+#check Wu2008DoubleSieve.omega3CofactorPrimeFibreLE
+#print axioms Wu2008DoubleSieve.omega3CofactorPrimeFibreLE
+#check Wu2008DoubleSieve.omega3SwitchedSiftedCountLE
+#print axioms Wu2008DoubleSieve.omega3SwitchedSiftedCountLE
+#check Wu2008DoubleSieve.omega3_prime_fibre_subset_closed
+#print axioms Wu2008DoubleSieve.omega3_prime_fibre_subset_closed
+#check Wu2008DoubleSieve.omega3_switched_sifted_le_closed
+#print axioms Wu2008DoubleSieve.omega3_switched_sifted_le_closed

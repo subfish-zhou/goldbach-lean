@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBlockSum
+
+#check Wu2008DoubleSieve.reboxingGeometricRaw
+#print axioms Wu2008DoubleSieve.reboxingGeometricRaw
+#check Wu2008DoubleSieve.reboxingGeometricCutoff
+#print axioms Wu2008DoubleSieve.reboxingGeometricCutoff
+#check Wu2008DoubleSieve.reboxingGeometricMain
+#print axioms Wu2008DoubleSieve.reboxingGeometricMain
+#check Wu2008DoubleSieve.reboxingGeometricRaw_eq_s1_add_R2
+#print axioms Wu2008DoubleSieve.reboxingGeometricRaw_eq_s1_add_R2
+#check Wu2008DoubleSieve.reboxingGeometricRaw_upper_s1
+#print axioms Wu2008DoubleSieve.reboxingGeometricRaw_upper_s1

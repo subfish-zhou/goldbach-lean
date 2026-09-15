@@ -1,0 +1,12 @@
+import MathlibNt.Wu2004MeanValue.PrimeCentered
+
+#check Wu2004MeanValue.primeCenteredAPSum
+#print axioms Wu2004MeanValue.primeCenteredAPSum
+#check Wu2004MeanValue.primeCenteredAPSum_eq_inverse
+#print axioms Wu2004MeanValue.primeCenteredAPSum_eq_inverse
+#check Wu2004MeanValue.primeCenteredAPSum_eq_actual_sub_principal
+#print axioms Wu2004MeanValue.primeCenteredAPSum_eq_actual_sub_principal
+#check Wu2004MeanValue.primeCenteredAPSum_sub_actual_weighted
+#print axioms Wu2004MeanValue.primeCenteredAPSum_sub_actual_weighted
+#check Wu2004MeanValue.weighted_primeCenteredAPSum_le_actual_add
+#print axioms Wu2004MeanValue.weighted_primeCenteredAPSum_le_actual_add

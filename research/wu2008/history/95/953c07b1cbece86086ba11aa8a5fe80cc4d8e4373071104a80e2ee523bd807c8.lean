@@ -1,0 +1,52 @@
+import MathlibNt.Wu2004MeanValue.OriginalTriplesCover
+
+#check Wu2004MeanValue.originalTriples
+#print axioms Wu2004MeanValue.originalTriples
+#check Wu2004MeanValue.originalTripleCount
+#print axioms Wu2004MeanValue.originalTripleCount
+#check Wu2004MeanValue.mem_originalTriples
+#print axioms Wu2004MeanValue.mem_originalTriples
+#check Wu2004MeanValue.originalTriplePair
+#print axioms Wu2004MeanValue.originalTriplePair
+#check Wu2004MeanValue.originalTriplePair_injOn
+#print axioms Wu2004MeanValue.originalTriplePair_injOn
+#check Wu2004MeanValue.originalTripleCount_eq_card_image
+#print axioms Wu2004MeanValue.originalTripleCount_eq_card_image
+#check Wu2004MeanValue.originalTriple_pairValue
+#print axioms Wu2004MeanValue.originalTriple_pairValue
+#check Wu2004MeanValue.originalTriple_prime_value_sifted
+#print axioms Wu2004MeanValue.originalTriple_prime_value_sifted
+#check Wu2004MeanValue.originalTriple_source_coprime
+#print axioms Wu2004MeanValue.originalTriple_source_coprime
+#check Wu2004MeanValue.originalTriplesLow
+#print axioms Wu2004MeanValue.originalTriplesLow
+#check Wu2004MeanValue.originalTriplesBlock
+#print axioms Wu2004MeanValue.originalTriplesBlock
+#check Wu2004MeanValue.originalTripleBlockCount
+#print axioms Wu2004MeanValue.originalTripleBlockCount
+#check Wu2004MeanValue.originalTriple_source_le_sqrt
+#print axioms Wu2004MeanValue.originalTriple_source_le_sqrt
+#check Wu2004MeanValue.originalTriplesLow_card_le
+#print axioms Wu2004MeanValue.originalTriplesLow_card_le
+#check Wu2004MeanValue.originalTriple_product_lt_rpow
+#print axioms Wu2004MeanValue.originalTriple_product_lt_rpow
+#check Wu2004MeanValue.originalTriple_block_geometry
+#print axioms Wu2004MeanValue.originalTriple_block_geometry
+#check Wu2004MeanValue.originalTriplesBlockInterior
+#print axioms Wu2004MeanValue.originalTriplesBlockInterior
+#check Wu2004MeanValue.originalTriple_interior_mem_blockPairs
+#print axioms Wu2004MeanValue.originalTriple_interior_mem_blockPairs
+#check Wu2004MeanValue.originalTriplesBlockInterior_card_le
+#print axioms Wu2004MeanValue.originalTriplesBlockInterior_card_le
+#check Wu2004MeanValue.originalTriplesBlock_product_boundary_card_le
+#print axioms Wu2004MeanValue.originalTriplesBlock_product_boundary_card_le
+#check Wu2004MeanValue.originalTriplesBlock_diagonal_card_le
+#print axioms Wu2004MeanValue.originalTriplesBlock_diagonal_card_le
+#check Wu2004MeanValue.originalTripleBlockCount_le
+#print axioms Wu2004MeanValue.originalTripleBlockCount_le
+#check Wu2004MeanValue.originalTripleCount_le_low_add_blocks
+#print axioms Wu2004MeanValue.originalTripleCount_le_low_add_blocks
+#check Wu2004MeanValue.originalTripleCount_le_cover
+#print axioms Wu2004MeanValue.originalTripleCount_le_cover
+#check Wu2004MeanValue.originalTripleCount_le_cover_real
+#print axioms Wu2004MeanValue.originalTripleCount_le_cover_real

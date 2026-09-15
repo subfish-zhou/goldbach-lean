@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientIntegralEndpoint
+
+#check Wu2008DoubleSieve.primeCoefficient_last_cell_le
+#print axioms Wu2008DoubleSieve.primeCoefficient_last_cell_le
+#check Wu2008DoubleSieve.primeCoefficient_global_trueLi_quadrature_endpoint
+#print axioms Wu2008DoubleSieve.primeCoefficient_global_trueLi_quadrature_endpoint
+#check Wu2008DoubleSieve.primeCoefficient_global_continuous
+#print axioms Wu2008DoubleSieve.primeCoefficient_global_continuous

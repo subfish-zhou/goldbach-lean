@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientSourceGeometry
+
+#check Wu2008DoubleSieve.primeCoefficient_source_geometry
+#print axioms Wu2008DoubleSieve.primeCoefficient_source_geometry
+#check Wu2008DoubleSieve.primeCoefficient_source_continuous_uniform
+#print axioms Wu2008DoubleSieve.primeCoefficient_source_continuous_uniform

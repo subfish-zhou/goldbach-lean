@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingSorted
+
+#check Wu2008DoubleSieve.boxSquaredPrefixes_cons_iff
+#print axioms Wu2008DoubleSieve.boxSquaredPrefixes_cons_iff
+#check Wu2008DoubleSieve.box_prefix_mul_entry_le_product
+#print axioms Wu2008DoubleSieve.box_prefix_mul_entry_le_product
+#check Wu2008DoubleSieve.boxSquaredPrefixes_cons_of_largest
+#print axioms Wu2008DoubleSieve.boxSquaredPrefixes_cons_of_largest
+#check Wu2008DoubleSieve.exists_sorted_box_insertion
+#print axioms Wu2008DoubleSieve.exists_sorted_box_insertion
+#check Wu2008DoubleSieve.wuSourceBox_sorted_insertion
+#print axioms Wu2008DoubleSieve.wuSourceBox_sorted_insertion
+#check Wu2008DoubleSieve.convolutionWuWindows_cons
+#print axioms Wu2008DoubleSieve.convolutionWuWindows_cons
+#check Wu2008DoubleSieve.wuSourceBox_sorted_insertion_convolution
+#print axioms Wu2008DoubleSieve.wuSourceBox_sorted_insertion_convolution

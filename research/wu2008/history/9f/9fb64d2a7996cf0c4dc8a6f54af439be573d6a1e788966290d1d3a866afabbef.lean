@@ -1,0 +1,50 @@
+import MathlibNt.Wu2004MeanValue.ManuscriptPairs
+
+#check Wu2004MeanValue.mem_intervalPrimeSet
+#print axioms Wu2004MeanValue.mem_intervalPrimeSet
+#check Wu2004MeanValue.mem_indexedPrimePairs
+#print axioms Wu2004MeanValue.mem_indexedPrimePairs
+#check Wu2004MeanValue.pairValue_dvd_iff
+#print axioms Wu2004MeanValue.pairValue_dvd_iff
+#check Wu2004MeanValue.intervalPrimeSet_filter_divisible
+#print axioms Wu2004MeanValue.intervalPrimeSet_filter_divisible
+#check Wu2004MeanValue.indexedDivisibleCount_eq_sum
+#print axioms Wu2004MeanValue.indexedDivisibleCount_eq_sum
+#check Wu2004MeanValue.source_coprime_of_scaled_congruence
+#print axioms Wu2004MeanValue.source_coprime_of_scaled_congruence
+#check Wu2004MeanValue.intervalPrimeSet_eq_empty_of_not_coprime
+#print axioms Wu2004MeanValue.intervalPrimeSet_eq_empty_of_not_coprime
+#check Wu2004MeanValue.intervalErrorSum_closed
+#print axioms Wu2004MeanValue.intervalErrorSum_closed
+#check Wu2004MeanValue.intervalErrorSum_open
+#print axioms Wu2004MeanValue.intervalErrorSum_open
+#check Wu2004MeanValue.indexedDivisibleCount_common_main
+#print axioms Wu2004MeanValue.indexedDivisibleCount_common_main
+#check Wu2004MeanValue.indexedRemainder_eq_error_on_sieve
+#print axioms Wu2004MeanValue.indexedRemainder_eq_error_on_sieve
+#check Wu2004MeanValue.mem_tailSource
+#print axioms Wu2004MeanValue.mem_tailSource
+#check Wu2004MeanValue.mem_blockSource
+#print axioms Wu2004MeanValue.mem_blockSource
+#check Wu2004MeanValue.blockSource_upper_domain
+#print axioms Wu2004MeanValue.blockSource_upper_domain
+#check Wu2004MeanValue.mem_tailPairs
+#print axioms Wu2004MeanValue.mem_tailPairs
+#check Wu2004MeanValue.mem_blockPairs
+#print axioms Wu2004MeanValue.mem_blockPairs
+#check Wu2004MeanValue.tail_pair_product_lt
+#print axioms Wu2004MeanValue.tail_pair_product_lt
+#check Wu2004MeanValue.block_pair_product_lt
+#print axioms Wu2004MeanValue.block_pair_product_lt
+#check Wu2004MeanValue.tail_pairValue_pos
+#print axioms Wu2004MeanValue.tail_pairValue_pos
+#check Wu2004MeanValue.block_pairValue_pos
+#print axioms Wu2004MeanValue.block_pairValue_pos
+#check Wu2004MeanValue.tail_pairValue_dvd_iff
+#print axioms Wu2004MeanValue.tail_pairValue_dvd_iff
+#check Wu2004MeanValue.block_pairValue_dvd_iff
+#print axioms Wu2004MeanValue.block_pairValue_dvd_iff
+#check Wu2004MeanValue.tail_count_common_main
+#print axioms Wu2004MeanValue.tail_count_common_main
+#check Wu2004MeanValue.block_count_common_main
+#print axioms Wu2004MeanValue.block_count_common_main

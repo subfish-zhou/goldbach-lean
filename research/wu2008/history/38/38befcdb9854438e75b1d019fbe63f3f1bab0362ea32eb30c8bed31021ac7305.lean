@@ -1,0 +1,22 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LabelsIndexed
+
+#check Wu2008DoubleSieve.mem_omega3OriginalLabels
+#print axioms Wu2008DoubleSieve.mem_omega3OriginalLabels
+#check Wu2008DoubleSieve.mem_omega3SwitchedLabels
+#print axioms Wu2008DoubleSieve.mem_omega3SwitchedLabels
+#check Wu2008DoubleSieve.omega3_switched_label_size
+#print axioms Wu2008DoubleSieve.omega3_switched_label_size
+#check Wu2008DoubleSieve.omega3_original_labels_sum
+#print axioms Wu2008DoubleSieve.omega3_original_labels_sum
+#check Wu2008DoubleSieve.omega3_switched_labels_sum
+#print axioms Wu2008DoubleSieve.omega3_switched_labels_sum
+#check Wu2008DoubleSieve.wuOmega3Sum_eq_indexed_count
+#print axioms Wu2008DoubleSieve.wuOmega3Sum_eq_indexed_count
+#check Wu2008DoubleSieve.omega3_switched_sifted_eq_indexed_count
+#print axioms Wu2008DoubleSieve.omega3_switched_sifted_eq_indexed_count
+#check Wu2008DoubleSieve.omega3_original_filtered_eq_indexed_count
+#print axioms Wu2008DoubleSieve.omega3_original_filtered_eq_indexed_count
+#check Wu2008DoubleSieve.omega3_switched_cofactor_fibres
+#print axioms Wu2008DoubleSieve.omega3_switched_cofactor_fibres
+#check Wu2008DoubleSieve.omega3_original_output_fibres
+#print axioms Wu2008DoubleSieve.omega3_original_output_fibres

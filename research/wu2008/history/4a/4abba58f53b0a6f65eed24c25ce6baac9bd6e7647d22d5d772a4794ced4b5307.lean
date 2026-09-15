@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientContinuous
+
+#check Wu2008DoubleSieve.antitone_product_right_quadrature
+#print axioms Wu2008DoubleSieve.antitone_product_right_quadrature
+#check Wu2008DoubleSieve.wuPrimeRealWeight
+#print axioms Wu2008DoubleSieve.wuPrimeRealWeight
+#check Wu2008DoubleSieve.wuPrime_continuous_argument_mem
+#print axioms Wu2008DoubleSieve.wuPrime_continuous_argument_mem
+#check Wu2008DoubleSieve.wuPrimeRealWeight_intervalIntegrable
+#print axioms Wu2008DoubleSieve.wuPrimeRealWeight_intervalIntegrable
+#check Wu2008DoubleSieve.primeCoefficient_trueLi_to_continuous
+#print axioms Wu2008DoubleSieve.primeCoefficient_trueLi_to_continuous

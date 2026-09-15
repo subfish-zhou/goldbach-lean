@@ -1,0 +1,45 @@
+import MathlibNt.Wu2008DoubleSieve.SignedSieveRemainder
+import MathlibNt.Wu2008DoubleSieve.RosserSieveConsumer
+
+open Wu2008DoubleSieve
+
+#check goldbachDivisible_card_eq_AP
+#print axioms goldbachDivisible_card_eq_AP
+#check sourceSequenceCount_eq_AP
+#print axioms sourceSequenceCount_eq_AP
+#check sourceSequenceRemainder_eq_AP
+#print axioms sourceSequenceRemainder_eq_AP
+#check ordinarySievePrimeProduct_pos
+#print axioms ordinarySievePrimeProduct_pos
+#check ordinarySievePrimeProduct_coprime
+#print axioms ordinarySievePrimeProduct_coprime
+#check ordinaryRosserWeight_abs_le_one
+#print axioms ordinaryRosserWeight_abs_le_one
+#check ordinaryRosserWeight_support
+#print axioms ordinaryRosserWeight_support
+#check ordinaryRosserRemainder_le_AP
+#print axioms ordinaryRosserRemainder_le_AP
+#check convolutionRosserRemainder_le_AP
+#print axioms convolutionRosserRemainder_le_AP
+#check finite_rosser_family_remainder_le_AP
+#print axioms finite_rosser_family_remainder_le_AP
+#check wu_signed_rosser_bombieri_vinogradov
+#print axioms wu_signed_rosser_bombieri_vinogradov
+#check ordinarySievePrimeProduct_squarefree
+#print axioms ordinarySievePrimeProduct_squarefree
+#check sifted_iff_product_coprime
+#print axioms sifted_iff_product_coprime
+#check sourceSieveCount_eq_gcd_indicator
+#print axioms sourceSieveCount_eq_gcd_indicator
+#check source_weighted_count_eq_gcd_sum
+#print axioms source_weighted_count_eq_gcd_sum
+#check ordinaryRosser_density_identity
+#print axioms ordinaryRosser_density_identity
+#check ordinaryRosser_upper_finite
+#print axioms ordinaryRosser_upper_finite
+#check ordinaryRosser_lower_finite
+#print axioms ordinaryRosser_lower_finite
+#check convolution_upper_sieve_with_AP_error
+#print axioms convolution_upper_sieve_with_AP_error
+#check convolution_lower_sieve_with_AP_error
+#print axioms convolution_lower_sieve_with_AP_error

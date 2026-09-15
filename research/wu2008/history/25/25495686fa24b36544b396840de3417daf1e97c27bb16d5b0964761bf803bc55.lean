@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.MuSquare
+
+#check Wu2004MeanValue.muSquare_sum_le_wu
+#print axioms Wu2004MeanValue.muSquare_sum_le_wu
+#check Wu2004MeanValue.muSquare_actualAPResidueSup_le_wu
+#print axioms Wu2004MeanValue.muSquare_actualAPResidueSup_le_wu

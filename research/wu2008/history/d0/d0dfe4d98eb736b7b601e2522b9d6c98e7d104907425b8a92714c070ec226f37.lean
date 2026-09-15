@@ -1,0 +1,37 @@
+import MathlibNt.Wu2008DoubleSieve.NinthSwitchingCount
+
+#check Wu2008DoubleSieve.mem_T9
+#check Wu2008DoubleSieve.variableS3Main_le_T9_add_finite_budget
+#check Wu2008DoubleSieve.variableS3Main_le_T9_add_error
+#check Wu2008DoubleSieve.ninth_switching_final_parameters
+
+#print axioms Wu2008DoubleSieve.NinthLabel
+#print axioms Wu2008DoubleSieve.ninthPairs
+#print axioms Wu2008DoubleSieve.ninthAtoms
+#print axioms Wu2008DoubleSieve.T9
+#print axioms Wu2008DoubleSieve.mem_T9
+#print axioms Wu2008DoubleSieve.ninthCofactor
+#print axioms Wu2008DoubleSieve.ninthAtoms_card
+#print axioms Wu2008DoubleSieve.mem_ninthAtoms
+#print axioms Wu2008DoubleSieve.ninthAtom_index
+#print axioms Wu2008DoubleSieve.ninthAtom_dvd
+#print axioms Wu2008DoubleSieve.ninthAtom_mul_cofactor
+#print axioms Wu2008DoubleSieve.ninthAtom_pair_divisors
+#print axioms Wu2008DoubleSieve.ninth_pair_budget
+#print axioms Wu2008DoubleSieve.ninth_atoms_card_le_indices
+#print axioms Wu2008DoubleSieve.ninth_atoms_card_le_complements
+#print axioms Wu2008DoubleSieve.ninthDivisorAtoms
+#print axioms Wu2008DoubleSieve.ninthSquareAtoms
+#print axioms Wu2008DoubleSieve.ninthSmallAtoms
+#print axioms Wu2008DoubleSieve.ninthDivisorAtoms_card_le
+#print axioms Wu2008DoubleSieve.ninthSquareAtoms_card_le
+#print axioms Wu2008DoubleSieve.ninthSmallAtom_complement_le
+#print axioms Wu2008DoubleSieve.ninthSmallAtoms_card_le
+#print axioms Wu2008DoubleSieve.ninthGoodAtoms
+#print axioms Wu2008DoubleSieve.ninthSwitch
+#print axioms Wu2008DoubleSieve.ninthGoodAtoms_card_le_T9
+#print axioms Wu2008DoubleSieve.ninthAtoms_card_le_parts
+#print axioms Wu2008DoubleSieve.variableS3Main_le_T9_add_finite_budget
+#print axioms Wu2008DoubleSieve.ninth_sqrt_budget_le
+#print axioms Wu2008DoubleSieve.variableS3Main_le_T9_add_error
+#print axioms Wu2008DoubleSieve.ninth_switching_final_parameters

@@ -1,0 +1,38 @@
+import MathlibNt.Wu2004MeanValue.OriginalTailQuotients
+
+#check Wu2004MeanValue.originalTailPrimes
+#print axioms Wu2004MeanValue.originalTailPrimes
+#check Wu2004MeanValue.originalTailA
+#print axioms Wu2004MeanValue.originalTailA
+#check Wu2004MeanValue.originalTailQuotients
+#print axioms Wu2004MeanValue.originalTailQuotients
+#check Wu2004MeanValue.tailOriginalSum
+#print axioms Wu2004MeanValue.tailOriginalSum
+#check Wu2004MeanValue.originalTailPrimeIndices
+#print axioms Wu2004MeanValue.originalTailPrimeIndices
+#check Wu2004MeanValue.originalTailIndices
+#print axioms Wu2004MeanValue.originalTailIndices
+#check Wu2004MeanValue.mem_originalTailPrimes
+#print axioms Wu2004MeanValue.mem_originalTailPrimes
+#check Wu2004MeanValue.mem_originalTailA
+#print axioms Wu2004MeanValue.mem_originalTailA
+#check Wu2004MeanValue.mem_originalTailQuotients
+#print axioms Wu2004MeanValue.mem_originalTailQuotients
+#check Wu2004MeanValue.mem_originalTailPrimeIndices
+#print axioms Wu2004MeanValue.mem_originalTailPrimeIndices
+#check Wu2004MeanValue.mem_originalTailIndices
+#print axioms Wu2004MeanValue.mem_originalTailIndices
+#check Wu2004MeanValue.originalTailQuotient_injective
+#print axioms Wu2004MeanValue.originalTailQuotient_injective
+#check Wu2004MeanValue.originalTailQuotients_sifted_image
+#print axioms Wu2004MeanValue.originalTailQuotients_sifted_image
+#check Wu2004MeanValue.tailOriginalSum_eq_primeIndex_card
+#print axioms Wu2004MeanValue.tailOriginalSum_eq_primeIndex_card
+#check Wu2004MeanValue.originalTailSwitch
+#print axioms Wu2004MeanValue.originalTailSwitch
+#check Wu2004MeanValue.originalTailSwitch_injective
+#print axioms Wu2004MeanValue.originalTailSwitch_injective
+#check Wu2004MeanValue.originalTailSwitch_pairValue
+#print axioms Wu2004MeanValue.originalTailSwitch_pairValue
+#check Wu2004MeanValue.originalTailSwitch_mem_tailPairs
+#print axioms Wu2004MeanValue.originalTailSwitch_mem_tailPairs

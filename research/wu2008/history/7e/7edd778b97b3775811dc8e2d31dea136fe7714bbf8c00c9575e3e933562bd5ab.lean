@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedbackLower
+
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_63_split
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_63_split
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_63
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_63
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_63_parameters
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_63_parameters

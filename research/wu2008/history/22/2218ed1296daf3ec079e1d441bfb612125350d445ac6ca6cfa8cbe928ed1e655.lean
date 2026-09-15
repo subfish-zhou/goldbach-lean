@@ -1,0 +1,24 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingParameter
+
+#check Wu2008DoubleSieve.reboxing_support_product_bounds
+#print axioms Wu2008DoubleSieve.reboxing_support_product_bounds
+#check Wu2008DoubleSieve.reboxing_support_level_bounds
+#print axioms Wu2008DoubleSieve.reboxing_support_level_bounds
+#check Wu2008DoubleSieve.reboxing_support_cutoff_bounds
+#print axioms Wu2008DoubleSieve.reboxing_support_cutoff_bounds
+#check Wu2008DoubleSieve.reboxingS1
+#print axioms Wu2008DoubleSieve.reboxingS1
+#check Wu2008DoubleSieve.reboxingS2
+#print axioms Wu2008DoubleSieve.reboxingS2
+#check Wu2008DoubleSieve.reboxingAlpha_log
+#print axioms Wu2008DoubleSieve.reboxingAlpha_log
+#check Wu2008DoubleSieve.reboxingS1_formula
+#print axioms Wu2008DoubleSieve.reboxingS1_formula
+#check Wu2008DoubleSieve.reboxingS2_formula
+#print axioms Wu2008DoubleSieve.reboxingS2_formula
+#check Wu2008DoubleSieve.reboxing_parameter_bounds
+#print axioms Wu2008DoubleSieve.reboxing_parameter_bounds
+#check Wu2008DoubleSieve.reboxing_parameter_domain
+#print axioms Wu2008DoubleSieve.reboxing_parameter_domain
+#check Wu2008DoubleSieve.reboxing_parameter_mesh_eventually
+#print axioms Wu2008DoubleSieve.reboxing_parameter_mesh_eventually

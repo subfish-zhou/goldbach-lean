@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3CofactorGeometry
+
+#check Wu2008DoubleSieve.omega3_cofactor_prime_lower
+#print axioms Wu2008DoubleSieve.omega3_cofactor_prime_lower
+#check Wu2008DoubleSieve.omega3_cofactor_coprime
+#print axioms Wu2008DoubleSieve.omega3_cofactor_coprime
+#check Wu2008DoubleSieve.omega3_cofactor_power_gap
+#print axioms Wu2008DoubleSieve.omega3_cofactor_power_gap
+#check Wu2008DoubleSieve.omega3_source_cofactor_geometry
+#print axioms Wu2008DoubleSieve.omega3_source_cofactor_geometry

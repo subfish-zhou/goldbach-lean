@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR2
+
+#check Wu2008DoubleSieve.reboxing_prime_mass_le_harmonic
+#print axioms Wu2008DoubleSieve.reboxing_prime_mass_le_harmonic
+#check Wu2008DoubleSieve.reboxingR2
+#print axioms Wu2008DoubleSieve.reboxingR2
+#check Wu2008DoubleSieve.reboxingR2_relative
+#print axioms Wu2008DoubleSieve.reboxingR2_relative

@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2CanonicalIntegral
+
+#check Wu2008DoubleSieve.omega2_canonical_parameter_mem
+#print axioms Wu2008DoubleSieve.omega2_canonical_parameter_mem
+#check Wu2008DoubleSieve.omega2_effective_lower_integral_eq_log
+#print axioms Wu2008DoubleSieve.omega2_effective_lower_integral_eq_log

@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.PhiBuchstab
+
+#check Wu2008DoubleSieve.buchstab_next_source_carrier
+#print axioms Wu2008DoubleSieve.buchstab_next_source_carrier
+#check Wu2008DoubleSieve.source_buchstab_selected_modulus
+#print axioms Wu2008DoubleSieve.source_buchstab_selected_modulus
+#check Wu2008DoubleSieve.wuBoxPhi_buchstab
+#print axioms Wu2008DoubleSieve.wuBoxPhi_buchstab
+#check Wu2008DoubleSieve.buchstab_shifted_parameter
+#print axioms Wu2008DoubleSieve.buchstab_shifted_parameter
+#check Wu2008DoubleSieve.buchstab_next_squared_prefix
+#print axioms Wu2008DoubleSieve.buchstab_next_squared_prefix

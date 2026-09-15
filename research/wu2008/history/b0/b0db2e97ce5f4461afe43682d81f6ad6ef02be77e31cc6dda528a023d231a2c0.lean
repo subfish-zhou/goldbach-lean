@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3NonCoprimeRelative
+
+#check Wu2008DoubleSieve.omega3_absolute_power_log_relative
+#print axioms Wu2008DoubleSieve.omega3_absolute_power_log_relative
+#check Wu2008DoubleSieve.omega3_non_coprime_relative
+#print axioms Wu2008DoubleSieve.omega3_non_coprime_relative

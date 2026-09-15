@@ -1,0 +1,66 @@
+import MathlibNt.Wu2008DoubleSieve.LocalProductWu
+
+#check Wu2008DoubleSieve.localDivisorTail
+#print axioms Wu2008DoubleSieve.localDivisorTail
+#check Wu2008DoubleSieve.localDivisorTail_eq_correction_ratio
+#print axioms Wu2008DoubleSieve.localDivisorTail_eq_correction_ratio
+#check Wu2008DoubleSieve.localDivisorTail_pos
+#print axioms Wu2008DoubleSieve.localDivisorTail_pos
+#check Wu2008DoubleSieve.localDivisorTail_le_one
+#print axioms Wu2008DoubleSieve.localDivisorTail_le_one
+#check Wu2008DoubleSieve.one_sub_localDivisorTail_le_card
+#print axioms Wu2008DoubleSieve.one_sub_localDivisorTail_le_card
+#check Wu2008DoubleSieve.primeFactors_card_mul_log_two_le
+#print axioms Wu2008DoubleSieve.primeFactors_card_mul_log_two_le
+#check Wu2008DoubleSieve.one_sub_localDivisorTail_le_log
+#print axioms Wu2008DoubleSieve.one_sub_localDivisorTail_le_log
+#check Wu2008DoubleSieve.liuTruncated_div_wu_eq_tails
+#print axioms Wu2008DoubleSieve.liuTruncated_div_wu_eq_tails
+#check Wu2008DoubleSieve.liuTruncated_relative_lower
+#print axioms Wu2008DoubleSieve.liuTruncated_relative_lower
+#check Wu2008DoubleSieve.eventually_liuTruncated_relative_error
+#print axioms Wu2008DoubleSieve.eventually_liuTruncated_relative_error
+#check Wu2008DoubleSieve.eventually_liuTruncated_relative_error_polynomial
+#print axioms Wu2008DoubleSieve.eventually_liuTruncated_relative_error_polynomial
+
+#check Wu2008DoubleSieve.localSievePrimes
+#print axioms Wu2008DoubleSieve.localSievePrimes
+#check Wu2008DoubleSieve.mem_localSievePrimes
+#print axioms Wu2008DoubleSieve.mem_localSievePrimes
+#check Wu2008DoubleSieve.localSieveProduct
+#print axioms Wu2008DoubleSieve.localSieveProduct
+#check Wu2008DoubleSieve.localSieveProduct_eq_goldbach
+#print axioms Wu2008DoubleSieve.localSieveProduct_eq_goldbach
+#check Wu2008DoubleSieve.localClosedCutoff
+#print axioms Wu2008DoubleSieve.localClosedCutoff
+#check Wu2008DoubleSieve.localClosedCutoff_bounds
+#print axioms Wu2008DoubleSieve.localClosedCutoff_bounds
+#check Wu2008DoubleSieve.tendsto_localClosedCutoff
+#print axioms Wu2008DoubleSieve.tendsto_localClosedCutoff
+#check Wu2008DoubleSieve.localSieveProduct_identity
+#print axioms Wu2008DoubleSieve.localSieveProduct_identity
+#check Wu2008DoubleSieve.tendsto_mertens_relative
+#print axioms Wu2008DoubleSieve.tendsto_mertens_relative
+#check Wu2008DoubleSieve.tendsto_log_div_localClosedCutoff
+#print axioms Wu2008DoubleSieve.tendsto_log_div_localClosedCutoff
+#check Wu2008DoubleSieve.tendsto_real_mertens_relative
+#print axioms Wu2008DoubleSieve.tendsto_real_mertens_relative
+#check Wu2008DoubleSieve.eventually_localSieveProduct_relative
+#print axioms Wu2008DoubleSieve.eventually_localSieveProduct_relative
+
+#check Wu2008DoubleSieve.wuLocalExponent
+#print axioms Wu2008DoubleSieve.wuLocalExponent
+#check Wu2008DoubleSieve.wuLocalExponent_pos
+#print axioms Wu2008DoubleSieve.wuLocalExponent_pos
+#check Wu2008DoubleSieve.wuLocalCutoff
+#print axioms Wu2008DoubleSieve.wuLocalCutoff
+#check Wu2008DoubleSieve.wuLocal_support_bounds
+#print axioms Wu2008DoubleSieve.wuLocal_support_bounds
+#check Wu2008DoubleSieve.wuLocalCutoff_lower
+#print axioms Wu2008DoubleSieve.wuLocalCutoff_lower
+#check Wu2008DoubleSieve.wuLocal_divisorTail_bound
+#print axioms Wu2008DoubleSieve.wuLocal_divisorTail_bound
+#check Wu2008DoubleSieve.wuLocal_main_pos
+#print axioms Wu2008DoubleSieve.wuLocal_main_pos
+#check Wu2008DoubleSieve.wu04_310_local_normalization
+#print axioms Wu2008DoubleSieve.wu04_310_local_normalization

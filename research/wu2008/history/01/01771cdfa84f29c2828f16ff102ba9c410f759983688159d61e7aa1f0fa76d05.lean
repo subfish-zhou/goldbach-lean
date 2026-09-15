@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.SieveErrorPayment
+
+#check Wu2004MeanValue.eventually_logCube_le_singular_margin
+#print axioms Wu2004MeanValue.eventually_logCube_le_singular_margin
+#check Wu2004MeanValue.tail_sequence_remainder_normalized
+#print axioms Wu2004MeanValue.tail_sequence_remainder_normalized
+#check Wu2004MeanValue.block_sequence_remainder_normalized
+#print axioms Wu2004MeanValue.block_sequence_remainder_normalized

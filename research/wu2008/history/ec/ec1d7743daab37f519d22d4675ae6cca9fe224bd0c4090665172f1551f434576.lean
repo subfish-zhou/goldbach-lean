@@ -1,0 +1,30 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SieveDefinitions
+
+#check Wu2008DoubleSieve.omega3SieveX
+#print axioms Wu2008DoubleSieve.omega3SieveX
+#check Wu2008DoubleSieve.omega3SieveAPCount
+#print axioms Wu2008DoubleSieve.omega3SieveAPCount
+#check Wu2008DoubleSieve.omega3SieveDivisibleCount
+#print axioms Wu2008DoubleSieve.omega3SieveDivisibleCount
+#check Wu2008DoubleSieve.omega3SieveAPResidual
+#print axioms Wu2008DoubleSieve.omega3SieveAPResidual
+#check Wu2008DoubleSieve.omega3SieveMissingMass
+#print axioms Wu2008DoubleSieve.omega3SieveMissingMass
+#check Wu2008DoubleSieve.omega3SieveModuli
+#print axioms Wu2008DoubleSieve.omega3SieveModuli
+#check Wu2008DoubleSieve.omega3SieveR1
+#print axioms Wu2008DoubleSieve.omega3SieveR1
+#check Wu2008DoubleSieve.omega3SieveR2
+#print axioms Wu2008DoubleSieve.omega3SieveR2
+#check Wu2008DoubleSieve.omega3SieveOutputWeight
+#print axioms Wu2008DoubleSieve.omega3SieveOutputWeight
+#check Wu2008DoubleSieve.omega3SieveLocalWeight
+#print axioms Wu2008DoubleSieve.omega3SieveLocalWeight
+#check Wu2008DoubleSieve.omega3GoldbachBoundingSieve
+#print axioms Wu2008DoubleSieve.omega3GoldbachBoundingSieve
+#check Wu2008DoubleSieve.omega3SieveX_nonneg
+#print axioms Wu2008DoubleSieve.omega3SieveX_nonneg
+#check Wu2008DoubleSieve.omega3SieveMissingMass_nonneg
+#print axioms Wu2008DoubleSieve.omega3SieveMissingMass_nonneg
+#check Wu2008DoubleSieve.omega3SieveModuli_properties
+#print axioms Wu2008DoubleSieve.omega3SieveModuli_properties

@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XPrimeMass
+
+#check Wu2008DoubleSieve.omega3X_prime_interval_reciprocal_le
+#print axioms Wu2008DoubleSieve.omega3X_prime_interval_reciprocal_le
+#check Wu2008DoubleSieve.omega3X_prime_triple_reciprocal_le
+#print axioms Wu2008DoubleSieve.omega3X_prime_triple_reciprocal_le

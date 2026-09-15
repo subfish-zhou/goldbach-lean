@@ -1,0 +1,24 @@
+import MathlibNt.Wu2004MeanValue.RefinedCounting
+
+#check Wu2004MeanValue.refinedGood
+#print axioms Wu2004MeanValue.refinedGood
+#check Wu2004MeanValue.mem_refinedGood
+#print axioms Wu2004MeanValue.mem_refinedGood
+#check Wu2004MeanValue.refinedGood_complement_ge_two
+#print axioms Wu2004MeanValue.refinedGood_complement_ge_two
+#check Wu2004MeanValue.not_mem_refinedGood_of_complement_le_one
+#print axioms Wu2004MeanValue.not_mem_refinedGood_of_complement_le_one
+#check Wu2004MeanValue.refinedGood_subset_chenGood
+#print axioms Wu2004MeanValue.refinedGood_subset_chenGood
+#check Wu2004MeanValue.prime_complement_mem_refinedGood
+#print axioms Wu2004MeanValue.prime_complement_mem_refinedGood
+#check Wu2004MeanValue.refined_prime_factor_lt
+#print axioms Wu2004MeanValue.refined_prime_factor_lt
+#check Wu2004MeanValue.refined_prime_factor_ordered
+#print axioms Wu2004MeanValue.refined_prime_factor_ordered
+#check Wu2004MeanValue.prime_square_is_bad
+#print axioms Wu2004MeanValue.prime_square_is_bad
+#check Wu2004MeanValue.ordered_prime_factors_unique
+#print axioms Wu2004MeanValue.ordered_prime_factors_unique
+#check Wu2004MeanValue.chenGood_prime_or_ordered_product
+#print axioms Wu2004MeanValue.chenGood_prime_or_ordered_product

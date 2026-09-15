@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3MultiplicityIndexed
+
+#check Wu2008DoubleSieve.omega3ProjectCofactor
+#print axioms Wu2008DoubleSieve.omega3ProjectCofactor
+#check Wu2008DoubleSieve.omega3ProjectedCofactorLabels
+#print axioms Wu2008DoubleSieve.omega3ProjectedCofactorLabels
+#check Wu2008DoubleSieve.omega3ActualCofactorFibre
+#print axioms Wu2008DoubleSieve.omega3ActualCofactorFibre
+#check Wu2008DoubleSieve.omega3_projected_cofactor_sum
+#print axioms Wu2008DoubleSieve.omega3_projected_cofactor_sum
+#check Wu2008DoubleSieve.omega3_actual_cofactor_fibre_subset
+#print axioms Wu2008DoubleSieve.omega3_actual_cofactor_fibre_subset
+#check Wu2008DoubleSieve.omega3_actual_cofactor_fibre_strengthened
+#print axioms Wu2008DoubleSieve.omega3_actual_cofactor_fibre_strengthened
+#check Wu2008DoubleSieve.omega3_actual_cofactor_weight_le
+#print axioms Wu2008DoubleSieve.omega3_actual_cofactor_weight_le

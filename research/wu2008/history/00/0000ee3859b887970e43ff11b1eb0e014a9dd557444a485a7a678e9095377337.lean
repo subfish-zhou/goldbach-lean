@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR1
+
+#check Wu2008DoubleSieve.reboxingR1
+#print axioms Wu2008DoubleSieve.reboxingR1
+#check Wu2008DoubleSieve.reboxingR1_endpoint_bounds
+#print axioms Wu2008DoubleSieve.reboxingR1_endpoint_bounds
+#check Wu2008DoubleSieve.reboxingR1_relative
+#print axioms Wu2008DoubleSieve.reboxingR1_relative

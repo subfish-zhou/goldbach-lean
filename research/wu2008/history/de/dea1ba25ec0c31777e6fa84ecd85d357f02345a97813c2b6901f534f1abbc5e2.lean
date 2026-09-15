@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LayerResidual
+
+#check Wu2008DoubleSieve.omega3Layer_coprime_weighted_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_coprime_weighted_sum
+#check Wu2008DoubleSieve.omega3Layer_coprime_abs_sum_le
+#print axioms Wu2008DoubleSieve.omega3Layer_coprime_abs_sum_le
+#check Wu2008DoubleSieve.omega3Layer_modulus_sum_le
+#print axioms Wu2008DoubleSieve.omega3Layer_modulus_sum_le

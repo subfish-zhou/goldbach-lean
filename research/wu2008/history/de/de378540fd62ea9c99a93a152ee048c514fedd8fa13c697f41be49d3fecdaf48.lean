@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedback
+
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_integral_le
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_integral_le
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_source
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_source
+#check Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_three
+#print axioms Wu2008DoubleSieve.wuImprovementLimit_firstFeedback_three

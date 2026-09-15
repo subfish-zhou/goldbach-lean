@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryCount
+
+#check Wu2008DoubleSieve.reboxing_source_count_le_divisor
+#print axioms Wu2008DoubleSieve.reboxing_source_count_le_divisor
+#check Wu2008DoubleSieve.reboxingBoundaryCount
+#print axioms Wu2008DoubleSieve.reboxingBoundaryCount
+#check Wu2008DoubleSieve.reboxingBoundaryCount_nonneg
+#print axioms Wu2008DoubleSieve.reboxingBoundaryCount_nonneg
+#check Wu2008DoubleSieve.reboxingBoundaryCount_le_mass
+#print axioms Wu2008DoubleSieve.reboxingBoundaryCount_le_mass
+#check Wu2008DoubleSieve.reboxingBoundaryCount_le_theta
+#print axioms Wu2008DoubleSieve.reboxingBoundaryCount_le_theta
+#check Wu2008DoubleSieve.reboxing_boundary_relative
+#print axioms Wu2008DoubleSieve.reboxing_boundary_relative

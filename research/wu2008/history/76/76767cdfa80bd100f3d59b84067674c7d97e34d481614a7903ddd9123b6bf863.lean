@@ -1,0 +1,19 @@
+import MathlibNt.Wu2004MeanValue.ActualResidueSup
+import MathlibNt.Wu2004MeanValue.RealScale
+
+#check Wu2004MeanValue.actualAPSum_residue_mod
+#print axioms Wu2004MeanValue.actualAPSum_residue_mod
+#check Wu2004MeanValue.actualAPResidueSup_attained
+#print axioms Wu2004MeanValue.actualAPResidueSup_attained
+#check Wu2004MeanValue.actualAPSum_le_residueSup
+#print axioms Wu2004MeanValue.actualAPSum_le_residueSup
+#check Wu2004MeanValue.actualAPResidueSup_sum_attained
+#print axioms Wu2004MeanValue.actualAPResidueSup_sum_attained
+#check Wu2004MeanValue.commonScale_bounds
+#print axioms Wu2004MeanValue.commonScale_bounds
+#check Wu2004MeanValue.commonScale_cutoff
+#print axioms Wu2004MeanValue.commonScale_cutoff
+#check Wu2004MeanValue.commonScale_log_saving
+#print axioms Wu2004MeanValue.commonScale_log_saving
+#check Wu2004MeanValue.block_source_sqrt_domain
+#print axioms Wu2004MeanValue.block_source_sqrt_domain

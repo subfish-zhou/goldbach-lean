@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR3Absolute
+
+#check Wu2008DoubleSieve.reboxing_prime_absolute_term_sum_le
+#print axioms Wu2008DoubleSieve.reboxing_prime_absolute_term_sum_le
+#check Wu2008DoubleSieve.reboxingR3Absolute
+#print axioms Wu2008DoubleSieve.reboxingR3Absolute
+#check Wu2008DoubleSieve.reboxingR3Absolute_relative
+#print axioms Wu2008DoubleSieve.reboxingR3Absolute_relative

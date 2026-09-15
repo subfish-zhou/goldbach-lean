@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaRepeated
+
+#check Wu2008DoubleSieve.omega_repeated_fibre_le
+#print axioms Wu2008DoubleSieve.omega_repeated_fibre_le
+#check Wu2008DoubleSieve.wuOmegaRepeatedSum_le_mass
+#print axioms Wu2008DoubleSieve.wuOmegaRepeatedSum_le_mass
+#check Wu2008DoubleSieve.wu_omega_repeated_relative
+#print axioms Wu2008DoubleSieve.wu_omega_repeated_relative
+#check Wu2008DoubleSieve.wu_omega_weighted_source
+#print axioms Wu2008DoubleSieve.wu_omega_weighted_source

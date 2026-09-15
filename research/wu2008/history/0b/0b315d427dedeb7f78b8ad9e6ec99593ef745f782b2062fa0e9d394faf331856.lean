@@ -1,0 +1,18 @@
+import MathlibNt.Wu2004MeanValue.LowRealEndpoints
+
+#check Wu2004MeanValue.lowMovingSource
+#check Wu2004MeanValue.lowPrimeSet
+#check Wu2004MeanValue.lowRealMovingSource
+
+#check Wu2004MeanValue.low_primePrefix_max
+#print axioms Wu2004MeanValue.low_primePrefix_max
+#check Wu2004MeanValue.low_primePrefix_nat_div_max
+#print axioms Wu2004MeanValue.low_primePrefix_nat_div_max
+#check Wu2004MeanValue.low_source_nat_moving
+#print axioms Wu2004MeanValue.low_source_nat_moving
+#check Wu2004MeanValue.mem_lowPrimeSet
+#print axioms Wu2004MeanValue.mem_lowPrimeSet
+#check Wu2004MeanValue.lowRealMovingSource_eq_natural
+#print axioms Wu2004MeanValue.lowRealMovingSource_eq_natural
+#check Wu2004MeanValue.low_source_real_moving
+#print axioms Wu2004MeanValue.low_source_real_moving

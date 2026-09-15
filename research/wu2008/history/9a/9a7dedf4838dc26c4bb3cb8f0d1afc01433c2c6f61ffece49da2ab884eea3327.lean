@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XErrorBudget
+
+#check Wu2008DoubleSieve.omega3_repeated_scalar_budget
+#print axioms Wu2008DoubleSieve.omega3_repeated_scalar_budget
+#check Wu2008DoubleSieve.omega3_repeated_weighted_floor_le
+#print axioms Wu2008DoubleSieve.omega3_repeated_weighted_floor_le

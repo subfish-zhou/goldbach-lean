@@ -1,0 +1,20 @@
+import MathlibNt.Wu2004MeanValue.ActualAP
+
+#check Wu2004MeanValue.actualCount_eq_characterMean
+#print axioms Wu2004MeanValue.actualCount_eq_characterMean
+#check Wu2004MeanValue.actualAPSum_eq_characterExpansion
+#print axioms Wu2004MeanValue.actualAPSum_eq_characterExpansion
+#check Wu2004MeanValue.abs_actualAPSum_le_characterMass
+#print axioms Wu2004MeanValue.abs_actualAPSum_le_characterMass
+#check Wu2004MeanValue.actualAmplitude_eq_primitive_cofactor
+#print axioms Wu2004MeanValue.actualAmplitude_eq_primitive_cofactor
+#check Wu2004MeanValue.actualNonprincipalMass_eq_primitive_cofactor
+#print axioms Wu2004MeanValue.actualNonprincipalMass_eq_primitive_cofactor
+#check Wu2004MeanValue.actualNonprincipal_sum_le_cofactor
+#print axioms Wu2004MeanValue.actualNonprincipal_sum_le_cofactor
+#check Wu2004MeanValue.sum_abs_actualAP_le_principal_add_cofactor
+#print axioms Wu2004MeanValue.sum_abs_actualAP_le_principal_add_cofactor
+#check Wu2004MeanValue.cofactorAmplitude_interval
+#print axioms Wu2004MeanValue.cofactorAmplitude_interval
+#check Wu2004MeanValue.cofactorLedger_interval
+#print axioms Wu2004MeanValue.cofactorLedger_interval

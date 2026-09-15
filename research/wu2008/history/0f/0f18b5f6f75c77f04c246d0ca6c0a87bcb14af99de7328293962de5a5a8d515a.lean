@@ -1,0 +1,12 @@
+import MathlibNt.Wu2004MeanValue.OriginalCountPayment
+
+#check Wu2004MeanValue.eventually_powerSaving_le_singular_margin
+#print axioms Wu2004MeanValue.eventually_powerSaving_le_singular_margin
+#check Wu2004MeanValue.originalTripleExceptionBudget
+#print axioms Wu2004MeanValue.originalTripleExceptionBudget
+#check Wu2004MeanValue.eventually_originalTripleExceptionBudget_le
+#print axioms Wu2004MeanValue.eventually_originalTripleExceptionBudget_le
+#check Wu2004MeanValue.eventually_originalTripleExceptionBudget_paid
+#print axioms Wu2004MeanValue.eventually_originalTripleExceptionBudget_paid
+#check Wu2004MeanValue.dyadic_target_boundary_sum_le
+#print axioms Wu2004MeanValue.dyadic_target_boundary_sum_le

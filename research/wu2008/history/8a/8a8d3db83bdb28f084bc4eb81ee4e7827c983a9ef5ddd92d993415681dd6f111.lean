@@ -1,0 +1,25 @@
+import MathlibNt.Wu2008DoubleSieve.NinthErrorPayment
+
+#check Wu2008DoubleSieve.P9_card_le_div
+#check Wu2008DoubleSieve.ninthSieveR2_source_finite_bound
+#check Wu2008DoubleSieve.ninthR2_smallOutput_error_paid
+#check Wu2008DoubleSieve.ninthSieveR1_error_paid
+#check Wu2008DoubleSieve.ninth_all_sieve_errors_paid
+#check Wu2008DoubleSieve.T9_upper_source_error_paid
+
+#print axioms Wu2008DoubleSieve.ninthProductSupport_rough
+#print axioms Wu2008DoubleSieve.ninthProductSupport_le_N
+#print axioms Wu2008DoubleSieve.P9_card_le_div
+#print axioms Wu2008DoubleSieve.ninthSieveMissingMass_le
+#print axioms Wu2008DoubleSieve.ninthSieveR2_finite_bound
+#print axioms Wu2008DoubleSieve.ninthSieveR2_source_finite_bound
+#print axioms Wu2008DoubleSieve.ninthSmallOutputBudget_le
+#print axioms Wu2008DoubleSieve.ninthSmallOutputBudget_source_le
+#print axioms Wu2008DoubleSieve.ninth_power_log_error_budget
+#print axioms Wu2008DoubleSieve.ninthSieveR2_error_paid
+#print axioms Wu2008DoubleSieve.ninthSmallOutput_error_paid
+#print axioms Wu2008DoubleSieve.ninthR2_smallOutput_error_paid
+#print axioms Wu2008DoubleSieve.ninth_log_cube_error_budget
+#print axioms Wu2008DoubleSieve.ninthSieveR1_error_paid
+#print axioms Wu2008DoubleSieve.ninth_all_sieve_errors_paid
+#print axioms Wu2008DoubleSieve.T9_upper_source_error_paid

@@ -1,0 +1,10 @@
+import MathlibNt.Wu2004MeanValue.OriginalLargeAsymptotics
+
+#check Wu2004MeanValue.originalLargeExceptionalBudget_le
+#print axioms Wu2004MeanValue.originalLargeExceptionalBudget_le
+#check Wu2004MeanValue.eventually_originalLargeExceptionalBudget_paid
+#print axioms Wu2004MeanValue.eventually_originalLargeExceptionalBudget_paid
+#check Wu2004MeanValue.eventually_originalLargeTriplesExceptional_paid
+#print axioms Wu2004MeanValue.eventually_originalLargeTriplesExceptional_paid
+#check Wu2004MeanValue.originalLargeTripleCount_upper
+#print axioms Wu2004MeanValue.originalLargeTripleCount_upper

@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR2ReverseBlock
+
+#check Wu2008DoubleSieve.reboxing_reverse_replacement_window_bounds
+#print axioms Wu2008DoubleSieve.reboxing_reverse_replacement_window_bounds
+#check Wu2008DoubleSieve.reboxingR2Reverse_atom_bound
+#print axioms Wu2008DoubleSieve.reboxingR2Reverse_atom_bound
+#check Wu2008DoubleSieve.reboxingR2Reverse
+#print axioms Wu2008DoubleSieve.reboxingR2Reverse
+#check Wu2008DoubleSieve.reboxingR2Reverse_relative
+#print axioms Wu2008DoubleSieve.reboxingR2Reverse_relative
+#check Wu2008DoubleSieve.reboxingGeometricRaw_eq_s2_sub_R2Reverse
+#print axioms Wu2008DoubleSieve.reboxingGeometricRaw_eq_s2_sub_R2Reverse
+#check Wu2008DoubleSieve.reboxingGeometricRaw_lower_s2
+#print axioms Wu2008DoubleSieve.reboxingGeometricRaw_lower_s2

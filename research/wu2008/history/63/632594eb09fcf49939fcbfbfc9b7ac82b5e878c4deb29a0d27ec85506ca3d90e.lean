@@ -1,0 +1,4 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SwitchedGeometry
+
+#check Wu2008DoubleSieve.omega3_switched_geometry
+#print axioms Wu2008DoubleSieve.omega3_switched_geometry

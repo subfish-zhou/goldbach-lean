@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.BalancedPrincipalSelected
+
+#check Wu2004MeanValue.balanced_principal_selected_unweighted_log_saving
+#print axioms Wu2004MeanValue.balanced_principal_selected_unweighted_log_saving
+#check Wu2004MeanValue.balanced_principal_error_selected_weighted
+#print axioms Wu2004MeanValue.balanced_principal_error_selected_weighted

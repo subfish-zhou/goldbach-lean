@@ -1,0 +1,20 @@
+import MathlibNt.Wu2004MeanValue.BlockMass
+
+#check Wu2004MeanValue.blockLower_div_eq_max
+#print axioms Wu2004MeanValue.blockLower_div_eq_max
+#check Wu2004MeanValue.sqrt_le_blockLower_div
+#print axioms Wu2004MeanValue.sqrt_le_blockLower_div
+#check Wu2004MeanValue.blockMass_nonneg
+#print axioms Wu2004MeanValue.blockMass_nonneg
+#check Wu2004MeanValue.blockMass_term_le
+#print axioms Wu2004MeanValue.blockMass_term_le
+#check Wu2004MeanValue.blockSource_prime_window
+#print axioms Wu2004MeanValue.blockSource_prime_window
+#check Wu2004MeanValue.blockSource_reciprocal_sum_bounded
+#print axioms Wu2004MeanValue.blockSource_reciprocal_sum_bounded
+#check Wu2004MeanValue.blockMass_le_reciprocal_sum
+#print axioms Wu2004MeanValue.blockMass_le_reciprocal_sum
+#check Wu2004MeanValue.blockMass_uniform_bound
+#print axioms Wu2004MeanValue.blockMass_uniform_bound
+#check Wu2004MeanValue.exists_blockMass_le
+#print axioms Wu2004MeanValue.exists_blockMass_le

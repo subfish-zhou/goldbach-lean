@@ -1,0 +1,12 @@
+import MathlibNt.Wu2004MeanValue.OriginalDyadicSummation
+
+#check Wu2004MeanValue.log_scale_lower_of_sqrt
+#print axioms Wu2004MeanValue.log_scale_lower_of_sqrt
+#check Wu2004MeanValue.dyadicScale_log_lower
+#print axioms Wu2004MeanValue.dyadicScale_log_lower
+#check Wu2004MeanValue.scale_div_log_sq_le
+#print axioms Wu2004MeanValue.scale_div_log_sq_le
+#check Wu2004MeanValue.sum_dyadicScale_div_log_sq_le
+#print axioms Wu2004MeanValue.sum_dyadicScale_div_log_sq_le
+#check Wu2004MeanValue.dyadicLast_add_one_le_log
+#print axioms Wu2004MeanValue.dyadicLast_add_one_le_log

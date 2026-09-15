@@ -1,0 +1,34 @@
+import MathlibNt.Wu2004MeanValue.OriginalDyadicGeometry
+
+#check Wu2004MeanValue.dyadicScale
+#print axioms Wu2004MeanValue.dyadicScale
+#check Wu2004MeanValue.dyadicScale_pos
+#print axioms Wu2004MeanValue.dyadicScale_pos
+#check Wu2004MeanValue.dyadicScale_zero
+#print axioms Wu2004MeanValue.dyadicScale_zero
+#check Wu2004MeanValue.dyadicScale_succ
+#print axioms Wu2004MeanValue.dyadicScale_succ
+#check Wu2004MeanValue.dyadicScale_antitone
+#print axioms Wu2004MeanValue.dyadicScale_antitone
+#check Wu2004MeanValue.exists_dyadicScale_lt_sqrt
+#print axioms Wu2004MeanValue.exists_dyadicScale_lt_sqrt
+#check Wu2004MeanValue.dyadicLast
+#print axioms Wu2004MeanValue.dyadicLast
+#check Wu2004MeanValue.dyadicLast_spec
+#print axioms Wu2004MeanValue.dyadicLast_spec
+#check Wu2004MeanValue.dyadicLast_pos
+#print axioms Wu2004MeanValue.dyadicLast_pos
+#check Wu2004MeanValue.dyadicLast_scale_lower
+#print axioms Wu2004MeanValue.dyadicLast_scale_lower
+#check Wu2004MeanValue.dyadicScale_retained_lower
+#print axioms Wu2004MeanValue.dyadicScale_retained_lower
+#check Wu2004MeanValue.dyadic_cover_iff
+#print axioms Wu2004MeanValue.dyadic_cover_iff
+#check Wu2004MeanValue.dyadic_blocks_disjoint
+#print axioms Wu2004MeanValue.dyadic_blocks_disjoint
+#check Wu2004MeanValue.dyadic_low_block_disjoint
+#print axioms Wu2004MeanValue.dyadic_low_block_disjoint
+#check Wu2004MeanValue.sum_dyadicScale
+#print axioms Wu2004MeanValue.sum_dyadicScale
+#check Wu2004MeanValue.sum_dyadicScale_le
+#print axioms Wu2004MeanValue.sum_dyadicScale_le

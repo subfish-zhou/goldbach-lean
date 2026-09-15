@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XReciprocal
+
+#check Wu2008DoubleSieve.omega3_triple_reciprocal_le
+#print axioms Wu2008DoubleSieve.omega3_triple_reciprocal_le
+#check Wu2008DoubleSieve.omega3_triple_repeated_floor_le
+#print axioms Wu2008DoubleSieve.omega3_triple_repeated_floor_le

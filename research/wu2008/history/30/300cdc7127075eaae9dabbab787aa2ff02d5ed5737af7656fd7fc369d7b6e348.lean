@@ -1,0 +1,22 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingNormalization
+
+#check Wu2008DoubleSieve.wuSingularSeries_mul_prime_of_dvd
+#print axioms Wu2008DoubleSieve.wuSingularSeries_mul_prime_of_dvd
+#check Wu2008DoubleSieve.wuSingularSeries_mul_prime_of_not_dvd
+#print axioms Wu2008DoubleSieve.wuSingularSeries_mul_prime_of_not_dvd
+#check Wu2008DoubleSieve.wu_inserted_arithmetic_weight
+#print axioms Wu2008DoubleSieve.wu_inserted_arithmetic_weight
+#check Wu2008DoubleSieve.wu_inserted_arithmetic_weight_le
+#print axioms Wu2008DoubleSieve.wu_inserted_arithmetic_weight_le
+#check Wu2008DoubleSieve.wu_inserted_arithmetic_weight_defect
+#print axioms Wu2008DoubleSieve.wu_inserted_arithmetic_weight_defect
+#check Wu2008DoubleSieve.reboxing_log_denominator
+#print axioms Wu2008DoubleSieve.reboxing_log_denominator
+#check Wu2008DoubleSieve.wu_inserted_theta_weight
+#print axioms Wu2008DoubleSieve.wu_inserted_theta_weight
+#check Wu2008DoubleSieve.boxConvolution_sum_cons
+#print axioms Wu2008DoubleSieve.boxConvolution_sum_cons
+#check Wu2008DoubleSieve.boxTheta_cons
+#print axioms Wu2008DoubleSieve.boxTheta_cons
+#check Wu2008DoubleSieve.wuBoxPhi_cons
+#print axioms Wu2008DoubleSieve.wuBoxPhi_cons

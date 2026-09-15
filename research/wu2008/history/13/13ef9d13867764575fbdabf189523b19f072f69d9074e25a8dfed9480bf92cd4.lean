@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XSource
+
+#check Wu2008DoubleSieve.omega3XPrimes_mem_Icc
+#print axioms Wu2008DoubleSieve.omega3XPrimes_mem_Icc
+#check Wu2008DoubleSieve.omega3XRepeatedMajorant_source_le
+#print axioms Wu2008DoubleSieve.omega3XRepeatedMajorant_source_le
+#check Wu2008DoubleSieve.omega3XRepeatedMajorant_relative
+#print axioms Wu2008DoubleSieve.omega3XRepeatedMajorant_relative
+#check Wu2008DoubleSieve.omega3SieveX_le_rough_paid
+#print axioms Wu2008DoubleSieve.omega3SieveX_le_rough_paid

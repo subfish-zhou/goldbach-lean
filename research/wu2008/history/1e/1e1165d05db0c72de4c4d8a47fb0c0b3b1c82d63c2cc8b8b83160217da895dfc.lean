@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3NonCoprimeEuler
+
+#check Wu2008DoubleSieve.omega3_sieve_euler_mass
+#print axioms Wu2008DoubleSieve.omega3_sieve_euler_mass
+#check Wu2008DoubleSieve.omega3_non_coprime_euler_bound
+#print axioms Wu2008DoubleSieve.omega3_non_coprime_euler_bound

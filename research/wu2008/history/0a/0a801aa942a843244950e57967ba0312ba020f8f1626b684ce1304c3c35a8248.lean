@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LayerSieve
+
+#check Wu2008DoubleSieve.omega3LayerAPResidual
+#print axioms Wu2008DoubleSieve.omega3LayerAPResidual
+#check Wu2008DoubleSieve.omega3LayerR1
+#print axioms Wu2008DoubleSieve.omega3LayerR1
+#check Wu2008DoubleSieve.omega3SieveAPResidual_eq_common_layers
+#print axioms Wu2008DoubleSieve.omega3SieveAPResidual_eq_common_layers
+#check Wu2008DoubleSieve.omega3SieveR1_le_common_layers
+#print axioms Wu2008DoubleSieve.omega3SieveR1_le_common_layers
+#check Wu2008DoubleSieve.omega3_cofactor_R1_common_layers
+#print axioms Wu2008DoubleSieve.omega3_cofactor_R1_common_layers

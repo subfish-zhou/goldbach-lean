@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.ActualOpenIntervals
+
+#check Wu2004MeanValue.actualOpenErrorSum_eq
+#print axioms Wu2004MeanValue.actualOpenErrorSum_eq
+#check Wu2004MeanValue.abs_actualEndpointSum_le
+#print axioms Wu2004MeanValue.abs_actualEndpointSum_le
+#check Wu2004MeanValue.weighted_actualOpenErrorSum_le
+#print axioms Wu2004MeanValue.weighted_actualOpenErrorSum_le

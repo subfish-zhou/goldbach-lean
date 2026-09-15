@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.PhiMonotone
+
+#check Wu2008DoubleSieve.sourceSieveCount_antitone
+#print axioms Wu2008DoubleSieve.sourceSieveCount_antitone
+#check Wu2008DoubleSieve.sourceSieveCarrierLE_subset_strict
+#print axioms Wu2008DoubleSieve.sourceSieveCarrierLE_subset_strict
+#check Wu2008DoubleSieve.wuBoxPhiLE
+#print axioms Wu2008DoubleSieve.wuBoxPhiLE
+#check Wu2008DoubleSieve.wuBoxPhiLE_le_strict
+#print axioms Wu2008DoubleSieve.wuBoxPhiLE_le_strict
+#check Wu2008DoubleSieve.wuBoxPhi_mono_parameter
+#print axioms Wu2008DoubleSieve.wuBoxPhi_mono_parameter
+#check Wu2008DoubleSieve.wu_boxPhi_upper_source
+#print axioms Wu2008DoubleSieve.wu_boxPhi_upper_source

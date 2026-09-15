@@ -1,0 +1,34 @@
+import MathlibNt.Wu2008DoubleSieve.ImprovementFamilies
+
+#check Wu2008DoubleSieve.wuSourceBox
+#print axioms Wu2008DoubleSieve.wuSourceBox
+#check Wu2008DoubleSieve.wuUpperCoefficient
+#print axioms Wu2008DoubleSieve.wuUpperCoefficient
+#check Wu2008DoubleSieve.wuLowerCoefficient
+#print axioms Wu2008DoubleSieve.wuLowerCoefficient
+#check Wu2008DoubleSieve.wuImprovementComparison
+#print axioms Wu2008DoubleSieve.wuImprovementComparison
+#check Wu2008DoubleSieve.wuAdmissibleImprovements
+#print axioms Wu2008DoubleSieve.wuAdmissibleImprovements
+#check Wu2008DoubleSieve.wuEventualImprovements
+#print axioms Wu2008DoubleSieve.wuEventualImprovements
+#check Wu2008DoubleSieve.wuSourceBox_mono_depth
+#print axioms Wu2008DoubleSieve.wuSourceBox_mono_depth
+#check Wu2008DoubleSieve.wuSourceBox_zero_depth
+#print axioms Wu2008DoubleSieve.wuSourceBox_zero_depth
+#check Wu2008DoubleSieve.wuAdmissibleImprovements_mono_threshold
+#print axioms Wu2008DoubleSieve.wuAdmissibleImprovements_mono_threshold
+#check Wu2008DoubleSieve.wuAdmissibleImprovements_antitone_depth
+#print axioms Wu2008DoubleSieve.wuAdmissibleImprovements_antitone_depth
+#check Wu2008DoubleSieve.wuEventualImprovements_antitone_depth
+#print axioms Wu2008DoubleSieve.wuEventualImprovements_antitone_depth
+#check Wu2008DoubleSieve.wuEventualImprovements_neg_mem
+#print axioms Wu2008DoubleSieve.wuEventualImprovements_neg_mem
+#check Wu2008DoubleSieve.wu_zero_depth_theta_pos
+#print axioms Wu2008DoubleSieve.wu_zero_depth_theta_pos
+#check Wu2008DoubleSieve.wuEventualImprovements_upper_le
+#print axioms Wu2008DoubleSieve.wuEventualImprovements_upper_le
+#check Wu2008DoubleSieve.wuEventualImprovements_lower_le
+#print axioms Wu2008DoubleSieve.wuEventualImprovements_lower_le
+#check Wu2008DoubleSieve.wuEventualImprovements_bddAbove
+#print axioms Wu2008DoubleSieve.wuEventualImprovements_bddAbove

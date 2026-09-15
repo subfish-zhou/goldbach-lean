@@ -1,0 +1,18 @@
+import MathlibNt.Wu2004MeanValue.SourceMargin
+
+#check Wu2004MeanValue.log_one_add_le_cubic
+#print axioms Wu2004MeanValue.log_one_add_le_cubic
+#check Wu2004MeanValue.source_parameter_admissible
+#print axioms Wu2004MeanValue.source_parameter_admissible
+#check Wu2004MeanValue.source_tau_eq
+#print axioms Wu2004MeanValue.source_tau_eq
+#check Wu2004MeanValue.source_loss_integral_eq
+#print axioms Wu2004MeanValue.source_loss_integral_eq
+#check Wu2004MeanValue.source_log_upper
+#print axioms Wu2004MeanValue.source_log_upper
+#check Wu2004MeanValue.source_margin_lower
+#print axioms Wu2004MeanValue.source_margin_lower
+#check Wu2004MeanValue.source_margin_pos
+#print axioms Wu2004MeanValue.source_margin_pos
+#check Wu2004MeanValue.source_integral_margin_pos
+#print axioms Wu2004MeanValue.source_integral_margin_pos

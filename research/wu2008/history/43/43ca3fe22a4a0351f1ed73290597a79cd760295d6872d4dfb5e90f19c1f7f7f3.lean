@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3Relative
+
+#check Wu2008DoubleSieve.omega3_badD_relative
+#print axioms Wu2008DoubleSieve.omega3_badD_relative
+#check Wu2008DoubleSieve.omega3_exceptional_count_le
+#print axioms Wu2008DoubleSieve.omega3_exceptional_count_le
+#check Wu2008DoubleSieve.omega3_exceptional_relative
+#print axioms Wu2008DoubleSieve.omega3_exceptional_relative
+#check Wu2008DoubleSieve.wu04_54
+#print axioms Wu2008DoubleSieve.wu04_54

@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientHalfOpen
+
+#check Wu2008DoubleSieve.primeWindow_halfopen_sum_eq
+#print axioms Wu2008DoubleSieve.primeWindow_halfopen_sum_eq
+#check Wu2008DoubleSieve.primeWindow_ceil_halfopen_sum_eq
+#print axioms Wu2008DoubleSieve.primeWindow_ceil_halfopen_sum_eq
+#check Wu2008DoubleSieve.wuPrimeRealWeight_div_log_abs_le
+#print axioms Wu2008DoubleSieve.wuPrimeRealWeight_div_log_abs_le
+#check Wu2008DoubleSieve.primeCoefficient_continuous_endpoint_budget
+#print axioms Wu2008DoubleSieve.primeCoefficient_continuous_endpoint_budget
+#check Wu2008DoubleSieve.primeCoefficient_halfopen_continuous
+#print axioms Wu2008DoubleSieve.primeCoefficient_halfopen_continuous

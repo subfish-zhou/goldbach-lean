@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.FirstFeedbackIndicator
+
+#check Wu2008DoubleSieve.firstFeedback_indicator_integral
+#print axioms Wu2008DoubleSieve.firstFeedback_indicator_integral
+#check Wu2008DoubleSieve.firstFeedback_indicator_intervalIntegrable
+#print axioms Wu2008DoubleSieve.firstFeedback_indicator_intervalIntegrable

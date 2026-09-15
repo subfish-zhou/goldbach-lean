@@ -1,0 +1,12 @@
+import MathlibNt.Wu2004MeanValue.PrincipalWeighted
+
+#check Wu2004MeanValue.coprimePrincipalSum_sub_core_le
+#print axioms Wu2004MeanValue.coprimePrincipalSum_sub_core_le
+#check Wu2004MeanValue.coprimePrincipalSum_log_saving
+#print axioms Wu2004MeanValue.coprimePrincipalSum_log_saving
+#check Wu2004MeanValue.wuModulusWeight_nonneg
+#print axioms Wu2004MeanValue.wuModulusWeight_nonneg
+#check Wu2004MeanValue.wu_reciprocal_totient_sum_bound
+#print axioms Wu2004MeanValue.wu_reciprocal_totient_sum_bound
+#check Wu2004MeanValue.principal_weighted_sup_log_saving
+#print axioms Wu2004MeanValue.principal_weighted_sup_log_saving

@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.RefinedLoss
+
+#check Wu2004MeanValue.refinedGood_card_lower
+#print axioms Wu2004MeanValue.refinedGood_card_lower
+#check Wu2004MeanValue.refinedGood_card_lower_add_unit
+#print axioms Wu2004MeanValue.refinedGood_card_lower_add_unit
+#check Wu2004MeanValue.refinedGood_source_parameter_lower
+#print axioms Wu2004MeanValue.refinedGood_source_parameter_lower

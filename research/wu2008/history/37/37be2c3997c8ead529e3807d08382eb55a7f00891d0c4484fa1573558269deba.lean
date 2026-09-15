@@ -1,0 +1,4 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SieveLocalProduct
+
+#check Wu2008DoubleSieve.omega3GoldbachBoundingSieve_sieveProduct
+#print axioms Wu2008DoubleSieve.omega3GoldbachBoundingSieve_sieveProduct

@@ -1,0 +1,51 @@
+import MathlibNt.Wu2008DoubleSieve.NinthUpperSieveSource
+
+#check Wu2008DoubleSieve.ninthBoundingSieve
+#check Wu2008DoubleSieve.ninthBoundingSieve_rem
+#check Wu2008DoubleSieve.ninthSmallOutputLabels_card_le
+#check Wu2008DoubleSieve.T9_upper_finite
+#check Wu2008DoubleSieve.ninthSieveR1_source_bound
+#check Wu2008DoubleSieve.T9_upper_source_density
+#check Wu2008DoubleSieve.T9_upper_source_with_R1
+
+#print axioms Wu2008DoubleSieve.P9
+#print axioms Wu2008DoubleSieve.X9
+#print axioms Wu2008DoubleSieve.B9
+#print axioms Wu2008DoubleSieve.ninthSieveDivisibleCount
+#print axioms Wu2008DoubleSieve.ninthSieveAPResidual
+#print axioms Wu2008DoubleSieve.ninthSieveMissingMass
+#print axioms Wu2008DoubleSieve.ninthSieveR1
+#print axioms Wu2008DoubleSieve.ninthSieveR2
+#print axioms Wu2008DoubleSieve.ninthSiftedCount
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve
+#print axioms Wu2008DoubleSieve.X9_nonneg
+#print axioms Wu2008DoubleSieve.ninthSieveMissingMass_nonneg
+#print axioms Wu2008DoubleSieve.ninthProductSupport_pos
+#print axioms Wu2008DoubleSieve.P9_size
+#print axioms Wu2008DoubleSieve.P9_prime
+#print axioms Wu2008DoubleSieve.P9_AP_eq_divisible
+#print axioms Wu2008DoubleSieve.P9_AP_empty_of_not_coprime
+#print axioms Wu2008DoubleSieve.ninthSieve_remainder_identity
+#print axioms Wu2008DoubleSieve.B9_test
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_mass
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_multSum
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_siftedSum
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_nu
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_rem
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_mainSum
+#print axioms Wu2008DoubleSieve.ninthOutput
+#print axioms Wu2008DoubleSieve.ninthSmallOutputLabels
+#print axioms Wu2008DoubleSieve.ninthSmallOutputBudget
+#print axioms Wu2008DoubleSieve.ninthOutput_properties
+#print axioms Wu2008DoubleSieve.ninthOutput_pair_injOn
+#print axioms Wu2008DoubleSieve.ninthOutput_pair_divisors
+#print axioms Wu2008DoubleSieve.ninthSmallOutputLabels_card_le
+#print axioms Wu2008DoubleSieve.ninth_prime_sifted
+#print axioms Wu2008DoubleSieve.ninthT9_large_outputs_le_sifted
+#print axioms Wu2008DoubleSieve.T9_card_le_sifted_add_small
+#print axioms Wu2008DoubleSieve.ninthBoundingSieve_upperErrSum_le
+#print axioms Wu2008DoubleSieve.ninth_sifted_upper_finite
+#print axioms Wu2008DoubleSieve.T9_upper_finite
+#print axioms Wu2008DoubleSieve.ninthSieveR1_source_bound
+#print axioms Wu2008DoubleSieve.T9_upper_source_density
+#print axioms Wu2008DoubleSieve.T9_upper_source_with_R1

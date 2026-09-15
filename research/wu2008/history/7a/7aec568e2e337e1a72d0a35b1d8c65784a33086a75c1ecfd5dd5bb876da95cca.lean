@@ -1,0 +1,18 @@
+import MathlibNt.Wu2004MeanValue.ManuscriptRemainders
+
+#check Wu2004MeanValue.mem_sieveDivisors
+#print axioms Wu2004MeanValue.mem_sieveDivisors
+#check Wu2004MeanValue.sieveDivisors_subset_sieveModuli
+#print axioms Wu2004MeanValue.sieveDivisors_subset_sieveModuli
+#check Wu2004MeanValue.sieveDivisors_subset_coprime
+#print axioms Wu2004MeanValue.sieveDivisors_subset_coprime
+#check Wu2004MeanValue.sieveDivisors_squarefree
+#print axioms Wu2004MeanValue.sieveDivisors_squarefree
+#check Wu2004MeanValue.tail_sequence_remainder_weighted
+#print axioms Wu2004MeanValue.tail_sequence_remainder_weighted
+#check Wu2004MeanValue.tail_sequence_remainder_muSquare
+#print axioms Wu2004MeanValue.tail_sequence_remainder_muSquare
+#check Wu2004MeanValue.block_sequence_remainder_weighted
+#print axioms Wu2004MeanValue.block_sequence_remainder_weighted
+#check Wu2004MeanValue.block_sequence_remainder_muSquare
+#print axioms Wu2004MeanValue.block_sequence_remainder_muSquare

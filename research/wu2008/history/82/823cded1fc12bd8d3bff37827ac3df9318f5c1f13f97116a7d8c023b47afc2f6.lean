@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XBuchstabPayment
+
+#check Wu2008DoubleSieve.omega3X_scaled_error_le
+#print axioms Wu2008DoubleSieve.omega3X_scaled_error_le
+#check Wu2008DoubleSieve.omega3X_fixed_density_factor_pos
+#print axioms Wu2008DoubleSieve.omega3X_fixed_density_factor_pos

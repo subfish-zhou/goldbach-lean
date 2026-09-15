@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XIntegralDomain
+
+#check Wu2008DoubleSieve.omega3XPhi
+#print axioms Wu2008DoubleSieve.omega3XPhi
+#check Wu2008DoubleSieve.omega3XExponentRegion
+#print axioms Wu2008DoubleSieve.omega3XExponentRegion
+#check Wu2008DoubleSieve.omega3XPhi_source_bounds
+#print axioms Wu2008DoubleSieve.omega3XPhi_source_bounds
+#check Wu2008DoubleSieve.omega3XExponentRegion_bounds
+#print axioms Wu2008DoubleSieve.omega3XExponentRegion_bounds
+#check Wu2008DoubleSieve.omega3X_argument_bounds
+#print axioms Wu2008DoubleSieve.omega3X_argument_bounds
+#check Wu2008DoubleSieve.omega3X_continuous_source_geometry
+#print axioms Wu2008DoubleSieve.omega3X_continuous_source_geometry

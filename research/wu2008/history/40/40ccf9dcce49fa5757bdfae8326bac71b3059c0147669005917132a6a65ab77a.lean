@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.RosserConsumerPairs
+
+#check Wu2004MeanValue.tailSiftedCount_upper_rosser
+#print axioms Wu2004MeanValue.tailSiftedCount_upper_rosser
+#check Wu2004MeanValue.blockSiftedCount_upper_rosser
+#print axioms Wu2004MeanValue.blockSiftedCount_upper_rosser

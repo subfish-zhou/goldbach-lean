@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3NonCoprime
+
+#check Wu2008DoubleSieve.omega3_reciprocal_multiples_le
+#print axioms Wu2008DoubleSieve.omega3_reciprocal_multiples_le
+#check Wu2008DoubleSieve.omega3_rough_non_coprime_reciprocal_le
+#print axioms Wu2008DoubleSieve.omega3_rough_non_coprime_reciprocal_le

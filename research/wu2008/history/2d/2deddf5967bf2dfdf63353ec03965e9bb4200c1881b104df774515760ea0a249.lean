@@ -1,0 +1,43 @@
+import MathlibNt.Wu2004MeanValue.SieveSupport
+
+#check Wu2004MeanValue.siftingPrimes
+#print axioms Wu2004MeanValue.siftingPrimes
+#check Wu2004MeanValue.siftingProduct
+#print axioms Wu2004MeanValue.siftingProduct
+#check Wu2004MeanValue.sieveModuli
+#print axioms Wu2004MeanValue.sieveModuli
+
+#check Wu2004MeanValue.mem_siftingPrimes
+#print axioms Wu2004MeanValue.mem_siftingPrimes
+#check Wu2004MeanValue.mem_sieveModuli
+#print axioms Wu2004MeanValue.mem_sieveModuli
+#check Wu2004MeanValue.sieveModuli_subset_Icc
+#print axioms Wu2004MeanValue.sieveModuli_subset_Icc
+#check Wu2004MeanValue.siftingProduct_pos
+#print axioms Wu2004MeanValue.siftingProduct_pos
+#check Wu2004MeanValue.siftingProduct_ne_zero
+#print axioms Wu2004MeanValue.siftingProduct_ne_zero
+#check Wu2004MeanValue.prime_dvd_siftingProduct_iff
+#print axioms Wu2004MeanValue.prime_dvd_siftingProduct_iff
+#check Wu2004MeanValue.siftingProduct_squarefree
+#print axioms Wu2004MeanValue.siftingProduct_squarefree
+#check Wu2004MeanValue.coprime_siftingProduct
+#print axioms Wu2004MeanValue.coprime_siftingProduct
+#check Wu2004MeanValue.coprime_of_mem_sieveModuli
+#print axioms Wu2004MeanValue.coprime_of_mem_sieveModuli
+#check Wu2004MeanValue.squarefree_of_mem_sieveModuli
+#print axioms Wu2004MeanValue.squarefree_of_mem_sieveModuli
+#check Wu2004MeanValue.prime_not_dvd_siftingProduct
+#print axioms Wu2004MeanValue.prime_not_dvd_siftingProduct
+#check Wu2004MeanValue.prime_coprime_siftingProduct
+#print axioms Wu2004MeanValue.prime_coprime_siftingProduct
+#check Wu2004MeanValue.prime_not_dvd_of_mem_sieveModuli
+#print axioms Wu2004MeanValue.prime_not_dvd_of_mem_sieveModuli
+#check Wu2004MeanValue.prime_coprime_of_mem_sieveModuli
+#print axioms Wu2004MeanValue.prime_coprime_of_mem_sieveModuli
+#check Wu2004MeanValue.omitted_main_sum_eq_zero
+#print axioms Wu2004MeanValue.omitted_main_sum_eq_zero
+#check Wu2004MeanValue.omitted_main_sum_eq_zero_of_lt
+#print axioms Wu2004MeanValue.omitted_main_sum_eq_zero_of_lt
+#check Wu2004MeanValue.coprime_main_sum_eq_sum
+#print axioms Wu2004MeanValue.coprime_main_sum_eq_sum

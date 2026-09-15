@@ -1,0 +1,4 @@
+import MathlibNt.Wu2004MeanValue.LargeAP
+
+#check Wu2004MeanValue.large_actualAP_unweighted
+#print axioms Wu2004MeanValue.large_actualAP_unweighted

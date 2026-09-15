@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XBuchstabUniform
+
+#check Wu2008DoubleSieve.omega3X_buchstab_uniform
+#print axioms Wu2008DoubleSieve.omega3X_buchstab_uniform
+#check Wu2008DoubleSieve.omega3XRoughMajorant_le_buchstab_error
+#print axioms Wu2008DoubleSieve.omega3XRoughMajorant_le_buchstab_error

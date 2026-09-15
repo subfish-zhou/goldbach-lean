@@ -1,0 +1,20 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XIntegralKernel
+
+#check Wu2008DoubleSieve.omega3XIntegralKernel
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernel
+#check Wu2008DoubleSieve.omega3XIntegral
+#print axioms Wu2008DoubleSieve.omega3XIntegral
+#check Wu2008DoubleSieve.omega3XIntegralKernelExtension
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernelExtension
+#check Wu2008DoubleSieve.omega3XIntegralKernelExtension_eq
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernelExtension_eq
+#check Wu2008DoubleSieve.omega3XIntegralKernelExtension_continuous
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernelExtension_continuous
+#check Wu2008DoubleSieve.omega3XIntegralKernel_uniformContinuousOn
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernel_uniformContinuousOn
+#check Wu2008DoubleSieve.omega3XIntegralKernel_continuousOn
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernel_continuousOn
+#check Wu2008DoubleSieve.omega3XIntegralKernel_bounds
+#print axioms Wu2008DoubleSieve.omega3XIntegralKernel_bounds
+#check Wu2008DoubleSieve.omega3XIntegral_self
+#print axioms Wu2008DoubleSieve.omega3XIntegral_self

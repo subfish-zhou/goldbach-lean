@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LabelsFibre
+
+#check Wu2008DoubleSieve.omega3_quotient_mem
+#print axioms Wu2008DoubleSieve.omega3_quotient_mem
+#check Wu2008DoubleSieve.omega3_quotient_inverse
+#print axioms Wu2008DoubleSieve.omega3_quotient_inverse
+#check Wu2008DoubleSieve.omega3_output_mem
+#print axioms Wu2008DoubleSieve.omega3_output_mem
+#check Wu2008DoubleSieve.omega3_fibre_sum_identity
+#print axioms Wu2008DoubleSieve.omega3_fibre_sum_identity

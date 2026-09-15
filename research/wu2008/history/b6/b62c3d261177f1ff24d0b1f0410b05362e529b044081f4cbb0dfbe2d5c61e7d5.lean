@@ -1,0 +1,61 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LabelsCofactor
+import MathlibNt.Wu2008DoubleSieve.Omega3SwitchingExceptional
+
+#check Wu2008DoubleSieve.omega3Quotient
+#print axioms Wu2008DoubleSieve.omega3Quotient
+#check Wu2008DoubleSieve.omega3Cofactor
+#print axioms Wu2008DoubleSieve.omega3Cofactor
+#check Wu2008DoubleSieve.Omega3Strengthened
+#print axioms Wu2008DoubleSieve.Omega3Strengthened
+#check Wu2008DoubleSieve.Omega3BadD
+#print axioms Wu2008DoubleSieve.Omega3BadD
+#check Wu2008DoubleSieve.omega3QuotientFibre
+#print axioms Wu2008DoubleSieve.omega3QuotientFibre
+#check Wu2008DoubleSieve.omega3SwitchedFibre
+#print axioms Wu2008DoubleSieve.omega3SwitchedFibre
+#check Wu2008DoubleSieve.omega3GoodOriginalFibre
+#print axioms Wu2008DoubleSieve.omega3GoodOriginalFibre
+#check Wu2008DoubleSieve.omega3SiftedSwitchedFibre
+#print axioms Wu2008DoubleSieve.omega3SiftedSwitchedFibre
+#check Wu2008DoubleSieve.omega3BadDFibre
+#print axioms Wu2008DoubleSieve.omega3BadDFibre
+#check Wu2008DoubleSieve.omega3BadNFibre
+#print axioms Wu2008DoubleSieve.omega3BadNFibre
+#check Wu2008DoubleSieve.omega3SmallOutputFibre
+#print axioms Wu2008DoubleSieve.omega3SmallOutputFibre
+#check Wu2008DoubleSieve.omega3LabelSum
+#print axioms Wu2008DoubleSieve.omega3LabelSum
+#check Wu2008DoubleSieve.omega3SwitchedSiftedCount
+#print axioms Wu2008DoubleSieve.omega3SwitchedSiftedCount
+#check Wu2008DoubleSieve.omega3BadDCount
+#print axioms Wu2008DoubleSieve.omega3BadDCount
+#check Wu2008DoubleSieve.omega3BadNCount
+#print axioms Wu2008DoubleSieve.omega3BadNCount
+#check Wu2008DoubleSieve.omega3SmallOutputCount
+#print axioms Wu2008DoubleSieve.omega3SmallOutputCount
+#check Wu2008DoubleSieve.Omega3Index
+#print axioms Wu2008DoubleSieve.Omega3Index
+#check Wu2008DoubleSieve.omega3OriginalLabels
+#print axioms Wu2008DoubleSieve.omega3OriginalLabels
+#check Wu2008DoubleSieve.omega3SwitchedLabels
+#print axioms Wu2008DoubleSieve.omega3SwitchedLabels
+#check Wu2008DoubleSieve.omega3IndexCofactor
+#print axioms Wu2008DoubleSieve.omega3IndexCofactor
+#check Wu2008DoubleSieve.omega3IndexOutput
+#print axioms Wu2008DoubleSieve.omega3IndexOutput
+#check Wu2008DoubleSieve.omega3ExceptionalOutputFibre
+#print axioms Wu2008DoubleSieve.omega3ExceptionalOutputFibre
+#check Wu2008DoubleSieve.omega3ExceptionalOutputCount
+#print axioms Wu2008DoubleSieve.omega3ExceptionalOutputCount
+#check Wu2008DoubleSieve.Omega3CofactorIndex
+#print axioms Wu2008DoubleSieve.Omega3CofactorIndex
+#check Wu2008DoubleSieve.omega3CofactorValue
+#print axioms Wu2008DoubleSieve.omega3CofactorValue
+#check Wu2008DoubleSieve.omega3CofactorLabels
+#print axioms Wu2008DoubleSieve.omega3CofactorLabels
+#check Wu2008DoubleSieve.omega3CofactorPrimeFibre
+#print axioms Wu2008DoubleSieve.omega3CofactorPrimeFibre
+#check Wu2008DoubleSieve.omega3SeparatePrime
+#print axioms Wu2008DoubleSieve.omega3SeparatePrime
+#check Wu2008DoubleSieve.omega3RestorePrime
+#print axioms Wu2008DoubleSieve.omega3RestorePrime

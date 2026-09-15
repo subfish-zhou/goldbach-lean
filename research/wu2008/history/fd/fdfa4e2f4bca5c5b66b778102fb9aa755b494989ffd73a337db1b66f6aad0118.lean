@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.OriginalLargeTriples
+
+#check Wu2004MeanValue.originalLargeTriples
+#print axioms Wu2004MeanValue.originalLargeTriples
+#check Wu2004MeanValue.originalLargeTripleCount
+#print axioms Wu2004MeanValue.originalLargeTripleCount
+#check Wu2004MeanValue.mem_originalLargeTriples
+#print axioms Wu2004MeanValue.mem_originalLargeTriples

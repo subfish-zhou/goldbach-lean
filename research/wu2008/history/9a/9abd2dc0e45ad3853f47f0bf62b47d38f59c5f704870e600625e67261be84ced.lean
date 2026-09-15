@@ -1,0 +1,24 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingGeometric
+
+#check Wu2008DoubleSieve.reboxingAlpha
+#print axioms Wu2008DoubleSieve.reboxingAlpha
+#check Wu2008DoubleSieve.reboxingAlpha_pos
+#print axioms Wu2008DoubleSieve.reboxingAlpha_pos
+#check Wu2008DoubleSieve.reboxingAlpha_zero
+#print axioms Wu2008DoubleSieve.reboxingAlpha_zero
+#check Wu2008DoubleSieve.reboxingAlpha_step
+#print axioms Wu2008DoubleSieve.reboxingAlpha_step
+#check Wu2008DoubleSieve.reboxingAlpha_strictMono
+#print axioms Wu2008DoubleSieve.reboxingAlpha_strictMono
+#check Wu2008DoubleSieve.reboxingAlpha_exists_terminal
+#print axioms Wu2008DoubleSieve.reboxingAlpha_exists_terminal
+#check Wu2008DoubleSieve.reboxingAlpha_terminal_unique
+#print axioms Wu2008DoubleSieve.reboxingAlpha_terminal_unique
+#check Wu2008DoubleSieve.reboxingAlpha_terminal_equal
+#print axioms Wu2008DoubleSieve.reboxingAlpha_terminal_equal
+#check Wu2008DoubleSieve.reboxingAlpha_partition
+#print axioms Wu2008DoubleSieve.reboxingAlpha_partition
+#check Wu2008DoubleSieve.reboxingAlpha_sum_partition
+#print axioms Wu2008DoubleSieve.reboxingAlpha_sum_partition
+#check Wu2008DoubleSieve.reboxingAlpha_convolution_sum_partition
+#print axioms Wu2008DoubleSieve.reboxingAlpha_convolution_sum_partition

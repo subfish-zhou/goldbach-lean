@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3R1Distribution
+
+#check Wu2008DoubleSieve.omega3ReducedResidue
+#print axioms Wu2008DoubleSieve.omega3ReducedResidue
+#check Wu2008DoubleSieve.omega3ReducedResidue_coprime
+#print axioms Wu2008DoubleSieve.omega3ReducedResidue_coprime
+#check Wu2008DoubleSieve.omega3ReducedResidue_eq
+#print axioms Wu2008DoubleSieve.omega3ReducedResidue_eq
+#check Wu2008DoubleSieve.omega3SieveModuli_weight
+#print axioms Wu2008DoubleSieve.omega3SieveModuli_weight
+#check Wu2008DoubleSieve.omega3SieveModuli_subset_Icc
+#print axioms Wu2008DoubleSieve.omega3SieveModuli_subset_Icc
+#check Wu2008DoubleSieve.omega3_primeCentered_moduli_le
+#print axioms Wu2008DoubleSieve.omega3_primeCentered_moduli_le
+#check Wu2008DoubleSieve.omega3_source_level_eventually
+#print axioms Wu2008DoubleSieve.omega3_source_level_eventually
+#check Wu2008DoubleSieve.omega3_balanced_interval_distribution
+#print axioms Wu2008DoubleSieve.omega3_balanced_interval_distribution

@@ -1,0 +1,24 @@
+import MathlibNt.Wu2008DoubleSieve.CanonicalUpperDensity
+
+open Wu2008DoubleSieve
+
+#check ordinarySievePrimeProduct_primeFactors
+#print axioms ordinarySievePrimeProduct_primeFactors
+#check ordinarySievePrimeProduct_prime_gt_two
+#print axioms ordinarySievePrimeProduct_prime_gt_two
+#check ordinaryGoldbach_mainSum_eq
+#print axioms ordinaryGoldbach_mainSum_eq
+#check ordinaryGoldbach_sieveProduct_eq
+#print axioms ordinaryGoldbach_sieveProduct_eq
+#check localSievePrimes_eq_primeWindow
+#print axioms localSievePrimes_eq_primeWindow
+#check ordinaryGoldbach_sieveProduct_eq_local
+#print axioms ordinaryGoldbach_sieveProduct_eq_local
+#check ordinaryGoldbach_uniform_dimension_one
+#print axioms ordinaryGoldbach_uniform_dimension_one
+#check ordinaryRosser_upper_density_uniform
+#print axioms ordinaryRosser_upper_density_uniform
+#check ordinaryRosser_upper_density_canonical
+#print axioms ordinaryRosser_upper_density_canonical
+#check ordinarySieve_upper_canonical_with_AP_error
+#print axioms ordinarySieve_upper_canonical_with_AP_error

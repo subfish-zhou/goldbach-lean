@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3R2Source
+
+#check Wu2008DoubleSieve.omega3_source_moduli_exact
+#print axioms Wu2008DoubleSieve.omega3_source_moduli_exact
+#check Wu2008DoubleSieve.omega3_sieve_R2_relative
+#print axioms Wu2008DoubleSieve.omega3_sieve_R2_relative

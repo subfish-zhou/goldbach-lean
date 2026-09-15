@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XPrimeMassSource
+
+#check Wu2008DoubleSieve.omega3XPrimes_mem_prime_interval
+#print axioms Wu2008DoubleSieve.omega3XPrimes_mem_prime_interval
+#check Wu2008DoubleSieve.omega3XPrimes_reciprocal_source_le
+#print axioms Wu2008DoubleSieve.omega3XPrimes_reciprocal_source_le
+#check Wu2008DoubleSieve.omega3X_scale_mass_source_le
+#print axioms Wu2008DoubleSieve.omega3X_scale_mass_source_le
+#check Wu2008DoubleSieve.omega3X_weighted_scale_mass_source_le
+#print axioms Wu2008DoubleSieve.omega3X_weighted_scale_mass_source_le
+#check Wu2008DoubleSieve.omega3X_prime_mass_threshold
+#print axioms Wu2008DoubleSieve.omega3X_prime_mass_threshold
+#check Wu2008DoubleSieve.omega3XPrimes_reciprocal_uniform
+#print axioms Wu2008DoubleSieve.omega3XPrimes_reciprocal_uniform
+#check Wu2008DoubleSieve.omega3X_weighted_scale_mass_uniform
+#print axioms Wu2008DoubleSieve.omega3X_weighted_scale_mass_uniform

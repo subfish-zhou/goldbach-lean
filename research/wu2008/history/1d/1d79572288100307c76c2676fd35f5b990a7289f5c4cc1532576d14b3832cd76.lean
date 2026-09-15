@@ -1,0 +1,88 @@
+import MathlibNt.Wu2008DoubleSieve.Buchstab
+import MathlibNt.Wu2008DoubleSieve.Normalization
+
+#check Wu2008DoubleSieve.mem_firstTwoTriples
+#check Wu2008DoubleSieve.card_le_two_add_firstTwoTriples
+#check Wu2008DoubleSieve.three_prime_weight
+#check Wu2008DoubleSieve.firstTwoTriples_divisorsIn
+#check Wu2008DoubleSieve.singleMass_eq_sum
+#check Wu2008DoubleSieve.tripleMass_eq_sum
+#check Wu2008DoubleSieve.finite_three_prime_upper_weight
+
+#print axioms Wu2008DoubleSieve.mem_firstTwoTriples
+#print axioms Wu2008DoubleSieve.card_le_two_add_firstTwoTriples
+#print axioms Wu2008DoubleSieve.three_prime_weight
+#print axioms Wu2008DoubleSieve.firstTwoTriples_divisorsIn
+#print axioms Wu2008DoubleSieve.singleMass_eq_sum
+#print axioms Wu2008DoubleSieve.tripleMass_eq_sum
+#print axioms Wu2008DoubleSieve.finite_three_prime_upper_weight
+
+#check Wu2008DoubleSieve.mem_primeWindow
+#check Wu2008DoubleSieve.sifted_split
+#check Wu2008DoubleSieve.siftedIndices_sieveCarrier
+#check Wu2008DoubleSieve.dvd_quotient_iff
+#check Wu2008DoubleSieve.sifted_quotient_iff
+#check Wu2008DoubleSieve.singleCarrier_eq
+#check Wu2008DoubleSieve.singleMass_sieveCarrier
+#check Wu2008DoubleSieve.triple_dvd_iff
+#check Wu2008DoubleSieve.sifted_remove_first_iff
+#check Wu2008DoubleSieve.sifted_triple_quotient_iff
+#check Wu2008DoubleSieve.tripleCarrier_eq
+#check Wu2008DoubleSieve.tripleMass_sieveCarrier
+#check Wu2008DoubleSieve.goldbach_three_prime_upper_weight
+#check Wu2008DoubleSieve.sieveCount_le_mul_modulus
+#check Wu2008DoubleSieve.wu_proposition44_finite_weight
+
+#print axioms Wu2008DoubleSieve.mem_primeWindow
+#print axioms Wu2008DoubleSieve.sifted_split
+#print axioms Wu2008DoubleSieve.siftedIndices_sieveCarrier
+#print axioms Wu2008DoubleSieve.dvd_quotient_iff
+#print axioms Wu2008DoubleSieve.sifted_quotient_iff
+#print axioms Wu2008DoubleSieve.singleCarrier_eq
+#print axioms Wu2008DoubleSieve.singleMass_sieveCarrier
+#print axioms Wu2008DoubleSieve.triple_dvd_iff
+#print axioms Wu2008DoubleSieve.sifted_remove_first_iff
+#print axioms Wu2008DoubleSieve.sifted_triple_quotient_iff
+#print axioms Wu2008DoubleSieve.tripleCarrier_eq
+#print axioms Wu2008DoubleSieve.tripleMass_sieveCarrier
+#print axioms Wu2008DoubleSieve.goldbach_three_prime_upper_weight
+#print axioms Wu2008DoubleSieve.sieveCount_le_mul_modulus
+#print axioms Wu2008DoubleSieve.wu_proposition44_finite_weight
+
+#check Wu2008DoubleSieve.sum_firstDivisor
+#check Wu2008DoubleSieve.firstMass_eq_sum
+#check Wu2008DoubleSieve.finite_buchstab
+#check Wu2008DoubleSieve.firstCarrier_eq
+#check Wu2008DoubleSieve.goldbach_buchstab
+#check Wu2008DoubleSieve.goldbach_buchstab_twofold
+#check Wu2008DoubleSieve.goldbach_buchstab_threefold
+#check Wu2008DoubleSieve.goldbach_buchstab_large_prime_sum
+
+#print axioms Wu2008DoubleSieve.sum_firstDivisor
+#print axioms Wu2008DoubleSieve.firstMass_eq_sum
+#print axioms Wu2008DoubleSieve.finite_buchstab
+#print axioms Wu2008DoubleSieve.firstCarrier_eq
+#print axioms Wu2008DoubleSieve.goldbach_buchstab
+#print axioms Wu2008DoubleSieve.goldbach_buchstab_twofold
+#print axioms Wu2008DoubleSieve.goldbach_buchstab_threefold
+#print axioms Wu2008DoubleSieve.goldbach_buchstab_large_prime_sum
+
+#check Wu2008DoubleSieve.primeWindow_mul_of_prime_above
+#check Wu2008DoubleSieve.wu_proposition44_prime_weight
+#check Wu2008DoubleSieve.siftedLE_iff_strict_and_endpoint
+#check Wu2008DoubleSieve.sieveCount_prime_endpoint
+#check Wu2008DoubleSieve.multipliable_wu_universal_product
+#check Wu2008DoubleSieve.wu_universal_product_eq_liu
+#check Wu2008DoubleSieve.oddPrimeDivisors_eq
+#check Wu2008DoubleSieve.wuSingularSeries_eq_liu
+#check Wu2008DoubleSieve.wuSingularSeries_pos
+
+#print axioms Wu2008DoubleSieve.primeWindow_mul_of_prime_above
+#print axioms Wu2008DoubleSieve.wu_proposition44_prime_weight
+#print axioms Wu2008DoubleSieve.siftedLE_iff_strict_and_endpoint
+#print axioms Wu2008DoubleSieve.sieveCount_prime_endpoint
+#print axioms Wu2008DoubleSieve.multipliable_wu_universal_product
+#print axioms Wu2008DoubleSieve.wu_universal_product_eq_liu
+#print axioms Wu2008DoubleSieve.oddPrimeDivisors_eq
+#print axioms Wu2008DoubleSieve.wuSingularSeries_eq_liu
+#print axioms Wu2008DoubleSieve.wuSingularSeries_pos

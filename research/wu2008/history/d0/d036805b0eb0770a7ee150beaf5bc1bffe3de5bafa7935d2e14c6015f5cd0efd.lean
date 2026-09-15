@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3CofactorProfile
+
+#check Wu2008DoubleSieve.omega3CofactorProfile
+#print axioms Wu2008DoubleSieve.omega3CofactorProfile
+#check Wu2008DoubleSieve.omega3ProfileCofactor
+#print axioms Wu2008DoubleSieve.omega3ProfileCofactor
+#check Wu2008DoubleSieve.omega3CofactorProfiles
+#print axioms Wu2008DoubleSieve.omega3CofactorProfiles
+#check Wu2008DoubleSieve.omega3ProfileFibre
+#print axioms Wu2008DoubleSieve.omega3ProfileFibre
+#check Wu2008DoubleSieve.omega3_profile_sum_identity
+#print axioms Wu2008DoubleSieve.omega3_profile_sum_identity
+#check Wu2008DoubleSieve.omega3_profile_fibre_subset
+#print axioms Wu2008DoubleSieve.omega3_profile_fibre_subset
+#check Wu2008DoubleSieve.omega3_profile_fibre_uniform
+#print axioms Wu2008DoubleSieve.omega3_profile_fibre_uniform

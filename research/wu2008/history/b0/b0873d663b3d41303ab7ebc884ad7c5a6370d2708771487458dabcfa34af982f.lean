@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LabelsCofactor
+
+#check Wu2008DoubleSieve.omega3_restore_separate
+#print axioms Wu2008DoubleSieve.omega3_restore_separate
+#check Wu2008DoubleSieve.omega3_separate_restore
+#print axioms Wu2008DoubleSieve.omega3_separate_restore
+#check Wu2008DoubleSieve.mem_omega3CofactorLabels
+#print axioms Wu2008DoubleSieve.mem_omega3CofactorLabels
+#check Wu2008DoubleSieve.omega3_separate_prime_mem
+#print axioms Wu2008DoubleSieve.omega3_separate_prime_mem
+#check Wu2008DoubleSieve.omega3_restore_prime_mem
+#print axioms Wu2008DoubleSieve.omega3_restore_prime_mem
+#check Wu2008DoubleSieve.omega3_cofactor_first_sum
+#print axioms Wu2008DoubleSieve.omega3_cofactor_first_sum
+#check Wu2008DoubleSieve.omega3_cofactor_label_fibres
+#print axioms Wu2008DoubleSieve.omega3_cofactor_label_fibres
+#check Wu2008DoubleSieve.omega3_switched_sifted_cofactor_first
+#print axioms Wu2008DoubleSieve.omega3_switched_sifted_cofactor_first

@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBoundaryR2ReverseRaw
+
+#check Wu2008DoubleSieve.reboxingGeometricRaw_le_raw_add_left_R1
+#print axioms Wu2008DoubleSieve.reboxingGeometricRaw_le_raw_add_left_R1
+#check Wu2008DoubleSieve.reboxingRawPrimeSum_lower_geometric
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum_lower_geometric

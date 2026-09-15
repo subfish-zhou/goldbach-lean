@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientSourceIntegral
+
+#check Wu2008DoubleSieve.wuPrime_source_cutoff_parameter
+#print axioms Wu2008DoubleSieve.wuPrime_source_cutoff_parameter
+#check Wu2008DoubleSieve.primeCoefficient_source_log_uniform
+#print axioms Wu2008DoubleSieve.primeCoefficient_source_log_uniform

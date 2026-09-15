@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.VariableS3
+
+#check Wu2008DoubleSieve.mem_lowerPairs_source
+#print axioms Wu2008DoubleSieve.mem_lowerPairs_source
+#check Wu2008DoubleSieve.sieveCount_nonneg
+#print axioms Wu2008DoubleSieve.sieveCount_nonneg
+#check Wu2008DoubleSieve.sieveCount_antitone
+#print axioms Wu2008DoubleSieve.sieveCount_antitone
+#check Wu2008DoubleSieve.variable_cutoff_pair_bound
+#print axioms Wu2008DoubleSieve.variable_cutoff_pair_bound
+#check Wu2008DoubleSieve.repeated_pair_eq_endpoint_loss
+#print axioms Wu2008DoubleSieve.repeated_pair_eq_endpoint_loss
+#check Wu2008DoubleSieve.lowerS3_le_variable_add_square_error
+#print axioms Wu2008DoubleSieve.lowerS3_le_variable_add_square_error
+#check Wu2008DoubleSieve.lowerS3_le_variable_add_paid_error
+#print axioms Wu2008DoubleSieve.lowerS3_le_variable_add_paid_error
+#check Wu2008DoubleSieve.variableS3_eventually
+#print axioms Wu2008DoubleSieve.variableS3_eventually

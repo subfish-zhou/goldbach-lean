@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3Labels
+
+#check Wu2008DoubleSieve.omega3_prime_output_lt
+#print axioms Wu2008DoubleSieve.omega3_prime_output_lt
+#check Wu2008DoubleSieve.omega3_quotient_equation
+#print axioms Wu2008DoubleSieve.omega3_quotient_equation
+#check Wu2008DoubleSieve.omega3_complement_div
+#print axioms Wu2008DoubleSieve.omega3_complement_div
+#check Wu2008DoubleSieve.omega3_quotient_coprime_of_output
+#print axioms Wu2008DoubleSieve.omega3_quotient_coprime_of_output
+#check Wu2008DoubleSieve.omega3_strengthened_of_source
+#print axioms Wu2008DoubleSieve.omega3_strengthened_of_source

@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingBlockComparison
+
+#check Wu2008DoubleSieve.wu_reboxed_block_comparison
+#print axioms Wu2008DoubleSieve.wu_reboxed_block_comparison
+#check Wu2008DoubleSieve.wu_reboxed_block_upper_lower
+#print axioms Wu2008DoubleSieve.wu_reboxed_block_upper_lower

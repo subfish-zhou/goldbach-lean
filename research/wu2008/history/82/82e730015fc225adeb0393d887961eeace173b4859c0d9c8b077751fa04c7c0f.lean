@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaSwitchedSieveCombined
+
+#check Wu2008DoubleSieve.omega3_switched_upper_R2_paid
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_R2_paid
+#check Wu2008DoubleSieve.wu04_first_weighted_switched_sieve
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_switched_sieve

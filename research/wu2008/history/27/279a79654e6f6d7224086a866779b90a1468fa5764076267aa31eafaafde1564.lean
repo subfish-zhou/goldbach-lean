@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SieveSource
+
+#check Wu2008DoubleSieve.omega3_switched_upper_source_finite
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_source_finite
+#check Wu2008DoubleSieve.omega3_switched_upper_source_density
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_source_density

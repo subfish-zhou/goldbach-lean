@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.ImprovementEffectiveIntegrals
+
+#check Wu2008DoubleSieve.wuEffectiveCoefficient_integral_eventually
+#print axioms Wu2008DoubleSieve.wuEffectiveCoefficient_integral_eventually
+#check Wu2008DoubleSieve.wuEffectiveCoefficient_integral_threshold_limit
+#print axioms Wu2008DoubleSieve.wuEffectiveCoefficient_integral_threshold_limit

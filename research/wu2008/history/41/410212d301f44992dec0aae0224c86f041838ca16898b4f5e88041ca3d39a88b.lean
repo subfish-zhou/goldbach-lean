@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3Switching
+
+#check Wu2008DoubleSieve.omega3LabelSum_add
+#print axioms Wu2008DoubleSieve.omega3LabelSum_add
+#check Wu2008DoubleSieve.omega3LabelSum_mono
+#print axioms Wu2008DoubleSieve.omega3LabelSum_mono
+#check Wu2008DoubleSieve.wuOmega3Sum_eq_original_label_count
+#print axioms Wu2008DoubleSieve.wuOmega3Sum_eq_original_label_count
+#check Wu2008DoubleSieve.omega3_weighted_fibre_identity
+#print axioms Wu2008DoubleSieve.omega3_weighted_fibre_identity
+#check Wu2008DoubleSieve.wuOmega3Sum_le_switched_add_actual_errors
+#print axioms Wu2008DoubleSieve.wuOmega3Sum_le_switched_add_actual_errors

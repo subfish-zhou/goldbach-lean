@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3ErrorBudget
+
+#check Wu2008DoubleSieve.omega3ExceptionalOutputs
+#print axioms Wu2008DoubleSieve.omega3ExceptionalOutputs
+#check Wu2008DoubleSieve.mem_omega3ExceptionalOutputs
+#print axioms Wu2008DoubleSieve.mem_omega3ExceptionalOutputs
+#check Wu2008DoubleSieve.omega3ExceptionalOutputs_card_le
+#print axioms Wu2008DoubleSieve.omega3ExceptionalOutputs_card_le
+#check Wu2008DoubleSieve.omega3_exceptional_weight_le
+#print axioms Wu2008DoubleSieve.omega3_exceptional_weight_le
+#check Wu2008DoubleSieve.omega3_power_mass_relative
+#print axioms Wu2008DoubleSieve.omega3_power_mass_relative
+#check Wu2008DoubleSieve.omega3_exceptional_weight_relative
+#print axioms Wu2008DoubleSieve.omega3_exceptional_weight_relative

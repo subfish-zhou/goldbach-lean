@@ -1,0 +1,7 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XGeometry
+
+#check Wu2008DoubleSieve.omega3X_log_gap
+#print axioms Wu2008DoubleSieve.omega3X_log_gap
+
+#check Wu2008DoubleSieve.omega3X_prime_triple_geometry
+#print axioms Wu2008DoubleSieve.omega3X_prime_triple_geometry

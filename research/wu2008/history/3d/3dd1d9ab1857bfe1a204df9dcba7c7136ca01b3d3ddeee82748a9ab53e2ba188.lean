@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XIntegralNormalization
+
+#check @Wu2008DoubleSieve.omega3X_trueLi_sharp_lower
+#print axioms Wu2008DoubleSieve.omega3X_trueLi_sharp_lower
+#check @Wu2008DoubleSieve.omega3XIntegralMain_le_envelope
+#print axioms Wu2008DoubleSieve.omega3XIntegralMain_le_envelope
+#check @Wu2008DoubleSieve.omega3XIntegralMain_scaled_le
+#print axioms Wu2008DoubleSieve.omega3XIntegralMain_scaled_le
+#check @Wu2008DoubleSieve.omega3XIntegralMain_scaled_uniform
+#print axioms Wu2008DoubleSieve.omega3XIntegralMain_scaled_uniform

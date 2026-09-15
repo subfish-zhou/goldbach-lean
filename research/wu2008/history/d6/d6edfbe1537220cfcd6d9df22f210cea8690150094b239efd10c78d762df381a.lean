@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.BalancedLowSource
+
+#check Wu2004MeanValue.balanced_lowMovingSource_le_budget
+#print axioms Wu2004MeanValue.balanced_lowMovingSource_le_budget
+#check Wu2004MeanValue.balanced_low_source_nat_moving
+#print axioms Wu2004MeanValue.balanced_low_source_nat_moving
+#check Wu2004MeanValue.balanced_low_source_real_moving
+#print axioms Wu2004MeanValue.balanced_low_source_real_moving

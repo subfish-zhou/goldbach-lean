@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingParameterSource
+
+#check Wu2008DoubleSieve.reboxing_atom_cutoff
+#print axioms Wu2008DoubleSieve.reboxing_atom_cutoff
+#check Wu2008DoubleSieve.reboxingAlpha_previous
+#print axioms Wu2008DoubleSieve.reboxingAlpha_previous
+#check Wu2008DoubleSieve.reboxing_source_parameters
+#print axioms Wu2008DoubleSieve.reboxing_source_parameters

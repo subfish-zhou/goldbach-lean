@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingSelectedIntegral
+
+#check Wu2008DoubleSieve.reboxingPrimeSum_log_parameter_eq
+#print axioms Wu2008DoubleSieve.reboxingPrimeSum_log_parameter_eq
+#check Wu2008DoubleSieve.wu_effective_shifted_prime_transport_relative
+#print axioms Wu2008DoubleSieve.wu_effective_shifted_prime_transport_relative
+#check Wu2008DoubleSieve.wu_reboxing_selected_prime_integral_relative
+#print axioms Wu2008DoubleSieve.wu_reboxing_selected_prime_integral_relative

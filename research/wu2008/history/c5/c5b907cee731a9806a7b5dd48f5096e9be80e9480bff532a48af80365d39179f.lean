@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.WuSourceLevel
+
+open Wu2008DoubleSieve
+
+#check wu_box_support_product_bound
+#print axioms wu_box_support_product_bound
+#check wuCommonRosserLevel_le_combined
+#print axioms wuCommonRosserLevel_le_combined
+#check wu_common_level_family_remainder_le_AP
+#print axioms wu_common_level_family_remainder_le_AP
+#check wu_common_level_signed_bv
+#print axioms wu_common_level_signed_bv

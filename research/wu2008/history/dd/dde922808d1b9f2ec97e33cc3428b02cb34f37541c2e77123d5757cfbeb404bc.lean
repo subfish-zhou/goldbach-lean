@@ -1,0 +1,6 @@
+import MathlibNt.Wu2004MeanValue.SiftedPairs
+
+#check Wu2004MeanValue.tailSiftedCount_sharp_upper
+#print axioms Wu2004MeanValue.tailSiftedCount_sharp_upper
+#check Wu2004MeanValue.blockSiftedCount_uniform_upper
+#print axioms Wu2004MeanValue.blockSiftedCount_uniform_upper

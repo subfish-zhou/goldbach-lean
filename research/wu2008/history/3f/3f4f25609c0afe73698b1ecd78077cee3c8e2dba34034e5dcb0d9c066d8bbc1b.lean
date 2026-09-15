@@ -1,0 +1,48 @@
+import MathlibNt.Wu2004MeanValue.RealEndpoints
+import MathlibNt.Wu2004MeanValue.PrincipalMaximal
+import MathlibNt.Wu2004MeanValue.OpenIntervals
+
+#check Wu2004MeanValue.mem_scaledPrimeSet
+#print axioms Wu2004MeanValue.mem_scaledPrimeSet
+#check Wu2004MeanValue.scaledPrimeCount_eq_frozen
+#print axioms Wu2004MeanValue.scaledPrimeCount_eq_frozen
+#check Wu2004MeanValue.scaledPrimeCount_eq_inverse
+#print axioms Wu2004MeanValue.scaledPrimeCount_eq_inverse
+#check Wu2004MeanValue.scaledPrimeCount_residue_mod
+#print axioms Wu2004MeanValue.scaledPrimeCount_residue_mod
+#check Wu2004MeanValue.ebar_residue_mod
+#print axioms Wu2004MeanValue.ebar_residue_mod
+#check Wu2004MeanValue.wuLi_sub_frozen
+#print axioms Wu2004MeanValue.wuLi_sub_frozen
+#check Wu2004MeanValue.wuLi_sub_wuLi
+#print axioms Wu2004MeanValue.wuLi_sub_wuLi
+#check Wu2004MeanValue.ebar_eq_frozen_add_correction
+#print axioms Wu2004MeanValue.ebar_eq_frozen_add_correction
+#check Wu2004MeanValue.ebar_nat_eq_frozen
+#print axioms Wu2004MeanValue.ebar_nat_eq_frozen
+#check Wu2004MeanValue.ebar_moving_inverse
+#print axioms Wu2004MeanValue.ebar_moving_inverse
+#check Wu2004MeanValue.abs_ebar_sub_frozen_le
+#print axioms Wu2004MeanValue.abs_ebar_sub_frozen_le
+#check Wu2004MeanValue.realPrimeCount_eq_scaled
+#print axioms Wu2004MeanValue.realPrimeCount_eq_scaled
+#check Wu2004MeanValue.principalError_le_prefix
+#print axioms Wu2004MeanValue.principalError_le_prefix
+#check Wu2004MeanValue.principal_real_prefix_bound
+#print axioms Wu2004MeanValue.principal_real_prefix_bound
+#check Wu2004MeanValue.principal_moving_term_bound
+#print axioms Wu2004MeanValue.principal_moving_term_bound
+#check Wu2004MeanValue.principal_moving_sum_bound
+#print axioms Wu2004MeanValue.principal_moving_sum_bound
+#check Wu2004MeanValue.principal_moving_sum_bound_ratio
+#print axioms Wu2004MeanValue.principal_moving_sum_bound_ratio
+#check Wu2004MeanValue.scaledPrimeSet_partition
+#print axioms Wu2004MeanValue.scaledPrimeSet_partition
+#check Wu2004MeanValue.scaledPrimeCount_partition
+#print axioms Wu2004MeanValue.scaledPrimeCount_partition
+#check Wu2004MeanValue.upperEndpointSet_card_le_one
+#print axioms Wu2004MeanValue.upperEndpointSet_card_le_one
+#check Wu2004MeanValue.openInterval_error_identity
+#print axioms Wu2004MeanValue.openInterval_error_identity
+#check Wu2004MeanValue.abs_sum_upperEndpoint_le
+#print axioms Wu2004MeanValue.abs_sum_upperEndpoint_le

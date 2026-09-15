@@ -1,0 +1,30 @@
+import MathlibNt.Wu2008DoubleSieve.LowerWeightSum
+
+#check Wu2008DoubleSieve.mem_sieveCarrier_one
+#print axioms Wu2008DoubleSieve.mem_sieveCarrier_one
+#check Wu2008DoubleSieve.lower_pair_carrier
+#print axioms Wu2008DoubleSieve.lower_pair_carrier
+#check Wu2008DoubleSieve.lowerPairPenalty_sum
+#print axioms Wu2008DoubleSieve.lowerPairPenalty_sum
+#check Wu2008DoubleSieve.lowerWeight_sum_eq
+#print axioms Wu2008DoubleSieve.lowerWeight_sum_eq
+#check Wu2008DoubleSieve.prime_dvd_of_complement_not_coprime
+#print axioms Wu2008DoubleSieve.prime_dvd_of_complement_not_coprime
+#check Wu2008DoubleSieve.primeFactors_card_le_sqrt_add_one
+#print axioms Wu2008DoubleSieve.primeFactors_card_le_sqrt_add_one
+#check Wu2008DoubleSieve.exceptionalGoldbach_card_le
+#print axioms Wu2008DoubleSieve.exceptionalGoldbach_card_le
+#check Wu2008DoubleSieve.lowerWeight_goldbach_sum_le
+#print axioms Wu2008DoubleSieve.lowerWeight_goldbach_sum_le
+#check Wu2008DoubleSieve.lower_pair_size_iff
+#print axioms Wu2008DoubleSieve.lower_pair_size_iff
+#check Wu2008DoubleSieve.lower_pair_sum_split
+#print axioms Wu2008DoubleSieve.lower_pair_sum_split
+#check Wu2008DoubleSieve.lowerWeightRHS_eq_sum
+#print axioms Wu2008DoubleSieve.lowerWeightRHS_eq_sum
+#check Wu2008DoubleSieve.lowerWeightRHS_le_count_add_explicit_error
+#print axioms Wu2008DoubleSieve.lowerWeightRHS_le_count_add_explicit_error
+#check Wu2008DoubleSieve.lowerWeight_error_le_rpow
+#print axioms Wu2008DoubleSieve.lowerWeight_error_le_rpow
+#check Wu2008DoubleSieve.wu_lemma21_strict
+#print axioms Wu2008DoubleSieve.wu_lemma21_strict

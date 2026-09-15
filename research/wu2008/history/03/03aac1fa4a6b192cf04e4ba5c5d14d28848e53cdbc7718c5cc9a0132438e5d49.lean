@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SourceBounds
+
+#check Wu2008DoubleSieve.omega3_source_support_le_Q
+#print axioms Wu2008DoubleSieve.omega3_source_support_le_Q
+#check Wu2008DoubleSieve.omega3_source_window_lower
+#print axioms Wu2008DoubleSieve.omega3_source_window_lower
+#check Wu2008DoubleSieve.omega3_support_prime_lower
+#print axioms Wu2008DoubleSieve.omega3_support_prime_lower
+#check Wu2008DoubleSieve.omega3_source_theta_lower
+#print axioms Wu2008DoubleSieve.omega3_source_theta_lower

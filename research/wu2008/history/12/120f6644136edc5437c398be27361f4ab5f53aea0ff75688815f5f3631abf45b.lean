@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3NonCoprimeMass
+
+#check Wu2008DoubleSieve.omega3_prime_fibre_card_le
+#print axioms Wu2008DoubleSieve.omega3_prime_fibre_card_le
+#check Wu2008DoubleSieve.omega3_non_coprime_mass_le
+#print axioms Wu2008DoubleSieve.omega3_non_coprime_mass_le

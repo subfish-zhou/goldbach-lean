@@ -1,0 +1,16 @@
+import MathlibNt.Wu2004MeanValue.RealClosed
+
+#check Wu2004MeanValue.mem_closedScaledPrimeSet
+#print axioms Wu2004MeanValue.mem_closedScaledPrimeSet
+#check Wu2004MeanValue.closedScaledPrimeSet_partition
+#print axioms Wu2004MeanValue.closedScaledPrimeSet_partition
+#check Wu2004MeanValue.closedScaledPrimeSet_card
+#print axioms Wu2004MeanValue.closedScaledPrimeSet_card
+#check Wu2004MeanValue.closedInterval_error_identity
+#print axioms Wu2004MeanValue.closedInterval_error_identity
+#check Wu2004MeanValue.actualClosedErrorSum_eq
+#print axioms Wu2004MeanValue.actualClosedErrorSum_eq
+#check Wu2004MeanValue.weighted_actualClosedErrorSum_le
+#print axioms Wu2004MeanValue.weighted_actualClosedErrorSum_le
+#check Wu2004MeanValue.manuscript_tail_closed_weighted
+#print axioms Wu2004MeanValue.manuscript_tail_closed_weighted

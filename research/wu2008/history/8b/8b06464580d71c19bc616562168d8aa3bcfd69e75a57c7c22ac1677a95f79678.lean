@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.PhiLower
+
+#check Wu2008DoubleSieve.canonical_lower_normalization_budget
+#print axioms Wu2008DoubleSieve.canonical_lower_normalization_budget
+#check Wu2008DoubleSieve.wu_variable_lower_main_relative
+#print axioms Wu2008DoubleSieve.wu_variable_lower_main_relative
+#check Wu2008DoubleSieve.wu_boxPhi_lower_source
+#print axioms Wu2008DoubleSieve.wu_boxPhi_lower_source

@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XPrimeQuadratureSource
+
+#check @Wu2008DoubleSieve.omega3XIntegralMain
+#print axioms Wu2008DoubleSieve.omega3XIntegralMain
+#check @Wu2008DoubleSieve.omega3X_ordered_quadrature_uniform
+#print axioms Wu2008DoubleSieve.omega3X_ordered_quadrature_uniform
+#check @Wu2008DoubleSieve.omega3X_log_scale_error_le
+#print axioms Wu2008DoubleSieve.omega3X_log_scale_error_le
+#check @Wu2008DoubleSieve.omega3XBuchstabMain_le_integral_paid
+#print axioms Wu2008DoubleSieve.omega3XBuchstabMain_le_integral_paid
+#check @Wu2008DoubleSieve.omega3SieveX_le_integral_paid
+#print axioms Wu2008DoubleSieve.omega3SieveX_le_integral_paid

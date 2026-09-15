@@ -1,0 +1,8 @@
+import MathlibNt.Wu2004MeanValue.BalancedPrincipal
+
+#check Wu2004MeanValue.balanced_principal_moving_term_bound
+#print axioms Wu2004MeanValue.balanced_principal_moving_term_bound
+#check Wu2004MeanValue.balanced_principal_moving_sum_bound
+#print axioms Wu2004MeanValue.balanced_principal_moving_sum_bound
+#check Wu2004MeanValue.balanced_coprimePrincipalSum_log_saving
+#print axioms Wu2004MeanValue.balanced_coprimePrincipalSum_log_saving

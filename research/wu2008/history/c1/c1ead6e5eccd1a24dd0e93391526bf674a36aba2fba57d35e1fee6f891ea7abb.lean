@@ -1,0 +1,4 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingGeometricBoundary
+
+#check Wu2008DoubleSieve.reboxing_terminal_boundary_geometry
+#print axioms Wu2008DoubleSieve.reboxing_terminal_boundary_geometry

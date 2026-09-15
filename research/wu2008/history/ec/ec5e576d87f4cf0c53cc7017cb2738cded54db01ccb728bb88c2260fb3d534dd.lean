@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SwitchingExceptional
+
+#check Wu2008DoubleSieve.omega3_fibre_switching_exceptional_bound
+#print axioms Wu2008DoubleSieve.omega3_fibre_switching_exceptional_bound
+#check Wu2008DoubleSieve.wuOmega3Sum_le_switched_add_badD_add_exceptional
+#print axioms Wu2008DoubleSieve.wuOmega3Sum_le_switched_add_badD_add_exceptional
+#check Wu2008DoubleSieve.omega3_exceptional_eq_indexed_count
+#print axioms Wu2008DoubleSieve.omega3_exceptional_eq_indexed_count

@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3SieveUpper
+
+#check Wu2008DoubleSieve.omega3GoldbachBoundingSieve_upperErrSum_le
+#print axioms Wu2008DoubleSieve.omega3GoldbachBoundingSieve_upperErrSum_le
+#check Wu2008DoubleSieve.omega3_switched_upper_finite
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_finite
+#check Wu2008DoubleSieve.omega3_switched_strict_upper_finite
+#print axioms Wu2008DoubleSieve.omega3_switched_strict_upper_finite
+#check Wu2008DoubleSieve.omega3_switched_upper_density
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_density
+#check Wu2008DoubleSieve.omega3_sifted_zero_iff
+#print axioms Wu2008DoubleSieve.omega3_sifted_zero_iff

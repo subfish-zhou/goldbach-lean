@@ -1,0 +1,16 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3R1Layers
+
+#check Wu2008DoubleSieve.omega3ProfilePrimes
+#print axioms Wu2008DoubleSieve.omega3ProfilePrimes
+#check Wu2008DoubleSieve.omega3ProfileError
+#print axioms Wu2008DoubleSieve.omega3ProfileError
+#check Wu2008DoubleSieve.omega3Layer_prime_fibre_eq_profile
+#print axioms Wu2008DoubleSieve.omega3Layer_prime_fibre_eq_profile
+#check Wu2008DoubleSieve.omega3Layer_prime_error_eq_profile
+#print axioms Wu2008DoubleSieve.omega3Layer_prime_error_eq_profile
+#check Wu2008DoubleSieve.omega3SieveAPResidual_eq_layers
+#print axioms Wu2008DoubleSieve.omega3SieveAPResidual_eq_layers
+#check Wu2008DoubleSieve.omega3SieveR1_le_layers
+#print axioms Wu2008DoubleSieve.omega3SieveR1_le_layers
+#check Wu2008DoubleSieve.omega3_source_R1_le_common_profiles
+#print axioms Wu2008DoubleSieve.omega3_source_R1_le_common_profiles

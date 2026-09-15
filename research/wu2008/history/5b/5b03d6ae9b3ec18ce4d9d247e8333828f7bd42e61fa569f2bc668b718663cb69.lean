@@ -1,0 +1,12 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaSwitchedIntegral
+
+#check @Wu2008DoubleSieve.omega3XBuchstabMain_scaled_integral
+#print axioms Wu2008DoubleSieve.omega3XBuchstabMain_scaled_integral
+#check @Wu2008DoubleSieve.omega3_switched_upper_integral
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_integral
+#check @Wu2008DoubleSieve.wu04_first_weighted_switched_integral
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_switched_integral
+#check @Wu2008DoubleSieve.omega3_switched_upper_envelope
+#print axioms Wu2008DoubleSieve.omega3_switched_upper_envelope
+#check @Wu2008DoubleSieve.wu04_first_weighted_switched_envelope
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_switched_envelope

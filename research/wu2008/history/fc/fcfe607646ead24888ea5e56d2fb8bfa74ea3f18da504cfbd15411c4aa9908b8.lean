@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.OmegaCombined
+
+#check Wu2008DoubleSieve.wu_omega_first_stage_upper
+#print axioms Wu2008DoubleSieve.wu_omega_first_stage_upper
+#check Wu2008DoubleSieve.wu_omega12_upper
+#print axioms Wu2008DoubleSieve.wu_omega12_upper
+#check Wu2008DoubleSieve.wu04_first_weighted_omega12
+#print axioms Wu2008DoubleSieve.wu04_first_weighted_omega12

@@ -1,0 +1,18 @@
+import MathlibNt.Wu2008DoubleSieve.Omega2Parameter
+
+#check Wu2008DoubleSieve.omega2ParameterTransform
+#print axioms Wu2008DoubleSieve.omega2ParameterTransform
+#check Wu2008DoubleSieve.omega2ParameterTransform_mono
+#print axioms Wu2008DoubleSieve.omega2ParameterTransform_mono
+#check Wu2008DoubleSieve.omega2ParameterTransform_domain
+#print axioms Wu2008DoubleSieve.omega2ParameterTransform_domain
+#check Wu2008DoubleSieve.omega2ParameterTransform_width
+#print axioms Wu2008DoubleSieve.omega2ParameterTransform_width
+#check Wu2008DoubleSieve.omega2_fixed_cutoff_ratio
+#print axioms Wu2008DoubleSieve.omega2_fixed_cutoff_ratio
+#check Wu2008DoubleSieve.omega2_fixed_cutoff_transform
+#print axioms Wu2008DoubleSieve.omega2_fixed_cutoff_transform
+#check Wu2008DoubleSieve.omega2_fixed_cutoff_domain
+#print axioms Wu2008DoubleSieve.omega2_fixed_cutoff_domain
+#check Wu2008DoubleSieve.omega2_fixed_replacement_window_bounds
+#print axioms Wu2008DoubleSieve.omega2_fixed_replacement_window_bounds

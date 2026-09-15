@@ -1,0 +1,8 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingUpperNormalization
+
+#check Wu2008DoubleSieve.wu_inserted_theta_upper_coefficient
+#print axioms Wu2008DoubleSieve.wu_inserted_theta_upper_coefficient
+#check Wu2008DoubleSieve.reboxingGeometricMain_upper_prime_add_R3
+#print axioms Wu2008DoubleSieve.reboxingGeometricMain_upper_prime_add_R3
+#check Wu2008DoubleSieve.reboxingRawPrimeSum_upper_prime
+#print axioms Wu2008DoubleSieve.reboxingRawPrimeSum_upper_prime

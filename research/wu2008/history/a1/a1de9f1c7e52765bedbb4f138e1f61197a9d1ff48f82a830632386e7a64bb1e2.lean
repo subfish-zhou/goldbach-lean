@@ -1,0 +1,12 @@
+import MathlibNt.Wu2004MeanValue.LossIntegral
+
+#check Wu2004MeanValue.loss_tau_bounds
+#print axioms Wu2004MeanValue.loss_tau_bounds
+#check Wu2004MeanValue.tail_kernel_domain
+#print axioms Wu2004MeanValue.tail_kernel_domain
+#check Wu2004MeanValue.tail_kernel_integral_eq_log
+#print axioms Wu2004MeanValue.tail_kernel_integral_eq_log
+#check Wu2004MeanValue.loss_integral_eq_log
+#print axioms Wu2004MeanValue.loss_integral_eq_log
+#check Wu2004MeanValue.loss_log_pos
+#print axioms Wu2004MeanValue.loss_log_pos

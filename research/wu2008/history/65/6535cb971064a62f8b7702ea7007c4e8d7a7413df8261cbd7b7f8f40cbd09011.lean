@@ -1,0 +1,14 @@
+import MathlibNt.Wu2008DoubleSieve.ReboxingRepeatedPrimes
+
+#check Wu2008DoubleSieve.reboxing_log_ratio_half
+#print axioms Wu2008DoubleSieve.reboxing_log_ratio_half
+#check Wu2008DoubleSieve.reboxing_prime_weight_le_four_div
+#print axioms Wu2008DoubleSieve.reboxing_prime_weight_le_four_div
+#check Wu2008DoubleSieve.reboxing_repeated_prime_sum_le
+#print axioms Wu2008DoubleSieve.reboxing_repeated_prime_sum_le
+#check Wu2008DoubleSieve.reboxingRepeatedTheta
+#print axioms Wu2008DoubleSieve.reboxingRepeatedTheta
+#check Wu2008DoubleSieve.reboxingRepeatedTheta_le
+#print axioms Wu2008DoubleSieve.reboxingRepeatedTheta_le
+#check Wu2008DoubleSieve.wu_reboxing_repeated_theta_relative
+#print axioms Wu2008DoubleSieve.wu_reboxing_repeated_theta_relative

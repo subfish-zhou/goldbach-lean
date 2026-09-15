@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3XPrimeQuadratureFinite
+
+#check @Wu2008DoubleSieve.omega3XPrime_coordinate_mem
+#print axioms Wu2008DoubleSieve.omega3XPrime_coordinate_mem
+#check @Wu2008DoubleSieve.omega3XPrime_buchstab_term_eq
+#print axioms Wu2008DoubleSieve.omega3XPrime_buchstab_term_eq
+#check @Wu2008DoubleSieve.omega3XPrime_sum_le_nested
+#print axioms Wu2008DoubleSieve.omega3XPrime_sum_le_nested
+#check @Wu2008DoubleSieve.omega3XPrime_buchstab_le_ordered
+#print axioms Wu2008DoubleSieve.omega3XPrime_buchstab_le_ordered

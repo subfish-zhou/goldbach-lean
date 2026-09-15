@@ -1,0 +1,22 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3LayerFinite
+
+#check Wu2008DoubleSieve.omega3LayerFibre
+#print axioms Wu2008DoubleSieve.omega3LayerFibre
+#check Wu2008DoubleSieve.omega3LayerRank
+#print axioms Wu2008DoubleSieve.omega3LayerRank
+#check Wu2008DoubleSieve.omega3LayerRank_injective
+#print axioms Wu2008DoubleSieve.omega3LayerRank_injective
+#check Wu2008DoubleSieve.omega3LayerSupport
+#print axioms Wu2008DoubleSieve.omega3LayerSupport
+#check Wu2008DoubleSieve.omega3LayerLabel
+#print axioms Wu2008DoubleSieve.omega3LayerLabel
+#check Wu2008DoubleSieve.omega3LayerLabel_mem_fibre
+#print axioms Wu2008DoubleSieve.omega3LayerLabel_mem_fibre
+#check Wu2008DoubleSieve.omega3LayerLabel_mem
+#print axioms Wu2008DoubleSieve.omega3LayerLabel_mem
+#check Wu2008DoubleSieve.omega3LayerLabel_rank
+#print axioms Wu2008DoubleSieve.omega3LayerLabel_rank
+#check Wu2008DoubleSieve.omega3Layer_fibre_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_fibre_sum
+#check Wu2008DoubleSieve.omega3Layer_sum
+#print axioms Wu2008DoubleSieve.omega3Layer_sum

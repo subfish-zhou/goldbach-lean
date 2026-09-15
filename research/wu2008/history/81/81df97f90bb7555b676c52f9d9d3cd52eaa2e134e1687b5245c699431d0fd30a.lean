@@ -1,0 +1,19 @@
+import MathlibNt.Wu2004MeanValue.SelectedMaximal
+
+#check Wu2004MeanValue.primitive_integral_selected_mean_le
+#print axioms Wu2004MeanValue.primitive_integral_selected_mean_le
+
+#check Wu2004MeanValue.selected_source_cell_perron_shift
+#print axioms Wu2004MeanValue.selected_source_cell_perron_shift
+
+#check Wu2004MeanValue.chosen_source_selected_cell_log_saving
+#print axioms Wu2004MeanValue.chosen_source_selected_cell_log_saving
+
+#check Wu2004MeanValue.selectedHighSource_le_sum_active_cells
+#print axioms Wu2004MeanValue.selectedHighSource_le_sum_active_cells
+
+#check Wu2004MeanValue.chosen_high_source_selected_prefix_log_saving
+#print axioms Wu2004MeanValue.chosen_high_source_selected_prefix_log_saving
+
+#check Wu2004MeanValue.chosen_high_source_prefix_max_log_saving
+#print axioms Wu2004MeanValue.chosen_high_source_prefix_max_log_saving

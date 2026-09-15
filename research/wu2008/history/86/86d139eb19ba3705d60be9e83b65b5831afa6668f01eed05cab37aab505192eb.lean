@@ -1,0 +1,6 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeCoefficientIntegralBounds
+
+#check Wu2008DoubleSieve.wuEffectiveCoefficient_uniform_signed_bounds
+#print axioms Wu2008DoubleSieve.wuEffectiveCoefficient_uniform_signed_bounds
+#check Wu2008DoubleSieve.wuEffectiveCoefficient_uniform_abs_le_eleven
+#print axioms Wu2008DoubleSieve.wuEffectiveCoefficient_uniform_abs_le_eleven

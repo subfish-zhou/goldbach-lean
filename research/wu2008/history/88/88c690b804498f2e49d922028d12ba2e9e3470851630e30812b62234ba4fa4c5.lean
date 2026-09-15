@@ -1,0 +1,10 @@
+import MathlibNt.Wu2008DoubleSieve.PrimeOrderedQuadratureBuchstab
+
+#check Wu2008DoubleSieve.primeOrdered_buchstab_lipschitz
+#print axioms Wu2008DoubleSieve.primeOrdered_buchstab_lipschitz
+#check Wu2008DoubleSieve.primeOrderedBuchstabWeight
+#print axioms Wu2008DoubleSieve.primeOrderedBuchstabWeight
+#check Wu2008DoubleSieve.primeOrdered_buchstab_weight
+#print axioms Wu2008DoubleSieve.primeOrdered_buchstab_weight
+#check Wu2008DoubleSieve.primeOrdered_buchstab_uniform
+#print axioms Wu2008DoubleSieve.primeOrdered_buchstab_uniform
