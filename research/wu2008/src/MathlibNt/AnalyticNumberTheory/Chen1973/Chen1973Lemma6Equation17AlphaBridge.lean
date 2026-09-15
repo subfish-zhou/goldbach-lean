@@ -27,6 +27,16 @@ open scoped BigOperators ArithmeticFunction Topology
 
 namespace AnalyticNumberTheory.LargeSieve
 
+/-- Conductors in a positive-level Chen block are greater than one. -/
+theorem chen1973Lemma6ConductorBlock_one_lt
+    {x L level d : ℕ} (hlevel : 1 ≤ level)
+    (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
+    1 < d := by
+  by_cases hzero : level = 0
+  · omega
+  · simp [chen1973Lemma6ConductorBlock, hzero, chen1973Lemma6DyadicShell] at hd
+    omega
+
 private theorem one_lt_of_mem_conductorBlock
     {x L level d : ℕ} (hlevel : 1 ≤ level)
     (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
