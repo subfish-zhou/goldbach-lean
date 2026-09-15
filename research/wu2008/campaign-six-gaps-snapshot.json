@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-09-15T21:56:34.334944+00:00",
-  "base_commit": "90bf5594a3ad1742dd2c2d1e29d2d270be6b51bb",
+  "snapshot_utc": "2026-09-15T22:08:23.558406+00:00",
+  "base_commit": "9dce516b027e4534e60a6bf47de9a96ff91c8782",
   "branch": "1.8938",
   "scope": "natural-language source proofs and all captured campaign Lean sources, including candidates",
   "full_theorem_proved": false,
@@ -8,9 +8,9 @@
   "lean_full_chain_complete": false,
   "full_rebuild": "stopped_by_user; not restarted for push",
   "snapshot_capture": "per-file immutable capture while non-overlapping workers continue",
-  "source_files": 172,
+  "source_files": 199,
   "mathematical_manuscripts": 15,
-  "files_matching_successful_local_compile_receipts": 166,
+  "files_matching_successful_local_compile_receipts": 167,
   "matching_receipts_are_not_final_parent_acceptance": true,
   "standard_logic_axioms_are_not_unproved_mathematical_premises": true,
   "files": [
@@ -29,13 +29,13 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/Audit.lean",
       "module": "Wu18938Campaign.M1.Confirmed.Audit",
-      "sha256": "b211146837ceabfd3742fd496e8629e7d516f327e34186a04073da0f171c3112",
-      "bytes": 23823,
+      "sha256": "747324e2eed7ab116cdb1149ef6130d8fb2b53034873f098ce2b8bd6b9708e4f",
+      "bytes": 24205,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
         "object_matches": true,
-        "log_sha256": "e762ca4962159f133b813b9b88629628344a3ed1c1545b786162074f74d219bc"
+        "log_sha256": "84cbe7ab88619223ff242d8679ae8808d6e27096cb7e6fe572ca8d36f950586e"
       }
     },
     {
@@ -399,6 +399,18 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairPacking.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairPacking",
+      "sha256": "3e59c69f80fbff8da90272f56d6a5b660effd20dea8977af90b0d0de5294d61c",
+      "bytes": 3615,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairSource.lean",
       "module": "Wu18938Campaign.M1.Confirmed.PairSource",
       "sha256": "4846e8ad146e0e87919e411f2cf07217c66146493d5f802a55973a1930d25f66",
@@ -461,8 +473,8 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/Root.lean",
       "module": "Wu18938Campaign.M1.Confirmed.Root",
-      "sha256": "0aa3137372d225b37548db65cc840606492ae25ad1ffb1a75b819fb98d99e15f",
-      "bytes": 1032,
+      "sha256": "3cf6020dc0178a2463a2d13af4835e00b465866a039ecf2355fd4313df6fcedf",
+      "bytes": 1080,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
@@ -1126,6 +1138,13 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/G2Slack.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.G2Slack",
+      "sha256": "e32aaaa67ebeca1e0666b04656ff1fcf7ba9d57b1344eb58cb6a64cc61c8bc45",
+      "bytes": 4664,
+      "receipt": null
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Ledger.lean",
       "module": "Wu18938Campaign.M3.Confirmed.Ledger",
       "sha256": "2a1013bd87a42f1f5af729f7d8c4251c1d9a24afa205ef11201e2ecc3021a25e",
@@ -1184,6 +1203,181 @@
         "object_matches": true,
         "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableBounds.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableBounds",
+      "sha256": "9d08ba716751a22be30fdef0e6766b7417df1e10199ef2d3171c5b4316d15ae5",
+      "bytes": 7670,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableCertificate.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableCertificate",
+      "sha256": "0549ddbed74e29f8603ef1dfa2ca1ffa747cbbc921752d847ce66250148f90ca",
+      "bytes": 2978,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow00.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow00",
+      "sha256": "423319b315af37526cda9463eadcc1f7ab0df38e446c1c70e708d44a70d40822",
+      "bytes": 32000,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow01.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow01",
+      "sha256": "7491b4c50ca8b122bb9a911b0341d6c2259f8c240e2c8d29df6576bfc9059ca3",
+      "bytes": 32014,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow02.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow02",
+      "sha256": "2049304b27e7a59cf87bbdca47089c6324d2eed564d54f04312d2793ae47b454",
+      "bytes": 31990,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow03.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow03",
+      "sha256": "a9be7677f4bf9e4e74c72086b58afdff46cd9e6c96befcd6a3e59a25d3fb413c",
+      "bytes": 32014,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow04.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow04",
+      "sha256": "dab132a76ac41d1f8f5f08281c5cfcd66eda5085d6d9e374bae0d926ae94720c",
+      "bytes": 31993,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow05.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow05",
+      "sha256": "aa92ab3c1ea8952868f030a107cdd603567eb4c85888c817c2d2bea396a264e5",
+      "bytes": 32009,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow06.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow06",
+      "sha256": "6b6d96baf787a9acc04d16cf2e8c230d6c7e9794a2056175e247bc3d17569b3f",
+      "bytes": 32021,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow07.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow07",
+      "sha256": "cbec79b8de3f92b5f5dff12ae46ddadd320ba517090b0646a6ec5c228094d647",
+      "bytes": 32013,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow08.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow08",
+      "sha256": "80fd17916b98a5210930a369396aa4f44a36b2a0ea90bf005dbeb9329d9269d9",
+      "bytes": 31924,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow09.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow09",
+      "sha256": "126470bcf5d5a161404676a522b1f9df1c10592068f8b1fde0a88afa6189f492",
+      "bytes": 31918,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow10.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow10",
+      "sha256": "7682b3ed8cfedbe42a55164b6820691cb83646a0ed8027aa05ed490e04bf87e2",
+      "bytes": 31918,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow11.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow11",
+      "sha256": "978e3e5bbc075dd24a506fcefa662ee620bde3e9cd569846107fba7178d95200",
+      "bytes": 32012,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow12.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow12",
+      "sha256": "ae2b330d3c35d7b541d606498303fb233e06a2c5971294c8dc277d8edf13f260",
+      "bytes": 31964,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow13.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow13",
+      "sha256": "b251226ad5df85e82df73a5fcba3f206ffa20984259c3b0b17d0f7b46110b68b",
+      "bytes": 31972,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow14.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow14",
+      "sha256": "a74b39f09538fbacfe14df6085c5820459cb5d332265f3fd5882145d2464898f",
+      "bytes": 33535,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow15.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow15",
+      "sha256": "489cfdffb8681b1ee678ea1d1198b2eded4ada413bd89556532abd247a5c5fd3",
+      "bytes": 33562,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow16.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow16",
+      "sha256": "2be4ea1eddbb7470b46806c183f90ada1df30186a7f31dc54ab28943d0d9034d",
+      "bytes": 31936,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow17.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow17",
+      "sha256": "67a80a7d0b6a42d10df82ff09c0a82475488c0c4c182c850575e6c4c20866676",
+      "bytes": 31899,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow18.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow18",
+      "sha256": "a9d22fef6d4ca5ea744e488965540cc37c7c502701fcf05f7e783c6fa4edcecf",
+      "bytes": 31867,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow19.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow19",
+      "sha256": "54b0bf0c767b9d8ff7ae2224a6474b002a14d0148bdd3e884742fd76c32926bf",
+      "bytes": 31835,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow20.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow20",
+      "sha256": "15743ee946a72c0ce6c5fb69aed396fd50725c37bad2df689987e66e33f0497d",
+      "bytes": 31807,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TableRow21.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.TableRow21",
+      "sha256": "645eaa1b647e4bb0a3e3d29fcfada768481c4078121e78ad762821ca2f3aec84",
+      "bytes": 33008,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Terminal06.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.Terminal06",
+      "sha256": "d6a9b3d1e8991a0165300b0a954dfc979fe63bf8c1666ccd968dd3a90e84120f",
+      "bytes": 3086,
+      "receipt": null
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/CountAudit.lean",

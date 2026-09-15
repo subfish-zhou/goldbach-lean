@@ -385,3 +385,9 @@ set_option pp.universes true
 #print axioms Wu18938Campaign.M1.Confirmed.Pair.cell_count
 #check @Wu18938Campaign.M1.Confirmed.Pair.cell_classical
 #print axioms Wu18938Campaign.M1.Confirmed.Pair.cell_classical
+#check @Wu18938Campaign.M1.Confirmed.Pair.term_mass_mono
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.term_mass_mono
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_child_mass
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_child_mass
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_relative_mass
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_relative_mass
