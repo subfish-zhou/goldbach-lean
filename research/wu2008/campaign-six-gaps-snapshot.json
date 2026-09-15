@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-09-15T23:27:15.531004+00:00",
-  "base_commit": "71c7d82510f1da8cd64eea732a97d06c647b26dd",
+  "snapshot_utc": "2026-09-15T23:40:22.422522+00:00",
+  "base_commit": "5b305e144ec500e36e765c8570e9e027b0dec0d6",
   "branch": "1.8938",
   "scope": "natural-language source proofs and all captured campaign Lean sources, including candidates",
   "full_theorem_proved": false,
@@ -8,9 +8,9 @@
   "lean_full_chain_complete": false,
   "full_rebuild": "stopped_by_user; not restarted for push",
   "snapshot_capture": "per-file immutable capture while non-overlapping workers continue",
-  "source_files": 236,
+  "source_files": 242,
   "mathematical_manuscripts": 15,
-  "files_matching_successful_local_compile_receipts": 229,
+  "files_matching_successful_local_compile_receipts": 235,
   "matching_receipts_are_not_final_parent_acceptance": true,
   "standard_logic_axioms_are_not_unproved_mathematical_premises": true,
   "files": [
@@ -603,6 +603,18 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairFullProfile.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairFullProfile",
+      "sha256": "8bf73fb931c05a4be71c50da884ea10bd4c2b7704779e14aac41a6a472b71468",
+      "bytes": 3277,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairGainGeometry.lean",
       "module": "Wu18938Campaign.M1.Confirmed.PairGainGeometry",
       "sha256": "1884495f18b5848db21c36643b31539abe12910dee38a4540b34adef43ba8815",
@@ -687,6 +699,30 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairProfile.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairProfile",
+      "sha256": "3789dd4b5217f40efc55aa94c7207acfab0cc8e3ce02e7409b310a3db7c9fd6d",
+      "bytes": 7510,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairProfileFamily.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairProfileFamily",
+      "sha256": "81be06d26ffff43d93008ec2f98298bd02b7fe055bd4f818e016bd33a51070b0",
+      "bytes": 5364,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairSeed.lean",
       "module": "Wu18938Campaign.M1.Confirmed.PairSeed",
       "sha256": "fca7833ef1276557fc4928504970b545a7dbddb899e32bcc52f60beb37d023c3",
@@ -721,6 +757,37 @@
         "object_matches": true,
         "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/ProfileGrid.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.ProfileGrid",
+      "sha256": "68be216ad8cd6bbfc3217a8a845eacd7baf13c426edbb28195338989a53659c1",
+      "bytes": 9436,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/ProfileOmega.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.ProfileOmega",
+      "sha256": "90952999414af73a82d887c4f91da5a1eafd5c8a8966303bb626d99382beb1e3",
+      "bytes": 4158,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/ProfileSecond.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.ProfileSecond",
+      "sha256": "54e81cd8ca47ba53bd7af4a27891420385934ee1d3c0dadc1aea1157f84351b8",
+      "bytes": 5196,
+      "receipt": null
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/Purification.lean",
@@ -1442,18 +1509,23 @@
       "module": "Wu18938Campaign.M3.Confirmed.ActualAssembly",
       "sha256": "efc9da58506d3cae938837a0778728e12f437f1eea9918c1cf0ba86fbb9b290b",
       "bytes": 6698,
-      "receipt": null
-    },
-    {
-      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Audit.lean",
-      "module": "Wu18938Campaign.M3.Confirmed.Audit",
-      "sha256": "18ca06307fedaf72e1e7d8a6c1c1dd42b2124257864d31ce51b14093519c38aa",
-      "bytes": 10110,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
         "object_matches": true,
-        "log_sha256": "d6ab6bd7b4ca19994ab520997eabeab6550c6997d8307d7171d7717f93d6f33b"
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Audit.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.Audit",
+      "sha256": "5a301ec225a8dbb6204cc121bfd13106c7a2c95a113bff8e779ccf18be525757",
+      "bytes": 14858,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "8b0883495b07eec35b288061e1db2e6d44e72476c9a4ad47400225e2e1f5fdcb"
       }
     },
     {
@@ -1483,8 +1555,8 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/ExistingClassical.lean",
       "module": "Wu18938Campaign.M3.Confirmed.ExistingClassical",
-      "sha256": "f64f1a1e4320ead23dbf45e36ca20750ec78b4f50a17868c84225e15ef205e62",
-      "bytes": 3223,
+      "sha256": "cd0b481247e5cc931907a2ee752c0017aebc4e87762cca2128650685b0105504",
+      "bytes": 4416,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
@@ -1579,8 +1651,8 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Root.lean",
       "module": "Wu18938Campaign.M3.Confirmed.Root",
-      "sha256": "7cc122da4677ad9f8e1f6e46f0a5d795f5193a04e1be2e0bc69966a418009c34",
-      "bytes": 413,
+      "sha256": "46eedb51f97ebc15a03650fe0c54b4545a40f1d94d32f3c86c53c62e98681788",
+      "bytes": 518,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,

@@ -51,6 +51,26 @@ theorem fifth_actual_count {ε : ℝ} (he : 0 < ε) :
       mul_div_assoc, mul_assoc] using hc N hN hEven
   exact hb.trans hcN
 
+theorem sixth_actual_count {ε : ℝ} (he : 0 < ε) :
+    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
+      ((3810749/1000000:ℝ)+47/481250-ε)*truncatedSixthMassScale N ≤
+        (truncatedSixthMass N ((N:ℝ)^truncatedSixthLowerAlpha)
+          ((N:ℝ)^truncatedSixthLowerBeta) ((N:ℝ)^truncatedSixthLowerSigma)
+          ((N:ℝ)^truncatedSixthLowerLambda) : ℝ) := by
+  obtain ⟨T,hT,hc⟩ := TruncatedSixthSmallDeltaGain.actual_count_lower he
+  refine ⟨T,hT,fun N hN hEven => ?_⟩
+  have hs : (3810749/1000000:ℝ) ≤ truncatedSixthLowerF6lin := sixth_main_lower
+  have hb : (3810749/1000000:ℝ)+47/481250-ε ≤
+      truncatedSixthLowerF6lin+47/481250-ε := by
+    linarith only [hs]
+  have hcN : (truncatedSixthLowerF6lin+47/481250-ε)*truncatedSixthMassScale N ≤
+      (truncatedSixthMass N ((N:ℝ)^truncatedSixthLowerAlpha)
+        ((N:ℝ)^truncatedSixthLowerBeta) ((N:ℝ)^truncatedSixthLowerSigma)
+        ((N:ℝ)^truncatedSixthLowerLambda) : ℝ) := by
+    simpa only [truncatedSixthMassScale, mul_div_assoc, mul_assoc] using hc N hN hEven
+  exact (mul_le_mul_of_nonneg_right hb
+    (truncatedSixthClosure_scale_nonneg (hT.trans hN))).trans hcN
+
 def conservativeClassicalLedger : ℝ :=
   conservativeLedger + ((1651382/1000000 - 1654808/1000000) +
     (3810749/1000000 - 3819092/1000000))/4

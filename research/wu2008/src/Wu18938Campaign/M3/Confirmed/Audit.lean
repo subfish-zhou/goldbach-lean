@@ -172,3 +172,69 @@ import Wu18938Campaign.M3.Confirmed.Root
 
 #check @Wu18938Campaign.M3.Confirmed.original_functions_sixth06_slack
 #print axioms Wu18938Campaign.M3.Confirmed.original_functions_sixth06_slack
+
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.logPolynomial
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.logPolynomial
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.kernelPolynomial
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.kernelPolynomial
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.innerPolynomial
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.innerPolynomial
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.inversePolynomial
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.inversePolynomial
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.outerPrimitive
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.outerPrimitive
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.log_polynomial_lower
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.log_polynomial_lower
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.kernel_lower
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.kernel_lower
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.inner_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.inner_derivative
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.inner_lower
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.inner_lower
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.inverse_bounds
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.inverse_bounds
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.outer_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.outer_derivative
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.recurrence_lower
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.recurrence_lower
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.second_main_lower
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.second_main_lower
+#check @Wu18938Campaign.M3.Confirmed.SecondClassical.second_actual_count
+#print axioms Wu18938Campaign.M3.Confirmed.SecondClassical.second_actual_count
+
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.sixth_exact_certificate_interval
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.sixth_exact_certificate_interval
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.sixth_main_lower
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.sixth_main_lower
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.fifth_exact_certificate_interval
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.fifth_exact_certificate_interval
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.fifth_main_lower
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.fifth_main_lower
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.fifth_actual_count
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.fifth_actual_count
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.sixth_actual_count
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.sixth_actual_count
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.conservativeClassicalLedger
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.conservativeClassicalLedger
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.conservative_classical_ledger_exact
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.conservative_classical_ledger_exact
+#check @Wu18938Campaign.M3.Confirmed.ExistingClassical.conservative_classical_ledger_unpaid
+#print axioms Wu18938Campaign.M3.Confirmed.ExistingClassical.conservative_classical_ledger_unpaid
+
+#check @Wu18938Campaign.M3.Confirmed.numericG2_eventual_second_count
+#print axioms Wu18938Campaign.M3.Confirmed.numericG2_eventual_second_count
+#check @Wu18938Campaign.M3.Confirmed.original_functions_sixth06_slack_C2_paid
+#print axioms Wu18938Campaign.M3.Confirmed.original_functions_sixth06_slack_C2_paid
+#check @Wu18938Campaign.M3.Confirmed.original_seventh_eighth_actual_upper
+#print axioms Wu18938Campaign.M3.Confirmed.original_seventh_eighth_actual_upper
+#check @Wu18938Campaign.M3.Confirmed.original_four_actual_upper
+#print axioms Wu18938Campaign.M3.Confirmed.original_four_actual_upper
+
+#check @Wu18938Campaign.M3.Confirmed.paidOriginalCoefficient
+#print axioms Wu18938Campaign.M3.Confirmed.paidOriginalCoefficient
+#check @Wu18938Campaign.M3.Confirmed.paid_original_coefficient_lower
+#print axioms Wu18938Campaign.M3.Confirmed.paid_original_coefficient_lower
+#check @Wu18938Campaign.M3.Confirmed.ordinary_count_from_remaining_improvements
+#print axioms Wu18938Campaign.M3.Confirmed.ordinary_count_from_remaining_improvements
+#check @Wu18938Campaign.M3.Confirmed.refined_1894_from_remaining_improvements
+#print axioms Wu18938Campaign.M3.Confirmed.refined_1894_from_remaining_improvements
