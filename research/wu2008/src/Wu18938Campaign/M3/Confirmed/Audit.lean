@@ -166,3 +166,9 @@ import Wu18938Campaign.M3.Confirmed.Root
 #print axioms Wu18938Campaign.M3.Confirmed.literal_sixth_coefficient_gt
 #check @Wu18938Campaign.M3.Confirmed.sixth_numeric_from_literal_transport
 #print axioms Wu18938Campaign.M3.Confirmed.sixth_numeric_from_literal_transport
+
+#check @Wu18938Campaign.M3.Confirmed.original_functions_sixth06
+#print axioms Wu18938Campaign.M3.Confirmed.original_functions_sixth06
+
+#check @Wu18938Campaign.M3.Confirmed.original_functions_sixth06_slack
+#print axioms Wu18938Campaign.M3.Confirmed.original_functions_sixth06_slack

@@ -8,6 +8,20 @@ namespace Wu18938Campaign.M1.Confirmed.Rebox
 open Wu2008DoubleSieve Finset Real
 open scoped Classical Interval
 
+theorem omega3_scaled {m i N : ℕ} {η δ Δ s t : ℝ} {V : Fin i → ℝ}
+    (hb : RoughBox m η δ N i Δ V) (hN : 4 ≤ N) (hη : 0 < η)
+    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 2 ≤ s) (hst : s ≤ t) (ht : t ≤ 10) :
+    (2 / (1 - 2 * δ)) *
+      HighSourcePayload.theta N δ Δ V (fun d => omega3XIntegral s t (omega3XPhi N d δ)) ≤
+      2 * (omega3XIntegralEnvelope s t / (1 - 2 * δ)) *
+        boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
+  calc
+    _ ≤ 2 / (1 - 2 * δ) * (omega3XIntegralEnvelope s t *
+        boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V)) :=
+      mul_le_mul_of_nonneg_left (omega3_envelope hb hN hη hδ hs hst ht)
+        (div_nonneg (by norm_num) (by linarith))
+    _ = _ := by ring
+
 theorem first_classical_update_bounded (m : ℕ) {η δ ε : ℝ}
     (hη : 0 < η) (hδ : 0 < δ) (hδhi : δ < 1 / 2) (he : 0 < ε) :
     ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
@@ -24,9 +38,7 @@ theorem first_classical_update_bounded (m : ℕ) {η δ ε : ℝ}
   have ha := h0 N (by omega) heven i Δ V hb s t hs hst (by linarith)
   have hb' := h1 N (by omega) heven i Δ V hb s t hs hst ht ht5 hratio
   have hc := h2 N (by omega) heven i Δ V hb t (by linarith) (by linarith)
-  have henv := mul_le_mul_of_nonneg_left
-    (omega3_envelope hb (by omega) hη hδ hs hst (by linarith))
-    (show 0 ≤ 2 / (1 - 2 * δ) from div_nonneg (by norm_num) (by linarith))
+  have henv := omega3_scaled hb (by omega) hη hδ hδhi hs hst (by linarith)
   unfold firstFunctionalGainPsi
   nlinarith only [ha,hb',hc,henv]
 
@@ -47,10 +59,8 @@ theorem first_seed_update (m : ℕ) {η δ ε : ℝ}
     (by norm_num) (by norm_num) (by norm_num)
   have hb' := h1 N (by omega) heven i Δ V hb
   have hc := h2 N (by omega) heven i Δ V hb (9 / 2) (by norm_num) (by norm_num)
-  have henv := mul_le_mul_of_nonneg_left
-    (omega3_envelope hb (s := 3) (t := 9 / 2) (by omega) hη hδ
-      (by norm_num) (by norm_num) (by norm_num))
-    (show 0 ≤ 2 / (1 - 2 * δ) from div_nonneg (by norm_num) (by linarith))
+  have henv := omega3_scaled hb (s := 3) (t := 9 / 2) (by omega) hη hδ (by linarith)
+    (by norm_num) (by norm_num) (by norm_num)
   unfold firstFunctionalGainPsi
   norm_num only [show (1 : ℝ) - 1 / 3 = 2 / 3 by norm_num,
     show (1 : ℝ) - 1 / (9 / 2) = 7 / 9 by norm_num]

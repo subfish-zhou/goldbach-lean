@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-09-15T22:56:31.099929+00:00",
-  "base_commit": "9103e87350bfaf2cf8042537f26ca1e595ee49e8",
+  "snapshot_utc": "2026-09-15T23:05:32.466878+00:00",
+  "base_commit": "9d6159fe8ab202377ea6d7666cea6a0997b74b31",
   "branch": "1.8938",
   "scope": "natural-language source proofs and all captured campaign Lean sources, including candidates",
   "full_theorem_proved": false,
@@ -8,9 +8,9 @@
   "lean_full_chain_complete": false,
   "full_rebuild": "stopped_by_user; not restarted for push",
   "snapshot_capture": "per-file immutable capture while non-overlapping workers continue",
-  "source_files": 225,
+  "source_files": 228,
   "mathematical_manuscripts": 15,
-  "files_matching_successful_local_compile_receipts": 214,
+  "files_matching_successful_local_compile_receipts": 220,
   "matching_receipts_are_not_final_parent_acceptance": true,
   "standard_logic_axioms_are_not_unproved_mathematical_premises": true,
   "files": [
@@ -115,7 +115,12 @@
       "module": "Wu18938Campaign.M1.Confirmed.ClassicalBounded",
       "sha256": "2578804d61d937a482b65d60e9cc58de715a57b9da1914e9b3ddf0cd5c3dbc58",
       "bytes": 3712,
-      "receipt": null
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/ClassicalExtended.lean",
@@ -204,9 +209,14 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FirstFiniteUpdate.lean",
       "module": "Wu18938Campaign.M1.Confirmed.FirstFiniteUpdate",
-      "sha256": "295c218832eed766f2e110311ac47451b0b231679ad9bad1f4b72c849e1390f0",
-      "bytes": 3177,
-      "receipt": null
+      "sha256": "d5b5d85db82c84f41fa407bf74f78061931d3042a0b9394919a23c37782e1166",
+      "bytes": 3755,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FirstFunctional.lean",
@@ -555,6 +565,32 @@
         "object_matches": true,
         "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairFinitePacking.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairFinitePacking",
+      "sha256": "95dae65d1dae1a568fc6c9dfd9629843739edf696a11ecfae89911f344366f28",
+      "bytes": 6286,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairGainGeometry.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairGainGeometry",
+      "sha256": "1884495f18b5848db21c36643b31539abe12910dee38a4540b34adef43ba8815",
+      "bytes": 11142,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairGainMass.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairGainMass",
+      "sha256": "2c2b6f19b09c160d6c689385568a0a6f4914773940606586c43bd56f97e3c091",
+      "bytes": 6783,
+      "receipt": null
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairGeometry.lean",
@@ -1358,13 +1394,13 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Audit.lean",
       "module": "Wu18938Campaign.M3.Confirmed.Audit",
-      "sha256": "6659f7521d3d27131cb9fb6799b07848845a86d8cc596ee728c6570e15daeb96",
-      "bytes": 9828,
+      "sha256": "18ca06307fedaf72e1e7d8a6c1c1dd42b2124257864d31ce51b14093519c38aa",
+      "bytes": 10110,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
         "object_matches": true,
-        "log_sha256": "09c6be5d197f48dfa41e3ef2723fea16797e946218c73332ffee43b9eb859b0c"
+        "log_sha256": "d6ab6bd7b4ca19994ab520997eabeab6550c6997d8307d7171d7717f93d6f33b"
       }
     },
     {
@@ -1384,7 +1420,12 @@
       "module": "Wu18938Campaign.M3.Confirmed.DirectAudit",
       "sha256": "a883085bd720ab45e916af645055b7532438063d4835ac9a63df5a74305bd699",
       "bytes": 331,
-      "receipt": null
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e006f61a521b6c0f0b2898340eb9a997bcf3a9ab9043447a6207dcce44481b6f"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FiniteMother.lean",
@@ -1461,8 +1502,8 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Root.lean",
       "module": "Wu18938Campaign.M3.Confirmed.Root",
-      "sha256": "fcad488d213afed87f2068fe0a60c0c8b0206c890792b3297b343660f3d74fbe",
-      "bytes": 363,
+      "sha256": "7cc122da4677ad9f8e1f6e46f0a5d795f5193a04e1be2e0bc69966a418009c34",
+      "bytes": 413,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
@@ -1787,14 +1828,24 @@
       "module": "Wu18938Campaign.M3.Confirmed.Terminal06",
       "sha256": "3d3830a88af531769c4a64020e59a1dc704b17e882ff371f5a473e0f74ffd8c1",
       "bytes": 1602,
-      "receipt": null
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/TerminalSlack.lean",
       "module": "Wu18938Campaign.M3.Confirmed.TerminalSlack",
       "sha256": "379eca36ac8281fec61e56ea134aea0e1430459bc46ff3f452ee8b7be9b37b60",
       "bytes": 1580,
-      "receipt": null
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/CountAudit.lean",
