@@ -36375,7 +36375,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17AlphaBridge",
-    "source_sha256": "d05e6cd7d1771a0f6d6f7ce468331d0116afb46eeb491796cc654e1d50491f5f",
+    "source_sha256": "207d0298725fa1e4be5047538f153c737edd34b9af68a8c85e3069f4c95ad5d0",
     "object_sha256": "3614619502af3ca37aa1714afe7fbb660537e1a78c9f14b9c2cc8f1dc8abf963",
     "imports": [
       "Init",
@@ -36387,7 +36387,9 @@
       "Mathlib.Tactic"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "d05e6cd7d1771a0f6d6f7ce468331d0116afb46eeb491796cc654e1d50491f5f",
+    "integration_adaptation": "Retain and explicitly reference h\u03c3upper and h\u03c7, remove unused simp arguments, use let for proof-local instance; statements and strict checks unchanged."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeSeries",
