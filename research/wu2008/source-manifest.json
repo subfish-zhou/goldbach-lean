@@ -30258,7 +30258,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz",
-    "source_sha256": "702e625d19af3e9f0e43ea8aa518f6621e9d41e527c61c9bd28bcfff0d403577",
+    "source_sha256": "50ab73105988c4e649528ef665d009457ff0b9fa5dca8a6a7b794b69ed03b803",
     "object_sha256": "e14e8f4db74ebbef061b3a737588d71f6be3e90e772bd1625d29b1e20a77effd",
     "imports": [
       "Init",
@@ -30268,7 +30268,9 @@
       "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "702e625d19af3e9f0e43ea8aa518f6621e9d41e527c61c9bd28bcfff0d403577",
+    "integration_adaptation": "Remove no-op push_cast; explicitly reference retained smoothness hypothesis without altering named binder or theorem statement; strict warnings retained."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticTatuzawaMultiplicativeValueTransfer",

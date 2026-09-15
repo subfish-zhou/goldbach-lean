@@ -196,7 +196,7 @@ theorem eventually_nonquadraticPointwiseSW_leftEdge
         dsimp only [z]
         ring
       _ ≤ L ^ (-(E : ℝ)) :=
-        Real.rpow_le_rpow_of_exponent_le hL1 (by dsimp only [M]; push_cast; linarith)
+        Real.rpow_le_rpow_of_exponent_le hL1 (by dsimp only [M]; linarith)
       _ = (Real.log (N : ℝ) ^ E)⁻¹ := by
         rw [Real.rpow_neg hLpos.le, Real.rpow_natCast]
   rw [dirichletLTwistedSmoothedConductorLogFinalLeft,
@@ -258,6 +258,7 @@ theorem exists_uniform_twistedSmoothedPsiClose
       (X : ℝ), 3 < X → ∀ (ε : ℝ), 0 < ε → ε < 1 → 2 < X * ε →
       ‖DirichletCharacter.twistedSmoothedPsi χ SmoothingF ε X -
         lambdaCharacterPrefix ⌊X⌋₊ q χ‖ ≤ C * ε * X * Real.log X := by
+  have _ := diffSmoothingF
   obtain ⟨c₁, c₁_pos, c₁_eq, hc₁⟩ :=
     Smooth1Properties_below suppSmoothingF mass_one
   obtain ⟨c₂, c₂_pos, c₂_eq, hc₂⟩ :=
