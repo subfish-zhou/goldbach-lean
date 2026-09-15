@@ -31412,7 +31412,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserBoundarySourceSuccLayer",
-    "source_sha256": "ca3db043668395c423a8278137bed5a8e32ccf80820448dcc23fe9640a54b17f",
+    "source_sha256": "479101e9fd3a11f2ad18d834fd3a6e011054a3d9b99a8e6c2f2601f2227c9e45",
     "object_sha256": "b1565c47aecafbea33e28eb7b4b3108ea5ce24344e99fbf13edd7364723cb737",
     "imports": [
       "Init",
@@ -31420,7 +31420,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserFiniteToContinuousProducer"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "ca3db043668395c423a8278137bed5a8e32ccf80820448dcc23fe9640a54b17f",
+    "integration_adaptation": "Explicitly reference retained hs and remove unnecessary final tactic sequence focus in two continuity proofs; mathematical statements and strict settings unchanged."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosMinpoly",
