@@ -1,5 +1,5 @@
 import Wu18938Campaign.M3.Confirmed.G2
-import WSrcFourEnclosureFine
+import Wu08OriginalFourWeights
 
 noncomputable section
 
@@ -16,6 +16,7 @@ theorem signed_original_functions_lower {δ G3 G4 G5 G6 : ℝ}
     (hd : 0 < δ) (hh : δ ≤ 1 / 100)
     (hh42 : (6440 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (21 / 5))
     (hH32 : (52233 / 10000000 : ℝ) ≤ wuImprovementLimit true δ (16 / 5))
+    (hpair : original10 + original11 < (851 / 1250 : ℝ))
     (hC1 : (14900897 / 1000000 : ℝ) ≤ firstMain)
     (hC2 : (9103015 / 1000000 : ℝ) ≤ secondMain)
     (hC3 : thirdMain ≤ (23652925 / 1000000 : ℝ))
@@ -32,7 +33,6 @@ theorem signed_original_functions_lower {δ G3 G4 G5 G6 : ℝ}
     originalNumericLedger < signedOriginalFunctions δ G3 G4 G5 G6 ∧
       (899 / 1000 : ℝ) < signedOriginalFunctions δ G3 G4 G5 G6 := by
   have hg2 := correctedG2_actual_node hd hh hh42 hH32
-  have hpair := WuSource.SrcFourEnclosure.original_pair_upper
   have hledger : originalNumericLedger < signedOriginalFunctions δ G3 G4 G5 G6 := by
     unfold originalNumericLedger signedOriginalFunctions
     linarith only [hg2, hpair, hC1, hC2, hC3, hC4, hC5, hC6,
