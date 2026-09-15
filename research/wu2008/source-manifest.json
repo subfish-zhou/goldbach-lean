@@ -33891,24 +33891,32 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrefixMaximal",
-    "source_sha256": "8292a6b486e4abc19eb69f2d3e607a17d0021bf47ee3c31e2eb359af46cf8e6f",
+    "source_sha256": "943116a30472669d95c351b8ff3c40d16d27a7917d0dc59045095b70f8615e8c",
     "object_sha256": "180a17d1f37c8d6cc8cb373bda9b8e032badb92f0e4c370bd18e5e3045c12591",
     "imports": [
       "Init",
       "Init",
-      "MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport"
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport",
+      "Mathlib.Analysis.InnerProductSpace.PiL2"
     ],
     "matching_source_variants": 1,
     "source_binding": "matching_object_imports_rebuild_required",
     "recovered_source_sha256": "09bbeb2161e74dba323c2bc41ebbcc93c15771f3aa1a406b93cd80e0f3c6a7c4",
-    "integration_adaptation": "Extract verbatim primitiveCharacterPrefixMaxSquare_nonneg from release PrefixMaximal for later consumers; no changes to existing definitions or theorem statements.",
+    "integration_adaptation": "Extract verbatim primitiveCharacterPrefixMaxSquare_nonneg from release PrefixMaximal for later consumers; no changes to existing definitions or theorem statements. Extract verbatim finiteComplexCauchy with its PiL2 import from the same release source; preserve exact coefficient energy, no norm-sum triangle replacement.",
     "added_proof_source_sha256": "36951d02a566fc5fbbf9bb0ac81702d2d1bbf1e6dbc8aee843461ac72f32ab67",
     "added_proof_fragment_sha256": "ea3dde78e10841ede9355c61541b1cbdd4293046ce52f4149ecf915bd458b8c9",
     "old_object_interface_check": {
       "nonprivate_constants_checked": 14,
       "missing_or_type_or_definition_differences": 0,
       "scope": "old nonprivate names and types, definition values; added proved theorem is separately recorded, not a full dependency audit"
-    }
+    },
+    "original_imports": [
+      "Init",
+      "Init",
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport"
+    ],
+    "added_cauchy_source_sha256": "36951d02a566fc5fbbf9bb0ac81702d2d1bbf1e6dbc8aee843461ac72f32ab67",
+    "added_cauchy_fragment_sha256": "ca8aa98d002c9fb336855316b3e4a1f4caa06a5c59074d3474cef94cfeb79f50"
   },
   {
     "module": "MixedSixthSharp",

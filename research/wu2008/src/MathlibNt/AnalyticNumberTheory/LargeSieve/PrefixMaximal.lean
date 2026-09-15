@@ -1,6 +1,7 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
  # Prefix-maximal weighted primitive-character large sieve
@@ -68,6 +69,37 @@ theorem norm_finset_sum_sq_le_card_mul_sum_norm_sq
       Finset.sum_mul_sq_le_sq_mul_sq s (fun i => ‖z i‖) (fun _ => 1)
     _ = (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by
       simp [mul_comm]
+
+open scoped ComplexConjugate in
+/-- Exact finite complex Cauchy--Schwarz, with no intervening `norm_sum_le`. -/
+theorem finiteComplexCauchy
+    {ι : Type*} [DecidableEq ι] (s : Finset ι) (a b : ι → ℂ) :
+    ‖∑ i ∈ s, a i * b i‖ ^ 2 ≤
+      (∑ i ∈ s, ‖a i‖ ^ 2) * (∑ i ∈ s, ‖b i‖ ^ 2) := by
+  let x : EuclideanSpace ℂ ↥s := WithLp.toLp 2 (fun i => conj (a i.1))
+  let y : EuclideanSpace ℂ ↥s := WithLp.toLp 2 (fun i => b i.1)
+  have hi : inner ℂ x y = ∑ i ∈ s, a i * b i := by
+    rw [PiLp.inner_apply]
+    simp only [x, y, RCLike.inner_apply]
+    rw [Finset.sum_subtype s (fun i => by rfl)]
+    apply Finset.sum_congr rfl
+    intro i hi
+    simp
+    ring
+  have hx : ‖x‖ ^ 2 = ∑ i ∈ s, ‖a i‖ ^ 2 := by
+    rw [EuclideanSpace.norm_sq_eq]
+    change (∑ i : ↥s, ‖conj (a i.1)‖ ^ 2) = _
+    simp only [Complex.norm_conj]
+    rw [Finset.sum_subtype s (fun i => by rfl)]
+  have hy : ‖y‖ ^ 2 = ∑ i ∈ s, ‖b i‖ ^ 2 := by
+    rw [EuclideanSpace.norm_sq_eq]
+    change (∑ i : ↥s, ‖b i.1‖ ^ 2) = _
+    rw [Finset.sum_subtype s (fun i => by rfl)]
+  have h := norm_inner_le_norm (𝕜 := ℂ) x y
+  rw [hi] at h
+  have hsq := pow_le_pow_left₀ (norm_nonneg (∑ i ∈ s, a i * b i)) h 2
+  rw [mul_pow, hx, hy] at hsq
+  exact hsq
 
 /-- Prefix square for one primitive character. -/
 def primitiveCharacterPrefixSquare (b : ℤ → ℂ) (M : ℤ) (y q : ℕ)
