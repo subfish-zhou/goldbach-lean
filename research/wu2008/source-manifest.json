@@ -28872,7 +28872,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload",
-    "source_sha256": "f58b19a0db9d0676fe0be498a7ebacdb6bd24d16912a0266c35af3dce214d042",
+    "source_sha256": "8872e77121026b3651cf4a53415bafcb32de3183c8468947f684fdc607c34a16",
     "object_sha256": "82159e73f3e02ed68ae6bb699e787d5730ed22e27f6abcedc01c9d799ce413f3",
     "imports": [
       "Init",
@@ -28881,7 +28881,9 @@
       "MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "f58b19a0db9d0676fe0be498a7ebacdb6bd24d16912a0266c35af3dce214d042",
+    "integration_adaptation": "Replace unnecessary sequence focus after interval_cases by sequential proof syntax; statements and definitions unchanged, strict warnings retained."
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosPrimeWeil",
