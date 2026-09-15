@@ -4,7 +4,7 @@
 
 ## 当前检查点
 
-自然语言数学源稿见 [`proofs/README.md`](proofs/README.md)，逐稿状态与哈希见 [`proofs/manifest.json`](proofs/manifest.json)。有限母式补正、数值账及后半桥分别记录；第六项完整候选仍须数学验收，不能以自报完成取代核验。已确认的部分在 `src/Wu18938Campaign/M3/Confirmed/` 接 Lean，其余新旧候选也作为源码快照保留。
+自然语言数学源稿见 [`proofs/README.md`](proofs/README.md)，逐稿状态与哈希见 [`proofs/manifest.json`](proofs/manifest.json)。有限母式补正、第六项解析运输、固定表向量证书、数值账及后半桥已合成并通过自然语言数学核对，具体引用口径及排除范围见证明入口。原候选较强数值端点仍未宣称；Lean全链尚未完成。已确认的部分在 `src/Wu18938Campaign/M3/Confirmed/` 接 Lean，其余新旧候选也作为源码快照保留。
 
 自然语言核验与已确认部分的 Lean 接合并行。`campaign-six-gaps-snapshot.json` 按本次捕获的源码核对局部编译回执；有回执不等于全局证明完成。按实质进展增量提交并推送，不等待全量重建。下文早期数学范围是历史阶段记录，不覆盖此检查点的逐稿状态。
 

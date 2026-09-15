@@ -1,4 +1,4 @@
-> **Checkpoint status:** assembled natural-language proof under explicit cited inputs; final cross-check pending; not Lean closure.
+> **Checkpoint status:** natural-language route accepted under explicit classical/numerical citations, with documented intermediate corrections; Lean closure incomplete.
 > 本文保存该阶段的数学正文；文中旧的完成声明不覆盖本检查点状态。引用输入、候选证明和已确认结果分别记账。
 
 # 沿原论文补全的1.894数学证明：总装
@@ -22,7 +22,7 @@ alpha=100/1327、beta=25/206、sigma=1/2-3alpha、lambda=1/2-2alpha。
 这不声称原full-U6字面Lemma2.2已证；此明示补正保留作者最终全部C6和21格G6积分支持，原移动第九门与负四重域不变。
 
 ## 3. 各实际计数的解析输入
-采用原Wu08 Propositions4.1、4.2、4.4及其Wu04引用，按匹配的计数对象、原权类及共同精度，有
+U1、U2的直接出处是Wu08(5.2)所引的公式(4.2)，不是双标签Proposition4.2；U5才使用后一个命题。其余按原Propositions4.1、4.4及Wu04引用，在匹配计数对象、原权类和共同精度下，有
 U1>=(C1-o(1))Theta，U2>=(C2+G2-o(1))Theta，
 U3<=(C3-G3+o(1))Theta，U4<=(C4-G4+o(1))Theta，
 U5>=(C5+G5-o(1))Theta。
@@ -49,7 +49,7 @@ K6 >= (3879092/1000000-epsilon)Theta。
 保留其他原经典项与改善项数值方向，代入第2节有限式并除以4，所得有号系数严格超过
 c=179816383/200000000。
 精确地c-899/1000=16383/200000000>0。
-令d=c-899/1000。先把有限个解析误差按原有号系数统一配到总误差小于d*Theta；再扩大共同N阈值，使两种幂次异常总误差也小于d*Theta。于是除以4后的总损失小于d/2，从而
+令d=c-899/1000。以下误差配额全部位于4D一侧、除以4之前。先把有限个解析误差按原有号系数统一配到总误差小于d*Theta；再扩大共同N阈值，使两种幂次异常总误差也小于d*Theta。于是除以4后的总损失小于d/2，从而
 D(N) >= (899/1000+d/2)Theta(N) > (899/1000)Theta(N)
 对全部充分大偶数N成立。
 这里没有用固定正损失冒充可任意小误差：表向量降低的差额已进入c，只有真正可任意小的解析误差留待上述阈值选择。

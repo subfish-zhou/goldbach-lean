@@ -11,7 +11,7 @@
 3. [第六项解析候选](M3/PAPER-SIXTH-NUMERIC-TARGET.md)须与[数学补充](SIXTH-ANALYTIC-SUPPLEMENT.md)共同使用；原较强数值端点未获确认，改用[固定表向量严格证书](TABLE-GAIN-CERTIFICATE.md)并明确支付差额。
 4. [到1.894的后半桥](M3/PROOF.md)：在准确引用的Wu计数定理及经典输入下已核对。
 5. [第九项上筛引用补正](NINTH-SIEVE-CORRECTION.md)。
-6. [自然语言总装稿](PAPER-ROUTE-ASSEMBLY.md)：沿原方法、明确列出经典及数值引用；总装终审中，不是Lean全链完成。
+6. [自然语言总装稿](PAPER-ROUTE-ASSEMBLY.md)：沿原方法、明确列出经典及数值引用；自然语言总装已通过核对，限于明确列出的引用口径；不是Lean全链完成。
 
 证书脚本与固定输入见 `certificates/`，只使用Python标准库，生成与证书校验均已实跑。
 

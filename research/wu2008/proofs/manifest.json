@@ -1,8 +1,10 @@
 {
-  "checkpoint_utc": "2026-09-15T20:05:06.905918+00:00",
-  "base_commit": "d8de89bfbe84607522ec9ee9a69bff25be84a933",
+  "checkpoint_utc": "2026-09-15T20:17:28.688724+00:00",
+  "base_commit": "5c25991fc78c03ec1789fe048a679e7695e1a3ce",
   "complete_theorem_accepted": false,
-  "mathematical_manuscripts": 13,
+  "natural_language_route_accepted": true,
+  "lean_full_chain_complete": false,
+  "mathematical_manuscripts": 14,
   "files": [
     {
       "file": "research/wu2008/proofs/M1/PROOF.md",
@@ -56,22 +58,29 @@
     {
       "file": "research/wu2008/proofs/SIXTH-ANALYTIC-SUPPLEMENT.md",
       "status": "reviewed mathematical supplements: actual transport to the fixed table vector",
-      "sha256": "4f8668d982dc525ac157dc566794870fb9918261e271bb0ab481dbef5da3e914",
-      "original_manuscript_sha256": "08b9f87a92fa3a5a3ffbcb8dda01e0bb9c0e387016aada5b6869b1d60d744c3b",
+      "sha256": "8bc959d509bb3e5a989a4619850d509d5ce214c3ed272dc9fd147110a1179f37",
+      "original_manuscript_sha256": "edc36c7bca0f19bad8be1ff9e0e296071cd876f254cf7917c1bf98b957826b66",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
     {
       "file": "research/wu2008/proofs/TABLE-GAIN-CERTIFICATE.md",
       "status": "directed rational certificate for the original fixed table gain; generator and verifier passed",
-      "sha256": "d84cadfef9dfedd8bddef352a644696d0a929046f9b40dba0947a7aceccb580f",
-      "original_manuscript_sha256": "f66cf0798115b9c16ccdbfc1339ddea779c3b17ebaf0aac7da8f0db80bbea346",
+      "sha256": "0b27c48d6a6ed5d2c892e1722965c0db03da85d7d300260520cf94b4fd324389",
+      "original_manuscript_sha256": "384bef181ada860d2b0558d4777554ce14baa9fbaf261346584b40a9fe4f094e",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
     {
       "file": "research/wu2008/proofs/PAPER-ROUTE-ASSEMBLY.md",
-      "status": "assembled natural-language proof under explicit cited inputs; final cross-check pending; not Lean closure",
-      "sha256": "5313ab8422802f88cdb5db9cb09ab98beff03cc4abb273d3ea290ecac1422aa0",
-      "original_manuscript_sha256": "ac3b4014ac04fe19c3b7f54f90a2826572e2cf110fc1314d1d20c731632a8390",
+      "status": "natural-language route accepted under explicit classical/numerical citations, with documented intermediate corrections; Lean closure incomplete",
+      "sha256": "fa7f48c7c8fcbf6c41504e47b2335314745901e2cfdf596c7b2055c852fcf662",
+      "original_manuscript_sha256": "5d9a8f4f356811a6451cd61104acfba169b575e56cba661bfffbb39df5276cc4",
+      "publication_edit": "status header and non-mathematical path/tool-label sanitization"
+    },
+    {
+      "file": "research/wu2008/proofs/COMPLETION-STATUS.md",
+      "status": "accepted mathematical completion scope and explicit exclusions",
+      "sha256": "721663cbcbde6a7c7bfe809e5b9d8c58aff7cc3724c00827715fafaecfb72527",
+      "original_manuscript_sha256": "78844660128244a8f355a16acfa733ce6202176435c31348b90a22d1c9ffd941",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
     {
