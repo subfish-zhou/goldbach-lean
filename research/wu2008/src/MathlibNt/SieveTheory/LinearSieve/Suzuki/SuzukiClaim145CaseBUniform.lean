@@ -169,8 +169,7 @@ theorem claim145_caseB_uniform_in_S
     have : 0 < Real.exp (max M (max (Real.exp r0) C_q0)) := Real.exp_pos _
     exact this.trans_le (le_max_left _ _)
   refine ⟨C1min, 1, hC1min_pos, zero_lt_one, ?_⟩
-  intro S
-  intro C1 K N D s hC1min_C1 hK hlocal hD hs hC1_K_Theta hsigma
+  intro S C1 K N D s hC1min_C1 hK hlocal hD hs hC1_K_Theta hsigma
   have hDreal : (2 : ℝ) ≤ D := by exact_mod_cast hD
   have hD1 : 1 < D := by omega
   have hKpos : 0 < K := by linarith

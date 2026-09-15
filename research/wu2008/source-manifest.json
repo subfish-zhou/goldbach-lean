@@ -18662,7 +18662,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform",
-    "source_sha256": "f89c77f7307475371d02539eb013badcd2f6b8562811a4d26c499a570c7b42f0",
+    "source_sha256": "3ab2875b0ff8a4d6f568da72516fe334bc324f5223736e1c17470205f84abe5c",
     "object_sha256": "0de4c25cf0c85bcfdc73439ed1fd39cc6354d5a99abe8e769d331cddb96e1df4",
     "imports": [
       "Init",
@@ -18673,7 +18673,9 @@
       "Mathlib.Analysis.SpecialFunctions.Pow.Real"
     ],
     "matching_source_variants": 2,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "f89c77f7307475371d02539eb013badcd2f6b8562811a4d26c499a570c7b42f0",
+    "integration_adaptation": "Merge adjacent intro tactics as required by strict linter; all binders, theorem conditions and constants retained."
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.Gamma5ClassicalUpper",
