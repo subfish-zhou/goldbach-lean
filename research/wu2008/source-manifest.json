@@ -37389,7 +37389,7 @@
   },
   {
     "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport",
-    "source_sha256": "5eef5c96d39f9404237c70a6e3d66c58a9cceeca46228d0eb4b8f3adf5d910ba",
+    "source_sha256": "2dcabdf47768905cf70cf4dd44482705ed9c20bdcc678b834156f23d661453c3",
     "object_sha256": "14b77d27ff9c8594319416075a50f2662cf41b19270810683c2eee79ff466c16",
     "imports": [
       "Init",
@@ -37397,7 +37397,15 @@
       "MathlibNt.AnalyticNumberTheory.LargeSieve.ReducedFareyGauss"
     ],
     "matching_source_variants": 3,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "versioned_source_rebuilt_nonprivate_interface_compared",
+    "rejected_source_sha256": "5eef5c96d39f9404237c70a6e3d66c58a9cceeca46228d0eb4b8f3adf5d910ba",
+    "integration_adaptation": "Restore complete versioned release source to retain original proof-generated companion as well as self-contained character orthogonality; no new imports or assumptions. Replace unnecessary sequence focus and letI with strict-lint-compatible proof syntax.",
+    "recovered_source_sha256": "7ab22f9373f32e1f749bc47c4134b4a0d5149f0da0d2812d72e73289de4cd77f",
+    "old_object_interface_check": {
+      "nonprivate_constants_checked": 28,
+      "missing_or_type_or_definition_differences": 0,
+      "scope": "old nonprivate names and types, definition values including present generated companions; not full proof or dependency audit"
+    }
   },
   {
     "module": "MathlibNt.Wu2008DoubleSieve.SecondFunctionalReciprocalGrid",

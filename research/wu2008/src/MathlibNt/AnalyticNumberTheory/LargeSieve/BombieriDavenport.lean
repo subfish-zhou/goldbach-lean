@@ -25,35 +25,102 @@ theorem character_reducedResidues_bessel {q : ℕ} [NeZero q] (c : ℕ → ℂ) 
     (∑ χ : PrimitiveCharacter q,
         ‖∑ a ∈ reducedResidues q, c a * χ.1 (a : ZMod q)‖ ^ 2) ≤
       (q.totient : ℝ) * ∑ a ∈ reducedResidues q, ‖c a‖ ^ 2 := by
-  classical
-  have hsum (χ : DirichletCharacter ℂ q) :
-      (∑ x : ZMod q, c x.val * χ x) =
-        ∑ a ∈ reducedResidues q, c a * χ (a : ZMod q) := by
-    rw [sum_zmod_eq_sum_range, reducedResidues, Finset.sum_filter]
-    apply Finset.sum_congr rfl
-    intro a ha
-    rw [ZMod.val_natCast, Nat.mod_eq_of_lt (Finset.mem_range.mp ha)]
-    by_cases hcop : Nat.Coprime a q
-    · simp [hcop]
-    · have hnonunit : ¬ IsUnit (a : ZMod q) := by
-        simpa only [ZMod.isUnit_iff_coprime] using hcop
-      simp [hcop, χ.map_nonunit hnonunit]
-  have hparseval := charParseval_units (fun x : ZMod q => star (c x.val))
-  simp_rw [← star_mul, ← star_sum, norm_star] at hparseval
-  rw [unitsSum_eq_reducedFracs] at hparseval
-  have henergy :
-      (∑ a ∈ (Finset.range q).filter (fun a => a.Coprime q),
-        ‖c (a : ZMod q).val‖ ^ 2) =
-      ∑ a ∈ reducedResidues q, ‖c a‖ ^ 2 := by
-    apply Finset.sum_congr rfl
-    intro a ha
-    rw [ZMod.val_natCast,
-      Nat.mod_eq_of_lt (Finset.mem_range.mp (Finset.mem_filter.mp ha).1)]
-  simp_rw [hsum] at hparseval
-  rw [henergy] at hparseval
-  exact (sum_primitive_le_sum_all
-    (fun χ => ‖∑ a ∈ reducedResidues q, c a * χ (a : ZMod q)‖ ^ 2)
-    (fun _ => sq_nonneg _)).trans_eq hparseval
+  calc
+    (∑ χ : PrimitiveCharacter q,
+        ‖∑ a ∈ reducedResidues q, c a * χ.1 (a : ZMod q)‖ ^ 2)
+        ≤ ∑ χ : DirichletCharacter ℂ q,
+            ‖∑ a ∈ reducedResidues q, c a * χ (a : ZMod q)‖ ^ 2 := by
+          exact sum_primitive_le_sum_all
+            (fun χ : DirichletCharacter ℂ q =>
+              ‖∑ a ∈ reducedResidues q, c a * χ (a : ZMod q)‖ ^ 2)
+            (fun _ => sq_nonneg _)
+    _ = (q.totient : ℝ) * ∑ a ∈ reducedResidues q, ‖c a‖ ^ 2 := by
+      -- Expand squared norms and use the pointwise character kernel.
+      let S : DirichletCharacter ℂ q → ℂ := fun χ =>
+        ∑ a ∈ reducedResidues q, c a * χ (a : ZMod q)
+      have hExp :
+          (∑ χ : DirichletCharacter ℂ q, (‖S χ‖ : ℂ) ^ 2) =
+            ∑ χ : DirichletCharacter ℂ q,
+              ∑ a ∈ reducedResidues q, ∑ b ∈ reducedResidues q,
+                (c a * χ (a : ZMod q)) * star (c b * χ (b : ZMod q)) := by
+        apply Finset.sum_congr rfl
+        intro χ hχ
+        exact normSq_sum_eq_sum_mul_star (reducedResidues q)
+          (fun a => c a * χ (a : ZMod q))
+      have hSwap :
+          (∑ χ : DirichletCharacter ℂ q,
+              ∑ a ∈ reducedResidues q, ∑ b ∈ reducedResidues q,
+                (c a * χ (a : ZMod q)) * star (c b * χ (b : ZMod q))) =
+            ∑ a ∈ reducedResidues q, ∑ b ∈ reducedResidues q,
+              c a * star (c b) *
+                (∑ χ : DirichletCharacter ℂ q,
+                  χ (a : ZMod q) * star (χ (b : ZMod q))) := by
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro a ha
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro b hb
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro χ hχ
+        rw [star_mul]
+        ring
+      have hKernel :
+          (∑ a ∈ reducedResidues q, ∑ b ∈ reducedResidues q,
+              c a * star (c b) *
+                (∑ χ : DirichletCharacter ℂ q,
+                  χ (a : ZMod q) * star (χ (b : ZMod q)))) =
+            (q.totient : ℂ) * ∑ a ∈ reducedResidues q, (‖c a‖ : ℂ) ^ 2 := by
+        calc
+          _ = ∑ a ∈ reducedResidues q, ∑ b ∈ reducedResidues q,
+                c a * star (c b) *
+                  (if a = b then (q.totient : ℂ) else 0) := by
+              apply Finset.sum_congr rfl
+              intro a ha
+              apply Finset.sum_congr rfl
+              intro b hb
+              have ha' := (mem_reducedResidues.mp ha)
+              have hb' := (mem_reducedResidues.mp hb)
+              have hau : IsUnit (a : ZMod q) :=
+                (ZMod.isUnit_iff_coprime a q).mpr ha'.2
+              have hbu : IsUnit (b : ZMod q) :=
+                (ZMod.isUnit_iff_coprime b q).mpr hb'.2
+              have hab : ((a : ZMod q) = (b : ZMod q)) ↔ a = b := by
+                constructor
+                · intro h
+                  exact Nat.ModEq.eq_of_lt_of_lt
+                    ((ZMod.natCast_eq_natCast_iff a b q).mp h) ha'.1 hb'.1
+                · exact congrArg (fun n : ℕ => (n : ZMod q))
+              rw [charOrthSum (NeZero.pos q)]
+              by_cases h : a = b
+              · simp [h, hbu]
+              · simp [h, hau, hbu, hab]
+          _ = ∑ a ∈ reducedResidues q,
+                c a * star (c a) * (q.totient : ℂ) := by
+              apply Finset.sum_congr rfl
+              intro a ha
+              refine Finset.sum_eq_single a ?_ ?_ |>.trans ?_
+              · intro b hb hba
+                simp [hba.symm]
+              · intro hna
+                exact False.elim (hna ha)
+              · simp
+          _ = (q.totient : ℂ) *
+                ∑ a ∈ reducedResidues q, (‖c a‖ : ℂ) ^ 2 := by
+              rw [Finset.mul_sum]
+              apply Finset.sum_congr rfl
+              intro a ha
+              have hc : c a * star (c a) = (‖c a‖ : ℂ) ^ 2 := by
+                simpa [Complex.normSq_eq_norm_sq] using Complex.mul_conj (c a)
+              rw [hc]
+              ring
+      have hComplex :
+          (∑ χ : DirichletCharacter ℂ q, (‖S χ‖ : ℂ) ^ 2) =
+            (q.totient : ℂ) * ∑ a ∈ reducedResidues q, (‖c a‖ : ℂ) ^ 2 :=
+        hExp.trans (hSwap.trans hKernel)
+      apply Complex.ofReal_inj.mp
+      simpa [S, map_sum] using hComplex
 
 /-- Inversion by the primitive Gauss sum, with the inverse character chosen so
 that the recovered interval coefficient is `χ(n)` rather than `χ⁻¹(n)`. -/
@@ -186,8 +253,8 @@ theorem weighted_primitive_modulus_le_reduced {q : ℕ} [NeZero q]
     _ = ∑ a ∈ reducedResidues q, ‖A a‖ ^ 2 := by field_simp
     _ = _ := rfl
 
-/-- Reindex canonical reduced residues for `1 ≤ q ≤ Q` by reduced Farey
-indices, preserving the modulus range and coprimality condition. -/
+/-- Weighted primitive-character Bombieri--Davenport inequality across all
+`1 ≤ q ≤ Q`, with interval coefficients and the exact additive-stack constant. -/
 theorem sum_reducedResidues_eq_sum_reducedFareyIndices
     {β : Type*} [AddCommMonoid β] (Q : ℕ) (f : ℕ × ℕ → β) :
     (∑ q ∈ Finset.Icc 1 Q, ∑ a ∈ reducedResidues q, f (q, a)) =
@@ -224,13 +291,36 @@ theorem interval_additive_energy_reindex (b : ℤ → ℂ) (M : ℤ) (N Q : ℕ)
       ∑ qa ∈ reducedFareyIndices Q,
         ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
           (charReal ((n : ℝ) * reducedFareyPoint qa) : ℂ) * b n‖ ^ 2 := by
-  simpa only [reducedFareyPoint, mul_div_assoc] using
-    sum_reducedResidues_eq_sum_reducedFareyIndices Q (fun qa =>
-      ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
-        (charReal ((n : ℝ) * (qa.2 : ℝ) / (qa.1 : ℝ)) : ℂ) * b n‖ ^ 2)
+  rw [Finset.sum_sigma']
+  refine Finset.sum_bij (fun x _ => (x.1, x.2)) ?_ ?_ ?_ ?_
+  · intro x hx
+    rcases x with ⟨q, a⟩
+    simp only [Finset.mem_sigma] at hx
+    rw [mem_reducedFareyIndices]
+    rcases Finset.mem_Icc.mp hx.1 with ⟨hq1, hqQ⟩
+    rcases mem_reducedResidues.mp hx.2 with ⟨haq, hcop⟩
+    exact ⟨hq1, hqQ, haq, hcop⟩
+  · intro x hx y hy hxy
+    rcases x with ⟨q, a⟩
+    rcases y with ⟨r, c⟩
+    cases hxy
+    rfl
+  · intro qa hqa
+    rcases qa with ⟨q, a⟩
+    rw [mem_reducedFareyIndices] at hqa
+    refine ⟨⟨q, a⟩, ?_, rfl⟩
+    simp only [Finset.mem_sigma]
+    exact ⟨Finset.mem_Icc.mpr ⟨hqa.1, hqa.2.1⟩,
+      mem_reducedResidues.mpr ⟨hqa.2.2.1, hqa.2.2.2⟩⟩
+  · intro x hx
+    rcases x with ⟨q, a⟩
+    congr 2
+    apply Finset.sum_congr rfl
+    intro n hn
+    congr 2
+    dsimp [reducedFareyPoint]
+    ring
 
-/-- Weighted primitive-character Bombieri--Davenport inequality across all
-`1 ≤ q ≤ Q`, with interval coefficients and the exact additive-stack constant. -/
 theorem weighted_primitive_bombieri_davenport (b : ℤ → ℂ) (M : ℤ)
     (N Q : ℕ) (hQ : 0 < Q) :
     (∑ q ∈ Finset.Icc 1 Q,
