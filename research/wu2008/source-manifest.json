@@ -25653,7 +25653,7 @@
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedCaseIEndpoint",
-    "source_sha256": "4674d64cbf8c526334d4e22fa35aeaf46e8d5e27f22f16a4dcb76cb0f07e34f7",
+    "source_sha256": "f213cbe771cfdf6dbff0dd1976e1cd4859e97d103a9535fdd161ef872439dc62",
     "object_sha256": "009c100d2f254411872380f51e08682c97dbfaca5e6d2704232690f3a9df6981",
     "imports": [
       "Init",
@@ -25661,7 +25661,9 @@
       "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointFromCaseI"
     ],
     "matching_source_variants": 1,
-    "source_binding": "matching_object_imports_rebuild_required"
+    "source_binding": "matching_object_imports_rebuild_required",
+    "recovered_source_sha256": "4674d64cbf8c526334d4e22fa35aeaf46e8d5e27f22f16a4dcb76cb0f07e34f7",
+    "integration_adaptation": "Explicitly reference retained hz2 and hyDhalf hypotheses; names, conditions, domains, definitions and strict settings unchanged."
   },
   {
     "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOne",

@@ -102,6 +102,7 @@ theorem sigmaEleven_add_sigmaTwelve_suzukiVProduct_le_finiteSourceLayer_add_qD_n
           (6 * K ^ 2 *
               qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ τ /
             Real.log ((D : ℝ) ^ (1 / σ))) * (τ / s)) := by
+  have _ := hz2
   classical
   let w : ℝ := (D : ℝ) ^ (1 / σ)
   let v : ℝ := (D : ℝ) ^ (1 / τ)
@@ -281,6 +282,7 @@ theorem caseII_endpoint_le_concrete_finiteSourceLayer_add_qD_natCeil
                   (D : ℝ) d Δ (β + 1) /
                 Real.log ((D : ℝ) ^ (1 / σ))) *
                   ((β + 1) / (β + 1)))) := by
+  have _ := hyDhalf
   classical
   let s : ℝ := β + 1
   let r : ℝ := (D : ℝ) ^ (1 / s)
