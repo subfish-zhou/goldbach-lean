@@ -1,0 +1,319 @@
+{
+  "scope": "Wu04/Wu08 1.8938 legacy Git worktrees, including both old repository groups",
+  "retired_worktrees": 75,
+  "remaining_project_worktrees": 1,
+  "remaining_branch": "1.8938",
+  "main_unchanged": true,
+  "archive_full_entry_readback": "passed",
+  "independent_restore": "75/75 passed",
+  "git_metadata_and_uncommitted_and_ignored_files": "preserved in private local archives",
+  "source_modules": 3574,
+  "source_history_records": 6365,
+  "source_history_unique_bytes": 2201,
+  "worktrees_with_lean_sources": 74,
+  "metadata_only_worktrees": 1,
+  "lean_build": "stopped; no build run for retirement",
+  "git_ancestry_merge_claim": false,
+  "archive_sha256": [
+    {
+      "id": "old-worktree-000",
+      "sha256": "90bd85a3cb021f298f27d3c476864275c378cbb098d7ba44704b4455b212b082"
+    },
+    {
+      "id": "old-worktree-001",
+      "sha256": "df75ec63e5946a79387d850d36049a0c811cac84c19a157bb03487a718b324ad"
+    },
+    {
+      "id": "old-worktree-002",
+      "sha256": "1d7c56ad872c8c7aef707f481588868e49e504f55674dd1daa58471151e7a3e9"
+    },
+    {
+      "id": "old-worktree-003",
+      "sha256": "9fcd223acafc18a1802990596a0285c12f97e8c8094c38954bfa42ef8bf7396f"
+    },
+    {
+      "id": "old-worktree-004",
+      "sha256": "ea59e3d928661465f48d8c7ef96d37bb01f45118fa0e5e618c129961292f0c5f"
+    },
+    {
+      "id": "old-worktree-005",
+      "sha256": "2c4a6c6d4c5eb2be1850a6f376b917a6f4be4bc9b1c4b150473c47662b6af40b"
+    },
+    {
+      "id": "old-worktree-006",
+      "sha256": "44105cb2c2cd77cb955bc644a691b3e5eeb74897203db66c41ae778df0969bb5"
+    },
+    {
+      "id": "old-worktree-007",
+      "sha256": "faa57b613d28248180db27fe0a3e57178089dd5905a8110e43a2704aedb06e9e"
+    },
+    {
+      "id": "old-worktree-008",
+      "sha256": "7172c005fc7982d59ae7bd3341ba1bcf9a24e0b73c5e7607c9f0f5b8858d31a3"
+    },
+    {
+      "id": "old-worktree-009",
+      "sha256": "45a47b10e3f5dc5babaa6d0d7fda6f4671ec5e0fae0e356da5cdf057be2a0ce9"
+    },
+    {
+      "id": "old-worktree-010",
+      "sha256": "80ac8fe127b96d6943a7cd37a32f80caecccae4b691e90170b0f442ef89823d8"
+    },
+    {
+      "id": "old-worktree-011",
+      "sha256": "d6b56dc962d5ebb5f263344945d2370c033bc02f7b141d5feaf50bd4c0d0d243"
+    },
+    {
+      "id": "old-worktree-012",
+      "sha256": "0f52d86e19d3a015f4ee9d9203564e30f878db1f341cd1c3480145b3905d993d"
+    },
+    {
+      "id": "old-worktree-013",
+      "sha256": "6d0394c63c1774210a9e0f24dec9ec7d9201dead5f14f1d166c6d9331e42ef21"
+    },
+    {
+      "id": "old-worktree-014",
+      "sha256": "af191da4d5bf604d519b3af8bbcec0e39a563d915be7ebacca6aa604f84b3d05"
+    },
+    {
+      "id": "old-worktree-015",
+      "sha256": "e40b4c78081b833e0df5e28843551899b60cc6d7bc3ecdadee32cf18389d9547"
+    },
+    {
+      "id": "old-worktree-016",
+      "sha256": "d1dea8846662c595e0aa4a2a31bbf8a5c00d5eb178eeb9ad3b16756ad5116898"
+    },
+    {
+      "id": "old-worktree-017",
+      "sha256": "6bccd2cf383dfc21e6421628e40ad74bd68bf0a019eb18bbab3936e030612d9b"
+    },
+    {
+      "id": "old-worktree-018",
+      "sha256": "bb71c4bc9fbbac1a93f22aeb662f4d5dcd4c35ffa4a50cfd167245f685bc2cd1"
+    },
+    {
+      "id": "old-worktree-019",
+      "sha256": "290de7b49d42661090069b3292f491f58e8aba1f03aa3251fc88510cdf0f13a6"
+    },
+    {
+      "id": "old-worktree-020",
+      "sha256": "db65111e6a495170a6fbbe19c5d6ae853443eaaeb56bd75a2b3a67cef705c4aa"
+    },
+    {
+      "id": "old-worktree-021",
+      "sha256": "a7ab8507e4a06ae35b9490655e96e174c8937a552eca1b5ec3ffe658b5b35454"
+    },
+    {
+      "id": "old-worktree-022",
+      "sha256": "c6e64e07944b5036a4e7d9b11269c8d131b9a4befa0f150ef0a4cb78a004949b"
+    },
+    {
+      "id": "old-worktree-023",
+      "sha256": "51042b8e83d0ae7736536d88431f1968a0c9edb72576bce14eb7d373df446420"
+    },
+    {
+      "id": "old-worktree-024",
+      "sha256": "427e316872695c619f35ee6aff139cd85f574fe791f689ddf211d0fe8ba2ec6a"
+    },
+    {
+      "id": "old-worktree-025",
+      "sha256": "4d4eecd8294ffd5635371916951da3180bb1e5c4614929141de3dd1fe46d2b88"
+    },
+    {
+      "id": "old-worktree-026",
+      "sha256": "7bf39e8d8265e8f1fb5546e9d01957848c49a6974e81edc4633183776ba63309"
+    },
+    {
+      "id": "old-worktree-027",
+      "sha256": "d6fb294a4cb6f485a14f888274dfecd1d06c6647f5155daf611f1717f887c023"
+    },
+    {
+      "id": "old-worktree-028",
+      "sha256": "dc327f60c4d73f4d159f44bbe59765ca2f443633d10f5f879fcebba2a5a50f19"
+    },
+    {
+      "id": "old-worktree-029",
+      "sha256": "bac4ea531e327939f5dd1ae55be7f2bed2001ca18e87a21b8630eea0465a9419"
+    },
+    {
+      "id": "old-worktree-030",
+      "sha256": "e51cd3e4835b3f9d3280847d53cb245fdee095789701dd5e08e58cd6b6de44a9"
+    },
+    {
+      "id": "old-worktree-031",
+      "sha256": "2ebaf3d3d4f803741ed74f6c2f55b4c16f69d18aab2790b1a5e732891be9436f"
+    },
+    {
+      "id": "old-worktree-032",
+      "sha256": "93a0d54b33e22dffa7a3a421cdba9a3bcbcc589cbd6e9bc8846584bd85919e15"
+    },
+    {
+      "id": "old-worktree-033",
+      "sha256": "e7fdb7ea4fc26f6d3af2c29f44eb1540eb7b77cb61cb60819cf492ba8fec10ba"
+    },
+    {
+      "id": "old-worktree-034",
+      "sha256": "43d4c412ae588990386c0b220ee64d217be4ddb65eb985367dfca104c4ef22f4"
+    },
+    {
+      "id": "old-worktree-035",
+      "sha256": "bc5fff2d219dc5f44a62b29863ed564f3cb09bd5cc4c13162700a8df61d1d491"
+    },
+    {
+      "id": "old-worktree-036",
+      "sha256": "cc9a08b8fb38c8931ccaeaaee1d2180a250169ea2d7ab8e50f4a94891a05676c"
+    },
+    {
+      "id": "old-worktree-037",
+      "sha256": "b16480aea1659039f9692bdbcb7f50fce12b3786932b6c530b3f239fee1eb34e"
+    },
+    {
+      "id": "old-worktree-038",
+      "sha256": "26477457c971bc0b09a95067118ccc18a4a2fc89f8c1519f0dc70597aaef2ab4"
+    },
+    {
+      "id": "old-worktree-039",
+      "sha256": "a0335dcc02c9cff11e7eb844c1435c6ebf2821239096bbed4810eacb3f34e01b"
+    },
+    {
+      "id": "old-worktree-040",
+      "sha256": "469f0b8bd3924a9a7e5c7807edec68114797bc27431ec4f774ed3c09f3b8eb4e"
+    },
+    {
+      "id": "old-worktree-041",
+      "sha256": "dd1fbc2b98a7ff0cd6a264760eed77c2cfcccdb22609e1defcd8d7dfc4189dcd"
+    },
+    {
+      "id": "old-worktree-042",
+      "sha256": "d19731de8bb5ddb2a19885b5294c7cadd1722ac1f8ea5e3a134a22869c7ab9d6"
+    },
+    {
+      "id": "old-worktree-043",
+      "sha256": "a797f7e8d8d54ef98792e42ca495c7428dca46519d960a316d2e745e92923f2b"
+    },
+    {
+      "id": "old-worktree-044",
+      "sha256": "8077e213bfdd1b8a7863ae4541530154e38510be3bedea748eaf2c33af96cc53"
+    },
+    {
+      "id": "old-worktree-045",
+      "sha256": "dce5a5141e7854c7eb5f99039fbf5ce5d25a5657929578ff63c6e11d7e61ba2a"
+    },
+    {
+      "id": "old-worktree-046",
+      "sha256": "3bce3e0bc048ebdad659d5a2795862be272519298acb6ddac386dd8622808dfc"
+    },
+    {
+      "id": "old-worktree-047",
+      "sha256": "e16b8ba134c8eb35f29663113dde67fe2af9f0ea4818f397238eeba5c30d855f"
+    },
+    {
+      "id": "old-worktree-048",
+      "sha256": "78fa55a7c60b88d9b6feb4a30b1ba893ca8c0d8be978ab2a81d2d06b609efd92"
+    },
+    {
+      "id": "old-worktree-049",
+      "sha256": "308728228ee1a3bc467c64b48a17c72d469dc4506b5a4949d68a2715b69f0d07"
+    },
+    {
+      "id": "old-worktree-050",
+      "sha256": "9d750492e81453f80e2c7fd946bbf35fb0f6b317f0c164bd8523639ff39f0fb0"
+    },
+    {
+      "id": "old-worktree-051",
+      "sha256": "9c48d0b88690a41e5231a56f269c7d5f767d29ee79f4ad08d03c3faaf383c5dc"
+    },
+    {
+      "id": "old-worktree-052",
+      "sha256": "f80e5f512651007a4f25ca50fd7d6e71ffe0b49f2247f719e5bcf9d83e9e0e82"
+    },
+    {
+      "id": "old-worktree-053",
+      "sha256": "2f76701f58375b38e3bd63d7a657c31a68ef2fd9b189c6357b021d8494e5a227"
+    },
+    {
+      "id": "old-worktree-054",
+      "sha256": "7644615a7d55ed565ceb72c50b60ae7621895d37d76e9d5ef2493cd6936344ac"
+    },
+    {
+      "id": "old-worktree-055",
+      "sha256": "fb65a8ab59379970d7a933400ad05d6d3bbb2bde0c6699f4dd3d6a92782ea2cc"
+    },
+    {
+      "id": "old-worktree-056",
+      "sha256": "2d7744d8afc0021cf37a9771f3f17d6364deac700f8eb98cbc0883836256733c"
+    },
+    {
+      "id": "old-worktree-057",
+      "sha256": "bfdb48921e2f794b00dd0226f864f732b3dc69a51ffba04e8545bf5b58bfcb91"
+    },
+    {
+      "id": "old-worktree-058",
+      "sha256": "57d94d37a791a38f7ced95cde4c2c8813adde6d3eba13608b5b8c3d83dec73fc"
+    },
+    {
+      "id": "old-worktree-059",
+      "sha256": "2b9dd2abef861cc1ee77242ce4c3c1b3c59c6cdbc56ac15432ebb1338db83580"
+    },
+    {
+      "id": "old-worktree-060",
+      "sha256": "d2a9fa593054437ddf1be092f7bda328d729d08699a174a7a2922731e5f527c9"
+    },
+    {
+      "id": "old-worktree-061",
+      "sha256": "846dc0817e0da4802c8ee4a464a9997e9ba3de411ceb8c880dae92dd097eb972"
+    },
+    {
+      "id": "old-worktree-062",
+      "sha256": "1789ddad3f4e3dff7ae7843efe5376d2e9bd3758efee6540d4e0503dfb42013e"
+    },
+    {
+      "id": "old-worktree-063",
+      "sha256": "78dd1544bba5013f1056436bdee98cd8cab990e8920a9423acfc59da38ae7514"
+    },
+    {
+      "id": "old-worktree-064",
+      "sha256": "e6b7558c00578cb251a2f51a72c788e762dad3ecbb5b19c36e0e3fbc975b92a0"
+    },
+    {
+      "id": "old-worktree-065",
+      "sha256": "2b84c4091133c4038cd602e5b1066cf6d8835389d5f70d571bced7de36b7e099"
+    },
+    {
+      "id": "old-worktree-066",
+      "sha256": "3f88cb8fb9bdccf2604a7389dd3900bb63d61e83f6c625b3a9dd88aeab101c71"
+    },
+    {
+      "id": "old-worktree-067",
+      "sha256": "b5d988ffe43913f6d1b175d7545d55c185376ccd7fc7e9858e87ccdd643f4361"
+    },
+    {
+      "id": "old-worktree-068",
+      "sha256": "251fc0aaa63421bacd5f61e6c54cc5dd903815bf2090074d3c439d2952eb1acc"
+    },
+    {
+      "id": "old-worktree-069",
+      "sha256": "252ed9319624cc4034a46653d269eacf0609a4543aea5bbe3d32d49b61fdfbd8"
+    },
+    {
+      "id": "old-worktree-070",
+      "sha256": "5f25cb43cd42e42b9a28607034ec3b816fb793960f23670c73fbc43556be3e40"
+    },
+    {
+      "id": "old-worktree-071",
+      "sha256": "4bfb57ff73f4c747f43b6219ab892c2cd6978f170f4a4b5713655a47e1898b5a"
+    },
+    {
+      "id": "old-worktree-072",
+      "sha256": "d0bdbeadc223777bd794e89755683c2268ec4d2a70e5d246acbdcf677034a900"
+    },
+    {
+      "id": "old-worktree-073",
+      "sha256": "92ba77d6d76b828ab815dcd7dd70bdecffcc55d6ea942c4e9ea897a60f909db8"
+    },
+    {
+      "id": "old-worktree-074",
+      "sha256": "d013b3c02d024c93bb128dda0eb774bf13fc10c693e135e6ec315cf1102bad5a"
+    }
+  ]
+}

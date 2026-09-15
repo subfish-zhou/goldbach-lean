@@ -1,10 +1,15 @@
 {
   "source_collection": "verified",
   "worktree_source_preservation": "verified_by_hash_and_independent_restore",
-  "original_worktrees_deleted": false,
+  "original_worktrees_deleted": true,
   "default_goldbach_targets_changed": false,
   "fresh_standalone_lean_rebuild": "stopped_by_user_incomplete",
   "global_wu18938_theorem_complete": false,
   "source_snapshot_commit": "0c3e53300a48e7dfb16ffc645adcde8fd8a4badd",
-  "note": "Do not infer full source-layout build acceptance from the preserved parent-level kernel receipts."
+  "note": "Do not infer full source-layout build acceptance from the preserved parent-level kernel receipts.",
+  "local_project_worktree_count": 1,
+  "retired_old_worktrees": 75,
+  "legacy_git_history_and_working_bytes": "preserved_in_private_cold_archives",
+  "archive_restore_verification": "all_75_passed",
+  "source_preservation_branch": "1.8938"
 }
