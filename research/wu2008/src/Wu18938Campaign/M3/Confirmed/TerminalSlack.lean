@@ -1,18 +1,16 @@
-import Wu18938Campaign.M3.Confirmed.Ledger
-import Wu18938Campaign.M3.Confirmed.ConservativeCount
-import WSrcFourEnclosureFine
+import Wu18938Campaign.M3.Confirmed.Terminal06
+import Wu18938Campaign.M3.Confirmed.G2Slack
 
 noncomputable section
 
 namespace Wu18938Campaign.M3.Confirmed
 
 open Wu2008DoubleSieve Wu08TerminalAlignment Wu08OriginalFourWeights
-open MathlibNt.Wu2008DoubleSieve
 
-theorem original_functions_sixth06 {δ G3 G4 G5 G6 : ℝ}
-    (hd : 0 < δ) (hh : δ ≤ 1 / 100)
-    (hh42 : (6440 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (21 / 5))
-    (hH32 : (52233 / 10000000 : ℝ) ≤ wuImprovementLimit true δ (16 / 5))
+theorem original_functions_sixth06_slack {δ η G3 G4 G5 G6 : ℝ}
+    (hd : 0 < δ) (hh : δ ≤ 1 / 100) (hη : η ≤ 52233 / 10000000)
+    (hh42 : (6440 / 10000000 : ℝ) - η ≤ wuImprovementLimit false δ (21 / 5))
+    (hH32 : (52233 / 10000000 : ℝ) - η ≤ wuImprovementLimit true δ (16 / 5))
     (hC1 : (14900897 / 1000000 : ℝ) ≤ firstMain)
     (hC2 : (9103015 / 1000000 : ℝ) ≤ secondMain)
     (hC3 : thirdMain ≤ (23652925 / 1000000 : ℝ))
@@ -26,12 +24,11 @@ theorem original_functions_sixth06 {δ G3 G4 G5 G6 : ℝ}
     (hG4 : (8860 / 1000000 : ℝ) ≤ G4)
     (hG5 : (1359 / 1000000 : ℝ) ≤ G5)
     (hG6 : (3 / 50 : ℝ) ≤ G6) :
-    conservativeLedger < signedOriginalFunctions δ G3 G4 G5 G6 := by
-  have h := (signed_original_functions_lower hd hh hh42 hH32
-    WuSource.SrcFourEnclosure.original_pair_upper hC1 hC2 hC3 hC4 hC5 hC6
-    hC7 hC8 hC9 hG3 hG4 hG5
-    (show (60469 / 1000000 : ℝ) ≤ G6 + 469 / 1000000 by linarith)).1
-  unfold conservativeLedger signedOriginalFunctions at *
-  linarith only [h]
+    conservativeLedger - (41 / 20) * η < signedOriginalFunctions δ G3 G4 G5 G6 := by
+  have hg2 := correctedG2_slack_node hd hh hη hh42 hH32
+  have hpair := WuSource.SrcFourEnclosure.original_pair_upper
+  unfold conservativeLedger originalNumericLedger signedOriginalFunctions
+  linarith only [hg2, hpair, hC1, hC2, hC3, hC4, hC5, hC6,
+    hC7, hC8, hC9, hG3, hG4, hG5, hG6]
 
 end Wu18938Campaign.M3.Confirmed

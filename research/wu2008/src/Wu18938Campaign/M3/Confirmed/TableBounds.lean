@@ -97,8 +97,9 @@ theorem ratio_upper_antitone {s b : ℝ} (hs : s ∈ Icc 2 endpoint)
   have hα := alpha_pos
   have hβ : 0 < beta := by norm_num [beta]
   have hbd := (scalar_bounds hb).1
+  have hsd := (scalar_bounds hs).1
   have h1 : 0 ≤ (1 / 2 : ℝ) - alpha * b - beta := by linarith
-  have h2 : 0 ≤ (1 / 2 : ℝ) - alpha * s - alpha := by nlinarith
+  have h2 : 0 ≤ (1 / 2 : ℝ) - alpha * s - alpha := by linarith only [hsd, hβ]
   unfold ratio
   simp only [if_true]
   apply div_le_div_of_nonneg_right _ (mul_nonneg hα.le hβ.le)

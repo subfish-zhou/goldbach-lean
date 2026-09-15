@@ -593,15 +593,23 @@
   },
   {
     "module": "WE10FourMajorData",
-    "source_sha256": "19f9e1ecd3ca050133b557a056718ff691192bb7c7f89110e7b2d74e551d95cd",
+    "source_sha256": "5a4c6bc803bfb97954390ed582e465b7b266197bc529e365e54b34e862a683f6",
     "object_sha256": "d12cd2c78eb3cac3d883850704438e532504567c15a5b745327d74997dee5555",
     "imports": [
       "Init",
       "Init",
-      "WE10FourRoot"
+      "WE10FourScalar"
     ],
     "matching_source_variants": 1,
-    "source_binding": "adjacent_exact_snapshot"
+    "source_binding": "parent_import_adaptation_current_source_old_object_is_historical",
+    "recovered_source_sha256": "5a4c6bc803bfb97954390ed582e465b7b266197bc529e365e54b34e862a683f6",
+    "integration_adaptation": "Narrow scalar-data import from WE10FourRoot to WE10FourScalar; all mathematical declarations and definition bodies byte-identical. Removes unrelated old global feedback budget dependency. Local fourfold consumers checked separately; full rebuild remains stopped.",
+    "pre_import_adaptation_source_sha256": "19f9e1ecd3ca050133b557a056718ff691192bb7c7f89110e7b2d74e551d95cd",
+    "pre_import_adaptation_imports": [
+      "Init",
+      "Init",
+      "WE10FourRoot"
+    ]
   },
   {
     "module": "WR2Gamma5CountTransport",

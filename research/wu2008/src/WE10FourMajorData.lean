@@ -1,4 +1,4 @@
-import WE10FourRoot
+import WE10FourScalar
 
 noncomputable section
 open Real Wu2008DoubleSieve FourRoughClosedMass
