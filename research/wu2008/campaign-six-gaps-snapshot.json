@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-09-16T00:49:20.266056+00:00",
-  "base_commit": "2cd3a910c71b353543a71f4aed1ea0befb0b7f4a",
+  "snapshot_utc": "2026-09-16T01:22:31.355355+00:00",
+  "base_commit": "daa568b462a372dfc1db615e55ca2e8a98de09d8",
   "branch": "1.8938",
   "scope": "natural-language source proofs and all captured campaign Lean sources, including candidates",
   "full_theorem_proved": false,
@@ -8,9 +8,9 @@
   "lean_full_chain_complete": false,
   "full_rebuild": "stopped_by_user; not restarted for push",
   "snapshot_capture": "per-file immutable capture while non-overlapping workers continue",
-  "source_files": 279,
+  "source_files": 291,
   "mathematical_manuscripts": 15,
-  "files_matching_successful_local_compile_receipts": 272,
+  "files_matching_successful_local_compile_receipts": 278,
   "matching_receipts_are_not_final_parent_acceptance": true,
   "standard_logic_axioms_are_not_unproved_mathematical_premises": true,
   "files": [
@@ -327,6 +327,18 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFirstKernel.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFirstKernel",
+      "sha256": "b255b0bbfcb973441d6184e004d4dae71b3231bf24c93d830c5b9843a2230dec",
+      "bytes": 4731,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveActual.lean",
       "module": "Wu18938Campaign.M1.Confirmed.FullFiveActual",
       "sha256": "1caf9dc87f0818e15cdf731cbd3455fd942e87dfe3c7ea22fbefcec6d806aa11",
@@ -423,11 +435,47 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullProfileIteration.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullProfileIteration",
+      "sha256": "f3d43b5a4688f1851edbdf7fba29f134cb9e94ff3b31f34e988f8d9e18fadb3e",
+      "bytes": 4354,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullSecondFunctional.lean",
       "module": "Wu18938Campaign.M1.Confirmed.FullSecondFunctional",
-      "sha256": "7a78a4ef03a5b41c4bfa6976103861fcbd209f655e13292b68cde39d3e454f52",
-      "bytes": 4996,
+      "sha256": "ca602d698c874670829cd4d6273ce770c69578f375e73eb75f7fcd91064fa265",
+      "bytes": 5002,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullSourceIteration.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullSourceIteration",
+      "sha256": "3f629ee0412575e87e198bb92dcb28158ba05631478c7086e4be766e884004eb",
+      "bytes": 4504,
       "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullSourceKernel.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullSourceKernel",
+      "sha256": "3ceebbe00013ff36de3486911134c39b08b32fe5ae1e5a890929b2fa6dd69006",
+      "bytes": 3950,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/HighNonunit.lean",
@@ -830,6 +878,18 @@
       "module": "Wu18938Campaign.M1.Confirmed.PairMother",
       "sha256": "69af491e968fa9635a6ea633f295ab186bb7aa8b9ca264e32ae751e7a932b013",
       "bytes": 3239,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairOriginalIntegrals.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairOriginalIntegrals",
+      "sha256": "a1db22a742f65f3da939488c49414efac66d657a9f01b67ec4c5629de1ae07b9",
+      "bytes": 6580,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
@@ -1937,6 +1997,46 @@
       }
     },
     {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthGain.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FifthGain",
+      "sha256": "6521693d406c6a17c430360817aa746ed5969ae4e3c57e9b6455f2a626c05e4f",
+      "bytes": 2604,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthGainAssembly.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FifthGainAssembly",
+      "sha256": "1c8d307bc1f468c24a27eb46b487fbd0c94648ecd6a1f652d834b2a773ed5a6c",
+      "bytes": 5340,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthGainNodes.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FifthGainNodes",
+      "sha256": "7c643bd4bfe329f2bbac2e9eee376fb2c91027b14eec28f27dc80b3614fbe55f",
+      "bytes": 4202,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthGainPaid.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FifthGainPaid",
+      "sha256": "6a6c2df9c1d1c7931365d3be3897f8066e25678ab1e7fd1d9133671ed4e78a75",
+      "bytes": 3351,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthGainTransfer.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FifthGainTransfer",
+      "sha256": "07e5d17f8a674db174cde211fe3b56ef50f038feba91373653368af3133759e1",
+      "bytes": 4099,
+      "receipt": null
+    },
+    {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthMoments.lean",
       "module": "Wu18938Campaign.M3.Confirmed.FifthMoments",
       "sha256": "a7e50e1e3c9ab8e1242e07d109ed04c4d711ec05489ec3fa26b5442dd0bf21bf",
@@ -1971,6 +2071,20 @@
         "object_matches": true,
         "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FirstAssembly.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FirstAssembly",
+      "sha256": "fff616e1bba6c4ac1e89239b37b87b9ff09fdb1bebe19dbb05862468824f947d",
+      "bytes": 3399,
+      "receipt": null
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FirstClassical.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.FirstClassical",
+      "sha256": "63ed23f2aeb80cfba40825a87fe8212109a53b96a67b533844bf987c4f02db98",
+      "bytes": 4336,
+      "receipt": null
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/G2.lean",

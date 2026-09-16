@@ -84,6 +84,6 @@ theorem second_gain_actual (j : Fin 4) {H : ℝ → ℝ} (hH : Antitone H)
   unfold secondGain coefficient
   dsimp only [e] at hm huS huk ho1 ho2 ho3 hgs
   dsimp only [p] at hm huS huk ho1 ho2 ho3 hgs hcost ⊢
-  nlinarith only [hm,huS,huk,ho1,ho2,ho3,hgs,hcost,Rebox.theta_nonneg hbox (by omega) hη hδ]
+  nlinarith only [hm,huS,huk,ho1,ho2,ho3,hgs,hcost,he.le,Rebox.theta_nonneg hbox (by omega) hη hδ]
 
 end Wu18938Campaign.M1.Confirmed.FullProfile
