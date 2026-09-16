@@ -575,3 +575,272 @@ set_option pp.universes true
 #print axioms Wu18938Campaign.M1.Confirmed.Rebox.seedProfile_integral
 #check @Wu18938Campaign.M1.Confirmed.Rebox.seed_omega2
 #print axioms Wu18938Campaign.M1.Confirmed.Rebox.seed_omega2
+
+#check @Wu18938Campaign.M1.Confirmed.roughBox_lower_main_bounded
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_lower_main_bounded
+#check @Wu18938Campaign.M1.Confirmed.roughBox_lower_leaf_bounded
+#print axioms Wu18938Campaign.M1.Confirmed.roughBox_lower_leaf_bounded
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.rowGain
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.rowGain
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.row_gain_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.row_gain_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_antitone
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_antitone
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_step
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_step
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_extensions
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_extensions
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_rows
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_rows
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_abs_bound
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_abs_bound
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_second_source
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_second_source
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_first_source
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_first_source
+#check @Wu18938Campaign.M1.Confirmed.Pair.full_profile_upper
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.full_profile_upper
+#check @Wu18938Campaign.M1.Confirmed.Pair.full_profile_actual
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.full_profile_actual
+#check @Wu18938Campaign.M1.Confirmed.Pair.childEta
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.childEta
+#check @Wu18938Campaign.M1.Confirmed.Pair.childEta_pos
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.childEta_pos
+#check @Wu18938Campaign.M1.Confirmed.Pair.rectangle_node
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.rectangle_node
+#check @Wu18938Campaign.M1.Confirmed.Pair.packing_node
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.packing_node
+#check @Wu18938Campaign.M1.Confirmed.Pair.finite_profile_upper
+#print axioms Wu18938Campaign.M1.Confirmed.Pair.finite_profile_upper
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.UpperNodes
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.UpperNodes
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.LowerNodes
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.LowerNodes
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.FourNode
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.FourNode
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fourNode_zero
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fourNode_zero
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.phi_mono
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.phi_mono
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lower_extension_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lower_extension_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upper_extension_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upper_extension_actual
+#check @Wu18938Campaign.M1.Confirmed.Rebox.profileIntegral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.profileIntegral
+#check @Wu18938Campaign.M1.Confirmed.Rebox.profileIntegral_shift
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.profileIntegral_shift
+#check @Wu18938Campaign.M1.Confirmed.Rebox.reciprocal_interval_bound
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.reciprocal_interval_bound
+#check @Wu18938Campaign.M1.Confirmed.Rebox.upper_buchstab_actual
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.upper_buchstab_actual
+#check @Wu18938Campaign.M1.Confirmed.Rebox.lower_buchstab_actual
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.lower_buchstab_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycle_integral
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycle_integral
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycle_four_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycle_four_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_zero
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_zero
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_succ
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_succ
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.finite_cycle_four
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.finite_cycle_four
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_tendsto
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.cycleValue_tendsto
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fourNode_profile
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fourNode_profile
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.full_extensions_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.full_extensions_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.tailGain
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.tailGain
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.logMoment_integrable
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.logMoment_integrable
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.tailGain_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.tailGain_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.sigma0_le_two
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.sigma0_le_two
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.aProfile_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.aProfile_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperInput
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperInput
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperInput_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperInput_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperInput_mono
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperInput_mono
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.input_integrable
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.input_integrable
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.input_integral_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.input_integral_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_mono
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_mono
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_eq
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_eq
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_integrable
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerExtension_integrable
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension_mono
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension_mono
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension_eq
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upperExtension_eq
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_mono
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_mono
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLower
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLower
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLowerGain
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLowerGain
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLower_eq
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLower_eq
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLower_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLower_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_twentyone
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_twentyone
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.secondGain
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.secondGain
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.second_gain_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.second_gain_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.firstCoefficient
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.firstCoefficient
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.firstGain
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.firstGain
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.first_gain_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.first_gain_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_le_classical
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.combinedUpper_le_classical
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullGain_integrable
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullGain_integrable
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLowerGain_nonneg
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLowerGain_nonneg
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLowerGain_antitone
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.fullLowerGain_antitone
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_twentyone_nonneg
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.originalProfile_twentyone_nonneg
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.kernel
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.kernel
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.approximation
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.approximation
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.at_cell
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.at_cell
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.outside
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.outside
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.measurable_approximation
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.measurable_approximation
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.approximation_bound
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.approximation_bound
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.approximation_tendsto
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.approximation_tendsto
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.monotone_pullback_ae
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.monotone_pullback_ae
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.integral_tendsto
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.integral_tendsto
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.integral_sum
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.integral_sum
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.sufficient_family
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.sufficient_family
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.kernel_integrable
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.kernel_integrable
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.profile_pullback
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.profile_pullback
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.profile_inner_substitution
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.profile_inner_substitution
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.profile_feedback_log
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.profile_feedback_log
+#check @Wu18938Campaign.M1.Confirmed.ProfileGrid.four_profile_density
+#print axioms Wu18938Campaign.M1.Confirmed.ProfileGrid.four_profile_density
+#check @Wu18938Campaign.M1.Confirmed.Rebox.profileJ
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.profileJ
+#check @Wu18938Campaign.M1.Confirmed.Rebox.profileJ_error
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.profileJ_error
+#check @Wu18938Campaign.M1.Confirmed.Rebox.profile_omega2_actual
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.profile_omega2_actual
+#check @Wu18938Campaign.M1.Confirmed.secondProfileCoefficient
+#print axioms Wu18938Campaign.M1.Confirmed.secondProfileCoefficient
+#check @Wu18938Campaign.M1.Confirmed.second_profile_actual
+#print axioms Wu18938Campaign.M1.Confirmed.second_profile_actual
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerGainJ
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerGainJ
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.gProfile_continuous
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.gProfile_continuous
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerGainJ_integrable
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lowerGainJ_integrable
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.lower_profile_J_split
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.lower_profile_J_split
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.upper_profile_E
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.upper_profile_E
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.feedbackDensityMoment
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.feedbackDensityMoment
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.classical_pair_identity
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.classical_pair_identity
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.classical_pair_sum
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.classical_pair_sum
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.first_gain_source_identity
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.first_gain_source_identity
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.second_gain_source_identity
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.second_gain_source_identity
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.clippedHeight
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.clippedHeight
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.clippedHeight_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.clippedHeight_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.stepProfile
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.stepProfile
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.stepProfile_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.stepProfile_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.stepProfile_antitone
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.stepProfile_antitone
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase_bounds
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase_antitone
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase_antitone
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.max_upper_nodes
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.max_upper_nodes
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.zero_upper_nodes
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.zero_upper_nodes
+#check @Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase_actual
+#print axioms Wu18938Campaign.M1.Confirmed.FiniteProfile.staircase_actual
+#check @Wu18938Campaign.M1.Confirmed.Rebox.lowerMain
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.lowerMain
+#check @Wu18938Campaign.M1.Confirmed.Rebox.geometric_raw_to_unselected
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.geometric_raw_to_unselected
+#check @Wu18938Campaign.M1.Confirmed.Rebox.lower_node_to_raw
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.lower_node_to_raw
+#check @Wu18938Campaign.M1.Confirmed.Rebox.reverse_cutoff_atom
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.reverse_cutoff_atom
+#check @Wu18938Campaign.M1.Confirmed.Rebox.reverse_cutoff_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.reverse_cutoff_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.raw_modulus_relative
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.raw_modulus_relative
+#check @Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform
+#check @Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform_bounds
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform_bounds
+#check @Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform_mono
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform_mono
+#check @Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform_cancel
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.inverseTransform_cancel
+#check @Wu18938Campaign.M1.Confirmed.Rebox.lower_node_integral
+#print axioms Wu18938Campaign.M1.Confirmed.Rebox.lower_node_integral

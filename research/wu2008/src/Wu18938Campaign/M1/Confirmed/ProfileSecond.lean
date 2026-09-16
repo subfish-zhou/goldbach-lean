@@ -13,7 +13,7 @@ def secondProfileCoefficient (p : SecondFunctionalParameters) (δ : ℝ)
     (u f H : ℝ → ℝ) : ℝ :=
   4 * u p.S + u p.kappa1 -
     Rebox.profileJ f p.s p.S - Rebox.profileJ f p.kappa2 p.S - Rebox.profileJ f p.kappa3 p.S +
-    (∑ j : Term, Pair.classicalIntegral p j - ∫ v : ℝ × ℝ, ProfileGrid.kernel p j H v) +
+    (∑ j : Term, (Pair.classicalIntegral p j - ∫ v : ℝ × ℝ, ProfileGrid.kernel p j H v)) +
     2 / (1 - 2 * δ) *
       (omega3XIntegralEnvelope p.kappa3 p.kappa1 + SecondFunctionalCoupled.jointSup p)
 
@@ -24,7 +24,7 @@ theorem second_profile_actual (p : SecondFunctionalParameters) (hp : AnalyticPar
     (m : ℕ) {η δ ε : ℝ} (hη : 0 < η) (hδ : 0 < δ) (hδhi : δ ≤ 1 / 100) (he : 0 < ε)
     (hu : ∀ ρ : ℝ, 0 < ρ → ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
       ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), RoughBox m η δ N i Δ V →
-      ∀ v : ℝ, 1 ≤ v → v ≤ 10 →
+      ∀ v : ℝ, 1 ≤ v → v ≤ 5 →
       wuBoxPhi N δ (convolutionWuWindows N Δ V) v ≤
         (u v + ρ) * boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V))
     (hl : ∀ ρ : ℝ, 0 < ρ → ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
@@ -57,11 +57,11 @@ theorem second_profile_actual (p : SecondFunctionalParameters) (hp : AnalyticPar
   have hk3S := hp.mother.kappa3_lt_kappa2.le.trans hk2S
   have hsS := hp.mother.s_le_kappa3.trans hk3S
   have hm := h0 N (by omega) heven i Δ V hb
-  have huS := h1 N (by omega) heven i Δ V hb p.S (by linarith [hp.three_le_S]) hp.mother.S_le_ten
+  have huS := h1 N (by omega) heven i Δ V hb p.S (by linarith [hp.three_le_S]) hp.S_le_five
   have huk := h1 N (by omega) heven i Δ V hb p.kappa1
     (hp.mother.one_le_s.trans (hp.mother.s_le_kappa3.trans
       (hp.mother.kappa3_lt_kappa2.le.trans hp.mother.kappa2_lt_kappa1.le)))
-    (hkS.trans hp.mother.S_le_ten)
+    (hkS.trans hp.S_le_five)
   have ho1 := h2 N (by omega) heven i Δ V hb p.s p.S hp.two_lt_s.le hsS hp.three_le_S hp.S_le_five
   have ho2 := h2 N (by omega) heven i Δ V hb p.kappa2 p.S
     (hp.two_lt_s.le.trans (hp.mother.s_le_kappa3.trans hp.mother.kappa3_lt_kappa2.le))

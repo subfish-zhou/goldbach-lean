@@ -1,6 +1,6 @@
 {
-  "checkpoint_utc": "2026-09-15T23:40:22.422522+00:00",
-  "base_commit": "5b305e144ec500e36e765c8570e9e027b0dec0d6",
+  "checkpoint_utc": "2026-09-16T00:29:40.043731+00:00",
+  "base_commit": "a125e721bb26b4ef2947290e4fe72c23024db624",
   "complete_theorem_accepted": false,
   "natural_language_route_accepted": true,
   "lean_full_chain_complete": false,
@@ -86,8 +86,8 @@
     {
       "file": "research/wu2008/proofs/LEAN-INTEGRATION-STATUS.md",
       "status": "accepted local Lean consumers and their remaining mathematical inputs; full Lean route incomplete",
-      "sha256": "4a07a59e34bd5991b32663b253e36dc81fb57b671cf675d8b145d42b4699683c",
-      "original_manuscript_sha256": "96f82e9a20c1eb2aafb26388660bfaa9ca8dbca000084a99de803afdd9c869a5",
+      "sha256": "25e5ccc70662cc1dd03559edf43ad51f926b8b05d21b0d092d396dbf0094ab6f",
+      "original_manuscript_sha256": "ef18bbd67267de54e1f30991ae45ea42f2d1f26aeae6042f8138b640a457cf97",
       "publication_edit": "status header and non-mathematical path/tool-label sanitization"
     },
     {
