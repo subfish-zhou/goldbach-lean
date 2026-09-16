@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-09-16T01:22:31.355355+00:00",
-  "base_commit": "daa568b462a372dfc1db615e55ca2e8a98de09d8",
+  "snapshot_utc": "2026-09-16T01:25:48.957541+00:00",
+  "base_commit": "4298c341f52f9a5161ea37ef76671d93d0d39687",
   "branch": "1.8938",
   "scope": "natural-language source proofs and all captured campaign Lean sources, including candidates",
   "full_theorem_proved": false,
@@ -10,7 +10,7 @@
   "snapshot_capture": "per-file immutable capture while non-overlapping workers continue",
   "source_files": 291,
   "mathematical_manuscripts": 15,
-  "files_matching_successful_local_compile_receipts": 278,
+  "files_matching_successful_local_compile_receipts": 279,
   "matching_receipts_are_not_final_parent_acceptance": true,
   "standard_logic_axioms_are_not_unproved_mathematical_premises": true,
   "files": [
@@ -463,7 +463,12 @@
       "module": "Wu18938Campaign.M1.Confirmed.FullSourceIteration",
       "sha256": "3f629ee0412575e87e198bb92dcb28158ba05631478c7086e4be766e884004eb",
       "bytes": 4504,
-      "receipt": null
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullSourceKernel.lean",
