@@ -36,8 +36,8 @@ theorem original_kernel_lower {x y : ℝ} (hx : a ≤ x) (hxy : x ≤ y) (hy : y
   have hy0 := hx0.trans_le hxy
   have hp := FifthActualIntegralRecovery.parameter_range hx hxy hy
   have hs : 17/5 ≤ truncatedSixthLowerS 0 x y := by
-    have h0 : (17/5:ℝ) ≤ FifthClassicalShape.s0 := by
-      norm_num [FifthClassicalShape.s0,a,b,truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
+    have h0 : (17/5:ℝ) ≤ s0 := by
+      norm_num [s0,a,b,truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
     exact h0.trans hp.1
   have hh := div_le_div_of_nonneg_right (scalar_lower hs)
     (mul_pos ha (mul_pos hx0 hy0)).le
@@ -45,9 +45,9 @@ theorem original_kernel_lower {x y : ℝ} (hx : a ≤ x) (hxy : x ≤ y) (hy : y
     have hb : b < 1/4 := by norm_num [b,truncatedSixthLowerBeta]
     linarith [hxy.trans hy]
   rw [FifthActualIntegralRecovery.log_literal hx hxy hy,kernel_identity]
-  convert! hh using 1
-  simp only [truncatedSixthLowerS,truncatedSixthLowerC,sub_zero,a]
-  field_simp [ha.ne',hx0.ne',hy0.ne',hz.ne']
+  convert! hh using 1 <;>
+    simp only [truncatedSixthLowerS,truncatedSixthLowerC,sub_zero,a] <;>
+    field_simp [ha.ne',hx0.ne',hy0.ne',hz.ne']
 
 theorem endpoint_lower :
     endpoint p0 p1 p2 p3 p4 ≤ Wu08TerminalAlignment.fifthMain := by
@@ -96,7 +96,10 @@ theorem fifth_actual_lower {ε : ℝ} (he : 0 < ε) :
       ((1654752/1000000:ℝ)-ε)*truncatedSixthMassScale N ≤ (fifthPairCount N : ℝ) := by
   obtain ⟨T,hT,h⟩ := fifthPair_actual_lower he
   refine ⟨T,hT,fun N hN hEven => ?_⟩
-  exact (mul_le_mul_of_nonneg_right (sub_le_sub_right fifth_main_lower ε)
-    (truncatedSixthClosure_scale_nonneg (hT.trans hN))).trans (h N hN hEven)
+  apply (mul_le_mul_of_nonneg_right (sub_le_sub_right fifth_main_lower ε)
+    (truncatedSixthClosure_scale_nonneg (hT.trans hN))).trans
+  convert! h N hN hEven using 1
+  unfold truncatedSixthMassScale Wu08TerminalAlignment.fifthMain
+  ring
 
 end Wu18938Campaign.M3.Confirmed.FifthClassical

@@ -9,3 +9,4 @@ import Wu18938Campaign.M3.Confirmed.Refinement
 import Wu18938Campaign.M3.Confirmed.TerminalSlack
 import Wu18938Campaign.M3.Confirmed.ExistingClassical
 import Wu18938Campaign.M3.Confirmed.ActualAssembly
+import Wu18938Campaign.M3.Confirmed.AnalyticAssembly

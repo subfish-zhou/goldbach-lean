@@ -238,3 +238,199 @@ import Wu18938Campaign.M3.Confirmed.Root
 #print axioms Wu18938Campaign.M3.Confirmed.ordinary_count_from_remaining_improvements
 #check @Wu18938Campaign.M3.Confirmed.refined_1894_from_remaining_improvements
 #print axioms Wu18938Campaign.M3.Confirmed.refined_1894_from_remaining_improvements
+
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.logUpper
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.logUpper
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.log_upper
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.log_upper
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.moment
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.moment
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.moment_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.moment_derivative
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.momentBound
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.momentBound
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.moment_bound
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.moment_bound
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.primitive
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.primitive
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.polynomial
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.polynomial
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.primitive_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.primitive_derivative
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.polynomial_upper
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.polynomial_upper
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.endpointBound
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.endpointBound
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.endpoint_bound
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.endpoint_bound
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.coordinate
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.coordinate
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.coordinate_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.coordinate_derivative
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.coordinate_antitone
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.coordinate_antitone
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.coordinate_lt
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.coordinate_lt
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.transformedKernel
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.transformedKernel
+#check @Wu18938Campaign.M3.Confirmed.LogMoments.transformed_integral_upper
+#print axioms Wu18938Campaign.M3.Confirmed.LogMoments.transformed_integral_upper
+
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.seventhCap
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.seventhCap
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.seventh_integral_upper
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.seventh_integral_upper
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.seventh_main_upper
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.seventh_main_upper
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthD
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthD
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthLeft
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthLeft
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthRight
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthRight
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthCap
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.ninthCap
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.ninth_integral_upper
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.ninth_integral_upper
+#check @Wu18938Campaign.M3.Confirmed.SeventhNinth.ninth_main_upper
+#print axioms Wu18938Campaign.M3.Confirmed.SeventhNinth.ninth_main_upper
+
+#check @Wu18938Campaign.M3.Confirmed.Eighth.a
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.a
+#check @Wu18938Campaign.M3.Confirmed.Eighth.top
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.top
+#check @Wu18938Campaign.M3.Confirmed.Eighth.middle
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.middle
+#check @Wu18938Campaign.M3.Confirmed.Eighth.polyPrimitive
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.polyPrimitive
+#check @Wu18938Campaign.M3.Confirmed.Eighth.poly_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.poly_derivative
+#check @Wu18938Campaign.M3.Confirmed.Eighth.kernel_identity
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.kernel_identity
+#check @Wu18938Campaign.M3.Confirmed.Eighth.smallCap
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.smallCap
+#check @Wu18938Campaign.M3.Confirmed.Eighth.largeCap
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.largeCap
+#check @Wu18938Campaign.M3.Confirmed.Eighth.small_integral_upper
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.small_integral_upper
+#check @Wu18938Campaign.M3.Confirmed.Eighth.large_integral_upper
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.large_integral_upper
+#check @Wu18938Campaign.M3.Confirmed.Eighth.eighth_main_upper
+#print axioms Wu18938Campaign.M3.Confirmed.Eighth.eighth_main_upper
+
+#check @Wu18938Campaign.M3.Confirmed.numeric_seventh_eighth_actual_upper
+#print axioms Wu18938Campaign.M3.Confirmed.numeric_seventh_eighth_actual_upper
+#check @Wu18938Campaign.M3.Confirmed.numeric_ninth_actual_upper
+#print axioms Wu18938Campaign.M3.Confirmed.numeric_ninth_actual_upper
+#check @Wu18938Campaign.M3.Confirmed.coefficient_lower_from_four_classical_inputs
+#print axioms Wu18938Campaign.M3.Confirmed.coefficient_lower_from_four_classical_inputs
+#check @Wu18938Campaign.M3.Confirmed.refined_1894_from_four_classical_inputs
+#print axioms Wu18938Campaign.M3.Confirmed.refined_1894_from_four_classical_inputs
+
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.center
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.center
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.linear
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.linear
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.quadratic
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.quadratic
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.cubic
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.cubic
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.quartic
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.quartic
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.shape
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.shape
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.remainder
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.remainder
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.center_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.center_lower
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.remainder_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.remainder_derivative
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.remainder_nonnegative
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.remainder_nonnegative
+#check @Wu18938Campaign.M3.Confirmed.FifthShape.scalar_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthShape.scalar_lower
+
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner3
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner3
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner4
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner4
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.primitive3
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.primitive3
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.primitive4
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.primitive4
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.power_integrable
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.power_integrable
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner3_ftc
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner3_ftc
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner4_ftc
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner4_ftc
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.primitive3_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.primitive3_derivative
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.primitive4_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.primitive4_derivative
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.kernel
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.kernel
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.primitive
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.primitive
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.endpoint
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.endpoint
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner_integrable
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner_integrable
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.inner_ftc
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.inner_ftc
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.outer_integrable
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.outer_integrable
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.primitive_derivative
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.primitive_derivative
+#check @Wu18938Campaign.M3.Confirmed.FifthMoments.endpoint_comparison
+#print axioms Wu18938Campaign.M3.Confirmed.FifthMoments.endpoint_comparison
+
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.offset
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.offset
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.p0
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.p0
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.p1
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.p1
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.p2
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.p2
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.p3
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.p3
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.p4
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.p4
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.logCoefficient
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.logCoefficient
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.constantCoefficient
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.constantCoefficient
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.rationalLower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.rationalLower
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.kernel_identity
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.kernel_identity
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.original_kernel_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.original_kernel_lower
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.endpoint_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.endpoint_lower
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.endpoint_collected
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.endpoint_collected
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.rational_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.rational_lower
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.fifth_main_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.fifth_main_lower
+#check @Wu18938Campaign.M3.Confirmed.FifthClassical.fifth_actual_lower
+#print axioms Wu18938Campaign.M3.Confirmed.FifthClassical.fifth_actual_lower
+
+#check @Wu18938Campaign.M3.Confirmed.analyticClassicalLedger
+#print axioms Wu18938Campaign.M3.Confirmed.analyticClassicalLedger
+#check @Wu18938Campaign.M3.Confirmed.analytic_classical_ledger_exact
+#print axioms Wu18938Campaign.M3.Confirmed.analytic_classical_ledger_exact
+#check @Wu18938Campaign.M3.Confirmed.analytic_classical_ledger_margin
+#print axioms Wu18938Campaign.M3.Confirmed.analytic_classical_ledger_margin
+#check @Wu18938Campaign.M3.Confirmed.coefficient_lower_from_three_classical_inputs
+#print axioms Wu18938Campaign.M3.Confirmed.coefficient_lower_from_three_classical_inputs
+#check @Wu18938Campaign.M3.Confirmed.ordinary_analytic_count_from_remaining_inputs
+#print axioms Wu18938Campaign.M3.Confirmed.ordinary_analytic_count_from_remaining_inputs
+#check @Wu18938Campaign.M3.Confirmed.ordinary_899_from_remaining_inputs
+#print axioms Wu18938Campaign.M3.Confirmed.ordinary_899_from_remaining_inputs
+#check @Wu18938Campaign.M3.Confirmed.refined_1894_from_remaining_inputs
+#print axioms Wu18938Campaign.M3.Confirmed.refined_1894_from_remaining_inputs

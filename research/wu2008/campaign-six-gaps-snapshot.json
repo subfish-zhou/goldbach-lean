@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-09-16T00:29:40.043731+00:00",
-  "base_commit": "a125e721bb26b4ef2947290e4fe72c23024db624",
+  "snapshot_utc": "2026-09-16T00:49:20.266056+00:00",
+  "base_commit": "2cd3a910c71b353543a71f4aed1ea0befb0b7f4a",
   "branch": "1.8938",
   "scope": "natural-language source proofs and all captured campaign Lean sources, including candidates",
   "full_theorem_proved": false,
@@ -8,9 +8,9 @@
   "lean_full_chain_complete": false,
   "full_rebuild": "stopped_by_user; not restarted for push",
   "snapshot_capture": "per-file immutable capture while non-overlapping workers continue",
-  "source_files": 268,
+  "source_files": 279,
   "mathematical_manuscripts": 15,
-  "files_matching_successful_local_compile_receipts": 261,
+  "files_matching_successful_local_compile_receipts": 272,
   "matching_receipts_are_not_final_parent_acceptance": true,
   "standard_logic_axioms_are_not_unproved_mathematical_premises": true,
   "files": [
@@ -325,6 +325,109 @@
         "object_matches": true,
         "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveActual.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFiveActual",
+      "sha256": "1caf9dc87f0818e15cdf731cbd3455fd942e87dfe3c7ea22fbefcec6d806aa11",
+      "bytes": 3024,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveApproximation.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFiveApproximation",
+      "sha256": "34a81589d9c00697400d6eb57374550bbadf20787a4d94c752f5c376f615effd",
+      "bytes": 5912,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveFamily.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFiveFamily",
+      "sha256": "465e4ffb19965643a94601fcd0b6bebea4e285d7c7d67f40cae86c2dd023e991",
+      "bytes": 5519,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveGrid.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFiveGrid",
+      "sha256": "d503b7ddbb5f2c1ead16abfbb61755de3060bf6d4d6ecda04c4f1c66d660ca6f",
+      "bytes": 7135,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveMass.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFiveMass",
+      "sha256": "4cc381a74c8beab011df08e2c0ab7b7f5ef86ef912cb7ce0df38ddc0c1fb7839",
+      "bytes": 8442,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFivePacking.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFivePacking",
+      "sha256": "97bcd58bd5e0be3ce98d34f922fab29a7626c364196e1ae3f0a1408ba2eefed6",
+      "bytes": 11511,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullFiveRectangle.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullFiveRectangle",
+      "sha256": "9fbb8fbb2f642ee0e0e748657611537ebf7910cc8c218a9cb1b5193191b81e67",
+      "bytes": 7336,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullPairActual.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullPairActual",
+      "sha256": "ebadaaf2b7a4a358028c501d23452da11e989bd2d68bc9f277c915d3d78d60a6",
+      "bytes": 3092,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/FullSecondFunctional.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.FullSecondFunctional",
+      "sha256": "7a78a4ef03a5b41c4bfa6976103861fcbd209f655e13292b68cde39d3e454f52",
+      "bytes": 4996,
+      "receipt": null
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/HighNonunit.lean",
@@ -691,6 +794,18 @@
       "module": "Wu18938Campaign.M1.Confirmed.PairIntegral",
       "sha256": "73db29cb781dc07b7d457ce38d60f30ca7563faa24869c234e73d60d6e43ae03",
       "bytes": 3309,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M1/Confirmed/PairLiteralKernel.lean",
+      "module": "Wu18938Campaign.M1.Confirmed.PairLiteralKernel",
+      "sha256": "0c2d9b82cc7a806e11908985b370d14ba2c33cc08cde6a84dfb5f1ea1ec120e3",
+      "bytes": 5444,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
@@ -1738,15 +1853,27 @@
       }
     },
     {
-      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Audit.lean",
-      "module": "Wu18938Campaign.M3.Confirmed.Audit",
-      "sha256": "5a301ec225a8dbb6204cc121bfd13106c7a2c95a113bff8e779ccf18be525757",
-      "bytes": 14858,
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/AnalyticAssembly.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.AnalyticAssembly",
+      "sha256": "91635d4ceb584f3784d83318fdb07780bdedfe41bb7b9336e1ea8fe2ef4905bd",
+      "bytes": 4250,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
         "object_matches": true,
-        "log_sha256": "8b0883495b07eec35b288061e1db2e6d44e72476c9a4ad47400225e2e1f5fdcb"
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Audit.lean",
+      "module": "Wu18938Campaign.M3.Confirmed.Audit",
+      "sha256": "049b20c5f05d973a9608835dde2611377d713d7d5ba2f77adc693b665a6f9f08",
+      "bytes": 27332,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "813a7692d32bdd07a9f5e6953a45bbf6d1b50d631abc10a139934f1eb13738e4"
       }
     },
     {
@@ -1800,9 +1927,14 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthClassical.lean",
       "module": "Wu18938Campaign.M3.Confirmed.FifthClassical",
-      "sha256": "faeaf989deff7f2cb9e77c0d44fb822bcb0d475a135eeed79fd550fc4066547a",
-      "bytes": 4550,
-      "receipt": null
+      "sha256": "5039aebfa78e01e44dd6b7dc9ba7dc7e4a9b16ee87eb8b3f9240cc48904fa5f5",
+      "bytes": 4611,
+      "receipt": {
+        "exit_code": 0,
+        "source_matches": true,
+        "object_matches": true,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     },
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/FifthMoments.lean",
@@ -1951,8 +2083,8 @@
     {
       "file": "research/wu2008/src/Wu18938Campaign/M3/Confirmed/Root.lean",
       "module": "Wu18938Campaign.M3.Confirmed.Root",
-      "sha256": "46eedb51f97ebc15a03650fe0c54b4545a40f1d94d32f3c86c53c62e98681788",
-      "bytes": 518,
+      "sha256": "71e4684347933663e64d889bb2c4b8a2333f0ef946c9c4599dc786cb48a49a8b",
+      "bytes": 571,
       "receipt": {
         "exit_code": 0,
         "source_matches": true,
