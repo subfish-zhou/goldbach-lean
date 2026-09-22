@@ -212,7 +212,10 @@ interactive graph. In this graph arrows point from a dependency to its consumer,
 opposite to the direct import graph above. Selecting a node opens its statement
 summary and links to the document and original Lean source. The source links
 use exported declaration positions and the rendering checkout's Git commit.
-Render from a committed checkout for links that describe exactly that source.
+Those positions are 1-based and begin at a declaration's doc comment when one
+precedes it, so `blueprint/src/sources.py` advances each anchor to the line that
+opens the declaration itself. Render from a committed checkout for links that
+describe exactly that source.
 
 Install Graphviz, its development headers, `pkg-config`, Python's venv support,
 and `kpsewhich` (provided by `texlive-binaries` on Ubuntu). Then, from the project
