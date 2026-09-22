@@ -73,9 +73,10 @@ and replay records retain their original 1+2 scope.
    These rules catch proof placeholders, custom axiom declarations, trusted
    native decision calls, unsafe declarations and the kernel-check bypass option
    at the source level. The release-text scan also checks for untranslated CJK
-   content and private machine paths, including Blueprint source and renderer
-   configuration. `Goldbach.Blueprint` is a separate documentation root in the
-   reachability check, alongside the public and check roots.
+   content and private machine paths across the published front end — the
+   website assets, the Blueprint exposition chapters, and the Blueprint source
+   and renderer configuration. `Goldbach.Blueprint` is a separate documentation
+   root in the reachability check, alongside the public and check roots.
 3. **Literal targets and axiom dependencies:** `python3 scripts/check.py` runs
    the source checks and elaborates two separate probes. `Goldbach/Checks.lean`
    expands the Chen specification, verifies its implementation signatures,
