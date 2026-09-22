@@ -66,5 +66,44 @@ class ChapterGraphTests(unittest.TestCase):
         self.assertTrue(all(len(line) <= 26 for line in label.split(r'\n')))
 
 
+class DeclarationLineTests(unittest.TestCase):
+    """Exported declaration positions resolve to the line that opens them."""
+
+    def test_bare_declaration_keeps_its_recorded_line(self):
+        lines = ['namespace Demo', '', 'theorem demo : True := trivial']
+        self.assertEqual(sources.declaration_line(lines, 3), 3)
+
+    def test_single_line_doc_comment_advances_to_the_declaration(self):
+        lines = ['/-- A short note. -/', 'theorem demo : True := trivial']
+        self.assertEqual(sources.declaration_line(lines, 1), 2)
+
+    def test_multi_line_doc_comment_advances_to_the_declaration(self):
+        lines = ['/-- A longer note,', 'spanning several lines. -/', '',
+                 'theorem demo : True :=', '  trivial']
+        self.assertEqual(sources.declaration_line(lines, 1), 4)
+
+    def test_declaration_after_a_closing_comment_line(self):
+        lines = ['/-- Note. -/', '', '', 'def demo : Nat := 0']
+        self.assertEqual(sources.declaration_line(lines, 1), 4)
+
+    def test_nested_comment_and_inline_declaration(self):
+        lines = ['/- outer /- inner -/ still outer -/ theorem demo : True := trivial']
+        self.assertEqual(sources.declaration_line(lines, 1), 1)
+
+    def test_recorded_line_outside_the_source_is_rejected(self):
+        with self.assertRaises(ValueError):
+            sources.declaration_line(['theorem demo : True := trivial'], 9)
+        with self.assertRaises(ValueError):
+            sources.declaration_line(['theorem demo : True := trivial'], 0)
+
+    def test_unterminated_comment_is_rejected(self):
+        with self.assertRaises(ValueError):
+            sources.declaration_line(['/-- never closed'], 1)
+
+    def test_comment_without_a_following_declaration_is_rejected(self):
+        with self.assertRaises(ValueError):
+            sources.declaration_line(['/-- Note. -/', '', ''], 1)
+
+
 if __name__ == '__main__':
     unittest.main()
