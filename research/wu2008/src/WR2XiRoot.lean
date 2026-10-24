@@ -1,3 +1,5 @@
+import WR2XiCandidateCertificate
+import WR2XiSecondPaid
 import WR2XiFirstPaid
 
 run_cmd do
@@ -26,3 +28,12 @@ run_cmd do
 #print axioms Wu04FirstCertificate.cost_paid
 #check @Wu04FirstPaid.debit_le_slack
 #print axioms Wu04FirstPaid.debit_le_slack
+
+#print axioms WuPaper.R2Xi.Xi2_four_rows_paid_base
+#print axioms WuPaper.R2Xi.originalSecondFeedback_eq_mother_gains
+
+#print axioms WuPaper.R2Xi.RationalCandidate.candidate_entry_bounds
+
+#print axioms WuPaper.R2Xi.RationalCandidate.candidate_actual_lower
+
+#print axioms WuPaper.R2Xi.RationalCandidate.candidate_actual_nodes

@@ -7,6 +7,12 @@ Follow either public statement down to its inputs, or start with an analytic
 ingredient and work upward. The [README roadmap](../README.md#proof-at-a-glance)
 shows the mathematics; the graph below shows the source boundary.
 
+The separate [Wu04/Wu08 source map](../research/wu2008/README.md)
+is in the research tree. Start with
+[`WR2ClassicalCertificate`](../research/wu2008/src/WR2ClassicalCertificate.lean)
+for its unconditional 1+1.894 endpoint, then follow the classical slot budget,
+improvement gains, actual counts, and refined-count conversion described there.
+
 ## Li–Liu extension
 
 | Import / build target | Public results |
@@ -314,6 +320,22 @@ premise. Historical counting errors must be corrected before those formulations
 can enter the proof.
 
 ## Proof reuse and discovery
+
+[Chen/Representations](../MathlibNt/SieveTheory/Chen/Representations.lean)
+defines the finite set `chenGoodRepresentations` using only primality and the
+almost-prime condition.
+[Switching/Weights](../MathlibNt/SieveTheory/Switching/Weights.lean) imports this
+definition and contains the sieve-weight comparison. The representation set keeps its original
+namespace and definition.
+
+The S3 numerical proof separates three reading tasks.
+[LiLiuGoldbachS3PolynomialData](../MathlibNt/SieveTheory/LiLiuGoldbachS3PolynomialData.lean)
+contains polynomial evaluation and primitive definitions;
+[LiLiuGoldbachS3IntegralScalarTables](../MathlibNt/SieveTheory/LiLiuGoldbachS3IntegralScalarTables.lean)
+contains the exact rational coefficient lists and constants. The coefficient
+identities and analytic bounds remain in their respective proof modules. This
+lets readers inspect each argument without reading through large rational
+tables, while preserving the definitions and their namespace.
 
 The public `goldbachProdPrimes_upperRosserCertificate` interface in
 [LiLiuGoldbachB10RosserFactor](../MathlibNt/SieveTheory/LiLiuGoldbachB10RosserFactor.lean)

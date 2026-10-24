@@ -2,7 +2,10 @@
 
 A Lean 4 project formalizing progress toward **Goldbach's conjecture** and
 building reusable analytic number theory, with **Chen's 1+2 theorem** and
-**Li–Liu's 1+1.9 theorem** formalized. Stronger results remain a research direction.
+**Li–Liu's 1+1.9 theorem** formalized. The separate
+[Wu04/Wu08 development](research/wu2008/README.md) derives **1+1.894**;
+its full source build, statement and axiom checks, and final module kernel
+replay have passed.
 
 The Li–Liu result proves:
 
@@ -17,7 +20,9 @@ public names: every sufficiently large even natural number is a prime plus
 another prime or a product of two primes, whose factors may be equal.
 
 The [release notes](docs/RELEASE_NOTES.md) describe the new results and retain the
-historical v1.0.0 record. The [recorded build benchmarks](docs/BUILD_BENCHMARK.md)
+historical v1.0.0 record. The [source-size report](docs/SOURCE_SIZE.md) gives the
+current theorem import-closure sizes and measured refactoring changes.
+The [recorded build benchmarks](docs/BUILD_BENCHMARK.md)
 measure the v1.0.0-rc1 and v1.0.0 **1+2** developments.
 
 **[Project homepage](https://subfish-zhou.github.io/goldbach-lean/)**
@@ -120,6 +125,20 @@ The quantitative theorem gives an eventual lower bound of
 actual good-representation set, for even `N`. See
 [`docs/THEOREMS.md`](docs/THEOREMS.md) for definitions and normalization.
 
+## Wu04/Wu08: 1+1.894
+
+The self-contained [research development](research/wu2008/README.md) has its own
+source manifest, build driver, and acceptance checks. Its final module is
+[`WR2ClassicalCertificate`](research/wu2008/src/WR2ClassicalCertificate.lean),
+whose theorem `WuPaper.ClassicalSlots.one894` states that every sufficiently
+large even `N` has `N = p + r*q`, with `p` and `q` prime, `r = 1` or prime,
+and `r^500 ≤ q^447`.
+
+The sources are integrated, and the complete 8826-module research build,
+independent statement and axiom checks, and final module kernel replay have
+passed. Follow the research README for the separate verification commands,
+proof source map, and acceptance records.
+
 ## Build and check
 
 Install [elan](https://github.com/leanprover/elan), then run from this directory:
@@ -185,6 +204,7 @@ work depends on your cache state and selected target.
 - `PrimeNumberTheoremAnd/`: the attributed, adapted prime-number-theorem source closure.
 - `scripts/`: reproducible source and trust checks.
 - `docs/`: theorem map, architecture, provenance, and verification instructions.
+- `research/wu2008/`: the separately built and accepted Wu04/Wu08 1+1.894 proof.
 
 The proof uses a modern combination of Jurkat–Richert/Richert linear sieve,
 Suzuki comparison results, Selberg upper sieve, and proved distribution bounds.

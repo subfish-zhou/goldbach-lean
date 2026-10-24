@@ -121,12 +121,6 @@ private theorem Pi10Sifted_literalHPoint_of_prime_ge
   have hEq : ℓ = p := (Nat.prime_dvd_prime_iff_eq hℓPrime hpPrime).mp hℓdvd
   simpa [hEq] using hZp
 
-private theorem Pi10Sifted_fst_dvd_of_prod_dvd {a b n : ℕ} (h : a * b ∣ n) : a ∣ n :=
-  dvd_trans (dvd_mul_right a b) h
-
-private theorem Pi10Sifted_snd_dvd_of_prod_dvd {a b n : ℕ} (h : a * b ∣ n) : b ∣ n :=
-  dvd_trans (dvd_mul_left b a) h
-
 private theorem Pi10Sifted_prod_eq_sub_of_outputFiber
     {N : ℕ} {ε b c : ℝ} {p : ℕ} {x : Σ _rs : ℕ × ℕ, ℕ}
     (hx : x ∈ goldbachPi10OutputFiber N ε b c p) :
@@ -145,12 +139,7 @@ private theorem Pi10Sifted_q_eq_div_of_outputFiber
   have hrsMem : x.1 ∈ goldbachC10Pairs N b c := (mem_goldbachPi10Atoms_iff.mp hxPi).1
   have hmpos : 0 < goldbachC10Prod x.1 := Pi10Sifted_prod_pos_of_pair_mem hrsMem
   have hEq : goldbachC10Prod x.1 * x.2 = N - p := Pi10Sifted_prod_eq_sub_of_outputFiber hx
-  have hdiv :
-      (x.2 * goldbachC10Prod x.1) / goldbachC10Prod x.1 = x.2 := by
-    simpa [mul_comm] using (Nat.mul_div_cancel_left x.2 hmpos)
-  calc
-    x.2 = (x.2 * goldbachC10Prod x.1) / goldbachC10Prod x.1 := hdiv.symm
-    _ = (N - p) / goldbachC10Prod x.1 := by rw [mul_comm, hEq]
+  exact Nat.eq_div_of_mul_eq_right hmpos.ne' hEq
 
 private theorem Pi10Sifted_outputFiber_fst_mem_largePrimeDivisors
     {N : ℕ} {ε β c : ℝ} {p : ℕ} {x : Σ _rs : ℕ × ℕ, ℕ}
@@ -166,7 +155,7 @@ private theorem Pi10Sifted_outputFiber_fst_mem_largePrimeDivisors
   have hn0 : N - p ≠ 0 := by
     omega
   have hprodDvd : goldbachC10Prod x.1 ∣ N - p := ⟨x.2, hEq.symm⟩
-  have hrdvd : x.1.1 ∣ N - p := Pi10Sifted_fst_dvd_of_prod_dvd hprodDvd
+  have hrdvd : x.1.1 ∣ N - p := dvd_of_mul_right_dvd hprodDvd
   change x.1.1 ∈ (N - p).primeFactors.filter (fun q : ℕ => (N : ℝ) ^ β ≤ (q : ℝ))
   exact Finset.mem_filter.mpr
     ⟨Nat.mem_primeFactors.mpr ⟨hrs.1, hrdvd, hn0⟩, hrs.2.2.2.1⟩
@@ -185,7 +174,7 @@ private theorem Pi10Sifted_outputFiber_snd_mem_largePrimeDivisors
   have hn0 : N - p ≠ 0 := by
     omega
   have hprodDvd : goldbachC10Prod x.1 ∣ N - p := ⟨x.2, hEq.symm⟩
-  have hsdvd : x.1.2 ∣ N - p := Pi10Sifted_snd_dvd_of_prod_dvd hprodDvd
+  have hsdvd : x.1.2 ∣ N - p := dvd_of_mul_left_dvd hprodDvd
   have hβle : (N : ℝ) ^ β ≤ (x.1.2 : ℝ) := by
     exact le_trans hrs.2.2.2.1 <|
       le_trans hrs.2.2.2.2.1 hrs.2.2.2.2.2.1

@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
 import MathlibNt.SieveTheory.LiuLogarithmicIntegral
 
@@ -56,28 +57,11 @@ theorem goldbachB8PlusMainMass_nonneg (N : ℕ) :
   exact liuLogarithmicIntegral_nonneg _ (by positivity)
     (goldbachC8ProductSupport_two_le_quotient hm)
 
-private theorem B8FibreSieve_pushforward_sum
-    {α : Type*} [DecidableEq α] (A : Finset α) (out : α → ℕ)
-    (P : ℕ → Prop) [DecidablePred P] :
-    ∑ n ∈ (A.image out).filter P, ((A.filter fun x => out x = n).card : ℝ) =
-      ((A.filter fun x => P (out x)).card : ℝ) := by
-  have h := Finset.sum_fiberwise_eq_sum_filter A ((A.image out).filter P) out
-    (fun _ => (1 : ℝ))
-  have heq : A.filter (fun x => out x ∈ (A.image out).filter P) =
-      A.filter (fun x => P (out x)) := by
-    ext x
-    simp only [Finset.mem_filter]
-    constructor
-    · exact fun hx => ⟨hx.1, hx.2.2⟩
-    · exact fun hx => ⟨hx.1, Finset.mem_image.mpr ⟨x, hx.1, rfl⟩, hx.2⟩
-  rw [heq] at h
-  simpa using h
-
 theorem goldbachB8PlusWeight_sum_eq_card_atoms (N : ℕ) :
     ∑ p ∈ goldbachB8PlusSupport N, goldbachB8PlusWeight N p =
       ((goldbachB8PlusAtoms N).card : ℝ) := by
   simpa [goldbachB8PlusSupport, goldbachB8PlusWeight, goldbachB8PlusOutputFiber] using
-    B8FibreSieve_pushforward_sum (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
+    MathlibNt.SieveTheory.sum_card_fibres_filter_image (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
       (fun _ => True)
 
 /-- Reciprocal totient on all moduli; it agrees with `goldbachNu` on squarefree moduli. -/
@@ -126,7 +110,7 @@ theorem goldbachB8PlusBoundingSieve_multSum_eq_divCount
   simpa [goldbachB8PlusBoundingSieve, BoundingSieve.multSum, goldbachB8PlusSupport,
     goldbachB8PlusWeight, goldbachB8PlusOutputFiber, goldbachB8PlusDivCount,
     Finset.sum_filter] using
-    B8FibreSieve_pushforward_sum (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
+    MathlibNt.SieveTheory.sum_card_fibres_filter_image (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
       (fun p => d ∣ p)
 
 theorem goldbachB8PlusBoundingSieve_siftedSum_eq_card
@@ -140,7 +124,7 @@ theorem goldbachB8PlusBoundingSieve_siftedSum_eq_card
         (((goldbachB8PlusAtoms N).filter fun x => goldbachB8PlusOutput N x = p).card : ℝ) := by
       rw [goldbachB8PlusBoundingSieve, BoundingSieve.siftedSum, ← Finset.sum_filter]
       rfl
-    _ = _ := B8FibreSieve_pushforward_sum (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
+    _ = _ := MathlibNt.SieveTheory.sum_card_fibres_filter_image (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
       (fun p => Nat.Coprime (goldbachB10ProdPrimes N Z) p)
 
 theorem goldbachB8PlusBoundingSieve_nu_eq_inv_totient

@@ -57,6 +57,7 @@ theorem goldbachPositiveScalar_rounding :
     goldbachPositiveScalarRationalLower ≤ goldbachPositiveScalarExactRational ∧
     goldbachPositiveScalarExactRational < goldbachPositiveScalarRationalLower + 1/10^8 := by
   norm_num [goldbachPositiveScalarRationalLower, goldbachPositiveScalarExactRational,
-    goldbachPositiveScalarL, goldbachPositiveScalarA, Finset.sum_range_succ]
+    goldbachPositiveScalarL, goldbachPositiveScalarA, goldbachPositiveScalarACoeffs,
+    s3eval, Finset.sum_range_succ]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -134,8 +134,8 @@ theorem goldbachPositiveScalar_integral_bounds {b : ℝ} (hb : b ∈ Icc (3 : �
     rw [uIcc_of_le hb.1]
     exact (goldbachS3_inner_continuousOn hb.1).div continuousOn_id
       (fun v hv => by dsimp; linarith [hv.1])
-  have hP : Continuous goldbachPositiveScalarP := by unfold goldbachPositiveScalarP; fun_prop
-  have hH : Continuous goldbachPositiveScalarH := by unfold goldbachPositiveScalarH; fun_prop
+  have hP : Continuous goldbachPositiveScalarP := S3Polynomial.eval_continuous _
+  have hH : Continuous goldbachPositiveScalarH := S3Polynomial.eval_continuous _
   have hz : ContinuousOn (fun v : ℝ => (v-3)/(v-1)) (Icc 3 b) :=
     (continuousOn_id.sub continuousOn_const).div (continuousOn_id.sub continuousOn_const)
       (fun v hv => by dsimp; linarith [hv.1])

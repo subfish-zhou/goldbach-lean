@@ -227,19 +227,12 @@ theorem goldbachS2SwitchedMainMass_nonneg
     (show (2 : ℝ) ≤ r by exact_mod_cast hrPrime.two_le).trans hrle
   exact liuLogarithmicIntegral_nonneg (2 / Real.log 2) (by positivity) htwo
 
-private theorem S2Switched_pushforward_sum_eq_card_filter
-    {α : Type*} [DecidableEq α]
-    (A : Finset α) (out : α → ℕ) (P : ℕ → Prop) [DecidablePred P] :
-    ∑ n ∈ (A.image out).filter P, (((A.filter fun x => out x = n).card : ℕ) : ℝ) =
-      (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := by
-  simpa using MathlibNt.SieveTheory.sum_fibres_filter_image A out P (fun _ => (1 : ℝ))
-
 theorem goldbachS2SwitchedWeight_sum_eq_card_labels
     (N : ℕ) (T : ℝ) :
     ∑ n ∈ goldbachS2SwitchedSupport N T, goldbachS2SwitchedWeight N T n =
       ((goldbachS2SwitchedLabels N T).card : ℝ) := by
   simpa [goldbachS2SwitchedSupport, goldbachS2SwitchedWeight] using
-    (S2Switched_pushforward_sum_eq_card_filter
+    (MathlibNt.SieveTheory.sum_card_fibres_filter_image
       (goldbachS2SwitchedLabels N T) (goldbachS2SwitchedOutput N) (fun _ => True))
 
 theorem goldbachS2SwitchedWeight_nonneg
@@ -294,7 +287,7 @@ theorem goldbachS2SwitchedBoundingSieve_multSum_eq_divCount
                 goldbachS2SwitchedWeight, BoundingSieve.multSum, A, out, Finset.sum_filter]
     _ = (((A.filter fun x => d ∣ out x).card : ℕ) : ℝ) := by
           simpa [A, out] using
-            S2Switched_pushforward_sum_eq_card_filter A out (fun n => d ∣ n)
+            MathlibNt.SieveTheory.sum_card_fibres_filter_image A out (fun n => d ∣ n)
     _ = (goldbachS2SwitchedDivCount N T d : ℝ) := by
           rw [show A.filter (fun x => d ∣ out x) = goldbachS2SwitchedDivisorLabels N T d by
             ext x
@@ -316,7 +309,7 @@ theorem goldbachS2SwitchedBoundingSieve_siftedSum_eq
               rfl
     _ = (((A.filter fun x => Nat.Coprime P (out x)).card : ℕ) : ℝ) := by
           simpa [A, out, P] using
-            S2Switched_pushforward_sum_eq_card_filter A out (fun n => Nat.Coprime P n)
+            MathlibNt.SieveTheory.sum_card_fibres_filter_image A out (fun n => Nat.Coprime P n)
     _ = (((A.filter fun x => SurvivesSieve N Z (out x)).card : ℕ) : ℝ) := by
           rw [show A.filter (fun x => Nat.Coprime P (out x)) =
             A.filter (fun x => SurvivesSieve N Z (out x)) by

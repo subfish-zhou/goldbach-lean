@@ -68,17 +68,11 @@ noncomputable def goldbachS4Point (N : ℕ) (u : ℝ) (n : ℕ) : ℤ :=
   (((goldbachS4Pairs N u).filter fun rs =>
       literalHPoint (N * rs.1) (rs.1 * rs.2) rs.2 n).card : ℤ)
 
-private theorem sum_indicator_eq_card_filter {α : Type*} [DecidableEq α]
-    (A : Finset α) (P : α → Prop) :
-    (∑ n ∈ A, if P n then (1 : ℤ) else 0) = ((A.filter P).card : ℤ) := by
-  classical
-  exact Finset.sum_boole P A
-
 theorem literalH_eq_sum_indicator
     (A : Finset ℕ) (M d : ℕ) (x : ℝ) :
     literalH A M d x =
       ∑ n ∈ A, if literalHPoint M d x n then (1 : ℤ) else 0 := by
-  rw [literalH, sum_indicator_eq_card_filter]
+  rw [literalH, Finset.sum_boole]
 
 theorem goldbachBadCount_eq_sum_indicator
     (A : Finset ℕ) (N : ℕ) :
@@ -111,28 +105,14 @@ theorem goldbachBasicWeight_nonneg_of_le {zAlpha zTau n : ℕ}
     (hz : zAlpha ≤ zTau) :
     0 ≤ goldbachBasicWeight zAlpha zTau n := by
   classical
+  have hLeast := leastPrimeFactorAtLeast_mono (k := n) hz
   by_cases h3 : OmegaAtLeast 3 n
   · have h2 : OmegaAtLeast 2 n := by
       unfold OmegaAtLeast at *
       omega
-    have hLeast : LeastPrimeFactorAtLeast zTau n → LeastPrimeFactorAtLeast zAlpha n :=
-      leastPrimeFactorAtLeast_mono hz
-    by_cases hτ : LeastPrimeFactorAtLeast zTau n
-    · simp [goldbachBasicWeight, h3, h2, hτ, hLeast hτ]
-    · by_cases hα : LeastPrimeFactorAtLeast zAlpha n
-      · simp [goldbachBasicWeight, h3, h2, hτ, hα]
-      · simp [goldbachBasicWeight, h3, h2, hτ, hα]
-  · by_cases h2 : OmegaAtLeast 2 n
-    · have hLeast : LeastPrimeFactorAtLeast zTau n → LeastPrimeFactorAtLeast zAlpha n :=
-        leastPrimeFactorAtLeast_mono hz
-      by_cases hτ : LeastPrimeFactorAtLeast zTau n
-      · simp [goldbachBasicWeight, h3, h2, hτ, hLeast hτ]
-      · by_cases hα : LeastPrimeFactorAtLeast zAlpha n
-        · simp [goldbachBasicWeight, h3, h2, hτ, hα]
-        · simp [goldbachBasicWeight, h3, h2, hτ, hα]
-    · by_cases hα : LeastPrimeFactorAtLeast zAlpha n
-      · simp [goldbachBasicWeight, h3, h2, hα]
-      · simp [goldbachBasicWeight, h3, h2, hα]
+    simp [goldbachBasicWeight, h3, h2]
+  · simp only [goldbachBasicWeight, h3, and_false, if_false, add_zero, sub_zero]
+    split_ifs <;> simp_all
 
 theorem prime_not_dvd_of_coprime {n M ℓ : ℕ}
     (hcop : Nat.Coprime n M) (hℓPrime : ℓ.Prime) (hℓn : ℓ ∣ n) :
@@ -157,14 +137,8 @@ theorem goldbachS1Point_eq_indicator_of_coprime
     {N n : ℕ} {u : ℝ} (hcop : Nat.Coprime n N) :
     goldbachS1Point N u n =
       if LeastPrimeFactorAtLeast ⌈u⌉₊ n then 1 else 0 := by
-  by_cases hrough : SurvivesSieve N u n
-  · have hrough' : LeastPrimeFactorAtLeast ⌈u⌉₊ n :=
-      (survivesSieve_iff_leastPrimeFactorAtLeast_of_coprime hcop).mp hrough
-    simp [goldbachS1Point, literalHPoint_one_iff_survivesSieve, hrough, hrough']
-  · have hrough' : ¬LeastPrimeFactorAtLeast ⌈u⌉₊ n := by
-      intro h
-      exact hrough ((survivesSieve_iff_leastPrimeFactorAtLeast_of_coprime hcop).mpr h)
-    simp [goldbachS1Point, literalHPoint_one_iff_survivesSieve, hrough, hrough']
+  simp only [goldbachS1Point, literalHPoint_one_iff_survivesSieve,
+    survivesSieve_iff_leastPrimeFactorAtLeast_of_coprime hcop]
 
 theorem goldbachS1Point_le_one (N n : ℕ) (u : ℝ) :
     goldbachS1Point N u n ≤ 1 := by
@@ -470,24 +444,14 @@ theorem goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
 theorem goldbachS2_eq_sum_point
     (A : Finset ℕ) (N : ℕ) (T : ℝ) :
     goldbachS2 A N T = ∑ n ∈ A, goldbachS2Point N T n := by
-  classical
-  unfold goldbachS2
-  simp_rw [literalH_eq_sum_indicator]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro n hn
-  rw [goldbachS2Point, sum_indicator_eq_card_filter]
+  simp only [goldbachS2, literalH_eq_sum_indicator, goldbachS2Point, ← Finset.sum_boole]
+  exact Finset.sum_comm
 
 theorem goldbachS4_eq_sum_point
     (A : Finset ℕ) (N : ℕ) (u : ℝ) :
     goldbachS4 A N u = ∑ n ∈ A, goldbachS4Point N u n := by
-  classical
-  unfold goldbachS4
-  simp_rw [literalH_eq_sum_indicator]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro n hn
-  rw [goldbachS4Point, sum_indicator_eq_card_filter]
+  simp only [goldbachS4, literalH_eq_sum_indicator, goldbachS4Point, ← Finset.sum_boole]
+  exact Finset.sum_comm
 
 theorem goldbachBasicFiniteRHS_ge_S1_sub_S2_sub_S4_sub_X
     (A : Finset ℕ) {N : ℕ} {u T : ℝ}

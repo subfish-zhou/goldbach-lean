@@ -1,0 +1,108 @@
+{
+  "status": "pass",
+  "reviewed_at_utc": "2026-10-24T11:19:36.290109+00:00",
+  "scope": "Both original goals: simplify Chen 1+2 and Li-Liu 1+1.9 with readability first, and complete the Wu04/Wu08 route to unconditional 1+1.894.",
+  "requirements": [
+    {
+      "requirement": "Simplify both existing developments, prioritizing readability",
+      "decision": "pass",
+      "evidence": [
+        "Chen weight proof reuses its cofactor classification and Mathlib product/divisibility lemmas; duplicate branches and unused private premises removed.",
+        "B8/B10 consumers share the cast-cardinality fibre lemma; indicator sums use Finset.sum_boole directly.",
+        "Finite Chen representation data and S3 polynomial/rational data are separated from analytic proof modules.",
+        "Buchstab core estimates remove unused cap hypotheses; old interfaces remain as specializations.",
+        "Heavy umbrella imports are narrowed where supported by the full build."
+      ],
+      "source_examples": [
+        "MathlibNt/SieveTheory/Chen/Representations.lean",
+        "MathlibNt/SieveTheory/LiLiuGoldbachS3PolynomialData.lean",
+        "MathlibNt/SieveTheory/LiLiuGoldbachS3IntegralScalarTables.lean",
+        "MathlibNt/SieveTheory/FiniteFibres.lean",
+        "MathlibNt/SieveTheory/Switching/Weights.lean",
+        "MathlibNt/SieveTheory/LiLiuGoldbachBasicToSieve.lean",
+        "MathlibNt/SieveTheory/LiLiuPrereqBuchstabUniformAbel.lean"
+      ],
+      "validation": "Full warning-free default-library source build, both literal/axiom probes, five facade kernel replays; all 2537 pinned inputs and current 2533-source inventory matched at final review.",
+      "measurement_scope": "No unmeasured wall-clock speedup or overall proof-byte reduction is claimed."
+    },
+    {
+      "requirement": "Complete Wu04/Wu08 and its implication to 1+1.894",
+      "decision": "pass",
+      "evidence": [
+        "Unconditional WuPaper.ClassicalSlots.one894 in src/WR2ClassicalCertificate.lean.",
+        "All classical slots and four improvements discharge the actual-count coefficient threshold.",
+        "The refined-count loss bridge and finite-carrier monotonicity produce the exact natural-power condition r^500 <= q^447.",
+        "All 8826 research modules built from integrated sources; independent literal and standard-axiom checks passed; final module independently replayed over rebuilt imports."
+      ],
+      "full_research_modules": 8826,
+      "final_source_import_closure_modules": 8444,
+      "manifest_sha256": "e15064e35823dba39491cfae766e0038b063633caab966fc92f4fc5a30ad1e73",
+      "acceptance": "build/classical-acceptance.json",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "kernel_scope": "WR2ClassicalCertificate replayed over imports checked in the complete source build."
+    }
+  ],
+  "main_acceptance": {
+    "report": "build/main-final-validation/result.json",
+    "input_manifest_sha256": "2525d123fbbf3006b4e3caeaf294c370cb4b49bdf49a0edd574caba187ea46ce",
+    "source_modules": 2533,
+    "input_files": 2537,
+    "lake_jobs": 11241,
+    "replayed_modules": [
+      "Goldbach.Theorem",
+      "Goldbach.Checks",
+      "Goldbach.OnePlusOneNine",
+      "Goldbach.OnePlusOneNineChecks",
+      "Goldbach.All"
+    ]
+  },
+  "documentation": {
+    "README.md": "8940765e9ba67bcc8551b5998d0d6c7ab42ea9d6933f94d028cf186420300414",
+    "docs/ARCHITECTURE.md": "4210e8f2fcfb58c9c1669f03f2bc257a41993239b25a881153d988ea0d9fb653",
+    "docs/THEOREMS.md": "a7ccb90b3a85abf0371f093ac37a35d0b47c2ec92c7e0e78ea9db2321d506fd9",
+    "docs/VERIFICATION.md": "b4b5d4dc7eec796cee7b7236afb36659097166761e0cb20d582fe3823e3b0b60",
+    "docs/RELEASE_NOTES.md": "45e6e5bff10a9faff3f73d3e645350438d0daa088e6aad03571d82021e42d9a6",
+    "docs/BUILD_BENCHMARK.md": "e5874147cd8c0f7086f79f5cd27d7e36948290eaf6780ac635764922a8a8f3a5",
+    "docs/PROVENANCE.md": "6b0eb81c4fe2545a998f36cd73333ff019bd80a9f9fb9cfa66fb17adecbd02aa",
+    "docs/SOURCE_SIZE.md": "70ae1753cd6410c78a7a0d45dcee1310999e85308bc869aa9d711f2b671b87c9",
+    "docs/DOCUMENTATION.md": "e1d772f6e604558c33f56d4148e5eb888724371d44d805cb2e1e58932b500dd1",
+    "research/wu2008/README.md": "252a8c22a1f02e747ec56094b9230b5c852b7c47deb995e229912bab22d046e7"
+  },
+  "final_static_checks": {
+    "source_modules": 2533,
+    "issues": [],
+    "local_document_links": "pass",
+    "replay_command_python_syntax": "pass",
+    "git_diff_check": "Tracked-file comparison passed at completion review. Full staged comparison additionally reports two trailing-whitespace warnings in previously untracked, accepted research sources; accepted proof bytes are preserved.",
+    "staged_whitespace_warnings": [
+      {
+        "file": "research/wu2008/src/WR2GammaHighNineUpper.lean",
+        "line": 147
+      },
+      {
+        "file": "research/wu2008/src/WR2XiRationalMixedArithmetic.lean",
+        "line": 34
+      }
+    ]
+  },
+  "remaining_required_work": [],
+  "stronger_endpoint_scope": "No separate literal acceptance of 1.8938 is claimed.",
+  "documentation_updated_at_utc": "2026-10-24T17:43:55.170902+00:00",
+  "source_size_report": {
+    "report": "source-size-report.json",
+    "sha256": "d47675689f2e5b9351e4b1e8955da1f7f50e6a639f88a2849b28f72df97fcaad",
+    "reproduce": "python3 scripts/source_size.py"
+  },
+  "publication_checks": {
+    "main_static_scan": "pass: 2533 modules, no issues",
+    "research_source_hashes": "pass: 8826 modules",
+    "build_script_regression_tests": "pass: 15 tests",
+    "source_size_reproduction": "all recorded measurements reproduced exactly",
+    "main_accepted_input_hashes": "pass: all 2537 inputs match",
+    "staged_files": "5386 source, tooling and documentation files; build outputs excluded"
+  }
+}

@@ -1,5 +1,6 @@
 import SigmaJJoint
 import F1LowerResidual
+import F1UpperGapPayment
 
 namespace RemainingHf
 open Real Wu2008DoubleSieve SharpLogRecurrence JointLogTotalComparison Wu04FactorEnvelopes F1FullRecoveryPayment

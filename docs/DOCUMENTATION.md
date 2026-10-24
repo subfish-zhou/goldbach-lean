@@ -1,5 +1,13 @@
 # Project website, Lean documentation and dependency views
 
+The 2026-10-24 source update adds the separately accepted
+[Wu04/Wu08 1+1.894 proof](../research/wu2008/README.md) and
+[source-size measurements](SOURCE_SIZE.md). The API and curated Blueprint
+pipeline described here covers the root Chen/Li–Liu libraries; the Wu proof has
+its own source map and verification commands. Pushing these sources and Markdown
+documents does not itself rebuild the static site. Live coverage and revision
+must be read from the deployed build records described below.
+
 The static site has four reader-facing routes, relative to the project's
 deployment prefix:
 

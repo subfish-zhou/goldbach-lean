@@ -1,8 +1,11 @@
-import F1JointPartial
+import FirstCRationalFTCBase
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
 
 noncomputable section
-open Real Set MeasureTheory FirstCRationalPayment F1RemainingRecovery
-open scoped Interval
+open Real
 namespace F1JointFTC
 
 /-- The radical is forced by the original quadratic denominator, not a domain split. -/

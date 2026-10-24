@@ -36,22 +36,8 @@ private theorem largePrimeDivisors_prod_pos {n : ℕ} {z : ℝ} :
 private theorem real_pow_card_le_prod_of_mem_ge (s : Finset ℕ) (z : ℝ)
     (hz : 0 ≤ z) (hmem : ∀ p ∈ s, z ≤ (p : ℝ)) :
     z ^ s.card ≤ ∏ p ∈ s, (p : ℝ) := by
-  classical
-  revert hmem
-  refine Finset.induction_on s ?_ ?_
-  · intro hmem
-    simp
-  · intro a s ha hs hmem
-    have haz : z ≤ (a : ℝ) := hmem a (by simp [ha])
-    have hmem' : ∀ p ∈ s, z ≤ (p : ℝ) := by
-      intro p hp
-      exact hmem p (by simp [hp])
-    have hs' := hs hmem'
-    calc
-      z ^ (insert a s).card = z ^ s.card * z := by simp [ha, pow_succ, mul_comm]
-      _ ≤ (∏ p ∈ s, (p : ℝ)) * a := by
-        gcongr
-      _ = ∏ p ∈ insert a s, (p : ℝ) := by simp [ha, mul_comm]
+  simpa only [Finset.prod_const] using
+    (Finset.prod_le_prod (fun _ _ => hz) hmem)
 
 /-- The filtered set of distinct prime divisors above `N^κ` has cardinality at most `20`
 once `1 ≤ n < N` and `1 / 21 < κ`. -/

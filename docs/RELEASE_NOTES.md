@@ -1,5 +1,35 @@
 # Release notes
 
+## Wu04/Wu08 1+1.894 and shared-proof refactoring (2026-10-24)
+
+The separate [Wu04/Wu08 development](../research/wu2008/README.md) now proves
+the unconditional theorem `WuPaper.ClassicalSlots.one894`. Every sufficiently
+large even natural number has `N = p + r*q`, with `p` and `q` prime, `r = 1`
+or prime, and the exact condition `r^500 ≤ q^447`. The final entry is
+[`WR2ClassicalCertificate`](../research/wu2008/src/WR2ClassicalCertificate.lean).
+Classical-slot certificates and the double-sieve improvements discharge the
+coefficient bound used by the actual representation-count argument.
+
+The complete 8,826-module research source build, independent literal-statement
+and axiom checks, and final-module kernel replay over rebuilt imports passed.
+The main tree's 2,533 source modules also passed the full default-library build
+(11,241 Lake jobs), both Chen/Li–Liu acceptance probes, and five public-module
+replays. The reported endpoint axioms are confined to `propext`,
+`Classical.choice` and `Quot.sound`. See the [verification guide](VERIFICATION.md)
+and [completion record](../research/wu2008/completion-audit.json) for scope.
+
+Chen and Li–Liu proofs now share finite-fibre and representation helpers, and
+the S3 rational data is separated from analytic proofs. Relative to
+`09b97db5764ade1246bfb77206baa1b124760958`, the refactoring cohort, including
+split-out files, saves 129 effective code lines and 8,961 bytes. Including the
+other new proof modules, the main tree grows by 1,104 effective lines. The
+[source-size report](SOURCE_SIZE.md) gives the three theorem sizes and counting
+method. No current build-time speedup is claimed.
+
+The Wu sources retain their separate manifest and build driver; root Lake targets
+provide the Chen and Li–Liu interfaces. The accepted Wu endpoint is 1+1.894;
+these records do not claim a separate literal acceptance of 1+1.8938.
+
 ## Li–Liu 1+1.9
 
 The project now formalizes Li–Liu's 1+1.9 theorem alongside the existing Chen

@@ -888,37 +888,8 @@ theorem correctedChenQ1Count_eq_reindexed (N : ℕ) :
       ∑ q ∈ (Finset.range (correctedChenY N)).filter
           (fun q => q.Prime ∧ correctedChenZ N ≤ q),
         (((correctedChenCandidates N).filter (fun p => q ∣ N - p)).card : ℝ) := by
-  unfold correctedChenQ1Count
-  let Q : Finset ℕ := (Finset.range (correctedChenY N)).filter
-    (fun q => q.Prime ∧ correctedChenZ N ≤ q)
-  have h2 : (correctedChenCandidates N).sum (fun p =>
-        (((Finset.range (correctedChenY N)).filter
-          (fun q => q.Prime ∧ correctedChenZ N ≤ q ∧ q ∣ N - p)).card : ℝ)) =
-      (correctedChenCandidates N).sum (fun p =>
-        ∑ q ∈ Q, if q ∣ N - p then (1 : ℝ) else 0) := by
-    apply Finset.sum_congr rfl
-    intro p hp
-    rw [Finset.card_filter]
-    rw [Nat.cast_sum]
-    simp only [Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
-    rw [← Finset.sum_filter]
-    rw [Finset.sum_filter]
-    rw [Finset.sum_filter]
-    apply Finset.sum_congr rfl
-    intro q hq
-    by_cases hd : q ∣ N - p <;> simp [hd]
-  have h3 : (correctedChenCandidates N).sum (fun p =>
-        ∑ q ∈ Q, if q ∣ N - p then (1 : ℝ) else 0) =
-      ∑ q ∈ Q, (correctedChenCandidates N).sum (fun p =>
-        if q ∣ N - p then (1 : ℝ) else 0) := by
-    rw [Finset.sum_comm]
-  have h4 : ∑ q ∈ Q, (correctedChenCandidates N).sum (fun p =>
-        if q ∣ N - p then (1 : ℝ) else 0) =
-      ∑ q ∈ Q, (((correctedChenCandidates N).filter (fun p => q ∣ N - p)).card : ℝ) := by
-    apply Finset.sum_congr rfl
-    intro q hq
-    rw [Finset.sum_boole]
-  exact h2.trans (h3.trans h4)
+  simp only [correctedChenQ1Count, ← Finset.filter_filter, ← Finset.sum_boole]
+  exact Finset.sum_comm
 
 /-- For large `N`, prime-factor multiplicity is at most 10: for `q ≥ z`, `n ≤ N`, and `N > 2^110`,
 `v_q(n) ≤ 10`, since `q^{11} > N`. -/

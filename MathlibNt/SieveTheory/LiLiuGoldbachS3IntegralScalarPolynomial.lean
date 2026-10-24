@@ -1,14 +1,10 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialData
 import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMajorant
 
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-
-/-- The explicit integrated product of the odd logarithm and geometric polynomials. -/
-noncomputable def goldbachS3_innerPolynomial (n m : ℕ) (z : ℝ) : ℝ :=
-  2 * ∑ i ∈ range n, ∑ j ∈ range m,
-    z^(2*i+j+2) / (((2*i+1 : ℕ) : ℝ) * ((2*i+j+2 : ℕ) : ℝ))
 
 /-- Exact derivative of the fixed rational-coefficient polynomial. -/
 theorem goldbachS3_innerPolynomial_hasDerivAt (n m : ℕ) (z : ℝ) :

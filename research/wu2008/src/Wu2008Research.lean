@@ -13,3 +13,6 @@ import WRMapMSixthRoot
 import WRMapMFirstRoot
 import WRMapMDebitRoot
 import WRMapMSigmaRoot
+import WR2XiSourceRoot
+import WR2XiSixthCertificate
+import WR2ClassicalCertificate

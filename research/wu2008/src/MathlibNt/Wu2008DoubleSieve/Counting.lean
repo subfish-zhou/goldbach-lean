@@ -1,4 +1,5 @@
-import MathlibNt.SieveTheory.Switching.Weights
+import MathlibNt.SieveTheory.Chen.Representations
+import Mathlib.Tactic.SplitIfs
 
 /-!
 # Wu's prime-complement count and the frozen Chen representation count

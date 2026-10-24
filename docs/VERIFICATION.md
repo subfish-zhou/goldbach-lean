@@ -19,6 +19,34 @@ artifacts; see the [upgrade instructions](../README.md#focused-builds-and-upgrad
 `--one-two-only` runs the original Chen probe while retaining the full source
 scan. The Li–Liu probe is `Goldbach/OnePlusOneNineChecks.lean`.
 
+The [Wu04/Wu08 development](../research/wu2008/README.md) has a separate source
+manifest and build driver. Its accepted endpoint is
+`WuPaper.ClassicalSlots.one894`, with the exact condition `r^500 ≤ q^447`.
+Run `python3 build.py --all --jobs 4 --lean-threads 2` and
+`python3 check_classical.py` from `research/wu2008` after setting up its pinned
+dependencies. The research README gives the final module replay command.
+Its 8826-module source build, independent literal statement and standard-axiom
+checks, and replay of `WR2ClassicalCertificate` over the rebuilt imports have
+passed. The root Lake targets and `scripts/check.py` cover Chen and Li–Liu;
+the research gates supply the Wu acceptance evidence.
+
+## Accepted source snapshot (2026-10-24)
+
+The main acceptance run built all 2,533 shipped source modules (11,241 Lake jobs),
+passed both literal/axiom probes and replayed `Goldbach.Theorem`,
+`Goldbach.Checks`, `Goldbach.OnePlusOneNine`, `Goldbach.OnePlusOneNineChecks`
+and `Goldbach.All`. All 2,537 pinned source/configuration/checker inputs matched
+the accepted snapshot at final review. The separate Wu run built all 8,826
+manifest modules and passed its literal/axiom gate and final-module replay.
+
+The tracked [completion record](../research/wu2008/completion-audit.json) and
+[research status](../research/wu2008/mathematical-status.json) retain the results
+and fingerprints. Raw build logs, receipts and compiled objects live in ignored
+local build directories; a fresh checkout must run the commands above and the
+research README's commands to generate its own evidence. The [source-size
+report](SOURCE_SIZE.md) distinguishes full build inventories from each endpoint's
+local import closure.
+
 ## Li–Liu endpoint inspection
 
 After building `Goldbach.OnePlusOneNine`, the following commands in a Lean file

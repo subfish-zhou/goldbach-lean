@@ -27,7 +27,8 @@ open scoped BigOperators ArithmeticFunction Topology
 
 namespace AnalyticNumberTheory.LargeSieve
 
-private theorem one_lt_of_mem_conductorBlock
+/-- Conductors in a positive-level Chen block are greater than one. -/
+theorem chen1973Lemma6ConductorBlock_one_lt
     {x L level d : ℕ} (hlevel : 1 ≤ level)
     (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
     1 < d := by
@@ -35,6 +36,11 @@ private theorem one_lt_of_mem_conductorBlock
   · omega
   · simp [chen1973Lemma6ConductorBlock, hzero, chen1973Lemma6DyadicShell] at hd
     omega
+
+private theorem one_lt_of_mem_conductorBlock
+    {x L level d : ℕ} (hlevel : 1 ≤ level)
+    (hd : d ∈ chen1973Lemma6ConductorBlock x L level) :
+    1 < d := chen1973Lemma6ConductorBlock_one_lt hlevel hd
 
 private theorem primitiveCharacter_ne_one_of_one_lt
     {d : ℕ} [NeZero d] (hd : 1 < d) (χ : PrimitiveCharacter d) :
@@ -75,7 +81,7 @@ private theorem perronOrder_two_le_succ {x : ℕ} (hx : 3 ≤ x) :
 
 private theorem norm_scaled_mellinKernel_le_inv_one_add_sq
     {x : ℕ} (hx : 3 ≤ x) {X σ t : ℝ} (hX : 0 < X)
-    (hσlower : chen1973Lemma6Alpha x ≤ σ) (hσupper : σ ≤ 2) :
+    (hσlower : chen1973Lemma6Alpha x ≤ σ) (_hσupper : σ ≤ 2) :
     ‖(X : ℂ) ^ (σ + t * I) * chen1973MellinKernel (x : ℝ) (σ + t * I)‖ ≤
       X ^ σ * chen1973PerronScale (x : ℝ) ^
         (chen1973PerronOrder (x : ℝ) + 1) / σ / (1 + t ^ 2) := by
@@ -119,28 +125,13 @@ private theorem norm_scaled_mellinKernel_le_inv_one_add_sq
         A ^ (n + 1) / (‖z‖ * ‖η‖ ^ (n + 1)) := by
     unfold chen1973MellinKernel
     rw [norm_div, norm_one, norm_mul, norm_pow, hηeq, norm_div, div_pow]
-    simp [A, n, hApos.ne', abs_of_pos hApos, div_eq_mul_inv,
-      mul_assoc, mul_left_comm, mul_comm]
+    simp [A, n, abs_of_pos hApos, div_eq_mul_inv,
+      mul_left_comm, mul_comm]
   have hstep :
       A ^ (n + 1) / (‖z‖ * ‖η‖ ^ (n + 1)) ≤
         A ^ (n + 1) / (σ * (1 + t ^ 2)) := by
-    have hηpow0 : 0 ≤ ‖η‖ ^ (n + 1) := pow_nonneg (norm_nonneg _) _
-    have hz0 : 0 ≤ ‖z‖ := norm_nonneg _
-    have hleft :
-        A ^ (n + 1) / (‖z‖ * ‖η‖ ^ (n + 1)) ≤
-          A ^ (n + 1) / (σ * ‖η‖ ^ (n + 1)) := by
-      apply div_le_div_of_nonneg_left
-      · exact pow_nonneg (zero_le_one.trans hA) _
-      · positivity
-      · gcongr
-    have hright :
-        A ^ (n + 1) / (σ * ‖η‖ ^ (n + 1)) ≤
-          A ^ (n + 1) / (σ * (1 + t ^ 2)) := by
-      apply div_le_div_of_nonneg_left
-      · exact pow_nonneg (zero_le_one.trans hA) _
-      · positivity
-      · gcongr
-    exact hleft.trans hright
+    apply div_le_div_of_nonneg_left (pow_nonneg hApos.le _) (by positivity)
+    exact mul_le_mul hzge hηpow (by positivity) (norm_nonneg _)
   calc
     ‖(X : ℂ) ^ z * chen1973MellinKernel (x : ℝ) z‖ =
         X ^ σ * ‖chen1973MellinKernel (x : ℝ) z‖ := by
@@ -313,7 +304,7 @@ private theorem chen1973Lemma6ActualPhi_eq_tsum
     simp [hmem, chen1973PerronKernelFinite_of_le_one harg]
 
 theorem chen1973Lemma6ActualPhi_eq_negLogDerivIntegral_alpha
-    {x d : ℕ} [NeZero d] (χ : PrimitiveCharacter d) (hχ : χ.1 ≠ 1)
+    {x d : ℕ} [NeZero d] (χ : PrimitiveCharacter d) (_hχ : χ.1 ≠ 1)
     (hx : 3 ≤ x) {pp : ℕ × ℕ} (hp₁ : 0 < pp.1) (hp₂ : 0 < pp.2) :
     chen1973Lemma6ActualPhi x d χ pp =
       (((1 / (2 * Real.pi) : ℝ) : ℂ) *
@@ -476,7 +467,7 @@ theorem chen1973Lemma6ActualPhi_eq_alphaNegLogDerivIntegral
     (hx : 3 ≤ x) {pp : ℕ × ℕ} (hp₁ : 0 < pp.1) (hp₂ : 0 < pp.2) :
     chen1973Lemma6ActualPhi x d χ pp =
       chen1973Lemma6AlphaNegLogDerivIntegral x d χ pp := by
-  letI : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
+  let : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
   have hχ : χ.1 ≠ 1 := primitiveCharacter_ne_one_of_one_lt hd χ
   simpa [chen1973Lemma6AlphaNegLogDerivIntegral,
     chen1973Lemma6AlphaNegLogDerivIntegrand,

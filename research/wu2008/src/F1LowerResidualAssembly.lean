@@ -1,4 +1,5 @@
 import F1LowerResidual
+import F1FixedSquareExtent
 
 noncomputable section
 open Real Wu2008DoubleSieve SharpLogRecurrence FirstCRationalPayment

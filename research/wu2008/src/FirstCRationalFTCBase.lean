@@ -1,8 +1,10 @@
-import FirstIntegralRational
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Tactic.Convert
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
 
 noncomputable section
-open Real Set MeasureTheory
-open scoped Interval
+open Real
 namespace FirstCRationalPayment
 
 /-- Primitive of a principal part with the fixed maximal pole multiplicity three. -/

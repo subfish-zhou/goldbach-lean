@@ -209,19 +209,13 @@ theorem goldbachG10ActualAtom_eq_prod_mul_cofactor
     x.2 = goldbachC10Prod x.1 * goldbachG10Cofactor x := by
   exact (Nat.mul_div_cancel' (mem_goldbachG10ActualAtoms_iff.mp hx).2.2.1).symm
 
-private theorem fst_dvd_of_prod_dvd {a b n : ℕ} (h : a * b ∣ n) : a ∣ n :=
-  dvd_trans (dvd_mul_of_dvd_left (dvd_refl a) b) h
-
-private theorem snd_dvd_of_prod_dvd {a b n : ℕ} (h : a * b ∣ n) : b ∣ n :=
-  dvd_trans (dvd_mul_of_dvd_right (dvd_refl b) a) h
-
 theorem goldbachG10ActualAtom_fst_mem_largePrimeDivisors
     {N n : ℕ} {ε β γ : ℝ} (hε : 0 < ε) {rs : ℕ × ℕ}
     (hx : Sigma.mk rs n ∈ goldbachG10ActualAtoms N ε ((N : ℝ) ^ β) ((N : ℝ) ^ γ)) :
     rs.1 ∈ largePrimeDivisors n ((N : ℝ) ^ β) := by
   rcases mem_goldbachG10ActualAtoms_iff.mp hx with ⟨hrsMem, hnA, hpoint⟩
   have hrs := mem_goldbachC10Pairs_iff.mp hrsMem
-  have hdiv : rs.1 ∣ n := fst_dvd_of_prod_dvd hpoint.1
+  have hdiv : rs.1 ∣ n := dvd_of_mul_right_dvd hpoint.1
   have hn1 : 1 ≤ n := (goldbachG10DifferenceCarrier_bounds (N := N) (ε := ε) (n := n) hε hnA).1
   have hn0 : n ≠ 0 := by omega
   simp [largePrimeDivisors, Nat.mem_primeFactors, hrs.1, hdiv, hn0, hrs.2.2.2.1]
@@ -232,7 +226,7 @@ theorem goldbachG10ActualAtom_snd_mem_largePrimeDivisors
     rs.2 ∈ largePrimeDivisors n ((N : ℝ) ^ β) := by
   rcases mem_goldbachG10ActualAtoms_iff.mp hx with ⟨hrsMem, hnA, hpoint⟩
   have hrs := mem_goldbachC10Pairs_iff.mp hrsMem
-  have hdiv : rs.2 ∣ n := snd_dvd_of_prod_dvd hpoint.1
+  have hdiv : rs.2 ∣ n := dvd_of_mul_left_dvd hpoint.1
   have hn1 : 1 ≤ n := (goldbachG10DifferenceCarrier_bounds (N := N) (ε := ε) (n := n) hε hnA).1
   have hn0 : n ≠ 0 := by omega
   have hβle : (N : ℝ) ^ β ≤ (rs.2 : ℝ) := by

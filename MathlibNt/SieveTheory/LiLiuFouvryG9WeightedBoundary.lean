@@ -1,3 +1,4 @@
+import MathlibNt.Analysis.MovingIntervalIntegral
 import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralContinuous
 import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
 

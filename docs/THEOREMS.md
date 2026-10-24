@@ -1,9 +1,29 @@
 # Theorems and interpretation
 
 The Goldbach research program has formalized Chen's **1+2 theorem** and
-Li–Liu's **1+1.9 theorem**, with quantitative bounds for both. Stronger results
-remain a research direction. Import `Goldbach` for Chen,
+Li–Liu's **1+1.9 theorem**, with quantitative bounds for both. The separate
+[Wu04/Wu08 development](../research/wu2008/README.md) proves **1+1.894** with
+the exact factor condition `r^500 ≤ q^447`. Import `Goldbach` for Chen,
 `Goldbach.OnePlusOneNine` for Li–Liu, or `Goldbach.All` for both.
+
+## Wu04/Wu08 1+1.894: literal representation
+
+The separate research module
+[`WR2ClassicalCertificate`](../research/wu2008/src/WR2ClassicalCertificate.lean)
+proves `WuPaper.ClassicalSlots.one894`:
+
+```lean
+∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
+  ∃ p r q : ℕ, p.Prime ∧ (r = 1 ∨ r.Prime) ∧ q.Prime ∧
+    N = p + r * q ∧ r ^ 500 ≤ q ^ 447
+```
+
+The factor condition uses exact natural-number powers, corresponding to
+`r ≤ q^(447/500)` over the reals. The threshold is existential and works for
+every subsequent even `N`; the theorem has no additional mathematical premise.
+The [research proof map](../research/wu2008/README.md) traces the classical slots,
+improvements, actual-count bound and refined-count loss bridge. Its build and
+acceptance checks are separate from the root Chen/Li–Liu Lake targets.
 
 ## Li–Liu 1+1.9: literal representation
 

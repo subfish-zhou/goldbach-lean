@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence
 import MathlibNt.SieveTheory.LinearSieve
 import Mathlib.Data.Nat.Cast.Order.Field
@@ -58,26 +59,10 @@ theorem goldbachB10ProdPrimes_ne_zero (N : ℕ) (Z : ℝ) :
   exact ne_of_gt <| Finset.prod_pos fun p hp => by
     exact (mem_goldbachB10SiftingPrimes_iff.mp hp).2.1.pos
 
-private theorem B10FibreSieve_primeFactors_prod_eq_self {S : Finset ℕ}
-    (hS : ∀ p ∈ S, p.Prime) : (S.prod id).primeFactors = S := by
-  induction S using Finset.induction_on with
-  | empty =>
-      simp [Nat.primeFactors_one]
-  | insert p S hpS ih =>
-      rw [Finset.prod_insert hpS]
-      show (p * S.prod id).primeFactors = insert p S
-      have hpPrime := hS p (Finset.mem_insert_self _ _)
-      have hp0 : p ≠ 0 := hpPrime.ne_zero
-      have hS0 : S.prod id ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        (hS q (Finset.mem_insert_of_mem hq)).pos
-      rw [Nat.primeFactors_mul hp0 hS0, Nat.Prime.primeFactors hpPrime,
-        ih (fun q hq => hS q (Finset.mem_insert_of_mem hq))]
-      rfl
-
 theorem goldbachB10ProdPrimes_primeFactors (N : ℕ) (Z : ℝ) :
     (goldbachB10ProdPrimes N Z).primeFactors = goldbachB10SiftingPrimes N Z := by
   unfold goldbachB10ProdPrimes
-  exact B10FibreSieve_primeFactors_prod_eq_self
+  exact Nat.primeFactors_prod
     (fun p hp => (mem_goldbachB10SiftingPrimes_iff.mp hp).2.1)
 
 theorem prime_dvd_goldbachB10ProdPrimes_iff
@@ -111,40 +96,6 @@ theorem prime_dvd_goldbachB10ProdPrimes_lt
     {N : ℕ} {Z : ℝ} {p : ℕ} (hp : p.Prime) (hpP : p ∣ goldbachB10ProdPrimes N Z) :
     (p : ℝ) < Z :=
   (prime_dvd_goldbachB10ProdPrimes_iff hp).mp hpP |>.1
-
-private theorem B10FibreSieve_pushforward_sum_eq_card_filter
-    {α : Type*} [DecidableEq α]
-    (A : Finset α) (out : α → ℕ) (P : ℕ → Prop) [DecidablePred P] :
-    ∑ n ∈ (A.image out).filter P, (((A.filter fun x => out x = n).card : ℕ) : ℝ) =
-      (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := by
-  let U : Finset ℕ := (A.image out).filter P
-  have hfiberwise :=
-    Finset.sum_fiberwise_eq_sum_filter A U out (fun _ => (1 : ℝ))
-  have hfilter :
-      A.filter (fun x => out x ∈ U) = A.filter (fun x => P (out x)) := by
-    ext x
-    constructor
-    · intro hx
-      rcases Finset.mem_filter.mp hx with ⟨hxA, hxU⟩
-      exact Finset.mem_filter.mpr
-        ⟨hxA, (Finset.mem_filter.mp hxU).2⟩
-    · intro hx
-      rcases Finset.mem_filter.mp hx with ⟨hxA, hxP⟩
-      refine Finset.mem_filter.mpr ?_
-      refine ⟨hxA, Finset.mem_filter.mpr ?_⟩
-      exact ⟨Finset.mem_image.mpr ⟨x, hxA, rfl⟩, hxP⟩
-  rw [hfilter] at hfiberwise
-  have hsum :
-      ∑ n ∈ U, ∑ x ∈ A.filter (fun x => out x = n), (1 : ℝ) =
-        (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := by
-    simpa [U] using hfiberwise
-  calc
-    ∑ n ∈ (A.image out).filter P, (((A.filter fun x => out x = n).card : ℕ) : ℝ)
-        = ∑ n ∈ U, ∑ x ∈ A.filter (fun x => out x = n), (1 : ℝ) := by
-            refine Finset.sum_congr rfl ?_
-            intro n hn
-            simp
-    _ = (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := hsum
 
 theorem goldbachB10_coprime_prodPrimes_iff_literalHPoint
     (N : ℕ) (Z : ℝ) (n : ℕ) :
@@ -208,7 +159,7 @@ theorem goldbachB10BoundingSieve_multSum_eq_card_divisorAtoms
                 BoundingSieve.multSum, A, out, Finset.sum_filter]
     _ = (((A.filter fun x => d ∣ out x).card : ℕ) : ℝ) := by
           simpa [A, out] using
-            B10FibreSieve_pushforward_sum_eq_card_filter
+            MathlibNt.SieveTheory.sum_card_fibres_filter_image
               A out (fun n => d ∣ n)
     _ = ((goldbachB10DivisorAtoms N d ε b c).card : ℝ) := by
           rw [show A.filter (fun x => d ∣ out x) = goldbachB10DivisorAtoms N d ε b c by
@@ -246,7 +197,7 @@ theorem goldbachB10BoundingSieve_siftedSum_eq
               rfl
     _ = (((A.filter fun x => Nat.Coprime P (out x)).card : ℕ) : ℝ) := by
           simpa [A, out, P] using
-            B10FibreSieve_pushforward_sum_eq_card_filter
+            MathlibNt.SieveTheory.sum_card_fibres_filter_image
               A out (fun n => Nat.Coprime P n)
     _ = (((A.filter fun x => literalHPoint N 1 Z (out x)).card : ℕ) : ℝ) := by
           rw [show A.filter (fun x => Nat.Coprime P (out x)) =

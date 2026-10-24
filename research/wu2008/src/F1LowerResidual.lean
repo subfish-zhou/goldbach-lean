@@ -1,4 +1,4 @@
-import F1FixedSquareExtent
+import F1LowerGapPayment
 
 noncomputable section
 open Real Set Wu2008DoubleSieve SharpLogRecurrence F1FullRecoveryPayment

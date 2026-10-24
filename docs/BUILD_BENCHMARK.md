@@ -7,6 +7,11 @@ For the current 1+1.9 targets and cache-preserving upgrade procedure, see the
 
 ## Recorded results
 
+The 2026-10-24 refactoring has no comparable before/after timing run. Its
+[source measurements](SOURCE_SIZE.md) and [acceptance checks](VERIFICATION.md)
+are recorded separately; the 17.3% reduction below belongs only to the historical
+release comparison.
+
 | Measurement | v1.0.0-rc1 | v1.0.0 |
 |---|---:|---:|
 | Elapsed time | 2,183.42 seconds (36:23) | 1,806.48 seconds (30:06) |

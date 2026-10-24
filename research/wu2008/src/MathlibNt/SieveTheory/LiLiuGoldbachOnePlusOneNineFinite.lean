@@ -1,4 +1,9 @@
-import Mathlib
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import Mathlib.Data.Nat.Factors
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.SplitIfs
 
 /-!
 # Li--Liu's literal `1 + 1.9` count and actual finite Goldbachbasic bridge
@@ -56,18 +61,9 @@ theorem D19_pos_iff (N : ℕ) :
       ∃ p r q : ℕ,
         p ≤ N ∧ p.Prime ∧ (r = 1 ∨ r.Prime) ∧ q.Prime ∧
           N = p + r * q ∧ r ^ 10 ≤ q ^ 9 := by
-  classical
-  constructor
-  · intro h
-    rw [D19, Finset.card_pos] at h
-    obtain ⟨p, hp⟩ := h
-    rw [mem_onePlusOneNineRepresentedPrimes_iff] at hp
-    obtain ⟨hpN, hpPrime, r, q, hr, hq, hN, hrq⟩ := hp
-    exact ⟨p, r, q, hpN, hpPrime, hr, hq, hN, hrq⟩
-  · rintro ⟨p, r, q, hpN, hpPrime, hr, hq, hN, hrq⟩
-    rw [D19, Finset.card_pos]
-    exact ⟨p, mem_onePlusOneNineRepresentedPrimes_iff.mpr
-      ⟨hpN, hpPrime, r, q, hr, hq, hN, hrq⟩⟩
+  simp only [D19, Finset.card_pos, Finset.nonempty_def,
+    mem_onePlusOneNineRepresentedPrimes_iff, IsOnePlusOneNineRepresentation,
+    exists_and_left]
 
 theorem D19_ne_zero_iff (N : ℕ) :
     D19 N ≠ 0 ↔
@@ -108,12 +104,6 @@ noncomputable def goldbachBasicFiniteRHS
       LeastPrimeFactorAtLeast zTau n ∧ OmegaAtLeast 3 n)).card : ℤ) -
     ((A.filter (fun n =>
       LeastPrimeFactorAtLeast zAlpha n ∧ OmegaAtLeast 3 n)).card : ℤ)
-
-private theorem sum_indicator_eq_card_filter
-    (A : Finset ℕ) (P : ℕ → Prop) :
-    (∑ n ∈ A, if P n then (1 : ℤ) else 0) = ((A.filter P).card : ℤ) := by
-  classical
-  exact Finset.sum_boole P A
 
 /-- Complete finite combinatorial identity behind the displayed four sums in
 `Goldbachbasic`.  No asymptotic or analytic premise enters this theorem. -/
@@ -379,7 +369,7 @@ theorem goldbachBasic_finite_le_D19 (ε : ℝ) (hε : 0 < ε) :
         ≤ ∑ p ∈ P, if IsOnePlusOneNineRepresentation N p then (1 : ℤ) else 0 := by
       exact Finset.sum_le_sum fun p hp => hN0 N hN α p hp
     _ = (((P.filter (IsOnePlusOneNineRepresentation N)).card : ℕ) : ℤ) :=
-      sum_indicator_eq_card_filter P (IsOnePlusOneNineRepresentation N)
+      Finset.sum_boole (IsOnePlusOneNineRepresentation N) P
     _ ≤ (((onePlusOneNineRepresentedPrimes N).card : ℕ) : ℤ) := by
       exact_mod_cast Finset.card_le_card (by
         intro p hp

@@ -1,5 +1,4 @@
-import MathlibNt.Wu2008DoubleSieve.Gamma678FeedbackCountLink
-import MathlibNt.Wu2008DoubleSieve.FirstFunctionalGainSource
+import MathlibNt.Wu2008DoubleSieve.Gamma5MassKernel
 import MathlibNt.Wu2008DoubleSieve.FirstFeedbackTriangle
 import MathlibNt.Wu2008DoubleSieve.FirstFeedbackWeightedKernel
 

@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Chen.Representations
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -129,8 +130,8 @@ private noncomputable def Tfilter (n z y : ℕ) : Finset ℕ :=
     ∃ p₂ p₃, p₂.Prime ∧ p₃.Prime ∧ y ≤ p₂ ∧ p₂ ≤ p₃ ∧
       p₁ * p₂ * p₃ = n ∧ p₁ < p₂ ∧ p₂ ≤ p₃)
 
-/-- Elementary construction of exactDiv: p prime and p | n imply p^(n.factorization p) ∥ n. -/
-private lemma exactDiv_of_factorization {p n : ℕ} (hp : p.Prime) (hn : n ≠ 0) (_hpdvd : p ∣ n) :
+/-- The factorization exponent gives exact divisibility, including exponent zero. -/
+private lemma exactDiv_of_factorization {p n : ℕ} (hp : p.Prime) (hn : n ≠ 0) :
     exactDiv p (n.factorization p) n := by
   unfold exactDiv
   constructor
@@ -146,7 +147,7 @@ private lemma primePowerSum_mem_of_dvd {n z y p : ℕ} (hp : p.Prime) (hz : z �
     p ∈ Sfilter n z y := by
   rw [Sfilter, mem_filter]
   exact ⟨by simpa using hp_lt, hp, hz, n.factorization p,
-    (hp.dvd_iff_one_le_factorization hn).1 hpdvd, exactDiv_of_factorization hp hn hpdvd⟩
+    (hp.dvd_iff_one_le_factorization hn).1 hpdvd, exactDiv_of_factorization hp hn⟩
 
 /-- S = (Σ (n.factorization q : ℕ) : ℝ). -/
 private lemma primePowerSum_eq_cast (n z y : ℕ) :
@@ -160,7 +161,7 @@ private lemma tripleFactorCount_eq_cast (n z y : ℕ) :
   rfl
 
 /-- q ∈ Sfilter implies 1 ≤ S, as a real-number inequality. -/
-private lemma primePowerSum_ge_one_of_mem {n z y q : ℕ} (_hz : 2 ≤ z) (hn : 1 ≤ n)
+private lemma primePowerSum_ge_one_of_mem {n z y q : ℕ} (hn : 1 ≤ n)
     (hq : q ∈ Sfilter n z y) : (1 : ℝ) ≤ primePowerSum n z y := by
   have hq' : q ∈ (range y).filter (fun x => x.Prime ∧ z ≤ x ∧
       ∃ k : ℕ, 1 ≤ k ∧ exactDiv x k n) := by simpa [Sfilter] using hq
@@ -176,64 +177,13 @@ private lemma primePowerSum_ge_one_of_mem {n z y q : ℕ} (_hz : 2 ≤ z) (hn : 
   rw [primePowerSum_eq_cast n z y]
   exact_mod_cast hsum_ge
 
-/-- T ≥ 1 ⟹ S ≥ 1. -/
-private lemma tripleFactorCount_pos_imp_primePowerSum_pos {n z y : ℕ} (hz : 2 ≤ z)
-    (hn : 1 ≤ n) (hT : 0 < tripleFactorCount n z y) : 0 < primePowerSum n z y := by
-  have hcard_pos : 0 < (Tfilter n z y).card := by
-    rw [tripleFactorCount_eq_cast n z y] at hT
-    exact_mod_cast hT
-  have hne : (Tfilter n z y).Nonempty := Finset.card_pos.mp hcard_pos
-  rcases hne with ⟨p₁, hp₁⟩
-  rw [Tfilter, mem_filter] at hp₁
-  rcases hp₁ with ⟨_, hp₁_prime, hz₁, hp₁_lt_y, p₂, p₃, hp₂_prime, hp₃_prime,
-    hyp₂, hp₂p₃, hprod, hqlt, _⟩
-  have hdvd : p₁ ∣ n := by
-    rw [← hprod]
-    simp [Nat.mul_assoc]
-  have hp₁S : p₁ ∈ Sfilter n z y :=
-    primePowerSum_mem_of_dvd hp₁_prime hz₁ hp₁_lt_y (by omega : n ≠ 0) hdvd
-  have hS_ge : (1 : ℝ) ≤ primePowerSum n z y := primePowerSum_ge_one_of_mem hz hn hp₁S
-  linarith
-
-/-- Lower bound for a list product: if every entry is ≥ y, then y^length ≤ prod. -/
-private lemma prod_ge_pow_length {y : ℕ} (l : List ℕ) (h : ∀ p ∈ l, y ≤ p) :
-    y ^ l.length ≤ l.prod := by
-  induction l with
-  | nil => simp
-  | cons a t ih =>
-      have ha : y ≤ a := h a (by simp)
-      have ht : y ^ t.length ≤ t.prod := ih (by
-        intro p hp
-        exact h p (by simp [hp]))
-      calc
-        y ^ (a :: t).length = y ^ (t.length + 1) := rfl
-        _ = y * y ^ t.length := by rw [pow_succ']
-        _ ≤ a * t.prod := Nat.mul_le_mul ha ht
-
-/-- Cases for a list of length ≤ 2. -/
+/-- Cases for a list of length at most two. -/
 private lemma length_le_two_cases {l : List ℕ} (hl : l.length ≤ 2) :
-    l = [] ∨ ∃ a, l = [a] ∨ ∃ a b, l = [a, b] := by
-  cases l with
-  | nil => left; rfl
-  | cons a t =>
-      right
-      use a
-      cases t with
-      | nil => left; rfl
-      | cons b u =>
-          right
-          use a, b
-          cases u with
-          | nil => rfl
-          | cons c v =>
-              have hlen : (a :: b :: c :: v).length = v.length + 3 := by simp
-              have : v.length + 3 ≤ 2 := by
-                rw [hlen] at hl
-                exact hl
-              omega
+    l = [] ∨ (∃ a, l = [a]) ∨ ∃ a b, l = [a, b] := by
+  rcases l with _ | ⟨a, _ | ⟨b, _ | ⟨c, t⟩⟩⟩ <;> simp_all
 
 /-- If S = 0 and n has no prime factor < z, all prime factors of n are ≥ y. -/
-private lemma all_prime_factors_ge_y_of_S_zero {n z y : ℕ} (hz : 2 ≤ z) (_hy : z < y)
+private lemma all_prime_factors_ge_y_of_S_zero {n z y : ℕ}
     (hn : 1 ≤ n) (hS : primePowerSum n z y = 0)
     (hcop : ∀ p : ℕ, p.Prime → p < z → ¬ p ∣ n) :
     ∀ p : ℕ, p.Prime → p ∣ n → y ≤ p := by
@@ -245,7 +195,7 @@ private lemma all_prime_factors_ge_y_of_S_zero {n z y : ℕ} (hz : 2 ≤ z) (_hy
   · have hz_le_p : z ≤ p := by omega
     have hpS : p ∈ Sfilter n z y :=
       primePowerSum_mem_of_dvd hp hz_le_p hp_lt_y (by omega : n ≠ 0) hpdvd
-    have hS_ge : (1 : ℝ) ≤ primePowerSum n z y := primePowerSum_ge_one_of_mem hz hn hpS
+    have hS_ge : (1 : ℝ) ≤ primePowerSum n z y := primePowerSum_ge_one_of_mem hn hpS
     linarith
 
 /-- If all prime factors are ≥ y and n < y³, then Ω(n) ≤ 2. -/
@@ -253,7 +203,7 @@ private lemma omega_le_two_of_lt_cube {n y : ℕ} (hy : 2 ≤ y) (hn : n ≠ 0)
     (hall : ∀ p : ℕ, p.Prime → p ∣ n → y ≤ p) (hn_lt : (n : ℝ) < (y : ℝ) ^ 3) :
     (n.primeFactorsList.length) ≤ 2 := by
   have hprod : y ^ n.primeFactorsList.length ≤ n.primeFactorsList.prod := by
-    apply prod_ge_pow_length
+    apply List.pow_card_le_prod
     intro p hp
     exact hall p (Nat.prime_of_mem_primeFactorsList hp) (Nat.dvd_of_mem_primeFactorsList hp)
   by_contra h
@@ -275,34 +225,22 @@ private lemma at_most_two_factors {n y : ℕ} (hy : 2 ≤ y) (hn : 1 ≤ n)
     n = 1 ∨ n.Prime ∨ ∃ p₁ p₂ : ℕ, p₁.Prime ∧ p₂.Prime ∧ y ≤ p₁ ∧ y ≤ p₂ ∧ n = p₁ * p₂ := by
   have hlen : n.primeFactorsList.length ≤ 2 :=
     omega_le_two_of_lt_cube hy (by omega : n ≠ 0) hall hn_lt
-  have hcases := length_le_two_cases hlen
-  rcases hcases with hnil | ⟨a, hrest⟩
+  rcases length_le_two_cases hlen with hnil | ⟨a, h1⟩ | ⟨a, b, h2⟩
   · left
-    have hprod : n.primeFactorsList.prod = 1 := by
-      rw [hnil]
-      simp
-    have : n = 1 := by
-      rw [← Nat.prod_primeFactorsList (by omega : n ≠ 0)]
-      exact hprod
-    exact this
-  · rcases hrest with h1 | ⟨a₂, b, h2⟩
-    · right; left
-      have hn_eq : n = a := by
-        rw [← Nat.prod_primeFactorsList (by omega : n ≠ 0)]
-        rw [h1]
-        simp
-      rw [hn_eq]
-      exact Nat.prime_of_mem_primeFactorsList (by rw [h1]; simp)
-    · right; right
-      have hn_eq : n = a₂ * b := by
-        rw [← Nat.prod_primeFactorsList (by omega : n ≠ 0)]
-        rw [h2]
-        simp
-      have ha_prime : a₂.Prime := Nat.prime_of_mem_primeFactorsList (by rw [h2]; simp)
-      have hb_prime : b.Prime := Nat.prime_of_mem_primeFactorsList (by rw [h2]; simp)
-      have ha_y : y ≤ a₂ := hall a₂ ha_prime (by rw [hn_eq]; exact dvd_mul_right a₂ b)
-      have hb_y : y ≤ b := hall b hb_prime (by rw [hn_eq]; exact dvd_mul_left b a₂)
-      exact ⟨a₂, b, ha_prime, hb_prime, ha_y, hb_y, hn_eq⟩
+    simpa [hnil] using (Nat.prod_primeFactorsList (by omega : n ≠ 0)).symm
+  · right; left
+    have hn_eq : n = a := by
+      simpa [h1] using (Nat.prod_primeFactorsList (by omega : n ≠ 0)).symm
+    rw [hn_eq]
+    exact Nat.prime_of_mem_primeFactorsList (by rw [h1]; simp)
+  · right; right
+    have hn_eq : n = a * b := by
+      simpa [h2] using (Nat.prod_primeFactorsList (by omega : n ≠ 0)).symm
+    have ha : a.Prime := Nat.prime_of_mem_primeFactorsList (by rw [h2]; simp)
+    have hb : b.Prime := Nat.prime_of_mem_primeFactorsList (by rw [h2]; simp)
+    exact ⟨a, b, ha, hb,
+      hall a ha (by rw [hn_eq]; exact dvd_mul_right a b),
+      hall b hb (by rw [hn_eq]; exact dvd_mul_left b a), hn_eq⟩
 
 /-- A triple factorization q·p₂·p₃ = n gives T ≥ 1. -/
 private lemma tripleFactorCount_ge_one {n z y q p₂ p₃ : ℕ} (hq : q.Prime) (hzq : z ≤ q)
@@ -327,7 +265,7 @@ private lemma tripleFactorCount_ge_one {n z y q p₂ p₃ : ℕ} (hq : q.Prime) 
   exact_mod_cast hcard_ge
 
 /-- S = 1 gives a unique prime q ∈ [z,y), with n = q·m and all prime factors of m ≥ y. -/
-private lemma S_one_structure {n z y : ℕ} (_hz : 2 ≤ z) (_hy : z < y) (hn : 1 ≤ n)
+private lemma S_one_structure {n z y : ℕ} (hn : 1 ≤ n)
     (hS : primePowerSum n z y = 1)
     (hcop : ∀ p : ℕ, p.Prime → p < z → ¬ p ∣ n) :
     ∃ q m : ℕ, q.Prime ∧ z ≤ q ∧ q < y ∧ n = q * m ∧
@@ -388,18 +326,15 @@ private lemma S_one_structure {n z y : ℕ} (_hz : 2 ≤ z) (_hy : z < y) (hn : 
     have hp_eq : q = p := by
       rw [hq_singleton] at hpS
       simpa [eq_comm] using hpS
-    have hq_dvd_m : q ∣ m := by
-      rw [hp_eq]
-      exact hpdvd_m
     have hq2_dvd : q ^ 2 ∣ n := by
       rw [hm, hp_eq]
       simpa [pow_two] using mul_dvd_mul_left p hpdvd_m
     have hexact1 : exactDiv q 1 n := by
       rw [← hfact1]
-      exact exactDiv_of_factorization hq_prime hn0 hdvd
+      exact exactDiv_of_factorization hq_prime hn0
     exact hexact1.2 (by simpa using hq2_dvd)
 
-/-- w(n) > 0 implies that n is 1, a prime, or a product of two primes, provided n has no prime factor ≤ z and n < y³.
+/-- w(n) > 0 implies that n is 1, a prime, or a product of two primes, provided n has no prime factor < z and n < y³.
 
 The extra hypothesis `n < y³` is needed: if all prime factors of n are ≥ y, then w(n) = 1 > 0,
 but n ≥ y³ can have three or more prime factors, each ≥ y. The hypothesis n < y³
@@ -431,7 +366,7 @@ theorem chenWeight_pos_implies_semiprime
       rw [hS_cast]
       exact_mod_cast hS0
     have hall : ∀ p : ℕ, p.Prime → p ∣ n → y ≤ p :=
-      all_prime_factors_ge_y_of_S_zero hz hy hn hS0r h_coprime
+      all_prime_factors_ge_y_of_S_zero hn hS0r h_coprime
     rcases at_most_two_factors hy2 hn hall hn_lt with hn1 | hprime | ⟨p₁, p₂, hp₁, hp₂, hp₁y, hp₂y, hn_eq⟩
     · exact Or.inl hn1
     · exact Or.inr (Or.inl hprime)
@@ -445,14 +380,13 @@ theorem chenWeight_pos_implies_semiprime
     have hT0r : tripleFactorCount n z y = 0 := by
       rw [hT_cast]
       exact_mod_cast hT0
-    rcases S_one_structure hz hy hn hS1r h_coprime with
+    rcases S_one_structure hn hS1r h_coprime with
       ⟨q, m, hq_prime, hzq, hq_lt_y, hn_eq, hm_factors⟩
     have hm_pos : 0 < m := by
       by_contra h
       have hm0 : m = 0 := by omega
       rw [hm0, mul_zero] at hn_eq
       omega
-    have hm_ne0 : m ≠ 0 := by omega
     have hm_lt_n : m < n := by
       have hq_ge2 : 2 ≤ q := hq_prime.two_le
       have hmul : 2 * m ≤ n := by
@@ -462,52 +396,24 @@ theorem chenWeight_pos_implies_semiprime
     have hn_lt_nat : n < y ^ 3 := by exact_mod_cast hn_lt
     have hm_lt_cube : (m : ℝ) < (y : ℝ) ^ 3 := by
       exact_mod_cast (lt_trans hm_lt_n hn_lt_nat)
-    have hlen_m : m.primeFactorsList.length ≤ 2 :=
-      omega_le_two_of_lt_cube hy2 hm_ne0 hm_factors hm_lt_cube
-    rcases length_le_two_cases hlen_m with hmnil | ⟨a, hmrest⟩
+    rcases at_most_two_factors hy2 (by omega) hm_factors hm_lt_cube with
+      hm1 | hmprime | ⟨a, b, ha, hb, hya, hyb, hm⟩
     · -- m = 1 implies n = q, a prime.
       right; left
-      have hm_eq : m = 1 := by
-        rw [← Nat.prod_primeFactorsList hm_ne0]
-        rw [hmnil]
-        simp
-      rw [hn_eq, hm_eq, mul_one]
-      exact hq_prime
-    · rcases hmrest with hm1 | ⟨a₂, b, hm2⟩
-      · -- m = a prime implies n = q·a, a semiprime.
-        right; right
-        have hm_eq : m = a := by
-          rw [← Nat.prod_primeFactorsList hm_ne0]
-          rw [hm1]
-          simp
-        have ha_prime : a.Prime := Nat.prime_of_mem_primeFactorsList (by rw [hm1]; simp)
-        have ha_y : y ≤ a := hm_factors a ha_prime (by rw [hm_eq])
-        refine ⟨q, a, hq_prime, ha_prime, hzq, le_trans (le_of_lt hy) ha_y, ?_⟩
-        rw [hn_eq, hm_eq]
-      · -- m = a·b gives a triple factorization, hence T ≥ 1, a contradiction.
-        have hm_eq : m = a₂ * b := by
-          rw [← Nat.prod_primeFactorsList hm_ne0]
-          rw [hm2]
-          simp
-        have ha_prime : a₂.Prime := Nat.prime_of_mem_primeFactorsList (by rw [hm2]; simp)
-        have hb_prime : b.Prime := Nat.prime_of_mem_primeFactorsList (by rw [hm2]; simp)
-        have ha_y : y ≤ a₂ := hm_factors a₂ ha_prime (by rw [hm_eq]; exact dvd_mul_right a₂ b)
-        have hb_y : y ≤ b := hm_factors b hb_prime (by rw [hm_eq]; exact dvd_mul_left b a₂)
-        have hn_triple : n = q * a₂ * b := by
-          rw [hn_eq, hm_eq]
-          rw [Nat.mul_assoc]
-        have hab : a₂ ≤ b ∨ b ≤ a₂ := le_total a₂ b
-        rcases hab with hab | hba
-        · have hT_ge : (1 : ℝ) ≤ tripleFactorCount n z y :=
-            tripleFactorCount_ge_one hq_prime hzq hq_lt_y ha_prime hb_prime ha_y hab
-              (lt_of_lt_of_le hq_lt_y ha_y) hn_triple
-          linarith
-        · have hT_ge : (1 : ℝ) ≤ tripleFactorCount n z y :=
-            tripleFactorCount_ge_one hq_prime hzq hq_lt_y hb_prime ha_prime hb_y hba
-              (lt_of_lt_of_le hq_lt_y hb_y) (by
-                rw [hn_triple]
-                ring_nf)
-          linarith
+      simpa [hn_eq, hm1] using hq_prime
+    · -- A prime cofactor gives a semiprime directly.
+      right; right
+      exact ⟨q, m, hq_prime, hmprime, hzq,
+        (le_of_lt hy).trans (hm_factors m hmprime (dvd_refl m)), hn_eq⟩
+    · -- Two prime cofactors give T ≥ 1, contradicting T = 0.
+      have hn_triple : n = q * a * b := by rw [hn_eq, hm, Nat.mul_assoc]
+      rcases le_total a b with hab | hba
+      · have hT_ge := tripleFactorCount_ge_one hq_prime hzq hq_lt_y ha hb hya hab
+          (hq_lt_y.trans_le hya) hn_triple
+        linarith
+      · have hT_ge := tripleFactorCount_ge_one hq_prime hzq hq_lt_y hb ha hyb hba
+          (hq_lt_y.trans_le hyb) (show n = q * b * a by rw [hn_triple]; ring)
+        linarith
 
 /-! ## Definition of W(N) -/
 
@@ -680,11 +586,6 @@ theorem chen_key_inequality (h_analytic : ChenAnalyticBounds)
     ring
   norm_num at hW' hO' ⊢
   nlinarith
-
-/-- Prime candidates already satisfying the conclusion of Chen's theorem. -/
-noncomputable def chenGoodRepresentations (N : ℕ) : Finset ℕ :=
-  (Finset.range N).filter (fun p =>
-    p.Prime ∧ 2 ≤ N - p ∧ Nat.IsAtMostAlmostPrime 2 (N - p))
 
 /-- The historical W-candidates whose complementary integer is not a `P₂`. -/
 noncomputable def chenWBadCandidates (N : ℕ) : Finset ℕ :=
@@ -863,30 +764,10 @@ end Internal
 /-- The product of pairwise coprime prime divisors of `N` divides `N`. -/
 private theorem prod_dvd_of_prime_divisors {N : ℕ} {s : Finset ℕ} (hdiv : ∀ p ∈ s, p ∣ N)
     (hprime : ∀ p ∈ s, p.Prime) : (∏ p ∈ s, p) ∣ N := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | insert p sp hpi ih =>
-      have hdivp : p ∣ N := hdiv p (by simp)
-      have hdivsp : ∀ q ∈ sp, q ∣ N := fun q hq => hdiv q (by simp [hq])
-      have hprimesp : ∀ q ∈ sp, q.Prime := fun q hq => hprime q (by simp [hq])
-      have hih : (∏ q ∈ sp, q) ∣ N := ih hdivsp hprimesp
-      have hcop : p.Coprime (∏ q ∈ sp, q) := by
-        rw [Nat.coprime_prod_right_iff]
-        intro q hq
-        exact (Nat.coprime_primes (hprime p (by simp)) (hprime q (by simp [hq]))).mpr (by
-          intro hpq
-          subst q
-          exact hpi hq)
-      rcases hih with ⟨m, hm⟩
-      have hpm : p ∣ m := by
-        apply Nat.Coprime.dvd_of_dvd_mul_left hcop
-        rw [← hm]
-        exact hdivp
-      rcases hpm with ⟨m', hm'⟩
-      refine ⟨m', ?_⟩
-      rw [hm, hm', Finset.prod_insert hpi]
-      ring
+  apply s.prod_dvd_of_isRelPrime _ hdiv
+  intro p hp q hq hpq
+  exact Nat.coprime_iff_isRelPrime.mp
+    ((Nat.coprime_primes (hprime p hp) (hprime q hq)).mpr hpq)
 
 namespace Internal
 

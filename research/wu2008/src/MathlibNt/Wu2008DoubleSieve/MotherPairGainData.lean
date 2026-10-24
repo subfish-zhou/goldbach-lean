@@ -1,4 +1,4 @@
-import MathlibNt.Wu2008DoubleSieve.SecondFunctionalMotherPairClassicalPorts
+import MathlibNt.Wu2008DoubleSieve.SecondFunctionalMotherPairGeometry
 import MathlibNt.Wu2008DoubleSieve.Gamma5GainKernel
 
 namespace Wu2008DoubleSieve.MotherPair

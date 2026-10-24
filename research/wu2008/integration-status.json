@@ -3,8 +3,17 @@
   "worktree_source_preservation": "verified_by_hash_and_independent_restore",
   "original_worktrees_deleted": false,
   "default_goldbach_targets_changed": false,
-  "fresh_standalone_lean_rebuild": "in_progress",
+  "fresh_standalone_lean_rebuild": "passed_8826_modules",
   "global_wu18938_theorem_complete": false,
   "source_snapshot_commit": "0c3e53300a48e7dfb16ffc645adcde8fd8a4badd",
-  "note": "Do not infer full source-layout build acceptance from the preserved parent-level kernel receipts."
+  "note": "Wu04/Wu08 route to 1+1.894 passed the full integrated source build, independent literal statement and standard-axiom checks, and final module kernel replay over rebuilt imports.",
+  "full_rebuild_log": "research/wu2008/build/full-rebuild-classical-source.log",
+  "prior_full_rebuild": "passed_3879_modules",
+  "prior_full_rebuild_log": "research/wu2008/build/full-rebuild-seven-source.log",
+  "global_wu1894_theorem_complete": true,
+  "classical_acceptance": "research/wu2008/build/classical-acceptance.json",
+  "kernel_replay_log": "research/wu2008/build/classical-kernel-replay.log",
+  "verified_endpoint": "WuPaper.ClassicalSlots.one894",
+  "verified_statement": "Eventually, every even N has N = p + r*q with p and q prime, r = 1 or prime, and r^500 <= q^447.",
+  "stronger_endpoint_scope": "No separate literal acceptance of 1.8938 is claimed by these records."
 }

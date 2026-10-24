@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarAnalytic
 import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients
 
 open Set MeasureTheory Finset

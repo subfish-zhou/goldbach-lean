@@ -1,4 +1,5 @@
 import NineComparison
+import NineOriginalData
 
 namespace NineFeedbackStrength
 open Wu2008DoubleSieve ActualNineFeedback NodeExtension
@@ -25,12 +26,6 @@ theorem actual_paid_feedback_same_delta : ∃ d : ℝ,0<d ∧ d≤1/10 ∧
     exact (le_add_of_nonneg_right (matrixApply_nonneg feedbackMatrix_nonneg hn i)).trans (hs δ hδ hr i)
   intro i
   exact (add_le_add le_rfl (matrixApply_mono feedbackMatrix_nonneg hp i)).trans (hs δ hδ hr i)
-
-/-- Author's unchanged Table 1 numbers at s=2.2,...,3.0, recorded ONLY as targets.
-Source: Wu 2008 author TeX, lines 775--950. -/
-def originalH : Fin 9 → ℝ :=
-  ![0.0223939,0.0217196,0.0202876,0.0181433,0.0158644,
-    0.0129923,0.0100686,0.0078162,0.0072943]
 
 /-- The remaining nine targets are genuine weighted integrals, not printed matrix premises. -/
 theorem original_integrals_to_subsolution

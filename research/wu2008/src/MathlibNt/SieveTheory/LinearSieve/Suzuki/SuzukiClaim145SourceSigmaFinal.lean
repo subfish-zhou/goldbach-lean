@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBAllS
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
 
 open scoped Classical BigOperators

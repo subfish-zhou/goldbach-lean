@@ -3,18 +3,6 @@ import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
 open Set MeasureTheory Finset
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-/-- Dense exact rational polynomial, in increasing coefficient order. -/
-noncomputable def s3eval : List ℚ → ℝ → ℝ
-  | [], _ => 0
-  | c :: cs, x => (c : ℝ) + x * s3eval cs x
-
-/-- A rational primitive; the natural offset makes the derivative induction transparent. -/
-noncomputable def s3primAux : List ℚ → ℕ → ℝ → ℝ
-  | [], _, _ => 0
-  | c :: cs, n, x => (c : ℝ) / (n+1 : ℕ) * x^(n+1) + s3primAux cs (n+1) x
-
-noncomputable def s3prim (cs : List ℚ) : ℝ → ℝ := s3primAux cs 0
-
 theorem s3eval_continuous (cs : List ℚ) : Continuous (s3eval cs) := by
   induction cs with
   | nil => exact continuous_const

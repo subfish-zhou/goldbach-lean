@@ -1,4 +1,4 @@
-import F1LogRecoveryPayment
+import JointLogTotalComparison
 
 noncomputable section
 open Real Set Wu2008DoubleSieve SharpLogRecurrence

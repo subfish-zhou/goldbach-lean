@@ -59,14 +59,10 @@ theorem goldbachB10ProdPrimes_ne_zero (N : ℕ) (Z : ℝ) :
   exact ne_of_gt <| Finset.prod_pos fun p hp => by
     exact (mem_goldbachB10SiftingPrimes_iff.mp hp).2.1.pos
 
-private theorem B10FibreSieve_primeFactors_prod_eq_self {S : Finset ℕ}
-    (hS : ∀ p ∈ S, p.Prime) : (S.prod id).primeFactors = S := by
-  exact Nat.primeFactors_prod hS
-
 theorem goldbachB10ProdPrimes_primeFactors (N : ℕ) (Z : ℝ) :
     (goldbachB10ProdPrimes N Z).primeFactors = goldbachB10SiftingPrimes N Z := by
   unfold goldbachB10ProdPrimes
-  exact B10FibreSieve_primeFactors_prod_eq_self
+  exact Nat.primeFactors_prod
     (fun p hp => (mem_goldbachB10SiftingPrimes_iff.mp hp).2.1)
 
 theorem prime_dvd_goldbachB10ProdPrimes_iff
@@ -100,13 +96,6 @@ theorem prime_dvd_goldbachB10ProdPrimes_lt
     {N : ℕ} {Z : ℝ} {p : ℕ} (hp : p.Prime) (hpP : p ∣ goldbachB10ProdPrimes N Z) :
     (p : ℝ) < Z :=
   (prime_dvd_goldbachB10ProdPrimes_iff hp).mp hpP |>.1
-
-private theorem B10FibreSieve_pushforward_sum_eq_card_filter
-    {α : Type*} [DecidableEq α]
-    (A : Finset α) (out : α → ℕ) (P : ℕ → Prop) [DecidablePred P] :
-    ∑ n ∈ (A.image out).filter P, (((A.filter fun x => out x = n).card : ℕ) : ℝ) =
-      (((A.filter fun x => P (out x)).card : ℕ) : ℝ) := by
-  simpa using MathlibNt.SieveTheory.sum_fibres_filter_image A out P (fun _ => (1 : ℝ))
 
 theorem goldbachB10_coprime_prodPrimes_iff_literalHPoint
     (N : ℕ) (Z : ℝ) (n : ℕ) :
@@ -170,7 +159,7 @@ theorem goldbachB10BoundingSieve_multSum_eq_card_divisorAtoms
                 BoundingSieve.multSum, A, out, Finset.sum_filter]
     _ = (((A.filter fun x => d ∣ out x).card : ℕ) : ℝ) := by
           simpa [A, out] using
-            B10FibreSieve_pushforward_sum_eq_card_filter
+            MathlibNt.SieveTheory.sum_card_fibres_filter_image
               A out (fun n => d ∣ n)
     _ = ((goldbachB10DivisorAtoms N d ε b c).card : ℝ) := by
           rw [show A.filter (fun x => d ∣ out x) = goldbachB10DivisorAtoms N d ε b c by
@@ -208,7 +197,7 @@ theorem goldbachB10BoundingSieve_siftedSum_eq
               rfl
     _ = (((A.filter fun x => Nat.Coprime P (out x)).card : ℕ) : ℝ) := by
           simpa [A, out, P] using
-            B10FibreSieve_pushforward_sum_eq_card_filter
+            MathlibNt.SieveTheory.sum_card_fibres_filter_image
               A out (fun n => Nat.Coprime P n)
     _ = (((A.filter fun x => literalHPoint N 1 Z (out x)).card : ℕ) : ℝ) := by
           rw [show A.filter (fun x => Nat.Coprime P (out x)) =

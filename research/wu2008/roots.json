@@ -14,7 +14,10 @@
     "WRMapMSixthRoot",
     "WRMapMFirstRoot",
     "WRMapMDebitRoot",
-    "WRMapMSigmaRoot"
+    "WRMapMSigmaRoot",
+    "WR2XiSourceRoot",
+    "WR2XiSixthCertificate",
+    "WR2ClassicalCertificate"
   ],
   "collected_roots": [
     "WR2MotherRoot",
@@ -425,6 +428,9 @@
     "WSrcSixthGainRoot",
     "WSrcSixthGainSource",
     "WSrcSixthGainWeights",
-    "WSrcSixthGridInstance"
+    "WSrcSixthGridInstance",
+    "WR2XiSourceRoot",
+    "WR2XiSixthCertificate",
+    "WR2ClassicalCertificate"
   ]
 }

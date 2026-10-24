@@ -90,6 +90,19 @@ theorem lemma63_second_integrable {f : ℝ → ℝ}
   · simp only [indicator_of_mem ht, mul_one]
   · simp only [indicator_of_notMem ht, mul_zero, zero_div, zero_mul]
 
+theorem original_lemma61 {δ : ℝ} (hd : 0 < δ) (hdhi : δ ≤ 1 / 10) :
+    ((∫ t in (1 : ℝ)..3, wuImprovementLimit true δ t * (sigma0 t / t)) ≤
+      wuImprovementLimit false δ 4) ∧
+    (∀ s ∈ Icc (3 : ℝ) 5,
+      (∫ t in (1 : ℝ)..3, wuImprovementLimit true δ t * upperKernel s t) ≤
+        wuImprovementLimit true δ s) ∧
+    (∀ a b c : ℝ, 0 < a → a < b → b < 1 → 2 ≤ a * c → b * c ≤ 4 →
+      source63RHS (wuImprovementLimit true δ) a b c ≤
+        ∫ t in a..b, wuImprovementLimit false δ (c * t) / (t * (1 - t))) :=
+  ⟨lemma61 hd hdhi, fun _ hs => lemma62 hd hdhi hs,
+    fun _ _ _ ha hab hb hac hbc => lemma63 hd hdhi ha hab hb hac hbc⟩
+
+
 end WuPaper.RMapMSigma
 
 #check @WuPaper.RMapMSigma.source63_geometry

@@ -1,5 +1,8 @@
 import MathlibNt.ChensTheorem
-import MathlibNt.SieveTheory.Switching.Weights
+import MathlibNt.SieveTheory.Chen.Representations
+import MathlibNt.Analysis.RationalPower
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 
 /-!
 # The literal refined prime count
@@ -33,6 +36,50 @@ theorem mem_refinedGood {N p : ℕ} {a : ℝ} :
     have hr0 : 0 < r := hr.elim (fun h => by omega) Nat.Prime.pos
     have hprod := Nat.mul_pos hr0 hq.pos
     exact ⟨by omega, h⟩
+
+/-- Increasing the exponent retains every previously counted prime. -/
+theorem refinedGood_mono (N : ℕ) : Monotone (refinedGood N) := by
+  intro a b hab p hp
+  obtain ⟨hpp, r, q, hq, hr, hN, hpower⟩ := mem_refinedGood.mp hp
+  exact mem_refinedGood.mpr ⟨hpp, r, q, hq, hr, hN,
+    hpower.trans (Real.rpow_le_rpow_of_exponent_le
+      (by exact_mod_cast hq.one_lt.le) (sub_le_sub_right hab 1))⟩
+
+/-- The requested 1.894 imbalance written entirely in natural powers.
+This equivalence also holds when either input is zero. -/
+theorem one894_power_iff (r q : ℕ) :
+    r ^ 500 ≤ q ^ 447 ↔ (r : ℝ) ≤ (q : ℝ) ^ ((947 / 500 : ℝ) - 1) := by
+  simpa only [Nat.cast_ofNat, show (447 : ℝ) / 500 = (947 / 500 : ℝ) - 1 by norm_num] using
+    MathlibNt.nat_pow_le_iff_le_rpow r q 447 500 (by decide)
+
+/-- Exact membership, preserving the original counted prime and both factors. -/
+theorem mem_refinedGood_one894_iff {N p : ℕ} :
+    p ∈ refinedGood N (947 / 500) ↔ p.Prime ∧
+      ∃ r q : ℕ, q.Prime ∧ (r = 1 ∨ r.Prime) ∧
+        N = p + r * q ∧ r ^ 500 ≤ q ^ 447 := by
+  rw [mem_refinedGood]
+  simp_rw [one894_power_iff]
+
+/-- Wu's 1.8938 carrier embeds in the requested 1.894 carrier. -/
+theorem source_refinedGood_subset_one894 (N : ℕ) :
+    refinedGood N (9469 / 5000) ⊆ refinedGood N (947 / 500) :=
+  refinedGood_mono N (by norm_num)
+
+/-- Thus any lower bound for the source count transfers without loss. -/
+theorem source_refinedGood_card_le_one894 (N : ℕ) :
+    (refinedGood N (9469 / 5000)).card ≤ (refinedGood N (947 / 500)).card :=
+  card_le_card (source_refinedGood_subset_one894 N)
+
+/-- Positive source count gives an actual representation with the requested
+integer-power constraint. The analytic positivity estimate remains upstream. -/
+theorem exists_one894_of_source_count_pos {N : ℕ}
+    (h : 0 < (refinedGood N (9469 / 5000)).card) :
+    ∃ p r q : ℕ, p.Prime ∧ (r = 1 ∨ r.Prime) ∧ q.Prime ∧
+      N = p + r * q ∧ r ^ 500 ≤ q ^ 447 := by
+  obtain ⟨p, hp⟩ := card_pos.mp h
+  obtain ⟨hpp, r, q, hq, hr, hN, hpower⟩ :=
+    mem_refinedGood_one894_iff.mp (source_refinedGood_subset_one894 N hp)
+  exact ⟨p, r, q, hpp, hr, hq, hN, hpower⟩
 
 theorem refinedGood_complement_ge_two {N p : ℕ} {a : ℝ}
     (hp : p ∈ refinedGood N a) : 2 ≤ N - p := by

@@ -35,6 +35,23 @@ the paper's strict `0.0004` conclusion. The paper's twin-prime Theorem 1.2 and
 its Theorems 1.3–1.4 under `WEH(0.999)` have separate targets from these four
 unconditional Goldbach interfaces.
 
+## Wu04/Wu08 research development
+
+The [Wu04/Wu08 source tree](../research/wu2008/README.md) implements the
+double-sieve route to 1+1.894, including classical-slot estimates, analytic
+comparisons and generated rational certificates. Its unconditional endpoint is
+[`WuPaper.ClassicalSlots.one894`](../research/wu2008/src/WR2ClassicalCertificate.lean).
+The research README maps the mathematical steps to the corresponding Lean
+modules and documents certificate regeneration.
+
+This tree includes reused local analytic sources and preserves their existing
+license, copyright and author notices. Its `source-manifest.json` binds current
+module sources by SHA-256; `history-manifest.json` records preserved historical
+source variants. Historical candidates are excluded from the default build and
+are not all claimed to compile. The final acceptance applies to the integrated
+current sources. Source collection and integration do not establish a separate
+authorship claim; the root license and original file notices remain applicable.
+
 ## Original project sources
 
 The Chen (1+2) implementation and the shared foundations reused by the

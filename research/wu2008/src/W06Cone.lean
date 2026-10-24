@@ -1,5 +1,6 @@
 import W06Consumers
 import Lean
+import Mathlib.Algebra.Ring.IsFormallyReal
 
 namespace WuTarget.W06
 open Lean Elab Command
@@ -24,7 +25,8 @@ elab (name := auditCone) "#w06_cone" : command => do
     if !seen.contains n then
       seen := seen.insert n
       if seen.size > 200000 then throwError "dependency audit cap exceeded"
-      match env.checked.get.find? n with
+      -- Include declarations realized on other elaboration branches.
+      match env.find? n with
       | none => missing := missing.push n
       | some ci =>
         todo := todo ++ ci.type.getUsedConstants

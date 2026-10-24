@@ -1,4 +1,4 @@
-import WRMapMSigmaRoot
+import WRMapMSigmaRegularity
 import WRMapMMatrixSelectedChange
 
 noncomputable section

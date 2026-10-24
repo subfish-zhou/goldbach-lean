@@ -78,19 +78,11 @@ theorem goldbachC10Prod_injOn
 theorem goldbachC10Coeff_le_one
     {N : ℕ} {b c : ℝ} {m : ℕ} :
     goldbachC10Coeff N b c m ≤ 1 := by
-  let A := goldbachC10ProductFiber N b c m
-  have hmap : Set.MapsTo goldbachC10Prod A ({m} : Finset ℕ) := by
-    intro rs hrs
-    exact Finset.mem_singleton.mpr (mem_goldbachC10ProductFiber_iff.mp hrs).2
-  have hinj : Set.InjOn goldbachC10Prod A := by
-    intro rs hrs tu htu hEq
-    exact goldbachC10Prod_injOn
-      (N := N) (b := b) (c := c)
-      (show rs ∈ goldbachC10Pairs N b c from (mem_goldbachC10ProductFiber_iff.mp hrs).1)
-      (show tu ∈ goldbachC10Pairs N b c from (mem_goldbachC10ProductFiber_iff.mp htu).1)
-      hEq
-  have hcard : A.card ≤ ({m} : Finset ℕ).card := Finset.card_le_card_of_injOn _ hmap hinj
-  simpa [goldbachC10Coeff, A] using hcard
+  apply Finset.card_le_one.mpr
+  intro rs hrs tu htu
+  obtain ⟨hrs, hrsEq⟩ := mem_goldbachC10ProductFiber_iff.mp hrs
+  obtain ⟨htu, htuEq⟩ := mem_goldbachC10ProductFiber_iff.mp htu
+  exact goldbachC10Prod_injOn hrs htu (hrsEq.trans htuEq.symm)
 
 private theorem B10Congruence_prod_pos_of_pair_mem
     {N : ℕ} {b c : ℝ} {rs : ℕ × ℕ}

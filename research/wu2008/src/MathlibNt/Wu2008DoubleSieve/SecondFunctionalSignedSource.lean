@@ -1,3 +1,5 @@
+import MathlibNt.Wu2008DoubleSieve.Omega3ElementaryFeedback
+import MathlibNt.Wu2008DoubleSieve.SecondFunctionalClassicalAlgebra
 import MathlibNt.Wu2008DoubleSieve.SecondFunctionalSignedRectangles
 
 namespace Wu2008DoubleSieve.SecondFunctionalSignedCore

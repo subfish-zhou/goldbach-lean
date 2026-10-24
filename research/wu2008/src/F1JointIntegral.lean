@@ -1,4 +1,5 @@
 import F1JointQuadratic
+import F1JointPartial
 
 noncomputable section
 open Real Set MeasureTheory FirstCRationalPayment F1RemainingRecovery

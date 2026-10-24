@@ -1,3 +1,5 @@
+import MathlibNt.Wu2008DoubleSieve.Gamma678FeedbackCountLink
+import MathlibNt.Wu2008DoubleSieve.FirstFunctionalGainSource
 import MathlibNt.Wu2008DoubleSieve.FourthRowClassicalCoefficientLog
 
 namespace Wu2008DoubleSieve

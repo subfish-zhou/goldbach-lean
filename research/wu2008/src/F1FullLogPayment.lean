@@ -1,4 +1,5 @@
 import F1UpperGapPayment
+import F1LogRecoveryPayment
 
 noncomputable section
 open Real Wu2008DoubleSieve SharpLogRecurrence FirstCRationalPayment

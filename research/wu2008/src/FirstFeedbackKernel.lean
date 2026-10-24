@@ -1,4 +1,6 @@
-import NineOriginalTargets
+import NineOriginalData
+import FeedbackProfiles
+import Wu04WholeCollection
 
 namespace FirstFeedbackIntegrals
 open Wu2008DoubleSieve NodeExtension ActualNineFeedback Real Set MeasureTheory

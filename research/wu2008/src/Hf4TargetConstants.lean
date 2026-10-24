@@ -16,13 +16,18 @@ theorem radical_bounds : (3872983346207/1000000000000 : ℝ) < TerminalE.radical
 
 theorem log_two_bounds : (6931/10000 : ℝ) < log 2 ∧ log 2 < 6932/10000 := by
   have hL := RemainingHf.splitLower_le (by norm_num : (1 : ℝ) ≤ 2)
-  have hU := Wu2008DoubleSieve.HighSharedKernelMagnitude.log_two_refined.2
+  have hU := (Wu04WholeCollection.bounds (x := 2) (by norm_num)).2
   norm_num [RemainingHf.splitLower, RemainingHf.basicLower,
     Wu04FactorEnvelopes.leftFactor, Wu04FactorEnvelopes.rightFactor,
     Wu2008DoubleSieve.SharpLogRecurrence.lowerLog,
     Wu2008DoubleSieve.SharpLogRecurrence.upperLog,
     F1FullRecoveryPayment.lowerGapPayment, F1LowerResidual.payment,
     F1LowerResidual.denom] at hL
+  norm_num [Wu04WholeCollection.up, Wu04FactorEnvelopes.upper,
+    Wu04FactorEnvelopes.leftFactor, Wu04FactorEnvelopes.rightFactor,
+    Wu2008DoubleSieve.SharpLogRecurrence.lowerLog,
+    Wu2008DoubleSieve.SharpLogRecurrence.upperLog,
+    Wu2008DoubleSieve.JointLogTotalComparison.V] at hU
   constructor <;> linarith only [hL,hU]
 
 end Hf4Target
