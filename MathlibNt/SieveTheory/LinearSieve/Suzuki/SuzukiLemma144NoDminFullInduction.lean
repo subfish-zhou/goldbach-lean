@@ -63,46 +63,6 @@ theorem actualClaim145_to_moving_at_common_constant
   · exact (claim145_uniform_scalar_normalization C145 d hC145 hd).2 D hD |>.trans hCnorm
   · exact hclaim
 
-/-- Base `N=1`: Claim 14.5 closes its literal source disjunction, while on the
-complement its logarithmic inequality pays the one production base cutoff.
-Thus the resulting invariant has cutoff exactly `2`, not an existential
-`Dmin`. -/
-theorem lemma14_4_noDmin_base_one_of_actualClaim145
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {C C145 K d Δ C1 Θ : ℝ} {Dbase : ℕ}
-    (hC145 : 0 ≤ C145) (hd : 0 < d)
-    (hCnorm : claim145UniformNormalizationConstant C145 d ≤ C)
-    (hH : Section13HatSourceContract H)
-    (_hK : 2 ≤ K) (_hlocal : HasDimensionOneLocalProductBound S K)
-    (hDbase : 2 ≤ Dbase)
-    (hbase : Lemma144MovingDomainNatCeilAt S H C K d Δ 1 Dbase)
-    (hbudget : Real.log (Dbase : ℝ) ≤ C1 * K ^ Θ)
-    (hclaim : ∀ (N D : ℕ) (s : ℝ),
-      2 ≤ D → 2 ≤ s →
-      (Real.log (D : ℝ) ≤ C1 * K ^ Θ ∨ sourceSigma (D : ℝ) d ≤ s) →
-      ActualClaim145BoundAt S H N D d Δ K s C145)
-    (hcaseIIBase : ∀ (D : ℕ) (s : ℝ),
-      2 ≤ D → s ∈ KappaOneModel.parityDomain 2 1 →
-      s ≤ sourceSigma (D : ℝ) d →
-      2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ → ¬ 2 ≤ s →
-      suzukiActualT S 1 D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-        suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
-          (finiteSourceLayer 1 2 1 s +
-            C * Real.exp (Real.sqrt K) * errorEnvelope H 1 (D : ℝ) d s *
-              (Real.log (D : ℝ)) ^ (-Δ))) :
-    Lemma144MovingDomainNatCeilAt S H C K d Δ 1 2 := by
-  intro D _hcut hD s hs hsSigma hz
-  by_cases hs2 : 2 ≤ s
-  · by_cases hregime :
-        Real.log (D : ℝ) ≤ C1 * K ^ Θ ∨ sourceSigma (D : ℝ) d ≤ s
-    · exact actualClaim145_to_moving_at_common_constant S H hC145 hd hCnorm hH hD hs
-        (hclaim 1 D s hD hs2 hregime)
-    · have hlarge : C1 * K ^ Θ < Real.log (D : ℝ) :=
-        lt_of_not_ge (fun h => hregime (Or.inl h))
-      have hDbaseD : Dbase ≤ D :=
-        nat_cutoff_paid_by_source_log_large hD hDbase hbudget hlarge
-      exact hbase D hDbaseD hD s hs hsSigma hz
-  · exact hcaseIIBase D s hD hs hsSigma hz hs2
 
 /-- Narrow successor bridge for the forthcoming `K`-uniform Case-I/II
 producers.  Its assumptions are their literal production output types at the

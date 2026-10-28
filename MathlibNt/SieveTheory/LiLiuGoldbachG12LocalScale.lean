@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuPrereqWFExternalParameters
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Tactic
 
 /-! Uniform local C2 scales. The ambient scale and the local scale stay distinct. -/
 namespace G12LocalScale

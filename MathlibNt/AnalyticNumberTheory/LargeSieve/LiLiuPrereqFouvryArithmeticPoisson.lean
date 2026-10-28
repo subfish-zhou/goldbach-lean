@@ -164,25 +164,6 @@ theorem scaledDyadicCutoff_finset_coprime_uniform_error :
         (abs_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)
     _ = _ := by simp [mul_comm]
 
-/-- The canonical finite arithmetic progression has a universal `O(1)` error. -/
-theorem scaledDyadicCutoff_progression_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ q : ℕ, 0 < q → ∀ a : ℤ,
-      |(∑ m ∈ dyadicCutoffNatSupport M,
-          if Int.ModEq q (m : ℤ) a then scaledDyadicCutoff M m else 0) -
-        (M / q) * dyadicCutoffMass| ≤ C := by
-  obtain ⟨C, hC, hbound⟩ := scaledDyadicCutoff_finset_progression_uniform_error
-  exact ⟨C, hC, fun M hM q hq a ↦
-    hbound M hM _ (scaledDyadicCutoff_mem_natSupport hM) q hq a⟩
-
-/-- The canonical finite coprime sum supplies the smooth U counting estimate. -/
-theorem scaledDyadicCutoff_coprime_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ q : ℕ, q ≠ 0 →
-      |(∑ m ∈ dyadicCutoffNatSupport M,
-          if m.Coprime q then scaledDyadicCutoff M m else 0) -
-        (M * dyadicCutoffMass) * (q.totient : ℝ) / q| ≤ C * q.divisors.card := by
-  obtain ⟨C, hC, hbound⟩ := scaledDyadicCutoff_finset_coprime_uniform_error
-  exact ⟨C, hC, fun M hM q hq ↦
-    hbound M hM _ (scaledDyadicCutoff_mem_natSupport hM) q hq⟩
 
 /-- Bezout inverses and the Chinese remainder theorem combine the divisibility
 condition and the product congruence into one actual residue class. -/
@@ -310,18 +291,5 @@ theorem scaledDyadicCutoff_finset_coprime_progression_uniform_error :
     _ ≤ _ := mul_le_mul_of_nonneg_left
       (by exact_mod_cast Finset.card_filter_le r.divisors (fun d ↦ d.Coprime q)) hC.le
 
-/-- Canonical finite-support version of the arithmetic V estimate. -/
-theorem scaledDyadicCutoff_coprime_progression_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M →
-      ∀ q r n : ℕ, 0 < q → r ≠ 0 → n.Coprime q → ∀ a : ℤ, Int.gcd a q = 1 →
-      |(∑ m ∈ dyadicCutoffNatSupport M,
-          if m.Coprime r ∧ Int.ModEq q ((m : ℤ) * n) a
-            then scaledDyadicCutoff M m else 0) -
-        (M * dyadicCutoffMass / q) *
-          ∑ d ∈ r.divisors.filter (fun d ↦ d.Coprime q),
-            (ArithmeticFunction.moebius d : ℝ) / d| ≤ C * r.divisors.card := by
-  obtain ⟨C, hC, hbound⟩ := scaledDyadicCutoff_finset_coprime_progression_uniform_error
-  exact ⟨C, hC, fun M hM q r n hq hr hn a ha ↦
-    hbound M hM _ (scaledDyadicCutoff_mem_natSupport hM) q r n hq hr hn a ha⟩
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

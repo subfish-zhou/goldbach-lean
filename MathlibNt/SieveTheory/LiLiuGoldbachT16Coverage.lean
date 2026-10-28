@@ -9,8 +9,6 @@ open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableT16Coverage (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 private abbrev T16CoverageSourceTriple := Σ _rs : ℕ × ℕ, ℕ
 

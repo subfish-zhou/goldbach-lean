@@ -1,4 +1,4 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
 import MathlibNt.SieveTheory.LiLiuGoldbachB8PaidUpper
 import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
 import MathlibNt.SieveTheory.LiLiuGoldbachS4CountTransport
@@ -11,8 +11,6 @@ open MathlibNt.SieveTheory.SwitchingPrinciple
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableB8NormalizedMainMass (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- Only the prime values of the actual B8 density enter this identity. -/
 theorem goldbachB8PlusBoundingSieve_product_eq_goldbachPrimeProduct
@@ -66,10 +64,9 @@ private theorem B8NormalizedMainMass_cutoff_large (B K : ℝ) (hK : 0 < K) :
 private theorem B8NormalizedMainMass_loglog_ratio :
     Tendsto (fun N : ℕ => Real.log (Real.log (N : ℝ)) / Real.log (N : ℝ))
       atTop (nhds 0) := by
-  have hreal : Tendsto (fun x : ℝ => Real.log x / x) atTop (nhds 0) := by
-    simpa [Real.rpow_one] using
-      (isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
-  exact hreal.comp (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
+  simpa only [Real.rpow_one, Function.comp_def] using
+    ((isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero).comp
+      (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
 
 /-- The real paid level gives ratio exactly two, with both production cutoff windows. -/
 theorem goldbachB8Plus_normalized_cutoff_geometry
@@ -162,41 +159,16 @@ private theorem B8NormalizedMainMass_coefficient
     {τ δ : ℝ} (hτ0 : 0 ≤ τ) (hτ1 : τ ≤ 1) (hτδ : 56 * τ ≤ δ) :
     8 * (1 + τ) ^ 3 ≤ 8 + δ := by
   have hτ2 : τ ^ 2 ≤ τ := by nlinarith [mul_nonneg hτ0 (sub_nonneg.mpr hτ1)]
-  have hτ3 : τ ^ 3 ≤ τ := by
-    have hmul := mul_le_mul_of_nonneg_left hτ2 hτ0
-    nlinarith
-  nlinarith
+  nlinarith [mul_le_mul_of_nonneg_left hτ2 hτ0]
 
 private theorem B8NormalizedMainMass_paid_error (C δ : ℝ) (hδ : 0 < δ) :
     ∀ᶠ N : ℕ in atTop,
       C * (N : ℝ) / Real.log (N : ℝ) ^ (3 : ℝ) ≤
         δ * SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ) ^ 2 := by
-  have hδU : 0 < δ * SingularSeries.liuUniversalProduct :=
-    mul_pos hδ SingularSeries.liuUniversalProduct_pos
-  have hlogs := (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-    (eventually_ge_atTop (max 1 (C / (δ * SingularSeries.liuUniversalProduct))))
-  filter_upwards [hlogs] with N hN
-  have hlogpos : 0 < Real.log (N : ℝ) :=
-    lt_of_lt_of_le zero_lt_one ((le_max_left _ _).trans hN)
-  have hC : C ≤ δ * SingularSeries.liuUniversalProduct * Real.log (N : ℝ) := by
-    simpa [mul_comm] using
-      (div_le_iff₀ hδU).mp ((le_max_right _ _).trans hN)
-  have hCdiv : C / Real.log (N : ℝ) ≤ δ * SingularSeries.liuUniversalProduct :=
-    (div_le_iff₀ hlogpos).2 hC
-  calc
-    C * (N : ℝ) / Real.log (N : ℝ) ^ (3 : ℝ) =
-        (C / Real.log (N : ℝ)) * ((N : ℝ) / Real.log (N : ℝ) ^ 2) := by
-      rw [Real.rpow_ofNat]
-      field_simp
-    _ ≤ (δ * SingularSeries.liuUniversalProduct) *
-        ((N : ℝ) / Real.log (N : ℝ) ^ 2) :=
-      mul_le_mul_of_nonneg_right hCdiv (by positivity)
-    _ ≤ (δ * SingularSeries.liuSingularSeries N) *
-        ((N : ℝ) / Real.log (N : ℝ) ^ 2) := by
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_left
-          (SingularSeries.liuUniversalProduct_le_liuSingularSeries N) hδ.le) (by positivity)
-    _ = _ := by ring
+  simpa only [Real.rpow_ofNat, mul_assoc, mul_div_assoc] using
+    (MathlibNt.SieveTheory.LiuWeight.eventually_inverse_log_remainder_le_liuSingularSeries
+      C δ hδ)
+
 
 /-- The selected B8 sieve, normalized on its unchanged sum of logarithmic integrals. -/
 theorem goldbachB8PlusSiftedCount_normalized_mainMass (δ : ℝ) (hδ : 0 < δ) :

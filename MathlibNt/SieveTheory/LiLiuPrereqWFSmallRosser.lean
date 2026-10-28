@@ -1,5 +1,5 @@
+import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
 import MathlibNt.SieveTheory.LiLiuPrereqWFGeometricBoxes
-import MathlibNt.SieveTheory.LinearSieve
 
 /-!
 # Concrete lower and upper small-prime Rosser weights
@@ -62,9 +62,6 @@ theorem lowerWeight_lt_level {M n : ℕ} {L : ℝ} (h : lowerWeight M L n ≠ 0)
     (n : ℝ) < L :=
   (lowerWeight_active h).2.1
 
-theorem lowerWeight_eq_zero_of_level_le {M n : ℕ} {L : ℝ} (h : L ≤ (n : ℝ)) :
-    lowerWeight M L n = 0 := by
-  simp [lowerWeight_apply, not_lt_of_ge h]
 
 theorem lowerWeight_supportedAt (M : ℕ) (L : ℝ) :
     SupportedAt (lowerWeight M L) L :=
@@ -82,15 +79,6 @@ theorem lowerWeight_one {M : ℕ} {L : ℝ} (hM : M ≠ 0) (hL : 1 < L) :
     lowerWeight M L 1 = 1 := by
   simp [lowerWeight_apply, Nat.mem_divisors, hM, hL, LowerAdmissibleSet]
 
-theorem lowerWeight_prime {M p : ℕ} {L : ℝ}
-    (hM : M ≠ 0) (hp : p.Prime) (hpd : p ∣ M) (hpL : (p : ℝ) < L) :
-    lowerWeight M L p = -1 := by
-  have hadm : LowerAdmissibleSet L {p} := by
-    intro q hq hcard
-    have hqp : q = p := Finset.mem_singleton.mp hq
-    subst q
-    norm_num [Finset.filter_singleton] at hcard
-  simp [lowerWeight_apply, hp.primeFactors, Nat.mem_divisors, hpd, hM, hpL, hadm]
 
 theorem lowerWeight_primeSupported (B : Finset ℕ) (L : ℝ)
     (hB : ∀ p ∈ B, p.Prime) :
@@ -123,13 +111,6 @@ theorem lowerSmallWeight_primeSupported (P : Finset ℕ) (D ε : ℝ) :
     PrimeSupported (geometricSmallPrimes P D ε) (lowerSmallWeight P D ε) :=
   lowerWeight_primeSupported _ _ (smallPrimes_prime P D ε)
 
-theorem lowerSmallWeight_lt_level {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : lowerSmallWeight P D ε n ≠ 0) : (n : ℝ) < D ^ ε :=
-  lowerWeight_lt_level hn
-
-theorem lowerSmallWeight_eq_zero_of_level_le {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : D ^ ε ≤ (n : ℝ)) : lowerSmallWeight P D ε n = 0 :=
-  lowerWeight_eq_zero_of_level_le hn
 
 theorem lowerSmallWeight_supportedAt (P : Finset ℕ) (D ε : ℝ) :
     SupportedAt (lowerSmallWeight P D ε) (D ^ ε) :=
@@ -154,16 +135,6 @@ theorem smallPrime_lt_level (P : Finset ℕ) {D ε : ℝ}
   apply lt_of_lt_of_le (Finset.mem_filter.mp hp).2.2
   exact Real.rpow_le_rpow_of_exponent_le hD (by nlinarith)
 
-/-- Every small prime has coefficient `-1`; this is not a delta weight. -/
-theorem lowerSmallWeight_prime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 1 ≤ D) (hε : 0 ≤ ε) (hε1 : ε ≤ 1) {p : ℕ}
-    (hp : p ∈ geometricSmallPrimes P D ε) : lowerSmallWeight P D ε p = -1 := by
-  apply lowerWeight_prime
-  · exact Finset.prod_ne_zero_iff.mpr
-      (fun q hq => (smallPrimes_prime P D ε q hq).ne_zero)
-  · exact smallPrimes_prime P D ε p hp
-  · exact Finset.dvd_prod_of_mem id hp
-  · exact smallPrime_lt_level P hD hε hε1 hp
 
 /-- One concrete lower-small-weight geometric box term. -/
 noncomputable def lowerBoxTerm (P : Finset ℕ) (D ε : ℝ)
@@ -266,9 +237,7 @@ theorem sum_powerset_insert_pairs (f : Finset ℕ → ℝ)
 theorem sum_divisors_eq_sum_powerset {n : ℕ}
     (hn : Squarefree n) (f : ℕ → ℝ) :
     ∑ d ∈ n.divisors, f d = ∑ s ∈ n.primeFactors.powerset, f (s.prod id) := by
-  simpa only [Nat.divisors_filter_squarefree_of_squarefree hn, Nat.factors_eq,
-    List.toFinset_coe, Nat.toFinset_factors, Finset.prod_val] using
-    (Nat.sum_divisors_filter_squarefree (f := f) hn.ne_zero)
+  exact LinearSieve.Internal.sum_divisors_eq_sum_primeFactors_powerset hn f
 
 theorem lowerWeight_prod_eq_setWeight {M : ℕ} {L : ℝ}
     (hM : Squarefree M) {s : Finset ℕ} (hsub : s ⊆ M.primeFactors) :
@@ -310,44 +279,6 @@ theorem lowerSmallWeight_divisor_sum (P : Finset ℕ) {D ε : ℝ} {n : ℕ}
     simpa only [id_eq, Nat.primeFactors_prod (smallPrimes_prime P D ε)] using hp
   exact smallPrime_lt_level P hD hε hε1 hmem
 
-/-- The finite lower-sieve direction on all natural numbers, obtained by
-restricting the divisor sum to `gcd(n,M)`. Prime powers cause no loss. -/
-theorem lowerWeight_divisor_sum_le_coprime {M n : ℕ} {L : ℝ}
-    (hM : Squarefree M) (hL : ∀ p ∈ M.primeFactors, (p : ℝ) < L) :
-    ∑ d ∈ n.divisors, lowerWeight M L d ≤ if n.Coprime M then 1 else 0 := by
-  by_cases hn : n = 0
-  · subst n
-    simp only [Nat.divisors_zero, Finset.sum_empty]
-    split <;> norm_num
-  have hg : (n.gcd M) ≠ 0 :=
-    (Squarefree.squarefree_of_dvd (Nat.gcd_dvd_right n M) hM).ne_zero
-  have heq : ∑ d ∈ n.divisors, lowerWeight M L d =
-      ∑ d ∈ (n.gcd M).divisors, lowerWeight M L d := by
-    symm
-    apply Finset.sum_subset
-    · intro d hd
-      exact Nat.mem_divisors.mpr
-        ⟨(Nat.mem_divisors.mp hd).1.trans (Nat.gcd_dvd_left n M), hn⟩
-    · intro d hd hnot
-      by_contra hweight
-      exact hnot (Nat.mem_divisors.mpr
-        ⟨Nat.dvd_gcd (Nat.mem_divisors.mp hd).1 (lowerWeight_dvd hweight), hg⟩)
-  rw [heq]
-  exact lowerWeight_divisor_sum hM hL (Nat.gcd_dvd_right n M)
-
-/-- The concrete small-prime weight is a lower bound for the indicator of
-integers coprime to its sieve prime product. This is finite, not a density
-estimate. -/
-theorem lowerSmallWeight_divisor_sum_le_coprime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 1 ≤ D) (hε : 0 ≤ ε) (hε1 : ε ≤ 1) (n : ℕ) :
-    ∑ d ∈ n.divisors, lowerSmallWeight P D ε d ≤
-      if n.Coprime ((geometricSmallPrimes P D ε).prod id) then 1 else 0 := by
-  apply lowerWeight_divisor_sum_le_coprime
-    (primeProduct_squarefree _ (smallPrimes_prime P D ε))
-  intro p hp
-  have hmem : p ∈ geometricSmallPrimes P D ε := by
-    simpa only [id_eq, Nat.primeFactors_prod (smallPrimes_prime P D ε)] using hp
-  exact smallPrime_lt_level P hD hε hε1 hmem
 
 /-! ## Concrete upper small weight -/
 
@@ -391,9 +322,6 @@ theorem upperWeight_lt_level {M n : ℕ} {L : ℝ} (h : upperWeight M L n ≠ 0)
     (n : ℝ) < L :=
   (upperWeight_active h).2.1
 
-theorem upperWeight_eq_zero_of_level_le {M n : ℕ} {L : ℝ} (h : L ≤ (n : ℝ)) :
-    upperWeight M L n = 0 := by
-  simp [upperWeight_apply, not_lt_of_ge h]
 
 theorem upperWeight_supportedAt (M : ℕ) (L : ℝ) :
     SupportedAt (upperWeight M L) L :=
@@ -411,17 +339,6 @@ theorem upperWeight_one {M : ℕ} {L : ℝ} (hM : M ≠ 0) (hL : 1 < L) :
     upperWeight M L 1 = 1 := by
   simp [upperWeight_apply, Nat.mem_divisors, hM, hL, UpperAdmissibleSet]
 
-theorem upperWeight_prime {M p : ℕ} {L : ℝ}
-    (hM : M ≠ 0) (hp : p.Prime) (hpd : p ∣ M) (hpL : (p : ℝ) ^ 3 < L) :
-    upperWeight M L p = -1 := by
-  have hp1 : (1 : ℝ) ≤ p := by exact_mod_cast hp.one_le
-  have hcut : (p : ℝ) < L := lt_of_le_of_lt (by nlinarith [sq_nonneg (p : ℝ)]) hpL
-  have hadm : UpperAdmissibleSet L {p} := by
-    intro q hq _
-    have hqp : q = p := Finset.mem_singleton.mp hq
-    subst q
-    simpa [Finset.filter_singleton, pow_succ, mul_comm] using hpL
-  simp [upperWeight_apply, hp.primeFactors, Nat.mem_divisors, hpd, hM, hcut, hadm]
 
 theorem upperWeight_primeSupported (B : Finset ℕ) (L : ℝ)
     (hB : ∀ p ∈ B, p.Prime) :
@@ -444,13 +361,6 @@ theorem upperSmallWeight_primeSupported (P : Finset ℕ) (D ε : ℝ) :
     PrimeSupported (geometricSmallPrimes P D ε) (upperSmallWeight P D ε) :=
   upperWeight_primeSupported _ _ (smallPrimes_prime P D ε)
 
-theorem upperSmallWeight_lt_level {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : upperSmallWeight P D ε n ≠ 0) : (n : ℝ) < D ^ ε :=
-  upperWeight_lt_level hn
-
-theorem upperSmallWeight_eq_zero_of_level_le {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : D ^ ε ≤ (n : ℝ)) : upperSmallWeight P D ε n = 0 :=
-  upperWeight_eq_zero_of_level_le hn
 
 theorem upperSmallWeight_supportedAt (P : Finset ℕ) (D ε : ℝ) :
     SupportedAt (upperSmallWeight P D ε) (D ^ ε) :=
@@ -469,23 +379,6 @@ theorem upperSmallWeight_one (P : Finset ℕ) {D ε : ℝ}
       (fun p hp => (smallPrimes_prime P D ε p hp).ne_zero)
   · exact Real.one_lt_rpow (by linarith) hε
 
-/-- Under the small-parameter hypothesis every small prime passes the upper
-cubic test, so the concrete upper weight is not a delta weight. -/
-theorem upperSmallWeight_prime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) {p : ℕ}
-    (hp : p ∈ geometricSmallPrimes P D ε) : upperSmallWeight P D ε p = -1 := by
-  apply upperWeight_prime
-  · exact Finset.prod_ne_zero_iff.mpr
-      (fun q hq => (smallPrimes_prime P D ε q hq).ne_zero)
-  · exact smallPrimes_prime P D ε p hp
-  · exact Finset.dvd_prod_of_mem id hp
-  · have hexp : ε ^ 2 * 3 < ε := by
-      nlinarith [mul_pos hε (sub_pos.mpr hεsmall)]
-    calc
-      (p : ℝ) ^ 3 ≤ (D ^ (ε ^ 2)) ^ 3 :=
-        pow_le_pow_left₀ (Nat.cast_nonneg p) (Finset.mem_filter.mp hp).2.2.le 3
-      _ = D ^ (ε ^ 2 * 3) := (Real.rpow_mul_natCast (by linarith) (ε ^ 2) 3).symm
-      _ < D ^ ε := Real.rpow_lt_rpow_of_exponent_lt (by linarith) hexp
 
 /-- One concrete upper-small-weight geometric box term. -/
 noncomputable def upperBoxTerm (P : Finset ℕ) (D ε : ℝ)
@@ -574,66 +467,6 @@ theorem prod_insert_min_lt_of_odd
     simpa [mul_comm] using
       mul_le_mul_of_nonneg_right hqp2real (Nat.cast_nonneg (s.prod id))) htest
 
-private theorem upperSetWeight_pair_nonneg
-    {L : ℝ} {q : ℕ} {s : Finset ℕ} (hqs : q ∉ s) (hqprime : q.Prime)
-    (hqmin : ∀ p ∈ s, q ≤ p) :
-    0 ≤ upperSetWeight L s + upperSetWeight L (insert q s) := by
-  have hcard : (insert q s).card = s.card + 1 :=
-    Finset.card_insert_of_notMem hqs
-  by_cases heven : Even s.card
-  · have hodd : ¬Even (insert q s).card := by
-      rw [hcard, Nat.even_add_one]
-      exact not_not_intro heven
-    have hback :
-        (((insert q s).prod id : ℕ) : ℝ) < L ∧ UpperAdmissibleSet L (insert q s) →
-          ((s.prod id : ℕ) : ℝ) < L ∧ UpperAdmissibleSet L s := by
-      intro hins
-      refine ⟨?_, upperAdmissible_of_insert_min hqs hqmin hins.2⟩
-      apply lt_of_le_of_lt _ hins.1
-      exact_mod_cast (show s.prod id ≤ (insert q s).prod id by
-        rw [Finset.prod_insert hqs]
-        exact Nat.le_mul_of_pos_left (s.prod id) hqprime.pos)
-    by_cases hbase : ((s.prod id : ℕ) : ℝ) < L ∧ UpperAdmissibleSet L s
-    · unfold upperSetWeight
-      rw [if_pos hbase, if_pos heven]
-      split <;> norm_num
-    · have hins : ¬((((insert q s).prod id : ℕ) : ℝ) < L ∧
-          UpperAdmissibleSet L (insert q s)) := fun h => hbase (hback h)
-      unfold upperSetWeight
-      rw [if_neg hbase, if_neg hins]
-      norm_num
-  · have hinsEven : Even (insert q s).card := by
-      rw [hcard, Nat.even_add_one]
-      exact heven
-    by_cases hbase : ((s.prod id : ℕ) : ℝ) < L ∧ UpperAdmissibleSet L s
-    · have hins : (((insert q s).prod id : ℕ) : ℝ) < L ∧
-          UpperAdmissibleSet L (insert q s) :=
-        ⟨prod_insert_min_lt_of_odd hqs hqprime hqmin hbase.2 heven,
-          upperAdmissible_insert_min_of_odd hqs hqmin hbase.2 heven⟩
-      unfold upperSetWeight
-      rw [if_pos hbase, if_pos hins, if_neg heven, if_pos hinsEven]
-      norm_num
-    · unfold upperSetWeight
-      rw [if_neg hbase]
-      split <;> norm_num
-
-private theorem sum_upperSetWeight_nonneg
-    {L : ℝ} {S : Finset ℕ} (hS : S.Nonempty)
-    (hprime : ∀ p ∈ S, p.Prime) :
-    0 ≤ ∑ s ∈ S.powerset, upperSetWeight L s := by
-  let q := S.min' hS
-  let T := S.erase q
-  have hqS : q ∈ S := Finset.min'_mem S hS
-  have hqT : q ∉ T := by simp [T]
-  have hST : insert q T = S := Finset.insert_erase hqS
-  rw [← hST, sum_powerset_insert_pairs (upperSetWeight L) hqT]
-  apply Finset.sum_nonneg
-  intro s hs
-  have hsubT : s ⊆ T := Finset.mem_powerset.mp hs
-  have hqs : q ∉ s := fun h => hqT (hsubT h)
-  apply upperSetWeight_pair_nonneg hqs (hprime q hqS)
-  intro p hp
-  exact Finset.min'_le S p (Finset.erase_subset q S (hsubT hp))
 
 theorem upperWeight_prod_eq_setWeight {M : ℕ} {L : ℝ}
     (hM : Squarefree M) {s : Finset ℕ} (hsub : s ⊆ M.primeFactors) :
@@ -651,32 +484,6 @@ theorem upperWeight_prod_eq_setWeight {M : ℕ} {L : ℝ}
   rw [upperWeight_apply, hpf]
   simp only [hdiv, true_and, neg_one_pow_eq_ite, upperSetWeight]
 
-/-- The finite upper-sieve direction on divisors of a squarefree sieve product.
-Only `1 < L` is required: there is no prime cutoff hypothesis. -/
-theorem upperWeight_divisor_sum {M n : ℕ} {L : ℝ}
-    (hM : Squarefree M) (hL : 1 < L) (hn : n ∣ M) :
-    (if n = 1 then 1 else 0) ≤ ∑ d ∈ n.divisors, upperWeight M L d := by
-  have hnSquarefree : Squarefree n := Squarefree.squarefree_of_dvd hn hM
-  by_cases hn1 : n = 1
-  · subst n
-    simp only [Nat.divisors_one, Finset.sum_singleton]
-    exact le_of_eq (upperWeight_one hM.ne_zero hL).symm
-  · rw [if_neg hn1, sum_divisors_eq_sum_powerset hnSquarefree]
-    have hnFactors : n.primeFactors.Nonempty := by
-      rw [Finset.nonempty_iff_ne_empty]
-      intro hempty
-      rcases Nat.primeFactors_eq_empty.mp hempty with hn0 | hn_one
-      · exact hnSquarefree.ne_zero hn0
-      · exact hn1 hn_one
-    have hsub : n.primeFactors ⊆ M.primeFactors := Nat.primeFactors_mono hn hM.ne_zero
-    calc
-      0 ≤ ∑ s ∈ n.primeFactors.powerset, upperSetWeight L s :=
-        sum_upperSetWeight_nonneg hnFactors (fun p hp => Nat.prime_of_mem_primeFactors hp)
-      _ = ∑ s ∈ n.primeFactors.powerset, upperWeight M L (s.prod id) := by
-        apply Finset.sum_congr rfl
-        intro s hs
-        exact (upperWeight_prod_eq_setWeight hM
-          ((Finset.mem_powerset.mp hs).trans hsub)).symm
 
 theorem upperSmallWeight_divisor_sum_of_le_one (P : Finset ℕ) {D ε : ℝ} {n : ℕ}
     (hD : 2 ≤ D) (hε : 0 < ε) (hε1 : ε ≤ 1)
@@ -698,62 +505,5 @@ by
     (LinearSieve.upperRosserWeight_certificate hB hB.ne_zero
       (Nat.lt_ceil.mpr (by simpa using hL)) hcut) hn
 
-/-- The wider legacy API is retained: ε need not be at most one. -/
-theorem upperSmallWeight_divisor_sum (P : Finset ℕ) {D ε : ℝ} {n : ℕ}
-    (hD : 2 ≤ D) (hε : 0 < ε)
-    (hn : n ∣ (geometricSmallPrimes P D ε).prod id) :
-    (if n = 1 then 1 else 0) ≤ ∑ d ∈ n.divisors, upperSmallWeight P D ε d :=
-  upperWeight_divisor_sum (primeProduct_squarefree _ (smallPrimes_prime P D ε))
-    (Real.one_lt_rpow (by linarith) hε) hn
-
-/-- The finite upper-sieve direction on positive integers, including prime
-powers, by restriction to `gcd(n,M)`. The exclusion of zero is essential for
-the empty-divisors convention when `M = 1`. -/
-theorem upperWeight_divisor_sum_ge_coprime {M n : ℕ} {L : ℝ}
-    (hM : Squarefree M) (hL : 1 < L) (hn : n ≠ 0) :
-    (if n.Coprime M then 1 else 0) ≤ ∑ d ∈ n.divisors, upperWeight M L d := by
-  have hg : (n.gcd M) ≠ 0 :=
-    (Squarefree.squarefree_of_dvd (Nat.gcd_dvd_right n M) hM).ne_zero
-  have heq : ∑ d ∈ n.divisors, upperWeight M L d =
-      ∑ d ∈ (n.gcd M).divisors, upperWeight M L d := by
-    symm
-    apply Finset.sum_subset
-    · intro d hd
-      exact Nat.mem_divisors.mpr
-        ⟨(Nat.mem_divisors.mp hd).1.trans (Nat.gcd_dvd_left n M), hn⟩
-    · intro d hd hnot
-      by_contra hweight
-      exact hnot (Nat.mem_divisors.mpr
-        ⟨Nat.dvd_gcd (Nat.mem_divisors.mp hd).1 (upperWeight_dvd hweight), hg⟩)
-  rw [heq]
-  exact upperWeight_divisor_sum hM hL (Nat.gcd_dvd_right n M)
-
-/-- The concrete small-prime upper coefficient bounds the coprimality
-indicator on every positive integer; no density estimate is asserted. -/
-theorem upperSmallWeight_divisor_sum_ge_coprime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) {n : ℕ} (hn : n ≠ 0) :
-    (if n.Coprime ((geometricSmallPrimes P D ε).prod id) then 1 else 0) ≤
-      ∑ d ∈ n.divisors, upperSmallWeight P D ε d :=
-  upperWeight_divisor_sum_ge_coprime
-    (primeProduct_squarefree _ (smallPrimes_prime P D ε))
-    (Real.one_lt_rpow (by linarith) hε) hn
-
-/-- The short lower weight itself is common WF at the external level. -/
-theorem lowerSmallWeight_wellFactorable (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) :
-    WellFactorable (lowerSmallWeight P D ε) (D ^ (1 + ε + ε ^ 9)) := by
-  simpa only [lowerBoxTerm, geometricBoxTerm, List.toFinset_nil, boxProduct,
-    Finset.prod_empty, mul_one] using
-    iwaniec_lowerBoxTerm_wellFactorable P [] hD hε hεsmall
-      (admissible_nil false _ _)
-
-/-- The short upper weight itself is common WF at the external level. -/
-theorem upperSmallWeight_wellFactorable (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) :
-    WellFactorable (upperSmallWeight P D ε) (D ^ (1 + ε + ε ^ 9)) := by
-  simpa only [upperBoxTerm, geometricBoxTerm, List.toFinset_nil, boxProduct,
-    Finset.prod_empty, mul_one] using
-    iwaniec_upperBoxTerm_wellFactorable P [] hD hε hεsmall
-      (admissible_nil true _ _)
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser

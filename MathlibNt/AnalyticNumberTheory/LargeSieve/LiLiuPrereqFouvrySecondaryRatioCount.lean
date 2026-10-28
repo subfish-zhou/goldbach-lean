@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
 
 /-!
 # Counting the secondary frequency-sieve ratio relation

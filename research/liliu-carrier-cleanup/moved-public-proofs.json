@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramPrefix_coordinate_mem_scale",
+      "before_provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioBox"
+      ],
+      "after_provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox"
+      ],
+      "same_public_kind_and_type_hash": true
+    },
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramPrefix_frequency_mem_scale",
+      "before_provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioBox"
+      ],
+      "after_provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox"
+      ],
+      "same_public_kind_and_type_hash": true
+    }
+  ],
+  "method": "The same public names and type hashes are preserved. Moving the existing public names upstream avoids a reverse import/cycle and removes the downstream copies."
+}

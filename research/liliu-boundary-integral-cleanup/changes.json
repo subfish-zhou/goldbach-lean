@@ -1,0 +1,116 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuFouvryG9KernelBudget.lean",
+      "status": "modified",
+      "before_sha256": "906b722a391c8f46a74ace589dd76e923337e559f8d349ef13c2832f00ffc9cb",
+      "after_sha256": "48d3caa4ee2a3d0afb8246820a13b4240763300d7bd5ebad946ad9639c7fc530",
+      "before": {
+        "code_lines": 69,
+        "physical_lines": 75,
+        "utf8_bytes": 3743
+      },
+      "after": {
+        "code_lines": 64,
+        "physical_lines": 70,
+        "utf8_bytes": 3491
+      },
+      "delta": {
+        "code_lines": -5,
+        "physical_lines": -5,
+        "utf8_bytes": -252
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuFouvryG9RelaxedIntegral.lean",
+      "status": "modified",
+      "before_sha256": "a5d78887e8ff515e3f3f2f462c9254478d5999531e4a6dc0d677b0bfe2db331f",
+      "after_sha256": "bb14ca3383e27d95d72af8d44e91b09078d26c8832de84aa2e4bc713ce980b38",
+      "before": {
+        "code_lines": 106,
+        "physical_lines": 124,
+        "utf8_bytes": 6537
+      },
+      "after": {
+        "code_lines": 114,
+        "physical_lines": 134,
+        "utf8_bytes": 6935
+      },
+      "delta": {
+        "code_lines": 8,
+        "physical_lines": 10,
+        "utf8_bytes": 398
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuFouvryG9S5Kernel.lean",
+      "status": "modified",
+      "before_sha256": "ef14fc40d672bbc2f4f55435d57effa032797433b6f561da2d190e49cab3025c",
+      "after_sha256": "2485cb0f6ce0bf24eb56e761b88836727a0fe1a30753e29ec55fe0d03d65c0f7",
+      "before": {
+        "code_lines": 53,
+        "physical_lines": 61,
+        "utf8_bytes": 2821
+      },
+      "after": {
+        "code_lines": 45,
+        "physical_lines": 51,
+        "utf8_bytes": 2423
+      },
+      "delta": {
+        "code_lines": -8,
+        "physical_lines": -10,
+        "utf8_bytes": -398
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuFouvryG9WeightedBoundaryIntegral.lean",
+      "status": "modified",
+      "before_sha256": "d99b8a0f6451084138245f39ca1ab7136e951a386c671c2e8b04bfcec4b77e2d",
+      "after_sha256": "880ea90dfdad585703be213cf5e16ebbff02786e183d9953d555b1fdbc594077",
+      "before": {
+        "code_lines": 168,
+        "physical_lines": 180,
+        "utf8_bytes": 9446
+      },
+      "after": {
+        "code_lines": 100,
+        "physical_lines": 110,
+        "utf8_bytes": 5788
+      },
+      "delta": {
+        "code_lines": -68,
+        "physical_lines": -70,
+        "utf8_bytes": -3658
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB9HighFirstIntegral.lean",
+      "status": "modified",
+      "before_sha256": "6ad8bb609fccb59eca9fc7d488974d4000b045c56cd423d4be0e0f55aa7be6d7",
+      "after_sha256": "ecd77dbfe5807eb89a9bf8c1fe454da92f2ce757c7f2febdd58187ea3b76c4d7",
+      "before": {
+        "code_lines": 217,
+        "physical_lines": 245,
+        "utf8_bytes": 12201
+      },
+      "after": {
+        "code_lines": 163,
+        "physical_lines": 188,
+        "utf8_bytes": 9369
+      },
+      "delta": {
+        "code_lines": -54,
+        "physical_lines": -57,
+        "utf8_bytes": -2832
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -127,
+    "physical_lines": -132,
+    "utf8_bytes": -6742
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

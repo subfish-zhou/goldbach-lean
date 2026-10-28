@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
-import Mathlib.Data.Nat.Factorization.Basic
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

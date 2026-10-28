@@ -102,65 +102,6 @@ theorem wMaskedTail_uniform (k : ℕ) :
           (hb M hM _ _ (hQ _ hq) (hQ _ hr) a _ _ _)) (abs_nonneg _)
     _ = _ := by ring
 
-/-- Transport a bound for an original progression sum only with its own
-zero mode and its own tail, never with the unmasked SW main term. -/
-theorem wMaskedTruncated_abs_le (k : ℕ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ H : ℕ → ℕ → ℕ,
-      ∀ N Q : Finset ℕ, ∀ β c : ℕ → ℝ, ∀ a : ℤ,
-      ∀ P : WOriginalTuple → Prop, (∀ q ∈ Q, q ≠ 0) →
-      |wMaskedTruncated M H N Q β c a P| ≤
-        |wMaskedOriginal M N Q β c a P| + |wMaskedZeroMode M N Q β c a P| +
-          C * wMaskedTailEnvelope k M H N Q β c a P := by
-  obtain ⟨C, hC, hb⟩ := wMaskedTail_uniform k
-  refine ⟨C, hC, fun M hM H N Q β c a P hQ ↦ ?_⟩
-  have he := wMaskedOriginal_eq_zero_add_truncated_add_tail hM H N Q β c a P hQ
-  have ht : wMaskedTruncated M H N Q β c a P =
-      (wMaskedOriginal M N Q β c a P - wMaskedZeroMode M N Q β c a P) -
-        wMaskedTail M H N Q β c a P := by linarith
-  rw [ht]
-  exact (abs_sub _ _).trans
-    (add_le_add (abs_sub _ _) (hb M hM H N Q β c a P hQ))
-
-theorem wMaskedTruncated_eq_gcdMask
-    (M : ℝ) (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (P : WGCDData → Prop) (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q) :
-    wMaskedTruncated M H N Q β c a (fun t ↦ P (wGCDTuple t)) =
-      ∑ v ∈ (wGCDTuples N Q a).filter P, wGCDTerm M H β c a v := by
-  unfold wMaskedTruncated wMaskedTuples
-  rw [Finset.sum_filter, Finset.sum_filter, sum_wGCDTuples hN hQ]
-  apply Finset.sum_congr rfl
-  intro t ht
-  split_ifs
-  · exact (wGCDTerm_eq_originalTerm (wOriginalTuples_pos hN hQ ht)
-      (Finset.mem_filter.mp ht).2 M H β c a).symm
-  · rfl
-
-/-- The exact large five-gcd contribution is a masked frequency sum. -/
-theorem wGCDLargeSum_eq_maskedTruncated
-    (M Y : ℝ) (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q) :
-    wGCDLargeSum M Y H N Q β c a =
-      wMaskedTruncated M H N Q β c a (fun t ↦ ¬(wGCDTuple t).Small Y) := by
-  rw [wMaskedTruncated_eq_gcdMask M H N Q β c a (fun v ↦ ¬v.Small Y) hN hQ]
-  unfold wGCDLargeSum
-  apply Finset.sum_congr
-  · ext v
-    simp
-  · intro v _
-    rfl
-
-theorem wGCDLargeSum_eq_original_sub_zero_sub_tail
-    {M : ℝ} (hM : 0 < M) (Y : ℝ) (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ)
-    (β c : ℕ → ℝ) (a : ℤ)
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q) :
-    wGCDLargeSum M Y H N Q β c a =
-      wMaskedOriginal M N Q β c a (fun t ↦ ¬(wGCDTuple t).Small Y) -
-        wMaskedZeroMode M N Q β c a (fun t ↦ ¬(wGCDTuple t).Small Y) -
-          wMaskedTail M H N Q β c a (fun t ↦ ¬(wGCDTuple t).Small Y) := by
-  rw [wGCDLargeSum_eq_maskedTruncated M Y H N Q β c a hN hQ]
-  have he := wMaskedOriginal_eq_zero_add_truncated_add_tail hM H N Q β c a
-    (fun t ↦ ¬(wGCDTuple t).Small Y) (fun q hq ↦ (hQ q hq).ne')
-  linarith
 
 /-! ## Weighted dyadic payment
 

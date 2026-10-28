@@ -1,4 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceSigmaFinal
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SmallDHighCoordinate
 
 open scoped Classical BigOperators

@@ -1,0 +1,54 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit.0.DirichletCharacter.sum_univ_zmod_eq_sum_range",
+      "provider": [
+        "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit"
+      ],
+      "kind": "theorem",
+      "typeHash": "1221082607",
+      "old_incoming_declarations": [
+        "DirichletCharacter.IsPrimitive.norm_weighted_fourierKernel_sum_le_four_mul_q_mul_one_add_log"
+      ],
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_zmod_eq_range",
+      "provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion"
+      ],
+      "kind": "theorem",
+      "typeHash": "1221082607",
+      "old_incoming_declarations": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.intervalFourier_lone"
+      ],
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B8NormalizedMainMass_paid_error",
+      "provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass"
+      ],
+      "kind": "theorem",
+      "typeHash": "262189150",
+      "old_incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB8PlusSiftedCount_normalized_mainMass"
+      ],
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.highFirst_paid_error",
+      "provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized"
+      ],
+      "kind": "theorem",
+      "typeHash": "661108067",
+      "old_incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighFirstSiftedCount_normalized_kernel"
+      ],
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "method": "All four explicit private helper names and complete statements are retained; only proof bodies are shortened. No private-removal saving is claimed."
+}

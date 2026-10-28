@@ -1,8 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146iErrorEnvelopeTransport
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorEnvelopeTransportFull
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144RecursiveCoordinateSourceSigma
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144IHInstantiation
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -146,20 +142,6 @@ theorem eventually_caseII_errorEnvelope_transport_uniform_in_S
     (zero_le_one.trans hd1.le) hq1 hlarge hi
     (hdomains p hpCarrier).1 (coordinate_bounds hp2 h2pD).1
     (hrecursiveUpper S 3 (by norm_num) p hpFull)
-
-/-- Compatibility wrapper for the original sieve-first Case-II transport API. -/
-theorem eventually_caseII_errorEnvelope_transport_uniform
-    (S : BoundingSieve) (H : Section13HatLayers) {d : ℝ}
-    (hH : Section13HatSourceContract H) (hd1 : 1 < d) :
-    ∀ᶠ D : ℕ in atTop, ∀ (N : ℕ) (s : ℝ), Odd N → 1 < s → s ≤ 3 →
-      (∀ p ∈ sigmaOneCarrier
-          (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (3 : ℝ))⌉₊)
-          D (sourceSigma (D : ℝ) d) 3,
-        inheritedCoordinate D p ∈ KappaOneModel.parityDomain 2 (N - 1) ∧
-        recursiveCoordinate D p ∈ KappaOneModel.parityDomain 2 (N - 1)) →
-      CaseIIErrorEnvelopeTransport S H N D d :=
-  (eventually_caseII_errorEnvelope_transport_uniform_in_S H hH hd1).mono
-    (fun _ hD => hD S)
 
 
 end MathlibNt.SieveTheory

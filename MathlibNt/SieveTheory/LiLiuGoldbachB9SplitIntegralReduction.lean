@@ -70,49 +70,6 @@ theorem continuousOn_goldbachB9WeightedSingleIntegrand :
   change u * (1 - u)^2 ≠ 0
   exact mul_ne_zero (by linarith [hu.1]) (pow_ne_zero 2 (by linarith [hu.2]))
 
-theorem intervalIntegrable_goldbachB9WeightedSingleIntegrand :
-    IntervalIntegrable (fun u : ℝ => Real.log (2 - 3 * u) / (u * (1 - u)^2))
-      volume (4 / 53) (1 / 3) := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le (by norm_num : (4 / 53 : ℝ) ≤ 1 / 3)]
-  exact continuousOn_goldbachB9WeightedSingleIntegrand
-
-theorem intervalIntegrable_goldbachB9WeightedInner {u : ℝ}
-    (hu : u ∈ Icc (4 / 53 : ℝ) (1 / 3)) :
-    IntervalIntegrable (fun v : ℝ => 1 / (u * v * (1 - u - v) * (1 - u)))
-      volume (1 / 3) ((1 - u) / 2) := by
-  simpa only [one_div, mul_inv] using
-    (intervalIntegrable_goldbachB9MainInner hu).mul_const (1 / (1 - u))
-
-theorem intervalIntegrable_goldbachB9WeightedOuter :
-    IntervalIntegrable (fun u : ℝ => ∫ v in (1 / 3 : ℝ)..((1 - u) / 2),
-      1 / (u * v * (1 - u - v) * (1 - u))) volume (4 / 53) (1 / 3) := by
-  apply intervalIntegrable_goldbachB9WeightedSingleIntegrand.congr
-  intro u hu
-  rw [uIoc_of_le (by norm_num : (4 / 53 : ℝ) ≤ 1 / 3)] at hu
-  exact (goldbachB9InnerWeightedIntegral_eq ⟨hu.1.le, hu.2⟩).symm
-
-/-- Continuous interval splitting is justified by integrability; it does not alter
-how the finite first-prime boundary is assigned to the high counting family. -/
-theorem goldbachB9MainIntegral_eq_splitSingleIntegrals :
-    goldbachB9MainIntegral =
-      (∫ u in (4 / 53 : ℝ)..(1 / 10), Real.log (2 - 3 * u) / (u * (1 - u))) +
-      (∫ u in (1 / 10 : ℝ)..(1 / 3), Real.log (2 - 3 * u) / (u * (1 - u))) := by
-  have hl : IntervalIntegrable (fun u : ℝ => Real.log (2 - 3 * u) / (u * (1 - u)))
-      volume (4 / 53) (1 / 10) := by
-    apply intervalIntegrable_goldbachB9SingleIntegrand.mono_set
-    rw [uIcc_of_le (by norm_num : (4 / 53 : ℝ) ≤ 1 / 10),
-      uIcc_of_le (by norm_num : (4 / 53 : ℝ) ≤ 1 / 3)]
-    exact Icc_subset_Icc_right (by norm_num)
-  have hr : IntervalIntegrable (fun u : ℝ => Real.log (2 - 3 * u) / (u * (1 - u)))
-      volume (1 / 10) (1 / 3) := by
-    apply intervalIntegrable_goldbachB9SingleIntegrand.mono_set
-    rw [uIcc_of_le (by norm_num : (1 / 10 : ℝ) ≤ 1 / 3),
-      uIcc_of_le (by norm_num : (4 / 53 : ℝ) ≤ 1 / 3)]
-    exact Icc_subset_Icc_left (by norm_num)
-  unfold goldbachB9MainIntegral
-  rw [goldbachB9DoubleIntegral_eq_singleIntegral]
-  exact (intervalIntegral.integral_add_adjacent_intervals hl hr).symm
 
 end
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

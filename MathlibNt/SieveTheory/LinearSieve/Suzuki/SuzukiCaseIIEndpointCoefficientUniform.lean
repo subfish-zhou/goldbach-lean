@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132FiniteHatUniformInterface
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISharpPositiveEndpointCoefficients
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIPositiveEndpointPacket
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set
@@ -77,34 +76,6 @@ theorem caseII_endpoint_source_layers_uniform
         _ ≤ L2 := by
           dsimp [L2]
           gcongr
-
-/-- For fixed source data and fixed `K ≥ 0`, both Case-II algebraic endpoint
-coefficients admit nonnegative bounds independent of the odd depth `N`. -/
-theorem caseII_algebraic_endpoint_coefficients_uniform
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    {K : ℝ} (hK : 0 ≤ K) :
-    ∃ A0 A1 : ℝ, 0 ≤ A0 ∧ 0 ≤ A1 ∧
-      ∀ N : ℕ, Odd N → 3 ≤ N →
-        caseIIAlgebraicEndpointCoeffA0 N K ≤ A0 ∧
-        caseIIAlgebraicEndpointCoeffA1 N K ≤ A1 := by
-  obtain ⟨L3, L2, hL3, hL2, hfinite⟩ :=
-    caseII_endpoint_source_layers_uniform hH
-  let A0 : ℝ := 9 * K * L3
-  let A1 : ℝ := 18 * K ^ 2 * (1 + 3 * K) * L2
-  refine ⟨A0, A1, ?_, ?_, ?_⟩
-  · dsimp [A0]
-    positivity
-  · dsimp [A1]
-    positivity
-  · intro N hN hN3
-    obtain ⟨h3, h2⟩ := hfinite N hN hN3
-    constructor
-    · unfold caseIIAlgebraicEndpointCoeffA0
-      dsimp [A0]
-      gcongr
-    · unfold caseIIAlgebraicEndpointCoeffA1
-      dsimp [A1]
-      gcongr
 
 
 end MathlibNt.SieveTheory

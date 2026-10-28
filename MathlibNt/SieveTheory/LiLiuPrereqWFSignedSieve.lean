@@ -396,21 +396,4 @@ theorem signedFamilyAggregate_canonical_gcd_divisor_sum_bounds (P : Finset ℕ)
     hD hε hεsmall (geometricSieveLabel_mem P hP (by linarith) hε)
     (geometricSieveLabel_head_lt P hP (by linarith) hε hcut) n
 
-#check sum_powerset_partition
-#check normalizedSignedSet_small_sum_bounds
-#check signedFamilyAggregate_divisor_sum_partition
-#check signedFamilyAggregate_divisor_sum_bounds
-#check signedFamilyAggregate_gcd_divisor_sum_bounds
-#check geometricSieveLabel_mem
-#check geometricSieveLabel_head_lt
-#check signedFamilyAggregate_canonical_gcd_divisor_sum_bounds
-#print axioms sum_powerset_partition
-#print axioms normalizedSignedSet_small_sum_bounds
-#print axioms signedFamilyAggregate_divisor_sum_partition
-#print axioms signedFamilyAggregate_divisor_sum_bounds
-#print axioms signedFamilyAggregate_gcd_divisor_sum_bounds
-#print axioms geometricSieveLabel_mem
-#print axioms geometricSieveLabel_head_lt
-#print axioms signedFamilyAggregate_canonical_gcd_divisor_sum_bounds
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

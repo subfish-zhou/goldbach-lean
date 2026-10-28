@@ -1,0 +1,49 @@
+{
+  "module": "W06SigmaV2",
+  "exit_code": 0,
+  "seconds": 4.953797124326229,
+  "source_sha256": "8d1cc14a0c18a591feb136c369dbf0405a7a402018fc2054e341eece4585f0a2",
+  "object_sha256": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3",
+  "dependencies": {
+    "Hf4QuadAggregate": "cdb232eed89741bfbd8998894221fcaa0d3b7e8cc07ceb0a97612860c9d5873b",
+    "Hf4DEDenominator": "c0983291f1cf246149424f2c7336a8ea0d4a85166665ff94e71ba108ed9b2865"
+  },
+  "dependency_contexts": {
+    "Hf4QuadAggregate": "8c11c640d8d46f17743efd340210c1bd3c7e57a5a8fc1fd2047e8dd3f41006e3",
+    "Hf4DEDenominator": "794051c60c20ff7c4ca72022430c11647356f2a90f7592f7aa982ad9933060e3"
+  },
+  "context_sha256": "477366dbd180c09b4d4b1879715a8f4d34a344e664909d156b6e709ee43259c0",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06SigmaV2.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06SigmaV2.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06SigmaV2.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06SigmaV2.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.resources",
+  "resource_sha256": "91d0873468576882fc42e3829c2107028e7b39257b8c538265f8337e8f2f6f87",
+  "artifact_bundle_sha256": {
+    ".olean": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3"
+  }
+}

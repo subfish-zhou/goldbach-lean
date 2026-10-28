@@ -28,7 +28,7 @@ theorem exp_nat_mul_log_sub_nat_le_factorial
   have hlogm : 0 ≤ Real.log (m : ℝ) := Real.log_nonneg hm1
   have hlog2pi : 0 ≤ Real.log (2 * Real.pi) := by
     apply Real.log_nonneg
-    have hpi := Real.pi_gt_three
+    have hpi := Real.two_le_pi
     linarith
   have hmain :
       (m : ℝ) * Real.log (m : ℝ) - (m : ℝ) ≤
@@ -129,41 +129,6 @@ theorem floorTail_le_claim145_logExponent
     simpa [M] using hT
   exact hexact.trans (Real.exp_le_exp.mpr
     (add_le_add le_rfl (hMlog.trans hfloorError)))
-
-/-- Direct consumer for the tail object occurring in Lemma 14.3.  The standard
-`L^M/M! * exp L` estimate is kept as an explicit premise, so this theorem can be
-composed with any proof of that estimate without changing constants. -/
-theorem suzukiExponentialTail_le_claim145_logExponent
-    {s L : ℝ} (hL : 0 < L)
-    (hlarge : Real.exp 1 * L ≤ s - 2)
-    (htail : suzukiExponentialTail L (⌊s - 2⌋₊ + 1) ≤
-      L ^ (⌊s - 2⌋₊ + 1) /
-          (((⌊s - 2⌋₊ + 1).factorial : ℕ) : ℝ) * Real.exp L) :
-    suzukiExponentialTail L (⌊s - 2⌋₊ + 1) ≤
-      Real.exp
-        (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) :=
-  floorTail_le_claim145_logExponent hL hlarge htail
-
-/-- Suzuki Lemma 14.3 with the exponential tail converted all the way to the
-logarithmic exponent consumed in subsequent Claim-14.5 comparisons.  Every
-constant and threshold condition is explicit. -/
-theorem suzukiLemma14_3_uniform_logExponent
-    (S : BoundingSieve) {N D z : ℕ} {s L : ℝ}
-    (hz : 0 < z) (hL : 0 < L)
-    (hpow : z ^ (⌊s - 2⌋₊ + 2) ≤ D)
-    (h141 : SuzukiLemma141Majorant S D z L)
-    (hlarge : Real.exp 1 * L ≤ s - 2)
-    (htail : suzukiExponentialTail L (⌊s - 2⌋₊ + 1) ≤
-      L ^ (⌊s - 2⌋₊ + 1) /
-          (((⌊s - 2⌋₊ + 1).factorial : ℕ) : ℝ) * Real.exp L) :
-    suzukiActualT S N D z ≤
-      Real.exp
-        (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) := by
-  have hs : 2 ≤ s := by
-    have hpos : 0 < Real.exp 1 * L := mul_pos (Real.exp_pos _) hL
-    linarith
-  exact (suzukiLemma14_3_uniform_exponentialTail S hz hs hL.le hpow h141).trans
-    (suzukiExponentialTail_le_claim145_logExponent hL hlarge htail)
 
 
 end MathlibNt.SieveTheory

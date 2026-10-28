@@ -1,0 +1,116 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryPrimeSWLogSaving.lean",
+      "status": "modified",
+      "before_sha256": "d743ba74b5d7d76ba0497363d24766bab4c25c9160d56b50f4732db65cae24ac",
+      "after_sha256": "c3cde216d657989dc8d5d337ac175efd1429693b66c14fad06b785b7821c5676",
+      "before": {
+        "code_lines": 75,
+        "physical_lines": 83,
+        "utf8_bytes": 4229
+      },
+      "after": {
+        "code_lines": 70,
+        "physical_lines": 78,
+        "utf8_bytes": 3890
+      },
+      "delta": {
+        "code_lines": -5,
+        "physical_lines": -5,
+        "utf8_bytes": -339
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachUpperThirdInterval.lean",
+      "status": "modified",
+      "before_sha256": "c761afe0774563e83a5af24bd6a6c1ce87a2ed3f8424b2fb8b6925f16d2b7cd6",
+      "after_sha256": "51edbd7b1dbf658ad5a3fdf805ca4ec1b1e1465a3eb63a89a42c2469b9486470",
+      "before": {
+        "code_lines": 185,
+        "physical_lines": 202,
+        "utf8_bytes": 9364
+      },
+      "after": {
+        "code_lines": 123,
+        "physical_lines": 140,
+        "utf8_bytes": 6673
+      },
+      "delta": {
+        "code_lines": -62,
+        "physical_lines": -62,
+        "utf8_bytes": -2691
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LinearSieve/DimensionOneLowerFactor.lean",
+      "status": "modified",
+      "before_sha256": "44c53ca125bcf4515d6a3c44f609404629262cb425e70be1eb83e12839cb7630",
+      "after_sha256": "5649c1c34723bbfc9cf73c382fcdba5e3f0a9990d2f98f08dd9a3c49bd2edb04",
+      "before": {
+        "code_lines": 90,
+        "physical_lines": 108,
+        "utf8_bytes": 4660
+      },
+      "after": {
+        "code_lines": 90,
+        "physical_lines": 108,
+        "utf8_bytes": 4652
+      },
+      "delta": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": -8
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectionEuler.lean",
+      "status": "modified",
+      "before_sha256": "ba8e9a16b06d0d25df7d98dcea541df47239975cfac22527983b2c94d68cd70f",
+      "after_sha256": "ac7ce1a9d7324f96b350b16e79533ddc39e226be711af0fcb136daad7d976394",
+      "before": {
+        "code_lines": 525,
+        "physical_lines": 551,
+        "utf8_bytes": 22946
+      },
+      "after": {
+        "code_lines": 509,
+        "physical_lines": 535,
+        "utf8_bytes": 22473
+      },
+      "delta": {
+        "code_lines": -16,
+        "physical_lines": -16,
+        "utf8_bytes": -473
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergUniformEuler.lean",
+      "status": "modified",
+      "before_sha256": "952caa01a20793802a46ddee8ae09a52aedca5431dbc87347dd31ec49320fa22",
+      "after_sha256": "afb38a390f0d3f3ed7acbd7ca6055a9d22862d9ca19b62c829de4dc8c76c8b58",
+      "before": {
+        "code_lines": 985,
+        "physical_lines": 1079,
+        "utf8_bytes": 48362
+      },
+      "after": {
+        "code_lines": 984,
+        "physical_lines": 1078,
+        "utf8_bytes": 48280
+      },
+      "delta": {
+        "code_lines": -1,
+        "physical_lines": -1,
+        "utf8_bytes": -82
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -84,
+    "physical_lines": -84,
+    "utf8_bytes": -3593
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

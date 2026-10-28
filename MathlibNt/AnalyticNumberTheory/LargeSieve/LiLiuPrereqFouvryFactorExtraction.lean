@@ -67,11 +67,6 @@ theorem factorExtraction_unique {D r s : ℕ} {e : FactorExtractionTuple}
     rw [hg, hs, Nat.mul_div_right _ hΔ']
   exact Prod.ext (Prod.ext hquot.symm hg.symm) (Prod.ext hrquot.symm hsquot.symm)
 
-theorem factorExtraction_existsUnique {D r s : ℕ}
-    (hD : 0 < D) (hr : 0 < r) (hs : 0 < s) (hd : D ∣ r * s) :
-    ∃! e : FactorExtractionTuple, FactorExtractionValid D r s e :=
-  ⟨factorExtraction D r s, factorExtraction_valid hD hr hs hd,
-    fun _ he => factorExtraction_unique he⟩
 
 def factorExtractionSource {ι : Type*} (R S : ℕ) (U : Finset ι)
     (P : ℕ → ℕ → ι → Prop) : Finset ((ℕ × ℕ) × ι) :=

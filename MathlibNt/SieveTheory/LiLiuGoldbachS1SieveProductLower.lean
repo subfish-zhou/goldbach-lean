@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 noncomputable section
 

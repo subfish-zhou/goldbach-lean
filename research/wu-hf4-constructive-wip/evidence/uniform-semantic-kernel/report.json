@@ -1,0 +1,11 @@
+{
+  "status": "FRESH_UNIFORM_SEMANTICS_KERNEL_PASS_NOT_CONSUMER_OR_PROJECT_ACCEPTANCE",
+  "exit_code": 0,
+  "seconds": 18.24533139169216,
+  "log_sha256": "9b850df66c303c2d5b04e74c37068b65e6ca1300086f91decae6b81273489aed",
+  "invocation_sha256": "aba57ba9613e3b3f8e9ea45905f1d93656c053cb2018d376536380792067669e",
+  "source_sha256": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995",
+  "object_sha256": "aec3cdb10d1ecd74dcf60264301f7d90867dcf88b83ad0d9801c57bf96779fa5",
+  "source_run": "/tmp/wu-hf4-semantic-uniform-v3/trial-1793171550762109585",
+  "bindings_verified": 211
+}

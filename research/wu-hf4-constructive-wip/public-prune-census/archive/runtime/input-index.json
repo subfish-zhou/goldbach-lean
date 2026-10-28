@@ -1,0 +1,107 @@
+[
+  {
+    "import_root": "WR2ClassicalCertificate",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/uses.json",
+    "output_sha256": "eb8009a9ce56e4f1d3129edba412db4c7d0389fc49f470bf17054c29eb450a56"
+  },
+  {
+    "import_root": "W01ContinuousRoot",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/uses.json",
+    "output_sha256": "a1fd53e6cef6724f3fafd8e852b33e23c02668a563d246f3270f84080cf37956"
+  },
+  {
+    "import_root": "W03Root",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/uses.json",
+    "output_sha256": "5ee73b6c33cae3162b34736dc30958759cec9b55f73567f8c871435c604d2596"
+  },
+  {
+    "import_root": "W13Root",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/uses.json",
+    "output_sha256": "f4cf5aa683deb51467925b774c9abf364339f346f7471dfe2abb60e20caa83b0"
+  },
+  {
+    "import_root": "W14AcceptedThreshold",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/uses.json",
+    "output_sha256": "940c981a4720cc37d3f12860be11881fb49caa74ec41dd264bfbc4b9f1bb79e2"
+  },
+  {
+    "import_root": "W15AcceptedThreshold",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/uses.json",
+    "output_sha256": "a66867e294ad6f0b1a7555a4aa1a4e3ba754b18dea27b8928ad15b189855f629"
+  },
+  {
+    "import_root": "W17ParentFullTypes",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/uses.json",
+    "output_sha256": "ecf60c0a40778a487233aa238448c835202178a8989dd6479851333b9ace2246"
+  },
+  {
+    "import_root": "WE10MajorAcceptedTotal",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/uses.json",
+    "output_sha256": "a68ecd3793ed4637e8f86dbde6c2035b3145f7142fdd1a3e4de3bde18f49eefe"
+  },
+  {
+    "import_root": "WRMapMMatrixProbe",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/uses.json",
+    "output_sha256": "bff6f5006b44a74d18dd33c718b63714d5447b98d82915b2f135c33997ef8d2f"
+  },
+  {
+    "import_root": "WRMapMMatrixRoot",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/uses.json",
+    "output_sha256": "2374fa94afeb19d1d8343fd64bef6765f337a1f0f80027282077ef15f19cc4c6"
+  },
+  {
+    "import_root": "WRecoveredFirstComparison",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/uses.json",
+    "output_sha256": "629e353bb140d78a460514ded6e1f70064864736bfba22faba14415161a31655"
+  },
+  {
+    "import_root": "WSrcFifthAnalyticInstance",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/uses.json",
+    "output_sha256": "ef7c1855f080ef0a842e13ce2460c4dc3c1e710cf229d40aadf8b456198de5ac"
+  },
+  {
+    "import_root": "WSrcFourBudgetVerified",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/uses.json",
+    "output_sha256": "14755e792973545e584d42015f27c03afe08180eba5188beaba96dfc10449fb4"
+  },
+  {
+    "import_root": "WSrcFourEnclosureCone",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/uses.json",
+    "output_sha256": "1d5a36b6d5fd2202d2012df4e4341e8252db8cc2101f0c1a87a569827ed8ef8a"
+  },
+  {
+    "import_root": "WSrcFourEnclosureFullTypes",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/uses.json",
+    "output_sha256": "e4dde13ea202930eb75677856c4c3ad704cabca258a1c3836b0c0be0e15b09c7"
+  },
+  {
+    "import_root": "WSrcGridAccepted",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/uses.json",
+    "output_sha256": "64df2278f6bffae27f52db7bd28d5863e175b3b3281e38eea70b417d7408f69b"
+  },
+  {
+    "import_root": "WSrcSingleGridInstance",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/uses.json",
+    "output_sha256": "421d6a5130e7e177942589abcbc3f73e16d84d355870718e189f0641dff55b8f"
+  },
+  {
+    "import_root": "WSrcSingleRoot",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/uses.json",
+    "output_sha256": "3c5b05b2b0d38f190b28049781fe96a4f63ef97c2a4ba30377ac8e39632c7933"
+  },
+  {
+    "import_root": "WSrcSixthGainRoot",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/uses.json",
+    "output_sha256": "77f75f16b96daa5e574eecd7b27f1fe1bdfadf36a2ef602f24e42bb0752b8e27"
+  },
+  {
+    "import_root": "WSrcSixthGridInstance",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/uses.json",
+    "output_sha256": "879d87edf7bfd9ab98cf774449d2999ff976c415b0671df33a4724f5e80d6c7b"
+  },
+  {
+    "import_root": "Wu2008Research",
+    "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/uses.json",
+    "output_sha256": "e9a234f6e2648db75011e1deefe24b92e8b9f6de034219710cd316e3f39c1026"
+  }
+]

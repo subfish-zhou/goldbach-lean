@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9LowFinal
 import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplit
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -1,5 +1,4 @@
 import AnalyticNumberTheory.LargeSieve.Duality
-import Mathlib.Tactic
 
 /-! # AnalyticNumberTheory.LargeSieve.WellSpaced
 
@@ -128,11 +127,6 @@ theorem distToInt_eq_zero_iff (z : ℝ) : distToInt z = 0 ↔ ∃ k : ℤ, (k : 
       exact Or.inl ⟨h, h.le.trans hright.le⟩
   exact hfract.trans Int.fract_eq_zero_iff
 
-/-- Distinct points of a well-spaced set have real distance at least `δ`:
-separation modulo 1 implies separation on the real line. -/
-theorem wellSpacedReal_abs_le {X : Finset ℝ} {δ : ℝ} (hws : wellSpacedReal X δ)
-    {x y : ℝ} (hx : x ∈ X) (hy : y ∈ X) (hxy : x ≠ y) : δ ≤ |x - y| := by
-  exact le_trans (hws hx hy hxy) (by simpa using distToInt_le_sub (x - y) 0)
 
 /-! ## 2. Counting lemmas -/
 

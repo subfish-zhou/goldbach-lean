@@ -96,10 +96,6 @@ def wCoprimeFiber (x : ℝ) (N : Finset ℕ) (S : ℝ)
     Finset (WExtractedTuple × ℤ) :=
   U.filter (fun t => wCoprimeLabel x N S t = c)
 
-theorem wCoprimeLabel_eq_of_pair_eq (x : ℝ) (N : Finset ℕ) (S : ℝ)
-    {t u : WExtractedTuple × ℤ} (h : wCoprimePair t.1 = wCoprimePair u.1) :
-    wCoprimeLabel x N S t = wCoprimeLabel x N S u := by
-  simp only [wCoprimeLabel, h]
 
 theorem wCoprimeLabel_mem_partition {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
     (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
@@ -134,15 +130,6 @@ theorem wCoprimeFiber_cross_coprime {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
   rw [huc] at hup
   exact ⟨partition_cross_coprime hp htp hup, partition_cross_coprime hp hup htp⟩
 
-/-- This identity keeps all tuple multiplicities and all signed weights.
-There is no absolute value inside a cell. -/
-theorem sum_wCoprimeFibers {A : Type*} [AddCommMonoid A]
-    (x : ℝ) (N : Finset ℕ) (S : ℝ) (U : Finset (WExtractedTuple × ℤ))
-    (F : WExtractedTuple × ℤ → A) :
-    ∑ t ∈ U, F t =
-      ∑ c ∈ U.image (wCoprimeLabel x N S), ∑ t ∈ wCoprimeFiber x N S U c, F t := by
-  exact (sum_fiberwise_of_maps_to
-    (fun t ht => mem_image.mpr ⟨t, ht, rfl⟩) F).symm
 
 theorem wCoprimeLabel_image_card_le {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
     (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
@@ -181,44 +168,5 @@ theorem eventually_wCoprimeLabel_image_card_le {ε : ℝ} (hε : 0 < ε) :
   simp only [realPartition, Nat.floor_natCast] at hcount
   exact (Nat.cast_le.mpr (wCoprimeLabel_image_card_le hN hQ hU)).trans hcount
 
-/-- The actual C.2 levels satisfy the pair cutoff required above, including
-the near-endpoint branch `S = 1`. Thus the cutoff is not a new analytic input. -/
-theorem wCoprimePairBound_c2_le {x ν ε : ℝ} (hx : 4 ≤ x)
-    (hε : 0 ≤ ε) (hεν : ε ≤ ν) (hν : ν ≤ 1 / 10)
-    {N : Finset ℕ} (hN : ∀ n ∈ N, (n : ℝ) ≤ 2 * x ^ ν) :
-    (wCoprimePairBound N (x ^ c2SExponent ν ε) : ℝ) ≤ x := by
-  have hx₁ : 1 ≤ x := by linarith
-  have hx₀ : 0 < x := by linarith
-  have hS : 1 ≤ x ^ c2SExponent ν ε :=
-    (c2_factor_levels hx₁ hε hεν hν).2.1
-  have hs : ν + c2SExponent ν ε ≤ (1 / 2 : ℝ) := by
-    unfold c2SExponent
-    by_cases he : 0 ≤ (1 - 10 * ν) / 9 - ε / 2
-    · rw [max_eq_right he]
-      linarith
-    · rw [max_eq_left (by linarith : (1 - 10 * ν) / 9 - ε / 2 ≤ 0)]
-      linarith
-  have hp : x ^ ν * x ^ c2SExponent ν ε ≤ Real.sqrt x := by
-    rw [← Real.rpow_add hx₀, Real.sqrt_eq_rpow]
-    exact Real.rpow_le_rpow_of_exponent_le hx₁ hs
-  have hsup : ((N.sup id : ℕ) : ℝ) ≤ 2 * x ^ ν :=
-    (Nat.cast_le.mpr (Finset.sup_le (fun n hn => Nat.le_floor (hN n hn)))).trans
-      (Nat.floor_le (by positivity))
-  have hprod : ((N.sup id : ℕ) : ℝ) * ⌊x ^ c2SExponent ν ε⌋₊ ≤ x := by
-    have he : ((N.sup id : ℕ) : ℝ) * ⌊x ^ c2SExponent ν ε⌋₊ ≤
-        2 * Real.sqrt x := by
-      calc
-        _ ≤ (2 * x ^ ν) * x ^ c2SExponent ν ε :=
-          mul_le_mul hsup (Nat.floor_le (by positivity)) (Nat.cast_nonneg _) (by positivity)
-        _ ≤ 2 * Real.sqrt x := by nlinarith
-    have hsqrt := Real.sq_sqrt hx₀.le
-    have hsqrt₀ := Real.sqrt_nonneg x
-    nlinarith
-  have hf : (1 : ℝ) ≤ ⌊x ^ c2SExponent ν ε⌋₊ := by
-    exact_mod_cast (Nat.le_floor (by simpa using hS) : 1 ≤ ⌊x ^ c2SExponent ν ε⌋₊)
-  have hn : ((N.sup id : ℕ) : ℝ) ≤ x :=
-    (le_mul_of_one_le_right (Nat.cast_nonneg _) hf).trans hprod
-  simpa only [wCoprimePairBound, Nat.cast_max, Nat.cast_ofNat, Nat.cast_mul] using
-    max_le (by linarith : (2 : ℝ) ≤ x) (max_le hn hprod)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

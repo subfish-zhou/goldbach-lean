@@ -1,0 +1,2041 @@
+{
+  "status": "SOURCE_AND_EVIDENCE_SNAPSHOT_PAUSED_NOT_FULL_ACCEPTANCE",
+  "copied_files": {
+    "/tmp/wu-hf4-portable-producer-v3/README.md": {
+      "path": "producer/README.md",
+      "sha256": "dad526f3696a0d670a4fa1b32a406278ef057c29b72a76384cdd92d7d3a03f42"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/Hf4DirectDagSeedSoundness.lean": {
+      "path": "producer/frozen/Hf4DirectDagSeedSoundness.lean",
+      "sha256": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/Hf4DirectDagSemantics.lean": {
+      "path": "producer/frozen/Hf4DirectDagSemantics.lean",
+      "sha256": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/golden.json": {
+      "path": "producer/frozen/golden.json",
+      "sha256": "c9512b8fca4b2546002e784a5f876e952fcd1f304bd34119882658d4f341c673"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/header-origin.json": {
+      "path": "producer/frozen/header-origin.json",
+      "sha256": "4272f0ca6bb7657b9efa5c0dd37469b6e57a8e839e0be36bb9a3c0f0ed7ba119"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/lineage.json": {
+      "path": "producer/frozen/lineage.json",
+      "sha256": "4ac55f3c199e58c2937b824b413209762fc281897ae0fef75514a736852a8676"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/original-headers.json": {
+      "path": "producer/frozen/original-headers.json",
+      "sha256": "07f65f709945142de4fd4d51437552a83fce32e2beb48e66754630646d8ceb3a"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen/uniform-lineage.json": {
+      "path": "producer/frozen/uniform-lineage.json",
+      "sha256": "2273707bbf2a872a111dd0abe2e06bf1545ffd8804483c1c4e3f40b506becf7e"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/frozen-inputs.json": {
+      "path": "producer/frozen-inputs.json",
+      "sha256": "f194909749bf9f7750f6e08ce3755ef046b3b68cc341415277cd94793bdd46c4"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/history/portable-v1-review.json": {
+      "path": "producer/history/portable-v1-review.json",
+      "sha256": "690839f61149dc1e7ac28ccfae0eb5aeaab2ad0beb7ad69b788aacae45f515d1"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/lib/legacy_hf4.py": {
+      "path": "producer/lib/legacy_hf4.py",
+      "sha256": "9c22e28b7566d7f686ec3d3da85c3f2d5fd4a669d965b5682e1c87c6c532ad7a"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/lib/source_counter.py": {
+      "path": "producer/lib/source_counter.py",
+      "sha256": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/produce.py": {
+      "path": "producer/produce.py",
+      "sha256": "d37beed27dba96bfe01843eaa1423b7940c89489b10262dfcee1e23b8c55c5fb"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/review.json": {
+      "path": "producer/review.json",
+      "sha256": "804aea572df800dc6f8f175aca263fb7f3f7d6e9ac4c7a033dc9edf813f0da6f"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/root-review.json": {
+      "path": "producer/root-review.json",
+      "sha256": "c7e5638a2dba3e980f715b02bc39bdc3d0989a748dff45646d9e6b863c9426c6"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/complete.py": {
+      "path": "producer/stages/complete/complete.py",
+      "sha256": "3a457eb376c84cdec183982eb73cdf9e6c272bd13ca3037adade59f9efc91a29"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/generate.py": {
+      "path": "producer/stages/complete/generate.py",
+      "sha256": "b68f21af2655e57e4926de9fcf3aa9049c43105dad681f296853fad76a7e7c59"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4CheckedDagData.lean": {
+      "path": "producer/stages/complete/inputs/Hf4CheckedDagData.lean",
+      "sha256": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4CheckedDagSoundness.lean": {
+      "path": "producer/stages/complete/inputs/Hf4CheckedDagSoundness.lean",
+      "sha256": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4ConstructionConditions.lean": {
+      "path": "producer/stages/complete/inputs/Hf4ConstructionConditions.lean",
+      "sha256": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4ConstructionRounding.lean": {
+      "path": "producer/stages/complete/inputs/Hf4ConstructionRounding.lean",
+      "sha256": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4DirectCoordinates.lean": {
+      "path": "producer/stages/complete/inputs/Hf4DirectCoordinates.lean",
+      "sha256": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4InverseDagChunks.lean": {
+      "path": "producer/stages/complete/inputs/Hf4InverseDagChunks.lean",
+      "sha256": "d6ec05778b92db8949bd5ff3d654e00c887c717f9abe2b19892db353829d61c1"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4InverseDagData.lean": {
+      "path": "producer/stages/complete/inputs/Hf4InverseDagData.lean",
+      "sha256": "78fbc3f1b221d56a54340e6dcd8171fbe471018c02bab4645da7173a9651530d"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/Hf4InverseDagSoundness.lean": {
+      "path": "producer/stages/complete/inputs/Hf4InverseDagSoundness.lean",
+      "sha256": "e0b8520fadcf774659ac2f95155cc2c9308a9de9e3aee6cc5d4174e93522da42"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/complete/inputs/semantic-fragments.json": {
+      "path": "producer/stages/complete/inputs/semantic-fragments.json",
+      "sha256": "2c107f6d816e4f52879b5101998bf2f69c840243ba9af8f347db799e14a5917c"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/constructive/generate.py": {
+      "path": "producer/stages/constructive/generate.py",
+      "sha256": "44efbc88f666b74da9c82b31677474db7ee550fe895758a046dc5bd98ded3e2c"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/stages/table/generate.py": {
+      "path": "producer/stages/table/generate.py",
+      "sha256": "f8af92e20b2bba9ebdca06895e2e923ef9ed54ea6e824b20fa91d63dd278ecfe"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/test-actual.log": {
+      "path": "producer/test-actual.log",
+      "sha256": "2ece75d7903dd9f4cff3ea7b77b7e0a34f15d08bb74ccff3c5f88aa0a825fc1d"
+    },
+    "/tmp/wu-hf4-portable-producer-v3/test_portable.py": {
+      "path": "producer/test_portable.py",
+      "sha256": "23fbb6d8cf7b2c17b58d8c59737ed530e1acdf5cb109899367666be2e7140deb"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/plan.json": {
+      "path": "integration/plan.json",
+      "sha256": "a3c6a7d76c2ddab52de70e75e6f09769ceb4b213e43f3f249190f8d13a57a04e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run.py": {
+      "path": "integration/run.py",
+      "sha256": "d25aaf3ae4ffb49c7d7b9d63510efa503de7c0316e6f06df4f3e71cc099f70a1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/validate.py": {
+      "path": "integration/validate.py",
+      "sha256": "34e8bbd98611bb3a4fac4becff8b30320942f19585b5910cabffd61517f3ae11"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/review-retirement.py": {
+      "path": "integration/review-retirement.py",
+      "sha256": "84a8f036d2a0d4054e88a93c6761937f08bd695f1785e1c4cd1a87a6dcebee04"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/retirement-review.json": {
+      "path": "integration/retirement-review.json",
+      "sha256": "312f6e225ba84e32730e47ba7e4e2e472920e6a36e782fee4e06977478024ca4"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4CheckedDagData.lean": {
+      "path": "candidate/Hf4CheckedDagData.lean",
+      "sha256": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4CheckedDagSoundness.lean": {
+      "path": "candidate/Hf4CheckedDagSoundness.lean",
+      "sha256": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructionConditions.lean": {
+      "path": "candidate/Hf4ConstructionConditions.lean",
+      "sha256": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructionRounding.lean": {
+      "path": "candidate/Hf4ConstructionRounding.lean",
+      "sha256": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveDagData.lean": {
+      "path": "candidate/Hf4ConstructiveDagData.lean",
+      "sha256": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveDagSoundness.lean": {
+      "path": "candidate/Hf4ConstructiveDagSoundness.lean",
+      "sha256": "b1e42a2d447f7783a38041298fa94ed17f0fb5095bd3d5dd3e78baf2ca21dc95"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveOriginalSoundness.lean": {
+      "path": "candidate/Hf4ConstructiveOriginalSoundness.lean",
+      "sha256": "39f9dad7e78264b8c12471d8cc676f36b08075923c2886b9756e9c8b964a6d09"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableChecks.lean": {
+      "path": "candidate/Hf4ConstructiveTableChecks.lean",
+      "sha256": "4bfae798d1e436c0d86e939b31553ac8adeba0f8e10a984a544b1459e26eec6d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableData.lean": {
+      "path": "candidate/Hf4ConstructiveTableData.lean",
+      "sha256": "76c8f3a83cef23fd234bdb4fb3e28a69a0255a284d1c434be36fde993ace6f27"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTablePublic.lean": {
+      "path": "candidate/Hf4ConstructiveTablePublic.lean",
+      "sha256": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableSoundness.lean": {
+      "path": "candidate/Hf4ConstructiveTableSoundness.lean",
+      "sha256": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectCoordinates.lean": {
+      "path": "candidate/Hf4DirectCoordinates.lean",
+      "sha256": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDag.lean": {
+      "path": "candidate/Hf4DirectDag.lean",
+      "sha256": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagProgram.lean": {
+      "path": "candidate/Hf4DirectDagProgram.lean",
+      "sha256": "2453aa5d85fa0d28579879e80031074781455f4d049f9357cbb119c01292fe25"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagSeedSoundness.lean": {
+      "path": "candidate/Hf4DirectDagSeedSoundness.lean",
+      "sha256": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagSemantics.lean": {
+      "path": "candidate/Hf4DirectDagSemantics.lean",
+      "sha256": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectKernel.lean": {
+      "path": "candidate/Hf4DirectKernel.lean",
+      "sha256": "c9615839b1184c70a57c82af09a26f0a471d27627f8e7f8dfaa33e4106cec581"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4QuadAggregate.lean": {
+      "path": "candidate/Hf4QuadAggregate.lean",
+      "sha256": "09174c493913f5d9d1221cc8a1f0dddd9f25b3f2549f26832d10996b2b7f2d0b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/producer-report.json": {
+      "path": "candidate/producer-report.json",
+      "sha256": "5f4f5133fc286406c3b4a1a847445558da7e4ca270f38f6f9d30b7e90316d836"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/plan.json": {
+      "path": "evidence/paused-full-run/plan.json",
+      "sha256": "a3c6a7d76c2ddab52de70e75e6f09769ceb4b213e43f3f249190f8d13a57a04e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/STATUS.json": {
+      "path": "evidence/paused-full-run/STATUS.json",
+      "sha256": "c7c4d8de31ff29fffe09f434bc6450675bf2dc37fdae847ecb5871c84ef64a47"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/status-before-user-pause.json": {
+      "path": "evidence/paused-full-run/status-before-user-pause.json",
+      "sha256": "f18f1016aec839ccc0f17a28961113177bf02ffd4e0ef5ce143435c1cd538377"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/results.json": {
+      "path": "evidence/paused-full-run/results.json",
+      "sha256": "60489483d6f351c8a18225615c9cfb54dfc9557b468ac7013c4cf4bdc5e62688"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/verified-base-receipts.json": {
+      "path": "evidence/paused-full-run/verified-base-receipts.json",
+      "sha256": "af48ab79a8604b85bd59de902629ed375704c6619ea076505b0dcd948204904c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/immutable-object-bindings.json": {
+      "path": "evidence/paused-full-run/immutable-object-bindings.json",
+      "sha256": "c8df5d7a1c7507c91d3e6abbf4ecb292b18e1d942e8bcc8dc040d2240860f3fa"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/own-process.json": {
+      "path": "evidence/paused-full-run/own-process.json",
+      "sha256": "da8cd1bef0d659726c40b1bf9a69d3278a9ec988490e47cf83f3423099917396"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/ownership.json": {
+      "path": "evidence/paused-full-run/ownership.json",
+      "sha256": "0882070712d662fd4e2b807a0abcadea7b423f0aa3ce607cece363da5b262889"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualDE.invocation.json",
+      "sha256": "632d80089d438f7ede12c3294682bea9f099d01f51f43eaa5cb8a115f97a1826"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualDE.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualDE.resources",
+      "sha256": "a13d4b68cf71292854a0eef721775a61b0b874ecb2542c15df173916478a66a9"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualLog.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualLog.invocation.json",
+      "sha256": "a4ccf73f0b4e554de3e7275af894306e254751e705e793dc966e0f1b78bdac1d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualLog.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualLog.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualLog.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualLog.resources",
+      "sha256": "9d27db4247044d8f9bf0bc618ff5ecb2ba5b2c1a84cca50d194b0626564db765"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualNumerator.invocation.json",
+      "sha256": "5777f5189d9313afc1109df7ff665cd0c697dec1e28d2a11021bab80d6926273"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualNumerator.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualNumerator.resources",
+      "sha256": "c14d698e8bac1cff2fa61303242bed26e89f35e17a63b9697b8fefcd4f9d9eb1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualOuter.invocation.json",
+      "sha256": "1fcfc9bcc9feee7e0fdc1af0ba404cabaf777af7efb69d517158a0268b5af81d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualOuter.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualOuter.resources",
+      "sha256": "a8a64bdab81890b05728174876c599902656e0c1b609dabad498af04f2f19878"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualPublic.invocation.json",
+      "sha256": "f1789f3aac9a5cdb0dc77c891d27407651ed5598dee644ac9dda0fd56074c891"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualPublic.log",
+      "sha256": "56d805100b5d65b7ad96711ac9c3fb6e782176b488cee0a8483049ded6f8286d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualPublic.resources",
+      "sha256": "9b1b8f75be9d42aab8caf3473c76fc180847dc307acc49651d77671ffde47f2b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualRoute.invocation.json",
+      "sha256": "5b28c0653476df24dc179eec99c39452a0cd318ea140e213fc07d7c9194c9826"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualRoute.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualRoute.resources",
+      "sha256": "4675f83300d4c90f63cb73d58e74338bef9549091e72792eef419946f9ac3a6b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualTerminal.invocation.json",
+      "sha256": "620dae05a514e2eba754d922f5ba90cec1e9ba1e503886e7e43356c43775ff9a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualTerminal.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ActualTerminal.resources",
+      "sha256": "a3c44aa0e30b1694a52a93fe23c6a60675a09e4626c7ab8029986aa3a2b121ed"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4AmountCore.invocation.json",
+      "sha256": "d42028872f9f302ab3644220158d70577ab95e0cf13f9d99fe9c5379919e4c48"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.log": {
+      "path": "evidence/paused-full-run/logs/Hf4AmountCore.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4AmountCore.resources",
+      "sha256": "05c4ea2b93856a4f291946b715038bf86525f91e6f25203f299334096458a79c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4AmountPublic.invocation.json",
+      "sha256": "4c2e9c0ef8a5caef3113f684427583b9ee973a0c8f707309b2456c1a30607dc0"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.log": {
+      "path": "evidence/paused-full-run/logs/Hf4AmountPublic.log",
+      "sha256": "28d59d41d6ea2791a6c893dbfcfc2abd61e9cbb9368c40aadb44e67555b742bf"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4AmountPublic.resources",
+      "sha256": "fb579e57f525262c089d895de79e78af153b771fbd20476f2a59312177dd48f1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagData.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4CheckedDagData.invocation.json",
+      "sha256": "f1241a828a6018a0318aef8aaeb0f30e65cb29a075706e74d428334c435b73cd"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagData.log": {
+      "path": "evidence/paused-full-run/logs/Hf4CheckedDagData.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagData.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4CheckedDagData.resources",
+      "sha256": "108c69b0f46110f7ae561908d53f0bce2edee9d559d1381d8b4eded875dd16ce"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagSoundness.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4CheckedDagSoundness.invocation.json",
+      "sha256": "cb2edb0d6ff448b0f00d0e5a1618f3fc881a6af20cf5c56e4888ea396df159de"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagSoundness.log": {
+      "path": "evidence/paused-full-run/logs/Hf4CheckedDagSoundness.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagSoundness.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4CheckedDagSoundness.resources",
+      "sha256": "a24d0bf21d3e6ba4f6a3a8cf84fd9da2b6bfcbffa212ff8a6fffc236cca30eb1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructionConditions.invocation.json",
+      "sha256": "19c1e376d2673bcc7b254f308e9de6f638a952d55b6716b1cc4e10f71e488932"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructionConditions.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructionConditions.resources",
+      "sha256": "db59c6e374d6be44a118f23e01c6bf6e9c6efbd76a93534221bd4776e22184b5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructionRounding.invocation.json",
+      "sha256": "a07691cd612c0bb0b8f23d6865e0467189459f5469c01195ffda3dbf16eb8663"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructionRounding.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructionRounding.resources",
+      "sha256": "ca13ea8800638f5da42ec8a4359f4f190d33b24200ec42de3b0ca140c6e4253d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveDagData.invocation.json",
+      "sha256": "705feec50a25402efb480fcb316973cee6b9fbc1b90c98e4b06a19e28dbb3812"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveDagData.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveDagData.resources",
+      "sha256": "1c7e01c9895c36d284d5985371b645d13cb94dda7bb525d5d547b516d37f5d28"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagSoundness.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveDagSoundness.invocation.json",
+      "sha256": "960c7c5a2e0fe098e7c6b34068cd3dae57b1d0e3503fa55262e99d44cccbfc8b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagSoundness.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveDagSoundness.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagSoundness.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveDagSoundness.resources",
+      "sha256": "885d14399f1568a71ebe4c00833bf4acc07c0a7192ac5e532cc3ee58e14d62c8"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveOriginalSoundness.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveOriginalSoundness.invocation.json",
+      "sha256": "408c578600ccbe1ec76d3f40f555bcb758f4cca16d4d3d93df53638dc4e63201"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveOriginalSoundness.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveOriginalSoundness.log",
+      "sha256": "6b46f2454f04bcffbbd1e0710a607597b210858644cb2f290983444c2c1d8d74"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveOriginalSoundness.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveOriginalSoundness.resources",
+      "sha256": "7baef90e19d94bee393db132ff9c7031fb78ee48490aa0ee19ea960a57837a4c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableChecks.invocation.json",
+      "sha256": "92d433a874c766ad52d6f86b54cc7b748c1e0ca656df25adf6d5d77675b22ddf"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableChecks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableChecks.resources",
+      "sha256": "58eebb5a78aabf4cddb021bda659a40d4431c4d70ecc29323ce38b8c3ca5d059"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableData.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableData.invocation.json",
+      "sha256": "cf765c979370546ebf0d4b4506f6817861ff91586d29a3250ffd6245a43dc745"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableData.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableData.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableData.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableData.resources",
+      "sha256": "38b751388cbc60eb418c06a543d4080070876742f2e8c4094da77e7e1ff286e5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTablePublic.invocation.json",
+      "sha256": "fd74765e1821e41f2bca8c4c4d063eb417504a04f4d0339721ffd43d0d107311"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTablePublic.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTablePublic.resources",
+      "sha256": "9a08e884d65a18d29a4b839a33f2a6c7779a0533138782d4c21496a3d42c87ab"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableSoundness.invocation.json",
+      "sha256": "5accafddf02f9034793c1a07beb28c90020ff91bdce8ffb1195e628471ef1579"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.log": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableSoundness.log",
+      "sha256": "a9bb7fcc8fd1edfe3c35425f3efcb7eb7e79170ce906e4cec892153a802233b1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4ConstructiveTableSoundness.resources",
+      "sha256": "7181489abcf03c538f675b5eafc028c82d5fde4e75c447d243dd25edeb3701cc"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectCoordinates.invocation.json",
+      "sha256": "53bbfd2744cf60bce5242907f532f6a328bded48767f6be8e21f78ce2ac33a66"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.log": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectCoordinates.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectCoordinates.resources",
+      "sha256": "4c16f19d5ef079e926545be3feeff07c561e25f7190fda46bf25b342390e7aca"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDag.invocation.json",
+      "sha256": "8f0997bb18c7b38bb3ac04894982f778bf16f3489c26402c1f7d7b37cd09cbd3"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.log": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDag.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDag.resources",
+      "sha256": "150643b9475b3fb9a18eaf8f5701b1a00ca09750996de2187c32953bff587e98"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagProgram.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagProgram.invocation.json",
+      "sha256": "7d9539806ac3d8b3da35e287af29dc18c37b59146ce1393082f4745901d9caf4"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagProgram.log": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagProgram.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagProgram.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagProgram.resources",
+      "sha256": "efdf1e6625397e63a13e068cfbf9a6dc42547407d1f52f3ad9de9a0e8332ed95"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSeedSoundness.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagSeedSoundness.invocation.json",
+      "sha256": "8279ff19ef8d811d92f80c58221d65defb424824c5282232dddac188eaa41444"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSeedSoundness.log": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagSeedSoundness.log",
+      "sha256": "2c3d8a86fbc37121d242a7ea855e41f6607641fb4e5776e9c6135447e09129e2"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSeedSoundness.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagSeedSoundness.resources",
+      "sha256": "88c855050ac9c31cc3cce66dffba6e7fbc3a0ef5ceb2efb20a44cb791b6c7211"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSemantics.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagSemantics.invocation.json",
+      "sha256": "90e93f025a206cbd5f1215f99d312c4b29d08f415c1fe64fc5f2c3d09cc486d5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSemantics.log": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagSemantics.log",
+      "sha256": "27c051727055278f4985d6600b0f6a517220ca46eed70b4b0cc06cbe9c04db29"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSemantics.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectDagSemantics.resources",
+      "sha256": "b7a430e63cd476116172196a78215da425105e3944f908379e19747f303d1aa9"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectKernel.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectKernel.invocation.json",
+      "sha256": "0b4c6216851d79d902be48492524367c2115b3a81d46a310f3afaaca106e8591"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectKernel.log": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectKernel.log",
+      "sha256": "eebd5fa7041a19c9b38b6d78a8664c705669d9ea53b3c39170668b54404ceee3"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectKernel.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4DirectKernel.resources",
+      "sha256": "cdaaa95975a249e7587cba852c149ec7a0c39ae62f9870c069acd32cd8df09f1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadAggregate.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4QuadAggregate.invocation.json",
+      "sha256": "0856924abbf89f8c9ca2d26b6b333053b4f3e5d7b5b31ec40427ab93d703003a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadAggregate.log": {
+      "path": "evidence/paused-full-run/logs/Hf4QuadAggregate.log",
+      "sha256": "9f994a5a7031bfd4fb6a3b82da80503955b43595b4f52397b510d7ab2fe5f84a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadAggregate.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4QuadAggregate.resources",
+      "sha256": "48c21b69831c97c62e2a0966fdd0b5454c8d5098460e1ed0da2396af06e8101a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.invocation.json": {
+      "path": "evidence/paused-full-run/logs/Hf4QuadPublic.invocation.json",
+      "sha256": "6aa38f536637475c206fc1958bbd4e67ad041efed1669215caa688306e85eb25"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.log": {
+      "path": "evidence/paused-full-run/logs/Hf4QuadPublic.log",
+      "sha256": "8a64503b32b8f95dfb04af8d50932ab25fe0f0a6c7e8d1cdedade47693cb1a2d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.resources": {
+      "path": "evidence/paused-full-run/logs/Hf4QuadPublic.resources",
+      "sha256": "8d12c3e1f7605b3ab605a607691076b2d4e5f5c0f1c744ee9a35a966d9e77fec"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W06Audit.invocation.json",
+      "sha256": "4a0733c494d8bce9eb11c1340c08c2a37eb5c074627ea0ecba0c02d59df9d527"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.log": {
+      "path": "evidence/paused-full-run/logs/W06Audit.log",
+      "sha256": "4a639246b1a93aecb5271eb7ff8f2155079a500f4a0dab0483697c2697886b1d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.resources": {
+      "path": "evidence/paused-full-run/logs/W06Audit.resources",
+      "sha256": "100dfee0fa7fbc5b941632c47a863d7cc05d5f11a185d740cf3a7e7671249ee3"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W06Cone.invocation.json",
+      "sha256": "fc240796266017c8a99a697e8165babb8ded52e425c3f568403c871758ed3a7e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.log": {
+      "path": "evidence/paused-full-run/logs/W06Cone.log",
+      "sha256": "468a0509c165feb4aee5b0ef695bbe45938fbe89d515f24b830657e2caf6c66e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.resources": {
+      "path": "evidence/paused-full-run/logs/W06Cone.resources",
+      "sha256": "b9765c5d3ef130447bbc9513b83a52e6e1558b0c461a4603dc4102a6f31c421d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Consumers.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W06Consumers.invocation.json",
+      "sha256": "13f0431333f9c725801b47fe9ef83e1f17c65e598ae597fe719e9e0fffe292ed"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Consumers.log": {
+      "path": "evidence/paused-full-run/logs/W06Consumers.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Consumers.resources": {
+      "path": "evidence/paused-full-run/logs/W06Consumers.resources",
+      "sha256": "a7e372631cbb6939eb956a5d74d89996dfae6d8c1e043ac0c0dcf7710defa16a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Decomposition.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W06Decomposition.invocation.json",
+      "sha256": "c10ab1115b9cb53336cf446f1389ee73800322f5f740315a1a84ac0484136d0b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Decomposition.log": {
+      "path": "evidence/paused-full-run/logs/W06Decomposition.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Decomposition.resources": {
+      "path": "evidence/paused-full-run/logs/W06Decomposition.resources",
+      "sha256": "156597fa4edf200142ac4ce313a9028e0a1f8076beb7c534e820147ca920eb9a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W06SigmaV2.invocation.json",
+      "sha256": "0357df963d62b6c2158576e3f4190260e332b380fc14823a162d78fc6a7307ad"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.log": {
+      "path": "evidence/paused-full-run/logs/W06SigmaV2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.resources": {
+      "path": "evidence/paused-full-run/logs/W06SigmaV2.resources",
+      "sha256": "91d0873468576882fc42e3829c2107028e7b39257b8c538265f8337e8f2f6f87"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W17AcceptedBudget.invocation.json",
+      "sha256": "1e8f52a3f374c1de2a66b59363b611e802f7c5e42d1474fc2887c36e82bf2dcf"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.log": {
+      "path": "evidence/paused-full-run/logs/W17AcceptedBudget.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.resources": {
+      "path": "evidence/paused-full-run/logs/W17AcceptedBudget.resources",
+      "sha256": "2f4928549a0f87a205d6efbea0bcb7206cb61af0f2a93b4b69e041aeb564e460"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedCount.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W17AcceptedCount.invocation.json",
+      "sha256": "78cca7262c0e826ae20b6cccfa5c757d580267256091f7a71844aec9f6fa2913"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedCount.log": {
+      "path": "evidence/paused-full-run/logs/W17AcceptedCount.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedCount.resources": {
+      "path": "evidence/paused-full-run/logs/W17AcceptedCount.resources",
+      "sha256": "c3cc25c760c8db1752a9f09ebef22e2bb9165eca70bb1845adaabce336f9c687"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointRecoveryRoot.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W17JointRecoveryRoot.invocation.json",
+      "sha256": "4f8f653fef1679671fc2c86815958f4d138e01ac63ad893478bc31280a8b790d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointRecoveryRoot.log": {
+      "path": "evidence/paused-full-run/logs/W17JointRecoveryRoot.log",
+      "sha256": "7dc00902cdbd5684f0ef5b46a67252e5f1acb7353c0c7a5cc6bba8f1cd3db15f"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointRecoveryRoot.resources": {
+      "path": "evidence/paused-full-run/logs/W17JointRecoveryRoot.resources",
+      "sha256": "487cc9140cba1ea8731d2ee3832889123d6ca34e0f9a811fa6e0da7a83e7cd01"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W17JointSplit.invocation.json",
+      "sha256": "0650d8fae2aa98ee3d85bdccdaa2d272682a2bf49e4c72d760ac22a9e4d11f04"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.log": {
+      "path": "evidence/paused-full-run/logs/W17JointSplit.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.resources": {
+      "path": "evidence/paused-full-run/logs/W17JointSplit.resources",
+      "sha256": "9ee895de3a7aa9cfd768d01ba74100272646e91e0d038b2f5f4850363ed69216"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W17JointSymbolicActual.invocation.json",
+      "sha256": "a4a4a3be81d766f9e75c822670bb600d17a37419a580ed82505fbd3637beed9a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.log": {
+      "path": "evidence/paused-full-run/logs/W17JointSymbolicActual.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.resources": {
+      "path": "evidence/paused-full-run/logs/W17JointSymbolicActual.resources",
+      "sha256": "e9616a236683544eb9d31739257fa0f4cc7739b2938acb9e0a9a0db7df8f852a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17ParentFullTypes.invocation.json": {
+      "path": "evidence/paused-full-run/logs/W17ParentFullTypes.invocation.json",
+      "sha256": "56f8cb98490a9613fb379e7f45713b9f3007ee68a3172920978d32485bce7a1a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17ParentFullTypes.log": {
+      "path": "evidence/paused-full-run/logs/W17ParentFullTypes.log",
+      "sha256": "c978fb74eb75a6daecc4bcbf6fc1826d2f1963d91d2a8c87ec5bdfc0c932d5a1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17ParentFullTypes.resources": {
+      "path": "evidence/paused-full-run/logs/W17ParentFullTypes.resources",
+      "sha256": "620aaea971f489b23ebd53641587cc62a0d57c11041122a828298d8337b6c16c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineBudget.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineBudget.invocation.json",
+      "sha256": "34cbf3805b878e3066e8a0fc659922b0249211eb5fc1a5bc75b1d90a5e675d89"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineBudget.log": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineBudget.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineBudget.resources": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineBudget.resources",
+      "sha256": "f97d8e87518d05631ed1254f8c2f57d59df21c4084fbdd23770963edadec1710"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineRoot.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineRoot.invocation.json",
+      "sha256": "480d6590af6221cbd654fb14f6d032d158e6955f127916abd8f4ba7c53c73452"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineRoot.log": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineRoot.log",
+      "sha256": "31c3d199a1bc3d5d480a16ddba7533759e07671435fc8bfd7d4508ea556643a5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineRoot.resources": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineRoot.resources",
+      "sha256": "d2f7d0842c585ecc96483dbfb56c3cefd3bd4c88b2224b0f98e5edf777ad6949"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineScalars.invocation.json",
+      "sha256": "dc22bf95814a7646ee6d2cc99c9fa54f584d9c35a90a2a2a06e446a7be455ead"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.log": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineScalars.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.resources": {
+      "path": "evidence/paused-full-run/logs/WE01BaselineScalars.resources",
+      "sha256": "8737095a48ed7c78d1473bbfe38c11b7f0153057802c7cab4c44c384f916fd91"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditPayment.invocation.json",
+      "sha256": "b3fc21823ae2ff1dd5a7e04df21ccce4717e735470d55f14149ad21b1383abba"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditPayment.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditPayment.resources",
+      "sha256": "d83238d1b6d426c624b88e306674e0638caf71b80d0d66eba7c282ae18c1f3ae"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneNodes.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneNodes.invocation.json",
+      "sha256": "dee70a63627b33e8c3752bb255d9f461900956caca6b6763e3cad42bf3d11220"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneNodes.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneNodes.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneNodes.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneNodes.resources",
+      "sha256": "5dac16198e964a9ff9827ac432ae550982517fd69ce63f09be5a9b5bc730b5d9"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOnePayment.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOnePayment.invocation.json",
+      "sha256": "cb78a146fbbab48c910b636fe78e821f43bfc25202e7d7b46aee54031df83b75"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOnePayment.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOnePayment.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOnePayment.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOnePayment.resources",
+      "sha256": "3c0d3c7d7ebbd9b2a96e310214da3585f8c3e2e571b3cb831d79dba1444af466"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRoot.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneRoot.invocation.json",
+      "sha256": "8084f6f9aa614fa528935297338ad65d99e776471c77345d1ab14e1dd7193524"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRoot.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneRoot.log",
+      "sha256": "509c9cc54d7c70e93692df68a861496faa62dc16d119de893ed67ae5d87cfcdf"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRoot.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneRoot.resources",
+      "sha256": "adb7289027eab5b7307798f6772fc3069e7618e71d99a61820c16f0572abae9b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneRows.invocation.json",
+      "sha256": "ad3a2bf62d200dcfb000f1056a355ca92bf9c607b31ed3e324adaa7e3cf5b0b2"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneRows.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneRows.resources",
+      "sha256": "17fb4430b2676f9728921a3e402af20ff26b6a13b4e884aae2ce17f421f90ed7"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneStructure.invocation.json",
+      "sha256": "c6d9ddf5f57b706c2a9199057890118a28d8ddfb762ec55fce1c95e316bf9f3b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneStructure.log",
+      "sha256": "e7633538e6376ffc358ca459ca577d924e6c26632a041a85b331568bbd873c6f"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRankOneStructure.resources",
+      "sha256": "70e9a62d9da69c0bcc225c7d7fc39a9b55bd868aa0868d0446e545cfc5514a98"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRoot.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRoot.invocation.json",
+      "sha256": "a40ab92aabd4c52c43b4487801ddc0cf8d108320f3919397c921298f4806310e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRoot.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRoot.log",
+      "sha256": "d6d36e8917ea842e5c2266fc6f216ee606127d0521d379efe0be5ea8723d6d67"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRoot.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditRoot.resources",
+      "sha256": "507636ef38ab7e4d3d249a476a54b9bae84f098bb7f6a952a7b35720fc0c0fcd"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditStructure.invocation.json",
+      "sha256": "a08752c6d8e8bfac9b56bb373ceb40743eb8910771ed3f424ec7285ec3721ef5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.log": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditStructure.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.resources": {
+      "path": "evidence/paused-full-run/logs/WE02JointCreditStructure.resources",
+      "sha256": "9d9114ed12cc1f6ec55e107acbd04c9c4542ba1e25640397d6c8a52f44ce7d32"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE04ContinuousPayment.invocation.json",
+      "sha256": "c7d434d83db8e4339570246c1f36dad7077a5e009e98072b23aaf0cf998a78be"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.log": {
+      "path": "evidence/paused-full-run/logs/WE04ContinuousPayment.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.resources": {
+      "path": "evidence/paused-full-run/logs/WE04ContinuousPayment.resources",
+      "sha256": "1471741aa5a23d4ec556a5903511f786ac7c297f8010cdb2859720a760c75517"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousRoot.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE04ContinuousRoot.invocation.json",
+      "sha256": "bb3d88bf0bcbfb1fce4d988e18fc98e56856bf3bfc5cdae5d5a9c2f08ac88897"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousRoot.log": {
+      "path": "evidence/paused-full-run/logs/WE04ContinuousRoot.log",
+      "sha256": "7396f5a801a7631497fc0ca796d55f57224e29f394984a4a113d1c9065ccd909"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousRoot.resources": {
+      "path": "evidence/paused-full-run/logs/WE04ContinuousRoot.resources",
+      "sha256": "013b53d184d8c7d34fa73a6192b66e322152e8aa03ca4a718204ca668e4f1fa8"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainBudget.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE09JointMainBudget.invocation.json",
+      "sha256": "181f9bc183aa411b3bee2458ff2c57f0587ffe74fd01e1eef72d3d0e691bfedd"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainBudget.log": {
+      "path": "evidence/paused-full-run/logs/WE09JointMainBudget.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainBudget.resources": {
+      "path": "evidence/paused-full-run/logs/WE09JointMainBudget.resources",
+      "sha256": "23a1911c503bdf2b2af9769c3ca786d03b5c136f357d6b88e1643acbec7e02c9"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainRoot.invocation.json": {
+      "path": "evidence/paused-full-run/logs/WE09JointMainRoot.invocation.json",
+      "sha256": "b4d34889f2803fa014432245682a923bbe3dc4959adaef0d13dbf3f4c4eec212"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainRoot.log": {
+      "path": "evidence/paused-full-run/logs/WE09JointMainRoot.log",
+      "sha256": "388dfbfcc904cf3bc414548733bbb29afae468c72cebe8cc4a30a83f7676962c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainRoot.resources": {
+      "path": "evidence/paused-full-run/logs/WE09JointMainRoot.resources",
+      "sha256": "9c44660421f8569bdb92cc71fecec7aa6902ede9fa7d78dbd77f0002c602b98e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualDE.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualDE.json",
+      "sha256": "04285f21276eb9ea1c73fccb10d3154119ec6bd02eb9375f6019eda14a249006"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualLog.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualLog.json",
+      "sha256": "21d35490711b69938c3881f531c3fc8ad8c500d817b5a68fc6fb61e80b1a5949"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualNumerator.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualNumerator.json",
+      "sha256": "215a3884e520fe3e96bfea12a62c21e67b0dea2a756149f47672f45545581baa"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualOuter.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualOuter.json",
+      "sha256": "4a0727e0a0167e0b5f236a351f0cb8029b1658d8347db682111d307180d7f622"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualPublic.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualPublic.json",
+      "sha256": "0223ac57fbdf67b89473075ad81a613615196da73deaa1271b96c0a21b83ed14"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualRoute.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualRoute.json",
+      "sha256": "8da5c745f4cb72ef50945415385e7dd7f61339fef111ccde17d88a76a02aa81c"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ActualTerminal.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ActualTerminal.json",
+      "sha256": "ad77998285d42986552a7143d59342581b52b1b8d3cfe0dbd4f115663379057d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4AmountCore.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4AmountCore.json",
+      "sha256": "e388fbf3c9dce783d75093dc91797d1d08cc31ca5564098a849e3a61b42c4b66"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4AmountPublic.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4AmountPublic.json",
+      "sha256": "357074b221bda77dbe949bb7265c3286a0ea44696c9e20bad915bd195ab6d456"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4CheckedDagData.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4CheckedDagData.json",
+      "sha256": "e5938a94b399fef18fe4fa64295d2d850b289b9fcffe9b0ad0cea21799094f3b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4CheckedDagSoundness.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4CheckedDagSoundness.json",
+      "sha256": "8081e44b3225d7644d7753931b84dd13923d333153a5a671bc128c4ca93b29be"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructionConditions.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructionConditions.json",
+      "sha256": "8ba17c59220f80c1c40e4cbe979c2893d8c70326cab52c3f5ef6ede286b74f0d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructionRounding.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructionRounding.json",
+      "sha256": "6be85440669e160b43a9beae4babd92a3768b60067c0ae4956ea7238412c2d65"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveDagData.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveDagData.json",
+      "sha256": "326af0fa36ae76003dcbfcd4ae66f160aa1cca838aa9de3cd8f9f4c8305c36da"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveDagSoundness.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveDagSoundness.json",
+      "sha256": "256f841b77ef6700aeb45dbab8d2d227e55165c44155fe54b2bfe14ab694b913"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveOriginalSoundness.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveOriginalSoundness.json",
+      "sha256": "a9f940b964ce128925c57e3f7584447c42c55f79060452f860f792104ae04441"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveTableChecks.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveTableChecks.json",
+      "sha256": "98905d759ebc31be962076994a8da80bc11036d7cdc8ca49032023b9c2f4ab25"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveTableData.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveTableData.json",
+      "sha256": "eb05c6f9981995f6364b2cff9ccae3f88fe835c3ac077396f0343a9a3bb40ab0"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveTablePublic.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveTablePublic.json",
+      "sha256": "da2ddc1a3aa2d67f11107661ef2ca841cf96dec4f89128ef7a9d62ef7924a85f"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4ConstructiveTableSoundness.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4ConstructiveTableSoundness.json",
+      "sha256": "bd0cca50c134984e01ca3b764b271f90ba3e2ff3ed1d5d3a5183105d4c8f6a4b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4DirectCoordinates.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4DirectCoordinates.json",
+      "sha256": "f868f34b88ca8847f185f5b97e7873d0ff3b3c6d904b0e5c263b827cb5a9a43d"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4DirectDag.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4DirectDag.json",
+      "sha256": "5dca053505d6306691cc7a0551c2c7d70e9b87e4ee2cb497d388c361f6d7b512"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4DirectDagProgram.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4DirectDagProgram.json",
+      "sha256": "d74cd1be25cc95bdc2424d4b0d65382665efa0a01f1de8c2736069eac47f2d5a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4DirectDagSeedSoundness.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4DirectDagSeedSoundness.json",
+      "sha256": "8d4932219acb2cea4e347b886cf162dc706bf2f8446aa645adbcd164e70b1958"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4DirectDagSemantics.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4DirectDagSemantics.json",
+      "sha256": "da535b07d1e712900450b4ff294f5570b9f3669f0c988df75fbc49e3f9ace2a5"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4DirectKernel.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4DirectKernel.json",
+      "sha256": "324bd06343c0a6482e797eee7d69ff74075164ba0fc1fa0501e5c879de1e6772"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4QuadAggregate.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4QuadAggregate.json",
+      "sha256": "c125caf8072bebb6401bf4d35bf87ab8a41f6810e298dd6184f810b9cd9b269a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/Hf4QuadPublic.json": {
+      "path": "evidence/paused-full-run/receipts/Hf4QuadPublic.json",
+      "sha256": "60d15f51d05e9b78861d6c98f5e5defe83f91805f9ae0ac609930366e30a54e9"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W06Audit.json": {
+      "path": "evidence/paused-full-run/receipts/W06Audit.json",
+      "sha256": "5749804c81bfb17a83e4ec414e0c556e84b725372a28609e37275234f9082624"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W06Cone.json": {
+      "path": "evidence/paused-full-run/receipts/W06Cone.json",
+      "sha256": "12b3f7c09bc4de74a23c7df92a1a28cd352250312efe8f96aaa9549332fabc53"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W06Consumers.json": {
+      "path": "evidence/paused-full-run/receipts/W06Consumers.json",
+      "sha256": "9df91e12d3cbdc53dd453e8b67cb9dea47f6194aea85f95b7db4fb3120ff4b8a"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W06Decomposition.json": {
+      "path": "evidence/paused-full-run/receipts/W06Decomposition.json",
+      "sha256": "1af4a8ba0f23b5f18b3ed6e775c66edeb63b2541038421d6c4262afe81baa8ca"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W06SigmaV2.json": {
+      "path": "evidence/paused-full-run/receipts/W06SigmaV2.json",
+      "sha256": "46e04b485a639df95fb0c78b7241124f9cc9d26a6073e4cab8ea12664198fa4e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W17AcceptedBudget.json": {
+      "path": "evidence/paused-full-run/receipts/W17AcceptedBudget.json",
+      "sha256": "98162371e5f9530d3c78b7fec32ce1318eb2580697e758464c883b8c1d9035de"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W17AcceptedCount.json": {
+      "path": "evidence/paused-full-run/receipts/W17AcceptedCount.json",
+      "sha256": "9c73bb571d9a2d8c512584bc963fff11f096253ff273758fac54b401fdbf37f1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W17JointRecoveryRoot.json": {
+      "path": "evidence/paused-full-run/receipts/W17JointRecoveryRoot.json",
+      "sha256": "63d361742c57d50ae27383f8daff9ec50a44fc4fcaa7b1f7da1286de0d01e9bf"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W17JointSplit.json": {
+      "path": "evidence/paused-full-run/receipts/W17JointSplit.json",
+      "sha256": "a95ae99e54f459271a37495aa94483c5adf33d6814a2c8f0b4de8f9e0fa21049"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W17JointSymbolicActual.json": {
+      "path": "evidence/paused-full-run/receipts/W17JointSymbolicActual.json",
+      "sha256": "2dab8f90d9e65b9e237ba70fc10b01af4180d687c2bd958fc7d290cc26cd7b2e"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/W17ParentFullTypes.json": {
+      "path": "evidence/paused-full-run/receipts/W17ParentFullTypes.json",
+      "sha256": "5d88607c559f32075fd3b57565875120d0b47f3cedbf312f1159fbf94dbe64e7"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE01BaselineBudget.json": {
+      "path": "evidence/paused-full-run/receipts/WE01BaselineBudget.json",
+      "sha256": "8638d42d483a444a7f0a9ece203656321f27c052d9b85f356b9884ae14d02619"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE01BaselineRoot.json": {
+      "path": "evidence/paused-full-run/receipts/WE01BaselineRoot.json",
+      "sha256": "4a7ce905d43275dbb68f330256cf816da106049743da277daa3f7cc8e0af4d69"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE01BaselineScalars.json": {
+      "path": "evidence/paused-full-run/receipts/WE01BaselineScalars.json",
+      "sha256": "aacab18f48df28e07dcd2960cad987bf684d3a89ebafb50e55e51139bfe05e1b"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditPayment.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditPayment.json",
+      "sha256": "09e1ebba283379f124468fc1700d58a44f765283c4091538cc5ab4268c30b094"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditRankOneNodes.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditRankOneNodes.json",
+      "sha256": "1a998d19d47cd8380f92c75b79c3933b605fa520afb70f332e924de9c25f2c11"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditRankOnePayment.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditRankOnePayment.json",
+      "sha256": "0f441edf47fe1468eb585723f53457874879787bf783b34410dc147f522d0cd7"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditRankOneRows.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditRankOneRows.json",
+      "sha256": "26762ef203b96d3565939516e3516f0bf595b87235df361e0fb95c74f81d5654"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditRankOneStructure.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditRankOneStructure.json",
+      "sha256": "d70db5ef238c7f5450ce52a92ac0959f5059d3f87d66d2b07eb88f143311a5c6"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditRoot.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditRoot.json",
+      "sha256": "141146fe0276c9700a90fbf20ff567099747320606c00ddd0c1213224421e8fd"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE02JointCreditStructure.json": {
+      "path": "evidence/paused-full-run/receipts/WE02JointCreditStructure.json",
+      "sha256": "4639c9539c0cbf5815e3326e9911eae9d248d0a21a0863b85652483193f9ca94"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE04ContinuousPayment.json": {
+      "path": "evidence/paused-full-run/receipts/WE04ContinuousPayment.json",
+      "sha256": "7d107db8c655663f904480a4cdcaa46032c5b205a17e1fc3fb6baf152a4b3234"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE04ContinuousRoot.json": {
+      "path": "evidence/paused-full-run/receipts/WE04ContinuousRoot.json",
+      "sha256": "8d98c420168f022714fbdace1b26645850206bd2538e9d17d6aa52f4d1da95e1"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE09JointMainBudget.json": {
+      "path": "evidence/paused-full-run/receipts/WE09JointMainBudget.json",
+      "sha256": "061ee9b3d354eb4341cb093933bc47c4b9349e4db80e533195785873763bf1d8"
+    },
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/receipts/WE09JointMainRoot.json": {
+      "path": "evidence/paused-full-run/receipts/WE09JointMainRoot.json",
+      "sha256": "1885dcfb0a2ebbd703fbf871a510f5e350438caf3ceeab9fb4bc87ca042050e2"
+    },
+    "/tmp/wu-hf4-uniform-interface-v1/comparison.json": {
+      "path": "evidence/uniform-interface/comparison.json",
+      "sha256": "59076fc492f17dea8aa0fb0e6eeb23895478aacb4a64132c22d356c300f8f7b7"
+    },
+    "/tmp/wu-hf4-post-v5-integration-v2/retired-declarations.json": {
+      "path": "integration/retired-declarations.json",
+      "sha256": "905f6f38250e338e91b4ab8e8d8cc8c736a0b4c856f26ae7f120009fb09ff5e7"
+    },
+    "/tmp/wu-hf4-uniform-interface-v1/before/UniformTypes.json": {
+      "path": "evidence/uniform-interface/before/UniformTypes.json",
+      "sha256": "55fc811c8cc6be0d89f13e46a822cef04394e33f832c7c3aa8ab68bf37b35a41"
+    },
+    "/tmp/wu-hf4-uniform-interface-v1/before/UniformData.json": {
+      "path": "evidence/uniform-interface/before/UniformData.json",
+      "sha256": "147614d5eb39c44f0695dc834595df31e0c68bb7af5224908731140015bd9473"
+    },
+    "/tmp/wu-hf4-uniform-interface-v1/after/UniformTypes.json": {
+      "path": "evidence/uniform-interface/after/UniformTypes.json",
+      "sha256": "55fc811c8cc6be0d89f13e46a822cef04394e33f832c7c3aa8ab68bf37b35a41"
+    },
+    "/tmp/wu-hf4-uniform-interface-v1/after/UniformData.json": {
+      "path": "evidence/uniform-interface/after/UniformData.json",
+      "sha256": "147614d5eb39c44f0695dc834595df31e0c68bb7af5224908731140015bd9473"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/result.json": {
+      "path": "evidence/seed-trials/1/result.json",
+      "sha256": "44e55bd242513d75aec3867349b82195f8e3b35b01e45fd7f0755ca99fd5c8c9"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/compile.log": {
+      "path": "evidence/seed-trials/1/compile.log",
+      "sha256": "0fa9d4aa9de5888ad617db159b500d8c5612e1b62edc740b19e72c6d329ca1a4"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/resources.txt": {
+      "path": "evidence/seed-trials/1/resources.txt",
+      "sha256": "7ceed7fcb5e2a9ab12fdc71f1f86d0fe67a322899b1127a66894f6797ab0174a"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/invocation.json": {
+      "path": "evidence/seed-trials/1/invocation.json",
+      "sha256": "6f2a54dc9581e4ed20ff81b826fac9d9274193334423b11c40afbbcdbe530cf8"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/own-process.json": {
+      "path": "evidence/seed-trials/1/own-process.json",
+      "sha256": "eb634a41add2586d18ddad9bdedb11ae50c9318cf2f10cec6ed8980280b42a55"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/sources/Hf4DirectDagSeedSoundness.lean": {
+      "path": "evidence/seed-trials/1/Hf4DirectDagSeedSoundness.lean",
+      "sha256": "739e9f5e298d84842247a783cb117a5c5c8d7c8e7896818bc5bac883fdb2c93e"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/result.json": {
+      "path": "evidence/seed-trials/2/result.json",
+      "sha256": "2da71c3e0a2a2966a976dd247f45a4a1b2ffd1f3a1e62f62cad88167a33cb0ad"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/compile.log": {
+      "path": "evidence/seed-trials/2/compile.log",
+      "sha256": "f3894d98ba0e38b6debdffb4efbb7180c581295eb15da906df4e80708321c89c"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/resources.txt": {
+      "path": "evidence/seed-trials/2/resources.txt",
+      "sha256": "c18c2dd6d88417812a68746f57d637c8aa407437882c7b07c66ac9da73111922"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/invocation.json": {
+      "path": "evidence/seed-trials/2/invocation.json",
+      "sha256": "61742cfc690d58d713f72f474f6f4f124a92ae1ded240c25c99ae47bbca783fd"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/own-process.json": {
+      "path": "evidence/seed-trials/2/own-process.json",
+      "sha256": "df13fd4cee1cb1415ef1de82e80577d42e669336f0127cfdf5eeef14300f2f39"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/sources/Hf4DirectDagSeedSoundness.lean": {
+      "path": "evidence/seed-trials/2/Hf4DirectDagSeedSoundness.lean",
+      "sha256": "56f7ab56667453d0eecb8dd44e24a0f1e0ca5b69acf379d2fb996c687c7abbaa"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/result.json": {
+      "path": "evidence/seed-trials/3/result.json",
+      "sha256": "c5d6360187e13127f034d4637956ae97072df63276f2c37fab819111d17c1100"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/compile.log": {
+      "path": "evidence/seed-trials/3/compile.log",
+      "sha256": "b962c693d1dc8ca185a8d18b62fa726170be56d055eb5a0f30012590c1958de2"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/resources.txt": {
+      "path": "evidence/seed-trials/3/resources.txt",
+      "sha256": "156ca8cea61558029be1190bf75180e3b7bab8bc6f072aca7ac5804d1250ece9"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/invocation.json": {
+      "path": "evidence/seed-trials/3/invocation.json",
+      "sha256": "b8dd7fcb81bd605dc13fff21970b7229f6b6867b9a5efe477d026e83131bdfc1"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/own-process.json": {
+      "path": "evidence/seed-trials/3/own-process.json",
+      "sha256": "7288fd32e361f00333017ad6630bcd6dabbee477c395ebf706fd834cc7316755"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/sources/Hf4DirectDagSeedSoundness.lean": {
+      "path": "evidence/seed-trials/3/Hf4DirectDagSeedSoundness.lean",
+      "sha256": "ff540ec2eebdde368363fdda0a670e4ebee846056addc3f5f6621c01c5514198"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v4/trial-1793180093227074789/result.json": {
+      "path": "evidence/seed-trials/4/result.json",
+      "sha256": "befd186ad66c6996753a2a886d17cfe1e1537550face65ac84a46a842ef193b0"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v4/trial-1793180093227074789/compile.log": {
+      "path": "evidence/seed-trials/4/compile.log",
+      "sha256": "2c3d8a86fbc37121d242a7ea855e41f6607641fb4e5776e9c6135447e09129e2"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v4/trial-1793180093227074789/resources.txt": {
+      "path": "evidence/seed-trials/4/resources.txt",
+      "sha256": "bad22ec9fbefcea8613a11742da1c2499a05841a094f350ea12887b06954b9f5"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v4/trial-1793180093227074789/invocation.json": {
+      "path": "evidence/seed-trials/4/invocation.json",
+      "sha256": "02e122df3c3d40f2ce19b9b3e0f33391d958d6e865d2867ff588c543b6959ad7"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v4/trial-1793180093227074789/own-process.json": {
+      "path": "evidence/seed-trials/4/own-process.json",
+      "sha256": "1c78e2d1d0b2cd8d59f1b88c5558b212b80ee620ce4ddb9da1ff829e11de273c"
+    },
+    "/tmp/wu-hf4-uniform-seed-trial-v4/trial-1793180093227074789/sources/Hf4DirectDagSeedSoundness.lean": {
+      "path": "evidence/seed-trials/4/Hf4DirectDagSeedSoundness.lean",
+      "sha256": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/report.json": {
+      "path": "evidence/uniform-consumers/report.json",
+      "sha256": "eb0a506ba6ad1ca4852f26d80f3d00d4d971f7e17774a5c4967b717666813faa"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/compile-Hf4ConstructiveOriginalSoundness.invocation.json": {
+      "path": "evidence/uniform-consumers/logs/compile-Hf4ConstructiveOriginalSoundness.invocation.json",
+      "sha256": "058ef725c5bf5e2aaad2906a86d2566a4ac4552ba549a8d6d0eff9988203d285"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/compile-Hf4ConstructiveOriginalSoundness.log": {
+      "path": "evidence/uniform-consumers/logs/compile-Hf4ConstructiveOriginalSoundness.log",
+      "sha256": "6b46f2454f04bcffbbd1e0710a607597b210858644cb2f290983444c2c1d8d74"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/compile-Hf4ConstructiveOriginalSoundness.resources": {
+      "path": "evidence/uniform-consumers/logs/compile-Hf4ConstructiveOriginalSoundness.resources",
+      "sha256": "181aa75b9aa49365b525d4449cfa6240ee1a66db208a90f0d4adef4d9bd428e1"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/compile-Hf4ConstructiveTableModels.invocation.json": {
+      "path": "evidence/uniform-consumers/logs/compile-Hf4ConstructiveTableModels.invocation.json",
+      "sha256": "8c6c0630b669e722fb60580999c5e884bcf006464af3635098cfe9b2c0eb4ced"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/compile-Hf4ConstructiveTableModels.log": {
+      "path": "evidence/uniform-consumers/logs/compile-Hf4ConstructiveTableModels.log",
+      "sha256": "d67337e90daf9a624be5591584d6c67aa181e1dab47a15013c1c09db3b79d9ec"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/compile-Hf4ConstructiveTableModels.resources": {
+      "path": "evidence/uniform-consumers/logs/compile-Hf4ConstructiveTableModels.resources",
+      "sha256": "37ab86a16e0414c7db66c1f928d3f18898f163b7335c1b88cb9c3144dce2b75d"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4ConstructiveOriginalSoundness.invocation.json": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4ConstructiveOriginalSoundness.invocation.json",
+      "sha256": "5475b51865714d63db09246a962c4c8cf40564a236646d2348554d330a85e383"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4ConstructiveOriginalSoundness.log": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4ConstructiveOriginalSoundness.log",
+      "sha256": "175be3455a4dad34dad0a17f177f3e8fe75106392c8c16ca5fb324cae033a780"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4ConstructiveOriginalSoundness.resources": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4ConstructiveOriginalSoundness.resources",
+      "sha256": "9a1050a27842c95b26801121a2d1f03f3869de80a9bf14767b7ddd52d32e7457"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4ConstructiveTableModels.invocation.json": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4ConstructiveTableModels.invocation.json",
+      "sha256": "8f7bee512faacd384bb12a4f78675819713a5beaec947545035e2bde37fe285e"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4ConstructiveTableModels.log": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4ConstructiveTableModels.log",
+      "sha256": "b3ea3b5f6a42fc4a042d9cbe334dbf9a44b5696c3cfba9b9ec41867a255060f8"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4ConstructiveTableModels.resources": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4ConstructiveTableModels.resources",
+      "sha256": "ffaef8f63aef7540a95f0ae4a73090f4a6e60c7a1f3f51efa6f69bc105c05f64"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4DirectDagSeedSoundness.invocation.json": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4DirectDagSeedSoundness.invocation.json",
+      "sha256": "2341b1d6131a4514f7fcc0782a28b64d3fdf0ccb0e0b7be1d66966c50720078c"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4DirectDagSeedSoundness.log": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4DirectDagSeedSoundness.log",
+      "sha256": "024bf6f413e04276285043db8c580b13cd5c52f1f8d32bd8650d0f228900b140"
+    },
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/logs/kernel-Hf4DirectDagSeedSoundness.resources": {
+      "path": "evidence/uniform-consumers/logs/kernel-Hf4DirectDagSeedSoundness.resources",
+      "sha256": "d1a0ae6f4a1ce1a1faad5f30dbeece0cac8810ae9aad99955954c818d1bd7b27"
+    },
+    "/tmp/wu-next-private-prune-candidate/README.md": {
+      "path": "next-private-prune/README.md",
+      "sha256": "a611c17e086d0d03cbce29d50f37ccb83e802d28f3e20779a770c6ed251a144d"
+    },
+    "/tmp/wu-next-private-prune-candidate/candidate.diff": {
+      "path": "next-private-prune/candidate.diff",
+      "sha256": "2563a54aeec3fe8955a994351b9afa4bf26e27095655560692f98440c4fe97ea"
+    },
+    "/tmp/wu-next-private-prune-candidate/manifest.json": {
+      "path": "next-private-prune/manifest.json",
+      "sha256": "6e77406e8b29ec736d22c257aad334a9ee2caad892f8373f96addb5f9779b685"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/AnalyticNumberTheory/Sieve/PanVaughanPointwise.lean": {
+      "path": "next-private-prune/overlay/AnalyticNumberTheory/Sieve/PanVaughanPointwise.lean",
+      "sha256": "7cf38f00f6bf044d1b60a48ee5d7a2faba9403952a0120a3e107a93bbb5d97dc"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973MellinMoment.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973MellinMoment.lean",
+      "sha256": "7ca340008a8f7195e80b0a3411564cb9bc066d3b0b725ad00abe2cae93e2eba9"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorLocalPrimitiveLargeSieve.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorLocalPrimitiveLargeSieve.lean",
+      "sha256": "2fd3c292c6092a31419fa4f0227aba68f54e84681c2ab916c145fd1e73a9a191"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVAdaptiveSmallCutoff.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVAdaptiveSmallCutoff.lean",
+      "sha256": "39a242bde90d7a974b456ad459c7db2416cc567981d77089e925ebaff2037a8a"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean",
+      "sha256": "880f0ceb70dc5886a896c9ba3a79c3f13477a1e409d6f1a335edf5b8f9580ade"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean",
+      "sha256": "1d90c7b349a44f267bc1aa260063ba34712ea764ab5aa9a7ba9282fc87c3ad07"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/AnalyticNumberTheory/Vaughan/HighConductorVaughanTypeIIShellSum.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/AnalyticNumberTheory/Vaughan/HighConductorVaughanTypeIIShellSum.lean",
+      "sha256": "07e8a30d221f9488a6e6c119149220d87fc6af2d412086aa56e75cd1335da0e7"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean",
+      "sha256": "e361a66d0309b9c54229dd14848e3fb01c94a13007982f5a9c83cd080cceff3a"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/SieveTheory/LiLiuGoldbachB10LogKernel.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/SieveTheory/LiLiuGoldbachB10LogKernel.lean",
+      "sha256": "a9a6bd7a5a7dcd5934e96341c82a29bafea010c4ed0649cfda955415d93d8f8b"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/SieveTheory/LiLiuGoldbachErrorFoundations.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/SieveTheory/LiLiuGoldbachErrorFoundations.lean",
+      "sha256": "08765771c14c48a29563f49465065d0733d195ed10ac8d96a083d089081b9b08"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCutoffClaim146iiiSanitized.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCutoffClaim146iiiSanitized.lean",
+      "sha256": "5a640f5c7c435b5c96a2031c0725af8f24c1128f4dbeac47459c96cf20f7bc69"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma141ElementaryMass.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma141ElementaryMass.lean",
+      "sha256": "b62f2d82a24158077241da8fa9a4c9117cddcf599e85e775442b1983c22267d0"
+    },
+    "/tmp/wu-next-private-prune-candidate/overlay/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean": {
+      "path": "next-private-prune/overlay/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean",
+      "sha256": "5e4f7c8e55af3d5f5c29e28642fb883711ebaba76bfa07fdd79f5770333a7e6c"
+    },
+    "/tmp/wu-next-private-prune-candidate/prepare.py": {
+      "path": "next-private-prune/prepare.py",
+      "sha256": "efbf17458fe377be3213ea3620b92d9cac38afa21c647f69c6e7fbd85073f1f9"
+    },
+    "/tmp/wu-next-public-prune-audit-v2/audit.py": {
+      "path": "public-prune-census/opportunities/audit.py",
+      "sha256": "f83a8b5ccc628dc981a13da70d94b1b5764e215be176beed49cf8c66da3df481"
+    },
+    "/tmp/wu-next-public-prune-audit-v2/opportunities.json": {
+      "path": "public-prune-census/opportunities/opportunities.json",
+      "sha256": "a934e7ba252b2b378f153017578d1ad666b75d635fa2666f98923a52fb5e935d"
+    },
+    "/tmp/wu-main-port-audit/public-census-v3-actual-root-review.json": {
+      "path": "public-prune-census/root-review.json",
+      "sha256": "246a48c34d007fd654bb89e856fa113cbf2207debb703720aad1b07b86aa8a40"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/archive-map.json": {
+      "path": "public-prune-census/archive/archive-map.json",
+      "sha256": "128e21b595b99831d42a816f21c678ee420ae543d9a01f9d5c03f81143d9a23f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/ROOT-REVIEW.json": {
+      "path": "public-prune-census/archive/ROOT-REVIEW.json",
+      "sha256": "246a48c34d007fd654bb89e856fa113cbf2207debb703720aad1b07b86aa8a40"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/collector/Template.lean": {
+      "path": "public-prune-census/archive/collector/Template.lean",
+      "sha256": "437c47321e34c6216bbd05f3bdb262e2763161843859f3843d0949f75b7b9658"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/collector/payload-validator.py": {
+      "path": "public-prune-census/archive/collector/payload-validator.py",
+      "sha256": "240a7d3797268d9afdc2beee8377798f059a47b88be8e2a644a6681be74fb4f1"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/collector/preparation.json": {
+      "path": "public-prune-census/archive/collector/preparation.json",
+      "sha256": "c6439a0a10a14d7edb000880def7f651e9856902b0b777e64d4261228a73df27"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/collector/prepare.py": {
+      "path": "public-prune-census/archive/collector/prepare.py",
+      "sha256": "4db5bb8caf5178f7bdd66ba9066b8462a60c251d74c763b14c55ce68f6c22c35"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v3-tools/prior-gates.json": {
+      "path": "public-prune-census/archive/v3-tools/prior-gates.json",
+      "sha256": "94b1c5db16caa63fe1dae49ef31d95b73353e17bcb5c8ae86fd1b4ada32d8ef0"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v3-tools/root-review.json": {
+      "path": "public-prune-census/archive/v3-tools/root-review.json",
+      "sha256": "7fdb346ff799d67c090ad245fb0ea35ca83b1de2df41d44093b78f2e1bd92179"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v3-tools/test_runtime.py": {
+      "path": "public-prune-census/archive/v3-tools/test_runtime.py",
+      "sha256": "d911255a24cd6452ecc12fd2452093b8685aa7b77a1a01cde0d888f11b1ecce4"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v3-tools/pins.json": {
+      "path": "public-prune-census/archive/v3-tools/pins.json",
+      "sha256": "f7fe8fcb1cd11e7b347ebcbda3f4cadb4601289f14c560322a2da6507e99b3eb"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v3-tools/run.py": {
+      "path": "public-prune-census/archive/v3-tools/run.py",
+      "sha256": "e9c58e8db40c1a3b4f8450661e45b5d1354de0fa858035ae384b7e42548be9c2"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v2-tools/prior-gates.json": {
+      "path": "public-prune-census/archive/v2-tools/prior-gates.json",
+      "sha256": "c05891cac9ba2e9e57fa38ccc71322d8b5695d23a39571d1218845ec51e2ae44"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v2-tools/root-review.json": {
+      "path": "public-prune-census/archive/v2-tools/root-review.json",
+      "sha256": "30f006e4d443fd051b906e8451a02494826b2537ff9115b0ef388e99b2317857"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v2-tools/test_runtime.py": {
+      "path": "public-prune-census/archive/v2-tools/test_runtime.py",
+      "sha256": "b072c43ae94d477bfea2c3a792bc17fae14090553e2476d82a169699c1db0b93"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v2-tools/pins.json": {
+      "path": "public-prune-census/archive/v2-tools/pins.json",
+      "sha256": "a1b9d32c7f3c0a917274e472d22d553c008b2ef62ac3edd375fc606ebc2e14ab"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/v2-tools/run.py": {
+      "path": "public-prune-census/archive/v2-tools/run.py",
+      "sha256": "c5f67a22f7a3691c93cf370043ed9d70a9e97bada5783272e6d30baa550c6240"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/static-before.json": {
+      "path": "public-prune-census/archive/failed-runtime-v2/static-before.json",
+      "sha256": "a20d0a3c1d4776aacea60cad8566df35449f4c2b71ff619ae0990e5bbaa6828b"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/own-process.json": {
+      "path": "public-prune-census/archive/failed-runtime-v2/own-process.json",
+      "sha256": "9ee1e60923d0faa3b11c4ad4f7762b33c06a90f612dd175a14550ede13b3db88"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/report.json": {
+      "path": "public-prune-census/archive/failed-runtime-v2/report.json",
+      "sha256": "f00428ecb9d3f799bd38a89015d7ef2a32f1d8676a0a7af09ee2c7f0fc3a234d"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/prior-controller.json": {
+      "path": "public-prune-census/archive/failed-runtime-v2/prior-controller.json",
+      "sha256": "5108bb62b7bb7a8f499990f9318d415a3020dace3c73012ad858110d1bee86e7"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/static-before.json": {
+      "path": "public-prune-census/archive/runtime/static-before.json",
+      "sha256": "c73c669975002332d42afd78c22dd33e15e41198c58801a7676e91905c2e1640"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/own-process.json": {
+      "path": "public-prune-census/archive/runtime/own-process.json",
+      "sha256": "7ae2d7ea9006a6d4cd27a2f750ee94f4ecb843c955b2656c6c4d8c21267d8510"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/input-index.json": {
+      "path": "public-prune-census/archive/runtime/input-index.json",
+      "sha256": "19b41fa6697568905ff34499bd908b8bb71e0d88048bf39db8b74296f4e2c2d0"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/report.json": {
+      "path": "public-prune-census/archive/runtime/report.json",
+      "sha256": "98690866fcb7352771ae6ca99c283b61cbfafecc137a16b2d78ef3143f374182"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/static-after.json": {
+      "path": "public-prune-census/archive/runtime/static-after.json",
+      "sha256": "c73c669975002332d42afd78c22dd33e15e41198c58801a7676e91905c2e1640"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/payload-consistency.json": {
+      "path": "public-prune-census/archive/runtime/payload-consistency.json",
+      "sha256": "63894cabb4ad5093b82ad4c78ea28c7c39c6c9ccfc73d7c53907e4d545bcae3b"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/prior-controller.json": {
+      "path": "public-prune-census/archive/runtime/prior-controller.json",
+      "sha256": "5108bb62b7bb7a8f499990f9318d415a3020dace3c73012ad858110d1bee86e7"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/00/compile.log": {
+      "path": "public-prune-census/archive/failed-runtime-v2/00/compile.log",
+      "sha256": "1101b31f5a0ecbc0ff86c3da90bceed6c6adc956c9ceb1635b62599d7bc79f65"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/00/resources.txt": {
+      "path": "public-prune-census/archive/failed-runtime-v2/00/resources.txt",
+      "sha256": "25e0d58652b885871cf652e1c370b265f80dd1c5a7fac28fc2b903af4ac6a64d"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/00/Probe.lean": {
+      "path": "public-prune-census/archive/failed-runtime-v2/00/Probe.lean",
+      "sha256": "ba11b4dc52482c989c35f34193877e69ba312a0cd2715d2a48dcad044605e87e"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/failed-runtime-v2/00/invocation.json": {
+      "path": "public-prune-census/archive/failed-runtime-v2/00/invocation.json",
+      "sha256": "e258b0a770786fde2036ac67f5e485b9a6bc86154bbfec8ea6fc9ef4cdbfb4cd"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/11/result.json": {
+      "path": "public-prune-census/archive/runtime/11/result.json",
+      "sha256": "55137bb0ccddc447264d3b6ab90c951acf204ea12824b4292f9f04faf9db36e4"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/11/uses.json": {
+      "path": "public-prune-census/archive/runtime/11/uses.json",
+      "sha256": "ef7c1855f080ef0a842e13ce2460c4dc3c1e710cf229d40aadf8b456198de5ac"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/11/compile.log": {
+      "path": "public-prune-census/archive/runtime/11/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/11/resources.txt": {
+      "path": "public-prune-census/archive/runtime/11/resources.txt",
+      "sha256": "0ef854d788195f7452c3c34243a1f2b5cc02b0bcafd8dfc054c622eeae37aeee"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/11/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/11/Probe.lean",
+      "sha256": "0c693700adce83b076fb67a858ccbde25cd14cc98a48e547dedb411b3df69432"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/11/invocation.json": {
+      "path": "public-prune-census/archive/runtime/11/invocation.json",
+      "sha256": "e0ce6838daf741e46f24941cbd91eb9b9d1dd3ff4062a81d3a770bdc7002a131"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/05/result.json": {
+      "path": "public-prune-census/archive/runtime/05/result.json",
+      "sha256": "2c0da1dabfb76e001306d4c3425b3dbd79c2567b5de6d654d669d3fe37bd7fce"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/05/uses.json": {
+      "path": "public-prune-census/archive/runtime/05/uses.json",
+      "sha256": "a66867e294ad6f0b1a7555a4aa1a4e3ba754b18dea27b8928ad15b189855f629"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/05/compile.log": {
+      "path": "public-prune-census/archive/runtime/05/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/05/resources.txt": {
+      "path": "public-prune-census/archive/runtime/05/resources.txt",
+      "sha256": "7cf8995f6ab06844095a89c5fa3b97237077d7d185d9c713599cf0511216ba01"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/05/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/05/Probe.lean",
+      "sha256": "d4c2d2e14df8adeaaa1b04a6309ca4e65c29db2d2cddd8a3a0b1bae50539d5f9"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/05/invocation.json": {
+      "path": "public-prune-census/archive/runtime/05/invocation.json",
+      "sha256": "49ac8cc03822ade2db2d0ccd8a20b2259b76292f58b989ca4714724a48fec227"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/13/result.json": {
+      "path": "public-prune-census/archive/runtime/13/result.json",
+      "sha256": "a3c615a5c44cfea11d1d486336592edef77655d04849ba8fdf763c57631133af"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/13/uses.json": {
+      "path": "public-prune-census/archive/runtime/13/uses.json",
+      "sha256": "1d5a36b6d5fd2202d2012df4e4341e8252db8cc2101f0c1a87a569827ed8ef8a"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/13/compile.log": {
+      "path": "public-prune-census/archive/runtime/13/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/13/resources.txt": {
+      "path": "public-prune-census/archive/runtime/13/resources.txt",
+      "sha256": "40d3fe1cd3081798ab6ff354e37e91e12cbb2aca8c3ca721ca041c5f3d8fb727"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/13/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/13/Probe.lean",
+      "sha256": "2ddbe0286ae8a038c52cf4c7db586468f422b6a58765275aaad79b8155009ee7"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/13/invocation.json": {
+      "path": "public-prune-census/archive/runtime/13/invocation.json",
+      "sha256": "91a05e245452e9f2fda549ca1deb6747a8f12cd97cce66596744fead393d4cb0"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/10/result.json": {
+      "path": "public-prune-census/archive/runtime/10/result.json",
+      "sha256": "f6f9a908275d906884f9bcc2cfcb507dbf6b7389a6c784bee455903af4cfa7c3"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/10/uses.json": {
+      "path": "public-prune-census/archive/runtime/10/uses.json",
+      "sha256": "629e353bb140d78a460514ded6e1f70064864736bfba22faba14415161a31655"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/10/compile.log": {
+      "path": "public-prune-census/archive/runtime/10/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/10/resources.txt": {
+      "path": "public-prune-census/archive/runtime/10/resources.txt",
+      "sha256": "0010d7a7742782949104be0d9b5389ded4dafd5364f60d69c537418b7fe9bdc6"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/10/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/10/Probe.lean",
+      "sha256": "81ff8e940480de8f33ac907706d32a9573ecbb20deefd4ee29afa2448670d690"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/10/invocation.json": {
+      "path": "public-prune-census/archive/runtime/10/invocation.json",
+      "sha256": "f1d78775b079c0934279a08ca1fb7e48f6d5a23caf4aad99eca238ada30e46a1"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/04/result.json": {
+      "path": "public-prune-census/archive/runtime/04/result.json",
+      "sha256": "2d3b8c630b7792d0babe10e4b0d2aa626e3573e9d9bb74d887f288d0f6713f82"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/04/uses.json": {
+      "path": "public-prune-census/archive/runtime/04/uses.json",
+      "sha256": "940c981a4720cc37d3f12860be11881fb49caa74ec41dd264bfbc4b9f1bb79e2"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/04/compile.log": {
+      "path": "public-prune-census/archive/runtime/04/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/04/resources.txt": {
+      "path": "public-prune-census/archive/runtime/04/resources.txt",
+      "sha256": "b868a2ba64f38ea1c2e7f272e5a0988def08f3995a318c85a505b8ee68559783"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/04/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/04/Probe.lean",
+      "sha256": "0f70497c32d82be4f5178606bca71d2bc75f517dd366d1ae234dbc69be500094"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/04/invocation.json": {
+      "path": "public-prune-census/archive/runtime/04/invocation.json",
+      "sha256": "f50d3c83cc47e155d5cd875e1e00f17056716439f4438827d269c5ddd3231367"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/17/result.json": {
+      "path": "public-prune-census/archive/runtime/17/result.json",
+      "sha256": "2592c0bfb2078dc1a7180c392f1aa650b4fe11b663fa32925927a967e96a3886"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/17/uses.json": {
+      "path": "public-prune-census/archive/runtime/17/uses.json",
+      "sha256": "3c5b05b2b0d38f190b28049781fe96a4f63ef97c2a4ba30377ac8e39632c7933"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/17/compile.log": {
+      "path": "public-prune-census/archive/runtime/17/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/17/resources.txt": {
+      "path": "public-prune-census/archive/runtime/17/resources.txt",
+      "sha256": "bfc52b7e335eefbcc63cac95785391809a6dcadf19896c9c7b11ed2e93e2bf5e"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/17/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/17/Probe.lean",
+      "sha256": "4b7c7a578a1bc8046dfcf1caf4a27e960f029178f717e5a590472219044c17d1"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/17/invocation.json": {
+      "path": "public-prune-census/archive/runtime/17/invocation.json",
+      "sha256": "9636f99e731dbd9e55f5bb01c8926aa178044c87ec7891391017447449d3f259"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/15/result.json": {
+      "path": "public-prune-census/archive/runtime/15/result.json",
+      "sha256": "777011de0fd0e7bb1fb1ceb6fe49a42bcdf00bd46d82580816a4b90dbb5094aa"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/15/uses.json": {
+      "path": "public-prune-census/archive/runtime/15/uses.json",
+      "sha256": "64df2278f6bffae27f52db7bd28d5863e175b3b3281e38eea70b417d7408f69b"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/15/compile.log": {
+      "path": "public-prune-census/archive/runtime/15/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/15/resources.txt": {
+      "path": "public-prune-census/archive/runtime/15/resources.txt",
+      "sha256": "bb7691875cb73dc634eb35d7a67e4678e3e2f240cb4ea67f5ee9ff2f0b3299ef"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/15/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/15/Probe.lean",
+      "sha256": "208a8e503206a8ce45f20c014651116364049dae44c7bd7e820a5c0133372555"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/15/invocation.json": {
+      "path": "public-prune-census/archive/runtime/15/invocation.json",
+      "sha256": "758789a39968732b860b1bc4f450dccd38d87a16602770a714944ac77ddda2f7"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/00/result.json": {
+      "path": "public-prune-census/archive/runtime/00/result.json",
+      "sha256": "5948e608b84a1b23a4a2ad823cb2f6f923c5f962cf8fbd51a3b74931c6c84e5f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/00/uses.json": {
+      "path": "public-prune-census/archive/runtime/00/uses.json",
+      "sha256": "eb8009a9ce56e4f1d3129edba412db4c7d0389fc49f470bf17054c29eb450a56"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/00/compile.log": {
+      "path": "public-prune-census/archive/runtime/00/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/00/resources.txt": {
+      "path": "public-prune-census/archive/runtime/00/resources.txt",
+      "sha256": "bbb3c05d36538e01d1714c7074c7882273c4d4ecb3bb0b162562dd80b4baf67d"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/00/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/00/Probe.lean",
+      "sha256": "e979f0dff73614bdf61328f349b85ce997fc96929dcd794140091dd0a3c5a13b"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/00/invocation.json": {
+      "path": "public-prune-census/archive/runtime/00/invocation.json",
+      "sha256": "4fb322bead580f387dcdcaac478abb33648edc85683f5e51382b71abffd8df02"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/20/result.json": {
+      "path": "public-prune-census/archive/runtime/20/result.json",
+      "sha256": "d77d71459cf09c8cb875234f67147a85badb970d74797e36535ea8eb73f515f9"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/20/uses.json": {
+      "path": "public-prune-census/archive/runtime/20/uses.json",
+      "sha256": "e9a234f6e2648db75011e1deefe24b92e8b9f6de034219710cd316e3f39c1026"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/20/compile.log": {
+      "path": "public-prune-census/archive/runtime/20/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/20/resources.txt": {
+      "path": "public-prune-census/archive/runtime/20/resources.txt",
+      "sha256": "2b24f6e8db45b5d412d73e3cb84e11474a978dfa533aada50c1c67f2d109650e"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/20/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/20/Probe.lean",
+      "sha256": "6cebf2fab2b26cd543f4f6c55823615fa934fc723b0b5aa7f92395486bb7439e"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/20/invocation.json": {
+      "path": "public-prune-census/archive/runtime/20/invocation.json",
+      "sha256": "1deae21d948b3a553e55b3debb3c32b8407fb82c18ff81cc51be21fb77a9344e"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/16/result.json": {
+      "path": "public-prune-census/archive/runtime/16/result.json",
+      "sha256": "ee7cbccbbe74f6e30815bf7e8a68c96a4f891eaa32a550c3ac6e7280d0e563e6"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/16/uses.json": {
+      "path": "public-prune-census/archive/runtime/16/uses.json",
+      "sha256": "421d6a5130e7e177942589abcbc3f73e16d84d355870718e189f0641dff55b8f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/16/compile.log": {
+      "path": "public-prune-census/archive/runtime/16/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/16/resources.txt": {
+      "path": "public-prune-census/archive/runtime/16/resources.txt",
+      "sha256": "e9d7f0ede0ee62470af70eafd8babaeae24ee59585576d295494810681bc7a01"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/16/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/16/Probe.lean",
+      "sha256": "5bfdd7169f55c24eb98cd511563dd8edfcb00b77c4539b5a1858961b97fe7837"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/16/invocation.json": {
+      "path": "public-prune-census/archive/runtime/16/invocation.json",
+      "sha256": "1d63b792ec2ecdd7da608a4950c2bd384138134d7893113872ede1aa4e8f7f05"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/12/result.json": {
+      "path": "public-prune-census/archive/runtime/12/result.json",
+      "sha256": "cfe271fc0e5fc95a3c4a331c2f99bebd0bf0047742b4ef54f89c9a5640f4f451"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/12/uses.json": {
+      "path": "public-prune-census/archive/runtime/12/uses.json",
+      "sha256": "14755e792973545e584d42015f27c03afe08180eba5188beaba96dfc10449fb4"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/12/compile.log": {
+      "path": "public-prune-census/archive/runtime/12/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/12/resources.txt": {
+      "path": "public-prune-census/archive/runtime/12/resources.txt",
+      "sha256": "23afb4447a16b6d3630195a17d07b1de12847293a23b5edad8effeec31d77c02"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/12/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/12/Probe.lean",
+      "sha256": "e352f78bacd5de4376943f9a2193c949c0de263db77847c62961deed0fd0473a"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/12/invocation.json": {
+      "path": "public-prune-census/archive/runtime/12/invocation.json",
+      "sha256": "f6efda3d3e7611f89ce4a1f51bf3db7ccaf241f85cce4ef10a7c07d19b7d8fa6"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/01/result.json": {
+      "path": "public-prune-census/archive/runtime/01/result.json",
+      "sha256": "acfc59aa44b3d4bd453ecb96f80c0639f91799dac3fe94b268d54d38b01bfbe0"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/01/uses.json": {
+      "path": "public-prune-census/archive/runtime/01/uses.json",
+      "sha256": "a1fd53e6cef6724f3fafd8e852b33e23c02668a563d246f3270f84080cf37956"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/01/compile.log": {
+      "path": "public-prune-census/archive/runtime/01/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/01/resources.txt": {
+      "path": "public-prune-census/archive/runtime/01/resources.txt",
+      "sha256": "bab05f03c976c0cca3ca018f5c31cbd452fb294de93b60caf356b82241bf2ca4"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/01/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/01/Probe.lean",
+      "sha256": "e0d43eef7de43d7a2f9a7f5ab23b3e4c383f65b3c31e8eee9c2ee424be7e9d79"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/01/invocation.json": {
+      "path": "public-prune-census/archive/runtime/01/invocation.json",
+      "sha256": "820334d2f1ae31791ea1b82b8e9b11039ab4c9b49dea5586b6d2cf76e2c12f37"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/19/result.json": {
+      "path": "public-prune-census/archive/runtime/19/result.json",
+      "sha256": "69822e6a663086e3dca04f0ee41669f974b0cb04e0b4d4c00ea91fe263adf766"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/19/uses.json": {
+      "path": "public-prune-census/archive/runtime/19/uses.json",
+      "sha256": "879d87edf7bfd9ab98cf774449d2999ff976c415b0671df33a4724f5e80d6c7b"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/19/compile.log": {
+      "path": "public-prune-census/archive/runtime/19/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/19/resources.txt": {
+      "path": "public-prune-census/archive/runtime/19/resources.txt",
+      "sha256": "bed243d21ebee4c20dfc40a0b5deacf7310e552029f92d6e21c60acf47fcd6f3"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/19/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/19/Probe.lean",
+      "sha256": "86626cc3bef5983cfeb9fb002c411df15d588e6525f9abe7c4002650fd3fe62d"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/19/invocation.json": {
+      "path": "public-prune-census/archive/runtime/19/invocation.json",
+      "sha256": "1118e69b2882fa4598ad62911a8edc24bbd7625af76557605b5f843a0cb73701"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/14/result.json": {
+      "path": "public-prune-census/archive/runtime/14/result.json",
+      "sha256": "d7a1ef0a47ef75a89d8abb891d292c9f6dff8658c36569104e4b52ef8644dc01"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/14/uses.json": {
+      "path": "public-prune-census/archive/runtime/14/uses.json",
+      "sha256": "e4dde13ea202930eb75677856c4c3ad704cabca258a1c3836b0c0be0e15b09c7"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/14/compile.log": {
+      "path": "public-prune-census/archive/runtime/14/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/14/resources.txt": {
+      "path": "public-prune-census/archive/runtime/14/resources.txt",
+      "sha256": "9df70fd60eae9519edda4c15dbeabea8d909b049fb08f7c997aa55ad86c2eeda"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/14/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/14/Probe.lean",
+      "sha256": "63cc2438a7f188a18d9c42b88e613494ed898502b976330832f82509cbc53f2e"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/14/invocation.json": {
+      "path": "public-prune-census/archive/runtime/14/invocation.json",
+      "sha256": "fdf4c1e55a0a451f3ac66e3c5b59e2656863173cdbf48233ab4688acf66a9aa7"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/09/result.json": {
+      "path": "public-prune-census/archive/runtime/09/result.json",
+      "sha256": "0ac437ae37e6e84bbd178482d363eb93ad53f92c0b8641fa18118e55d6ac0d65"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/09/uses.json": {
+      "path": "public-prune-census/archive/runtime/09/uses.json",
+      "sha256": "2374fa94afeb19d1d8343fd64bef6765f337a1f0f80027282077ef15f19cc4c6"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/09/compile.log": {
+      "path": "public-prune-census/archive/runtime/09/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/09/resources.txt": {
+      "path": "public-prune-census/archive/runtime/09/resources.txt",
+      "sha256": "e5f74424a26d812d026f3e991caf81fd08fc5241a07722a8f2cb4ff53f1154b3"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/09/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/09/Probe.lean",
+      "sha256": "e9781372543d728204d07faf93acc75352c133be6cbcbceea4dab1c44b46e6c3"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/09/invocation.json": {
+      "path": "public-prune-census/archive/runtime/09/invocation.json",
+      "sha256": "5098dadd2545c7e3e53127fcf29225e26a4c14014bc65f7ce4eabf7544483d74"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/03/result.json": {
+      "path": "public-prune-census/archive/runtime/03/result.json",
+      "sha256": "35c23e8fbcb7f9f5bd3dacab25911a68af3bc8274975ba87215beb112020b409"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/03/uses.json": {
+      "path": "public-prune-census/archive/runtime/03/uses.json",
+      "sha256": "f4cf5aa683deb51467925b774c9abf364339f346f7471dfe2abb60e20caa83b0"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/03/compile.log": {
+      "path": "public-prune-census/archive/runtime/03/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/03/resources.txt": {
+      "path": "public-prune-census/archive/runtime/03/resources.txt",
+      "sha256": "df63cd808ff79b54974be9325fd4f816188abfb94878503eb72767c8f00a0e1f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/03/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/03/Probe.lean",
+      "sha256": "35a873e83dff543bb8d82c69e98feb809a78cbcb5fe6bc6bde3aec48aee3a680"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/03/invocation.json": {
+      "path": "public-prune-census/archive/runtime/03/invocation.json",
+      "sha256": "2204fce26b701ab8173f65c2a149427f9c576529e0c31388400f6e7b987d5197"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/07/result.json": {
+      "path": "public-prune-census/archive/runtime/07/result.json",
+      "sha256": "fb02327f2e1eab3ce71b49eaac7313fb312ed84f5155363cd68a496caff8b628"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/07/uses.json": {
+      "path": "public-prune-census/archive/runtime/07/uses.json",
+      "sha256": "a68ecd3793ed4637e8f86dbde6c2035b3145f7142fdd1a3e4de3bde18f49eefe"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/07/compile.log": {
+      "path": "public-prune-census/archive/runtime/07/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/07/resources.txt": {
+      "path": "public-prune-census/archive/runtime/07/resources.txt",
+      "sha256": "1bdec4f38e289b7c54b28472f4ed36b3e02cc31d2dc58e5919b56d0fa76c3361"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/07/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/07/Probe.lean",
+      "sha256": "73a434addfd11d50960f4791e8f5d24ff3666dab4a0389fce5e378777006ed17"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/07/invocation.json": {
+      "path": "public-prune-census/archive/runtime/07/invocation.json",
+      "sha256": "5c4a237a608a690915069248ebaaeb26bc26f451fc28bb048b22902d6e02d784"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/08/result.json": {
+      "path": "public-prune-census/archive/runtime/08/result.json",
+      "sha256": "922920587afcbcad5ef955f759a4bb7a8a4d406dba7b0e849ace3a30d965082f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/08/uses.json": {
+      "path": "public-prune-census/archive/runtime/08/uses.json",
+      "sha256": "bff6f5006b44a74d18dd33c718b63714d5447b98d82915b2f135c33997ef8d2f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/08/compile.log": {
+      "path": "public-prune-census/archive/runtime/08/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/08/resources.txt": {
+      "path": "public-prune-census/archive/runtime/08/resources.txt",
+      "sha256": "fc6e3701fc1ae35549b454ce6636645e121d800691756d15528f9a3e30755812"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/08/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/08/Probe.lean",
+      "sha256": "0b4e14907ff84b8b79e7f43da0f8be78a520be5b4b2385fff617ac7e2f678299"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/08/invocation.json": {
+      "path": "public-prune-census/archive/runtime/08/invocation.json",
+      "sha256": "ca83759b0e038de56a9b4a6b4ea6028a3b7b981a26f3edc83467ec1c7722bb71"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/02/result.json": {
+      "path": "public-prune-census/archive/runtime/02/result.json",
+      "sha256": "72de930c92af40c7bfde91764eceac7572b66ee86466d575d8b616475eb89c14"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/02/uses.json": {
+      "path": "public-prune-census/archive/runtime/02/uses.json",
+      "sha256": "5ee73b6c33cae3162b34736dc30958759cec9b55f73567f8c871435c604d2596"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/02/compile.log": {
+      "path": "public-prune-census/archive/runtime/02/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/02/resources.txt": {
+      "path": "public-prune-census/archive/runtime/02/resources.txt",
+      "sha256": "5778e605bfff598e1d735d93c4650a2794df4f0fda1ce55ad8e9c13919a6a175"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/02/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/02/Probe.lean",
+      "sha256": "9da6d2fc26dac76a8bd7b6bd59a1af7f5143aa8c09d769c7f95422990362962f"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/02/invocation.json": {
+      "path": "public-prune-census/archive/runtime/02/invocation.json",
+      "sha256": "d6feae1c66209ef0766c167baf94b4e17147a931b7f811053f16b53cf6247235"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/18/result.json": {
+      "path": "public-prune-census/archive/runtime/18/result.json",
+      "sha256": "2efac9118e02b3e9f3fc6c7c749f8768b899876d8a713824a2f70b2877fb51b2"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/18/uses.json": {
+      "path": "public-prune-census/archive/runtime/18/uses.json",
+      "sha256": "77f75f16b96daa5e574eecd7b27f1fe1bdfadf36a2ef602f24e42bb0752b8e27"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/18/compile.log": {
+      "path": "public-prune-census/archive/runtime/18/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/18/resources.txt": {
+      "path": "public-prune-census/archive/runtime/18/resources.txt",
+      "sha256": "30454795a20cca012ad49c41d8fcdc1b65f2902f9d2f85c549e1bfad708a0978"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/18/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/18/Probe.lean",
+      "sha256": "1418b520cf7dd2a6c1a33cef63be29f51c525f727af3c59d1ce9e54829e21461"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/18/invocation.json": {
+      "path": "public-prune-census/archive/runtime/18/invocation.json",
+      "sha256": "f2e6fe390791b285ec9a81f58d02f512e6f61b911457e2cf11846f37f45e8f31"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/06/result.json": {
+      "path": "public-prune-census/archive/runtime/06/result.json",
+      "sha256": "74456d9ea32c3534d80b62cb5065b6cc87b5695f722fd95ea02fb8edc8d3f107"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/06/uses.json": {
+      "path": "public-prune-census/archive/runtime/06/uses.json",
+      "sha256": "ecf60c0a40778a487233aa238448c835202178a8989dd6479851333b9ace2246"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/06/compile.log": {
+      "path": "public-prune-census/archive/runtime/06/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/06/resources.txt": {
+      "path": "public-prune-census/archive/runtime/06/resources.txt",
+      "sha256": "8e920ce1cf2b8b2a1fd24c14b20c3658b6edd8ecfb979c59dd8467ed4e3103dc"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/06/Probe.lean": {
+      "path": "public-prune-census/archive/runtime/06/Probe.lean",
+      "sha256": "155db43437051aa21d2cdc67d3e08a71f505c78396eb80314de0d012549853b2"
+    },
+    "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/structural-v9-1793177513339524821/evidence/public-constant-use-census/runtime/06/invocation.json": {
+      "path": "public-prune-census/archive/runtime/06/invocation.json",
+      "sha256": "c78e2f4dd86145d2415343e86a68b0a3cb9b281f795a145307fc07756fd30c41"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/kernel-1793171690397650277/own-process.json": {
+      "path": "evidence/uniform-semantic-kernel/own-process.json",
+      "sha256": "2672b96815b51f656aa0195c72e0996fe0a45c455b680429b12b98e0ebb09b30"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/kernel-1793171690397650277/report.json": {
+      "path": "evidence/uniform-semantic-kernel/report.json",
+      "sha256": "57fc8ef7655b09bde507391fa1a7491ac07d1ee7862a7a5a6f5e0c868f88df5c"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/kernel-1793171690397650277/kernel.log": {
+      "path": "evidence/uniform-semantic-kernel/kernel.log",
+      "sha256": "9b850df66c303c2d5b04e74c37068b65e6ca1300086f91decae6b81273489aed"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/kernel-1793171690397650277/invocation.json": {
+      "path": "evidence/uniform-semantic-kernel/invocation.json",
+      "sha256": "aba57ba9613e3b3f8e9ea45905f1d93656c053cb2018d376536380792067669e"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/trial-1793171550762109585/own-process.json": {
+      "path": "evidence/uniform-semantic-trial/own-process.json",
+      "sha256": "639e6aa2edd60108c4de6f237aa6f5ed579cb281729a1fb35dadf9c7aa630952"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/trial-1793171550762109585/result.json": {
+      "path": "evidence/uniform-semantic-trial/result.json",
+      "sha256": "b56715fb880d2bb68bc9828404dfe847d2d6932c6eb28d44a2be61e7338a8ca1"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/trial-1793171550762109585/compile.log": {
+      "path": "evidence/uniform-semantic-trial/compile.log",
+      "sha256": "27c051727055278f4985d6600b0f6a517220ca46eed70b4b0cc06cbe9c04db29"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/trial-1793171550762109585/resources.txt": {
+      "path": "evidence/uniform-semantic-trial/resources.txt",
+      "sha256": "90f488fe5452f26bc0350c90d28ed4c0f86cec20abd266edbf3dfe0df3d68173"
+    },
+    "/tmp/wu-hf4-semantic-uniform-v3/trial-1793171550762109585/invocation.json": {
+      "path": "evidence/uniform-semantic-trial/invocation.json",
+      "sha256": "c19f33e1f46de32639049795a5f23e7fd075c91fda4dcc34f306751471edd971"
+    }
+  }
+}

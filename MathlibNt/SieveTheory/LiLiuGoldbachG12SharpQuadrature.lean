@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpIntegralSplit
 import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 noncomputable section
 open MeasureTheory Set Filter
@@ -68,14 +67,5 @@ theorem sharp_kernel_le_integral_eventually (δ : ℝ) (hδ : 0 < δ) :
   have hb := hN N hNN
   linarith
 
-/-- Direct one-dimensional low/high consumer, with no numerical bound as an input. -/
-theorem sharp_kernel_le_split_eventually (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      goldbachG12PrimeKernel G12SharpWeight.weight N ≤ Real.log (9/4 : ℝ) *
-        ((561990/1000000 : ℝ) * (36/5) *
-          (∫ u in (4/53 : ℝ)..(1/10), density u / (1-u)) +
-        (564383/1000000 : ℝ) * 8 *
-          (∫ u in (1/10 : ℝ)..(4/33), density u)) + δ := by
-  simpa only [sharp_integral_split] using sharp_kernel_le_integral_eventually δ hδ
 
 end G12SharpQuadrature

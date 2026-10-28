@@ -122,9 +122,4 @@ theorem directPayKMain_uniform
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
 
-
 -- Public declaration type and trust audit.
-#check MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_bound
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_bound
-#check MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_uniform
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_uniform

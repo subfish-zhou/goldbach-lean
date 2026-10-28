@@ -1,7 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPi10NormalizedUpper
-
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-
-#check goldbachPi10_normalized_upper
-
-#print axioms goldbachPi10_normalized_upper

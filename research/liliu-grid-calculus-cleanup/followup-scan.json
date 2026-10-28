@@ -1,0 +1,22 @@
+{
+  "status": "read_only_followup_evidence",
+  "finite_indicator_abel": {
+    "status": "compiled_but_not_adopted",
+    "warning_as_error_compile_exit_code": 0,
+    "original_cohort_effective_lines": 81,
+    "prototype_cohort_effective_lines": 97,
+    "delta": 16,
+    "original_file": "MathlibNt/SieveTheory/LiLiuPrereqBuchstabUniformAbel.lean",
+    "original_file_sha256": "c7b5f176aabe100aeabf4dcf1503729884758c5e0e965e9650a7bd3cd5994bf4",
+    "prototype_sha256": "bf3584430da0b194cd8e22337d29a982231252464ce63f4b95a60e352a5e4829",
+    "compile_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope": "Same public FTC-based Abel statement, all auxiliary finite-prefix and truncated-integral lemmas counted. Prototype remains outside production; no saving counted."
+  },
+  "remaining_empty_facades": {
+    "status": "read_only_candidates_not_accepted",
+    "method": "Baseline compiled module has no local declarations, and current masked source consists only of imports plus local open/namespace/section/end commands. All original imports must be preserved; full acceptance remains required.",
+    "candidates": [],
+    "compiled_modules_scanned": 1801
+  },
+  "limitations": "The facade scan covers only declaration-free modules with imports plus local open/namespace/section/end commands. It is not a proof of global mathematical minimality."
+}

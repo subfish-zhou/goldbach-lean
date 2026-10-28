@@ -39,7 +39,6 @@ structure Section13HatContract (H : Section13HatLayers) (β : ℝ) : Prop where
   weighted_tendsto_zero : ∀ sign,
     Tendsto (weightedHat H sign) atTop (𝓝 0)
 
-@[simp] theorem kappaHat_eq_one (H : Section13HatLayers) : H.kappaHat = 1 := rfl
 
 @[simp] theorem lambda_eq_perturb_mul_weightedHat
     (H : Section13HatLayers) (sign : ErrorSign) (D d ε t : ℝ) :
@@ -48,43 +47,6 @@ structure Section13HatContract (H : Section13HatLayers) (β : ℝ) : Prop where
   norm_num [lambda, weightedHat, Section13HatLayers.kappaHat]
   ac_rfl
 
-/-- On every finite interval strictly beyond the delay threshold, (T3) and
-positivity already imply that `s² T̂±(s)` is antitone.  No limiting theorem is
-used here. -/
-theorem weightedHat_antitoneOn_Icc
-    {H : Section13HatLayers} {β a b : ℝ} (hH : Section13HatContract H β)
-    (sign : ErrorSign) (ha : β + sign.epsilon < a) :
-    AntitoneOn (weightedHat H sign) (Icc a b) := by
-  have heps : 0 ≤ sign.epsilon := by cases sign <;> simp [ErrorSign.epsilon]
-  have hthreshold : 0 < β + sign.epsilon := by linarith [hH.beta_gt_one]
-  apply antitoneOn_of_deriv_nonpos (convex_Icc a b)
-  · exact (continuousOn_id.pow 2).mul (hH.continuous sign) |>.mono (by
-      intro x hx
-      exact hthreshold.trans (ha.trans_le hx.1))
-  · intro x hx
-    have hx' : x ∈ Icc a b := interior_subset hx
-    exact (hH.dde sign x (ha.trans_le hx'.1)).differentiableAt.differentiableWithinAt
-  · intro x hx
-    have hx' : x ∈ Icc a b := interior_subset hx
-    rw [(hH.dde sign x (ha.trans_le hx'.1)).deriv]
-    exact mul_nonpos_of_nonpos_of_nonneg
-      (neg_nonpos.mpr (le_of_lt (hthreshold.trans (ha.trans_le hx'.1))))
-      (le_of_lt (hH.positive sign.opposite (x - 1) (by
-        linarith [hH.beta_gt_one, ha.trans_le hx'.1])))
-
-/-- A finite-interval product criterion isolating exactly the local estimate
-needed in Claim 14.6(i).  This is the rigorous content of the step from
-(14.16)+(T3) to a decreasing `Λ`: once the displayed derivative is nonpositive,
-ordinary one-variable calculus supplies antitonicity. -/
-theorem lambda_antitoneOn_Icc_of_deriv_nonpos
-    (H : Section13HatLayers) (sign : ErrorSign) (D d ε a b : ℝ)
-    (hcont : ContinuousOn (lambda H sign D d ε) (Icc a b))
-    (hdiff : ∀ t ∈ Ioo a b, DifferentiableAt ℝ (fun x => lambda H sign D d ε x) t)
-    (hderiv : ∀ t ∈ Ioo a b, deriv (lambda H sign D d ε) t ≤ 0) :
-    AntitoneOn (lambda H sign D d ε) (Icc a b) := by
-  exact antitoneOn_of_deriv_nonpos (convex_Icc a b) hcont
-    (fun t ht => (hdiff t (by simpa only [interior_Icc] using ht)).differentiableWithinAt)
-    (fun t ht => hderiv t (by simpa only [interior_Icc] using ht))
 
 /-- Multiplying two nonnegative antitone functions preserves antitonicity on a
 fixed set.  This is the algebraic engine in the high-range part of Claim
@@ -143,67 +105,11 @@ theorem qD_mul_antitoneOn_of_shifted_lambda
       (div_nonneg (zero_lt_one.trans (hS ht)).le (sub_nonneg.mpr (hS ht).le)) _
   · exact fun t ht => hS ht
 
-/-- Pointwise convergence preserves antitonicity.  Thus any genuine finite
-construction of the Section 13 solutions needs only pointwise convergence to
-pass weighted monotonicity to the limit; uniform convergence is required only
-for continuity/differentiation, not for this order statement. -/
-theorem antitoneOn_of_pointwise_limit
-    {u : ℕ → ℝ → ℝ} {f : ℝ → ℝ} {S : Set ℝ}
-    (hu : ∀ n, AntitoneOn (u n) S)
-    (hlim : ∀ x ∈ S, Tendsto (fun n => u n x) atTop (𝓝 (f x))) :
-    AntitoneOn f S := by
-  intro x hx y hy hxy
-  exact le_of_tendsto_of_tendsto (hlim y hy) (hlim x hx)
-    (Filter.Eventually.of_forall (fun n => hu n hx hy hxy))
-
-/-- Exact separation of finite and limiting obligations for Claim 14.6(i). -/
-structure Claim14_6FiniteApproximation
-    (H : Section13HatLayers) (sign : ErrorSign) (D d ε a b : ℝ) where
-  approx : ℕ → ℝ → ℝ
-  antitone : ∀ n, AntitoneOn (approx n) (Icc a b)
-  pointwise : ∀ x ∈ Icc a b,
-    Tendsto (fun n => approx n x) atTop (𝓝 (lambda H sign D d ε x))
-
-/-- Once a source construction supplies finite antitone approximants and their
-pointwise limit, Claim 14.6(i) on that compact interval is automatic. -/
-theorem claim14_6_i_of_finiteApproximation
-    {H : Section13HatLayers} {sign : ErrorSign} {D d ε a b : ℝ}
-    (h : Claim14_6FiniteApproximation H sign D d ε a b) :
-    AntitoneOn (lambda H sign D d ε) (Icc a b) :=
-  antitoneOn_of_pointwise_limit h.antitone h.pointwise
 
 /-- The delayed positive integrand in the κ=1 Section 13 DDE. -/
 def hatTailIntegrand (H : Section13HatLayers) (sign : ErrorSign) (t : ℝ) : ℝ :=
   t * H.T sign.opposite (t - 1)
 
-/-- The DDE integrated on a finite interval. -/
-theorem integral_hatTailIntegrand
-    {H : Section13HatLayers} {β a b : ℝ} (hH : Section13HatContract H β)
-    (sign : ErrorSign) (ha : β + sign.epsilon < a) (hab : a ≤ b) :
-    (∫ t in a..b, hatTailIntegrand H sign t) =
-      weightedHat H sign a - weightedHat H sign b := by
-  let g : ℝ → ℝ := fun t => hatTailIntegrand H sign t
-  have hcont : ContinuousOn g (Icc a b) := by
-    apply continuousOn_id.mul
-    apply (hH.continuous sign.opposite).comp
-      (continuousOn_id.sub continuousOn_const)
-    intro x hx
-    have heps : 0 ≤ sign.epsilon := by cases sign <;> simp [ErrorSign.epsilon]
-    have : 1 < x := by linarith [hH.beta_gt_one, ha, hx.1]
-    exact sub_pos.mpr this
-  have hderiv : ∀ x ∈ Icc a b,
-      HasDerivAt (-weightedHat H sign) (g x) x := by
-    intro x hx
-    simpa [g, hatTailIntegrand, neg_mul] using
-      (hH.dde sign x (ha.trans_le hx.1)).neg
-  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hab
-    (HasDerivAt.continuousOn hderiv)
-    (fun x hx => hderiv x ⟨hx.1.le, hx.2.le⟩)
-    (hcont.intervalIntegrable_of_Icc hab)
-  change (∫ t in a..b, g t) = _
-  rw [hFTC]
-  change -weightedHat H sign b - (-weightedHat H sign a) = _
-  ring
 
 /-- The delayed DDE integrand is integrable on every tail beyond the threshold. -/
 theorem integrableOn_hatTailIntegrand_Ioi

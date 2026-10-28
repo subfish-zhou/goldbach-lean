@@ -1,0 +1,28 @@
+{
+  "status": "ROOT_REVIEWED_ACTUAL_FULL_CENSUS_NOT_API_RETIREMENT_OR_PROOF_ACCEPTANCE",
+  "observed_unix": 1793177122.7220213,
+  "run": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769",
+  "report_sha256": "98690866fcb7352771ae6ca99c283b61cbfafecc137a16b2d78ef3143f374182",
+  "runtime_sha256": "e9c58e8db40c1a3b4f8450661e45b5d1354de0fa858035ae384b7e42548be9c2",
+  "pins_sha256": "f7fe8fcb1cd11e7b347ebcbda3f4cadb4601289f14c560322a2da6507e99b3eb",
+  "prior_sha256": "94b1c5db16caa63fe1dae49ef31d95b73353e17bcb5c8ae86fd1b4ada32d8ef0",
+  "actual_successful_compiler_processes": 21,
+  "scanned_modules": 4151,
+  "scanned_research_constants": 112752,
+  "scanned_values_including_theorems_and_opaque": 112465,
+  "candidates": 2096,
+  "zero_incoming_candidates": 2096,
+  "provisional_zero_incoming_code_lines": 31152,
+  "actual_sources_commands_environments_and_artifacts_independently_checked": true,
+  "full_source_object_context_before_after_equal": true,
+  "union_payload_validation_independently_recomputed": true,
+  "worker_and_owned_child_genuinely_terminal": true,
+  "only_readonly_research_constant_reference_evidence": true,
+  "limitations": [
+    "No automatic public API retirement; persistent registrations/reflection and protected API/consumer review still required",
+    "Direct references over research modules; no claim of all external package registrations or arbitrary reflection",
+    "Deleting any proposed theorem still requires full source compilation and final mathematical gates"
+  ],
+  "production_adopted": false,
+  "public_retirement_authorized": false
+}

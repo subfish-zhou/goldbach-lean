@@ -1,8 +1,5 @@
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Data.Nat.Factors
 import Mathlib.Order.Filter.AtTopBot.Basic
 import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
-import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
 import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
 
 open scoped BigOperators
@@ -105,18 +102,6 @@ private theorem S2PrimePairs_label_eq_of_points
     have hrLeNat : r ≤ s := by exact_mod_cast hrLe
     exact (not_le_of_gt hgt) hrLeNat
 
-theorem goldbachS2PrimePairs_point_le_one (N n : ℕ) (T : ℝ) :
-    goldbachS2Point N T n ≤ 1 := by
-  classical
-  let S := (goldbachS2Primes N T).filter fun r => literalHPoint N r r n
-  have hcard : S.card ≤ 1 := by
-    apply Finset.card_le_one.mpr
-    intro r hr s hs
-    exact S2PrimePairs_label_eq_of_points
-      ((Finset.mem_filter.mp hr).1) ((Finset.mem_filter.mp hs).1)
-      ((Finset.mem_filter.mp hr).2) ((Finset.mem_filter.mp hs).2)
-  unfold goldbachS2Point
-  exact_mod_cast hcard
 
 private theorem S2PrimePairs_actualAtoms_eq_of_snd_eq
     {N : ℕ} {ε T : ℝ} {x y : Σ _r : ℕ, ℕ}
@@ -463,60 +448,5 @@ theorem goldbachS2PrimePairs_bridge
       _ = ((goldbachS2PrimePairs N ε T).card : ℤ) + (N.primeFactors.card : ℤ) := by
             omega
 
-theorem goldbachS2PrimePairs_bridge_eventually
-    (ε : ℝ) (hε : 0 < ε) (hε15 : ε < (2 / 15 : ℝ)) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      let T : ℝ := (N : ℝ) ^ ((9 : ℝ) / 19 - ε)
-      ((goldbachS2PrimePairs N ε T).card : ℤ) ≤
-          goldbachS2 (goldbachDifferenceCarrier N ε) N T ∧
-        goldbachS2 (goldbachDifferenceCarrier N ε) N T ≤
-          ((goldbachS2PrimePairs N ε T).card : ℤ) + (N.primeFactors.card : ℤ) := by
-  let N₀ : ℕ := max 2 ⌈1 / ε ^ (2 : ℕ)⌉₊
-  refine ⟨N₀, ?_⟩
-  intro N hNN₀
-  let β : ℝ := (9 : ℝ) / 19 - ε
-  let T : ℝ := (N : ℝ) ^ β
-  have hN : 2 ≤ N := (le_max_left _ _).trans hNN₀
-  have hε1 : ε < 1 := by linarith
-  have hβ : (1 : ℝ) / 3 < β := by
-    dsimp [β]
-    nlinarith
-  have hT : 0 < T := by
-    dsimp [T]
-    exact Real.rpow_pos_of_pos (by positivity : 0 < (N : ℝ)) _
-  have hceil : 1 / ε ^ (2 : ℕ) ≤ (N : ℝ) := by
-    calc
-      1 / ε ^ (2 : ℕ) ≤ (⌈1 / ε ^ (2 : ℕ)⌉₊ : ℝ) := Nat.le_ceil _
-      _ ≤ N := by
-        exact_mod_cast (show ⌈1 / ε ^ (2 : ℕ)⌉₊ ≤ N from (le_max_right _ _).trans hNN₀)
-  have hsqrt : Real.sqrt N ≤ ε * N := by
-    have hmul :
-        ε ^ (2 : ℕ) * (1 / ε ^ (2 : ℕ)) ≤ ε ^ (2 : ℕ) * N :=
-      mul_le_mul_of_nonneg_left hceil (by positivity)
-    have hone : (1 : ℝ) ≤ ε ^ (2 : ℕ) * N := by
-      have hεsqne : ε ^ (2 : ℕ) ≠ 0 := by positivity
-      simpa [div_eq_mul_inv, hεsqne, mul_assoc, mul_left_comm, mul_comm] using hmul
-    have hsq : (N : ℝ) ≤ (ε * N) ^ 2 := by
-      have hmulN := mul_le_mul_of_nonneg_right hone (show 0 ≤ (N : ℝ) by positivity)
-      simpa [pow_two, mul_assoc, mul_left_comm, mul_comm] using hmulN
-    have hsq' : (Real.sqrt N) ^ 2 ≤ (ε * N) ^ 2 := by
-      simpa [Real.sq_sqrt (show (0 : ℝ) ≤ N by positivity)] using hsq
-    have hright : 0 ≤ ε * N := by positivity
-    nlinarith [Real.sqrt_nonneg (N : ℝ), hsq']
-  have hcube : (N : ℝ) < T ^ 3 := by
-    have hN1 : (1 : ℝ) < N := by
-      exact_mod_cast (lt_of_lt_of_le (by norm_num : 1 < 2) hN)
-    have hpow :
-        (N : ℝ) ^ (1 : ℝ) < (N : ℝ) ^ (β * (3 : ℝ)) := by
-      exact Real.rpow_lt_rpow_of_exponent_lt hN1 (by nlinarith)
-    have hpow3 : T ^ 3 = (N : ℝ) ^ (β * (3 : ℝ)) := by
-      dsimp [T]
-      rw [← Real.rpow_natCast, ← Real.rpow_mul (by positivity : (0 : ℝ) ≤ N)]
-      norm_num
-    calc
-      (N : ℝ) = (N : ℝ) ^ (1 : ℝ) := by simp
-      _ < (N : ℝ) ^ (β * (3 : ℝ)) := hpow
-      _ = T ^ 3 := hpow3.symm
-  exact goldbachS2PrimePairs_bridge N ε T hN hε hε1 hT hcube hsqrt
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

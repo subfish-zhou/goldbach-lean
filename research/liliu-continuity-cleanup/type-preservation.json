@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "compared_public_declarations": 10386,
+  "missing_public_declarations": [],
+  "added_public_declarations": [],
+  "kind_or_type_mismatches": [],
+  "protected_endpoints": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound",
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "method": "Public kind/type hashes across both complete main-library censuses; private and specified generated names excluded."
+}

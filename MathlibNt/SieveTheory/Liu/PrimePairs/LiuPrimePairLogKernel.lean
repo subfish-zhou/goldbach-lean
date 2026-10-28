@@ -137,16 +137,6 @@ theorem liuPairLogKernel_nonneg
   exact one_div_nonneg.mpr
     (mul_nonneg hprod.le (one_sub_primeLogExponent_pos hN hp).le)
 
-/-- The kernel contribution of any fixed exponent rectangle is nonnegative. -/
-theorem liuPairLogKernelRectangleContribution_nonneg
-    (N : ℕ) (hN : 8 ≤ N) (a₀ a₁ b₀ b₁ : ℝ) :
-    0 ≤ liuPairLogKernelRectangleContribution N a₀ a₁ b₀ b₁ := by
-  classical
-  unfold liuPairLogKernelRectangleContribution
-  apply Finset.sum_nonneg
-  intro p hp
-  rw [liuPairsInLogRectangle, Finset.mem_filter] at hp
-  exact liuPairLogKernel_nonneg hN hp.1
 
 /-- The finite product carrier underlying `primeReciprocalLogRectangle`. -/
 noncomputable def primeLogRectanglePairs

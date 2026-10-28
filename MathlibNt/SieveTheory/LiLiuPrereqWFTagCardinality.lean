@@ -135,7 +135,4 @@ theorem signedTags_card_le_uniform (upper : Bool) (P : Finset ℕ)
       simpa only [Nat.add_assoc, Nat.reduceAdd] using
         TagCardinality.card_words_le (⌊(ε⁻¹) ^ 11⌋₊ + 1) ⌊(ε⁻¹) ^ 2⌋₊
 
-#check signedTags_card_le_uniform
-#print axioms signedTags_card_le_uniform
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

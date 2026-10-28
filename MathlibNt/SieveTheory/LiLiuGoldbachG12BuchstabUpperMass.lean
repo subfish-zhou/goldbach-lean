@@ -72,21 +72,5 @@ theorem goldbachG12_rough_upper_buchstab (η : ℝ) (hη : 0 < η) :
     ((by norm_num : (1 : ℝ) ≤ 3).trans hU.1) hη hdata.2
   exact sub_le_iff_le_add'.mp ((le_abs_self _).trans herr)
 
-noncomputable def goldbachG12FullRoughMass (N : ℕ) : ℝ :=
-  ∑ v ∈ goldbachG12Labels N ((N : ℝ)^(4/53 : ℝ))
-    ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)),
-    (roughCount ((N : ℝ)/goldbachG11LabelProd v) v.2.2.2 : ℝ)
-
-noncomputable def goldbachG12BuchstabUpperMass (N : ℕ) (η : ℝ) : ℝ :=
-  ∑ v ∈ goldbachG12Labels N ((N : ℝ)^(4/53 : ℝ))
-    ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)),
-    (goldbachG11BuchstabMass ((N : ℝ)/goldbachG11LabelProd v) v.2.2.2 +
-      η*((N : ℝ)/goldbachG11LabelProd v)/Real.log (v.2.2.2 : ℝ))
-
-theorem goldbachG12FullRoughMass_le_buchstabUpper (η : ℝ) (hη : 0 < η) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      goldbachG12FullRoughMass N ≤ goldbachG12BuchstabUpperMass N η := by
-  obtain ⟨N₀,hN₀,hn⟩ := goldbachG12_rough_upper_buchstab η hη
-  exact ⟨N₀,hN₀,fun N hN => Finset.sum_le_sum (hn N hN)⟩
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

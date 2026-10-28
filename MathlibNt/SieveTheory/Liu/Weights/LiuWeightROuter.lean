@@ -47,21 +47,6 @@ theorem liuMainFullSum_eq_coprime_add_noncoprime
   intro a _
   by_cases ha : a.Coprime d <;> simp [ha]
 
-/-- **Proxy compatibility.** The unrestricted main-parametric sum specializes
-to ANT's historical `x / log x` Pan object. This is not a true-`li` claim. -/
-theorem liuMainFullSum_proxy
-    (Y X d l : ℕ) (f : ℕ → ℝ) :
-    liuMainFullSum AnalyticNumberTheory.Sieve.logarithmicIntegral Y X d l f =
-      AnalyticNumberTheory.Sieve.panDistributionFullSum Y X d l f := by
-  rfl
-
-/-- **Proxy compatibility.** The coprime main-parametric sum specializes to
-ANT's historical `x / log x` Pan object. This is not a true-`li` claim. -/
-theorem liuMainCoprimeSum_proxy
-    (Y X d l : ℕ) (f : ℕ → ℝ) :
-    liuMainCoprimeSum AnalyticNumberTheory.Sieve.logarithmicIntegral Y X d l f =
-      AnalyticNumberTheory.Sieve.panDistributionSum Y X d l f := by
-  rfl
 
 /-! ## Neutral signed weighted sums -/
 
@@ -75,50 +60,6 @@ noncomputable def liuPaperQSourceFullSignedWeightedSum
       liuMainFullSum main N N d (N % d)
         (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))
 
-/-- The coprime signed weighted sum with the auxiliary cutoff `D₂`. -/
-noncomputable def liuPaperQSourceCoprimeSignedWeightedSum
-    (main : ℝ → ℝ) (N : ℕ) (ε : ℝ) : ℝ :=
-  ∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-      (fun d => d ≤ liuSourceD2 N),
-    (3 : ℝ) ^ d.primeFactors.card *
-      liuMainCoprimeSum main N N d (N % d)
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))
-
-/-- The non-coprime signed weighted sum with the auxiliary cutoff `D₂`. -/
-noncomputable def liuPaperQSourceNoncoprimeSignedWeightedSum
-    (main : ℝ → ℝ) (N : ℕ) (ε : ℝ) : ℝ :=
-  ∑ d ∈ (liuPaperQModulus N ε).divisors.filter
-      (fun d => d ≤ liuSourceD2 N),
-    (3 : ℝ) ^ d.primeFactors.card *
-      liuMainNoncoprimeSum main N N d (N % d)
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))
-
-/-- Exact partition of the neutral signed weighted sum. -/
-theorem liuPaperQSourceFullSignedWeightedSum_eq_coprime_add_noncoprime
-    (main : ℝ → ℝ) (N : ℕ) (ε : ℝ) :
-    liuPaperQSourceFullSignedWeightedSum main N ε =
-      liuPaperQSourceCoprimeSignedWeightedSum main N ε +
-        liuPaperQSourceNoncoprimeSignedWeightedSum main N ε := by
-  classical
-  unfold liuPaperQSourceFullSignedWeightedSum
-    liuPaperQSourceCoprimeSignedWeightedSum
-    liuPaperQSourceNoncoprimeSignedWeightedSum
-  rw [← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro d _
-  rw [liuMainFullSum_eq_coprime_add_noncoprime, mul_add]
-
-/-- The neutral non-coprime signed weighted sum is bounded by the existing
-termwise `R₁` majorant. -/
-theorem abs_liuPaperQSourceNoncoprimeSignedWeightedSum_le_majorant
-    (main : ℝ → ℝ) (N : ℕ) (ε : ℝ) :
-    |liuPaperQSourceNoncoprimeSignedWeightedSum main N ε| ≤
-      liuPaperQSourceR1Majorant main N ε := by
-  simpa [liuPaperQSourceNoncoprimeSignedWeightedSum, liuPaperQSourceR1Majorant,
-    paperQStyleMainR1SignedSum, paperQStyleMainR1Majorant, paperQStyleR1Divisors,
-    liuPaperQModulus_eq_paperQStyleModulus] using
-    abs_paperQStyleMainR1SignedSum_le_majorant main N (liuSourceZ10 N)
-      (paperQSourceCutoff N ε) (liuSourceY3 N) (liuSourceD2 N) N
 
 /-! ## The source `eqn-r` absolute majorants -/
 

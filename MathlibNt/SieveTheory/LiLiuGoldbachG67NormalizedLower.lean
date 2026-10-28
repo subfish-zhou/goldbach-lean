@@ -34,33 +34,5 @@ theorem goldbachBV_logCube_normalized (C δ : ℝ) (hδ : 0 < δ) :
     _ = δ * (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ)^2) := by
       field_simp
 
-/-- Both original positive terms, with arbitrary relative BV error. The
-signed finite main sums are retained; no density or integral estimate is assumed. -/
-theorem goldbachG67_lowerRosser_normalized :
-    ∃ B : ℝ, 0 ≤ B ∧ ∀ δ : ℝ, 0 < δ →
-      ∀ ε : ℝ, 0 < ε → ε < 2/15 →
-        ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-          (goldbachPairLowerMain N ε B
-            (goldbachG6Pairs N ((N : ℝ)^(4/53 : ℝ)) ((N : ℝ)^(4/33 : ℝ))) -
-              δ * (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ)^2) ≤
-            (goldbachWeightG6 (goldbachDifferenceCarrier N ε) N
-              ((N : ℝ)^(4/53 : ℝ)) ((N : ℝ)^(4/33 : ℝ)) : ℝ)) ∧
-          (goldbachPairLowerMain N ε B
-            (goldbachG7Pairs N ((N : ℝ)^(4/53 : ℝ)) ((N : ℝ)^(4/33 : ℝ))
-              ((N : ℝ)^(3/11 : ℝ))) -
-              δ * (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ)^2) ≤
-            (goldbachWeightG7 (goldbachDifferenceCarrier N ε) N
-              ((N : ℝ)^(4/53 : ℝ)) ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)) : ℝ)) := by
-  obtain ⟨B, hB, C, _, hp⟩ := goldbachG67_lowerRosser_paid 3 (by norm_num)
-  refine ⟨B, hB, ?_⟩
-  intro δ hδ ε hε hεu
-  obtain ⟨Np, hNp, hn⟩ := hp ε hε hεu
-  obtain ⟨Ne, he⟩ := eventually_atTop.mp (goldbachBV_logCube_normalized C δ hδ)
-  refine ⟨max Np Ne, by omega, ?_⟩
-  intro N hN hEven
-  obtain ⟨h6, h7⟩ := hn N (by omega) hEven
-  have hb := he N (by omega)
-  simp only [Real.rpow_ofNat] at h6 h7
-  exact ⟨(sub_le_sub_left hb _).trans h6, (sub_le_sub_left hb _).trans h7⟩
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

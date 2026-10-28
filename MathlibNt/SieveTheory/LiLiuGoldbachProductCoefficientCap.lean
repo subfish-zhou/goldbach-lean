@@ -33,19 +33,6 @@ theorem goldbachG11ProductCoefficient_le_four_hundred_of_cutoff
   · rw [Finset.not_nonempty_iff_eq_empty.mp hne, Finset.card_empty]
     norm_num
 
-/-- Any subset of good bodies retains the cap, without identifying equal products. -/
-theorem goldbachG11GoodBodySubset_product_fiber_card_le_four_hundred
-    (N m : ℕ) (c : ℝ) (B : Finset GoldbachG11SwitchedBody)
-    (hB : B ⊆ goldbachG11GoodSwitchedBodies N ((N : ℝ) ^ ((4 : ℝ) / 53)) c) :
-    (B.filter fun u => goldbachG11SwitchedBodyProd u = m).card ≤ 400 := by
-  classical
-  apply le_trans (Finset.card_le_card (show
-    (B.filter fun u => goldbachG11SwitchedBodyProd u = m) ⊆
-      goldbachG11ProductFiber N ((N : ℝ) ^ ((4 : ℝ) / 53)) c m from ?_))
-    (goldbachG11ProductCoefficient_le_four_hundred_of_cutoff N m c)
-  intro u hu
-  obtain ⟨hu, hm⟩ := Finset.mem_filter.mp hu
-  exact mem_goldbachG11ProductFiber_iff.mpr ⟨hB hu, hm⟩
 
 /-- Filter actual bodies first, then count every body representation in the product fibre. -/
 noncomputable def goldbachG11FilteredProductCoefficient
@@ -71,32 +58,5 @@ theorem goldbachG11FilteredProductCoefficient_le_four_hundred
   (goldbachG11FilteredProductCoefficient_le N m _ c C).trans
     (goldbachG11ProductCoefficient_le_four_hundred_of_cutoff N m c)
 
-noncomputable def goldbachG11NormalizedFilteredProductCoefficient
-    (N : ℕ) (z c : ℝ) (C : GoldbachG11SwitchedBody → Prop) (m : ℕ) : ℝ :=
-  (goldbachG11FilteredProductCoefficient N z c C m : ℝ) / 400
-
-theorem goldbachG11NormalizedFilteredProductCoefficient_mem_Icc
-    (N m : ℕ) (c : ℝ) (C : GoldbachG11SwitchedBody → Prop) :
-    goldbachG11NormalizedFilteredProductCoefficient
-      N ((N : ℝ) ^ ((4 : ℝ) / 53)) c C m ∈ Set.Icc (0 : ℝ) 1 := by
-  have h : (goldbachG11FilteredProductCoefficient
-      N ((N : ℝ) ^ ((4 : ℝ) / 53)) c C m : ℝ) ≤ 400 := by
-    exact_mod_cast goldbachG11FilteredProductCoefficient_le_four_hundred N m c C
-  unfold goldbachG11NormalizedFilteredProductCoefficient
-  constructor
-  · positivity
-  · linarith
-
-theorem goldbachG11NormalizedProductCoefficient_mem_Icc_of_cutoff
-    (N m : ℕ) (c : ℝ) :
-    goldbachG11NormalizedProductCoefficient
-      N ((N : ℝ) ^ ((4 : ℝ) / 53)) c m ∈ Set.Icc (0 : ℝ) 1 := by
-  have h : (goldbachG11ProductCoefficient
-      N ((N : ℝ) ^ ((4 : ℝ) / 53)) c m : ℝ) ≤ 400 := by
-    exact_mod_cast goldbachG11ProductCoefficient_le_four_hundred_of_cutoff N m c
-  constructor
-  · exact goldbachG11NormalizedProductCoefficient_nonneg N m _ c
-  · unfold goldbachG11NormalizedProductCoefficient
-    linarith
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

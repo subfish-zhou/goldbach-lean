@@ -1,4 +1,4 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryUniform
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryScalar
 
 /-! Fixed-scale shift growth, with the constant chosen before varying data. -/
 noncomputable section

@@ -1,0 +1,261 @@
+--- before/AnalyticNumberTheory/Sieve/PanVaughanPointwise.lean
++++ after/AnalyticNumberTheory/Sieve/PanVaughanPointwise.lean
+@@ -1075,9 +1075,6 @@
+   rw [show (4 : ℝ) = (2 : ℝ) ^ 2 by norm_num, Real.log_pow]
+   norm_num
+ 
+-/-- The von Mangoldt arithmetic function vanishes at zero. -/
+-private lemma vonMangoldt_zero : Λ 0 = 0 := by
+-  simp only [ArithmeticFunction.map_zero]
+ 
+ /-- `Λ 4 = log 2` (4 = 2², `vonMangoldt_apply_pow`). -/
+ private lemma vonMangoldt_four : Λ 4 = Real.log 2 := by
+--- before/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973MellinMoment.lean
++++ after/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973MellinMoment.lean
+@@ -93,16 +93,7 @@
+       rw [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
+       ring
+ 
+-private theorem chen_rexp_neg_deriv :
+-    ∀ x ∈ univ, HasDerivWithinAt (Real.exp ∘ Neg.neg) (-Real.exp (-x)) univ x :=
+-  fun x _ ↦ mul_neg_one (Real.exp (-x)) ▸
+-    ((Real.hasDerivAt_exp (-x)).comp x (hasDerivAt_neg x)).hasDerivWithinAt
+ 
+-private theorem chen_rexp_neg_image : Real.exp ∘ Neg.neg '' univ = Ioi 0 := by
+-  rw [Set.image_comp, Set.image_univ_of_surjective neg_surjective, Set.image_univ,
+-    Real.range_exp]
+ 
+-private theorem chen_rexp_neg_injOn : univ.InjOn (Real.exp ∘ Neg.neg) :=
+-  Real.exp_injective.injOn.comp neg_injective.injOn (univ.mapsTo_univ _)
+ 
+ end AnalyticNumberTheory.LargeSieve
+--- before/MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorLocalPrimitiveLargeSieve.lean
++++ after/MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorLocalPrimitiveLargeSieve.lean
+@@ -37,10 +37,6 @@
+         (((L : ℝ) * conductorLocalRowEnergy b M L) / R +
+           (Q : ℝ) ^ 2 * conductorLocalRowEnergy b M L)
+ 
+-private lemma localRowAmplitude_nonneg
+-    (b : ℤ → ℂ) (M : ℤ) (L d : ℕ) (χ : PrimitiveCharacter d) :
+-    0 ≤ Real.sqrt (primitiveCharacterPrefixMaxSquare b M L d χ) :=
+-  Real.sqrt_nonneg _
+ 
+ /-- Square-ledger extraction.  Once the actual row geometry supplies
+ `L * energy ≤ N²` and `energy ≤ N`, the local primitive large sieve gives the
+--- before/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVAdaptiveSmallCutoff.lean
++++ after/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVAdaptiveSmallCutoff.lean
+@@ -29,9 +29,6 @@
+   exact (standardBVAdaptiveSmallCutoff_le_balanced Q N).trans
+     (standardBVBalancedSmallCutoff_le N)
+ 
+-private lemma highConductorSet_subset_Icc_one_adaptive (N Q C : ℕ) :
+-    highConductorSet N Q C ⊆ Finset.Icc 1 Q := by
+-  exact highConductorSet_subset_Icc_one N Q C
+ 
+ /-- Ordinary primitive prefix-maximal large sieve for an arbitrary small cutoff.
+ No comparison of coefficient values is used: the dependence on `v` enters only
+--- before/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean
++++ after/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean
+@@ -472,11 +472,6 @@
+   nlinarith only [hw, hpay,
+     sq_nonneg (P * apNormalizedPrimitiveMeanOn a N (highConductorSet N Q C))]
+ 
+-private lemma highConductorSet_eq_interval_blockL1 (N Q C : ℕ)
+-    (hR : 1 ≤ logConductorThreshold N C) :
+-    highConductorSet N Q C =
+-      Finset.Icc (logConductorThreshold N C + 1) Q := by
+-  exact highConductorSet_eq_interval N Q C hR
+ 
+ /-- Production block-L¹ chosen assembler.  Type-I and Type-II use one shared
+ pair `u,v`, with `v = standardBVBalancedSmallCutoff`; their block first moments
+--- before/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean
++++ after/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean
+@@ -68,12 +68,6 @@
+       (standardBVHighChosenUnconditionalTypeIICutoff A N)
+       (standardBVHighChosenUnconditionalTypeIICutoff A N)
+ 
+-private theorem chosen_discreteAbelAmplifierPrefixMax_le_three (N : ℕ) :
+-    discreteAbelAmplifierPrefixMax N ≤ 3 := by
+-  refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_
+-  have htwo : (2 / 3 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
+-  rw [mul_inv_le_iff₀ (Real.log_pos (by norm_num : (1 : ℝ) < 2))]
+-  linarith
+ 
+ /-- Unconditional closure of exactly the chosen-parameter Type-II
+ high-conductor contribution. -/
+@@ -459,11 +453,6 @@
+   unfold logConductorThreshold standardBVBalancedSmallCutoff
+   exact Nat.floor_mono (by simpa [x, C] using hrpow)
+ 
+-private lemma highConductorSet_eq_interval_highChosenUnconditional (N Q C : ℕ)
+-    (hR : 1 ≤ logConductorThreshold N C) :
+-    highConductorSet N Q C =
+-      Finset.Icc (logConductorThreshold N C + 1) Q := by
+-  exact highConductorSet_eq_interval N Q C hR
+ 
+ /-- Unconditional closure of exactly the small Vaughan lane at the
+ chosen parameters `B=3*A+200`, `C=2*(A+50)`, and
+--- before/MathlibNt/AnalyticNumberTheory/Vaughan/HighConductorVaughanTypeIIShellSum.lean
++++ after/MathlibNt/AnalyticNumberTheory/Vaughan/HighConductorVaughanTypeIIShellSum.lean
+@@ -106,12 +106,6 @@
+         Finset.sum_mul_sq_le_sq_mul_sq s (fun _ => (1 : ℝ)) (fun i => ‖z i‖)
+     _ = (s.card : ℝ) * ∑ i ∈ s, ‖z i‖ ^ 2 := by simp
+ 
+-private theorem vaughanTypeIIFixedShellPrefixSquare_nonneg
+-    (N k y d : ℕ) (a : ℕ → ℂ) (c : ℕ → ℕ → ℂ)
+-    (χ : PrimitiveCharacter d) :
+-    0 ≤ vaughanTypeIIFixedShellPrefixSquare N k y d a c χ := by
+-  unfold vaughanTypeIIFixedShellPrefixSquare
+-  positivity
+ 
+ private theorem vaughanTypeIIFixedShellPrefixMaxSquare_nonneg
+     (N k d : ℕ) (a : ℕ → ℂ) (c : ℕ → ℕ → ℂ)
+--- before/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean
++++ after/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean
+@@ -1290,40 +1290,6 @@
+   ((range z).filter (fun p => Nat.Prime p ∧ ¬ p ∣ N)).prod
+     (fun p => 1 - 1 / ((p : ℝ) - 1))
+ 
+-/-- Local logarithmic correction for an odd prime p ≥ 3:
+-|log(1 - 1/(p-1)) + 1/(p-1)| ≤ 2/(p-1)². -/
+-private lemma log_one_sub_prime_odd_bound {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) :
+-    |log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1)| ≤ 2 / ((p : ℝ) - 1) ^ 2 := by
+-  let t : ℝ := 1 / ((p : ℝ) - 1)
+-  have hp3 : 3 ≤ p := by
+-    have h2lt : 2 < p := by
+-      have h2le : 2 ≤ p := hp.two_le
+-      omega
+-    omega
+-  have ht0 : 0 < t := by
+-    unfold t
+-    have hpos : 0 < (p : ℝ) - 1 := by
+-      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+-      linarith
+-    exact div_pos one_pos hpos
+-  have htle : t ≤ 1 / 2 := by
+-    unfold t
+-    have h2le : (2 : ℝ) ≤ (p : ℝ) - 1 := by
+-      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+-      linarith
+-    exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2le
+-  have hp1 : (p : ℝ) - 1 ≠ 0 := by
+-    have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
+-    have : 0 < (p : ℝ) - 1 := by linarith
+-    exact ne_of_gt this
+-  have hsubst : |log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1)| =
+-      |log (1 - t) + t| := by
+-    simp [t]
+-  have hrhs : 2 * t ^ 2 = 2 / ((p : ℝ) - 1) ^ 2 := by
+-    unfold t
+-    field_simp [hp1]
+-  rw [hsubst, ← hrhs]
+-  exact log_one_sub_bound ht0 htle
+ 
+ /-- Sieve-product upper bound: V(z, N) ≤ 1, since every factor lies in [0, 1].
+ The factor at p = 2 can be zero when N is odd. -/
+--- before/MathlibNt/SieveTheory/LiLiuGoldbachB10LogKernel.lean
++++ after/MathlibNt/SieveTheory/LiLiuGoldbachB10LogKernel.lean
+@@ -45,29 +45,11 @@
+   ∑ rs ∈ goldbachB10PairsInLogRectangle N a₀ a₁ b₀ b₁,
+     goldbachB10PairLogKernel N rs
+ 
+-private lemma goldbachB10Beta_gt_one_tenth : (1 / 10 : ℝ) < goldbachB10Beta := by
+-  dsimp [goldbachB10Beta]
+-  norm_num
+-
+-private lemma goldbachB10Gamma_gt_one_fourth : (1 / 4 : ℝ) < goldbachB10Gamma := by
+-  dsimp [goldbachB10Gamma]
+-  norm_num
+-
+-private lemma goldbachB10Beta_pos : 0 < goldbachB10Beta := by
+-  dsimp [goldbachB10Beta]
+-  norm_num
+-
+-private lemma goldbachB10Gamma_pos : 0 < goldbachB10Gamma := by
+-  dsimp [goldbachB10Gamma]
+-  norm_num
+-
+-private lemma goldbachB10Beta_lt_gamma : goldbachB10Beta < goldbachB10Gamma := by
+-  dsimp [goldbachB10Beta, goldbachB10Gamma]
+-  norm_num
+-
+-private lemma goldbachB10Gamma_lt_one : goldbachB10Gamma < 1 := by
+-  dsimp [goldbachB10Gamma]
+-  norm_num
++
++
++
++
++
+ 
+ private lemma goldbachB10SecondUpper_eq : (1 - goldbachB10Beta) / 2 = (29 / 66 : ℝ) := by
+   dsimp [goldbachB10Beta]
+--- before/MathlibNt/SieveTheory/LiLiuGoldbachErrorFoundations.lean
++++ after/MathlibNt/SieveTheory/LiLiuGoldbachErrorFoundations.lean
+@@ -27,11 +27,6 @@
+   have hsubset : largePrimeDivisors n z ⊆ n.primeFactors := Finset.filter_subset _ _
+   exact (Finset.prod_dvd_prod_of_subset _ _ id hsubset).trans (Nat.prod_primeFactors_dvd n)
+ 
+-private theorem largePrimeDivisors_prod_pos {n : ℕ} {z : ℝ} :
+-    0 < ∏ p ∈ largePrimeDivisors n z, p := by
+-  refine Finset.prod_pos ?_
+-  intro p hp
+-  exact Nat.pos_of_mem_primeFactors ((Finset.mem_filter.mp hp).1)
+ 
+ private theorem real_pow_card_le_prod_of_mem_ge (s : Finset ℕ) (z : ℝ)
+     (hz : 0 ≤ z) (hmem : ∀ p ∈ s, z ≤ (p : ℝ)) :
+--- before/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCutoffClaim146iiiSanitized.lean
++++ after/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCutoffClaim146iiiSanitized.lean
+@@ -333,10 +333,6 @@
+           max 1 (Real.log (1 + t ^ d / Real.log D)) ≤
+         Real.log (Real.exp 1 * t)
+ 
+-private lemma source_bridge_Qhat_rfl
+-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
+-    (sign : ErrorSign) :
+-    (section13_bridgeAtThree hH sign).Qhat = section13Qhat H := rfl
+ 
+ private lemma source_bridge_K_opposite_rfl
+     {H : Section13HatLayers} (hH : Section13HatSourceContract H)
+--- before/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma141ElementaryMass.lean
++++ after/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma141ElementaryMass.lean
+@@ -100,15 +100,6 @@
+   have htSub := (mem_powersetCard.mp ht).1 hp
+   exact nu_nonneg_of_mem_primeFactors S (mem_filter.mp htSub).1
+ 
+-private theorem sourceDiscreteEuler_nonneg (S : BoundingSieve) (z : ℕ) :
+-    0 ≤ sourceDiscreteEuler S z := by
+-  unfold sourceDiscreteEuler
+-  apply prod_nonneg
+-  intro p hp
+-  have hpP := (mem_filter.mp hp).1
+-  have hlt := S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hpP)
+-    (Nat.mem_primeFactors.mp hpP).2.1
+-  linarith
+ 
+ private theorem sourceDiscreteEuler_le_one (S : BoundingSieve) (z : ℕ) :
+     sourceDiscreteEuler S z ≤ 1 := by
+--- before/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean
++++ after/MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean
+@@ -340,10 +340,6 @@
+       (hp.coprime_iff_not_dvd.mpr hpn)]
+   simp [hp.primeFactors]
+ 
+-private theorem liuSelbergArithmeticFunction_prime_pow_zero
+-    (N p : ℕ) :
+-    liuSelbergArithmeticFunction N (p ^ 0) = 1 := by
+-  simp
+ 
+ private theorem liuSelbergArithmeticFunction_prime_pow_eq_zero
+     {N p k : ℕ} (hp : p.Prime) (hk : 2 ≤ k) :
+@@ -367,10 +363,6 @@
+     Nat.Coprime.of_dvd_left (dvd_pow_self p (by omega)) h.2
+   exact (hp.coprime_iff_not_dvd.mp hcop) hpn
+ 
+-private theorem liuMoebiusReciprocal_prime_pow_zero
+-    (p : ℕ) :
+-    liuMoebiusReciprocal (p ^ 0) = 1 := by
+-  simp [liuMoebiusReciprocal]
+ 
+ @[simp] theorem liuMoebiusReciprocal_one :
+     liuMoebiusReciprocal 1 = 1 := by

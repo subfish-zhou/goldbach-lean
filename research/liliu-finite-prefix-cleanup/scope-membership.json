@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "modified_modules": [
+    "MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility",
+    "MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser",
+    "MathlibNt.SieveTheory.LinearSieve.FiniteWeights",
+    "MathlibNt.SieveTheory.LinearSieve.RosserChains"
+  ],
+  "all_in_liliu_closure": true,
+  "chen_modified_modules": [
+    "MathlibNt.SieveTheory.LinearSieve.FiniteWeights",
+    "MathlibNt.SieveTheory.LinearSieve.RosserChains"
+  ],
+  "original_import_lists_unchanged": true,
+  "existing_wf_provider_paths_present": true,
+  "method": "Fresh complete compiled import graph. The two canonical finite-sieve modules account for Chen savings; both WF consumers already import the canonical providers."
+}

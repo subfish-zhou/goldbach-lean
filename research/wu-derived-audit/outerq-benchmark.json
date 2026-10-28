@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "baseline",
+    "module": "WR2ClassicalFourthBlockouterPay000",
+    "seconds": 8.32,
+    "exit_code": 0
+  },
+  {
+    "mode": "baseline",
+    "module": "WR2ClassicalFourthBlockouterPay041",
+    "seconds": 6.456,
+    "exit_code": 0
+  },
+  {
+    "mode": "derived",
+    "module": "WR2ClassicalFourthBlockouterPay000",
+    "seconds": 13.167,
+    "exit_code": 0
+  },
+  {
+    "mode": "derived",
+    "module": "WR2ClassicalFourthBlockouterPay041",
+    "seconds": 7.997,
+    "exit_code": 0
+  }
+]

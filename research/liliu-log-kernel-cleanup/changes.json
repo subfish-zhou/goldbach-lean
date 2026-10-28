@@ -1,0 +1,413 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/ChenLiuCoprimeProducerPayment.lean",
+      "status": "modified",
+      "before_sha256": "b247fd16ca8c8dad46b8589ff55aa35ddeb7d3ee6f9348887f8e13c75dc3e8f8",
+      "after_sha256": "7ff066f5c46606ddb6794f7ef0b5b281cda971acc25d3fe484eb76103d781890",
+      "before": {
+        "code_lines": 90,
+        "physical_lines": 102,
+        "utf8_bytes": 5189
+      },
+      "after": {
+        "code_lines": 91,
+        "physical_lines": 103,
+        "utf8_bytes": 5248
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 59
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/ChenLiuCoprimeProducerPerron.lean",
+      "status": "modified",
+      "before_sha256": "98c63235c31f5ce19182ee97342920a0cb39b15ffa8b4658b7c88e647afd183a",
+      "after_sha256": "d1acac3dd9f662975dfb17ac469b322685a21205442348fc18482214b3443a10",
+      "before": {
+        "code_lines": 235,
+        "physical_lines": 270,
+        "utf8_bytes": 13261
+      },
+      "after": {
+        "code_lines": 235,
+        "physical_lines": 270,
+        "utf8_bytes": 13295
+      },
+      "delta": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 34
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/PanWangDingLowEndpoint.lean",
+      "status": "modified",
+      "before_sha256": "a281b2ae1f1b248f3c1eb8792252cc3287eccf1d71f95a6fb8b1325ab3fc49a4",
+      "after_sha256": "5c6a622bc50b500341e383c6f4bb157cc6ca1ed69abb4b79a4f9234ffd650fe8",
+      "before": {
+        "code_lines": 61,
+        "physical_lines": 70,
+        "utf8_bytes": 3515
+      },
+      "after": {
+        "code_lines": 62,
+        "physical_lines": 71,
+        "utf8_bytes": 3574
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 59
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean",
+      "status": "modified",
+      "before_sha256": "2f0fec3b1ca2e0e706e40ad22629d6c2d215773e32c0b107f185f367fc5ef971",
+      "after_sha256": "92c2566f04175fb849e544b22385e3d2ed56b209671ccf0e31058164579a2921",
+      "before": {
+        "code_lines": 31,
+        "physical_lines": 85,
+        "utf8_bytes": 2701
+      },
+      "after": {
+        "code_lines": 12,
+        "physical_lines": 57,
+        "utf8_bytes": 1629
+      },
+      "delta": {
+        "code_lines": -19,
+        "physical_lines": -28,
+        "utf8_bytes": -1072
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanLiMainTermEnvelope.lean",
+      "status": "modified",
+      "before_sha256": "2f63a79be9d41686d6aae6c31fd5e9e8dafe6c78d8c945d73260e720d2321190",
+      "after_sha256": "526e6ef46c423de3d70838db0b15ea4877e22c6aadfcf68341407fb0990a7c91",
+      "before": {
+        "code_lines": 137,
+        "physical_lines": 163,
+        "utf8_bytes": 8191
+      },
+      "after": {
+        "code_lines": 138,
+        "physical_lines": 164,
+        "utf8_bytes": 8250
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 59
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimitivePerron.lean",
+      "status": "modified",
+      "before_sha256": "7e1a1c50c9085154db82aa8dc11f09ff35fc9ddbc869b26efee44789b4fa155e",
+      "after_sha256": "7a1822743b4e606faaf5466a0c63c0271f8d2f9d7dfbebd7004ae93338421566",
+      "before": {
+        "code_lines": 2299,
+        "physical_lines": 2474,
+        "utf8_bytes": 95903
+      },
+      "after": {
+        "code_lines": 2304,
+        "physical_lines": 2479,
+        "utf8_bytes": 96104
+      },
+      "delta": {
+        "code_lines": 5,
+        "physical_lines": 5,
+        "utf8_bytes": 201
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB10LogGridLimit.lean",
+      "status": "modified",
+      "before_sha256": "5dcc26c2095b7bf34aa79e4deafecb20360fa30cd6e426395f27f8cf7e86f64e",
+      "after_sha256": "f072252caddff0f5fa67fd6c9a58c7fb8aac7d7ac350ba84780c87e719fb5b0e",
+      "before": {
+        "code_lines": 609,
+        "physical_lines": 682,
+        "utf8_bytes": 33547
+      },
+      "after": {
+        "code_lines": 573,
+        "physical_lines": 646,
+        "utf8_bytes": 32388
+      },
+      "delta": {
+        "code_lines": -36,
+        "physical_lines": -36,
+        "utf8_bytes": -1159
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB8LogGridLimit.lean",
+      "status": "modified",
+      "before_sha256": "742573a38beae91514c83718d97a76be457067ccf79ffae29e4a342ab47690ff",
+      "after_sha256": "6022f187dc79a8c0d87bfdb5c8ad67020e616404b2ab9d03ad7cacbdeac8991a",
+      "before": {
+        "code_lines": 233,
+        "physical_lines": 273,
+        "utf8_bytes": 13082
+      },
+      "after": {
+        "code_lines": 219,
+        "physical_lines": 259,
+        "utf8_bytes": 12603
+      },
+      "delta": {
+        "code_lines": -14,
+        "physical_lines": -14,
+        "utf8_bytes": -479
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB9LogGridRegion.lean",
+      "status": "modified",
+      "before_sha256": "837e98c7fb38e2b55ec70bb3f5395ea596d09f08edfe0a16d7c94b8c41337230",
+      "after_sha256": "06dc7f174d0b165e04b1a0311b9510d773ae741b1a95c7a886d96cf661ef9163",
+      "before": {
+        "code_lines": 81,
+        "physical_lines": 109,
+        "utf8_bytes": 4424
+      },
+      "after": {
+        "code_lines": 81,
+        "physical_lines": 109,
+        "utf8_bytes": 4432
+      },
+      "delta": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 8
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelMesh.lean",
+      "status": "modified",
+      "before_sha256": "3b2aa37f2607ec4efe335f6ae35a74aaeaaa4aee5eda04acf1f348e86be08031",
+      "after_sha256": "49905d2955be237d4ef7d7958419a3875318a0f36460aacac6dcb2db770f9c3e",
+      "before": {
+        "code_lines": 134,
+        "physical_lines": 159,
+        "utf8_bytes": 6714
+      },
+      "after": {
+        "code_lines": 135,
+        "physical_lines": 160,
+        "utf8_bytes": 6786
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 72
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachG12CrossMesh.lean",
+      "status": "modified",
+      "before_sha256": "945c3ba4d586446694cb2368a185d08d4b637173648239d095680cb86e4523c4",
+      "after_sha256": "550ef5471d5d3ed9afc312d18e3366d0ebf57b5f39b468691a9ed03c27e43f57",
+      "before": {
+        "code_lines": 501,
+        "physical_lines": 564,
+        "utf8_bytes": 28371
+      },
+      "after": {
+        "code_lines": 502,
+        "physical_lines": 565,
+        "utf8_bytes": 28435
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 64
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachG9AnalyticPrimitives.lean",
+      "status": "modified",
+      "before_sha256": "dc1d33007fc05a9edb8b8016057f56922dfa2c5ddc5037ca6e65732c7f9c4226",
+      "after_sha256": "bcdea88fd6d06a73b58dc55e2ceaa8b8aec4cbc518ef573913ac16f832360979",
+      "before": {
+        "code_lines": 212,
+        "physical_lines": 232,
+        "utf8_bytes": 11460
+      },
+      "after": {
+        "code_lines": 213,
+        "physical_lines": 233,
+        "utf8_bytes": 11500
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 40
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachIdealPairKernel.lean",
+      "status": "modified",
+      "before_sha256": "a4df8796c818db0c4b592aa89ea0f63d9e4b2a82ae704729cb22c2c40996f406",
+      "after_sha256": "4c63d2d1897dfb49b9cf6d1c834644c3c45e69a96eba01acbfc8a6ca979e9791",
+      "before": {
+        "code_lines": 106,
+        "physical_lines": 128,
+        "utf8_bytes": 6384
+      },
+      "after": {
+        "code_lines": 107,
+        "physical_lines": 129,
+        "utf8_bytes": 6450
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 66
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachLogDarboux.lean",
+      "status": "modified",
+      "before_sha256": "0a567d30233ee5f56ff41a917aa5a63f8c1b6a0d3fb2f4aa51dcaa98fd3984c1",
+      "after_sha256": "59482faf59eee91a40585445eb62d2976de6c16d4f771d9b1658961b4a244aa8",
+      "before": {
+        "code_lines": 216,
+        "physical_lines": 248,
+        "utf8_bytes": 12350
+      },
+      "after": {
+        "code_lines": 217,
+        "physical_lines": 249,
+        "utf8_bytes": 12422
+      },
+      "delta": {
+        "code_lines": 1,
+        "physical_lines": 1,
+        "utf8_bytes": 72
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Liu/PrimePairs/LiuLogCoordinates.lean",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "6f658575a76f77c90d1fdd3b710447803bc6275ff9e6055787d64e4cc2583f08",
+      "before": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 0
+      },
+      "after": {
+        "code_lines": 71,
+        "physical_lines": 93,
+        "utf8_bytes": 3923
+      },
+      "delta": {
+        "code_lines": 71,
+        "physical_lines": 93,
+        "utf8_bytes": 3923
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Liu/PrimePairs/LiuPrimePairLogGridLimit.lean",
+      "status": "modified",
+      "before_sha256": "18a4fbe8504613809ad6a5168abd516ecfc16774168bf3d84cd7ebb6c9cf4e5f",
+      "after_sha256": "ebe1451852f744e9c9d3b5838e178c3b86863c569a54a7baf79ee39c26fa2313",
+      "before": {
+        "code_lines": 537,
+        "physical_lines": 637,
+        "utf8_bytes": 28477
+      },
+      "after": {
+        "code_lines": 482,
+        "physical_lines": 573,
+        "utf8_bytes": 25909
+      },
+      "delta": {
+        "code_lines": -55,
+        "physical_lines": -64,
+        "utf8_bytes": -2568
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Liu/Weights/LiuWeightHarmonic.lean",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "4cf9356706d1acc95c9e867d61e05b490f5e54623a24963ff0eb01870146901c",
+      "before": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 0
+      },
+      "after": {
+        "code_lines": 46,
+        "physical_lines": 65,
+        "utf8_bytes": 2248
+      },
+      "delta": {
+        "code_lines": 46,
+        "physical_lines": 65,
+        "utf8_bytes": 2248
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean",
+      "status": "modified",
+      "before_sha256": "217b83f67f2f500d1276c8488b611e78d4b625eb184af87cf294434c04642d30",
+      "after_sha256": "f97da816552859c58d34434f0a8c41aa672ae6338bb9793b9c87f3a748ea51ee",
+      "before": {
+        "code_lines": 431,
+        "physical_lines": 490,
+        "utf8_bytes": 19192
+      },
+      "after": {
+        "code_lines": 427,
+        "physical_lines": 483,
+        "utf8_bytes": 19000
+      },
+      "delta": {
+        "code_lines": -4,
+        "physical_lines": -7,
+        "utf8_bytes": -192
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorHarmonic.lean",
+      "status": "modified",
+      "before_sha256": "16165b31582efe6fe1a9bb38a85828fd17785103c00eae50568a32b5128a8be0",
+      "after_sha256": "808ff31aa8c57bee2ae642adda2acf1b7121349eb2c640aee0df5198453926b3",
+      "before": {
+        "code_lines": 228,
+        "physical_lines": 259,
+        "utf8_bytes": 11138
+      },
+      "after": {
+        "code_lines": 215,
+        "physical_lines": 243,
+        "utf8_bytes": 10619
+      },
+      "delta": {
+        "code_lines": -13,
+        "physical_lines": -16,
+        "utf8_bytes": -519
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -11,
+    "physical_lines": 6,
+    "utf8_bytes": 916
+  },
+  "deleted_modules": [],
+  "added_modules": [
+    "MathlibNt/SieveTheory/Liu/PrimePairs/LiuLogCoordinates.lean",
+    "MathlibNt/SieveTheory/Liu/Weights/LiuWeightHarmonic.lean"
+  ]
+}

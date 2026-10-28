@@ -25,25 +25,12 @@ namespace MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers
 open MeasureTheory intervalIntegral
 open scoped Interval
 
-inductive Side
-  | upper
-  | lower
-  deriving DecidableEq, Repr
-
-def Side.sourceParity : Side → ℕ
-  | .upper => 1
-  | .lower => 0
-
-@[simp] theorem Side.sourceParity_upper : Side.upper.sourceParity = 1 := rfl
-@[simp] theorem Side.sourceParity_lower : Side.lower.sourceParity = 0 := rfl
 
 def sourceEpsilon (n : ℕ) : ℕ := n % 2
 
 @[simp] theorem sourceEpsilon_even {n : ℕ} (h : Even n) : sourceEpsilon n = 0 := by
   exact Nat.even_iff.mp h
 
-@[simp] theorem sourceEpsilon_odd {n : ℕ} (h : Odd n) : sourceEpsilon n = 1 := by
-  exact Nat.odd_iff.mp h
 
 noncomputable def dPowDensity (κ t : ℝ) : ℝ := κ * t ^ (κ - 1)
 
@@ -72,18 +59,11 @@ noncomputable def suzukiLayerNumerator (κ β : ℝ) : ℕ → ℝ → ℝ
       ∫ t in recursionLower β s (n + 2)..(β + (n + 2)),
         suzukiLayer κ β (n + 1) (t - 1) * dPowDensity κ t
 
-noncomputable def finiteSideLayer (side : Side) (κ β : ℝ) (N : ℕ) (s : ℝ) : ℝ :=
-  ∑ n ∈ Finset.Icc 1 N,
-    if n % 2 = side.sourceParity then suzukiLayer κ β n s else 0
 
 noncomputable def finiteSourceLayer (κ β : ℝ) (N : ℕ) (s : ℝ) : ℝ :=
   ∑ n ∈ Finset.Icc 1 N,
     if n % 2 = N % 2 then suzukiLayer κ β n s else 0
 
-@[simp] theorem suzukiLayer_zero (κ β s : ℝ) : suzukiLayer κ β 0 s = 0 := rfl
-
-@[simp] theorem suzukiLayerNumerator_zero (κ β s : ℝ) :
-    suzukiLayerNumerator κ β 0 s = 0 := rfl
 
 /-- Normalized form of (9.1). -/
 theorem suzukiLayer_one (κ β s : ℝ) :
@@ -113,7 +93,7 @@ theorem suzukiLayer_eq_inv_rpow_mul_numerator (κ β : ℝ) (n : ℕ) (s : ℝ) 
     suzukiLayer κ β n s =
       (s ^ κ)⁻¹ * suzukiLayerNumerator κ β n s := by
   cases n with
-  | zero => simp
+  | zero => simp [suzukiLayer, suzukiLayerNumerator]
   | succ n =>
       cases n with
       | zero => rfl
@@ -133,15 +113,6 @@ theorem rpow_mul_suzukiLayer (κ β : ℝ) (n : ℕ) {s : ℝ} (hs : 0 < s) :
   exact rpow_mul_suzukiLayer_of_ne κ β n s
     (ne_of_gt (Real.rpow_pos_of_pos hs κ))
 
-/-- At the excluded point `s = 0`, positive `κ` makes the normalized definition
-zero.  No theorem identifies its numerator with `0`: multiplying by `0^κ`
-cannot recover an arbitrary source right-hand side. -/
-@[simp] theorem suzukiLayer_at_zero (κ β : ℝ) (n : ℕ) (hκ : 0 < κ) :
-    suzukiLayer κ β n 0 = 0 := by
-  rw [suzukiLayer_eq_inv_rpow_mul_numerator]
-  have hz : (0 : ℝ) ^ κ = 0 := Real.zero_rpow (ne_of_gt hκ)
-  rw [hz]
-  simp
 
 @[simp] theorem baseLower_eq_upper {β s : ℝ} (hs : β + 1 ≤ s) :
     baseLower β s = β + 1 := by simp [baseLower, hs]
@@ -174,62 +145,5 @@ theorem suzukiLayer_eq_zero_of_le (κ β : ℝ) (n : ℕ) {s : ℝ}
   rw [suzukiLayer_eq_inv_rpow_mul_numerator,
     suzukiLayerNumerator_eq_zero_of_le κ β n hs, mul_zero]
 
-theorem dPowDensity_nonneg {κ t : ℝ} (hκ : 0 ≤ κ) (ht : 0 ≤ t) :
-    0 ≤ dPowDensity κ t :=
-  mul_nonneg hκ (Real.rpow_nonneg ht _)
-
-theorem suzukiLayerNumerator_one_nonneg {κ β s : ℝ}
-    (hκ : 0 ≤ κ) (hβ : 1 ≤ β) (hs : β - 1 < s) :
-    0 ≤ suzukiLayerNumerator κ β 1 s := by
-  rw [suzukiLayerNumerator_one]
-  apply intervalIntegral.integral_nonneg
-  · exact min_le_right _ _
-  · intro t ht
-    apply dPowDensity_nonneg hκ
-    have hslow : 0 < s := lt_of_le_of_lt (by linarith) hs
-    have hmin : 0 ≤ baseLower β s := by
-      rw [baseLower]
-      exact le_min hslow.le (by linarith)
-    exact hmin.trans ht.1
-
-/-- One source-correct recursive positivity step: the induction hypothesis is on
-the preceding normalized layer. -/
-theorem suzukiLayerNumerator_succ_succ_nonneg
-    {κ β s : ℝ} {n : ℕ} (hκ : 0 ≤ κ) (hβ : 1 ≤ β)
-    (hprev : ∀ t ∈ Set.Icc (recursionLower β s (n + 2)) (β + (n + 2)),
-      0 ≤ suzukiLayer κ β (n + 1) (t - 1)) :
-    0 ≤ suzukiLayerNumerator κ β (n + 2) s := by
-  rw [suzukiLayerNumerator_succ_succ]
-  apply intervalIntegral.integral_nonneg
-  · simpa only [recursionLower, Nat.cast_add, Nat.cast_ofNat] using
-      (min_le_right (max s (β + sourceEpsilon (n + 2))) (β + (n + 2 : ℕ)))
-  · intro t ht
-    exact mul_nonneg (hprev t ht)
-      (dPowDensity_nonneg hκ (by
-        have hthreshold : 0 ≤ β + sourceEpsilon (n + 2) := by
-          exact add_nonneg (by linarith) (Nat.cast_nonneg _)
-        have hupper : 0 ≤ β + (n + 2 : ℕ) := by positivity
-        have hlower : 0 ≤ recursionLower β s (n + 2) := by
-          rw [recursionLower]
-          exact le_min (hthreshold.trans (le_max_right _ _)) hupper
-        exact hlower.trans ht.1))
-
-@[simp] theorem finiteSideLayer_zero (side : Side) (κ β s : ℝ) :
-    finiteSideLayer side κ β 0 s = 0 := by simp [finiteSideLayer]
-
-@[simp] theorem finiteSourceLayer_zero (κ β s : ℝ) :
-    finiteSourceLayer κ β 0 s = 0 := by simp [finiteSourceLayer]
-
-theorem finiteSourceLayer_eq_upper_of_odd (κ β : ℝ) {N : ℕ} (hN : Odd N) (s : ℝ) :
-    finiteSourceLayer κ β N s = finiteSideLayer .upper κ β N s := by
-  unfold finiteSourceLayer finiteSideLayer
-  rw [Nat.odd_iff.mp hN]
-  rfl
-
-theorem finiteSourceLayer_eq_lower_of_even (κ β : ℝ) {N : ℕ} (hN : Even N) (s : ℝ) :
-    finiteSourceLayer κ β N s = finiteSideLayer .lower κ β N s := by
-  unfold finiteSourceLayer finiteSideLayer
-  rw [Nat.even_iff.mp hN]
-  rfl
 
 end MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers

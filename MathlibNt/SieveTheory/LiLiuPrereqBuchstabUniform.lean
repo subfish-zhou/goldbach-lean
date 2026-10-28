@@ -40,11 +40,6 @@ theorem rpow_cutoff_bounds_fixed (M : ℕ) {x u : ℝ} (hx : 1 < x) (hu : 1 ≤ 
     have hlx := (Real.log_pos hx).ne'
     field_simp
 
-theorem rpow_cutoff_bounds {x u : ℝ} (hx : 1 < x) (hu : 1 ≤ u) (hu100 : u ≤ 100) :
-    1 < x ^ (1 / u) ∧ x ^ (1 / 100 : ℝ) ≤ x ^ (1 / u) ∧
-      x ^ (1 / u) ≤ x ∧ x ≤ (x ^ (1 / u)) ^ (100 : ℕ) ∧
-      Real.log x / Real.log (x ^ (1 / u)) = u := by
-  exact rpow_cutoff_bounds_fixed 100 hx hu hu100
 
 theorem rpow_buchstab_main_eq {x u : ℝ} (hx : 1 < x) (hu : 0 < u) :
     x * buchstab u / Real.log (x ^ (1 / u)) =
@@ -101,12 +96,6 @@ theorem roughCount_relative_band_error_fixed (M : ℕ) {x y : ℝ}
         (x / Real.log y) * buchstab (Real.log x / Real.log y)) := by linarith only [hm]
     _ = _ := by ring
 
-theorem roughCount_relative_band_error {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hyx : y ≤ x) (hxy : x ≤ y ^ (100 : ℕ)) :
-    |(roughCount x y : ℝ) /
-        (x * buchstab (Real.log x / Real.log y) / Real.log y) - 1| ≤
-      2 * buchstabBandConstant 100 * (buchstabRemainder y + y / x) := by
-  exact roughCount_relative_band_error_fixed 100 hy hyx hxy
 
 /-- A parameter-free upper bound for every normalized error in the compact band. -/
 theorem roughCount_uniform_error_bound_fixed (M : ℕ) {x u u₀ : ℝ}
@@ -133,14 +122,6 @@ theorem roughCount_uniform_error_bound_fixed (M : ℕ) {x u u₀ : ℝ}
     apply div_le_div_of_nonneg_right _ hx0.le
     exact Real.rpow_le_rpow_of_exponent_le hx.le (one_div_le_one_div_of_le hu₀0 hlo)
 
-theorem roughCount_uniform_error_bound {x u u₀ : ℝ}
-    (hx : 1 < x) (hu₀ : 1 < u₀) (hlo : u₀ ≤ u) (hhi : u ≤ 100)
-    (hstart : primeErrorStart ≤ x ^ (1 / 100 : ℝ)) :
-    |(roughCount x (x ^ (1 / u)) : ℝ) /
-        (u * buchstab u * x / Real.log x) - 1| ≤
-      2 * buchstabBandConstant 100 *
-        (buchstabRemainder (x ^ (1 / 100 : ℝ)) + x ^ (1 / u₀ - 1)) := by
-  exact roughCount_uniform_error_bound_fixed 100 hx hu₀ hlo hhi hstart
 
 /-- The majorant tends to zero before a value of `u` is chosen. -/
 theorem tendsto_uniform_buchstab_majorant_fixed (M : ℕ) (hM : 2 ≤ M) {u₀ : ℝ} (hu₀ : 1 < u₀) :
@@ -159,11 +140,6 @@ theorem tendsto_uniform_buchstab_majorant_fixed (M : ℕ) (hM : 2 ≤ M) {u₀ :
   simpa only [Function.comp_apply, add_zero, mul_zero] using
     (tendsto_const_nhds.mul ((tendsto_buchstabRemainder.comp hroot).add hp))
 
-theorem tendsto_uniform_buchstab_majorant {u₀ : ℝ} (hu₀ : 1 < u₀) :
-    Tendsto (fun x : ℝ => 2 * buchstabBandConstant 100 *
-      (buchstabRemainder (x ^ (1 / 100 : ℝ)) + x ^ (1 / u₀ - 1)))
-      atTop (𝓝 0) := by
-  exact tendsto_uniform_buchstab_majorant_fixed 100 (by norm_num) hu₀
 
 /-- Uniform asymptotics for the actual rough count. The single threshold `X`
 precedes both `x` and `u`; no pointwise-to-uniform inference is used. -/

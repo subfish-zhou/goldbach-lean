@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB8MainMassTransport
-import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
 import MathlibNt.SieveTheory.LiuPrimePairLogKernel
 
 open scoped BigOperators

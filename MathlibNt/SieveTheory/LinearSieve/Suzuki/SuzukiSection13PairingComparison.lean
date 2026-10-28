@@ -8,49 +8,6 @@ namespace MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne
 
 set_option maxHeartbeats 800000
 
-/-- The explicit standard adjoint for `DDE(2,+1,β)` at `κ = 1`.
-It is the polynomial standard solution `r_{2,1}` (up to positive scaling). -/
-noncomputable def section10KappaOneAdjointPlus (s : ℝ) : ℝ := s ^ 2 - 2 * s + 1 / 2
-
-/-- The explicit standard adjoint for `DDE(2,-1,β)` at `κ = 1`. -/
-def section10KappaOneAdjointMinus (_s : ℝ) : ℝ := 1
-
-theorem section10KappaOneAdjointPlus_dde (s : ℝ) :
-    HasDerivAt (fun u => u * section10KappaOneAdjointPlus u)
-      (2 * section10KappaOneAdjointPlus s + section10KappaOneAdjointPlus (s + 1)) s := by
-  have h := (hasDerivAt_id s).mul
-    (((hasDerivAt_pow 2 s).sub ((hasDerivAt_id s).const_mul 2)).add_const (1 / 2))
-  change HasDerivAt (id * fun u : ℝ => u ^ 2 - 2 * u + 1 / 2)
-    (2 * section10KappaOneAdjointPlus s + section10KappaOneAdjointPlus (s + 1)) s
-  apply h.congr_deriv
-  norm_num [section10KappaOneAdjointPlus]
-  ring
-
-theorem section10KappaOneAdjointMinus_dde (s : ℝ) :
-    HasDerivAt (fun u => u * section10KappaOneAdjointMinus u)
-      (2 * section10KappaOneAdjointMinus s - section10KappaOneAdjointMinus (s + 1)) s := by
-  have heq : (fun u : ℝ => u * section10KappaOneAdjointMinus u) = id := by
-    funext u
-    simp [section10KappaOneAdjointMinus]
-  rw [heq]
-  apply (hasDerivAt_id s).congr_deriv
-  norm_num [section10KappaOneAdjointMinus]
-
-theorem section10KappaOneAdjointPlus_pos {s : ℝ} (hs : 2 ≤ s) :
-    0 < section10KappaOneAdjointPlus s := by
-  dsimp [section10KappaOneAdjointPlus]
-  nlinarith [sq_nonneg (s - 1)]
-
-theorem section10KappaOneAdjointMinus_pos (s : ℝ) :
-    0 < section10KappaOneAdjointMinus s := by simp [section10KappaOneAdjointMinus]
-
-/-- Thus the previously missing positive standard-adjoint object is explicit at
-`κ=1`; no existence or positivity axiom is needed. -/
-theorem section10KappaOneStandardAdjointPlus :
-    Section10StandardAdjoint section10KappaOneAdjointPlus where
-  continuous := (continuous_id.pow 2).sub (continuous_const.mul continuous_id) |>.add continuous_const
-  positive := fun _ hs => section10KappaOneAdjointPlus_pos hs
-  dde := fun s _ => section10KappaOneAdjointPlus_dde s
 
 /-- Signed Iwaniec pairing, retaining the coefficient `b`. -/
 noncomputable def section10SignedPairing (b : ℝ) (R r : ℝ → ℝ) (s : ℝ) : ℝ :=
@@ -132,13 +89,6 @@ theorem section10SignedPairing_eq_of_dde
     (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => (0 : ℝ)) volume x y)
   norm_num at hFTC
   linarith
-
-/-- The `Q̂` DDE and the explicit positive adjoint are now fully constructed.
-The only omitted field is pairing-zero itself; unlike the old bridge, this
-record cannot conceal Lemma 10.17 or an adjacent-value estimate. -/
-theorem section13QhatAdjointCore {H : Section13HatLayers}
-    (_hH : Section13HatContract H 2) : Section10StandardAdjoint section10KappaOneAdjointPlus :=
-  section10KappaOneStandardAdjointPlus
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

@@ -1,0 +1,13 @@
+{
+  "status": "production_verified",
+  "transaction": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893",
+  "historical_commit_phase": "committed_pending_production_verification",
+  "production_targets": 6341,
+  "isolated_compiled": 3165,
+  "verified_reuse": 977,
+  "production_modules": 4142,
+  "root_marker_sha256": "f082c60489f86742f7bd2d15d83e954b969c4fb970553120b60f30d4b544c957",
+  "adoption_journal_sha256": "a7358fd70e47235dd9fa20763671035d18f25e240714cacd22cee3443d71f8bc",
+  "resume_history_manifest_sha256": "e81a87d145943a2eeb71e18368d0f9994c2bb6fe2af9d24dcf95ee2e43c917fd",
+  "sysroot_history_manifest_sha256": "6bd2adb131c12bc7b8d9b29e954193347a7d8cf663ff9f51e495250ff2a4dd77"
+}

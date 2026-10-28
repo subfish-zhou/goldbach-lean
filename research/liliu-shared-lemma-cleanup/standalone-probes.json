@@ -1,0 +1,26 @@
+{
+  "UpperThirdShared.lean": {
+    "source_sha256": "aee1ebab6edc0fd0f72311ed8d96e8485f94b90298a11dea70fc9a83e36e3113",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "PrimeSWLogSaving.lean": {
+    "source_sha256": "c3cde216d657989dc8d5d337ac175efd1429693b66c14fad06b785b7821c5676",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "CorrectionEuler.lean": {
+    "source_sha256": "ac7ce1a9d7324f96b350b16e79533ddc39e226be711af0fcb136daad7d976394",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "EulerUniform.lean": {
+    "source_sha256": "e96b60060f991201757a23175c153b49408d5be4a3cb9833809d8cb33a76a472",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

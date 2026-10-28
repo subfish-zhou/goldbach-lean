@@ -22,12 +22,6 @@ theorem liuBeta_eq_card (N z y n : ℕ) :
   intro a _
   split_ifs <;> simp_all
 
-@[simp] theorem liuBeta_zero (N z y : ℕ) : liuBeta N z y 0 = 0 := by
-  simp [liuBeta]
-
-theorem liuBeta_nonneg (N z y n : ℕ) : 0 ≤ liuBeta N z y n := by
-  rw [liuBeta_eq_card]
-  positivity
 
 /-- Distinct effective divisors have distinct complementary primes. -/
 theorem liuBetaSupport_complement_injective (N z y n : ℕ) :

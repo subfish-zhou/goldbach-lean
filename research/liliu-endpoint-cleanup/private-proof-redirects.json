@@ -1,0 +1,148 @@
+{
+  "status": "pass",
+  "baseline_census": "Accepted carrier/growth complete main census",
+  "removed_private_declarations": [
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b10_two_mul_le_of_rpow",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b10_two_mul_le_of_rpow",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Floor_two_mul_le_of_rpow",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b10_two_mul_le_of_rpow",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.Pi10Sifted_prod_lt_N_of_B10Atom",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB10Atom_prod_lt",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Congruence_prod_pos_of_pair_mem",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": null,
+      "same_kind_and_type_hash": null,
+      "role": "Orphaned downstream positivity proof: its sole former consumer is the existing public strict-product proof, now moved upstream and using the retained upstream positivity analogue.",
+      "old_incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB10Atom_prod_lt"
+      ],
+      "retained_upstream_analogue": "_private.MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.Pi10Sifted_prod_pos_of_pair_mem",
+      "retained_analogue_same_kind_and_type_hash": true,
+      "retained_analogue_reachable_from_moved_public_proof": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Paid_quarterCutoff_large_eventually",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Paid_quarterCutoff_large_eventually",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2NormalizedUpper_quarterCutoff_large_eventually",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Paid_quarterCutoff_large_eventually",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.literalH_eq_zero_of_large_divisor",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.literalH_eq_zero_of_large_divisor",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.literalH_eq_zero_of_large_divisor_budget",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.literalH_eq_zero_of_large_divisor",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Paid_endpoint_two_le",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1Endpoint_two_le",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3NormalizedUpper_li_nonneg",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1Endpoint_li_nonneg",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingCount.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.movingCount_li_nonneg",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingCount"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingCount"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1Endpoint_li_nonneg",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "same_replacement_kind_type_hash_count": 10,
+  "orphan_private_proofs_removed": 1,
+  "scope": "Eleven private declaration names disappear after exposure/shared reuse/public movement or orphan cleanup. Some proofs are exposed or moved; only duplicate copies and the resulting orphan are removed."
+}

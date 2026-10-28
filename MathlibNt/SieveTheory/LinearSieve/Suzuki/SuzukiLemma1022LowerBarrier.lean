@@ -202,7 +202,6 @@ theorem lemma10_22_lower_barrier_eventually_of_kernel
   exact lt_of_le_of_lt hrewrite hfromWeighted
 
 
-
 /-- Suzuki Lemma 10.22 specialized to the κ=b=1 application used in Section 13. -/
 theorem lemma10_22_lower_barrier_one
     {E s₀ : ℝ} {f : ℝ → ℝ}

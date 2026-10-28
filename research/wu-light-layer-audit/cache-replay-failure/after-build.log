@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/tmp/wu-light-layer-production/after_build.py", line 15, in <module>
+    subprocess.run(['python3','/tmp/wu-light-layer-production/postvalidate.py'],cwd=root,stdout=log,stderr=subprocess.STDOUT,check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python3', '/tmp/wu-light-layer-production/postvalidate.py']' returned non-zero exit status 1.

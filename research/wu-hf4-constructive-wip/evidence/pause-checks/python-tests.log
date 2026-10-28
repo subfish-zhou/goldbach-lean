@@ -1,0 +1,27 @@
+.........................................................................................s......Switched to a new branch 'gh-pages'
+.Switched to a new branch 'gh-pages'
+[gh-pages (root-commit) dc6b508] Publish documentation for 1111111111111111111111111111111111111111
+ 1 file changed, 1 insertion(+)
+ create mode 100644 old.html
+To /tmp/tmp_fncowye/remote.git
+ * [new branch]      HEAD -> gh-pages
+From /tmp/tmp_fncowye/remote
+ * branch            gh-pages   -> FETCH_HEAD
+ * [new branch]      gh-pages   -> origin/gh-pages
+Switched to a new branch 'gh-pages'
+rm 'old.html'
+[gh-pages e81b6dd] Publish documentation for 1111111111111111111111111111111111111111
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ create mode 100644 index.html
+ delete mode 100644 old.html
+To /tmp/tmp_fncowye/remote.git
+   dc6b508..e81b6dd  HEAD -> gh-pages
+...................
+----------------------------------------------------------------------
+Ran 116 tests in 0.976s
+
+OK (skipped=1)
+All public theorem axiom reports use only the standard classical axioms.
+All public theorem axiom reports use only the standard classical axioms.
+All public theorem axiom reports use only the standard classical axioms.
+All public theorem axiom reports use only the standard classical axioms.

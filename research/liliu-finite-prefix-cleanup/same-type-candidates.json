@@ -1,0 +1,1613 @@
+{
+  "status": "read_only_candidates_not_deletions",
+  "method": "Complete stable-object main census with canonical binder names/metadata erased. Identical canonical statement hashes are grouped; all original forall/let binders and premises remain. Restricted to current byte-matching Li-Liu sources and original bodies>=5effective lines. Compiled type/value/recursor references union conservatively across module parts. The existing graph-export normalization prefers actual body-bearing records over matching module-interface signatures; remaining conflicting type variants are excluded from matching. Hash matches and acyclic paths are candidate signals, never accepted deletions.",
+  "source_input_manifest_sha256": "60fc889c14c6655bfd9d160402851e08cb016c3d01c640d35e13c1ff9061b8f3",
+  "object_input_manifest_sha256": "c19c8d1819af099b8c0ef651115f647ae6ff2c61b3196fec13ae2e38224111a9",
+  "candidates": [
+    {
+      "name": "MediumPNT",
+      "module": "PrimeNumberTheoremAnd.MediumPNT",
+      "typeHash": "3695049913",
+      "symmetricTypeHash": "3695049913",
+      "source": {
+        "source_line": 3334,
+        "code_lines": 489,
+        "proof_body_code_lines": 486
+      },
+      "alternatives": [
+        {
+          "name": "AnalyticNumberTheory.PrimeDistribution.chebyshevPsi_medium_error",
+          "module": "AnalyticNumberTheory.PrimeDistribution.PrimeNumberTheorem",
+          "source": {
+            "source_line": 15,
+            "code_lines": 5,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_abs_lcm_weight_le_log",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds",
+      "typeHash": "2067515179",
+      "symmetricTypeHash": "2067515179",
+      "source": {
+        "source_line": 107,
+        "code_lines": 64,
+        "proof_body_code_lines": 59
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_le_log",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "source": {
+            "source_line": 37,
+            "code_lines": 6,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.standardBVSmall_weightedSquareLedger_payable",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVChosenSmallSquare",
+      "typeHash": "1135281674",
+      "symmetricTypeHash": "1135281674",
+      "source": {
+        "source_line": 232,
+        "code_lines": 63,
+        "proof_body_code_lines": 47
+      },
+      "alternatives": [
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.standardBVSmall_squareLedger_payable_of_le_balanced",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVAdaptiveSmallCutoff",
+          "source": {
+            "source_line": 14,
+            "code_lines": 17,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144Equation1410.sigmaEleven_eq_suzukiLemmaEightSevenPrimeSum",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaElevenPrimeSumIdentification",
+      "typeHash": "301297186",
+      "symmetricTypeHash": "301297186",
+      "source": {
+        "source_line": 22,
+        "code_lines": 58,
+        "proof_body_code_lines": 47
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.sigmaEleven_eq_lemmaEightSevenPrimeSum",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11Internal",
+          "source": {
+            "source_line": 19,
+            "code_lines": 13,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.dimensionOneLowerLinearSieveFactor_continuousOn_four_six",
+      "module": "MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor",
+      "typeHash": "843922104",
+      "symmetricTypeHash": "843922104",
+      "source": {
+        "source_line": 56,
+        "code_lines": 44,
+        "proof_body_code_lines": 42
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_lowerFactor_continuousOn_four_six",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachUpperThirdInterval",
+          "source": {
+            "source_line": 17,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.suzukiVProduct_mul_localRatio_eq_sourceDiscreteEuler",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge",
+      "typeHash": "3496780809",
+      "symmetricTypeHash": "3496780809",
+      "source": {
+        "source_line": 32,
+        "code_lines": 44,
+        "proof_body_code_lines": 41
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.roundedBaseOne_V_mul_localRatio_eq_sourceEuler",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedBaseOne",
+          "source": {
+            "source_line": 25,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.zmodParseval_zmod",
+      "module": "AnalyticNumberTheory.LargeSieve.BombieriDavenport",
+      "typeHash": "966622204",
+      "symmetricTypeHash": "966622204",
+      "source": {
+        "source_line": 98,
+        "code_lines": 40,
+        "proof_body_code_lines": 37
+      },
+      "alternatives": [
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.zmod_fourier_energy",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters",
+          "source": {
+            "source_line": 172,
+            "code_lines": 6,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.continuousOn_qD_Icc_of_contract",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Integral",
+      "typeHash": "540742614",
+      "symmetricTypeHash": "540742614",
+      "source": {
+        "source_line": 8,
+        "code_lines": 37,
+        "proof_body_code_lines": 32
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized.0.MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.continuousOn_qD_tailStrict",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized",
+          "source": {
+            "source_line": 391,
+            "code_lines": 6,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.moving_perturbationSlope_le_log",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDDEAsymptoticClosure",
+      "typeHash": "4037442942",
+      "symmetricTypeHash": "4037442942",
+      "source": {
+        "source_line": 13,
+        "code_lines": 33,
+        "proof_body_code_lines": 29
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource.0.MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.slope_le_log",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource",
+          "source": {
+            "source_line": 37,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.caseII_cubic_carrier_quotient_scale",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIErrorTransportUniform",
+      "typeHash": "3020283681",
+      "symmetricTypeHash": "3020283681",
+      "source": {
+        "source_line": 36,
+        "code_lines": 35,
+        "proof_body_code_lines": 29
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogMoving.0.MathlibNt.SieveTheory.caseII_raw_cubic_scale",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogMoving",
+          "source": {
+            "source_line": 16,
+            "code_lines": 8,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.caseI_carrier_quotient_scale",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIErrorTransportUniform",
+      "typeHash": "3502398728",
+      "symmetricTypeHash": "3502398728",
+      "source": {
+        "source_line": 106,
+        "code_lines": 31,
+        "proof_body_code_lines": 27
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIFinalProducer.0.MathlibNt.SieveTheory.caseI_carrier_scale",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIFinalProducer",
+          "source": {
+            "source_line": 34,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.continuousOn_jurkatRichertInnerIntegral_three_five",
+      "module": "MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor",
+      "typeHash": "1024554512",
+      "symmetricTypeHash": "1024554512",
+      "source": {
+        "source_line": 26,
+        "code_lines": 28,
+        "proof_body_code_lines": 26
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachUpperThirdInterval.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.UpperThird_inner_continuous",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachUpperThirdInterval",
+          "source": {
+            "source_line": 13,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.suzukiLayer_weighted_eq_integral_to_upper",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118FinitePrefixPairing",
+      "typeHash": "3874782374",
+      "symmetricTypeHash": "3874782374",
+      "source": {
+        "source_line": 26,
+        "code_lines": 31,
+        "proof_body_code_lines": 26
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceIntegralDDE.0.MathlibNt.SieveTheory.weighted_suzukiLayer_eq_integral_to_upper",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceIntegralDDE",
+          "source": {
+            "source_line": 26,
+            "code_lines": 6,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.charNormSq_sum",
+      "module": "AnalyticNumberTheory.LargeSieve.BombieriDavenport",
+      "typeHash": "4165875945",
+      "symmetricTypeHash": "4165875945",
+      "source": {
+        "source_line": 165,
+        "code_lines": 24,
+        "proof_body_code_lines": 22
+      },
+      "alternatives": [
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.dirichletCharacter_sum_norm_sq",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters",
+          "source": {
+            "source_line": 180,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.fixedGap_rpow_margin",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFixedGapRpowMargin",
+      "typeHash": "1003602545",
+      "symmetricTypeHash": "1003602545",
+      "source": {
+        "source_line": 7,
+        "code_lines": 24,
+        "proof_body_code_lines": 21
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead.0.MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.fixed_gap_rpow_margin",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead",
+          "source": {
+            "source_line": 87,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_gcd_div_le_tau_log",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds",
+      "typeHash": "1263683802",
+      "symmetricTypeHash": "1263683802",
+      "source": {
+        "source_line": 57,
+        "code_lines": 24,
+        "proof_body_code_lines": 20
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_gcd_div_le_tau_log",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "source": {
+            "source_line": 22,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.PanQuotientBounds.eventually_quotient_parameters",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds",
+      "typeHash": "2549184463",
+      "symmetricTypeHash": "2549184463",
+      "source": {
+        "source_line": 40,
+        "code_lines": 26,
+        "proof_body_code_lines": 19
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMovingPrefix.0.AnalyticNumberTheory.LargeSieve.PanLow.eventually_quotient_parameters",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMovingPrefix",
+          "source": {
+            "source_line": 11,
+            "code_lines": 8,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "_private.MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalMoving.0.AnalyticNumberTheory.LargeSieve.PanPrincipal.eventually_quotient_parameters",
+          "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalMoving",
+          "source": {
+            "source_line": 12,
+            "code_lines": 8,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.Mertens.abs_log_one_sub_add_le",
+      "module": "AnalyticNumberTheory.Mertens.Basic",
+      "typeHash": "889745155",
+      "symmetricTypeHash": "889745155",
+      "source": {
+        "source_line": 84,
+        "code_lines": 21,
+        "proof_body_code_lines": 19
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.Arithmetic.MertensTheorem.0.MathlibNt.SieveTheory.MertensTheorem.log_one_sub_bound",
+          "module": "MathlibNt.SieveTheory.Arithmetic.MertensTheorem",
+          "source": {
+            "source_line": 861,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.Analysis.eventually_log_mul_rpow_le",
+      "module": "MathlibNt.Analysis.LogPowerBounds",
+      "typeHash": "2519140933",
+      "symmetricTypeHash": "2519140933",
+      "source": {
+        "source_line": 20,
+        "code_lines": 22,
+        "proof_body_code_lines": 19
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaPayment_eventually_log_mul_rpow_le",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "source": {
+            "source_line": 19,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.errorEnvelope_antitoneOn_of_claim14_6",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge",
+      "typeHash": "3601985990",
+      "symmetricTypeHash": "3601985990",
+      "source": {
+        "source_line": 34,
+        "code_lines": 24,
+        "proof_body_code_lines": 18
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.errorEnvelope_antitoneOn_of_claim14_6_internal",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146iErrorEnvelopeTransport",
+          "source": {
+            "source_line": 29,
+            "code_lines": 7,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.suzukiVProduct_natCeil_eq",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge",
+      "typeHash": "4258099212",
+      "symmetricTypeHash": "4258099212",
+      "source": {
+        "source_line": 9,
+        "code_lines": 21,
+        "proof_body_code_lines": 18
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.roundedBaseOne_V_natCeil_eq_real",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedBaseOne",
+          "source": {
+            "source_line": 65,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.suzukiVProduct_natCeil_eq",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedCaseIEndpoint",
+          "source": {
+            "source_line": 23,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.suzukiVProduct_natCeil_real_eq",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedEndpointError",
+          "source": {
+            "source_line": 18,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "DirichletLGlobalConductorLogValueBound.rpow_one_sub_le_exp_one",
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound",
+      "typeHash": "1756887406",
+      "symmetricTypeHash": "1756887406",
+      "source": {
+        "source_line": 63,
+        "code_lines": 21,
+        "proof_body_code_lines": 17
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound.0.DirichletLGlobalConductorLogDerivativeBound.rpow_one_sub_le_exp_one",
+          "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound",
+          "source": {
+            "source_line": 27,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10RosserFactor_upperRosserWeight_certificate",
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor",
+      "typeHash": "2241057200",
+      "symmetricTypeHash": "2241057200",
+      "source": {
+        "source_line": 74,
+        "code_lines": 23,
+        "proof_body_code_lines": 17
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachProdPrimes_upperRosserCertificate",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor",
+          "source": {
+            "source_line": 100,
+            "code_lines": 7,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB8Plus_upperRosserWeight_certificate",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachB8RosserFactor",
+          "source": {
+            "source_line": 60,
+            "code_lines": 7,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Linked_upperRosserCertificate",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachG11RosserFactor",
+          "source": {
+            "source_line": 16,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12Linked_upperRosserCertificate",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachG12RosserFactor",
+          "source": {
+            "source_line": 11,
+            "code_lines": 4,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.finiteSourceLayer_continuousOn_closedDomain",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11EvenEndpoint",
+      "typeHash": "3854089088",
+      "symmetricTypeHash": "3854089088",
+      "source": {
+        "source_line": 24,
+        "code_lines": 19,
+        "proof_body_code_lines": 16
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC.0.MathlibNt.SieveTheory.finiteSourceLayer_continuousOn_closedDomain_even",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC",
+          "source": {
+            "source_line": 103,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.GoldbachLiuProductBridge.product_nonneg",
+      "module": "MathlibNt.SieveTheory.Arithmetic.GoldbachLiuProductBridge",
+      "typeHash": "2591299843",
+      "symmetricTypeHash": "2591299843",
+      "source": {
+        "source_line": 33,
+        "code_lines": 17,
+        "proof_body_code_lines": 15
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS1SieveProductLower.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S1SieveProductLower_goldbachSieveProduct_nonneg",
+          "module": "MathlibNt.SieveTheory.LiLiuGoldbachS1SieveProductLower",
+          "source": {
+            "source_line": 280,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.caseI1423_endpoint_sigma12_final_algebra",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsFinal",
+      "typeHash": "606141335",
+      "symmetricTypeHash": "606141335",
+      "source": {
+        "source_line": 125,
+        "code_lines": 23,
+        "proof_body_code_lines": 15
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogPointwiseProducer.0.MathlibNt.SieveTheory.endpoint_sigma12_final_algebra_pointwise",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogPointwiseProducer",
+          "source": {
+            "source_line": 50,
+            "code_lines": 10,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.caseI_inheritedCoordinate_gt",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIFinalProducer",
+      "typeHash": "184283066",
+      "symmetricTypeHash": "184283066",
+      "source": {
+        "source_line": 41,
+        "code_lines": 20,
+        "proof_body_code_lines": 15
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogPointwiseProducer.0.MathlibNt.SieveTheory.caseI_inheritedCoordinate_gt_pointwise",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogPointwiseProducer",
+          "source": {
+            "source_line": 225,
+            "code_lines": 6,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.zmod_sum_range",
+      "module": "AnalyticNumberTheory.LargeSieve.Multiplicative",
+      "typeHash": "2751874919",
+      "symmetricTypeHash": "2751874919",
+      "source": {
+        "source_line": 711,
+        "code_lines": 16,
+        "proof_body_code_lines": 14
+      },
+      "alternatives": [
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.zmodSum_eq_rangeSum",
+          "module": "AnalyticNumberTheory.LargeSieve.BombieriDavenport",
+          "source": {
+            "source_line": 93,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.sum_zmod_eq_sum_range",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters",
+          "source": {
+            "source_line": 165,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.Richert1969.chenReducedCombinedModulusFibres_pairwise",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969CombinedModulusEStar",
+      "typeHash": "402937820",
+      "symmetricTypeHash": "402937820",
+      "source": {
+        "source_line": 106,
+        "code_lines": 26,
+        "proof_body_code_lines": 14
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization.0.MathlibNt.SieveTheory.Richert1969.chenReducedCombinedModulusFibres_pairwise_standard",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization",
+          "source": {
+            "source_line": 505,
+            "code_lines": 13,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.qD_eq_dde_main",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaDifferentialTail",
+      "typeHash": "1176703620",
+      "symmetricTypeHash": "1176703620",
+      "source": {
+        "source_line": 13,
+        "code_lines": 21,
+        "proof_body_code_lines": 14
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized.0.MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.qD_eq_dde_mainStrict",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized",
+          "source": {
+            "source_line": 312,
+            "code_lines": 8,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.rpow_contraction_gap",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceContractionGap",
+      "typeHash": "4150056821",
+      "symmetricTypeHash": "4150056821",
+      "source": {
+        "source_line": 7,
+        "code_lines": 16,
+        "proof_body_code_lines": 13
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.caseI_rpow_contraction_gap",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIAbsorption",
+          "source": {
+            "source_line": 34,
+            "code_lines": 5,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.perturbation_three_le_one_add_seven_ratio",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIIntegralTransportRelative",
+      "typeHash": "3112005056",
+      "symmetricTypeHash": "3112005056",
+      "source": {
+        "source_line": 83,
+        "code_lines": 17,
+        "proof_body_code_lines": 13
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform.0.MathlibNt.SieveTheory.perturbation_three_le_one_add_seven_ratio_sourceLarge",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform",
+          "source": {
+            "source_line": 210,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.caseI1423_endpoint_sigma11_bound",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsFinal",
+      "typeHash": "1758923656",
+      "symmetricTypeHash": "1758923656",
+      "source": {
+        "source_line": 87,
+        "code_lines": 36,
+        "proof_body_code_lines": 12
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogPointwiseProducer.0.MathlibNt.SieveTheory.endpoint_sigma11_bound",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogPointwiseProducer",
+          "source": {
+            "source_line": 22,
+            "code_lines": 26,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "Section10MinusFirstCrossingProducer.normalizedMinusBase_continuousAt",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer",
+      "typeHash": "2800430768",
+      "symmetricTypeHash": "2800430768",
+      "source": {
+        "source_line": 26,
+        "code_lines": 16,
+        "proof_body_code_lines": 12
+      },
+      "alternatives": [
+        {
+          "name": "Section10Lemma1028PlusAssembly.normalizedMinusBase_continuousAt",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1055UniformStationary",
+          "source": {
+            "source_line": 393,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.charReal_periodic_zmod",
+      "module": "AnalyticNumberTheory.LargeSieve.BombieriDavenport",
+      "typeHash": "2125555599",
+      "symmetricTypeHash": "2125555599",
+      "source": {
+        "source_line": 54,
+        "code_lines": 14,
+        "proof_body_code_lines": 11
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters.0.AnalyticNumberTheory.LargeSieve.charReal_eq_of_int_modEq",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters",
+          "source": {
+            "source_line": 140,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.lambda_norm_le_log_of_le",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure",
+      "typeHash": "3771088860",
+      "symmetricTypeHash": "3771088860",
+      "source": {
+        "source_line": 82,
+        "code_lines": 12,
+        "proof_body_code_lines": 10
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalLambdaGlobalReduction.0.AnalyticNumberTheory.LargeSieve.lambda_norm_le_log_of_le_global",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalLambdaGlobalReduction",
+          "source": {
+            "source_line": 97,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.log_pow_le_sqrt_eventually",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds",
+      "typeHash": "717153253",
+      "symmetricTypeHash": "717153253",
+      "source": {
+        "source_line": 9,
+        "code_lines": 13,
+        "proof_body_code_lines": 10
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz.0.AnalyticNumberTheory.LargeSieve.eventually_log_pow_le_sqrt_nat",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz",
+          "source": {
+            "source_line": 389,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz.0.AnalyticNumberTheory.LargeSieve.eventually_log_pow_le_sqrt_nat",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz",
+          "source": {
+            "source_line": 555,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_one_div_lcm_le_tau_log",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds",
+      "typeHash": "904958586",
+      "symmetricTypeHash": "904958586",
+      "source": {
+        "source_line": 90,
+        "code_lines": 14,
+        "proof_body_code_lines": 10
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_one_div_lcm_le_tau_log",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "source": {
+            "source_line": 29,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "DirichletLConditionalValueSeries.character_nat_zero_of_ne_one",
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries",
+      "typeHash": "3679350580",
+      "symmetricTypeHash": "3679350580",
+      "source": {
+        "source_line": 26,
+        "code_lines": 11,
+        "proof_body_code_lines": 9
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound.0.DirichletLGlobalConductorLogDerivativeBound.character_nat_zero_of_ne_one",
+          "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound",
+          "source": {
+            "source_line": 23,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound.0.DirichletLGlobalConductorLogValueBound.character_nat_zero_of_ne_one",
+          "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound",
+          "source": {
+            "source_line": 27,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_D19_author_lower_of_coefficient_lt",
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative",
+      "typeHash": "3567425146",
+      "symmetricTypeHash": "3567425146",
+      "source": {
+        "source_line": 48,
+        "code_lines": 14,
+        "proof_body_code_lines": 9
+      },
+      "alternatives": [
+        {
+          "name": "Goldbach.one_plus_one_nine_lower_bound",
+          "module": "Goldbach.OnePlusOneNine",
+          "source": {
+            "source_line": 38,
+            "code_lines": 7,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_D19_gt_paper_0004",
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative",
+      "typeHash": "3318567759",
+      "symmetricTypeHash": "3318567759",
+      "source": {
+        "source_line": 66,
+        "code_lines": 13,
+        "proof_body_code_lines": 9
+      },
+      "alternatives": [
+        {
+          "name": "Goldbach.one_plus_one_nine_count",
+          "module": "Goldbach.OnePlusOneNine",
+          "source": {
+            "source_line": 29,
+            "code_lines": 7,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_nat_unconditional",
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional",
+      "typeHash": "4182699065",
+      "symmetricTypeHash": "4182699065",
+      "source": {
+        "source_line": 7,
+        "code_lines": 13,
+        "proof_body_code_lines": 9
+      },
+      "alternatives": [
+        {
+          "name": "Goldbach.one_plus_one_nine",
+          "module": "Goldbach.OnePlusOneNine",
+          "source": {
+            "source_line": 15,
+            "code_lines": 5,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "Goldbach.OnePlusOneNineChecks.oneNine",
+          "module": "Goldbach.OnePlusOneNineChecks",
+          "source": {
+            "source_line": 11,
+            "code_lines": 5,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.ceilDiv_ceilDiv_eq",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Rosser.LowerRosserSuzukiActualBridge",
+      "typeHash": "2294955337",
+      "symmetricTypeHash": "2294955337",
+      "source": {
+        "source_line": 199,
+        "code_lines": 11,
+        "proof_body_code_lines": 9
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.UpperRosserSuzukiActualBridge.0.MathlibNt.SieveTheory.upper_ceilDiv_ceilDiv_eq",
+          "module": "MathlibNt.SieveTheory.UpperRosserSuzukiActualBridge",
+          "source": {
+            "source_line": 21,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.hasDimensionOneLocalProductBound_mono_K",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseABoundedK",
+      "typeHash": "717922092",
+      "symmetricTypeHash": "717922092",
+      "source": {
+        "source_line": 21,
+        "code_lines": 12,
+        "proof_body_code_lines": 8
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.HasDimensionOneLocalProductBound.mono_constant",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenVaryingFamilyLowerDensity",
+          "source": {
+            "source_line": 29,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.HasDimensionOneLocalProductBound.mono",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserDensityEndpointDirect",
+          "source": {
+            "source_line": 14,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.primitiveCharacter_card_le_totient_basic",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters",
+      "typeHash": "2805341628",
+      "symmetricTypeHash": "2805341628",
+      "source": {
+        "source_line": 42,
+        "code_lines": 9,
+        "proof_body_code_lines": 7
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveWeightedFamilyMassBound.0.AnalyticNumberTheory.LargeSieve.primitiveCharacter_card_le_totient_mass",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveWeightedFamilyMassBound",
+          "source": {
+            "source_line": 9,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "_private.MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIElementaryPeriodCauchy.0.AnalyticNumberTheory.LargeSieve.primitiveCharacter_card_le_totient_elementary",
+          "module": "MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIElementaryPeriodCauchy",
+          "source": {
+            "source_line": 237,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.card_primitiveCharacter_le_totient",
+          "module": "MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure",
+          "source": {
+            "source_line": 19,
+            "code_lines": 4,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.card_primitiveCharacter_le_totient",
+          "module": "MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualPhysical",
+          "source": {
+            "source_line": 23,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.Mertens.abs_log_primeFactor_add_le",
+      "module": "AnalyticNumberTheory.Mertens.Basic",
+      "typeHash": "731693599",
+      "symmetricTypeHash": "731693599",
+      "source": {
+        "source_line": 107,
+        "code_lines": 9,
+        "proof_body_code_lines": 7
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.Arithmetic.MertensTheorem.0.MathlibNt.SieveTheory.MertensTheorem.log_one_sub_prime_bound",
+          "module": "MathlibNt.SieveTheory.Arithmetic.MertensTheorem",
+          "source": {
+            "source_line": 867,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.Analysis.eventually_nat_log_rpow_le_rpow",
+      "module": "MathlibNt.Analysis.LogPowerBounds",
+      "typeHash": "9023884",
+      "symmetricTypeHash": "9023884",
+      "source": {
+        "source_line": 10,
+        "code_lines": 9,
+        "proof_body_code_lines": 7
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_log_rpow_eventually",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWLogSaving",
+          "source": {
+            "source_line": 12,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "MathlibNt.SieveTheory.LiuWeight.eventually_pan_log_rpow_le_rpow",
+          "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveLedgerAssembly",
+          "source": {
+            "source_line": 50,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "AnalyticNumberTheory.LargeSieve.PanPrincipal.eventually_log_rpow_le_rpow",
+          "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalPNT",
+          "source": {
+            "source_line": 27,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayMain_span",
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReindex",
+      "typeHash": "3046947",
+      "symmetricTypeHash": "3046947",
+      "source": {
+        "source_line": 37,
+        "code_lines": 9,
+        "proof_body_code_lines": 7
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPaySecondary_grid",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryLocal",
+          "source": {
+            "source_line": 11,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9LowIntegral_nonneg",
+      "module": "MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral",
+      "typeHash": "1988418425",
+      "symmetricTypeHash": "1988418425",
+      "source": {
+        "source_line": 26,
+        "code_lines": 8,
+        "proof_body_code_lines": 7
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9KernelBudget_low_nonneg",
+          "module": "MathlibNt.SieveTheory.LiLiuFouvryG9KernelBudget",
+          "source": {
+            "source_line": 9,
+            "code_lines": 2,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiuWeight.sum_liuWeight_mul_eq_sum_pairs_of_support",
+      "module": "MathlibNt.SieveTheory.Liu.Weights.LiuWeight",
+      "typeHash": "1885128847",
+      "symmetricTypeHash": "1885128847",
+      "source": {
+        "source_line": 167,
+        "code_lines": 11,
+        "proof_body_code_lines": 7
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.LiuWeight.sum_liuWeight_mul_eq_sum_pairs",
+          "module": "MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectedChenBridge",
+          "source": {
+            "source_line": 765,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.parityDomain_upperClosed",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion",
+      "typeHash": "1772126193",
+      "symmetricTypeHash": "1772126193",
+      "source": {
+        "source_line": 318,
+        "code_lines": 9,
+        "proof_body_code_lines": 6
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144Equation1410.parityDomain_mono",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144IHInstantiation",
+          "source": {
+            "source_line": 53,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.caseI_endpoint_sigma11_normalization",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEndpointScalarBounds",
+      "typeHash": "3093863290",
+      "symmetricTypeHash": "3093863290",
+      "source": {
+        "source_line": 7,
+        "code_lines": 13,
+        "proof_body_code_lines": 6
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC.0.MathlibNt.SieveTheory.evenEndpoint_sigma11_normalization",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC",
+          "source": {
+            "source_line": 175,
+            "code_lines": 8,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        },
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsFinal.0.MathlibNt.SieveTheory.endpoint_sigma11_normalization",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsFinal",
+          "source": {
+            "source_line": 50,
+            "code_lines": 9,
+            "proof_body_code_lines": 2
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.exists_lemma14_4_literal_allDepth_with_lowStrip_extension_uniform_in_S_of_source",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS",
+      "typeHash": "1467443156",
+      "symmetricTypeHash": "1467443156",
+      "source": {
+        "source_line": 183,
+        "code_lines": 18,
+        "proof_body_code_lines": 6
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.exists_lemma14_4_movingRange_rounded_allDepth_uniform_in_S_of_source",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS",
+          "source": {
+            "source_line": 204,
+            "code_lines": 14,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "AnalyticNumberTheory.LargeSieve.dirichletChar_norm_le_one",
+      "module": "AnalyticNumberTheory.LargeSieve.BombieriDavenport",
+      "typeHash": "1064002831",
+      "symmetricTypeHash": "1064002831",
+      "source": {
+        "source_line": 157,
+        "code_lines": 6,
+        "proof_body_code_lines": 5
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.dirichletCharacter_norm_le_one",
+          "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve",
+          "source": {
+            "source_line": 46,
+            "code_lines": 4,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_unconditional",
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional",
+      "typeHash": "2217977431",
+      "symmetricTypeHash": "2217977431",
+      "source": {
+        "source_line": 23,
+        "code_lines": 9,
+        "proof_body_code_lines": 5
+      },
+      "alternatives": [
+        {
+          "name": "Goldbach.one_plus_one_nine_real",
+          "module": "Goldbach.OnePlusOneNine",
+          "source": {
+            "source_line": 22,
+            "code_lines": 5,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SingularSeries.one_add_liuBaseDeviation_le_one",
+      "module": "MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries",
+      "typeHash": "750915993",
+      "symmetricTypeHash": "750915993",
+      "source": {
+        "source_line": 160,
+        "code_lines": 7,
+        "proof_body_code_lines": 5
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.LiuWeight.one_add_liuBaseDeviation_le_one",
+          "module": "MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergUniformEuler",
+          "source": {
+            "source_line": 338,
+            "code_lines": 3,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.moving_above_cutoff_one_lt_z",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDDEAsymptoticClosure",
+      "typeHash": "730732640",
+      "symmetricTypeHash": "730732640",
+      "source": {
+        "source_line": 59,
+        "code_lines": 9,
+        "proof_body_code_lines": 5
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource.0.MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.above_cutoff_one_lt_z",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource",
+          "source": {
+            "source_line": 49,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.moving_below_cutoff_z_le_one",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDDEAsymptoticClosure",
+      "typeHash": "623419082",
+      "symmetricTypeHash": "623419082",
+      "source": {
+        "source_line": 48,
+        "code_lines": 9,
+        "proof_body_code_lines": 5
+      },
+      "alternatives": [
+        {
+          "name": "_private.MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource.0.MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne.below_cutoff_z_le_one",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource",
+          "source": {
+            "source_line": 43,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    },
+    {
+      "name": "MathlibNt.SieveTheory.summable_suzukiLayer_one_two_even_of_sourceContract",
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEvenSourceLayerRealLimit",
+      "typeHash": "1468303844",
+      "symmetricTypeHash": "1468303844",
+      "source": {
+        "source_line": 56,
+        "code_lines": 9,
+        "proof_body_code_lines": 5
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.summable_suzukiProposition118SourceTMinus_of_sourceContract",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceSeriesPairing",
+          "source": {
+            "source_line": 88,
+            "code_lines": 5,
+            "proof_body_code_lines": 0
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    }
+  ],
+  "known_prefix_positive_control_pass": true,
+  "ambiguous_type_variants_excluded": {}
+}

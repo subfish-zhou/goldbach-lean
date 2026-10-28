@@ -39,24 +39,5 @@ theorem goldbach_power_error_le_log_scale_eventually
       exact div_le_div_of_nonneg_left (mul_nonneg hC (sq_nonneg _)) hden hpow
     _ ≤ δ * N := mul_le_mul_of_nonneg_right hsmall.le hpos.le
 
-/-- The actual switched twelve-term lower bound with arbitrary analytic-scale
-loss. This does not assert positivity of the labelled main expression. -/
-theorem goldbachWeight_twelve_switched_log_scale_eventually
-    (ε δ : ℝ) (hε : 0 < ε) (hεu : ε < (2 : ℝ) / 15) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Even N → ∀ α β γ : ℝ,
-      (1 : ℝ) / 18 < α → α < β → β < (1 - 3 * β) / 3 →
-      (1 - 3 * β) / 3 < γ → γ < (1 : ℝ) / 3 →
-      (goldbachWeightTwelveSwitchedRHS (goldbachDifferenceCarrier N ε) N ε
-        ((N : ℝ) ^ α) ((N : ℝ) ^ β) ((N : ℝ) ^ γ)
-        ((N : ℝ) ^ ((9 : ℝ) / 19 - ε)) : ℝ) -
-        δ * (N : ℝ) / (Real.log N) ^ 2 ≤ 4 * (D19 N : ℝ) := by
-  obtain ⟨Ns, hs⟩ := goldbachWeight_twelve_switched_lower_bound_eventually ε hε hεu
-  obtain ⟨Ne, _, he⟩ := goldbach_power_error_le_log_scale_eventually
-    2214 ((1 : ℝ) / 18) δ (by norm_num) (by norm_num) hδ
-  refine ⟨max Ns Ne, ?_⟩
-  intro N hN hEven α β γ hα hαβ hβγ hγ hγu
-  have hmain := hs N ((le_max_left _ _).trans hN) hEven α β γ hα hαβ hβγ hγ hγu
-  have herror := he N ((le_max_right _ _).trans hN) α hα.le
-  linarith
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

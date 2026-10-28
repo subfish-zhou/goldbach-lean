@@ -1,5 +1,10 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB9LowPositivePrefixTransport
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectC2
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayZero
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayMainUniform
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryScalar
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPrefixAssembly
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectErrorScalar
+
 
 open scoped BigOperators
 open Finset
@@ -55,28 +60,6 @@ theorem fouvryG9Carrier_geometry {N : ℕ} {eps : ℝ} {y : ℕ × ℕ × ℕ}
   · have hnat : (x.1.1*x.1.2)*x.2 < N := by exact_mod_cast hupper
     simpa only [fouvryG9Coordinates, Nat.mul_assoc] using hnat
 
-/-- The actual long-coordinate weight never exceeds the number of divisors. -/
-def fouvryG9Multiplicity (N : ℕ) (eps : ℝ) (n m : ℕ) : ℕ :=
-  ((fouvryG9Carrier N eps).filter (fun y => y.1=m ∧ y.2.2=n)).card
-
-theorem fouvryG9Multiplicity_le_divisors (N : ℕ) (eps : ℝ) (n m : ℕ) :
-    fouvryG9Multiplicity N eps n m ≤ m.divisors.card := by
-  classical
-  unfold fouvryG9Multiplicity
-  apply card_le_card_of_injOn (fun y => y.2.1)
-  · intro y hy
-    obtain ⟨hy,hm,hn⟩ := mem_filter.mp hy
-    have hg := fouvryG9Carrier_geometry hy
-    apply Nat.mem_divisors.mpr
-    refine ⟨hm ▸ hg.2.2.1, ?_⟩
-    intro hz
-    have hp := hg.2.2.2.1
-    rw [hm,hz, Nat.zero_div] at hp
-    exact Nat.not_prime_zero hp
-  · intro x hx y hy he
-    obtain ⟨_,hxm,hxn⟩ := mem_filter.mp hx
-    obtain ⟨_,hym,hyn⟩ := mem_filter.mp hy
-    exact Prod.ext (hxm.trans hym.symm) (Prod.ext he (hxn.trans hyn.symm))
 
 end
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointScaledTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiIntegralDDEPairing
+import Mathlib.Analysis.Calculus.MeanValue
 
 /-!
 # Unconditional upper-source pairing conservation route
@@ -219,6 +219,7 @@ theorem upperSourcePairing_eq_of_integralDDE
   have hconst := constant_of_has_deriv_right_zero hpair_cont (fun z hz =>
     hpair_right z (hx.trans hz.1))
   exact hconst y ⟨hxy, le_rfl⟩
+
 
 @[simp] theorem upperSourcePairingFor_actual (p : ℝ → ℝ) (s : ℝ) :
     upperSourcePairingFor suzukiUpperSourceP p s =

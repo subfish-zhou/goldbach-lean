@@ -46,6 +46,8 @@ The implementation endpoints are `goldbach_onePlusOneNine_nat_unconditional`
 and `goldbach_onePlusOneNine_unconditional` in
 `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig`, supplied by
 [LiLiuGoldbachOneNineUnconditional.lean](../MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean).
+They extract witnesses from the strict positive `D19` count proved by the
+quantitative assembly; the real-power interface uses the exact exponent bridge.
 
 ## Li–Liu 1+1.9: distinct-prime count
 

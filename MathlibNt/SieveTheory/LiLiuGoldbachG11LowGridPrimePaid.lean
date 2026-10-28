@@ -48,22 +48,5 @@ theorem goldbachG11LowGrid_prime_outputs_paid (A : ℕ) {ε δ θ ρ : ℝ}
   rw [sum_add_distrib] at hp
   exact (hp.trans (add_le_add hS hsmall)).trans_eq (by ring)
 
-/-- The original restricted first-prime fibres inherit the paid estimate;
-all product-coefficient multiplicities are the existing literal ones. -/
-theorem goldbachG11LowGrid_mother_outputs_paid (A : ℕ) {ε δ θ ρ : ℝ}
-    (hε : 0 < ε) (hεu : ε ≤ 1) (hδ : 0 < δ) (hδu : δ < 1/2)
-    (hθ : 0 < θ) (hθu : θ < 1/8) (hρ : 1 < ρ) (hρu : ρ ≤ 5/4) :
-    ∃ N₀ : ℝ, ∀ N : ℕ, N₀ ≤ (N : ℝ) → ∀ z : ℝ,
-      0 ≤ z → z ≤ Real.sqrt (N : ℝ) →
-      (∑ k ∈ goldbachG11LowGridUsed N ε ρ,
-        goldbachG11RectangleMotherCount N ε (goldbachG11GridLong N ε ρ k)
-          (goldbachG11GridShort N ρ k)) ≤
-        goldbachG11LowGridDensityMain N ε δ θ ρ (fun _ => fouvryG9SievePrimes N z) (fun _ => z) +
-          3*(N : ℝ)/Real.log (N : ℝ)^A := by
-  obtain ⟨M,hM⟩ := goldbachG11LowGrid_prime_outputs_paid A hε hεu hδ hδu hθ hθu hρ hρu
-  refine ⟨M,?_⟩
-  intro N hN z hz hzu
-  exact (sum_le_sum (fun k _ => goldbachG11RectangleMotherCount_le_primeMass N ε
-    (goldbachG11GridLong N ε ρ k) (goldbachG11GridShort N ρ k))).trans (hM N hN z hz hzu)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -1,6 +1,5 @@
 import MathlibNt.Wu2004MeanValue.GammaFiveLossKernelIdentity
 import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetTriangle
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetMeasurable
 
 /-!
 # Paid bounds for full versus legal Gamma₅ sections

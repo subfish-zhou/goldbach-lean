@@ -29,13 +29,6 @@ noncomputable def caseISigma12QDFixedFactor
     (H.T (ErrorSign.ofDepth N).opposite (s - 1) /
       H.T (ErrorSign.ofDepth N) s)
 
-/-- At successor depth, the delayed layer in `q_D^∓` is literally the layer
-selected by the predecessor parity. -/
-theorem caseISigma12_qD_sign_eq_pred
-    (H : Section13HatLayers) {N : ℕ} (hN : 1 ≤ N) (s : ℝ) :
-    H.T (ErrorSign.ofDepth N).opposite (s - 1) =
-      H.T (ErrorSign.ofDepth (N - 1)) (s - 1) := by
-  rw [ErrorSign.ofDepth_pred_eq_opposite hN]
 
 /-- The endpoint value `q_D^∓(s)` is bounded by a factor independent of `D`
 times the inherited envelope.  This is the source-order comparison required by
@@ -111,26 +104,6 @@ theorem caseISigma12_qD_le_fixedFactor_mul_errorEnvelope
                 H.T (ErrorSign.ofDepth N) s) *
               H.T (ErrorSign.ofDepth N) s) by ring, hcancel]
       ring
-
-/-- Packaged form: for fixed `H,N,Δ,s`, one nonnegative constant works for every
-`D>1` and every `d`. -/
-theorem exists_caseISigma12_qD_envelope_factor
-    {H : Section13HatLayers} (hH : Section13HatContract H 2)
-    (N : ℕ) {Δ s : ℝ} (hs : 2 ≤ s) :
-    ∃ A : ℝ, 0 ≤ A ∧ ∀ D d : ℝ, 1 < D →
-      qD H (ErrorSign.ofDepth N).opposite D d Δ s ≤
-        A * errorEnvelope H N D d s := by
-  refine ⟨caseISigma12QDFixedFactor H N Δ s, ?_, ?_⟩
-  · dsimp [caseISigma12QDFixedFactor]
-    have hs0 : 0 < s := by linarith
-    have hsm0 : 0 < s - 1 := by linarith
-    exact mul_nonneg
-      (Real.rpow_nonneg (div_nonneg hs0.le hsm0.le) _)
-      (div_nonneg
-        (hH.positive (ErrorSign.ofDepth N).opposite (s - 1) hsm0).le
-        (hH.positive (ErrorSign.ofDepth N) s hs0).le)
-  · intro D d hD
-    exact caseISigma12_qD_le_fixedFactor_mul_errorEnvelope hH N hD hs
 
 
 end MathlibNt.SieveTheory

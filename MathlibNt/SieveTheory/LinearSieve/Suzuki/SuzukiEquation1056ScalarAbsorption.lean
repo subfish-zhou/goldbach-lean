@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053KernelExpansion
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval
@@ -197,29 +196,6 @@ lemma scalar_absorption_of_elementary_bounds
   dsimp [A, m] at hmul ⊢
   convert hmul using 1; ring
 
-lemma xi_nonneg (s : ℝ) : 0 ≤ xi s := by
-  exact (etaOrderIso.symm ⟨max s 1, le_max_right s 1⟩).property
-
-lemma xi_tendsto_atTop_local : Tendsto xi atTop atTop := by
-  refine tendsto_atTop.2 ?_
-  intro B
-  let B₀ : ℝ := max B 0
-  let S : ℝ := max 2 (eta B₀ + 1)
-  apply eventually_atTop.2
-  refine ⟨S, fun s hs => ?_⟩
-  have hs2 : 2 ≤ s := (le_max_left 2 (eta B₀ + 1)).trans hs
-  have hs1 : 1 < s := by linarith
-  have hB0 : 0 ≤ B₀ := le_max_right B 0
-  have hxi0 : 0 ≤ xi s := xi_nonneg s
-  have hetaXi : eta (xi s) = s := by rw [eta_xi, max_eq_left hs1.le]
-  have hetaB : eta B₀ + 1 ≤ s := (le_max_right 2 (eta B₀ + 1)).trans hs
-  have hxiB0 : B₀ ≤ xi s := by
-    by_contra hn
-    have hlt : xi s < B₀ := lt_of_not_ge hn
-    have hη := eta_strictMonoOn hxi0 hB0 hlt
-    rw [hetaXi] at hη
-    linarith
-  exact (le_max_left B 0).trans hxiB0
 
 lemma xi_unit_increment_le
     {s : ℝ} (hs : 4 ≤ s) (hx : 2 ≤ xi (s - 1)) :
@@ -268,146 +244,6 @@ lemma kappaOneLogSlope_le_three_div {u : ℝ} (hu : 2 ≤ u) :
   dsimp [kappaOneLogSlope]
   apply (div_le_div_iff₀ hden hu0).2
   nlinarith [sq_nonneg (u - 2)]
-
-lemma eventual_elementary_absorption (c : ℝ) (hc : 1152 ≤ c) :
-    ∃ S : ℝ, ∀ s, S ≤ s →
-      3 ≤ s ∧
-      0 < xi (s - 1) - c - kappaOneLogSlope (s - 1) ∧
-      0 < xi s - c - 2 / s ∧
-      (xi s - c - 2 / s -
-          (xi (s - 1) - c - kappaOneLogSlope (s - 1)) <
-        (xi s - c - 2 / s) *
-          Real.exp (-(xi (s - 1) - c - kappaOneLogSlope (s - 1)))) := by
-  have hev : ∀ᶠ s in atTop, 2 * c + 4 ≤ xi (s - 1) := by
-    have hshift : Tendsto (fun s : ℝ => s - 1) atTop atTop :=
-      by
-        rw [tendsto_atTop]
-        intro B
-        filter_upwards [eventually_ge_atTop (B + 1)] with s hs
-        linarith
-    exact (xi_tendsto_atTop_local.comp hshift).eventually (eventually_ge_atTop (2 * c + 4))
-  apply eventually_atTop.1
-  filter_upwards [hev, eventually_ge_atTop (4 : ℝ)] with s hxi hs
-  have hs0 : 0 < s := by linarith
-  have hsm0 : 0 < s - 1 := by linarith
-  have hx2 : 2 ≤ xi (s - 1) := by linarith [hc]
-  have hks0 := kappaOneLogSlope_nonneg (u := s - 1) (by linarith)
-  have hks := kappaOneLogSlope_le_three_div (u := s - 1) (by linarith)
-  have hdelta0 := proposition1020_secant_nonneg canonicalXi_proposition1020
-    (t := s - 1) (s := s) (by linarith) (by linarith)
-  have hdelta := xi_unit_increment_le hs hx2
-  have htwo : 2 / s ≤ 1 := by
-    apply (div_le_iff₀ hs0).2
-    nlinarith
-  have hthree : 3 / (s - 1) ≤ 6 / s := by
-    apply (div_le_div_iff₀ hsm0 hs0).2
-    nlinarith
-  have htwo' : 2 / (s - 1) ≤ 4 / s := by
-    apply (div_le_div_iff₀ hsm0 hs0).2
-    nlinarith
-  have hgapUpper :
-      xi s - c - 2 / s - (xi (s - 1) - c - kappaOneLogSlope (s - 1)) ≤
-        10 / s := by
-    have heq : xi s - c - 2 / s -
-        (xi (s - 1) - c - kappaOneLogSlope (s - 1)) =
-        (xi s - xi (s - 1)) + kappaOneLogSlope (s - 1) - 2 / s := by ring
-    rw [heq]
-    have hd4 := hdelta.trans htwo'
-    have hk6 := hks.trans hthree
-    calc
-      xi s - xi (s - 1) + kappaOneLogSlope (s - 1) - 2 / s ≤
-          4 / s + 6 / s - 2 / s := sub_le_sub_right (add_le_add hd4 hk6) _
-      _ = 8 / s := by ring
-      _ ≤ 10 / s := by
-        apply (div_le_div_iff₀ hs0 hs0).2
-        nlinarith
-  have hAhalf : xi (s - 1) / 2 ≤ xi s - c - 2 / s := by
-    linarith
-  have hmpos : 0 < xi (s - 1) - c - kappaOneLogSlope (s - 1) := by
-    have hk2 : kappaOneLogSlope (s - 1) ≤ 2 := by
-      calc
-        kappaOneLogSlope (s - 1) ≤ 3 / (s - 1) := hks
-        _ ≤ 2 := by
-          apply (div_le_iff₀ hsm0).2
-          nlinarith
-    linarith
-  have hApos : 0 < xi s - c - 2 / s := lt_of_lt_of_le (by linarith [hx2]) hAhalf
-  have heqc :
-      Real.exp (-(xi (s - 1) - c - kappaOneLogSlope (s - 1))) =
-        Real.exp c * Real.exp (kappaOneLogSlope (s - 1)) * Real.exp (-(xi (s - 1))) := by
-    rw [← Real.exp_add, ← Real.exp_add]
-    congr 1
-    ring
-  have hexpk : 1 ≤ Real.exp (kappaOneLogSlope (s - 1)) :=
-    Real.one_le_exp hks0
-  have hxipos : 0 < xi (s - 1) := by linarith
-  have hs1 : 1 < s - 1 := by linarith
-  have hEqXi := xi_equation hs1
-  have hnegxi : Real.exp (-(xi (s - 1))) =
-      1 / (1 + (s - 1) * xi (s - 1)) := by
-    have he : Real.exp (xi (s - 1)) = 1 + (s - 1) * xi (s - 1) := by
-      linarith
-    rw [Real.exp_neg, he]
-    rw [one_div]
-  have hdenpos : 0 < 1 + (s - 1) * xi (s - 1) := by positivity
-  have hdenle : 1 + (s - 1) * xi (s - 1) ≤ s * xi (s - 1) := by
-    nlinarith
-  have hbase : 1 / (s * xi (s - 1)) ≤ Real.exp (-(xi (s - 1))) := by
-    rw [hnegxi]
-    exact one_div_le_one_div_of_le hdenpos hdenle
-  have hexpc : 20 < Real.exp c := by
-    have := Real.add_one_lt_exp (ne_of_gt (by linarith [hc] : 0 < c))
-    linarith [hc]
-  have hrhs : 10 / s <
-      (xi s - c - 2 / s) *
-        Real.exp (-(xi (s - 1) - c - kappaOneLogSlope (s - 1))) := by
-    rw [heqc]
-    have hExpLower : Real.exp c * (1 / (s * xi (s - 1))) ≤
-        Real.exp c * Real.exp (kappaOneLogSlope (s - 1)) * Real.exp (-(xi (s - 1))) := by
-      have hcpos : 0 ≤ Real.exp c := (Real.exp_pos c).le
-      have h1 := mul_le_mul_of_nonneg_left hbase hcpos
-      have h2 := mul_le_mul_of_nonneg_right hexpk
-        (Real.exp_pos (-(xi (s - 1)))).le
-      simp only [one_mul] at h2
-      calc
-        Real.exp c * (1 / (s * xi (s - 1))) ≤
-            Real.exp c * Real.exp (-(xi (s - 1))) := h1
-        _ ≤ Real.exp c * (Real.exp (kappaOneLogSlope (s - 1)) *
-              Real.exp (-(xi (s - 1)))) := mul_le_mul_of_nonneg_left h2 hcpos
-        _ = _ := by ring
-    have hprod : (Real.exp c / (2 * s)) ≤
-        (xi s - c - 2 / s) *
-          (Real.exp c * Real.exp (kappaOneLogSlope (s - 1)) * Real.exp (-(xi (s - 1)))) := by
-      have hh := mul_le_mul hAhalf hExpLower
-        (by positivity : 0 ≤ Real.exp c * (1 / (s * xi (s - 1)))) hApos.le
-      calc
-        Real.exp c / (2 * s) =
-            (xi (s - 1) / 2) * (Real.exp c * (1 / (s * xi (s - 1)))) := by
-              field_simp [ne_of_gt hs0, ne_of_gt hxipos]
-        _ ≤ _ := hh
-    have : 10 / s < Real.exp c / (2 * s) := by
-      apply (div_lt_div_iff₀ hs0 (mul_pos (by norm_num) hs0)).2
-      nlinarith
-    exact this.trans_le hprod
-  exact ⟨by linarith, hmpos, hApos, hgapUpper.trans_lt hrhs⟩
-
-/-- Final source-(10.56) scalar absorption: for every fixed `c ≥ 1152`,
-the canonical `ξ` makes the normalized scalar product strictly less than one
-for all sufficiently large `s`. -/
-theorem equation1056_eventually_strict (c : ℝ) (hc : 1152 ≤ c) :
-    ∃ S : ℝ, ∀ s, S ≤ s → Equation1053EarliestScalarInequality xi c s := by
-  obtain ⟨S, hS⟩ := eventual_elementary_absorption c hc
-  refine ⟨S, fun s hs => ?_⟩
-  rcases hS s hs with ⟨hs3, hm, hA, hgap⟩
-  exact scalar_absorption_of_elementary_bounds hs3 hm hA hgap
-
-/-- The literal final contradiction in (10.56): the source-side lower bound
-`1 ≤ ratio` is incompatible with the eventual strict absorption. -/
-theorem equation1056_eventually_contradiction (c : ℝ) (hc : 1152 ≤ c) :
-    ∃ S : ℝ, ∀ s, S ≤ s →
-      1 ≤ equation1056ScalarRatio xi c s → False := by
-  obtain ⟨S, hS⟩ := equation1056_eventually_strict c hc
-  exact ⟨S, fun s hs hsource => (not_lt_of_ge hsource) (hS s hs)⟩
 
 
 end Section10Equation1056ScalarAbsorption

@@ -1,3 +1,4 @@
+import MathlibNt.Analysis.LogPowerBounds
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWLarge
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
@@ -10,13 +11,7 @@ noncomputable section
 /-- Fixed logarithmic powers are eventually dominated uniformly in the scale. -/
 theorem primeSW_log_rpow_eventually (a : ℝ) {s : ℝ} (hs : 0 < s) :
     ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ a ≤ (N : ℝ) ^ s := by
-  have hb := (isLittleO_log_rpow_rpow_atTop a hs).bound (show (0 : ℝ) < 1 by norm_num)
-  filter_upwards [tendsto_natCast_atTop_atTop.eventually hb,
-    (tendsto_natCast_atTop_atTop : Tendsto (fun N : ℕ => (N : ℝ)) atTop atTop).eventually_ge_atTop 1]
-    with N hN hN1
-  simpa only [Real.norm_eq_abs, one_mul,
-    abs_of_nonneg (Real.rpow_nonneg (Real.log_nonneg hN1) _),
-    abs_of_nonneg (Real.rpow_nonneg (Nat.cast_nonneg N) _)] using hN
+  exact MathlibNt.Analysis.eventually_nat_log_rpow_le_rpow a s hs
 
 /-- Every fixed logarithmic modulus range lies inside the genuine BV cutoff. -/
 theorem primeSW_log_cutoff_eventually (K : ℕ) (C : ℝ) :

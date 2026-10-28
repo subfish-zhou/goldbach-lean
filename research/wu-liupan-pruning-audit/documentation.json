@@ -1,0 +1,21 @@
+{
+  "status": "ROOT_DOCUMENTATION_REVIEW_PASS",
+  "Main_and_historical_source_measurements_unchanged": true,
+  "acceptance_sha256": "c40ddfd04bc4fb7ee7380d3f308baf6064a902d697da9b38a840747ce7479a4d",
+  "files": {
+    "README.md": "15c858b081abcfbc665e28eb391862dbaee296f1e9d433ae8c523d6c86a14f5a",
+    "docs/SOURCE_SIZE.md": "a04ae04b8300ba7ca1d743fa89a2fddf1685941fdc2ffe9856ae5d8feeafd9fc",
+    "docs/VERIFICATION.md": "e331b5953b13d17ae0f853277389fed80875e941c650fdc094e8721f4a7d21b7",
+    "docs/RELEASE_NOTES.md": "b2dbeda462e6f668dea90fe014046f90574f963281a79525761b8c4eeff6f45f",
+    "docs/WU_LIUPAN_PRUNING.md": "cb9661a1ea98131a9b948922507e0e7af3f837a870100944d16929fd0424eca1",
+    "research/wu2008/README.md": "9a63fed620bb08ddf630cb7534e7ca744f88ddd58ea5ee8e5538e9a84f42a125",
+    "research/wu2008/mathematical-status.json": "68b28e13c21d6627090ea46567c4ae5aebc1fda4fe2cd1c191f1f8be26c9c69d",
+    "research/wu2008/integration-status.json": "7bf38a891cdda8b35925e7a8eb3544878b93a5c66ad3031807991853ca98d6b6",
+    "research/wu2008/source-size-report.json": "67c6cedaeceb43d98eab436a4f358b69f29935785089e48c3ce62c9d9c32d8e4"
+  },
+  "root_corrections": [
+    "negative-control command includes required --candidate-root",
+    "unused declarations may refer to each other; release note uses unused rather than unreferenced"
+  ],
+  "Lean_executed": false
+}

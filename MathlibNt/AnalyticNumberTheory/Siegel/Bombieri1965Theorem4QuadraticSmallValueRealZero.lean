@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionWeightedSum
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConjugation
 
 /-!
 # Small actual quadratic L-values force near-one real zeros

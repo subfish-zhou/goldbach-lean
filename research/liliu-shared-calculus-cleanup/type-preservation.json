@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "original_public_declarations": 10406,
+  "unchanged_original_public_kind_type_hashes": 10406,
+  "current_public_declarations": 10408,
+  "missing_public_declarations": [],
+  "added_public_declarations": [
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv"
+  ],
+  "kind_or_type_mismatches": [],
+  "protected_endpoints": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound",
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "method": "Complete main-library before/after census; public name/kind/type hashes, excluding private and specified generated declarations. Full source compilation and independent literal/axiom and kernel gates are recorded separately."
+}

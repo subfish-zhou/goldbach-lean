@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "scope": "Five isolated compilations; production proof sources and their import graph are unchanged. This is not a post-cleanup whole-project acceptance.",
+  "checks": {
+    "CountToExistence": {
+      "exit_code": 0,
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "/tmp/liliu-audit-final-experiments/CountToExistence.lean"
+      ],
+      "source_sha256": "6c921bda3c6ce77f357c3527414bde4280ac6ba7e39b28abffb07d46f37663eb",
+      "log_sha256": "513aa85586d7cac364aa6fe7210c196c1f16d8b0a20d644f530e704ff8b13ead"
+    },
+    "StrongToWeak": {
+      "exit_code": 0,
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "/tmp/liliu-audit-final-experiments/StrongToWeak.lean"
+      ],
+      "source_sha256": "2b2806c3ff0898da7ac11b1c00a241ceebbbb6a30db692eed366b7e93c47bab4",
+      "log_sha256": "2ba14445def0f57e03bd1e75f2c68a669eeb9007f5974c46b44d97feccc46301"
+    },
+    "B10RetainedWithoutWeak": {
+      "exit_code": 0,
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "/tmp/liliu-audit-final-experiments/B10RetainedWithoutWeak.lean"
+      ],
+      "source_sha256": "9e6f33255341eb2ec30284bf7e6135d4541ea1abab57248e4ec00a0a7968de82",
+      "log_sha256": "2f59c5d5fe09bce6b125bd63ef4d80d229dc5df7ea219aeef2cda2a8646c441c"
+    },
+    "S4RetainedWithoutWeak": {
+      "exit_code": 0,
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "/tmp/liliu-audit-final-experiments/S4RetainedWithoutWeak.lean"
+      ],
+      "source_sha256": "33454f263675921226098ad7bb9d6bb4e7a82aa218aee628bc0914bfbae8f9ce",
+      "log_sha256": "264a7263fa8235b5e16456e9e5bc0987f3cefb93719d0e87b412945cd6418fd9"
+    },
+    "BetaContinuityNarrow": {
+      "exit_code": 0,
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-DwarningAsError=true",
+        "/tmp/liliu-audit-final-experiments/BetaContinuityNarrow.lean"
+      ],
+      "source_sha256": "8a2e88459ad3399ea3c03b48ab2b3d2d0c7ff9ccde7a249a718bbfb0c036efd8",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "input_manifest_sha256": "9db9b6b8d7ea1d838bd4926fb06325ba23bf6e88a61d7c48142e0262dcc83917"
+}

@@ -1,0 +1,6 @@
+{
+  "scope": "All surviving public, non-obvious-generated declarations from the original Chen import closure. Types compared structurally after erasing binder names and metadata; universe parameter names retained.",
+  "compared_declarations": 5302,
+  "type_hash_mismatches": [],
+  "status": "pass"
+}

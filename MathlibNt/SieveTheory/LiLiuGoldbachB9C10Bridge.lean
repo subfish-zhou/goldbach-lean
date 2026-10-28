@@ -60,9 +60,5 @@ theorem goldbachB9PlusSiftedAtoms_eq_B10ZeroPrefix (N : ℕ) (Z : ℝ) :
   change ((_ ∧ _ ∧ _) ∧ literalHPoint N 1 Z (goldbachPi10Output N x)) ↔ _
   tauto
 
-theorem goldbachB9PlusSifted_card_eq_B10ZeroPrefix (N : ℕ) (Z : ℝ) :
-    ((goldbachB9PlusSiftedAtoms N Z).card : ℤ) = goldbachB10SiftedCount N 0
-      ((N : ℝ)^(4 / 53 : ℝ)) ((N : ℝ)^(1 / 3 : ℝ)) Z := by
-  rw [goldbachB9PlusSiftedAtoms_eq_B10ZeroPrefix, goldbachB10SiftedCount_eq_card_atoms]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

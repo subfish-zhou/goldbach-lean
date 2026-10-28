@@ -1,0 +1,45 @@
+{
+  "module": "Hf4ActualRoute",
+  "exit_code": 0,
+  "seconds": 3.5986423790454865,
+  "source_sha256": "8b90795173258347451721254121d4b32a71072fb8f17cc10fd2e81565981514",
+  "object_sha256": "2b25695ffe5f26e6d642dd9324cd3a29b54a4537e08f7ba7b1746d57aab76fd2",
+  "dependencies": {
+    "Hf4ActualTerminal": "c2907e0b6b1d48bb592dbfd721a248ed73e3188e2c5dd9906a8568a8a6d4ee3d"
+  },
+  "dependency_contexts": {
+    "Hf4ActualTerminal": "9907d46ba26c582047c1089c6256f976b851f034a71fb60446ca031dd5f12890"
+  },
+  "context_sha256": "3ddf7bc0b4ffc1d09918980be61739b87fec4c95cdbe6cfe225059f6c9cab229",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualRoute.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualRoute.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualRoute.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualRoute.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.resources",
+  "resource_sha256": "4675f83300d4c90f63cb73d58e74338bef9549091e72792eef419946f9ac3a6b",
+  "artifact_bundle_sha256": {
+    ".olean": "2b25695ffe5f26e6d642dd9324cd3a29b54a4537e08f7ba7b1746d57aab76fd2"
+  }
+}

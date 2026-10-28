@@ -8,16 +8,6 @@ open Filter Finset
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open BombieriVinogradov JurkatRichert1965ChenGammaOneQOne
 
-private theorem movingCount_li_nonneg {N : ℕ} {ε : ℝ}
-    (hN : 4 ≤ N) (hε : ε < (2 : ℝ)/15) :
-    0 ≤ trueLogarithmicIntegral (goldbachS1Endpoint N ε) := by
-  have hNR : (4 : ℝ) ≤ N := by exact_mod_cast hN
-  have hx : 3 ≤ (1-ε)*(N : ℝ) := by nlinarith
-  have hc : 3 ≤ Nat.ceil ((1-ε)*(N : ℝ)) := by
-    exact_mod_cast hx.trans (Nat.le_ceil ((1-ε)*(N : ℝ)))
-  have hm : 2 ≤ goldbachS1Endpoint N ε := by unfold goldbachS1Endpoint; omega
-  exact LiuWeight.liuLogarithmicIntegral_nonneg (2 / Real.log 2)
-    (div_nonneg (by norm_num) (Real.log_pos (by norm_num)).le) (by exact_mod_cast hm)
 
 /-- The actual count on every moving composite layer, including t < 2.
 Clipping is justified by count nonnegativity, not signed-density nonnegativity.
@@ -40,7 +30,7 @@ theorem goldbachComposite_moving_count_lower (B ρ : ℝ) (hB : 0 ≤ B) (hρ : 
   intro N hN hEven ε hε m hm hml hmu S D t
   have hN4 : 4 ≤ N := by omega
   have hX : 0 ≤ S.totalMass :=
-    div_nonneg (movingCount_li_nonneg hN4 hε) (Nat.cast_nonneg _)
+    div_nonneg (goldbachS1Endpoint_li_nonneg hN4 hε) (Nat.cast_nonneg _)
   have hE : 0 ≤ LinearSieve.lowerErrSum S D
       (LinearSieve.lowerRosserWeight S.prodPrimes D) := by
     unfold LinearSieve.lowerErrSum

@@ -14,15 +14,23 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parent
 BUILD = ROOT / 'build'
-THEOREM = 'WuPaper.ClassicalSlots.one894'
+THEOREM = 'WuPaper.ClassicalSlots.one8938'
 PROBE = '''import WR2ClassicalCertificate
 
 theorem WuLiteralAcceptance :
     ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
       ∃ p r q : ℕ, Nat.Prime p ∧ (r = 1 ∨ Nat.Prime r) ∧ Nat.Prime q ∧
+        N = p + r * q ∧ r ^ 5000 ≤ q ^ 4469 :=
+  WuPaper.ClassicalSlots.one8938
+
+theorem WuLegacyLiteralAcceptance :
+    ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
+      ∃ p r q : ℕ, Nat.Prime p ∧ (r = 1 ∨ Nat.Prime r) ∧ Nat.Prime q ∧
         N = p + r * q ∧ r ^ 500 ≤ q ^ 447 :=
   WuPaper.ClassicalSlots.one894
 
+#print axioms WuLegacyLiteralAcceptance
+#print axioms WuPaper.ClassicalSlots.one8938
 #print axioms WuLiteralAcceptance
 #print axioms WuPaper.ClassicalSlots.one894
 #print axioms WuPaper.ClassicalSlots.classical_lower
@@ -60,7 +68,16 @@ def verify_build():
     assert sources == set((ROOT / 'src').rglob('*.lean')), 'Source inventory mismatch'
     for row in manifest:
         expected = {n: hashes[n] for n in row['imports'] if n in names}
-        assert receipts[row['module']]['dependencies'] == expected, row['module']
+        receipt = receipts[row['module']]
+        assert receipt['dependencies'] == expected, row['module']
+        contexts = {n: receipts[n]['context_sha256'] for n in expected}
+        assert receipt.get('dependency_contexts') == contexts, row['module']
+        payload = {'source_sha256': receipt['source_sha256'],
+                   'object_sha256': receipt['object_sha256'],
+                   'dependency_contexts': contexts}
+        digest = hashlib.sha256(json.dumps(
+            payload, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        assert receipt.get('context_sha256') == digest, row['module']
     return hashes
 
 
@@ -95,10 +112,11 @@ def main():
     (BUILD / 'classical-literal-axioms.log').write_text(result.stdout)
     assert result.returncode == 0, result.stdout
     checks.check_axiom_output(result.stdout, {
-        THEOREM, 'WuPaper.ClassicalSlots.classical_lower', 'WuLiteralAcceptance'})
+        THEOREM, 'WuPaper.ClassicalSlots.one894', 'WuPaper.ClassicalSlots.classical_lower',
+        'WuLiteralAcceptance', 'WuLegacyLiteralAcceptance'})
     assert sha(ROOT / 'source-manifest.json') == manifest_hash, 'Manifest changed'
     assert verify_build() == before, 'Build objects changed during acceptance'
-    report = {'status': 'pass', 'theorem': THEOREM, 'modules': len(before),
+    report = {'status': 'pass', 'theorem': THEOREM, 'legacy_theorem': 'WuPaper.ClassicalSlots.one894', 'modules': len(before),
               'manifest_sha256': manifest_hash, 'literal_probe_sha256':
               hashlib.sha256(PROBE.encode()).hexdigest(),
               'log': 'build/classical-literal-axioms.log'}

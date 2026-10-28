@@ -3,10 +3,6 @@ import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
 open Set MeasureTheory Finset
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-theorem s3eval_continuous (cs : List ℚ) : Continuous (s3eval cs) := by
-  induction cs with
-  | nil => exact continuous_const
-  | cons c cs ih => exact continuous_const.add (continuous_id.mul ih)
 
 theorem s3primAux_hasDerivAt (cs : List ℚ) (n : ℕ) (x : ℝ) :
     HasDerivAt (s3primAux cs n) (x^n * s3eval cs x) x := by

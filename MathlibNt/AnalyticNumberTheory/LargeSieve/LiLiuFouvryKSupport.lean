@@ -41,5 +41,3 @@ theorem wMaskedOriginal_abs_le_largeSupport_kscale
   ring
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
-
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeSupport_kscale

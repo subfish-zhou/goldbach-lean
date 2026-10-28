@@ -1,0 +1,18 @@
+{
+  "MathlibNt.SieveTheory.LiLiuGoldbachFinalCoefficientsReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachOneNineLiteralExponent": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "Goldbach.OnePlusOneNine"
+    ]
+  }
+}

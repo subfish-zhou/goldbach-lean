@@ -1,0 +1,46 @@
+{
+  "B": {
+    "values": 10541,
+    "anchors": 2636,
+    "exact_original_match": true,
+    "final_value": 582213039803965,
+    "source_sha256": "da97b70a19dd0dbddbb95d4b598492dc2c583ad5a2ebfcbcadf8fec53a469113"
+  },
+  "C": {
+    "values": 2541,
+    "anchors": 636,
+    "exact_original_match": true,
+    "final_value": 4671211498619,
+    "source_sha256": "fc9e88a1e7a212f8d7b2bb277199866321008f2a70d661c3d0e51bc5010334a7"
+  },
+  "D": {
+    "values": 2541,
+    "anchors": 636,
+    "exact_original_match": true,
+    "final_value": 178546965688,
+    "source_sha256": "44b284e2921155476b7339db24c62ca36f3307b9ffc00774d492bdbeba462a04"
+  },
+  "outerq": {
+    "values": 10541,
+    "exact_original_match": true,
+    "source_sha256": "b768586f167998e4c2a2fa7c76fdbb87fe41bbdc5ca0c94aa9d2336b84d329c9"
+  },
+  "outer": {
+    "values": 10541,
+    "anchors": 2636,
+    "exact_original_match": true,
+    "final_value": 4910932051664422,
+    "source_sha256": "07c4147c532f6bed5a7ebf596eeae3d6f633ba4a37456463115b42779ac85805"
+  },
+  "default_tail": "The definitions return zero above 10540 for B/outer/outerq and above 2540 for C/D, matching the original block tables.",
+  "arithmetic": "Exact Python integers, not floating point; Lean consumers are checked separately.",
+  "baseline_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "original_source_sha256": {
+    "B": "d2a8bd20ac142d9be9d84dada08a27015fa944c185a0b2c6187d1d071a166e1f",
+    "Bq": "9e1a3769d6801c9adf04417d4690f9d734e772f5960db208811929f7e8bac1a4",
+    "C": "5a0dc8a6c04bf8050d7660b189283307763bf4238d910621ffeef63a08f5dffb",
+    "D": "33ec3b6db94444f4021234e774fa1940f1bf1d679b176f9d5bacffba8cdd70ba",
+    "outer": "77d13f96dab6fbb3062f5ea1c71c9eb4b07a1fbdef74d0794fbf25f8e655ee30",
+    "outerq": "e963014e2a819f49cf497f2f02f8eb6587943b7a726722fc8bd6584b8dcde17b"
+  }
+}

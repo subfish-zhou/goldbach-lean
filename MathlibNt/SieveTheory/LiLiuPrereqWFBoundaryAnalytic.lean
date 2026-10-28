@@ -140,8 +140,5 @@ theorem window_sum_le (P R : Finset ℕ) {D ε K x k : ℝ} {b : ℕ → ℝ}
     dsimp [a] at *
     nlinarith
 
-#print axioms log_interval_sum_le
-#print axioms window_sum_le
-
 end BoundaryAnalytic
 end MathlibNt.SieveTheory.LiLiuPrereqWF

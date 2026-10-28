@@ -45,35 +45,6 @@ theorem upperWeight_ceil (M : ℕ) (L : ℝ) :
   ext n
   simp only [upperWeight_apply, upperAdmissibleSet_ceil, ← nat_lt_real_iff_lt_ceil]
 
-theorem setWeight_ceil (L : ℝ) (s : Finset ℕ) :
-    setWeight (⌈L⌉₊ : ℝ) s = setWeight L s := by
-  simp only [setWeight, lowerAdmissibleSet_ceil, ← nat_lt_real_iff_lt_ceil]
-
-theorem upperSetWeight_ceil (L : ℝ) (s : Finset ℕ) :
-    upperSetWeight (⌈L⌉₊ : ℝ) s = upperSetWeight L s := by
-  simp only [upperSetWeight, upperAdmissibleSet_ceil, ← nat_lt_real_iff_lt_ceil]
-
-theorem lowerBoundary_ceil (L : ℝ) (q : ℕ) (s : Finset ℕ) :
-    LowerBoundary (⌈L⌉₊ : ℝ) q s ↔ LowerBoundary L q s := by
-  unfold LowerBoundary
-  simp only [lowerAdmissibleSet_ceil, ← nat_lt_real_iff_lt_ceil,
-    ← not_lt, ← integer_cubic_lt_ceil]
-
-theorem upperBoundary_ceil (L : ℝ) (q : ℕ) (s : Finset ℕ) :
-    UpperBoundary (⌈L⌉₊ : ℝ) q s ↔ UpperBoundary L q s := by
-  unfold UpperBoundary
-  simp only [upperAdmissibleSet_ceil, ← nat_lt_real_iff_lt_ceil,
-    ← not_lt, ← integer_cubic_lt_ceil]
-
-theorem densityDefects_ceil (L : ℝ) (g : ℕ → ℝ) (ps : List ℕ) :
-    lowerDensityDefect (⌈L⌉₊ : ℝ) g ps = lowerDensityDefect L g ps ∧
-    upperDensityDefect (⌈L⌉₊ : ℝ) g ps = upperDensityDefect L g ps := by
-  induction ps with
-  | nil => exact ⟨rfl, rfl⟩
-  | cons p ps ih =>
-      simp only [lowerDensityDefect, upperDensityDefect, ih.1, ih.2,
-        lowerBoundaryDensity, upperBoundaryDensity, lowerBoundary_ceil, upperBoundary_ceil,
-        and_self]
 
 /-- The coordinate uses the rounded level but the original real cutoff. -/
 noncomputable def roundedSieveCoordinate (L u : ℝ) : ℝ :=
@@ -93,18 +64,6 @@ theorem roundedSieveCoordinate_cutoff {L u : ℝ} (hL : 1 < L) (hu : 1 < u) :
   field_simp
   exact Real.exp_log (by linarith)
 
-theorem roundedSieveCoordinate_prime_cutoff {L u : ℝ}
-    (hL : 1 < L) (hu : 1 < u) (p : ℕ) :
-    p < ⌈(⌈L⌉₊ : ℝ) ^ (1 / roundedSieveCoordinate L u)⌉₊ ↔ (p : ℝ) < u := by
-  rw [roundedSieveCoordinate_cutoff hL hu, Nat.lt_ceil]
-
-theorem roundedSieveCoordinate_carrier (P : Finset ℕ) {L u : ℝ}
-    (hL : 1 < L) (hu : 1 < u) :
-    P.filter (fun p : ℕ => p.Prime ∧
-      p < ⌈(⌈L⌉₊ : ℝ) ^ (1 / roundedSieveCoordinate L u)⌉₊) =
-    P.filter (fun p : ℕ => p.Prime ∧ (p : ℝ) < u) := by
-  ext p
-  simp only [Finset.mem_filter, roundedSieveCoordinate_prime_cutoff hL hu]
 
 theorem small_rounded_cutoff_bounds {D ε : ℝ}
     (hD : 2 ≤ D) (hε : 0 < ε) (hε1 : ε ≤ 1) :

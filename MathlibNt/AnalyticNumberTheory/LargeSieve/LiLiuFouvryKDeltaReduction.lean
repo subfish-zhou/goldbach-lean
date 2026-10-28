@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmegaReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaDyadic
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction
 noncomputable section
 open Classical Finset Filter

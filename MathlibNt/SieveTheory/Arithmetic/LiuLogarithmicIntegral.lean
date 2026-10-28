@@ -22,12 +22,6 @@ namespace MathlibNt.SieveTheory.LiuWeight
 noncomputable def liuLogarithmicIntegral (κ x : ℝ) : ℝ :=
   κ + ∫ t in (2 : ℝ)..x, 1 / Real.log t
 
-/-- Changing the additive normalization changes the logarithmic integral by
-exactly the same constant. -/
-@[simp] theorem liuLogarithmicIntegral_sub_normalization
-    (κ₂ κ₁ x : ℝ) :
-    liuLogarithmicIntegral κ₂ x - liuLogarithmicIntegral κ₁ x = κ₂ - κ₁ := by
-  simp [liuLogarithmicIntegral]
 
 /-- Difference between Liu's genuine logarithmic integral and the `x / log x`
 proxy used in the source main-term calculation. -/

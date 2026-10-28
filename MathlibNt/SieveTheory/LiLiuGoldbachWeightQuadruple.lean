@@ -10,8 +10,6 @@ open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachWeightQuadruple (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The weakly ordered closed triple sum
 `Σ_{z≤r≤s≤t≤b} H(A,N*r,rst;s)`. -/
@@ -47,53 +45,6 @@ noncomputable def goldbachWeightG12 (A : Finset ℕ) (N : ℕ) (z b c : ℝ) : �
         ∑ q ∈ goldbachClosedPrimes N (r : ℝ) (s : ℝ),
           literalH A (N * r) (r * q * s * t) q
 
-theorem goldbachWeightT14_nonneg (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
-    0 ≤ goldbachWeightT14 A N z b := by
-  unfold goldbachWeightT14
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A (N * r) (r * s * t) s
-
-theorem goldbachWeightT15_nonneg (A : Finset ℕ) (N : ℕ) (z b c : ℝ) :
-    0 ≤ goldbachWeightT15 A N z b c := by
-  unfold goldbachWeightT15
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A (N * r) (r * s * t) s
-
-theorem goldbachWeightG11_nonneg (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
-    0 ≤ goldbachWeightG11 A N z b := by
-  unfold goldbachWeightG11
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  refine Finset.sum_nonneg ?_
-  intro q hq
-  exact literalH_nonneg A (N * r) (r * q * s * t) q
-
-theorem goldbachWeightG12_nonneg (A : Finset ℕ) (N : ℕ) (z b c : ℝ) :
-    0 ≤ goldbachWeightG12 A N z b c := by
-  unfold goldbachWeightG12
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  refine Finset.sum_nonneg ?_
-  intro q hq
-  exact literalH_nonneg A (N * r) (r * q * s * t) q
 
 private theorem goldbachWeightQuad_middleCarrier_eq
     (N r s : ℕ) (hrPrime : r.Prime) :

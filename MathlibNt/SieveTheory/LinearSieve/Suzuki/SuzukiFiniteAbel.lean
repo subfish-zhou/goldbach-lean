@@ -6,84 +6,6 @@ namespace MathlibNt.SieveTheory.LinearSieve
 
 open scoped BigOperators
 
-/-- Finite Abel summation on an initial segment. -/
-theorem finiteAbelSum_range {𝕜 : Type*} [CommRing 𝕜]
-    {R H : ℕ → 𝕜} (n : ℕ) :
-    (∑ i ∈ Finset.range n, (R i - R (i + 1)) * H i) =
-      R 0 * H 0 - R n * H n +
-        ∑ i ∈ Finset.range n, R (i + 1) * (H (i + 1) - H i) := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-      simp only [Finset.sum_range_succ, ih]
-      ring
-
-/-- Exact finite Abel identity on the natural interval `[w,z)`.  The term
-`R (x+1)` is the right-endpoint value in the discrete Stieltjes increment. -/
-theorem finiteAbelSum_Ico {𝕜 : Type*} [CommRing 𝕜]
-    {a R H : ℕ → 𝕜} {w z : ℕ} (hwz : w ≤ z)
-    (hdiff : ∀ n ∈ Finset.Ico w z, a n = R n - R (n + 1)) :
-    (∑ n ∈ Finset.Ico w z, a n * H n) =
-      R w * H w - R z * H z +
-        ∑ n ∈ Finset.Ico w z, R (n + 1) * (H (n + 1) - H n) := by
-  simp only [Finset.sum_Ico_eq_sum_range]
-  have hdiff' : ∀ i ∈ Finset.range (z - w),
-      a (w + i) = R (w + i) - R (w + i + 1) := by
-    intro i hi
-    apply hdiff
-    simp only [Finset.mem_Ico]
-    constructor
-    · omega
-    · have hi' : i < z - w := Finset.mem_range.mp hi
-      omega
-  calc
-    (∑ i ∈ Finset.range (z - w), a (w + i) * H (w + i)) =
-        ∑ i ∈ Finset.range (z - w),
-          (R (w + i) - R (w + i + 1)) * H (w + i) := by
-      apply Finset.sum_congr rfl
-      intro i hi
-      rw [hdiff' i hi]
-    _ = R w * H w - R z * H z +
-        ∑ i ∈ Finset.range (z - w),
-          R (w + i + 1) * (H (w + i + 1) - H (w + i)) := by
-      simpa only [Nat.add_zero, Nat.add_assoc, Nat.add_sub_of_le hwz] using
-        (finiteAbelSum_range (R := fun i => R (w + i))
-          (H := fun i => H (w + i)) (z - w))
-
-
-/-- Suzuki Lemma 8.5's exact finite Abel identity, before replacing `R` by its
-main term plus error.  `R z = 1` corresponds to the empty tail at the upper
-endpoint. -/
-theorem suzukiLemma85_finiteAbel {𝕜 : Type*} [CommRing 𝕜]
-    {a R H : ℕ → 𝕜} {w z : ℕ}
-    (hwz : w ≤ z) (hRz : R z = 1)
-    (hdiff : ∀ n ∈ Finset.Ico w z, a n = R n - R (n + 1)) :
-    (∑ n ∈ Finset.Ico w z, a n * H n) =
-      -H z + R w * H w +
-        ∑ n ∈ Finset.Ico w z, R (n + 1) * (H (n + 1) - H n) := by
-  rw [finiteAbelSum_Ico hwz hdiff, hRz]
-  ring
-
-/-- Fully explicit tail-sum form.  A prime sum is obtained by taking `a n = 0`
-off primes.  No positivity, monotonicity, continuity, or primality hypothesis is
-used by this exact finite identity. -/
-theorem suzukiLemma85_finiteAbel_tail {𝕜 : Type*} [CommRing 𝕜]
-    (a H : ℕ → 𝕜) {w z : ℕ} (hwz : w ≤ z) :
-    (∑ n ∈ Finset.Ico w z, a n * H n) =
-      -H z + (1 + ∑ p ∈ Finset.Ico w z, a p) * H w +
-        ∑ n ∈ Finset.Ico w z,
-          (1 + ∑ p ∈ Finset.Ico (n + 1) z, a p) *
-            (H (n + 1) - H n) := by
-  let R : ℕ → 𝕜 := fun x => 1 + ∑ p ∈ Finset.Ico x z, a p
-  apply suzukiLemma85_finiteAbel (R := R) hwz
-  · simp [R]
-  · intro n hn
-    have hnz : n ≤ z := (Finset.mem_Ico.mp hn).2.le
-    have hsnz : n + 1 ≤ z := (Finset.mem_Ico.mp hn).2
-    dsimp [R]
-    rw [Finset.sum_Ico_eq_sub a hnz, Finset.sum_Ico_eq_sub a hsnz,
-      Finset.sum_range_succ]
-    ring
 
 /-- Sum `(R x - R y) * g x` over consecutive nodes `x,y` of a finite list. -/
 def finiteNodeAtomSum {α A : Type*} [CommRing A]
@@ -216,35 +138,6 @@ theorem finiteNodeAbel_mainRatio_errorVariation
           finiteNodeVariationSum E g (w :: interior ++ [u])) := by
       rw [finiteNodeMainRatio_boundary_variation]
 
-/-- At a nondegenerate upper endpoint the main ratio has the expected value
-one, so its upper boundary term is literally `-g z`. -/
-@[simp] theorem finiteNodeLogRatio_self {z : ℝ} (hz : Real.log z ≠ 0) :
-    finiteNodeLogRatio z z = 1 := by
-  simp [finiteNodeLogRatio, hz]
-
-/-- A finite adjacent-edge majorant telescopes.  Pairwise control is stronger than
-needed, but matches the ordered Suzuki node list. -/
-theorem finiteNodeVariationSum_le_telescope
-    {α : Type*} (E g t : α → ℝ) (C : ℝ) (w z : α) (interior : List α)
-    (hedge : (w :: interior ++ [z]).Pairwise
-      (fun x y => E y * (g y - g x) ≤ C * (t x - t y))) :
-    finiteNodeVariationSum E g (w :: interior ++ [z]) ≤ C * (t w - t z) := by
-  induction interior generalizing w with
-  | nil =>
-      simpa [finiteNodeVariationSum] using hedge
-  | cons x xs ih =>
-      simp only [List.cons_append] at hedge ⊢
-      have hfirst : E x * (g x - g w) ≤ C * (t w - t x) := by
-        exact (List.pairwise_cons.mp hedge).1 x (by simp)
-      have htail : finiteNodeVariationSum E g (x :: xs ++ [z]) ≤
-          C * (t x - t z) :=
-        ih x (List.pairwise_cons.mp hedge).2
-      change E x * (g x - g w) + finiteNodeVariationSum E g (x :: xs ++ [z]) ≤
-        C * (t w - t z)
-      calc
-        E x * (g x - g w) + finiteNodeVariationSum E g (x :: xs ++ [z]) ≤
-            C * (t w - t x) + C * (t x - t z) := add_le_add hfirst htail
-        _ = C * (t w - t z) := by ring
 
 theorem finiteNodeVariationSum_mono_of_pairwise
     {α : Type*} (E B g : α → ℝ) (nodes : List α)

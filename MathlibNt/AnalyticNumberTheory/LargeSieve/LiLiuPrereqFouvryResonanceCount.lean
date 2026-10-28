@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
 
 /-!
 # Finite counting of the genuine zero-numerator branch
@@ -131,59 +130,5 @@ theorem iv3_resonance_card_le_divisor_sum
   · exact iv3_resonance_encode_injOn ha hδ'
       (fun t ht => ⟨(hS t ht).1, (hS t ht).2.1, (hS t ht).2.2.2.2⟩)
 
-/-- Coordinate-dependent nonnegative weights can be summed directly over
-the finite divisor encoding; arbitrary signed original weights are allowed. -/
-theorem iv3_resonance_sum_le_divisor_sum
-    {d₁ n n₂' s' : ℕ} {a h : ℤ} (ha : a ≠ 0)
-    (hP : h * n₂' * s' ≠ 0) (hδ' : (d₁ : ℤ) * n - n₂' ≠ 0)
-    (S : Finset (ℕ × ℕ × ℤ))
-    (hS : ∀ t ∈ S, 0 < t.1 ∧ 0 < t.2.1 ∧
-      (d₁ * n).Coprime t.1 ∧ (d₁ : ℤ) * n - t.1 ≠ 0 ∧
-      iv3CorrelationNumerator d₁ n t.1 n₂' t.2.1 s' a h t.2.2 = 0)
-    (w : ℕ × ℕ × ℤ → ℝ) (W : ℕ → ℕ → ℝ)
-    (hW : ∀ j k, 0 ≤ W j k) (hw : ∀ t ∈ S, w t ≤ W t.1 t.2.1) :
-    (∑ t ∈ S, w t) ≤
-      ∑ n₂ ∈ (h * n₂' * s').natAbs.divisors,
-        ∑ s ∈ ((h * n₂' * s') * ((d₁ : ℤ) * n - n₂)).natAbs.divisors,
-          W n₂ s := by
-  have hinj := iv3_resonance_encode_injOn ha hδ'
-    (fun t ht => ⟨(hS t ht).1, (hS t ht).2.1, (hS t ht).2.2.2.2⟩)
-  have hsub : S.image iv3ResonanceEncode ⊆
-      iv3ResonanceDivisorPairs d₁ n (h * n₂' * s') := by
-    rintro z hz
-    obtain ⟨t, ht, rfl⟩ := mem_image.mp hz
-    exact iv3_resonance_encode_mem ha hP (hS t ht).2.2.1
-      (hS t ht).2.2.2.1 (hS t ht).2.2.2.2
-  calc
-    _ ≤ ∑ t ∈ S, W t.1 t.2.1 := sum_le_sum hw
-    _ = ∑ z ∈ S.image iv3ResonanceEncode, W z.1 z.2 := by
-      rw [sum_image hinj]
-      rfl
-    _ ≤ ∑ z ∈ iv3ResonanceDivisorPairs d₁ n (h * n₂' * s'), W z.1 z.2 :=
-      sum_le_sum_of_subset_of_nonneg hsub (fun z _ _ => hW z.1 z.2)
-    _ = _ := by rw [iv3ResonanceDivisorPairs, sum_sigma]
-
-/-- In particular each fixed Gram weight or span bound can be paid once
-per divisor encoding, with the actual resonance multiplicity. -/
-theorem iv3_resonance_sum_le_const_mul
-    {d₁ n n₂' s' : ℕ} {a h : ℤ} (ha : a ≠ 0)
-    (hP : h * n₂' * s' ≠ 0) (hδ' : (d₁ : ℤ) * n - n₂' ≠ 0)
-    (S : Finset (ℕ × ℕ × ℤ))
-    (hS : ∀ t ∈ S, 0 < t.1 ∧ 0 < t.2.1 ∧
-      (d₁ * n).Coprime t.1 ∧ (d₁ : ℤ) * n - t.1 ≠ 0 ∧
-      iv3CorrelationNumerator d₁ n t.1 n₂' t.2.1 s' a h t.2.2 = 0)
-    (w : ℕ × ℕ × ℤ → ℝ) {B : ℝ} (hB : 0 ≤ B)
-    (hw : ∀ t ∈ S, w t ≤ B) :
-    (∑ t ∈ S, w t) ≤ B *
-      (∑ n₂ ∈ (h * n₂' * s').natAbs.divisors,
-        (fouvryTau 2 ((h * n₂' * s') * ((d₁ : ℤ) * n - n₂)).natAbs : ℝ)) := by
-  have hc : (S.card : ℝ) ≤
-      ∑ n₂ ∈ (h * n₂' * s').natAbs.divisors,
-        (fouvryTau 2 ((h * n₂' * s') * ((d₁ : ℤ) * n - n₂)).natAbs : ℝ) := by
-    exact_mod_cast iv3_resonance_card_le_divisor_sum ha hP hδ' S hS
-  calc
-    _ ≤ ∑ _t ∈ S, B := sum_le_sum hw
-    _ = B * S.card := by simp [mul_comm]
-    _ ≤ _ := mul_le_mul_of_nonneg_left hc hB
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

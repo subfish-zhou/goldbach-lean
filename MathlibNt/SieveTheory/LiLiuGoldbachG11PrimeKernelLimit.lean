@@ -92,58 +92,6 @@ def goldbachG11OrderedPrimeLabels (N : ℕ) : Finset GoldbachG11Label :=
   (goldbachG11PrimeBox N (fun _ => 4 / 53) (fun _ => 4 / 33)).filter
     (fun v => v.2.2.1 ≤ v.2.2.2 ∧ v.2.2.2 ≤ v.2.1 ∧ v.2.1 ≤ v.1)
 
-theorem goldbachG11Labels_eq_coprime_filter (N : ℕ) :
-    goldbachG11Labels N ((N : ℝ) ^ (4 / 53 : ℝ)) ((N : ℝ) ^ (4 / 33 : ℝ)) =
-      (goldbachG11OrderedPrimeLabels N).filter
-        (fun v => Nat.Coprime (goldbachG11LabelProd v) N) := by
-  classical
-  ext ⟨t, s, r, q⟩
-  constructor
-  · intro hv
-    have hp := goldbachG11Labels_subset_primeBox N hv
-    obtain ⟨_, _, _, _, hc, _, hrq, hqs, hst, _⟩ :=
-      mem_goldbachG11Labels_iff.mp hv
-    exact Finset.mem_filter.mpr ⟨Finset.mem_filter.mpr ⟨hp, hrq, hqs, hst⟩, hc⟩
-  · intro hv
-    obtain ⟨hv, hc⟩ := Finset.mem_filter.mp hv
-    obtain ⟨hv, hrq, hqs, hst⟩ := Finset.mem_filter.mp hv
-    simp only [goldbachG11PrimeBox, Finset.mem_sigma, mem_goldbachG11PrimeInterval] at hv
-    exact mem_goldbachG11Labels_iff.mpr
-      ⟨hv.2.2.1.1, hv.2.2.2.1, hv.2.1.1, hv.1.1, hc,
-        hv.2.2.1.2.1.le, hrq, hqs, hst, hv.1.2.2⟩
-
-theorem goldbachG11PrimeKernel_eq_logCoordinateSum (h : ℝ → ℝ) (N : ℕ) :
-    goldbachG11PrimeKernel h N =
-      ∑ v ∈ goldbachG11Labels N ((N : ℝ) ^ (4 / 53 : ℝ)) ((N : ℝ) ^ (4 / 33 : ℝ)),
-        (h (Real.log (v.2.2.1 : ℝ) / Real.log (N : ℝ)) /
-          (Real.log (v.2.2.2 : ℝ) / Real.log (N : ℝ))) *
-            (1 / (goldbachG11LabelProd v : ℝ)) := by
-  apply Finset.sum_congr rfl
-  intro v _
-  simp only [div_eq_mul_inv, mul_inv, inv_inv]
-  ring
-
-/-- Removing coprimality is only an upper bound; ordering and all diagonals remain. -/
-theorem goldbachG11PrimeKernel_le_orderedSum (h : ℝ → ℝ)
-    (hh : ∀ x ∈ Icc (4 / 53 : ℝ) (4 / 33), 0 ≤ h x)
-    {N : ℕ} (hN : 4 ≤ N) :
-    goldbachG11PrimeKernel h N ≤
-      ∑ v ∈ goldbachG11OrderedPrimeLabels N,
-        h (Real.log (v.2.2.1 : ℝ) / Real.log (N : ℝ)) * Real.log (N : ℝ) /
-          ((goldbachG11LabelProd v : ℝ) * Real.log (v.2.2.2 : ℝ)) := by
-  classical
-  unfold goldbachG11PrimeKernel
-  rw [goldbachG11Labels_eq_coprime_filter]
-  apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
-  rintro ⟨t, s, r, q⟩ hv _
-  obtain ⟨hp, _⟩ := Finset.mem_filter.mp hv
-  simp only [goldbachG11PrimeBox, Finset.mem_sigma, mem_goldbachG11PrimeInterval] at hp
-  have hr := goldbachG11_logPrimeExponent_mem (by omega : 2 ≤ N)
-    hp.2.2.1.1 hp.2.2.1.2.1.le hp.2.2.1.2.2
-  exact div_nonneg (mul_nonneg (hh _ hr)
-    (Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))))
-    (mul_nonneg (Nat.cast_nonneg _)
-      (Real.log_pos (by exact_mod_cast hp.2.2.2.1.one_lt)).le)
 
 def goldbachG11PrimeBoxContribution (h : ℝ → ℝ) (N : ℕ) (lo hi : Fin 4 → ℝ) : ℝ :=
   ∑ v ∈ (goldbachG11Labels N ((N : ℝ) ^ (4 / 53 : ℝ))
@@ -250,41 +198,5 @@ theorem goldbachG11PrimeKernel_le_fixedCover_eventually {ι : Type*} (S : Finset
   exact (goldbachG11PrimeKernel_le_boxCover S h hh hN4 lo hi C hC hbound
     (hcover N hN4)).trans (by linarith [(abs_lt.mp he).2])
 
-/-- Exact finite triangular identity. The diagonal is present with its full weight. -/
-theorem goldbachG11PrimeKernel_triangle (S : Finset ℕ) (w : ℕ → ℝ) :
-    2 * (∑ s ∈ S, ∑ t ∈ S with s ≤ t, w s * w t) =
-      (∑ s ∈ S, w s) ^ 2 + ∑ s ∈ S, (w s) ^ 2 := by
-  classical
-  have hsplit (s : ℕ) (hs : s ∈ S) :
-      (∑ t ∈ S with s ≤ t, w s * w t) +
-        (∑ t ∈ S with t ≤ s, w s * w t) =
-          (∑ t ∈ S, w s * w t) + (w s) ^ 2 := by
-    rw [Finset.sum_filter, Finset.sum_filter, ← Finset.sum_add_distrib]
-    have he : ∀ t, (if s ≤ t then w s * w t else 0) +
-        (if t ≤ s then w s * w t else 0) =
-          w s * w t + if t = s then (w s) ^ 2 else 0 := by
-      intro t
-      rcases lt_trichotomy s t with h | h | h
-      · simp [h.le, not_le.mpr h, ne_of_gt h]
-      · subst t
-        simp [pow_two]
-      · simp [h.le, not_le.mpr h, ne_of_lt h]
-    simp_rw [he, Finset.sum_add_distrib]
-    simp [hs]
-  have hswap : (∑ s ∈ S, ∑ t ∈ S with t ≤ s, w s * w t) =
-      ∑ s ∈ S, ∑ t ∈ S with s ≤ t, w s * w t := by
-    simp only [Finset.sum_filter]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro s _
-    apply Finset.sum_congr rfl
-    intro t _
-    rw [mul_comm]
-  have ht := Finset.sum_congr rfl hsplit
-  simp only [Finset.sum_add_distrib] at ht
-  rw [hswap] at ht
-  calc
-    _ = (∑ s ∈ S, ∑ t ∈ S, w s * w t) + ∑ s ∈ S, (w s) ^ 2 := by linarith [ht]
-    _ = _ := by rw [pow_two, Finset.sum_mul_sum]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

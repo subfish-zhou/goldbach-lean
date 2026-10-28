@@ -1,10 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEndpointSourceLargeLogUniform
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma0CaseBUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeCoefficientUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144SourceLargeLogFixedThreshold
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIFinalProducer
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIMovingSuccessor
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144EndpointSourceBoundsFinal
 
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBudgetCore
 
@@ -506,34 +505,6 @@ theorem exists_lemma14_4_caseI_final_producer_sourceLargeLog_pointwise_uniform_i
     exact h10
   rw [h149, h2]
   linarith [hmiddle, h11, h12qSupported, hside]
-
-/-- Compatibility specialization of the producer uniform in `S`. -/
-theorem exists_lemma14_4_caseI_final_producer_sourceLargeLog_pointwise
-    (S : BoundingSieve) (H : Section13HatLayers) {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ) :
-    ∃ C1min CB : ℝ, 1 ≤ C1min ∧ 0 < CB ∧
-      ∀ (C1 C K : ℝ) (M D : ℕ) (s : ℝ),
-        C1min ≤ C1 → max 3 CB ≤ C → 2 ≤ K →
-        HasDimensionOneLocalProductBound S K →
-        2 ≤ M →
-        s ∈ KappaOneModel.parityDomain 2 M →
-        s - 1 ∈ KappaOneModel.parityDomain 2 (M - 1) →
-        2 ≤ s → 2 + (ErrorSign.ofDepth M).epsilon ≤ s →
-        C1 * K ^ Θ < Real.log (D : ℝ) →
-        s ≤ sourceSigma (D : ℝ) d →
-        H.betaHat + (ErrorSign.ofDepth M).epsilon < s →
-        Lemma144MovingDomainGlobalDepthAt S H C K d Δ (M - 1) 2 →
-        suzukiActualT S M D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-          suzukiVProduct S ⌈(D : ℝ) ^ (1 / s)⌉₊ *
-            finiteSourceLayer 1 2 M s +
-          sigma12InheritedBudget S H M D
-            ⌈(D : ℝ) ^ (1 / s)⌉₊ C K d Δ s := by
-  obtain ⟨C1min, CB, hC1min, hCB, hall⟩ :=
-    exists_lemma14_4_caseI_final_producer_sourceLargeLog_pointwise_uniform_in_S
-      H hH hsrc
-  exact ⟨C1min, CB, hC1min, hCB, hall S⟩
-
 
 
 end MathlibNt.SieveTheory

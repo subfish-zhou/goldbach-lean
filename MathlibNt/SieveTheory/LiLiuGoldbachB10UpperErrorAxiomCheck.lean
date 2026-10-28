@@ -1,4 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10UpperError
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachB10_upperErrSum_le_commonModulusSum
-#print axioms goldbachB10_upperErrSum_le_commonModulusSum

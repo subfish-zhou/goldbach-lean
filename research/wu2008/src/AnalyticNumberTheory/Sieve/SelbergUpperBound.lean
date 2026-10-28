@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Selberg.TruncatedOptimalWeights
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.Antidiag.Nat
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -61,6 +62,8 @@ References:
 -/
 
 namespace AnalyticNumberTheory.Sieve
+
+open MathlibNt.SieveTheory.LiuWeight
 
 open Finset Real
 
@@ -312,109 +315,47 @@ noncomputable def optimalSelbergWeight (S : BoundingSieve) : ℕ → ℝ :=
       (∑ e ∈ S.prodPrimes.divisors,
         if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0) / S.nu d
     else 0
+private theorem fullSelbergCarrier_eq (S : BoundingSieve) :
+    truncatedSelbergCarrier S S.prodPrimes = S.prodPrimes.divisors := by
+  apply Finset.filter_eq_self.mpr
+  intro d hd
+  exact Nat.le_of_dvd (Nat.pos_of_ne_zero S.prodPrimes_ne_zero)
+    (Nat.mem_divisors.mp hd).1
 
-/-- Standard Moebius sum: `Σ_{d|n} μ(d) = [n=1]`. -/
-lemma sum_moebius_eq_one {n : ℕ} :
-    (∑ d ∈ n.divisors, (μ d : ℝ)) = if n = 1 then (1 : ℝ) else 0 := by
-  have h := ArithmeticFunction.coe_zeta_mul_coe_moebius (R := ℝ)
-  have hkey : (ζ * (μ : ArithmeticFunction ℝ)) n = (1 : ArithmeticFunction ℝ) n := by rw [h]
-  rw [ArithmeticFunction.coe_zeta_mul_apply, ArithmeticFunction.one_apply] at hkey
-  simpa [ArithmeticFunction.intCoe_apply, mul_comm] using hkey
+private theorem selbergMainTerm_eq_truncated (S : BoundingSieve) :
+    selbergMainTerm S = 1 / truncatedSelbergDenominator S S.prodPrimes := by
+  simp only [selbergMainTerm, truncatedSelbergDenominator, fullSelbergCarrier_eq, one_div]
 
-/-- For nonzero `e` with `d|e` and `l|e`,
-`l|d ↔ e/d | e/l`. This quotient form converts divisibility
-by `l` into divisibility of `e/l` for reindexing a restricted
-Moebius sum. -/
-lemma dvd_iff_div_dvd {e l d : ℕ} (he : e ≠ 0) (hd : d ∣ e) (hl : l ∣ e) :
-    l ∣ d ↔ e / d ∣ e / l := by
-  constructor
-  · exact Nat.div_dvd_div_left hd
-  · intro hdl
-    have h := Nat.div_dvd_div_left (Nat.div_dvd_of_dvd hl) hdl
-    simpa only [Nat.div_div_self hl he, Nat.div_div_self hd he] using h
+private theorem optimalSelbergX_eq_truncated (S : BoundingSieve) {l : ℕ}
+    (hl : l ∣ S.prodPrimes) :
+    optimalSelbergX S l = truncatedSelbergOptimalX S S.prodPrimes l := by
+  have hlC : l ∈ truncatedSelbergCarrier S S.prodPrimes := by
+    rw [fullSelbergCarrier_eq]
+    exact Nat.mem_divisors.mpr ⟨hl, S.prodPrimes_ne_zero⟩
+  rw [truncatedSelbergOptimalX, if_pos hlC, optimalSelbergX,
+    selbergMainTerm_eq_truncated]
+  ring
 
-/-- Restricted Moebius sum: for `l|e` and `e ≠ 0`,
-`Σ_{d|e, l|d} μ(e/d) = [e=l]`. -/
-lemma sum_moebius_quotient_of_dvd {e l : ℕ} (he : e ≠ 0) (hle : l ∣ e) :
-    (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
-      if e = l then (1 : ℝ) else 0 := by
-  -- Reindex d ↦ e/d: the condition [l|d] becomes [e/d | e/l].
-  have hbij :
-      (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) =
-        ∑ d ∈ e.divisors, if d ∣ e / l then (μ d : ℝ) else 0 := by
-    calc
-      (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0)
-          = ∑ d ∈ e.divisors, if e / d ∣ e / l then (μ (e / d) : ℝ) else 0 := by
-              refine Finset.sum_congr rfl fun d hd => ?_
-              simp only [dvd_iff_div_dvd he (Nat.mem_divisors.mp hd).1 hle]
-      _ = ∑ d ∈ e.divisors, if d ∣ e / l then (μ d : ℝ) else 0 :=
-        Nat.sum_div_divisors e (fun d => if d ∣ e / l then (μ d : ℝ) else 0)
-  rw [hbij]
-  -- The sum is now Σ_{d|e, d|e/l} μ(d); since e/l divides e, its index set is (e/l).divisors.
-  have hfilter : e.divisors.filter (fun d => d ∣ e / l) = (e / l).divisors :=
-    Nat.divisors_filter_dvd_of_dvd he (Nat.div_dvd_of_dvd hle)
-  rw [← Finset.sum_filter]
-  rw [hfilter]
-  rw [sum_moebius_eq_one]
-  by_cases hel : e = l
-  · have hl0 : 0 < l := Nat.pos_of_dvd_of_pos hle (Nat.pos_of_ne_zero he)
-    simp [hel]
-    exact Nat.div_self hl0
-  · have hdiv_ne : e / l ≠ 1 := by
-      intro h
-      apply hel
-      calc
-        e = l * (e / l) := by rw [mul_comm, Nat.div_mul_cancel hle]
-        _ = l * 1 := by rw [h]
-        _ = l := by rw [mul_one]
-    simp [hdiv_ne, hel]
+private theorem optimalSelbergWeight_eq_truncated (S : BoundingSieve) :
+    optimalSelbergWeight S = truncatedSelbergOptimalLambda S S.prodPrimes := by
+  funext d
+  unfold optimalSelbergWeight truncatedSelbergOptimalLambda
+  rw [fullSelbergCarrier_eq]
+  by_cases hd : d ∣ S.prodPrimes
+  · rw [dif_pos hd, if_pos (Nat.mem_divisors.mpr ⟨hd, S.prodPrimes_ne_zero⟩)]
+    apply congrArg (fun x : ℝ => x / S.nu d)
+    apply Finset.sum_congr rfl
+    intro e he
+    rw [optimalSelbergX_eq_truncated S (Nat.mem_divisors.mp he).1]
+  · rw [dif_neg hd, if_neg (fun h => hd (Nat.mem_divisors.mp h).1)]
+
 
 /-- **Normalization of the optimal weight**: `w*(1) = 1`. -/
 theorem optimalSelbergWeight_one (S : BoundingSieve) :
     optimalSelbergWeight S 1 = 1 := by
-  unfold optimalSelbergWeight
-  rw [dif_pos (one_dvd S.prodPrimes)]
-  -- Numerator: Σ_{e|P} μ(e)·x*_e = (Σg)⁻¹·Σ_e g(e)·μ(e)² = (Σg)⁻¹·Σg = 1.
-  have hnum : (∑ e ∈ S.prodPrimes.divisors,
-        (μ (e / 1) : ℝ) * optimalSelbergX S e) = 1 := by
-    have hstep1 : (∑ e ∈ S.prodPrimes.divisors,
-        (μ (e / 1) : ℝ) * optimalSelbergX S e) =
-        selbergMainTerm S * (∑ e ∈ S.prodPrimes.divisors, S.selbergTerms e) := by
-      -- e/1 = e, and μ(e)·x*_e = μ(e)·g(e)·μ(e)·T = T·g(e)·μ(e)² = T·g(e).
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro e he
-      have hsq := S.squarefree_of_mem_divisors_prodPrimes he
-      have hμsq : (μ e : ℝ) ^ 2 = 1 := by
-        exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-      unfold optimalSelbergX
-      simp only [Nat.div_one]
-      ring_nf
-      rw [hμsq]
-      ring
-    rw [hstep1]
-    unfold selbergMainTerm
-    have hsum_ne : (∑ e ∈ S.prodPrimes.divisors, S.selbergTerms e) ≠ 0 := by
-      have h1mem : (1 : ℕ) ∈ S.prodPrimes.divisors :=
-        Nat.mem_divisors.mpr ⟨one_dvd S.prodPrimes, S.prodPrimes_ne_zero⟩
-      have hpos1 : 0 < S.selbergTerms 1 := by
-        rw [BoundingSieve.selbergTerms_apply]
-        have hν1 : S.nu 1 = 1 := S.nu_mult.map_one
-        simp [hν1]
-      exact ne_of_gt (Finset.sum_pos
-        (fun e he => S.selbergTerms_pos ((Nat.mem_divisors.mp he).1)) ⟨1, h1mem⟩)
-    field_simp [hsum_ne]
-  -- The denominator is ν(1) = 1.
-  have hν1 : S.nu 1 = 1 := S.nu_mult.map_one
-  rw [hν1]
-  have hif : (∑ e ∈ S.prodPrimes.divisors,
-        if (1 : ℕ) ∣ e then (μ (e / 1) : ℝ) * optimalSelbergX S e else 0) =
-      ∑ e ∈ S.prodPrimes.divisors, (μ (e / 1) : ℝ) * optimalSelbergX S e := by
-    apply Finset.sum_congr rfl
-    intro e he
-    rw [if_pos (one_dvd e)]
-  rw [hif, hnum]
-  norm_num
+  rw [optimalSelbergWeight_eq_truncated]
+  exact truncatedSelbergOptimalLambda_one S
+    (Nat.one_le_iff_ne_zero.mpr S.prodPrimes_ne_zero)
 
 /-- **Diagonal-value identification**:
 `Σ_{d : l|d|P} ν(d)·w*(d) = x*_l`.
@@ -425,186 +366,18 @@ theorem optimalSelbergX_eq_sum_nu_mul_weight (S : BoundingSieve) (l : ℕ)
     (hl : l ∣ S.prodPrimes) :
     optimalSelbergX S l =
       ∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * optimalSelbergWeight S d else 0 := by
-  -- For d|P, ν(d)·w*(d) = y*(d) := Σ_{e : d|e|P} μ(e/d)·x*_e.
-  have hd_def : ∀ d : ℕ, d ∈ S.prodPrimes.divisors →
-      S.nu d * optimalSelbergWeight S d =
-        ∑ e ∈ S.prodPrimes.divisors, if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0 := by
-    intro d hd
-    have hdvd : d ∣ S.prodPrimes := (Nat.mem_divisors.mp hd).1
-    have hν : S.nu d ≠ 0 := S.nu_ne_zero hdvd
-    unfold optimalSelbergWeight
-    rw [dif_pos hdvd]
-    field_simp [hν]
-  -- Exchange sums: Σ_d [l|d]·Σ_e [d|e]·μ(e/d)·x*_e = Σ_e x*_e·Σ_{d : l|d|e} μ(e/d).
-  have hswap :
-      (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then
-          (∑ e ∈ S.prodPrimes.divisors, if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0)
-        else 0) =
-        ∑ e ∈ S.prodPrimes.divisors, optimalSelbergX S e *
-          (∑ d ∈ S.prodPrimes.divisors,
-            if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0) := by
-    -- First express the inner sum multiplicatively, then exchange sums.
-    calc
-      (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then
-          (∑ e ∈ S.prodPrimes.divisors, if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0)
-        else 0)
-          = ∑ d ∈ S.prodPrimes.divisors,
-              ∑ e ∈ S.prodPrimes.divisors,
-                if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0) else 0 := by
-              apply Finset.sum_congr rfl
-              intro d hd
-              by_cases hld : l ∣ d
-              · simp [hld]
-              · simp [hld]
-      _ = ∑ e ∈ S.prodPrimes.divisors,
-              ∑ d ∈ S.prodPrimes.divisors,
-                if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0) else 0 := by
-              rw [Finset.sum_comm]
-      _ = ∑ e ∈ S.prodPrimes.divisors, optimalSelbergX S e *
-              (∑ d ∈ S.prodPrimes.divisors,
-                if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0) := by
-              apply Finset.sum_congr rfl
-              intro e he
-              -- Factor the inner sum: Σ_d [l|d]·[d|e]·μ(e/d)·x*_e = x*_e·Σ_d [l|d]·[d|e]·μ(e/d).
-              have hinner : (∑ d ∈ S.prodPrimes.divisors,
-                    if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0) else 0) =
-                  optimalSelbergX S e *
-                    (∑ d ∈ S.prodPrimes.divisors,
-                      if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0) := by
-                rw [mul_comm]
-                rw [Finset.sum_mul]
-                apply Finset.sum_congr rfl
-                intro d hd
-                by_cases hld : l ∣ d
-                · by_cases hde : d ∣ e
-                  · simp [hld, hde]
-                  · simp [hld, hde]
-                · simp [hld]
-              rw [hinner]
-  -- For fixed e, the inner sum Σ_{d : l|d|e} μ(e/d) equals [e=l].
-  have hinner_delta : ∀ e : ℕ, e ∈ S.prodPrimes.divisors →
-      (∑ d ∈ S.prodPrimes.divisors,
-        if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0) =
-        if e = l then (1 : ℝ) else 0 := by
-    intro e he
-    have hdvd_e : e ∣ S.prodPrimes := (Nat.mem_divisors.mp he).1
-    have he0 : e ≠ 0 := Nat.ne_of_gt (Nat.pos_of_dvd_of_pos hdvd_e (Nat.pos_of_ne_zero S.prodPrimes_ne_zero))
-    have hrestrict :
-        (∑ d ∈ S.prodPrimes.divisors,
-          if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0) =
-          ∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0 := by
-      -- Combine the two conditions and restrict the index set to e.divisors.
-      have hfilt : S.prodPrimes.divisors.filter (fun d => l ∣ d ∧ d ∣ e) =
-          e.divisors.filter (fun d => l ∣ d) := by
-        ext d
-        simp only [Finset.mem_filter, Nat.mem_divisors]
-        constructor
-        · intro h
-          exact ⟨⟨h.2.2, he0⟩, h.2.1⟩
-        · intro h
-          exact ⟨⟨h.1.1.trans hdvd_e, S.prodPrimes_ne_zero⟩, h.2, h.1.1⟩
-      calc
-        (∑ d ∈ S.prodPrimes.divisors,
-          if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0)
-            = ∑ d ∈ S.prodPrimes.divisors, if l ∣ d ∧ d ∣ e then (μ (e / d) : ℝ) else 0 := by
-              apply Finset.sum_congr rfl
-              intro d hd
-              by_cases hld : l ∣ d <;> by_cases hde : d ∣ e <;> simp [hld, hde]
-        _ = ∑ d ∈ (S.prodPrimes.divisors.filter (fun d => l ∣ d ∧ d ∣ e)), (μ (e / d) : ℝ) := by
-              rw [← Finset.sum_filter]
-        _ = ∑ d ∈ (e.divisors.filter (fun d => l ∣ d)), (μ (e / d) : ℝ) := by
-              rw [hfilt]
-        _ = ∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0 := by
-              rw [Finset.sum_filter]
-    rw [hrestrict]
-    by_cases hle : l ∣ e
-    · rw [sum_moebius_quotient_of_dvd he0 hle]
-    · have hne : e ≠ l := by intro hel; apply hle; rw [hel]
-      -- If l does not divide e, the inner sum is empty.
-      have hsum0 : (∑ d ∈ e.divisors, if l ∣ d then (μ (e / d) : ℝ) else 0) = 0 := by
-        apply Finset.sum_eq_zero
-        intro d hd
-        by_cases hld : l ∣ d
-        · exfalso
-          apply hle
-          exact hld.trans (Nat.mem_divisors.mp hd).1
-        · simp [hld]
-      rw [hsum0]
-      simp [hne]
-  -- Combine the identities.
-  calc
-    optimalSelbergX S l
-        = ∑ e ∈ S.prodPrimes.divisors, optimalSelbergX S e *
-            (if e = l then (1 : ℝ) else 0) := by
-          have hlm : l ∈ S.prodPrimes.divisors :=
-            Nat.mem_divisors.mpr ⟨hl, S.prodPrimes_ne_zero⟩
-          simp_rw [mul_ite, mul_one, mul_zero]
-          rw [← Finset.sum_ite_eq_of_mem' S.prodPrimes.divisors l (fun e => optimalSelbergX S e) hlm]
-    _ = ∑ e ∈ S.prodPrimes.divisors, optimalSelbergX S e *
-          (∑ d ∈ S.prodPrimes.divisors,
-            if l ∣ d then (if d ∣ e then (μ (e / d) : ℝ) else 0) else 0) := by
-          apply Finset.sum_congr rfl
-          intro e he
-          rw [← hinner_delta e he]
-    _ = ∑ d ∈ S.prodPrimes.divisors, if l ∣ d then
-            (∑ e ∈ S.prodPrimes.divisors, if d ∣ e then (μ (e / d) : ℝ) * optimalSelbergX S e else 0)
-          else 0 := hswap.symm
-    _ = ∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * optimalSelbergWeight S d else 0 := by
-          apply Finset.sum_congr rfl
-          intro d hd
-          by_cases hld : l ∣ d
-          · rw [← hd_def d hd]
-          · simp [hld]
+  rw [optimalSelbergX_eq_truncated S hl, optimalSelbergWeight_eq_truncated]
+  exact truncatedSelbergOptimalX_eq_sum_nu_mul_lambda S S.prodPrimes l
+    (by rw [fullSelbergCarrier_eq]; exact Nat.mem_divisors.mpr ⟨hl, S.prodPrimes_ne_zero⟩)
 
 /-- **Optimal main-term identity**:
 `mainSum(Λ²w*) = (Σ_{l|P} selbergTerms l)⁻¹`,
 the equality case of `mainSum_cauchy_schwarz_lower_bound`. -/
 theorem optimalSelbergMainSum_eq (S : BoundingSieve) :
     S.mainSum (BoundingSieve.lambdaSquared (optimalSelbergWeight S)) = selbergMainTerm S := by
-  rw [mainSum_diag_via_mathlib]
-  -- The inner sum equals x*_l.
-  have hx : ∀ l ∈ S.prodPrimes.divisors,
-      (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * optimalSelbergWeight S d else 0) =
-        optimalSelbergX S l := by
-    intro l hl
-    exact (optimalSelbergX_eq_sum_nu_mul_weight S l ((Nat.mem_divisors.mp hl).1)).symm
-  have hsum1 : (∑ l ∈ S.prodPrimes.divisors,
-        (S.selbergTerms l)⁻¹ *
-          (∑ d ∈ S.prodPrimes.divisors, if l ∣ d then S.nu d * optimalSelbergWeight S d else 0) ^ 2) =
-      ∑ l ∈ S.prodPrimes.divisors, (S.selbergTerms l)⁻¹ * (optimalSelbergX S l) ^ 2 := by
-    apply Finset.sum_congr rfl
-    intro l hl
-    rw [← hx l hl]
-  rw [hsum1]
-  -- Expand x*_l = g(l)·μ(l)·T; each summand becomes T²·g(l).
-  have hsum2 : (∑ l ∈ S.prodPrimes.divisors,
-        (S.selbergTerms l)⁻¹ * (optimalSelbergX S l) ^ 2) =
-      (selbergMainTerm S) ^ 2 * (∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l) := by
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro l hl
-    have hg : S.selbergTerms l ≠ 0 := (S.selbergTerms_pos ((Nat.mem_divisors.mp hl).1)).ne'
-    have hsq := S.squarefree_of_mem_divisors_prodPrimes hl
-    have hμsq : ((μ l : ℝ) ^ 2) = 1 := by
-      exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hsq
-    unfold optimalSelbergX
-    have hx2 : (S.selbergTerms l * (μ l : ℝ) * selbergMainTerm S) ^ 2 =
-        (S.selbergTerms l) ^ 2 * ((μ l : ℝ) ^ 2) * (selbergMainTerm S) ^ 2 := by ring
-    rw [hx2, hμsq]
-    field_simp [hg]
-  rw [hsum2]
-  -- T²·Σg = T
-  unfold selbergMainTerm
-  have hsum_ne : (∑ l ∈ S.prodPrimes.divisors, S.selbergTerms l) ≠ 0 := by
-    have h1mem : (1 : ℕ) ∈ S.prodPrimes.divisors :=
-      Nat.mem_divisors.mpr ⟨one_dvd S.prodPrimes, S.prodPrimes_ne_zero⟩
-    have hpos1 : 0 < S.selbergTerms 1 := by
-      rw [BoundingSieve.selbergTerms_apply]
-      have hν1 : S.nu 1 = 1 := S.nu_mult.map_one
-      simp [hν1]
-    exact ne_of_gt (Finset.sum_pos
-      (fun l hl => S.selbergTerms_pos ((Nat.mem_divisors.mp hl).1)) ⟨1, h1mem⟩)
-  field_simp [hsum_ne]
+  rw [optimalSelbergWeight_eq_truncated, selbergMainTerm_eq_truncated]
+  exact mainSum_truncatedSelbergOptimalLambda S
+    (Nat.one_le_iff_ne_zero.mpr S.prodPrimes_ne_zero)
 
 /-- **Finite Selberg upper bound**: optimal Λ² weights minimize
 the main term and give

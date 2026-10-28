@@ -1,0 +1,38 @@
+{
+  "status": "read_only_followup",
+  "unused_private_candidates_unchanged_sources": {
+    "status": "read_only_candidates_not_deletions",
+    "method": "Current carrier-phase full compiled census, no other-declaration incoming refs; identifier appears once across main source text; actual source bytes must still match that census; no adjacent attributes. Source-length estimates include statements and commands, not accepted savings. Fresh current census, source context/attribute/import review and full compile remain necessary before deletion.",
+    "candidates": []
+  },
+  "private_identifier_once_candidates_in_thirteen_changed_files": [],
+  "thin_aliases_retained": [
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachS1Carrier.lean",
+      "name": "S1Carrier_primeFactors_prod_eq_self",
+      "actual_effective_lines": 3
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Switching/CorrectedSievePanBridge.lean",
+      "name": "Internal.primeFactors_prod_eq_self",
+      "actual_effective_lines": 3
+    }
+  ],
+  "thin_alias_reason": "Current source bodies are already single calls to the shared paper-Q identity. Older candidate source lengths were stale; there is no repeated induction to remove from these aliases.",
+  "distinct_endpoint_proof_retained": {
+    "file": "MathlibNt/SieveTheory/LiLiuGoldbachS3LiEulerUpper.lean",
+    "name": "S3LiEulerUpper_endpoint_large",
+    "reason": "Its epsilon<1 domain, arbitrary X and eventual threshold are stronger/different from the epsilon<2/15, N>=4 shared endpoint geometry. No replacement by the narrower statement."
+  },
+  "next_wave": {
+    "files": 13,
+    "candidate_net_main_code_lines": -78,
+    "production_applied": false,
+    "standalone_status": "Future prototype results are separate from this phase acceptance; no saving is counted.",
+    "private_names": 11,
+    "expected_new_public_helpers": 5,
+    "moved_existing_public_names": 1
+  },
+  "note": "These observations establish no global minimality or unadopted saving.",
+  "unused_private_scan_scope": "Fresh carrier census and current matching Li-Liu/Liu source files; generated names, attributed declarations and identifiers occurring more than once are excluded. Zero candidates is not a global minimality claim."
+}

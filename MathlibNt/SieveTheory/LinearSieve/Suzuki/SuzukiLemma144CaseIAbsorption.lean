@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeil
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma0Internal
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -26,21 +25,6 @@ than assumes, that every such fixed source-order side term is eventually paid
 for by the canonical midpoint gap from Claim 14.6(iii).
 -/
 
-/-- The exact `Σ₁₁` endpoint term displayed by the internal Lemma-8.7 bound. -/
-noncomputable def caseISigma11EndpointRemainder
-    (S : BoundingSieve) (N D z : ℕ) (K β s τ σ : ℝ) : ℝ :=
-  suzukiVProduct S z *
-    ((6 * K ^ 2 * finiteSourceLayer 1 β (N - 1) (τ - 1) /
-      Real.log ((D : ℝ) ^ (1 / σ))) * (τ / s))
-
-/-- The literal sum of all explicit Case-I side budgets currently exposed by
-`Σ₀`, `Σ₁₁`, and `Σ₁₂`.  No absorption inequality is a field of this object. -/
-noncomputable def caseIExplicitSideBudget
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (N D z : ℕ) (C C145 K β d Δ s τ σ : ℝ) : ℝ :=
-  suzukiSigmaZeroClaim145Budget S H N D z d Δ σ K C145 +
-    caseISigma11EndpointRemainder S N D z K β s τ σ +
-    sigma12EndpointRemainder S H N D z C K d Δ s σ
 
 /-- The source-order coefficient in Suzuki (14.23). -/
 noncomputable def caseISourceOrderCoefficient (A D d : ℝ) : ℝ :=
@@ -133,51 +117,6 @@ theorem eventually_caseISourceOrderCoefficient_le_sameC_gap
     _ ≤ ((1 - Δ) / 2) / sourceSigma D d := hdivide
     _ = (1 - Δ) / (2 * sourceSigma D d) := by ring
     _ ≤ 1 - q.ρ := hqgap
-
-/-- Budget-valued form of the scalar theorem.  The side term is the proved
-source-order majorant, not an assumed absorption inequality. -/
-theorem eventually_caseISourceOrderBudget_le_sameC_gap
-    {A B d Δ : ℝ} (hA : 0 ≤ A) (hB : 0 ≤ B)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∀ᶠ D : ℝ in atTop,
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient A D d * B ≤ (1 - q.ρ) * B := by
-  filter_upwards [eventually_caseISourceOrderCoefficient_le_sameC_gap
-      hA hΔ0 hΔ1 hd] with D hD
-  obtain ⟨q, hq, hcoef⟩ := hD
-  exact ⟨q, hq, mul_le_mul_of_nonneg_right hcoef hB⟩
-
-/-- Case-I's three displayed remainder families have one Claim-14.5 constant
-and two Lemma-8.7 endpoint constants `6 K²`.  For fixed positive `K`, their
-combined source-order coefficient is therefore eventually inside the same-`C`
-gap.  The theorem is scalar: it makes no assumption of the desired absorption
-inequality. -/
-theorem eventually_caseI_allExplicitRemainderCoefficient_le_sameC_gap
-    {A145 K d Δ : ℝ} (hA145 : 0 ≤ A145) (hK : 0 < K)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∀ᶠ D : ℝ in atTop,
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient (A145 + 12 * K ^ 2) D d ≤ 1 - q.ρ := by
-  exact eventually_caseISourceOrderCoefficient_le_sameC_gap
-    (by positivity) hΔ0 hΔ1 hd
-
-/-- Earliest remaining non-scalar edge.  It says that the literal sum of the
-three explicit API budgets has Suzuki's source order.  This is deliberately a
-frozen proposition (not an axiom and not a premise of the scalar absorption
-theorems): the reachable production cone contains no theorem simultaneously
-normalising the Claim-14.5 `Σ₀` sum and the two Lemma-8.7 endpoints to the
-inherited `errorEnvelope` budget. -/
-def Lemma144CaseIExplicitRemaindersSourceOrder : Prop :=
-  ∀ (S : BoundingSieve) (H : Section13HatLayers)
-      (N : ℕ) (C C145 K β d Δ s τ : ℝ),
-    ∃ A : ℝ, 0 ≤ A ∧ ∀ᶠ D : ℕ in atTop,
-      let σ := sourceSigma (D : ℝ) d
-      let z := ⌈(D : ℝ) ^ (1 / s)⌉₊
-      caseIExplicitSideBudget S H N D z C C145 K β d Δ s τ σ ≤
-        caseISourceOrderCoefficient A (D : ℝ) d *
-          sigma12InheritedBudget S H N D z C K d Δ s
 
 
 end MathlibNt.SieveTheory

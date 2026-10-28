@@ -1,0 +1,18 @@
+{
+  "original_generator_matches_accepted_sources": 15,
+  "panels": 40,
+  "certificate_values_compared": 15240,
+  "exact_rational_fields": 76200,
+  "preserved_public_statements": 80,
+  "all_fields_exact": true,
+  "stored_records": {
+    "literal": 6204,
+    "addExact": 4402,
+    "neg": 883,
+    "scale": 1840
+  },
+  "original_literal_records": 15240,
+  "actual_literal_records_removed": 9036,
+  "arithmetic": "Exact fractions parsed from original and actual new Lean source; operator definitions bound above. This audit does not replace Lean verification.",
+  "baseline_generator_sha256": "00c8f4a090b59c40f035ee2c1f202750465f00100446b3aeb0d397e1b8f71ae2"
+}

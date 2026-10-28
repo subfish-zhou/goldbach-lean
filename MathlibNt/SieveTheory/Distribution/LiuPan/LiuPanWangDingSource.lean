@@ -116,26 +116,6 @@ theorem log_rpow_lt_liuPanSourceIntervalLower (N : ℕ) (B : ℝ) :
   unfold liuPanSourceIntervalLower
   exact_mod_cast Nat.lt_floor_add_one (Real.log N ^ (2 * B))
 
-/-- For `N > 1`, the two-thirds upper endpoint is strictly below the fixed
-`N^(3/4)` source ceiling used in the Pan corollary. -/
-theorem liuPanSourceIntervalUpper_lt_rpow_three_fourths
-    {N : ℕ} (hN : 1 < N) :
-    (liuPanSourceIntervalUpper N : ℝ) < (N : ℝ) ^ (3 / 4 : ℝ) := by
-  have hfloor :
-      (liuPanSourceIntervalUpper N : ℝ) ≤ (N : ℝ) ^ (2 / 3 : ℝ) := by
-    unfold liuPanSourceIntervalUpper
-    exact Nat.floor_le (Real.rpow_nonneg (Nat.cast_nonneg N) _)
-  exact hfloor.trans_lt (Real.rpow_lt_rpow_of_exponent_lt
-    (by exact_mod_cast hN) (by norm_num : (2 / 3 : ℝ) < 3 / 4))
-
-/-- Liu's tenth-power source cutoff lies below the two-thirds Pan endpoint. -/
-theorem liuSourceZ10_le_liuPanSourceIntervalUpper
-    {N : ℕ} (hN : 1 ≤ N) :
-    liuSourceZ10 N ≤ liuPanSourceIntervalUpper N := by
-  unfold liuSourceZ10 liuPanSourceIntervalUpper
-  apply Nat.floor_mono
-  exact Real.rpow_le_rpow_of_exponent_le
-    (by exact_mod_cast hN) (by norm_num : (1 / 10 : ℝ) ≤ 2 / 3)
 
 /-- For every fixed Pan exponent, the logarithmic lower endpoint is eventually
 strictly below Liu's `N^(1/10)` source cutoff. -/
@@ -174,23 +154,6 @@ theorem eventually_liuPanSourceIntervalLower_lt_liuSourceZ10 (B : ℝ) :
   unfold liuPanSourceIntervalLower liuSourceZ10
   omega
 
-/-- All source-side interval and coefficient hypotheses needed for the Liu
-specialization of Corollary `(2.30)` hold eventually (with paper ε = 1/4). -/
-theorem eventually_liuPanSourceInterval_hypotheses (B : ℝ) :
-    ∀ᶠ N : ℕ in atTop,
-      Real.log N ^ (2 * B) < (liuPanSourceIntervalLower N B : ℝ) ∧
-      liuPanSourceIntervalLower N B ≤ liuPanSourceIntervalUpper N ∧
-      (liuPanSourceIntervalUpper N : ℝ) < (N : ℝ) ^ (3 / 4 : ℝ) ∧
-      ∀ a : ℕ,
-        |liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a| ≤ 1 := by
-  filter_upwards [eventually_liuPanSourceIntervalLower_lt_liuSourceZ10 B,
-    eventually_ge_atTop (2 : ℕ)] with N hlow hN
-  refine ⟨log_rpow_lt_liuPanSourceIntervalLower N B, ?_,
-    liuPanSourceIntervalUpper_lt_rpow_three_fourths (by omega), ?_⟩
-  · exact (Nat.le_of_lt hlow).trans
-      (liuSourceZ10_le_liuPanSourceIntervalUpper (by omega))
-  · intro a
-    exact abs_liuWeight_le_one N (liuSourceZ10 N) (liuSourceY3 N) a
 
 /-- Conditional finite support bridge.  Once the logarithmic lower endpoint is
 below Liu's `N^(1/10)` cutoff, every nonzero source coefficient lies in the
@@ -408,61 +371,6 @@ theorem LiuPanWangDingCorollary230.to_canonicalCoprimeTheorem
     (hPan : LiuPanWangDingCorollary230) : LiuPanCanonicalCoprimeTheorem :=
   fun ε A hε hA ↦ hPan.to_coprimeRBound ε A hε hA
 
-/-- A post-transport endpoint contract at a specified additive normalization.
-It is convenient for downstream consumers, but is not the literal statement of
-Corollary (2.30): the source-faithful Liu specialization is
-`LiuPanWangDingCorollary230`, with a strict modulus cutoff, source interval,
-and existential source normalization. -/
-def LiuPanWangDingSourceMeanValue (κ : ℝ) : Prop :=
-  ∀ A : ℝ, 0 < A →
-    ∃ C : ℝ, 0 < C ∧
-    ∃ B : ℝ, 0 ≤ B ∧
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      LiuMainPanEndpointMeanValueAt (liuLogarithmicIntegral κ) N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C
-
-/-- A stronger conditional convenience contract at canonical normalization
-`li₂(x) = 2 + ∫₂ˣ dt / log t`.  This is not identified definitionally with the
-source-literal Corollary (2.30); use
-`LiuPanWangDingCorollary230.to_coprimeRBound` for the source-faithful route. -/
-def LiuPanWangDingTheorem : Prop :=
-  LiuPanWangDingSourceMeanValue 2
-
-/-- The aggregate Pan--Wang--Ding source theorem directly supplies Liu's
-source-`Q` coprime remainder bound.  The only additional step is the already
-proved eventual inclusion of Liu's divisor cutoff in Pan's modulus range. -/
-theorem LiuPanWangDingSourceMeanValue.to_coprimeRBound
-    {κ : ℝ} (hPan : LiuPanWangDingSourceMeanValue κ)
-    (ε A : ℝ) (hε : 0 < ε) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧
-    ∃ B : ℝ, 0 ≤ B ∧
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      LiuPaperQCoprimeRBound (liuLogarithmicIntegral κ) N ε A C := by
-  rcases hPan A hA with ⟨C, hC, B, hB, NPan, hPanN⟩
-  rcases exists_liuSourceDEpsilon_le_panModulusCutoff ε B hε hB with
-    ⟨NCut, hCut⟩
-  refine ⟨C, hC, B, hB, max NPan NCut, ?_⟩
-  intro N hN
-  rcases max_le_iff.mp hN with ⟨hNPan, hNCut⟩
-  exact liuPaperQCoprimeRBound_of_liuMainPanEndpointMeanValueAt
-    (liuLogarithmicIntegral κ) N ε A B C
-    (hCut N hNCut) (hPanN N hNPan)
-
-/-- Consumer consequence of the stronger conditional canonical contract. -/
-theorem LiuPanWangDingTheorem.to_coprimeRBound
-    (hPan : LiuPanWangDingTheorem)
-    (ε A : ℝ) (hε : 0 < ε) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧
-    ∃ B : ℝ, 0 ≤ B ∧
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      LiuPaperQCoprimeRBound (liuLogarithmicIntegral 2) N ε A C :=
-  LiuPanWangDingSourceMeanValue.to_coprimeRBound hPan ε A hε hA
-
-/-- The stronger canonical endpoint contract also supplies the minimal
-canonical consumer interface. -/
-theorem LiuPanWangDingTheorem.to_canonicalCoprimeTheorem
-    (hPan : LiuPanWangDingTheorem) : LiuPanCanonicalCoprimeTheorem :=
-  fun ε A hε hA ↦ hPan.to_coprimeRBound ε A hε hA
 
 /-- The canonical coprime consumer interface implies every fixed logarithmic
 saving for Liu's exact `eqn-r` source sum.  The full majorant keeps
@@ -539,27 +447,5 @@ theorem LiuPanCanonicalCoprimeTheorem.eventually_liuPaperQSourceFullDistribution
       exact add_le_add_right (mul_le_mul_of_nonneg_left hR1scale hCR1) _
     _ = (Cpan + CR1) * N / Real.log N ^ A := by ring
 
-/-- Backward-compatible wrapper for the stronger canonical endpoint contract. -/
-theorem LiuPanWangDingTheorem.eventually_liuPaperQSourceFullDistributionMajorant_le
-    (hPan : LiuPanWangDingTheorem)
-    (ε A : ℝ) (hε : 0 < ε) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      liuPaperQSourceFullDistributionMajorant
-          (liuLogarithmicIntegral 2) N ε ≤
-        C * N / Real.log N ^ A :=
-  hPan.to_canonicalCoprimeTheorem
-    |>.eventually_liuPaperQSourceFullDistributionMajorant_le ε A hε hA
-
-/-- Source-faithful wrapper from literal Corollary `(2.30)` to the same full
-canonical consumer majorant. -/
-theorem LiuPanWangDingCorollary230.eventually_liuPaperQSourceFullDistributionMajorant_le
-    (hPan : LiuPanWangDingCorollary230)
-    (ε A : ℝ) (hε : 0 < ε) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      liuPaperQSourceFullDistributionMajorant
-          (liuLogarithmicIntegral 2) N ε ≤
-        C * N / Real.log N ^ A :=
-  hPan.to_canonicalCoprimeTheorem
-    |>.eventually_liuPaperQSourceFullDistributionMajorant_le ε A hε hA
 
 end MathlibNt.SieveTheory.LiuWeight

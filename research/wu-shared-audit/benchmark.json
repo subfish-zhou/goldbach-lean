@@ -1,0 +1,24 @@
+{
+  "strict_flags": [
+    "warningAsError=true",
+    "autoImplicit=false"
+  ],
+  "imports": "official build/lib and pinned packages; prototype additionally imports its own new helper oleans only",
+  "method": "one successful timed compilation per version/module, same machine, prototype then baseline; wall-clock measurements, not controlled repeated benchmark",
+  "results": [
+    {
+      "module": "Hf4QuadPanel0",
+      "baseline_seconds": 28.233,
+      "prototype_seconds": 13.566,
+      "ratio": 0.4805
+    },
+    {
+      "module": "Hf4QuadBatch12",
+      "baseline_seconds": 76.032,
+      "prototype_seconds": 52.888,
+      "ratio": 0.6956
+    }
+  ],
+  "lean_threads_per_process": 2,
+  "concurrent_compilations": 1
+}

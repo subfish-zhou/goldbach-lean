@@ -1,7 +1,6 @@
 import MathlibNt.SieveTheory.LiuWeightMainSum
 import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
 import MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open scoped BigOperators
 open Filter Finset
@@ -13,18 +12,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 noncomputable def goldbachB9PlusLiWeight (N m : ℕ) : ℝ :=
   liuLogarithmicIntegral (2 / Real.log 2) ((N : ℝ) / (m : ℝ))
 
-/-- The full-prefix mass on the actual closed C10 product support. -/
-noncomputable def goldbachB9PlusMainMass (N : ℕ) : ℝ :=
-  ∑ m ∈ goldbachC10ProductSupport N ((N : ℝ) ^ (4 / 53 : ℝ))
-      ((N : ℝ) ^ (1 / 3 : ℝ)), goldbachB9PlusLiWeight N m
-
-theorem goldbachB9PlusMainMass_eq_pair_sum (N : ℕ) :
-    goldbachB9PlusMainMass N =
-      ∑ rs ∈ goldbachC10Pairs N ((N : ℝ) ^ (4 / 53 : ℝ))
-          ((N : ℝ) ^ (1 / 3 : ℝ)),
-        liuLogarithmicIntegral (2 / Real.log 2) ((N : ℝ) / goldbachC10Prod rs) := by
-  unfold goldbachB9PlusMainMass goldbachC10ProductSupport goldbachB9PlusLiWeight
-  exact Finset.sum_image (fun _ hx _ hy h => goldbachC10Prod_injOn hx hy h)
 
 private theorem B9MainGate_mem_S4Pairs {N : ℕ} {b c : ℝ} {rs : ℕ × ℕ}
     (hrs : rs ∈ goldbachC10Pairs N b c) :
@@ -104,12 +91,6 @@ theorem goldbachB9PlusLiWeight_bounds_eventually :
     _ ≤ 2 * ((N : ℝ) / m) := by linarith
     _ = 2 * (N : ℝ) / m := by ring
 
-theorem goldbachB9PlusMainMass_nonneg_eventually :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → 0 ≤ goldbachB9PlusMainMass N := by
-  obtain ⟨N₀, hN₀, hw⟩ := goldbachB9PlusLiWeight_bounds_eventually
-  refine ⟨N₀, hN₀, ?_⟩
-  intro N hN
-  exact Finset.sum_nonneg (fun m hm => (hw N hN m hm).2.1)
 
 /-- The real non-coprime gate is paid, not identified with zero.
 The generic budget receives `T * N = 2 * N`. -/
@@ -203,13 +184,5 @@ theorem goldbachB9PlusLiWeight_sum_gateLoss_log_saving_one (U : ℝ) :
       mul_le_mul_of_nonneg_left haux (by positivity)
     _ = (N : ℝ) / Real.log (N : ℝ) ^ U := by field_simp
 
-theorem goldbachB9PlusLiWeight_sum_gateLoss_log_saving (U : ℝ) (_hU : 0 < U) :
-    ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, 4 ≤ N₀ ∧
-      ∀ N : ℕ, N₀ ≤ N → ∀ Q : ℕ, Q ≤ N →
-        ∑ d ∈ Finset.Icc 1 Q,
-          gateLoss N ((N : ℝ) ^ (4 / 53 : ℝ)) ((N : ℝ) ^ (1 / 3 : ℝ))
-            (goldbachB9PlusLiWeight N) d ≤ C * (N : ℝ) / Real.log (N : ℝ) ^ U := by
-  refine ⟨1, by norm_num, ?_⟩
-  simpa only [one_mul] using goldbachB9PlusLiWeight_sum_gateLoss_log_saving_one U
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

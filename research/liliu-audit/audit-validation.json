@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "scope": "Read-only original-paper and compiled-reference audit, plus five isolated experiment compilations; no production proof cleanup has been applied.",
+  "checked_at_utc": "2026-10-26T06:29:52.997208+00:00",
+  "main_proof_modules": 2143,
+  "accepted_source_config_checker_inputs_unchanged": 2149,
+  "compiled_object_parts_unchanged": 2147,
+  "unresolved_project_references_including_private": [],
+  "previous_acceptance": "../chen-paper-audit/validation.json",
+  "previous_acceptance_sha256": "ab3b0087497ab6d942dda87f140765b66b82d7682549e55dcc8d180e1d91db10",
+  "fresh_audit_artifacts_sha256": {
+    "analysis.json": "b606ded024f19d5a85567f42f900fef6b6aa7fe6af66227c785d3de49e5d4568",
+    "summary.json": "cfe50fd0c3ae6891dc7b0972e461b5823c4901189086ce7cdf7311d7c93253a5",
+    "candidate-consumers.json": "f06f0cee4d6841085a8e45b92963e73727f0d6a0348fe063f06f6960f4e3bb69",
+    "source-inputs.json": "9db9b6b8d7ea1d838bd4926fb06325ba23bf6e88a61d7c48142e0262dcc83917",
+    "object-inputs.json": "98b7fbe97ff4b36a5146a4199ee5a9b31ee0ca92888fc1cc5e2ce60c432c2dd4",
+    "experiment-validation.json": "26c8b6b8cdf3a567e6b7690f462c7759fde8ab68eae270971a20cd2b437ce71c",
+    "paper.json": "38b46bbdd60ba7c27d838a207766d79986a5fe151b3403554c2def7a14729363"
+  },
+  "audit_tools_sha256": {
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/liliu-audit/verify_experiments.py": "4395ecf8917ea33ea28175e7cdf0b38029f135b096745f238a78a9ad6fcf7fd0",
+    "research/liliu-audit/experiments/CountToExistence.lean": "6c921bda3c6ce77f357c3527414bde4280ac6ba7e39b28abffb07d46f37663eb",
+    "research/liliu-audit/experiments/StrongToWeak.lean": "2b2806c3ff0898da7ac11b1c00a241ceebbbb6a30db692eed366b7e93c47bab4",
+    "research/liliu-audit/experiments/import-reductions.json": "dcb52120fb585335a1b8a5da81e4b16d031d2845d6e43dcaa015cf700ef929b7"
+  },
+  "local_log_sha256": {
+    "census": "87244f4b940a81d5a73f915b6def5f138edddaf2630e7ba1f8747d0c7f1cb870",
+    "experiments": "26c8b6b8cdf3a567e6b7690f462c7759fde8ab68eae270971a20cd2b437ce71c"
+  },
+  "new_whole_project_build": false
+}

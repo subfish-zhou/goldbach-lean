@@ -1,0 +1,57 @@
+{
+  "module": "W17JointSplit",
+  "exit_code": 0,
+  "seconds": 28.25155771151185,
+  "source_sha256": "2f99ba778591f4d1bb1ca1a5bded03af69a7c2eb783d0ee01e5a7781828d7697",
+  "object_sha256": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47",
+  "dependencies": {
+    "W04ExactMatrix": "430314d4b7c377e3a1ef08aacfe8120e4100ecc7be3d270546fe777e05d2597d",
+    "W05JTableConsumer": "631e1e1c610cb9c6a5198bff06297cffb16723720a97dd18599cce29a0c5ff42",
+    "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e",
+    "W07DensityMatrices": "d76525e182588f2c402ad326663c7fbfe43f7ad436b72dd2eba2d50e94be1105",
+    "W08Envelope": "f1733d4a5d73da9b2a1c6f61bcdc3e3542b843d0eec8f1549b203603981e7e0a",
+    "W09ActualV2": "f2da310c5a6ff4a38e56a84f4078928802df070a1b4db5c7c81224c44dfee806"
+  },
+  "dependency_contexts": {
+    "W04ExactMatrix": "c2ad2b95ad3de46e0c2f17666d26d6b0e9e74e5951129e423fad59b83e6bc3c1",
+    "W05JTableConsumer": "2d6f41d49cd5d2e50e7b3f37906c30492f7cb3ea97e578dd503a72a5c8df7c5e",
+    "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79",
+    "W07DensityMatrices": "167fb0d89ec8290d36c4e44fee272bd33548d9fe7816d487295e9351379f71fc",
+    "W08Envelope": "599279d1b5f2ed19a1d0692078fa1cb7399bbc575cf561ac4ac61ca8a1dcbde5",
+    "W09ActualV2": "c690c1b196b4309aff1df3cea1189085cf15f3e50df061941dca5875cbd0fdc5"
+  },
+  "context_sha256": "bc9560e1a8bcf3ca6fe37178d4bddfe571d2c34b0b95beb4d32d6684107eabf8",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSplit.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSplit.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSplit.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSplit.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.resources",
+  "resource_sha256": "9ee895de3a7aa9cfd768d01ba74100272646e91e0d038b2f5f4850363ed69216",
+  "artifact_bundle_sha256": {
+    ".olean": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47"
+  }
+}

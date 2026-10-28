@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "baseline_census": "Accepted shared-lemma complete main census",
+  "removed_private_declarations": [
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S1BetaLowerDensity_exists_dimensionOneLocalProductBound",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity"
+      ],
+      "compiled_consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_exists_dimensionOneLocalProductBound",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S1LowerDensitySix_exists_dimensionOneLocalProductBound",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix"
+      ],
+      "compiled_consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_exists_dimensionOneLocalProductBound",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3RosserMain_exists_localProductBound",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper"
+      ],
+      "compiled_consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_exists_dimensionOneLocalProductBound",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10PanTwoEndpoints_intervalMaxL_nonneg",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints"
+      ],
+      "compiled_consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalMaxL_nonneg",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Switched_intervalMaxL_nonneg",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution"
+      ],
+      "compiled_consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalMaxL_nonneg",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "scope": "Only five private declarations are removed. Their compiled consumers were confined to their own source modules, all local calls are redirected, and the fresh complete main build and all public-type comparisons pass."
+}

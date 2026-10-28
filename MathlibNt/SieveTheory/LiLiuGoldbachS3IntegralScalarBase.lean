@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarEndpoints
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 open Set MeasureTheory
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

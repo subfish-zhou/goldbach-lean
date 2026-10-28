@@ -1,6 +1,8 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanSmooth
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeReduction
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+
 
 noncomputable section
 open Classical Finset Filter

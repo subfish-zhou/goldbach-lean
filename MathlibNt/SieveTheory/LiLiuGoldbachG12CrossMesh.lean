@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
 import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelLimit
 import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshLimit
 
@@ -16,11 +17,6 @@ theorem goldbachG12HighMeshStep_pos (n : ℕ) : 0 < goldbachG12HighMeshStep n :=
   unfold goldbachG12HighMeshStep
   positivity
 
-theorem goldbachG12HighMeshPoint_succ (n i : ℕ) :
-    goldbachG12HighMeshPoint n (i + 1) =
-      goldbachG12HighMeshPoint n i + goldbachG12HighMeshStep n := by
-  simp only [goldbachG12HighMeshPoint, Nat.cast_add, Nat.cast_one]
-  ring
 
 theorem goldbachG12HighMeshPoint_strictMono (n : ℕ) :
     StrictMono (goldbachG12HighMeshPoint n) := by
@@ -342,15 +338,6 @@ theorem goldbachG12LogBoxMass_eq_meshIntegral (n : ℕ)
   rw [LiuWeight.logarithmicRectangleMass_eq_setIntegral (hp 0) (hl 0) (hp 1) (hl 1),
     LiuWeight.logarithmicRectangleMass_eq_setIntegral (hp 2) (hl 2) (hp 3) (hl 3)]
 
-private theorem g12_integral_four (F : ((ℝ × ℝ) × (ℝ × ℝ)) → ℝ) (hF : Integrable F) :
-    (∫ x, F x) = ∫ r : ℝ, ∫ q : ℝ, ∫ s : ℝ, ∫ t : ℝ, F ((r, q), (s, t)) := by
-  simp only [Measure.volume_eq_prod] at hF ⊢
-  rw [integral_prod F hF, integral_prod _ hF.integral_prod_left]
-  apply integral_congr_ae
-  filter_upwards [Measure.ae_ae_of_ae_prod hF.prod_right_ae] with r hr
-  apply integral_congr_ae
-  filter_upwards [hr] with q hq
-  exact integral_prod _ hq
 
 theorem goldbachG12MeshSource_mem_iff (r q s t : ℝ) :
     ((r, q), (s, t)) ∈ goldbachG12MeshSource ↔
@@ -385,7 +372,7 @@ theorem goldbachG12PrimeIntegral_eq_meshSource (h : ℝ → ℝ)
     (hh : ContinuousOn h (Icc (4 / 53 : ℝ) (4 / 33))) :
     goldbachG12PrimeIntegral h =
       ∫ x, goldbachG12MeshSource.indicator (goldbachG12MeshIntegrand h) x := by
-  rw [g12_integral_four _ (integrable_goldbachG12MeshSource h hh)]
+  rw [goldbach_integral_four _ (integrable_goldbachG12MeshSource h hh)]
   simp_rw [g12_source_indicator, g12_integral_parameter_indicator,
     integral_indicator measurableSet_Icc, integral_indicator measurableSet_Ioc]
   unfold goldbachG12PrimeIntegral
@@ -434,45 +421,39 @@ theorem tendsto_goldbachG12MeshCoeff (h : ℝ → ℝ)
 
 theorem integrable_goldbachG12MeshUpperIntegrand (h : ℝ → ℝ) (n : ℕ) :
     Integrable (goldbachG12MeshUpperIntegrand h n) := by
-  exact integrable_finsetSum _ fun j _ =>
-    ((integrableOn_goldbachG12MeshDensity (measurableSet_goldbachG12MeshCell n j)
+  exact MathlibNt.Analysis.LogGridEstimates.integrable_weighted_sum _ _ _ _
+    (fun j _ => measurableSet_goldbachG12MeshCell n j)
+    (fun j _ => integrableOn_goldbachG12MeshDensity (measurableSet_goldbachG12MeshCell n j)
       (fun _ hx => goldbachG12MeshBox_subset_ambient
-        (goldbachG12MeshCell_subset_box n j hx))).integrable_indicator
-      (measurableSet_goldbachG12MeshCell n j)).const_mul _
+        (goldbachG12MeshCell_subset_box n j hx)))
 
 theorem goldbachG12MeshUpperSum_eq_integral (h : ℝ → ℝ) (n : ℕ) :
     goldbachG12MeshUpperSum h n = ∫ x, goldbachG12MeshUpperIntegrand h n x := by
   unfold goldbachG12MeshUpperSum goldbachG12MeshUpperIntegrand
-  rw [integral_finsetSum]
-  · apply Finset.sum_congr rfl
-    intro j _
-    rw [integral_const_mul, integral_indicator (measurableSet_goldbachG12MeshCell n j),
-      goldbachG12LogBoxMass_eq_meshIntegral]
-  · intro j _
-    exact ((integrableOn_goldbachG12MeshDensity (measurableSet_goldbachG12MeshCell n j)
+  rw [MathlibNt.Analysis.LogGridEstimates.integral_weighted_sum _ _ _ _
+    (fun j _ => measurableSet_goldbachG12MeshCell n j)
+    (fun j _ => integrableOn_goldbachG12MeshDensity (measurableSet_goldbachG12MeshCell n j)
       (fun _ hx => goldbachG12MeshBox_subset_ambient
-        (goldbachG12MeshCell_subset_box n j hx))).integrable_indicator
-      (measurableSet_goldbachG12MeshCell n j)).const_mul _
+        (goldbachG12MeshCell_subset_box n j hx)))]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [goldbachG12LogBoxMass_eq_meshIntegral]
 
 theorem goldbachG12MeshUpperIntegrand_eq_of_mem (h : ℝ → ℝ) {n : ℕ}
     {j : (Fin (n + 1) × Fin (n + 1)) × (Fin (n + 1) × Fin (n + 1))}
     (hj : j ∈ goldbachG12MeshCells n) {x : (ℝ × ℝ) × (ℝ × ℝ)}
     (hx : x ∈ goldbachG12MeshCell n j) :
     goldbachG12MeshUpperIntegrand h n x = goldbachG11MeshCoeff h n j * goldbachG12MeshDensity x := by
-  classical
   unfold goldbachG12MeshUpperIntegrand
-  rw [Finset.sum_eq_single j]
-  · rw [indicator_of_mem hx]
-  · intro k _ hkj
-    rw [indicator_of_notMem (fun hk => hkj (goldbachG12MeshCell_unique hk hx)), mul_zero]
-  · exact fun h => (h hj).elim
+  exact MathlibNt.Analysis.LogGridEstimates.weighted_sum_eq_of_mem _ _ _ _
+    (fun j _ k _ hjk => Set.disjoint_left.mpr
+      (fun _ hx hy => hjk (goldbachG12MeshCell_unique hx hy))) hj hx
 
 theorem goldbachG12MeshUpperIntegrand_eq_zero (h : ℝ → ℝ) {n : ℕ}
     {x : (ℝ × ℝ) × (ℝ × ℝ)} (hx : x ∉ goldbachG12MeshRegion n) :
     goldbachG12MeshUpperIntegrand h n x = 0 := by
-  apply Finset.sum_eq_zero
-  intro j hj
-  rw [indicator_of_notMem (fun h => hx (Set.mem_iUnion₂.mpr ⟨j, hj, h⟩)), mul_zero]
+  unfold goldbachG12MeshUpperIntegrand
+  exact MathlibNt.Analysis.LogGridEstimates.weighted_sum_zero _ _ _ _ hx
 
 theorem goldbachG12MeshRegion_eventually_not_mem {x : (ℝ × ℝ) × (ℝ × ℝ)}
     (hx : x ∉ goldbachG12MeshSource) :

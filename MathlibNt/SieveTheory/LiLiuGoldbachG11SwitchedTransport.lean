@@ -121,19 +121,6 @@ theorem goldbachG11SwitchForward_backward (N : ℕ) (y : GoldbachG11SwitchedAtom
   rcases y with ⟨⟨t, s, q, k⟩, r⟩
   rfl
 
-noncomputable def goldbachG11SwitchEquiv (N : ℕ) (eps z b : ℝ) :
-    {x // x ∈ goldbachG11RoughFamily N eps z b} ≃
-      {y // y ∈ goldbachG11SwitchedFamily N eps z b} where
-  toFun x := ⟨goldbachG11SwitchForward x.1, goldbachG11SwitchForward_mem x.2⟩
-  invFun y := ⟨goldbachG11SwitchBackward N y.1, goldbachG11SwitchBackward_mem y.2⟩
-  left_inv x := Subtype.ext (goldbachG11SwitchBackward_forward x.2)
-  right_inv y := Subtype.ext (goldbachG11SwitchForward_backward N y.1)
-
-theorem goldbachG11Switch_card (N : ℕ) (eps z b : ℝ) :
-    (goldbachG11RoughFamily N eps z b).card =
-      (goldbachG11SwitchedFamily N eps z b).card := by
-  classical
-  simpa only [Fintype.card_coe] using Fintype.card_congr (goldbachG11SwitchEquiv N eps z b)
 
 theorem goldbachG11Switch_sum (N : ℕ) (eps z b : ℝ)
     (w : GoldbachG11SwitchedBody → ℤ) :

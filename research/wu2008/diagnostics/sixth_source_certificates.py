@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Reproduce the 1024 rational sixth-source panel certificates and their assembly.
 
-All arithmetic uses Fraction. Profile tails, endpoint density bounds,
-and final payments are rounded downward to 10^-12. Lean checks every generated
-inequality and the integer total; this generator is not a trusted oracle.
+All arithmetic uses Fraction. The original payment table is reproduced byte for byte, retaining its 10^-12
+rounding. A shared analytic soundness lemma eliminates the intermediate rounded
+density/profile proofs; Lean directly checks the exact rational product on each
+32-cell block and the original integer total.
 """
 import argparse
 from pathlib import Path
@@ -31,29 +32,12 @@ def data(i,n=1024):
  p=floor(q[k-2]*loglower(node(k)/(b-1))+F(tails[k],scale))
  d=floor(density(a,b));c=floor(8*(b-a)*F(d,scale)*F(p,scale))
  return a,b,k,p,d,c
-def proof(i,name):
- a,b,k,p,d,c=data(i)
- s=f'''theorem {name} :
-    ({c}:ℝ)/{scale} ≤ 8*({fmt(b)}-{fmt(a)})*
-      (densityLower {fmt(a)} {fmt(b)}*pointLower {fmt(b)}) := by
-  apply compact_panel_paid (k := {k}) (p := ({p}:ℝ)/{scale}) (d := ({d}:ℝ)/{scale})
-  all_goals norm_num [endpoint,alpha,beta,profileLeft,rNode,upperLower,upperNumerator,
-    RationalCandidate.lowerH,SourceLogRational.lower,tailNumerator,densityLower,
-    panelRatio,upperX,lowerX]
-'''
- return s
 
 tails={k:sum(floor(q[i-2]*loglower(node(i)/node(i-1)))
              for i in range(k+1,30)) for k in range(2,12)}
 pay=[data(i)[-1] for i in range(1024)]
 assert sum(pay) == 56646110394
 outputs={}
-for batch in range(32):
- s='import WR2XiSixthCompactPanel\nnoncomputable section\nnamespace WuPaper.R2Xi.SixthContinuous\nopen QuarterTrim WuSource.SrcSixthGain NodeExtension SourceRational\nset_option maxHeartbeats 2000000\n'
- for i in range(batch*32,(batch+1)*32):s+=proof(i,f'panel_paid_{i}')+'\n'
- s+='end WuPaper.R2Xi.SixthContinuous\n'
- for i in range(batch*32,(batch+1)*32):s+=f'#print axioms WuPaper.R2Xi.SixthContinuous.panel_paid_{i}\n'
- outputs[f'WR2XiSixthPanels{batch:02d}.lean'] = s
 s='import WR2XiSixthUniformGrid\nnoncomputable section\nnamespace WuPaper.R2Xi.SixthContinuous\nopen Finset\n'
 for b in range(32):
  s+=f'def paymentBlock{b:02d} : ℕ → ℕ\n'
@@ -76,11 +60,22 @@ end WuPaper.R2Xi.SixthContinuous
 '''
 outputs['WR2XiSixthPayments.lean'] = s
 for b in range(32):
- s=f'import WR2XiSixthPayments\nimport WR2XiSixthPanels{b:02d}\nnoncomputable section\nnamespace WuPaper.R2Xi.SixthContinuous\nset_option maxHeartbeats 2000000 in\n'
- s+=f'theorem grid_block_{b:02d} (j : Fin 32) : payment (32*{b}+j.val) ≤ panelBound (32*{b}+j.val) := by\n  fin_cases j\n'
- for j in range(32):
-  s+=f'  · convert panel_paid_{32*b+j} using 1 <;> norm_num [payment,paymentNumerator,paymentBlock{b:02d},panelBound,grid]\n'
- s+=f'end WuPaper.R2Xi.SixthContinuous\n#print axioms WuPaper.R2Xi.SixthContinuous.grid_block_{b:02d}\n'
+ s=f'''import WR2XiSixthDirectCheck
+noncomputable section
+namespace WuPaper.R2Xi.SixthContinuous
+set_option maxRecDepth 10000
+set_option maxHeartbeats 2000000
+
+private theorem direct_block_{b:02d} : ∀ j : Fin 32,
+    DirectCheck.condition (32*{b}+j.val) := by
+  decide +kernel
+
+theorem grid_block_{b:02d} (j : Fin 32) : payment (32*{b}+j.val) ≤ panelBound (32*{b}+j.val) :=
+  DirectCheck.condition_sound (direct_block_{b:02d} j)
+
+end WuPaper.R2Xi.SixthContinuous
+#print axioms WuPaper.R2Xi.SixthContinuous.grid_block_{b:02d}
+'''
  outputs[f'WR2XiSixthGridBlock{b:02d}.lean'] = s
 s=''.join(f'import WR2XiSixthGridBlock{b:02d}\n' for b in range(32))
 s+='''import WR2XiSourceFinalBudget

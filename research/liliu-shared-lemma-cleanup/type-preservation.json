@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "original_public_declarations": 10392,
+  "unchanged_original_public_kind_type_hashes": 10389,
+  "current_public_declarations": 10393,
+  "missing_public_declarations": [],
+  "added_public_declarations": [
+    "MathlibNt.SieveTheory.SwitchingPrinciple.continuousOn_jurkatRichertInnerIntegral_three_five"
+  ],
+  "intentional_strengthenings": [
+    {
+      "name": "MathlibNt.SieveTheory.LiuWeight.liuAbsoluteEulerFactor_one_le",
+      "kind": "theorem",
+      "before_type_hash": "4141725998",
+      "after_type_hash": "3611572542",
+      "change": "Removed the Even N hypothesis. The conclusion and all other arguments are unchanged.",
+      "checked_by": "StrengthenedStatements.lean: unconditional and original-premise consequences"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiuWeight.liuSelbergAbsPrimeDeviation_nonneg",
+      "kind": "theorem",
+      "before_type_hash": "1315794190",
+      "after_type_hash": "3468837783",
+      "change": "Removed the Even N hypothesis. The conclusion and all other arguments are unchanged.",
+      "checked_by": "StrengthenedStatements.lean: unconditional and original-premise consequences"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiuWeight.liuSelbergAbsPrimeDeviation_nonneg_core",
+      "kind": "theorem",
+      "before_type_hash": "1315794190",
+      "after_type_hash": "3468837783",
+      "change": "Removed the Even N hypothesis. The conclusion and all other arguments are unchanged.",
+      "checked_by": "StrengthenedStatements.lean: unconditional and original-premise consequences"
+    }
+  ],
+  "unexpected_kind_or_type_mismatches": [],
+  "protected_endpoints": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound",
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "exposed_existing_lemma": {
+    "old_private_name": "_private.MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor.0.MathlibNt.SieveTheory.SwitchingPrinciple.continuousOn_jurkatRichertInnerIntegral_three_five",
+    "new_public_name": "MathlibNt.SieveTheory.SwitchingPrinciple.continuousOn_jurkatRichertInnerIntegral_three_five",
+    "same_kind_and_type_hash": true
+  },
+  "method": "Public kind/type hashes across complete main-library censuses; private and specified generated names excluded. Exactly three explicitly checked internal strengthenings are allowed."
+}

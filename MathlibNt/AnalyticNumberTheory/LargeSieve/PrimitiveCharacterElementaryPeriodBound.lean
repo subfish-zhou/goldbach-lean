@@ -1,6 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
-import Mathlib.NumberTheory.DirichletCharacter.Bounds
-import Mathlib.Tactic
 
 namespace AnalyticNumberTheory.LargeSieve
 

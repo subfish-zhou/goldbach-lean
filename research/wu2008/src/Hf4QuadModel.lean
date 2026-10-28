@@ -1,4 +1,5 @@
-import Hf4TargetConstants
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic
 
 noncomputable section
 namespace Hf4Quad

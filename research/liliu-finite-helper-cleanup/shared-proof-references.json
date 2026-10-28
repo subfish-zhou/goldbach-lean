@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "liu_log_provider": "MathlibNt.SieveTheory.LiuWeight.eventually_inverse_log_remainder_le_liuSingularSeries",
+  "verified_liu_consumers": [
+    "_private.MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B8NormalizedMainMass_paid_error",
+    "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.highFirst_paid_error",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11NormalizedIntegral_logError_paid"
+  ],
+  "log_power_consumer": "MathlibNt.SieveTheory.LiLiuPrereqWF.TransportAbsorption.eventually_log_power_budget",
+  "log_power_provider": "MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow",
+  "verified_zmod_helpers": [
+    "_private.MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit.0.DirichletCharacter.sum_univ_zmod_eq_sum_range",
+    "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_zmod_eq_range"
+  ],
+  "mathlib_zmod_references": [
+    "Fin.sum_univ_eq_sum_range",
+    "ZMod.natCast_zmod_val"
+  ],
+  "method": "Actual compiled proof-reference reachability, including external Mathlib theorem leaves. No wrapper is substituted back into its producer."
+}

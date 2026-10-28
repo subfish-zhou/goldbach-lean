@@ -114,9 +114,4 @@ theorem externalInternalLevel_error {Q ε K : ℝ} (hQ : 1 < Q)
     (show 0 ≤ (ε ^ 8)⁻¹ * Real.exp (6 * K + 2) by positivity)
   nlinarith
 
-#check externalInternalLevel_ge_threshold
-#print axioms externalInternalLevel_ge_threshold
-#check externalInternalLevel_error
-#print axioms externalInternalLevel_error
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

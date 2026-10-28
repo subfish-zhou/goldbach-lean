@@ -3,7 +3,7 @@
 ## Reader route and fixed mathematical source
 
 Start with the [Li–Liu proof structure](https://subfish-zhou.github.io/goldbach-lean/report/)
-for the public statements, two proof exits, and the paper-to-Lean correspondence
+for the public statements, quantitative argument, and the paper-to-Lean correspondence
 ledger. Continue with the [selected Blueprint](https://subfish-zhou.github.io/goldbach-lean/blueprint/)
 for the finite weights and analytic arguments, and the
 [Lean API](https://subfish-zhou.github.io/goldbach-lean/docs/) for exact statements.
@@ -27,9 +27,9 @@ Its actual twelve-term route uses a separately defined factor-excluded
 paper's tenth fibre and this implemented fibre remain separately named; the
 correspondence ledger identifies the exact change of excluded modulus.
 
-The natural-power and real-exponent public existence theorems use the earlier
-positive-margin route. The strict `1/2500` count and the family of fixed
-coefficients `κ < 515093/800000000` use the author-G11 count ledger. The stronger
+The natural-power and real-exponent existence theorems follow from the strict
+`1/2500` count. That count and the family of fixed coefficients
+`κ < 515093/800000000` share the author-G11 count ledger. The stronger
 coefficient family is a retained formal certificate, separately recorded from
 the paper's strict `0.0004` conclusion. The paper's twin-prime Theorem 1.2 and
 its Theorems 1.3–1.4 under `WEH(0.999)` have separate targets from these four
@@ -51,6 +51,25 @@ source variants. Historical candidates are excluded from the default build and
 are not all claimed to compile. The final acceptance applies to the integrated
 current sources. Source collection and integration do not establish a separate
 authorship claim; the root license and original file notices remain applicable.
+
+## Chen cleanup and literature coverage (2026-10-25)
+
+The [Chen audit](CHEN_REDUNDANCY_AUDIT.md) records the comparison with Zihao
+Liu's corrected proof and the role of all thirteen bibliography entries.
+The cleanup removes unused historical branches, consolidates unconditional
+analytic producers and reuses the quantitative count for existence. It keeps
+the noncoprime correction, multiplicity accounting, varying-prime uniformity,
+and the public `0.67` bound. The independent Wu research source manifest is
+unchanged.
+
+The first structural audit did not have the full originals. The subsequent
+[full-text comparison](CHEN_PAPER_COMPARISON.md) uses the supplied Chen 1973,
+Pan–Ding–Wang 1975, Jurkat–Richert 1965, Richert 1969 and Wang 1962 PDFs.
+It records exact passages, hypotheses and the common finite optimizer, with
+file fingerprints. Pan–Ding–Wang is the author order on the uploaded title page;
+historical Lean identifiers containing `PanWangDing` are retained. This review
+covers the inputs used here, without claiming a recursive review of every
+bibliographic dependency. Original author and license notices remain applicable.
 
 ## Original project sources
 
@@ -74,12 +93,14 @@ release `v4.32.2`, commit
 `6a380f0c4658c04a420a9eb00b1ed62a1e3fde01`, under Apache-2.0.
 
 The port uses Lean `v4.33.0-rc1` and the Mathlib revision pinned in this package.
-Its documented adaptations make measurability, unit-circle norm, and
-almost-everywhere arguments explicit in `Fourier.lean` and `Wiener.lean`, and
-remove an obsolete redundant proof step in `MediumPNT.lean`. The import
-extraction also omits three unused alternate decay lemmas that contained
-unproved terms. The retained implementation carries the upstream proof into
-this toolchain and is built and checked with the rest of the package.
+Its retained adaptations make measurability, unit-circle norm, and
+almost-everywhere arguments explicit in `Fourier.lean`, and remove an obsolete
+redundant proof step in `MediumPNT.lean`. The 2026-10-25 cleanup narrows the
+consumer to `MediumPNT` and removes the unused alternate Wiener route. The
+elementary square-root/log estimate used by `ChebyshevTheta` is retained in
+the local logarithm module. The earlier import extraction also omitted three
+unused alternate decay lemmas that contained unproved terms. The retained
+implementation carries the upstream proof into this toolchain and is built and checked with the rest of the package.
 
 ## External Lean dependencies
 
@@ -94,7 +115,7 @@ The implementation assembles the completed Chen and Li–Liu theorems from the f
 mathematical sources. Module documentation identifies the source variants and
 adaptations used at each step.
 
-- J. R. Chen, *On the representation of a large even integer as the sum of a
+- J. R. Chen, *On the representation of a larger even integer as the sum of a
   prime and the product of at most two primes*, Scientia Sinica 16 (1973), 157–176.
 - Jiamin Li and Jianya Liu (2026), the fixed public source above, its `1+1.9` result and distinct-prime count
   `D_{1,19/10}(N)`. The [finite representation module](../MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean)

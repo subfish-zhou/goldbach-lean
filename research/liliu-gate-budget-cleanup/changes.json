@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/FiniteCoprimeGateBudget.lean",
+      "status": "new",
+      "before_sha256": null,
+      "after_sha256": "50eec146da83d65b7bb6dddeb6291d6ffdfe7fe9feeed688387a062eab243807",
+      "before": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 0
+      },
+      "after": {
+        "code_lines": 116,
+        "physical_lines": 127,
+        "utf8_bytes": 6036
+      },
+      "delta": {
+        "code_lines": 116,
+        "physical_lines": 127,
+        "utf8_bytes": 6036
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB10MainGateBudget.lean",
+      "status": "modified",
+      "before_sha256": "e8bf291636eaea2bd35e23c7064975cbb73b45ee36b95a371b9757779185b800",
+      "after_sha256": "a70a27752c3b8b926ba09be76d29db854ac3ee46c7181d7b871d5de06f5204da",
+      "before": {
+        "code_lines": 251,
+        "physical_lines": 270,
+        "utf8_bytes": 11888
+      },
+      "after": {
+        "code_lines": 65,
+        "physical_lines": 79,
+        "utf8_bytes": 3298
+      },
+      "delta": {
+        "code_lines": -186,
+        "physical_lines": -191,
+        "utf8_bytes": -8590
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachG11GateBudget.lean",
+      "status": "modified",
+      "before_sha256": "d35828d619fe2566aafcb12b1182f13169dffe22d92dfccdb5b4cb93d779ecc1",
+      "after_sha256": "2f155956169fda99cb165e14d64244d33b58b0ffd64539c9ac6eae1b5fd6e771",
+      "before": {
+        "code_lines": 138,
+        "physical_lines": 153,
+        "utf8_bytes": 7120
+      },
+      "after": {
+        "code_lines": 27,
+        "physical_lines": 36,
+        "utf8_bytes": 1367
+      },
+      "delta": {
+        "code_lines": -111,
+        "physical_lines": -117,
+        "utf8_bytes": -5753
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -181,
+    "physical_lines": -181,
+    "utf8_bytes": -8307
+  },
+  "deleted_modules": [],
+  "added_modules": [
+    "MathlibNt.SieveTheory.FiniteCoprimeGateBudget"
+  ]
+}

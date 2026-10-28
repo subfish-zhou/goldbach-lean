@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RosserFactor
 
 noncomputable section
 open Classical Finset
@@ -45,17 +43,6 @@ theorem outputWeight_le_twenty (hN : 2 ≤ N) (h : Admissible N ε g L U) (p : �
     outputWeight N g L U p ≤ 20 :=
   (outputWeight_le_old h p).trans (goldbachG12LinkedOutputWeight_le_twenty hN ε p)
 
-theorem output_pos (h : Admissible N ε g L U) {x : GoldbachG12LinkedAtom}
-    (hx : x ∈ atoms N L U) : 0 < goldbachG12LinkedOutput N x := by
-  obtain ⟨hm,hr⟩ := mem_sigma.mp (atoms_subset h hx)
-  exact goldbachG12LinkedPrimeWindow_output_pos hm hr
-
-theorem zero_not_mem_outputSupport (h : Admissible N ε g L U) :
-    0 ∉ outputSupport N L U := by
-  rintro hz
-  obtain ⟨x,hx,he⟩ := mem_image.mp hz
-  have := output_pos h hx
-  omega
 
 /-- Exact pushforward for arbitrary output predicates, including divisibility. -/
 theorem output_sum (N : ℕ) (g L U : ℕ → ℝ) (P : ℕ → Prop) [DecidablePred P] :

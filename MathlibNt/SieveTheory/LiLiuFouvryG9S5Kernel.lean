@@ -33,16 +33,6 @@ theorem fouvryG9S5Low_kernel_upper (τ ξ ζ : ℝ)
   convert h using 1
   ring
 
-/-- Positivity of the literal weighted low integral, using its proved single form. -/
-theorem fouvryG9LowIntegral_nonneg : 0 ≤ fouvryG9RelaxedIntegralLow := by
-  rw [fouvryG9RelaxedIntegralLow_eq_single]
-  apply intervalIntegral.integral_nonneg (by norm_num)
-  intro u hu
-  apply div_nonneg
-  · apply Real.log_nonneg
-    linarith [hu.2]
-  · exact mul_nonneg (by linarith [hu.1]) (sq_nonneg _)
-
 /-- A common small budget pays the two multiplicative and one additive errors. -/
 theorem fouvryG9Low_final_budget (B τ : ℝ) (hB : 0 ≤ B) (hτ : 0 < τ) :
     ∃ κ : ℝ, 0 < κ ∧ κ ≤ 1/4 ∧

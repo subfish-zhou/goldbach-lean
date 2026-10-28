@@ -59,9 +59,6 @@ theorem bitColor_cross_ne {T a b c d : ℕ}
   intro h
   exact h₂ (h ▸ h₁)
 
-theorem card_bitColor (T : ℕ) :
-    Fintype.card (BitColor T) = 2 * (Nat.log2 T + 1) := by
-  simp [BitColor, Nat.mul_comm]
 
 /-- Enumerate the distinct prime factors increasingly and pad to the requested length. -/
 noncomputable def paddedFactor (ω n pad : ℕ) (i : Fin ω) : ℕ :=
@@ -167,12 +164,6 @@ theorem cell_cross_coprime {T ω : ℕ} {κ : MatrixColor T ω} {a b : ℕ × �
   exact matrixColor_cross_coprime (ha₁.1.trans ha₁.2) (by omega) (by omega)
     ha₁.2 ha₂.2 hb₁.2 hb₂.2 haw hbw hac hbc (hca.trans hcb.symm)
 
-theorem disjoint_cells {T ω : ℕ} {κ η : MatrixColor T ω} (h : κ ≠ η) :
-    Disjoint (cell T ω κ) (cell T ω η) := by
-  classical
-  rw [Finset.disjoint_left]
-  intro a ha hb
-  exact h ((mem_cell.mp ha).2.symm.trans (mem_cell.mp hb).2)
 
 /-- Only nonempty fibers are retained, so this is a genuine partition into finite sets. -/
 noncomputable def partition (T ω : ℕ) : Finset (Finset (ℕ × ℕ)) :=
@@ -183,31 +174,6 @@ theorem mem_partition {T ω : ℕ} {s : Finset (ℕ × ℕ)} :
   classical
   simp [partition]
 
-theorem partition_nonempty {T ω : ℕ} {s : Finset (ℕ × ℕ)}
-    (hs : s ∈ partition T ω) : s.Nonempty := by
-  obtain ⟨a, ha, rfl⟩ := mem_partition.mp hs
-  exact ⟨a, mem_cell.mpr ⟨ha, rfl⟩⟩
-
-theorem partition_pairwise_disjoint (T ω : ℕ) :
-    (partition T ω : Set (Finset (ℕ × ℕ))).PairwiseDisjoint id := by
-  classical
-  intro s hs t ht hst
-  obtain ⟨a, _, rfl⟩ := mem_partition.mp hs
-  obtain ⟨b, _, rfl⟩ := mem_partition.mp ht
-  exact disjoint_cells (fun h => hst (congrArg (cell T ω) h))
-
-theorem partition_cover (T ω : ℕ) :
-    (partition T ω).biUnion id = admissiblePairs T ω := by
-  classical
-  ext a
-  simp only [Finset.mem_biUnion, id_eq]
-  constructor
-  · rintro ⟨s, hs, ha⟩
-    obtain ⟨b, _, rfl⟩ := mem_partition.mp hs
-    exact (mem_cell.mp ha).1
-  · intro ha
-    exact ⟨cell T ω (matrixColor T ω a),
-      mem_partition.mpr ⟨a, ha, rfl⟩, mem_cell.mpr ⟨ha, rfl⟩⟩
 
 theorem partition_cross_coprime {T ω : ℕ} {s : Finset (ℕ × ℕ)}
     (hs : s ∈ partition T ω) {a b : ℕ × ℕ} (ha : a ∈ s) (hb : b ∈ s) :
@@ -225,11 +191,5 @@ theorem card_partition_le (T ω : ℕ) :
     _ ≤ Fintype.card (MatrixColor T ω) := Finset.card_le_univ _
     _ = _ := card_matrixColor T ω
 
-/-- Arbitrary signed or complex weights decompose without a triangle inequality. -/
-theorem sum_partition {M : Type*} [AddCommMonoid M] (T ω : ℕ) (f : ℕ × ℕ → M) :
-    ∑ s ∈ partition T ω, ∑ a ∈ s, f a = ∑ a ∈ admissiblePairs T ω, f a := by
-  classical
-  rw [← partition_cover T ω]
-  exact (Finset.sum_biUnion (partition_pairwise_disjoint T ω)).symm
 
 end LiLiuPrereqFouvry.CoprimePartition

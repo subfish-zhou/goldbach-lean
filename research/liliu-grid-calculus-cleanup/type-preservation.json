@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "compared_original_public_declarations": 10389,
+  "current_public_declarations": 10392,
+  "missing_public_declarations": [],
+  "added_public_declarations": [
+    "MathlibNt.Analysis.LogGridEstimates.integrable_weighted_sum",
+    "MathlibNt.Analysis.LogGridEstimates.integral_weighted_sum",
+    "MathlibNt.Analysis.LogGridEstimates.tendsto_of_sub_le_div_nat"
+  ],
+  "kind_or_type_mismatches": [],
+  "protected_endpoints": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound",
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "method": "Public kind/type hashes across complete main-library censuses; private and specified generated names excluded."
+}

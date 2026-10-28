@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachPi10IntegralUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachG10SwitchBudget
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

@@ -1,9 +1,7 @@
+import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
 import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
-import MathlibNt.SieveTheory.LinearSieve
 import MathlibNt.SieveTheory.BombieriVinogradov
 import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.ZMod.Basic
 
 open scoped BigOperators
 
@@ -337,5 +335,21 @@ theorem goldbachS1BoundingSieve_rem_eq_standardPrimeAPError
   simp [goldbachS1BoundingSieve,
     MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPError,
     div_eq_mul_inv, mul_comm]
+
+theorem goldbachS1Endpoint_two_le {N : ℕ} {ε : ℝ}
+    (hN : 4 ≤ N) (hε : ε < 2 / 15) : 2 ≤ goldbachS1Endpoint N ε := by
+  have hNreal : (4 : ℝ) ≤ N := by exact_mod_cast hN
+  have hx3 : 3 ≤ (1 - ε) * (N : ℝ) := by nlinarith
+  have hceil : 3 ≤ Nat.ceil ((1 - ε) * (N : ℝ)) := by
+    exact_mod_cast hx3.trans (Nat.le_ceil ((1 - ε) * (N : ℝ)))
+  unfold goldbachS1Endpoint
+  omega
+
+theorem goldbachS1Endpoint_li_nonneg {N : ℕ} {ε : ℝ}
+    (hN : 4 ≤ N) (hε : ε < (2 : ℝ) / 15) :
+    0 ≤ MathlibNt.SieveTheory.BombieriVinogradov.trueLogarithmicIntegral
+      (goldbachS1Endpoint N ε) := by
+  exact MathlibNt.SieveTheory.LiuWeight.liuLogarithmicIntegral_nonneg (2 / Real.log 2)
+    (by positivity) (by exact_mod_cast goldbachS1Endpoint_two_le hN hε)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

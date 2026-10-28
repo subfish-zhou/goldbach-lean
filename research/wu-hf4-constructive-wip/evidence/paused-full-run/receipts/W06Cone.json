@@ -1,0 +1,47 @@
+{
+  "module": "W06Cone",
+  "exit_code": 0,
+  "seconds": 15.474998407065868,
+  "source_sha256": "a9fe5f48bac42d6c696d98e3c1e008bb6d0821c77a662bbe7d96beb00f86ef90",
+  "object_sha256": "32cac97cfd0f73fbf0e45b9f421b9d0bb3bb41d609ef6281710cf391615a2ecb",
+  "dependencies": {
+    "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e"
+  },
+  "dependency_contexts": {
+    "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79"
+  },
+  "context_sha256": "29ce28fd7444d798e94211f59e7bd5e85c75637d01506724b7981366fb66a52b",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Cone.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Cone.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Cone.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Cone.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.log",
+  "log_sha256": "468a0509c165feb4aee5b0ef695bbe45938fbe89d515f24b830657e2caf6c66e",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.resources",
+  "resource_sha256": "b9765c5d3ef130447bbc9513b83a52e6e1558b0c461a4603dc4102a6f31c421d",
+  "artifact_bundle_sha256": {
+    ".olean": "32cac97cfd0f73fbf0e45b9f421b9d0bb3bb41d609ef6281710cf391615a2ecb"
+  }
+}

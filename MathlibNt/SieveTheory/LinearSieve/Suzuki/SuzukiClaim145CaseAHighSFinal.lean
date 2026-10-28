@@ -144,44 +144,5 @@ theorem claim145_caseA_highS_actual_uniform_in_S
   exact (hK0 K ((le_max_right 2 K0).trans hK)).2 S N D s
     hlocal hD hs hsqrt hsmall
 
-/-- Compatibility specialization of the uniform high-coordinate leaf. -/
-theorem claim145_caseA_highS_actual
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ C1 Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hC1 : 0 < C1) (hΘ : 0 ≤ Θ)
-    (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1)
-    (hgap : 0 < d - 2 * Θ) :
-    ∃ K0 : ℝ, 2 ≤ K0 ∧
-      Claim145CaseALargeKHighSClosed S H d Δ C1 Θ K0 1 := by
-  obtain ⟨K0, hK0, hall⟩ :=
-    claim145_caseA_highS_actual_uniform_in_S H hH hC1 hΘ hΔ0 hΔ1 hgap
-  exact ⟨K0, hK0, hall S⟩
-
-/-- Public `Claim14_5Bound` spelling of the same actual producer. -/
-theorem exists_claim145_caseA_highS_actual_claim14_5Bound
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ C1 Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hC1 : 0 < C1) (hΘ : 0 ≤ Θ)
-    (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1)
-    (hgap : 0 < d - 2 * Θ) :
-    ∃ C145 : ℝ, 0 < C145 ∧
-      ∃ K0 : ℝ, 2 ≤ K0 ∧
-        ∀ (K : ℝ) (N D : ℕ) (s : ℝ),
-          K0 ≤ K → HasDimensionOneLocalProductBound S K →
-          2 ≤ D → 2 ≤ s → Real.sqrt K / Real.log K ≤ s →
-          Real.log (D : ℝ) ≤ C1 * K ^ Θ →
-          Claim14_5Bound
-            (fun m D' z' => suzukiActualT S m ⌈D'⌉₊ ⌈z'⌉₊)
-            S H N (D : ℝ) (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K s C145 := by
-  obtain ⟨K0, hK0, hclosed⟩ :=
-    claim145_caseA_highS_actual S H hH hC1 hΘ hΔ0 hΔ1 hgap
-  refine ⟨1, by norm_num, K0, hK0, ?_⟩
-  intro K N D s hK hlocal hD hs hsqrt hsmall
-  simpa only [ActualClaim145BoundAt, Claim14_5Bound, Nat.ceil_natCast] using
-    hclosed K N D s hK hlocal hD hs hsqrt hsmall
-
 
 end MathlibNt.SieveTheory

@@ -10,9 +10,6 @@ open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachWeightTriplePartition (P : Prop) :
-    Decidable P :=
-  Classical.propDecidable P
 
 /-- The part of `S6Closed` with middle prime `s ≤ b`, keeping the original
 `t,r,s` nesting and all closed-endpoint/repeat contributions. -/
@@ -33,19 +30,6 @@ noncomputable def goldbachWeightUpperMiddle
           (fun s : ℕ => b < (s : ℝ)),
         literalH A (N * r) (r * s * t) s
 
-theorem goldbachWeightLowMiddle_nonneg
-    (A : Finset ℕ) (N : ℕ) (z b y : ℝ) :
-    0 ≤ goldbachWeightLowMiddle A N z b y := by
-  unfold goldbachWeightLowMiddle
-  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
-    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
-
-theorem goldbachWeightUpperMiddle_nonneg
-    (A : Finset ℕ) (N : ℕ) (z b y : ℝ) :
-    0 ≤ goldbachWeightUpperMiddle A N z b y := by
-  unfold goldbachWeightUpperMiddle
-  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
-    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
 private theorem goldbachWeightTriplePartition_closedPrimes_eq_filter_ge
     (N : ℕ) (z y : ℝ) {r : ℕ}
@@ -119,35 +103,6 @@ private theorem goldbachWeightTriplePartition_triangle_swap
             intro r hr
             rw [goldbachWeightTriplePartition_closedPrimes_eq_filter_ge N z y hr]
 
-private theorem goldbachWeightTriplePartition_closedPrimes_filter_lt_eq_halfOpen_of_le
-    (N : ℕ) (z b y : ℝ) (hby : b ≤ y) :
-    (goldbachClosedPrimes N z y).filter (fun p : ℕ => (p : ℝ) < b) =
-      goldbachHalfOpenPrimes N z b := by
-  ext p
-  constructor
-  · intro hp
-    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpb⟩
-    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, hpz, _⟩
-    exact mem_goldbachHalfOpenPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpb⟩
-  · intro hp
-    rcases mem_goldbachHalfOpenPrimes_iff.mp hp with ⟨hpPrime, hpN, hpz, hpb⟩
-    exact Finset.mem_filter.mpr
-      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpb.le.trans hby⟩, hpb⟩
-
-private theorem goldbachWeightTriplePartition_closedPrimes_filter_not_lt_eq_closed
-    (N : ℕ) (z b y : ℝ) (hzb : z ≤ b) :
-    (goldbachClosedPrimes N z y).filter (fun p : ℕ => ¬(p : ℝ) < b) =
-      goldbachClosedPrimes N b y := by
-  ext p
-  constructor
-  · intro hp
-    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpNotLt⟩
-    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, _, hpy⟩
-    exact mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, not_lt.mp hpNotLt, hpy⟩
-  · intro hp
-    rcases mem_goldbachClosedPrimes_iff.mp hp with ⟨hpPrime, hpN, hpb, hpy⟩
-    exact Finset.mem_filter.mpr
-      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hzb.trans hpb, hpy⟩, not_lt.mpr hpb⟩
 
 private theorem goldbachWeightTriplePartition_closedPrimes_filter_le_eq_self
     (N : ℕ) (r y b : ℝ) (hyb : y ≤ b) :
@@ -308,11 +263,11 @@ private theorem goldbachWeightTriplePartition_lowMiddle_eq_goldbachS6HalfOpen_ad
       ∑ t ∈ goldbachClosedPrimes N z c, lowSlice t =
         ∑ t ∈ goldbachHalfOpenPrimes N z b, lowSlice t +
           ∑ t ∈ (goldbachClosedPrimes N z c).filter (fun t : ℕ => ¬(t : ℝ) < b), lowSlice t := by
-            simpa [goldbachWeightTriplePartition_closedPrimes_filter_lt_eq_halfOpen_of_le N z b c hbc]
+            simpa [goldbachClosedPrimes_filter_lt_eq_halfOpen_of_le N z b c hbc]
               using hsplit.symm
       _ = ∑ t ∈ goldbachHalfOpenPrimes N z b, lowSlice t +
             ∑ t ∈ goldbachClosedPrimes N b c, lowSlice t := by
-              rw [goldbachWeightTriplePartition_closedPrimes_filter_not_lt_eq_closed N z b c hzb]
+              rw [goldbachClosedPrimes_filter_not_lt_eq_closed N z b c hzb]
   have hfirst :
       ∑ t ∈ goldbachHalfOpenPrimes N z b, lowSlice t =
         goldbachS6HalfOpen A N z b := by

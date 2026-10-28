@@ -1,0 +1,42 @@
+{
+  "status": "pass",
+  "accepted_at_utc": "2026-10-26T08:58:23.017975+00:00",
+  "manifest_sha256": "c443682b009f9642ed3a2dfca4cfbf46bcc03c8178fab80c9968226c2794fccf",
+  "modules": 4774,
+  "theorem_closure_modules": 4387,
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+  "full_build": "pass with unchanged objects reused only under matching receipts",
+  "literal_and_axiom_checks": "pass; only propext, Classical.choice, Quot.sound",
+  "kernel_replays": [
+    "Hf4QuadCompactKernel",
+    "Hf4QuadCompactIntegral",
+    "Hf4QuadRationalModel",
+    "Hf4QuadPanel0",
+    "WR2ClassicalCertificate"
+  ],
+  "preserved_panel_bound_statements": 40,
+  "unchanged_source_modules": 4756,
+  "generator": "pass: 15 modules, 381 DAG nodes",
+  "files": {
+    "README.md": "01261180c5ed71e5b4359e15b7bf626f561d477e060e04aaad0d796637fd778a",
+    "baseline-panel-statements.json": "581a209a001ce088286378f49abcd790c232a1e08563f8871564839a243618e0",
+    "baseline-source-index.json": "14ac43e3d73dfc1d8d5d71a169c069f035520d3c9403300515b8aa9527d322e8",
+    "certificate-enclosures.json": "d87c6bc0b543b3cdbbab085a431620e20c03314339ef5a8cdfbe81b933f04985",
+    "classical-acceptance.json": "d88df88c7b0cb5efb99e8b64ded2181f61a4166b23b62356fa6f63923def86ae",
+    "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+    "full-build.log": "3bb8d36af49690e6b46a8370a881be664c39eea249ea428c0a24cd34ebe27015",
+    "generator-check.log": "4c725276adb453c9439bb74832fb806c1116454168a3c8528bf587355ca134fd",
+    "interval-comparison.json": "5eeb525af9461c2e163bc9041868c2baf06a98a13d26e039daf3264653dfbf17",
+    "kernel-Hf4QuadCompactIntegral.log": "e959fdcd865fc580553c8bdb1b98c58de0edf2ecec468d21c7d63a2038555fb7",
+    "kernel-Hf4QuadCompactKernel.log": "d086afbd2487620701256b861ece3f431695f2f5aadbc95a662df5cff7c99ccd",
+    "kernel-Hf4QuadPanel0.log": "4c07ecf0b78b60dd5d56ba29315127400043e7f27d043a2fc422c291f352446e",
+    "kernel-Hf4QuadRationalModel.log": "1f11819e4469c35bec902d646dc22c35599abe039fc2bda9ca7debbf4c9360d4",
+    "kernel-WR2ClassicalCertificate.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+    "literal-check.log": "eb4d99efa458aecf738ab24a1990b846cee0ad48da3ad32fa6615581db671427",
+    "measure.py": "adb6d07fbe8842914a6b253b7413018d6794dda447b3ec1bbb89e82f3f511d8a",
+    "panel-statement-comparison.json": "f49c5c550adadf2393adcce2ab236fd671aa811df578c1f82f25ae5e586fd8b1",
+    "source-size.json": "ab3f12eff56355cb323afcd3b506830e2cdb3acd97ea8851d89a6eac07dff2da",
+    "verify-sources.log": "7a6c284e8b383c90e266c092eaf950db32edefeaa8761e880cb7d9ac727e2768"
+  }
+}

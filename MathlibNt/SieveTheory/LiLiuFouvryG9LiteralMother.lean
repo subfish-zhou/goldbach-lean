@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutputPrime
-import MathlibNt.SieveTheory.LiLiuGoldbachBuchstab
 
 noncomputable section
 open Finset
@@ -53,15 +52,5 @@ theorem fouvryG9MotherSifted_eq_original (N : ℕ) (e z : ℝ) :
   rw [hp]
   split_ifs <;> norm_num
 
-/-- Exact prime-output count identification; no small outputs are silently removed. -/
-theorem fouvryG9MotherPrimeOutput_eq_original (N : ℕ) (e : ℝ) :
-    fouvryG9MotherPrimeOutput N e =
-      ((goldbachB9LowPositivePrefixPrimeAtoms N e).card : ℝ) := by
-  classical
-  unfold fouvryG9MotherPrimeOutput goldbachB9LowPositivePrefixPrimeAtoms
-  rw [← sum_boole]
-  apply sum_congr rfl
-  intro a ha
-  rw [fouvryG9Mother_output_eq ha]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

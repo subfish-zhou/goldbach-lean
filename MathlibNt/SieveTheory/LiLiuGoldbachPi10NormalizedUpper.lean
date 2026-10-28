@@ -1,9 +1,5 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
 import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted
 import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
-import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import MathlibNt.SieveTheory.LiuSingularSeries
 
 noncomputable section
 

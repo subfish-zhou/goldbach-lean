@@ -75,16 +75,6 @@ theorem halfStepShortKernel_vertical_integrable {q : ℕ} (f : ℕ → ℂ)
   dsimp at hs ⊢
   linarith [hs.1]
 
-theorem halfStepShortKernel_horizontal_integrable {q : ℕ} (f : ℕ → ℂ)
-    (m H y A₁ A₂ k : ℕ) (χ : PrimitiveCharacter q)
-    {α t : ℝ} (hα : 1 / 2 ≤ α) :
-    IntervalIntegrable (fun u : ℝ =>
-      halfStepShortKernel f m H y A₁ A₂ k χ (u + t * I)) volume (1 / 2) α := by
-  apply Eq21FiniteContour_horizontal_intervalIntegrable hα (le_refl |t|)
-  apply (halfStepShortKernel_differentiableOn f m H y A₁ A₂ k χ).continuousOn.mono
-  intro s hs
-  dsimp at hs ⊢
-  linarith [hs.1]
 
 /-- Pointwise bounds use the actual source and prime polynomials. -/
 theorem halfStepShortKernel_horizontal_pointwise {q : ℕ} (f : ℕ → ℂ)

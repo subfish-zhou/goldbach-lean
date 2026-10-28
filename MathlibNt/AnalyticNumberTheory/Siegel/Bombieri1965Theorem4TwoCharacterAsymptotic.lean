@@ -346,18 +346,6 @@ theorem norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
         mul_nonneg (sq_nonneg (q : ℝ)) (mul_nonneg (Real.sqrt_nonneg (N : ℝ)) hsm.le)]
     _ ≤ _ := mul_le_mul_of_nonneg_left hpower (by positivity)
 
-/-- The common-level, distinct quadratic case, with no primitive or coprime
-conductor hypothesis. -/
-theorem norm_sum_Icc_twoCharacterConvolution_sub_residue_main_le
-    (χ ψ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (hψ : ψ ≠ 1)
-    (hχquad : χ ^ 2 = 1) (hψquad : ψ ^ 2 = 1) (hne : χ ≠ ψ) (N : ℕ) :
-    ‖(∑ n ∈ Finset.Icc 1 N, twoCharacterConvolution χ ψ n) -
-      (N : ℂ) * twoCharacterResidue χ ψ‖ ≤
-        300 * (q : ℝ) ^ 2 * (N : ℝ) ^ (3 / 4 : ℝ) := by
-  have hI : Finset.Icc 1 N = Ioc 0 N := by ext n; simp; omega
-  rw [hI]
-  exact norm_sum_Ioc_twoCharacterConvolution_sub_residue_main_le
-    χ ψ hχ hχquad hψ (mul_ne_one_of_quadratic_ne hψquad hne) N
 
 /-- A crude uniform norm bound for the actual residue, used only to pay
 the change from a natural endpoint to a real endpoint. -/
@@ -373,55 +361,5 @@ theorem norm_twoCharacterResidue_le_eight_mul_modulus_cubed
         (norm_LFunction_one_le_two_mul_modulus (χ * ψ) hprod) (norm_nonneg _) (by positivity)
     _ = _ := by ring
 
-/-- Real-endpoint version of the genuine fourfold main term. The additional
-power of the common modulus pays only the endpoint displacement. -/
-theorem norm_sum_Icc_floor_twoCharacterConvolution_sub_residue_main_le
-    (χ ψ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (hψ : ψ ≠ 1)
-    (hχquad : χ ^ 2 = 1) (hψquad : ψ ^ 2 = 1) (hne : χ ≠ ψ)
-    {X : ℝ} (hX : 1 ≤ X) :
-    ‖(∑ n ∈ Finset.Icc 1 ⌊X⌋₊, twoCharacterConvolution χ ψ n) -
-      (X : ℂ) * twoCharacterResidue χ ψ‖ ≤
-        308 * (q : ℝ) ^ 3 * X ^ (3 / 4 : ℝ) := by
-  have hf := Nat.floor_le (show 0 ≤ X by linarith)
-  have herror : |(⌊X⌋₊ : ℝ) - X| ≤ 1 := by
-    rw [abs_le]
-    constructor <;> linarith [Nat.lt_floor_add_one X]
-  have he : ‖((⌊X⌋₊ : ℂ) - (X : ℂ)) * twoCharacterResidue χ ψ‖ ≤
-      8 * (q : ℝ) ^ 3 := by
-    rw [norm_mul]
-    have hc : ‖(⌊X⌋₊ : ℂ) - (X : ℂ)‖ ≤ 1 := by
-      simpa only [← ofReal_natCast, ← ofReal_sub, Complex.norm_real, Real.norm_eq_abs] using herror
-    exact (mul_le_mul hc
-      (norm_twoCharacterResidue_le_eight_mul_modulus_cubed
-        χ ψ hχ hψ (mul_ne_one_of_quadratic_ne hψquad hne))
-      (norm_nonneg _) (by norm_num)).trans (by simp)
-  have hp : (⌊X⌋₊ : ℝ) ^ (3 / 4 : ℝ) ≤ X ^ (3 / 4 : ℝ) :=
-    Real.rpow_le_rpow (Nat.cast_nonneg _) hf (by norm_num)
-  have hp1 : 1 ≤ X ^ (3 / 4 : ℝ) := by
-    simpa using Real.rpow_le_rpow (by norm_num : (0 : ℝ) ≤ 1) hX
-      (by norm_num : (0 : ℝ) ≤ 3 / 4)
-  have hq : (1 : ℝ) ≤ q := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
-  have hqq : (q : ℝ) ^ 2 ≤ (q : ℝ) ^ 3 := by
-    calc
-      (q : ℝ) ^ 2 = (q : ℝ) ^ 2 * 1 := (mul_one _).symm
-      _ ≤ (q : ℝ) ^ 2 * q := mul_le_mul_of_nonneg_left hq (sq_nonneg _)
-      _ = (q : ℝ) ^ 3 := by ring
-  calc
-    _ = ‖((∑ n ∈ Finset.Icc 1 ⌊X⌋₊, twoCharacterConvolution χ ψ n) -
-        (⌊X⌋₊ : ℂ) * twoCharacterResidue χ ψ) +
-        ((⌊X⌋₊ : ℂ) - (X : ℂ)) * twoCharacterResidue χ ψ‖ := by congr 1; ring
-    _ ≤ _ := norm_add_le _ _
-    _ ≤ 300 * (q : ℝ) ^ 2 * (⌊X⌋₊ : ℝ) ^ (3 / 4 : ℝ) + 8 * (q : ℝ) ^ 3 :=
-      add_le_add
-        (norm_sum_Icc_twoCharacterConvolution_sub_residue_main_le χ ψ hχ hψ hχquad hψquad hne _)
-        he
-    _ ≤ 300 * (q : ℝ) ^ 3 * X ^ (3 / 4 : ℝ) +
-        8 * (q : ℝ) ^ 3 * X ^ (3 / 4 : ℝ) := by
-      apply add_le_add
-      · exact mul_le_mul
-          (mul_le_mul_of_nonneg_left hqq (by norm_num)) hp (by positivity) (by positivity)
-      · simpa only [mul_one] using
-          mul_le_mul_of_nonneg_left hp1 (show (0 : ℝ) ≤ 8 * (q : ℝ) ^ 3 by positivity)
-    _ = _ := by ring
 
 end DirichletCharacter

@@ -40,7 +40,3 @@ end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
 
 -- Public declaration type and trust audit.
-#check MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_max_le
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_max_le
-#check MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_abs_rpow_le
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayKMain_abs_rpow_le

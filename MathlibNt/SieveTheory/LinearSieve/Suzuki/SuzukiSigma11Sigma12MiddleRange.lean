@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseAssembly
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
 
@@ -12,15 +11,6 @@ open SuzukiFiniteContinuousLayers
 
 set_option maxHeartbeats 800000
 
-/-- Global clamp for the Proposition-9.3 source layer in Lemma 8.7. -/
-noncomputable def sigma11ShiftClamp
-    (β : ℝ) (M : ℕ) (τ t : ℝ) : ℝ :=
-  finiteSourceLayer 1 β M (max (τ - 1) (t - 1))
-
-@[simp] theorem sigma11ShiftClamp_eq_of_le
-    (β : ℝ) (M : ℕ) {τ t : ℝ} (hτt : τ ≤ t) :
-    sigma11ShiftClamp β M τ t = finiteSourceLayer 1 β M (t - 1) := by
-  simp [sigma11ShiftClamp, max_eq_right (by linarith : τ - 1 ≤ t - 1)]
 
 /-- Direct source-layer instance of Lemma 8.7, kept in the same import cone as
 Claim 14.5 to avoid the legacy/production finite-layer declaration collision. -/
@@ -97,71 +87,6 @@ theorem sigma11_middle_le_finiteSourceLayer_add_endpoint
     hβ hτdom hτσ hD hz2 hv2 hw2 hwv hvz hz hv hw hK hlocal
   exact h87.trans (add_le_add
     (Sigma11FiniteLayerMajorization hβ hsdom hτdom hsτ hτσ) le_rfl)
-
-/-- Source-correct `Σ₁₂` middle-range assembly after the pointwise majorant
-(14.13).  The prime carrier is exactly `w ≤ p < v`; `z` is deliberately kept
-as the independent original sieve cutoff controlling `V(p)/V(z)`. -/
-theorem sigma12_middle_le_qD_lemma8_7
-    {S : BoundingSieve} {H : Section13HatLayers}
-    {β D z v w s τ σ K d Δ : ℝ} (sign : ErrorSign) (R : ℝ → ℝ)
-    (hmajorant : ∀ p ∈ S.prodPrimes.primeFactors,
-      w ≤ (p : ℝ) → (p : ℝ) < v →
-      R (Real.log D / Real.log p) ≤
-        qD H sign.opposite D d Δ (Real.log D / Real.log p))
-    (hH : Section13HatContract H β)
-    (hD : 1 < D) (hz2 : 2 ≤ z) (hv2 : 2 ≤ v) (hw2 : 2 ≤ w)
-    (hwv : w ≤ v) (hvz : v ≤ z)
-    (hz : z = D ^ (1 / s)) (hv : v = D ^ (1 / τ))
-    (hw : w = D ^ (1 / σ))
-    (hτ : H.betaHat + sign.epsilon < τ) (hτσ : τ ≤ σ)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K)
-    (hii : Claim14_6_MonotoneQPremise H D d Δ σ) :
-    suzukiLemmaEightSevenPrimeSum S D w v z R ≤
-      (1 / s) * (∫ t in τ..σ, qD H sign.opposite D d Δ t) +
-        (6 * K ^ 2 * qD H sign.opposite D d Δ τ / Real.log w) *
-          (τ / s) := by
-  exact (suzukiLemmaEightSevenPrimeSum_mono_on_middle
-    S D w v z R (qD H sign.opposite D d Δ) hmajorant).trans
-      (lemma8_7_qD_of_claim14_6_ii (S := S) (H := H) (sign := sign)
-        hH hD hz2 hv2 hw2 hwv hvz hz hv hw hτ hτσ hK hlocal hii)
-
-/-- Combined source-correct middle-range estimate for `Σ₁₁ + Σ₁₂`.
-Both terms use the same exact carrier `w ≤ p < v` and the same independent
-Euler-ratio cutoff `z`. -/
-theorem sigma11_add_sigma12_middle_le
-    {S : BoundingSieve} {H : Section13HatLayers}
-    {β D z v w s τ σ K d Δ : ℝ} {N : ℕ}
-    (sign : ErrorSign) (R : ℝ → ℝ)
-    (hβ : 1 < β)
-    (hsdom : s ∈ KappaOneModel.parityDomain β N)
-    (hτdom : τ - 1 ∈ KappaOneModel.parityDomain β (N - 1))
-    (hsτ : s ≤ τ)
-    (hmajorant : ∀ p ∈ S.prodPrimes.primeFactors,
-      w ≤ (p : ℝ) → (p : ℝ) < v →
-      R (Real.log D / Real.log p) ≤
-        qD H sign.opposite D d Δ (Real.log D / Real.log p))
-    (hH : Section13HatContract H β)
-    (hD : 1 < D) (hz2 : 2 ≤ z) (hv2 : 2 ≤ v) (hw2 : 2 ≤ w)
-    (hwv : w ≤ v) (hvz : v ≤ z)
-    (hz : z = D ^ (1 / s)) (hv : v = D ^ (1 / τ))
-    (hw : w = D ^ (1 / σ))
-    (hτ : H.betaHat + sign.epsilon < τ) (hτσ : τ ≤ σ)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K)
-    (hii : Claim14_6_MonotoneQPremise H D d Δ σ) :
-    suzukiLemmaEightSevenPrimeSum S D w v z
-        (fun t => finiteSourceLayer 1 β (N - 1) (t - 1)) +
-      suzukiLemmaEightSevenPrimeSum S D w v z R ≤
-      finiteSourceLayer 1 β N s +
-        (6 * K ^ 2 * finiteSourceLayer 1 β (N - 1) (τ - 1) /
-          Real.log w) * (τ / s) +
-      ((1 / s) * (∫ t in τ..σ, qD H sign.opposite D d Δ t) +
-        (6 * K ^ 2 * qD H sign.opposite D d Δ τ / Real.log w) *
-          (τ / s)) := by
-  exact add_le_add
-    (sigma11_middle_le_finiteSourceLayer_add_endpoint hβ hsdom hτdom hsτ hτσ
-      hD hz2 hv2 hw2 hwv hvz hz hv hw hK hlocal)
-    (sigma12_middle_le_qD_lemma8_7 sign R hmajorant hH hD hz2 hv2 hw2
-      hwv hvz hz hv hw hτ hτσ hK hlocal hii)
 
 
 end SuzukiLemma144KappaOne

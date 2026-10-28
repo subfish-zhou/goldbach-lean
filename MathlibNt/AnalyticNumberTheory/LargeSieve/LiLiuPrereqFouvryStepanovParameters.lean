@@ -29,14 +29,6 @@ def stepanovB (q m : ℕ) : ℕ := ⌈((q : ℝ) - m) / 2⌉₊
 def stepanovJ (q m ell : ℕ) : ℕ :=
   ⌈(ell : ℝ) / 2 + (ell : ℝ) ^ 2 * m / q⌉₊
 
-/-- Exact equation count, not an estimate for a hypothetical system. -/
-theorem stepanov_equation_count (ell B J m : ℕ) :
-    (∑ k : Fin ell, (B + k.val * (m - 1) + (J - 1))) =
-      ell * (B + (J - 1)) + (ell * (ell - 1) / 2) * (m - 1) := by
-  simp only [Finset.sum_add_distrib, ← Finset.sum_mul, Finset.sum_const,
-    Finset.card_univ, Fintype.card_fin, smul_eq_mul]
-  rw [Fin.sum_univ_eq_sum_range (fun k : ℕ => k) ell, Finset.sum_range_id]
-  ring
 
 /-- The real form of the exact count, with no rounding of dimensions. -/
 theorem stepanov_equation_count_real (ell B J m : ℕ)
@@ -227,16 +219,6 @@ theorem stepanov_integer_parameters (q m : ℕ) (hm : 3 ≤ m) (hmq : 6 * m < q)
   exact ⟨hell, by omega, hellq, hqsq, hB, hJ, hBq, hcount,
     stepanov_parameters_degree hm hmq hell hellq hqsq⟩
 
-/-- An existential interface spelling out the source-matching choices. -/
-theorem stepanov_integer_parameters_exists (q m : ℕ)
-    (hm : 3 ≤ m) (hmq : 6 * m < q) :
-    ∃ ell B J : ℕ,
-      ell = ⌈Real.sqrt (q : ℝ)⌉₊ ∧
-      B = ⌈((q : ℝ) - m) / 2⌉₊ ∧
-      J = ⌈(ell : ℝ) / 2 + (ell : ℝ) ^ 2 * m / q⌉₊ ∧
-      StepanovParameterBounds q m ell B J :=
-  ⟨stepanovEll q, stepanovB q m, stepanovJ q m (stepanovEll q),
-    rfl, rfl, rfl, stepanov_integer_parameters q m hm hmq⟩
 
 /-- The actual auxiliary polynomial with no assumed dimension inequality:
 the integer choices above discharge all numerical construction hypotheses.

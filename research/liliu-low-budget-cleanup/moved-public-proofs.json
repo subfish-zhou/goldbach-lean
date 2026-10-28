@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "Wu2004MeanValue.balanced_lowMovingSource_le_budget",
+      "before_provider": [
+        "MathlibNt.Wu2004MeanValue.BalancedLowSource"
+      ],
+      "after_provider": [
+        "MathlibNt.Wu2004MeanValue.LowSource"
+      ],
+      "same_public_kind_and_type_hash": true
+    }
+  ],
+  "verified_consumers_reaching_shared_budget": [
+    "Wu2004MeanValue.low_source_nat_moving",
+    "Wu2004MeanValue.balanced_low_source_nat_moving",
+    "Wu2004MeanValue.balanced_low_source_real_moving"
+  ],
+  "method": "The existing generic budget name/type moves upstream. Both differently scoped higher low-conductor estimates and their real-endpoint transport retain their complete original public types and actually reach the shared proof."
+}

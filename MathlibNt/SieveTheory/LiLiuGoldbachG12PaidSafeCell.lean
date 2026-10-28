@@ -104,14 +104,5 @@ theorem safe_cell_paid (δ : ℝ) (hδ : 0 < δ) (e : ℝ) (he : 0 < e) (he1 : e
     simp only [mul_zero,zero_mul,zero_div,zero_add]
     positivity
 
-/-- Exact slack ledger: the delta contribution is delta times the original mass. -/
-theorem authorMass_slack (N : ℕ) (A : Finset (ℕ × ℕ)) (δ : ℝ) :
-    authorMass N A δ = authorMass N A 0 + δ*G12FlexibleWF.mass N A := by
-  simp only [authorMass, G12FlexibleWF.mass, mul_add, sum_add_distrib, add_zero]
-  rw [mul_sum]
-  congr 1
-  apply sum_congr rfl
-  intro p _
-  ring
 
 end G12SafeGridBudget

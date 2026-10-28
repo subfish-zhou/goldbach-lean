@@ -35,11 +35,6 @@ theorem boxProfile_pairwise (label : ℕ → ℕ) (S : Finset ℕ) :
     (boxProfile label S).Pairwise (· ≥ ·) :=
   Multiset.pairwise_sort _ _
 
-theorem boxProfile_eq_of_counts {label : ℕ → ℕ} {S T : Finset ℕ}
-    (h : ∀ j, (boxProfile label S).count j = (boxProfile label T).count j) :
-    boxProfile label S = boxProfile label T :=
-  (List.perm_iff_count.mpr h).eq_of_pairwise'
-    (boxProfile_pairwise label S) (boxProfile_pairwise label T)
 
 /-- The prime order gives exactly the same occurrence list whenever the
 labels respect that order. Equal labels are retained, not collapsed. -/
@@ -153,12 +148,5 @@ theorem boxProfile_matches_iff (label : ℕ → ℕ) (B : ℕ → Finset ℕ)
       exact Finset.mem_union_right _ (Finset.mem_biUnion.mpr
         ⟨label p, List.mem_toFinset.mpr ((mem_boxProfile _ _ _).mpr ⟨p, hpS, rfl⟩),
           hcover p hpS⟩)
-
-#check boxProfile_eq_of_counts
-#check roundedSupport_boxProfile_iff
-#check boxProfile_matches_iff
-#print axioms boxProfile_eq_of_counts
-#print axioms roundedSupport_boxProfile_iff
-#print axioms boxProfile_matches_iff
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

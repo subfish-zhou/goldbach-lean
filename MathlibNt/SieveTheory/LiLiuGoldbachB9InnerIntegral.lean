@@ -11,9 +11,6 @@ private lemma B9InnerReduction_beta_pos : 0 < (4 / 53 : ℝ) := by
 private lemma B9InnerReduction_gamma_pos : 0 < (1 / 3 : ℝ) := by
   norm_num
 
-private lemma B9InnerReduction_beta_le_gamma :
-    (4 / 53 : ℝ) ≤ (1 / 3 : ℝ) := by
-  norm_num
 
 private lemma B9InnerReduction_gamma_lt_one : (1 / 3 : ℝ) < 1 := by
   norm_num
@@ -127,14 +124,6 @@ theorem goldbachB9InnerIntegral_eq_logTwoSubThree {u : ℝ}
   congr 2
   ring
 
-theorem goldbachB9DoubleIntegral_eq_singleIntegral :
-    (∫ u in (4 / 53 : ℝ)..(1 / 3),
-      ∫ v in (1 / 3 : ℝ)..((1 - u) / 2), 1 / (u * v * (1 - u - v))) =
-      ∫ u in (4 / 53 : ℝ)..(1 / 3), Real.log (2 - 3 * u) / (u * (1 - u)) := by
-  apply intervalIntegral.integral_congr
-  intro u hu
-  rw [uIcc_of_le B9InnerReduction_beta_le_gamma] at hu
-  exact goldbachB9InnerIntegral_eq_logTwoSubThree hu
 
 theorem continuousOn_goldbachB9SingleIntegrand :
     ContinuousOn (fun u : ℝ => Real.log (2 - 3 * u) / (u * (1 - u)))
@@ -147,12 +136,6 @@ theorem continuousOn_goldbachB9SingleIntegrand :
   exact mul_ne_zero (by change u ≠ 0; linarith [hu.1])
     (by change 1 - u ≠ 0; linarith [hu.2])
 
-theorem intervalIntegrable_goldbachB9SingleIntegrand :
-    IntervalIntegrable (fun u : ℝ => Real.log (2 - 3 * u) / (u * (1 - u)))
-      volume (4 / 53) (1 / 3) := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le B9InnerReduction_beta_le_gamma]
-  exact continuousOn_goldbachB9SingleIntegrand
 
 end
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

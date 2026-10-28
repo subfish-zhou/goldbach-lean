@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11GridGeometry
 import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres
-import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantDiscrepancy
 
 open Finset
 open scoped BigOperators Classical

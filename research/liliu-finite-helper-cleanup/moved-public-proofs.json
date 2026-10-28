@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPayMain_span",
+      "before_provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayMainLocal"
+      ],
+      "after_provider": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReindex"
+      ],
+      "same_public_kind_and_type_hash": true
+    }
+  ],
+  "verified_consumer": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPaySecondary_grid",
+  "actual_shared_grid_reference_reachable": true,
+  "method": "The original inclusive grid-endpoint proof and public name move upstream into its definition provider. Both consumers already import it transitively; the secondary public name retains its full type and invokes this proof."
+}

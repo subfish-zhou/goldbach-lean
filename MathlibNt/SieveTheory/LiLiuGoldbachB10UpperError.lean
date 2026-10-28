@@ -5,8 +5,6 @@ open Finset MathlibNt.SieveTheory
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableB10UpperError (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The actual Rosser remainder needs only the unweighted coprime modulus sum.
 The natural Rosser level is `Q+1`, so its strict support is exactly `d≤Q`. -/

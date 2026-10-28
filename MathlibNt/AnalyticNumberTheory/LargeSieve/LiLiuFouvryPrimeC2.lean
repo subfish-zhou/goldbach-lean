@@ -1,5 +1,10 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWFamily
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectC2
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayZero
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayMainUniform
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryScalar
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPrefixAssembly
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectErrorScalar
+
 
 noncomputable section
 open Classical Finset Filter
@@ -28,21 +33,6 @@ theorem primeSWBeta_le_order_one (n : ℕ) : |primeSWBeta n| ≤ (fouvryTau 1 n 
   · simp [primeSWBeta,hp,fouvryTau_order_one hp.ne_zero]
   · simp [primeSWBeta,hp]
 
-/-- No SW premise: the actual prime-interval producer is consumed here. -/
-theorem primeC2_unconditional (i j A : ℕ) {ε : ℝ} (hε : 0 < ε) :
-    ∀ᶠ x : ℝ in atTop, ∀ z : PrimeC2Interval, ∀ M ν : ℝ,
-      1 ≤ M → 4*M*z.scale = x → ε ≤ ν → ν ≤ 1/10 → z.scale = x^ν →
-      ∀ U : Finset ℕ, (∀ n ∈ U, M ≤ (n : ℝ) ∧ (n : ℝ) ≤ 2*M) →
-      ∀ α c : ℕ → ℝ, (∀ n ∈ U, |α n| ≤ (fouvryTau i n : ℝ)) →
-      SignedWellFactorable j (x^((5-5*ν)/9-ε)) c →
-      ∀ a : ℤ, a ≠ 0 → |(a : ℝ)| ≤ x →
-      |signedError U (primeSWInterval z.lower z.upper)
-        (Ioc 0 ⌊x^((5-5*ν)/9-ε)⌋₊) α primeSWBeta c a| ≤ x/Real.log x^A := by
-  have hSW := primeSW_BetaCoprimeSWFamily PrimeC2Interval.scale
-    PrimeC2Interval.lower PrimeC2Interval.upper PrimeC2Interval.one_le_scale
-    PrimeC2Interval.scale_le_lower PrimeC2Interval.lower_le_upper PrimeC2Interval.upper_le_twice
-  exact direct_wellFactorable_signedError_c2 (i := i) (j := j) (k := 1) A hSW
-    PrimeC2Interval.one_le_scale primeC2Interval_support (fun _ n _ => primeSWBeta_le_order_one n) hε
 
 /-- For primes, divisor deletion is exactly the actual Goldbach coprime mask. -/
 theorem primeSWBeta_clean_nat (N n : ℕ) :
@@ -66,20 +56,5 @@ theorem primeC2_clean_family {ε : ℝ} (hε : 0 < ε) :
     PrimeC2Interval.scale_le_lower PrimeC2Interval.lower_le_upper PrimeC2Interval.upper_le_twice
   exact hSW.betaClean (k := 1) (fun _ n _ => primeSWBeta_le_order_one n) hε
 
-/-- Concrete cleaned prime intervals feed C.2 without an analytic premise. -/
-theorem primeC2_clean_unconditional (i j A : ℕ) {ε δ : ℝ} (hε : 0 < ε) (hδ : 0 < δ) :
-    ∀ᶠ x : ℝ in atTop, ∀ z : BetaCleanIndex PrimeC2Interval.scale δ, ∀ M ν : ℝ,
-      1 ≤ M → 4*M*z.index.scale = x → ε ≤ ν → ν ≤ 1/10 → z.index.scale = x^ν →
-      ∀ U : Finset ℕ, (∀ n ∈ U, M ≤ (n : ℝ) ∧ (n : ℝ) ≤ 2*M) →
-      ∀ α c : ℕ → ℝ, (∀ n ∈ U, |α n| ≤ (fouvryTau i n : ℝ)) →
-      SignedWellFactorable j (x^((5-5*ν)/9-ε)) c →
-      ∀ a : ℤ, a ≠ 0 → |(a : ℝ)| ≤ x →
-      |signedError U (primeSWInterval z.index.lower z.index.upper)
-        (Ioc 0 ⌊x^((5-5*ν)/9-ε)⌋₊) α (betaClean primeSWBeta z.residue) c a| ≤
-        x/Real.log x^A := by
-  exact direct_wellFactorable_signedError_c2 (i := i) (j := j) (k := 1) A
-    (primeC2_clean_family hδ) (fun z => z.one_le_T)
-    (fun z => primeC2Interval_support z.index)
-    (fun z n _ => (abs_betaClean_le _ _ _).trans (primeSWBeta_le_order_one n)) hε
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -1,32 +1,9 @@
 import MathlibNt.SieveTheory.Chen.Representations
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Topology.MetricSpace.ThickenedIndicator
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.Prime.Infinite
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Totient
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.NumberTheory.AlmostPrime
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import AnalyticNumberTheory
-import MathlibNt.SieveTheory.Arithmetic.SingularSeries
-import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorAsymptotic
-import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
 import MathlibNt.SieveTheory.Distribution.BombieriVinogradov
-import MathlibNt.SieveTheory.LinearSieve
-import MathlibNt.SieveTheory.Selberg.SelbergUpperBound
+import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
 
 /-!
 # Chen weights and representation counts
@@ -429,192 +406,12 @@ noncomputable def chenWCandidates (N : ℕ) : Finset ℕ :=
     (Finset.card ((Finset.range (y + 1)).filter (fun q =>
       q.Prime ∧ z < q ∧ q ≤ y ∧ q ∣ (N - p))) ≤ 1))
 
-/-- **W(N)**: the count of primes p satisfying the sieve conditions.
-
-W(N) = |{p prime : N-p has no prime factor ≤ N^(1/10), and at most one prime factor in (N^(1/10), N^(1/3)]}|.
-
-The Jurkat-Richert lower bound gives W(N) ≥ 2.6408 𝔖(N) N/log²N. -/
-noncomputable def chenW (N : ℕ) : ℝ :=
-  (chenWCandidates N).card
-
-/-- **Pointwise remainder interface for the W(N) lower bound**.
-
-The error constant in the current linear-sieve interface may depend on the fixed `N`,
-so the remainder cannot be removed without a uniformity hypothesis.
-The genuinely uniform Jurkat--Richert lower bound is included in `ChenAnalyticBounds` below. -/
-theorem chenW_lower_bound (N : ℕ) (_hN : Even N) (hN_large : 1000 ≤ N) :
-    ∃ C : ℝ,
-      2.6408 * chenW N ≥
-        2.6408 * 2.6408 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 -
-          C * (N : ℝ) / (log N) ^ 10 := by
-  have hlog : 0 < log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (by omega : 1 < N))
-  have hscale : 0 < (N : ℝ) / (log N) ^ 10 :=
-    div_pos (by exact_mod_cast (by omega : 0 < N)) (pow_pos hlog 10)
-  let L : ℝ := 2.6408 * chenW N
-  let M : ℝ := 2.6408 * 2.6408 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2
-  refine ⟨(M - L) / ((N : ℝ) / (log N) ^ 10), ?_⟩
-  change L ≥ M - (M - L) / ((N : ℝ) / (log N) ^ 10) * (N : ℝ) /
-    (log N) ^ 10
-  rw [mul_div_assoc, div_mul_cancel₀ _ (ne_of_gt hscale)]
-  linarith
-
-/-- The working `chenW` is bounded by the number of primes below `N`.
-
-This is only the filter-inclusion `chenW ≤ π(N - 1)`.  It is not a lower
-bound for Chen representations and is not used by the conditional Chen chain. -/
-theorem chenW_le_primeCount (N : ℕ) :
-    chenW N ≤ ((Finset.card ((range N).filter Nat.Prime) : ℕ) : ℝ) := by
-  unfold chenW chenWCandidates
-  apply Nat.cast_le.mpr
-  apply Finset.card_le_card
-  intro p hp
-  simp only [Finset.mem_filter, Finset.mem_range] at hp ⊢
-  obtain ⟨hp_range, hp_prime, -, -⟩ := hp
-  exact ⟨hp_range, hp_prime⟩
 
 /-! ## Definition of Ω (the switched sum) -/
 
-/-- **Indicator f(a)**: a = p₁p₂ with N^(1/10) < p₁ ≤ N^(1/3) < p₂ ≤ (N/p₁)^(1/2). -/
-noncomputable def chenF (N a : ℕ) : ℝ :=
-  if ∃ p₁ p₂ : ℕ, p₁.Prime ∧ p₂.Prime ∧
-      (N : ℝ) ^ (1/10 : ℝ) < p₁ ∧ p₁ ≤ (N : ℝ) ^ (1/3 : ℝ) ∧
-      (N : ℝ) ^ (1/3 : ℝ) < p₂ ∧ (p₂ : ℝ) ≤ ((N : ℝ) / p₁) ^ (1/2 : ℝ) ∧
-      a = p₁ * p₂ then 1 else 0
-
-/-- **Switched sum Ω**:
-
-  Ω = Σ_a Σ_{ap₃ ≤ N, N-ap₃ prime} f(a),
-
-where f(a) is the indicator of a = p₁p₂ satisfying the range conditions.
-For a strict ordered triple, this counts the smaller large-prime pairing once
-and counts the larger pairing only when it independently satisfies the square
-cutoff.  It therefore has local multiplicity one or two, not uniformly two. -/
-noncomputable def chenOmega (N : ℕ) : ℝ :=
-  (Finset.range (N + 1)).sum (fun a =>
-    chenF N a *
-      (Finset.range (N + 1)).sum (fun p₃ =>
-        if p₃.Prime ∧ a * p₃ ≤ N ∧ (N - a * p₃).Prime then 1 else 0))
-
-/-- **Pointwise remainder interface for the Ω upper bound**. -/
-theorem chenOmega_upper_bound (N : ℕ) (hN : Even N) (hN_large : 1000 ≤ N) :
-    ∃ C : ℝ,
-      chenOmega N ≤ 3.9404 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 +
-        C * (N : ℝ) / (log N) ^ 10 := by
-  simpa [chenOmega, chenF] using
-    SelbergUpperBound.chenOmega_simple_bound N hN hN_large
-
-/-- The two analytic estimates currently available at one fixed `N`, with
-their remainders made explicit.  This is deliberately weaker than the uniform
-Jurkat--Richert/Selberg input needed for Chen's theorem: the errors may still
-depend on `N`. -/
-def ChenPointwiseAnalyticBoundsAt (N : ℕ) : Prop :=
-  ∃ errorW errorOmega : ℝ,
-    2.6408 * chenW N ≥
-      2.6408 * 2.6408 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 - errorW
-      ∧ chenOmega N ≤
-        3.9404 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 + errorOmega
-
-/-- Package the existing pointwise remainder interfaces into an explicit error
-budget.  No uniformity in `N` is claimed here. -/
-theorem chen_pointwise_analytic_bounds_at (N : ℕ) (hN : Even N)
-    (hN_large : 1000 ≤ N) : ChenPointwiseAnalyticBoundsAt N := by
-  obtain ⟨CW, hW⟩ := chenW_lower_bound N hN hN_large
-  obtain ⟨CO, hO⟩ := chenOmega_upper_bound N hN hN_large
-  exact ⟨CW * (N : ℝ) / (log N) ^ 10,
-    CO * (N : ℝ) / (log N) ^ 10, hW, hO⟩
-
-/-- A closed pointwise error budget forces Chen's numerical key inequality.
-
-This isolates the precise analytic work still needed for a uniform theorem:
-prove that the two remainders fit this strict budget uniformly for all
-sufficiently large even `N`. -/
-theorem chen_key_inequality_of_error_budget {N : ℕ} {errorW errorOmega : ℝ}
-    (hW :
-      2.6408 * chenW N ≥
-        2.6408 * 2.6408 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 - errorW)
-    (hO :
-      chenOmega N ≤
-        3.9404 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 + errorOmega)
-    (hbudget :
-      0 <
-        (2.6408 * 2.6408 - 2.6408 * 3.9404 / 2) *
-            ((N : ℝ) / (log N) ^ 2) - errorW -
-          2.6408 * errorOmega / 2) :
-    chenW N - chenOmega N / 2 > 0 := by
-  have hcoeff : (0 : ℝ) < 2.6408 := by norm_num
-  ring_nf at hW hO hbudget ⊢
-  nlinarith
-
-/-- The two analytic estimates required for Chen's theorem, uniform over all sufficiently large `N`. -/
-def ChenAnalyticBounds : Prop :=
-  ∀ N : ℕ, Even N → 1000 ≤ N →
-    2.6408 * chenW N ≥
-        2.6408 * 2.6408 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2 ∧
-      chenOmega N ≤ 3.9404 * (1 : ℝ) * (N : ℝ) / (log N) ^ 2
 
 /-! ## The key inequality -/
 
-/-- **Key inequality for Chen's theorem**: W(N) - Ω/2 > 0.
-
-  W(N) - Ω/2 ≥ (2.6408 - 3.9404/2) 𝔖(N) N/log²N
-             = 0.6706 𝔖(N) N/log²N
-             > 0
-
-Since 𝔖(N) > 0 by positivity of the singular series, W(N) - Ω/2 > 0.
-
-This theorem is only the numerical consequence of the two historical analytic
-bounds.  Turning it into a Chen representation additionally requires a valid
-counting theorem; the old symmetry argument for `chenOmega / 2` is false. -/
-theorem chen_key_inequality (h_analytic : ChenAnalyticBounds)
-    (N : ℕ) (hN : Even N) (hN_large : 1000 ≤ N) :
-    chenW N - chenOmega N / 2 > 0 := by
-  obtain ⟨hW, hO⟩ := h_analytic N hN hN_large
-  have hlog : 0 < log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (by omega : 1 < N))
-  let X : ℝ := (N : ℝ) / (log N) ^ 2
-  have hscale : 0 < X := by
-    dsimp [X]
-    positivity
-  have hW' : 2.6408 * chenW N ≥ 2.6408 * 2.6408 * (1 : ℝ) * X := by
-    convert hW using 1
-    dsimp [X]
-    ring
-  have hO' : chenOmega N ≤ 3.9404 * (1 : ℝ) * X := by
-    convert hO using 1
-    dsimp [X]
-    ring
-  norm_num at hW' hO' ⊢
-  nlinarith
-
-/-- The historical W-candidates whose complementary integer is not a `P₂`. -/
-noncomputable def chenWBadCandidates (N : ℕ) : Finset ℕ :=
-  (chenWCandidates N).filter
-    (fun p => ¬Nat.IsAtMostAlmostPrime 2 (N - p))
-
-/-- The unit boundary fibre of the W-candidates. -/
-noncomputable def chenUnitCandidates (N : ℕ) : Finset ℕ :=
-  (chenWCandidates N).filter (fun p => N - p = 1)
-
-/-- The exceptional candidate with `N - p = 1` occurs at most once.  A
-corrected switching count must either remove this fibre from `chenW` or carry
-this explicit boundary term. -/
-theorem range_sub_eq_one_card_le_one (N : ℕ) :
-    ((Finset.range N).filter (fun p => N - p = 1)).card ≤ 1 := by
-  refine Finset.card_le_one.mpr ?_
-  intro a ha b hb
-  simp only [Finset.mem_filter, Finset.mem_range] at ha hb
-  omega
-
-/-- The unit fibre inside the named W-candidate set also has cardinality at
-most one. -/
-theorem chenUnitCandidates_card_le_one (N : ℕ) :
-    (chenUnitCandidates N).card ≤ 1 := by
-  apply le_trans (Finset.card_le_card ?_) (range_sub_eq_one_card_le_one N)
-  intro p hp
-  simp only [chenUnitCandidates, Finset.mem_filter] at hp
-  refine Finset.mem_filter.mpr ⟨?_, hp.2⟩
-  simpa [chenWCandidates] using (Finset.mem_filter.mp hp.1).1
 
 /-- Corrected lower sieve cutoff.  The `max 2` removes the small-`N`
 degeneracy of the historical floor cutoff. -/
@@ -628,57 +425,6 @@ theorem singularSeriesTruncated_eq_ant (N z : ℕ) :
       AnalyticNumberTheory.Sieve.singularSeriesTruncated N z := by
   rfl
 
-/-- **Sieve-level logarithmic parameter estimate**: there exists `Clog > 0`
-such that for all `N ≥ 2`, `log (z(N) − 1) ≤ Clog · log N`, where
-`z(N) = max 2 ⌊N^{1/10}⌋`.
-
-One can take `Clog = 1/10`: `z(N) − 1 ≤ N^{1/10}` follows from the floor and `max` bounds,
-then use monotonicity of log and `log(N^{1/10}) = (1/10)·log N`. -/
-theorem correctedChenLogZ_upper_bound :
-    ∃ Clog : ℝ, 0 < Clog ∧
-      ∀ N : ℕ, 2 ≤ N → log (correctedChenZ N - 1 : ℝ) ≤ Clog * log (N : ℝ) := by
-  refine ⟨1 / 10, by norm_num, ?_⟩
-  intro N hN
-  have hN2 : (2 : ℝ) ≤ N := by exact_mod_cast hN
-  have hNpos : 0 < (N : ℝ) := by linarith
-  have hN1 : (1 : ℝ) < N := by linarith
-  let x : ℝ := (N : ℝ) ^ (1 / 10 : ℝ)
-  have hxpow1 : (1 : ℝ) ≤ x := by
-    dsimp [x]
-    have hpow : (1 : ℝ) ^ (1 / 10 : ℝ) ≤ (N : ℝ) ^ (1 / 10 : ℝ) :=
-      Real.rpow_le_rpow (by norm_num) (le_trans (by norm_num : (1 : ℝ) ≤ 2) hN2)
-        (by norm_num)
-    simpa using hpow
-  have hxpos : 0 < x := by
-    dsimp [x]
-    exact Real.rpow_pos_of_pos hNpos _
-  have hfloor : (Nat.floor x : ℝ) ≤ x := by
-    dsimp [x]
-    exact Nat.floor_le (Real.rpow_nonneg (by exact_mod_cast (by omega : 0 ≤ N)) _)
-  have hzle : (correctedChenZ N : ℝ) ≤ x + 1 := by
-    unfold correctedChenZ
-    rw [Nat.cast_max]
-    calc
-      max (2 : ℝ) ↑(Nat.floor x) ≤ max (2 : ℝ) (x + 1) := by
-        exact max_le_max le_rfl (le_trans hfloor (by linarith))
-      _ = x + 1 := by
-        have h2 : (2 : ℝ) ≤ x + 1 := by linarith
-        exact max_eq_right h2
-  have hz1 : (correctedChenZ N - 1 : ℝ) ≤ x := by
-    linarith
-  have hz1pos : 0 < (correctedChenZ N - 1 : ℝ) := by
-    have hzge2 : 2 ≤ correctedChenZ N := by
-      unfold correctedChenZ
-      exact le_max_left _ _
-    have hz2r : (2 : ℝ) ≤ (correctedChenZ N : ℝ) := by exact_mod_cast hzge2
-    linarith
-  have hlogle : log (correctedChenZ N - 1 : ℝ) ≤ log x :=
-    (Real.log_le_log_iff hz1pos hxpos).2 hz1
-  calc
-    log (correctedChenZ N - 1 : ℝ) ≤ log x := hlogle
-    _ = (1 / 10 : ℝ) * log (N : ℝ) := by
-      dsimp [x]
-      rw [Real.log_rpow hNpos]
 
 namespace Internal
 
@@ -895,45 +641,6 @@ theorem singularSeries_eq_trunc_mul_tail (N : ℕ) (_hN2 : 2 ≤ N)
 
 end Internal
 
-/-- The tail product over primes in `(z, N]` is at most `(3/2)^k`, where `k`
-is the number of prime divisors of `N` in the tail: `p ∤ N` factors are
-`< 1`, `p ∣ N` factors are `≤ 3/2`. -/
-private theorem chenZ_tail_prod_le (N : ℕ) (hz3 : 3 ≤ correctedChenZ N)
-    (_hzleN : correctedChenZ N ≤ N + 1) :
-    ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
-      (fun p => SingularSeries.localFactor p N) ≤
-    (3 / 2 : ℝ) ^ ((Finset.Ico (correctedChenZ N) (N + 1)).filter
-      (fun p => p.Prime ∧ p ∣ N)).card := by
-  have hfac : ∀ p ∈ (Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime,
-      SingularSeries.localFactor p N ≤ if p ∣ N then 3 / 2 else 1 := by
-    intro p hp
-    rcases Finset.mem_filter.mp hp with ⟨hpIco, hpPrime⟩
-    have hpz : correctedChenZ N ≤ p := (Finset.mem_Ico.mp hpIco).1
-    have hp2 : 2 < p := by omega
-    by_cases hpd : p ∣ N
-    · rw [if_pos hpd]
-      exact SingularSeries.localFactor_dvd_le hpPrime hp2 hpd
-    · rw [if_neg hpd]
-      exact le_of_lt (SingularSeries.localFactor_not_dvd_lt_one hpPrime hp2 hpd)
-  have hle1 : ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
-      (fun p => SingularSeries.localFactor p N) ≤
-    ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
-      (fun p => if p ∣ N then 3 / 2 else 1) := by
-    apply Finset.prod_le_prod
-    · intro p hp
-      exact le_of_lt (SingularSeries.localFactor_pos
-        ((Finset.mem_filter.mp hp).2))
-    · intro p hp
-      exact hfac p hp
-  have hite : ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
-      (fun p => if p ∣ N then 3 / 2 else 1) =
-    (3 / 2 : ℝ) ^ ((Finset.Ico (correctedChenZ N) (N + 1)).filter
-      (fun p => p.Prime ∧ p ∣ N)).card := by
-    rw [Finset.prod_ite]
-    rw [Finset.prod_const, Finset.prod_const]
-    rw [Finset.filter_filter, Finset.filter_filter]
-    rw [one_pow, mul_one]
-  exact le_trans hle1 (le_of_eq hite)
 
 namespace Internal
 
@@ -1004,54 +711,5 @@ theorem chenZ_tail_prod_le_vanishing (N : ℕ)
 
 end Internal
 
-/-- **Uniform lower bound for the truncated singular series**: there exist `c > 0, N₀` such that
-for all even `N ≥ N₀`, `c·𝔖(N) ≤ 𝔖_trunc(N, z−1)`, where
-`z = correctedChenZ N = max 2 ⌊N^{1/10}⌋`. This is one of the standard inputs
-to the main-term lower bound `CorrectedChenMainTermLower`. The key point is that the tail
-`∏_{z ≤ p ≤ N} localFactor(p,N)` is at most `(3/2)^10`, since N has at most
-ten prime factors greater than `z`. -/
-theorem singularSeriesTruncated_lower_bound :
-    ∃ c : ℝ, 0 < c ∧ ∃ N₀ : ℕ,
-      ∀ N : ℕ, N₀ ≤ N → Even N →
-        c * SingularSeries.singularSeries N ≤
-          SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) := by
-  refine ⟨(2 / 3) ^ 10, by positivity, 2 ^ 110 + 1, ?_⟩
-  intro N hN hEven
-  have hNbig : 2 ^ 110 < N := by omega
-  have hN2 : 2 ≤ N := by
-    have h : 2 ^ 110 ≤ N := le_of_lt hNbig
-    omega
-  have hz3 : 3 ≤ correctedChenZ N := chenZ_ge_three N hNbig
-  have hz1 : 1 ≤ correctedChenZ N := by omega
-  have hzleN : correctedChenZ N ≤ N + 1 := chenZ_le_N_add_one N hN2
-  have hsplit := singularSeries_eq_trunc_mul_tail N hN2 hz1 hzleN
-  have htail := chenZ_tail_prod_le N hz3 hzleN
-  have hk : ((Finset.Ico (correctedChenZ N) (N + 1)).filter
-      (fun p => p.Prime ∧ p ∣ N)).card ≤ 10 :=
-    chenZ_tail_prime_count_le N N hNbig (by omega) le_rfl
-  have htail10 : ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
-      (fun p => SingularSeries.localFactor p N) ≤ (3 / 2 : ℝ) ^ 10 :=
-    le_trans htail (pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 3 / 2) hk)
-  have hpos : 0 < SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) :=
-    SingularSeries.singularSeriesTruncated_pos N (correctedChenZ N - 1) (by omega)
-  have hle : SingularSeries.singularSeries N ≤
-      SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) * (3 / 2 : ℝ) ^ 10 := by
-    calc
-      SingularSeries.singularSeries N
-          = SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) *
-              ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
-                (fun p => SingularSeries.localFactor p N) := hsplit
-      _ ≤ SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) * (3 / 2 : ℝ) ^ 10 := by
-          exact mul_le_mul_of_nonneg_left htail10 (le_of_lt hpos)
-  calc
-    (2 / 3 : ℝ) ^ 10 * SingularSeries.singularSeries N ≤
-        (2 / 3 : ℝ) ^ 10 *
-          (SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) * (3 / 2 : ℝ) ^ 10) := by
-          exact mul_le_mul_of_nonneg_left hle (by positivity)
-    _ = SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) := by
-        have hinv : (2 / 3 : ℝ) ^ 10 * (3 / 2 : ℝ) ^ 10 = 1 := by
-          rw [← mul_pow]
-          norm_num
-        nlinarith
 
 end MathlibNt.SieveTheory.SwitchingPrinciple

@@ -222,22 +222,5 @@ theorem tendsto_primeReciprocalLogInterval {a b : ℝ}
   filter_upwards [eventually_ge_atTop (1 : ℕ)] with N hN
   exact (primeReciprocalLogInterval_eq_sub N hN (le_of_lt hab)).symm
 
-/-- Quantitative eventual form of the fixed-cell limit.  It is directly
-suitable for taking a maximum of the finitely many thresholds belonging to a
-fixed partition. -/
-theorem eventually_abs_primeReciprocalLogInterval_sub_lt {a b ε : ℝ}
-    (ha : 0 < a) (hab : a < b) (hε : 0 < ε) :
-    ∀ᶠ N : ℕ in atTop,
-      |primeReciprocalLogInterval N a b - Real.log (b / a)| < ε := by
-  simpa only [Real.dist_eq] using
-    (Metric.tendsto_nhds.mp (tendsto_primeReciprocalLogInterval ha hab)) ε hε
-
-/-- Threshold form of the quantitative fixed-cell estimate. -/
-theorem exists_abs_primeReciprocalLogInterval_sub_lt {a b ε : ℝ}
-    (ha : 0 < a) (hab : a < b) (hε : 0 < ε) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      |primeReciprocalLogInterval N a b - Real.log (b / a)| < ε := by
-  simpa only [eventually_atTop] using
-    (eventually_abs_primeReciprocalLogInterval_sub_lt ha hab hε)
 
 end MathlibNt.SieveTheory.PrimeReciprocalLogScale

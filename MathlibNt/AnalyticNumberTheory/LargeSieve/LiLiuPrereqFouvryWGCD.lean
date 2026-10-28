@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPrimeSupport
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPhaseThreeFactor
-
 /-!
 # The canonical five-gcd coordinates of W
 
@@ -138,8 +137,6 @@ theorem k_D : (v.k₁ * v.k₂).Coprime v.D := by
   exact (hkδ.mul_right (coprime_of_prime_support hkδ hv.δ₁_support)).mul_right
     (coprime_of_prime_support hkδ hv.δ₂_support)
 
-theorem n₁_d₁ : v.n₁.Coprime v.d₁ :=
-  coprime_of_prime_support hv.n₁_d hv.d₁_support
 
 theorem n₁_n₂ : v.n₁.Coprime v.n₂ :=
   hv.n_primitive.of_dvd_left (dvd_mul_left _ _)
@@ -190,21 +187,6 @@ theorem N₁_D (hc : WCompatible q r N₁ N₂) : N₁.Coprime v.D := by
   exact (hNδ.mul_right (coprime_of_prime_support hNδ hv.δ₁_support)).mul_right
     (coprime_of_prime_support hNδ hv.δ₂_support)
 
-theorem N₂_D (hc : WCompatible q r N₁ N₂) : N₂.Coprime v.D := by
-  have hNδ : N₂.Coprime v.δ := by
-    rw [hv.δ_eq]
-    exact hc.2.1.of_dvd_right (Nat.gcd_dvd_right q r)
-  exact (hNδ.mul_right (coprime_of_prime_support hNδ hv.δ₁_support)).mul_right
-    (coprime_of_prime_support hNδ hv.δ₂_support)
-
-theorem n_congruence (hc : WCompatible q r N₁ N₂) :
-    Nat.ModEq v.δ (v.d₁ * v.n₁) v.n₂ := by
-  have hdδ : v.d.Coprime v.δ := by
-    apply (hv.N₁_D hc).of_dvd
-    · rw [hv.N₁_eq]; exact dvd_mul_of_dvd_left (dvd_mul_right _ _) _
-    · exact dvd_mul_of_dvd_left (dvd_mul_right _ _) _
-  apply Nat.ModEq.cancel_left_of_coprime hdδ.symm.gcd_eq_one
-  simpa only [← hv.δ_eq, hv.N₁_eq, hv.N₂_eq, mul_assoc] using hc.2.2
 
 /-- All the arithmetic hypotheses of the existing three-factor phase follow
 from the canonical decomposition and the original W compatibility. -/
@@ -231,50 +213,8 @@ theorem phase_coprime (hc : WCompatible q r N₁ N₂) :
   · exact (hnq.of_dvd_left (dvd_mul_left _ _)).symm.mul_right hv.k_coprime
   · exact hv.n₁_n₂.symm.mul_right (hnr.of_dvd_left (dvd_mul_left _ _))
 
-omit hv in
-/-- Uniform algebraic small-modulus bounds; no discarded contribution is
-estimated here. -/
-theorem small_moduli {Y : ℝ} (hY : 0 ≤ Y)
-    (hd : (v.d : ℝ) ≤ Y) (hd₁ : (v.d₁ : ℝ) ≤ Y)
-    (hδ : (v.δ : ℝ) ≤ Y) (hδ₁ : (v.δ₁ : ℝ) ≤ Y)
-    (hδ₂ : (v.δ₂ : ℝ) ≤ Y) : (v.D : ℝ) ≤ Y ^ 3 ∧ (v.D' : ℝ) ≤ Y ^ 5 := by
-  have hD : (v.D : ℝ) ≤ Y ^ 3 := by
-    unfold D
-    push_cast
-    calc
-      _ ≤ (Y * Y) * Y :=
-        mul_le_mul (mul_le_mul hδ hδ₁ (by positivity) hY) hδ₂
-          (by positivity) (by positivity)
-      _ = _ := by ring
-  refine ⟨hD, ?_⟩
-  unfold D'
-  push_cast
-  calc
-    _ ≤ (Y * Y) * Y ^ 3 :=
-      mul_le_mul (mul_le_mul hd hd₁ (by positivity) hY) hD
-        (by positivity) (by positivity)
-    _ = _ := by ring
 
 end WGCDData.Valid
 
-/-- The real frequency on every positive compatible original tuple, with
-all factorization and coprimality premises now constructed. -/
-theorem wPoissonFrequency_eq_canonical_threeFactor
-    {q r N₁ N₂ : ℕ} (hq : 0 < q) (hr : 0 < r)
-    (hN₁ : 0 < N₁) (hN₂ : 0 < N₂) (hc : WCompatible q r N₁ N₂)
-    (M : ℝ) (a h : ℤ) :
-    let v := wGCDData q r N₁ N₂
-    wPoissonFrequency M a q r N₁ N₂ h =
-      wThreeFactorPoissonFrequency M a q r v.d v.d₁ v.D v.k₁ v.k₂ v.n₁ v.n₂ h := by
-  dsimp only
-  let v := wGCDData q r N₁ N₂
-  have hv : v.Valid q r N₁ N₂ := wGCDData_valid hq hr hN₁ hN₂
-  have hp := hv.phase_coprime hc
-  have hc' : WCompatible q r (v.d * v.d₁ * v.n₁) (v.d * v.n₂) := by
-    simpa only [← hv.N₁_eq, ← hv.N₂_eq] using hc
-  have he := wPoissonFrequency_eq_threeFactor hv.d_pos hv.d₁_pos hv.D_pos
-    hv.k₁_pos hv.k₂_pos hv.n₁_pos hv.lcm_eq hv.k₁_dvd hv.k₂_dvd
-    hv.k_D hp.1 hp.2.1 hp.2.2 hc' M a h
-  simpa only [← hv.N₁_eq, ← hv.N₂_eq] using he
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

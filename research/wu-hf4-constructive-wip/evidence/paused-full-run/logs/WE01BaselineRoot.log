@@ -1,0 +1,98 @@
+def WuTarget.E01Baseline.exactRemaining : ℝ :=
+7015518298198059892262773112128336184593997191555464948431865927491757265821698839570036927901056374104435073916743537022200208289088661753990808294725495298519273802496693639211848879583951531885647362044620134926827202918167570492891954131605664544483006234772278052413322547183825128010013097423997688611499005869056337127730727268015718064521990373193748753 /
+  7393589635701246041693432083521824487672742569688317393967664959671376079465075071967298755964891032576468642558678439692010242779380932180264796651415236257470449941402976156793557565081852167707138770083058058952855176365912265669290464317168315652664082478665174662325170429258674356031666088092057524913661628670483639258393363829821432374450150400000000000
+def WuTarget.E01Baseline.exactPaid : ℝ :=
+WuTarget.E01Baseline.exactRemaining - 122417 / 800000
+WuTarget.E01Baseline.sixth_exact : Wu2008DoubleSieve.Phase25.newSixth = WuTarget.E01Baseline.sixthLower
+WuTarget.E01Baseline.gamma_exact : ∑ j, WuTarget.W03.paidWeights j * ↑(WuTarget.W02.lowerVector j) =
+  WuTarget.E01Baseline.gammaLower
+WuTarget.E01Baseline.payment_exact : WuTarget.W11CreditAccepted.paymentSlack = WuTarget.E01Baseline.paymentLower
+WuTarget.E01Baseline.four_exact : WuTarget.W13TightAccepted.fourSlack = WuTarget.E01Baseline.fourLower
+WuTarget.E01Baseline.debit_exact : (WuTarget.W12.debitCeiling - WuTarget.W12.paymentEndpoint) / 4 =
+  WuTarget.E01Baseline.debitLower
+WuTarget.E01Baseline.original_packet_exact : (Wu2008DoubleSieve.Phase25.newSixth +
+            ∑ j, WuTarget.W03.paidWeights j * ↑(WuTarget.W02.lowerVector j)) /
+          4 +
+        (WuTarget.W12.debitCeiling - WuTarget.W12.paymentEndpoint) / 4 +
+      WuTarget.W11CreditAccepted.paymentSlack +
+    WuTarget.W13TightAccepted.fourSlack =
+  WuTarget.E01Baseline.exactRemaining
+WuTarget.E01Baseline.sixth_lower : WuTarget.E01Baseline.sixthLower ≤ Wu08TerminalAlignment.sixthMain
+WuTarget.E01Baseline.node_lower : WuTarget.E01Baseline.gammaLower ≤ WuTarget.W02Accepted.nodeGain
+WuTarget.E01Baseline.debit_strict : WuTarget.E01Baseline.debitLower < WuTarget.W12Accepted.debitSlack
+WuTarget.E01Baseline.remaining_strict : WuTarget.E01Baseline.exactRemaining < WuTarget.W17Accepted.remainingCoefficient
+WuTarget.E01Baseline.paid_strict : WuTarget.E01Baseline.exactPaid < WuTarget.W17Accepted.paidCoefficient
+WuTarget.E01Baseline.actual_strict : WuTarget.E01Baseline.exactPaid <
+  WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced
+WuTarget.E01Baseline.literal_baseline : 14826 / 15625 < WuTarget.W17Accepted.remainingCoefficient ∧
+  3183371 / 4000000 < WuTarget.W17Accepted.paidCoefficient ∧
+    3183371 / 4000000 < WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced
+WuTarget.E01Baseline.paid_net_identity : WuTarget.W17Accepted.paidCoefficient =
+  WuTarget.W17Accepted.remainingCoefficient - 122417 / 800000
+WuTarget.E01Baseline.remaining_surplus_identity : WuTarget.W17Accepted.remainingCoefficient -
+    WuTarget.E01Baseline.exactRemaining =
+  (Wu08TerminalAlignment.sixthMain - WuTarget.E01Baseline.sixthLower) / 4 +
+          (WuTarget.W02Accepted.nodeGain - WuTarget.E01Baseline.gammaLower) / 4 +
+        WuTarget.W14Accepted.retainedSlack +
+      (WuTarget.W12.paymentEndpoint - WuTarget.W12.analyticUpper) / 4 +
+    WuTarget.W17Accepted.jointCredit
+WuTarget.E01Baseline.surplus_strict : 0 <
+    WuTarget.W17Accepted.remainingCoefficient - WuTarget.E01Baseline.exactRemaining ∧
+  WuTarget.W17Accepted.paidCoefficient - WuTarget.E01Baseline.exactPaid =
+    WuTarget.W17Accepted.remainingCoefficient - WuTarget.E01Baseline.exactRemaining
+WuTarget.E01Baseline.exact_gap_identity : 840977 / 800000 - WuTarget.E01Baseline.exactRemaining =
+  4491 / 5000 - WuTarget.E01Baseline.exactPaid
+WuTarget.E01Baseline.exact_gap_value : 840977 / 800000 - WuTarget.E01Baseline.exactRemaining =
+  756780240630848598243748679501580555617952843480500172851565290995186285653676708927266829467801333274391013099593610698884414138255635998712376572171043629104134422967369710052870695928349456166660689765554761628166906650177178814311654380968408696305096378553225187584471017924515101880539967282745137800146513498965312238026617648873955352937964792982251247 /
+    7393589635701246041693432083521824487672742569688317393967664959671376079465075071967298755964891032576468642558678439692010242779380932180264796651415236257470449941402976156793557565081852167707138770083058058952855176365912265669290464317168315652664082478665174662325170429258674356031666088092057524913661628670483639258393363829821432374450150400000000000
+WuTarget.E01Baseline.exact_gap_bounds : 409425 / 4000000 < 840977 / 800000 - WuTarget.E01Baseline.exactRemaining ∧
+  840977 / 800000 - WuTarget.E01Baseline.exactRemaining < 409429 / 4000000
+WuTarget.E01Baseline.short_gap_identity : 840977 / 800000 - 14826 / 15625 = 409429 / 4000000 ∧
+  4491 / 5000 - 3183371 / 4000000 = 409429 / 4000000
+WuTarget.E01Baseline.certificate_below_targets : WuTarget.E01Baseline.exactRemaining < 840977 / 800000 ∧
+  WuTarget.E01Baseline.exactPaid < 4491 / 5000
+WuTarget.E01Baseline.actual_gap_identity : 840977 / 800000 - WuTarget.W17Accepted.remainingCoefficient =
+    840977 / 800000 - WuTarget.E01Baseline.exactRemaining -
+      (WuTarget.W17Accepted.remainingCoefficient - WuTarget.E01Baseline.exactRemaining) ∧
+  4491 / 5000 - WuTarget.W17Accepted.paidCoefficient = 840977 / 800000 - WuTarget.W17Accepted.remainingCoefficient
+WuTarget.E01Baseline.certificate_gap_is_not_actual_gap : 840977 / 800000 - WuTarget.W17Accepted.remainingCoefficient <
+    840977 / 800000 - WuTarget.E01Baseline.exactRemaining ∧
+  4491 / 5000 - WuTarget.W17Accepted.paidCoefficient < 4491 / 5000 - WuTarget.E01Baseline.exactPaid
+WuTarget.E01Baseline.ordinary_P2_exact : ∃ T,
+  512 ≤ T ∧
+    ∀ (N : ℕ),
+      T ≤ N →
+        Even N →
+          WuTarget.E01Baseline.exactPaid * U8CanonicalMother.M N ≤
+            ↑{p ∈ Finset.range (N + 1) | Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+WuTarget.E01Baseline.ordinary_P2_baseline : ∃ T,
+  512 ≤ T ∧
+    ∀ (N : ℕ),
+      T ≤ N →
+        Even N →
+          3183371 / 4000000 * U8CanonicalMother.M N ≤
+            ↑{p ∈ Finset.range (N + 1) | Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+WuTarget.W17Accepted.refined_target : 840977 / 800000 ≤ WuTarget.W17Accepted.remainingCoefficient →
+  ∃ T,
+    512 ≤ T ∧
+      ∀ (N : ℕ),
+        T ≤ N →
+          Even N →
+            WuTarget.RefinedExit.margin / 2 * U8CanonicalMother.M N ≤
+                ↑(Wu2004MeanValue.refinedGood N (9469 / 5000)).card ∧
+              ∃ p r q, Nat.Prime p ∧ (r = 1 ∨ Nat.Prime r) ∧ Nat.Prime q ∧ N = p + r * q ∧ ↑r ≤ ↑q ^ (4469 / 5000)
+'WuTarget.W03.paid_weights_consumer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.sixth_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.node_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.debit_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.original_packet_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.remaining_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.paid_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.actual_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.literal_baseline' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.remaining_surplus_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.exact_gap_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.certificate_gap_is_not_actual_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.ordinary_P2_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E01Baseline.ordinary_P2_baseline' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.W17Accepted.refined_target' depends on axioms: [propext, Classical.choice, Quot.sound]

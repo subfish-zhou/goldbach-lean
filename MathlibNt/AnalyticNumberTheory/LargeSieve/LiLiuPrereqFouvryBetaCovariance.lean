@@ -237,32 +237,6 @@ theorem smoothWMain_sub_smoothUMain_eq_betaCovariance
     (Nat.pos_of_ne_zero (hQ q (Finset.mem_filter.mp hq).1)),
     beta_covariance_identity N β (Nat.pos_of_ne_zero (hQ q (Finset.mem_filter.mp hq).1))]
 
-/-- Conditional estimate from independent pointwise beta-AP discrepancies.
-The error bounds need not be assumed nonnegative separately. -/
-theorem betaCovariance_abs_le (N : Finset ℕ) (β : ℕ → ℝ)
-    (q r : ℕ) (Eq Er : ℝ)
-    (hEq : ∀ b ∈ betaReducedResidues (q.gcd r),
-      |betaResidueMass N β q (q.gcd r) b -
-        coprimeMass N β q / ((q.gcd r).totient : ℝ)| ≤ Eq)
-    (hEr : ∀ b ∈ betaReducedResidues (q.gcd r),
-      |betaResidueMass N β r (q.gcd r) b -
-        coprimeMass N β r / ((q.gcd r).totient : ℝ)| ≤ Er) :
-    |betaCovariance N β q r| ≤ ((q.gcd r).totient : ℝ) * Eq * Er := by
-  unfold betaCovariance
-  calc
-    _ ≤ ∑ b ∈ betaReducedResidues (q.gcd r),
-        |(betaResidueMass N β q (q.gcd r) b -
-          coprimeMass N β q / ((q.gcd r).totient : ℝ)) *
-         (betaResidueMass N β r (q.gcd r) b -
-          coprimeMass N β r / ((q.gcd r).totient : ℝ))| :=
-      Finset.abs_sum_le_sum_abs _ _
-    _ ≤ ∑ _b ∈ betaReducedResidues (q.gcd r), Eq * Er := by
-      apply Finset.sum_le_sum
-      intro b hb
-      rw [abs_mul]
-      exact mul_le_mul (hEq b hb) (hEr b hb) (abs_nonneg _)
-        ((abs_nonneg _).trans (hEq b hb))
-    _ = _ := by simp [betaReducedResidues_card, mul_assoc]
 
 /-- The beta-AP discrepancy with the additional, exact coprime sieve.
 This is an analytic input to a Siegel--Walfisz hypothesis, not a claim that
@@ -302,54 +276,6 @@ theorem betaResidueMass_centered_eq_coprimeAPDiscrepancy
   rw [betaResidueMass_eq_quotientSieve N β hdq hb]
   simp only [betaCoprimeAPDiscrepancy, Nat.mul_div_cancel' hdq]
 
-/-- Direct conditional covariance bound from the two independently supplied
-coprime-sieved AP bounds, in the normalization of the F87 beta-SW input. -/
-theorem betaCovariance_abs_le_of_coprimeAP
-    (N : Finset ℕ) (β : ℕ → ℝ) (q r : ℕ) (Eq Er : ℝ)
-    (hEq : ∀ b ∈ betaReducedResidues (q.gcd r),
-      |betaCoprimeAPDiscrepancy N β (q.gcd r) (q / q.gcd r) b| ≤ Eq)
-    (hEr : ∀ b ∈ betaReducedResidues (q.gcd r),
-      |betaCoprimeAPDiscrepancy N β (q.gcd r) (r / q.gcd r) b| ≤ Er) :
-    |betaCovariance N β q r| ≤ ((q.gcd r).totient : ℝ) * Eq * Er := by
-  apply betaCovariance_abs_le N β q r Eq Er
-  · intro b hb
-    rw [betaResidueMass_centered_eq_coprimeAPDiscrepancy N β
-      (Nat.gcd_dvd_left q r) (Finset.mem_filter.mp hb).2]
-    exact hEq b hb
-  · intro b hb
-    rw [betaResidueMass_centered_eq_coprimeAPDiscrepancy N β
-      (Nat.gcd_dvd_right q r) (Finset.mem_filter.mp hb).2]
-    exact hEr b hb
-
-/-- A conditional aggregate consequence of independent beta-AP input at
-each positive divisor of each sieving modulus. This is not a logarithmic
-saving: no estimate for the resulting modulus sum is asserted. -/
-theorem smoothWMain_sub_smoothUMain_abs_le_of_coprimeAP
-    (M : ℝ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (hQ : ∀ q ∈ Q, q ≠ 0) (E : ℕ → ℕ → ℝ)
-    (hE : ∀ q ∈ Q, ∀ d : ℕ, d ∣ q → 0 < d →
-      ∀ b ∈ betaReducedResidues d,
-        |betaCoprimeAPDiscrepancy N β d (q / d) b| ≤ E q d) :
-    |smoothWMain M N Q β c a - smoothUMain M N Q β c a| ≤
-      |M * dyadicCutoffMass| *
-        ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-          |c q * c r / (q.lcm r : ℝ)| *
-            (((q.gcd r).totient : ℝ) * E q (q.gcd r) * E r (q.gcd r)) := by
-  rw [smoothWMain_sub_smoothUMain_eq_betaCovariance M N Q β c a hQ, abs_mul]
-  apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro q hq
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro r hr
-  rw [abs_mul]
-  apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
-  have hδ := Nat.gcd_pos_of_pos_left r
-    (Nat.pos_of_ne_zero (hQ q (Finset.mem_filter.mp hq).1))
-  exact betaCovariance_abs_le_of_coprimeAP N β q r _ _
-    (hE q (Finset.mem_filter.mp hq).1 _ (Nat.gcd_dvd_left q r) hδ)
-    (hE r (Finset.mem_filter.mp hr).1 _ (Nat.gcd_dvd_right q r) hδ)
 
 end
 

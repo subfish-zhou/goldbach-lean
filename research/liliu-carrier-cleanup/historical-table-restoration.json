@@ -1,0 +1,8 @@
+{
+  "source_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "source_file": "docs/SOURCE_SIZE.md",
+  "previous_incorrect_historical_table": "| Metric | Before | After | Change |\n|---|---:|---:|---:|\n| Effective code lines | 350,143 | 202,626 | -147,517 (-42.13%) |\n| Physical lines | 411,423 | 241,305 | -170,118 |\n| UTF-8 bytes | 20,652,937 | 12,262,083 | -8,390,854 |",
+  "restored_table": "| Metric | Before | After | Change |\n|---|---:|---:|---:|\n| Effective code lines | 7,704 | 7,575 | -129 (-1.67%) |\n| Physical lines | 8,999 | 8,908 | -91 |\n| UTF-8 bytes | 609,046 | 600,085 | -8,961 |",
+  "source_table_sha256": "e8d5879a5e7fef87493eab455227a6b2a74938a0a6493a0552abf7f111cf85e4",
+  "method": "Restore the original accepted cohort table from the checkout base. Current whole-main totals update only their own cumulative section. This documentation correction has zero contribution to proof-code savings."
+}

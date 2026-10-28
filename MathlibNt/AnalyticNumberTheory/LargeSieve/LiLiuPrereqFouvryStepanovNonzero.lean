@@ -181,35 +181,6 @@ theorem stepanovAnsatz_coefficients_eq_zero
       intro j
       exact Fin.cases hzero (fun i => ht i) j
 
-/-- Injectivity of the actual ansatz on degree-bounded coefficient families. -/
-theorem stepanovAnsatz_eq_iff
-    (f : F[X]) {J B : ℕ} (r s r' s' : Fin J → F[X])
-    (hq : Odd (Fintype.card F)) (hf0 : f.eval 0 ≠ 0)
-    (hf : ¬ IsSquare (f.map (algebraMap F (AlgebraicClosure F))))
-    (hr : ∀ j, (r j).degree < (B : WithBot ℕ))
-    (hs : ∀ j, (s j).degree < (B : WithBot ℕ))
-    (hr' : ∀ j, (r' j).degree < (B : WithBot ℕ))
-    (hs' : ∀ j, (s' j).degree < (B : WithBot ℕ))
-    (hB : 2 * (B - 1) + f.natDegree < Fintype.card F) :
-    stepanovAnsatz f r s = stepanovAnsatz f r' s' ↔ r = r' ∧ s = s' := by
-  constructor
-  · intro heq
-    have hsub :
-        stepanovAnsatz f (fun j => r j - r' j) (fun j => s j - s' j) = 0 := by
-      rw [← sub_eq_zero] at heq
-      convert heq using 1
-      simp only [stepanovAnsatz, ← Finset.sum_sub_distrib]
-      apply Finset.sum_congr rfl
-      intro j _
-      ring
-    have hz := stepanovAnsatz_coefficients_eq_zero f
-      (fun j => r j - r' j) (fun j => s j - s' j) hq hf0 hf
-      (fun j => lt_of_le_of_lt (degree_sub_le _ _) (max_lt (hr j) (hr' j)))
-      (fun j => lt_of_le_of_lt (degree_sub_le _ _) (max_lt (hs j) (hs' j))) hB hsub
-    exact ⟨funext (fun j => sub_eq_zero.mp (hz j).1),
-      funext (fun j => sub_eq_zero.mp (hz j).2)⟩
-  · rintro ⟨rfl, rfl⟩
-    rfl
 
 /-- Harcos page 11: a nontrivial bounded coefficient family gives a nonzero
 auxiliary polynomial, under the geometric nonsquare hypothesis. -/

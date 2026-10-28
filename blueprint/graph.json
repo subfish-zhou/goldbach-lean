@@ -39,6 +39,7 @@
     "bp:liliu-b9",
     "bp:liliu-basic",
     "bp:liliu-coefficient",
+    "bp:liliu-count-existence",
     "bp:liliu-count-positive",
     "bp:liliu-cross",
     "bp:liliu-cross-certificate",
@@ -51,7 +52,6 @@
     "bp:liliu-imbalance",
     "bp:liliu-ledger",
     "bp:liliu-level",
-    "bp:liliu-old-margin",
     "bp:liliu-pair",
     "bp:liliu-pair-certificate",
     "bp:liliu-paper",
@@ -164,7 +164,23 @@
     ],
     [
       "bp:foundation-bv",
+      "bp:foundation-liupan"
+    ],
+    [
+      "bp:foundation-bv",
+      "bp:foundation-pan-bounded"
+    ],
+    [
+      "bp:foundation-bv",
       "bp:foundation-weighted-bv"
+    ],
+    [
+      "bp:foundation-bv",
+      "bp:liliu-cross"
+    ],
+    [
+      "bp:foundation-bv",
+      "bp:liliu-g11-actual"
     ],
     [
       "bp:foundation-bv",
@@ -181,14 +197,6 @@
     [
       "bp:foundation-bv-high",
       "bp:foundation-fouvry-rectangle"
-    ],
-    [
-      "bp:foundation-bv-high",
-      "bp:foundation-liupan"
-    ],
-    [
-      "bp:foundation-bv-high",
-      "bp:foundation-pan-bounded"
     ],
     [
       "bp:foundation-bv-low",
@@ -419,14 +427,6 @@
       "bp:liliu-author-consume"
     ],
     [
-      "bp:liliu-b9",
-      "bp:liliu-existence"
-    ],
-    [
-      "bp:liliu-b9",
-      "bp:liliu-public-natural"
-    ],
-    [
       "bp:liliu-basic",
       "bp:liliu-six"
     ],
@@ -439,12 +439,16 @@
       "bp:liliu-public-coefficient"
     ],
     [
-      "bp:liliu-count-positive",
+      "bp:liliu-count-existence",
       "bp:liliu-existence"
     ],
     [
-      "bp:liliu-count-positive",
+      "bp:liliu-count-existence",
       "bp:liliu-public-natural"
+    ],
+    [
+      "bp:liliu-count-positive",
+      "bp:liliu-count-existence"
     ],
     [
       "bp:liliu-cross",
@@ -453,10 +457,6 @@
     [
       "bp:liliu-cross-certificate",
       "bp:liliu-ledger"
-    ],
-    [
-      "bp:liliu-cross-certificate",
-      "bp:liliu-old-margin"
     ],
     [
       "bp:liliu-domain",
@@ -495,20 +495,16 @@
       "bp:liliu-g11-actual"
     ],
     [
-      "bp:liliu-old-margin",
-      "bp:liliu-existence"
-    ],
-    [
-      "bp:liliu-old-margin",
-      "bp:liliu-public-natural"
-    ],
-    [
       "bp:liliu-pair",
       "bp:liliu-ledger"
     ],
     [
       "bp:liliu-pair-certificate",
       "bp:liliu-ledger"
+    ],
+    [
+      "bp:liliu-paper",
+      "bp:liliu-count-existence"
     ],
     [
       "bp:liliu-paper",
@@ -529,14 +525,6 @@
     [
       "bp:liliu-retained",
       "bp:liliu-author-consume"
-    ],
-    [
-      "bp:liliu-retained",
-      "bp:liliu-existence"
-    ],
-    [
-      "bp:liliu-retained",
-      "bp:liliu-public-natural"
     ],
     [
       "bp:liliu-s1-density-six",
@@ -596,11 +584,15 @@
         ],
         [
           "bp:foundation-bv",
-          "bp:chen-representation-lower-bound"
+          "bp:foundation-liupan-canonical"
         ],
         [
           "bp:foundation-bv",
-          "bp:liliu-retained"
+          "bp:foundation-pan-bounded"
+        ],
+        [
+          "bp:foundation-bv",
+          "bp:liliu-g11-actual"
         ],
         [
           "bp:foundation-liupan-canonical",
@@ -623,12 +615,12 @@
           "bp:liliu-public-count"
         ],
         [
-          "bp:liliu-retained",
-          "bp:liliu-ledger"
+          "bp:liliu-ledger",
+          "bp:liliu-public-natural"
         ],
         [
           "bp:liliu-retained",
-          "bp:liliu-public-natural"
+          "bp:liliu-ledger"
         ],
         [
           "bp:liliu-twelve",
@@ -668,6 +660,14 @@
         ],
         [
           "bp:foundation-bv",
+          "bp:foundation-liupan"
+        ],
+        [
+          "bp:foundation-bv",
+          "bp:foundation-pan-bounded"
+        ],
+        [
+          "bp:foundation-bv",
           "bp:foundation-weighted-bv"
         ],
         [
@@ -677,14 +677,6 @@
         [
           "bp:foundation-bv-high",
           "bp:foundation-fouvry-rectangle"
-        ],
-        [
-          "bp:foundation-bv-high",
-          "bp:foundation-liupan"
-        ],
-        [
-          "bp:foundation-bv-high",
-          "bp:foundation-pan-bounded"
         ],
         [
           "bp:foundation-bv-low",
@@ -947,7 +939,7 @@
     "dep_graph_chapter_4.html": {
       "nodes": [
         "bp:foundation-bv",
-        "bp:foundation-bv-high",
+        "bp:foundation-bv-low",
         "bp:foundation-fouvry-rectangle",
         "bp:foundation-jr-hats",
         "bp:foundation-local-product",
@@ -960,6 +952,7 @@
         "bp:liliu-b9",
         "bp:liliu-basic",
         "bp:liliu-coefficient",
+        "bp:liliu-count-existence",
         "bp:liliu-count-positive",
         "bp:liliu-cross",
         "bp:liliu-cross-certificate",
@@ -972,7 +965,6 @@
         "bp:liliu-imbalance",
         "bp:liliu-ledger",
         "bp:liliu-level",
-        "bp:liliu-old-margin",
         "bp:liliu-pair",
         "bp:liliu-pair-certificate",
         "bp:liliu-paper",
@@ -993,6 +985,18 @@
       "edges": [
         [
           "bp:foundation-bv",
+          "bp:foundation-pan-bounded"
+        ],
+        [
+          "bp:foundation-bv",
+          "bp:liliu-cross"
+        ],
+        [
+          "bp:foundation-bv",
+          "bp:liliu-g11-actual"
+        ],
+        [
+          "bp:foundation-bv",
           "bp:liliu-pair"
         ],
         [
@@ -1000,16 +1004,12 @@
           "bp:liliu-positive"
         ],
         [
-          "bp:foundation-bv-high",
+          "bp:foundation-bv-low",
           "bp:foundation-bv"
         ],
         [
-          "bp:foundation-bv-high",
+          "bp:foundation-bv-low",
           "bp:foundation-fouvry-rectangle"
-        ],
-        [
-          "bp:foundation-bv-high",
-          "bp:foundation-pan-bounded"
         ],
         [
           "bp:foundation-fouvry-rectangle",
@@ -1148,14 +1148,6 @@
           "bp:liliu-author-consume"
         ],
         [
-          "bp:liliu-b9",
-          "bp:liliu-existence"
-        ],
-        [
-          "bp:liliu-b9",
-          "bp:liliu-public-natural"
-        ],
-        [
           "bp:liliu-basic",
           "bp:liliu-six"
         ],
@@ -1168,12 +1160,16 @@
           "bp:liliu-public-coefficient"
         ],
         [
-          "bp:liliu-count-positive",
+          "bp:liliu-count-existence",
           "bp:liliu-existence"
         ],
         [
-          "bp:liliu-count-positive",
+          "bp:liliu-count-existence",
           "bp:liliu-public-natural"
+        ],
+        [
+          "bp:liliu-count-positive",
+          "bp:liliu-count-existence"
         ],
         [
           "bp:liliu-cross",
@@ -1182,10 +1178,6 @@
         [
           "bp:liliu-cross-certificate",
           "bp:liliu-ledger"
-        ],
-        [
-          "bp:liliu-cross-certificate",
-          "bp:liliu-old-margin"
         ],
         [
           "bp:liliu-domain",
@@ -1224,20 +1216,16 @@
           "bp:liliu-g11-actual"
         ],
         [
-          "bp:liliu-old-margin",
-          "bp:liliu-existence"
-        ],
-        [
-          "bp:liliu-old-margin",
-          "bp:liliu-public-natural"
-        ],
-        [
           "bp:liliu-pair",
           "bp:liliu-ledger"
         ],
         [
           "bp:liliu-pair-certificate",
           "bp:liliu-ledger"
+        ],
+        [
+          "bp:liliu-paper",
+          "bp:liliu-count-existence"
         ],
         [
           "bp:liliu-paper",
@@ -1258,14 +1246,6 @@
         [
           "bp:liliu-retained",
           "bp:liliu-author-consume"
-        ],
-        [
-          "bp:liliu-retained",
-          "bp:liliu-existence"
-        ],
-        [
-          "bp:liliu-retained",
-          "bp:liliu-public-natural"
         ],
         [
           "bp:liliu-s1-density-six",

@@ -212,23 +212,6 @@ theorem directConductorWeight_le (Q d : ℕ) :
         rw [div_eq_mul_inv]
         ring
 
-/-- Compatibility-only weakening to the historical square-large-sieve weight
-`d / φ(d)`.  New direct L¹ assembly should use `directConductorWeight_le` and
-the AP-normalized primitive mean instead. -/
-theorem directConductorWeight_le_compatibility_majorant (Q d : ℕ) :
-    directConductorWeight Q d ≤
-      conductorHarmonicFactor Q ^ 2 * ((d : ℝ) / (d.totient : ℝ)) := by
-  refine (directConductorWeight_le Q d).trans ?_
-  by_cases hd : d = 0
-  · subst d
-    simp
-  rw [div_eq_mul_inv, div_eq_mul_inv]
-  have hd1 : (1 : ℝ) ≤ d := by
-    exact_mod_cast (Nat.one_le_iff_ne_zero.mpr hd)
-  have hinv : 0 ≤ (d.totient : ℝ)⁻¹ := by positivity
-  have hH : 0 ≤ conductorHarmonicFactor Q ^ 2 := sq_nonneg _
-  -- Only this compatibility bound enlarges the primitive weight by a factor of d.
-  exact mul_le_mul_of_nonneg_left (le_mul_of_one_le_left hinv hd1) hH
 
 end
 

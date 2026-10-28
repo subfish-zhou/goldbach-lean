@@ -1,4 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachS3RosserMain_upper_six
-#print axioms goldbachS3RosserMain_upper_six

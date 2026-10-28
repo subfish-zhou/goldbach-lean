@@ -121,25 +121,5 @@ theorem IsPrimitive.abs_quadraticSiegelConvolutionDiscrepancy_le
       · exact abs_quadratic_shortFloorError_le χ X m
       · exact hχ.abs_floorWeighted_character_tail_le hq hm hmX
 
-/-- The square lower bound with the total discrepancy estimate substituted.
-This is the strongest unconditional output of the present one-fold route. -/
-theorem IsPrimitive.sqrt_sub_totalDiscrepancyError_sub_polyaVinogradovError_le
-    {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive)
-    (hquad : χ ^ 2 = 1) (hnonprincipal : χ ≠ 1) (hq : 1 < q)
-    {m X : ℕ} (hm : 1 ≤ m) (hmX : m ≤ X) :
-    (X.sqrt : ℝ) -
-          ((m : ℝ) +
-            (8 * Real.sqrt q * (1 + Real.log q)) * ((X / m : ℕ) : ℝ)) -
-        (X : ℝ) * (8 * Real.sqrt q * (1 + Real.log q) / (m : ℝ)) ≤
-      (X : ℝ) * (χ.LFunction 1).re := by
-  have hbase :=
-    sqrt_sub_convolutionDiscrepancy_sub_polyaVinogradovError_le
-      hχ hquad hnonprincipal hq X hm
-  have hdisc := hχ.abs_quadraticSiegelConvolutionDiscrepancy_le hq hm hmX
-  have hdisc' : quadraticSiegelConvolutionDiscrepancy χ X m ≤
-      (m : ℝ) +
-        (8 * Real.sqrt q * (1 + Real.log q)) * ((X / m : ℕ) : ℝ) :=
-    (le_abs_self _).trans hdisc
-  linarith
 
 end DirichletCharacter

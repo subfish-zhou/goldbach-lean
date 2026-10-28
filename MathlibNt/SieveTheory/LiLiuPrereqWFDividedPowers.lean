@@ -115,10 +115,6 @@ theorem dividedPower_apply (f : ArithmeticFunction ℝ) (k n : ℕ) :
     dividedPower f k n = (f ^ k) n / k.factorial := by
   simp [dividedPower, div_eq_mul_inv, mul_comm]
 
-theorem factorial_mul_dividedPower (f : ArithmeticFunction ℝ) (k : ℕ) :
-    (k.factorial : ℝ) • dividedPower f k = f ^ k := by
-  rw [dividedPower, smul_smul, mul_inv_cancel₀, one_smul]
-  exact_mod_cast Nat.factorial_ne_zero k
 
 theorem smul_convolution (r s : ℝ) (f g : ArithmeticFunction ℝ) :
     (r • f) * (s • g) = (r * s) • (f * g) := by
@@ -177,28 +173,6 @@ theorem boxWeight_abs_le_one (B : Finset ℕ) (k n : ℕ) : |boxWeight B k n| �
   rw [abs_of_nonneg (boxWeight_nonneg B k n)]
   exact boxWeight_le_one B k n
 
-theorem primeBox_pow_prime_pow (B : Finset ℕ) {p : ℕ} (hp : p.Prime) (hpB : p ∈ B)
-    (k : ℕ) : (primeBox B ^ k) (p ^ k) = 1 := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-      rw [pow_succ', primeBox_mul_apply, Nat.primeFactors_prime_pow (Nat.succ_ne_zero k) hp]
-      simpa [hpB, pow_succ, Nat.mul_div_cancel, hp.pos] using ih
-
-/-- In particular the square of a box prime has coefficient 1/2, not zero. -/
-theorem boxWeight_prime_pow (B : Finset ℕ) {p : ℕ} (hp : p.Prime) (hpB : p ∈ B)
-    (k : ℕ) : boxWeight B k (p ^ k) = (k.factorial : ℝ)⁻¹ := by
-  rw [boxWeight_apply, primeBox_pow_prime_pow B hp hpB]
-  simp [one_div]
-
-/-- The factorially many copies restore the original coefficient at every n,
-so any subsequent finite weighted sum is preserved as well. -/
-theorem sum_copies_boxWeight (B : Finset ℕ) (k n : ℕ) :
-    (∑ _j ∈ Finset.range k.factorial, boxWeight B k n) =
-      ((primeBox B ^ k) n : ℝ) := by
-  simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul, boxWeight_apply]
-  have hk : (k.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
-  field_simp
 
 /-- Explicit bounded factors for each division of the slots of the same box. -/
 theorem boxWeight_bounded_split (B : Finset ℕ) (a b : ℕ) :

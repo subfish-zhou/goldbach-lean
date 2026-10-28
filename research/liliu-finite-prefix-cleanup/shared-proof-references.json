@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "canonical_divisor_sum": "MathlibNt.SieveTheory.LinearSieve.Internal.sum_divisors_eq_sum_primeFactors_powerset",
+  "wf_divisor_sum": "MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser.sum_divisors_eq_sum_powerset",
+  "mathlib_divisor_provider": "Nat.sum_divisors_filter_squarefree",
+  "wf_sum_reaches_canonical": true,
+  "canonical_sum_reaches_mathlib": true,
+  "canonical_sum_does_not_reach_wf": true,
+  "canonical_prefix": "MathlibNt.SieveTheory.LinearSieve.sorted_prefix_toFinset_eq_filter_ge",
+  "wf_prefix": "MathlibNt.SieveTheory.LiLiuPrereqWF.rounded_prefix_eq_take",
+  "wf_prefix_reaches_canonical": true,
+  "canonical_prefix_does_not_reach_wf": true,
+  "cardinality_provider": "MathlibNt.SieveTheory.LinearSieve.sorted_prefix_card_eq_filter_ge",
+  "verified_cardinality_consumers": [
+    "MathlibNt.SieveTheory.LinearSieve.lowerRosserAdmissibleSet_iff_sorted_prefix_cube_lt",
+    "MathlibNt.SieveTheory.LinearSieve.upperRosserAdmissibleSet_iff_sorted_prefix_cube_lt",
+    "MathlibNt.SieveTheory.LiLiuPrereqWF.rounded_prefix_card"
+  ],
+  "method": "Actual compiled type/value/recursor reference cones verify canonical Mathlib reuse, both public WF wrappers, all three cardinality consumers, and absence of backward references into the WF consumers."
+}

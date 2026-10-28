@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "started_at_utc": "2026-10-25T20:35:12.881216+00:00",
+  "source_modules": 2142,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log": "full-build.log",
+      "log_sha256": "d80f6c32e987e0d83d5a8b1f9d8cddb326b7de1566071ef74fabda9a48f0fcc9"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log": "public-checks.log",
+      "log_sha256": "e4adf42df7d99da6b80312a27c3566db5efa76d34d14799ede570b9a59fc6585"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.Theorem.log",
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.Checks.log",
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.OnePlusOneNine.log",
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.OnePlusOneNineChecks.log",
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.All.log",
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log": "script-tests.log",
+      "log_sha256": "120efb2cac01dfe0230596947f72a13306b07302256164451eaf6982b1266d64"
+    },
+    "wu_sources_unchanged": {
+      "exit_code": 0,
+      "log": "wu-source-hashes.log",
+      "log_sha256": "701181b64274a87076b63578206571c49566c72c64b82a2ca4ddf0630353a6db"
+    },
+    "wu_literal_and_receipt_validation": {
+      "exit_code": 0,
+      "log": "wu-literal-receipts.log",
+      "log_sha256": "b2e0a0577e18b47cbd8151d3bbce4c23bd286704240e90dbf1c3376f8d2fc37e"
+    },
+    "blueprint_extract_render_and_graph_validation": {
+      "exit_code": 0,
+      "logs_sha256": {
+        "blueprint-extraction.log": "26429909ff6eaf2f02189e63923cf30b610a2a20d2cf0575448f5ec3b0516c5c",
+        "blueprint-render.log": "a81f28dbb4c89e668a2c0246e153ff7bfb51cbeaa3d58c266e07d4e766fb5e52",
+        "blueprint-graph-review.log": "a76dc2258ba0618f36cfecbaf7d9d6554ec28c6a6ef08407f864a328439d84cb",
+        "blueprint-verification.json": "d8587741888629dc406f34aedbfa0a1475ee8359a4e0ebaa69a1c576b4155adb"
+      },
+      "nodes": 68,
+      "edges": 125,
+      "chapters": 4,
+      "terminal_results": 6,
+      "source_locations_refreshed": 67,
+      "scope": "Local rendering and source/graph validation only."
+    }
+  },
+  "finished_at_utc": "2026-10-25T20:57:20.745875+00:00",
+  "input_manifest_sha256": "8c18007e8ac75d18688508d5b4f6d59c763e17ffb114928cd256c11c913dc2ed",
+  "validation_environment": {
+    "LEAN_NUM_THREADS": 4,
+    "build_command": [
+      "lake",
+      "--rehash",
+      "--wfail",
+      "build"
+    ]
+  },
+  "source_revision_base": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "source_state": "Uncommitted cleanup working tree; exact 2148 source/config/check inputs are pinned in validation-inputs.json.",
+  "scope_notes": [
+    "Full main build and all five replays run on the pinned cleanup sources.",
+    "Wu source hashes and existing source-bound receipts/literal/axiom checks rerun; the unchanged 8826-module Wu tree was not rebuilt in this cleanup.",
+    "Raw logs and objects are local, untracked. Reproduce validation in a fresh checkout before treating its local artifacts as accepted."
+  ],
+  "script_tests": {
+    "discovered": 116,
+    "passed": 115,
+    "skipped": 1,
+    "skip_reason": "full project-structure export fixture not supplied; test_corrupt_export_is_rejected requires --structure"
+  },
+  "type_preservation": {
+    "scope": "All surviving public, non-obvious-generated declarations from the original Chen import closure. Types compared structurally after erasing binder names and metadata; universe parameter names retained.",
+    "compared_declarations": 5302,
+    "type_hash_mismatches": [],
+    "status": "pass"
+  },
+  "lake_jobs": 10850,
+  "auxiliary_tool_sha256": {
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846",
+    "research/chen-audit/reproduce.py": "eba1447215871e29a719d61d99bb4312bb26e2d84a663b0f90fe095742a40122",
+    "tools/ProjectStructure.lean": "b83a185d1c17d2c4adb7e2db0345187bd507df63ea25f37682ee8850dd531aba"
+  },
+  "documentation_metadata_sha256": {
+    "blueprint/nodes.json": "98bacb46c6dac1eb87c3fe7f804b33cf366662244d9fe773e98074df56b82594",
+    "blueprint/graph.json": "11b5dbdca6192d29273105313f713efda33ee85b909735435824bc5ed89429eb"
+  }
+}

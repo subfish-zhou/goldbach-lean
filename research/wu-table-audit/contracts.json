@@ -1,0 +1,14 @@
+{
+  "Seventh": {
+    "original_data_and_sum_sha256": "310fb8a39a3f95d6cdb7ddac95d159273143933a3ac016ea34e41afdffbb8932",
+    "preserved_exactly": true
+  },
+  "Ninth": {
+    "original_data_and_sum_sha256": "308acec9cb4c44e23b24fad635b3d732c42b5af30cdc7c96738bb57de209cd3c",
+    "preserved_exactly": true
+  },
+  "public_statement_comparison": {
+    "statements": 36,
+    "status": "exact_except_whitespace"
+  }
+}

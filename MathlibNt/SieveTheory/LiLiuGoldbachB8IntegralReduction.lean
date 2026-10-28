@@ -1,7 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridLimit
-import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 
 open MeasureTheory Set
 open scoped Interval
@@ -130,19 +127,6 @@ theorem continuousOn_goldbachB8SingleIntegrand :
   have hp := B8IntegralReduction_u_pos hu
   exact mul_ne_zero hp.1.ne' hp.2.1.ne'
 
-theorem intervalIntegrable_goldbachB8SingleIntegrand :
-    IntervalIntegrable (fun u : ℝ => Real.log (1 / u - 2) / (u * (1 - u)))
-      volume (3 / 11) (1 / 3) := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le (by norm_num : (3 / 11 : ℝ) ≤ 1 / 3)]
-  exact continuousOn_goldbachB8SingleIntegrand
-
-theorem goldbachB8SingleIntegrand_nonneg {u : ℝ}
-    (hu : u ∈ Icc (3 / 11 : ℝ) (1 / 3)) :
-    0 ≤ Real.log (1 / u - 2) / (u * (1 - u)) := by
-  have hp := B8IntegralReduction_u_pos hu
-  exact div_nonneg (Real.log_nonneg (B8IntegralReduction_log_arg_ge_one hu))
-    (mul_pos hp.1 hp.2.1).le
 
 theorem continuousOn_goldbachB8TransformedIntegrand :
     ContinuousOn (fun t : ℝ => Real.log (t - 1) / t) (Icc (2 : ℝ) (8 / 3)) := by
@@ -155,21 +139,6 @@ theorem continuousOn_goldbachB8TransformedIntegrand :
   change t ≠ 0
   linarith [ht.1]
 
-theorem intervalIntegrable_goldbachB8TransformedIntegrand :
-    IntervalIntegrable (fun t : ℝ => Real.log (t - 1) / t) volume 2 (8 / 3) := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le (by norm_num : (2 : ℝ) ≤ 8 / 3)]
-  exact continuousOn_goldbachB8TransformedIntegrand
-
-theorem goldbachB8TransformedIntegrand_nonneg {t : ℝ}
-    (ht : t ∈ Icc (2 : ℝ) (8 / 3)) :
-    0 ≤ Real.log (t - 1) / t :=
-  div_nonneg (Real.log_nonneg (by linarith [ht.1])) (by linarith [ht.1])
-
-theorem goldbachB8ReductionChange_endpoints :
-    (1 / ((2 : ℝ) + 1) = 1 / 3) ∧
-      (1 / ((8 / 3 : ℝ) + 1) = 3 / 11) := by
-  norm_num
 
 theorem goldbachB8ReductionChange_mapsTo :
     MapsTo (fun t : ℝ => 1 / (t + 1)) (Icc (2 : ℝ) (8 / 3))
@@ -189,10 +158,6 @@ theorem hasDerivAt_goldbachB8ReductionChange {t : ℝ}
   simpa only [neg_div, one_div] using
     (hasDerivAt_inv hp).comp_add_const t 1
 
-theorem continuousOn_goldbachB8ReductionChange :
-    ContinuousOn (fun t : ℝ => 1 / (t + 1)) (Icc (2 : ℝ) (8 / 3)) :=
-  continuousOn_const.div (continuousOn_id.add continuousOn_const)
-    (fun t ht => by linarith [ht.1])
 
 theorem continuousOn_goldbachB8ReductionJacobian :
     ContinuousOn (fun t : ℝ => -1 / (t + 1) ^ 2) (Icc (2 : ℝ) (8 / 3)) :=

@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrenceStrictCeil
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaGeometryEventually
 
 open scoped Classical BigOperators
 open Finset
@@ -51,19 +50,6 @@ theorem suzukiSigmaZero_eq_actualT_sourceSigma_strict
   rw [hcarrier]
   exact hrec.symm
 
-/-- At even depth the odd side condition is vacuous, so the same exact source
-recurrence holds without a cubic-ceiling surrogate. -/
-theorem suzukiSigmaZero_eq_actualT_sourceSigma_even
-    (S : BoundingSieve) {N D z : ℕ} {d : ℝ}
-    (hN : 2 ≤ N) (hEven : Even N)
-    (hz : (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (z : ℝ)) :
-    suzukiSigmaZero S N D z
-        ((D : ℝ) ^ (1 / sourceSigma (D : ℝ) d)) =
-      suzukiActualT S N D
-        ⌈(D : ℝ) ^ (1 / sourceSigma (D : ℝ) d)⌉₊ := by
-  apply suzukiSigmaZero_eq_actualT_sourceSigma_strict S hN hz
-  intro hOdd
-  exact (Nat.not_even_iff_odd.mpr hOdd hEven).elim
 
 /-- Source-large, non-eventual `Σ₀` closure, with all Case-B constants selected
 uniformly before the varying bounding sieve `S`, then before `C1`, the common
@@ -134,26 +120,6 @@ theorem claim145_caseB_sigmaZero_uniform_strict_in_S
           (sourceSigma (D : ℝ) d) K (sourceSigma (D : ℝ) d)) := by
       field_simp [ne_of_gt hCpos]
 
-/-- Compatibility specialization of the strict uniform-in-`S` Case-B closure. -/
-theorem claim145_caseB_sigmaZero_uniform_strict
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) (hTheta : 1 ≤ Θ)
-    (hH : Section13HatSourceContract H) :
-    ∃ C1min CB : ℝ, 0 < C1min ∧ 0 < CB ∧
-      ∀ (C1 C K : ℝ) (N D z : ℕ),
-        C1min ≤ C1 → CB ≤ C → 2 ≤ K →
-        HasDimensionOneLocalProductBound S K → 2 ≤ D →
-        C1 * K ^ Θ < Real.log (D : ℝ) → 2 ≤ N →
-        (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (z : ℝ) →
-        suzukiSigmaZero S N D z
-            ((D : ℝ) ^ (1 / sourceSigma (D : ℝ) d)) ≤
-          (CB / C) * (C * claim14_5Scale S H N (D : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K (sourceSigma (D : ℝ) d)) := by
-  obtain ⟨C1min, CB, hC1min, hCB, hall⟩ :=
-    claim145_caseB_sigmaZero_uniform_strict_in_S H hΔ0 hΔ1 hd hTheta hH
-  exact ⟨C1min, CB, hC1min, hCB, hall S⟩
 
 /-- Even-depth specialization, still uniform in the varying bounding sieve. -/
 theorem claim145_caseB_sigmaZero_uniform_even_in_S
@@ -177,27 +143,6 @@ theorem claim145_caseB_sigmaZero_uniform_even_in_S
   refine ⟨C1min, CB, hC1min, hCB, ?_⟩
   intro S C1 C K N D z hC1 hCBC hK hlocal hD hlarge _hEven hN hz
   exact hstrict S C1 C K N D z hC1 hCBC hK hlocal hD hlarge hN hz
-
-/-- Compatibility specialization of the even uniform-in-`S` Case-B closure. -/
-theorem claim145_caseB_sigmaZero_uniform_even
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) (hTheta : 1 ≤ Θ)
-    (hH : Section13HatSourceContract H) :
-    ∃ C1min CB : ℝ, 0 < C1min ∧ 0 < CB ∧
-      ∀ (C1 C K : ℝ) (N D z : ℕ),
-        C1min ≤ C1 → CB ≤ C → 2 ≤ K →
-        HasDimensionOneLocalProductBound S K → 2 ≤ D →
-        C1 * K ^ Θ < Real.log (D : ℝ) → Even N → 2 ≤ N →
-        (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (z : ℝ) →
-        suzukiSigmaZero S N D z
-            ((D : ℝ) ^ (1 / sourceSigma (D : ℝ) d)) ≤
-          (CB / C) * (C * claim14_5Scale S H N (D : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K (sourceSigma (D : ℝ) d)) := by
-  obtain ⟨C1min, CB, hC1min, hCB, hall⟩ :=
-    claim145_caseB_sigmaZero_uniform_even_in_S H hΔ0 hΔ1 hd hTheta hH
-  exact ⟨C1min, CB, hC1min, hCB, hall S⟩
 
 
 end MathlibNt.SieveTheory

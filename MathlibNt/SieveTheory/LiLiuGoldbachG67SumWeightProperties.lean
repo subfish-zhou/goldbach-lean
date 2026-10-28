@@ -46,18 +46,5 @@ theorem weight_last {a b c d s : ℝ} (hL : a+d ≤ s) (hU : b+c ≤ s) :
   have hu : upper b c s = b := min_eq_left (by linarith)
   simp only [weight, hl, hu, sub_sub_cancel]
 
-/-- Degenerate first sum fiber has exactly zero weight. -/
-theorem weight_left_endpoint {a b c d : ℝ} (ha : 0 < a) (hc : 0 < c)
-    (hab : a ≤ b) (hcd : c ≤ d) : weight a b c d (a+c) = 0 := by
-  rw [weight_first (by linarith : a+c ≤ a+d) (by linarith : a+c ≤ b+c)]
-  simp only [add_sub_cancel_right, add_sub_cancel_left,
-    div_self (mul_pos ha hc).ne', Real.log_one, zero_div]
-
-/-- Degenerate last sum fiber has exactly zero weight. -/
-theorem weight_right_endpoint {a b c d : ℝ} (ha : 0 < a) (hc : 0 < c)
-    (hab : a ≤ b) (hcd : c ≤ d) : weight a b c d (b+d) = 0 := by
-  rw [weight_last (by linarith : a+d ≤ b+d) (by linarith : b+c ≤ b+d)]
-  simp only [add_sub_cancel_right, add_sub_cancel_left,
-    div_self (mul_pos (ha.trans_le hab) (hc.trans_le hcd)).ne', Real.log_one, zero_div]
 
 end G67SumCoordinate

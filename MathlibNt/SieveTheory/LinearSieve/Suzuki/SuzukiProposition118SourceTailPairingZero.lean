@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceSeriesPairing
-import Mathlib.Analysis.SpecialFunctions.PolynomialExp
 
 /-!
 # Proposition 11.8: decay of the genuine source Q and pairing at infinity

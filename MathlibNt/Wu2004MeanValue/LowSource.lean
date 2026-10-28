@@ -18,7 +18,7 @@ def lowMovingSource (f : ℕ → ℂ)
   ∑ q ∈ Icc 2 Q, (q.totient : ℝ)⁻¹ * ∑ χ : PrimitiveCharacter q,
     ‖∑ a ∈ S, f a * χ.1 (a : ZMod q) * coprimePrimePrefix χ.1 (t q χ a) h‖
 
-private theorem lowMovingSource_le_budget
+theorem balanced_lowMovingSource_le_budget
     (f : ℕ → ℂ) (t : (q : ℕ) → PrimitiveCharacter q → ℕ → ℕ)
     (S : Finset ℕ) (N U h Q : ℕ) (J s F : ℝ)
     (hN : 3 ≤ N) (hU : U ≤ N) (hS : S ⊆ Icc 1 U)
@@ -125,7 +125,7 @@ theorem low_source_nat_moving (A b F : ℝ) (hA : 0 < A) (hb : 0 ≤ b) (hF : 0 
     have hroot : (N : ℝ) ^ (2 / 3 : ℝ) ≤ N :=
       Real.rpow_le_self_of_one_le (by exact_mod_cast (show 1 ≤ N by omega)) (by norm_num)
     exact_mod_cast hU.trans hroot
-  have hbound := lowMovingSource_le_budget f t S N U h Q J (A + b + 2) F
+  have hbound := balanced_lowMovingSource_le_budget f t S N U h Q J (A + b + 2) F
     hN3 hUN hS (by omega) hJ.le hF hf (by
       intro a ha q hq χ
       obtain ⟨ha1, haU⟩ := mem_Icc.mp (hS ha)

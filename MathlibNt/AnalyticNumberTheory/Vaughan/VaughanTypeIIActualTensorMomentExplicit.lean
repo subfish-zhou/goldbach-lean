@@ -269,78 +269,6 @@ private theorem divisorSquarePrefix_le_cube_harmonic (X : ℕ) :
       simp only [← Finset.mul_sum, ← Finset.sum_mul, liuHarmonic]
       ring
 
-/-- Weighted divisor-square energy in the form used in Chen's Lemma 3.
-The elementary four-harmonic proof keeps the endpoint `X = 0` harmless. -/
-theorem divisorSquareWeightedPrefix_le_fourth_harmonic (X : ℕ) :
-    (∑ t ∈ Finset.Icc 1 X,
-      ((t.divisors.card : ℝ) ^ 2) * (t : ℝ)⁻¹) ≤ liuHarmonic X ^ 4 := by
-  calc
-    (∑ t ∈ Finset.Icc 1 X,
-        ((t.divisors.card : ℝ) ^ 2) * (t : ℝ)⁻¹) ≤
-      ∑ t ∈ Finset.Icc 1 X,
-        (∑ g ∈ Finset.Icc 1 X, ∑ u ∈ Finset.Icc 1 X,
-          ∑ v ∈ Finset.Icc 1 X,
-            if g * u * v ∣ t then (1 : ℝ) else 0) * (t : ℝ)⁻¹ := by
-      apply Finset.sum_le_sum
-      intro t ht
-      apply mul_le_mul_of_nonneg_right
-      · exact divisorSquarePrefix_term_le_tripleCount
-          (Finset.mem_Icc.mp ht).1 (Finset.mem_Icc.mp ht).2
-      · positivity
-    _ = ∑ g ∈ Finset.Icc 1 X, ∑ u ∈ Finset.Icc 1 X,
-        ∑ v ∈ Finset.Icc 1 X, ∑ t ∈ Finset.Icc 1 X,
-          if g * u * v ∣ t then (t : ℝ)⁻¹ else 0 := by
-      simp_rw [Finset.sum_mul]
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro g hg
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro u hu
-      rw [Finset.sum_comm]
-      simp only [ite_mul, one_mul, zero_mul]
-    _ ≤ ∑ g ∈ Finset.Icc 1 X, ∑ u ∈ Finset.Icc 1 X,
-        ∑ v ∈ Finset.Icc 1 X,
-          ((g * u * v : ℕ) : ℝ)⁻¹ * liuHarmonic X := by
-      apply Finset.sum_le_sum
-      intro g hg
-      apply Finset.sum_le_sum
-      intro u hu
-      apply Finset.sum_le_sum
-      intro v hv
-      have hgpos : 0 < g := lt_of_lt_of_le Nat.zero_lt_one (Finset.mem_Icc.mp hg).1
-      have hupos : 0 < u := lt_of_lt_of_le Nat.zero_lt_one (Finset.mem_Icc.mp hu).1
-      have hvpos : 0 < v := lt_of_lt_of_le Nat.zero_lt_one (Finset.mem_Icc.mp hv).1
-      have hepos : 0 < g * u * v := Nat.mul_pos (Nat.mul_pos hgpos hupos) hvpos
-      rw [← Finset.sum_filter]
-      rw [sum_multiples_Icc_reindex (R := ℝ)
-        (F := fun t => ((t : ℝ)⁻¹)) (k := g * u * v) (y := X) hepos]
-      calc
-        (∑ r ∈ Finset.Icc 1 (X / (g * u * v)),
-            (((g * u * v) * r : ℕ) : ℝ)⁻¹) =
-          ∑ r ∈ Finset.Icc 1 (X / (g * u * v)),
-            ((g * u * v : ℕ) : ℝ)⁻¹ * (r : ℝ)⁻¹ := by
-              apply Finset.sum_congr rfl
-              intro r hr
-              simp only [Nat.cast_mul, mul_inv_rev]
-              ring
-        _ ≤ ∑ r ∈ Finset.Icc 1 X,
-            ((g * u * v : ℕ) : ℝ)⁻¹ * (r : ℝ)⁻¹ := by
-              apply Finset.sum_le_sum_of_subset_of_nonneg
-              · intro r hr
-                exact Finset.mem_Icc.mpr ⟨(Finset.mem_Icc.mp hr).1,
-                  (Finset.mem_Icc.mp hr).2.trans
-                    (Nat.div_le_self X (g * u * v))⟩
-              · intro r hrX hrsmall
-                positivity
-        _ = ((g * u * v : ℕ) : ℝ)⁻¹ * liuHarmonic X := by
-              rw [← Finset.mul_sum]
-              rfl
-    _ = liuHarmonic X ^ 4 := by
-      -- The three reciprocal sums contribute three further harmonic factors.
-      simp only [Nat.cast_mul, mul_inv_rev]
-      simp only [mul_assoc, ← Finset.sum_mul, ← Finset.mul_sum, liuHarmonic]
-      ring
 
 theorem divisorSquareMomentBound_27 :
     DivisorSquareMomentBound 27 := by
@@ -360,27 +288,6 @@ theorem divisorSquareMomentBound_27 :
       mul_le_mul_of_nonneg_left hpow hX0
     _ = 27 * (X : ℝ) * Real.log (X + 1 : ℕ) ^ 3 := by ring
 
-theorem vaughanActualTensorCoeffEnergy_canonical_le_BVScale_unconditional
-    (b : ℕ → ℂ) (y N u v k l : ℕ) (B : ℝ)
-    (hB : ∀ n ≤ y, ‖b n‖ ≤ B) :
-    vaughanActualTensorCoeffEnergy b y
-        (vaughanCanonicalDyadicBlock N u k)
-        (vaughanCanonicalDyadicBlock N v l) ≤
-      27 * B ^ 2 * (y : ℝ) * Real.log (y + 1 : ℕ) ^ 5 := by
-  simpa using
-    (vaughanActualTensorCoeffEnergy_canonical_le_BVScale
-      b y N u v k l B 27 hB divisorSquareMomentBound_27 (by positivity))
-
-theorem vaughanBilinearTensorEnergy_canonical_le_BVScale_unconditional
-    (b : ℕ → ℂ) (y N u v k l : ℕ) (B : ℝ)
-    (hB : ∀ n ≤ y, ‖b n‖ ≤ B) :
-    vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-        (vaughanCanonicalDyadicBlock N u k)
-        (vaughanCanonicalDyadicBlock N v l) ≤
-      27 * B ^ 2 * (y : ℝ) * Real.log (y + 1 : ℕ) ^ 5 := by
-  simpa using
-    (vaughanBilinearTensorEnergy_canonical_le_BVScale
-      b y N u v k l B 27 hB divisorSquareMomentBound_27 (by positivity))
 
 end
 

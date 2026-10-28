@@ -1,0 +1,7 @@
+{
+  "action": "SIGTERM one own Lean worker; coordinator drains remaining worker, then restart with jobs=1",
+  "pid": 1127710,
+  "module": "WR2ClassicalFourthBlockouterPay031",
+  "reason": "Observed swap about 7.5 GiB of 8 GiB, memory pressure full avg60 about22%, both workers made only seconds of CPU progress per minute under concurrent load.",
+  "at": "2026-10-27T03:00:05.567701+00:00"
+}

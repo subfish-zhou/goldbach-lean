@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergRemainder
-import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
 import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
-import Mathlib.NumberTheory.SelbergSieve
 
 /-!
 # Liu's factored Selberg main term
@@ -172,15 +170,6 @@ theorem liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared
       liuSelbergCoefficientFactor N epsilon lambda :=
   liuSelbergCoefficientFactor_eq_mainSum_lambdaSquared_of_support hNeven hlambda.1
 
-/-- The admissible-weight specialization of the support-only carrier identity. -/
-theorem fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor
-    {N : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
-    (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda) :
-    (liuPaperQModulus N epsilon).divisors.sum (fun d1 =>
-      (liuPaperQModulus N epsilon).divisors.sum (fun d2 =>
-        lambda d1 * lambda d2 / Nat.totient (Nat.lcm d1 d2))) =
-      liuSelbergCoefficientFactor N epsilon lambda :=
-  fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support hlambda.1
 
 /-- Under the source support hypotheses and `Even N`, the Selberg coefficient
 factor is a nonnegative diagonal sum of squares. -/

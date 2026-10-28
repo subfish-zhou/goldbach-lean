@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
 import MathlibNt.SieveTheory.LiLiuGoldbachS4FiniteError
 
 open Filter

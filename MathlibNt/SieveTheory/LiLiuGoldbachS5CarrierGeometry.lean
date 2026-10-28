@@ -5,8 +5,6 @@ open Finset
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachS5CarrierGeometry (P : Prop) :
-    Decidable P := Classical.propDecidable P
 
 noncomputable def goldbachC9Pairs (N : ℕ) : Finset (ℕ × ℕ) :=
   (goldbachS4Pairs N ((N : ℝ) ^ ((4 : ℝ) / 53))).filter fun rs =>
@@ -33,11 +31,6 @@ theorem goldbachC9Prod_pos {N : ℕ} {rs : ℕ × ℕ} (hrs : rs ∈ goldbachC9P
     0 < goldbachC9Prod rs :=
   goldbachC8Prod_pos (goldbachC9Pairs_subset_S4Pairs N hrs)
 
-theorem goldbachC9Prod_injOn (N : ℕ) :
-    Set.InjOn goldbachC9Prod (goldbachC9Pairs N) := by
-  intro rs hrs tu htu heq
-  exact goldbachC8Prod_injOn (goldbachC9Pairs_subset_S4Pairs N hrs)
-    (goldbachC9Pairs_subset_S4Pairs N htu) heq
 
 theorem goldbachC9Prod_support_bounds {N : ℕ} {rs : ℕ × ℕ}
     (hN : 2 ≤ N) (hrs : rs ∈ goldbachC9Pairs N) :
@@ -57,23 +50,6 @@ theorem goldbachC9Prod_support_bounds {N : ℕ} {rs : ℕ × ℕ}
 noncomputable def goldbachC9ProductSupport (N : ℕ) : Finset ℕ :=
   (goldbachC9Pairs N).image goldbachC9Prod
 
-noncomputable def goldbachC9ProductFiber (N m : ℕ) : Finset (ℕ × ℕ) :=
-  (goldbachC9Pairs N).filter fun rs => goldbachC9Prod rs = m
-
-noncomputable def goldbachC9Coeff (N m : ℕ) : ℕ :=
-  (goldbachC9ProductFiber N m).card
-
-theorem goldbachC9Coeff_le_one (N m : ℕ) : goldbachC9Coeff N m ≤ 1 := by
-  apply Finset.card_le_one.mpr
-  intro rs hrs tu htu
-  obtain ⟨hrs, hrm⟩ := Finset.mem_filter.mp hrs
-  obtain ⟨htu, htm⟩ := Finset.mem_filter.mp htu
-  exact goldbachC9Prod_injOn N hrs htu (hrm.trans htm.symm)
-
-theorem goldbachC9Coeff_pos_iff {N m : ℕ} :
-    0 < goldbachC9Coeff N m ↔ m ∈ goldbachC9ProductSupport N := by
-  simp only [goldbachC9Coeff, Finset.card_pos, Finset.Nonempty,
-    goldbachC9ProductFiber, Finset.mem_filter, goldbachC9ProductSupport, Finset.mem_image]
 
 theorem goldbachC9ProductSupport_bounds {N m : ℕ}
     (hN : 2 ≤ N) (hm : m ∈ goldbachC9ProductSupport N) :
@@ -82,15 +58,6 @@ theorem goldbachC9ProductSupport_bounds {N m : ℕ}
   obtain ⟨rs, hrs, rfl⟩ := Finset.mem_image.mp hm
   exact goldbachC9Prod_support_bounds hN hrs
 
-theorem goldbachS5Cutoff_twentieth_gt {N : ℕ} (hN : 2 ≤ N) :
-    (N : ℝ) < ((N : ℝ) ^ ((4 : ℝ) / 53)) ^ 20 := by
-  have hN1 : (1 : ℝ) < N := by exact_mod_cast (show 1 < N by omega)
-  rw [← Real.rpow_natCast, ← Real.rpow_mul (by positivity : (0 : ℝ) ≤ N)]
-  norm_num only [Nat.cast_ofNat]
-  calc
-    (N : ℝ) = (N : ℝ) ^ (1 : ℝ) := (Real.rpow_one _).symm
-    _ < (N : ℝ) ^ ((80 : ℝ) / 53) :=
-      Real.rpow_lt_rpow_of_exponent_lt hN1 (by norm_num)
 
 theorem goldbachC9Pair_dvdFiber_card_le_fourHundred {N n : ℕ}
     (hn1 : 1 ≤ n) (hnN : n < N) :

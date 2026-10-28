@@ -1,0 +1,97 @@
+[
+  {
+    "label": "bp:chen-finite-counting",
+    "before": "MathlibNt/SieveTheory/Switching/WeightedCounting.lean:102",
+    "after": "MathlibNt/SieveTheory/Switching/WeightedCounting.lean:103"
+  },
+  {
+    "label": "bp:chen-lower-sieve",
+    "before": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:273",
+    "after": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:189"
+  },
+  {
+    "label": "bp:chen-base-asymptotic",
+    "before": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:1122",
+    "after": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:1038"
+  },
+  {
+    "label": "bp:chen-upper-asymptotic",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:761",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:744"
+  },
+  {
+    "label": "bp:chen-distinct-lower",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:828",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:811"
+  },
+  {
+    "label": "bp:chen-prime-powers",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1011",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:994"
+  },
+  {
+    "label": "bp:chen-valuation-lower",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1145",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1128"
+  },
+  {
+    "label": "bp:chen-switched-weight-payment",
+    "before": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanModernWeightTransfer.lean:78",
+    "after": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanModernWeightTransfer.lean:80"
+  },
+  {
+    "label": "bp:liliu-imbalance",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:246",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:222"
+  },
+  {
+    "label": "bp:liliu-basic",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:341",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:317"
+  },
+  {
+    "label": "bp:liliu-twelve",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean:58",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean:53"
+  },
+  {
+    "label": "bp:liliu-retained",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachWeightAllRetainedEndpointsConsumed.lean:25",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachWeightAllRetainedEndpointsConsumed.lean:29"
+  },
+  {
+    "label": "bp:liliu-pair-certificate",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachG67IntegralCertificate.lean:16",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG67IntegralCertificate.lean:14"
+  },
+  {
+    "label": "bp:liliu-domain",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean:197",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean:164"
+  },
+  {
+    "label": "bp:liliu-ledger",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:8",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:10"
+  },
+  {
+    "label": "bp:liliu-coefficient",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:45",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:47"
+  },
+  {
+    "label": "bp:liliu-paper",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:62",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:64"
+  },
+  {
+    "label": "bp:liliu-count-existence",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:8",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:7"
+  },
+  {
+    "label": "bp:liliu-existence",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:62",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:22"
+  }
+]

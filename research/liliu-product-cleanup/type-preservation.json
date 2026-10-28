@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "original_public_declarations": 10393,
+  "unchanged_original_public_kind_type_hashes": 10393,
+  "current_public_declarations": 10394,
+  "missing_public_declarations": [],
+  "added_public_declarations": [
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS1_exists_dimensionOneLocalProductBound"
+  ],
+  "kind_or_type_mismatches": [],
+  "protected_endpoints": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound",
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "method": "Public kind/type hashes across complete main-library censuses; private and specified generated names excluded. No original public type change is allowed."
+}

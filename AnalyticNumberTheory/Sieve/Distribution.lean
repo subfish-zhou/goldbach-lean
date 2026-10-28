@@ -13,17 +13,6 @@ used to identify sieve remainders.
 
 namespace AnalyticNumberTheory.Sieve
 
-/-- A natural is coprime to a product exactly when no prime divisor of the
-product divides it. -/
-theorem coprime_prod_iff_no_prime_dvd {P a : ℕ} :
-    Nat.Coprime P a ↔ ∀ r : ℕ, r.Prime → r ∣ P → ¬ r ∣ a := by
-  constructor
-  · intro hcop r hr hrP hra
-    exact Nat.not_coprime_of_dvd_of_dvd hr.one_lt hrP hra hcop
-  · intro hno
-    apply Nat.coprime_of_dvd'
-    intro r hr hrP hra
-    exact False.elim (hno r hr hrP hra)
 
 /-- For `p < N`, divisibility `d ∣ N - p` is the congruence `p ≡ N [MOD d]`. -/
 theorem prime_dvd_complement_iff_modEq {N p d : ℕ} (hp_lt : p < N) :

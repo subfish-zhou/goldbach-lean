@@ -1,0 +1,77 @@
+{
+  "phase": "Li-Liu shared logarithmic coordinates and harmonic foundations",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T03:27:55.149112+00:00",
+  "source_modules": 1801,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "1a6403be91bed7e875ced14c2db9d975f53f3730ff89aebf5fb90658d08b9170"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "dbeb4e17d66af693981ab1260e093ef82c48f70dd202270d689e9f61155548ee"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "1dab46d154c9c450636d1ded5d90ae5ecbf80a77f65d22acd11ba87fb7b67911"
+    }
+  },
+  "finished_at_utc": "2026-10-27T03:50:29.764306+00:00",
+  "input_manifest_sha256": "2b0407f87f2d0cc451d2157da4851a81c083ce6347e7f88fa4ca31cb036ab474",
+  "scope": "Main Chen and Li-Liu libraries only; separate concurrent Wu research sources excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "22ee327da712fd4219fb4be54aca6142aebf5ef6962fdf2de8497803b5aa96dc",
+  "net_main_code_lines": -11,
+  "net_liliu_closure_code_lines": -1086,
+  "net_chen_closure_code_lines": 22,
+  "type_preservation_report": "type-preservation.json",
+  "final_review_at_utc": "2026-10-27T03:53:37.633484+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "c5ebc2a242308a41a9b308efa6bab6f196a09c84fc68a16aa6af6b855700b83d"
+  },
+  "evidence_sha256": {
+    "changes.json": "4028aec8001c11bc1146fafb7b5b1360c90aadac61bdc31bb19806e071115583",
+    "source-size.json": "a9d75c69f33afeb6f2220e7dc9a94c3dcb317fcccbb7d9a79910a902ddd43080",
+    "type-preservation.json": "6d88367da27e1166fff67d758a888fa93af83a724eaea07b294c9bfa98ef50c3",
+    "moved-definitions.json": "b31d16ff3593848669e20d8e157e65738dc21ba45c449608fb4335926ec11acb",
+    "intermediate-type-check.json": "84257297ecb1fec3ee04487857dfdeffb9f6a46170ecf9533f28e49450a5ba44",
+    "blueprint-validation.json": "6041e036065b527b7b9d099250944d2c8c482fcd7eb36c72c562ebe38e1e9289",
+    "analysis.json": "199f9614a85d466420521cc7a8bfe05e8667b7a804dd8cf9e6f948e044c006b5"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-log-kernel-cleanup/reproduce.py": "fff2eb88790182e8583ca05686007bc1e2ad99b72a01444b7ad00607a5de18fe",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "7d9aad4a4182c821cf3d977d4868a7a5e9f4d64a896dbd4b6b2d0e6fbab86be4",
+    "docs/LILIU_LOG_KERNEL_CLEANUP.md": "17ef48141a6ace96a15478b0c8da92ec9a5de3da8237c32672a61d1d105a0bc5",
+    "docs/SOURCE_SIZE.md": "4f2764577670944c80c19908205209cf582c1b2fc204fc1efb93748e6d68c8ca",
+    "docs/VERIFICATION.md": "325591854e11abae7c426f7813a00a72dbb60872664bdd79c6c48ccfea65bcc6",
+    "docs/RELEASE_NOTES.md": "8286f9089994dcc38aeac52aa37682907a061eac4cbf78ea87f1e37c5465ea00",
+    "docs/ARCHITECTURE.md": "f5fdda1498fa677ea86147b5659b0ddcc64e6bd697424c46cbe7c9b66f34de10"
+  }
+}

@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
 import MathlibNt.SieveTheory.LiuLogarithmicIntegral
 
@@ -9,8 +8,6 @@ open MathlibNt.SieveTheory.LiuWeight
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachB8FibreSieve (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 noncomputable def goldbachB8PlusSupport (N : ℕ) : Finset ℕ :=
   (goldbachB8PlusAtoms N).image (goldbachB8PlusOutput N)
@@ -57,12 +54,6 @@ theorem goldbachB8PlusMainMass_nonneg (N : ℕ) :
   exact liuLogarithmicIntegral_nonneg _ (by positivity)
     (goldbachC8ProductSupport_two_le_quotient hm)
 
-theorem goldbachB8PlusWeight_sum_eq_card_atoms (N : ℕ) :
-    ∑ p ∈ goldbachB8PlusSupport N, goldbachB8PlusWeight N p =
-      ((goldbachB8PlusAtoms N).card : ℝ) := by
-  simpa [goldbachB8PlusSupport, goldbachB8PlusWeight, goldbachB8PlusOutputFiber] using
-    MathlibNt.SieveTheory.sum_card_fibres_filter_image (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
-      (fun _ => True)
 
 /-- Reciprocal totient on all moduli; it agrees with `goldbachNu` on squarefree moduli. -/
 noncomputable def goldbachB8PlusNu : ArithmeticFunction ℝ :=

@@ -1,0 +1,1 @@
+'Hf4Quad.CheckedDag.DirectSemantics.seed_sound' depends on axioms: [propext, Classical.choice, Quot.sound]

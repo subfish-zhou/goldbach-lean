@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuPanBoundedPrincipal
 import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPayment
 import MathlibNt.SieveTheory.LiuPanUnweightedUnconditional
 
 noncomputable section

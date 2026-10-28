@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open scoped BigOperators
 open Filter
@@ -10,8 +9,6 @@ open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachG10SwitchFinite (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 private theorem one_twentyfirst_lt_of_parameter_window {β : ℝ}
     (hβ : (1 : ℝ) / 18 < β) : (1 : ℝ) / 21 < β := by

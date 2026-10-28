@@ -45,29 +45,6 @@ noncomputable def goldbachB10PairLogKernelRectangleContribution
   ∑ rs ∈ goldbachB10PairsInLogRectangle N a₀ a₁ b₀ b₁,
     goldbachB10PairLogKernel N rs
 
-private lemma goldbachB10Beta_gt_one_tenth : (1 / 10 : ℝ) < goldbachB10Beta := by
-  dsimp [goldbachB10Beta]
-  norm_num
-
-private lemma goldbachB10Gamma_gt_one_fourth : (1 / 4 : ℝ) < goldbachB10Gamma := by
-  dsimp [goldbachB10Gamma]
-  norm_num
-
-private lemma goldbachB10Beta_pos : 0 < goldbachB10Beta := by
-  dsimp [goldbachB10Beta]
-  norm_num
-
-private lemma goldbachB10Gamma_pos : 0 < goldbachB10Gamma := by
-  dsimp [goldbachB10Gamma]
-  norm_num
-
-private lemma goldbachB10Beta_lt_gamma : goldbachB10Beta < goldbachB10Gamma := by
-  dsimp [goldbachB10Beta, goldbachB10Gamma]
-  norm_num
-
-private lemma goldbachB10Gamma_lt_one : goldbachB10Gamma < 1 := by
-  dsimp [goldbachB10Gamma]
-  norm_num
 
 private lemma goldbachB10SecondUpper_eq : (1 - goldbachB10Beta) / 2 = (29 / 66 : ℝ) := by
   dsimp [goldbachB10Beta]

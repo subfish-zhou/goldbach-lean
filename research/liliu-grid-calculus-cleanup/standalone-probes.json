@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "warning_as_error": true,
+  "consumers": {
+    "LiLiuGoldbachB10LogGridLimit.lean": {
+      "exit_code": 0,
+      "source_sha256": "479c09830d01acf6bdcd953d099db3af977a126c99dea4b53a1f99369bce8a16",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "LiLiuGoldbachB8LogGridLimit.lean": {
+      "exit_code": 0,
+      "source_sha256": "0328c9fe87bc0d344df4e16fbe49cead6f0515ce9a5ba72b09e92d46a6575ada",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "LiLiuGoldbachB9HighFirstLogRegion.lean": {
+      "exit_code": 0,
+      "source_sha256": "41aa9217d5f02dd5c88379a5d97c5b01e3b3234bdabdc18f7c4495247fb4fcaa",
+      "log_sha256": "e345f8a3612ed06a1c3c49ade2cfb8ecbe9f17dc58767324d4c98e499bf6d164"
+    },
+    "LiLiuGoldbachB9LogGridLimit.lean": {
+      "exit_code": 0,
+      "source_sha256": "f05c549ef82f640d06173ca449f8173ba64c2fbf054f0111a5577222932eeff1",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "LiLiuGoldbachG11PrimeKernelMeshLimit.lean": {
+      "exit_code": 0,
+      "source_sha256": "28efce12103077384d7037a8516da6713b5535cf5d7833c61dcfa1f00d6ceb3f",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "LiLiuGoldbachG12CrossMesh.lean": {
+      "exit_code": 0,
+      "source_sha256": "8badf5e66440431b5ce588880c95cd476b357be1a8e9276e425d11d719d23988",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "LiuPrimePairLogGridLimit.lean": {
+      "exit_code": 0,
+      "source_sha256": "b92ed3c83a9f4c6eb1df620541cb197c24b6e62f4284f785afa223a757e3fa3c",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "shared_helper_prototype_sha256": "ef40ebe3f9a7be844f695f8863771cd8430e7d7ca89d2496c3796e401ca67f5d",
+  "scope": "Standalone development probes preceded production edits. Acceptance uses the complete current main build and full type comparison."
+}

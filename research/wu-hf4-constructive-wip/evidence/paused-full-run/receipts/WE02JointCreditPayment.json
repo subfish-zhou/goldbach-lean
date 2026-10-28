@@ -1,0 +1,51 @@
+{
+  "module": "WE02JointCreditPayment",
+  "exit_code": 0,
+  "seconds": 6.007167067378759,
+  "source_sha256": "a7ca67833939de71d9c397d6321c951f04dd51cd09b324b20a9b3907907c0c1a",
+  "object_sha256": "43d2dd04976735b73d893faaed92c6a4a09b5a6a15c8da7a0d5c88dd6c9e66b1",
+  "dependencies": {
+    "WE02JointCreditStructure": "1e6da30baaa46ce70b5d0784a6ba84967cc80886dcbea407666429d867246483",
+    "W03Table": "fde7de24ff3603e898587dbd81fbb0f26f56c625b95ed063897fb2cde799be37",
+    "W02Transfer": "bc5a90219ff4a11e2c20e20dd5f6f2c7a438aaab191ce8c6844168e3595629e8"
+  },
+  "dependency_contexts": {
+    "WE02JointCreditStructure": "d62ba709f6b8f47e12e3e033a6712b848ebea462adb3475d779bd857fb6f1687",
+    "W03Table": "dd31cc25374b18853ef5a96ff7bb420abd206b626e52488a7aaff1cefd3422f2",
+    "W02Transfer": "661dc845ab8714488f92952780f5c5329e057156c3ae49c58f65055b3c4769c0"
+  },
+  "context_sha256": "144bd7cbe9e37ab22658e388e0b7220302a3ee4b047153b8853230278b395456",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditPayment.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditPayment.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditPayment.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditPayment.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.resources",
+  "resource_sha256": "d83238d1b6d426c624b88e306674e0638caf71b80d0d66eba7c282ae18c1f3ae",
+  "artifact_bundle_sha256": {
+    ".olean": "43d2dd04976735b73d893faaed92c6a4a09b5a6a15c8da7a0d5c88dd6c9e66b1"
+  }
+}

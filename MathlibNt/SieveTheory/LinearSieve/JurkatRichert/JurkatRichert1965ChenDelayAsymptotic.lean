@@ -194,25 +194,5 @@ theorem abs_jr1965f_sub_one_le_exp {u : ℝ} (hu : 1 ≤ u) :
     |jr1965f u - 1| ≤ jr1965DelayConstant * Real.exp 2 * Real.exp (-u) := by
   simpa only [jr1965CommonLimit_eq_one] using abs_jr1965f_sub_commonLimit_le_exp hu
 
-/-- Literal quantified (5.10): one positive constant, both functions, all `u >= 1`. -/
-theorem exists_jr1965_delay_asymptotic :
-    ∃ A > 0, ∀ u : ℝ, 1 ≤ u →
-      |jr1965F u - 1| ≤ A * Real.exp (-u) ∧
-      |jr1965f u - 1| ≤ A * Real.exp (-u) :=
-  ⟨jr1965DelayConstant * Real.exp 2, by unfold jr1965DelayConstant; positivity,
-    fun _ hu => ⟨abs_jr1965F_sub_one_le_exp hu, abs_jr1965f_sub_one_le_exp hu⟩⟩
-
-theorem abs_jr1965g_sub_one_le_exp (ν : ℕ) {u : ℝ} (hu : 1 ≤ u) :
-    |jr1965g ν u - 1| ≤ jr1965DelayConstant * Real.exp 2 * Real.exp (-u) := by
-  unfold jr1965g
-  split_ifs
-  · exact abs_jr1965F_sub_one_le_exp hu
-  · exact abs_jr1965f_sub_one_le_exp hu
-
-theorem tendsto_jr1965F_one : Tendsto jr1965F atTop (𝓝 1) := by
-  simpa only [jr1965CommonLimit_eq_one] using tendsto_jr1965F_commonLimit
-
-theorem tendsto_jr1965f_one : Tendsto jr1965f atTop (𝓝 1) := by
-  simpa only [jr1965CommonLimit_eq_one] using tendsto_jr1965f_commonLimit
 
 end MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne

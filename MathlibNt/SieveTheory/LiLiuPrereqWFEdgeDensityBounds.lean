@@ -114,8 +114,4 @@ theorem plusProduct_le_full_euler (P B : Finset ℕ) (hBP : B ⊆ P)
   apply (mul_le_mul_iff_left₀ hV).mp
   nlinarith [show (A * V) ^ 2 = V * (V * A ^ 2) by ring]
 
-#print axioms euler_truncation_ratio
-#print axioms signedFamilyDensity_abs_le_plusProduct
-#print axioms plusProduct_le_full_euler
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.EdgeDensity

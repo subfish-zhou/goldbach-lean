@@ -100,15 +100,6 @@ theorem suzukiSuffixCarrier_natCeil_eq_power
   simp only [mem_filter]
   rw [Nat.cast_lt, nat_lt_natCeil_iff_lt_real hx hz]
 
-/-- Consequently every inverse Euler suffix product is exactly invariant. -/
-theorem suzukiSuffixProduct_natCeil_eq_power
-    (S : BoundingSieve) (p : ℕ) {x : ℝ} {z : ℕ}
-    (hx : 0 < x) (hz : z = ⌈x⌉₊) :
-    (∏ q ∈ S.prodPrimes.primeFactors.filter
-        (fun q : ℕ => p ≤ q ∧ (q : ℝ) < (z : ℝ)), (1 - S.nu q)⁻¹) =
-      ∏ q ∈ S.prodPrimes.primeFactors.filter
-        (fun q : ℕ => p ≤ q ∧ (q : ℝ) < x), (1 - S.nu q)⁻¹ := by
-  rw [suzukiSuffixCarrier_natCeil_eq_power S p hx hz]
 
 /-- A positive natural base has a positive real `1/s` power cutoff, for every
 real power parameter `s`. -/
@@ -116,22 +107,6 @@ theorem natCast_rpow_one_div_pos {D : ℕ} (hD : 0 < D) (s : ℝ) :
     0 < (D : ℝ) ^ (1 / s) := by
   exact Real.rpow_pos_of_pos (by exact_mod_cast hD) _
 
-/-- Convenient exact supported-carrier specialization to `D^(1/s)`. -/
-theorem suzukiSupportedBelow_natCeil_rpow_eq
-    (S : BoundingSieve) {D z : ℕ} {s : ℝ} (hD : 0 < D)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    suzukiSupportedBelow S z =
-      suzukiSupportedBelowPowerReal S ((D : ℝ) ^ (1 / s)) :=
-  suzukiSupportedBelow_natCeil_eq_powerReal S
-    (natCast_rpow_one_div_pos hD s) hz
-
-/-- Convenient exact Euler-product specialization to `D^(1/s)`. -/
-theorem suzukiVProduct_natCeil_rpow_eq
-    (S : BoundingSieve) {D z : ℕ} {s : ℝ} (hD : 0 < D)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    suzukiVProduct S (z : ℝ) =
-      suzukiVProduct S ((D : ℝ) ^ (1 / s)) :=
-  suzukiVProduct_natCeil_eq_power S (natCast_rpow_one_div_pos hD s) hz
 
 /-- Convenient exact source-successor recurrence specialization to
 `D^(1/s)`. -/
@@ -146,17 +121,6 @@ theorem suzukiSourceV_succ_natCeil_rpow_eq
   suzukiSourceV_succ_natCeil_eq_powerReal S hn
     (natCast_rpow_one_div_pos hD s) hz
 
-/-- Convenient exact inverse-suffix specialization to `D^(1/s)`. -/
-theorem suzukiSuffixProduct_natCeil_rpow_eq
-    (S : BoundingSieve) (p : ℕ) {D z : ℕ} {s : ℝ} (hD : 0 < D)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    (∏ q ∈ S.prodPrimes.primeFactors.filter
-        (fun q : ℕ => p ≤ q ∧ (q : ℝ) < (z : ℝ)), (1 - S.nu q)⁻¹) =
-      ∏ q ∈ S.prodPrimes.primeFactors.filter
-        (fun q : ℕ => p ≤ q ∧ (q : ℝ) < (D : ℝ) ^ (1 / s)),
-          (1 - S.nu q)⁻¹ :=
-  suzukiSuffixProduct_natCeil_eq_power S p
-    (natCast_rpow_one_div_pos hD s) hz
 
 /-- For a base at least one, decreasing the positive power parameter increases
 `D^(1/s)`. -/
@@ -211,15 +175,5 @@ theorem supported_cube_lt_of_eq_natCeil_cuberoot
   have hcubeR : (p : ℝ) ^ (3 : ℕ) < (D : ℝ) := hr.mp hplt
   exact_mod_cast hcubeR
 
-/-- One packet supplies both Case-II cutoff obligations: cubic support at `y`
-and the natural-cutoff order `y ≤ z`. -/
-theorem cubicSupport_and_caseII_hyz_of_natCeil_powerCutoffs
-    (S : BoundingSieve) {D : ℕ} {s : ℝ} {y z : ℕ}
-    (hD : 1 ≤ D) (hs : 0 < s) (hs3 : s ≤ 3)
-    (hy : y = ⌈(D : ℝ) ^ (1 / 3 : ℝ)⌉₊)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    (∀ p ∈ suzukiSupportedBelow S y, p ^ 3 < D) ∧ y ≤ z := by
-  exact ⟨supported_cube_lt_of_eq_natCeil_cuberoot S (by omega) hy,
-    caseII_hyz_of_natCeil_powerCutoffs hD hs hs3 hy hz⟩
 
 end MathlibNt.SieveTheory

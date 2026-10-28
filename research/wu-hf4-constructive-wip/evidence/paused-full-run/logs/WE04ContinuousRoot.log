@@ -1,0 +1,164 @@
+def WuTarget.E04Continuous.certifiedAmount : ℝ :=
+8039587 / 22000000000000
+def WuTarget.E04Continuous.netCredit : ℝ :=
+(WuTarget.W01Continuous.continuousGain WuTarget.W17Accepted.enhanced -
+    WuTarget.W01.lowGain WuTarget.W17Accepted.enhanced) /
+  4
+def WuTarget.E04Continuous.replacementCoefficient : ℝ :=
+WuTarget.W01Continuous.continuousCoefficient WuTarget.W17Accepted.enhanced
+def WuTarget.E04Continuous.replacementPaidCoefficient : ℝ :=
+WuTarget.W17Accepted.paidCoefficient + WuTarget.E04Continuous.certifiedAmount
+def WuTarget.W01Continuous.continuousCoefficient : (Fin 9 → ℝ) → ℝ :=
+fun (x : Fin 9 → ℝ) =>
+  (3 * Wu08TerminalAlignment.firstMain + Wu08TerminalAlignment.secondMain - Wu08TerminalAlignment.thirdMain -
+                                Wu08TerminalAlignment.fourthMain +
+                              Wu08TerminalAlignment.fifthMain +
+                            Wu08TerminalAlignment.sixthMain -
+                          2 * Wu08TerminalAlignment.seventhMain -
+                        Wu08TerminalAlignment.eighthMain -
+                      Wu08TerminalAlignment.ninthMain -
+                    Wu08OriginalFourWeights.original10 -
+                  Wu08OriginalFourWeights.original11 +
+                8 * PositiveSecondPayment.secondGain +
+              PositiveCoreResume.fifthGain +
+            WuTarget.W01Continuous.continuousGain x +
+          4 * Wu2008DoubleSieve.Phase20.rawPsi +
+        4 * Wu2008DoubleSieve.Phase18.g18 +
+      HighConsumer.highGain) /
+    4
+@WuTarget.E04Continuous.first_cell_surplus : ∀ {x : Fin 9 → ℝ},
+  (∀ (i : Fin 9), 0 ≤ x i) →
+    ∀ {s : ℝ},
+      2 < s ∧ s ≤ 41 / 20 →
+        x 0 / 22 ≤
+          WuTarget.W01Continuous.hContinuous x s -
+            DirectFiniteF6.profile (ActualNineFeedback.matrixApply NodeExtension.transferMatrix x) s
+@WuTarget.E04Continuous.rectangle_geometry : ∀ {v : ℝ × ℝ},
+  v ∈ WuTarget.E04Continuous.rectangle →
+    v ∈ StaircaseShrink.domain 0 ∧
+      (2 < QuarterTrim.u v.1 v.2 ∧ QuarterTrim.u v.1 v.2 ≤ 41 / 20) ∧
+        0 < v.1 * v.2 * (1 / 2 - v.1 - v.2) ∧ v.1 * v.2 * (1 / 2 - v.1 - v.2) ≤ 1 / 250
+@WuTarget.E04Continuous.rectangle_kernel_surplus : ∀ {x : Fin 9 → ℝ},
+  (∀ (i : Fin 9), 0 ≤ x i) →
+    ∀ {v : ℝ × ℝ},
+      v ∈ WuTarget.E04Continuous.rectangle →
+        125 * x 0 / 11 ≤
+          WuTarget.W01Continuous.continuousUniform x 0 v -
+            DirectFiniteF6.uniform (ActualNineFeedback.matrixApply NodeExtension.transferMatrix x) 0 v
+WuTarget.E04Continuous.rectangle_volume : MeasureTheory.MeasureSpace.volume.real WuTarget.E04Continuous.rectangle =
+  1 / 500000
+@WuTarget.E04Continuous.net_integral : ∀ {x : Fin 9 → ℝ},
+  (∀ (i : Fin 9), 0 ≤ x i) →
+    (WuTarget.W01Continuous.continuousGain x - WuTarget.W01.lowGain x) / 4 =
+      ∫ (v : ℝ × ℝ), WuTarget.E04Continuous.surplusDensity x v
+@WuTarget.E04Continuous.surplus_linear : ∀ {x : Fin 9 → ℝ},
+  (∀ (i : Fin 9), 0 ≤ x i) → x 0 / 44000 ≤ (WuTarget.W01Continuous.continuousGain x - WuTarget.W01.lowGain x) / 4
+WuTarget.E04Continuous.enhanced_zero_lower : 8039587 / 500000000 ≤ WuTarget.W17Accepted.enhanced 0
+WuTarget.E04Continuous.enhanced_surplus_linear : WuTarget.W17Accepted.enhanced 0 / 44000 ≤
+  (WuTarget.W01Continuous.continuousGain WuTarget.W17Accepted.enhanced -
+      WuTarget.W01.lowGain WuTarget.W17Accepted.enhanced) /
+    4
+WuTarget.E04Continuous.enhanced_surplus_rational : 8039587 / 22000000000000 ≤
+  (WuTarget.W01Continuous.continuousGain WuTarget.W17Accepted.enhanced -
+      WuTarget.W01.lowGain WuTarget.W17Accepted.enhanced) /
+    4
+WuTarget.E04Continuous.certifiedAmount_pos : 0 < WuTarget.E04Continuous.certifiedAmount
+WuTarget.E04Continuous.certifiedAmount_le_netCredit : WuTarget.E04Continuous.certifiedAmount ≤
+  WuTarget.E04Continuous.netCredit
+WuTarget.E04Continuous.netCredit_gt_display : 3 / 10000000 < WuTarget.E04Continuous.netCredit
+WuTarget.E04Continuous.netCredit_pos : 0 < WuTarget.E04Continuous.netCredit
+WuTarget.E04Continuous.replacement_identity : WuTarget.E04Continuous.replacementCoefficient =
+  WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced +
+    (WuTarget.W01Continuous.continuousGain WuTarget.W17Accepted.enhanced -
+        WuTarget.W01.lowGain WuTarget.W17Accepted.enhanced) /
+      4
+WuTarget.E04Continuous.netCredit_identity : WuTarget.E04Continuous.netCredit =
+  WuTarget.E04Continuous.replacementCoefficient - WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced
+WuTarget.E04Continuous.replacement_gain_strict : WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced +
+    3 / 10000000 <
+  WuTarget.E04Continuous.replacementCoefficient
+WuTarget.E04Continuous.replacementPaid_net_identity : WuTarget.E04Continuous.replacementPaidCoefficient -
+    WuTarget.W17Accepted.paidCoefficient =
+  WuTarget.E04Continuous.certifiedAmount
+WuTarget.E04Continuous.replacementPaid_lt_actual : WuTarget.E04Continuous.replacementPaidCoefficient <
+  WuTarget.E04Continuous.replacementCoefficient
+@WuTarget.E04Continuous.enhanced_continuous_Hadm : ∀ {ε : ℝ},
+  0 < ε →
+    ∃ (d : ℝ),
+      0 < d ∧
+        d ≤ 1 / 100 ∧
+          ∀ (δ : ℝ),
+            0 < δ →
+              δ < d →
+                WuTarget.W01Continuous.continuousGain WuTarget.W17Accepted.enhanced - ε ≤
+                  Wu2008DoubleSieve.truncatedSixthLowerHadmdelta δ
+@WuTarget.E04Continuous.enhanced_continuous_ordinary_P2 : ∀ {ε dmax : ℝ},
+  0 < ε →
+    0 < dmax →
+      ∃ (δ : ℝ),
+        0 < δ ∧
+          δ < dmax ∧
+            δ ≤ 1 / 100 ∧
+              (∀ (i : Fin 9), WuTarget.W17Accepted.enhanced i ≤ NodeExtension.actualNine δ i) ∧
+                (∀ s ∈ Set.Icc 2 (41 / 10),
+                    WuTarget.W01Continuous.hContinuous WuTarget.W17Accepted.enhanced s ≤
+                      Wu2008DoubleSieve.wuImprovementLimit Bool.false δ s) ∧
+                  ∃ (T : ℕ),
+                    512 ≤ T ∧
+                      ∀ (N : ℕ),
+                        T ≤ N →
+                          Even N →
+                            (WuTarget.E04Continuous.replacementCoefficient - ε) * U8CanonicalMother.M N ≤
+                              ↑{p ∈ Finset.range (N + 1) |
+                                    Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+@WuTarget.E04Continuous.replacement_paid_ordinary_P2 : ∀ {ε dmax : ℝ},
+  0 < ε →
+    0 < dmax →
+      ∃ (δ : ℝ),
+        0 < δ ∧
+          δ < dmax ∧
+            δ ≤ 1 / 100 ∧
+              ∃ (T : ℕ),
+                512 ≤ T ∧
+                  ∀ (N : ℕ),
+                    T ≤ N →
+                      Even N →
+                        (WuTarget.E04Continuous.replacementPaidCoefficient - ε) * U8CanonicalMother.M N ≤
+                          ↑{p ∈ Finset.range (N + 1) |
+                                Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+WuTarget.E04Continuous.replacement_threshold_iff : 4491 / 5000 ≤ WuTarget.E04Continuous.replacementPaidCoefficient ↔
+  4491 / 5000 - WuTarget.E04Continuous.certifiedAmount ≤ WuTarget.W17Accepted.paidCoefficient
+WuTarget.E04Continuous.replacement_refined_target : 4491 / 5000 - WuTarget.E04Continuous.certifiedAmount ≤
+    WuTarget.W17Accepted.paidCoefficient →
+  ∃ (T : ℕ),
+    512 ≤ T ∧
+      ∀ (N : ℕ),
+        T ≤ N →
+          Even N →
+            WuTarget.RefinedExit.margin / 2 * U8CanonicalMother.M N ≤
+                ↑(Wu2004MeanValue.refinedGood N (9469 / 5000)).card ∧
+              ∃ (p : ℕ) (r : ℕ) (q : ℕ),
+                Nat.Prime p ∧ (r = 1 ∨ Nat.Prime r) ∧ Nat.Prime q ∧ N = p + r * q ∧ ↑r ≤ ↑q ^ (4469 / 5000)
+'WuTarget.E04Continuous.first_cell_surplus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.rectangle_geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.rectangle_kernel_surplus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.rectangle_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.net_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.surplus_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.enhanced_zero_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.enhanced_surplus_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.enhanced_surplus_rational' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.certifiedAmount_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.certifiedAmount_le_netCredit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.netCredit_gt_display' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.netCredit_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacement_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.netCredit_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacement_gain_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacementPaid_net_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacementPaid_lt_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.enhanced_continuous_Hadm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.enhanced_continuous_ordinary_P2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacement_paid_ordinary_P2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacement_threshold_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuTarget.E04Continuous.replacement_refined_target' depends on axioms: [propext, Classical.choice, Quot.sound]

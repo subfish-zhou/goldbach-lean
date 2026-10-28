@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9SieveTotal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9PositiveCover
-
 noncomputable section
 open Finset Filter
 open MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

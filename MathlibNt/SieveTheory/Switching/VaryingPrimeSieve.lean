@@ -1,4 +1,5 @@
 import MathlibNt.SieveTheory.Switching.SourceSieve
+import MathlibNt.SieveTheory.Selberg.SelbergUpperBound
 
 /-!
 # Varying-prime sieves and cutoff corrections
@@ -75,13 +76,6 @@ noncomputable def jurkatRichertSourceVaryingQUpperRosserWeight
   LinearSieve.upperRosserWeight (jurkatRichertSourceSiftingProduct N)
     (jurkatRichertSourceUpperLevel N q ε) d
 
-theorem jurkatRichertSourceVaryingQUpperRosserWeight_hasUpperLevelSupport
-    (N q : ℕ) (ε : ℝ) :
-    LinearSieve.HasUpperLevelSupport
-      (jurkatRichertSourceSiftingProduct N)
-      (jurkatRichertSourceUpperLevel N q ε)
-      (jurkatRichertSourceVaryingQUpperRosserWeight N q ε) :=
-  LinearSieve.upperRosserWeight_hasUpperLevelSupport _ _
 
 theorem abs_jurkatRichertSourceVaryingQUpperRosserWeight_le_one
     (N q d : ℕ) (ε : ℝ) :

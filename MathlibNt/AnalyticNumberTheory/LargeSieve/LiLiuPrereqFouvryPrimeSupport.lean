@@ -42,11 +42,6 @@ theorem supportedPart_dvd {n : ℕ} (hn : 0 < n) (d : ℕ) :
     supportedPart n d ∣ n :=
   ⟨coprimePart n d, (supportedPart_mul_coprimePart hn d).symm⟩
 
-theorem coprimePart_dvd {n : ℕ} (hn : 0 < n) (d : ℕ) :
-    coprimePart n d ∣ n := by
-  refine ⟨supportedPart n d, ?_⟩
-  rw [Nat.mul_comm]
-  exact (supportedPart_mul_coprimePart hn d).symm
 
 /-- Every prime divisor of the supported part divides the reference integer. -/
 theorem prime_dvd_supportedPart {n d p : ℕ} (hp : p.Prime)
@@ -80,10 +75,6 @@ theorem coprime_of_prime_support {u d s : ℕ} (hu : u.Coprime d)
   obtain ⟨p, hp, hpu, hps⟩ := Nat.Prime.not_coprime_iff_dvd.mp h
   exact (Nat.Prime.not_coprime_iff_dvd.mpr ⟨p, hp, hpu, hs p hp hps⟩) hu
 
-theorem coprimePart_coprime_supportedPart (n d : ℕ) :
-    (coprimePart n d).Coprime (supportedPart n d) :=
-  coprime_of_prime_support (coprimePart_coprime n d)
-    (fun _ hp hps => prime_dvd_supportedPart hp hps)
 
 /-- Every supported divisor of `n` divides its canonical supported part. -/
 theorem dvd_supportedPart_of_prime_support {n d s : ℕ} (hn : 0 < n)
@@ -94,13 +85,6 @@ theorem dvd_supportedPart_of_prime_support {n d s : ℕ} (hn : 0 < n)
   apply hst.dvd_mul_right.mp
   rwa [supportedPart_mul_coprimePart hn d]
 
-/-- Every divisor of `n` coprime to `d` divides the complementary part. -/
-theorem dvd_coprimePart_of_coprime {n d t : ℕ} (hn : 0 < n)
-    (htn : t ∣ n) (htd : t.Coprime d) : t ∣ coprimePart n d := by
-  have hts : t.Coprime (supportedPart n d) :=
-    coprime_of_prime_support htd (fun _ hp hps => prime_dvd_supportedPart hp hps)
-  apply hts.dvd_mul_left.mp
-  rwa [supportedPart_mul_coprimePart hn d]
 
 /-- The prime-support conditions determine both factors, including unit factors. -/
 theorem prime_support_split_unique {n d s t : ℕ} (hn : 0 < n)
@@ -121,50 +105,5 @@ theorem prime_support_split_unique {n d s t : ℕ} (hn : 0 < n)
   rw [supportedPart_mul_coprimePart hn d, ← hs_eq]
   exact hst
 
-/-- An exact characterization suitable for reindexing by the two factors. -/
-theorem prime_support_split_iff {n d s t : ℕ} (hn : 0 < n) :
-    (s * t = n ∧ (∀ p : ℕ, p.Prime → p ∣ s → p ∣ d) ∧ t.Coprime d) ↔
-      s = supportedPart n d ∧ t = coprimePart n d := by
-  constructor
-  · rintro ⟨hst, hs, ht⟩
-    exact prime_support_split_unique hn hst hs ht
-  · rintro ⟨rfl, rfl⟩
-    exact ⟨supportedPart_mul_coprimePart hn d,
-      (fun _ hp hps => prime_dvd_supportedPart hp hps), coprimePart_coprime n d⟩
-
-@[simp] theorem supportedPart_one_left (d : ℕ) : supportedPart 1 d = 1 := by
-  simp [supportedPart]
-
-@[simp] theorem coprimePart_one_left (d : ℕ) : coprimePart 1 d = 1 := by
-  simp [coprimePart]
-
-@[simp] theorem supportedPart_one_right (n : ℕ) : supportedPart n 1 = 1 := by
-  apply Nat.eq_one_iff_not_exists_prime_dvd.mpr
-  intro p hp hps
-  exact hp.not_dvd_one (prime_dvd_supportedPart hp hps)
-
-theorem coprimePart_one_right {n : ℕ} (hn : 0 < n) : coprimePart n 1 = n := by
-  simpa using supportedPart_mul_coprimePart hn 1
-
-theorem supportedPart_eq_one_of_coprime {n d : ℕ} (hn : 0 < n)
-    (hnd : n.Coprime d) : supportedPart n d = 1 := by
-  have h := prime_support_split_unique hn (Nat.one_mul n)
-    (fun p hp hp1 => (hp.not_dvd_one hp1).elim) hnd
-  exact h.1.symm
-
-theorem coprimePart_eq_self_of_coprime {n d : ℕ} (hn : 0 < n)
-    (hnd : n.Coprime d) : coprimePart n d = n := by
-  have h := supportedPart_mul_coprimePart hn d
-  rwa [supportedPart_eq_one_of_coprime hn hnd, Nat.one_mul] at h
-
-theorem supportedPart_eq_self_of_prime_support {n d : ℕ} (hn : 0 < n)
-    (hs : ∀ p : ℕ, p.Prime → p ∣ n → p ∣ d) : supportedPart n d = n := by
-  have h := prime_support_split_unique hn (Nat.mul_one n) hs (by simp)
-  exact h.1.symm
-
-theorem coprimePart_eq_one_of_prime_support {n d : ℕ} (hn : 0 < n)
-    (hs : ∀ p : ℕ, p.Prime → p ∣ n → p ∣ d) : coprimePart n d = 1 := by
-  have h := prime_support_split_unique hn (Nat.mul_one n) hs (by simp)
-  exact h.2.symm
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

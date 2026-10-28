@@ -143,11 +143,4 @@ theorem finiteSourceLayer_even_le_one_sub_jr1965f (m : ℕ) {s : ℝ} (hs : 2 �
     jr1965Section13HatSourceContract hs).sum_le_tsum _
       (fun k _ => suzukiLayer_one_two_even_nonneg hs k)
 
-#check sourceParity_eq_jr1965
-#check finiteSourceLayer_odd_le_jr1965F_sub_one
-#check finiteSourceLayer_even_le_one_sub_jr1965f
-#print axioms sourceParity_eq_jr1965
-#print axioms finiteSourceLayer_odd_le_jr1965F_sub_one
-#print axioms finiteSourceLayer_even_le_one_sub_jr1965f
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.CoarseDensity

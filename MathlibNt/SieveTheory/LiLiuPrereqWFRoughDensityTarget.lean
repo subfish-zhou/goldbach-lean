@@ -88,9 +88,4 @@ theorem roughSignedDensity_abs_sub_le_target (upper : Bool) (P : Finset ℕ)
   · rw [abs_of_nonneg h0]
     nlinarith
 
-#check roughCollisionPairContribution_le_target
-#print axioms roughCollisionPairContribution_le_target
-#check roughSignedDensity_abs_sub_le_target
-#print axioms roughSignedDensity_abs_sub_le_target
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

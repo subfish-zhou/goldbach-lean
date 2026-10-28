@@ -6,7 +6,6 @@ Authors: Nous Research
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.PolynomialExp
 
 /-!
 # The differential--delay equation for Suzuki's standard upper adjoint

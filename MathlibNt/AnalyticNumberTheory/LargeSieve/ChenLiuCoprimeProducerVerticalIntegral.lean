@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerLong
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 noncomputable section
 

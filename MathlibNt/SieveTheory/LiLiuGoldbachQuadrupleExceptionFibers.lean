@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.FiniteLabelCounting
 import MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionFibers
-import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
 
 /- The accepted G11 fibre proof only uses the lower prime cutoff.
 This parameter-polymorphic version retains its proof for every upper cutoff. -/

@@ -160,18 +160,5 @@ theorem harcosEulerLog_coeff (η : (ZMod p)[X] →* ℂ) (N n : ℕ) (hn : n ≤
     have he := ((mem_harcosMonicPolynomials e k).mp (mem_filter.mp hk').1).2
     exact hde (hd.symm.trans he)
 
-/-- The finite Euler logarithmic recurrence, proved from polynomial UFD factorization. -/
-theorem harcosEuler_recurrence (η : (ZMod p)[X] →* ℂ) (n : ℕ) :
-    (n : ℂ) * harcosEulerCoefficient η n =
-      ∑ j ∈ range (n + 1),
-        harcosEulerLogCoefficient η j * harcosEulerCoefficient η (n - j) := by
-  rw [← harcosEulerLog_mul_coeff η n n le_rfl, PowerSeries.coeff_mul,
-    Finset.Nat.sum_antidiagonal_eq_sum_range_succ
-      (fun i j ↦ PowerSeries.coeff i (harcosEulerLog η n) *
-        PowerSeries.coeff j (harcosEulerSeries η))]
-  apply sum_congr rfl
-  intro j hj
-  rw [harcosEulerLog_coeff η n j (by simpa using mem_range.mp hj),
-    harcosEulerSeries, PowerSeries.coeff_mk]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

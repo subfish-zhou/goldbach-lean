@@ -1,0 +1,49 @@
+{
+  "module": "Hf4ConstructiveDagData",
+  "exit_code": 0,
+  "seconds": 1.3955853953957558,
+  "source_sha256": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73",
+  "object_sha256": "5ee6770a3a0fdc24b740905253611648589c321f864144fc2ba1f4bb1d7dda51",
+  "dependencies": {
+    "Hf4CheckedDagData": "36261df41862e266c3d8911cbb07e41b8ebb651d3b4c7744b5f3b155527a8dae",
+    "Hf4ConstructionConditions": "a234bcbc31a28f267b6b9aeb74bdcfc8f723352c6b0abfdd62733aa641e33dde"
+  },
+  "dependency_contexts": {
+    "Hf4CheckedDagData": "ca60783cba8cc5731f1c62274fa47e8ace1eb825132b499277df1ee255a04e8d",
+    "Hf4ConstructionConditions": "8b79e3ebb43685e112e5e43051695cd1440b436c893b941f5c6553d512f00e32"
+  },
+  "context_sha256": "9b853e83f3c1227f7828d86766de81c7ca171ef48af3e43c1a035e2f7dcb9384",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveDagData.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveDagData.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveDagData.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveDagData.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.resources",
+  "resource_sha256": "1c7e01c9895c36d284d5985371b645d13cb94dda7bb525d5d547b516d37f5d28",
+  "artifact_bundle_sha256": {
+    ".olean": "5ee6770a3a0fdc24b740905253611648589c321f864144fc2ba1f4bb1d7dda51"
+  }
+}

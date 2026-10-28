@@ -1,14 +1,10 @@
+import TerminalERadical
 import TerminalEDivided
 import FirstCRationalFTCBase
 
 noncomputable section
 namespace TerminalE
 open Real FirstCRationalPayment
-
-def radical : ℝ := sqrt 15
-theorem radical_pos : 0 < radical := by unfold radical; positivity
-theorem radical_sq : radical^2=15 := by unfold radical; exact sq_sqrt (by norm_num)
-theorem radical_lt_four : radical<4 := by nlinarith only [radical_pos,radical_sq]
 
 def quadraticPrimitive (A B x : ℝ) : ℝ :=
   (A/2)*log (q x)+((B-4*A)/(2*radical))*(log (x+4-radical)-log (x+4+radical))

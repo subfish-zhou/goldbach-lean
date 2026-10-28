@@ -1,0 +1,57 @@
+{
+  "import_root": "WSrcSingleGridInstance",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-DautoImplicit=false",
+    "-DmaxRecDepth=16384",
+    "-R",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16",
+    "-o",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.olean",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.lean"
+  ],
+  "measured_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/resources.txt",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-DautoImplicit=false",
+    "-DmaxRecDepth=16384",
+    "-R",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16",
+    "-o",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.olean",
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.lean"
+  ],
+  "cwd": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16",
+  "source": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.lean",
+  "output": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/uses.json",
+  "source_sha256": "5bfdd7169f55c24eb98cd511563dd8edfcb00b77c4539b5a1858961b97fe7837",
+  "prepared_source_sha256": "cc0b200df54c5de089ad0a479bb518eb6070b3e503ffdaa56bcfc8a5409e5847",
+  "environment": {
+    "LEAN_PATH": "/tmp/wu-structural-full-probe-v7/full/run-1793131987644216375/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+    "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+    "TMPDIR": "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/tmp"
+  },
+  "assigned_modules": [
+    "WSrcSingleGridInstance"
+  ],
+  "invocation_sha256": "1d63b792ec2ecdd7da608a4950c2bd384138134d7893113872ede1aa4e8f7f05",
+  "exit_code": 0,
+  "seconds": 11.100594390183687,
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resources_sha256": "e9d7f0ede0ee62470af70eafd8babaeae24ee59585576d295494810681bc7a01",
+  "output_sha256": "421d6a5130e7e177942589abcbc3f73e16d84d355870718e189f0641dff55b8f",
+  "object_sha256": "b5924d8f928225b7f2a640ff8a6d8acd98c1398cbb1f9edca6f29fd964bb3fc7",
+  "resources": {
+    "user_cpu_seconds": 8.39,
+    "system_cpu_seconds": 2.67,
+    "wall_clock": "0:11.07",
+    "max_rss_kib": 7989264
+  }
+}

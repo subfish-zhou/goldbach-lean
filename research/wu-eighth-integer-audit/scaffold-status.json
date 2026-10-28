@@ -1,0 +1,12 @@
+{
+  "status": "source_and_values_checked_pending_full_acceptance",
+  "baseline": "accepted Sixth integer compression",
+  "baseline_modules": 4459,
+  "baseline_code_lines": 604478,
+  "archive_index_hash_matches": 4459,
+  "retained_non_grid_eighth_raw_statements": 3,
+  "allowed_source_changes": "WR2ClassicalEighthRaw* plus new WR2IntegerLogUpper only",
+  "shared_horner_must_remain_byte_identical": true,
+  "production_eighth_validation": "2048 ceil payments, 32 block targets, 3 retained raw contracts, frozen non-Raw scope and 7 negative controls checked; full Lean acceptance belongs to root pipeline",
+  "lean_run_by_this_scaffold": false
+}

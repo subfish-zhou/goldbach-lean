@@ -3,7 +3,6 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Analysis.Calculus.FDeriv.Analytic
 import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Complex.Convex
 
 /-!
 # Naturally ordered conditional Dirichlet L-series
@@ -211,10 +210,6 @@ noncomputable def orderedValueFunction
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (s : ℂ) : ℂ :=
   if hs : 0 < s.re then orderedValueSeries χ hχ s hs else 0
 
-lemma orderedValueSeries_proof_irrel
-    (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (s : ℂ) (hs ht : 0 < s.re) :
-    orderedValueSeries χ hχ s hs = orderedValueSeries χ hχ s ht := by
-  rfl
 
 lemma orderedValueFunction_eq (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     (s : ℂ) (hs : 0 < s.re) :

@@ -1,0 +1,80 @@
+{
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity": {
+    "source_sha256": "d7872569f715caa665f7ce0fd59ff9cd4a322032437ad35aed70d8a7863c568a",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-product-payments/LiLiuGoldbachS1BetaLowerDensity.lean",
+    "log": "/tmp/liliu-product-payments/LiLiuGoldbachS1BetaLowerDensity.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix": {
+    "source_sha256": "fbcbc36ac6bd345a706147aed01119e145697fc97e76d87c5d1881089412dd40",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-product-payments/LiLiuGoldbachS1LowerDensitySix.lean",
+    "log": "/tmp/liliu-product-payments/LiLiuGoldbachS1LowerDensitySix.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper": {
+    "source_sha256": "f8f2fa156ea02633a10e52fbde55b1f69a9e47cfa8211a51dcbe8dab9fd25d50",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-product-payments/LiLiuGoldbachS3RosserMainUpper.lean",
+    "log": "/tmp/liliu-product-payments/LiLiuGoldbachS3RosserMainUpper.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass": {
+    "source_sha256": "65d7f53e5c63e4d833e0489af9535da06342fdf32848de9a47be6aaa1b03bde0",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachB8NormalizedMainMass.lean",
+    "log": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachB8NormalizedMainMass.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized": {
+    "source_sha256": "ca762050a6b2969cd961b501b26300bd606f9b3dd2dcc9fd92e8b12d664605e4",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachB9HighFirstNormalized.lean",
+    "log": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachB9HighFirstNormalized.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope": {
+    "source_sha256": "6189924ce6faeb39c19a8e319c3972e969b363a94abcc8bad4955064ae353bf0",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachG11NormalizedIntegralEnvelope.lean",
+    "log": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachG11NormalizedIntegralEnvelope.log"
+  },
+  "MathlibNt.SieveTheory.Liu.Weights.LiuWeightPaperQ": {
+    "source_sha256": "06cb322f258c168a1fdfd19992647166a8df50a24a940ecdbea6a3956efaece7",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-shared-lemma/next-wave/probes/LiuWeightPaperQ.lean",
+    "log": "/tmp/liliu-shared-lemma/next-wave/probes/LiuWeightPaperQ.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints": {
+    "source_sha256": "333a35222c98e541cd03de08cd0bc15989a844ae3ddd60ef8bd598d50fd5560a",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachB10PanTwoEndpoints.lean",
+    "log": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachB10PanTwoEndpoints.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution": {
+    "source_sha256": "6c4f18b36a60b1d23c4d4857d7bf5bcf65e095c191dab0ccf1b26de24c1c343b",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true,
+    "source": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachS2SwitchedDistribution.lean",
+    "log": "/tmp/liliu-shared-lemma/next-wave/probes/LiLiuGoldbachS2SwitchedDistribution.log"
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1LocalProduct": {
+    "source_sha256": "a614a0bf703cb90d56cf7b680eeba135c9fd796f63517e523410e1f0b82ff033",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile_exit_code": 0,
+    "warning_as_error": true
+  }
+}

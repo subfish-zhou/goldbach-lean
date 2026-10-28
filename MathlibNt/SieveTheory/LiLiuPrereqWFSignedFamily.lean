@@ -96,14 +96,6 @@ theorem signedFamilyTerm_primeSupported (upper : Bool) (P : Finset ℕ) (D ε : 
   · obtain ⟨j, _, hj⟩ := Finset.mem_biUnion.mp hb
     exact ((mem_geometricPrimeBox _ _ _ _ _ _).mp hj).1
 
-theorem signedFamilyAggregate_eq_zero_of_not_subset (upper : Bool) (P : Finset ℕ)
-    (D ε : ℝ) (label : ℕ → ℕ) {n : ℕ} (hsub : ¬ n.primeFactors ⊆ P) :
-    signedFamilyAggregate upper P D ε label n = 0 := by
-  rw [signedFamilyAggregate_apply]
-  apply Finset.sum_eq_zero
-  intro t _
-  by_contra h
-  exact hsub (signedFamilyTerm_primeSupported upper P D ε t n h)
 
 /-- One concrete signed term, on all integers, works for every real split of
 the same enlarged level. There is no supplied coefficient or factorization. -/
@@ -315,39 +307,5 @@ theorem signedFamilyAggregate_squarefree_normalized (upper : Bool) (P : Finset �
   simp only [← geometricLower_succ hD0]
   split_ifs <;> simp [S]
 
-/-- The normalized identification at every squarefree integer, including
-integers outside the fixed sieve-prime support. It is not a squarefree mask
-definition: the left side remains the common full-integer family. -/
-theorem signedFamilyAggregate_squarefree (upper : Bool) (P : Finset ℕ)
-    {D ε : ℝ} (label : ℕ → ℕ) (hD : 2 ≤ D) (hε : 0 < ε)
-    (hlabel : ∀ p ∈ P \ geometricSmallPrimes P D ε,
-      p ∈ geometricPrimeBox P D ε (ε ^ 9) (label p))
-    (hhead : ∀ p ∈ P \ geometricSmallPrimes P D ε,
-      geometricLower D ε (ε ^ 9) (label p) ^ 2 < D)
-    {n : ℕ} (hn : Squarefree n) :
-    signedFamilyAggregate upper P D ε label n =
-      if n.primeFactors ⊆ P then
-        normalizedSignedSet upper (fun p => geometricLower D ε (ε ^ 9) (label p))
-          (fun p => geometricLower D ε (ε ^ 9) (label p) ^ (1 + ε ^ 9)) D
-          (n.primeFactors \ geometricSmallPrimes P D ε) *
-        signedSmallWeight upper P D ε (n.primeFactors \ geometricSmallPrimes P D ε).card
-          ((n.primeFactors ∩ geometricSmallPrimes P D ε).prod id)
-      else 0 := by
-  by_cases hsub : n.primeFactors ⊆ P
-  · rw [if_pos hsub]
-    exact signedFamilyAggregate_squarefree_normalized upper P label hD hε hlabel hhead hn hsub
-  · rw [if_neg hsub]
-    exact signedFamilyAggregate_eq_zero_of_not_subset upper P D ε label hsub
-
-#check signedTags_common_wellFactorable
-#check signedFamilyTerm_squarefree
-#check signedFamilyAggregate_squarefree_profile
-#check signedFamilyAggregate_squarefree_normalized
-#check signedFamilyAggregate_squarefree
-#print axioms signedTags_common_wellFactorable
-#print axioms signedFamilyTerm_squarefree
-#print axioms signedFamilyAggregate_squarefree_profile
-#print axioms signedFamilyAggregate_squarefree_normalized
-#print axioms signedFamilyAggregate_squarefree
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "source": "MathlibNt/SieveTheory/LinearSieve/DimensionOneLowerFactor.lean",
+  "change": "Only the private visibility modifier is removed. The existing statement and entire proof body are unchanged.",
+  "before_sha256": "44c53ca125bcf4515d6a3c44f609404629262cb425e70be1eb83e12839cb7630",
+  "after_sha256": "5649c1c34723bbfc9cf73c382fcdba5e3f0a9990d2f98f08dd9a3c49bd2edb04",
+  "new_public_name": "MathlibNt.SieveTheory.SwitchingPrinciple.continuousOn_jurkatRichertInnerIntegral_three_five",
+  "old_private_name": "_private.MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor.0.MathlibNt.SieveTheory.SwitchingPrinciple.continuousOn_jurkatRichertInnerIntegral_three_five",
+  "kind_and_type_hash_preserved": true
+}

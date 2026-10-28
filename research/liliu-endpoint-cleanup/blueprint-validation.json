@@ -1,0 +1,143 @@
+{
+  "node_count": 68,
+  "edge_count": 120,
+  "source_revision": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "graph_scope": "mathematical-routes-with-chapter-inputs",
+  "chapters": {
+    "dep_graph_chapter_1.html": {
+      "node_count": 14,
+      "edge_count": 14
+    },
+    "dep_graph_chapter_2.html": {
+      "node_count": 18,
+      "edge_count": 16
+    },
+    "dep_graph_chapter_3.html": {
+      "node_count": 30,
+      "edge_count": 46
+    },
+    "dep_graph_chapter_4.html": {
+      "node_count": 43,
+      "edge_count": 72
+    }
+  },
+  "reader_routes": {
+    "overview.html": "chap-overview.html",
+    "foundations.html": "chap-foundations.html",
+    "chen.html": "chap-chen.html",
+    "liliu.html": "chap-liliu.html"
+  },
+  "sourcefile_paths": [
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorChangeLevelLedger.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/ImprimitiveConductorWeightLinear.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LcmWeightBounds.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryPrimeC2.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryDispersion.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryFactorConvolution.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean",
+    "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean",
+    "MathlibNt/SieveTheory/Arithmetic/LiuLogarithmicIntegral.lean",
+    "MathlibNt/SieveTheory/Distribution/BombieriVinogradov.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachB9SplitIntegralReduction.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG11GridKernelPaid.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernel.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG12BuchstabMajorant.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG12SharpGeometry.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG67G67Piecewise.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG67G67Specialization.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachG67IntegralCertificate.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachPi10IntegralUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS1AlphaNormalizedLower.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS1LevelSix.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS3NormalizedUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean",
+    "MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean",
+    "MathlibNt/SieveTheory/LinearSieve/FiniteWeights.lean",
+    "MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean",
+    "MathlibNt/SieveTheory/LinearSieve/RosserChains.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCaseIISourceSigmaDecay.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenAdaptiveDepthAbsorption.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenParameterBridge.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiChenVaryingFamilyLowerDensity.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiClaim145SourceParameters.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144ErrorObjects.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean",
+    "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean",
+    "MathlibNt/SieveTheory/LinearSieve/UpperRosserDensity.lean",
+    "MathlibNt/SieveTheory/Liu/PrimePairs/LiuPrimePairTransfer.lean",
+    "MathlibNt/SieveTheory/Liu/Weights/LiuWeightMainIntegral.lean",
+    "MathlibNt/SieveTheory/Liu/Weights/LiuWeightMainSum.lean",
+    "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergEvenAssembly.lean",
+    "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergMainTermInstantiation.lean",
+    "MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean",
+    "PrimeNumberTheoremAnd/Consequences.lean",
+    "docs/PROVENANCE.md"
+  ],
+  "source_state": "Local render of the uncommitted Li-Liu endpoint/scale/labelled-atom follow-up snapshot; source_revision is the checkout HEAD base, not a deployment record.",
+  "proof_input_manifest_sha256": "efeb2391abd043bd7e53eef15d952b045f48fe835f7e0112c7a001c2c985eddb",
+  "checks": {
+    "catalogue-source-locations": {
+      "command": [
+        "python3",
+        "/tmp/liliu-endpoint-validation/refresh_blueprint_locations.py"
+      ],
+      "exit_code": 0,
+      "log_sha256": "eba21d9000c69b81f2fa5e541fab868365cb203c8d6e6c985e5500a6730ee3a7"
+    },
+    "blueprint-reviewed-graph": {
+      "command": [
+        "python3",
+        "scripts/update_blueprint_graph.py",
+        "--write"
+      ],
+      "exit_code": 0,
+      "log_sha256": "d347eb13e33415fccb9d86517fabd136fce079f6fb108e2d7baf2a28a66f0997"
+    },
+    "blueprint-final-verification": {
+      "command": [
+        "python3",
+        "scripts/verify_blueprint.py"
+      ],
+      "exit_code": 0,
+      "log_sha256": "bb6c14a35b8ee99715587b2aa962aae03a96c1e08fa0e94497c98284671d651a"
+    },
+    "blueprint-annotation-consistency": {
+      "command": [
+        "python3",
+        "scripts/generate_blueprint.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log_sha256": "f3b83b296b82add4bcc3038f4550e2eac14a3256a020e145c182f08ba96ba7ef"
+    },
+    "blueprint-script-tests": {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_*blueprint*.py"
+      ],
+      "exit_code": 0,
+      "log_sha256": "5c4fa7ff70d8c635fafb800ad9e4cd51b5f366237c2741dbc00cb4477a53fe73"
+    }
+  },
+  "render_logs_sha256": {
+    "blueprint-extraction.log": "654b4d1f0172bad845c2c8a0344918b106f81f9b9cd83f136e1a3c18fdb699c6",
+    "blueprint-render.log": "9287475b27c9dc3f87613f609e5d4660a337d7eb306491bf21c9a8663421116b",
+    "blueprint-graph-review.log": "f280df32b2e0897168e9d331104e5b34533a875ee262ac4ea4c4c92ce4409d0f"
+  },
+  "catalogue_sha256": "7bc1a9cd16b2e87a104bf35b2b69bc97bfc669611fe25d3fea8fcf71900a47c9",
+  "graph_sha256": "307ec818d77770cc7607fbca5b6d9783c01b2b00b67766e56783edb7306025b3"
+}

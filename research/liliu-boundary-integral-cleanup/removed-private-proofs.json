@@ -1,0 +1,47 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b9HighIndicator_nonneg",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral"
+      ],
+      "incoming_declarations": [
+        "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b9HighUpperIntegrand_majorized"
+      ],
+      "outside_provider_consumers": []
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b9HighUpperIntegrand_majorized",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral"
+      ],
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridUpperSum_sub_mainIntegral_le"
+      ],
+      "outside_provider_consumers": []
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.weightedIndicator_nonneg",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral"
+      ],
+      "incoming_declarations": [
+        "_private.MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.weightedUpperIntegrand_majorized"
+      ],
+      "outside_provider_consumers": []
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.weightedUpperIntegrand_majorized",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral"
+      ],
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RelaxedIntegralUpperSum_le_low_add_error"
+      ],
+      "outside_provider_consumers": []
+    }
+  ],
+  "exact_statement_replacement_count": 0,
+  "method": "Two local indicator-nonnegativity and two pointwise-majorant proof stages are removed when the public integral estimates specialize the existing excess-cover theorem. Each old stage has exactly one incoming declaration inside its provider. No literal kind/type equality with the polymorphic common theorem is claimed."
+}

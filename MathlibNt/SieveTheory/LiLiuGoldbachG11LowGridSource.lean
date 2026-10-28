@@ -1,7 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11GridGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ScaleLevel
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ModulusSupport
 
 open Finset Filter
 open scoped BigOperators Classical

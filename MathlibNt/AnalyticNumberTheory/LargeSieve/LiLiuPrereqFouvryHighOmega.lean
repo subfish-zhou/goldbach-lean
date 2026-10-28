@@ -36,10 +36,6 @@ theorem abs_betaHighOmega_le (β : ℕ → ℝ) (ξ : ℝ) (n : ℕ) :
   unfold betaHighOmega
   split_ifs <;> simp
 
-theorem betaLowOmega_nonzero_card_le {β : ℕ → ℝ} {ξ : ℝ} {n : ℕ}
-    (h : betaLowOmega β ξ n ≠ 0) : (n.primeFactors.card : ℝ) ≤ ξ := by
-  by_contra hh
-  exact h (if_neg hh)
 
 theorem two_pow_card_primeFactors_le_tau {n : ℕ} (hn : n ≠ 0) :
     2 ^ n.primeFactors.card ≤ fouvryTau 2 n := by

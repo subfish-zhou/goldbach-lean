@@ -42,41 +42,6 @@ theorem chen_exponent_div_s {ε : ℝ} (hε : ε < 1 / 2) :
   have hden : 1 - 2 * ε ≠ 0 := by linarith
   field_simp [ha, hden]
 
-/-- Exact, scan-free floor/rpow/ceiling bridge.  Every natural below Chen's
-`N^(1/10)` cutoff is strictly below the Suzuki natural cutoff `z`. -/
-theorem chen_lt_tenth_rpow_imp_lt_chenZ
-    {N p : ℕ} {ε : ℝ} (hN : 1 ≤ N) (_hε0 : 0 ≤ ε) (hε : ε < 1 / 10)
-    (hp : (p : ℝ) < (N : ℝ) ^ (1 / 10 : ℝ)) :
-    p < chenZ N ε := by
-  let a : ℝ := 1 / 2 - ε
-  let s : ℝ := chenS ε
-  have hNpos : 0 < (N : ℝ) := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hN)
-  have hNnonneg : 0 ≤ (N : ℝ) := hNpos.le
-  have hs : 0 < s := by
-    dsimp [s, chenS]
-    linarith
-  have hfloor : (N : ℝ) ^ a < (chenLevel N ε : ℝ) := by
-    simpa [chenLevel, a] using lt_cast_floor_add_one ((N : ℝ) ^ a)
-  have hpow : ((N : ℝ) ^ a) ^ (1 / s) <
-      (chenLevel N ε : ℝ) ^ (1 / s) :=
-    Real.rpow_lt_rpow (Real.rpow_nonneg hNnonneg _) hfloor (by positivity)
-  have hid : ((N : ℝ) ^ a) ^ (1 / s) = (N : ℝ) ^ (1 / 10 : ℝ) := by
-    rw [← Real.rpow_mul hNnonneg]
-    congr 1
-    dsimp [a, s]
-    exact chen_exponent_div_s (by linarith)
-  rw [hid] at hpow
-  rw [chenZ, Nat.lt_ceil]
-  exact hp.trans hpow
-
-/-- The same bridge packaged as membership in an arbitrary supported carrier.
-This is the precise shape needed when `P` is the production prime-factor carrier. -/
-theorem mem_filter_lt_chenZ_of_lt_tenth_rpow
-    {N p : ℕ} {ε : ℝ} (P : Finset ℕ)
-    (hN : 1 ≤ N) (hε0 : 0 ≤ ε) (hε : ε < 1 / 10)
-    (hpP : p ∈ P) (hp : (p : ℝ) < (N : ℝ) ^ (1 / 10 : ℝ)) :
-    p ∈ P.filter (fun q => q < chenZ N ε) := by
-  exact mem_filter.mpr ⟨hpP, chen_lt_tenth_rpow_imp_lt_chenZ hN hε0 hε hp⟩
 
 /-- A convenient explicit threshold for the fixed Claim-14.5 choice `d=16`. -/
 noncomputable def chenSigmaThreshold : ℝ :=
@@ -148,11 +113,6 @@ theorem exists_chen_floor_level_sourceSigma_gate :
   apply chenS_le_sourceSigma_sixteen hε0
   have : Real.exp B < (chenLevel N ε : ℝ) := hbase.trans_lt (hpowmono.trans_lt hfloor)
   simpa [chenSigmaThreshold, B] using this.le
-
-/-- The fixed value used above satisfies Claim 14.5's source inequality at
-`Delta=1/2`. -/
-theorem sixteen_claim14_5_admissible :
-    7 / (1 - (1 / 2 : ℝ)) < (16 : ℝ) := by norm_num
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

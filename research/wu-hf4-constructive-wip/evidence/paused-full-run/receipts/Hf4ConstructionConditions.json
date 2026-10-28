@@ -1,0 +1,49 @@
+{
+  "module": "Hf4ConstructionConditions",
+  "exit_code": 0,
+  "seconds": 1.394977692514658,
+  "source_sha256": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+  "object_sha256": "a234bcbc31a28f267b6b9aeb74bdcfc8f723352c6b0abfdd62733aa641e33dde",
+  "dependencies": {
+    "Hf4ConstructionRounding": "fee447f1e5818cba63dc45dbd905f3a323a13d79ac8d0d17bf0ea07c293a37f7",
+    "Hf4QuadRatCore": "3ad6a6dc66e7d9489aab031d6c3b978736ea491c9340cec90344b1994a9dad4c"
+  },
+  "dependency_contexts": {
+    "Hf4ConstructionRounding": "0f9f7aca2483e2acc8f323f55d6798e203df62c99edf19ea4fdf38a533049f33",
+    "Hf4QuadRatCore": "a4725f45a2e35b6d2df02a3e225c78016c0a0b974425bfb321e2e3288203fa79"
+  },
+  "context_sha256": "8b79e3ebb43685e112e5e43051695cd1440b436c893b941f5c6553d512f00e32",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionConditions.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionConditions.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionConditions.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionConditions.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.resources",
+  "resource_sha256": "db59c6e374d6be44a118f23e01c6bf6e9c6efbd76a93534221bd4776e22184b5",
+  "artifact_bundle_sha256": {
+    ".olean": "a234bcbc31a28f267b6b9aeb74bdcfc8f723352c6b0abfdd62733aa641e33dde"
+  }
+}

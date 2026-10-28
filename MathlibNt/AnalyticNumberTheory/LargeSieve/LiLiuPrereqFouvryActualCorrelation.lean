@@ -136,13 +136,6 @@ theorem wCoprimeFiber_arithmetic_correlation :
   simp only [wExtractedArithmeticPhase, wActualSmallRootFactor, star_mul]
   ring
 
-/-- Zero numerator kills the reciprocal factor, not the small-root product. -/
-theorem wCoprimeFiber_arithmetic_correlation_zero
-    (hl : wActualCorrelationNumerator K a t u = 0) :
-    wExtractedArithmeticPhase a t.2 t.1 * star (wExtractedArithmeticPhase a u.2 u.1) =
-      wActualSmallRootFactor a t * star (wActualSmallRootFactor a u) := by
-  rw [wCoprimeFiber_arithmetic_correlation hN hQ hU ht hu hk hr hn]
-  simp [wActualReciprocalCorrelation, hl, iv3ReciprocalCircle]
 
 end Actual
 
@@ -213,37 +206,6 @@ theorem wCorrelationOuterFiber_gram (c : Finset (ℕ × ℕ)) (o : ℕ × ℕ ×
       rw [wCoprimeFiber_arithmetic_correlation hN hQ hU ht hu hk hr hn]
       ring
 
-/-- The finite Cauchy step followed by the exact IV.3 Gram expansion.
-The outer cost counts occupied triples, not original tuple multiplicities.
-The right side is an exact nonnegative Gram quantity; its summands need
-not be nonnegative, and no unweighted interval bound is asserted. -/
-theorem wCoprimeFiber_cauchy_correlation (c : Finset (ℕ × ℕ))
-    (A : WExtractedTuple × ℤ → ℂ) :
-    ‖∑ t ∈ wCoprimeFiber x N S U c, A t * wExtractedArithmeticPhase a t.2 t.1‖ ^ 2 ≤
-      (((wCoprimeFiber x N S U c).image wCorrelationOuter).card : ℝ) *
-        ∑ o ∈ (wCoprimeFiber x N S U c).image wCorrelationOuter,
-          (∑ t ∈ wCorrelationOuterFiber x N S U c o,
-            ∑ u ∈ wCorrelationOuterFiber x N S U c o,
-              (A t * star (A u)) *
-                (wActualSmallRootFactor a t * star (wActualSmallRootFactor a u)) *
-                wActualReciprocalCorrelation K a t u).re := by
-  let O := (wCoprimeFiber x N S U c).image wCorrelationOuter
-  let B : ℕ × ℕ × ℕ → ℂ := fun o =>
-    ∑ t ∈ wCorrelationOuterFiber x N S U c o,
-      A t * wExtractedArithmeticPhase a t.2 t.1
-  rw [sum_wCorrelationOuterFibers x N S U c]
-  change ‖∑ o ∈ O, B o‖ ^ 2 ≤ _
-  calc
-    _ ≤ (∑ o ∈ O, ‖B o‖) ^ 2 := by
-      gcongr
-      exact norm_sum_le _ _
-    _ ≤ (O.card : ℝ) * ∑ o ∈ O, ‖B o‖ ^ 2 := by
-      simpa using sum_mul_sq_le_sq_mul_sq O (fun _ => (1 : ℝ)) (fun o => ‖B o‖)
-    _ = _ := by
-      congr 1
-      apply sum_congr rfl
-      intro o _
-      exact congrArg Complex.re (wCorrelationOuterFiber_gram hN hQ hU c o A)
 
 end Gram
 

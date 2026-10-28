@@ -52,9 +52,6 @@ theorem fouvryG9LongAlpha_le_divisors (N : ℕ) (ρ : ℝ) (k : ℕ × ℕ × �
       _ = y.1 * y.2 := hym.symm
       _ = x.1 * y.2 := by rw [he]
 
-/-- Neither the short label nor even its grid index enters the long coefficient. -/
-theorem fouvryG9LongAlpha_firstIndex_eq (N : ℕ) (ρ : ℝ) (i i' j l m : ℕ) :
-    fouvryG9LongAlpha N ρ (i, j, l) m = fouvryG9LongAlpha N ρ (i', j, l) m := rfl
 
 /-- The full divisor-bound contract, including the ordered-divisor normalization. -/
 theorem fouvryG9LongAlpha_bounds (N : ℕ) (ρ : ℝ) (k : ℕ × ℕ × ℕ) (m : ℕ) :

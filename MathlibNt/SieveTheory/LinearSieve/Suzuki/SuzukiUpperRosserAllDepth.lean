@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserDensityProducer
 import MathlibNt.SieveTheory.UpperRosserSuzukiExactBridge
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead
 
 open Set Filter Topology
 

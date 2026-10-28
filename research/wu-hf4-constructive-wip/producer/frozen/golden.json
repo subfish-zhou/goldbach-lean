@@ -1,0 +1,70 @@
+{
+  "status": "SOURCE_BYTE_GOLDEN_NOT_WHOLE_CANDIDATE_ACCEPTANCE",
+  "canonical_fields_sha256": "e797b939f8cbb0a48f5c2b0e75853807de778b560a3a5d1fc75d3ef1eda0071f",
+  "precision_denominator": 100000000000000,
+  "routes": {
+    "checkpoint": {
+      "modules": {
+        "Hf4CheckedDagData": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008",
+        "Hf4CheckedDagSoundness": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51",
+        "Hf4ConstructionConditions": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+        "Hf4ConstructionRounding": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+        "Hf4DirectCoordinates": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+        "Hf4DirectDag": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f",
+        "Hf4DirectDagProgram": "2453aa5d85fa0d28579879e80031074781455f4d049f9357cbb119c01292fe25",
+        "Hf4DirectDagSeedSoundness": "9fb1b01e902ccacfb2e4d3e739811f7b368930b5bac149953982e4f55cb69505",
+        "Hf4DirectDagSemantics": "4ac943a79ea10617673c162bfb479713db0620374f209224005eb8753c765d5d",
+        "Hf4DirectInverseOriginalSoundness": "98d399726a97d7c526722e7606ee5e0faf6c613af7571ea1707aab9c37a8d4ef",
+        "Hf4DirectKernel": "c9615839b1184c70a57c82af09a26f0a471d27627f8e7f8dfaa33e4106cec581",
+        "Hf4DirectTableChecks": "d7133c1c72d5f4d2dca99a5237d99455a5e14f104094068e52e55fb004ef9099",
+        "Hf4DirectTableData": "88d779d467b9b2d7150acbe138dffca202fdb558a8efffbb3607dfdced1b9911",
+        "Hf4DirectTablePublic": "44ca4ac3382c460ae2f1998a5cc936c4c697f0c1768f1fb4bd361a436dfe5ea9",
+        "Hf4DirectTableSoundness": "e5ade48d0a1b9103f5dc5dc4b279343efdaaa3764dd42a8bdf07363b7aa8b440",
+        "Hf4InverseDagData": "78fbc3f1b221d56a54340e6dcd8171fbe471018c02bab4645da7173a9651530d",
+        "Hf4InverseDagSoundness": "e0b8520fadcf774659ac2f95155cc2c9308a9de9e3aee6cc5d4174e93522da42"
+      },
+      "preview_plan_sha256": "b4a6d16f1291b0ba04bc7809b315d779de7cde6fbf8af3c0af0ca10bac5190ef"
+    },
+    "constructive": {
+      "modules": {
+        "Hf4CheckedDagData": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008",
+        "Hf4CheckedDagSoundness": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51",
+        "Hf4ConstructionConditions": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+        "Hf4ConstructionRounding": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+        "Hf4ConstructiveDagData": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73",
+        "Hf4ConstructiveDagSoundness": "b1e42a2d447f7783a38041298fa94ed17f0fb5095bd3d5dd3e78baf2ca21dc95",
+        "Hf4ConstructiveOriginalSoundness": "39f9dad7e78264b8c12471d8cc676f36b08075923c2886b9756e9c8b964a6d09",
+        "Hf4ConstructiveTableChecks": "4bfae798d1e436c0d86e939b31553ac8adeba0f8e10a984a544b1459e26eec6d",
+        "Hf4ConstructiveTableData": "76c8f3a83cef23fd234bdb4fb3e28a69a0255a284d1c434be36fde993ace6f27",
+        "Hf4ConstructiveTablePublic": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee",
+        "Hf4ConstructiveTableSoundness": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff",
+        "Hf4DirectCoordinates": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+        "Hf4DirectDag": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f",
+        "Hf4DirectDagProgram": "2453aa5d85fa0d28579879e80031074781455f4d049f9357cbb119c01292fe25",
+        "Hf4DirectDagSeedSoundness": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f",
+        "Hf4DirectDagSemantics": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995",
+        "Hf4DirectKernel": "c9615839b1184c70a57c82af09a26f0a471d27627f8e7f8dfaa33e4106cec581"
+      },
+      "preview_plan_sha256": "76885a8c6228f659484717b2337cb2e5f6b85016a7c3ebe814aca6079dcaf68f"
+    }
+  },
+  "retired_modules_not_generated": [
+    "Hf4QuadBatch0",
+    "Hf4QuadBatch1",
+    "Hf4QuadBatch10",
+    "Hf4QuadBatch11",
+    "Hf4QuadBatch12",
+    "Hf4QuadBatch2",
+    "Hf4QuadBatch3",
+    "Hf4QuadBatch4",
+    "Hf4QuadBatch5",
+    "Hf4QuadBatch6",
+    "Hf4QuadBatch7",
+    "Hf4QuadBatch8",
+    "Hf4QuadBatch9",
+    "Hf4QuadCompactDag",
+    "Hf4QuadEndpointBridges",
+    "Hf4QuadPanel0",
+    "Hf4QuadSharedCertificates"
+  ]
+}

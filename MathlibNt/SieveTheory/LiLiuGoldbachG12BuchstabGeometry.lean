@@ -80,14 +80,5 @@ theorem goldbachG12_canonical_logQuotient_bounds
   rw [heq]
   exact hbound
 
-/-- The low-first-prime domain gives 127/40, without relaxing to 79/25. -/
-theorem goldbachG12_low_buchstabParameter_lower {u v w x : ℝ}
-    (hu : u ≤ (1 / 10 : ℝ))
-    (hv : v ∈ Icc (4 / 53 : ℝ) (4 / 33))
-    (hw : w ≤ (4 / 33 : ℝ)) (hx : x ≤ (3 / 11 : ℝ)) :
-    (127 / 40 : ℝ) ≤ (1 - u - v - w - x) / v := by
-  have hv0 : 0 < v := by linarith [hv.1]
-  apply (le_div_iff₀ hv0).mpr
-  linarith [hv.2]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

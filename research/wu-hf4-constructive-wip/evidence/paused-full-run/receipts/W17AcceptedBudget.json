@@ -1,0 +1,49 @@
+{
+  "module": "W17AcceptedBudget",
+  "exit_code": 0,
+  "seconds": 8.120844848453999,
+  "source_sha256": "3c6435f8c0d23c5f1e04c3a90fc7e379cd49a0e24a8c75de3c9f3df3a8d16a00",
+  "object_sha256": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7",
+  "dependencies": {
+    "W17AcceptedCount": "8826d804aacf542983dd69f7745a5683f4efaa5bb4678aa3a9837ee38873dc5d",
+    "W13TightAcceptedBudget": "bdb9dcb64765b428c97dd48ffdab5ab3ee2d79817b2e7b997f31f2abf20fa681"
+  },
+  "dependency_contexts": {
+    "W17AcceptedCount": "7353e6a5d1a07e18bc28bad9b8f8eabbd4b7e98c1eee3ee157b8a9fbd9ac1a69",
+    "W13TightAcceptedBudget": "6cf6bfe66f5bbc676b318ee160a8e85fa593646912c08475316d305d12e9fc52"
+  },
+  "context_sha256": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17AcceptedBudget.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17AcceptedBudget.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17AcceptedBudget.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17AcceptedBudget.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.resources",
+  "resource_sha256": "2f4928549a0f87a205d6efbea0bcb7206cb61af0f2a93b4b69e041aeb564e460",
+  "artifact_bundle_sha256": {
+    ".olean": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+  }
+}

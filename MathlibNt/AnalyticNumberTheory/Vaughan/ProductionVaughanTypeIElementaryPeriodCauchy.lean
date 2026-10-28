@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacterElementaryPeriodBound
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicDecomposition
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
 
 /-!

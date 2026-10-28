@@ -10,8 +10,6 @@ open MathlibNt.SieveTheory.LiuWeight
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachB8PanDistribution (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 noncomputable def goldbachC8CoeffReal (N m : ℕ) : ℝ := goldbachC8Coeff N m
 
@@ -65,41 +63,6 @@ theorem goldbachC8Product_coprime_of_dvd_output {N m q d : ℕ}
   exact (prime_not_dvd_of_coprime
     (goldbachC8ProductSupport_one_lt_and_coprime hm).2 hp hpm hpN).elim
 
-/-- The inverse residue is coupled to the product label, including modulus one. -/
-theorem goldbachB8PlusAtom_output_dvd_iff_residue
-    {N d : ℕ} {x : Σ _rs : ℕ × ℕ, ℕ}
-    (hx : x ∈ goldbachB8PlusAtoms N) :
-    d ∣ goldbachB8PlusOutput N x ↔
-      Nat.Coprime (goldbachC8Prod x.1) d ∧
-        (x.2 : ZMod d) = (N : ZMod d) * (goldbachC8Prod x.1 : ZMod d)⁻¹ := by
-  obtain ⟨hrs, _, hlt⟩ := mem_goldbachB8PlusAtoms_iff.mp hx
-  have hm : goldbachC8Prod x.1 ∈ goldbachC8ProductSupport N :=
-    Finset.mem_image.mpr ⟨x.1, hrs, rfl⟩
-  have hmod : d ∣ goldbachB8PlusOutput N x ↔ Nat.ModEq d (goldbachC8Prod x.1 * x.2) N := by
-    rw [goldbachB8PlusOutput, Nat.modEq_iff_dvd' hlt.le]
-  constructor
-  · intro hd
-    have hc := goldbachC8Product_coprime_of_dvd_output hm hlt.le hd
-    have hz : (goldbachC8Prod x.1 : ZMod d) * (x.2 : ZMod d) = (N : ZMod d) := by
-      simpa using (ZMod.natCast_eq_natCast_iff _ _ d).2 (hmod.mp hd)
-    refine ⟨hc, ?_⟩
-    calc
-      (x.2 : ZMod d) =
-          ((goldbachC8Prod x.1 : ZMod d) * (goldbachC8Prod x.1 : ZMod d)⁻¹) * x.2 := by
-            rw [ZMod.coe_mul_inv_eq_one _ hc, one_mul]
-      _ = ((goldbachC8Prod x.1 : ZMod d) * x.2) *
-          (goldbachC8Prod x.1 : ZMod d)⁻¹ := by ac_rfl
-      _ = _ := by rw [hz]
-  · rintro ⟨hc, hq⟩
-    apply hmod.mpr
-    apply (ZMod.natCast_eq_natCast_iff _ _ d).1
-    push_cast
-    rw [hq]
-    calc
-      (goldbachC8Prod x.1 : ZMod d) * ((N : ZMod d) * (goldbachC8Prod x.1 : ZMod d)⁻¹)
-          = (N : ZMod d) * ((goldbachC8Prod x.1 : ZMod d) *
-              (goldbachC8Prod x.1 : ZMod d)⁻¹) := by ac_rfl
-      _ = _ := by rw [ZMod.coe_mul_inv_eq_one _ hc, mul_one]
 
 private noncomputable def B8PanDivisorQFiber (N d m : ℕ) : Finset ℕ :=
   (range (N + 1)).filter fun q => q.Prime ∧ m * q < N ∧ d ∣ N - m * q
@@ -173,16 +136,6 @@ theorem goldbachC8CoeffReal_sum_eq_support
     _ = _ := Finset.sum_congr rfl (fun _ hm => by
       rw [goldbachC8CoeffReal_eq_one_of_mem hm, one_mul])
 
-noncomputable def goldbachB8PlusPanAPPrefixCount (N A₁ A₂ d : ℕ) : ℝ :=
-  ∑ m ∈ Ioc A₁ A₂, goldbachC8CoeffReal N m *
-    (if Nat.Coprime m d then (primesInAPBelow N m d (N % d) : ℝ) else 0)
-
-theorem goldbachB8PlusDivCount_eq_panAPPrefixCount
-    {N A₁ A₂ d : ℕ} (_hd : 1 ≤ d) (_hdN : Nat.Coprime d N)
-    (hsupp : goldbachC8ProductSupport N ⊆ Ioc A₁ A₂) :
-    (goldbachB8PlusDivCount N d : ℝ) = goldbachB8PlusPanAPPrefixCount N A₁ A₂ d := by
-  rw [goldbachB8PlusDivCount_eq_product_sum, goldbachB8PlusPanAPPrefixCount,
-    goldbachC8CoeffReal_sum_eq_support _ hsupp]
 
 theorem goldbachB8PlusRemainder_eq_panError
     {N A₁ A₂ d : ℕ} (_hd : 1 ≤ d) (_hdN : Nat.Coprime d N)

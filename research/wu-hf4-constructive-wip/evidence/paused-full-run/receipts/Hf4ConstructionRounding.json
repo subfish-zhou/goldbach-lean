@@ -1,0 +1,43 @@
+{
+  "module": "Hf4ConstructionRounding",
+  "exit_code": 0,
+  "seconds": 1.3946486413478851,
+  "source_sha256": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+  "object_sha256": "fee447f1e5818cba63dc45dbd905f3a323a13d79ac8d0d17bf0ea07c293a37f7",
+  "dependencies": {},
+  "dependency_contexts": {},
+  "context_sha256": "0f9f7aca2483e2acc8f323f55d6798e203df62c99edf19ea4fdf38a533049f33",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionRounding.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionRounding.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionRounding.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionRounding.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.resources",
+  "resource_sha256": "ca13ea8800638f5da42ec8a4359f4f190d33b24200ec42de3b0ca140c6e4253d",
+  "artifact_bundle_sha256": {
+    ".olean": "fee447f1e5818cba63dc45dbd905f3a323a13d79ac8d0d17bf0ea07c293a37f7"
+  }
+}

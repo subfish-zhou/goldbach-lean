@@ -6,8 +6,6 @@ open Finset
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachS1LowerRosser (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 private theorem S1LowerRosser_remainderIndex_subset
     {N : ℕ} {z : ℝ} {D Q0 : ℕ}

@@ -48,11 +48,6 @@ noncomputable def goldbachWeightTwelveCorrectedRHS
     (A : Finset ℕ) (N : ℕ) (z b c T : ℝ) : ℤ :=
   goldbachWeightTwelveBase A N z b c T - goldbachG10Corrected A N b c
 
-/-- The twelve-term expression with the genuine labelled prime source in place
-of corrected G10. No analytic estimate of that source is built into this definition. -/
-noncomputable def goldbachWeightTwelveSwitchedRHS
-    (A : Finset ℕ) (N : ℕ) (ε z b c T : ℝ) : ℤ :=
-  goldbachWeightTwelveBase A N z b c T - goldbachPi10 N ε b c
 
 /-- The actual D19 lower bound for the corrected twelve-term formula, with
 all finite losses paid. This is a signed lower bound, not a positivity theorem. -/
@@ -123,32 +118,5 @@ theorem goldbachWeight_twelve_corrected_lower_bound_eventually
   push_cast at hGa hGb hS5 hCover ⊢
   linarith
 
-/-- The same actual lower bound with labelled Pi10 and its additional finite
-payment. This still does not assert an analytic bound or positive main term. -/
-theorem goldbachWeight_twelve_switched_lower_bound_eventually
-    (ε : ℝ) (hε : 0 < ε) (hεu : ε < (2 : ℝ) / 15) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Even N → ∀ α β γ : ℝ,
-      (1 : ℝ) / 18 < α → α < β → β < (1 - 3 * β) / 3 →
-      (1 - 3 * β) / 3 < γ → γ < (1 : ℝ) / 3 →
-      (goldbachWeightTwelveSwitchedRHS (goldbachDifferenceCarrier N ε) N ε
-        ((N : ℝ) ^ α) ((N : ℝ) ^ β) ((N : ℝ) ^ γ)
-        ((N : ℝ) ^ ((9 : ℝ) / 19 - ε)) : ℝ) -
-        2214 * (N : ℝ) ^ (1 - α) ≤ 4 * (D19 N : ℝ) := by
-  obtain ⟨Nc, hc⟩ := goldbachWeight_twelve_corrected_lower_bound_eventually ε hε hεu
-  obtain ⟨Np, hp⟩ := goldbachG10Corrected_eventually_le_pi10_add_880 ε hε
-  refine ⟨max (max Nc Np) 2, ?_⟩
-  intro N hN hEven α β γ hα hαβ hβγ hγ hγu
-  have hNc : Nc ≤ N := (le_max_left Nc Np).trans ((le_max_left (max Nc Np) 2).trans hN)
-  have hNp : Np ≤ N := (le_max_right Nc Np).trans ((le_max_left (max Nc Np) 2).trans hN)
-  have hN2 : 2 ≤ N := (le_max_right (max Nc Np) 2).trans hN
-  have hbase : (1 : ℝ) ≤ N := by exact_mod_cast (show 1 ≤ N by omega)
-  have hmain := hc N hNc hEven α β γ hα hαβ hβγ hγ hγu
-  have hswitch := hp N hNp β γ (lt_trans hα hαβ) hβγ hγ hγu
-  have hpβ : (N : ℝ) ^ (1 - β) ≤ (N : ℝ) ^ (1 - α) :=
-    Real.rpow_le_rpow_of_exponent_le hbase (by linarith)
-  dsimp only [goldbachWeightTwelveCorrectedRHS] at hmain
-  dsimp only [goldbachWeightTwelveSwitchedRHS]
-  push_cast at hmain ⊢
-  linarith
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

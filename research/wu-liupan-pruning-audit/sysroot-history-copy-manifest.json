@@ -1,0 +1,71 @@
+{
+  "status": "HISTORICAL_RAW_COPY_NOT_NEW_ACCEPTANCE",
+  "files": {
+    "failed-attempt/WuLiteralAcceptance.lean": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/WuLiteralAcceptance.lean",
+      "sha256": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f",
+      "bytes": 781
+    },
+    "failed-attempt/WuLiteralAcceptance.olean": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/WuLiteralAcceptance.olean",
+      "sha256": "5679a85d69d49098e66df7435188eda48b20a83666de5c16710f7dd6a8f41890",
+      "bytes": 13192
+    },
+    "failed-attempt/verified-inputs.json": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/verified-inputs.json",
+      "sha256": "2adbd9ec0969f817c47c37083d0316aa5c577ed51e56974e43b7d3a6c83bb3e7",
+      "bytes": 6348581
+    },
+    "failed-attempt/watcher-status.json": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/watcher-status.json",
+      "sha256": "d9aaa9e2e06ce8b60156b640f900edcfe43f0139110765d5008ee3dce25d62fa",
+      "bytes": 212
+    },
+    "failed-attempt/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters.log": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters.log",
+      "sha256": "662bc6ec706f189a6dffb367f7c460ae9905c3b40b4a4432ba148214efab7e66",
+      "bytes": 327
+    },
+    "failed-attempt/literal-axioms.log": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/literal-axioms.log",
+      "sha256": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "bytes": 451
+    },
+    "failed-attempt/driver.log": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/driver.log",
+      "sha256": "649ddb56d7148d1e17437ef64ea40a54a9f3ba590f05ea3d1a53b058a99e5409",
+      "bytes": 864
+    },
+    "failed-attempt/acceptance-failed.json": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/acceptance-failed.json",
+      "sha256": "62e282400a5fde12eae5f43caf952b0fd91ee25b8583d857b141366488040e06",
+      "bytes": 2231
+    },
+    "failed-attempt/steps.json": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831/steps.json",
+      "sha256": "030395453e1ce3a4a1cf083b04f38aeaf945da78dcda39e94a8bae963bd65c10",
+      "bytes": 2209
+    },
+    "tools-and-driver/validate-isolated.py": {
+      "source": "/tmp/wu-main-port-audit/validate-isolated.py",
+      "sha256": "08dbb50e15d93bf4d26b1abc18d4903d01915cf44fa980de27a4ffb8f17cd7cf",
+      "bytes": 14659
+    },
+    "tools-and-driver/validate-isolated-sysroot.py": {
+      "source": "/tmp/wu-main-port-audit/validate-isolated-sysroot.py",
+      "sha256": "d55e77db656495ac5d618ad243e2a65d638199b5b1f65725f9175a1a1a7226b5",
+      "bytes": 14889
+    },
+    "tools-and-driver/sysroot-validator-fix.json": {
+      "source": "/tmp/wu-main-port-audit/sysroot-validator-fix.json",
+      "sha256": "efa01dd6c681db010a9ce61e7315ca31f804426ff1ebb84c7de89470c71c69e2",
+      "bytes": 1732
+    },
+    "tools-and-driver/validation-sysroot-driver.log": {
+      "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-sysroot-driver.log",
+      "sha256": "4e7bdc8e1c6d459aba56e8dcd6c816f7de5dbd511b473655c6f92ece43b79f02",
+      "bytes": 170
+    }
+  },
+  "reason": "First independent kernel attempt used wrong defaultstdlib; corrected actual complete rerun passed. Original failure preserved. Build results and source/object artifacts never rebuilt for this fix."
+}

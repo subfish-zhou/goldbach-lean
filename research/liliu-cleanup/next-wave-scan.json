@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-10-26T09:11:52.422433+00:00",
+  "candidate_deleted_modules": [],
+  "candidate_removed_blocks": [],
+  "candidate_changed_modules": [
+    "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper",
+    "MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve",
+    "MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption"
+  ],
+  "formatting_only_modules": [
+    "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper",
+    "MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve",
+    "MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption"
+  ],
+  "remaining_implied_direct_imports": [],
+  "scope": "Fresh post-wave-2 compiled and elaboration-reference scan, protecting shared consumers, public endpoints, selected Blueprint declarations and macro registrations. A zero result is convergence of this pruning rule, not mathematical minimality."
+}

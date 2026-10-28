@@ -1,0 +1,89 @@
+{
+  "phase": "Li-Liu shared finite coprimality gate budgets",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T07:34:20.486919+00:00",
+  "source_modules": 1803,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "dad53496be14895dcf67b98380848e07a4e39fd23721caa29a43de28d9fb2244"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "9ac15b05873545dce60a9b43a2d9948b3b32157f2c13143b72e2a12fdb781a07"
+    },
+    "strengthened_internal_statement_contracts": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "dd49ecd678cab9f78d73bbf2cf7efe5806b3033e4c7efd610046ef3728a4ce23"
+    }
+  },
+  "auxiliary_input_sha256": {
+    "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean": "e670fe75c11a6cbd25cc97f31e28cd107b46762947e81a58d03716ba851d2f17"
+  },
+  "finished_at_utc": "2026-10-27T07:45:22.349714+00:00",
+  "input_manifest_sha256": "03da8b2fe77fe66b205bfd2a7d81bdb36ba5663d39e653ee5f07a290e756a06b",
+  "scope": "Main Chen and Li-Liu libraries; separate concurrent research/wu2008 sources and numerical certificates excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "f4c3fa624b4d1396344112f2b5814ebd0bb29f1ca0e9fe1887ffe95a4281ea94",
+  "net_main_code_lines": -181,
+  "net_liliu_closure_code_lines": -181,
+  "net_chen_closure_code_lines": 0,
+  "new_auxiliary_lean_code_lines": 0,
+  "type_preservation_report": "type-preservation.json",
+  "common_proof_source_block_identical": true,
+  "gateLoss_definition_source_identical": true,
+  "final_review_at_utc": "2026-10-27T07:48:23.921524+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "30c4b7f29246850cf62e7a16e0c2d02f96219b3d720692f5d971ba1170c8cc5d"
+  },
+  "evidence_sha256": {
+    "changes.json": "e2e5e9f67b4db11b63f82991a8d5b4688532bd9c60ea2cc6e479ac356c69e796",
+    "source-size.json": "c84351a4e39e07a8ffad73087d36bade1ca706ed76aa4ca78d57f184bc878211",
+    "type-preservation.json": "c82860fdd6c7e7113573ab22e87d6e4a9797c7fd36f419e641f2deb42bf27681",
+    "removed-private-proofs.json": "43a942bfa8026dd58d2d7f971daaf1e3a1fd58dfa7dc4c28dde8d7be912457c4",
+    "moved-public-proofs.json": "cec3f7f7b2b0ea3a8e2d6e78183123cec9534fd3d3fc84204ac465805d1517a7",
+    "retained-private-statements.json": "cc4cb25c9719fa637fd58cbeeb7a378ed9ac800d885ef7308e79dc154bfb609c",
+    "standalone-probes.json": "25165931f9c8f29667b14811bc21e0085fdc989bd66e4510a88b9e519a57dc15",
+    "blueprint-validation.json": "629a1a1617ad50c76ba708259c00b3282e121330ba38e726e231b7afbc59cba2",
+    "analysis.json": "f82834598ad92788aa4a1b22b0911de6634902ed7a18d1d5bb513450f5867fb6"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-gate-budget-cleanup/reproduce.py": "bf470a196131d2cb519a7821d5f564cce6fbb1e9c24c488a8c28084487d696ba",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "cff0083a3a98422779a7f2695e974dca37d568e28b7b6b69312c49ac7dcfb281",
+    "docs/LILIU_GATE_BUDGET_CLEANUP.md": "6833bec26d47dac63ee28b23c5b583fad08b7bda4ee0c9b45c2d4d7fc58f5b85",
+    "docs/SOURCE_SIZE.md": "7edc55fa0cedb3668e964aee598744aaa2ccef04a2e594f61f8d751cc7cf3523",
+    "docs/VERIFICATION.md": "9f7a430b65e28c9db2c0284af406da7be580222b39c2ec41be932f8a0353594d",
+    "docs/RELEASE_NOTES.md": "fd8d15d2b1cecaddaa9ad8f5395b7b1b0a820a0794fb712356f9c790de5aa5c8",
+    "docs/ARCHITECTURE.md": "fcb3d082a3a6d660f46c366cc95a4cf1607e983ed4cd01c0ea9315981e4d680b"
+  }
+}

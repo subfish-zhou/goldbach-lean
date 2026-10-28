@@ -44,18 +44,6 @@ noncomputable def primeReciprocalSum (x : ℕ) : ℝ :=
 noncomputable def primeProduct (x : ℕ) : ℝ :=
   (primesUpTo x).prod fun p => 1 - 1 / (p : ℝ)
 
-/-- There are no reciprocal-prime terms below `2`. -/
-theorem primeReciprocalSum_eq_zero_of_le_one {x : ℕ} (hx : x ≤ 1) :
-    primeReciprocalSum x = 0 := by
-  simp [primeReciprocalSum, primesUpTo_eq_empty_of_le_one hx]
-
-@[simp]
-theorem primeReciprocalSum_zero : primeReciprocalSum 0 = 0 :=
-  primeReciprocalSum_eq_zero_of_le_one (by decide)
-
-@[simp]
-theorem primeReciprocalSum_one : primeReciprocalSum 1 = 0 :=
-  primeReciprocalSum_eq_zero_of_le_one le_rfl
 
 theorem primeReciprocalSum_nonneg (x : ℕ) : 0 ≤ primeReciprocalSum x := by
   unfold primeReciprocalSum
@@ -69,17 +57,6 @@ theorem primeReciprocalSum_mono : Monotone primeReciprocalSum := by
   intro p _ _
   positivity
 
-@[simp]
-theorem primeProduct_zero : primeProduct 0 = 1 := by
-  unfold primeProduct
-  rw [primesUpTo_eq_empty_of_le_one (by omega)]
-  simp
-
-@[simp]
-theorem primeProduct_one : primeProduct 1 = 1 := by
-  unfold primeProduct
-  rw [primesUpTo_eq_empty_of_le_one (by omega)]
-  simp
 
 /-- Every Euler factor indexed by a prime is strictly positive. -/
 theorem primeFactor_pos {p : ℕ} (hp : p.Prime) :
@@ -87,35 +64,11 @@ theorem primeFactor_pos {p : ℕ} (hp : p.Prime) :
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
   exact sub_pos.mpr ((div_lt_one (zero_lt_one.trans hp1)).mpr hp1)
 
-/-- Every Euler factor indexed by a prime is at most one. -/
-theorem primeFactor_le_one {p : ℕ} (_hp : p.Prime) :
-    1 - 1 / (p : ℝ) ≤ 1 := by
-  exact sub_le_self _ (by positivity)
 
 theorem primeProduct_pos (x : ℕ) : 0 < primeProduct x := by
   unfold primeProduct
   exact Finset.prod_pos fun p hp => primeFactor_pos (mem_primesUpTo.mp hp).1
 
-theorem primeProduct_nonneg (x : ℕ) : 0 ≤ primeProduct x :=
-  (primeProduct_pos x).le
-
-theorem primeProduct_le_one (x : ℕ) : primeProduct x ≤ 1 := by
-  unfold primeProduct
-  refine Finset.prod_le_one ?_ ?_
-  · intro p hp
-    exact (primeFactor_pos (mem_primesUpTo.mp hp).1).le
-  · intro p hp
-    exact primeFactor_le_one (mem_primesUpTo.mp hp).1
-
-/-- The finite Euler product is antitone in its cutoff. -/
-theorem primeProduct_antitone : Antitone primeProduct := by
-  intro x y hxy
-  unfold primeProduct
-  refine Finset.prod_le_prod_of_subset_of_le_one (primesUpTo_mono hxy) ?_ ?_
-  · intro p hp
-    exact (primeFactor_pos (mem_primesUpTo.mp hp).1).le
-  · intro p hp _
-    exact primeFactor_le_one (mem_primesUpTo.mp hp).1
 
 /-- Taking logarithms converts the finite Euler product into a finite sum. -/
 theorem log_primeProduct (x : ℕ) :

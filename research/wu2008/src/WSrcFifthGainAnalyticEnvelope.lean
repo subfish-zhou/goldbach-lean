@@ -1,5 +1,4 @@
 import WSrcFifthGainRoot
-import WE09JointMainMajorLog
 
 namespace WuSource.SrcFifthGain.Analytic
 open Wu2008DoubleSieve WuTarget.Wu08FifthSource SharpMassBalance
@@ -14,18 +13,12 @@ def upperSlope (l : ℝ) : ℝ :=
 
 theorem log_ratio_lower {x y : ℝ} (hx : 0 < x) (hxy : x ≤ y) :
     2*(y-x)/(y+x) ≤ log (y/x) := by
-  have ht : 1 ≤ y/x := (le_div_iff₀ hx).mpr (by simpa using hxy)
-  have hp := WuTarget.E09JointMainMajor.log_lower ht
-  have hq : 0 ≤ (y/x-1)/(y/x+1) := div_nonneg (by linarith) (by linarith)
-  have h3 := pow_nonneg hq 3
-  have h5 := pow_nonneg hq 5
-  have h7 := pow_nonneg hq 7
-  unfold WuTarget.E09JointMainMajor.lowerLog at hp
-  have hh : 2*((y/x-1)/(y/x+1)) ≤ log (y/x) := by
-    linarith only [hp, h3, h5, h7]
-  have he : 2*((y/x-1)/(y/x+1)) = 2*(y-x)/(y+x) := by
-    field_simp [hx.ne']
-  rwa [he] at hh
+  have h := Real.le_log_one_add_of_nonneg (div_nonneg (sub_nonneg.mpr hxy) hx.le)
+  have harg : 1+(y-x)/x = y/x := by field_simp; ring
+  have hbound : 2*((y-x)/x)/((y-x)/x+2) = 2*(y-x)/(y+x) := by
+    field_simp
+    ring
+  rwa [harg, hbound] at h
 
 theorem parameter_bounds {s : ℝ} (hs : s ∈ Icc s0 FifthClassicalShape.q) :
     0 < a ∧ 0 < s ∧ 0 < 1/2-a*s ∧ 1 ≤ 4*a*s := by

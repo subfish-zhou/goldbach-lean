@@ -1,0 +1,90 @@
+{
+  "phase": "Li-Liu shared boundary integrals and unconditional low-integral positivity",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T08:20:37.248749+00:00",
+  "source_modules": 1803,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "7ff246f229397cd5933db5457287b525332c3a3a98c29a190729a830799d03eb"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "9ac15b05873545dce60a9b43a2d9948b3b32157f2c13143b72e2a12fdb781a07"
+    },
+    "strengthened_internal_statement_contracts": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "339f550d2fdc372f687552b387903195a68cb90011409f341c249ca98ddb644c"
+    }
+  },
+  "auxiliary_input_sha256": {
+    "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean": "e670fe75c11a6cbd25cc97f31e28cd107b46762947e81a58d03716ba851d2f17"
+  },
+  "finished_at_utc": "2026-10-27T08:27:47.079162+00:00",
+  "input_manifest_sha256": "286ce8eb038ce22fe427891bbeeade035a1f5c77c3c706a0ff109f8f5241bb99",
+  "scope": "Main Chen and Li-Liu libraries; separate concurrent research/wu2008 sources and numerical certificates excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "708adf97f24d9654f0cb3df9dfe6b609805d570e754df9c1de13acf91365286b",
+  "net_main_code_lines": -127,
+  "net_liliu_closure_code_lines": -127,
+  "net_chen_closure_code_lines": 0,
+  "new_auxiliary_lean_code_lines": 0,
+  "type_preservation_report": "type-preservation.json",
+  "moved_nonnegativity_proof_source_identical": true,
+  "final_review_at_utc": "2026-10-27T08:30:45.745026+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "30c4b7f29246850cf62e7a16e0c2d02f96219b3d720692f5d971ba1170c8cc5d"
+  },
+  "evidence_sha256": {
+    "changes.json": "1fa095f73a87c4b802083efda651a193b646e67e8898c23edab8040789fa3330",
+    "source-size.json": "1a5033558d74e6d103d868124827dd0af0bd5e5d5381d2ad8559197760c9ee93",
+    "type-preservation.json": "c82860fdd6c7e7113573ab22e87d6e4a9797c7fd36f419e641f2deb42bf27681",
+    "moved-public-proofs.json": "691b2c6b340018adb4c452785a8ccbbc633be45cc58be820501d70be96a747a9",
+    "removed-private-proofs.json": "4b64a09b186e872765752bc0e0d2e3ee8f3c24fcb260b3e733377ea1fa8385e4",
+    "retained-private-statements.json": "038f3319dfcf2a1ed8f92db00230982ecfe9d447da7d2e5129027f406eb353f4",
+    "shared-proof-references.json": "132062bdae9466b7ce3564a1ebc4c8612ec619ff6c49a57c5e423635e953f20b",
+    "scope-membership.json": "b444f0cf6b1c59d967056fa90fbacfdf1970e3213ac467403cdc9fc20eb4eba5",
+    "standalone-probes.json": "dc23428c7cc93250dcb1f351cd0db7d875fb81af4b8c4111fad64b6771923c39",
+    "blueprint-validation.json": "88930edd2e8418dbd27eb8fc29f0b051073a1d1ef72972041836fa8e409a22e2",
+    "analysis.json": "7276a229534e1f65780b0ff008f71aa3e3522fb3ec30793af99b089bb0b44a52"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-boundary-integral-cleanup/reproduce.py": "f5ec6779e3ef156c078b1559e981f73570f5168f63422446930663302f8e0ab2",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "59b692ee342c14d6bf502aea4d134aa8adf1a3ec7ec809b4d0d4f6ad7aa95b96",
+    "docs/LILIU_BOUNDARY_INTEGRAL_CLEANUP.md": "1c0a1b1da2c55f43b2d822d875dec36148992d60248d01b1d214461597d6962b",
+    "docs/SOURCE_SIZE.md": "d2602e117eaac3a986cd1cdc7ce1f662783698bacf86ce836c6af05238c6b64c",
+    "docs/VERIFICATION.md": "c2945230b3a35b96d24befe9ebd03a54a4a986191311b4ff9b2fbc03f60c3555",
+    "docs/RELEASE_NOTES.md": "e96e2065ee71fa1b07e239166bb36d739bc7d952168346f8c8f44f11fc95aa05",
+    "docs/ARCHITECTURE.md": "bf49bd462aa4e19b28ef7ee855c70bd497bc8e50b11c9de1e9ea277ef920e4e7"
+  }
+}

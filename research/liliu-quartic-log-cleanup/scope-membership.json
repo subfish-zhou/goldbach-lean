@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "modified_modules": [
+    "MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption",
+    "MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper",
+    "MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper"
+  ],
+  "all_in_liliu_closure": true,
+  "chen_imports_only_modified_provider": "MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption",
+  "method": "Fresh complete compiled module import graph. The whole shared provider contributes16 extra effective lines to Chen; both modified consumers lie outside Chen."
+}

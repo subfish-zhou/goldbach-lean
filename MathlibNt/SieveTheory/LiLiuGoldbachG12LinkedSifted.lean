@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.FiniteLabelCounting
 import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundingSieve
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -79,63 +78,6 @@ theorem goldbachG12LinkedSmallOutputMass_le {N : ℕ} (hN : 2 ≤ N) (ε Z : ℝ
       · intro _ _ _; norm_num
     _ = 20*(Nat.ceil Z : ℝ) := by simp [mul_comm]
 
-/-- Prime outputs survive the sieve unless they lie below its cutoff. -/
-theorem goldbachG12LinkedPrimeOutput_le_sifted_add_small (N : ℕ) (ε Z : ℝ) :
-    (∑ p ∈ (goldbachG12LinkedOutputSupport N ε).filter Nat.Prime,
-      goldbachG12LinkedOutputWeight N ε p) ≤
-      goldbachG12LinkedSiftedMass N ε Z + goldbachG12LinkedSmallOutputMass N ε Z := by
-  classical
-  have hsplit : (∑ p ∈ (goldbachG12LinkedOutputSupport N ε).filter Nat.Prime,
-      goldbachG12LinkedOutputWeight N ε p) ≤
-      (∑ p ∈ (goldbachG12LinkedOutputSupport N ε).filter
-        (fun p => (goldbachB10ProdPrimes N Z).Coprime p), goldbachG12LinkedOutputWeight N ε p) +
-      goldbachG12LinkedSmallOutputMass N ε Z := by
-    simp only [goldbachG12LinkedSmallOutputMass, sum_filter, ← sum_add_distrib]
-    apply sum_le_sum
-    intro p _
-    have hw := goldbachG12LinkedOutputWeight_nonneg N ε p
-    by_cases hp : p.Prime
-    · rw [if_pos hp]
-      by_cases hc : (goldbachB10ProdPrimes N Z).Coprime p
-      · rw [if_pos hc]
-        split_ifs <;> linarith
-      · have hpd : p ∣ goldbachB10ProdPrimes N Z := by
-          by_contra hpd
-          exact hc ((hp.coprime_iff_not_dvd.mpr hpd).symm)
-        have hsmall : p < Nat.ceil Z := Nat.lt_ceil.mpr
-          (prime_dvd_goldbachB10ProdPrimes_lt hp hpd)
-        simp only [if_neg hc, if_pos hsmall, zero_add, le_refl]
-    · rw [if_neg hp]
-      split_ifs <;> linarith
-  simpa only [goldbachG12LinkedOutput_sum, goldbachG12LinkedSiftedMass] using hsplit
-
-/-- The literal original output-prime fibres on the G12 active support. -/
-theorem goldbachG12OutputTotal_le_linkedSifted {N : ℕ} (hN : 2 ≤ N) (ε Z : ℝ) :
-    (400 * ∑ m ∈ goldbachG12ActiveProductSupport N,
-      goldbachG12NormalizedCoefficient N m *
-        ((goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).card : ℝ)) ≤
-      400*goldbachG12LinkedSiftedMass N ε Z + 8000*(Nat.ceil Z : ℝ) := by
-  classical
-  have hsum : (∑ m ∈ goldbachG12ActiveProductSupport N,
-      goldbachG12NormalizedCoefficient N m *
-        ((goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).card : ℝ)) ≤
-      ∑ m ∈ goldbachG12ActiveProductSupport N,
-      goldbachG12NormalizedCoefficient N m *
-        (((goldbachG11LinkedPrimeWindow N ε m).filter (fun r => (N-r*m).Prime)).card : ℝ) := by
-    apply sum_le_sum
-    intro m hm
-    have hc : (goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).card ≤
-        ((goldbachG11LinkedPrimeWindow N ε m).filter (fun r => (N-r*m).Prime)).card := by
-      apply card_le_card
-      intro r hr
-      rw [goldbachG12ProductFirstPrimeFiber_eq_linkedWindow hm] at hr
-      exact mem_filter.mpr ⟨(mem_filter.mp hr).1, (mem_filter.mp hr).2.2⟩
-    exact mul_le_mul_of_nonneg_left (Nat.cast_le.mpr hc)
-      (goldbachG12NormalizedCoefficient_bounds N m).1
-  rw [← goldbachG12LinkedOutput_sum N ε Nat.Prime] at hsum
-  have hs := goldbachG12LinkedPrimeOutput_le_sifted_add_small N ε Z
-  have he := goldbachG12LinkedSmallOutputMass_le hN ε Z
-  linarith only [hsum, hs, he]
 
 end
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -100,6 +100,63 @@ if mode == 'earlier_source' and source.stem == 'B':
             self.assertEqual(self.status()['status'], 'passed')
         self.assertEqual((self.root / 'calls').read_text().splitlines(), ['A', 'B'])
 
+    def test_transitive_import_removal_rebuilds_identical_object_consumers(self):
+        # D -> A -> B -> C: removing A's import changes B's context but its
+        # serialized object remains identical. C must nevertheless recompile.
+        for name, imports in [('D', []), ('C', ['B'])]:
+            source = self.root / 'src' / (name + '.lean')
+            source.write_text('-- test source ' + name + '\n')
+            self.rows.append({'module': name, 'imports': imports,
+                              'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest()})
+        self.rows[0]['imports'] = ['D']
+        (self.root / 'source-manifest.json').write_text(json.dumps(self.rows))
+        result = self.build(all_modules=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        before = {n: json.loads((self.root / 'build/receipts' / (n + '.json')).read_text())
+                  for n in ['B', 'C']}
+        self.rows[0]['imports'] = []
+        source = self.root / 'src/A.lean'
+        source.write_text('-- A no longer imports D\n')
+        self.rows[0]['source_sha256'] = hashlib.sha256(source.read_bytes()).hexdigest()
+        (self.root / 'source-manifest.json').write_text(json.dumps(self.rows))
+        result = self.build(all_modules=True, jobs=2)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual((self.root / 'calls').read_text().splitlines(),
+                         ['D', 'A', 'B', 'C', 'A', 'B', 'C'])
+        after = {n: json.loads((self.root / 'build/receipts' / (n + '.json')).read_text())
+                 for n in ['B', 'C']}
+        self.assertEqual(before['B']['object_sha256'], after['B']['object_sha256'])
+        self.assertEqual(before['C']['dependencies'], after['C']['dependencies'])
+        self.assertNotEqual(before['C']['dependency_contexts'], after['C']['dependency_contexts'])
+        for n in after:
+            self.assertNotEqual(before[n]['context_sha256'], after[n]['context_sha256'])
+        result = self.build(all_modules=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len((self.root / 'calls').read_text().splitlines()), 7)
+
+    def test_legacy_receipt_without_context_forces_recompile(self):
+        result = self.build()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        path = self.root / 'build/receipts/B.json'
+        receipt = json.loads(path.read_text())
+        del receipt['dependency_contexts']
+        del receipt['context_sha256']
+        path.write_text(json.dumps(receipt))
+        result = self.build()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual((self.root / 'calls').read_text().splitlines(), ['A', 'B', 'B'])
+
+    def test_corrupt_own_context_forces_recompile(self):
+        result = self.build()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        path = self.root / 'build/receipts/B.json'
+        receipt = json.loads(path.read_text())
+        receipt['context_sha256'] = '0' * 64
+        path.write_text(json.dumps(receipt))
+        result = self.build()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual((self.root / 'calls').read_text().splitlines(), ['A', 'B', 'B'])
+
     def test_priority_preserves_dependencies_and_full_scope(self):
         source = self.root / 'src/C.lean'
         source.write_text('-- independent C\n')

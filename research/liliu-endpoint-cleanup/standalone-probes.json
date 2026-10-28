@@ -1,0 +1,125 @@
+{
+  "status": "pass",
+  "finished_at_utc": "2026-10-27T06:22:28.951539+00:00",
+  "results": [
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachB10MainWeight.lean",
+      "probe_sha256": "d189c11263bdf1d17948fd6e2ad18ff21b31098ba5631bf96f3279e5618b5c43",
+      "exit_code": 0,
+      "elapsed_seconds": 6.166493713855743,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachB10MainWeight.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachB10ContinuousMain.lean",
+      "probe_sha256": "4812c284e1d6be72db29a053168012eab2f8a1d001b4c1e39a9bdb89ba0a48ba",
+      "exit_code": 0,
+      "elapsed_seconds": 6.03290793299675,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachB10ContinuousMain.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachPi10Sifted.lean",
+      "probe_sha256": "fd0cdde0a7dd3047c291c9d24efb336b5dc47f50676baed5eb9ebfdc6e19b7f3",
+      "exit_code": 0,
+      "elapsed_seconds": 5.916598334908485,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachPi10Sifted.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachB10Congruence.lean",
+      "probe_sha256": "eb2e952978bda31c05483978c4d9a834774f1f13324063d72fe9156e8a56d39b",
+      "exit_code": 0,
+      "elapsed_seconds": 4.922055784612894,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachB10Congruence.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS2PaidUpper.lean",
+      "probe_sha256": "353472d4c46f1af0981b82e5d6a0bf5681feb80453ee7e0facbc904c144d4871",
+      "exit_code": 0,
+      "elapsed_seconds": 7.349851559847593,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS2PaidUpper.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS2NormalizedUpper.lean",
+      "probe_sha256": "071cd87b091226eb9cb921c1385bbd95266b349b279d25d1d15884f8c4708bf6",
+      "exit_code": 0,
+      "elapsed_seconds": 9.54200990498066,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS2NormalizedUpper.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachErrorFoundations.lean",
+      "probe_sha256": "0b7b5280558fa66119e6ee149e57611100be7c64ac9967f548c43cfe8cc3b8f5",
+      "exit_code": 0,
+      "elapsed_seconds": 5.995483998209238,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachErrorFoundations.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachWeightInitialBudget.lean",
+      "probe_sha256": "8fa2bb6b02ef1319f73b7819fa5cb4def34189282f96e8297455ac00b201b195",
+      "exit_code": 0,
+      "elapsed_seconds": 6.075962536036968,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachWeightInitialBudget.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS3PaidUpper.lean",
+      "probe_sha256": "7d40f740d9a6e123cfc7f03b33a395ade62b821b33c5f85cd238d8ae4d422726",
+      "exit_code": 0,
+      "elapsed_seconds": 5.714192871004343,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS3PaidUpper.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS1Carrier.lean",
+      "probe_sha256": "00a6d953e499d947069b6d05246d48fa55915b62d26fc2209c1b0a9fa9c44fa5",
+      "exit_code": 0,
+      "elapsed_seconds": 7.479896117001772,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS1Carrier.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS3NormalizedUpper.lean",
+      "probe_sha256": "803fa3fdc27a09c14fc7ffbcd1b6b331d8af1a8ab18c9d90785a6a4cfba78d33",
+      "exit_code": 0,
+      "elapsed_seconds": 7.8879846185445786,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachS3NormalizedUpper.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingCount",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachCompositeMovingCount.lean",
+      "probe_sha256": "2322aae9b472865dadf934109bcbb96a45d5ea23b2514a714fa5717e9e28adae",
+      "exit_code": 0,
+      "elapsed_seconds": 7.929563965648413,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachCompositeMovingCount.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachPairMovingKernel",
+      "probe_file": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachPairMovingKernel.lean",
+      "probe_sha256": "b2cf7e6f81799907ef6a49f9da7f8763f1d658bf6d0597ab41a827d0f80437c5",
+      "exit_code": 0,
+      "elapsed_seconds": 4.540983643382788,
+      "log": "/tmp/liliu-carrier-cleanup/next-wave/probes/LiLiuGoldbachPairMovingKernel.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "record_scope": "Historical standalone prototype proof receipts before application; accepted full production combination is recorded separately in validation.json.",
+  "accepted_full_combination_validation": "validation.json"
+}

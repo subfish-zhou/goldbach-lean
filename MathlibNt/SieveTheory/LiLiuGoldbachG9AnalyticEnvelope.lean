@@ -15,42 +15,6 @@ def envelope : ℝ :=
   8 * (∫ u in (1 / 10 : ℝ)..(1 / 3),
     S3Correction.L (1 - 3 * u) / (u * (1 - u)))
 
-/-- A whole-half-line analytic remainder; no samples or scalar assumptions. -/
-theorem log_remainder {x : ℝ} (hx : 0 ≤ x) :
-    0 ≤ S3Correction.L x - Real.log (1+x) ∧
-    S3Correction.L x - Real.log (1+x) ≤ x^34 / 34 := by
-  refine ⟨sub_nonneg.mpr (S3Correction.log_le_L hx), ?_⟩
-  let F : ℝ → ℝ := fun y => y^34 / 34 - S3Correction.L y + Real.log (1+y)
-  have hd : ∀ y ∈ Icc (0 : ℝ) x,
-      HasDerivAt F (y^33 - S3Correction.dL y + 1/(1+y)) y := by
-    intro y hy
-    have hl : HasDerivAt (fun z : ℝ => Real.log (1+z)) (1/(1+y)) y := by
-      convert! (Real.hasDerivAt_log (by linarith [hy.1] : 1+y ≠ 0)).comp y
-        ((hasDerivAt_id y).const_add 1) using 1; simp [one_div]
-    have hp : HasDerivAt (fun z : ℝ => z^34 / 34) (y^33) y := by
-      convert! (hasDerivAt_pow 34 y).div_const 34 using 1; norm_num
-    exact (hp.sub (S3Correction.L_deriv y)).add hl
-  have hp : ∀ y ∈ Icc (0 : ℝ) x,
-      0 ≤ y^33 - S3Correction.dL y + 1/(1+y) := by
-    intro y hy
-    have he := S3Correction.L_residual y
-    have hpos : 0 < 1+y := by linarith [hy.1]
-    have hid : y^33 - S3Correction.dL y + 1/(1+y) = y^34/(1+y) := by
-      apply (eq_div_iff hpos.ne').2
-      field_simp
-      nlinarith only [he, show y^34 = y^33*y by ring]
-    rw [hid]
-    positivity
-  have hm : MonotoneOn F (Icc (0 : ℝ) x) :=
-    monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc _ _)
-      (fun y hy => (hd y hy).continuousAt.continuousWithinAt)
-      (fun y hy => (hd y (interior_subset hy)).hasDerivWithinAt)
-      (fun y hy => hp y (interior_subset hy))
-  have h := hm ⟨le_rfl, hx⟩ ⟨hx, le_rfl⟩ hx
-  have hz : F 0 = 0 := by simp [F, S3Correction.L_zero]
-  rw [hz] at h
-  dsimp [F] at h
-  linarith
 
 theorem continuousOn_envelope_kernel (k : ℕ) :
     ContinuousOn (fun u : ℝ => S3Correction.L (1-3*u)/(u*(1-u)^k))

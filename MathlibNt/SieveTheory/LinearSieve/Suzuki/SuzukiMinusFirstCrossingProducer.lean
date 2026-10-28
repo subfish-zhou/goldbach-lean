@@ -133,17 +133,5 @@ theorem minusFirstCrossing_of_reaches
       crossing_nonneg := hcrossSlope }
   exact ⟨w, hSs⟩
 
-/-- Pointwise crossing production, in the exact shape consumed by
-`ProducesMinusFirstCrossing` after unfolding that definition. -/
-theorem producesMinusFirstCrossing
-    {R : ℝ → ℝ} {β c S : ℝ}
-    (h : FirstCrossingDDEApparatus R β)
-    (hβS : β < S) (hβoneS : β + 1 ≤ S)
-    (hinitial : ∀ u ∈ Icc β S, normalizedMinusBase R xi u < c) :
-    ∀ v, S ≤ v → c ≤ normalizedMinusBase R xi v →
-      ∃ w : MinusFirstCrossing R xi c β S, S ≤ w.s := by
-  intro v hSv hv
-  exact minusFirstCrossing_of_reaches h hβS hβoneS hinitial hSv hv
-
 
 end Section10MinusFirstCrossingProducer

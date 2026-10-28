@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Quantitative
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146iErrorEnvelopeTransport
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

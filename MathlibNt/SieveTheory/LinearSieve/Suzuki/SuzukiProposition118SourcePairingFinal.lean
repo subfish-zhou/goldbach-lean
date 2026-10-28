@@ -255,14 +255,14 @@ theorem hasDerivWithinAt_suzukiProposition118SourceQPairing_right
   apply hout.congr_of_eventuallyEq
   · filter_upwards [] with u
     simp only [suzukiProposition118SourceQPairing, section10SignedPairing, one_mul]
-    dsimp [sourceWeighted]
+    dsimp [sourceWeighted, suzukiProposition118KappaOneSourceAdjoint]
     congr 1
     · ring
     · apply intervalIntegral.integral_congr
       intro t _
       ring
   · simp only [suzukiProposition118SourceQPairing, section10SignedPairing, one_mul]
-    dsimp [sourceWeighted]
+    dsimp [sourceWeighted, suzukiProposition118KappaOneSourceAdjoint]
     congr 1
     · ring
     · apply intervalIntegral.integral_congr

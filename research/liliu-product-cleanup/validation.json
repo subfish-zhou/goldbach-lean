@@ -1,0 +1,85 @@
+{
+  "phase": "Li-Liu uniform local products and normalized error payment",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T05:05:19.431276+00:00",
+  "source_modules": 1802,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "aae1fc46fea7b48dadb969d000368a91aaed530898d3c9b3c0d80ea8ff2d74ed"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "390dc37cf6d2580eb22b49dd9e2663e0cdc6ff92ebbee04f9bee2f3d5fecb46d"
+    },
+    "strengthened_internal_statement_contracts": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "b03e127c92954fd2a0378ded6211336d881a6ebbec8133fcb3fa7f3f8a0d45b6"
+    }
+  },
+  "auxiliary_input_sha256": {
+    "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean": "e670fe75c11a6cbd25cc97f31e28cd107b46762947e81a58d03716ba851d2f17"
+  },
+  "finished_at_utc": "2026-10-27T05:49:20.349476+00:00",
+  "input_manifest_sha256": "78dd16347b087bca7a14cebba299b23727867f8d0a03e9fbdefffbcb1761616a",
+  "scope": "Main Chen and Li-Liu libraries only; separate concurrent Wu research sources excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "39dcacaeb15673fb39ac905a8b54716c6940b231aff831e8fa08a375c3951166",
+  "net_main_code_lines": -192,
+  "new_auxiliary_lean_code_lines": 0,
+  "net_liliu_closure_code_lines": -192,
+  "net_chen_closure_code_lines": -11,
+  "type_preservation_report": "type-preservation.json",
+  "final_review_at_utc": "2026-10-27T05:53:26.540517+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "49ad6fdb8ef79ec0a01e97bee89938ab888715ed069c9be4e666cc0be6de8d95"
+  },
+  "evidence_sha256": {
+    "changes.json": "e216fa0120f62aa05a8715907633736f03bf756100da466e13fbb76db88662a2",
+    "source-size.json": "783a15c398664dfebc6fd8d7d29525bb8798c0a72f824fcf8fafd24d9de4ee78",
+    "type-preservation.json": "86dd5cb89386bdfcc8162fae2331ee68118ae8c139f726c53acf160bb439b8d1",
+    "private-proof-redirects.json": "19a2a7a6b222b3975328ea303bbe86bee55f93d9b3ebd66c41183c230b38f8bd",
+    "standalone-probes.json": "cc758fe7f445ab70c9c5c337e73ef1e6ca507ccf27d33eff3a05e17d6d137f65",
+    "blueprint-validation.json": "b6e22895a3dc0161fc28ea50239de8ea2800278931be1e238576200caf2cf6a7",
+    "analysis.json": "49d2792c4f69a2e4566da8123bfa7fd3a82dcefc559f1455b9781663a82ede8a"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-product-cleanup/reproduce.py": "5c961a5c08df05e22c6c24aefa284e1be0809dc564ec05f9c332f9541b7526b1",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "accc43eac9d644a7faf5ffecab2790c4e56161c9dfe01bbc1783aa6181f7c1e8",
+    "docs/LILIU_PRODUCT_CLEANUP.md": "e493148fe2069d9cb2aea36cccd0fa69ed8809320ff70b34ca9573071db6c965",
+    "docs/SOURCE_SIZE.md": "7a323377be8d43b137611e985bc02c1b623d51bb7c5ff39b96429f93798c0768",
+    "docs/VERIFICATION.md": "0dc1ee820879cd3a8f2e423c6a18787b60ceb69ab4225641387af8512265a2d8",
+    "docs/RELEASE_NOTES.md": "10f031438e697dbb258b2cbf56c67b91d545aaa7f98eb7a33d54868547c0182c",
+    "docs/ARCHITECTURE.md": "b815218a1a3439b4e6916cf9054062acb0c6aa5e48e281894543bd488c0dc63c"
+  }
+}

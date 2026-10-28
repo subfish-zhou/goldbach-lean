@@ -1,14 +1,12 @@
-import MathlibNt.SieveTheory.Switching.EndpointAssembly
+import MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics
 
 /-!
-# Chen's switching principle
+# Chen's switching and weighted-counting interface
 
-Compatibility facade for the content-based modules in `MathlibNt/SieveTheory/Switching/`.
-All existing declarations remain in the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
-
-The sequence develops weights and representation counts, the corrected sieve and Pan
-counting bridge, Mertens main terms, weighted penalties, source sieves, dimension-one
-prime sums, logarithmic meshes, Rosser boundary comparisons, and endpoint assembly.
-Import this facade to retain the complete historical API, including its explicit
-analytic hypotheses and documented limitations.
+The retained modules provide corrected representation counts, finite weights,
+source sieves and varying-prime asymptotics in the
+`MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
+The actual triple estimate is supplied by `Selberg.Liu.LiuSelbergCorrectedChenBridge`;
+`Chen.ChenVerifiedPrerequisites` combines it with the weighted lower bound and
+obtains existence from the positive representation count.
 -/

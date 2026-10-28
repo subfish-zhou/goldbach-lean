@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "modules_verified": 4142,
+  "manifest_sha256": "5edafd3f227eabed812038e21b69b0817577ff459d23c0acc1f89f88953f6cfe",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+    "--verbose",
+    "WR2ClassicalCertificate"
+  ],
+  "seconds": 13.75367521494627,
+  "exit_code": 0,
+  "log": "/tmp/wu-main-port-audit/production-kernel.log",
+  "log_sha256": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+  "lean_sysroot": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+  "stdlib_init_sha256": "1e95ecbedde5d49a3e6550ec04f0d4176245196093254e26015c4b5f5a5844fd",
+  "lean_path": "/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+  "before_after_objects_equal": true
+}

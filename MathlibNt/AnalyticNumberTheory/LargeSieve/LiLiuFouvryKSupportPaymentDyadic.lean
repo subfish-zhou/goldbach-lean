@@ -95,6 +95,3 @@ theorem betaClean_wMaskedTruncated_largeSupport_dyadic_kscale
     (fun q hq ↦ (mem_Ioc.mp (hQx hq)).1.ne') hheadPower htailPay
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
-
-
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeSupport_dyadic_kscale

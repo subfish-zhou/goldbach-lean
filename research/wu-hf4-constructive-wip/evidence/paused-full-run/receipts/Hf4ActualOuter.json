@@ -1,0 +1,45 @@
+{
+  "module": "Hf4ActualOuter",
+  "exit_code": 0,
+  "seconds": 5.755537580698729,
+  "source_sha256": "b974628afe8bb494ebb1341e3ebf6126864bac2b21bdfcec6d567bc92eca5741",
+  "object_sha256": "ce37c2f787ddd2029e57e2c0927791e67f885a416f816063bc6fab8c3f1f9256",
+  "dependencies": {
+    "Hf4ActualLog": "a5fdbb4a3d70787ef2fab03948077fb2c7b03ed1a34eb4471c83dadc3b806f69"
+  },
+  "dependency_contexts": {
+    "Hf4ActualLog": "aee571649ed4d02fd7b9d17ffba75cb783e9a01f73719e04085304aa60ed2b60"
+  },
+  "context_sha256": "daf2398e7710a6f783455a1c5baa398b82845b190d2bbfb11f791bdefce5b1e5",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualOuter.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualOuter.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualOuter.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualOuter.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.resources",
+  "resource_sha256": "a8a64bdab81890b05728174876c599902656e0c1b609dabad498af04f2f19878",
+  "artifact_bundle_sha256": {
+    ".olean": "ce37c2f787ddd2029e57e2c0927791e67f885a416f816063bc6fab8c3f1f9256"
+  }
+}

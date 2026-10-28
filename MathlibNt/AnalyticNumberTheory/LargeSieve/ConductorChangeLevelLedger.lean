@@ -17,26 +17,6 @@ open scoped BigOperators
 
 noncomputable section
 
-/-- Integers in the interval on which changing from level `q` to the conductor
-can produce an error. -/
-def conductorBadSupport (q : ℕ) (M : ℤ) (N : ℕ) : Finset ℤ :=
-  (Finset.Icc (M + 1) (M + N)).filter (fun n => ¬ IsCoprime n q)
-
-@[simp] theorem mem_conductorBadSupport {q : ℕ} {M n : ℤ} {N : ℕ} :
-    n ∈ conductorBadSupport q M N ↔
-      M + 1 ≤ n ∧ n ≤ M + N ∧ ¬ IsCoprime n q := by
-  simp [conductorBadSupport, and_assoc]
-
-/-- The change-level error has exactly zero contribution away from the explicit
-bad support. -/
-theorem conductorChangeLevelError_eq_zero_of_not_mem
-    {q : ℕ} (χ : DirichletCharacter ℂ q) (b : ℤ → ℂ) (M : ℤ) (N : ℕ)
-    {n : ℤ} (hn : n ∈ Finset.Icc (M + 1) (M + N))
-    (hbad : n ∉ conductorBadSupport q M N) :
-    conductorChangeLevelError χ b n = 0 := by
-  apply conductorChangeLevelError_eq_zero_of_isCoprime
-  by_contra h
-  exact hbad (by simp [conductorBadSupport, hn, h])
 
 /-- Pointwise `4‖b(n)‖²` bound for the squared change-level correction. -/
 theorem conductorChangeLevelError_norm_sq_le
@@ -55,31 +35,6 @@ theorem conductorChangeLevelError_norm_sq_le
     exact (norm_sub_le _ _).trans (by linarith)
   nlinarith [norm_nonneg (conductorChangeLevelError χ b n), norm_nonneg (b n)]
 
-/-- Exact support restriction for the finite correction energy. -/
-theorem conductorChangeLevelError_energy_eq_badSupport
-    {q : ℕ} (χ : DirichletCharacter ℂ q) (b : ℤ → ℂ) (M : ℤ) (N : ℕ) :
-    (∑ n ∈ Finset.Icc (M + 1) (M + N),
-        ‖conductorChangeLevelError χ b n‖ ^ 2) =
-      ∑ n ∈ conductorBadSupport q M N,
-        ‖conductorChangeLevelError χ b n‖ ^ 2 := by
-  rw [conductorBadSupport, Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro n hn
-  by_cases hbad : ¬ IsCoprime n q
-  · simp [hbad]
-  · simp only [if_neg hbad]
-    rw [conductorChangeLevelError_eq_zero_of_isCoprime χ b (not_not.mp hbad)]
-    simp
-
-/-- Explicit finite energy bound: only bad-prime-supported coefficients occur,
-with pointwise constant four. -/
-theorem conductorChangeLevelError_energy_le_badSupport
-    {q : ℕ} (χ : DirichletCharacter ℂ q) (b : ℤ → ℂ) (M : ℤ) (N : ℕ) :
-    (∑ n ∈ Finset.Icc (M + 1) (M + N),
-        ‖conductorChangeLevelError χ b n‖ ^ 2) ≤
-      4 * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-  rw [conductorChangeLevelError_energy_eq_badSupport, Finset.mul_sum]
-  exact Finset.sum_le_sum fun n _ => conductorChangeLevelError_norm_sq_le χ b n
 
 /-- Squared prefix correction. -/
 def conductorErrorPrefixSquare {q : ℕ} (χ : DirichletCharacter ℂ q)
@@ -92,62 +47,6 @@ def conductorErrorPrefixMaxSquare {q : ℕ} (χ : DirichletCharacter ℂ q)
   ((Finset.range (N + 1)).image (fun y => conductorErrorPrefixSquare χ b M y)).max'
     (Finset.image_nonempty.mpr ⟨0, by simp⟩)
 
-/-- Every correction prefix is controlled by `N` times its full interval
-energy. -/
-theorem conductorErrorPrefixSquare_le_energy
-    {q : ℕ} (χ : DirichletCharacter ℂ q) (b : ℤ → ℂ) (M : ℤ)
-    {N y : ℕ} (hy : y ≤ N) :
-    conductorErrorPrefixSquare χ b M y ≤
-      (N : ℝ) * ∑ n ∈ Finset.Icc (M + 1) (M + N),
-        ‖conductorChangeLevelError χ b n‖ ^ 2 := by
-  unfold conductorErrorPrefixSquare
-  refine (norm_finset_sum_sq_le_card_mul_sum_norm_sq
-    (Finset.Icc (M + 1) (M + y)) (fun n => conductorChangeLevelError χ b n)).trans ?_
-  have hcard : ((Finset.Icc (M + 1) (M + y)).card : ℝ) ≤ N := by
-    rw [Int.card_Icc]
-    have heq : (M + (y : ℤ) + 1 - (M + 1)).toNat = y := by
-      omega
-    rw [heq]
-    exact_mod_cast hy
-  have hsub : Finset.Icc (M + 1) (M + y) ⊆ Finset.Icc (M + 1) (M + N) := by
-    intro n hn
-    simp only [Finset.mem_Icc] at hn ⊢
-    refine ⟨hn.1, hn.2.trans ?_⟩
-    have hyz : (y : ℤ) ≤ (N : ℤ) := by exact_mod_cast hy
-    simpa [add_comm] using add_le_add_left hyz M
-  calc
-    ((Finset.Icc (M + 1) (M + y)).card : ℝ) *
-        ∑ n ∈ Finset.Icc (M + 1) (M + y),
-          ‖conductorChangeLevelError χ b n‖ ^ 2
-      ≤ (N : ℝ) * ∑ n ∈ Finset.Icc (M + 1) (M + y),
-          ‖conductorChangeLevelError χ b n‖ ^ 2 := by
-        gcongr
-    _ ≤ (N : ℝ) * ∑ n ∈ Finset.Icc (M + 1) (M + N),
-          ‖conductorChangeLevelError χ b n‖ ^ 2 := by
-        apply mul_le_mul_of_nonneg_left
-        · exact Finset.sum_le_sum_of_subset_of_nonneg hsub
-            (fun _ _ _ => sq_nonneg _)
-        · positivity
-
-/-- Explicit support bound for the maximal correction. -/
-theorem conductorErrorPrefixMaxSquare_le_badSupport
-    {q : ℕ} (χ : DirichletCharacter ℂ q) (b : ℤ → ℂ) (M : ℤ) (N : ℕ) :
-    conductorErrorPrefixMaxSquare χ b M N ≤
-      4 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-  unfold conductorErrorPrefixMaxSquare
-  apply Finset.max'_le
-  intro z hz
-  rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
-  have hyN : y ≤ N := by simpa [Finset.mem_range] using hy
-  calc
-    conductorErrorPrefixSquare χ b M y ≤
-        (N : ℝ) * ∑ n ∈ Finset.Icc (M + 1) (M + N),
-          ‖conductorChangeLevelError χ b n‖ ^ 2 :=
-      conductorErrorPrefixSquare_le_energy χ b M hyN
-    _ ≤ (N : ℝ) * (4 * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2) := by
-      gcongr
-      exact conductorChangeLevelError_energy_le_badSupport χ b M N
-    _ = _ := by ring
 
 /-- Squared prefix for an arbitrary (possibly imprimitive) character. -/
 def characterPrefixSquare {q : ℕ} (χ : DirichletCharacter ℂ q)
@@ -193,11 +92,6 @@ conductors at a positive level. -/
 def nonprincipalConductors (q : ℕ) : Finset ℕ :=
   q.divisors.filter (fun d => 2 ≤ d)
 
-/-- Total `q/φ(q)` weight with which one primitive character of conductor `d`
-appears among levels `1 ≤ q ≤ Q`.  This is the exact imprimitive multiplicity
-with the analytic weight retained, rather than replaced by a crude count. -/
-def imprimitiveConductorWeight (Q d : ℕ) : ℝ :=
-  ∑ q ∈ Finset.Icc 1 Q with d ∣ q, (q : ℝ) / (q.totient : ℝ)
 
 /-- At one positive level, characters of nontrivial conductor are in bijection
 with primitive characters over the divisors `d ≥ 2` of that level. -/
@@ -273,114 +167,6 @@ theorem sum_nonprincipal_by_conductor
   · intro χ hχ
     rfl
 
-/-- Exact global conductor regrouping.  Every primitive character of conductor
-`d` receives exactly `imprimitiveConductorWeight Q d`; hence both ordinary
-imprimitive multiplicity and the `q/φ(q)` weight are visible. -/
-theorem weighted_sum_nonprincipal_by_conductor
-    (Q : ℕ) (F : (d : ℕ) → PrimitiveCharacter d → ℝ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q,
-            F χ.conductor (conductorPrimitiveCharacter χ)) =
-      ∑ d ∈ Finset.Icc 2 Q,
-        imprimitiveConductorWeight Q d * ∑ ψ : PrimitiveCharacter d, F d ψ := by
-  calc
-    _ = ∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ d ∈ nonprincipalConductors q,
-            ∑ ψ : PrimitiveCharacter d, F d ψ := by
-      apply Finset.sum_congr rfl
-      intro q hq
-      rw [sum_nonprincipal_by_conductor (Finset.mem_Icc.mp hq).1 F]
-    _ = ∑ q ∈ Finset.Icc 1 Q, ∑ d ∈ Finset.Icc 2 Q,
-        if d ∣ q then ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ ψ : PrimitiveCharacter d, F d ψ else 0 := by
-      apply Finset.sum_congr rfl
-      intro q hq
-      rw [Finset.mul_sum]
-      rw [← Finset.sum_filter]
-      apply Finset.sum_subset
-      · intro d hd
-        have hd' := Finset.mem_filter.mp hd
-        have hddiv : d ∣ q := (Nat.mem_divisors.mp hd'.1).1
-        rw [Finset.mem_filter, Finset.mem_Icc]
-        exact ⟨⟨hd'.2, (Nat.le_of_dvd (Finset.mem_Icc.mp hq).1 hddiv).trans
-          (Finset.mem_Icc.mp hq).2⟩, hddiv⟩
-      · intro d hdQ hdnot
-        simp only [Finset.mem_filter] at hdQ
-        exfalso
-        apply hdnot
-        rw [nonprincipalConductors, Finset.mem_filter]
-        exact ⟨Nat.mem_divisors.mpr ⟨hdQ.2,
-            Nat.ne_of_gt (Finset.mem_Icc.mp hq).1⟩,
-          (Finset.mem_Icc.mp hdQ.1).1⟩
-    _ = ∑ d ∈ Finset.Icc 2 Q, ∑ q ∈ Finset.Icc 1 Q,
-        if d ∣ q then ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ ψ : PrimitiveCharacter d, F d ψ else 0 := by
-      rw [Finset.sum_comm]
-    _ = _ := by
-      apply Finset.sum_congr rfl
-      intro d hd
-      rw [imprimitiveConductorWeight, Finset.sum_filter, Finset.sum_mul]
-      apply Finset.sum_congr rfl
-      intro q hq
-      by_cases hdq : d ∣ q <;> simp [hdq]
-
-/-- The requested all-character nonprincipal maximal ledger.  Its first term is
-then exactly regrouped by the preceding theorem, while the second is the honest
-bad-prime correction; no principal estimate is inserted. -/
-theorem weighted_allCharacter_nonprincipal_prefix_ledger
-    (b : ℤ → ℂ) (M : ℤ) (N Q : ℕ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ ∈ nonprincipalCharacters q, characterPrefixMaxSquare χ b M N) ≤
-      2 * (∑ d ∈ Finset.Icc 2 Q,
-        imprimitiveConductorWeight Q d *
-          ∑ ψ : PrimitiveCharacter d,
-            primitiveCharacterPrefixMaxSquare b M N d ψ) +
-      8 * (N : ℝ) *
-        ∑ q ∈ Finset.Icc 1 Q,
-          ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ _χ ∈ nonprincipalCharacters q,
-              ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-  -- Pay the bad-support correction for each character before summing.
-  have hchar {q : ℕ} (χ : DirichletCharacter ℂ q) :
-      characterPrefixMaxSquare χ b M N ≤
-        2 * primitiveCharacterPrefixMaxSquare b M N χ.conductor
-          (conductorPrimitiveCharacter χ) +
-        8 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-    have hsplit := characterPrefixMaxSquare_le_conductor_add_error χ b M N
-    have hbad := conductorErrorPrefixMaxSquare_le_badSupport χ b M N
-    linarith
-  calc
-    _ ≤ ∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q,
-            (2 * primitiveCharacterPrefixMaxSquare b M N χ.conductor
-              (conductorPrimitiveCharacter χ) +
-            8 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2) := by
-      gcongr with q hq χ hχ
-      exact hchar χ
-    _ = _ := by
-      rw [← weighted_sum_nonprincipal_by_conductor]
-      simp only [mul_add, Finset.sum_add_distrib, Finset.mul_sum]
-      simp only [mul_assoc, mul_left_comm, mul_comm]
-
-/-- Principal/nonprincipal split with the principal maximal term kept literally.
-This theorem is bookkeeping only, not a PNT assertion. -/
-theorem weighted_allCharacter_prefix_eq_principal_add_nonprincipal
-    (b : ℤ → ℂ) (M : ℤ) (N Q : ℕ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : DirichletCharacter ℂ q, characterPrefixMaxSquare χ b M N) =
-      (∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          characterPrefixMaxSquare (1 : DirichletCharacter ℂ q) b M N) +
-      ∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q, characterPrefixMaxSquare χ b M N := by
-  simp_rw [sum_allCharacters_eq_principal_add_nonprincipal, mul_add]
-  exact Finset.sum_add_distrib
 
 end
 

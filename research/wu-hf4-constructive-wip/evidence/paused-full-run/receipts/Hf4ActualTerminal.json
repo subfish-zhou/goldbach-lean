@@ -1,0 +1,45 @@
+{
+  "module": "Hf4ActualTerminal",
+  "exit_code": 0,
+  "seconds": 4.201106034219265,
+  "source_sha256": "ad1200c29e147c4b903dd528ae32fcfd3724c77c63368c66888d3b36a437204c",
+  "object_sha256": "c2907e0b6b1d48bb592dbfd721a248ed73e3188e2c5dd9906a8568a8a6d4ee3d",
+  "dependencies": {
+    "Hf4ActualDE": "c5cae56522f005b807f7e5290190feed39a79262d05f703c71138853568a0c2f"
+  },
+  "dependency_contexts": {
+    "Hf4ActualDE": "df2ff4ef03b5c2d3088cb8fc7e1b98ea783290c82f00634027534f901d9d4ee9"
+  },
+  "context_sha256": "9907d46ba26c582047c1089c6256f976b851f034a71fb60446ca031dd5f12890",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualTerminal.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualTerminal.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualTerminal.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualTerminal.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.resources",
+  "resource_sha256": "a3c44aa0e30b1694a52a93fe23c6a60675a09e4626c7ab8029986aa3a2b121ed",
+  "artifact_bundle_sha256": {
+    ".olean": "c2907e0b6b1d48bb592dbfd721a248ed73e3188e2c5dd9906a8568a8a6d4ee3d"
+  }
+}

@@ -1,6 +1,5 @@
 import Mathlib.NumberTheory.EulerProduct.Basic
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorConvolution
-import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
 
 /-!
 # Euler total of Liu's Selberg correction
@@ -124,28 +123,12 @@ theorem tsum_liuSelbergCorrection_prime_pow_eq_localFactor_inv
 
 /-- The absolute local Euler total contains the unit term. -/
 theorem liuSelbergAbsPrimeDeviation_nonneg_core
-    {N : ℕ} (hNeven : Even N) (p : Nat.Primes) :
+    {N : ℕ} (p : Nat.Primes) :
     0 ≤ liuSelbergAbsPrimeDeviation N p := by
-  rw [liuSelbergAbsPrimeDeviation,
-    tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
-  by_cases hpdvd : (p : ℕ) ∣ N
-  · simp [hpdvd]
-  · rw [if_neg hpdvd]
-    have hp2 : 2 < (p : ℕ) := by
-      have hpne : (p : ℕ) ≠ 2 := by
-        intro heq
-        apply hpdvd
-        rw [heq]
-        exact hNeven.two_dvd
-      have := p.2.two_le
-      omega
-    have hpR : (0 : ℝ) < (p : ℕ) := by exact_mod_cast p.2.pos
-    have hpR2 : (0 : ℝ) < ((p : ℕ) : ℝ) - 2 := by
-      have : (2 : ℝ) < (p : ℕ) := by exact_mod_cast hp2
-      linarith
-    have hq : 0 ≤ 3 / (((p : ℕ) : ℝ) * (((p : ℕ) : ℝ) - 2)) := by
-      positivity
-    linarith
+  apply sub_nonneg.mpr
+  simpa only [pow_zero, liuSelbergCorrection_one, abs_one] using
+    (summable_abs_liuSelbergCorrection_prime_pow N p.2).le_tsum 0
+      (fun e _ => abs_nonneg (liuSelbergCorrection N ((p : ℕ) ^ e)))
 
 theorem summable_liuSelbergAbsPrimeDeviation
     {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
@@ -180,7 +163,7 @@ theorem summable_liuSelbergAbsPrimeDeviation
     simp [b, Function.comp_apply, div_eq_mul_inv, mul_comm]
   apply Summable.of_nonneg_of_le
     (fun p => ?_) (fun p => ?_) (hd.add hb)
-  · exact liuSelbergAbsPrimeDeviation_nonneg_core hNeven p
+  · exact liuSelbergAbsPrimeDeviation_nonneg_core p
   · rw [liuSelbergAbsPrimeDeviation,
       tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
     by_cases hpdvd : (p : ℕ) ∣ N
@@ -300,7 +283,7 @@ theorem summable_norm_liuSelbergCorrection
     exact summable_liuSelbergAbsPrimeDeviation hNeven hN
   · intro p
     simp only [Real.norm_eq_abs]
-    exact liuSelbergAbsPrimeDeviation_nonneg_core hNeven p
+    exact liuSelbergAbsPrimeDeviation_nonneg_core p
 
 theorem summable_abs_liuSelbergCorrection
     {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
@@ -548,21 +531,5 @@ theorem tsum_liuSelbergCorrection
   filter_upwards [Filter.eventually_ge_atTop 2] with z hz
   exact (liuSelbergCorrection_finiteEulerProduct hNeven hz).symm
 
-theorem tendsto_liuSelbergCorrection_partialSums
-    {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
-    Filter.Tendsto
-      (fun x : ℕ => ∑ d ∈ Finset.Icc 1 x, liuSelbergCorrection N d)
-      Filter.atTop (nhds (1 / (2 * liuSingularSeries N))) := by
-  have hs := (summable_norm_liuSelbergCorrection hNeven hN).of_norm
-  have ht := hs.hasSum.tendsto_sum_nat
-  have ht' := ht.comp (Filter.tendsto_add_atTop_nat 1)
-  rw [tsum_liuSelbergCorrection hNeven hN] at ht'
-  apply ht'.congr'
-  filter_upwards [] with x
-  rw [show Finset.Icc 1 x = (Finset.range (x + 1)).erase 0 by
-    ext n
-    simp only [Finset.mem_Icc, Finset.mem_erase, Finset.mem_range]
-    omega]
-  simp
 
 end MathlibNt.SieveTheory.LiuWeight

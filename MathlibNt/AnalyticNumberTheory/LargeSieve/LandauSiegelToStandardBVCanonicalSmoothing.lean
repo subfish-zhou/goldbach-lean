@@ -40,10 +40,6 @@ theorem standardBVCanonicalWeight_hasCompactSupport :
     HasCompactSupport standardBVCanonicalWeight := by
   exact standardBVCanonicalBaseBump.hasCompactSupport.mul_right
 
-theorem standardBVCanonicalWeight_integrable :
-    Integrable standardBVCanonicalWeight :=
-  standardBVCanonicalWeight_continuous.integrable_of_hasCompactSupport
-    standardBVCanonicalWeight_hasCompactSupport
 
 theorem standardBVCanonicalWeight_nonneg : 0 ≤ standardBVCanonicalWeight := by
   intro x
@@ -135,14 +131,6 @@ theorem standardBVCanonicalSmoothing_mass_one :
       integral_div _ _
     _ = 1 := div_self standardBVCanonicalWeightMass_pos.ne'
 
-/-- A raw Landau--Siegel lower bound supplies Standard Bombieri--Vinogradov with
-no smoothing function, regularity, support, or mass parameters in the headline. -/
-theorem standardBombieriVinogradov_of_rawLandauSiegelLowerBound_canonicalSmoothing
-    (hLandauSiegel : RawLandauSiegelLowerBound) :
-    MathlibNt.SieveTheory.BombieriVinogradov.StandardBombieriVinogradov :=
-  standardBombieriVinogradov_of_rawLandauSiegelLowerBound hLandauSiegel
-    standardBVCanonicalSmoothing_contDiff standardBVCanonicalSmoothing_nonneg
-    standardBVCanonicalSmoothing_support standardBVCanonicalSmoothing_mass_one
 
 end
 

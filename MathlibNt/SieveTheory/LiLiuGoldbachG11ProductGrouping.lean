@@ -28,13 +28,6 @@ theorem goldbachG11FirstPrimeFiber_eq_product {N : ℕ} {eps z b : ℝ}
   unfold goldbachG11FirstPrimeFiber goldbachG11ProductFirstPrimeFiber
   rw [goldbachG11SwitchedBodyProd_minFac hu]
 
-theorem goldbachG11FirstPrimeFiber_eq_product_of_mem {N m : ℕ} {eps z b : ℝ}
-    {u : GoldbachG11SwitchedBody} (hu : u ∈ goldbachG11ProductFiber N z b m) :
-    goldbachG11FirstPrimeFiber N eps z u =
-      goldbachG11ProductFirstPrimeFiber N eps z m := by
-  obtain ⟨hu, heq⟩ := mem_goldbachG11ProductFiber_iff.mp hu
-  rw [goldbachG11FirstPrimeFiber_eq_product
-    (mem_goldbachG11GoodSwitchedBodies_iff.mp hu).1, heq]
 
 -- No injectivity of the product map is used: each filtered fiber contributes its card.
 theorem goldbachG11GoodSwitchedBodies_sum_product (N : ℕ) (z b : ℝ) (f : ℕ → ℤ) :

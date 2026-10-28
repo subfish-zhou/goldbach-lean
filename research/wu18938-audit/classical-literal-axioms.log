@@ -1,0 +1,5 @@
+'WuLegacyLiteralAcceptance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuPaper.ClassicalSlots.one8938' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuLiteralAcceptance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuPaper.ClassicalSlots.one894' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WuPaper.ClassicalSlots.classical_lower' depends on axioms: [propext, Classical.choice, Quot.sound]

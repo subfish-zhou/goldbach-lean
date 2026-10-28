@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147LowerFiniteFactor
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
 
 /-!
@@ -135,93 +134,6 @@ theorem exists_lowerRosserDensity_dimensionOneLowerFactor_of_suzuki_literal_allD
   refine ⟨C145, Clow, C, hC145, hClow, hC, ?_⟩
   intro S K hK hlocal D hD s hs4 hs6 hsSigma hz2
   have h := hall S K hK hlocal D hD s (by linarith) hsSigma hz2
-  rw [suzukiContinuousLowerFactor_eq_dimensionOne_of_sourceContract
-    hH hs4 hs6] at h
-  exact h
-
-/-- Lemma 14.7 with the canonical continuous lower factor on every legal source
-coordinate.  Relative to the finite theorem, only the factor is strengthened;
-the quantifier order, adaptive depth, and error envelope are preserved exactly. -/
-theorem exists_lowerRosserDensity_continuousLowerFactor_of_suzuki_literal_allDepth
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ) :
-    ∃ C1min : ℝ, 0 < C1min ∧
-      ∀ C1 : ℝ, C1min ≤ C1 →
-        ∃ C145 Clow C : ℝ,
-          0 < C145 ∧ 0 ≤ Clow ∧ 3 ≤ C ∧
-          ∀ K : ℝ, 2 ≤ K → HasDimensionOneLocalProductBound S K →
-            ∀ D : ℕ, 2 ≤ D →
-              ∀ s : ℝ, 2 ≤ s → s ≤ sourceSigma (D : ℝ) d →
-                2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ →
-                let z := ⌈(D : ℝ) ^ (1 / s)⌉₊
-                let N := 2 * ((suzukiSupportedBelow S z).card + 1)
-                suzukiVProduct S (z : ℝ) *
-                    (suzukiContinuousLowerFactor s -
-                      C * Real.exp (Real.sqrt K) *
-                        errorEnvelope H N (D : ℝ) d s *
-                          (Real.log (D : ℝ)) ^ (-Δ)) ≤
-                  lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) := by
-  obtain ⟨C1min, hC1min, hbound⟩ :=
-    exists_lowerRosserDensity_finiteLowerFactor_of_suzuki_literal_allDepth
-      S H hH hsrc
-  refine ⟨C1min, hC1min, ?_⟩
-  intro C1 hC1
-  obtain ⟨C145, Clow, C, hC145, hClow, hC, hall⟩ := hbound C1 hC1
-  refine ⟨C145, Clow, C, hC145, hClow, hC, ?_⟩
-  intro K hK hlocal D hD s hs hsSigma hz2
-  let z : ℕ := ⌈(D : ℝ) ^ (1 / s)⌉₊
-  let N : ℕ := 2 * ((suzukiSupportedBelow S z).card + 1)
-  have hfinite := hall K hK hlocal D hD s hs hsSigma hz2
-  have hfactor :
-      suzukiContinuousLowerFactor s ≤ suzukiFiniteLowerFactor N s := by
-    dsimp only [N]
-    exact suzukiContinuousLowerFactor_le_adaptive_finiteLowerFactor
-      hH (suzukiSupportedBelow S z) hs
-  have hV : 0 ≤ suzukiVProduct S (z : ℝ) :=
-    (suzukiVProduct_pos S (z : ℝ)).le
-  dsimp only [z, N] at hfinite ⊢
-  have hbracket := sub_le_sub_right hfactor
-    (C * Real.exp (Real.sqrt K) *
-      errorEnvelope H (2 * ((suzukiSupportedBelow S z).card + 1))
-        (D : ℝ) d s * (Real.log (D : ℝ)) ^ (-Δ))
-  exact (mul_le_mul_of_nonneg_left hbracket hV).trans hfinite
-
-/-- Suzuki Lemma 14.7 on the Chen/Jurkat--Richert interval `4 ≤ s ≤ 6`.
-The conclusion has the standard dimension-one lower factor, with precisely the
-same constants, adaptive depth, and error term as the all-depth finite theorem. -/
-theorem exists_lowerRosserDensity_dimensionOneLowerFactor_of_suzuki_literal_allDepth
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ) :
-    ∃ C1min : ℝ, 0 < C1min ∧
-      ∀ C1 : ℝ, C1min ≤ C1 →
-        ∃ C145 Clow C : ℝ,
-          0 < C145 ∧ 0 ≤ Clow ∧ 3 ≤ C ∧
-          ∀ K : ℝ, 2 ≤ K → HasDimensionOneLocalProductBound S K →
-            ∀ D : ℕ, 2 ≤ D →
-              ∀ s : ℝ, 4 ≤ s → s ≤ 6 →
-                s ≤ sourceSigma (D : ℝ) d →
-                2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ →
-                let z := ⌈(D : ℝ) ^ (1 / s)⌉₊
-                let N := 2 * ((suzukiSupportedBelow S z).card + 1)
-                suzukiVProduct S (z : ℝ) *
-                    (SwitchingPrinciple.dimensionOneLowerLinearSieveFactor s -
-                      C * Real.exp (Real.sqrt K) *
-                        errorEnvelope H N (D : ℝ) d s *
-                          (Real.log (D : ℝ)) ^ (-Δ)) ≤
-                  lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) := by
-  obtain ⟨C1min, hC1min, hbound⟩ :=
-    exists_lowerRosserDensity_continuousLowerFactor_of_suzuki_literal_allDepth
-      S H hH hsrc
-  refine ⟨C1min, hC1min, ?_⟩
-  intro C1 hC1
-  obtain ⟨C145, Clow, C, hC145, hClow, hC, hall⟩ := hbound C1 hC1
-  refine ⟨C145, Clow, C, hC145, hClow, hC, ?_⟩
-  intro K hK hlocal D hD s hs4 hs6 hsSigma hz2
-  have h := hall K hK hlocal D hD s (by linarith) hsSigma hz2
   rw [suzukiContinuousLowerFactor_eq_dimensionOne_of_sourceContract
     hH hs4 hs6] at h
   exact h

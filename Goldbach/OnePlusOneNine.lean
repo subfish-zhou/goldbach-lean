@@ -1,4 +1,4 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative
+import MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional
 
 /-!
 # Li–Liu's one-plus-one-point-nine theorem

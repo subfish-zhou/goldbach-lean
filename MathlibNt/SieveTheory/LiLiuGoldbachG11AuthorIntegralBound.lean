@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 open MeasureTheory Set
 open scoped Interval BigOperators
@@ -169,17 +168,4 @@ theorem goldbachG11PrimeIntegral_author_le_primitives :
     ring
   rw [he, g11AuthorKernel_integral (by norm_num : (0 : ℝ) < 1 / 10) (by norm_num)]
   linarith
-
-#check goldbachG11PrimeIntegral_author_le_primitives
-#print axioms goldbachG11PrimeIntegral_author_le_primitives
-#check g11AuthorMajorant_geometric
-#print axioms g11AuthorMajorant_geometric
-#check g11AuthorMajorant_integral
-#print axioms g11AuthorMajorant_integral
-#check g11AuthorPrimitive0_hasDerivAt
-#print axioms g11AuthorPrimitive0_hasDerivAt
-#check g11AuthorPrimitive1_hasDerivAt
-#print axioms g11AuthorPrimitive1_hasDerivAt
-#check g11AuthorPrimitiveN_hasDerivAt
-#print axioms g11AuthorPrimitiveN_hasDerivAt
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

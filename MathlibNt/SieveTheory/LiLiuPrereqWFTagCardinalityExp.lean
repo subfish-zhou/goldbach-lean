@@ -72,9 +72,4 @@ theorem signedTags_card_lt_exp_source (upper : Bool) (P : Finset ℕ)
     ((signedTags upper P D ε label).card : ℝ) < Real.exp (8 * (ε⁻¹) ^ 3) :=
   signedTags_card_lt_exp upper P label (by linarith) hε (by linarith)
 
-#check signedTags_card_lt_exp
-#print axioms signedTags_card_lt_exp
-#check signedTags_card_lt_exp_source
-#print axioms signedTags_card_lt_exp_source
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

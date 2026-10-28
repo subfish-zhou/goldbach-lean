@@ -1,0 +1,20 @@
+{
+  "B10RetainedWithoutWeak": {
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachB10RetainedEndpoints.lean",
+    "before": "import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralScalar",
+    "after": "import MathlibNt.Tactic.PolynomialDeriv\nimport MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction\nimport MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper",
+    "source_sha256": "af9602d04c53b4a678543fe8675e1ecb8b8aaeb22f9ab9816a231c6dc3c807a7"
+  },
+  "S4RetainedWithoutWeak": {
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachS4RetainedEndpoints.lean",
+    "before": "import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralScalar",
+    "after": "import MathlibNt.Tactic.PolynomialDeriv\nimport MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction\nimport MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper",
+    "source_sha256": "d8b5cda315011e356ecd8fdada50c9b2a4e8738a423d893ec67bf918d95994b8"
+  },
+  "BetaContinuityNarrow": {
+    "source": "MathlibNt/SieveTheory/LiLiuGoldbachS1BetaFactorContinuity.lean",
+    "before": "import MathlibNt.SieveTheory.SwitchingPrinciple",
+    "after": "import MathlibNt.SieveTheory.Switching.RosserSieveAsymptotics",
+    "source_sha256": "614ece5cdead1726184c7cc8c7861743d689db651b81fd83b610710d33c98dae"
+  }
+}

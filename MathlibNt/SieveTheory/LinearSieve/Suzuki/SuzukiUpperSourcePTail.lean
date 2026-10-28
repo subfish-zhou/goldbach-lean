@@ -1,5 +1,5 @@
+import MathlibNt.SieveTheory.LinearSieve.DimensionOneUpperFactor
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingWindowTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourcePairingFinal
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEinEulerTailAsymptotic
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointDDE
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSecondIntervalJurkatRichertBridge

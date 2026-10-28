@@ -1,0 +1,23 @@
+	Command being timed: "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean -j1 -DwarningAsError=true -R /tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources -o /tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4CheckedDagData.olean -DautoImplicit=false /tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4CheckedDagData.lean"
+	User time (seconds): 1.01
+	System time (seconds): 0.44
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.47
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1555796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 58
+	Minor (reclaiming a frame) page faults: 36199
+	Voluntary context switches: 883
+	Involuntary context switches: 72
+	Swaps: 0
+	File system inputs: 9648
+	File system outputs: 960
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

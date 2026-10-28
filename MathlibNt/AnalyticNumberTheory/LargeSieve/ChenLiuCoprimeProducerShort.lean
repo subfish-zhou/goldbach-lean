@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerCutoff
-import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19UniformMoments
-import Mathlib.NumberTheory.Harmonic.Bounds
+import MathlibNt.AnalyticNumberTheory.LargeSieve.FixedPrimitiveSquareMean
 
 /-!
 # The short-polynomial primitive mean in Pan (2.25)--(2.27)
@@ -169,18 +168,6 @@ def shortMean (f : ℕ → ℂ) (m A₁ A₂ k : ℕ) (R : ℝ) (s : ℂ) : ℝ 
     ∑ χ : PrimitiveCharacter q,
       ‖panDyadicG f m A₁ A₂ k χ s * panShortF₁ m (shortCutoff R) χ s‖
 
-theorem shortMean_nonneg (f : ℕ → ℂ) (m A₁ A₂ k : ℕ) (R : ℝ) (s : ℂ) :
-    0 ≤ shortMean f m A₁ A₂ k R s := by unfold shortMean; positivity
-
-/-- Equation (2.25), without a triangle inequality inside either polynomial. -/
-theorem shortMean_le_sqrt_moments (f : ℕ → ℂ) (m A₁ A₂ k : ℕ)
-    (R : ℝ) (s : ℂ) :
-    shortMean f m A₁ A₂ k R s ≤
-      Real.sqrt (∑ q ∈ conductorCell R, (q.totient : ℝ)⁻¹ *
-        ∑ χ : PrimitiveCharacter q, ‖panDyadicG f m A₁ A₂ k χ s‖ ^ 2) *
-      Real.sqrt (∑ q ∈ conductorCell R, (q.totient : ℝ)⁻¹ *
-        ∑ χ : PrimitiveCharacter q, ‖panShortF₁ m (shortCutoff R) χ s‖ ^ 2) :=
-  weighted_product_mean_le (conductorCell R) _ _
 
 private theorem sqrt_moments_le {U V C R N H L : ℝ}
     (hU : 0 ≤ U) (hV : 0 ≤ V) (hC : 0 ≤ C) (hR : 0 < R)

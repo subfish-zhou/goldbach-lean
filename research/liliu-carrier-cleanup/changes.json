@@ -1,0 +1,284 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/Analysis/LogPowerBounds.lean",
+      "status": "modified",
+      "before_sha256": "b1f24d0f70f59fa85c05c56ce51e15bb830f615d81fe6f490fcc650d2d8e3e1a",
+      "after_sha256": "6b35ee2d935eb28997a13ccba2b952b547ce84744cb4764defb7129bcccd559f",
+      "before": {
+        "code_lines": 14,
+        "physical_lines": 20,
+        "utf8_bytes": 914
+      },
+      "after": {
+        "code_lines": 36,
+        "physical_lines": 43,
+        "utf8_bytes": 2024
+      },
+      "delta": {
+        "code_lines": 22,
+        "physical_lines": 23,
+        "utf8_bytes": 1110
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKLargeGCDExclusion.lean",
+      "status": "modified",
+      "before_sha256": "cf544567096f776667d845c7c4d532dbfa8fa7a957be2b1d211b6fdcfba95934",
+      "after_sha256": "3f9f005b4011721880e7d159372b1a4fd28d5f1ab74b7f08e0274a0a42fbd8c7",
+      "before": {
+        "code_lines": 274,
+        "physical_lines": 306,
+        "utf8_bytes": 15223
+      },
+      "after": {
+        "code_lines": 253,
+        "physical_lines": 284,
+        "utf8_bytes": 14223
+      },
+      "delta": {
+        "code_lines": -21,
+        "physical_lines": -22,
+        "utf8_bytes": -1000
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryBetaCleanPayment.lean",
+      "status": "modified",
+      "before_sha256": "134c0c42c3a37f7e19b59d81c5f39308d34339d749d89a3600177f941df3ec03",
+      "after_sha256": "acd1e16ab1bb0618e931d2119f2edeb1a6693e6feffd68356cf94fc1393423a1",
+      "before": {
+        "code_lines": 63,
+        "physical_lines": 83,
+        "utf8_bytes": 3661
+      },
+      "after": {
+        "code_lines": 46,
+        "physical_lines": 66,
+        "utf8_bytes": 2839
+      },
+      "delta": {
+        "code_lines": -17,
+        "physical_lines": -17,
+        "utf8_bytes": -822
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryGramResonanceScaleBox.lean",
+      "status": "modified",
+      "before_sha256": "7def3edf650dfbd581b8d98bf3af1528666a0d3eca4dce22d03a757b8d82edce",
+      "after_sha256": "1deedfa8b15a026381d773ad08ce066b12f8dfb205d3017f952d183947baf6b2",
+      "before": {
+        "code_lines": 104,
+        "physical_lines": 132,
+        "utf8_bytes": 6245
+      },
+      "after": {
+        "code_lines": 104,
+        "physical_lines": 132,
+        "utf8_bytes": 6306
+      },
+      "delta": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 61
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvrySecondaryRatioBox.lean",
+      "status": "modified",
+      "before_sha256": "11810981f10ac65ace98e8ae83a0d8d09a4b3450af9d65bcbbe99cbeb62f7f77",
+      "after_sha256": "103e147b22c59ac864c51555342b9f02c2bbe706c40010d84cd3d80c2246c910",
+      "before": {
+        "code_lines": 112,
+        "physical_lines": 136,
+        "utf8_bytes": 6751
+      },
+      "after": {
+        "code_lines": 80,
+        "physical_lines": 103,
+        "utf8_bytes": 5105
+      },
+      "delta": {
+        "code_lines": -32,
+        "physical_lines": -33,
+        "utf8_bytes": -1646
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB10NormalizedUpper.lean",
+      "status": "modified",
+      "before_sha256": "609765f5f222ea52c69ad97359630210c783f0beead279a45aab1d1b0740b057",
+      "after_sha256": "f65ebc6d4d2d879ab8b7fb948de52379ca1d19e59bcd955e26da9d834625d713",
+      "before": {
+        "code_lines": 375,
+        "physical_lines": 391,
+        "utf8_bytes": 18498
+      },
+      "after": {
+        "code_lines": 360,
+        "physical_lines": 376,
+        "utf8_bytes": 17976
+      },
+      "delta": {
+        "code_lines": -15,
+        "physical_lines": -15,
+        "utf8_bytes": -522
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB8NormalizedMainMass.lean",
+      "status": "modified",
+      "before_sha256": "65d7f53e5c63e4d833e0489af9535da06342fdf32848de9a47be6aaa1b03bde0",
+      "after_sha256": "a1483990f2f6dc676d54331b6c7c7dcd8095f5aae333ec71e48d6361d69a5d8b",
+      "before": {
+        "code_lines": 290,
+        "physical_lines": 308,
+        "utf8_bytes": 16287
+      },
+      "after": {
+        "code_lines": 286,
+        "physical_lines": 304,
+        "utf8_bytes": 16163
+      },
+      "delta": {
+        "code_lines": -4,
+        "physical_lines": -4,
+        "utf8_bytes": -124
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachClosedTriples.lean",
+      "status": "modified",
+      "before_sha256": "500c982190c366ccbb6ee1b13ea68ee8266f5a32cbefed0ce0d4c4c8958a5ccb",
+      "after_sha256": "c431c6656a314c68c04bed4a589ece8ea8d4e3f12db7ac37ac750b18135dd1bf",
+      "before": {
+        "code_lines": 344,
+        "physical_lines": 384,
+        "utf8_bytes": 17696
+      },
+      "after": {
+        "code_lines": 372,
+        "physical_lines": 414,
+        "utf8_bytes": 19083
+      },
+      "delta": {
+        "code_lines": 28,
+        "physical_lines": 30,
+        "utf8_bytes": 1387
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachS2PaidUpper.lean",
+      "status": "modified",
+      "before_sha256": "8e7b1708e2bd85906cc4a30146e5dee70ee9481cb3ac4fe251de40722228a8ac",
+      "after_sha256": "1f2ccc08cee53ee314d26b5ac9e24d53cf216dba48d5e767285d8c5b07bf4d2b",
+      "before": {
+        "code_lines": 331,
+        "physical_lines": 343,
+        "utf8_bytes": 16040
+      },
+      "after": {
+        "code_lines": 325,
+        "physical_lines": 337,
+        "utf8_bytes": 15785
+      },
+      "delta": {
+        "code_lines": -6,
+        "physical_lines": -6,
+        "utf8_bytes": -255
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachS4SwitchedCarrier.lean",
+      "status": "modified",
+      "before_sha256": "e27f37512f12009460135c04a5c77c2e77f55fc03fcb6a213651a9b2a396d3d3",
+      "after_sha256": "dc619c3dc15c9243bf124326f49e74fa00b3e362ffe5078f7e640133bdb7fc6e",
+      "before": {
+        "code_lines": 388,
+        "physical_lines": 429,
+        "utf8_bytes": 21423
+      },
+      "after": {
+        "code_lines": 377,
+        "physical_lines": 418,
+        "utf8_bytes": 20906
+      },
+      "delta": {
+        "code_lines": -11,
+        "physical_lines": -11,
+        "utf8_bytes": -517
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachS5SwitchedCarrier.lean",
+      "status": "modified",
+      "before_sha256": "e0815b05bc491eaa3c86e850bb55348207eabf4c503018c3c8eb2df6df533fc1",
+      "after_sha256": "7ec51e7dfa4ba7936e81b95c9a94b63380ac91b0b48d6f622e2922ddfa495bd0",
+      "before": {
+        "code_lines": 279,
+        "physical_lines": 320,
+        "utf8_bytes": 15319
+      },
+      "after": {
+        "code_lines": 267,
+        "physical_lines": 308,
+        "utf8_bytes": 14745
+      },
+      "delta": {
+        "code_lines": -12,
+        "physical_lines": -12,
+        "utf8_bytes": -574
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachWeightInitial.lean",
+      "status": "modified",
+      "before_sha256": "66cb2026cd55eb40d5743a8405bfae5922eb80e55c08f7f078ec5b31ab097247",
+      "after_sha256": "f6da5a1460fb3bcaafe0b93af6a0ff33478090b71a4a51aee77dd0af57f8be19",
+      "before": {
+        "code_lines": 529,
+        "physical_lines": 576,
+        "utf8_bytes": 27168
+      },
+      "after": {
+        "code_lines": 471,
+        "physical_lines": 515,
+        "utf8_bytes": 24261
+      },
+      "delta": {
+        "code_lines": -58,
+        "physical_lines": -61,
+        "utf8_bytes": -2907
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachWeightTriplePartition.lean",
+      "status": "modified",
+      "before_sha256": "f25dc6df153613313f116d52cd13228bb0094e57d1e806d493f56cc314f738bc",
+      "after_sha256": "bf69259df19f69539995c55ba97a3a6b6442b82c2903ef74180df9777aa8c88c",
+      "before": {
+        "code_lines": 418,
+        "physical_lines": 447,
+        "utf8_bytes": 20060
+      },
+      "after": {
+        "code_lines": 390,
+        "physical_lines": 418,
+        "utf8_bytes": 18556
+      },
+      "delta": {
+        "code_lines": -28,
+        "physical_lines": -29,
+        "utf8_bytes": -1504
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -154,
+    "physical_lines": -157,
+    "utf8_bytes": -7313
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

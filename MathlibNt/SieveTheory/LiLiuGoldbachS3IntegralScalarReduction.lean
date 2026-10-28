@@ -10,32 +10,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 set_option autoImplicit false
 
-/-- Exact argument range of the unchanged S3 integrand. -/
-theorem goldbachS3_scalar_argument_mem {u : ℝ}
-    (hu : u ∈ Icc (4 / 53 : ℝ) (1 / 3 : ℝ)) :
-    ((1 / 2 : ℝ) - u) / (4 / 53 : ℝ) ∈ Icc (53 / 24 : ℝ) (45 / 8 : ℝ) := by
-  constructor <;> linarith [hu.1, hu.2]
-
-/-- Compact integrability of the literal production kernel, not a surrogate. -/
-theorem goldbachS3_scalar_intervalIntegrable {β : ℝ}
-    (hβ : (4 / 53 : ℝ) ≤ β) (hβu : β ≤ (1 / 3 : ℝ)) :
-    IntervalIntegrable (fun u : ℝ =>
-      suzukiContinuousUpperFactor (((1 / 2 : ℝ) - u) / (4 / 53 : ℝ)) / u)
-      volume (4 / 53 : ℝ) β := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le hβ]
-  apply ContinuousOn.div
-  · apply goldbach_suzukiUpperFactor_continuousOn_threeHalves_seven.comp
-      ((continuous_const.sub continuous_id).div_const (4 / 53 : ℝ)).continuousOn
-    intro u hu
-    have hr := goldbachS3_scalar_argument_mem ⟨hu.1, hu.2.trans hβu⟩
-    change (3 / 2 : ℝ) ≤ ((1 / 2 : ℝ) - u) / (4 / 53 : ℝ) ∧
-      ((1 / 2 : ℝ) - u) / (4 / 53 : ℝ) ≤ 7
-    constructor <;> linarith [hr.1, hr.2]
-  · exact continuousOn_id
-  · intro u hu
-    change u ≠ 0
-    linarith [hu.1]
 
 /-- First branch, with the genuine amplitude cancelled exactly. -/
 theorem goldbachS3_scalar_exp_cancel_first {s : ℝ}

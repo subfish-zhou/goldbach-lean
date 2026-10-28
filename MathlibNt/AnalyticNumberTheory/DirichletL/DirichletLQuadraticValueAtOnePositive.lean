@@ -81,12 +81,5 @@ theorem LFunction_apply_one_re_pos_of_sq_eq_one
     · simpa only [zero_im] using him
   exact lt_of_le_of_ne hnonneg.1 (Ne.symm hre_ne)
 
-/-- Positivity and realness of a nonprincipal quadratic Dirichlet L-value at
-`1`. -/
-theorem LFunction_apply_one_positive_real_of_sq_eq_one
-    {χ : DirichletCharacter ℂ N} (hquad : χ ^ 2 = 1) (hχ : χ ≠ 1) :
-    (χ.LFunction 1).im = 0 ∧ 0 < (χ.LFunction 1).re :=
-  ⟨LFunction_apply_one_im_eq_zero_of_sq_eq_one hquad hχ,
-    LFunction_apply_one_re_pos_of_sq_eq_one hquad hχ⟩
 
 end DirichletCharacter

@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineScalars.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineScalars.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineScalars.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineScalars.lean"
+  ],
+  "environment": {
+    "LEAN_PATH": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+    "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+    "TMPDIR": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/tmp"
+  },
+  "source_sha256": "bf1d41e114e2014dcbdd7cc7d1e3a784d57e81a0fb6de1a59bb02991f4bc551e",
+  "dependencies": {
+    "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7",
+    "W03Table": "fde7de24ff3603e898587dbd81fbb0f26f56c625b95ed063897fb2cde799be37",
+    "ExactSixthOuter": "134cf9378e73511b71b688defd5cfd62087cce4886677bc045ff4c0f143dc28f"
+  },
+  "dependency_contexts": {
+    "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878",
+    "W03Table": "dd31cc25374b18853ef5a96ff7bb420abd206b626e52488a7aaff1cefd3422f2",
+    "ExactSixthOuter": "ccc55f016ea4f216cf3c40391e10e1ca6e9df88f70a5bc301ac017d67f6915cd"
+  }
+}

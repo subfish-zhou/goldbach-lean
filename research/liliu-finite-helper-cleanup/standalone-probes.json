@@ -1,0 +1,117 @@
+{
+  "status": "pass",
+  "finished_at_utc": "2026-10-27T07:45:58.945090+00:00",
+  "results": [
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit",
+      "before_source_sha256": "350f482d1201c01bf861506802d86a8f2c5b53a01f3f4f31a48bca8501f052e1",
+      "planned_production_sha256": "026849ca676f4f30d0b348f97bf8c43011dc0c0214221f2054d88b373b22d521",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit.lean",
+      "probe_sha256": "026849ca676f4f30d0b348f97bf8c43011dc0c0214221f2054d88b373b22d521",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/PV.log",
+      "log_sha256": "e345f8a3612ed06a1c3c49ade2cfb8ecbe9f17dc58767324d4c98e499bf6d164",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -7,
+      "informational_output": true
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion",
+      "before_source_sha256": "ad3e11d7b6070602d8edbfb16e0ba630e38b51f8253372ef55385d63202ed826",
+      "planned_production_sha256": "9f231ca00dc63bf30bd0e3ed0e9a74a3ba8648ee91fce05315b96d1509235a06",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion.lean",
+      "probe_sha256": "9f231ca00dc63bf30bd0e3ed0e9a74a3ba8648ee91fce05315b96d1509235a06",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/Fouvry.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -5,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption",
+      "before_source_sha256": "ae30f1854e5c265dad52b14f9626799af01d5f1a5f5ce23c4f989e0cbc24dd41",
+      "planned_production_sha256": "4f7d50a0ea5b0c11afbd4b0fc6abfded5d6388c7bd778c98503140bd845f41d2",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption.lean",
+      "probe_sha256": "4f7d50a0ea5b0c11afbd4b0fc6abfded5d6388c7bd778c98503140bd845f41d2",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/WF.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -4,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass",
+      "before_source_sha256": "a1483990f2f6dc676d54331b6c7c7dcd8095f5aae333ec71e48d6361d69a5d8b",
+      "planned_production_sha256": "cf1494139e8baa5cd8320908fc10fe7d2bbd17cd25534bd9d58335105893f8f6",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass.lean",
+      "probe_sha256": "cf1494139e8baa5cd8320908fc10fe7d2bbd17cd25534bd9d58335105893f8f6",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/B8.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -4,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized",
+      "before_source_sha256": "ca762050a6b2969cd961b501b26300bd606f9b3dd2dcc9fd92e8b12d664605e4",
+      "planned_production_sha256": "f8d099a9a2c49b43b10e4e013c425158d07f60b1fe767dc823865e7f0900b482",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized.lean",
+      "probe_sha256": "f8d099a9a2c49b43b10e4e013c425158d07f60b1fe767dc823865e7f0900b482",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/B9.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -4,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope",
+      "before_source_sha256": "6189924ce6faeb39c19a8e319c3972e969b363a94abcc8bad4955064ae353bf0",
+      "planned_production_sha256": "4afdbb2a519a360c4df23ea636d9556013839b10407033aa8ac41e0cbe6b0c28",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope.lean",
+      "probe_sha256": "4afdbb2a519a360c4df23ea636d9556013839b10407033aa8ac41e0cbe6b0c28",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/G11Envelope.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -4,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayMainLocal",
+      "before_source_sha256": "9ad611bd862d038f75517c367db1364a8d7a5e3c8c36b36a24298385f6fbb5f9",
+      "planned_production_sha256": "b6a0098df7ba5f42b7e40109212773e035a1e59bf4112cb5affb86a5ab8a6861",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayMainLocal.lean",
+      "probe_sha256": "23cacb07c488eb7f16a772b7daaea7bc84ed0ad300c5eb9ecbe074ab31e16993",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/GridMain.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -9,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryLocal",
+      "before_source_sha256": "3f63f8ccb86c2e19eaec857e47376b3f3401d6be6d48488dfe0a14c059dd6843",
+      "planned_production_sha256": "aef8466ec8b7c1ba7e9256697d606780ae3ae014b81ff82765a8166765bb7f40",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryLocal.lean",
+      "probe_sha256": "e18a465f83e6b678382e7a442bf146a65a867652ad6cdec3e0058055a3ad0fb6",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/GridSecondary.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": -6,
+      "informational_output": false
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReindex",
+      "before_source_sha256": "f5593fc7f2086f3be8b77a318bed9cd6dc59e6f48efc8a26227c9b234129d469",
+      "planned_production_sha256": "544a450aa7839185bc1bc01f68b3ac3ad39161e13d5db66aaf8c547bdda92f8e",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/next-wave/MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReindex.lean",
+      "probe_sha256": "544a450aa7839185bc1bc01f68b3ac3ad39161e13d5db66aaf8c547bdda92f8e",
+      "log": "/tmp/liliu-gate-budget-cleanup/next-wave/GridProvider.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "net_code_lines_if_applied": 9,
+      "informational_output": false
+    }
+  ],
+  "net_main_code_lines_if_applied": -34,
+  "record_scope": "Historical complete-file prototype receipts before application. Production import combination accepted separately in validation.json. PV prototype emits an informational ring_nf suggestion while the actual warning-as-error process exits0.",
+  "accepted_full_combination_validation": "validation.json"
+}

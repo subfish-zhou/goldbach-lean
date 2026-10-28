@@ -61,7 +61,4 @@ theorem fouvryG9RelaxedIntegral_selected_cell_geometry {n : ℕ} {h u v : ℝ}
   rw [goldbachB9AlphaGridPoint_succ] at huu
   rw [goldbachB9BetaGridPoint_succ] at hvv
   exact ⟨by linarith [hu.1], by linarith, by linarith [hv.1], by linarith⟩
-
-#print axioms fouvryG9RelaxedIntegral_continuous_corner_error
-#print axioms fouvryG9RelaxedIntegral_selected_cell_geometry
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

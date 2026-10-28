@@ -78,21 +78,6 @@ private theorem high_integrable (g : ℝ → ℝ)
   rw [sharp_high hu.1.le]
   ring
 
-/-- Multiplication by a continuous density preserves sharp-weight integrability. -/
-theorem sharp_mul_integrable (g : ℝ → ℝ)
-    (hg : ContinuousOn g (Icc (4/53 : ℝ) (4/33))) :
-    IntervalIntegrable (fun u => G12SharpWeight.weight u * g u) volume (4/53) (4/33) :=
-  (low_integrable g hg).trans (high_integrable g hg)
-
-/-- Integrability of the original discontinuous weight itself. -/
-theorem sharp_weight_intervalIntegrable :
-    IntervalIntegrable G12SharpWeight.weight volume (4/53) (4/33) := by
-  simpa only [mul_one] using sharp_mul_integrable (fun _ => 1) continuousOn_const
-
-/-- Integrability of the discontinuous sharp weighted density, proved branchwise. -/
-theorem sharp_integrable :
-    IntervalIntegrable (fun u => G12SharpWeight.weight u * density u)
-      volume (4/53) (4/33) := sharp_mul_integrable density continuousOn_density
 
 /-- Endpoint removal occurs only inside Lebesgue integrals, never in the prime sum. -/
 theorem sharp_integral_split :
@@ -118,18 +103,5 @@ theorem sharp_integral_split :
     dsimp only
     rw [sharp_high hu.1.le, goldbachG11AuthorWeight_eq_high hu.1.le]
 
-/-- The discontinuous weight also gives an integrable literal outer cross slice. -/
-theorem sharp_outer_intervalIntegrable :
-    IntervalIntegrable (fun r : ℝ => ∫ q in r..(4/33 : ℝ),
-      ∫ s in q..(4/33 : ℝ), ∫ t in (4/33 : ℝ)..(3/11),
-        G12SharpWeight.weight r / (r * q^2 * s * t)) volume (4/53) (4/33) := by
-  apply (sharp_integrable.const_mul (Real.log ((3/11 : ℝ)/(4/33)))).congr
-  intro r hr
-  have hr := uIoc_subset_uIcc hr
-  rw [uIcc_of_le (by norm_num : (4/53 : ℝ) ≤ 4/33)] at hr
-  dsimp only
-  rw [goldbachG12PrimeIntegral_rSlice_eq G12SharpWeight.weight (by linarith [hr.1]) hr.2]
-  dsimp [density]
-  ring
 
 end G12SharpQuadrature

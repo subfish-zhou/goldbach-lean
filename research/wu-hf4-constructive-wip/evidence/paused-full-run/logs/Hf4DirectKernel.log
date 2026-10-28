@@ -1,0 +1,1 @@
+'Hf4Quad.compactKernel_eq_directKernel' depends on axioms: [propext, Classical.choice, Quot.sound]

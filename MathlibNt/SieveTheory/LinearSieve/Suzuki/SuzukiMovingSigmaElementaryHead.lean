@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146SourceAssembly
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaCompactHead
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFixedGapRpowMargin
 
 open scoped Classical BigOperators Interval

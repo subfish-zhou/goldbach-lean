@@ -1,5 +1,6 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectJoinedTerms
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalizationRoots
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalizationMonomials
+
 
 /-! Local bounds for the secondary terms, retaining the long-interval fractions. -/
 noncomputable section
@@ -10,13 +11,7 @@ namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 theorem directPaySecondary_grid (R S : ℝ) (K : WExtractedKey)
     (j cap : Fin 5 → ℕ) :
     ((wKSectionGridUpper R S K j cap + 1 : ℕ) : ℝ) ≤ 2 * (2 : ℝ) ^ j 1 := by
-  have hu : wKSectionGridUpper R S K j cap ≤ 2 ^ (j 1 + 1) - 1 :=
-    (min_le_right _ _).trans (min_le_right _ _)
-  have hp : 0 < (2 : ℕ) ^ (j 1 + 1) := by positivity
-  have hh : wKSectionGridUpper R S K j cap + 1 ≤ 2 ^ (j 1 + 1) := by omega
-  have hr : ((wKSectionGridUpper R S K j cap + 1 : ℕ) : ℝ) ≤
-      (2 : ℝ) ^ (j 1 + 1) := by exact_mod_cast hh
-  simpa only [pow_succ, mul_comm] using hr
+  exact directPayMain_span R S K j cap
 
 /-- Actual ratio count is H s log(2H), with both independent beta supports. -/
 theorem directPaySecondary_count (K : WExtractedKey) (F : ℕ) (j : Fin 5 → ℕ) :

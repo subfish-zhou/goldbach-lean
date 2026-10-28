@@ -67,11 +67,7 @@ theorem goldbachPairMovingMain_paid (U : ℝ) (hU : 0 < U) :
   refine ⟨max Nc Nb, by omega, ?_⟩
   intro N hN hEven ε hε hεu T hT
   have hN4 : 4 ≤ N := by omega
-  have hNR : (4 : ℝ) ≤ N := by exact_mod_cast hN4
-  have hx : 3 ≤ (1-ε)*(N : ℝ) := by nlinarith
-  have hceil : 3 ≤ Nat.ceil ((1-ε)*(N : ℝ)) := by
-    exact_mod_cast hx.trans (Nat.le_ceil ((1-ε)*(N : ℝ)))
-  have hm : 2 ≤ goldbachS1Endpoint N ε := by unfold goldbachS1Endpoint; omega
+  have hm : 2 ≤ goldbachS1Endpoint N ε := goldbachS1Endpoint_two_le hN4 hεu
   have hf := Finset.sum_le_sum (s := T) (fun a ha =>
     hc N (by omega) hEven ε hεu (a.1*a.2)
       (goldbachPair_product_bounds hN4 (hT a ha).1 (hT a ha).2.1).1

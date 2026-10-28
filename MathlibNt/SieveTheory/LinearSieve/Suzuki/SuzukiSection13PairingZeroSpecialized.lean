@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZero
-import Mathlib.Analysis.SpecialFunctions.PolynomialExp
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

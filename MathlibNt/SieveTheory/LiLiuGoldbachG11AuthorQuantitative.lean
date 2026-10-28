@@ -1,6 +1,8 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorReusedCounts
 import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorCountLedger
-import MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional
+import MathlibNt.SieveTheory.LiLiuGoldbachG67IntegralCertificate
+import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticScalar
+import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationScalar
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

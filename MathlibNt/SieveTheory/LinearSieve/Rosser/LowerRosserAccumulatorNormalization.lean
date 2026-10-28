@@ -147,15 +147,6 @@ theorem lowerRosserBoundaryAccum_supportedBelow_eq_euler_mul_sum_normalizedLayer
   intro k hk
   rw [lowerSuzukiUnnormalizedLayer_eq_euler_mul_normalizedLayer]
 
-/-- At every legal source level, each actual even Suzuki source layer is the
-Euler product times its normalized lower-boundary layer. -/
-theorem suzukiSourceV_even_eq_euler_mul_normalizedLayer
-    (S : BoundingSieve) (D z k : ℕ) (hzD : z ≤ D) :
-    suzukiSourceV S (2 * (k + 1)) D z =
-      sourceDiscreteEuler S z * lowerSuzukiNormalizedLayer S D 0 z k := by
-  rw [suzukiSourceV_even_eq_lowerRosserEvenBoundaryLayerMass,
-    lowerRosserEvenBoundaryLayerMass_eq_unnormalizedLayer S D z k hzD,
-    lowerSuzukiUnnormalizedLayer_eq_euler_mul_normalizedLayer]
 
 /-- Exact finite normalization identity for Suzuki's actual even parity sum. -/
 theorem suzukiActualT_even_eq_euler_mul_sum_normalizedLayers

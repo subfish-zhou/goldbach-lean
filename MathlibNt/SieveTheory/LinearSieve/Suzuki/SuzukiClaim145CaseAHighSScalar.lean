@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowS
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
 import MathlibNt.Analysis.RealLogPowerThreshold
 
@@ -566,23 +565,6 @@ theorem claim145_caseA_highS_front_factor_eventually_uniform_in_S
       exact mul_le_mul_of_nonneg_left hscaleR hV
     _ = _ := by ring
 
-/-- Compatibility specialization of the uniform front-factor cutoff. -/
-theorem claim145_caseA_highS_front_factor_eventually
-    (S : BoundingSieve) {d Δ C1 Θ : ℝ}
-    (hC1 : 0 < C1) (hΘ : 0 ≤ Θ)
-    (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1)
-    (hgap : 0 < d - 2 * Θ) :
-    ∀ᶠ K : ℝ in atTop, 2 ≤ K ∧ ∀ D s : ℝ,
-      HasDimensionOneLocalProductBound S K →
-      2 ≤ D → 4 ≤ s →
-      Real.sqrt K / Real.log K ≤ s →
-      Real.log D ≤ C1 * K ^ Θ →
-      1 ≤ claim14_5VProduct S D *
-        (Real.exp (Real.sqrt K) / (Real.log D * sourceSigma D d)) *
-        s * (Real.log D) ^ (-Δ) := by
-  filter_upwards [claim145_caseA_highS_front_factor_eventually_uniform_in_S
-    hC1 hΘ hΔ0 hΔ1 hgap] with K hK
-  exact ⟨hK.1, hK.2 S⟩
 
 /-- Final high-coordinate `(14.6)` scalar absorption.  Unlike an actual-bound
 wrapper, this statement exposes the complete numerical comparison: the finite
@@ -644,32 +626,6 @@ theorem claim145_caseA_highS_habsorb_eventually_uniform_in_S
             proposition131iiLowerProfile C s) := by ring
         _ ≤ _ := mul_le_mul_of_nonneg_right hfront htail0
     _ = _ := by ring
-
-/-- Compatibility specialization of the uniform high-coordinate absorption. -/
-theorem claim145_caseA_highS_habsorb_eventually
-    (S : BoundingSieve) {d Δ C1 Θ C : ℝ}
-    (hC1 : 0 < C1) (hΘ : 0 ≤ Θ)
-    (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1)
-    (hgap : 0 < d - 2 * Θ) :
-    ∀ᶠ K : ℝ in atTop, 2 ≤ K ∧ ∀ D s : ℝ,
-      HasDimensionOneLocalProductBound S K →
-      2 ≤ D → 4 ≤ s →
-      Real.sqrt K / Real.log K ≤ s →
-      Real.log D ≤ C1 * K ^ Θ →
-      1 ≤ suzukiSourceL D K →
-      Real.exp 1 * suzukiSourceL D K ≤ s - 2 →
-      suzukiSourceL D K ≤ Real.log (3 * K) * Real.log (3 * s) →
-      Real.exp
-          (suzukiSourceL D K + (s - 2) *
-            (1 + Real.log (suzukiSourceL D K) - Real.log (s - 2))) ≤
-        claim14_5VProduct S D *
-          (Real.exp (Real.sqrt K) / (Real.log D * sourceSigma D d)) *
-          ((1 + s ^ d / Real.log D) ^ s * s *
-            proposition131iiLowerProfile C s) *
-          (Real.log D) ^ (-Δ) := by
-  filter_upwards [claim145_caseA_highS_habsorb_eventually_uniform_in_S
-    hC1 hΘ hΔ0 hΔ1 hgap] with K hK
-  exact ⟨hK.1, hK.2 S⟩
 
 
 end MathlibNt.SieveTheory

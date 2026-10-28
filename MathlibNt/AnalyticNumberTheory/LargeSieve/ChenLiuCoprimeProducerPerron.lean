@@ -136,7 +136,7 @@ theorem hyperbola_error_le_harmonic {q x y : ℕ} {T : ℝ}
     have hcoeff : ‖liuPanPerronProductCoefficient A B χ u v‖ ≤ 1 := by
       simp only [liuPanPerronProductCoefficient, hu0, hv0, or_self, if_false, norm_mul]
       exact mul_le_one₀ (mul_le_one₀ (hA u hu) (norm_nonneg _) (hB v hv))
-        (norm_nonneg _) (dirichletCharacter_norm_le_one q χ _)
+        (norm_nonneg _) (_root_.AnalyticNumberTheory.LargeSieve.dirichletChar_norm_le_one q χ _)
     rw [← mul_boole, ← mul_sub, norm_mul]
     calc
       _ ≤ 1 * ((108 * (x : ℝ) ^ 3 / T) / (u * v : ℕ)) :=

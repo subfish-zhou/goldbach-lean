@@ -1,9 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
 import MathlibNt.SieveTheory.LiuTrueLiPan
 import MathlibNt.SieveTheory.LiuPanActualCountCharacters
-import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Order.Interval.Finset.Nat
 
 open scoped BigOperators
 
@@ -15,8 +12,6 @@ open MathlibNt.SieveTheory.LiuWeight
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachB10PanPrefixes (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The literal real-valued `C10` coefficient used by the finite Pan bridge. -/
 noncomputable def goldbachC10CoeffReal (N : ℕ) (b c : ℝ) (m : ℕ) : ℝ :=
@@ -213,65 +208,6 @@ private theorem B10PanPrefixes_residue_eq_iff_modEq_residue
   · intro hmq
     exact hmq.trans (Nat.mod_modEq N d)
 
-private theorem goldbachB10ProductQFiber_eq_primePrefixSdiff
-    {N : ℕ} {ε b c : ℝ} {m : ℕ}
-    (hm : m ∈ goldbachC10ProductSupport N b c)
-    (hε0 : 0 < ε) :
-    goldbachB10ProductQFiber N ε m =
-      B10PanPrefixesAPPrefix N N m 1 0 \
-        B10PanPrefixesAPPrefix N ⌊ε * (N : ℝ)⌋₊ m 1 0 := by
-  let Y₀ : ℕ := ⌊ε * (N : ℝ)⌋₊
-  have hm0 : goldbachC10CoeffReal N b c m ≠ 0 :=
-    (goldbachC10CoeffReal_ne_zero_iff).2 hm
-  have hmpos : 0 < m := lt_trans Nat.zero_lt_one (goldbachC10CoeffReal_ne_zero_imp_one_lt hm0)
-  ext q
-  constructor
-  · intro hq
-    rcases mem_goldbachB10ProductQFiber_iff.mp hq with ⟨hqRange, hqPrime, hqLower, hqUpper⟩
-    have hupperLe : m * q ≤ N := (B10PanPrefixes_upper_lt_iff_mul_le hm0).mp hqUpper
-    have hlowerNot : ¬ m * q ≤ Y₀ := by
-      intro hmq
-      have hfloor : Y₀ < m * q := (B10PanPrefixes_lower_lt_iff_floor_lt_mul hmpos (le_of_lt hε0)).mp hqLower
-      exact (not_lt_of_ge hmq) hfloor
-    refine Finset.mem_sdiff.mpr ?_
-    constructor
-    · exact Finset.mem_filter.mpr
-        ⟨hqRange, hqPrime, hupperLe, (by simpa using (Nat.modEq_one : m * q ≡ 0 [MOD 1]))⟩
-    · intro hLower
-      exact hlowerNot (by
-        rcases Finset.mem_filter.mp hLower with ⟨_, _, hmq, _⟩
-        exact hmq)
-  · intro hq
-    rcases Finset.mem_sdiff.mp hq with ⟨hUpper, hNotLower⟩
-    rcases Finset.mem_filter.mp hUpper with ⟨hqRange, hqPrime, hupperLe, _⟩
-    have hqUpper : (q : ℝ) < (N : ℝ) / (m : ℝ) :=
-      (B10PanPrefixes_upper_lt_iff_mul_le hm0).2 hupperLe
-    have hfloor : Y₀ < m * q := lt_of_not_ge fun hmq =>
-      hNotLower <| by
-        exact Finset.mem_filter.mpr
-          ⟨hqRange, hqPrime, hmq, (by simpa using (Nat.modEq_one : m * q ≡ 0 [MOD 1]))⟩
-    have hqLower : ε * (N : ℝ) / (m : ℝ) < (q : ℝ) :=
-      (B10PanPrefixes_lower_lt_iff_floor_lt_mul hmpos (le_of_lt hε0)).2 hfloor
-    exact mem_goldbachB10ProductQFiber_iff.mpr ⟨hqRange, hqPrime, hqLower, hqUpper⟩
-
-theorem goldbachB10ProductQFiber_card_eq_primePrefix_sub
-    {N : ℕ} {ε b c : ℝ} {m : ℕ}
-    (hm : m ∈ goldbachC10ProductSupport N b c)
-    (hε0 : 0 < ε) (hε1 : ε < 1) :
-    (goldbachB10ProductQFiber N ε m).card =
-      primesInAPBelow N m 1 0 - primesInAPBelow ⌊ε * (N : ℝ)⌋₊ m 1 0 := by
-  let Y₀ : ℕ := ⌊ε * (N : ℝ)⌋₊
-  have hm0 : goldbachC10CoeffReal N b c m ≠ 0 :=
-    (goldbachC10CoeffReal_ne_zero_iff).2 hm
-  have hm1 : 1 ≤ m := (goldbachC10CoeffReal_ne_zero_imp_one_lt hm0).le
-  have hY₀ : Y₀ ≤ N := B10PanPrefixes_floor_mul_le_self hε0 hε1
-  rw [goldbachB10ProductQFiber_eq_primePrefixSdiff hm hε0]
-  have hsubset :
-      B10PanPrefixesAPPrefix N Y₀ m 1 0 ⊆ B10PanPrefixesAPPrefix N N m 1 0 :=
-    B10PanPrefixesAPPrefix_mono hY₀
-  rw [Finset.card_sdiff_of_subset hsubset,
-    ← B10PanPrefixes_primesInAPBelow_eq_card hm1 le_rfl,
-    ← B10PanPrefixes_primesInAPBelow_eq_card hm1 hY₀]
 
 private theorem goldbachB10ProductResidueQFiber_eq_primePrefixSdiff
     {N d : ℕ} {ε b c : ℝ} {m : ℕ}

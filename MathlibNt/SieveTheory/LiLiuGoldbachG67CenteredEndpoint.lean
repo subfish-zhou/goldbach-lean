@@ -16,7 +16,4 @@ theorem centered_endpoint_bound : (54233/40000 : ℝ) ≤ G67Centered.polynomial
   unfold polynomialIntegral
   rw [integral1_eq, endpoint1_eq, integral2_eq, endpoint2_eq, integral3_eq, endpoint3_eq, integral4_eq, endpoint4_eq, integral5_eq, endpoint5_eq]
   norm_num [errorBudget, cutoff, a]
-
-#check @centered_endpoint_bound
-#print axioms centered_endpoint_bound
 end G67CenteredEvaluation

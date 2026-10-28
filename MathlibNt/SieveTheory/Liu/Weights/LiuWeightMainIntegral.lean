@@ -1,8 +1,5 @@
 import MathlibNt.Tactic.ElementaryDeriv
 import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
-import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 /-!
 # Liu's reciprocal-log main integral
@@ -45,17 +42,6 @@ lemma liuSource_inner_domain_pos {α β : ℝ}
   · linarith [hβ.1]
   · linarith [hα.2, hβ.2]
 
-lemma liuSource_inner_intervalIntegrable {α : ℝ}
-    (hα : α ∈ Icc (1 / 10 : ℝ) (1 / 3 : ℝ)) :
-    IntervalIntegrable (liuSourceInnerIntegrand α) volume
-      (1 / 3 : ℝ) ((1 - α) / 2) := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le (by linarith [hα.2])]
-  apply ContinuousOn.div continuousOn_const
-    (continuousOn_id.mul (continuousOn_const.sub continuousOn_id))
-  intro β hβ
-  exact mul_ne_zero (liuSource_inner_domain_pos hα hβ).1.ne'
-    (liuSource_inner_domain_pos hα hβ).2.ne'
 
 /-- Exact evaluation of the inner integral in Liu's `lm-mt`. -/
 theorem liuSourceInnerIntegral_eq {α : ℝ}
@@ -128,19 +114,6 @@ theorem liuSourceInnerIntegral_eq {α : ℝ}
       rw [Real.log_one]
       ring
 
-lemma liuSource_reduced_intervalIntegrable :
-    IntervalIntegrable liuSourceReducedIntegrand volume
-      (1 / 10 : ℝ) (1 / 3 : ℝ) := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le (by norm_num : (1 / 10 : ℝ) ≤ 1 / 3)]
-  apply ContinuousOn.div
-  · exact (continuousOn_const.sub (continuousOn_const.mul continuousOn_id)).log
-      (fun α hα => by
-        simp only [Pi.sub_apply, Pi.mul_apply, id_eq]
-        linarith [hα.2])
-  · exact continuousOn_id.mul (continuousOn_const.sub continuousOn_id)
-  · intro α hα
-    exact mul_ne_zero (by linarith [hα.1]) (by linarith [hα.2])
 
 /-- Liu's double integral is exactly the reduced one-dimensional integral. -/
 theorem liuSourceMainIntegral_eq_reduced :

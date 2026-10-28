@@ -1,0 +1,31 @@
+{
+  "reason": "actual terminal independent checker failure: default findSysroot loaded4.35 Init into pinned4.33checker",
+  "old_validator_sha256": "08dbb50e15d93bf4d26b1abc18d4903d01915cf44fa980de27a4ffb8f17cd7cf",
+  "new_validator_sha256": "d55e77db656495ac5d618ad243e2a65d638199b5b1f65725f9175a1a1a7226b5",
+  "changes": [
+    {
+      "before": "  checkerhash=sha(checker)",
+      "after": "  checkerhash=sha(checker)\n  sysroot=lean.parent.parent\n  stdlib_init=sysroot/'lib/lean/Init.olean';stdlib_hash=sha(stdlib_init)"
+    },
+    {
+      "before": "   for name,h in plan['config'].items():checked(ROOT/name,h)",
+      "after": "   checked(stdlib_init,stdlib_hash)\n   for name,h in plan['config'].items():checked(ROOT/name,h)"
+    },
+    {
+      "before": "  env['LEAN_PATH']=':'.join([str(run/'lib'),*plan['package_paths']]);",
+      "after": "  env['LEAN_SYSROOT']=str(sysroot)\n  env['LEAN_PATH']=':'.join([str(run/'lib'),*plan['package_paths']]);"
+    },
+    {
+      "before": "validation_script_sha256=selfhash,production_adoption=False)",
+      "after": "validation_script_sha256=selfhash,lean_sysroot=str(sysroot),stdlib_init_sha256=stdlib_hash,production_adoption=False)"
+    }
+  ],
+  "exact_reverse": true,
+  "failed_validation_directory": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115563318799831",
+  "archived_failure_sha256": "62e282400a5fde12eae5f43caf952b0fd91ee25b8583d857b141366488040e06",
+  "source_evidence": {
+    "path": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/src/lean/Lean/Util/Path.lean",
+    "finding": "findSysroot honors LEAN_SYSROOT before invoking PATH lean --print-prefix"
+  },
+  "build_sources_results_objects_changed": false
+}

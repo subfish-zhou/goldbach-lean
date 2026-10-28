@@ -146,14 +146,6 @@ private theorem S3Paid_finite
   rw [hlit]
   exact hsum.trans (add_le_add le_rfl herr)
 
-private theorem S3Paid_endpoint_two_le {N : ℕ} {ε : ℝ}
-    (hN : 4 ≤ N) (hε : ε < 2 / 15) : 2 ≤ goldbachS1Endpoint N ε := by
-  have hNreal : (4 : ℝ) ≤ N := by exact_mod_cast hN
-  have hx3 : 3 ≤ (1 - ε) * (N : ℝ) := by nlinarith
-  have hceil : 3 ≤ Nat.ceil ((1 - ε) * (N : ℝ)) := by
-    exact_mod_cast hx3.trans (Nat.le_ceil ((1 - ε) * (N : ℝ)))
-  unfold goldbachS1Endpoint
-  omega
 
 /-- Actual closed S3 with the BV remainder paid, retaining the exact finite
 upper Rosser main sum and the strict-endpoint genuine logarithmic integral.
@@ -184,7 +176,7 @@ theorem goldbachS3Closed_upperRosser_paid (U : ℝ) (hU : 0 < U) :
   intro N hN hEven y _hzy hy
   have hN4 : 4 ≤ N := (le_max_left _ _).trans hN
   have hdata := hK N ((le_max_right _ _).trans hN)
-  have hm := S3Paid_endpoint_two_le hN4 hεu
+  have hm := goldbachS1Endpoint_two_le hN4 hεu
   have hlevel : ∀ p ∈ goldbachClosedPrimes N ((N : ℝ) ^ (4 / 53 : ℝ)) y,
       1 < LiuWeight.panModulusCutoff N B / p + 1 ∧
       ∀ ℓ ∈ (goldbachS1ProdPrimes N ((N : ℝ) ^ (4 / 53 : ℝ))).primeFactors,

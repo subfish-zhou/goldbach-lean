@@ -1,3 +1,4 @@
+import Mathlib.Topology.Order.LeftRight
 import MathlibNt.SieveTheory.LiLiuGoldbachG12ThinCofactorMass
 import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
 
@@ -65,14 +66,10 @@ theorem goldbachG12ThinSum_integral_budget
   let W : ℝ := 564383/1000000
   let I := goldbachG12PrimeIntegral (fun _ => 1)
   have hc : ContinuousAt (fun t : ℝ => (W*w+t)*(I+t)) 0 := by fun_prop
-  obtain ⟨r,hr,hs⟩ := Metric.continuousAt_iff.mp hc δ hδ
-  let η := r/2
-  have hη : 0 < η := half_pos hr
-  have hh := hs (show dist η 0 < r by simp only [Real.dist_eq,sub_zero,abs_of_pos hη]; dsimp [η]; linarith)
-  have he : (W*w+η)*(I+η) ≤ W*w*I+δ := by
-    rw [Real.dist_eq] at hh
-    have := (abs_lt.mp hh).2
-    nlinarith only [this]
+  have hevent := hc.eventually (gt_mem_nhds
+    (lt_add_of_pos_right (((W*w+(0 : ℝ))*(I+0))) hδ))
+  obtain ⟨η,hη,hbound⟩ := hevent.exists_gt
+  have he : (W*w+η)*(I+η) ≤ W*w*I+δ := by simpa using hbound.le
   obtain ⟨N₁,hN₁,hb⟩ := goldbachG12ThinSum_le_kernel e₀ he₀ he₁ w η hη
   obtain ⟨N₂,hN₂,hk⟩ := goldbachG12PrimeKernel_one_le_integral_eventually η hη
   refine ⟨max N₁ N₂, hN₁.trans (le_max_left _ _), ?_⟩

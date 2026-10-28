@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFOutput
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass
 
 set_option maxHeartbeats 2000000
 
@@ -48,11 +47,6 @@ theorem partition (N : ℕ) (ε : ℝ) :
       · exact Or.inl ⟨hp,h⟩
       · exact Or.inr ⟨hp,h⟩
 
-theorem boundary_in_high (N : ℕ) (ε : ℝ) (p : ℕ × ℕ)
-    (hp : p ∈ globalLinkedAtoms N ε) (he : (p.2 : ℝ) = (N : ℝ)^(1/10 : ℝ)) :
-    p ∈ high N ε ∧ p ∉ low N ε := by
-  exact ⟨mem_filter.mpr ⟨hp, he.ge⟩,
-    fun h => (not_lt_of_ge he.ge) (mem_filter.mp h).2⟩
 
 /-- Exact real weighted splitting, without subtracting inequalities. -/
 theorem weighted_partition (N : ℕ) (ε : ℝ) (f : ℕ × ℕ → ℝ) :
@@ -67,16 +61,6 @@ theorem output_partition (N : ℕ) (ε : ℝ) :
       outputCount N (low N ε) + outputCount N (high N ε) :=
   weighted_partition N ε _
 
-/-- The low summand consumes the established original-fibre identity literally. -/
-theorem original_low_count (N : ℕ) (ε : ℝ) :
-    outputCount N (low N ε) =
-    ∑ m ∈ goldbachG12ActiveProductSupport N,
-      (goldbachG12ProductCoefficient N ((N : ℝ)^(4/53 : ℝ))
-        ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)) m : ℝ) *
-      (((goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).filter
-        (fun r : ℕ => (r : ℝ) < (N : ℝ)^(1/10 : ℝ))).card : ℝ) := by
-  rw [low_eq_mother]
-  exact G12LowRectangle.original_low_count N ε
 
 /-- The physical carrier has exactly the original output-prime fibres. -/
 theorem global_output_iff (N m r : ℕ) (ε : ℝ) :
@@ -173,38 +157,5 @@ theorem original_total_partition (N : ℕ) (ε : ℝ) (hN : 2 ≤ N) :
   unfold goldbachG12NormalizedCoefficient
   ring
 
-/-- The ungated distribution carrier is kept separate from the original
-coprime-gated physical output carrier. -/
-def sourceLow (N : ℕ) (ε : ℝ) : Finset GoldbachG12LinkedAtom :=
-  (goldbachG12LinkedAtoms N ε).filter fun p => (p.2 : ℝ) < (N : ℝ)^(1/10 : ℝ)
-
-def sourceHigh (N : ℕ) (ε : ℝ) : Finset GoldbachG12LinkedAtom :=
-  (goldbachG12LinkedAtoms N ε).filter fun p => (N : ℝ)^(1/10 : ℝ) ≤ (p.2 : ℝ)
-
-theorem source_partition (N : ℕ) (ε : ℝ) :
-    Disjoint (sourceLow N ε) (sourceHigh N ε) ∧
-      sourceLow N ε ∪ sourceHigh N ε = goldbachG12LinkedAtoms N ε := by
-  constructor
-  · apply disjoint_left.mpr
-    intro p hp hq
-    exact (not_lt_of_ge (mem_filter.mp hq).2) (mem_filter.mp hp).2
-  · apply Finset.ext
-    intro p
-    simp only [sourceLow, sourceHigh, Finset.mem_union, Finset.mem_filter]
-    constructor
-    · rintro (h | h) <;> exact h.1
-    · intro hp
-      rcases lt_or_ge (p.2 : ℝ) ((N : ℝ)^(1/10 : ℝ)) with h | h
-      · exact Or.inl ⟨hp,h⟩
-      · exact Or.inr ⟨hp,h⟩
-
-/-- The original distribution atoms themselves split exactly for every real
-weight test; this does not claim that a distribution bound splits. -/
-theorem source_weighted_partition (N : ℕ) (ε : ℝ) (f : GoldbachG12LinkedAtom → ℝ) :
-    (400 * ∑ p ∈ goldbachG12LinkedAtoms N ε, goldbachG12NormalizedCoefficient N p.1 * f p) =
-      (400 * ∑ p ∈ sourceLow N ε, goldbachG12NormalizedCoefficient N p.1 * f p) +
-      (400 * ∑ p ∈ sourceHigh N ε, goldbachG12NormalizedCoefficient N p.1 * f p) := by
-  obtain ⟨hd, hu⟩ := source_partition N ε
-  rw [← hu, Finset.sum_union hd, mul_add]
 
 end G12LowHighOutput

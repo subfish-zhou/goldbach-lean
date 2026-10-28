@@ -1,4 +1,4 @@
-import MathlibNt.SieveTheory.SwitchingPrinciple
+import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
 
 open scoped Classical BigOperators
 open Filter Real Finset

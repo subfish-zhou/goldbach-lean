@@ -185,31 +185,6 @@ theorem sum_lambdaPrimePowerCorrectionPrefixMaxError_le
         lambdaPrimePowerCorrectionPrefixMaxError_le_explicit N q
     _ = (Q : ℝ) * primePowerCorrectionExplicitBound N := by simp
 
-/-- Literal Standard-BV-range specialization of the preceding elementary
-estimate. -/
-theorem sum_lambdaPrimePowerCorrection_standardBVRange_le (N : ℕ) (B : ℝ) :
-    (∑ q ∈ Finset.Icc 1
-        (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-      lambdaPrimePowerCorrectionPrefixMaxError N q) ≤
-      (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B : ℝ) *
-        primePowerCorrectionExplicitBound N :=
-  sum_lambdaPrimePowerCorrectionPrefixMaxError_le N _
-
-/-- Once the elementary scalar majorant fits in an `N/log^A N` budget, the
-whole prime-power contribution on the genuine Standard-BV range fits in the
-same budget.  This theorem performs the finite `q,residue,prefix` bookkeeping;
-its premise is purely one-dimensional. -/
-theorem sum_lambdaPrimePowerCorrection_standardBVRange_payable
-    {N : ℕ} {A B C : ℝ}
-    (hpay :
-      (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B : ℝ) *
-          primePowerCorrectionExplicitBound N ≤
-        C * (N : ℝ) / Real.log N ^ A) :
-    (∑ q ∈ Finset.Icc 1
-        (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-      lambdaPrimePowerCorrectionPrefixMaxError N q) ≤
-        C * (N : ℝ) / Real.log N ^ A :=
-  (sum_lambdaPrimePowerCorrection_standardBVRange_le N B).trans hpay
 
 /-- The two genuinely global source terms left by partial summation: the
 principal PNT prefix at modulus one, after Abel amplification, and the scalar
@@ -228,19 +203,6 @@ def GlobalChebyshevToLiPrincipalPNTSourceContract : Prop :=
         globalPartialSummationSource N ≤
           C * (N : ℝ) / Real.log N ^ A
 
-/-- The one-dimensional contract closes exactly the global source term in the
-partial-summation bridge, with no AP/BV assertion frozen into the hypothesis. -/
-theorem globalPartialSummationSource_payable
-    (hsource : GlobalChebyshevToLiPrincipalPNTSourceContract) :
-    ∀ A : ℝ, 0 < A →
-      ∃ C : ℝ, 0 < C ∧
-        ∀ᶠ N : ℕ in Filter.atTop, 2 ≤ N →
-          discreteAbelAmplifierPrefixMax N * principalLambdaPrefixMaxError N 1 +
-              globalChebyshevToLiSourcePrefixMaxError N ≤
-            C * (N : ℝ) / Real.log N ^ A := by
-  intro A hA
-  simpa [GlobalChebyshevToLiPrincipalPNTSourceContract,
-    globalPartialSummationSource] using hsource A hA
 
 end
 

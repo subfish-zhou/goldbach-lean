@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Switching.RosserSieveAsymptotics
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147JurkatRichertInterval
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenAdaptiveDepthAbsorption
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDensityBoundingSieveBridge
@@ -265,17 +266,6 @@ theorem chenJurkatRichertBaseLowerSieveFundamentalLemma_of_section13HatSource
     ChenJurkatRichertBaseLowerSieveFundamentalLemma :=
   chenJurkatRichertBaseLowerSieveFundamentalLemma_of_density
     (chenJurkatRichertBaseLowerRosserDensityFundamentalLemma_of_section13HatSource H hH)
-
-/-- Chen's base lower asymptotic after the Suzuki source contract and the genuine
-standard Bombieri--Vinogradov input.  The former now supplies the complete lower
-sieve; the only remaining premise here is the named distribution theorem. -/
-theorem chenJurkatRichertBaseLowerSieveAsymptotic_of_section13HatSource_and_standardBV
-    (H : Section13HatLayers) (hH : Section13HatSourceContract H)
-    (hBV : BombieriVinogradov.StandardBombieriVinogradov) :
-    ChenJurkatRichertBaseLowerSieveAsymptotic :=
-  chenJurkatRichertBaseLowerSieveAsymptotic_of_inputs
-    (chenJurkatRichertBaseLowerSieveFundamentalLemma_of_section13HatSource H hH)
-    (chenJurkatRichertBaseGoldbachDistribution_of_standardBV hBV)
 
 
 end MathlibNt.SieveTheory

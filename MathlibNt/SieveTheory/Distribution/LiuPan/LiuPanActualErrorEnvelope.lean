@@ -99,4 +99,24 @@ theorem modulus_mul_liuMainPanCoprimeIntervalMaxL_le (κ : ℝ)
     simp only [mul_zero]
     exact mul_nonneg (mul_nonneg (liuActualEnvelopeConstant_pos κ).le (Nat.cast_nonneg _)) (sq_nonneg _)
 
+theorem liuMainPanCoprimeIntervalSum_abs_le_maxL
+    {N Y A₁ A₂ d : ℕ} {main : ℝ → ℝ} {f : ℕ → ℝ}
+    (hd : 1 ≤ d) (hdN : Nat.Coprime d N) :
+    |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d (N % d) f| ≤
+      liuMainPanCoprimeIntervalMaxL main Y A₁ A₂ d f := by
+  classical
+  have hl : N % d ∈ AnalyticNumberTheory.Sieve.unitResidues d := by
+    rw [AnalyticNumberTheory.Sieve.unitResidues]
+    exact Finset.mem_filter.mpr
+      ⟨Finset.mem_range.mpr (Nat.mod_lt N (lt_of_lt_of_le Nat.zero_lt_one hd)),
+        (ZMod.coprime_mod_iff_coprime N d).2 hdN.symm⟩
+  have hS : (AnalyticNumberTheory.Sieve.unitResidues d).Nonempty := ⟨N % d, hl⟩
+  unfold liuMainPanCoprimeIntervalMaxL
+  dsimp only
+  rw [dif_pos hS]
+  exact Finset.le_max'
+    ((AnalyticNumberTheory.Sieve.unitResidues d).image
+      (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|))
+    _ (Finset.mem_image.mpr ⟨N % d, hl, rfl⟩)
+
 end MathlibNt.SieveTheory.LiuWeight

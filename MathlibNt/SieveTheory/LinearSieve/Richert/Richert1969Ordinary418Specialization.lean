@@ -4,9 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
 import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969CombinedModulusEStar
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969SquarefulA4
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Theorem1FiniteChain
-import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
 
 /-!
 # Richert 1969: specialization of ordinary (4.18) to Chen's weighted remainder
@@ -382,32 +379,6 @@ theorem eventually_chenReducedCombinedModuli_subset_panModulusCutoff
   exact Finset.mem_Icc.mpr
     ⟨hmPos, (chenReducedCombinedModuli_le_liuSourceDEpsilon hm).trans hcut⟩
 
-/-- Quantified ordinary (4.18), specialized by finite subset monotonicity to
-Chen's exact combined-modulus carrier. -/
-theorem eventually_sum_richertEStar_combined_le_of_ordinary418
-    (h418 : Richert418BombieriVinogradov)
-    (ε U : ℝ) (hε : 0 < ε) (hU : 0 < U) :
-    ∃ B : ℝ, 0 < B ∧ ∃ K : ℝ, 0 < K ∧
-      ∀ᶠ N : ℕ in Filter.atTop,
-        (∑ m ∈ chenReducedCombinedModuli N ε,
-          primeAPPrefixMaxError N m) ≤
-            K * (N : ℝ) / Real.log N ^ U := by
-  obtain ⟨B, hB, K, hK, hordinary⟩ := h418 U hU
-  refine ⟨B, hB, K, hK, ?_⟩
-  have hsubset :=
-    eventually_chenReducedCombinedModuli_subset_panModulusCutoff
-      ε B hε hB.le
-  filter_upwards [hsubset, hordinary, Filter.eventually_ge_atTop 2]
-      with N hSN hordinaryN hN
-  have hsum :
-      (∑ m ∈ chenReducedCombinedModuli N ε,
-          primeAPPrefixMaxError N m) ≤
-        ∑ m ∈ Finset.Icc 1 (LiuWeight.panModulusCutoff N B),
-          primeAPPrefixMaxError N m := by
-    apply Finset.sum_le_sum_of_subset_of_nonneg hSN
-    intro m hm hmNot
-    exact primeAPPrefixMaxError_nonneg N m
-  exact hsum.trans (hordinaryN hN)
 
 /-- Every combined modulus is a medium prime times a coprime squarefree
 sifting divisor; both finite Lemma 3 payments use this same fact. -/
@@ -426,85 +397,6 @@ private theorem chenReducedCombinedModuli_squarefree
     jurkatRichertSourceMediumPrime_coprime_siftingDivisor hqSource hdDiv
   exact (Nat.squarefree_mul hcop).mpr ⟨hqPrime.squarefree, hdSquarefree⟩
 
-/-- Floor-safe form of Richert's Cauchy/Lemma 3 payment on Chen's exact
-combined moduli.  Its only distribution premise is the ordinary unweighted
-initial-range mass from (4.18). -/
-theorem chenReducedPairWeightedEStar_sq_le_of_ordinary418_floorSafe
-    (N Q : ℕ) (ε B : ℝ) (hN : 2 ≤ N) (hε : 0 ≤ ε)
-    (hsubset : chenReducedCombinedModuli N ε ⊆ Finset.Icc 1 Q)
-    (hOrdinary418 :
-      (∑ m ∈ Finset.Icc 1 Q, primeAPPrefixMaxError N m) ≤ B) :
-    ∃ C : ℝ, 0 < C ∧
-      chenReducedPairWeightedEStar N ε ^ 2 ≤
-        (C * (Real.log (Q + 2)) ^ (9 : ℝ)) *
-          ((richert418PointwiseEnvelopeConstant * (N : ℝ) *
-            (1 + Real.log N)) * B) := by
-  let S := chenReducedCombinedModuli N ε
-  let E := primeAPPrefixMaxError N
-  have hS : S ⊆ Finset.range (Q + 1) := by
-    intro m hm
-    exact Finset.mem_range.mpr
-      (Nat.lt_succ_of_le (Finset.mem_Icc.mp (hsubset hm)).2)
-  have hSquarefree : ∀ m ∈ S, Squarefree m :=
-    fun _ hm => chenReducedCombinedModuli_squarefree hm
-  have hE : ∀ m ∈ S, 0 ≤ E m := by
-    intro m hm
-    exact primeAPPrefixMaxError_nonneg N m
-  have henvelope : ∀ m ∈ S,
-      (m : ℝ) * E m ≤
-        richert418PointwiseEnvelopeConstant * (N : ℝ) *
-          (1 + Real.log N) := by
-    intro m hm
-    have hmIcc := Finset.mem_Icc.mp (hsubset hm)
-    have hmN : m ≤ N := by
-      have hmReal := chenReducedCombinedModuli_cast_le hm
-      have hpow :
-          (N : ℝ) ^ (1 / 2 - ε) ≤ (N : ℝ) := by
-        exact Real.rpow_le_self_of_one_le
-          (by exact_mod_cast (show 1 ≤ N by omega)) (by linarith)
-      exact_mod_cast hmReal.trans hpow
-    exact modulus_mul_primeAPPrefixMaxError_le hN hmIcc.1 hmN
-  have hordinaryS : (∑ m ∈ S, E m) ≤ B := by
-    exact (Finset.sum_le_sum_of_subset_of_nonneg hsubset
-      (fun m hm hmNot => primeAPPrefixMaxError_nonneg N m)).trans
-        hOrdinary418
-  obtain ⟨C, hC, hmass⟩ :=
-    threeOmegaError_sq_le_of_ordinaryBombieri_squarefree
-      S Q E
-        (richert418PointwiseEnvelopeConstant * (N : ℝ) *
-          (1 + Real.log N))
-        B hS hSquarefree hE
-        (by
-          have hlog : 0 ≤ Real.log (N : ℝ) :=
-            Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
-          exact mul_nonneg
-            (mul_nonneg richert418PointwiseEnvelopeConstant_pos.le
-              (by positivity))
-            (by linarith))
-        henvelope hordinaryS
-  refine ⟨C, hC, ?_⟩
-  have hpairNonneg : 0 ≤ chenReducedPairWeightedEStar N ε := by
-    unfold chenReducedPairWeightedEStar
-    apply Finset.sum_nonneg
-    intro q hq
-    apply Finset.sum_nonneg
-    intro d hd
-    exact mul_nonneg (pow_nonneg (by norm_num) _)
-      (primeAPPrefixMaxError_nonneg N (q * d))
-  have hcombinedNonneg : 0 ≤ threeOmegaErrorMass S E := by
-    unfold threeOmegaErrorMass
-    apply Finset.sum_nonneg
-    intro m hm
-    exact mul_nonneg (pow_nonneg (by norm_num) _)
-      (primeAPPrefixMaxError_nonneg N m)
-  calc
-    chenReducedPairWeightedEStar N ε ^ 2 ≤
-        threeOmegaErrorMass S E ^ 2 :=
-      (sq_le_sq₀ hpairNonneg hcombinedNonneg).2
-        (chenReducedPairWeightedEStar_le_combinedMass N ε)
-    _ ≤ (C * (Real.log (Q + 2)) ^ (9 : ℝ)) *
-          ((richert418PointwiseEnvelopeConstant * (N : ℝ) *
-            (1 + Real.log N)) * B) := hmass
 
 /-- The fixed pointwise-envelope coefficient after translating back from
 Richert's literal integral to the project's standard normalization. -/
@@ -977,84 +869,5 @@ theorem chenWeightedBombieriVinogradov_of_standard
       _ = (C * (N : ℝ) / Real.log N ^ A) ^ 2 := by ring
   exact (sq_le_sq₀ hleft htargetNonneg).1 hmajor'
 
-/-- Chen-facing Richert source chain with Theorem A honestly imported and the
-weighted varying-level error derived from ordinary Bombieri--Vinogradov
-`(4.18)`.  The lower object, conditioned upper sieves, squareful correction,
-and Stieltjes prime integral are assembled by the source-faithful Theorem 1
-endpoint. -/
-theorem chenWeightedLowerBound_of_importedTheoremA_and_standardBombieri
-    (hLowerTheoremA : DimensionOneLowerRosserDensityFundamentalLemma)
-    (hOrdinaryBombieri : BombieriVinogradov.StandardBombieriVinogradov)
-    (hUpperTheoremA : DimensionOneUpperRosserDensityFundamentalLemma) :
-    ChenJurkatRichertWeightedLowerBound :=
-  Chen.weightedLowerBound_of_importedTheoremA
-    hLowerTheoremA hOrdinaryBombieri hUpperTheoremA
-      (chenWeightedBombieriVinogradov_of_standard hOrdinaryBombieri)
-
-/-- A single certificate carrying every literal Richert source stage used for
-the Chen-facing specialization.  The finite Theorem 1 and `(A4)` fields record
-their exact conditional statements; the analytic endpoint retains Theorem A
-as an imported dependency. -/
-structure ChenFacingSourceChainCertificate : Prop where
-  theoremOneFinite :
-    ∀ (A : Finset ℕ) (X : ℝ) (K : ℕ) (v u lambda : ℝ),
-      0 ≤ lambda →
-      (∀ p ∈ theoremOneWeightedPrimes X K u v,
-        0 ≤ theoremOnePrimeWeight X u p) →
-      ((lowerCarrier A (theoremOneSiftingProduct X K v)).card : ℝ) -
-          squarefulCorrection A (theoremOneWeightedPrimes X K u v)
-            (theoremOneSiftingProduct X K v) -
-          lambda * primeConditionedUpperAggregate A
-            (theoremOneWeightedPrimes X K u v)
-            (theoremOneSiftingProduct X K v)
-            (theoremOnePrimeWeight X u) ≤
-        theoremOneWeightedLowerObject A X K v u lambda
-  lowerS :
-    ∀ N : ℕ,
-      (jurkatRichertSourceBoundingSieve N).siftedSum =
-        (jurkatRichertSourceCandidates N).card
-  conditionedUpperS :
-    ∀ (N p : ℕ),
-      (jurkatRichertSourceConditionedBoundingSieve N p).siftedSum =
-        ((jurkatRichertSourceCandidates N).filter
-          fun q => p ∣ N - q).card
-  weightedObject :
-    ∀ N : ℕ,
-      jurkatRichertSourceWeightedCount N =
-        ((jurkatRichertSourceCandidates N).card : ℝ) -
-          jurkatRichertSourceMediumPrimeAggregate N / 2
-  squarefulA4 :
-    ∀ (A : Finset ℕ) (X : ℝ) (K : ℕ) (v u A4 : ℝ),
-      SquarefulA4On A (theoremOneWeightedPrimes X K u v) X A4 →
-      squarefulCorrection A (theoremOneWeightedPrimes X K u v)
-          (theoremOneSiftingProduct X K v) ≤
-        ∑ p ∈ theoremOneWeightedPrimes X K u v,
-          A4 * (X * Real.log X / (p : ℝ) ^ 2 + 1)
-  stieltjesPrimeIntegral :
-    ChenJurkatRichertVaryingQPrimeSumAsymptotic
-  weightedBombieri :
-    ChenJurkatRichertVaryingQWeightedBombieriVinogradov
-  weightedLowerBound :
-    ChenJurkatRichertWeightedLowerBound
-
-/-- Complete source-chain certificate from lower/upper Theorem A and ordinary
-Bombieri--Vinogradov.  In particular, the `3^ω` statement is a conclusion,
-not an additional premise. -/
-theorem chenFacingSourceChainCertificate_of_importedTheoremA_and_standardBombieri
-    (hLowerTheoremA : DimensionOneLowerRosserDensityFundamentalLemma)
-    (hOrdinaryBombieri : BombieriVinogradov.StandardBombieriVinogradov)
-    (hUpperTheoremA : DimensionOneUpperRosserDensityFundamentalLemma) :
-    ChenFacingSourceChainCertificate where
-  theoremOneFinite := theoremOneFiniteLowerBound
-  lowerS := Chen.lowerS_eq_candidateCard
-  conditionedUpperS := Chen.primeConditionedUpperS_eq_candidateCard
-  weightedObject := Chen.weightedLowerObject_eq_lower_sub_half_conditioned
-  squarefulA4 := theoremOneSquarefulCorrection_le_sum_A4
-  stieltjesPrimeIntegral := Chen.stieltjesPrimeIntegral
-  weightedBombieri :=
-    chenWeightedBombieriVinogradov_of_standard hOrdinaryBombieri
-  weightedLowerBound :=
-    chenWeightedLowerBound_of_importedTheoremA_and_standardBombieri
-      hLowerTheoremA hOrdinaryBombieri hUpperTheoremA
 
 end MathlibNt.SieveTheory.Richert1969

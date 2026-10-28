@@ -19,13 +19,5 @@ theorem reciprocal_totient_mass_le_log_sq {D N : ℕ} (hDN : D ≤ N) :
     ((sq_le_sq₀ (conductorHarmonicFactor_nonneg D)
       ((conductorHarmonicFactor_nonneg D).trans hH)).mpr hH)
 
-/-- A single constant chosen BEFORE N and D, valid even at N=0/1.
-The exponent 2 is intentional and must not be reported as Pan's exact log. -/
-theorem exists_reciprocal_totient_mass_le_log_sq :
-    ∃ C : ℝ, 0 < C ∧ ∀ N D : ℕ, D ≤ N →
-      (∑ m ∈ Icc 1 D, (m.totient : ℝ)⁻¹) ≤ C * (1 + Real.log (N : ℝ)) ^ 2 := by
-  refine ⟨1, zero_lt_one, ?_⟩
-  intro N D hDN
-  simpa only [one_mul] using reciprocal_totient_mass_le_log_sq hDN
 
 end AnalyticNumberTheory.LargeSieve.PanCofactor

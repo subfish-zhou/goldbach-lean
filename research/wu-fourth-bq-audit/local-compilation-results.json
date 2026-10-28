@@ -1,0 +1,36 @@
+{
+  "final_sources": {
+    "WR2ClassicalFourthBqSoundness.lean": "c77057efca2a4e9d2bd7158dd0a209be2fd258d7787cdc44a53a042cb5961c0d",
+    "WR2ClassicalFourthDataBq.lean": "d1a40c94e1f72c704db6249c634db41319ba3a061546038d2ab8429af85afcc6",
+    "WR2ClassicalFourthAllLog.lean": "c4043cde37fe7d81ef0f32e899b4c50fce6846fb23064f456417f03b1568dba7"
+  },
+  "strict_validation": [
+    {
+      "mode": "candidate",
+      "module": "WR2ClassicalFourthAllLog",
+      "exit_code": 0,
+      "seconds": 6.904,
+      "source_sha256": "c4043cde37fe7d81ef0f32e899b4c50fce6846fb23064f456417f03b1568dba7",
+      "log": "local-logs/WR2ClassicalFourthAllLog.log"
+    },
+    {
+      "mode": "candidate",
+      "module": "WR2ClassicalFourthBqSoundness",
+      "exit_code": 0,
+      "seconds": 7.39,
+      "source_sha256": "c77057efca2a4e9d2bd7158dd0a209be2fd258d7787cdc44a53a042cb5961c0d",
+      "log": "local-logs/WR2ClassicalFourthBqSoundness.log"
+    },
+    {
+      "mode": "candidate",
+      "module": "WR2ClassicalFourthDataBq",
+      "exit_code": 0,
+      "seconds": 5.818,
+      "source_sha256": "d1a40c94e1f72c704db6249c634db41319ba3a061546038d2ab8429af85afcc6",
+      "log": "local-logs/WR2ClassicalFourthDataBq.log"
+    }
+  ],
+  "all_other_generated_outputs_byte_identical": 114,
+  "benchmark_DataBq_exact_hash_match": true,
+  "benchmark_completed_before_formal_edits": true
+}

@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergOptimalWeights
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergPrimeDivisorGrowth
 
 /-!
@@ -182,33 +181,5 @@ theorem liuSelbergDenominatorLowerBound_of_lt_margin
     _ = liuSelbergDenominator N epsilon := by
       field_simp
 
-/-- Every positive loss admits a positive epsilon interval on which the sharp
-Selberg denominator lower bound holds. -/
-theorem exists_liuSelbergDenominatorLowerBound :
-    ∀ delta > 0, ∃ epsilon0 > 0,
-      ∀ epsilon, 0 < epsilon → epsilon ≤ epsilon0 →
-        LiuSelbergDenominatorLowerBound delta epsilon := by
-  intro delta hdelta
-  let epsilon0 := delta / (4 * (8 + delta))
-  have hscale : 0 < 8 + delta := by
-    linarith
-  have hepsilon0 : 0 < epsilon0 := by
-    dsimp [epsilon0]
-    positivity
-  refine ⟨epsilon0, hepsilon0, ?_⟩
-  intro epsilon _hepsilon hepsilon_le
-  apply liuSelbergDenominatorLowerBound_of_lt_margin hdelta
-  exact hepsilon_le.trans_lt (by
-    dsimp [epsilon0]
-    apply
-      (div_lt_div_iff_of_pos_left hdelta (by positivity) (by positivity)).2
-    nlinarith)
-
-/-- Liu's optimized Selberg coefficient input follows from the proved
-denominator lower bound; the definition itself remains unchanged. -/
-theorem liuOptimizedSelbergCoefficientInput :
-    LegacySelberg.LiuOptimizedSelbergCoefficientInput :=
-  LegacySelberg.LiuOptimizedSelbergCoefficientInput.of_denominatorLowerBound
-    exists_liuSelbergDenominatorLowerBound
 
 end MathlibNt.SieveTheory.LiuWeight

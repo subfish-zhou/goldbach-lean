@@ -34,12 +34,6 @@ theorem harcosEta_C (a b c : ZMod p) :
 theorem harcosEta_one (a b : ZMod p) : harcosEta a b 1 = 1 := by
   simpa using harcosEta_C a b 1
 
-theorem harcosEta_norm_le_one (a b : ZMod p) (f : (ZMod p)[X]) :
-    ‖harcosEta a b f‖ ≤ 1 := by
-  unfold harcosEta
-  split_ifs
-  · simp
-  · exact (stdAddChar_norm _).le
 
 private theorem nextCoeff_div_leadingCoeff_mul (f g : (ZMod p)[X])
     (hf : f ≠ 0) (hg : g ≠ 0) :

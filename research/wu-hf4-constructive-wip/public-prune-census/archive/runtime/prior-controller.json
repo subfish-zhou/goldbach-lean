@@ -1,0 +1,120 @@
+{
+  "status": "ACTUAL_CORRECTED_GATES_AND_DRY_RUN_VERIFIED_NOT_ADOPTED",
+  "original_failed_controller": {
+    "status": "gate_failed_no_adoption",
+    "watcher_pid": 1546008,
+    "prior_pid": 1539330,
+    "prior_start_ticks": "2005520393",
+    "plan_sha256": "fe6a9b8660db03f15f75a1f1b955d48b56a1b1bd7d211d99864513c495beffe3",
+    "no_adoption": true,
+    "completed": [
+      {
+        "label": "kernel-checked-endpoint",
+        "exit_code": 0,
+        "log": "/tmp/wu-main-port-audit/post-controls-kernel-checked-endpoint.log",
+        "log_sha256": "1080b20184a68be497906a2b277ddc33c1d0b57337a7f070269ebc0a81d88936"
+      },
+      {
+        "label": "kernel-baseline-original-panel0",
+        "exit_code": 0,
+        "log": "/tmp/wu-main-port-audit/post-controls-kernel-baseline-original-panel0.log",
+        "log_sha256": "bd79265101b2dfd727a0a5cb0b871c1a2e88bef211810e244089e7a260d19f84"
+      },
+      {
+        "label": "kernel-baseline-panel1",
+        "exit_code": 0,
+        "log": "/tmp/wu-main-port-audit/post-controls-kernel-baseline-panel1.log",
+        "log_sha256": "920844dcee94ac4c9cc5fdce3b596ad5759eff0967028ecb57b8a393f1e8e8db"
+      },
+      {
+        "label": "kernel-baseline-panel39",
+        "exit_code": 0,
+        "log": "/tmp/wu-main-port-audit/post-controls-kernel-baseline-panel39.log",
+        "log_sha256": "d4cd342d7addbef9ab10941687c1fdce3bd520ce4b0bcbd364a511594dac59e7"
+      },
+      {
+        "label": "structural-acceptance-evidence",
+        "exit_code": 1,
+        "log": "/tmp/wu-main-port-audit/post-controls-structural-acceptance-evidence.log",
+        "log_sha256": "cc373ef37a1954e0c71cbe00a3d87273cd2e0cb4138d66a5faa045bec1aea616"
+      }
+    ],
+    "prior_terminal": {
+      "status": "controls_compiled_axiom_kernel_checks_pending",
+      "watcher_pid": 1539330,
+      "main_run": "/tmp/wu-structural-full-probe-v7/full/run-1793131987644216375",
+      "main_pid": 1532172,
+      "main_start_ticks": "2005322649",
+      "main_plan_sha256": "04d9a31438198668bfec595f9949f2e1e32e9aef7dc425f051c99d8419fa1410",
+      "modes": [
+        "checked-endpoint",
+        "baseline-original-panel0",
+        "baseline-panel1",
+        "baseline-panel39"
+      ],
+      "completed": [
+        {
+          "mode": "checked-endpoint",
+          "exit_code": 0,
+          "log": "/tmp/wu-main-port-audit/381-control-checked-endpoint.log",
+          "log_sha256": "5e0eb4f155aba89f96738b4c7a91e1ceba86a3834f8ad57a4c913f3465e1d946"
+        },
+        {
+          "mode": "baseline-original-panel0",
+          "exit_code": 0,
+          "log": "/tmp/wu-main-port-audit/381-control-baseline-original-panel0.log",
+          "log_sha256": "9b96fe2f2a75cc7e619558e072164decc75d45dc9250f1eca3ae4bfb43f3f9be"
+        },
+        {
+          "mode": "baseline-panel1",
+          "exit_code": 0,
+          "log": "/tmp/wu-main-port-audit/381-control-baseline-panel1.log",
+          "log_sha256": "20e15a0c86d8065649e31d2c376397a76cf3ad606fb5455406f2afb9a27a2468"
+        },
+        {
+          "mode": "baseline-panel39",
+          "exit_code": 0,
+          "log": "/tmp/wu-main-port-audit/381-control-baseline-panel39.log",
+          "log_sha256": "1d165075230cde821e73d2102a4bab581800e2154205eacbf8ecb380686d014c"
+        }
+      ],
+      "gate_sha256": "e3011b321122d2d641321cbc9b1a9c5d0ae61d5d49237c0f913e79125d2d833f",
+      "no_adoption": true,
+      "current_mode": null,
+      "command": [
+        "python3",
+        "/tmp/wu-hf4-381-safe-controls-v2/run.py",
+        "--mode",
+        "baseline-panel39",
+        "--execute"
+      ],
+      "log": "/tmp/wu-main-port-audit/381-control-baseline-panel39.log",
+      "control_pid": 1684062,
+      "control_start_ticks": "2008979577"
+    },
+    "control_runs": {
+      "checked-endpoint": "/tmp/wu-hf4-381-safe-controls-v2/checked-endpoint/run-1793167130161144214",
+      "baseline-original-panel0": "/tmp/wu-hf4-381-safe-controls-v2/baseline-original-panel0/run-1793168451166802728",
+      "baseline-panel1": "/tmp/wu-hf4-381-safe-controls-v2/baseline-panel1/run-1793168504542993030",
+      "baseline-panel39": "/tmp/wu-hf4-381-safe-controls-v2/baseline-panel39/run-1793168558213652311"
+    },
+    "current_gate": "structural-acceptance-evidence",
+    "command": [
+      "python3",
+      "/tmp/wu-structural-acceptance-v7/validate.py",
+      "--run",
+      "/tmp/wu-structural-full-probe-v7/full/run-1793131987644216375",
+      "--execute"
+    ],
+    "log": "/tmp/wu-main-port-audit/post-controls-structural-acceptance-evidence.log",
+    "child_pid": 1687360,
+    "child_start_ticks": "2009111444",
+    "exit_code": 1
+  },
+  "corrected_report": "/tmp/wu-structural-acceptance-v8/evidence-1793172455447521675/report.json",
+  "corrected_report_sha256": "80230088de0057841fe6280e2b452c2b45d36f61e2306bd8a7eb71367c224e9d",
+  "root_marker": "/tmp/wu-structural-full-probe-v7/full/run-1793131987644216375/ADOPTION-ACCEPTANCE.json",
+  "root_marker_sha256": "89a794b6ae3f136ac3d4a63f1c4addfb0bd0c7bafeafc5302617e30fb92b252a",
+  "dry_run": "/tmp/wu-structural-adoption-v9/actual-dry-run.json",
+  "dry_run_sha256": "f888d04fb3f182a3cd418d860c8c258a69be6b104875f60dd8db4ffb282b5338"
+}

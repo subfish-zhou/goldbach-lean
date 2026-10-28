@@ -1,0 +1,52 @@
+{
+  "status": "pass",
+  "removed_private_declarations": [
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_invTotient_prime_le_two_div",
+      "incoming_declarations": [
+        "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_invTotient_prime_le_two_div_b"
+      ],
+      "outside_provider_consumers": [],
+      "exact_statement_replacement": null,
+      "same_kind_and_type_hash": null
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_invTotient_prime_le_two_div_b",
+      "incoming_declarations": [
+        "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_bad_inverseTotientMass_le"
+      ],
+      "outside_provider_consumers": [],
+      "exact_statement_replacement": "G11FiniteGate.inv_totient_prime_le",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_bad_inverseTotientMass_le",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.sum_gateLoss_le_logCube"
+      ],
+      "outside_provider_consumers": [],
+      "exact_statement_replacement": null,
+      "same_kind_and_type_hash": null
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_weightMass_le",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.sum_gateLoss_le_logCube"
+      ],
+      "outside_provider_consumers": [],
+      "exact_statement_replacement": null,
+      "same_kind_and_type_hash": null
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10MainGateBudget_harmonicCube_le_logCube",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.sum_gateLoss_le_logCube"
+      ],
+      "outside_provider_consumers": [],
+      "exact_statement_replacement": null,
+      "same_kind_and_type_hash": null
+    }
+  ],
+  "exact_statement_replacement_count": 1,
+  "method": "The old two-prime chain is removed when the public gate specializes the existing finite-support theorem. Only one old private type is claimed to exactly match a shared public type; other statements are specialized consequences or proof stages, not literal type-equal aliases."
+}

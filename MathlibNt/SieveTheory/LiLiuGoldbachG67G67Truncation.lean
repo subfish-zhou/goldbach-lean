@@ -68,10 +68,5 @@ theorem elementaryIntegral_eq_truncated :
   unfold oneDimensionalIntegral truncatedIntegral
   rw [rectangle_integral_truncate]
 
-/-- Actual C67 consumer after exact tail removal. -/
-theorem actual_constant_lower_truncated :
-    4 * truncatedIntegral ≤ goldbachG67IntegralConstant := by
-  rw [← elementaryIntegral_eq_truncated]
-  exact G67ElementaryIntegral.actual_constant_lower
 
 end G67SumCoordinate

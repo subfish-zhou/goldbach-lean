@@ -22,16 +22,6 @@ private theorem literalH_le_dvdFiberCard_budget
     (Finset.monotone_filter_right A (p := literalHPoint M d x)
       (q := fun n => d ∣ n) (fun _ _ hn => hn.1))
 
-private theorem literalH_eq_zero_of_large_divisor_budget
-    (A : Finset ℕ) (M d N : ℕ) (x : ℝ)
-    (hA : ∀ n ∈ A, 1 ≤ n ∧ n < N) (hNd : N < d) :
-    literalH A M d x = 0 := by
-  unfold literalH
-  have hempty : A.filter (literalHPoint M d x) = ∅ :=
-    Finset.filter_eq_empty_iff.mpr fun n hn hp =>
-      (not_le_of_gt (hA n hn).2)
-        (hNd.le.trans (Nat.le_of_dvd (lt_of_lt_of_le Nat.zero_lt_one (hA n hn).1) hp.1))
-  simp only [hempty, Finset.card_empty, Nat.cast_zero]
 
 private theorem left_dvd_of_pair_dvd_budget
     {a b n : ℕ}
@@ -113,7 +103,7 @@ theorem goldbachWeightD6_le_goldbachQA
     refine Finset.sum_eq_zero ?_
     intro r hr
     rcases Finset.mem_filter.mp hr with ⟨_, hrSq⟩
-    exact literalH_eq_zero_of_large_divisor_budget A N (r ^ 2) N z hA (lt_of_not_ge hrSq)
+    exact literalH_eq_zero_of_large_divisor A N (r ^ 2) N z hA (lt_of_not_ge hrSq)
   rw [hzero, add_zero]
   exact hmain
 

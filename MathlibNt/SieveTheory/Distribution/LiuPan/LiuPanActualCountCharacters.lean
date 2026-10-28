@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
-import AnalyticNumberTheory.LargeSieve.CharacterIndicators
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
 
 /-! Pan (2.4), first line only: actual prime counts, with the true principal
@@ -237,63 +236,5 @@ theorem liuWeight_intervalMaxL_le_nonprincipal_add_principal
     liuMainPanCoprimeIntervalMaxL main N A₁ A₂ 0 f = 0 := by
   simp [liuMainPanCoprimeIntervalMaxL]
 
-/-- On primitive inputs this is exactly the existing literal Pan amplitude,
-with m=q in both coprimality screens. This is an identity, not a conductor step. -/
-theorem liuPanActualCharacterAmplitude_eq_panSource
-    (N A₁ A₂ q : ℕ) (f : ℕ → ℝ) (χ : PrimitiveCharacter q) :
-    liuPanActualCharacterAmplitude N A₁ A₂ q f χ.1 =
-      panSourceCharacterAmplitude
-        (fun a => if a.Coprime q then (f a : ℂ) else 0)
-        (fun p => if p.Prime ∧ p.Coprime q then (1 : ℂ) else 0)
-        N A₁ A₂ χ := by
-  unfold liuPanActualCharacterAmplitude panSourceCharacterAmplitude
-  dsimp only
-  apply sum_congr rfl
-  intro a ha
-  by_cases hc : a.Coprime q
-  · rw [if_pos hc, if_pos hc]
-    congr 1
-    have hs : (Icc 1 (N / a)) ⊆ range (N / a + 1) := by
-      intro p hp
-      exact mem_range.mpr (Nat.lt_succ_of_le (mem_Icc.mp hp).2)
-    calc
-      _ = ∑ p ∈ Icc 1 (N / a), if p.Prime ∧ p.Coprime q then χ.1 (p : ZMod q) else 0 := by
-        symm
-        apply sum_subset hs
-        intro p hp hn
-        have hp0 : p = 0 := by
-          have := mem_range.mp hp
-          simp only [mem_Icc, not_and] at hn
-          omega
-        subst p
-        simp [Nat.not_prime_zero]
-      _ = _ := by
-        apply sum_congr rfl
-        intro p hp
-        split_ifs <;> simp
-  · simp only [if_neg hc, zero_mul]
-
-private theorem characters_modulus_one :
-    (univ : Finset (DirichletCharacter ℂ 1)) = {1} := by
-  ext χ
-  simp only [mem_univ, mem_singleton, true_iff]
-  exact Subsingleton.elim _ _
-
-/-- Modulus one has no nonprincipal mass; its canonical residue is zero. -/
-@[simp] theorem liuPanActualNonprincipalMass_one
-    (N A₁ A₂ : ℕ) (f : ℕ → ℝ) :
-    liuPanActualNonprincipalMass N A₁ A₂ 1 f = 0 := by
-  simp only [liuPanActualNonprincipalMass, characters_modulus_one, erase_singleton, sum_empty]
-
-theorem liuMainPanCoprimeIntervalMaxL_one_eq_principal
-    (main : ℝ → ℝ) (N A₁ A₂ : ℕ) (f : ℕ → ℝ) :
-    liuMainPanCoprimeIntervalMaxL main N A₁ A₂ 1 f =
-      |liuPanActualPrincipalRaw main N A₁ A₂ 1 f| := by
-  have he := liuMainPanCoprimeIntervalSum_eq_actualCharacterExpansion main N A₁ A₂ 1 0 f
-    (by omega) ((ZMod.isUnit_iff_coprime 0 1).mpr (by simp))
-  simp only [characters_modulus_one, erase_singleton, sum_empty, Nat.totient_one, Nat.cast_one,
-    zero_add, div_one] at he
-  have hr := Complex.ofReal_injective he
-  simp [liuMainPanCoprimeIntervalMaxL, hr]
 
 end MathlibNt.SieveTheory.LiuWeight

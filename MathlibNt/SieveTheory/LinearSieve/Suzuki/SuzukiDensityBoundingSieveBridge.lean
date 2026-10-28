@@ -1,9 +1,9 @@
+import AnalyticNumberTheory.Sieve.LinearSieve
 /-
 Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import AnalyticNumberTheory
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147ContinuousLowerFactor
 
 /-!

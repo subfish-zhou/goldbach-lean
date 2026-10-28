@@ -1,0 +1,22 @@
+{
+  "status": "TEN_RETAINED_TYPES_THREE_DATA_VALUES_EXACT_MATCH",
+  "types": 10,
+  "values": 3,
+  "seed_before": {
+    "effective": 293,
+    "physical": 344,
+    "bytes": 16358
+  },
+  "seed_after": {
+    "effective": 39,
+    "physical": 45,
+    "bytes": 2174
+  },
+  "seed_savings": {
+    "effective": 254,
+    "physical": 299,
+    "bytes": 14184
+  },
+  "semantic_savings_effective": 2204,
+  "installed": false
+}

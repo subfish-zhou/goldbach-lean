@@ -15,18 +15,6 @@ theorem endpoint_coordinate {N r : ℝ} (hN : 1 < N)
   rw [Real.log_rpow hNp] at hl hh
   exact ⟨(le_div_iff₀ (Real.log_pos hN)).2 hl, (div_le_iff₀ (Real.log_pos hN)).2 hh⟩
 
-/-- A concrete witness rules out empty-domain admission for every source epsilon. -/
-theorem source_domain_nonempty {N e : ℝ} (hN : 1 ≤ N) (he : e ≤ 1) :
-    ∃ x T r : ℝ, e * N ≤ x ∧ x ≤ 4 * N ∧
-      N ^ (4 / 53 : ℝ) / 2 ≤ T ∧ T ≤ r ∧
-      N ^ (4 / 53 : ℝ) ≤ r ∧ r ≤ N ^ (1 / 10 : ℝ) := by
-  have hNp : 0 ≤ N := by linarith
-  have hp : 0 ≤ N ^ (4 / 53 : ℝ) := Real.rpow_nonneg hNp _
-  refine ⟨N, N ^ (4 / 53 : ℝ), N ^ (4 / 53 : ℝ), ?_, ?_, ?_, le_rfl, le_rfl, ?_⟩
-  · nlinarith
-  · linarith
-  · linarith
-  · exact Real.rpow_le_rpow_of_exponent_le hN (by norm_num)
 
 /-- One source-faithful cutoff controls admission, internal level and the main
 coefficient simultaneously. In particular `x` may be the physical value `4*M*T`;

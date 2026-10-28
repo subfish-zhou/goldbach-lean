@@ -61,101 +61,9 @@ noncomputable def liuPanDiscreteInverseLogMain (y : ℕ) : ℝ :=
     liuPanInverseLogAbelWeight 1 = 0 := by
   simp [liuPanInverseLogAbelWeight]
 
-theorem liuPanInverseLogAbelWeight_nonneg (n : ℕ) :
-    0 ≤ liuPanInverseLogAbelWeight n := by
-  unfold liuPanInverseLogAbelWeight
-  split_ifs with hn
-  · rw [sub_nonneg]
-    have hnpos : (0 : ℝ) < n := by
-      exact_mod_cast (show 0 < n by omega)
-    have hsuccpos : (0 : ℝ) < (n + 1 : ℕ) := by
-      exact_mod_cast (show 0 < n + 1 by omega)
-    have hlogn : 0 < Real.log (n : ℝ) :=
-      Real.log_pos (by exact_mod_cast (show 1 < n by omega))
-    have hlogmono :
-        Real.log (n : ℝ) ≤ Real.log (n + 1 : ℕ) := by
-      exact Real.strictMonoOn_log.monotoneOn hnpos hsuccpos
-        (by exact_mod_cast (Nat.le_succ n))
-    exact inv_anti₀ hlogn hlogmono
-  · exact le_rfl
 
-private theorem natCast_log_nonneg (n : ℕ) :
-    0 ≤ Real.log (n : ℝ) := by
-  exact Real.log_natCast_nonneg n
 
-/-- Exact finite discrete Abel summation for the AP sum of `Λ(n) / log n`.
-The exceptional terms `n = 0, 1` vanish before a logarithmic denominator is
-used, and the displayed prefix weights are nonnegative. -/
-theorem apLogVonMangoldt_eq_discreteAbel (y q l : ℕ) :
-    apLogVonMangoldt y q l =
-      (Real.log (y : ℝ))⁻¹ * liuPanAPPsi y q l +
-        ∑ n ∈ range y,
-          liuPanInverseLogAbelWeight n * liuPanAPPsi n q l := by
-  let c : ℕ → ℝ := fun n => if n ≡ l [MOD q] then Λ n else 0
-  have h := Finset.sum_range_by_parts
-    (fun n : ℕ => (Real.log (n : ℝ))⁻¹) c (y + 1)
-  simp only [Nat.add_sub_cancel, smul_eq_mul] at h
-  rw [show apLogVonMangoldt y q l =
-      ∑ n ∈ range (y + 1), (Real.log (n : ℝ))⁻¹ * c n by
-    unfold apLogVonMangoldt c
-    apply sum_congr rfl
-    intro n hn
-    by_cases hmod : n ≡ l [MOD q] <;>
-      simp [hmod, div_eq_inv_mul]]
-  rw [h]
-  change
-    (Real.log (y : ℝ))⁻¹ * liuPanAPPsi y q l -
-        ∑ n ∈ range y,
-          ((Real.log (n + 1 : ℕ))⁻¹ - (Real.log (n : ℝ))⁻¹) *
-            liuPanAPPsi n q l =
-      _
-  rw [sub_eq_add_neg, ← sum_neg_distrib]
-  congr 1
-  apply sum_congr rfl
-  intro n hn
-  by_cases hn2 : 2 ≤ n
-  · simp only [liuPanInverseLogAbelWeight, if_pos hn2]
-    ring
-  · interval_cases n <;> simp [liuPanInverseLogAbelWeight]
 
-/-- Exact decomposition of the inverse-log discrepancy into the endpoint psi
-discrepancy, all preceding psi discrepancies, and the deterministic discrete
-main-term error.  This identity is valid for every modulus, including `0` and
-`1`. -/
-theorem apLogVonMangoldt_sub_liuLogarithmicIntegral_eq_discreteAbel
-    (kappa : ℝ) (y : ℕ) (x : ℝ) (q l : ℕ) :
-    apLogVonMangoldt y q l -
-        liuLogarithmicIntegral kappa x / Nat.totient q =
-      (Real.log (y : ℝ))⁻¹ * liuPanAPPsiDiscrepancy y q l +
-        ∑ n ∈ range y,
-          liuPanInverseLogAbelWeight n *
-            liuPanAPPsiDiscrepancy n q l +
-        (liuPanDiscreteInverseLogMain y -
-            liuLogarithmicIntegral kappa x) / Nat.totient q := by
-  rw [apLogVonMangoldt_eq_discreteAbel]
-  have hpsi : ∀ n : ℕ,
-      liuPanAPPsi n q l =
-        liuPanAPPsiDiscrepancy n q l +
-          (n : ℝ) / Nat.totient q := by
-    intro n
-    unfold liuPanAPPsiDiscrepancy
-    ring
-  have hsum :
-      (∑ n ∈ range y,
-          liuPanInverseLogAbelWeight n *
-            ((n : ℝ) / Nat.totient q)) =
-        (∑ n ∈ range y,
-          liuPanInverseLogAbelWeight n * (n : ℝ)) /
-            Nat.totient q := by
-    rw [Finset.sum_div]
-    apply sum_congr rfl
-    intro n hn
-    ring
-  rw [hpsi y]
-  simp_rw [hpsi, mul_add]
-  rw [Finset.sum_add_distrib, hsum]
-  unfold liuPanDiscreteInverseLogMain
-  ring
 
 /-! ## Aggregate-before-absolute-value Abel identities -/
 
@@ -323,87 +231,9 @@ theorem sum_source_prefix_eq_sum_aggregate_prefix
       rw [← sum_range_eq_sum_range_indicator
         (fun n => w n * F n a) (y / a) y (Nat.div_le_self y a)]
 
-/-- Exact endpoint shell identity for the source-aggregated AP psi
-discrepancy. -/
-theorem liuPanAggregateAPPsiDiscrepancy_endpoint_shell
-    (y X q l : ℕ) (f g : ℕ → ℝ) (hg0 : g 0 = 0) :
-    (∑ a ∈ Icc 1 X, if a.Coprime q then
-      f a * g (y / a) *
-        liuPanAPPsiDiscrepancy (y / a) q (natInvMod q a * l % q)
-    else 0) =
-      ∑ k ∈ Icc 1 y, g k *
-        (liuPanAggregateAPPsiDiscrepancy k
-            (liuPanAbelSourceCutoff y X k) q l f -
-          liuPanAggregateAPPsiDiscrepancy k
-            (liuPanAbelSourceCutoff y X (k + 1)) q l f) := by
-  simpa only [liuPanAggregateAPPsiDiscrepancy, mul_assoc, mul_left_comm,
-    mul_comm, mul_ite, mul_zero] using
-    (sum_source_eq_sum_quotient_shells y X g
-      (fun k a => if a.Coprime q then
-        f a * liuPanAPPsiDiscrepancy k q (natInvMod q a * l % q)
-      else 0) hg0)
 
-/-- The endpoint shell identity at the inverse-log weight. -/
-theorem liuPanAggregateAPPsiDiscrepancy_inverseLog_endpoint_shell
-    (y X q l : ℕ) (f : ℕ → ℝ) :
-    (∑ a ∈ Icc 1 X, if a.Coprime q then
-      f a * (Real.log (y / a : ℕ))⁻¹ *
-        liuPanAPPsiDiscrepancy (y / a) q (natInvMod q a * l % q)
-    else 0) =
-      ∑ k ∈ Icc 1 y, (Real.log (k : ℝ))⁻¹ *
-        (liuPanAggregateAPPsiDiscrepancy k
-            (liuPanAbelSourceCutoff y X k) q l f -
-          liuPanAggregateAPPsiDiscrepancy k
-            (liuPanAbelSourceCutoff y X (k + 1)) q l f) := by
-  exact liuPanAggregateAPPsiDiscrepancy_endpoint_shell y X q l f
-    (fun k => (Real.log (k : ℝ))⁻¹) (by simp)
 
-/-- Exact prefix swap for the source-aggregated AP psi discrepancy. -/
-theorem liuPanAggregateAPPsiDiscrepancy_prefix_swap
-    (y X q l : ℕ) (f w : ℕ → ℝ) :
-    (∑ a ∈ Icc 1 X, if a.Coprime q then
-      f a * (∑ n ∈ range (y / a), w n *
-        liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q))
-    else 0) =
-      ∑ n ∈ range y, w n *
-        liuPanAggregateAPPsiDiscrepancy n
-          (liuPanAbelSourceCutoff y X (n + 1)) q l f := by
-  calc
-    _ = ∑ a ∈ Icc 1 X, ∑ n ∈ range (y / a), w n *
-          (if a.Coprime q then
-            f a * liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q)
-          else 0) := by
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop, Finset.mul_sum]
-        apply sum_congr rfl
-        intro n hn
-        ring
-      · simp [hcop]
-    _ = ∑ n ∈ range y, w n *
-          ∑ a ∈ Icc 1 (liuPanAbelSourceCutoff y X (n + 1)),
-            (if a.Coprime q then
-              f a * liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q)
-            else 0) :=
-      sum_source_prefix_eq_sum_aggregate_prefix y X w
-        (fun n a => if a.Coprime q then
-          f a * liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q)
-        else 0)
-    _ = _ := by rfl
 
-/-- The exact prefix swap at the nonnegative Abel weights used above. -/
-theorem liuPanAggregateAPPsiDiscrepancy_abel_prefix_swap
-    (y X q l : ℕ) (f : ℕ → ℝ) :
-    (∑ a ∈ Icc 1 X, if a.Coprime q then
-      f a * (∑ n ∈ range (y / a), liuPanInverseLogAbelWeight n *
-        liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q))
-    else 0) =
-      ∑ n ∈ range y, liuPanInverseLogAbelWeight n *
-        liuPanAggregateAPPsiDiscrepancy n
-          (liuPanAbelSourceCutoff y X (n + 1)) q l f :=
-  liuPanAggregateAPPsiDiscrepancy_prefix_swap y X q l f
-    liuPanInverseLogAbelWeight
 
 /-- The aggregate psi contribution after both exact finite rearrangements. -/
 noncomputable def liuPanAggregateInverseLogPsiTerm
@@ -426,77 +256,7 @@ noncomputable def liuPanAggregateInverseLogDeterministicTerm
       liuLogarithmicIntegral kappa ((y : ℝ) / a))
   else 0
 
-/-- Exact aggregate-before-absolute-value decomposition of the combined
-inverse-log discrepancy.  It remains valid for moduli `0` and `1`. -/
-theorem liuPanCombinedInverseLogDiscrepancy_eq_aggregateAbel
-    (kappa : ℝ) (y X q l : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogDiscrepancy
-        (liuLogarithmicIntegral kappa) y X q l f u v =
-      |liuPanAggregateInverseLogPsiTerm y X q l f +
-        liuPanAggregateInverseLogDeterministicTerm kappa y X q f /
-          Nat.totient q| := by
-  rw [liuPanCombinedInverseLogDiscrepancy_eq]
-  congr 1
-  calc
-    _ = ∑ a ∈ Icc 1 X, if a.Coprime q then f a *
-          ((Real.log (y / a : ℕ))⁻¹ *
-              liuPanAPPsiDiscrepancy (y / a) q
-                (natInvMod q a * l % q) +
-            (∑ n ∈ range (y / a), liuPanInverseLogAbelWeight n *
-              liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q)) +
-            (liuPanDiscreteInverseLogMain (y / a) -
-              liuLogarithmicIntegral kappa ((y : ℝ) / a)) /
-                Nat.totient q)
-        else 0 := by
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop]
-        rw [apLogVonMangoldt_sub_liuLogarithmicIntegral_eq_discreteAbel]
-      · simp [hcop]
-    _ = (∑ a ∈ Icc 1 X, if a.Coprime q then f a *
-            (Real.log (y / a : ℕ))⁻¹ *
-              liuPanAPPsiDiscrepancy (y / a) q
-                (natInvMod q a * l % q)
-          else 0) +
-        (∑ a ∈ Icc 1 X, if a.Coprime q then f a *
-            (∑ n ∈ range (y / a), liuPanInverseLogAbelWeight n *
-              liuPanAPPsiDiscrepancy n q (natInvMod q a * l % q))
-          else 0) +
-        (∑ a ∈ Icc 1 X, if a.Coprime q then f a *
-            (liuPanDiscreteInverseLogMain (y / a) -
-              liuLogarithmicIntegral kappa ((y : ℝ) / a))
-          else 0) / Nat.totient q := by
-      rw [Finset.sum_div, ← Finset.sum_add_distrib,
-        ← Finset.sum_add_distrib]
-      apply sum_congr rfl
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop]
-        ring
-      · simp [hcop]
-    _ = _ := by
-      rw [liuPanAggregateAPPsiDiscrepancy_inverseLog_endpoint_shell,
-        liuPanAggregateAPPsiDiscrepancy_abel_prefix_swap]
-      rfl
 
-/-- The pointwise aggregate bound keeps the only analytic absolute value outside
-the full source convolution and separates the deterministic error. -/
-theorem liuPanCombinedInverseLogDiscrepancy_le_aggregateAbel
-    (kappa : ℝ) (y X q l : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogDiscrepancy
-        (liuLogarithmicIntegral kappa) y X q l f u v ≤
-      |liuPanAggregateInverseLogPsiTerm y X q l f| +
-        |liuPanAggregateInverseLogDeterministicTerm kappa y X q f| /
-          Nat.totient q := by
-  rw [liuPanCombinedInverseLogDiscrepancy_eq_aggregateAbel]
-  calc
-    _ ≤ |liuPanAggregateInverseLogPsiTerm y X q l f| +
-        |liuPanAggregateInverseLogDeterministicTerm kappa y X q f /
-          Nat.totient q| :=
-      abs_add_le _ _
-    _ = _ := by
-      rw [abs_div, abs_of_nonneg (by positivity : (0 : ℝ) ≤ Nat.totient q)]
 
 /-! ## Canonical aggregate maxima -/
 
@@ -584,149 +344,16 @@ noncomputable def liuPanAggregateInverseLogDeterministicMaxY
   unfold liuPanAggregateInverseLogDeterministicMaxY
   simp only [liuPanAggregateInverseLogDeterministicMaxL_one]
 
-/-- The pointwise aggregate bound lifted through the canonical residue maximum. -/
-theorem liuPanCombinedInverseLogMaxL_le_aggregateAbel
-    (kappa : ℝ) (y X q : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogMaxL
-        (liuLogarithmicIntegral kappa) y X q f u v ≤
-      liuPanAggregateInverseLogPsiMaxL y X q f +
-        liuPanAggregateInverseLogDeterministicMaxL kappa y X q f /
-          Nat.totient q := by
-  unfold liuPanCombinedInverseLogMaxL
-    liuPanAggregateInverseLogPsiMaxL
-    liuPanAggregateInverseLogDeterministicMaxL
-  dsimp only
-  by_cases hS : (unitResidues q).Nonempty
-  · simp only [dif_pos hS, if_pos hS]
-    apply max'_le
-    intro z hz
-    rcases mem_image.mp hz with ⟨l, hl, rfl⟩
-    refine (liuPanCombinedInverseLogDiscrepancy_le_aggregateAbel
-      kappa y X q l f u v).trans ?_
-    refine add_le_add ?_ le_rfl
-    apply le_max'
-    exact mem_image.mpr ⟨l, hl, rfl⟩
-  · simp [hS]
 
-/-- The aggregate bound lifted through the canonical `y` maximum, without
-introducing any sourcewise triangle inequality. -/
-theorem liuPanCombinedInverseLogMaxY_le_aggregateAbel
-    (kappa : ℝ) (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogMaxY
-        (liuLogarithmicIntegral kappa) X q x f u v ≤
-      liuPanAggregateInverseLogPsiMaxY X q x f +
-        liuPanAggregateInverseLogDeterministicMaxY kappa X q x f /
-          Nat.totient q := by
-  unfold liuPanCombinedInverseLogMaxY
-  apply max'_le
-  intro z hz
-  rcases mem_image.mp hz with ⟨y, hy, rfl⟩
-  refine (liuPanCombinedInverseLogMaxL_le_aggregateAbel
-    kappa y X q f u v).trans ?_
-  -- Lift the two terms separately, keeping the totient outside the maximum.
-  apply add_le_add
-  · unfold liuPanAggregateInverseLogPsiMaxY
-    apply le_max'
-    exact mem_image.mpr ⟨y, hy, rfl⟩
-  · apply div_le_div_of_nonneg_right
-    · unfold liuPanAggregateInverseLogDeterministicMaxY
-      apply le_max'
-      exact mem_image.mpr ⟨y, hy, rfl⟩
-    · positivity
 
 /-! ## Aggregate fixed-source and source-family bounds -/
 
-/-- The modulus-weighted aggregate psi average at a fixed source. -/
-noncomputable def liuMainPanAggregateInverseLogPsiAverage
-    (N : ℕ) (f : ℕ → ℝ) (B : ℝ) : ℝ :=
-  ∑ q ∈ range (panModulusCutoff N B + 1),
-    (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-      (3 : ℝ) ^ q.primeFactors.card *
-      liuPanAggregateInverseLogPsiMaxY N q N f
 
-/-- The separately visible modulus-weighted deterministic average. -/
-noncomputable def liuMainPanAggregateInverseLogDeterministicAverage
-    (kappa : ℝ) (N : ℕ) (f : ℕ → ℝ) (B : ℝ) : ℝ :=
-  ∑ q ∈ range (panModulusCutoff N B + 1),
-    (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-      (3 : ℝ) ^ q.primeFactors.card *
-      (liuPanAggregateInverseLogDeterministicMaxY kappa N q N f /
-        Nat.totient q)
 
-/-- Fixed-`N` aggregate psi estimate, with the absolute value only after the
-source aggregation. -/
-def LiuMainPanAggregateInverseLogPsiBoundAt
-    (N : ℕ) (f : ℕ → ℝ) (A B C : ℝ) : Prop :=
-  liuMainPanAggregateInverseLogPsiAverage N f B ≤
-    C * N / Real.log N ^ A
 
-/-- Fixed-`N` deterministic source-error estimate. -/
-def LiuMainPanAggregateInverseLogDeterministicBoundAt
-    (kappa : ℝ) (N : ℕ) (f : ℕ → ℝ) (A B C : ℝ) : Prop :=
-  liuMainPanAggregateInverseLogDeterministicAverage kappa N f B ≤
-    C * N / Real.log N ^ A
 
-/-- The corrected aggregate source-family input.  Its psi and deterministic
-components have separate constants and separate displayed bounds, while the
-source `f_N` is specialized inside the universal quantifier over `N`. -/
-def LiuMainPanAggregateInverseLogSourceFamilyBound (kappa : ℝ) : Prop :=
-  ∀ A : ℝ, 0 < A →
-    ∃ Cpsi : ℝ, 0 < Cpsi ∧ ∃ Cdet : ℝ, 0 < Cdet ∧
-    ∃ B : ℝ, 0 ≤ B ∧ ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N →
-      LiuMainPanAggregateInverseLogPsiBoundAt N
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B Cpsi ∧
-        LiuMainPanAggregateInverseLogDeterministicBoundAt kappa N
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B Cdet
 
-/-- The exact combined average is bounded by the aggregate psi average plus the
-separate deterministic average. -/
-theorem liuMainPanCombinedInverseLogAverage_le_aggregateAbel
-    (kappa : ℝ) (N : ℕ) (B : ℝ) (u v : ℕ) :
-    liuMainPanCombinedInverseLogAverage kappa N B u v ≤
-      liuMainPanAggregateInverseLogPsiAverage N
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) B +
-        liuMainPanAggregateInverseLogDeterministicAverage kappa N
-          (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) B := by
-  unfold liuMainPanCombinedInverseLogAverage
-    liuMainPanAggregateInverseLogPsiAverage
-    liuMainPanAggregateInverseLogDeterministicAverage
-  rw [← Finset.sum_add_distrib]
-  apply sum_le_sum
-  intro q hq
-  rw [← mul_add]
-  exact mul_le_mul_of_nonneg_left
-    (liuPanCombinedInverseLogMaxY_le_aggregateAbel
-      kappa N q N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) u v)
-    (panTypeI_weight_nonneg q)
 
-/-- The corrected aggregate psi hypothesis together with its separately
-bounded deterministic component implies the combined inverse-log family
-bound.  This theorem does not assert either analytic input. -/
-theorem LiuMainPanAggregateInverseLogSourceFamilyBound.to_combinedInverseLog
-    {kappa : ℝ} (hagg : LiuMainPanAggregateInverseLogSourceFamilyBound kappa)
-    (u v : ℕ) :
-    LiuMainPanCombinedInverseLogSourceFamilyBound kappa u v := by
-  intro A hA
-  rcases hagg A hA with
-    ⟨Cpsi, hCpsi, Cdet, hCdet, B, hB, N0, hN⟩
-  refine ⟨Cpsi + Cdet, add_pos hCpsi hCdet, B, hB, N0, ?_⟩
-  intro N hN0
-  have hbounds := hN N hN0
-  unfold LiuMainPanAggregateInverseLogPsiBoundAt
-    LiuMainPanAggregateInverseLogDeterministicBoundAt at hbounds
-  unfold LiuMainPanCombinedInverseLogBoundAt
-  calc
-    liuMainPanCombinedInverseLogAverage kappa N B u v ≤
-        liuMainPanAggregateInverseLogPsiAverage N
-            (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) B +
-          liuMainPanAggregateInverseLogDeterministicAverage kappa N
-            (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) B :=
-      liuMainPanCombinedInverseLogAverage_le_aggregateAbel
-        kappa N B u v
-    _ ≤ Cpsi * N / Real.log N ^ A + Cdet * N / Real.log N ^ A :=
-      add_le_add hbounds.1 hbounds.2
-    _ = (Cpsi + Cdet) * N / Real.log N ^ A := by ring
 
 /-! ## Sourcewise diagnostic (analytically overstrong) -/
 
@@ -744,75 +371,7 @@ noncomputable def liuPanPsiAbelMajorant
     |liuPanDiscreteInverseLogMain y -
         liuLogarithmicIntegral kappa x| / Nat.totient q
 
-theorem liuPanPsiAbelMajorant_nonneg
-    (kappa : ℝ) (y : ℕ) (x : ℝ) (q l : ℕ) :
-    0 ≤ liuPanPsiAbelMajorant kappa y x q l := by
-  unfold liuPanPsiAbelMajorant
-  exact add_nonneg
-    (add_nonneg
-      (div_nonneg (abs_nonneg _) (natCast_log_nonneg y))
-      (sum_nonneg fun n _ =>
-        mul_nonneg (liuPanInverseLogAbelWeight_nonneg n) (abs_nonneg _)))
-    (div_nonneg (abs_nonneg _) (by positivity))
 
-/-- Pointwise inverse-log discrepancy bound obtained from the exact Abel
-identity, with no distribution estimate assumed. -/
-theorem abs_apLogVonMangoldt_sub_liuLogarithmicIntegral_le_psiAbelMajorant
-    (kappa : ℝ) (y : ℕ) (x : ℝ) (q l : ℕ) :
-    |apLogVonMangoldt y q l -
-        liuLogarithmicIntegral kappa x / Nat.totient q| ≤
-      liuPanPsiAbelMajorant kappa y x q l := by
-  rw [apLogVonMangoldt_sub_liuLogarithmicIntegral_eq_discreteAbel]
-  have hend :
-      |(Real.log (y : ℝ))⁻¹ * liuPanAPPsiDiscrepancy y q l| =
-        |liuPanAPPsiDiscrepancy y q l| / Real.log (y : ℝ) := by
-    rw [abs_mul, abs_of_nonneg (inv_nonneg.mpr (natCast_log_nonneg y))]
-    ring
-  have hsum :
-      |∑ n ∈ range y,
-          liuPanInverseLogAbelWeight n *
-            liuPanAPPsiDiscrepancy n q l| ≤
-        ∑ n ∈ range y,
-          liuPanInverseLogAbelWeight n *
-            |liuPanAPPsiDiscrepancy n q l| := by
-    calc
-      _ ≤ ∑ n ∈ range y,
-          |liuPanInverseLogAbelWeight n *
-            liuPanAPPsiDiscrepancy n q l| :=
-        abs_sum_le_sum_abs _ _
-      _ = _ := by
-        apply sum_congr rfl
-        intro n hn
-        rw [abs_mul,
-          abs_of_nonneg (liuPanInverseLogAbelWeight_nonneg n)]
-  have htotient : 0 ≤ (Nat.totient q : ℝ) := by positivity
-  have hdet :
-      |(liuPanDiscreteInverseLogMain y -
-          liuLogarithmicIntegral kappa x) / Nat.totient q| =
-        |liuPanDiscreteInverseLogMain y -
-          liuLogarithmicIntegral kappa x| / Nat.totient q := by
-    rw [abs_div, abs_of_nonneg htotient]
-  unfold liuPanPsiAbelMajorant
-  calc
-    _ ≤
-        |(Real.log (y : ℝ))⁻¹ * liuPanAPPsiDiscrepancy y q l +
-          ∑ n ∈ range y,
-            liuPanInverseLogAbelWeight n *
-              liuPanAPPsiDiscrepancy n q l| +
-        |(liuPanDiscreteInverseLogMain y -
-          liuLogarithmicIntegral kappa x) / Nat.totient q| :=
-      abs_add_le _ _
-    _ ≤
-        (|(Real.log (y : ℝ))⁻¹ * liuPanAPPsiDiscrepancy y q l| +
-          |∑ n ∈ range y,
-            liuPanInverseLogAbelWeight n *
-              liuPanAPPsiDiscrepancy n q l|) +
-        |(liuPanDiscreteInverseLogMain y -
-          liuLogarithmicIntegral kappa x) / Nat.totient q| :=
-      add_le_add (abs_add_le _ _) le_rfl
-    _ ≤ _ := by
-      rw [hend, hdet]
-      exact add_le_add (add_le_add le_rfl hsum) le_rfl
 
 /-! ## Diagnostic source-weighted maxima -/
 
@@ -827,52 +386,7 @@ noncomputable def liuPanSourceWeightedPsiAbelMajorant
         (natInvMod q a * l % q)
   else 0
 
-theorem liuPanSourceWeightedPsiAbelMajorant_nonneg
-    (kappa : ℝ) (y X q l : ℕ) (f : ℕ → ℝ) :
-    0 ≤ liuPanSourceWeightedPsiAbelMajorant kappa y X q l f := by
-  unfold liuPanSourceWeightedPsiAbelMajorant
-  apply sum_nonneg
-  intro a ha
-  split_ifs
-  · exact mul_nonneg (abs_nonneg _)
-      (liuPanPsiAbelMajorant_nonneg _ _ _ _ _)
-  · exact le_rfl
 
-/-- The exact combined discrepancy is bounded by the diagnostic sourcewise
-majorant.  This valid inequality is analytically too costly in the
-empty-progression tail. -/
-theorem liuPanCombinedInverseLogDiscrepancy_le_sourceWeightedPsiAbelMajorant
-    (kappa : ℝ) (y X q l : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogDiscrepancy
-        (liuLogarithmicIntegral kappa) y X q l f u v ≤
-      liuPanSourceWeightedPsiAbelMajorant kappa y X q l f := by
-  rw [liuPanCombinedInverseLogDiscrepancy_eq]
-  unfold liuPanSourceWeightedPsiAbelMajorant
-  calc
-    |∑ a ∈ Icc 1 X, if a.Coprime q then
-        f a * (apLogVonMangoldt (y / a) q
-            (natInvMod q a * l % q) -
-          liuLogarithmicIntegral kappa ((y : ℝ) / a) /
-            Nat.totient q)
-      else 0| ≤
-        ∑ a ∈ Icc 1 X, |if a.Coprime q then
-          f a * (apLogVonMangoldt (y / a) q
-              (natInvMod q a * l % q) -
-            liuLogarithmicIntegral kappa ((y : ℝ) / a) /
-              Nat.totient q)
-        else 0| :=
-      abs_sum_le_sum_abs _ _
-    _ ≤ _ := by
-      apply sum_le_sum
-      intro a ha
-      by_cases hcop : a.Coprime q
-      · simp only [if_pos hcop, abs_mul]
-        exact mul_le_mul_of_nonneg_left
-          (abs_apLogVonMangoldt_sub_liuLogarithmicIntegral_le_psiAbelMajorant
-            kappa (y / a) ((y : ℝ) / a) q
-              (natInvMod q a * l % q))
-          (abs_nonneg (f a))
-      · simp [hcop]
 
 /-- Canonical maximum of the source-weighted psi majorant over reduced
 residues. -/
@@ -909,114 +423,14 @@ noncomputable def liuPanSourceWeightedPsiAbelMaxY
   simp [liuPanSourceWeightedPsiAbelMaxY,
     Finset.image_const (by simp : (range (x + 1)).Nonempty)]
 
-theorem liuPanSourceWeightedPsiAbelMaxY_one
-    (kappa : ℝ) (X x : ℕ) (f : ℕ → ℝ) :
-    liuPanSourceWeightedPsiAbelMaxY kappa X 1 x f =
-      ((range (x + 1)).image (fun y =>
-        liuPanSourceWeightedPsiAbelMajorant kappa y X 1 0 f)).max'
-          (Finset.image_nonempty.mpr ⟨0, by simp⟩) := by
-  unfold liuPanSourceWeightedPsiAbelMaxY
-  simp only [liuPanSourceWeightedPsiAbelMaxL_one]
 
-theorem liuPanCombinedInverseLogMaxL_le_sourceWeightedPsiAbelMaxL
-    (kappa : ℝ) (y X q : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogMaxL
-        (liuLogarithmicIntegral kappa) y X q f u v ≤
-      liuPanSourceWeightedPsiAbelMaxL kappa y X q f := by
-  unfold liuPanCombinedInverseLogMaxL
-    liuPanSourceWeightedPsiAbelMaxL
-  dsimp only
-  by_cases hS : (unitResidues q).Nonempty
-  · simp only [dif_pos hS]
-    apply max'_le
-    intro z hz
-    rcases mem_image.mp hz with ⟨l, hl, rfl⟩
-    exact
-      (liuPanCombinedInverseLogDiscrepancy_le_sourceWeightedPsiAbelMajorant
-        kappa y X q l f u v).trans
-        (le_max'
-          ((unitResidues q).image (fun r =>
-            liuPanSourceWeightedPsiAbelMajorant kappa y X q r f))
-          (liuPanSourceWeightedPsiAbelMajorant kappa y X q l f)
-          (mem_image.mpr ⟨l, hl, rfl⟩))
-  · simp [hS]
 
-theorem liuPanCombinedInverseLogMaxY_le_sourceWeightedPsiAbelMaxY
-    (kappa : ℝ) (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanCombinedInverseLogMaxY
-        (liuLogarithmicIntegral kappa) X q x f u v ≤
-      liuPanSourceWeightedPsiAbelMaxY kappa X q x f := by
-  unfold liuPanCombinedInverseLogMaxY
-    liuPanSourceWeightedPsiAbelMaxY
-  apply max'_le
-  intro z hz
-  rcases mem_image.mp hz with ⟨y, hy, rfl⟩
-  exact
-    (liuPanCombinedInverseLogMaxL_le_sourceWeightedPsiAbelMaxL
-      kappa y X q f u v).trans
-      (le_max'
-        ((range (x + 1)).image (fun t =>
-          liuPanSourceWeightedPsiAbelMaxL kappa t X q f))
-        (liuPanSourceWeightedPsiAbelMaxL kappa y X q f)
-        (mem_image.mpr ⟨y, hy, rfl⟩))
 
 /-! ## Overstrong diagnostic source-family predicate -/
 
-/-- The source-weighted maximal psi functional averaged over Pan moduli. -/
-noncomputable def liuMainPanPsiAbelAverage
-    (kappa : ℝ) (N : ℕ) (f : ℕ → ℝ) (B : ℝ) : ℝ :=
-  ∑ q ∈ range (panModulusCutoff N B + 1),
-    (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-      (3 : ℝ) ^ q.primeFactors.card *
-      liuPanSourceWeightedPsiAbelMaxY kappa N q N f
 
-/-- A fixed-`N`, fixed-source estimate for the overstrong sourcewise
-functional. -/
-def LiuMainPanPsiAbelBoundAt
-    (kappa : ℝ) (N : ℕ) (f : ℕ → ℝ) (A B C : ℝ) : Prop :=
-  liuMainPanPsiAbelAverage kappa N f B ≤
-    C * N / Real.log N ^ A
 
-/-- An intentionally retained overstrong diagnostic, not the remaining analytic
-input.  For `q > y / a`, the empty-progression contribution survives the
-sourcewise absolute value; averaged over reduced residues this prevents the
-claimed arbitrary logarithmic saving.  The source weight `f_N` is nevertheless
-quantified correctly inside `∀ N`, so finite consequences remain reusable. -/
-def LiuMainPanPsiAbelSourceFamilyBound (kappa : ℝ) : Prop :=
-  ∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∃ B : ℝ, 0 ≤ B ∧ ∃ N0 : ℕ,
-    ∀ N : ℕ, N0 ≤ N →
-      LiuMainPanPsiAbelBoundAt kappa N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C
 
-/-- The overstrong diagnostic functional dominates the combined inverse-log
-average for every fixed `N`. -/
-theorem liuMainPanCombinedInverseLogAverage_le_psiAbelAverage
-    (kappa : ℝ) (N : ℕ) (B : ℝ) (u v : ℕ) :
-    liuMainPanCombinedInverseLogAverage kappa N B u v ≤
-      liuMainPanPsiAbelAverage kappa N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) B := by
-  unfold liuMainPanCombinedInverseLogAverage
-    liuMainPanPsiAbelAverage
-  apply sum_le_sum
-  intro q hq
-  exact mul_le_mul_of_nonneg_left
-    (liuPanCombinedInverseLogMaxY_le_sourceWeightedPsiAbelMaxY
-      kappa N q N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) u v)
-    (panTypeI_weight_nonneg q)
 
-/-- The overstrong diagnostic predicate has the stated finite implication.  It
-is not proposed as the analytic Bombieri--Vinogradov frontier. -/
-theorem LiuMainPanPsiAbelSourceFamilyBound.to_combinedInverseLog
-    {kappa : ℝ} (hpsi : LiuMainPanPsiAbelSourceFamilyBound kappa)
-    (u v : ℕ) :
-    LiuMainPanCombinedInverseLogSourceFamilyBound kappa u v := by
-  intro A hA
-  rcases hpsi A hA with ⟨C, hC, B, hB, N0, hN⟩
-  refine ⟨C, hC, B, hB, N0, ?_⟩
-  intro N hN0
-  exact
-    (liuMainPanCombinedInverseLogAverage_le_psiAbelAverage
-      kappa N B u v).trans (hN N hN0)
 
 end MathlibNt.SieveTheory.LiuWeight

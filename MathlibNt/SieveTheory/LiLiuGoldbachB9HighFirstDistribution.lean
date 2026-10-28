@@ -1,5 +1,7 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstMainMass
-import MathlibNt.SieveTheory.LiLiuGoldbachB9PaidUpper
+import MathlibNt.SieveTheory.LiLiuGoldbachB9CommonRemainder
+import MathlibNt.SieveTheory.LiLiuGoldbachB8PaidUpper
+
 
 open scoped BigOperators
 open Finset Filter
@@ -42,11 +44,6 @@ theorem goldbachB9HighFirstCommonRemainder_eq (N d : ℕ) :
   rw [goldbachX9High_eq_gated_add_deleted N d]
   ring
 
-theorem goldbachB9HighFirstCommonRemainder_one (N : ℕ) :
-    goldbachX9HighDeleted N 1 = 0 ∧
-      goldbachB9HighFirstCommonRemainder N 1 = goldbachB9HighFirstGatedRemainder N 1 := by
-  have hz : goldbachX9HighDeleted N 1 = 0 := by simp [goldbachX9HighDeleted]
-  exact ⟨hz, by rw [goldbachB9HighFirstCommonRemainder_eq, hz]; simp⟩
 
 theorem goldbachB9HighFirstSupport_eventually_panInterval (B : ℝ) :
     ∀ᶠ N : ℕ in atTop, goldbachB9HighFirstSupport N ⊆

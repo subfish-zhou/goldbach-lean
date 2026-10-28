@@ -1,0 +1,154 @@
+{
+  "status": "static_only",
+  "static_checks": "PASS",
+  "lean_acceptance": false,
+  "baseline_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "deleted_declarations": 383,
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean",
+      "before": {
+        "effective_lines": 3291,
+        "physical_lines": 3777,
+        "utf8_bytes": 165488
+      },
+      "after": {
+        "effective_lines": 664,
+        "physical_lines": 994,
+        "utf8_bytes": 39941
+      },
+      "before_sha256": "70b2cdea392de96e5e06d30ba6dcfff95fe6accac9240027df788ea4d8ed8074",
+      "after_sha256": "9497588d203868a044658cd7c632bb73c7d3a3e540fe72b7062f2348935354aa"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimePowerLargeSieve.lean",
+      "before": {
+        "effective_lines": 2568,
+        "physical_lines": 2842,
+        "utf8_bytes": 119550
+      },
+      "after": {
+        "effective_lines": 238,
+        "physical_lines": 388,
+        "utf8_bytes": 12869
+      },
+      "before_sha256": "0063223beb297f59e3ae3e5a58625c6ee950b8db44730704b2c87c134689d9f5",
+      "after_sha256": "7be7e743bca0dac89f9fdde931803becfb6c6e5d1add0b7dc4faa6b9173bb9db"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimePowerCharacters.lean",
+      "before": {
+        "effective_lines": 1483,
+        "physical_lines": 1732,
+        "utf8_bytes": 73393
+      },
+      "after": {
+        "effective_lines": 349,
+        "physical_lines": 505,
+        "utf8_bytes": 18468
+      },
+      "before_sha256": "c4c1382ee50753ca41e003e2123cdf1c48882344bc5148500da3e81395948040",
+      "after_sha256": "2393577cb612c67799139829c5c7ffba18b9fb5bca607d7c1ea2b11a2335957a"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiDyadic.lean",
+      "before": {
+        "effective_lines": 2315,
+        "physical_lines": 2590,
+        "utf8_bytes": 113446
+      },
+      "after": {
+        "effective_lines": 302,
+        "physical_lines": 487,
+        "utf8_bytes": 20530
+      },
+      "before_sha256": "89ea59d1d9543bdf7de37d0e228db4699f3088a8125b11e76030736b9045426d",
+      "after_sha256": "4c395d8bfb43e14192f95a398da855bf339601f21168e26f83e9657dcce818f0"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimePowerPowerSaving.lean",
+      "before": {
+        "effective_lines": 470,
+        "physical_lines": 537,
+        "utf8_bytes": 25381
+      },
+      "after": {
+        "effective_lines": 33,
+        "physical_lines": 78,
+        "utf8_bytes": 2699
+      },
+      "before_sha256": "a10dfbd52c00cba8aa25e9635bf6d34b8295114756d3ecd9fbf8ef5b8e67d1e4",
+      "after_sha256": "86e78f061c7f9111cd8cb365c2d4cb4a88defeb652ec93d56b2fb06ae89a309f"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbel.lean",
+      "before": {
+        "effective_lines": 839,
+        "physical_lines": 1022,
+        "utf8_bytes": 41865
+      },
+      "after": {
+        "effective_lines": 347,
+        "physical_lines": 496,
+        "utf8_bytes": 19551
+      },
+      "before_sha256": "6536f1652118a94740f2b64c7f547b4d3dbf4e08763fa7848cbff32dddd43f74",
+      "after_sha256": "e50a481656bd0f734aad758da779edb2822a792406d366a43b80e26229085bbb"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbelDeterministic.lean",
+      "before": {
+        "effective_lines": 644,
+        "physical_lines": 711,
+        "utf8_bytes": 32522
+      },
+      "after": {
+        "effective_lines": 20,
+        "physical_lines": 59,
+        "utf8_bytes": 1570
+      },
+      "before_sha256": "b996ec5f9a06b03a1e94b88695e380c444d6490a54325fe035ffb96671393d14",
+      "after_sha256": "8b7452b2ba42e3ec8088925fdc615768401d74c38a308213157bc87f0f111f9f"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedInverseLog.lean",
+      "before": {
+        "effective_lines": 407,
+        "physical_lines": 490,
+        "utf8_bytes": 22139
+      },
+      "after": {
+        "effective_lines": 63,
+        "physical_lines": 124,
+        "utf8_bytes": 4401
+      },
+      "before_sha256": "8b831e2e292661b90b91274e1494b6de2e3f6734a5d85586da82e8b3a7623380",
+      "after_sha256": "e65120c6bac7f26d059b4b7b34cc2bd2b5c3f767a90d93749cc5f31d9451e557"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimitivePerron.lean",
+      "before": {
+        "effective_lines": 3240,
+        "physical_lines": 3469,
+        "utf8_bytes": 138183
+      },
+      "after": {
+        "effective_lines": 2317,
+        "physical_lines": 2523,
+        "utf8_bytes": 97250
+      },
+      "before_sha256": "477e0482f296649b964499faf46b36421fffe069604e949fde7bfae50b9cd537",
+      "after_sha256": "6a7f6af820e3f47d118416457a3bf91114df98b173209dfff9e13d06c0825a1b"
+    }
+  ],
+  "reduction": {
+    "effective_lines": 10924,
+    "physical_lines": 11516,
+    "utf8_bytes": 514688
+  },
+  "all_surviving_text_character_identical": true,
+  "scope": "nine listed files only; dependency/type/kernel validation is separate",
+  "qname_semantics": "source-level namespace-qualified names; private elaborator-generated names are not claimed",
+  "manifest_sha256": "6bd7006db602d707c54a031718ee39445e3a002c1b7b8ca868abfe82bb1b9796",
+  "audit_sha256": "c78203672effa8e68bcd087d06bcb39e4891cedb5966883c2fe5af33854e8a4a"
+}

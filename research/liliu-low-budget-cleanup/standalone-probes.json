@@ -1,0 +1,81 @@
+{
+  "status": "pass",
+  "finished_at_utc": "2026-10-27T06:58:31.486298+00:00",
+  "results": [
+    {
+      "module": "MathlibNt.Wu2004MeanValue.LowSource",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LowSource.lean",
+      "probe_sha256": "894d68bd1f3c8eecd2a006b6541184546441cd8f0c70b436f95d0e4cb5204185",
+      "exit_code": 0,
+      "elapsed_seconds": 5.26629563421011,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LowSource.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.Wu2004MeanValue.BalancedLowSource",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/BalancedLowSource.lean",
+      "probe_sha256": "9d2cce1f6eaed640b986c7c3d13a1806fda5623eca0277bbc443cd84245797f1",
+      "exit_code": 0,
+      "elapsed_seconds": 6.188385043293238,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/BalancedLowSource.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.Wu2004MeanValue.LowPrefix",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LowPrefix.lean",
+      "probe_sha256": "85b33bc7ea6524a3e7c7ae177c0281de06f9553c322df9f74e46dc74e1561825",
+      "exit_code": 0,
+      "elapsed_seconds": 4.6080449894070625,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LowPrefix.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/PanQuotientBounds.lean",
+      "probe_sha256": "c507b187adb772188bfb773e05233a14eb6c5acf874ba25acf73986a6a165edf",
+      "exit_code": 0,
+      "elapsed_seconds": 4.540746655315161,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/PanQuotientBounds.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanActualErrorEnvelope",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LiuPanActualErrorEnvelope.lean",
+      "probe_sha256": "376a4bad5e3b106f39d4ef56087cf2f79d6aeb7a7ba47131d8b999c965695075",
+      "exit_code": 0,
+      "elapsed_seconds": 4.605076115578413,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LiuPanActualErrorEnvelope.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LiLiuGoldbachB10PanTwoEndpoints.lean",
+      "probe_sha256": "a74b17f0473092b0267d4fa636e5e93dd58fbe9fadd513795b7cf7c9339fe571",
+      "exit_code": 0,
+      "elapsed_seconds": 4.568698465824127,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LiLiuGoldbachB10PanTwoEndpoints.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LiLiuGoldbachS2SwitchedDistribution.lean",
+      "probe_sha256": "18a3ebf5cf8ca2d6bbd061dad147db269712e472adc8f1108ea275f165850879",
+      "exit_code": 0,
+      "elapsed_seconds": 5.613127559423447,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/LiLiuGoldbachS2SwitchedDistribution.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne",
+      "probe_file": "/tmp/liliu-endpoint-cleanup/next-wave/probes/JurkatRichert1965ChenGammaOneQOne.lean",
+      "probe_sha256": "92c4a78b4b0e76d29f5433a6e21c8e9b99b75c763d8d70ac1c5ce980b910c848",
+      "exit_code": 0,
+      "elapsed_seconds": 31.3208815343678,
+      "log": "/tmp/liliu-endpoint-cleanup/next-wave/probes/JurkatRichert1965ChenGammaOneQOne.log",
+      "log_sha256": "972a3414ee8c19a340a2c980b4b3d270fec395cf895a58b32124d97ef25d7eb5"
+    }
+  ],
+  "initial_failure": "Three Pan max-bound prototypes needed an explicit finite image to fix its index type in Finset.mem_image; actual initial results/logs retained in initial-probes. No production source or accepted statement changed.",
+  "record_scope": "Historical standalone prototype proof receipts before application; accepted full production combination is recorded separately in validation.json.",
+  "accepted_full_combination_validation": "validation.json"
+}

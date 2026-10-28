@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFLevel
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 noncomputable section
 open Filter Finset
@@ -170,8 +168,4 @@ theorem fouvryG9MainScalar_payment (C K τ : ℝ) (hC : 0 < C) (_hK : 1 < K)
   exact hnorm.trans (div_le_div_of_nonneg_right
     (mul_le_mul_of_nonneg_right (by linarith : 4*(1+ζ)^3 ≤ 4*(1+τ)) hSS)
       (Real.log_pos hQ1).le)
-
-#print axioms fouvryG9MainScalar_initial
-#print axioms fouvryG9MainScalar_normalize
-#print axioms fouvryG9MainScalar_payment
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

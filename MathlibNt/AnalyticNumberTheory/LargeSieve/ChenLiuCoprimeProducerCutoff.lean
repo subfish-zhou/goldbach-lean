@@ -37,9 +37,6 @@ theorem le_shortCutoff_iff (R : ℝ) (n : ℕ) :
     n ≤ shortCutoff R ↔ (n : ℝ) ≤ R ^ 2 :=
   Nat.le_floor_iff (sq_nonneg R)
 
-theorem mem_shortCutoff_iff (R : ℝ) (n : ℕ) :
-    n ∈ Icc 1 (shortCutoff R) ↔ 1 ≤ n ∧ (n : ℝ) ≤ R ^ 2 := by
-  simp only [mem_Icc, le_shortCutoff_iff]
 
 theorem shortCutoff_le_square (R : ℝ) : (shortCutoff R : ℝ) ≤ R ^ 2 :=
   Nat.floor_le (sq_nonneg R)
@@ -95,67 +92,5 @@ theorem shortCutoff_le_x {x : ℕ} {B R : ℝ}
     R ^ 2 ≤ (Real.sqrt x) ^ 2 := pow_le_pow_left₀ hR hRs 2
     _ = (x : ℝ) := Real.sq_sqrt (Nat.cast_nonneg x)
 
-theorem shortCutoff_lt_height {x : ℕ} {B R : ℝ}
-    (hx : 2 ≤ Real.log x) (hB : 0 ≤ B) (hR : 0 ≤ R)
-    (hRD : R ≤ upperConductor x B) :
-    (shortCutoff R : ℝ) < panSourceHeight x := by
-  have hx1 : (1 : ℝ) < x := by
-    have hn : x ≠ 0 := by
-      intro he
-      subst x
-      norm_num at hx
-    have hx0 : (0 : ℝ) < x := by exact_mod_cast Nat.pos_of_ne_zero hn
-    have hlog := Real.log_le_sub_one_of_pos hx0
-    linarith
-  have hH : (shortCutoff R : ℝ) ≤ x := by
-    exact_mod_cast shortCutoff_le_x (by linarith) hB hR hRD
-  have hx4 : (x : ℝ) < (x : ℝ) ^ 4 := by nlinarith [sq_nonneg ((x : ℝ) ^ 2 - 1)]
-  exact hH.trans_lt (hx4.trans_le (panSourceHeight_ge_fourth hx))
-
-/-- The literal short polynomial is exactly the sum over `n ≤ R²`.
-The extra ambient bound is only a finite enumeration device. -/
-theorem panShortF₁_eq_real_cutoff {q : ℕ} (m x : ℕ) (R : ℝ)
-    (hH : shortCutoff R ≤ x) (χ : PrimitiveCharacter q) (s : ℂ) :
-    panShortF₁ m (shortCutoff R) χ s =
-      ∑ n ∈ (Icc 1 x).filter (fun n : ℕ => (n : ℝ) ≤ R ^ 2),
-        panSourceD m n * χ.1 (n : ZMod q) / (n : ℂ) ^ s := by
-  have hsets : (Icc 1 x).filter (fun n : ℕ => (n : ℝ) ≤ R ^ 2) =
-      Icc 1 (shortCutoff R) := by
-    ext n
-    simp only [mem_filter, mem_Icc, ← le_shortCutoff_iff]
-    omega
-  rw [hsets]
-  rfl
-
-/-- The constant and threshold precede the real exponent, conductor cell,
-character, all source cutoffs, and bounded coefficients. -/
-theorem chosen_short_contour_uniform :
-    ∃ C : ℝ, 0 < C ∧ ∃ X₀ : ℕ, ∀ x : ℕ, X₀ ≤ x →
-      ∀ (B : ℝ) (j q : ℕ) (χ : PrimitiveCharacter q)
-        (m y A₁ A₂ k : ℕ) (f : ℕ → ℂ),
-      0 ≤ B → conductorRadius x B j ≤ upperConductor x B →
-      (∀ n, ‖f n‖ ≤ 1) → 1 ≤ y → y ≤ x → A₂ ≤ y →
-      ‖I * (∫ t in -(panSourceHeight x)..panSourceHeight x,
-          chen1973VerticalSection
-            (pan223Kernel f m (shortCutoff (conductorRadius x B j)) y A₁ A₂ k χ)
-            (panSourceSigma x) t) -
-        I * (∫ t in -(panSourceHeight x)..panSourceHeight x,
-          chen1973VerticalSection
-            (pan223Kernel f m (shortCutoff (conductorRadius x B j)) y A₁ A₂ k χ)
-            (1 / 2) t)‖ ≤ C * ((x : ℝ) ^ 2)⁻¹ := by
-  have he : ∀ᶠ x : ℕ in atTop, 2 ≤ Real.log (x : ℝ) :=
-    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-      (eventually_ge_atTop (2 : ℝ))
-  obtain ⟨X₀, hX⟩ := Filter.eventually_atTop.mp he
-  refine ⟨16 * Real.exp 1, by positivity, X₀, ?_⟩
-  intro x hx B j q χ m y A₁ A₂ k f hB hRD hf hy hyx hAy
-  have hlog := hX x hx
-  have hlog1 : 1 ≤ Real.log (x : ℝ) := le_trans (by norm_num : (1 : ℝ) ≤ 2) hlog
-  have hRadius : 0 ≤ conductorRadius x B j :=
-    zero_le_one.trans (conductorRadius_ge_one j hlog1 hB)
-  have hCutoff : shortCutoff (conductorRadius x B j) ≤ x :=
-    shortCutoff_le_x hlog1 hB hRadius hRD
-  exact pan223_source_inverse_square f hf m _ y A₁ A₂ k χ hlog hy hyx hAy
-    hCutoff
 
 end AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducer

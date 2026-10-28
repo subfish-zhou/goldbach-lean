@@ -1,0 +1,51 @@
+[
+  {
+    "module": "WR2IntegerLogUpper",
+    "exit_code": 0,
+    "seconds": 6.86,
+    "source_sha256": "9772541af0e346f40e2ba755390d39bce0874414842763dde664d9b4f3fadff6",
+    "log": "local-logs/WR2IntegerLogUpper.log"
+  },
+  {
+    "module": "WR2ClassicalEighthRawIntegerData",
+    "exit_code": 0,
+    "seconds": 5.73,
+    "source_sha256": "2fdd688fcb8fb0a4e8bb47a018662ca47b47dabd936bcaa3a7d6a112a4fbde80",
+    "log": "local-logs/WR2ClassicalEighthRawIntegerData.log"
+  },
+  {
+    "module": "WR2ClassicalEighthRawSums",
+    "exit_code": 0,
+    "seconds": 7.91,
+    "source_sha256": "f95b6eded567a414f3e02bbf4b34cb2343e62660796af40ee197510ee2323e3c",
+    "log": "local-logs/WR2ClassicalEighthRawSums.log"
+  },
+  {
+    "module": "WR2ClassicalEighthRawPayments",
+    "exit_code": 0,
+    "seconds": 6.08,
+    "source_sha256": "b0298b140892dee011ec7ade5c7119ec3980f2879f9f9931776d6f34a7a870a2",
+    "log": "local-logs/WR2ClassicalEighthRawPayments.log"
+  },
+  {
+    "module": "WR2ClassicalEighthRawIntegerSoundness",
+    "exit_code": 0,
+    "seconds": 7.0,
+    "source_sha256": "ddbd70c639ce9ae9dba3ef7c1fe335e2170f2eec8adbbc318a62d5c8545185eb",
+    "log": "local-logs/WR2ClassicalEighthRawIntegerSoundness.log"
+  },
+  {
+    "module": "WR2ClassicalEighthRawCertificate",
+    "exit_code": 0,
+    "seconds": 5.65,
+    "source_sha256": "f3858845ac3f01d537736002b3425fd5dfe918a08bcad7b863868e985f935ec6",
+    "log": "local-logs/WR2ClassicalEighthRawCertificate.log"
+  },
+  {
+    "module": "WR2ClassicalEighthTableCheck",
+    "exit_code": 0,
+    "seconds": 6.02,
+    "source_sha256": "35e77e31ec353dc7148de25c9b91f5b05897ff472d636351382f9dc72c1f95cb",
+    "log": "local-logs/WR2ClassicalEighthTableCheck.log"
+  }
+]

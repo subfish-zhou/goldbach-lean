@@ -1,0 +1,72 @@
+{
+  "status": "pass",
+  "accepted_at_utc": "2026-10-28T09:30:02.855720+00:00",
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "literal_bound": "r ^ 5000 ≤ q ^ 4469",
+  "manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+  "whole_tree": {
+    "modules": 4151,
+    "code_lines": 566283,
+    "physical_lines": 667929,
+    "utf8_bytes": 34424418
+  },
+  "theorem_closure": {
+    "modules": 3764,
+    "code_lines": 525529,
+    "physical_lines": 621451,
+    "utf8_bytes": 30215769
+  },
+  "savings": {
+    "whole": {
+      "effective": 7612,
+      "physical": 9092,
+      "bytes": 467539
+    },
+    "final_closure": {
+      "effective": 7612,
+      "physical": 9092,
+      "bytes": 467539
+    }
+  },
+  "source_proofs": {
+    "modules": 4151,
+    "promoted_actual_compilations": 3500,
+    "verified_unchanged": 651,
+    "fresh_v7": 3304,
+    "genuine_prefix": 196
+  },
+  "interfaces": {
+    "types": 736,
+    "data": 183,
+    "raw_values_exact": 179,
+    "kernel_proof_irrelevance_bridges": 4,
+    "bounded_proof_occurrences": 13
+  },
+  "kernels": {
+    "modified_and_final": 65,
+    "bridge_libraries": 2,
+    "production_final": 1
+  },
+  "production_verification": "production-verification.json",
+  "acceptance_archive": "research/wu2008/build/adoptions/structural-v9-1793177513339524821",
+  "historical_receipts_archived": {
+    "count": 4709,
+    "bytes": 4924550,
+    "code_savings": 0
+  },
+  "not_installed": {
+    "uniform_semantics_effective_saving": 2204,
+    "public_zero_incoming_candidates": 2096,
+    "public_provisional_lines": 31152,
+    "public_retirement_accepted": false
+  },
+  "records": {
+    "literal_and_five_axiom_reports.log": "a2eaa0edb87f44f88d5e5fe384e4fb5ff7470794aa2f8572d070e1651cafcaaf",
+    "production-verification.json": "d13f60c24222fb0882fadd6ca289ca45eff8e62b2635ff53bd259fd02125494a",
+    "fresh_production_final_kernel.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+    "full_cached_receipt_verification.log": "ae7b0b71948af6991abe018516fb8814882d833655d1d0a392c91145c9f1bcd6",
+    "measurement.json": "6bac757641eb90941f06764cd4a80bac4cc21265c52b50b42242ff9758bed99e",
+    "public-census-root-review.json": "246a48c34d007fd654bb89e856fa113cbf2207debb703720aad1b07b86aa8a40",
+    "classical-acceptance.json": "a32591e34a9a2924e26b4e6768842d94ac4928775eff972ba856085c114b8bce"
+  }
+}

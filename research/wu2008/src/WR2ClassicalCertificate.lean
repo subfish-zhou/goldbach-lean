@@ -11,6 +11,14 @@ theorem classical_lower : (17401:ℝ)/20000 ≤ R2Xi.SourceContinuousCount.class
   classical_lower_of_three_slots ClassicalFourthConditions.fourth_main_upper
     ClassicalFifthRational.fifth_main_lower ClassicalSixthRational.sixth_main_lower
 
+/-- The full certified precision, expressed entirely in natural-number powers. -/
+theorem one8938 :
+    ∃ T ≥ 512, ∀ N ≥ T, Even N → ∃ p r q : ℕ,
+      p.Prime ∧ (r=1 ∨ r.Prime) ∧ q.Prime ∧ N=p+r*q ∧ r^5000≤q^4469 :=
+  R2Xi.SourceContinuousCount.one8938_of_coefficient
+    (R2Xi.SourceContinuousCount.target_of_integral_bounds classical_lower
+      R2Xi.SixthContinuous.sixth_gain_lower)
+
 /-- The original Wu bound after all classical and improvement integrals are certified. -/
 theorem one894 :
     ∃ T ≥ 512, ∀ N ≥ T, Even N → ∃ p r q : ℕ,
@@ -20,3 +28,5 @@ theorem one894 :
 end WuPaper.ClassicalSlots
 #print axioms WuPaper.ClassicalSlots.classical_lower
 #print axioms WuPaper.ClassicalSlots.one894
+
+#print axioms WuPaper.ClassicalSlots.one8938

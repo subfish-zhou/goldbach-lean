@@ -47,14 +47,6 @@ private theorem inheritedCoordinate_gt_one_of_lt_sqrt
     nlinarith
   linarith
 
-/-- At even depth the odd source-cutoff premise of the exact recurrence is
-vacuous.  Therefore `suzukiActualT_caseI_recurrence_strict` applies at the
-literal natural ceiling without any (generally false) ceiling-square claim. -/
-theorem lemma144_caseI_even_endpoint_odd_carrier
-    {M D z : ℕ} (hM : Even M) :
-    Odd M → ∀ p < z, p ^ 3 < D := by
-  intro hOdd
-  exact False.elim ((Nat.not_even_iff_odd.mpr hOdd) hM)
 
 /-- Every actual recurrence index at the even endpoint has inherited
 coordinate strictly inside the predecessor's open odd parity domain.  This is

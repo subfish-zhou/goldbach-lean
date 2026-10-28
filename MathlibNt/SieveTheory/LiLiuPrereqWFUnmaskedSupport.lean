@@ -147,9 +147,4 @@ theorem signedFamilyTerm_exceptional_mass_le (upper : Bool) (P : Finset ℕ)
         by_contra h
         exact hR.2 (mem_filter.mpr ⟨hR.1, hp'.2, lt_of_not_ge h⟩))
 
-#check signedFamilyTerm_exceptional_support
-#print axioms signedFamilyTerm_exceptional_support
-#check signedFamilyTerm_exceptional_mass_le
-#print axioms signedFamilyTerm_exceptional_mass_le
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

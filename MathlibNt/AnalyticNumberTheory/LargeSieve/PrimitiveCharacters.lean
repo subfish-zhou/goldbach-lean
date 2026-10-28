@@ -1,8 +1,6 @@
 
 
-import AnalyticNumberTheory.LargeSieve.Multiplicative
 import AnalyticNumberTheory.LargeSieve.BombieriDavenport
-import Mathlib.NumberTheory.DirichletCharacter.GaussSum
 
 /-!
  # Primitive Dirichlet characters for the multiplicative large sieve
@@ -74,11 +72,11 @@ noncomputable def conductorPrimitiveCharacter {q : ℕ}
     (χ : DirichletCharacter ℂ q) : PrimitiveCharacter χ.conductor :=
   ⟨χ.primitiveCharacter, χ.primitiveCharacter_isPrimitive⟩
 
+
 @[simp]
 theorem conductorPrimitiveCharacter_val {q : ℕ}
     (χ : DirichletCharacter ℂ q) :
-    (conductorPrimitiveCharacter χ).1 = χ.primitiveCharacter :=
-  rfl
+    (conductorPrimitiveCharacter χ).1 = χ.primitiveCharacter := rfl
 
 /-- Exact conductor decomposition: changing the conductor-level primitive
 character back to the original modulus recovers the original character. -/
@@ -107,25 +105,6 @@ theorem sum_primitive_le_sum_all {q : ℕ}
   exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
     (fun χ _ _ => hf χ)
 
-/-- The first primitive-character multiplicative large-sieve foundation:
-the pinned single-modulus all-character estimate restricts to the primitive
-subtype. This is intentionally only pointwise in `q`; it is not the missing
-Bombieri--Davenport sum over moduli. -/
-theorem characterSievePrimitiveModulus_le {q : ℕ} [NeZero q]
-    (a : ℤ → ℂ) (M : ℤ) (N : ℕ) :
-    ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
-            a n * χ.1 (n : ZMod q)‖ ^ 2
-      ≤ ∑ r ∈ Finset.range q,
-          ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
-            (charReal ((n : ℝ) * (r : ℝ) / (q : ℝ)) : ℂ) * a n‖ ^ 2 := by
-  refine le_trans (mul_le_mul_of_nonneg_left
-    (sum_primitive_le_sum_all (fun χ =>
-      ‖∑ n ∈ Finset.Icc (M + 1) (M + N),
-        a n * χ (n : ZMod q)‖ ^ 2) (fun _ => sq_nonneg _)) ?_)
-    (characterSieveModulus_le a M N)
-  exact div_nonneg (by positivity) (by positivity)
 
 /-! ## Primitive Gauss sums -/
 
@@ -157,11 +136,6 @@ theorem primitiveGaussAddChar_apply (q : ℕ) [NeZero q] (a : ZMod q) :
   congr 1
   exact mul_one_div (a.val : ℝ) (q : ℝ)
 
-/-- The standard additive character on `ZMod q` is primitive. -/
-theorem primitiveGaussAddChar_isPrimitive (q : ℕ) [NeZero q] :
-    (primitiveGaussAddChar q).IsPrimitive := by
-  exact AddChar.zmodChar_primitive_of_primitive_root q
-    (primitiveGaussRoot_isPrimitiveRoot q (NeZero.ne q))
 
 private theorem charReal_eq_of_int_modEq {q : ℕ} (hq : 0 < q) {m n : ℤ}
     (hmn : m ≡ n [ZMOD (q : ℤ)]) :
@@ -274,13 +248,6 @@ theorem primitive_gaussSum_norm_sq {q : ℕ} [NeZero q]
   have hφ : (q.totient : ℝ) ≠ 0 := by
     exact_mod_cast (Nat.totient_pos.mpr (NeZero.pos q)).ne'
   exact mul_right_cancel₀ hφ hEq
-
-/-- Norm form of the primitive Gauss-sum identity. -/
-theorem primitive_gaussSum_norm {q : ℕ} [NeZero q]
-    (χ : PrimitiveCharacter q) :
-    ‖gaussSum χ.1 (primitiveGaussAddChar q)‖ = Real.sqrt q := by
-  rw [← primitive_gaussSum_norm_sq χ, Real.sqrt_sq (norm_nonneg _)]
-
 
 
 end

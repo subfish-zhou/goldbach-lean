@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergOptimalWeights
 
 /-!
@@ -121,9 +122,6 @@ theorem liuSelbergDenominator_eq_sum_Icc
 noncomputable def liuReciprocal : ArithmeticFunction ℝ :=
   ⟨fun n => if n = 0 then 0 else (n : ℝ)⁻¹, by simp⟩
 
-@[simp]
-theorem liuReciprocal_apply (n : ℕ) :
-    liuReciprocal n = if n = 0 then 0 else (n : ℝ)⁻¹ := rfl
 
 noncomputable def liuSelbergArithmeticFunction (N : ℕ) : ArithmeticFunction ℝ :=
   ⟨liuSelbergArithmetic N, liuSelbergArithmetic_zero N⟩
@@ -149,15 +147,6 @@ theorem liuSelbergCorrection_apply (N n : ℕ) :
       (fun a b => liuMoebiusReciprocal a * liuSelbergArithmeticFunction N b)
       (n := n))
 
-@[simp]
-theorem liuReciprocal_zero : liuReciprocal 0 = 0 := rfl
-
-@[simp]
-theorem liuMoebiusReciprocal_zero : liuMoebiusReciprocal 0 = 0 := rfl
-
-@[simp]
-theorem liuSelbergCorrection_zero (N : ℕ) : liuSelbergCorrection N 0 = 0 := by
-  simp
 
 @[simp]
 theorem liuSelbergCorrection_one (N : ℕ) : liuSelbergCorrection N 1 = 1 := by
@@ -257,25 +246,11 @@ private theorem liu_pdiv_mul_pdiv
   ext n
   simp only [ArithmeticFunction.mul_apply, ArithmeticFunction.pdiv_apply]
   rw [Finset.sum_div]
-  by_cases hn : n = 0
-  · subst n
-    simp
-  · apply Finset.sum_congr rfl
-    intro x hx
-    obtain ⟨hxy, _⟩ := Nat.mem_divisorsAntidiagonal.mp hx
-    have hx0 : x.1 ≠ 0 :=
-      Nat.left_ne_zero_of_mem_divisorsAntidiagonal hx
-    have hy0 : x.2 ≠ 0 :=
-      Nat.right_ne_zero_of_mem_divisorsAntidiagonal hx
-    change f x.1 * (x.1 : ℝ)⁻¹ * (g x.2 * (x.2 : ℝ)⁻¹) =
-      f x.1 * g x.2 * (n : ℝ)⁻¹
-    have hcast : (x.1 : ℝ) * (x.2 : ℝ) = (n : ℝ) := by
-      exact_mod_cast hxy
-    field_simp [hx0, hy0]
-    calc
-      f x.1 * g x.2 * (n : ℝ) =
-          f x.1 * g x.2 * ((x.1 : ℝ) * (x.2 : ℝ)) := by rw [hcast]
-      _ = f x.1 * (x.1 : ℝ) * g x.2 * (x.2 : ℝ) := by ring
+  apply Finset.sum_congr rfl
+  intro x hx
+  change f x.1 / (x.1 : ℝ) * (g x.2 / (x.2 : ℝ)) =
+    f x.1 * g x.2 / (n : ℝ)
+  rw [div_mul_div_comm, ← Nat.cast_mul, (Nat.mem_divisorsAntidiagonal.mp hx).1]
 
 theorem liuReciprocal_mul_liuMoebiusReciprocal :
     liuReciprocal * liuMoebiusReciprocal = 1 := by
@@ -308,10 +283,6 @@ theorem liuSelbergArithmeticFunction_eq_convolution :
   rw [liuSelbergCorrection, ← mul_assoc,
     liuReciprocal_mul_liuMoebiusReciprocal, one_mul]
 
-theorem liuSelbergArithmetic_eq_convolution (N n : ℕ) :
-    liuSelbergArithmetic N n =
-      (liuReciprocal * liuSelbergCorrection N) n := by
-  rw [← liuSelbergArithmeticFunction_apply, liuSelbergArithmeticFunction_eq_convolution]
 
 theorem liuSelbergCorrection_prime_pow_sum
     {N p k : ℕ} (hp : p.Prime) :
@@ -340,10 +311,6 @@ private theorem liuSelbergArithmeticFunction_prime_pow_one
       (hp.coprime_iff_not_dvd.mpr hpn)]
   simp [hp.primeFactors]
 
-private theorem liuSelbergArithmeticFunction_prime_pow_zero
-    (N p : ℕ) :
-    liuSelbergArithmeticFunction N (p ^ 0) = 1 := by
-  simp
 
 private theorem liuSelbergArithmeticFunction_prime_pow_eq_zero
     {N p k : ℕ} (hp : p.Prime) (hk : 2 ≤ k) :
@@ -367,10 +334,6 @@ private theorem liuSelbergArithmeticFunction_prime_pow_eq_zero_of_dvd
     Nat.Coprime.of_dvd_left (dvd_pow_self p (by omega)) h.2
   exact (hp.coprime_iff_not_dvd.mp hcop) hpn
 
-private theorem liuMoebiusReciprocal_prime_pow_zero
-    (p : ℕ) :
-    liuMoebiusReciprocal (p ^ 0) = 1 := by
-  simp [liuMoebiusReciprocal]
 
 @[simp] theorem liuMoebiusReciprocal_one :
     liuMoebiusReciprocal 1 = 1 := by
@@ -470,14 +433,6 @@ theorem liuSelbergCorrection_prime_pow_eq_zero_of_dvd
     rw [liuSelbergArithmeticFunction_prime_pow_eq_zero_of_dvd hp hj1 hpn]
     simp
 
-/-- The finite harmonic sum, with the empty sum giving its value at zero. -/
-noncomputable def liuHarmonic (x : ℕ) : ℝ :=
-  ∑ m ∈ Finset.Icc 1 x, (m : ℝ)⁻¹
-
-@[simp]
-theorem liuHarmonic_zero : liuHarmonic 0 = 0 := by
-  simp [liuHarmonic]
-
 theorem liuReciprocal_sum_Ioc (x : ℕ) :
     ∑ m ∈ Finset.Ioc 0 x, liuReciprocal m = liuHarmonic x := by
   have hI : Finset.Ioc 0 x = Finset.Icc 1 x := by
@@ -485,7 +440,8 @@ theorem liuReciprocal_sum_Ioc (x : ℕ) :
     simp only [Finset.mem_Ioc, Finset.mem_Icc]
     omega
   rw [hI]
-  simp only [liuHarmonic, liuReciprocal_apply]
+  simp only [liuHarmonic]
+  change (∑ m ∈ Finset.Icc 1 x, if m = 0 then 0 else (m : ℝ)⁻¹) = _
   apply Finset.sum_congr rfl
   intro m hm
   simp [Nat.ne_of_gt (Finset.mem_Icc.mp hm).1]

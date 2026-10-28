@@ -194,41 +194,5 @@ theorem wMaskedOriginal_abs_le_largeDelta_kscale {k : ℕ} (hk : 1 ≤ k) (j : �
   rw [mul_assoc M T]
   gcongr
 
-/-- The constant precedes all scales, supports, coefficients, residues and
-masks. The beta coefficient is arbitrary apart from the stated support
-condition; only the modulus coefficient has a fixed divisor order. -/
-theorem wMaskedOriginal_abs_le_largeDelta_pair_mass (j : ℕ)
-    {ε : ℝ} (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ M T x : ℝ, 1 ≤ M → 1 ≤ T → 1 ≤ x → M * T ≤ x →
-      ∀ N Q : Finset ℕ, N ⊆ Ioc 0 ⌊T⌋₊ →
-      ∀ β c : ℕ → ℝ, (∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) →
-      ∀ a : ℤ, |(a : ℝ)| ≤ x → (∀ n ∈ N, β n ≠ 0 → ¬(n : ℤ) ∣ a) →
-      ∀ Y : ℝ, 0 < Y → ∀ P : WOriginalTuple → Prop,
-        (∀ t ∈ wOriginalTuples N Q a, P t → Y < (t.1.1.gcd t.1.2 : ℝ)) →
-      |wMaskedOriginal M N Q β c a P| ≤
-        C * x ^ ε * (M * (∑ n ∈ N, β n ^ 2) +
-          (M / Y + 1) * (∑ n ∈ N, |β n|) ^ 2) := by
-  simpa only [one_mul] using
-    (wMaskedOriginal_abs_le_largeDelta_pair_mass_kscale
-      (Cscale := 1) j hε le_rfl)
-
-/-- Evaluating the beta square and absolute masses with fixed-order divisor
-means leaves the diagonal at length `T`, while the off-diagonal receives
-the factor `M / Y + 1`. -/
-theorem wMaskedOriginal_abs_le_largeDelta {k : ℕ} (hk : 1 ≤ k) (j : ℕ)
-    {ε : ℝ} (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ M T x : ℝ, 1 ≤ M → 1 ≤ T → 1 ≤ x → M * T ≤ x →
-      ∀ N Q : Finset ℕ, N ⊆ Ioc 0 ⌊T⌋₊ →
-      ∀ β c : ℕ → ℝ, (∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ)) →
-      (∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) →
-      ∀ a : ℤ, |(a : ℝ)| ≤ x → (∀ n ∈ N, β n ≠ 0 → ¬(n : ℤ) ∣ a) →
-      ∀ Y : ℝ, 0 < Y → ∀ P : WOriginalTuple → Prop,
-        (∀ t ∈ wOriginalTuples N Q a, P t → Y < (t.1.1.gcd t.1.2 : ℝ)) →
-      |wMaskedOriginal M N Q β c a P| ≤
-        C * x ^ ε * (M * T * (1 + Real.log T) ^ (k ^ 2 - 1) +
-          (M / Y + 1) * (T * (1 + Real.log T) ^ (k - 1)) ^ 2) := by
-  simpa only [one_mul] using
-    (wMaskedOriginal_abs_le_largeDelta_kscale
-      (Cscale := 1) hk j hε le_rfl)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

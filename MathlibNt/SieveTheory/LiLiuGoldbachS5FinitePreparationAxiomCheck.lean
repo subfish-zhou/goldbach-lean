@@ -1,9 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5Cofactor
-import MathlibNt.SieveTheory.LiLiuGoldbachS5SquareMass
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachS5_cofactor_prime_or_square
-#print axioms goldbachS5_cofactor_prime_or_square
-#check goldbachS5Closed_cofactor_prime_or_square
-#print axioms goldbachS5Closed_cofactor_prime_or_square
-#check goldbachS5_squareMass_normalized
-#print axioms goldbachS5_squareMass_normalized

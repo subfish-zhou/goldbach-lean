@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridSource
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridCost
 
 open Finset
 open scoped BigOperators

@@ -1,8 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaPaidLower
 import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity
 import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaMainScale
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
 import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
 import MathlibNt.Analysis.SieveNormalization
 
@@ -15,38 +13,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 set_option autoImplicit false
 
-private theorem S1BetaNormalizedLower_mainConst_pos :
-    0 < (33 / 2 : ℝ) * Real.exp (-Real.eulerMascheroniConstant) := by
-  positivity
-
-private theorem S1BetaNormalizedLower_goldbachS1_nonneg (N : ℕ) (ε : ℝ) :
-    0 ≤
-      (goldbachS1 (goldbachDifferenceCarrier N ε) N ((N : ℝ) ^ (4 / 33 : ℝ)) : ℝ) := by
-  classical
-  unfold goldbachS1 literalH
-  exact_mod_cast Nat.zero_le
-    ((goldbachDifferenceCarrier N ε).filter
-      (literalHPoint N 1 ((N : ℝ) ^ (4 / 33 : ℝ)))).card
-
-private theorem S1BetaNormalizedLower_paidErrorAbsorbEventually
-    (C ρ : ℝ) (hρ : 0 < ρ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      C * (N : ℝ) / Real.log (N : ℝ) ^ (3 : ℝ) ≤
-        ρ * SingularSeries.liuSingularSeries N * (N : ℝ) /
-          Real.log (N : ℝ) ^ (2 : ℝ) := by
-  have hbase :
-      ∀ᶠ N : ℕ in atTop,
-        C * (N : ℝ) / Real.log (N : ℝ) ^ (3 : ℝ) ≤
-          ρ * SingularSeries.liuSingularSeries N * (N : ℝ) /
-            Real.log (N : ℝ) ^ (2 : ℝ) := by
-    filter_upwards
-      [MathlibNt.SieveTheory.LiuWeight.eventually_inverse_log_remainder_le_liuSingularSeries
-        C ρ hρ] with N hN
-    simpa [Real.rpow_natCast] using hN
-  obtain ⟨N₀, hN₀⟩ := eventually_atTop.mp (hbase.and (eventually_ge_atTop (4 : ℕ)))
-  refine ⟨N₀, (hN₀ N₀ le_rfl).2, ?_⟩
-  intro N hN
-  exact (hN₀ N hN).1
 
 /-- Fixed-`s` normalized lower bound at the original beta cutoff.  The
 lower-density factor is paid at fixed `s`, the actual main mass and actual

@@ -1,0 +1,49 @@
+{
+  "module": "Hf4ConstructiveTablePublic",
+  "exit_code": 0,
+  "seconds": 13.822733357548714,
+  "source_sha256": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee",
+  "object_sha256": "150d040e93836843d5a7eadb4709952665fe5ee7aab880d7028e6a509a72515e",
+  "dependencies": {
+    "Hf4ConstructiveTableChecks": "db4ec52ec0d011380a79f4607cf1a67b25e2165645ff2fde2e3a563694a516cf",
+    "Hf4ConstructiveTableSoundness": "437af8b9d639cb8d6fdf9a9c14e10893ed1d8e8029019b3b56b8043438016650"
+  },
+  "dependency_contexts": {
+    "Hf4ConstructiveTableChecks": "fb53b946bdc3fa1f1c9111e416144051644e94be37c76d331021a1f35ef0ba75",
+    "Hf4ConstructiveTableSoundness": "0a3a72efbb6996b74ace19baddb212983130d5fe73a1045fdf723c10ba05651d"
+  },
+  "context_sha256": "15ca7e62d4412d1818e1a6a736e087192481f853971f508772672938af96dc71",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTablePublic.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTablePublic.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTablePublic.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTablePublic.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.resources",
+  "resource_sha256": "9a08e884d65a18d29a4b839a33f2a6c7779a0533138782d4c21496a3d42c87ab",
+  "artifact_bundle_sha256": {
+    ".olean": "150d040e93836843d5a7eadb4709952665fe5ee7aab880d7028e6a509a72515e"
+  }
+}

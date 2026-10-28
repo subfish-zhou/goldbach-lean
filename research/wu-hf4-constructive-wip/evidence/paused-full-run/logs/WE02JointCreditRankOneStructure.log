@@ -1,0 +1,8 @@
+def Wu2008DoubleSieve.SecondFunctionalParameters.row1 : SecondFunctionalParameters :=
+{ s := 220 / 100, S := 454 / 100, kappa1 := 353 / 100, kappa2 := 290 / 100, kappa3 := 244 / 100 }
+def Wu2008DoubleSieve.SecondFunctionalParameters.row2 : SecondFunctionalParameters :=
+{ s := 230 / 100, S := 450 / 100, kappa1 := 354 / 100, kappa2 := 288 / 100, kappa3 := 243 / 100 }
+def Wu2008DoubleSieve.SecondFunctionalParameters.row3 : SecondFunctionalParameters :=
+{ s := 240 / 100, S := 446 / 100, kappa1 := 357 / 100, kappa2 := 287 / 100, kappa3 := 240 / 100 }
+def Wu2008DoubleSieve.SecondFunctionalParameters.row4 : SecondFunctionalParameters :=
+{ s := 250 / 100, S := 412 / 100, kappa1 := 356 / 100, kappa2 := 291 / 100, kappa3 := 250 / 100 }

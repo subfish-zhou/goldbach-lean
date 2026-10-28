@@ -137,16 +137,6 @@ theorem goldbachK9High_le_logGridMajorant
       goldbachB9PairLogKernelRectangleContribution_le N hN _ _ _ _
         (goldbachB9LogGridCell_upperCorner_lt_one hn q)
 
-theorem goldbachB9HighLogGridMajorant_eq_primeReciprocalProducts (n N : ℕ) :
-    goldbachB9HighLogGridMajorant n N =
-      ∑ q ∈ goldbachB9HighLogGridCells n,
-        (1 / (1 - goldbachB9AlphaGridPoint n (q.1 + 1) -
-          goldbachB9BetaGridPoint n (q.2 + 1))) *
-          (PrimeReciprocalLogScale.primeReciprocalLogInterval N
-            (goldbachB9AlphaGridPoint n q.1) (goldbachB9AlphaGridPoint n (q.1 + 1)) *
-          PrimeReciprocalLogScale.primeReciprocalLogInterval N
-            (goldbachB9BetaGridPoint n q.2) (goldbachB9BetaGridPoint n (q.2 + 1))) := by
-  simp only [goldbachB9HighLogGridMajorant, primeReciprocalLogRectangle_eq_mul]
 
 /-- Apply Mertens to this finite weighted sum, not to a full-sum limit. -/
 theorem tendsto_goldbachB9HighLogGridMajorant (n : ℕ) (hn : 0 < n) :

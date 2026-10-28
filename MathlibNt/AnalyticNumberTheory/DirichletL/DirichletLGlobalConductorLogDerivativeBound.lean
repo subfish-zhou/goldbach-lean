@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
-import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # A squared-logarithmic conductor-height bound for Dirichlet L-derivatives

@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayAsymptotic
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZeroSpecialized
 
 /-!
 # The actual dimension-one Section 13 hat functions

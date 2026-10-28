@@ -98,8 +98,6 @@ set_option pp.fullNames true
 #print axioms WuSource.SrcFifthGain.cell_weight_cross
 #check @WuSource.SrcFifthGain.certified_g5_count
 #print axioms WuSource.SrcFifthGain.certified_g5_count
-#check @WuTarget.E09JointMainMajor.log_lower
-#print axioms WuTarget.E09JointMainMajor.log_lower
 #check @fifthH_actual_Fdelta_lower
 #print axioms fifthH_actual_Fdelta_lower
 #print wuImprovementLimit

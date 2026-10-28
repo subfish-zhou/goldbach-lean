@@ -37,34 +37,6 @@ theorem c2SExponent_eq_zero_near_endpoint {ν ε : ℝ}
     c2SExponent ν ε = 0 := by
   exact max_eq_left (sub_nonpos.mpr h)
 
-theorem c2SExponent_endpoint {ε : ℝ} (hε : 0 ≤ ε) :
-    c2SExponent (1 / 10) ε = 0 := by
-  apply c2SExponent_eq_zero_near_endpoint
-  linarith
-
-theorem c2_factor_levels {x ν ε : ℝ} (hx : 1 ≤ x) (hε : 0 ≤ ε)
-    (hεν : ε ≤ ν) (hν : ν ≤ 1 / 10) :
-    let R := x ^ c2RExponent ν ε
-    let S := x ^ c2SExponent ν ε
-    1 ≤ R ∧ 1 ≤ S ∧ R * S = x ^ ((5 - 5 * ν) / 9 - ε) ∧
-      max (R ^ 2 * S) ((x ^ ν) ^ (5 / 4 : ℝ) * R ^ (7 / 4 : ℝ) * S ^ 2) ≤
-        x ^ (1 - 3 * ε / 2) := by
-  dsimp only
-  obtain ⟨hr, hs, hsum, hfirst, hsecond⟩ := c2_exponent_bounds hε hεν hν
-  have hxpos : 0 < x := lt_of_lt_of_le zero_lt_one hx
-  refine ⟨Real.one_le_rpow hx hr, Real.one_le_rpow hx hs, ?_, max_le ?_ ?_⟩
-  · rw [← Real.rpow_add hxpos, hsum]
-  · rw [← Real.rpow_mul_natCast hxpos.le, ← Real.rpow_add hxpos]
-    apply Real.rpow_le_rpow_of_exponent_le hx
-    nlinarith
-  · rw [← Real.rpow_mul hxpos.le, ← Real.rpow_mul hxpos.le,
-      ← Real.rpow_mul_natCast hxpos.le, ← Real.rpow_add hxpos, ← Real.rpow_add hxpos]
-    apply Real.rpow_le_rpow_of_exponent_le hx
-    nlinarith
-
-theorem c2_S_level_endpoint (x : ℝ) {ε : ℝ} (hε : 0 ≤ ε) :
-    x ^ c2SExponent (1 / 10) ε = 1 := by
-  rw [c2SExponent_endpoint hε, Real.rpow_zero]
 
 end
 

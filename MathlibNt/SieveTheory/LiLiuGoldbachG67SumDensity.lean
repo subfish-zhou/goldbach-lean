@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG67SumGeometry
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 open Set MeasureTheory
 open scoped Interval

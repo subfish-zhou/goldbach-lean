@@ -1,0 +1,87 @@
+{
+  "whole_tree": {
+    "before": {
+      "modules": 4641,
+      "code_lines": 625805,
+      "physical_lines": 731546,
+      "utf8_bytes": 37313672
+    },
+    "after": {
+      "modules": 4643,
+      "code_lines": 620401,
+      "physical_lines": 724235,
+      "utf8_bytes": 36405664
+    },
+    "reduction": {
+      "modules": -2,
+      "code_lines": 5404,
+      "physical_lines": 7311,
+      "utf8_bytes": 908008
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 4254,
+      "code_lines": 585051,
+      "physical_lines": 685068,
+      "utf8_bytes": 33105023
+    },
+    "after": {
+      "modules": 4256,
+      "code_lines": 579647,
+      "physical_lines": 677757,
+      "utf8_bytes": 32197015
+    },
+    "reduction": {
+      "modules": -2,
+      "code_lines": 5404,
+      "physical_lines": 7311,
+      "utf8_bytes": 908008
+    }
+  },
+  "modified_modules": [
+    "Hf4QuadBatch0",
+    "Hf4QuadBatch1",
+    "Hf4QuadBatch10",
+    "Hf4QuadBatch11",
+    "Hf4QuadBatch12",
+    "Hf4QuadBatch2",
+    "Hf4QuadBatch3",
+    "Hf4QuadBatch4",
+    "Hf4QuadBatch5",
+    "Hf4QuadBatch6",
+    "Hf4QuadBatch7",
+    "Hf4QuadBatch8",
+    "Hf4QuadBatch9",
+    "Hf4QuadPanel0"
+  ],
+  "added_modules": [
+    "Hf4QuadExactOperations",
+    "Hf4QuadSharedCertificates"
+  ],
+  "removed_modules": [],
+  "families": {
+    "hf4_shared": {
+      "before": {
+        "modules": 14,
+        "code_lines": 32602,
+        "physical_lines": 48016,
+        "utf8_bytes": 3754006
+      },
+      "after": {
+        "modules": 16,
+        "code_lines": 27198,
+        "physical_lines": 40705,
+        "utf8_bytes": 2845998
+      },
+      "reduction": {
+        "modules": -2,
+        "code_lines": 5404,
+        "physical_lines": 7311,
+        "utf8_bytes": 908008
+      }
+    }
+  },
+  "unchanged_modules": 4627,
+  "preserved_public_statements": 80
+}

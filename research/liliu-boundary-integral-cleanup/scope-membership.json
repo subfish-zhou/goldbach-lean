@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "modified_modules": [
+    "MathlibNt.SieveTheory.LiLiuFouvryG9KernelBudget",
+    "MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral",
+    "MathlibNt.SieveTheory.LiLiuFouvryG9S5Kernel",
+    "MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral",
+    "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral"
+  ],
+  "all_in_liliu_closure": true,
+  "none_in_chen_closure": true,
+  "method": "Fresh complete compiled module import graph."
+}

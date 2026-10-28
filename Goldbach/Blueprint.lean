@@ -334,15 +334,15 @@ attribute [blueprint "bp:liliu-paper"
   (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
   MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_D19_gt_paper_0004
 
-attribute [blueprint "bp:liliu-old-margin"
-  (title := "The separate earlier positive margin")
-  (statement := /-- For $m_{\mathrm{old}}:=4J_{\mathrm{elem}}+c_0-C_9-10385101/10^8-C_{12}$, where $J_{\mathrm{elem}}$ is the five fixed sum-coordinate integrals in the text (including the half-square multiplicity), $126891/200000000\le m_{\mathrm{old}}$. This is an unconditional scalar certificate with no epsilon parameter, not the definition of the margin and not the author-route ledger. -/)
+attribute [blueprint "bp:liliu-count-existence"
+  (title := "A positive count gives natural-power witnesses")
+  (statement := /-- The strict lower bound for $D_{19}(N)$ implies $D_{19}(N)>0$ for every sufficiently large even $N$. Hence $N=p+rq$ with $p,q$ prime, $r=1$ or prime, and $r^{10}\le q^9$. -/)
   (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
-  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachSharpElementaryMargin_lower_certified
+  MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_nat_unconditional
 
 attribute [blueprint "bp:liliu-existence"
   (title := "The actual unconditional existence endpoint")
-  (statement := /-- There exists $K\ge4$ such that every even $N\ge K$ admits $p,r,q\in\mathbb N$ with $p\le N$, $p,q$ prime, $r=1$ or $r$ prime, $N=p+rq$, and $r\le q^{(19/10)-1}$. This endpoint is supplied by the independent old-margin existence route. -/)
+  (statement := /-- There exists $K\ge4$ such that every even $N\ge K$ admits $p,r,q\in\mathbb N$ with $p\le N$, $p,q$ prime, $r=1$ or $r$ prime, $N=p+rq$, and $r\le q^{(19/10)-1}$. This endpoint follows from the strict quantitative count and the exact exponent conversion. -/)
   (proofUses := [-"ZetaUpperBnd", -"ResidueTheoremOnRectangleWithSimplePole", -"MediumPNT", -"Smooth1Properties_below", -"Smooth1Properties_above", -"Smooth1", -"RectangleIntegral", -"pi_alt", -"Smooth1Nonneg", -"HolomorphicOn.vanishesOnRectangle", -"Smooth1ContinuousAt", -"existsDifferentiableOn_of_bddAbove", -"SmoothedChebyshevDirichlet_aux_integrable", -"MellinOfSmooth1b", -"Smooth1LeOne", -"VerticalIntegral"])]
   MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_unconditional
 

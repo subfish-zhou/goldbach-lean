@@ -91,11 +91,5 @@ theorem eventually_card_realPartition_le_rpow_of_factor
     _ ≤ Real.exp (Real.log x * ε) := Real.exp_le_exp.mpr hexponent
     _ = x ^ ε := (Real.rpow_def_of_pos hx₀ ε).symm
 
-theorem eventually_card_realPartition_le_rpow {ε : ℝ} (hε : 0 < ε) :
-    ∀ᶠ x : ℝ in atTop, ∀ T : ℝ, 2 ≤ T → T ≤ x → ∀ ω : ℕ,
-      (ω : ℝ) ≤ Real.log x ^ (1 / 5 : ℝ) →
-        ((realPartition T ω).card : ℝ) ≤ x ^ ε := by
-  simpa only [one_mul] using
-    eventually_card_realPartition_le_rpow_of_factor (C := 1) zero_lt_one hε
 
 end LiLiuPrereqFouvry.CoprimePartition

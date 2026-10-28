@@ -14,7 +14,7 @@ class DocumentationTests(unittest.TestCase):
         self.assertEqual({m.split(".")[0] for m in modules},
                          {"Goldbach", "MathlibNt", "AnalyticNumberTheory", "PrimeNumberTheoremAnd"})
         self.assertIn("Goldbach.Statement", modules)
-        self.assertIn("PrimeNumberTheoremAnd.Defs", modules)
+        self.assertIn("PrimeNumberTheoremAnd.MediumPNT", modules)
 
     def test_dependency_urls_and_embedded_headers_are_rewritten(self):
         with tempfile.TemporaryDirectory() as directory:

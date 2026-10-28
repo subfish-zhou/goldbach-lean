@@ -1,6 +1,7 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaPayment
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaPayment
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

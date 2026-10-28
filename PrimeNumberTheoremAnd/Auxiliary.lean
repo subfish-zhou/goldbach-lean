@@ -16,8 +16,6 @@ namespace Complex
 lemma hasDerivAt_ofReal (x : ℝ) : HasDerivAt ofReal 1 x :=
   HasDerivAt.ofReal_comp <| hasDerivAt_id x
 
-lemma deriv_ofReal (x : ℝ) : deriv ofReal x = 1 :=
-  (hasDerivAt_ofReal x).deriv
 
 lemma differentiableAt_ofReal (x : ℝ) : DifferentiableAt ℝ ofReal x :=
   (hasDerivAt_ofReal x).differentiableAt
@@ -32,17 +30,11 @@ lemma deriv.comp_ofReal {e : ℂ → ℂ} {z : ℝ} (hf : DifferentiableAt ℂ e
     deriv (fun x : ℝ ↦ e x) z = deriv e z :=
   hf.hasDerivAt.comp_ofReal.deriv
 
-lemma Differentiable.comp_ofReal {e : ℂ → ℂ} (h : Differentiable ℂ e) :
-    Differentiable ℝ (fun x : ℝ ↦ e x) :=
-  fun _ ↦ h.differentiableAt.comp_ofReal
 
 lemma DifferentiableAt.ofReal_comp {z : ℝ} {f : ℝ → ℝ} (hf : DifferentiableAt ℝ f z) :
     DifferentiableAt ℝ (fun (y : ℝ) ↦ (f y : ℂ)) z :=
   hf.hasDerivAt.ofReal_comp.differentiableAt
 
-lemma Differentiable.ofReal_comp {f : ℝ → ℝ} (hf : Differentiable ℝ f) :
-    Differentiable ℝ (fun (y : ℝ) ↦ (f y : ℂ)) :=
-  fun _ ↦ hf.differentiableAt.ofReal_comp
 
 open Complex ContinuousLinearMap in
 lemma HasDerivAt.of_hasDerivAt_ofReal_comp {z : ℝ} {f : ℝ → ℝ} {u : ℂ}

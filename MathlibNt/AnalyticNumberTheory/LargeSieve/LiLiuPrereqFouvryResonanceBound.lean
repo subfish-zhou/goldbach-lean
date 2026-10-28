@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
 
 /-!
 # Uniform local-scale payment for the resonance divisor count
@@ -67,26 +66,5 @@ theorem iv3_resonance_divisor_sum_le_local_scales
       rw [he]
       ring
 
-/-- The local-scale estimate applies to the entire resonant carrier,
-including all signed frequencies and every non-diagonal label pair. -/
-theorem iv3_resonance_card_le_local_scales
-    {ε : ℝ} (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (d₁ n n₂' s' : ℕ) (a h : ℤ) (A B : ℝ),
-      a ≠ 0 → h * n₂' * s' ≠ 0 → (d₁ : ℤ) * n - n₂' ≠ 0 →
-      0 ≤ A → 0 ≤ B → ((h * n₂' * s').natAbs : ℝ) ≤ A →
-      ((d₁ * n + (h * n₂' * s').natAbs : ℕ) : ℝ) ≤ B →
-      ∀ F : Finset (ℕ × ℕ × ℤ),
-        (∀ t ∈ F, 0 < t.1 ∧ 0 < t.2.1 ∧ (d₁ * n).Coprime t.1 ∧
-          (d₁ : ℤ) * n - t.1 ≠ 0 ∧
-          iv3CorrelationNumerator d₁ n t.1 n₂' t.2.1 s' a h t.2.2 = 0) →
-        (F.card : ℝ) ≤ C * A ^ (2 * ε) * B ^ ε := by
-  obtain ⟨C, hC, hbound⟩ := iv3_resonance_divisor_sum_le_local_scales hε
-  refine ⟨C, hC, ?_⟩
-  intro d₁ n n₂' s' a h A B ha hP hδ' hA hB hPA hDB F hF
-  have hc : (F.card : ℝ) ≤
-      ∑ j ∈ (h * n₂' * s').natAbs.divisors,
-        (fouvryTau 2 ((h * n₂' * s') * ((d₁ : ℤ) * n - j)).natAbs : ℝ) := by
-    exact_mod_cast iv3_resonance_card_le_divisor_sum ha hP hδ' F hF
-  exact hc.trans (hbound d₁ n (h * n₂' * s') A B hA hB hPA hDB)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

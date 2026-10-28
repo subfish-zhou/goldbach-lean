@@ -1,0 +1,51 @@
+{
+  "module": "WE01BaselineScalars",
+  "exit_code": 0,
+  "seconds": 8.47288878634572,
+  "source_sha256": "bf1d41e114e2014dcbdd7cc7d1e3a784d57e81a0fb6de1a59bb02991f4bc551e",
+  "object_sha256": "88ef24ebb872ba7f364f41ad8acf84716d7c2044c12d8d053344920a9c93fa6f",
+  "dependencies": {
+    "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7",
+    "W03Table": "fde7de24ff3603e898587dbd81fbb0f26f56c625b95ed063897fb2cde799be37",
+    "ExactSixthOuter": "134cf9378e73511b71b688defd5cfd62087cce4886677bc045ff4c0f143dc28f"
+  },
+  "dependency_contexts": {
+    "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878",
+    "W03Table": "dd31cc25374b18853ef5a96ff7bb420abd206b626e52488a7aaff1cefd3422f2",
+    "ExactSixthOuter": "ccc55f016ea4f216cf3c40391e10e1ca6e9df88f70a5bc301ac017d67f6915cd"
+  },
+  "context_sha256": "9a9644074d7eaea593c70c160838fdf1f6a47de6004586d37321724e78b9e234",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineScalars.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineScalars.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineScalars.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineScalars.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.resources",
+  "resource_sha256": "8737095a48ed7c78d1473bbfe38c11b7f0153057802c7cab4c44c384f916fd91",
+  "artifact_bundle_sha256": {
+    ".olean": "88ef24ebb872ba7f364f41ad8acf84716d7c2044c12d8d053344920a9c93fa6f"
+  }
+}

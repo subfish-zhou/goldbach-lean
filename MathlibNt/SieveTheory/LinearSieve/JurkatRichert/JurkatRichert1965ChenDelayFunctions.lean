@@ -183,14 +183,6 @@ theorem hasDerivAt_delayWeight (A : ℝ) (b : Bool) {u : ℝ} (hu : 2 < u) :
   filter_upwards [eventually_ge_nhds hu] with v hv
   exact delayWeight_integral A b hv
 
-/-- The right derivative at the initial endpoint, included in (5.6). -/
-theorem hasDerivWithinAt_delayWeight_two (A : ℝ) (b : Bool) :
-    HasDerivWithinAt (delayWeight A b) (delayFunction A (!b) 1) (Ici 2) 2 := by
-  have hd := ((continuous_delayIntegrand A b).integral_hasStrictDerivAt 2 2).hasDerivAt
-  rw [delayIntegrand_eq A b le_rfl] at hd
-  norm_num only at hd
-  exact (hd.const_add (delayInitial A b)).hasDerivWithinAt.congr
-    (fun _ hv => delayWeight_integral A b hv) (delayWeight_integral A b le_rfl)
 
 /-- The literal weighted differential equation (5.6) away from the endpoint. -/
 theorem hasDerivAt_mul_delayFunction (A : ℝ) (b : Bool) {u : ℝ} (hu : 2 < u) :
@@ -200,47 +192,6 @@ theorem hasDerivAt_mul_delayFunction (A : ℝ) (b : Bool) {u : ℝ} (hu : 2 < u)
   filter_upwards [eventually_ge_nhds hu] with v hv
   exact mul_delayFunction A b (by linarith)
 
-theorem hasDerivWithinAt_mul_delayFunction_two (A : ℝ) (b : Bool) :
-    HasDerivWithinAt (fun x => x * delayFunction A b x)
-      (delayFunction A (!b) 1) (Ici 2) 2 := by
-  exact (hasDerivWithinAt_delayWeight_two A b).congr
-    (fun _ hv => mul_delayFunction A b (by
-      have : (2 : ℝ) ≤ _ := hv
-      linarith)) (mul_delayFunction A b (by norm_num))
-
-/-- Uniqueness of the integral initial-value problem on the positive half-line.
-This is a consequence of the construction, not an input to it. -/
-theorem delayFunction_unique (A : ℝ) (k : Bool → ℝ → ℝ)
-    (hinit : ∀ b u, 0 < u → u ≤ 2 → k b u = delayInitial A b / u)
-    (hint : ∀ b u, 2 ≤ u →
-      u * k b u = delayInitial A b + ∫ t in (2 : ℝ)..u, k (!b) (t - 1)) :
-    ∀ b u, 0 < u → k b u = delayFunction A b u := by
-  have hstep : ∀ n : ℕ, ∀ b u, 0 < u → u ≤ (n : ℝ) + 2 →
-      k b u = delayFunction A b u := by
-    intro n
-    induction n with
-    | zero =>
-      intro b u hu hb
-      have hb' : u ≤ 2 := by simpa using hb
-      rw [hinit b u hu hb', delayFunction_initial A b hb']
-    | succ n ih =>
-      intro b u hu hb
-      by_cases hsmall : u ≤ 2
-      · rw [hinit b u hu hsmall, delayFunction_initial A b hsmall]
-      have hlarge : 2 ≤ u := le_of_lt (lt_of_not_ge hsmall)
-      apply mul_left_cancel₀ (ne_of_gt hu)
-      rw [hint b u hlarge, mul_delayFunction A b (ne_of_gt hu),
-        delayWeight_integral A b hlarge]
-      congr 1
-      apply intervalIntegral.integral_congr
-      intro t ht
-      have ht' : t ∈ Icc 2 u := by simpa only [uIcc_of_le hlarge] using ht
-      rw [delayIntegrand_eq A b ht'.1]
-      apply ih (!b) (t - 1) (by linarith [ht'.1])
-      push_cast at hb
-      linarith [ht'.2]
-  intro b u hu
-  exact hstep ⌈u⌉₊ b u hu (by linarith [Nat.le_ceil u])
 
 theorem delayStep_nonneg {A : ℝ} (hA : 0 ≤ A) (n : ℕ) (b : Bool) (u : ℝ) :
     0 ≤ delayStep A n b u := by
@@ -310,13 +261,6 @@ theorem hasDerivAt_mul_jr1965f {u : ℝ} (hu : 2 < u) :
     HasDerivAt (fun x => x * jr1965f x) (jr1965F (u - 1)) u :=
   hasDerivAt_mul_delayFunction jr1965DelayConstant true hu
 
-theorem hasDerivWithinAt_mul_jr1965F_two :
-    HasDerivWithinAt (fun x => x * jr1965F x) (jr1965f 1) (Ici 2) 2 :=
-  hasDerivWithinAt_mul_delayFunction_two jr1965DelayConstant false
-
-theorem hasDerivWithinAt_mul_jr1965f_two :
-    HasDerivWithinAt (fun x => x * jr1965f x) (jr1965F 1) (Ici 2) 2 :=
-  hasDerivWithinAt_mul_delayFunction_two jr1965DelayConstant true
 
 theorem jr1965F_pos {u : ℝ} (hu : 0 < u) : 0 < jr1965F u := by
   have hA : 0 < jr1965DelayConstant := by
@@ -345,25 +289,5 @@ theorem jr1965F_eq_of_le_three {u : ℝ} (hu : u ≤ 3) :
   apply (eq_div_iff (by linarith : u ≠ 0)).2
   nlinarith
 
-/-- The parity-indexed notation (5.14). -/
-def jr1965g (ν : ℕ) (u : ℝ) : ℝ := if Even ν then jr1965F u else jr1965f u
-
-theorem jr1965g_integral_recurrence (ν : ℕ) {v u : ℝ} (hv : 2 ≤ v) (hvu : v ≤ u) :
-    u * jr1965g ν u = v * jr1965g ν v + ∫ t in v..u, jr1965g (ν + 1) (t - 1) := by
-  by_cases hν : Even ν
-  · simpa [jr1965g, Nat.even_add_one, hν] using jr1965F_integral_recurrence hv hvu
-  · simpa [jr1965g, Nat.even_add_one, hν] using jr1965f_integral_recurrence hv hvu
-
-theorem continuousOn_jr1965g (ν : ℕ) : ContinuousOn (jr1965g ν) (Ioi 0) := by
-  unfold jr1965g
-  split_ifs
-  · exact continuousOn_jr1965F
-  · exact continuousOn_jr1965f
-
-theorem hasDerivAt_mul_jr1965g (ν : ℕ) {u : ℝ} (hu : 2 < u) :
-    HasDerivAt (fun x => x * jr1965g ν x) (jr1965g (ν + 1) (u - 1)) u := by
-  by_cases hν : Even ν
-  · simpa [jr1965g, Nat.even_add_one, hν] using hasDerivAt_mul_jr1965F hu
-  · simpa [jr1965g, Nat.even_add_one, hν] using hasDerivAt_mul_jr1965f hu
 
 end MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne

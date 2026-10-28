@@ -1,9 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachRepeatBound
-
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-
-#check goldbachR_le_twenty_mul_goldbachQA
-#check goldbachR_real_le_forty_mul_div
-
-#print axioms goldbachR_le_twenty_mul_goldbachQA
-#print axioms goldbachR_real_le_forty_mul_div

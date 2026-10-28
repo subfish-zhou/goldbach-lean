@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionContinuation.0.AnalyticNumberTheory.LargeSieve.Bombieri1965Theorem4.mul_error_cpow",
+      "owner": "MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionContinuation",
+      "kind": "theorem",
+      "typeHash": "3037665393",
+      "same_kind_and_type_hash": true,
+      "actual_cpow_add_reference_reachable": true
+    },
+    {
+      "name": "_private.MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterContinuation.0.AnalyticNumberTheory.LargeSieve.Bombieri1965Theorem4.mul_error_cpow",
+      "owner": "MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterContinuation",
+      "kind": "theorem",
+      "typeHash": "3037665393",
+      "same_kind_and_type_hash": true,
+      "actual_cpow_add_reference_reachable": true
+    }
+  ],
+  "method": "Both original private Mellin-kernel shift statements/names remain; only their manual calculation bodies become direct applications of Complex.cpow_add with elementary additive simplification."
+}

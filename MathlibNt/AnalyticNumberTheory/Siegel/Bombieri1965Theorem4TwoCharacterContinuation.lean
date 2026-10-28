@@ -1,6 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterAsymptotic
-import Mathlib.Analysis.MellinTransform
-import Mathlib.NumberTheory.LSeries.SumCoeff
 import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 
 /-!
@@ -205,11 +203,8 @@ theorem twoCharacterSummatory_isBigO
 
 private theorem mul_error_cpow (t : ℝ) (ht : 0 < t) (s : ℂ) :
     (t : ℂ) * (t : ℂ) ^ (-(s + 1)) = (t : ℂ) ^ (-s) := by
-  calc
-    _ = (t : ℂ) ^ (1 : ℂ) * (t : ℂ) ^ (-(s + 1)) := by rw [cpow_one]
-    _ = (t : ℂ) ^ ((1 : ℂ) + -(s + 1)) :=
-      (cpow_add _ _ (ofReal_ne_zero.mpr ht.ne')).symm
-    _ = _ := by congr 1; ring
+  simpa only [cpow_one, neg_add_rev, add_neg_cancel_left] using
+    (cpow_add (1 : ℂ) (-(s + 1)) (ofReal_ne_zero.mpr ht.ne')).symm
 
 private theorem summatory_kernel_split
     (χ ψ : DirichletCharacter ℂ q) (s : ℂ) {t : ℝ} (ht : 1 < t) :

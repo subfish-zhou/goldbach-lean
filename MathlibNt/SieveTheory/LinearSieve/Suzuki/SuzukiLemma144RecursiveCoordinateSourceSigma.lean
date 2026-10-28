@@ -1,7 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorEnvelopeTransportFull
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIErrorTransportUniform
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144IHInstantiation
 
 open scoped Classical BigOperators Interval
 open Filter Finset Set Topology
@@ -273,17 +270,6 @@ theorem eventually_recursiveCoordinate_le_quotient_sourceSigma_uniform
   · exact hs
   · exact hp'.2.1
   · exact hp'.2.2
-
-/-- Compatibility wrapper for the original sieve-first API. -/
-theorem eventually_recursiveCoordinate_le_quotient_sourceSigma
-    (S : BoundingSieve) {d : ℝ} (hd : 1 < d) :
-    ∀ᶠ D : ℕ in atTop, ∀ (s : ℝ), 2 ≤ s →
-      ∀ p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D
-          (sourceSigma (D : ℝ) d) s,
-        recursiveCoordinate D p ≤
-          sourceSigma ((D ⌈/⌉ p : ℕ) : ℝ) d :=
-  (eventually_recursiveCoordinate_le_quotient_sourceSigma_uniform hd).mono
-    (fun _ hD => hD S)
 
 
 end MathlibNt.SieveTheory

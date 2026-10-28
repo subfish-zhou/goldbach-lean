@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12LowHighOutputWindow
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass
 
 noncomputable section
 open Classical Finset Filter

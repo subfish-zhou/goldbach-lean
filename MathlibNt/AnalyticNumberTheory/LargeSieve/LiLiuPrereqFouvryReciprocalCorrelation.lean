@@ -113,22 +113,6 @@ theorem iv3_reciprocal_correlation
   unfold iv3CorrelationNumerator
   ring
 
-theorem norm_iv3_reciprocal_correlation
-    (D d₁ n n₂ n₂' k r s s' : ℕ) (a h h' : ℤ) :
-    ‖fourier h (iv3ReciprocalPhase D d₁ n n₂ k r s a) *
-        star (fourier h' (iv3ReciprocalPhase D d₁ n n₂' k r s' a))‖ = 1 := by
-  simp only [norm_mul, norm_star, fourier_apply, Circle.norm_coe, mul_one]
-
-/-- The zero-numerator branch is exactly one, not just bounded by one. -/
-theorem iv3_reciprocal_correlation_zero
-    {D d₁ n n₂ n₂' k r s s' : ℕ}
-    (hn : 0 < n) (hr : 0 < r) (hs : 0 < s) (hs' : 0 < s')
-    (hc : (D * n₂ * n₂' * k).Coprime (n * r * s * s')) (a h h' : ℤ)
-    (hl : iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' = 0) :
-    fourier h (iv3ReciprocalPhase D d₁ n n₂ k r s a) *
-        star (fourier h' (iv3ReciprocalPhase D d₁ n n₂' k r s' a)) = 1 := by
-  rw [iv3_reciprocal_correlation hn hr hs hs' hc, hl]
-  simp [iv3ReciprocalCircle]
 
 /-- Agreement with the inverse used by the complete Weil theorem, including
 the trivial residue ring at modulus one. -/
@@ -185,82 +169,5 @@ theorem iv3ReciprocalCircle_eq_reciprocalPhase {q B k : ℕ} [NeZero q]
         one_mul]
   rw [hi, mul_assoc]
 
-/-- The actual unweighted interval of positive `k`, with precisely its
-coprimality restriction. No coefficient or additional carrier mask is present. -/
-def iv3CorrelationInterval (D d₁ n n₂ n₂' r s s' : ℕ) (a h h' : ℤ)
-    (X Y : ℕ) : ℂ :=
-  ∑ k ∈ (Finset.Ioc X Y).filter (fun k ↦ k.Coprime (n * r * s * s')),
-    fourier h (iv3ReciprocalPhase D d₁ n n₂ k r s a) *
-      star (fourier h' (iv3ReciprocalPhase D d₁ n n₂' k r s' a))
-
-/-- Natural interval endpoints give the same interval convention as the
-established Fouvry bound: `X < k ≤ Y`. -/
-theorem iv3_reciprocalInterval_nat {q : ℕ} [NeZero q] (d : ℤ) (X Y : ℕ) :
-    (∑ k ∈ Finset.Ioc X Y, reciprocalPhase q d (k : ZMod q)) =
-      reciprocalInterval q d X Y := by
-  unfold reciprocalInterval
-  simp only [Int.floor_natCast]
-  apply Finset.sum_bij (fun (k : ℕ) _ ↦ (k : ℤ))
-  · intro k hk
-    simpa only [Finset.mem_Ioc, Nat.cast_lt, Nat.cast_le] using hk
-  · intro k _ j _ he
-    exact_mod_cast he
-  · intro c hc
-    have hc' := Finset.mem_Ioc.mp hc
-    refine ⟨c.toNat, ?_, ?_⟩
-    · simp only [Finset.mem_Ioc]
-      omega
-    · omega
-  · intro k _
-    simp only [Int.cast_natCast]
-
-theorem iv3CorrelationInterval_eq_reciprocalInterval
-    {D d₁ n n₂ n₂' r s s' : ℕ}
-    (hn : 0 < n) (hr : 0 < r) (hs : 0 < s) (hs' : 0 < s')
-    (hB : (D * n₂ * n₂').Coprime (n * r * s * s')) (a h h' : ℤ) (X Y : ℕ) :
-    letI : NeZero (n * r * s * s') := ⟨by positivity⟩
-    iv3CorrelationInterval D d₁ n n₂ n₂' r s s' a h h' X Y =
-      reciprocalInterval (n * r * s * s')
-        (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' *
-          wPhaseInverse (D * n₂ * n₂') (n * r * s * s')) X Y := by
-  let : NeZero (n * r * s * s') := ⟨by positivity⟩
-  rw [← iv3_reciprocalInterval_nat]
-  unfold iv3CorrelationInterval
-  rw [Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro k _
-  by_cases hk : k.Coprime (n * r * s * s')
-  · rw [if_pos hk, iv3_reciprocal_correlation hn hr hs hs' (hB.mul_left hk),
-      iv3ReciprocalCircle_eq_reciprocalPhase hB hk]
-  · rw [if_neg hk]
-    symm
-    unfold reciprocalPhase
-    rw [if_neg]
-    intro hu
-    exact hk ((ZMod.isUnit_iff_coprime k (n * r * s * s')).mp hu)
-
-/-- The unconditional complete Weil theorem applies to this unweighted
-interval, not to an arbitrarily weighted or further masked correlation. -/
-theorem iv3CorrelationInterval_fouvry {ε : ℝ} (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧
-      ∀ (D d₁ n n₂ n₂' r s s' : ℕ) (a h h' : ℤ) (X Y : ℕ),
-        0 < n → 0 < r → 0 < s → 0 < s' →
-        (D * n₂ * n₂').Coprime (n * r * s * s') →
-        X ≤ Y → Y - X ≤ n * r * s * s' →
-        ‖iv3CorrelationInterval D d₁ n n₂ n₂' r s s' a h h' X Y‖ ≤
-          C * Real.sqrt ((n * r * s * s').gcd
-            (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs) *
-            (n * r * s * s' : ℕ) ^ (1 / 2 + ε : ℝ) := by
-  obtain ⟨C, hC, hbound⟩ := reciprocalInterval_fouvry hε
-  refine ⟨C, hC, ?_⟩
-  intro D d₁ n n₂ n₂' r s s' a h h' X Y hn hr hs hs' hB hXY hlen
-  let : NeZero (n * r * s * s') := ⟨by positivity⟩
-  rw [iv3CorrelationInterval_eq_reciprocalInterval hn hr hs hs' hB]
-  have he := hbound (n * r * s * s') inferInstance
-    (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' *
-      wPhaseInverse (D * n₂ * n₂') (n * r * s * s')) X Y
-    (by exact_mod_cast hXY) (by exact_mod_cast hlen)
-  rw [iv3_gcd_inverse_twist hB] at he
-  exact he
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

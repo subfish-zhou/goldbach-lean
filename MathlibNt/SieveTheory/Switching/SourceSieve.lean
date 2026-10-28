@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.LinearSieve.DimensionOneUpperFactor
 import MathlibNt.SieveTheory.Switching.WeightedCounting
 
 /-!
@@ -318,21 +319,6 @@ noncomputable def jurkatRichertSourceRemainderSum (N : ℕ) (ε : ℝ) : ℝ :=
       (fun d : ℕ => (d : ℝ) ≤ (N : ℝ) ^ (1 / 2 - ε)),
     |(jurkatRichertSourceBoundingSieve N).rem d|
 
-/-- The level-restricted remainder is literally a sum of Goldbach AP
-discrepancies. -/
-theorem jurkatRichertSourceRemainderSum_eq_AP
-    (N : ℕ) (ε : ℝ) (hEven : Even N) (hN : 2 < N) :
-    jurkatRichertSourceRemainderSum N ε =
-      ∑ d ∈ (jurkatRichertSourceSiftingProduct N).divisors.filter
-          (fun d : ℕ => (d : ℝ) ≤ (N : ℝ) ^ (1 / 2 - ε)),
-        |(((jurkatRichertSourceUnsiftedPrimeSupport N).filter
-              (fun p => p ≡ N [MOD d])).card : ℝ) -
-          AnalyticNumberTheory.Sieve.goldbachNu d *
-            LiuWeight.liuLogarithmicIntegral (2 / Real.log 2) N| := by
-  unfold jurkatRichertSourceRemainderSum
-  apply Finset.sum_congr rfl
-  intro d hd
-  rw [jurkatRichertSourceRem_eq_modEq_count N d hEven hN]
 
 /-- Every source modulus is coprime to the Goldbach integer: the source
 product omits precisely the cutoff primes dividing `N`. -/
@@ -871,16 +857,6 @@ theorem jurkatRichertSourceMediumPrime_log_mem
   rw [Real.log_rpow hNr] at hlogLower hlogUpper
   exact ⟨(le_div_iff₀ hlogN).2 hlogLower,
     (div_le_iff₀ hlogN).2 hlogUpper⟩
-
-/-- The dimension-one upper linear-sieve factor on the range used in Chen's
-q-sum.  The integral branch is the one whose partial summation contributes
-`K / 2`. -/
-noncomputable def jurkatRichertUpperLinearSieveFactor (s : ℝ) : ℝ :=
-  if s ≤ 3 then
-    2 * Real.exp Real.eulerMascheroniConstant / s
-  else
-    2 * Real.exp Real.eulerMascheroniConstant / s *
-      (1 + jurkatRichertInnerIntegral s)
 
 private lemma jurkatRichertInnerIntegral_three :
     jurkatRichertInnerIntegral 3 = 0 := by

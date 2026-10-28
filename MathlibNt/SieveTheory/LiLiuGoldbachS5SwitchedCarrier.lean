@@ -23,13 +23,6 @@ theorem mem_goldbachS5ActualAtoms_iff {N : ℕ} {eps : ℝ}
         literalHPoint (N * x.1.1) (goldbachC9Prod x.1) x.1.2 x.2 := by
   simp [goldbachS5ActualAtoms]
 
-theorem goldbachS5Closed_eq_card_actualAtoms (N : ℕ) (eps : ℝ) :
-    goldbachS5Closed (goldbachDifferenceCarrier N eps) N
-      ((N : ℝ) ^ ((4 : ℝ) / 53)) ((N : ℝ) ^ ((1 : ℝ) / 3)) =
-        ((goldbachS5ActualAtoms N eps).card : ℤ) := by
-  simp [goldbachS5Closed, goldbachS5ActualAtoms, goldbachC9Pairs,
-    goldbachC9Prod, goldbachC8Prod, literalH]
-  rfl
 
 noncomputable def goldbachS5BadAtoms (N : ℕ) (eps : ℝ) :
     Finset (Σ _rs : ℕ × ℕ, ℕ) :=
@@ -110,12 +103,6 @@ theorem mem_goldbachB9PlusSiftedAtoms_iff {N : ℕ} {Z : ℝ}
       x ∈ goldbachB9PlusAtoms N ∧ SurvivesSieve N Z (goldbachB9PlusOutput N x) := by
   simp [goldbachB9PlusSiftedAtoms, literalHPoint]
 
-theorem goldbachB9PlusSiftedAtoms_eq_coprime_filter (N : ℕ) (Z : ℝ) :
-    goldbachB9PlusSiftedAtoms N Z =
-      (goldbachB9PlusAtoms N).filter
-        fun x => Nat.Coprime (goldbachB10ProdPrimes N Z) (goldbachB9PlusOutput N x) := by
-  ext x
-  simp [goldbachB9PlusSiftedAtoms, goldbachB10_coprime_prodPrimes_iff_literalHPoint]
 
 noncomputable def goldbachB9PlusPrimeAtoms (N : ℕ) : Finset (Σ _rs : ℕ × ℕ, ℕ) :=
   (goldbachB9PlusAtoms N).filter fun x => (goldbachB9PlusOutput N x).Prime
@@ -165,33 +152,7 @@ theorem goldbachS5Switch_mem_primeAtoms {N : ℕ} {eps : ℝ}
     simpa [hnp, Nat.sub_sub_self hpN] using hp
   exact ⟨Finset.mem_filter.mpr ⟨hmem, hout⟩, by simpa [← heq] using hb.2.2⟩
 
-theorem goldbachS5GoodNonsquareAtoms_outputFiber_card_le {N p : ℕ} {eps : ℝ}
-    (hN : 2 ≤ N) (heps : 0 < eps)
-    (hcut : (N : ℝ) ^ ((2 : ℝ) / 3) ≤ eps * N) :
-    ((goldbachS5GoodNonsquareAtoms N eps).filter fun x => N - x.2 = p).card ≤
-      ((goldbachB9PlusPrimeAtoms N).filter fun x => goldbachB9PlusOutput N x = p).card := by
-  apply Finset.card_le_card_of_injOn goldbachS5Switch
-  · intro x hx
-    obtain ⟨hx, hp⟩ := Finset.mem_filter.mp hx
-    have ha := (Finset.mem_filter.mp (Finset.mem_filter.mp hx).1).1
-    exact Finset.mem_filter.mpr
-      ⟨(goldbachS5Switch_mem_primeAtoms hN heps hcut hx).1,
-        (goldbachS5Switch_output ha).trans hp⟩
-  · intro x hx y hy hxy
-    exact goldbachS5Switch_injOn
-      (Finset.mem_filter.mp (Finset.mem_filter.mp (Finset.mem_filter.mp hx).1).1).1
-      (Finset.mem_filter.mp (Finset.mem_filter.mp (Finset.mem_filter.mp hy).1).1).1 hxy
 
-private theorem S5_card_le_mul_of_fibers {α : Type*} [DecidableEq α]
-    (A : Finset α) (T : Finset ℕ) (f : α → ℕ) (k : ℕ)
-    (hmaps : ∀ x ∈ A, f x ∈ T)
-    (hfiber : ∀ p ∈ T, (A.filter fun x => f x = p).card ≤ k) :
-    A.card ≤ T.card * k := by
-  calc
-    A.card = ∑ p ∈ T, (A.filter fun x => f x = p).card :=
-      Finset.card_eq_sum_card_fiberwise hmaps
-    _ ≤ ∑ _p ∈ T, k := Finset.sum_le_sum hfiber
-    _ = T.card * k := by simp
 
 theorem goldbachS5ActualAtoms_fiber_card_le_fourHundred {N n : ℕ} {eps : ℝ}
     (hn1 : 1 ≤ n) (hnN : n < N) :
@@ -230,8 +191,7 @@ theorem goldbachS5BadAtoms_card_le {N : ℕ} {eps : ℝ} (heps : 0 < eps) :
       exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp hx).1, heq⟩
     exact (Finset.card_le_card hsub).trans
       (goldbachS5ActualAtoms_fiber_card_le_fourHundred hb.1 hb.2.1)
-  have h := S5_card_le_mul_of_fibers (goldbachS5BadAtoms N eps) T
-    (fun x => x.2) 400 hmaps hfiber
+  have h := Finset.card_le_mul_card_image_of_maps_to hmaps 400 hfiber
   unfold goldbachBadCount
   exact_mod_cast (by simpa [T, mul_comm] using h :
     (goldbachS5BadAtoms N eps).card ≤
@@ -260,8 +220,7 @@ theorem goldbachS5SquareAtoms_card_le {N : ℕ} {eps : ℝ} (heps : 0 < eps) :
         ⟨(Finset.mem_filter.mp (Finset.mem_filter.mp hx).1).1, heq⟩
     exact (Finset.card_le_card hsub).trans
       (goldbachS5ActualAtoms_fiber_card_le_fourHundred hn0 hnN)
-  have h := S5_card_le_mul_of_fibers (goldbachS5SquareAtoms N eps)
-    (goldbachS5SquareSet N) (fun x => x.2) 400 hmaps hfiber
+  have h := Finset.card_le_mul_card_image_of_maps_to hmaps 400 hfiber
   unfold goldbachS5SquareCount
   exact_mod_cast (by simpa [mul_comm] using h :
     (goldbachS5SquareAtoms N eps).card ≤ 400 * (goldbachS5SquareSet N).card)
@@ -326,7 +285,7 @@ theorem goldbachB9Plus_low_card_le (N : ℕ) {Z : ℝ} (hZ : 1 ≤ Z) :
       obtain ⟨hx, heq⟩ := Finset.mem_filter.mp hx
       exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp hx).1, heq⟩
     exact (Finset.card_le_card hsub).trans (goldbachB9PlusOutputFiber_card_le_fourHundred N p)
-  have h := S5_card_le_mul_of_fibers A T (goldbachB9PlusOutput N) 400 hmaps hfiber
+  have h := Finset.card_le_mul_card_image_of_maps_to hmaps 400 hfiber
   have hcardT : T.card = Nat.floor Z := by simp [T, Nat.card_Icc]
   rw [hcardT] at h
   exact_mod_cast (by simpa [A, mul_comm] using h :
@@ -345,80 +304,5 @@ theorem goldbachB9Plus_highPrime_subset_sifted (N : ℕ) (Z : ℝ) :
   have heq := (Nat.prime_dvd_prime_iff_eq hell hp).mp hd
   simpa [heq] using hhigh
 
-theorem goldbachB9PlusPrimeAtoms_card_le_sifted (N : ℕ) {Z : ℝ} (hZ : 1 ≤ Z) :
-    ((goldbachB9PlusPrimeAtoms N).card : ℤ) ≤
-      ((goldbachB9PlusSiftedAtoms N Z).card : ℤ) + 400 * (Nat.floor Z : ℤ) := by
-  have hsplit := Finset.sum_filter_add_sum_filter_not (goldbachB9PlusPrimeAtoms N)
-    (fun x => (goldbachB9PlusOutput N x : ℝ) < Z) (fun _ => (1 : ℤ))
-  have hlowSub : ((goldbachB9PlusPrimeAtoms N).filter
-      fun x => (goldbachB9PlusOutput N x : ℝ) < Z) ⊆
-      ((goldbachB9PlusAtoms N).filter fun x => (goldbachB9PlusOutput N x : ℝ) < Z) := by
-    intro x hx
-    obtain ⟨hx, hlow⟩ := Finset.mem_filter.mp hx
-    exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp hx).1, hlow⟩
-  have hlow : (((goldbachB9PlusPrimeAtoms N).filter
-      fun x => (goldbachB9PlusOutput N x : ℝ) < Z).card : ℤ) ≤
-      400 * (Nat.floor Z : ℤ) := by
-    have hc : (((goldbachB9PlusPrimeAtoms N).filter
-        fun x => (goldbachB9PlusOutput N x : ℝ) < Z).card : ℤ) ≤
-        (((goldbachB9PlusAtoms N).filter
-          fun x => (goldbachB9PlusOutput N x : ℝ) < Z).card : ℤ) := by
-      exact_mod_cast Finset.card_le_card hlowSub
-    exact hc.trans (goldbachB9Plus_low_card_le N hZ)
-  have hhigh : (((goldbachB9PlusPrimeAtoms N).filter
-      fun x => Z ≤ (goldbachB9PlusOutput N x : ℝ)).card : ℤ) ≤
-      ((goldbachB9PlusSiftedAtoms N Z).card : ℤ) := by
-    exact_mod_cast Finset.card_le_card (goldbachB9Plus_highPrime_subset_sifted N Z)
-  simp only [Finset.sum_const, nsmul_eq_mul, mul_one, not_lt] at hsplit
-  omega
-
-/-- All three losses count labelled fibers, with the square set left unpaid asymptotically. -/
-theorem goldbachS5Closed_le_sifted_B9Plus {N : ℕ} {eps Z : ℝ}
-    (hN : 2 ≤ N) (heps : 0 < eps)
-    (hcut : (N : ℝ) ^ ((2 : ℝ) / 3) ≤ eps * N) (hZ : 1 ≤ Z) :
-    goldbachS5Closed (goldbachDifferenceCarrier N eps) N
-      ((N : ℝ) ^ ((4 : ℝ) / 53)) ((N : ℝ) ^ ((1 : ℝ) / 3)) ≤
-        ((goldbachB9PlusSiftedAtoms N Z).card : ℤ) +
-          400 * goldbachBadCount (goldbachDifferenceCarrier N eps) N +
-            400 * goldbachS5SquareCount N + 400 * (Nat.floor Z : ℤ) := by
-  have hgood : ((goldbachS5GoodNonsquareAtoms N eps).card : ℤ) ≤
-      ((goldbachB9PlusPrimeAtoms N).card : ℤ) := by
-    have hmaps : Set.MapsTo goldbachS5Switch (goldbachS5GoodNonsquareAtoms N eps)
-        (goldbachB9PlusPrimeAtoms N) :=
-      fun _ hx => (goldbachS5Switch_mem_primeAtoms hN heps hcut hx).1
-    have hinj : Set.InjOn goldbachS5Switch (goldbachS5GoodNonsquareAtoms N eps) :=
-      fun _ hx _ hy hxy => goldbachS5Switch_injOn
-        (Finset.mem_filter.mp (Finset.mem_filter.mp hx).1).1
-        (Finset.mem_filter.mp (Finset.mem_filter.mp hy).1).1 hxy
-    exact_mod_cast Finset.card_le_card_of_injOn _ hmaps hinj
-  have hsplit : ((goldbachS5GoodAtoms N eps).card : ℤ) +
-      ((goldbachS5BadAtoms N eps).card : ℤ) = ((goldbachS5ActualAtoms N eps).card : ℤ) := by
-    simpa [goldbachS5GoodAtoms, goldbachS5BadAtoms] using
-      Finset.sum_filter_add_sum_filter_not (goldbachS5ActualAtoms N eps)
-        (fun x => Nat.Coprime x.2 N) (fun _ => (1 : ℤ))
-  have hsquareSplit : ((goldbachS5SquareAtoms N eps).card : ℤ) +
-      ((goldbachS5GoodNonsquareAtoms N eps).card : ℤ) =
-        ((goldbachS5GoodAtoms N eps).card : ℤ) := by
-    simpa [goldbachS5SquareAtoms, goldbachS5GoodNonsquareAtoms] using
-      Finset.sum_filter_add_sum_filter_not (goldbachS5GoodAtoms N eps)
-        (fun x => x.1.1 ^ 2 ∣ x.2) (fun _ => (1 : ℤ))
-  have hbad := goldbachS5BadAtoms_card_le (N := N) heps
-  have hsquare := goldbachS5SquareAtoms_card_le (N := N) heps
-  have hprime := goldbachB9PlusPrimeAtoms_card_le_sifted N hZ
-  rw [goldbachS5Closed_eq_card_actualAtoms]
-  omega
-
-theorem goldbachS5Closed_eventually_le_sifted_B9Plus :
-    ∀ eps : ℝ, 0 < eps →
-      ∃ N0 : ℕ, 2 ≤ N0 ∧ ∀ N : ℕ, N0 ≤ N → ∀ Z : ℝ, 1 ≤ Z →
-        goldbachS5Closed (goldbachDifferenceCarrier N eps) N
-          ((N : ℝ) ^ ((4 : ℝ) / 53)) ((N : ℝ) ^ ((1 : ℝ) / 3)) ≤
-            ((goldbachB9PlusSiftedAtoms N Z).card : ℤ) +
-              400 * goldbachBadCount (goldbachDifferenceCarrier N eps) N +
-                400 * goldbachS5SquareCount N + 400 * (Nat.floor Z : ℤ) := by
-  intro eps heps
-  obtain ⟨N0, hN0, hcut⟩ := exists_goldbachS4_switch_threshold eps heps
-  exact ⟨N0, hN0, fun N hN Z hZ =>
-    goldbachS5Closed_le_sifted_B9Plus (hN0.trans hN) heps (hcut N hN) hZ⟩
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

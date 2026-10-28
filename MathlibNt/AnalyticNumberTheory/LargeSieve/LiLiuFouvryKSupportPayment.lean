@@ -107,6 +107,3 @@ theorem eventually_wMaskedOriginal_zero_largeSupport_power_saving_kscale
   linarith
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
-
-
-#print axioms MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_largeSupport_power_saving_kscale

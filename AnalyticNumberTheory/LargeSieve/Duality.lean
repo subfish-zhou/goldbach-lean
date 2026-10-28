@@ -1,6 +1,5 @@
 import AnalyticNumberTheory.LargeSieve.Additive
 import AnalyticNumberTheory.LargeSieve.GeomSum
-import Mathlib.Tactic
 
 /-! # AnalyticNumberTheory.LargeSieve.Duality
 
@@ -129,42 +128,6 @@ theorem dualQuadraticIdentity_Icc (M : ℤ) (N : ℕ) (t : Finset ℝ) (b : ℝ 
 
 /-! ## 3. Circle version (AddCircle 1) -/
 
-/-- Conjugation of a circle character:
-`star(e(nx)) = e(−nx)` (n : ℤ, x : AddCircle 1). -/
-theorem charPow_star (n : ℤ) (x : AddCircle (1 : ℝ)) :
-    star (charPow n x : ℂ) = (charPow (-n) x : ℂ) := by
-  dsimp [charPow, unitChar]
-  rw [neg_zsmul, AddCircle.toCircle_neg, Circle.coe_inv_eq_conj]
-
-/-- Circle-character product:
-`(unitChar (a + b) : ℂ) = (unitChar a : ℂ) * (unitChar b : ℂ)`. -/
-theorem unitChar_add (a b : AddCircle (1 : ℝ)) :
-    (unitChar (a + b) : ℂ) = (unitChar a : ℂ) * (unitChar b : ℂ) := by
-  simpa [unitChar] using congrArg (fun z : Circle => (z : ℂ)) (AddCircle.toCircle_add a b)
-
-/-- Circle-character cross-product identity:
-`star(e(nx))·e(ny) = star(e(n(x−y)))` (n : ℤ, x y : AddCircle 1). -/
-theorem charPow_cross (n : ℤ) (x y : AddCircle (1 : ℝ)) :
-    star (charPow n x : ℂ) * (charPow n y : ℂ) =
-      star (charPow n (x - y) : ℂ) := by
-  rw [charPow_star, charPow_star]
-  change (unitChar ((-n) • x) : ℂ) * (unitChar (n • y) : ℂ) =
-    (unitChar ((-n) • (x - y)) : ℂ)
-  rw [← unitChar_add]
-  congr 2
-  simp only [neg_zsmul, zsmul_sub]
-  abel
-
-/-- **Dual quadratic-form identity (circle)**: the Parseval expansion
-matching `MontgomeryLargeSieveDual`, with kernel `Σ_n star(e(n(x−y)))`. -/
-theorem dualQuadraticIdentity_circle (M : ℤ) (N : ℕ)
-    (X : Finset (AddCircle (1 : ℝ))) (b : AddCircle (1 : ℝ) → ℂ) :
-    (∑ n ∈ Finset.Icc (M + 1) (M + N),
-        ‖∑ x ∈ X, star (charPow n x : ℂ) * b x‖ ^ 2) =
-      ∑ x ∈ X, ∑ y ∈ X, b x * star (b y) *
-        (∑ n ∈ Finset.Icc (M + 1) (M + N), star (charPow n (x - y) : ℂ)) := by
-  simpa only [charPow_cross] using
-    dualExpansion (Finset.Icc (M + 1) (M + N)) X (fun n x => (charPow n x : ℂ)) b
 
 end
 

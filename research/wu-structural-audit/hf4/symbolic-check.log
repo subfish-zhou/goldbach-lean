@@ -1,0 +1,5 @@
+lower_difference = 2*z**8*(45*z**3 + 90*z**2 + 33*z - 26)/(105*(z + 1)**2*(3*z**2 - 5))
+upper_difference = -4*z**8*(5*z**2 + 5*z + 9)/(315*(z - 1)*(z + 1)**2)
+split_upper_difference = -z**8*(40*z**10 + 40*z**9 - 568*z**8 - 568*z**7 + 2856*z**6 + 2847*z**5 - 5383*z**4 - 5752*z**3 + 1048*z**2 + 112*z + 144)/(630*(z - 2)**4*(z - 1)*(z + 1)**2*(z + 2)**4)
+unsplit_lower_counterexample = -7804301671255727/13925693418881136407739000
+SymPy operation counts (not Lean DAG-node counts): {'old lower': 34, 'old upper': 37, 'P7': 11, 'U7': 18}

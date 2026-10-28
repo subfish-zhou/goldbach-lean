@@ -1,0 +1,51 @@
+{
+  "scope": "Gross candidate areas before implementation, not achieved or guaranteed net savings. Line totals count whole modules.",
+  "current_main": {
+    "modules": 1803,
+    "code_lines": 202026,
+    "physical_lines": 240698
+  },
+  "current_liliu": {
+    "modules": 1432,
+    "code_lines": 194471,
+    "physical_lines": 231057
+  },
+  "shared_with_chen": {
+    "modules": 511,
+    "code_lines": 94660,
+    "physical_lines": 114615
+  },
+  "liliu_outside_chen": {
+    "modules": 921,
+    "code_lines": 99811,
+    "physical_lines": 116442
+  },
+  "gross_liliu_named_review_pool": {
+    "modules": 3,
+    "code_lines": 64,
+    "physical_lines": 81
+  },
+  "outside_supported_roots_classification": {
+    "audit_check_inspection_by_name": {
+      "modules": 1,
+      "code_lines": 29,
+      "physical_lines": 34
+    }
+  },
+  "conversion_helpers_to_retain": [
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachOneNineLiteralExponent",
+      "code_lines": 9
+    },
+    {
+      "module": "MathlibNt.Analysis.RationalPower",
+      "code_lines": 14
+    }
+  ],
+  "protected_public_declarations": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound"
+  ]
+}

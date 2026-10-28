@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1055SourceExpansion
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZeroSpecialized
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseRatio
 
 open scoped Classical BigOperators Interval

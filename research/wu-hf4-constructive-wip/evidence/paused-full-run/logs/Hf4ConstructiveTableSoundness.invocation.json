@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableSoundness.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableSoundness.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableSoundness.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableSoundness.lean"
+  ],
+  "environment": {
+    "LEAN_PATH": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+    "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+    "TMPDIR": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/tmp"
+  },
+  "source_sha256": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff",
+  "dependencies": {
+    "Hf4ConstructiveTableData": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb",
+    "Hf4ConstructiveOriginalSoundness": "598e9aac4af3a77d256fe8a74fa36882c14ea2fb7c24b0131844e7422420c4b4",
+    "Hf4QuadCompactIntegral": "918b1423b38f3369b151852b0af310058fc76fc7256dfe0b9a5d03b595eed181"
+  },
+  "dependency_contexts": {
+    "Hf4ConstructiveTableData": "02e8470bd34b71b68d27ef5bc3b9e172b92d742b61edec98af51e0ab3cc37ee9",
+    "Hf4ConstructiveOriginalSoundness": "7de9b08bcd13a54a2b894a7e588f73b995280709d1b035e46dab99694b34b502",
+    "Hf4QuadCompactIntegral": "abfc584bed35f5d8e8fdb76e759d466e82ecd89c69cae095f2cb331a8c94db83"
+  }
+}

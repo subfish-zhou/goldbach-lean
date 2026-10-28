@@ -35,10 +35,6 @@ theorem measurableSet_goldbachB8LogGridCell (n : ℕ) (q : Fin n × Fin n) :
     MeasurableSet (goldbachB8LogGridCell n q) :=
   measurableSet_Ioc.prod measurableSet_Ioc
 
-theorem measurableSet_goldbachB8LogGridRegion (n : ℕ) :
-    MeasurableSet (goldbachB8LogGridRegion n) := by
-  classical
-  exact Finset.measurableSet_biUnion _ fun q _ => measurableSet_goldbachB8LogGridCell n q
 
 theorem measurableSet_goldbachB8LogSourceRegion :
     MeasurableSet goldbachB8LogSourceRegion := by
@@ -46,9 +42,6 @@ theorem measurableSet_goldbachB8LogSourceRegion :
     ((isOpen_lt continuous_fst continuous_snd).measurableSet.inter
       (measurableSet_le measurable_snd (by fun_prop)))
 
-theorem measurableSet_goldbachB8LogAmbientBox :
-    MeasurableSet goldbachB8LogAmbientBox :=
-  measurableSet_Icc.prod measurableSet_Icc
 
 theorem isCompact_goldbachB8LogAmbientBox : IsCompact goldbachB8LogAmbientBox :=
   isCompact_Icc.prod isCompact_Icc
@@ -63,36 +56,6 @@ theorem measurableSet_goldbachB8ObliqueStrip (n : ℕ) :
     ((measurableSet_lt (by fun_prop) measurable_snd).inter
       (measurableSet_lt measurable_snd (by fun_prop)))
 
-theorem goldbachB8LogSourceRegion_section (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB8LogSourceRegion =
-      if u ∈ Ioc (3 / 11 : ℝ) (1 / 3) then Ioc u ((1 - u) / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB8LogSourceRegion]
-
-theorem goldbachB8LeftStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB8LeftStrip n =
-      if u ∈ Ioc (3 / 11 - goldbachB8AlphaGridStep n) (3 / 11) then
-        Icc (1 / 4) (4 / 11) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB8LeftStrip]
-
-theorem goldbachB8DiagonalStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB8DiagonalStrip n =
-      if u ∈ Icc (3 / 11 : ℝ) (1 / 3) then
-        Ioc (u - (goldbachB8AlphaGridStep n + goldbachB8BetaGridStep n)) u else ∅ := by
-  classical
-  exact goldbachAffineDiagonalStrip_section _ _ _ _
-
-theorem goldbachB8ObliqueStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB8ObliqueStrip n =
-      if u ∈ Icc (3 / 11 : ℝ) (1 / 3) then
-        Ioo ((1 - u) / 2) ((1 - u) / 2 +
-          (goldbachB8AlphaGridStep n + 2 * goldbachB8BetaGridStep n) / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB8ObliqueStrip, and_assoc]
 
 theorem volume_goldbachB8LeftStrip (n : ℕ) :
     volume (goldbachB8LeftStrip n) = ENNReal.ofReal ((5 / 528 : ℝ) / n) := by

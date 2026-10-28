@@ -68,15 +68,6 @@ theorem goldbachG12LabelProd_pos {N : ℕ} {z b c : ℝ} {v : GoldbachG11Label}
     (hv : v ∈ goldbachG12Labels N z b c) : 0 < goldbachG11LabelProd v :=
   goldbachG11LabelProd_pos (goldbachG12Labels_subset_goldbachG11Labels N z b c hv)
 
-open Classical in
-/-- The rough count is the actual quotient-filter cardinal, not a modulus-N sieve. -/
-theorem goldbachG12RoughCount_eq_filter (N : ℕ) (ε : ℝ) (v : GoldbachG11Label)
-    {z b c : ℝ} (hε : 0 ≤ ε) (hv : v ∈ goldbachG12Labels N z b c) :
-    goldbachG11RoughCount N ε v =
-      (((goldbachDifferenceCarrier N ε).filter fun n =>
-        goldbachG11LabelProd v ∣ n ∧
-          SurvivesSieve 1 v.2.2.2 (n / goldbachG11LabelProd v)).card : ℤ) :=
-  goldbachG11RoughCount_eq_filter N ε v hε (goldbachG12LabelProd_pos hv)
 
 theorem goldbachG12_cell_sandwich (N : ℕ) (ε : ℝ) (v : GoldbachG11Label)
     {z b c : ℝ} (hε : 0 ≤ ε) (hv : v ∈ goldbachG12Labels N z b c) :

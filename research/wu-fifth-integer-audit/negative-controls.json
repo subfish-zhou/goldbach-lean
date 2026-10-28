@@ -1,0 +1,47 @@
+[
+  {
+    "case": "support",
+    "rejected": true,
+    "reason": "payment support/formula"
+  },
+  {
+    "case": "ratio_integer",
+    "rejected": true,
+    "reason": "('Nat interpreter payment mismatch', 'initial')"
+  },
+  {
+    "case": "cPoly_pair",
+    "rejected": true,
+    "reason": "('Nat interpreter payment mismatch', 'middle')"
+  },
+  {
+    "case": "public_payment",
+    "rejected": true,
+    "reason": "('Payment body', 'initial')"
+  },
+  {
+    "case": "public_total",
+    "rejected": true,
+    "reason": "('public sum/total', 'middle', 'sum')"
+  },
+  {
+    "case": "root_contract",
+    "rejected": true,
+    "reason": "('Root statement', 'terminal')"
+  },
+  {
+    "case": "sum_index",
+    "rejected": true,
+    "reason": "16 contiguous blocks"
+  },
+  {
+    "case": "frozen_final",
+    "rejected": true,
+    "reason": "('outside candidate cohort changed', 'WR2ClassicalCertificate.lean')"
+  },
+  {
+    "case": "actual_Horner_AST_coefficient",
+    "rejected": true,
+    "reason": "Actual-source interpreted payment changes"
+  }
+]

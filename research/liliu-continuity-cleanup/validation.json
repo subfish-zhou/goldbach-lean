@@ -1,0 +1,82 @@
+{
+  "phase": "Li-Liu continuity proof simplification",
+  "status": "pass",
+  "started_at_utc": "2026-10-26T10:27:48.871320+00:00",
+  "source_modules": 1799,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "694d07442cb0513991ea1150a61c4a682fe09bc9d85c677fdf74d54654e397f8"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "7420ae21f38af70f06a230912a6d12c0e57d4cbd8d31ebd8d8a19934e0ee8a98"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "a57cee2c960a78ccc908ba52fbd079702fb978a2db6d8081dba93ceb2203cf79"
+    }
+  },
+  "finished_at_utc": "2026-10-26T10:38:23.153929+00:00",
+  "input_manifest_sha256": "0c52a9318975ce398c495fb4b9d9c1ade7d3e03175e6c2873ac4af1615e63150",
+  "scope": "Main Chen and Li-Liu libraries. Separate concurrent Wu research changes are excluded.",
+  "source_state": "Uncommitted working-tree proof sources identified by validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "db24dc8a2e5ee336826eff0e4171d819e7f73529510951d616585fffc10df11a",
+  "type_preservation_report": "type-preservation.json",
+  "net_main_code_lines": -60,
+  "net_liliu_closure_code_lines": -60,
+  "rejected_import_experiment": "rejected-import-experiment.json",
+  "release_document_translation": {
+    "file": "docs/WU_TABLE_COMPRESSION.md",
+    "original_sha256": "78edd8b95e410eb1b9e9068a56436197bc2f5d1a1d03787011e1a648265530ff",
+    "translated_sha256": "b16133dae5acd9907e66e5b7fad7ea085f96a5314686011f64e8ba124a77e446",
+    "scope": "Faithful English translation for the unchanged release-language gate; separate Wu research proof sources untouched."
+  },
+  "final_review_at_utc": "2026-10-26T10:46:06.709680+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "6ab510bc893f0c0393ab4acb6576620ac54bf41f7eb18c16170a7921c3fd1f99"
+  },
+  "evidence_sha256": {
+    "changes.json": "c602d752c44026e3e810686f1311a114051c2d606b2c9a16a59d7d7f644faa14",
+    "source-size.json": "d5a99ddb69962ea2b787945b8585ed9d2c9fbdee31cdc6d2e242c7a423496ea5",
+    "type-preservation.json": "473561ecc0e6315634909cd4e825b0b596b49b77487b179c2f346bd7b0153d90",
+    "rejected-import-experiment.json": "7cb5f173f41379686f6580c63ab55765456467f525553171e1b20db5625c1520",
+    "blueprint-validation.json": "85da012059c7ee32fd3ed81cfa32d068515f4f8667150d6caa1eeace5384a02b",
+    "analysis.json": "b7b4d19634747e61e980fc763a81b6cd7ca4128b6bd0f0b4be148ecc0aa4c35d"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-continuity-cleanup/reproduce.py": "50ceaa8cdf26f2f3ac4133759ffcd5853dd137f2a1b969ff26f10c222930fc4d",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "d80432f36db09f8b16d811d6ce4cdeae4ce29ca23617d5bac4eeb8c87b30b66e",
+    "docs/LILIU_CONTINUITY_CLEANUP.md": "b4e8f2fb4236fa10eade6fd5d6cf469e5b04a1f65bded7e3713c0486a95ef8dc",
+    "docs/SOURCE_SIZE.md": "ad5fdae85e2b3e641cdef8ef81b924b00682d9598ec5181c17333685e2e2736c",
+    "docs/VERIFICATION.md": "84a1a260d00f52264079e4e07b66886330de9eb54fbe91a31062ac7606e3da3e",
+    "docs/RELEASE_NOTES.md": "84e6dd2346a3c4205c41826a50b1622917daa2640a6b559b7a47d31bb107463e",
+    "docs/WU_TABLE_COMPRESSION.md": "b16133dae5acd9907e66e5b7fad7ea085f96a5314686011f64e8ba124a77e446"
+  }
+}

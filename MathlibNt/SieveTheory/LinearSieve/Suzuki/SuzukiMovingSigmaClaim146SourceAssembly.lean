@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Quantitative
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaDecay
 
 open scoped Classical BigOperators Interval
@@ -54,46 +53,12 @@ def Lemma133WeightedHeadContract
         (1 - 1 / sourceSigma D d) ^ (1 - Δ) *
           (1 - gap / (4 * M)) * lambda H sign D d 0 s
 
-/-- The already established large-`s` differential/DDE tail, uniform up to the
-actual moving source cutoff.  Its left endpoint is fixed before `D` is chosen. -/
-def MovingDDEWeightedTailContract
-    (H : Section13HatLayers) (d Δ M : ℝ) : Prop :=
-  ∃ D₀ : ℝ, 1 < D₀ ∧ ∀ D : ℝ, D₀ ≤ D →
-    M + 2 ≤ sourceSigma D d ∧
-    (∀ (sign : ErrorSign) (s : ℝ), M ≤ s →
-        s ≤ sourceSigma D d →
-        (∫ t in s..sourceSigma D d, qD H sign.opposite D d Δ t) <
-          (1 - 1 / sourceSigma D d) ^ (1 - Δ) *
-            lambda H sign D d 0 s) ∧
-    (∀ (sign : ErrorSign) (s : ℝ), s ≤ M →
-        (∫ t in s..sourceSigma D d, qD H sign.opposite D d Δ t) =
-          (∫ t in s..M + 2, qD H sign.opposite D d Δ t) +
-          (∫ t in M + 2..sourceSigma D d,
-            qD H sign.opposite D d Δ t))
 
 /-- A fixed cutoff chosen solely from the Proposition-13.1 constant and the
 positive source gap.  The `16` leaves twice the margin actually needed below. -/
 noncomputable def claim146iiiFixedM (C gap : ℝ) : ℝ :=
   max 4 (16 * C / gap + 1)
 
-lemma claim146iiiFixedM_margin {C gap : ℝ}
-    (hC : 0 ≤ C) (hgap : 0 < gap) :
-    let M := claim146iiiFixedM C gap
-    4 ≤ M ∧ 2 * C / M ^ 2 < gap / (4 * M) := by
-  dsimp [claim146iiiFixedM]
-  let M : ℝ := max 4 (16 * C / gap + 1)
-  have hM4 : 4 ≤ M := le_max_left _ _
-  have hMpos : 0 < M := by linarith
-  have hMlower : 16 * C / gap + 1 ≤ M := le_max_right _ _
-  have hcross : 16 * C < gap * M := by
-    have hmul := mul_le_mul_of_nonneg_left hMlower hgap.le
-    have hident : gap * (16 * C / gap + 1) = 16 * C + gap := by
-      field_simp [ne_of_gt hgap]
-    rw [hident] at hmul
-    linarith
-  refine ⟨hM4, ?_⟩
-  rw [div_lt_div_iff₀ (sq_pos_of_pos hMpos) (mul_pos (by norm_num) hMpos)]
-  nlinarith [sq_nonneg M]
 
 /-- The source weight tends to one for every fixed real exponent. -/
 lemma tendsto_source_weight (gap : ℝ) :
@@ -157,90 +122,6 @@ lemma lambda_fixed_endpoint_decay
       mul_le_mul_of_nonneg_left h131 (mul_nonneg (by norm_num) hPs)
     _ = (2 * C / M ^ 2) *
         (perturbation D d 0 s * weightedHat H sign s) := by ring
-
-/-- Source-faithful head+tail assembly of moving Claim 14.6(iii).
-
-The cutoff is fixed as `M = max 4 (16 C / gap + 1)` before any `D` threshold
-is chosen.  Consequently the tail coefficient `2C/M²` is strictly smaller
-than the head saving `gap/(4M)`.  The theorem does not package its own
-conclusion as a premise: its four inputs are respectively Proposition 13.1
-quantitative decay, elementary compact perturbation, Lemma 13.3 weighted head,
-and the large-range DDE tail. -/
-theorem moving_claim14_6_iii_of_source_contracts
-    {H : Section13HatLayers} (hH : Section13HatContract H 2)
-    {d Δ gap : ℝ} (_hΔ : Δ < 1) (hgap : 0 < gap)
-    (h131 : Proposition131TailDecayContract H)
-    (hpertAll : ∀ C : ℝ, 0 ≤ C →
-      FixedCompactPerturbationContract d (claim146iiiFixedM C gap))
-    (hheadAll : ∀ C : ℝ, 0 ≤ C →
-      Lemma133WeightedHeadContract H d Δ gap (claim146iiiFixedM C gap))
-    (htailAll : ∀ C : ℝ, 0 ≤ C →
-      MovingDDEWeightedTailContract H d Δ (claim146iiiFixedM C gap)) :
-    ∃ D₀ : ℝ, 1 < D₀ ∧ ∀ D : ℝ, D₀ ≤ D →
-      ∀ (sign : ErrorSign) (s : ℝ),
-        2 + sign.epsilon ≤ s → s ≤ sourceSigma D d →
-        (∫ t in s..sourceSigma D d,
-            qD H sign.opposite D d Δ t) <
-          (1 - 1 / sourceSigma D d) ^ (1 - Δ) *
-            lambda H sign D d 0 s := by
-  obtain ⟨C, hC, h131C⟩ := h131
-  let M : ℝ := claim146iiiFixedM C gap
-  have hmargin := claim146iiiFixedM_margin hC hgap
-  change 4 ≤ M ∧ 2 * C / M ^ 2 < gap / (4 * M) at hmargin
-  obtain ⟨hM4, hcoef⟩ := hmargin
-  obtain ⟨Dp, hDp, hpert⟩ := hpertAll C hC
-  obtain ⟨Dh, hDh, hhead⟩ := hheadAll C hC
-  obtain ⟨Dt, hDt, htail⟩ := htailAll C hC
-  let D₀ : ℝ := max Dp (max Dh Dt)
-  refine ⟨D₀, hDp.trans_le (le_max_left _ _), ?_⟩
-  intro D hD sign s hs hsσ
-  have hDpD : Dp ≤ D := (le_max_left Dp (max Dh Dt)).trans hD
-  have hDhD : Dh ≤ D :=
-    (le_max_left Dh Dt).trans ((le_max_right Dp (max Dh Dt)).trans hD)
-  have hDtD : Dt ≤ D :=
-    (le_max_right Dh Dt).trans ((le_max_right Dp (max Dh Dt)).trans hD)
-  have hD1 : 1 < D := hDp.trans_le hDpD
-  obtain ⟨hMσ, hlarge, hsplit⟩ := htail D hDtD
-  by_cases hMs : M ≤ s
-  · exact hlarge sign s hMs hsσ
-  · have hsM : s ≤ M := (lt_of_not_ge hMs).le
-    have hheadD := hhead D hDhD sign s hs hsM
-    have hpertD := hpert D hDpD sign s hs hsM
-    have hlambdaDecay : lambda H sign D d 0 (M + 2) ≤
-        (2 * C / M ^ 2) * lambda H sign D d 0 s :=
-      lambda_fixed_endpoint_decay sign hM4 hD1 hs
-        (h131C sign M s hM4 hs hsM) hpertD hH.positive
-    have htailD := hlarge sign (M + 2) (by linarith) hMσ
-    have hsplitD := hsplit sign s hsM
-    let K : ℝ := (1 - 1 / sourceSigma D d) ^ (1 - Δ)
-    let L : ℝ := lambda H sign D d 0 s
-    have hKpos : 0 < K := Real.rpow_pos_of_pos (by
-      have hσ1 : 1 < sourceSigma D d := by linarith [hM4, hMσ]
-      have hσpos : 0 < sourceSigma D d := zero_lt_one.trans hσ1
-      exact sub_pos.mpr ((div_lt_one hσpos).mpr hσ1)) _
-    have hK0 : 0 ≤ K := hKpos.le
-    have hL : 0 < L := lambda_pos_of_source_range hH sign hD1 hs
-    have htailBound :
-        (∫ t in M + 2..sourceSigma D d,
-            qD H sign.opposite D d Δ t) <
-          K * ((2 * C / M ^ 2) * L) := by
-      exact htailD.trans_le (mul_le_mul_of_nonneg_left hlambdaDecay hK0)
-    rw [hsplitD]
-    have hsum :
-        K * (1 - gap / (4 * M)) * L +
-            K * ((2 * C / M ^ 2) * L) < K * L := by
-      have hcoefsum : 1 - gap / (4 * M) + 2 * C / M ^ 2 < 1 := by
-        linarith
-      calc
-        K * (1 - gap / (4 * M)) * L + K * ((2 * C / M ^ 2) * L) =
-            (K * L) * (1 - gap / (4 * M) + 2 * C / M ^ 2) := by ring
-        _ < (K * L) * 1 := mul_lt_mul_of_pos_left hcoefsum (mul_pos hKpos hL)
-        _ = K * L := by ring
-    change (∫ t in s..M + 2, qD H sign.opposite D d Δ t) +
-        (∫ t in M + 2..sourceSigma D d,
-          qD H sign.opposite D d Δ t) < K * L
-    exact (add_lt_add_of_le_of_lt (by simpa [K, L, mul_assoc] using hheadD)
-      htailBound).trans hsum
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

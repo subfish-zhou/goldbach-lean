@@ -116,40 +116,5 @@ theorem suzukiSourceV_eq_zero_below_natCeil_rpow
           rw [hempty]
           simp
 
-/-- Lemma 14.3 with both former abstract inputs discharged: support comes from
-strict natural-ceiling carrier equality and the pointwise majorant is the
-proved Lemma 14.1 factorial bound.  The right side is independent of `N`. -/
-theorem suzukiLemma14_3_natCeil_uniform_exponentialTail
-    (S : BoundingSieve) {N D z : ℕ} {s : ℝ}
-    (hD : 1 < D) (hs : 2 ≤ s)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    suzukiActualT S N D z ≤
-      suzukiExponentialTail
-        (∑ p ∈ suzukiSupportedBelow S z, S.nu p) (⌊s - 2⌋₊ + 1) := by
-  have hL : 0 ≤ ∑ p ∈ suzukiSupportedBelow S z, S.nu p := by
-    apply Finset.sum_nonneg
-    intro p hp
-    have hpP := (Finset.mem_filter.mp hp).1
-    exact (S.nu_pos_of_prime p (Nat.prime_of_mem_primeFactors hpP)
-      (Nat.mem_primeFactors.mp hpP).2.1).le
-  apply suzukiActualT_le_exponentialTail_of_support S hL
-  · intro n hn
-    apply suzukiSourceV_eq_zero_below_natCeil_rpow S hD hs hz
-    omega
-  · intro n
-    exact suzukiSourceV_le_pow_div_factorial S n D z
-
-/-- Explicit `tsum` form of the same `N`-uniform conclusion. -/
-theorem suzukiLemma14_3_natCeil_uniform_tsum
-    (S : BoundingSieve) {N D z : ℕ} {s : ℝ}
-    (hD : 1 < D) (hs : 2 ≤ s)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    suzukiActualT S N D z ≤
-      ∑' n : ℕ, if ⌊s - 2⌋₊ + 1 ≤ n then
-        (∑ p ∈ suzukiSupportedBelow S z, S.nu p) ^ n /
-          (n.factorial : ℝ) else 0 := by
-  simpa [suzukiExponentialTail] using
-    suzukiLemma14_3_natCeil_uniform_exponentialTail S hD hs hz
-
 
 end MathlibNt.SieveTheory

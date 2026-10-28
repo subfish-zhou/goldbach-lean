@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "accepted_at_utc": "2026-10-26T08:34:34.884220+00:00",
+  "manifest_sha256": "02c13086a68bf2a3e4dcfff2a43a7ab4d0bff01f8af14b0eac9fbf9af1031c05",
+  "modules": 4771,
+  "theorem_closure_modules": 4384,
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "full_build": "pass: unchanged objects reused only with matching receipts",
+  "literal_and_axiom_checks": "pass for one8938 and one894",
+  "kernel_replays": [
+    "WSrcFifthGainAnalyticEnvelope",
+    "WR2ClassicalCertificate"
+  ],
+  "unchanged_source_modules": 4769,
+  "changed_source_banned_token_check": "pass",
+  "experimental_hf4": "four isolated Lean theorems pass; not integrated into final theorem",
+  "files": {
+    "README.md": "0def56f3041f921cb60740cbe724a1668a6da56d033724530f7b4f884f67165c",
+    "baseline/WSrcFifthGainAnalyticEnvelope.lean": "ae879b09856387de8f9e5cb3816e019f827052a09d4c0e4a874a31ee64e01190",
+    "baseline/WSrcFifthGainAnalyticRoot.lean": "57b6fea8d736aba0d47b7d738ad1b392b471e4eff5890e020c79c49ac8456f7b",
+    "baseline-source-index.json": "a74b4cc7be000f3246ace37e4fcc09ba90426ed345bdd5a619a775e618d23828",
+    "check_experiment.py": "197253358f833797d8dc5b569157487177dae5cc6ec80847627b03f7812db770",
+    "classical-acceptance.json": "9fa7b4c105c98910e604e71e801b5d6a684b668e2d64a671b4303e3b755ee381",
+    "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+    "full-build.log": "f8ca7056e9e85b24c6fffe67838b0b91c5a743a611bfe82ee2dd9118c01a47a2",
+    "hf4/Hf4SeriesEnvelope.lean": "9fb566af716f4829741b855484aace6ed856f443414ad8cb15b1448cabe639df",
+    "hf4/build.log": "472ee66a540c8518b81dfed1d54bc0bac5158fae7928532a92a17443bf2025c8",
+    "hf4/symbolic-check.log": "341d1816273f4b7ed1ee58e9ceda77cdeb968fb5aeb8829290e8b9a87c27b94d",
+    "hf4/symbolic-check.py": "f0766aecdd959ed372ee926bc3209915d1064edb88b7ebe970c7959f5afdcdfa",
+    "kernel-WR2ClassicalCertificate.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+    "kernel-WSrcFifthGainAnalyticEnvelope.log": "289b596325e3f212d0fe2f240fffda69fd5f83a179323f3902d411c1e970b1c7",
+    "literal-check.log": "1fa80d033388a52ac6f866244feb325d9f8fb113f40e0c1db110d68775f20b0d",
+    "measure.py": "299e554ae066caf18bd9618c61485f56702b84fc76c6c694320d70ceb8ed84c2",
+    "source-size.json": "5e3324b514d6cbb2a4cbca17262c9715e0a01c34f2ece2f5c024ddb93de551d9",
+    "verify-sources.log": "8c224df9f722eddb23206ed7155775eb6eddaece009e25dbc411df1bf34ef6d0",
+    "weighted-analysis.md": "ce345105e5937ea4ad26e016423b8b8ec0ac399543cf6b8d66d456bdaaf02af5",
+    "weighted-check.json": "6153eef87a9beefc5e317c7d4604469da3bb5b98ad562e8bcbffdc83b158cbf8",
+    "weighted_check.py": "ba7ea0469a78799c518768cc117982f1919b9944e85d91109b99812f756d92cb"
+  }
+}

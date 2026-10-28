@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -38,17 +37,5 @@ theorem eventually_rpow_le_scaled_floor_rpow
   obtain ⟨K, hK⟩ := eventually_atTop.mp hev
   exact ⟨max 2 K, le_max_left _ _, fun N hN => hK N ((le_max_right _ _).trans hN)⟩
 
-/-- The actual B10 support fits the smaller Pan endpoint for fixed epsilon and gamma. -/
-theorem goldbachC10ProductSupport_scaled_floor_eventually
-    (ε γ : ℝ) (hε : 0 < ε) (hγ : γ < (1 : ℝ) / 3) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → ∀ b : ℝ, ∀ m : ℕ,
-      m ∈ goldbachC10ProductSupport N b ((N : ℝ) ^ γ) →
-      (m : ℝ) ≤ (⌊ε * (N : ℝ)⌋₊ : ℝ) ^ ((2 : ℝ) / 3) := by
-  obtain ⟨N₀, hN₀, hscale⟩ := eventually_rpow_le_scaled_floor_rpow ε ((1 + γ) / 2)
-    ((2 : ℝ) / 3) hε (by norm_num) (by linarith)
-  refine ⟨N₀, ?_⟩
-  intro N hN b m hm
-  exact (goldbachC10ProductSupport_le_rpow_half_and_lt_two_thirds
-    (hN₀.trans hN) hγ hm).1.trans (hscale N hN)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

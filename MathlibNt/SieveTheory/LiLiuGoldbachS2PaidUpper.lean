@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS2RosserFactor
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Order.Filter.AtTopBot.Basic
 import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
 
 open Filter
@@ -18,17 +16,11 @@ set_option autoImplicit false
 private theorem S2Paid_tendsto_logLog_div_log :
     Tendsto (fun N : ℕ => Real.log (Real.log (N : ℝ)) / Real.log (N : ℝ))
       atTop (nhds 0) := by
-  have hreal : Tendsto (fun x : ℝ => Real.log x / x) atTop (nhds 0) := by
-    simpa [Real.rpow_one] using
-      (isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
-  have hlog : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
-    Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  change Tendsto
-    (((fun x : ℝ => Real.log x / x) ∘ fun N : ℕ => Real.log (N : ℝ)))
-    atTop (nhds 0)
-  exact hreal.comp hlog
+  simpa only [Real.rpow_one, Function.comp_def] using
+    ((isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero).comp
+      (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
 
-private theorem S2Paid_quarterCutoff_large_eventually
+theorem S2Paid_quarterCutoff_large_eventually
     (K : ℝ) (_hK : 0 < K) :
     ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
       K ≤ (N : ℝ) ^ ((1 : ℝ) / 4) := by

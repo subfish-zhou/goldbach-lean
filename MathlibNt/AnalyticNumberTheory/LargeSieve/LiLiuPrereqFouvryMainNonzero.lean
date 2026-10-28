@@ -126,58 +126,5 @@ theorem iv3_main_sqrt_gcd_r_sum
         Real.sqrt_sq (Nat.cast_nonneg R)]
       ring
 
-/-- The genuinely remaining arithmetic: the `s*s'` gcd and divisor count,
-with zero numerators excluded. The `n` and `r` factors of the modulus no
-longer occur in this residual sum. -/
-def iv3MainResidual (d₁ n₂ n₂' s s' : ℕ) (a h h' : ℤ) (N : ℕ) : ℕ :=
-  ∑ n ∈ (Ioc 0 N).filter
-      (fun n => iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' ≠ 0),
-    (s * s').gcd (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs *
-      (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs.divisors.card
-
-/-- A simultaneous common-index and r mean for the original signed
-numerator. It applies even if its slope in the common index vanishes. -/
-theorem iv3_main_sqrt_gcd_sum
-    {d₁ n₂ n₂' s s' : ℕ} {a h h' : ℤ}
-    (ha : a ≠ 0) (hn₂ : 0 < n₂) (hn₂' : 0 < n₂')
-    (hmain : h' * s ≠ h * s') (N R : ℕ) :
-    (∑ n ∈ (Ioc 0 N).filter
-        (fun n => iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' ≠ 0),
-      ∑ r ∈ Ioc 0 R, Real.sqrt ((n * r * s * s').gcd
-        (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs : ℝ)) ≤
-      R * (Real.sqrt ((N *
-          (iv3MainConstant n₂ n₂' s s' a h h').natAbs.divisors.card : ℕ) : ℝ) *
-        Real.sqrt (iv3MainResidual d₁ n₂ n₂' s s' a h h' N : ℝ)) := by
-  let B := (iv3MainConstant n₂ n₂' s s' a h h').natAbs
-  let U := (Ioc 0 N).filter
-    (fun n => iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' ≠ 0)
-  let f := fun n : ℕ => (n.gcd B : ℝ)
-  let g := fun n => (((s * s').gcd
-      (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs *
-      (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs.divisors.card : ℕ) : ℝ)
-  have hf : (∑ n ∈ U, f n) ≤ (N * B.divisors.card : ℕ) := by
-    have hsum : (∑ n ∈ U, n.gcd B) ≤ N * B.divisors.card :=
-      (sum_le_sum_of_subset (filter_subset _ _)).trans (by
-        simpa only [Nat.gcd_comm] using
-          sum_gcd_le (Int.natAbs_ne_zero.mpr
-            (iv3MainConstant_ne_zero ha hn₂ hn₂' hmain)) N)
-    dsimp only [f]
-    exact_mod_cast hsum
-  have hg : (∑ n ∈ U, g n) =
-      (iv3MainResidual d₁ n₂ n₂' s s' a h h' N : ℝ) := by
-    simp only [g, U, iv3MainResidual, Nat.cast_sum]
-  calc
-    _ ≤ ∑ n ∈ U, R * (Real.sqrt (f n) * Real.sqrt (g n)) :=
-      sum_le_sum (fun _ hn => iv3_main_sqrt_gcd_r_sum (mem_filter.mp hn).2 R)
-    _ = R * ∑ n ∈ U, Real.sqrt (f n) * Real.sqrt (g n) := (mul_sum _ _ _).symm
-    _ ≤ R * (Real.sqrt (∑ n ∈ U, f n) * Real.sqrt (∑ n ∈ U, g n)) :=
-      mul_le_mul_of_nonneg_left (Real.sum_sqrt_mul_sqrt_le U
-        (fun _ => by dsimp [f]; positivity) (fun _ => by dsimp [g]; positivity))
-        (Nat.cast_nonneg _)
-    _ ≤ _ := by
-      rw [hg]
-      exact mul_le_mul_of_nonneg_left
-        (mul_le_mul_of_nonneg_right (Real.sqrt_le_sqrt hf) (Real.sqrt_nonneg _))
-        (Nat.cast_nonneg _)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

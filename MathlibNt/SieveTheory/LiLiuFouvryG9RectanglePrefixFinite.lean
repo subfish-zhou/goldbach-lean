@@ -170,11 +170,4 @@ theorem fouvryG9RectanglePrefix_thirds_sum_le {N : ℕ} {e ρ : ℝ}
     have hqz' : (s, r.2) ∈ fouvryG9LongLabels N ρ q.1 := by simpa only [he] using hqz
     have hk := fouvryG9RectanglePrefix_label_unique hρ hqn hqz' hrn hrz
     exact Sigma.ext hk (heq_of_eq he)
-
-#print axioms fouvryG9RectanglePrefix_thirds_sum_le
-#print axioms fouvryG9RectanglePrefix_enlarged_geometry
-#print axioms fouvryG9RectanglePrefix_pair_and_prefix
-#print axioms fouvryG9RectanglePrefix_label_unique
-#print axioms fouvryG9RectanglePrefix_mass_labels
-#print axioms fouvryG9RectanglePrefix_mass_eq_card
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -69,7 +69,7 @@ theorem goldbachG11LogBoxMass_eq_meshIntegral (n : ℕ)
   rw [LiuWeight.logarithmicRectangleMass_eq_setIntegral (hp 0) (hl 0) (hp 1) (hl 1),
     LiuWeight.logarithmicRectangleMass_eq_setIntegral (hp 2) (hl 2) (hp 3) (hl 3)]
 
-private theorem g11_integral_four (F : ((ℝ × ℝ) × (ℝ × ℝ)) → ℝ) (hF : Integrable F) :
+theorem goldbach_integral_four (F : ((ℝ × ℝ) × (ℝ × ℝ)) → ℝ) (hF : Integrable F) :
     (∫ x, F x) = ∫ r : ℝ, ∫ q : ℝ, ∫ s : ℝ, ∫ t : ℝ, F ((r, q), (s, t)) := by
   simp only [Measure.volume_eq_prod] at hF ⊢
   rw [integral_prod F hF, integral_prod _ hF.integral_prod_left]
@@ -112,7 +112,7 @@ theorem goldbachG11PrimeIntegral_eq_meshSource (h : ℝ → ℝ)
     (hh : ContinuousOn h (Icc (4 / 53 : ℝ) (4 / 33))) :
     goldbachG11PrimeIntegral h =
       ∫ x, goldbachG11MeshSource.indicator (goldbachG11MeshIntegrand h) x := by
-  rw [g11_integral_four _ (integrable_goldbachG11MeshSource h hh)]
+  rw [goldbach_integral_four _ (integrable_goldbachG11MeshSource h hh)]
   simp_rw [g11_source_indicator, g11_integral_parameter_indicator,
     integral_indicator measurableSet_Icc, integral_indicator measurableSet_Ioc]
   unfold goldbachG11PrimeIntegral

@@ -81,44 +81,5 @@ theorem coordinate_at_lower
     Real.log D / Real.log w = σ := by
   exact coordinate_at_upper hD hσ hw
 
-/-- Applying `H` at the upper endpoint gives exactly `H s`. -/
-theorem apply_coordinate_at_upper
-    {D s z : ℝ} (H : ℝ → ℝ) (hD : 1 < D) (hs : 0 < s)
-    (hz : z = D ^ (1 / s)) :
-    H (Real.log D / Real.log z) = H s := by
-  rw [coordinate_at_upper hD hs hz]
-
-/-- Applying `H` at the lower endpoint gives exactly `H σ`. -/
-theorem apply_coordinate_at_lower
-    {D σ w : ℝ} (H : ℝ → ℝ) (hD : 1 < D) (hσ : 0 < σ)
-    (hw : w = D ^ (1 / σ)) :
-    H (Real.log D / Real.log w) = H σ := by
-  rw [coordinate_at_lower hD hσ hw]
-
-/-- Endpoint normalization after applying an arbitrary function `H`. -/
-theorem apply_coordinate_endpoints
-    {D s σ w z : ℝ} (H : ℝ → ℝ)
-    (hD : 1 < D) (hs : 0 < s) (hsσ : s ≤ σ)
-    (hz : z = D ^ (1 / s)) (hw : w = D ^ (1 / σ)) :
-    H (Real.log D / Real.log z) = H s ∧
-      H (Real.log D / Real.log w) = H σ := by
-  have hσ : 0 < σ := hs.trans_le hsσ
-  constructor
-  · exact apply_coordinate_at_upper H hD hs hz
-  · exact apply_coordinate_at_lower H hD hσ hw
-
-/-- The endpoint logarithms give the exact normalization factor used in
-Suzuki's main term. -/
-theorem reciprocal_log_endpoint_normalization
-    {D s σ w z : ℝ} (hD : 1 < D) (hs : 0 < s) (hsσ : s ≤ σ)
-    (hz : z = D ^ (1 / s)) (hw : w = D ^ (1 / σ)) :
-    1 / Real.log z * (σ / s) = 1 / Real.log w := by
-  have hσ : 0 < σ := hs.trans_le hsσ
-  rw [log_upper_endpoint hD hs hz, log_lower_endpoint hD hσ hw]
-  have hs0 : s ≠ 0 := ne_of_gt hs
-  have hσ0 : σ ≠ 0 := ne_of_gt hσ
-  have hlogD0 : Real.log D ≠ 0 := ne_of_gt (Real.log_pos hD)
-  field_simp
-
 
 end MathlibNt.SieveTheory.SuzukiPowerCoordinates

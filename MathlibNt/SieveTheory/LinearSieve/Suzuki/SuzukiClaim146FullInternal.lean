@@ -1,8 +1,9 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDerivativeDDELargeRange
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDerivativeDDECompactRange
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingClaim146iIICorrected
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13QhatMajorantInternal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingClaim146ToCaseIIFinal
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedEndpointTransport
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceContractionGap
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceRoundedGeometryPacket
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set
@@ -79,87 +80,6 @@ theorem eventually_claim14_6_full_internal_at_sourceSigma
   exact ⟨(h12 D hD12D).1, (h12 D hD12D).2, h3 D hD3D⟩
 
 end SwitchingPrinciple.SuzukiLemma144KappaOne
-
-/-- Natural Case-II closure with Claims 14.6(i)--(iii) generated before the
-natural source parameter is introduced. -/
-theorem claim14_5_caseII_natEventual_of_internalClaim146
-    {Tdisc : ℕ → ℝ → ℝ → ℝ} {S : BoundingSieve}
-    {H : Section13HatLayers} {B₀ : ℕ → ℕ → ℝ}
-    {N : ℕ} {d Δ σ K C C145 s : ℝ}
-    (hH : Section13HatSourceContract H) (hN : Odd N)
-    (hd1 : 1 < d) (hd : 7 / (1 - Δ) < d)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hs1 : 1 < s) (hs3 : s ≤ 3)
-    (hC : 0 ≤ C) (hK : 0 ≤ K)
-    (hF0 : 0 ≤ finiteSourceLayer 1 2 N 3)
-    (hF1 : 0 ≤ finiteSourceLayer 1 2 (N - 1) 2)
-    (hscaleNonneg : ∀ D : ℕ,
-      0 ≤ (C * Real.exp (Real.sqrt K)) * errorEnvelope H N (D : ℝ) d s *
-        (Real.log (D : ℝ)) ^ (-Δ))
-    (hassemble : MovingCaseIIRelativeAssembler Tdisc S H B₀ d Δ C K)
-    (hnormalize : MovingCaseIINormalization S H B₀ d Δ σ K C C145) :
-    Claim14_5NatEventualAt Tdisc S H N d Δ σ K s C145 := by
-  obtain ⟨Dg, hDg, hgeom⟩ :=
-    exists_sourceSigma_doubleRounded_geometry_threshold d hd1
-  obtain ⟨D146, hD146, h146⟩ :=
-    eventually_claim14_6_full_internal_at_sourceSigma hH hd1 hΔ0 hΔ1
-  obtain ⟨Db, hDb, hbracket⟩ :=
-    exists_caseIIConcreteRoundedRelativeBracket_lt_one_threshold
-      N K C d Δ hF0 hF1 hK hC hΔ0 hΔ1 hd
-  let D₀ : ℝ := max Dg (max D146 Db)
-  refine ⟨D₀, hDg.trans_le (le_max_left _ _), ?_⟩
-  intro D hD
-  have hDgD : Dg ≤ (D : ℝ) := (le_max_left Dg _).trans hD
-  have hD146D : D146 ≤ (D : ℝ) :=
-    (le_max_left D146 Db).trans ((le_max_right Dg _).trans hD)
-  have hDbD : Db ≤ (D : ℝ) :=
-    (le_max_right D146 Db).trans ((le_max_right Dg _).trans hD)
-  let z : ℕ := ⌈(D : ℝ) ^ (1 / s)⌉₊
-  have hg := hgeom S D hDgD s hs1 hs3
-  obtain ⟨hi, hii, hiiiAll⟩ := h146 (D : ℝ) hD146D
-  have hsign3 : 2 + (ErrorSign.ofDepth N).epsilon ≤ (3 : ℝ) := by
-    rw [ErrorSign.ofDepth_of_odd hN]
-    norm_num [ErrorSign.epsilon]
-  have hiii := (hiiiAll (ErrorSign.ofDepth N) 3 hsign3 hg.h3σ).le
-  have hass := hassemble N D s hN hs1 hs3 hg hi hii hiii
-  have hclosed := source_caseII_close_relative_bracket
-    (suzukiVProduct_pos S (z : ℝ)).le (hscaleNonneg D)
-      (hbracket (D : ℝ) hDbD) hass
-  have hnorm := hnormalize N D s hN hs1 hs3
-  unfold Claim14_5Bound
-  exact hclosed.trans hnorm
-
-/-- Exact Case-I/Case-II split with the full moving Claim 14.6 generated
-internally from the Section-13 source contract. -/
-theorem claim14_5_natEventual_exact_case_split_with_internalClaim146_caseII
-    {Tdisc : ℕ → ℝ → ℝ → ℝ} {S : BoundingSieve}
-    {H : Section13HatLayers} {B₀ : ℕ → ℕ → ℝ}
-    {N : ℕ} {d Δ σ K C C145 D C1 ΘK s : ℝ}
-    (hdom : s ∈ SuzukiFiniteContinuousLayers.suzukiParityDomainOne 2 N)
-    (hsσ : s ≤ σ) (hlarge : C1 * K ^ ΘK < Real.log D)
-    (hH : Section13HatSourceContract H)
-    (hd1 : 1 < d) (hd : 7 / (1 - Δ) < d)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hC : 0 ≤ C) (hK : 0 ≤ K)
-    (hF0 : 0 ≤ finiteSourceLayer 1 2 N 3)
-    (hF1 : 0 ≤ finiteSourceLayer 1 2 (N - 1) 2)
-    (hscaleNonneg : ∀ D : ℕ,
-      0 ≤ (C * Real.exp (Real.sqrt K)) * errorEnvelope H N (D : ℝ) d s *
-        (Real.log (D : ℝ)) ^ (-Δ))
-    (hassemble : MovingCaseIIRelativeAssembler Tdisc S H B₀ d Δ C K)
-    (hnormalize : MovingCaseIINormalization S H B₀ d Δ σ K C C145)
-    (hI : 2 + (N % 2 : ℕ) ≤ s → s ≤ σ →
-      Claim14_5NatEventualAt Tdisc S H N d Δ σ K s C145) :
-    Claim14_5NatEventualAt Tdisc S H N d Δ σ K s C145 := by
-  have hbranch : Claim14_5ExactBranch 2 N s σ :=
-    claim14_5ExactBranch_iff.mpr
-      (claim14_5_exact_case_split hdom hsσ hlarge)
-  exact hbranch.elim hI (fun hN hlo hup => by
-    have hs1 : 1 < s := by norm_num at hlo ⊢; exact hlo
-    have hs3 : s ≤ 3 := by norm_num at hup ⊢; exact hup
-    exact claim14_5_caseII_natEventual_of_internalClaim146
-      hH hN hd1 hd hΔ0 hΔ1 hs1 hs3 hC hK hF0 hF1 hscaleNonneg
-      hassemble hnormalize)
 
 
 end MathlibNt.SieveTheory

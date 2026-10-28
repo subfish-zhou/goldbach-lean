@@ -1,5 +1,5 @@
+import Mathlib.Topology.Order.LeftRight
 import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Order.Filter.AtTopBot.Basic
 import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
 import MathlibNt.SieveTheory.LiuLogarithmicIntegral
@@ -14,8 +14,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 set_option autoImplicit false
 
-noncomputable local instance instDecidableS2MainMassUpper (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The literal `S2` main-mass sum at the genuine single-endpoint carrier
 `r ∈ R(N,N^τ)`. -/
@@ -150,59 +148,20 @@ private theorem S2MainMass_logKernel_integral
 private theorem S2MainMass_logDifference_continuousAt
     {τ : ℝ} (hτ0 : 0 < τ) (hτ : τ < (1 : ℝ) / 2) :
     ContinuousAt (fun u : ℝ => Real.log (1 - u) - Real.log u) τ := by
-  have hleft : ContinuousAt (fun u : ℝ => Real.log (1 - u)) τ := by
-    have h1τne : 1 - τ ≠ 0 := by linarith
-    have hraw :=
-      (Real.continuousAt_log h1τne).comp
-        (continuousAt_const.sub continuousAt_id)
-    convert hraw using 1
-    · funext u
-      rfl
-  have hright : ContinuousAt (fun u : ℝ => Real.log u) τ :=
-    Real.continuousAt_log hτ0.ne'
-  exact hleft.sub hright
+  fun_prop (disch := linarith)
 
 private theorem S2MainMass_choose_lowerExponent
     {τ η : ℝ} (hτ0 : 0 < τ) (hτ : τ < (1 : ℝ) / 2) (hη : 0 < η) :
     ∃ τ₀ : ℝ, 0 < τ₀ ∧ τ₀ < τ ∧
       Real.log ((1 - τ₀) / τ₀) ≤ Real.log ((1 - τ) / τ) + η := by
   have hcont := S2MainMass_logDifference_continuousAt hτ0 hτ
-  rw [Metric.continuousAt_iff] at hcont
-  obtain ⟨δ, hδpos, hδ⟩ := hcont η hη
-  let ε : ℝ := min (δ / 2) (τ / 2)
-  have hεpos : 0 < ε := by
-    dsimp [ε]
-    positivity
-  have hεltδ : ε < δ := by
-    calc
-      ε ≤ δ / 2 := min_le_left _ _
-      _ < δ := by linarith
-  refine ⟨τ - ε, ?_, ?_, ?_⟩
-  · have hεle : ε ≤ τ / 2 := min_le_right _ _
-    nlinarith
-  · linarith
-  · have hdist : dist (τ - ε) τ < δ := by
-      rw [Real.dist_eq]
-      have hεnonneg : 0 ≤ ε := le_of_lt hεpos
-      calc
-        |(τ - ε) - τ| = |(-ε : ℝ)| := by ring_nf
-        _ = ε := by simpa using abs_of_nonneg hεnonneg
-        _ < δ := hεltδ
-    have hclose := hδ hdist
-    have hτ₀ne : τ - ε ≠ 0 := by
-      have hεle : ε ≤ τ / 2 := min_le_right _ _
-      nlinarith
-    have h1τ₀ne : 1 - (τ - ε) ≠ 0 := by
-      have hεnonneg : 0 ≤ ε := le_of_lt hεpos
-      linarith
-    have hτne : τ ≠ 0 := ne_of_gt hτ0
-    have h1τne : 1 - τ ≠ 0 := by linarith
-    rw [Real.dist_eq] at hclose
-    have hupper :
-        (Real.log (1 - (τ - ε)) - Real.log (τ - ε)) -
-            (Real.log (1 - τ) - Real.log τ) < η := (abs_lt.mp hclose).2
-    rw [Real.log_div h1τ₀ne hτ₀ne, Real.log_div h1τne hτne]
-    linarith
+  have he := hcont.eventually (gt_mem_nhds
+    (lt_add_of_pos_right (Real.log (1 - τ) - Real.log τ) hη))
+  obtain ⟨τ₀,hτ₀τ,hτ₀0,hupper⟩ := ((eventually_gt_nhds hτ0).and he).exists_lt
+  refine ⟨τ₀,hτ₀0,hτ₀τ,?_⟩
+  rw [Real.log_div (by linarith : 1 - τ₀ ≠ 0) hτ₀0.ne',
+    Real.log_div (by linarith : 1 - τ ≠ 0) hτ0.ne']
+  exact hupper.le
 
 private theorem S2MainMass_carrier_subset_window
     {N : ℕ} {τ₀ τ : ℝ}

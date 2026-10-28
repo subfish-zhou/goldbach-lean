@@ -1,7 +1,7 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalLambdaGlobalReduction
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedAssembly
+import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
 
 /-!
  # Standard BV through a low/high primitive-conductor split
@@ -82,16 +82,6 @@ theorem directConductorMean_low_high (a : ℤ → ℂ) (N Q C : ℕ) :
   rw [← Finset.sum_union (lowConductorSet_disjoint_highConductorSet N Q C)]
   rw [lowConductorSet_union_highConductorSet]
 
-/-- Minimal Siegel--Walfisz primitive-prefix source.  It controls each primitive
-Λ twist at conductor `d ≤ log(N)^C`; no modulus average and no BV conclusion
-occurs in its type.  The decay exponent `D` is chosen after `C`. -/
-def PrimitivePrefixSiegelWalfiszSource : Prop :=
-  ∀ C D : ℕ, ∃ K : ℝ, 0 < K ∧
-    ∀ᶠ N : ℕ in Filter.atTop, 2 ≤ N →
-      ∀ d ∈ Finset.Icc 2 (logConductorThreshold N C),
-        ∀ ψ : PrimitiveCharacter d,
-          primitivePrefixAmplitude vonMangoldtIntegerCoeff N d ψ ≤
-            K * (N : ℝ) / Real.log (N : ℝ) ^ D
 
 /-- The exact finite arithmetic mass multiplying a pointwise SW estimate. -/
 def lowConductorArithmeticMass (N Q C : ℕ) : ℝ :=
@@ -227,17 +217,6 @@ theorem highConductorHarmonicFactor_le (Q R : ℕ) :
   · intro d hd hnot
     positivity
 
-/-- If the high range is nonempty, its Cauchy factor still contains the final
-summand `1/Q`.  Thus Cauchy supplies no automatic power of `R`; any useful
-inverse-log gain must enter the high-conductor analytic estimate itself. -/
-theorem inv_Q_le_highConductorHarmonicFactor
-    {Q R : ℕ} (hRQ : R < Q) :
-    ((Q : ℝ)⁻¹) ≤ highConductorHarmonicFactor Q R := by
-  unfold highConductorHarmonicFactor
-  apply Finset.single_le_sum (f := fun d : ℕ => ((d : ℝ)⁻¹))
-  · intro d hd
-    positivity
-  · exact Finset.mem_Icc.mpr ⟨by omega, le_rfl⟩
 
 /-- Exact high-conductor Type-I direct mean. -/
 def highConductorVaughanTypeIMean (N Q C u v : ℕ) : ℝ :=
@@ -257,13 +236,6 @@ def highConductorVaughanSmallMean (N Q C v : ℕ) : ℝ :=
     (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
     (highConductorSet N Q C)
 
-/-- The missing analytic saving is frozen at its real location: the sum of the
-three exact high-conductor Vaughan means.  This is not a BV conclusion. -/
-def VaughanHighConductorHybridSaving
-    (N Q C u v : ℕ) (X : ℝ) : Prop :=
-  highConductorVaughanTypeIMean N Q C u v +
-      highConductorVaughanTypeIIMean N Q C u v +
-      highConductorVaughanSmallMean N Q C v ≤ X
 
 /-- Exact physical terms appearing after principal reduction and discrete
 partial summation.  `nonprincipal` is where the low/high conductor route feeds
@@ -361,70 +333,6 @@ theorem sum_standardPrimeAPPrefixMaxError_le_concretePhysical
           rw [Finset.sum_add_distrib, ← Finset.mul_sum,
             Finset.sum_add_distrib, hsplit]
 
-/-- The remaining finite normalization connector needed to feed the conductor
-split into the preceding concrete packet.  Its statement is an inequality
-between literal finite means, not an analytic or BV hypothesis. -/
-def LambdaToLowHighConductorConnector (N Q C : ℕ) : Prop :=
-  nonprincipalLambdaPhysical N Q ≤
-    2 * (lowConductorPhysical N Q C + highConductorPhysical N Q C) +
-      2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q
-
-/-- At a fixed `N,Q`, a Standard-BV estimate follows once every named physical
-lane is dominated and their literal total fits the target.  The theorem does
-not allow the modulus exponent `B` to pay a `Q`-independent `N` term: such a
-term remains in `P.nonprincipal` until the Vaughan hybrid hypothesis saves it. -/
-theorem standardBV_sufficient_at
-    (A : ℝ) (B C N Q : ℕ) (K : ℝ)
-    (P : StandardBVPhysicalTerms)
-    (hQ : Q = MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B)
-    (_hconnector : LambdaToLowHighConductorConnector N Q C)
-    (hcomponents :
-      (∑ q ∈ Finset.Icc 1 Q,
-        MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-        P.total (discreteAbelAmplifierPrefixMax N))
-    (hpay : P.total (discreteAbelAmplifierPrefixMax N) ≤
-      K * (N : ℝ) / Real.log (N : ℝ) ^ A) :
-    (∑ q ∈ Finset.Icc 1
-        (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-      MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-        K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-  subst Q
-  exact hcomponents.trans hpay
-
-/-- Quantifier-faithful sufficient interface for Standard BV.  For each target
-`A`, choose the conductor exponent `C`; then choose the modulus exponent `B`.
-The producer must pay all five physical lanes uniformly for large `N`.
-This ordering makes explicit that increasing `B` cannot repair a missing
-`Q`-independent high-conductor `N` saving. -/
-def StandardBVSufficient : Prop :=
-  ∀ A : ℝ, 0 < A →
-    ∃ C : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
-      ∀ᶠ N : ℕ in Filter.atTop,
-        ∃ P : StandardBVPhysicalTerms,
-          LambdaToLowHighConductorConnector N
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B) C ∧
-          (∑ q ∈ Finset.Icc 1
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-            MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-              P.total (discreteAbelAmplifierPrefixMax N) ∧
-          P.total (discreteAbelAmplifierPrefixMax N) ≤
-            K * (N : ℝ) / Real.log (N : ℝ) ^ A
-
-/-- The sufficient interface has exactly the usual Standard-BV conclusion. -/
-theorem standardBV_of_sufficient (h : StandardBVSufficient) :
-    ∀ A : ℝ, 0 < A →
-      ∃ _C : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
-        ∀ᶠ N : ℕ in Filter.atTop,
-          (∑ q ∈ Finset.Icc 1
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-            MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-              K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-  intro A hA
-  obtain ⟨C, B, K, hK, hN⟩ := h A hA
-  refine ⟨C, B, K, hK, ?_⟩
-  filter_upwards [hN] with N hPN
-  obtain ⟨P, _hconnector, hcomp, hpay⟩ := hPN
-  exact hcomp.trans hpay
 
 end
 

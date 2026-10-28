@@ -33,38 +33,6 @@ def CubicPrefixBound (upper : Bool) (b : ι → ℝ) (D : ℝ) (input : List ι)
     i % 2 = (if upper then 0 else 1) →
       ((input.take i).map b).prod * b input[i] ^ 3 < D
 
-/-- The upper condition is exactly the source's tests at one-based `2ℓ + 1`. -/
-theorem cubicPrefixBound_upper_iff (b : ι → ℝ) (D : ℝ) (input : List ι) :
-    CubicPrefixBound true b D input ↔
-      ∀ (ℓ : ℕ) (hℓ : 2 * ℓ < input.length),
-        ((input.take (2 * ℓ)).map b).prod * b input[2 * ℓ] ^ 3 < D := by
-  constructor
-  · intro h ℓ hℓ
-    exact h (2 * ℓ) hℓ (by simp)
-  · intro h i hi hpar
-    have heq : i = 2 * (i / 2) := by
-      change i % 2 = 0 at hpar
-      omega
-    have hbound : 2 * (i / 2) < input.length := by omega
-    simpa only [← heq] using h (i / 2) hbound
-
-/-- The lower condition is exactly the source's tests at one-based `2ℓ`,
-with `ℓ ≥ 1`, not at the upper side's odd one-based indices. -/
-theorem cubicPrefixBound_lower_iff (b : ι → ℝ) (D : ℝ) (input : List ι) :
-    CubicPrefixBound false b D input ↔
-      ∀ (ℓ : ℕ), 1 ≤ ℓ → ∀ (hℓ : 2 * ℓ - 1 < input.length),
-        ((input.take (2 * ℓ - 1)).map b).prod * b input[2 * ℓ - 1] ^ 3 < D := by
-  constructor
-  · intro h ℓ hpos hℓ
-    apply h (2 * ℓ - 1) hℓ
-    simp only [Bool.false_eq_true, ↓reduceIte]
-    omega
-  · intro h i hi hpar
-    have heq : i = 2 * (i / 2 + 1) - 1 := by
-      simp only [Bool.false_eq_true, ↓reduceIte] at hpar
-      omega
-    have hbound : 2 * (i / 2 + 1) - 1 < input.length := by omega
-    simpa only [← heq] using h (i / 2 + 1) (by omega) hbound
 
 /-- Actual numerical admissibility of a decreasing lower-endpoint sequence.
 The fields are the source's inequalities, not an allocation or prefix-square
@@ -76,17 +44,6 @@ structure Admissible (upper : Bool) (b : ι → ℝ) (D : ℝ) (input : List ι)
   head_lt_sqrt : ∀ (h : 0 < input.length), b input[0] < Real.sqrt D
   cubic : CubicPrefixBound upper b D input
 
-@[simp]
-theorem admissible_nil (upper : Bool) (b : ι → ℝ) (D : ℝ) :
-    Admissible upper b D [] := by
-  constructor
-  · simp
-  · intro i j hi
-    simp at hi
-  · intro h
-    simp at h
-  · intro i hi
-    simp at hi
 
 variable {upper : Bool} {b : ι → ℝ} {D : ℝ} {input : List ι}
 
@@ -150,25 +107,5 @@ theorem Admissible.prefixSquareBound (h : Admissible upper b D input) :
     PrefixSquareBound b D input :=
   fun i hi => (h.prefix_square_lt i hi).le
 
-/-- Allocate every labeled occurrence to exactly one box for any factorization
-of the level. Products are of the lower endpoints `b`, not upper endpoints. -/
-theorem Admissible.exists_boxPartition (h : Admissible upper b D input)
-    {M N : ℝ} (hM : 1 ≤ M) (hN : 1 ≤ N) (hMN : M * N = D) :
-    ∃ left right : List ι, BoxPartition left right input ∧
-      (left.map b).prod ≤ M ∧ (right.map b).prod ≤ N := by
-  apply exists_boxPartition_of_prefixSquareBound b hM hN input
-  simpa only [hMN] using h.prefixSquareBound
-
-/-- Expanded allocation interface, including subsequence, permutation, and
-product identities; repeated labels remain distinct occurrences. -/
-theorem Admissible.exists_boxPartition_with_properties (h : Admissible upper b D input)
-    {M N : ℝ} (hM : 1 ≤ M) (hN : 1 ≤ N) (hMN : M * N = D) :
-    ∃ left right : List ι, BoxPartition left right input ∧
-      left.Sublist input ∧ right.Sublist input ∧ (left ++ right).Perm input ∧
-      (left.map b).prod * (right.map b).prod = (input.map b).prod ∧
-      (left.map b).prod ≤ M ∧ (right.map b).prod ≤ N := by
-  obtain ⟨left, right, hpart, hleft, hright⟩ := h.exists_boxPartition hM hN hMN
-  exact ⟨left, right, hpart, hpart.sublists.1, hpart.sublists.2, hpart.perm,
-    hpart.prod_eq b, hleft, hright⟩
 
 end MathlibNt.SieveTheory.LiLiuPrereqWFAdmissibility

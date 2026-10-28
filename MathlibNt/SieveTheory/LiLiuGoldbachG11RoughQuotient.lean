@@ -76,9 +76,6 @@ theorem goldbachG11_survives_one_iff (x : ℝ) (m : ℕ) :
   · intro h ell hp hm _
     exact h ell hp hm
 
-theorem goldbachG11_survives_one (x : ℝ) : SurvivesSieve 1 x 1 := by
-  intro ell hp hm
-  exact (hp.not_dvd_one hm).elim
 
 noncomputable def goldbachG11QuotientPairs (N : ℕ) (ε : ℝ) (d : ℕ) :
     Finset (ℕ × ℕ) := by
@@ -151,31 +148,6 @@ theorem goldbachG11_quotient_backward {N d p m : ℕ} {ε : ℝ} (hε : 0 ≤ ε
   exact Finset.mem_image.mpr
     ⟨p, (mem_goldbachPrimeCarrier_iff hε).mpr ⟨hp, hcut⟩, by omega⟩
 
-theorem goldbachG11_quotient_cast {N n d : ℕ} {ε : ℝ} (hε : 0 ≤ ε)
-    (hd : 0 < d) (hn : n ∈ goldbachDifferenceCarrier N ε) (hdn : d ∣ n) :
-    ((n / d : ℕ) : ℝ) = (n : ℝ) / d ∧
-      ((N - n : ℕ) : ℝ) + (d : ℝ) * ((n / d : ℕ) : ℝ) = N := by
-  have hpair := goldbachG11_quotient_forward hε hd hn hdn
-  constructor
-  · apply (eq_div_iff (show (d : ℝ) ≠ 0 by exact_mod_cast Nat.ne_of_gt hd)).mpr
-    exact_mod_cast Nat.div_mul_cancel hdn
-  · exact_mod_cast (mem_goldbachG11QuotientPairs_iff.mp hpair).2.2.2.2.2
-
-noncomputable def goldbachG11QuotientEquiv (N : ℕ) (ε : ℝ) (d : ℕ)
-    (hε : 0 ≤ ε) (hd : 0 < d) :
-    {n // n ∈ goldbachDifferenceCarrier N ε ∧ d ∣ n} ≃
-      {pm // pm ∈ goldbachG11QuotientPairs N ε d} where
-  toFun n := ⟨(N - n.1, n.1 / d), goldbachG11_quotient_forward hε hd n.2.1 n.2.2⟩
-  invFun pm := ⟨d * pm.1.2, (goldbachG11_quotient_backward hε pm.2).1,
-    (goldbachG11_quotient_backward hε pm.2).2.1⟩
-  left_inv n := by
-    apply Subtype.ext
-    exact Nat.mul_div_cancel' n.2.2
-  right_inv pm := by
-    apply Subtype.ext
-    apply Prod.ext
-    · exact (goldbachG11_quotient_backward hε pm.2).2.2
-    · exact Nat.mul_div_right _ hd
 
 open Classical in
 theorem goldbachG11RoughCount_eq_filter (N : ℕ) (ε : ℝ) (v : GoldbachG11Label)

@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12ScaledNormalized
-import MathlibNt.SieveTheory.LiLiuGoldbachG12OutsideBudgetLogSaving
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
 
 noncomputable section
 open Classical Finset Filter

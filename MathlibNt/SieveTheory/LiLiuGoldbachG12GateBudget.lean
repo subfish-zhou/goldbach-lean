@@ -30,8 +30,6 @@ def goldbachG12PrimeWindowWeight (N : ℕ) (ε : ℝ) (m : ℕ) : ℝ :=
   goldbachG12NormalizedCoefficient N m *
     (goldbachG11LinkedPrimeWindow N ε m).card
 
-def goldbachG12PrimeWindowMainMass (N : ℕ) (ε : ℝ) : ℝ :=
-  ∑ m ∈ goldbachG12ActiveProductSupport N, goldbachG12PrimeWindowWeight N ε m
 
 def goldbachG12PrimeWindowGateLoss (N : ℕ) (ε : ℝ) (d : ℕ) : ℝ :=
   (∑ m ∈ (goldbachG12ActiveProductSupport N).filter (fun m => ¬m.Coprime d),
@@ -41,9 +39,6 @@ theorem goldbachG12PrimeWindowWeight_nonneg (N m : ℕ) (ε : ℝ) :
     0 ≤ goldbachG12PrimeWindowWeight N ε m :=
   mul_nonneg (goldbachG12NormalizedCoefficient_bounds N m).1 (Nat.cast_nonneg _)
 
-theorem goldbachG12PrimeWindowMainMass_nonneg (N : ℕ) (ε : ℝ) :
-    0 ≤ goldbachG12PrimeWindowMainMass N ε :=
-  sum_nonneg (fun m _ => goldbachG12PrimeWindowWeight_nonneg N m ε)
 
 theorem goldbachG12PrimeWindowGateLoss_nonneg (N d : ℕ) (ε : ℝ) :
     0 ≤ goldbachG12PrimeWindowGateLoss N ε d :=

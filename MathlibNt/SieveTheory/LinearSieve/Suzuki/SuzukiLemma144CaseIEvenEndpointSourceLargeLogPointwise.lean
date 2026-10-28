@@ -306,27 +306,5 @@ theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_
   rw [h149, h2]
   linarith [hmiddle, h11, h12qSupported, hside]
 
-/-- Compatibility specialization of the producer uniform in the bounding sieve. -/
-theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise
-    (S : BoundingSieve) (H : Section13HatLayers) {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ) :
-    ∃ C1min CB : ℝ, 1 ≤ C1min ∧ 0 < CB ∧
-      ∀ (C1 C K : ℝ) (M D : ℕ),
-        C1min ≤ C1 → max 3 CB ≤ C → 2 ≤ K →
-        HasDimensionOneLocalProductBound S K →
-        Even M → 2 ≤ M →
-        C1 * K ^ Θ < Real.log (D : ℝ) →
-        Lemma144MovingDomainGlobalDepthAt S H C K d Δ (M - 1) 2 →
-        suzukiActualT S M D ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ ≤
-          suzukiVProduct S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ *
-            finiteSourceLayer 1 2 M 2 +
-          sigma12InheritedBudget S H M D
-            ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ C K d Δ 2 := by
-  obtain ⟨C1min, CB, hC1min, hCB, hall⟩ :=
-    exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_S
-      H hH hsrc
-  exact ⟨C1min, CB, hC1min, hCB, hall S⟩
-
 
 end MathlibNt.SieveTheory

@@ -1,8 +1,8 @@
-import MathlibNt.SieveTheory.SwitchingPrinciple
+import AnalyticNumberTheory.Mertens.Theorems
+import AnalyticNumberTheory.Sieve.GoldbachDensity
+import AnalyticNumberTheory.Sieve.SelbergUpperBound
+import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
 import Mathlib.Data.Finset.NatDivisors
-import Mathlib.NumberTheory.EulerProduct.Basic
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.NumberTheory.AbelSummation
 import Mathlib.NumberTheory.SmoothNumbers
 import Mathlib.RingTheory.Radical.NatInt
 
@@ -1353,29 +1353,9 @@ theorem siftedCount_literalQuotientCarrier_eq_divisibilityFiber
 private theorem squarefree_prod_of_primes
     {s : Finset ℕ} (hs : ∀ p ∈ s, p.Prime) :
     Squarefree (s.prod id) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert a s ha ih =>
-      have haPrime : a.Prime := hs a (by simp [ha])
-      have hcoprime : a.Coprime (s.prod id) := by
-        rw [haPrime.coprime_iff_not_dvd]
-        intro hadvd
-        have hprodNe : s.prod id ≠ 0 :=
-          Finset.prod_ne_zero_iff.mpr
-            (fun p hp => (hs p (by simp [hp])).ne_zero)
-        have hamem : a ∈ (s.prod id).primeFactors :=
-          (Nat.mem_primeFactors.mpr ⟨haPrime, hadvd, hprodNe⟩)
-        have hprimeFactors :
-            (s.prod id).primeFactors = s :=
-          Nat.primeFactors_prod (fun p hp => hs p (by simp [hp]))
-        rw [hprimeFactors] at hamem
-        exact ha hamem
-      rw [Finset.prod_insert ha]
-      simpa only [id_eq] using
-        (Nat.squarefree_mul hcoprime).2
-          ⟨haPrime.squarefree,
-            ih (fun p hp => hs p (by simp [hp]))⟩
+  refine Finset.squarefree_prod_of_pairwise_isCoprime
+    (fun p hp q hq hpq => ?_) (fun p hp => (hs p hp).squarefree)
+  exact Nat.coprime_iff_isRelPrime.mp ((Nat.coprime_primes (hs p hp) (hs q hq)).mpr hpq)
 
 /-- The Euler product over any finite prime carrier is its product's exact
 totient ratio. -/

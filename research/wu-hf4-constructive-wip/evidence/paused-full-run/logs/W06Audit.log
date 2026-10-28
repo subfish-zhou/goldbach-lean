@@ -1,0 +1,194 @@
+WuTarget.W06.massLower : Fin 9 → ℝ
+'WuTarget.W06.massLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.massLower_pos (k : Fin 9) : 0 < massLower k
+'WuTarget.W06.massLower_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.massLower_le (k : Fin 9) :
+  massLower k ≤ SigmaActualBlockSeparable.endpointCellMass (NodeExtension.upperLeft k) (NodeExtension.upperNode k)
+'WuTarget.W06.massLower_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.numeratorLower (z : Fin 9 → ℝ) : ℝ
+'WuTarget.W06.numeratorLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.numeratorLower_nonneg {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) : 0 ≤ numeratorLower z
+'WuTarget.W06.numeratorLower_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.numeratorLower_le_endpoint {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) :
+  numeratorLower z ≤ SigmaActualBlockSeparable.endpointNumerator z
+'WuTarget.W06.numeratorLower_le_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.endpointNumerator_le_actual {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) :
+  SigmaActualBlockSeparable.endpointNumerator z ≤
+    ∫ (t : ℝ) in 1..3, NodeExtension.nineProfile z t / t * NodeExtension.sigma 3 (t + 2) (t + 1)
+'WuTarget.W06.endpointNumerator_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.numeratorLower_le_actual {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) :
+  numeratorLower z ≤ ∫ (t : ℝ) in 1..3, NodeExtension.nineProfile z t / t * NodeExtension.sigma 3 (t + 2) (t + 1)
+'WuTarget.W06.numeratorLower_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.denominatorLower : ℝ
+'WuTarget.W06.denominatorLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.denominatorLower_le : denominatorLower ≤ NodeExtension.D0
+'WuTarget.W06.denominatorLower_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.denominator_pos : 0 < 1 - denominatorLower
+'WuTarget.W06.denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaCoeff (k : Fin 9) : ℝ
+'WuTarget.W06.sigmaCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaLower (z : Fin 9 → ℝ) : ℝ
+'WuTarget.W06.sigmaLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaCoeff_pos (k : Fin 9) : 0 < sigmaCoeff k
+'WuTarget.W06.sigmaCoeff_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaLower_nonneg {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) : 0 ≤ sigmaLower z
+'WuTarget.W06.sigmaLower_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaLower_eq (z : Fin 9 → ℝ) : sigmaLower z = numeratorLower z / (1 - denominatorLower)
+'WuTarget.W06.sigmaLower_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaLower_le_aProfile {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) :
+  sigmaLower z ≤ NodeExtension.aProfile (NodeExtension.nineProfile z)
+'WuTarget.W06.sigmaLower_le_aProfile' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaLower_basis (k : Fin 9) : sigmaLower (NodeExtension.nodeBasis k) = sigmaCoeff k
+'WuTarget.W06.sigmaLower_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaCoeff_le_aProfile (k : Fin 9) :
+  sigmaCoeff k ≤ NodeExtension.aProfile (NodeExtension.nineProfile (NodeExtension.nodeBasis k))
+'WuTarget.W06.sigmaCoeff_le_aProfile' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eCoefficient (S : ℝ) : ℝ
+'WuTarget.W06.eCoefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.jCoefficient (s S : ℝ) : ℝ
+'WuTarget.W06.jCoefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eRemainder (z : Fin 9 → ℝ) (S : ℝ) : ℝ
+'WuTarget.W06.eRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.jRemainder (z : Fin 9 → ℝ) (s S : ℝ) : ℝ
+'WuTarget.W06.jRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eCoefficient_nonneg {S : ℝ} (hS : 3 ≤ S) (hS5 : S ≤ 5) : 0 ≤ eCoefficient S
+'WuTarget.W06.eCoefficient_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eCoefficient_pos {S : ℝ} (hS : 3 ≤ S) (hS5 : S < 5) : 0 < eCoefficient S
+'WuTarget.W06.eCoefficient_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.jCoefficient_nonneg {s S : ℝ} (hs : 2 ≤ s) (hsS : s ≤ S) : 0 ≤ jCoefficient s S
+'WuTarget.W06.jCoefficient_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.jCoefficient_pos {s S : ℝ} (hs : 2 ≤ s) (hsS : s < S) : 0 < jCoefficient s S
+'WuTarget.W06.jCoefficient_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eRemainder_nonneg {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) {S : ℝ} (hS : 3 ≤ S) (hS5 : S ≤ 5) :
+  0 ≤ eRemainder z S
+'WuTarget.W06.eRemainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.jRemainder_nonneg {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S)
+  (hS5 : S ≤ 5) (hsS : s ≤ S) (hr : 2 ≤ S - S / s) : 0 ≤ jRemainder z s S
+'WuTarget.W06.jRemainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eProfile_split (z : Fin 9 → ℝ) (S : ℝ) :
+  NodeExtension.eProfile (NodeExtension.nineProfile z) S =
+    eCoefficient S * NodeExtension.aProfile (NodeExtension.nineProfile z) + eRemainder z S
+'WuTarget.W06.eProfile_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.profileJ_split (z : Fin 9 → ℝ) {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S) (hS5 : S ≤ 5) (hsS : s ≤ S)
+  (hr : 2 ≤ S - S / s) :
+  ActualNineFeedback.profileJ z s S =
+    jCoefficient s S * NodeExtension.aProfile (NodeExtension.nineProfile z) + jRemainder z s S
+'WuTarget.W06.profileJ_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.eProfile_sigma_lower {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) {S : ℝ} (hS : 3 ≤ S) (hS5 : S ≤ 5) :
+  eCoefficient S * sigmaLower z + eRemainder z S ≤ NodeExtension.eProfile (NodeExtension.nineProfile z) S
+'WuTarget.W06.eProfile_sigma_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.profileJ_sigma_lower {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S)
+  (hS5 : S ≤ 5) (hsS : s ≤ S) (hr : 2 ≤ S - S / s) :
+  jCoefficient s S * sigmaLower z + jRemainder z s S ≤ ActualNineFeedback.profileJ z s S
+'WuTarget.W06.profileJ_sigma_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.firstCoefficient (s S : ℝ) : ℝ
+'WuTarget.W06.firstCoefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupledCoefficient (p : Wu2008DoubleSieve.SecondFunctionalParameters) : ℝ
+'WuTarget.W06.coupledCoefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.firstRemainder (z : Fin 9 → ℝ) (s S : ℝ) : ℝ
+'WuTarget.W06.firstRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupledRemainder (p : Wu2008DoubleSieve.SecondFunctionalParameters) (z : Fin 9 → ℝ) : ℝ
+'WuTarget.W06.coupledRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.firstCoefficient_nonneg {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S) (hS5 : S ≤ 5) (hsS : s ≤ S) :
+  0 ≤ firstCoefficient s S
+'WuTarget.W06.firstCoefficient_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupledCoefficient_nonneg {p : Wu2008DoubleSieve.SecondFunctionalParameters}
+  (hp : ActualNineFeedback.CoupledGeometry p) : 0 ≤ coupledCoefficient p
+'WuTarget.W06.coupledCoefficient_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.firstFeedback_split (z : Fin 9 → ℝ) {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S) (hS5 : S ≤ 5) (hsS : s ≤ S)
+  (hr : 2 ≤ S - S / s) :
+  ActualNineFeedback.firstFeedback z s S =
+    firstCoefficient s S * NodeExtension.aProfile (NodeExtension.nineProfile z) + firstRemainder z s S
+'WuTarget.W06.firstFeedback_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupledFeedback_split {p : Wu2008DoubleSieve.SecondFunctionalParameters}
+  (hp : ActualNineFeedback.CoupledGeometry p) (z : Fin 9 → ℝ) :
+  ActualNineFeedback.coupledFeedback p z =
+    coupledCoefficient p * NodeExtension.aProfile (NodeExtension.nineProfile z) + coupledRemainder p z
+'WuTarget.W06.coupledFeedback_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.firstRemainder_nonneg {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S)
+  (hS5 : S ≤ 5) (hsS : s ≤ S) (hr : 2 ≤ S - S / s) : 0 ≤ firstRemainder z s S
+'WuTarget.W06.firstRemainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupledRemainder_nonneg {p : Wu2008DoubleSieve.SecondFunctionalParameters}
+  (hp : ActualNineFeedback.CoupledGeometry p) {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) : 0 ≤ coupledRemainder p z
+'WuTarget.W06.coupledRemainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.firstFeedback_sigma_lower {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S)
+  (hS5 : S ≤ 5) (hsS : s ≤ S) (hr : 2 ≤ S - S / s) :
+  firstCoefficient s S * sigmaLower z + firstRemainder z s S ≤ ActualNineFeedback.firstFeedback z s S
+'WuTarget.W06.firstFeedback_sigma_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupledFeedback_sigma_lower {p : Wu2008DoubleSieve.SecondFunctionalParameters}
+  (hp : ActualNineFeedback.CoupledGeometry p) {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) :
+  coupledCoefficient p * sigmaLower z + coupledRemainder p z ≤ ActualNineFeedback.coupledFeedback p z
+'WuTarget.W06.coupledFeedback_sigma_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.first_multipliers (i : Fin 5) :
+  0 < eCoefficient (ActualNineFeedback.firstS i) ∧
+    0 ≤ jCoefficient (ActualNineFeedback.firstNode i) (ActualNineFeedback.firstS i) / 2
+'WuTarget.W06.first_multipliers' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.first_J_multiplier_pos (i : Fin 5) (hi : i ≠ 4) :
+  0 < jCoefficient (ActualNineFeedback.firstNode i) (ActualNineFeedback.firstS i) / 2
+'WuTarget.W06.first_J_multiplier_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.terminal_J_multiplier : jCoefficient (ActualNineFeedback.firstNode 4) (ActualNineFeedback.firstS 4) / 2 = 0
+'WuTarget.W06.terminal_J_multiplier' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupled_multipliers (i : Fin 4) :
+  0 < 4 * eCoefficient (ActualNineFeedback.coupledRow i).S / 5 ∧
+    0 < eCoefficient (ActualNineFeedback.coupledRow i).kappa1 / 5 ∧
+      0 < jCoefficient (ActualNineFeedback.coupledRow i).s (ActualNineFeedback.coupledRow i).S / 5 ∧
+        0 < jCoefficient (ActualNineFeedback.coupledRow i).kappa2 (ActualNineFeedback.coupledRow i).S / 5 ∧
+          0 < jCoefficient (ActualNineFeedback.coupledRow i).kappa3 (ActualNineFeedback.coupledRow i).S / 5
+'WuTarget.W06.coupled_multipliers' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.first_row_coefficient_pos (i : Fin 5) :
+  0 < firstCoefficient (ActualNineFeedback.firstNode i) (ActualNineFeedback.firstS i)
+'WuTarget.W06.first_row_coefficient_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.coupled_row_coefficient_pos (i : Fin 4) : 0 < coupledCoefficient (ActualNineFeedback.coupledRow i)
+'WuTarget.W06.coupled_row_coefficient_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.rowCoefficient (i : Fin 9) : ℝ
+'WuTarget.W06.rowCoefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.rowRemainder (z : Fin 9 → ℝ) (i : Fin 9) : ℝ
+'WuTarget.W06.rowRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.rowCoefficient_pos (i : Fin 9) : 0 < rowCoefficient i
+'WuTarget.W06.rowCoefficient_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.rowRemainder_nonneg {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) (i : Fin 9) : 0 ≤ rowRemainder z i
+'WuTarget.W06.rowRemainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.feedback_split (z : Fin 9 → ℝ) (i : Fin 9) :
+  ActualNineFeedback.feedback z i =
+    rowCoefficient i * NodeExtension.aProfile (NodeExtension.nineProfile z) + rowRemainder z i
+'WuTarget.W06.feedback_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.feedback_sigma_lower {z : Fin 9 → ℝ} (hz : ∀ (k : Fin 9), 0 ≤ z k) (i : Fin 9) :
+  rowCoefficient i * sigmaLower z + rowRemainder z i ≤ ActualNineFeedback.feedback z i
+'WuTarget.W06.feedback_sigma_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaMatrix (i k : Fin 9) : ℝ
+'WuTarget.W06.sigmaMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.nonSigmaMatrix (i k : Fin 9) : ℝ
+'WuTarget.W06.nonSigmaMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaMatrix_pos (i k : Fin 9) : 0 < sigmaMatrix i k
+'WuTarget.W06.sigmaMatrix_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.nonSigmaMatrix_nonneg (i k : Fin 9) : 0 ≤ nonSigmaMatrix i k
+'WuTarget.W06.nonSigmaMatrix_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaMatrix_apply (z : Fin 9 → ℝ) (i : Fin 9) :
+  ∑ k, sigmaMatrix i k * z k = rowCoefficient i * sigmaLower z
+'WuTarget.W06.sigmaMatrix_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.nonSigmaMatrix_apply (z : Fin 9 → ℝ) (i : Fin 9) : ∑ k, nonSigmaMatrix i k * z k = rowRemainder z i
+'WuTarget.W06.nonSigmaMatrix_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.feedbackMatrix_split (i k : Fin 9) :
+  ActualNineFeedback.feedbackMatrix i k =
+    rowCoefficient i * NodeExtension.aProfile (NodeExtension.nineProfile (NodeExtension.nodeBasis k)) +
+      nonSigmaMatrix i k
+'WuTarget.W06.feedbackMatrix_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaMatrix_add_nonSigma_le (i k : Fin 9) :
+  sigmaMatrix i k + nonSigmaMatrix i k ≤ ActualNineFeedback.feedbackMatrix i k
+'WuTarget.W06.sigmaMatrix_add_nonSigma_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.sigmaMatrix_le_feedbackMatrix (i k : Fin 9) : sigmaMatrix i k ≤ ActualNineFeedback.feedbackMatrix i k
+'WuTarget.W06.sigmaMatrix_le_feedbackMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.add_nonSigma_payment {B : Fin 9 → Fin 9 → ℝ} (hB : ∀ (i k : Fin 9), B i k ≤ nonSigmaMatrix i k)
+  (i k : Fin 9) : sigmaMatrix i k + B i k ≤ ActualNineFeedback.feedbackMatrix i k
+'WuTarget.W06.add_nonSigma_payment' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.actual_sigma_feedback {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1 / 10) (i : Fin 9) :
+  ActualNineFeedback.base i - ActualNineFeedback.deltaLoss δ * ActualNineFeedback.loss i +
+        ∑ k, sigmaMatrix i k * NodeExtension.actualNine δ k +
+      rowRemainder (NodeExtension.actualNine δ) i ≤
+    NodeExtension.actualNine δ i
+'WuTarget.W06.actual_sigma_feedback' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.W06.actual_sigma_matrix_feedback {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1 / 10) (i : Fin 9) :
+  ActualNineFeedback.base i - ActualNineFeedback.deltaLoss δ * ActualNineFeedback.loss i +
+      ∑ k, (sigmaMatrix i k + nonSigmaMatrix i k) * NodeExtension.actualNine δ k ≤
+    NodeExtension.actualNine δ i
+'WuTarget.W06.actual_sigma_matrix_feedback' depends on axioms: [propext, Classical.choice, Quot.sound]

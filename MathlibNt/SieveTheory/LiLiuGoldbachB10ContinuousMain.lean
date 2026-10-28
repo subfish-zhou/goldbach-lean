@@ -56,21 +56,6 @@ theorem goldbachB10MainMass_sub_continuous_nonneg_le
     exact Finset.sum_le_sum (fun m hm =>
       (goldbachB10MainWeight_sub_continuous_nonneg_le hε (hlo m hm).1 (hlo m hm).2).2)
 
-private theorem B10Floor_two_mul_le_of_rpow {Y m : ℕ} (hY : 8 ≤ Y)
-    (hm : (m : ℝ) ≤ (Y : ℝ) ^ ((2 : ℝ) / 3)) : 2 * (m : ℝ) ≤ Y := by
-  have hYpos : (0 : ℝ) < Y := by exact_mod_cast (show 0 < Y by omega)
-  have h8 : (8 : ℝ) ^ ((1 : ℝ) / 3) = 2 := by
-    calc
-      (8 : ℝ) ^ ((1 : ℝ) / 3) = ((2 : ℝ) ^ (3 : ℝ)) ^ ((1 : ℝ) / 3) := by norm_num
-      _ = (2 : ℝ) ^ ((3 : ℝ) * (1 / 3)) := (Real.rpow_mul (by norm_num) _ _).symm
-      _ = 2 := by norm_num
-  have hr : (2 : ℝ) ≤ (Y : ℝ) ^ ((1 : ℝ) / 3) := by
-    rw [← h8]
-    exact Real.rpow_le_rpow (by norm_num) (by exact_mod_cast hY) (by norm_num)
-  calc
-    2 * (m : ℝ) ≤ 2 * (Y : ℝ) ^ ((2 : ℝ) / 3) := by gcongr
-    _ ≤ (Y : ℝ) ^ ((1 : ℝ) / 3) * (Y : ℝ) ^ ((2 : ℝ) / 3) := by gcongr
-    _ = Y := by rw [← Real.rpow_add hYpos]; norm_num
 
 /-- A uniform-in-beta floor payment. The coarse power bound suffices for the main scale. -/
 theorem goldbachB10MainMass_floor_payment_eventually
@@ -96,7 +81,7 @@ theorem goldbachB10MainMass_floor_payment_eventually
     have hmi := Finset.mem_Ioc.mp (hsub m hm)
     have hmpos : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
     have hmA2 : (m : ℝ) ≤ B10PanGeometryUpperWindow N γ := by exact_mod_cast hmi.2
-    exact ⟨by omega, (le_div_iff₀ hmpos).mpr (B10Floor_two_mul_le_of_rpow hY8 (hmA2.trans hA2Y))⟩
+    exact ⟨by omega, (le_div_iff₀ hmpos).mpr (b10_two_mul_le_of_rpow hY8 (hmA2.trans hA2Y))⟩
   have hc := goldbachB10MainMass_sub_continuous_nonneg_le hε.le hlow
   refine ⟨hc.1, hc.2.trans ?_⟩
   apply mul_le_mul_of_nonneg_left _ (by positivity)

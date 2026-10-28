@@ -1,9 +1,3 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Order.Interval.Finset.Nat
 import MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedCarrier
 import MathlibNt.SieveTheory.LiuPanWangDingSource
 import MathlibNt.SieveTheory.LiuTrueLiPan
@@ -23,9 +17,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 set_option autoImplicit false
 
-noncomputable local instance instDecidableGoldbachS2SwitchedDistribution (P : Prop) :
-    Decidable P :=
-  Classical.propDecidable P
 
 /-- The bounded coefficient selecting the actual `S2` large-prime source. -/
 noncomputable def goldbachS2SwitchedCoeff (N : ℕ) (T : ℝ) (r : ℕ) : ℝ :=
@@ -37,11 +28,6 @@ theorem goldbachS2SwitchedCoeff_eq_one_of_mem
     goldbachS2SwitchedCoeff N T r = 1 := by
   simp [goldbachS2SwitchedCoeff, hr]
 
-theorem goldbachS2SwitchedCoeff_eq_zero_of_not_mem
-    {N r : ℕ} {T : ℝ}
-    (hr : r ∉ goldbachS2Primes N T) :
-    goldbachS2SwitchedCoeff N T r = 0 := by
-  simp [goldbachS2SwitchedCoeff, hr]
 
 theorem abs_goldbachS2SwitchedCoeff_le_one
     (N : ℕ) (T : ℝ) (r : ℕ) :
@@ -114,46 +100,6 @@ private theorem S2Switched_primesInAPBelow_eq_card
         _ ≤ Y := hrqY
     exact ⟨hqY, hqPrime, hrqY, hmod⟩
 
-private theorem S2Switched_residue_eq_iff_modEq
-    {N d r q : ℕ}
-    (hrd : Nat.Coprime r d) :
-    (q : ZMod d) = (N : ZMod d) * (r : ZMod d)⁻¹ ↔ Nat.ModEq d (r * q) N := by
-  constructor
-  · intro hq
-    have hzmul :
-        ((r : ZMod d) * (q : ZMod d)) = (N : ZMod d) := by
-      calc
-        ((r : ZMod d) * (q : ZMod d))
-            = (r : ZMod d) * ((N : ZMod d) * (r : ZMod d)⁻¹) := by rw [hq]
-        _ = (N : ZMod d) * ((r : ZMod d) * (r : ZMod d)⁻¹) := by ac_rfl
-        _ = (N : ZMod d) * 1 := by rw [ZMod.coe_mul_inv_eq_one r hrd]
-        _ = (N : ZMod d) := by simp
-    have hzprod : (((r * q : ℕ) : ZMod d)) = (N : ZMod d) := by
-      simpa using hzmul
-    exact (ZMod.natCast_eq_natCast_iff (r * q) N d).1 hzprod
-  · intro hrq
-    have hzprod : (((r * q : ℕ) : ZMod d)) = (N : ZMod d) :=
-      (ZMod.natCast_eq_natCast_iff (r * q) N d).2 hrq
-    have hzmul : ((r : ZMod d) * (q : ZMod d)) = (N : ZMod d) := by
-      simpa using hzprod
-    calc
-      (q : ZMod d) = (1 : ZMod d) * (q : ZMod d) := by simp
-      _ = (((r : ZMod d) * (r : ZMod d)⁻¹) * (q : ZMod d)) := by
-            rw [← ZMod.coe_mul_inv_eq_one r hrd]
-      _ = (r : ZMod d)⁻¹ * ((r : ZMod d) * (q : ZMod d)) := by ac_rfl
-      _ = (r : ZMod d)⁻¹ * (N : ZMod d) := by rw [hzmul]
-      _ = (N : ZMod d) * (r : ZMod d)⁻¹ := by simp [mul_comm]
-
-private theorem S2Switched_residue_eq_iff_modEq_residue
-    {N d r q : ℕ}
-    (hrd : Nat.Coprime r d) :
-    (q : ZMod d) = (N : ZMod d) * (r : ZMod d)⁻¹ ↔ Nat.ModEq d (r * q) (N % d) := by
-  rw [S2Switched_residue_eq_iff_modEq hrd]
-  constructor
-  · intro hq
-    exact hq.trans (Nat.mod_modEq N d).symm
-  · intro hq
-    exact hq.trans (Nat.mod_modEq N d)
 
 private noncomputable def S2SwitchedDivisorQFiber
     (N d r : ℕ) : Finset ℕ :=
@@ -395,49 +341,6 @@ theorem goldbachS2SwitchedRemainder_eq_panError
   rw [goldbachS2SwitchedDivCount_eq_panAPPrefixCount hd hdN hsupp,
     goldbachS2SwitchedPanMainPrefix_eq_div_gatedMainMass hsupp]
 
-private theorem S2Switched_intervalMaxL_nonneg
-    (main : ℝ → ℝ) (Y A₁ A₂ d : ℕ) (f : ℕ → ℝ) :
-    0 ≤ liuMainPanCoprimeIntervalMaxL main Y A₁ A₂ d f := by
-  unfold liuMainPanCoprimeIntervalMaxL
-  dsimp only
-  by_cases hS : (unitResidues d).Nonempty
-  · rw [dif_pos hS]
-    have hmem :
-        ((unitResidues d).image
-            (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|)).max'
-            (Finset.image_nonempty.mpr hS) ∈
-          (unitResidues d).image
-            (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|) :=
-      Finset.max'_mem _ _
-    rcases Finset.mem_image.mp hmem with ⟨l, _, hl⟩
-    rw [← hl]
-    exact abs_nonneg _
-  · rw [dif_neg hS]
-
-private theorem S2Switched_residue_mem_unitResidues
-    {N d : ℕ} (hd : 1 ≤ d) (hdN : Nat.Coprime d N) :
-    N % d ∈ unitResidues d := by
-  rw [unitResidues]
-  refine Finset.mem_filter.mpr ?_
-  constructor
-  · exact Finset.mem_range.mpr (Nat.mod_lt N (lt_of_lt_of_le Nat.zero_lt_one hd))
-  · exact (ZMod.coprime_mod_iff_coprime N d).2 hdN.symm
-
-private theorem S2Switched_abs_intervalSum_le_maxL
-    {N Y A₁ A₂ d : ℕ} {main : ℝ → ℝ} {f : ℕ → ℝ}
-    (hd : 1 ≤ d) (hdN : Nat.Coprime d N) :
-    |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d (N % d) f| ≤
-      liuMainPanCoprimeIntervalMaxL main Y A₁ A₂ d f := by
-  have hl : N % d ∈ unitResidues d := S2Switched_residue_mem_unitResidues hd hdN
-  have hS : (unitResidues d).Nonempty := ⟨N % d, hl⟩
-  unfold liuMainPanCoprimeIntervalMaxL
-  dsimp only
-  rw [dif_pos hS]
-  exact Finset.le_max'
-    ((unitResidues d).image
-      (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|))
-    _
-    (Finset.mem_image.mpr ⟨N % d, hl, rfl⟩)
 
 private theorem S2Switched_prime_support_mem_panInterval
     {N : ℕ} {B ε : ℝ}
@@ -533,7 +436,7 @@ theorem goldbachS2SwitchedRemainder_log_saving
     rcases Finset.mem_filter.mp hdS with ⟨hdIcc, hdN⟩
     have hd : 1 ≤ d := (Finset.mem_Icc.mp hdIcc).1
     rw [goldbachS2SwitchedRemainder_eq_panError (T := T) hd hdN hsupp]
-    exact S2Switched_abs_intervalSum_le_maxL hd hdN
+    exact MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL hd hdN
   have hsubset : S ⊆ Icc 1 (panModulusCutoff N B) := by
     intro d hd
     exact (Finset.mem_filter.mp hd).1
@@ -546,7 +449,7 @@ theorem goldbachS2SwitchedRemainder_log_saving
             N A₁ A₂ d (goldbachS2SwitchedCoeff N T) := by
     refine Finset.sum_le_sum_of_subset_of_nonneg hsubset ?_
     intro d _ hdNot
-    exact S2Switched_intervalMaxL_nonneg
+    exact MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalMaxL_nonneg
       (liuLogarithmicIntegral (2 / Real.log 2)) N A₁ A₂ d
       (goldbachS2SwitchedCoeff N T)
   calc

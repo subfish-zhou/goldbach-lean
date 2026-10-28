@@ -1,10 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper
-import MathlibNt.Analysis.LogScaleAbsorption
+import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
 import MathlibNt.Analysis.SieveNormalization
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Data.Nat.Factors
-import Mathlib.Order.Filter.AtTopBot.Basic
 import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
 import MathlibNt.SieveTheory.LiLiuGoldbachS2MainMassUpper
 import MathlibNt.SieveTheory.LiuPanPrimePowerCharacters
@@ -53,37 +49,6 @@ private theorem S2NormalizedUpper_main_coefficient_le
           have h56 : 56 * η ≤ δ / 2 := by nlinarith [hηδ]
           linarith
 
-private theorem S2NormalizedUpper_quarterCutoff_large_eventually
-    (K : ℝ) (_hK : 0 < K) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      K ≤ (N : ℝ) ^ ((1 : ℝ) / 4) := by
-  have hpow :
-      Tendsto (fun N : ℕ => (N : ℝ) ^ ((1 : ℝ) / 4)) atTop atTop :=
-    (tendsto_rpow_atTop (by norm_num : (0 : ℝ) < (1 : ℝ) / 4)).comp
-      tendsto_natCast_atTop_atTop
-  obtain ⟨N₀, hN₀⟩ := eventually_atTop.mp
-    (hpow.eventually (eventually_ge_atTop K))
-  refine ⟨max 4 N₀, le_max_left _ _, ?_⟩
-  intro N hN
-  exact hN₀ N ((le_max_right _ _).trans hN)
-
-private theorem S2NormalizedUpper_paid_error_absorb_eventually
-    (C δ : ℝ) (hC : 0 < C) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
-        δ * SingularSeries.liuUniversalProduct * (N : ℝ) /
-          Real.log (N : ℝ) ^ (2 : ℝ) := by
-  -- Normalize the positive paid coefficient to its absolute-value envelope.
-  have hbase :=
-    MathlibNt.Analysis.eventually_log_rpow_remainder_lt_of_lower_bound
-      |C| SingularSeries.liuUniversalProduct δ 2
-      SingularSeries.liuUniversalProduct_pos hδ (by norm_num)
-  obtain ⟨M, hM⟩ := Filter.eventually_atTop.mp hbase
-  refine ⟨max 4 M, le_max_left _ _, ?_⟩
-  intro N hN
-  have h := (hM N ((le_max_right _ _).trans hN)
-    2 SingularSeries.liuUniversalProduct le_rfl).le
-  simpa only [abs_of_pos hC, show (2 : ℝ) + 2 = 4 by norm_num] using h
 
 private theorem S2NormalizedUpper_quarterPower_absorb_eventually
     (δ : ℝ) (hδ : 0 < δ) :
@@ -162,7 +127,7 @@ private theorem S2NormalizedUpper_smallPartner_absorb_eventually
       (Nat.ceil ((N : ℝ) ^ ((1 : ℝ) / 4)) : ℝ) ≤
         δ * SingularSeries.liuUniversalProduct * (N : ℝ) /
           Real.log (N : ℝ) ^ (2 : ℝ) := by
-  obtain ⟨NZ, hNZ4, hZlarge⟩ := S2NormalizedUpper_quarterCutoff_large_eventually 1 zero_lt_one
+  obtain ⟨NZ, hNZ4, hZlarge⟩ := S2Paid_quarterCutoff_large_eventually 1 zero_lt_one
   obtain ⟨Npow, hNpow4, hpow⟩ := S2NormalizedUpper_quarterPower_absorb_eventually δ hδ
   refine ⟨max 4 (max NZ Npow), le_max_left _ _, ?_⟩
   intro N hN
@@ -329,10 +294,10 @@ theorem goldbachS2SwitchedSiftedCount_normalized_upper_nine_nineteen_sub
   obtain ⟨Nmass, hNmass4, hmass⟩ :=
     goldbachS2MainMassUpper_nine_nineteen_sub η ε hη hε hεu
   obtain ⟨NZ, hNZ4, hZlarge⟩ :=
-    S2NormalizedUpper_quarterCutoff_large_eventually (max 2 Z₀)
+    S2Paid_quarterCutoff_large_eventually (max 2 Z₀)
       (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 2) (le_max_left _ _))
   obtain ⟨Nerr, hNerr4, herr⟩ :=
-    S2NormalizedUpper_paid_error_absorb_eventually C (δ / 2) hC (by positivity)
+    LiuWeight.quartic_log_error_absorb_eventually C (δ / 2) hC (by positivity)
   let N₀ : ℕ := max 4 (max Npaid (max Nmass (max NZ Nerr)))
   refine ⟨N₀, le_max_left _ _, ?_⟩
   intro N hN hEven

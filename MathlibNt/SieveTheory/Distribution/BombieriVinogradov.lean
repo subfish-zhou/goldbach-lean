@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
-import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
 
 /-!
 ! # MathlibNt.SieveTheory.BombieriVinogradov
@@ -45,9 +44,6 @@ noncomputable def standardPrimeAPMaxError (x q : ℕ) : ℝ :=
       (Finset.image_nonempty.mpr h)
   else 0
 
-theorem standardPrimeAPMaxError_zero (x : ℕ) :
-    standardPrimeAPMaxError x 0 = 0 := by
-  simp [standardPrimeAPMaxError, AnalyticNumberTheory.Sieve.unitResidues]
 
 theorem standardPrimeAPMaxError_one (x : ℕ) :
     standardPrimeAPMaxError x 1 = |standardPrimeAPError x 1 0| := by
@@ -112,11 +108,6 @@ theorem primesInAP_modEq_N_eq (N d : ℕ) :
   simp only [primesInAP, Nat.ModEq, Nat.mod_mod]
   rfl
 
-/-- The genuine logarithmic integral dominates the historical elementary
-proxy. -/
-theorem div_log_le_trueLogarithmicIntegral {x : ℝ} (hx : 2 ≤ x) :
-    x / Real.log x ≤ trueLogarithmicIntegral x :=
-  LiuWeight.div_log_le_liuLogarithmicIntegral hx
 
 /-- **Standard Bombieri--Vinogradov literature interface.**
 

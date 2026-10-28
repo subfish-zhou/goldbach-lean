@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovPointCount
-import Mathlib.Algebra.Polynomial.Taylor
 
 /-!
 # Harcos's affine curve
@@ -160,20 +159,6 @@ section Translation
 
 variable {K : Type*} [Field K]
 
-theorem stepanov_isSquare_taylor_iff (f : K[X]) (r : K) :
-    IsSquare (taylor r f) ↔ IsSquare f := by
-  constructor
-  · rintro ⟨g, hg⟩
-    refine ⟨taylor (-r) g, ?_⟩
-    have h := congrArg (taylor (-r)) hg
-    simpa only [taylor_taylor, neg_add_cancel, taylor_zero, taylor_mul] using h
-  · rintro ⟨g, rfl⟩
-    exact ⟨taylor r g, taylor_mul r g g⟩
-
-theorem stepanov_geometrically_not_isSquare_taylor_iff (f : K[X]) (r : K) :
-    (¬ IsSquare ((taylor r f).map (algebraMap K (AlgebraicClosure K)))) ↔
-      ¬ IsSquare (f.map (algebraMap K (AlgebraicClosure K))) := by
-  rw [map_taylor, stepanov_isSquare_taylor_iff]
 
 end Translation
 
@@ -181,45 +166,6 @@ section FiniteField
 
 variable {F : Type*} [Field F] [Fintype F] [DecidableEq F]
 
-/-- Translation is a bijection on the actual affine point sets. -/
-theorem stepanovPointCount_taylor (f : F[X]) (r : F) :
-    stepanovPointCount (taylor r f) = stepanovPointCount f := by
-  unfold stepanovPointCount
-  refine card_nbij' (fun xy : F × F => (xy.1 + r, xy.2))
-    (fun xy : F × F => (xy.1 - r, xy.2)) ?_ ?_ ?_ ?_
-  · intro xy hxy
-    simpa only [mem_coe, mem_filter, mem_univ, true_and, taylor_eval] using hxy
-  · intro xy hxy
-    simpa only [mem_coe, mem_filter, mem_univ, true_and, taylor_eval,
-      sub_add_cancel] using hxy
-  · intro xy _
-    simp
-  · intro xy _
-    simp
-
-/-- Harcos Theorem 7 (`pages/harcos-stepanov-08.png`), without an
-`f(0) ≠ 0` hypothesis. A nonroot exists since `deg f < q`, and translation
-preserves the degree, geometric nonsquareness, and affine point count. -/
-theorem stepanov_pointCount_bound (f : F[X])
-    (hq : Odd (Fintype.card F))
-    (hf : ¬ IsSquare (f.map (algebraMap F (AlgebraicClosure F))))
-    (hm : 3 ≤ f.natDegree) (hmq : 6 * f.natDegree < Fintype.card F) :
-    |(stepanovPointCount f : ℝ) - Fintype.card F| <
-      4 * f.natDegree * ⌈Real.sqrt (Fintype.card F : ℝ)⌉₊ := by
-  have hnz : f ≠ 0 := by
-    intro hz
-    simp only [hz, natDegree_zero] at hm
-    omega
-  obtain ⟨r, hr⟩ : ∃ r : F, f.eval r ≠ 0 := by
-    by_contra! h
-    exact hnz (eq_zero_of_natDegree_lt_card_of_eval_eq_zero f
-      Function.injective_id h (by omega))
-  have h := stepanov_pointCount_bound_of_eval_zero_ne (taylor r f) hq
-    (by simpa only [taylor_eval, zero_add] using hr)
-    ((stepanov_geometrically_not_isSquare_taylor_iff f r).mpr hf)
-    (by simpa only [natDegree_taylor] using hm)
-    (by simpa only [natDegree_taylor] using hmq)
-  simpa only [stepanovPointCount_taylor, natDegree_taylor] using h
 
 end FiniteField
 

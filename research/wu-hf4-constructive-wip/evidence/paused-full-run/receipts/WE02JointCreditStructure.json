@@ -1,0 +1,47 @@
+{
+  "module": "WE02JointCreditStructure",
+  "exit_code": 0,
+  "seconds": 8.222008358687162,
+  "source_sha256": "a4cf081b3b8c9f162ab998fbd89c6860b9b07be5b7113fb40749416b77be7e4c",
+  "object_sha256": "1e6da30baaa46ce70b5d0784a6ba84967cc80886dcbea407666429d867246483",
+  "dependencies": {
+    "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+  },
+  "dependency_contexts": {
+    "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878"
+  },
+  "context_sha256": "d62ba709f6b8f47e12e3e033a6712b848ebea462adb3475d779bd857fb6f1687",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditStructure.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditStructure.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditStructure.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditStructure.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.resources",
+  "resource_sha256": "9d9114ed12cc1f6ec55e107acbd04c9c4542ba1e25640397d6c8a52f44ce7d32",
+  "artifact_bundle_sha256": {
+    ".olean": "1e6da30baaa46ce70b5d0784a6ba84967cc80886dcbea407666429d867246483"
+  }
+}

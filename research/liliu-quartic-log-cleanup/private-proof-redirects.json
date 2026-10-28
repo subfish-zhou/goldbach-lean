@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10NormalizedUpper_paid_error_absorb_eventually",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper"
+      ],
+      "kind": "theorem",
+      "typeHash": "1470354719",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB10SiftedCount_normalized_upper"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiuWeight.quartic_log_error_absorb_eventually",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2NormalizedUpper_paid_error_absorb_eventually",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper"
+      ],
+      "kind": "theorem",
+      "typeHash": "1470354719",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS2SwitchedSiftedCount_normalized_upper_nine_nineteen_sub"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiuWeight.quartic_log_error_absorb_eventually",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "exact_statement_replacement_count": 2,
+  "method": "Both old private helper statements have exactly the kind/type hash of the new shared public theorem. Each has one old incoming declaration inside its own provider; both original public consumers now actually reach the shared proof."
+}

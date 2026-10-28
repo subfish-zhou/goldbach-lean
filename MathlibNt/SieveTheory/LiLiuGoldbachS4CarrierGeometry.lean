@@ -5,7 +5,6 @@ open Finset
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachS4CarrierGeometry (P : Prop) : Decidable P := Classical.propDecidable P
 
 theorem mem_goldbachS4Pairs_iff {N : ℕ} {u : ℝ} {rs : ℕ × ℕ} :
     rs ∈ goldbachS4Pairs N u ↔

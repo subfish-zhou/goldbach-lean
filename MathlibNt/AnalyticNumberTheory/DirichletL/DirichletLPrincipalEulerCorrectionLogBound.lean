@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripValueBound
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
+import Mathlib.NumberTheory.DirichletCharacter.Bounds
 
 open Complex Finset
 

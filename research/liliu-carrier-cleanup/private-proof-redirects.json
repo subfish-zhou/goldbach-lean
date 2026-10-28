@@ -1,0 +1,169 @@
+{
+  "status": "pass",
+  "baseline_census": "Accepted product/payment complete main census",
+  "removed_private_declarations": [
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_self_eq_singleton",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_self_eq_singleton",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightClosedPrimes_filter_lt_eq_halfOpen",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightClosedPrimes_filter_not_lt_self_eq_singleton",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_self_eq_singleton",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightClosedPrimes_filter_lt_eq_halfOpen_of_le",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen_of_le",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightClosedPrimes_filter_not_lt_eq_closed",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_eq_closed",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightTriplePartition_closedPrimes_filter_lt_eq_halfOpen_of_le",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen_of_le",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightTriplePartition_closedPrimes_filter_not_lt_eq_closed",
+      "provider_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition"
+      ],
+      "consumer_modules": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_eq_closed",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_log_mul_rpow_le",
+      "provider_modules": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion"
+      ],
+      "consumer_modules": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.Analysis.eventually_log_mul_rpow_le",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.prefix_coordinate_mem",
+      "provider_modules": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox"
+      ],
+      "consumer_modules": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramPrefix_coordinate_mem_scale",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.prefix_frequency_mem",
+      "provider_modules": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox"
+      ],
+      "consumer_modules": [
+        "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramPrefix_frequency_mem_scale",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S4_card_le_mul_of_fibers",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "Finset.card_le_mul_card_image_of_maps_to, applied with the same actual maps-to/fiber hypotheses and bound 400; downstream commutativity normalization handles the factor order.",
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S4_card_le_mul_of_fibers",
+      "same_kind_and_type_hash": null,
+      "method": "The imported Mathlib theorem is generic in both types and has the opposite multiplication order. The two complete original consumer files compile with unchanged public types after all five direct substitutions; the existing mul_comm normalizations handle the factor order. No matching canonical type hash for the generic theorem is claimed."
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S5_card_le_mul_of_fibers",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "Finset.card_le_mul_card_image_of_maps_to, applied with the same actual maps-to/fiber hypotheses and bound 400; downstream commutativity normalization handles the factor order.",
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S5_card_le_mul_of_fibers",
+      "same_kind_and_type_hash": null,
+      "method": "The imported Mathlib theorem is generic in both types and has the opposite multiplication order. The two complete original consumer files compile with unchanged public types after all five direct substitutions; the existing mul_comm normalizations handle the factor order. No matching canonical type hash for the generic theorem is claimed."
+    }
+  ],
+  "same_replacement_kind_type_hash_count": 11,
+  "direct_existing_mathlib_fiber_replacements": 2,
+  "scope": "Thirteen private declaration names disappear after exposing/moving/shared reuse or replacement. All previous compiled consumers were confined to their own providers. These are not thirteen independent redundant proof bodies: some existing proofs are exposed or moved; only duplicate copies are removed."
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "Isolated Lean compile, one worker, warningAsError and autoImplicit=false; includes import/elaboration overhead; not a controlled old/new timing comparison.",
+  "benchmarks": [
+    {
+      "name": "BenchmarkC",
+      "seconds": 12.94,
+      "range": "0 <= i < 256",
+      "obligation": "CPay with C reconstructed from original B",
+      "finite_boundary_points": 64,
+      "status": "pass"
+    },
+    {
+      "name": "BenchmarkD",
+      "seconds": 24.11,
+      "range": "0 <= i < 256",
+      "obligation": "DPay with D and C reconstructed",
+      "finite_boundary_points": 64,
+      "status": "pass"
+    },
+    {
+      "name": "BenchmarkOuter",
+      "seconds": 87.97,
+      "range": "8192 <= i < 8448",
+      "obligation": "OuterPay with outerq/outer/D/C/B nested reconstruction",
+      "finite_boundary_points": 64,
+      "status": "pass",
+      "observed_rss_bytes_approx": 13163302912
+    }
+  ],
+  "timeout_seconds": 180,
+  "precision_changed": false
+}

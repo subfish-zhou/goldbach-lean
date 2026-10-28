@@ -1,0 +1,51 @@
+{
+  "module": "W06Audit",
+  "exit_code": 0,
+  "seconds": 3.450749881565571,
+  "source_sha256": "5e96bf3ac65e9bd4b58306159e5fa882caa4ad1dd65b432986e7c1f82fc5bbb5",
+  "object_sha256": "701d988441adfbaad6c04b92e31a2d06984b1532c74aef514fda25a4f7c6e38d",
+  "dependencies": {
+    "W06SigmaV2": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3",
+    "W06Decomposition": "5cb29722c4c15d3a91f513ad8a0a72284d69b006625571fedc4d9a82b833d491",
+    "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e"
+  },
+  "dependency_contexts": {
+    "W06SigmaV2": "477366dbd180c09b4d4b1879715a8f4d34a344e664909d156b6e709ee43259c0",
+    "W06Decomposition": "9aa5169933bf3b2fa7bde275e7e73ad6920118219e98c8f9b56bd7621d5512b9",
+    "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79"
+  },
+  "context_sha256": "8f64e0ef94e8c95d86b3fde8ae46a79a7ff07c3891984495f1de44fe8e0fcbe5",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Audit.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Audit.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Audit.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Audit.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.log",
+  "log_sha256": "4a639246b1a93aecb5271eb7ff8f2155079a500f4a0dab0483697c2697886b1d",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.resources",
+  "resource_sha256": "100dfee0fa7fbc5b941632c47a863d7cc05d5f11a185d740cf3a7e7671249ee3",
+  "artifact_bundle_sha256": {
+    ".olean": "701d988441adfbaad6c04b92e31a2d06984b1532c74aef514fda25a4f7c6e38d"
+  }
+}

@@ -1,0 +1,215 @@
+/tmp/wu-hf4-uniform-seed-trial-v2/trial-1793179955799907808/sources/Hf4DirectDagSeedSoundness.lean:20:53: error: unsolved goals
+case e'_1
+m h : ℚ
+k : ℕ
+hk1 : ¬k = 1
+hk299 : ¬k = 299
+x✝⁴⁷ : ℕ
+x✝⁴⁶ : k = 1 → False
+x✝⁴⁵ : k = 2 → False
+x✝⁴⁴ : k = 4 → False
+x✝⁴³ : k = 8 → False
+x✝⁴² : k = 13 → False
+x✝⁴¹ : k = 18 → False
+x✝⁴⁰ : k = 22 → False
+x✝³⁹ : k = 26 → False
+x✝³⁸ : k = 30 → False
+x✝³⁷ : k = 33 → False
+x✝³⁶ : k = 35 → False
+x✝³⁵ : k = 38 → False
+x✝³⁴ : k = 41 → False
+x✝³³ : k = 44 → False
+x✝³² : k = 48 → False
+x✝³¹ : k = 50 → False
+x✝³⁰ : k = 52 → False
+x✝²⁹ : k = 57 → False
+x✝²⁸ : k = 59 → False
+x✝²⁷ : k = 61 → False
+x✝²⁶ : k = 67 → False
+x✝²⁵ : k = 72 → False
+x✝²⁴ : k = 114 → False
+x✝²³ : k = 116 → False
+x✝²² : k = 125 → False
+x✝²¹ : k = 127 → False
+x✝²⁰ : k = 132 → False
+x✝¹⁹ : k = 135 → False
+x✝¹⁸ : k = 137 → False
+x✝¹⁷ : k = 140 → False
+x✝¹⁶ : k = 147 → False
+x✝¹⁵ : k = 151 → False
+x✝¹⁴ : k = 154 → False
+x✝¹³ : k = 157 → False
+x✝¹² : k = 160 → False
+x✝¹¹ : k = 163 → False
+x✝¹⁰ : k = 170 → False
+x✝⁹ : k = 206 → False
+x✝⁸ : k = 208 → False
+x✝⁷ : k = 211 → False
+x✝⁶ : k = 213 → False
+x✝⁵ : k = 217 → False
+x✝⁴ : k = 227 → False
+x✝³ : k = 291 → False
+x✝² : k = 293 → False
+x✝¹ : k = 296 → False
+x✝ : k = 299 → False
+⊢ 0 = ?h_48
+
+case e'_2
+m h : ℚ
+k : ℕ
+hk1 : ¬k = 1
+hk299 : ¬k = 299
+x✝⁴⁷ : ℕ
+x✝⁴⁶ : k = 1 → False
+x✝⁴⁵ : k = 2 → False
+x✝⁴⁴ : k = 4 → False
+x✝⁴³ : k = 8 → False
+x✝⁴² : k = 13 → False
+x✝⁴¹ : k = 18 → False
+x✝⁴⁰ : k = 22 → False
+x✝³⁹ : k = 26 → False
+x✝³⁸ : k = 30 → False
+x✝³⁷ : k = 33 → False
+x✝³⁶ : k = 35 → False
+x✝³⁵ : k = 38 → False
+x✝³⁴ : k = 41 → False
+x✝³³ : k = 44 → False
+x✝³² : k = 48 → False
+x✝³¹ : k = 50 → False
+x✝³⁰ : k = 52 → False
+x✝²⁹ : k = 57 → False
+x✝²⁸ : k = 59 → False
+x✝²⁷ : k = 61 → False
+x✝²⁶ : k = 67 → False
+x✝²⁵ : k = 72 → False
+x✝²⁴ : k = 114 → False
+x✝²³ : k = 116 → False
+x✝²² : k = 125 → False
+x✝²¹ : k = 127 → False
+x✝²⁰ : k = 132 → False
+x✝¹⁹ : k = 135 → False
+x✝¹⁸ : k = 137 → False
+x✝¹⁷ : k = 140 → False
+x✝¹⁶ : k = 147 → False
+x✝¹⁵ : k = 151 → False
+x✝¹⁴ : k = 154 → False
+x✝¹³ : k = 157 → False
+x✝¹² : k = 160 → False
+x✝¹¹ : k = 163 → False
+x✝¹⁰ : k = 170 → False
+x✝⁹ : k = 206 → False
+x✝⁸ : k = 208 → False
+x✝⁷ : k = 211 → False
+x✝⁶ : k = 213 → False
+x✝⁵ : k = 217 → False
+x✝⁴ : k = 227 → False
+x✝³ : k = 291 → False
+x✝² : k = 293 → False
+x✝¹ : k = 296 → False
+x✝ : k = 299 → False
+⊢ (match (motive := ℕ → ℝ → ℝ) k with
+    | 1 => fun x => DirectDag.f1 (↑m + ↑h * x)
+    | 2 => fun x => 184 / 105
+    | 4 => fun x => 32 / 35
+    | 8 => fun x => 1144 / 945
+    | 13 => fun x => 5261 / 540
+    | 18 => fun x => 176 / 63
+    | 22 => fun x => 1759 / 270
+    | 26 => fun x => 2122 / 945
+    | 30 => fun x => 299 / 1260
+    | 33 => fun x => 2145
+    | 35 => fun x => 4418
+    | 38 => fun x => 2280
+    | 41 => fun x => 1
+    | 44 => fun x => 210
+    | 48 => fun x => -1
+    | 50 => fun x => 11
+    | 52 => fun x => 3
+    | 57 => fun x => 2
+    | 59 => fun x => 6
+    | 61 => fun x => -14
+    | 67 => fun x => -70
+    | 72 => fun x => 105
+    | 114 => fun x => 10
+    | 116 => fun x => 18
+    | 125 => fun x => 64
+    | 127 => fun x => 945
+    | 132 => fun x => 23
+    | 135 => fun x => 24
+    | 137 => fun x => 7
+    | 140 => fun x => 8
+    | 147 => fun x => 12
+    | 151 => fun x => -140
+    | 154 => fun x => -280
+    | 157 => fun x => 385
+    | 160 => fun x => 1050
+    | 163 => fun x => 525
+    | 170 => fun x => 5
+    | 206 => fun x => -5
+    | 208 => fun x => 21
+    | 211 => fun x => 26
+    | 213 => fun x => 250
+    | 217 => fun x => 189
+    | 227 => fun x => 90
+    | 291 => fun x => -11
+    | 293 => fun x => 97
+    | 296 => fun x => 108
+    | 299 => fun x => DirectDag.f299 (↑m + ↑h * x)
+    | x => fun x => 0) =
+    fun x => ↑?h_48
+
+case h_48
+m h : ℚ
+k : ℕ
+hk1 : ¬k = 1
+hk299 : ¬k = 299
+x✝⁴⁷ : ℕ
+x✝⁴⁶ : k = 1 → False
+x✝⁴⁵ : k = 2 → False
+x✝⁴⁴ : k = 4 → False
+x✝⁴³ : k = 8 → False
+x✝⁴² : k = 13 → False
+x✝⁴¹ : k = 18 → False
+x✝⁴⁰ : k = 22 → False
+x✝³⁹ : k = 26 → False
+x✝³⁸ : k = 30 → False
+x✝³⁷ : k = 33 → False
+x✝³⁶ : k = 35 → False
+x✝³⁵ : k = 38 → False
+x✝³⁴ : k = 41 → False
+x✝³³ : k = 44 → False
+x✝³² : k = 48 → False
+x✝³¹ : k = 50 → False
+x✝³⁰ : k = 52 → False
+x✝²⁹ : k = 57 → False
+x✝²⁸ : k = 59 → False
+x✝²⁷ : k = 61 → False
+x✝²⁶ : k = 67 → False
+x✝²⁵ : k = 72 → False
+x✝²⁴ : k = 114 → False
+x✝²³ : k = 116 → False
+x✝²² : k = 125 → False
+x✝²¹ : k = 127 → False
+x✝²⁰ : k = 132 → False
+x✝¹⁹ : k = 135 → False
+x✝¹⁸ : k = 137 → False
+x✝¹⁷ : k = 140 → False
+x✝¹⁶ : k = 147 → False
+x✝¹⁵ : k = 151 → False
+x✝¹⁴ : k = 154 → False
+x✝¹³ : k = 157 → False
+x✝¹² : k = 160 → False
+x✝¹¹ : k = 163 → False
+x✝¹⁰ : k = 170 → False
+x✝⁹ : k = 206 → False
+x✝⁸ : k = 208 → False
+x✝⁷ : k = 211 → False
+x✝⁶ : k = 213 → False
+x✝⁵ : k = 217 → False
+x✝⁴ : k = 227 → False
+x✝³ : k = 291 → False
+x✝² : k = 293 → False
+x✝¹ : k = 296 → False
+x✝ : k = 299 → False
+⊢ ℚ
+'Hf4Quad.CheckedDag.DirectSemantics.seed_sound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

@@ -1,0 +1,42 @@
+{
+  "whole_tree": {
+    "before": {
+      "modules": 4181,
+      "code_lines": 588598,
+      "physical_lines": 692236,
+      "utf8_bytes": 35501282
+    },
+    "after": {
+      "modules": 4142,
+      "code_lines": 584819,
+      "physical_lines": 688537,
+      "utf8_bytes": 35406645
+    },
+    "reduction": {
+      "modules": 39,
+      "code_lines": 3779,
+      "physical_lines": 3699,
+      "utf8_bytes": 94637
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 3794,
+      "code_lines": 547844,
+      "physical_lines": 645758,
+      "utf8_bytes": 31292633
+    },
+    "after": {
+      "modules": 3755,
+      "code_lines": 544065,
+      "physical_lines": 642059,
+      "utf8_bytes": 31197996
+    },
+    "reduction": {
+      "modules": 39,
+      "code_lines": 3779,
+      "physical_lines": 3699,
+      "utf8_bytes": 94637
+    }
+  }
+}

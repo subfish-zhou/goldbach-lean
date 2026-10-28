@@ -1,0 +1,70 @@
+{
+  "whole_tree": {
+    "before": {
+      "modules": 4771,
+      "code_lines": 728665,
+      "physical_lines": 837948,
+      "utf8_bytes": 41323445
+    },
+    "after": {
+      "modules": 4774,
+      "code_lines": 677670,
+      "physical_lines": 785481,
+      "utf8_bytes": 39825858
+    },
+    "reduction": {
+      "modules": -3,
+      "code_lines": 50995,
+      "physical_lines": 52467,
+      "utf8_bytes": 1497587
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 4384,
+      "code_lines": 687911,
+      "physical_lines": 791470,
+      "utf8_bytes": 37114796
+    },
+    "after": {
+      "modules": 4387,
+      "code_lines": 636916,
+      "physical_lines": 739003,
+      "utf8_bytes": 35617209
+    },
+    "reduction": {
+      "modules": -3,
+      "code_lines": 50995,
+      "physical_lines": 52467,
+      "utf8_bytes": 1497587
+    }
+  },
+  "modified_modules": [
+    "Hf4QuadBatch0",
+    "Hf4QuadBatch1",
+    "Hf4QuadBatch10",
+    "Hf4QuadBatch11",
+    "Hf4QuadBatch12",
+    "Hf4QuadBatch2",
+    "Hf4QuadBatch3",
+    "Hf4QuadBatch4",
+    "Hf4QuadBatch5",
+    "Hf4QuadBatch6",
+    "Hf4QuadBatch7",
+    "Hf4QuadBatch8",
+    "Hf4QuadBatch9",
+    "Hf4QuadPanel0"
+  ],
+  "added_modules": [
+    "Hf4QuadCompactDag",
+    "Hf4QuadCompactIntegral",
+    "Hf4QuadCompactKernel",
+    "Hf4QuadRationalModel"
+  ],
+  "removed_modules": [
+    "Hf4QuadDag"
+  ],
+  "unchanged_modules": 4756,
+  "unchanged_panel_bound_statements": 40,
+  "aggregate_and_endpoint_sources_byte_identical": true
+}

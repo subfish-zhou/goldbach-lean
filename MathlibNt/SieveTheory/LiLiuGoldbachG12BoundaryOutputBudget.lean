@@ -143,44 +143,5 @@ theorem fixed_grid_boundaryOutput_budget {ρ a ε : ℝ}
   have hh' := (div_le_iff₀ (sub_pos.mpr hρa)).mp hh
   simpa only [mul_comm] using hh'
 
-theorem exists_fixed_boundaryOutput_constant : ∃ C > 0, ∀ ρ a ε : ℝ,
-    1 < ρ → ρ < a → a ≤ 2 → 0 < ε → ε ≤ 2/15 → ∀ δ : ℝ, 0 < δ →
-    ∃ K : ℕ, 4 ≤ K ∧ ∀ N ≥ K, Even N →
-      boundaryOutput ρ N ε ≤ C*(a-1)*HN N + δ*HN N := by
-  exact ⟨outputConstant,outputConstant_pos,fun _ _ _ hρ hρa ha2 he he2 δ hδ =>
-    fixed_grid_boundaryOutput_budget hρ hρa ha2 he he2 δ hδ⟩
-
-/-- Mesh is selected before N: arbitrarily small actual entire-boundary output. -/
-theorem exists_small_mesh (τ : ℝ) (hτ : 0 < τ) :
-    ∃ ρ a : ℝ, 1 < ρ ∧ ρ < a ∧ a ≤ 2 ∧ ∀ ε : ℝ, 0 < ε → ε ≤ 2/15 →
-      ∃ K : ℕ, 4 ≤ K ∧ ∀ N ≥ K, Even N → boundaryOutput ρ N ε ≤ τ*HN N := by
-  let d : ℝ := min (1/2) (τ/(2*outputConstant))
-  have hd : 0 < d := lt_min (by norm_num) (div_pos hτ (by positivity [outputConstant_pos]))
-  have hd1 : d ≤ 1/2 := min_le_left _ _
-  have hdτ : outputConstant*d ≤ τ/2 := by
-    have h := (le_div_iff₀ (by positivity [outputConstant_pos] : 0 < 2*outputConstant)).mp
-      (show d ≤ τ/(2*outputConstant) from min_le_right _ _)
-    linarith
-  refine ⟨1+d/2,1+d,by linarith,by linarith,by linarith,?_⟩
-  intro ε he he2
-  obtain ⟨K,hK,h⟩ := fixed_grid_boundaryOutput_budget
-    (by linarith : 1 < 1+d/2) (by linarith : 1+d/2 < 1+d)
-    (by linarith : 1+d ≤ 2) he he2 (τ/2) (by positivity)
-  refine ⟨K,hK,?_⟩
-  intro N hN hEven
-  have hout := h N hN hEven
-  have hpay := mul_le_mul_of_nonneg_right hdτ (HN_nonneg N)
-  nlinarith only [hout,hpay]
-
-/-- Expanded actual-output headline: every physical atom and both logarithms are visible. -/
-theorem actual_boundary_output_constant : ∃ C > 0, ∀ ρ a ε : ℝ,
-    1 < ρ → ρ < a → a ≤ 2 → 0 < ε → ε ≤ 2/15 → ∀ δ : ℝ, 0 < δ →
-    ∃ K : ℕ, 4 ≤ K ∧ ∀ N ≥ K, Even N →
-      (400*∑ p ∈ (indices ρ N).biUnion (boundaryCell ρ N ε),
-        goldbachG12NormalizedCoefficient N p.1 *
-          (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) ≤
-        C*(a-1)*(SingularSeries.liuSingularSeries N*(N : ℝ)/Real.log (N : ℝ)^2) +
-          δ*(SingularSeries.liuSingularSeries N*(N : ℝ)/Real.log (N : ℝ)^2) := by
-  simpa only [boundaryOutput,atom,HN] using exists_fixed_boundaryOutput_constant
 
 end G12BandOutput

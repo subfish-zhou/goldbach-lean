@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "panels": 40,
+  "normalized_statements_sha256": "82cadb3b3be4a499fa3d23101616c4885d5fac2a55baf2be48d9789c094b9332",
+  "scope": "All 40 original mass_bounds statement texts equal after whitespace removal"
+}

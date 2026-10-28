@@ -1,0 +1,2621 @@
+[
+  {
+    "module": "Hf4CheckedDagData",
+    "exit_code": 0,
+    "seconds": 1.5453229285776615,
+    "source_sha256": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008",
+    "object_sha256": "36261df41862e266c3d8911cbb07e41b8ebb651d3b4c7744b5f3b155527a8dae",
+    "dependencies": {
+      "Hf4QuadRatCore": "3ad6a6dc66e7d9489aab031d6c3b978736ea491c9340cec90344b1994a9dad4c"
+    },
+    "dependency_contexts": {
+      "Hf4QuadRatCore": "a4725f45a2e35b6d2df02a3e225c78016c0a0b974425bfb321e2e3288203fa79"
+    },
+    "context_sha256": "ca60783cba8cc5731f1c62274fa47e8ace1eb825132b499277df1ee255a04e8d",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4CheckedDagData.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4CheckedDagData.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagData.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4CheckedDagData.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4CheckedDagData.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagData.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagData.resources",
+    "resource_sha256": "108c69b0f46110f7ae561908d53f0bce2edee9d559d1381d8b4eded875dd16ce",
+    "artifact_bundle_sha256": {
+      ".olean": "36261df41862e266c3d8911cbb07e41b8ebb651d3b4c7744b5f3b155527a8dae"
+    }
+  },
+  {
+    "module": "Hf4DirectDagProgram",
+    "exit_code": 0,
+    "seconds": 1.6469468846917152,
+    "source_sha256": "2453aa5d85fa0d28579879e80031074781455f4d049f9357cbb119c01292fe25",
+    "object_sha256": "3bb3e3731e556c0bdcc8c4865ad03478f7eda5db62306ff522e32f54da057b71",
+    "dependencies": {
+      "Hf4CheckedDagData": "36261df41862e266c3d8911cbb07e41b8ebb651d3b4c7744b5f3b155527a8dae"
+    },
+    "dependency_contexts": {
+      "Hf4CheckedDagData": "ca60783cba8cc5731f1c62274fa47e8ace1eb825132b499277df1ee255a04e8d"
+    },
+    "context_sha256": "121e035e82f7668a83f8068083658bcda4ac427d6dfedc4119cb1e2d650c0de2",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDagProgram.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDagProgram.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagProgram.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDagProgram.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDagProgram.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagProgram.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagProgram.resources",
+    "resource_sha256": "efdf1e6625397e63a13e068cfbf9a6dc42547407d1f52f3ad9de9a0e8332ed95",
+    "artifact_bundle_sha256": {
+      ".olean": "3bb3e3731e556c0bdcc8c4865ad03478f7eda5db62306ff522e32f54da057b71"
+    }
+  },
+  {
+    "module": "Hf4ConstructionRounding",
+    "exit_code": 0,
+    "seconds": 1.3946486413478851,
+    "source_sha256": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+    "object_sha256": "fee447f1e5818cba63dc45dbd905f3a323a13d79ac8d0d17bf0ea07c293a37f7",
+    "dependencies": {},
+    "dependency_contexts": {},
+    "context_sha256": "0f9f7aca2483e2acc8f323f55d6798e203df62c99edf19ea4fdf38a533049f33",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionRounding.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionRounding.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionRounding.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionRounding.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionRounding.resources",
+    "resource_sha256": "ca13ea8800638f5da42ec8a4359f4f190d33b24200ec42de3b0ca140c6e4253d",
+    "artifact_bundle_sha256": {
+      ".olean": "fee447f1e5818cba63dc45dbd905f3a323a13d79ac8d0d17bf0ea07c293a37f7"
+    }
+  },
+  {
+    "module": "Hf4ConstructionConditions",
+    "exit_code": 0,
+    "seconds": 1.394977692514658,
+    "source_sha256": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+    "object_sha256": "a234bcbc31a28f267b6b9aeb74bdcfc8f723352c6b0abfdd62733aa641e33dde",
+    "dependencies": {
+      "Hf4ConstructionRounding": "fee447f1e5818cba63dc45dbd905f3a323a13d79ac8d0d17bf0ea07c293a37f7",
+      "Hf4QuadRatCore": "3ad6a6dc66e7d9489aab031d6c3b978736ea491c9340cec90344b1994a9dad4c"
+    },
+    "dependency_contexts": {
+      "Hf4ConstructionRounding": "0f9f7aca2483e2acc8f323f55d6798e203df62c99edf19ea4fdf38a533049f33",
+      "Hf4QuadRatCore": "a4725f45a2e35b6d2df02a3e225c78016c0a0b974425bfb321e2e3288203fa79"
+    },
+    "context_sha256": "8b79e3ebb43685e112e5e43051695cd1440b436c893b941f5c6553d512f00e32",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionConditions.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionConditions.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructionConditions.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructionConditions.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructionConditions.resources",
+    "resource_sha256": "db59c6e374d6be44a118f23e01c6bf6e9c6efbd76a93534221bd4776e22184b5",
+    "artifact_bundle_sha256": {
+      ".olean": "a234bcbc31a28f267b6b9aeb74bdcfc8f723352c6b0abfdd62733aa641e33dde"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveDagData",
+    "exit_code": 0,
+    "seconds": 1.3955853953957558,
+    "source_sha256": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73",
+    "object_sha256": "5ee6770a3a0fdc24b740905253611648589c321f864144fc2ba1f4bb1d7dda51",
+    "dependencies": {
+      "Hf4CheckedDagData": "36261df41862e266c3d8911cbb07e41b8ebb651d3b4c7744b5f3b155527a8dae",
+      "Hf4ConstructionConditions": "a234bcbc31a28f267b6b9aeb74bdcfc8f723352c6b0abfdd62733aa641e33dde"
+    },
+    "dependency_contexts": {
+      "Hf4CheckedDagData": "ca60783cba8cc5731f1c62274fa47e8ace1eb825132b499277df1ee255a04e8d",
+      "Hf4ConstructionConditions": "8b79e3ebb43685e112e5e43051695cd1440b436c893b941f5c6553d512f00e32"
+    },
+    "context_sha256": "9b853e83f3c1227f7828d86766de81c7ca171ef48af3e43c1a035e2f7dcb9384",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveDagData.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveDagData.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveDagData.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveDagData.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagData.resources",
+    "resource_sha256": "1c7e01c9895c36d284d5985371b645d13cb94dda7bb525d5d547b516d37f5d28",
+    "artifact_bundle_sha256": {
+      ".olean": "5ee6770a3a0fdc24b740905253611648589c321f864144fc2ba1f4bb1d7dda51"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveTableData",
+    "exit_code": 0,
+    "seconds": 1.4959699548780918,
+    "source_sha256": "76c8f3a83cef23fd234bdb4fb3e28a69a0255a284d1c434be36fde993ace6f27",
+    "object_sha256": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb",
+    "dependencies": {
+      "Hf4DirectDagProgram": "3bb3e3731e556c0bdcc8c4865ad03478f7eda5db62306ff522e32f54da057b71",
+      "Hf4ConstructiveDagData": "5ee6770a3a0fdc24b740905253611648589c321f864144fc2ba1f4bb1d7dda51"
+    },
+    "dependency_contexts": {
+      "Hf4DirectDagProgram": "121e035e82f7668a83f8068083658bcda4ac427d6dfedc4119cb1e2d650c0de2",
+      "Hf4ConstructiveDagData": "9b853e83f3c1227f7828d86766de81c7ca171ef48af3e43c1a035e2f7dcb9384"
+    },
+    "context_sha256": "02e8470bd34b71b68d27ef5bc3b9e172b92d742b61edec98af51e0ab3cc37ee9",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableData.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableData.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableData.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableData.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableData.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableData.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableData.resources",
+    "resource_sha256": "38b751388cbc60eb418c06a543d4080070876742f2e8c4094da77e7e1ff286e5",
+    "artifact_bundle_sha256": {
+      ".olean": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveTableChecks",
+    "exit_code": 0,
+    "seconds": 152.07015676051378,
+    "source_sha256": "4bfae798d1e436c0d86e939b31553ac8adeba0f8e10a984a544b1459e26eec6d",
+    "object_sha256": "db4ec52ec0d011380a79f4607cf1a67b25e2165645ff2fde2e3a563694a516cf",
+    "dependencies": {
+      "Hf4ConstructiveTableData": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb"
+    },
+    "dependency_contexts": {
+      "Hf4ConstructiveTableData": "02e8470bd34b71b68d27ef5bc3b9e172b92d742b61edec98af51e0ab3cc37ee9"
+    },
+    "context_sha256": "fb53b946bdc3fa1f1c9111e416144051644e94be37c76d331021a1f35ef0ba75",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableChecks.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableChecks.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableChecks.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableChecks.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.resources",
+    "resource_sha256": "58eebb5a78aabf4cddb021bda659a40d4431c4d70ecc29323ce38b8c3ca5d059",
+    "artifact_bundle_sha256": {
+      ".olean": "db4ec52ec0d011380a79f4607cf1a67b25e2165645ff2fde2e3a563694a516cf"
+    }
+  },
+  {
+    "module": "Hf4CheckedDagSoundness",
+    "exit_code": 0,
+    "seconds": 2.4976760372519493,
+    "source_sha256": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51",
+    "object_sha256": "64299a08e3dedb33fead45018903b85a608f0c9d9465c071181e0ccbd376f87a",
+    "dependencies": {
+      "Hf4CheckedDagData": "36261df41862e266c3d8911cbb07e41b8ebb651d3b4c7744b5f3b155527a8dae",
+      "Hf4QuadExactOperations": "b4047305d64d5f17a97a6a26bb9d73386711e31d86efadfa38c8465e9e0930d6"
+    },
+    "dependency_contexts": {
+      "Hf4CheckedDagData": "ca60783cba8cc5731f1c62274fa47e8ace1eb825132b499277df1ee255a04e8d",
+      "Hf4QuadExactOperations": "9374a230a63a1e39521c0fa06056d551bb962e4c5af36217c90e4496c2dc9387"
+    },
+    "context_sha256": "613ef89150fc78bf57389b465dc99861fe6e04a7391ea40c4dce84447af5fc10",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4CheckedDagSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4CheckedDagSoundness.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagSoundness.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4CheckedDagSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4CheckedDagSoundness.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagSoundness.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4CheckedDagSoundness.resources",
+    "resource_sha256": "a24d0bf21d3e6ba4f6a3a8cf84fd9da2b6bfcbffa212ff8a6fffc236cca30eb1",
+    "artifact_bundle_sha256": {
+      ".olean": "64299a08e3dedb33fead45018903b85a608f0c9d9465c071181e0ccbd376f87a"
+    }
+  },
+  {
+    "module": "Hf4DirectCoordinates",
+    "exit_code": 0,
+    "seconds": 3.3010941483080387,
+    "source_sha256": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+    "object_sha256": "6be2b5cf39fa5cc53c160aa1af739f6075ab31a71a25956041f6fa2c5e1fec37",
+    "dependencies": {
+      "Hf4QuadCompactKernelCore": "5d1b22ba9f5ef13d4481103b7fa0756611c9b49d66180613cac407f721d1c4e6"
+    },
+    "dependency_contexts": {
+      "Hf4QuadCompactKernelCore": "12cd20b495291632fea93137711d13090b88705b6637016da954753cf4387fa5"
+    },
+    "context_sha256": "148ec85c39a9391f83bce0e52220001674b415ab83db0d23df5d2af88a6d2544",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectCoordinates.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectCoordinates.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectCoordinates.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectCoordinates.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.resources",
+    "resource_sha256": "4c16f19d5ef079e926545be3feeff07c561e25f7190fda46bf25b342390e7aca",
+    "artifact_bundle_sha256": {
+      ".olean": "6be2b5cf39fa5cc53c160aa1af739f6075ab31a71a25956041f6fa2c5e1fec37"
+    }
+  },
+  {
+    "module": "Hf4DirectKernel",
+    "exit_code": 0,
+    "seconds": 2.7972445003688335,
+    "source_sha256": "c9615839b1184c70a57c82af09a26f0a471d27627f8e7f8dfaa33e4106cec581",
+    "object_sha256": "8ab571036e5e3be01937a62265c0f5b72a4b74b231f8c55400bd00cbd5216737",
+    "dependencies": {
+      "Hf4DirectCoordinates": "6be2b5cf39fa5cc53c160aa1af739f6075ab31a71a25956041f6fa2c5e1fec37"
+    },
+    "dependency_contexts": {
+      "Hf4DirectCoordinates": "148ec85c39a9391f83bce0e52220001674b415ab83db0d23df5d2af88a6d2544"
+    },
+    "context_sha256": "2954e44aa790643cc87b4288c00f9238b8249e4e095d147a3bd0ae8c37638f47",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectKernel.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectKernel.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectKernel.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectKernel.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectKernel.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectKernel.log",
+    "log_sha256": "eebd5fa7041a19c9b38b6d78a8664c705669d9ea53b3c39170668b54404ceee3",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectKernel.resources",
+    "resource_sha256": "cdaaa95975a249e7587cba852c149ec7a0c39ae62f9870c069acd32cd8df09f1",
+    "artifact_bundle_sha256": {
+      ".olean": "8ab571036e5e3be01937a62265c0f5b72a4b74b231f8c55400bd00cbd5216737"
+    }
+  },
+  {
+    "module": "Hf4DirectDag",
+    "exit_code": 0,
+    "seconds": 4.300756376236677,
+    "source_sha256": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f",
+    "object_sha256": "1ffe49c07d41f53825455b74808cdff0d5100953a2bb42c0441bde60b923ce6d",
+    "dependencies": {
+      "Hf4DirectKernel": "8ab571036e5e3be01937a62265c0f5b72a4b74b231f8c55400bd00cbd5216737"
+    },
+    "dependency_contexts": {
+      "Hf4DirectKernel": "2954e44aa790643cc87b4288c00f9238b8249e4e095d147a3bd0ae8c37638f47"
+    },
+    "context_sha256": "f2c68103fcb21638a60dceb2398c7759e1fccee29c8b181aaba05b22157f8315",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDag.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDag.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDag.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDag.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.resources",
+    "resource_sha256": "150643b9475b3fb9a18eaf8f5701b1a00ca09750996de2187c32953bff587e98",
+    "artifact_bundle_sha256": {
+      ".olean": "1ffe49c07d41f53825455b74808cdff0d5100953a2bb42c0441bde60b923ce6d"
+    }
+  },
+  {
+    "module": "Hf4DirectDagSemantics",
+    "exit_code": 0,
+    "seconds": 36.881130289286375,
+    "source_sha256": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995",
+    "object_sha256": "aec3cdb10d1ecd74dcf60264301f7d90867dcf88b83ad0d9801c57bf96779fa5",
+    "dependencies": {
+      "Hf4CheckedDagSoundness": "64299a08e3dedb33fead45018903b85a608f0c9d9465c071181e0ccbd376f87a",
+      "Hf4DirectDagProgram": "3bb3e3731e556c0bdcc8c4865ad03478f7eda5db62306ff522e32f54da057b71",
+      "Hf4DirectDag": "1ffe49c07d41f53825455b74808cdff0d5100953a2bb42c0441bde60b923ce6d"
+    },
+    "dependency_contexts": {
+      "Hf4CheckedDagSoundness": "613ef89150fc78bf57389b465dc99861fe6e04a7391ea40c4dce84447af5fc10",
+      "Hf4DirectDagProgram": "121e035e82f7668a83f8068083658bcda4ac427d6dfedc4119cb1e2d650c0de2",
+      "Hf4DirectDag": "f2c68103fcb21638a60dceb2398c7759e1fccee29c8b181aaba05b22157f8315"
+    },
+    "context_sha256": "f5dbf416b700b0dcf2949206f9afc0b686bebc29254a26786fce0f4325fdf798",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDagSemantics.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDagSemantics.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSemantics.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDagSemantics.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDagSemantics.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSemantics.log",
+    "log_sha256": "27c051727055278f4985d6600b0f6a517220ca46eed70b4b0cc06cbe9c04db29",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSemantics.resources",
+    "resource_sha256": "b7a430e63cd476116172196a78215da425105e3944f908379e19747f303d1aa9",
+    "artifact_bundle_sha256": {
+      ".olean": "aec3cdb10d1ecd74dcf60264301f7d90867dcf88b83ad0d9801c57bf96779fa5"
+    }
+  },
+  {
+    "module": "Hf4DirectDagSeedSoundness",
+    "exit_code": 0,
+    "seconds": 15.58253464475274,
+    "source_sha256": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f",
+    "object_sha256": "3766642e81067fd48f8b2edcafddcbb8d79f7e9baed5e1a6a00cab6782fbd319",
+    "dependencies": {
+      "Hf4DirectDagSemantics": "aec3cdb10d1ecd74dcf60264301f7d90867dcf88b83ad0d9801c57bf96779fa5",
+      "Hf4QuadRationalModel": "6e426ed8ddd5a93b29c9153fff9169a521436399195c7288b905889f4a2fa30b"
+    },
+    "dependency_contexts": {
+      "Hf4DirectDagSemantics": "f5dbf416b700b0dcf2949206f9afc0b686bebc29254a26786fce0f4325fdf798",
+      "Hf4QuadRationalModel": "e41841eed180f4e2ab727e81be239f0da5460be963e2560121b0cdd1ece0f456"
+    },
+    "context_sha256": "13dadf7bbfcfe85f26e7f496239d68e358ab4fec2f593d7f68f6f1c1e6ade8c5",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDagSeedSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDagSeedSoundness.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSeedSoundness.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDagSeedSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDagSeedSoundness.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSeedSoundness.log",
+    "log_sha256": "2c3d8a86fbc37121d242a7ea855e41f6607641fb4e5776e9c6135447e09129e2",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDagSeedSoundness.resources",
+    "resource_sha256": "88c855050ac9c31cc3cce66dffba6e7fbc3a0ef5ceb2efb20a44cb791b6c7211",
+    "artifact_bundle_sha256": {
+      ".olean": "3766642e81067fd48f8b2edcafddcbb8d79f7e9baed5e1a6a00cab6782fbd319"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveDagSoundness",
+    "exit_code": 0,
+    "seconds": 2.4023163691163063,
+    "source_sha256": "b1e42a2d447f7783a38041298fa94ed17f0fb5095bd3d5dd3e78baf2ca21dc95",
+    "object_sha256": "fbb9a860f658a003ec53b304e0d07b01cbe9d240d7ad9fc801c5b04aa30e4d9c",
+    "dependencies": {
+      "Hf4ConstructiveDagData": "5ee6770a3a0fdc24b740905253611648589c321f864144fc2ba1f4bb1d7dda51",
+      "Hf4CheckedDagSoundness": "64299a08e3dedb33fead45018903b85a608f0c9d9465c071181e0ccbd376f87a"
+    },
+    "dependency_contexts": {
+      "Hf4ConstructiveDagData": "9b853e83f3c1227f7828d86766de81c7ca171ef48af3e43c1a035e2f7dcb9384",
+      "Hf4CheckedDagSoundness": "613ef89150fc78bf57389b465dc99861fe6e04a7391ea40c4dce84447af5fc10"
+    },
+    "context_sha256": "aacd0f0ca507bc959b5e191bb91b6bfdfc55dc0d59fe0a0342e2d4bfd7cfec8c",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveDagSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveDagSoundness.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagSoundness.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveDagSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveDagSoundness.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagSoundness.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveDagSoundness.resources",
+    "resource_sha256": "885d14399f1568a71ebe4c00833bf4acc07c0a7192ac5e532cc3ee58e14d62c8",
+    "artifact_bundle_sha256": {
+      ".olean": "fbb9a860f658a003ec53b304e0d07b01cbe9d240d7ad9fc801c5b04aa30e4d9c"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveOriginalSoundness",
+    "exit_code": 0,
+    "seconds": 2.649347096681595,
+    "source_sha256": "39f9dad7e78264b8c12471d8cc676f36b08075923c2886b9756e9c8b964a6d09",
+    "object_sha256": "598e9aac4af3a77d256fe8a74fa36882c14ea2fb7c24b0131844e7422420c4b4",
+    "dependencies": {
+      "Hf4DirectDagSeedSoundness": "3766642e81067fd48f8b2edcafddcbb8d79f7e9baed5e1a6a00cab6782fbd319",
+      "Hf4ConstructiveDagSoundness": "fbb9a860f658a003ec53b304e0d07b01cbe9d240d7ad9fc801c5b04aa30e4d9c"
+    },
+    "dependency_contexts": {
+      "Hf4DirectDagSeedSoundness": "13dadf7bbfcfe85f26e7f496239d68e358ab4fec2f593d7f68f6f1c1e6ade8c5",
+      "Hf4ConstructiveDagSoundness": "aacd0f0ca507bc959b5e191bb91b6bfdfc55dc0d59fe0a0342e2d4bfd7cfec8c"
+    },
+    "context_sha256": "7de9b08bcd13a54a2b894a7e588f73b995280709d1b035e46dab99694b34b502",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveOriginalSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveOriginalSoundness.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveOriginalSoundness.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveOriginalSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveOriginalSoundness.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveOriginalSoundness.log",
+    "log_sha256": "6b46f2454f04bcffbbd1e0710a607597b210858644cb2f290983444c2c1d8d74",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveOriginalSoundness.resources",
+    "resource_sha256": "7baef90e19d94bee393db132ff9c7031fb78ee48490aa0ee19ea960a57837a4c",
+    "artifact_bundle_sha256": {
+      ".olean": "598e9aac4af3a77d256fe8a74fa36882c14ea2fb7c24b0131844e7422420c4b4"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveTableSoundness",
+    "exit_code": 0,
+    "seconds": 11.867941822856665,
+    "source_sha256": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff",
+    "object_sha256": "437af8b9d639cb8d6fdf9a9c14e10893ed1d8e8029019b3b56b8043438016650",
+    "dependencies": {
+      "Hf4ConstructiveTableData": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb",
+      "Hf4ConstructiveOriginalSoundness": "598e9aac4af3a77d256fe8a74fa36882c14ea2fb7c24b0131844e7422420c4b4",
+      "Hf4QuadCompactIntegral": "918b1423b38f3369b151852b0af310058fc76fc7256dfe0b9a5d03b595eed181"
+    },
+    "dependency_contexts": {
+      "Hf4ConstructiveTableData": "02e8470bd34b71b68d27ef5bc3b9e172b92d742b61edec98af51e0ab3cc37ee9",
+      "Hf4ConstructiveOriginalSoundness": "7de9b08bcd13a54a2b894a7e588f73b995280709d1b035e46dab99694b34b502",
+      "Hf4QuadCompactIntegral": "abfc584bed35f5d8e8fdb76e759d466e82ecd89c69cae095f2cb331a8c94db83"
+    },
+    "context_sha256": "0a3a72efbb6996b74ace19baddb212983130d5fe73a1045fdf723c10ba05651d",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableSoundness.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableSoundness.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableSoundness.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.log",
+    "log_sha256": "a9bb7fcc8fd1edfe3c35425f3efcb7eb7e79170ce906e4cec892153a802233b1",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.resources",
+    "resource_sha256": "7181489abcf03c538f675b5eafc028c82d5fde4e75c447d243dd25edeb3701cc",
+    "artifact_bundle_sha256": {
+      ".olean": "437af8b9d639cb8d6fdf9a9c14e10893ed1d8e8029019b3b56b8043438016650"
+    }
+  },
+  {
+    "module": "Hf4ConstructiveTablePublic",
+    "exit_code": 0,
+    "seconds": 13.822733357548714,
+    "source_sha256": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee",
+    "object_sha256": "150d040e93836843d5a7eadb4709952665fe5ee7aab880d7028e6a509a72515e",
+    "dependencies": {
+      "Hf4ConstructiveTableChecks": "db4ec52ec0d011380a79f4607cf1a67b25e2165645ff2fde2e3a563694a516cf",
+      "Hf4ConstructiveTableSoundness": "437af8b9d639cb8d6fdf9a9c14e10893ed1d8e8029019b3b56b8043438016650"
+    },
+    "dependency_contexts": {
+      "Hf4ConstructiveTableChecks": "fb53b946bdc3fa1f1c9111e416144051644e94be37c76d331021a1f35ef0ba75",
+      "Hf4ConstructiveTableSoundness": "0a3a72efbb6996b74ace19baddb212983130d5fe73a1045fdf723c10ba05651d"
+    },
+    "context_sha256": "15ca7e62d4412d1818e1a6a736e087192481f853971f508772672938af96dc71",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTablePublic.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTablePublic.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTablePublic.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTablePublic.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTablePublic.resources",
+    "resource_sha256": "9a08e884d65a18d29a4b839a33f2a6c7779a0533138782d4c21496a3d42c87ab",
+    "artifact_bundle_sha256": {
+      ".olean": "150d040e93836843d5a7eadb4709952665fe5ee7aab880d7028e6a509a72515e"
+    }
+  },
+  {
+    "module": "Hf4QuadAggregate",
+    "exit_code": 0,
+    "seconds": 7.309156086295843,
+    "source_sha256": "09174c493913f5d9d1221cc8a1f0dddd9f25b3f2549f26832d10996b2b7f2d0b",
+    "object_sha256": "cdb232eed89741bfbd8998894221fcaa0d3b7e8cc07ceb0a97612860c9d5873b",
+    "dependencies": {
+      "Hf4ConstructiveTablePublic": "150d040e93836843d5a7eadb4709952665fe5ee7aab880d7028e6a509a72515e"
+    },
+    "dependency_contexts": {
+      "Hf4ConstructiveTablePublic": "15ca7e62d4412d1818e1a6a736e087192481f853971f508772672938af96dc71"
+    },
+    "context_sha256": "8c11c640d8d46f17743efd340210c1bd3c7e57a5a8fc1fd2047e8dd3f41006e3",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4QuadAggregate.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4QuadAggregate.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadAggregate.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4QuadAggregate.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4QuadAggregate.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadAggregate.log",
+    "log_sha256": "9f994a5a7031bfd4fb6a3b82da80503955b43595b4f52397b510d7ab2fe5f84a",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadAggregate.resources",
+    "resource_sha256": "48c21b69831c97c62e2a0966fdd0b5454c8d5098460e1ed0da2396af06e8101a",
+    "artifact_bundle_sha256": {
+      ".olean": "cdb232eed89741bfbd8998894221fcaa0d3b7e8cc07ceb0a97612860c9d5873b"
+    }
+  },
+  {
+    "module": "Hf4QuadPublic",
+    "exit_code": 0,
+    "seconds": 3.4487719424068928,
+    "source_sha256": "0e8599b424a09995246912b310decd856bf3d107d82eda9ff50b89e7138dc999",
+    "object_sha256": "eeaba3e19956d2f81cc19e1cade93bdc7154d163aee85a3a624cd0af4fdec8e3",
+    "dependencies": {
+      "Hf4QuadAggregate": "cdb232eed89741bfbd8998894221fcaa0d3b7e8cc07ceb0a97612860c9d5873b"
+    },
+    "dependency_contexts": {
+      "Hf4QuadAggregate": "8c11c640d8d46f17743efd340210c1bd3c7e57a5a8fc1fd2047e8dd3f41006e3"
+    },
+    "context_sha256": "9a10b26444a6d93a83f49a25019d6cba2a5b3b97d1d09abbb8a1d02d91c0ac6f",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4QuadPublic.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4QuadPublic.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4QuadPublic.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4QuadPublic.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.log",
+    "log_sha256": "8a64503b32b8f95dfb04af8d50932ab25fe0f0a6c7e8d1cdedade47693cb1a2d",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.resources",
+    "resource_sha256": "8d12c3e1f7605b3ab605a607691076b2d4e5f5c0f1c744ee9a35a966d9e77fec",
+    "artifact_bundle_sha256": {
+      ".olean": "eeaba3e19956d2f81cc19e1cade93bdc7154d163aee85a3a624cd0af4fdec8e3"
+    }
+  },
+  {
+    "module": "Hf4AmountCore",
+    "exit_code": 0,
+    "seconds": 4.753239318728447,
+    "source_sha256": "449003813583411856a34695fed3ffc7a2479c61b03a174e079e1c5810cf0b58",
+    "object_sha256": "5efc5f1642dfee16d4dbdbe87190e529669e4836e8dc4a59eccde49dd1c05d40",
+    "dependencies": {
+      "Hf4QuadPublic": "eeaba3e19956d2f81cc19e1cade93bdc7154d163aee85a3a624cd0af4fdec8e3",
+      "Hf4DEOriginalMass": "9aee4087d3903bac176fe48dca355cb0406f7de095b2e386f0ef30025f0d3f34",
+      "Hf4TargetVariation": "610274449f818eecbf523c06ae947778143cf347f0621c1041ff249587138e1e"
+    },
+    "dependency_contexts": {
+      "Hf4QuadPublic": "9a10b26444a6d93a83f49a25019d6cba2a5b3b97d1d09abbb8a1d02d91c0ac6f",
+      "Hf4DEOriginalMass": "7400478f6739a2f94e3c159c6cfc33ce63d9e5943d78af62b7a1693d3c928e76",
+      "Hf4TargetVariation": "78159f4a1d3ca6eb9dd9676fad90744e5ed5d5e8239fd25d4a6e0646924c24bb"
+    },
+    "context_sha256": "aef5398b02852d5e56043571461859c31b800ec6fab7b7adf8cd1d1dd89040c4",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountCore.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountCore.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountCore.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountCore.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.resources",
+    "resource_sha256": "05c4ea2b93856a4f291946b715038bf86525f91e6f25203f299334096458a79c",
+    "artifact_bundle_sha256": {
+      ".olean": "5efc5f1642dfee16d4dbdbe87190e529669e4836e8dc4a59eccde49dd1c05d40"
+    }
+  },
+  {
+    "module": "Hf4AmountPublic",
+    "exit_code": 0,
+    "seconds": 3.449769988656044,
+    "source_sha256": "488a971117ca2fbd091d2ee7e2be20fb200825a1aa051d76d29662b732b71ab6",
+    "object_sha256": "2c22da8b3e104795d1a6cd68d78824cdeae035bc122df1e2fe13281caae4a10b",
+    "dependencies": {
+      "Hf4AmountCore": "5efc5f1642dfee16d4dbdbe87190e529669e4836e8dc4a59eccde49dd1c05d40"
+    },
+    "dependency_contexts": {
+      "Hf4AmountCore": "aef5398b02852d5e56043571461859c31b800ec6fab7b7adf8cd1d1dd89040c4"
+    },
+    "context_sha256": "bac345baa97b689af02f56b1a61707099efc9282b5ae7dfa8caef1a9b40de4e9",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountPublic.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountPublic.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountPublic.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountPublic.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.log",
+    "log_sha256": "28d59d41d6ea2791a6c893dbfcfc2abd61e9cbb9368c40aadb44e67555b742bf",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.resources",
+    "resource_sha256": "fb579e57f525262c089d895de79e78af153b771fbd20476f2a59312177dd48f1",
+    "artifact_bundle_sha256": {
+      ".olean": "2c22da8b3e104795d1a6cd68d78824cdeae035bc122df1e2fe13281caae4a10b"
+    }
+  },
+  {
+    "module": "Hf4ActualLog",
+    "exit_code": 0,
+    "seconds": 6.005576379597187,
+    "source_sha256": "0bc29e96ef0a7c5ffc5751d02711b6a251f5b3aae08a759b7551264d6572c603",
+    "object_sha256": "a5fdbb4a3d70787ef2fab03948077fb2c7b03ed1a34eb4471c83dadc3b806f69",
+    "dependencies": {
+      "Hf4AmountPublic": "2c22da8b3e104795d1a6cd68d78824cdeae035bc122df1e2fe13281caae4a10b"
+    },
+    "dependency_contexts": {
+      "Hf4AmountPublic": "bac345baa97b689af02f56b1a61707099efc9282b5ae7dfa8caef1a9b40de4e9"
+    },
+    "context_sha256": "aee571649ed4d02fd7b9d17ffba75cb783e9a01f73719e04085304aa60ed2b60",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualLog.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualLog.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualLog.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualLog.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualLog.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualLog.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualLog.resources",
+    "resource_sha256": "9d27db4247044d8f9bf0bc618ff5ecb2ba5b2c1a84cca50d194b0626564db765",
+    "artifact_bundle_sha256": {
+      ".olean": "a5fdbb4a3d70787ef2fab03948077fb2c7b03ed1a34eb4471c83dadc3b806f69"
+    }
+  },
+  {
+    "module": "Hf4ActualOuter",
+    "exit_code": 0,
+    "seconds": 5.755537580698729,
+    "source_sha256": "b974628afe8bb494ebb1341e3ebf6126864bac2b21bdfcec6d567bc92eca5741",
+    "object_sha256": "ce37c2f787ddd2029e57e2c0927791e67f885a416f816063bc6fab8c3f1f9256",
+    "dependencies": {
+      "Hf4ActualLog": "a5fdbb4a3d70787ef2fab03948077fb2c7b03ed1a34eb4471c83dadc3b806f69"
+    },
+    "dependency_contexts": {
+      "Hf4ActualLog": "aee571649ed4d02fd7b9d17ffba75cb783e9a01f73719e04085304aa60ed2b60"
+    },
+    "context_sha256": "daf2398e7710a6f783455a1c5baa398b82845b190d2bbfb11f791bdefce5b1e5",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualOuter.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualOuter.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualOuter.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualOuter.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualOuter.resources",
+    "resource_sha256": "a8a64bdab81890b05728174876c599902656e0c1b609dabad498af04f2f19878",
+    "artifact_bundle_sha256": {
+      ".olean": "ce37c2f787ddd2029e57e2c0927791e67f885a416f816063bc6fab8c3f1f9256"
+    }
+  },
+  {
+    "module": "Hf4ActualNumerator",
+    "exit_code": 0,
+    "seconds": 5.303926069289446,
+    "source_sha256": "91582626e453e93bcf1e8ccbd1d3ee2afebaa7ef72d342e806b6c15582c7bd44",
+    "object_sha256": "0fa8acd69c808af6f2ce174925165dbec0021c65c45a3bf2f8531789bdb7544c",
+    "dependencies": {
+      "Hf4ActualOuter": "ce37c2f787ddd2029e57e2c0927791e67f885a416f816063bc6fab8c3f1f9256"
+    },
+    "dependency_contexts": {
+      "Hf4ActualOuter": "daf2398e7710a6f783455a1c5baa398b82845b190d2bbfb11f791bdefce5b1e5"
+    },
+    "context_sha256": "4f5a50acbf49685a7bdffc01deee21586accbedb1d8524f147740e7741230ad7",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualNumerator.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualNumerator.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualNumerator.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualNumerator.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.resources",
+    "resource_sha256": "c14d698e8bac1cff2fa61303242bed26e89f35e17a63b9697b8fefcd4f9d9eb1",
+    "artifact_bundle_sha256": {
+      ".olean": "0fa8acd69c808af6f2ce174925165dbec0021c65c45a3bf2f8531789bdb7544c"
+    }
+  },
+  {
+    "module": "Hf4ActualDE",
+    "exit_code": 0,
+    "seconds": 4.451769571751356,
+    "source_sha256": "c6563fe62c61efd1c61c0636e5f2fcd4d8564c2ae3406490d000caeb8b29473b",
+    "object_sha256": "c5cae56522f005b807f7e5290190feed39a79262d05f703c71138853568a0c2f",
+    "dependencies": {
+      "Hf4ActualNumerator": "0fa8acd69c808af6f2ce174925165dbec0021c65c45a3bf2f8531789bdb7544c"
+    },
+    "dependency_contexts": {
+      "Hf4ActualNumerator": "4f5a50acbf49685a7bdffc01deee21586accbedb1d8524f147740e7741230ad7"
+    },
+    "context_sha256": "df2ff4ef03b5c2d3088cb8fc7e1b98ea783290c82f00634027534f901d9d4ee9",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualDE.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualDE.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualDE.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualDE.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.resources",
+    "resource_sha256": "a13d4b68cf71292854a0eef721775a61b0b874ecb2542c15df173916478a66a9",
+    "artifact_bundle_sha256": {
+      ".olean": "c5cae56522f005b807f7e5290190feed39a79262d05f703c71138853568a0c2f"
+    }
+  },
+  {
+    "module": "Hf4ActualTerminal",
+    "exit_code": 0,
+    "seconds": 4.201106034219265,
+    "source_sha256": "ad1200c29e147c4b903dd528ae32fcfd3724c77c63368c66888d3b36a437204c",
+    "object_sha256": "c2907e0b6b1d48bb592dbfd721a248ed73e3188e2c5dd9906a8568a8a6d4ee3d",
+    "dependencies": {
+      "Hf4ActualDE": "c5cae56522f005b807f7e5290190feed39a79262d05f703c71138853568a0c2f"
+    },
+    "dependency_contexts": {
+      "Hf4ActualDE": "df2ff4ef03b5c2d3088cb8fc7e1b98ea783290c82f00634027534f901d9d4ee9"
+    },
+    "context_sha256": "9907d46ba26c582047c1089c6256f976b851f034a71fb60446ca031dd5f12890",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualTerminal.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualTerminal.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualTerminal.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualTerminal.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualTerminal.resources",
+    "resource_sha256": "a3c44aa0e30b1694a52a93fe23c6a60675a09e4626c7ab8029986aa3a2b121ed",
+    "artifact_bundle_sha256": {
+      ".olean": "c2907e0b6b1d48bb592dbfd721a248ed73e3188e2c5dd9906a8568a8a6d4ee3d"
+    }
+  },
+  {
+    "module": "Hf4ActualRoute",
+    "exit_code": 0,
+    "seconds": 3.5986423790454865,
+    "source_sha256": "8b90795173258347451721254121d4b32a71072fb8f17cc10fd2e81565981514",
+    "object_sha256": "2b25695ffe5f26e6d642dd9324cd3a29b54a4537e08f7ba7b1746d57aab76fd2",
+    "dependencies": {
+      "Hf4ActualTerminal": "c2907e0b6b1d48bb592dbfd721a248ed73e3188e2c5dd9906a8568a8a6d4ee3d"
+    },
+    "dependency_contexts": {
+      "Hf4ActualTerminal": "9907d46ba26c582047c1089c6256f976b851f034a71fb60446ca031dd5f12890"
+    },
+    "context_sha256": "3ddf7bc0b4ffc1d09918980be61739b87fec4c95cdbe6cfe225059f6c9cab229",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualRoute.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualRoute.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualRoute.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualRoute.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualRoute.resources",
+    "resource_sha256": "4675f83300d4c90f63cb73d58e74338bef9549091e72792eef419946f9ac3a6b",
+    "artifact_bundle_sha256": {
+      ".olean": "2b25695ffe5f26e6d642dd9324cd3a29b54a4537e08f7ba7b1746d57aab76fd2"
+    }
+  },
+  {
+    "module": "Hf4ActualPublic",
+    "exit_code": 0,
+    "seconds": 3.5491749234497547,
+    "source_sha256": "ed11ac8bd837a9319cba392eecf6a108aef194739c38c8289cd1b8a436e53421",
+    "object_sha256": "8c6e48a7b5a9840030f3a1b4e1d43ef0a89b7aba692e249c55d3b7e4328719ee",
+    "dependencies": {
+      "Hf4ActualRoute": "2b25695ffe5f26e6d642dd9324cd3a29b54a4537e08f7ba7b1746d57aab76fd2"
+    },
+    "dependency_contexts": {
+      "Hf4ActualRoute": "3ddf7bc0b4ffc1d09918980be61739b87fec4c95cdbe6cfe225059f6c9cab229"
+    },
+    "context_sha256": "b3886fcd5df2eb30101c1a99346d6671d646e39c073908b52c745c1dafa9a87d",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualPublic.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualPublic.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualPublic.olean",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualPublic.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.log",
+    "log_sha256": "56d805100b5d65b7ad96711ac9c3fb6e782176b488cee0a8483049ded6f8286d",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.resources",
+    "resource_sha256": "9b1b8f75be9d42aab8caf3473c76fc180847dc307acc49651d77671ffde47f2b",
+    "artifact_bundle_sha256": {
+      ".olean": "8c6e48a7b5a9840030f3a1b4e1d43ef0a89b7aba692e249c55d3b7e4328719ee"
+    }
+  },
+  {
+    "module": "W06SigmaV2",
+    "exit_code": 0,
+    "seconds": 4.953797124326229,
+    "source_sha256": "8d1cc14a0c18a591feb136c369dbf0405a7a402018fc2054e341eece4585f0a2",
+    "object_sha256": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3",
+    "dependencies": {
+      "Hf4QuadAggregate": "cdb232eed89741bfbd8998894221fcaa0d3b7e8cc07ceb0a97612860c9d5873b",
+      "Hf4DEDenominator": "c0983291f1cf246149424f2c7336a8ea0d4a85166665ff94e71ba108ed9b2865"
+    },
+    "dependency_contexts": {
+      "Hf4QuadAggregate": "8c11c640d8d46f17743efd340210c1bd3c7e57a5a8fc1fd2047e8dd3f41006e3",
+      "Hf4DEDenominator": "794051c60c20ff7c4ca72022430c11647356f2a90f7592f7aa982ad9933060e3"
+    },
+    "context_sha256": "477366dbd180c09b4d4b1879715a8f4d34a344e664909d156b6e709ee43259c0",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06SigmaV2.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06SigmaV2.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06SigmaV2.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06SigmaV2.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06SigmaV2.resources",
+    "resource_sha256": "91d0873468576882fc42e3829c2107028e7b39257b8c538265f8337e8f2f6f87",
+    "artifact_bundle_sha256": {
+      ".olean": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3"
+    }
+  },
+  {
+    "module": "W06Decomposition",
+    "exit_code": 0,
+    "seconds": 4.651465114206076,
+    "source_sha256": "5c80fd2e0e4dd3cc88a3a8afe0f4e541cf2d1cf8bd83dc405d79ed49c09a4253",
+    "object_sha256": "5cb29722c4c15d3a91f513ad8a0a72284d69b006625571fedc4d9a82b833d491",
+    "dependencies": {
+      "W06SigmaV2": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3",
+      "CoupledEndpointLog": "89bc2f439bba0b557acd63af26ce112f7e01dce2dfd7b9f5ac9d5fbc5ba83b69"
+    },
+    "dependency_contexts": {
+      "W06SigmaV2": "477366dbd180c09b4d4b1879715a8f4d34a344e664909d156b6e709ee43259c0",
+      "CoupledEndpointLog": "6a09e0d5bcb53e3c56dfdcd48338ad3f8b112558a5246c76d4765db93c3bd9ee"
+    },
+    "context_sha256": "9aa5169933bf3b2fa7bde275e7e73ad6920118219e98c8f9b56bd7621d5512b9",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Decomposition.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Decomposition.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Decomposition.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Decomposition.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Decomposition.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Decomposition.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Decomposition.resources",
+    "resource_sha256": "156597fa4edf200142ac4ce313a9028e0a1f8076beb7c534e820147ca920eb9a",
+    "artifact_bundle_sha256": {
+      ".olean": "5cb29722c4c15d3a91f513ad8a0a72284d69b006625571fedc4d9a82b833d491"
+    }
+  },
+  {
+    "module": "W06Consumers",
+    "exit_code": 0,
+    "seconds": 4.851260080933571,
+    "source_sha256": "7cdd9d06ae63e20ce39112b7eb3ca41275217bcdd6e169729d56dd74f6909730",
+    "object_sha256": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e",
+    "dependencies": {
+      "W06Decomposition": "5cb29722c4c15d3a91f513ad8a0a72284d69b006625571fedc4d9a82b833d491"
+    },
+    "dependency_contexts": {
+      "W06Decomposition": "9aa5169933bf3b2fa7bde275e7e73ad6920118219e98c8f9b56bd7621d5512b9"
+    },
+    "context_sha256": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Consumers.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Consumers.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Consumers.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Consumers.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Consumers.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Consumers.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Consumers.resources",
+    "resource_sha256": "a7e372631cbb6939eb956a5d74d89996dfae6d8c1e043ac0c0dcf7710defa16a",
+    "artifact_bundle_sha256": {
+      ".olean": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e"
+    }
+  },
+  {
+    "module": "W06Audit",
+    "exit_code": 0,
+    "seconds": 3.450749881565571,
+    "source_sha256": "5e96bf3ac65e9bd4b58306159e5fa882caa4ad1dd65b432986e7c1f82fc5bbb5",
+    "object_sha256": "701d988441adfbaad6c04b92e31a2d06984b1532c74aef514fda25a4f7c6e38d",
+    "dependencies": {
+      "W06SigmaV2": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3",
+      "W06Decomposition": "5cb29722c4c15d3a91f513ad8a0a72284d69b006625571fedc4d9a82b833d491",
+      "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e"
+    },
+    "dependency_contexts": {
+      "W06SigmaV2": "477366dbd180c09b4d4b1879715a8f4d34a344e664909d156b6e709ee43259c0",
+      "W06Decomposition": "9aa5169933bf3b2fa7bde275e7e73ad6920118219e98c8f9b56bd7621d5512b9",
+      "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79"
+    },
+    "context_sha256": "8f64e0ef94e8c95d86b3fde8ae46a79a7ff07c3891984495f1de44fe8e0fcbe5",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Audit.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Audit.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Audit.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Audit.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.log",
+    "log_sha256": "4a639246b1a93aecb5271eb7ff8f2155079a500f4a0dab0483697c2697886b1d",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Audit.resources",
+    "resource_sha256": "100dfee0fa7fbc5b941632c47a863d7cc05d5f11a185d740cf3a7e7671249ee3",
+    "artifact_bundle_sha256": {
+      ".olean": "701d988441adfbaad6c04b92e31a2d06984b1532c74aef514fda25a4f7c6e38d"
+    }
+  },
+  {
+    "module": "W06Cone",
+    "exit_code": 0,
+    "seconds": 15.474998407065868,
+    "source_sha256": "a9fe5f48bac42d6c696d98e3c1e008bb6d0821c77a662bbe7d96beb00f86ef90",
+    "object_sha256": "32cac97cfd0f73fbf0e45b9f421b9d0bb3bb41d609ef6281710cf391615a2ecb",
+    "dependencies": {
+      "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e"
+    },
+    "dependency_contexts": {
+      "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79"
+    },
+    "context_sha256": "29ce28fd7444d798e94211f59e7bd5e85c75637d01506724b7981366fb66a52b",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Cone.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Cone.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W06Cone.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W06Cone.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.log",
+    "log_sha256": "468a0509c165feb4aee5b0ef695bbe45938fbe89d515f24b830657e2caf6c66e",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W06Cone.resources",
+    "resource_sha256": "b9765c5d3ef130447bbc9513b83a52e6e1558b0c461a4603dc4102a6f31c421d",
+    "artifact_bundle_sha256": {
+      ".olean": "32cac97cfd0f73fbf0e45b9f421b9d0bb3bb41d609ef6281710cf391615a2ecb"
+    }
+  },
+  {
+    "module": "W17JointSplit",
+    "exit_code": 0,
+    "seconds": 28.25155771151185,
+    "source_sha256": "2f99ba778591f4d1bb1ca1a5bded03af69a7c2eb783d0ee01e5a7781828d7697",
+    "object_sha256": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47",
+    "dependencies": {
+      "W04ExactMatrix": "430314d4b7c377e3a1ef08aacfe8120e4100ecc7be3d270546fe777e05d2597d",
+      "W05JTableConsumer": "631e1e1c610cb9c6a5198bff06297cffb16723720a97dd18599cce29a0c5ff42",
+      "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e",
+      "W07DensityMatrices": "d76525e182588f2c402ad326663c7fbfe43f7ad436b72dd2eba2d50e94be1105",
+      "W08Envelope": "f1733d4a5d73da9b2a1c6f61bcdc3e3542b843d0eec8f1549b203603981e7e0a",
+      "W09ActualV2": "f2da310c5a6ff4a38e56a84f4078928802df070a1b4db5c7c81224c44dfee806"
+    },
+    "dependency_contexts": {
+      "W04ExactMatrix": "c2ad2b95ad3de46e0c2f17666d26d6b0e9e74e5951129e423fad59b83e6bc3c1",
+      "W05JTableConsumer": "2d6f41d49cd5d2e50e7b3f37906c30492f7cb3ea97e578dd503a72a5c8df7c5e",
+      "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79",
+      "W07DensityMatrices": "167fb0d89ec8290d36c4e44fee272bd33548d9fe7816d487295e9351379f71fc",
+      "W08Envelope": "599279d1b5f2ed19a1d0692078fa1cb7399bbc575cf561ac4ac61ca8a1dcbde5",
+      "W09ActualV2": "c690c1b196b4309aff1df3cea1189085cf15f3e50df061941dca5875cbd0fdc5"
+    },
+    "context_sha256": "bc9560e1a8bcf3ca6fe37178d4bddfe571d2c34b0b95beb4d32d6684107eabf8",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSplit.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSplit.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSplit.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSplit.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSplit.resources",
+    "resource_sha256": "9ee895de3a7aa9cfd768d01ba74100272646e91e0d038b2f5f4850363ed69216",
+    "artifact_bundle_sha256": {
+      ".olean": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47"
+    }
+  },
+  {
+    "module": "W17JointSymbolicActual",
+    "exit_code": 0,
+    "seconds": 5.904454879462719,
+    "source_sha256": "c0209035d0c43c25da979ac65b4921a694d20ecfa5708b554d934b117a2fd047",
+    "object_sha256": "c67b2b8f7d49eea9a2e223e87bceecf9860de8957704a3ef069a84652840977e",
+    "dependencies": {
+      "W17JointSplit": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47"
+    },
+    "dependency_contexts": {
+      "W17JointSplit": "bc9560e1a8bcf3ca6fe37178d4bddfe571d2c34b0b95beb4d32d6684107eabf8"
+    },
+    "context_sha256": "6b385beec22c78132e694eb64e306bcc17072676eb87ba8bd6cd845c231ca071",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSymbolicActual.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSymbolicActual.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSymbolicActual.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSymbolicActual.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.resources",
+    "resource_sha256": "e9616a236683544eb9d31739257fa0f4cc7739b2938acb9e0a9a0db7df8f852a",
+    "artifact_bundle_sha256": {
+      ".olean": "c67b2b8f7d49eea9a2e223e87bceecf9860de8957704a3ef069a84652840977e"
+    }
+  },
+  {
+    "module": "W17JointRecoveryRoot",
+    "exit_code": 0,
+    "seconds": 22.739596903324127,
+    "source_sha256": "718590918e5db7452e3271ee45d64a050259d104cc0bc3ab24face6bb6e4b533",
+    "object_sha256": "b8e24a018c9de233920b8248197bbcdf64c700774989200dfd93e4ba7f3eaf6d",
+    "dependencies": {
+      "W17JointSplit": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47",
+      "W17JointSymbolicActual": "c67b2b8f7d49eea9a2e223e87bceecf9860de8957704a3ef069a84652840977e"
+    },
+    "dependency_contexts": {
+      "W17JointSplit": "bc9560e1a8bcf3ca6fe37178d4bddfe571d2c34b0b95beb4d32d6684107eabf8",
+      "W17JointSymbolicActual": "6b385beec22c78132e694eb64e306bcc17072676eb87ba8bd6cd845c231ca071"
+    },
+    "context_sha256": "945daacc288f14b53bd4007b322a957812ff27ff7025b5a9d9302b78b6723acd",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointRecoveryRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointRecoveryRoot.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointRecoveryRoot.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointRecoveryRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointRecoveryRoot.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointRecoveryRoot.log",
+    "log_sha256": "7dc00902cdbd5684f0ef5b46a67252e5f1acb7353c0c7a5cc6bba8f1cd3db15f",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointRecoveryRoot.resources",
+    "resource_sha256": "487cc9140cba1ea8731d2ee3832889123d6ca34e0f9a811fa6e0da7a83e7cd01",
+    "artifact_bundle_sha256": {
+      ".olean": "b8e24a018c9de233920b8248197bbcdf64c700774989200dfd93e4ba7f3eaf6d"
+    }
+  },
+  {
+    "module": "W17AcceptedCount",
+    "exit_code": 0,
+    "seconds": 7.657904200255871,
+    "source_sha256": "c1970efe1bd09de4177a1f985465c3e26d2945f90fcda207ea4d1c3493d3a8a7",
+    "object_sha256": "8826d804aacf542983dd69f7745a5683f4efaa5bb4678aa3a9837ee38873dc5d",
+    "dependencies": {
+      "W17JointRecoveryRoot": "b8e24a018c9de233920b8248197bbcdf64c700774989200dfd93e4ba7f3eaf6d",
+      "W04AcceptedCount": "22d383df8984b0cd001c39904e1a5b0e96d5ee95bc7ee09a1e2298b916fa8d8c"
+    },
+    "dependency_contexts": {
+      "W17JointRecoveryRoot": "945daacc288f14b53bd4007b322a957812ff27ff7025b5a9d9302b78b6723acd",
+      "W04AcceptedCount": "d79699c3f327e0935bfef3cc6494e7d40eabe008b37b4f2aec40f43d51dd962b"
+    },
+    "context_sha256": "7353e6a5d1a07e18bc28bad9b8f8eabbd4b7e98c1eee3ee157b8a9fbd9ac1a69",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17AcceptedCount.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17AcceptedCount.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedCount.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17AcceptedCount.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17AcceptedCount.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedCount.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedCount.resources",
+    "resource_sha256": "c3cc25c760c8db1752a9f09ebef22e2bb9165eca70bb1845adaabce336f9c687",
+    "artifact_bundle_sha256": {
+      ".olean": "8826d804aacf542983dd69f7745a5683f4efaa5bb4678aa3a9837ee38873dc5d"
+    }
+  },
+  {
+    "module": "W17AcceptedBudget",
+    "exit_code": 0,
+    "seconds": 8.120844848453999,
+    "source_sha256": "3c6435f8c0d23c5f1e04c3a90fc7e379cd49a0e24a8c75de3c9f3df3a8d16a00",
+    "object_sha256": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7",
+    "dependencies": {
+      "W17AcceptedCount": "8826d804aacf542983dd69f7745a5683f4efaa5bb4678aa3a9837ee38873dc5d",
+      "W13TightAcceptedBudget": "bdb9dcb64765b428c97dd48ffdab5ab3ee2d79817b2e7b997f31f2abf20fa681"
+    },
+    "dependency_contexts": {
+      "W17AcceptedCount": "7353e6a5d1a07e18bc28bad9b8f8eabbd4b7e98c1eee3ee157b8a9fbd9ac1a69",
+      "W13TightAcceptedBudget": "6cf6bfe66f5bbc676b318ee160a8e85fa593646912c08475316d305d12e9fc52"
+    },
+    "context_sha256": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17AcceptedBudget.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17AcceptedBudget.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17AcceptedBudget.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17AcceptedBudget.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17AcceptedBudget.resources",
+    "resource_sha256": "2f4928549a0f87a205d6efbea0bcb7206cb61af0f2a93b4b69e041aeb564e460",
+    "artifact_bundle_sha256": {
+      ".olean": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+    }
+  },
+  {
+    "module": "W17ParentFullTypes",
+    "exit_code": 0,
+    "seconds": 7.958083938807249,
+    "source_sha256": "72d08e9280a87a750a296ed0b5693565a12bdeba6de047c167781011dd84d736",
+    "object_sha256": "557a57e5a227fc631e6c70bf610b0bc81b83c865def0b00d6e31bd3338fce854",
+    "dependencies": {
+      "W04ClippedCells": "e9fe603103e6e51163b70d6207ddd6b33863d8ab4db3ed1b0806b0152c6e9a69",
+      "W04CoupledMatrix": "676883c1f219261f9b54e5ccfd134812af96c7f956ba544f4fef31c107cb2bb7",
+      "W04ExactMatrix": "430314d4b7c377e3a1ef08aacfe8120e4100ecc7be3d270546fe777e05d2597d",
+      "W04Audit": "5db9b995817e3a9903414cf7125ec075889f1670652a623a19c3a77bf0f90f63",
+      "W04Root": "ea79592bc04a0ff59033219d17b1b4a902d7cf06faa88f1c98b7f82b5ffb8c66",
+      "W05JCoefficients": "74c24764d8acd0184e02743caf7d0b857e45b4ddd43947c915c68b2297b379a6",
+      "W05JRational": "179f3ca7436ca2d71bb32c42950648398a9db2cf071025f0cd11c84a8d88163a",
+      "W05JFeedback": "7ad335f46afc3f56a2e212863de2fdebdbb4cec71b9dfc69107478ba6caf044e",
+      "W05JTables": "7077b2843713b4448d1093cec968ef1be1671b3863dc2c9fb9e5e3fac9aa1139",
+      "W05JTableConsumer": "631e1e1c610cb9c6a5198bff06297cffb16723720a97dd18599cce29a0c5ff42",
+      "W05Audit": "0b91f6dfbc9bae7f6a0f3cc07e125ad663cf51f8eef4575ddf2e814c73872be8",
+      "W05Root": "cb93e858255d7bbce7ba5d12d1b3f4575f474093debca7239378b46261b30085",
+      "W06SigmaV2": "ec40c8a411a61bc7ecdb3be14e3b23065a2681ae9011fa169aae5ae6d13a59b3",
+      "W06Decomposition": "5cb29722c4c15d3a91f513ad8a0a72284d69b006625571fedc4d9a82b833d491",
+      "W06Consumers": "bb2ffca9647ed1b3b268142aff94e94094c2597e9cf3a907c7ab70147a8ea69e",
+      "W06Audit": "701d988441adfbaad6c04b92e31a2d06984b1532c74aef514fda25a4f7c6e38d",
+      "W06Cone": "32cac97cfd0f73fbf0e45b9f421b9d0bb3bb41d609ef6281710cf391615a2ecb",
+      "W07DensityBridge": "878eeadb4b8f4634496d63b12faf2fa9852771bf4eadab459fe51a338e401bf7",
+      "W07DensityRationalV2": "4f2d4f62bc8f8e5cb23571630b38f0fe37d9f8e33c93d7e5155e17b02d3bbd41",
+      "W07DensityData": "0ed1dbfdc2d6fab5bde1e16929f3b43ccd8a6bce94d52d8b46b16bc4c12c4132",
+      "W07TableProbe": "cbcf0886653198e721cd1de303c98d65adf6c8df5b9673652884373fee3c8b76",
+      "W07DensityTableV5": "a2021e0414bd8db01e296d20015fbac6fa39959ce386b15b377e8afd392e3e9e",
+      "W07DensityMatrices": "d76525e182588f2c402ad326663c7fbfe43f7ad436b72dd2eba2d50e94be1105",
+      "W07DensityConsumerV2": "a7f6f3358dccc2b51fe75cde4e830eb125050b3e14cfe5131348bcb1950677ff",
+      "W07DensityV8": "acf8846b68af8b61c699af624211c6c3ffd4aa7ba149fbf786ee480c6be84f34",
+      "W08KernelMatrix": "08f1fbb89f97e185a9607878a2d4113fac58123c0297206a9ac9a5277244e24d",
+      "W08Entries0": "d28e5bb2694e53ba058062fd97ce57869e0f6ad24246d6e4e5254af00decb08f",
+      "W08EntriesRest": "1d99e848871ef9bd711fac41c31904d9e9a8e2b704bc1578b00dcf4a3447de66",
+      "W08Envelope": "f1733d4a5d73da9b2a1c6f61bcdc3e3542b843d0eec8f1549b203603981e7e0a",
+      "W08FrozenConsumer": "99d562c50d405d21cd419218874c090c8709a7d57da147899547226ed5e84aca",
+      "W08CellCertificate": "e940c7f35a5469739dc923121e60faffcb30d84be21ce88ebba003ced1107f87",
+      "W08Audit": "f5d61a99188fb525a2e5a221f7d336278db8031866ba28d8e28a280176c81c89",
+      "W08Root": "9f7def50e73e280cf78de4136a042c8a5a6615939a5bf1b67a764c10b8041602",
+      "W09ScalarTactics": "079c6fed22d1bd855b312cb6f60c782cb89c7dba9376877b150a33dce2807a3a",
+      "W09SeedV3": "2c0e27e5fc57ac9d7d87b7c7d7935f49874b51cd0071dcd34bc79f551943b398",
+      "W09PaidRowsV2": "dbaaeb470c34cbdeb4326669d9ed867f9fb1f16d137565f44d5f5959474ae74e",
+      "W09RadiusV2": "3ffaca08a9edda84f4baa999b3d3b09cda263fadb51edab4b5fb102d9bb98b9e",
+      "W09ActualV2": "f2da310c5a6ff4a38e56a84f4078928802df070a1b4db5c7c81224c44dfee806",
+      "W09Audit": "f3f36d262b8bee4ee175086ff44f87243d96a2fb51f7e24bbb7a9bbb78fcfcdc",
+      "W09Root": "f06f422b03a07ee96863efc9881e66d2b11984de90d0ee00edec4d5afe7f1e58",
+      "W17JointSplit": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47",
+      "W17JointSymbolicActual": "c67b2b8f7d49eea9a2e223e87bceecf9860de8957704a3ef069a84652840977e",
+      "W17JointRecoveryRoot": "b8e24a018c9de233920b8248197bbcdf64c700774989200dfd93e4ba7f3eaf6d",
+      "W13TightAcceptedBudget": "bdb9dcb64765b428c97dd48ffdab5ab3ee2d79817b2e7b997f31f2abf20fa681"
+    },
+    "dependency_contexts": {
+      "W04ClippedCells": "a834a55d8a507eb5c7a6c7978da5c054617da5fe5568b8efae53cefb242f994f",
+      "W04CoupledMatrix": "ac4d3e6874e9a872d0beb5b731059bf9f3dac2bfcf2a06e87afed18e49c8963c",
+      "W04ExactMatrix": "c2ad2b95ad3de46e0c2f17666d26d6b0e9e74e5951129e423fad59b83e6bc3c1",
+      "W04Audit": "5b92bf6c4614c65670bfc148055b105bdc6c799cf6cd1e425531d7ccce12e3ce",
+      "W04Root": "98587f6a02493631af02b28d0d108035bdc7c06337b46a5da112227118c5d418",
+      "W05JCoefficients": "e759b15dd56092fb01b918dc18184f007e305c52c68ad542f9fbbbacf3f3620b",
+      "W05JRational": "21094e247ef7d8411bbb4e031bf785d13525770842a13d0d35eb45f4e6951902",
+      "W05JFeedback": "8e3499a9a3537f7f64875c11774be11e417bf1c6693e8605b8985df1c1dc07c1",
+      "W05JTables": "5097f180fcf05a92c145598535162a7a651308e6f181812316f889b170fac80a",
+      "W05JTableConsumer": "2d6f41d49cd5d2e50e7b3f37906c30492f7cb3ea97e578dd503a72a5c8df7c5e",
+      "W05Audit": "7ca1eeef8fff0f464c34e9e2e959b97c721f4d38a54539b57e816e1642c8129a",
+      "W05Root": "9a4df79da8cbcb7995e280c1a59315696f75e8cde406486f7ab79604edc0f263",
+      "W06SigmaV2": "477366dbd180c09b4d4b1879715a8f4d34a344e664909d156b6e709ee43259c0",
+      "W06Decomposition": "9aa5169933bf3b2fa7bde275e7e73ad6920118219e98c8f9b56bd7621d5512b9",
+      "W06Consumers": "9da97ff19923d6980d3558f7e7500773ba2108022333ca042441763a66122c79",
+      "W06Audit": "8f64e0ef94e8c95d86b3fde8ae46a79a7ff07c3891984495f1de44fe8e0fcbe5",
+      "W06Cone": "29ce28fd7444d798e94211f59e7bd5e85c75637d01506724b7981366fb66a52b",
+      "W07DensityBridge": "4fcc3ebfc9293b06d56d53bf7c48f2643c895b7ede38ac02fbd329a7182b4112",
+      "W07DensityRationalV2": "856b14c5a4d6340c4826d08127ae331c9eca96ff4bffa0374f2c518e39316e6c",
+      "W07DensityData": "b3abc933305b026c277fcf482ae4194be8a6eb642d187c595b2137aa6188bc71",
+      "W07TableProbe": "412e8da7aa08a75bdac8da56fbfa23a5cce999b9e97fe2886ca3c7979071b519",
+      "W07DensityTableV5": "ec82a9a9374b6f0ca3c6885475b6adc516dba6728cf83338dcdae8af64a828d9",
+      "W07DensityMatrices": "167fb0d89ec8290d36c4e44fee272bd33548d9fe7816d487295e9351379f71fc",
+      "W07DensityConsumerV2": "128f997bbb6ee7f081950349248e99632408d5742555e52eac573a8e22df9107",
+      "W07DensityV8": "b57c3159107ce2544540c978afaafbdd41794e6465831743a4ca6e9f45f3f0fa",
+      "W08KernelMatrix": "7b7303a4c0121b255b232bea6629a486674339f58e5376c1f48621b607c09db3",
+      "W08Entries0": "8f2c405e7f368a792af468d1080bf69a16d5bf281e61c2fa7bba0e163977decf",
+      "W08EntriesRest": "6fe071831598330aa2029b20a9dc2f4bfd0f193a0e2947601dd8b3a0a1de3440",
+      "W08Envelope": "599279d1b5f2ed19a1d0692078fa1cb7399bbc575cf561ac4ac61ca8a1dcbde5",
+      "W08FrozenConsumer": "52efd97ec77e3a26bf2701be6b70954859e8f9116b62f669f1d3fb656765028a",
+      "W08CellCertificate": "10176e1f307ad8534bb5ae7c986020c01b5d7d42133f011dc8292ebd9a1fa38f",
+      "W08Audit": "c4da5c29c76efc38de43292ce5d0f19aee24b4eefd5520523fdc07516723c8d3",
+      "W08Root": "ebba66d8b11215b54ced3530a8de3d4204f8c508db21f15449b8f4aca51d3b83",
+      "W09ScalarTactics": "005a28632c5a55eeab3f1415aa2dad227cf67774a3d14d74db764f58709cec7e",
+      "W09SeedV3": "84a1e651ce29c7eddfc957018c33732f867fdd1844368ea6be7d7fdcd73913fb",
+      "W09PaidRowsV2": "f176ad379adb201aea8472a170a9c80c62d2d944af75127ecdce3d5781303dce",
+      "W09RadiusV2": "bd06bbe84933577908f5efa63e4dcb7f8f12949a18cbb9cb581d51d62ca074c6",
+      "W09ActualV2": "c690c1b196b4309aff1df3cea1189085cf15f3e50df061941dca5875cbd0fdc5",
+      "W09Audit": "010a477500521c6226ae4dcf8b7083a79ce8203d101710411e41a8d409ad1ce3",
+      "W09Root": "ab4852264e9b8a9cd5038e42c39c50c2dfded3857d40b3a7eeed6c8a587f0cda",
+      "W17JointSplit": "bc9560e1a8bcf3ca6fe37178d4bddfe571d2c34b0b95beb4d32d6684107eabf8",
+      "W17JointSymbolicActual": "6b385beec22c78132e694eb64e306bcc17072676eb87ba8bd6cd845c231ca071",
+      "W17JointRecoveryRoot": "945daacc288f14b53bd4007b322a957812ff27ff7025b5a9d9302b78b6723acd",
+      "W13TightAcceptedBudget": "6cf6bfe66f5bbc676b318ee160a8e85fa593646912c08475316d305d12e9fc52"
+    },
+    "context_sha256": "cd00297f4df928c53d01a9fc3e321842a306a5cd27b4b2440a1d9cb7374b2ef7",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17ParentFullTypes.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17ParentFullTypes.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17ParentFullTypes.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17ParentFullTypes.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17ParentFullTypes.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17ParentFullTypes.log",
+    "log_sha256": "c978fb74eb75a6daecc4bcbf6fc1826d2f1963d91d2a8c87ec5bdfc0c932d5a1",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17ParentFullTypes.resources",
+    "resource_sha256": "620aaea971f489b23ebd53641587cc62a0d57c11041122a828298d8337b6c16c",
+    "artifact_bundle_sha256": {
+      ".olean": "557a57e5a227fc631e6c70bf610b0bc81b83c865def0b00d6e31bd3338fce854"
+    }
+  },
+  {
+    "module": "WE01BaselineScalars",
+    "exit_code": 0,
+    "seconds": 8.47288878634572,
+    "source_sha256": "bf1d41e114e2014dcbdd7cc7d1e3a784d57e81a0fb6de1a59bb02991f4bc551e",
+    "object_sha256": "88ef24ebb872ba7f364f41ad8acf84716d7c2044c12d8d053344920a9c93fa6f",
+    "dependencies": {
+      "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7",
+      "W03Table": "fde7de24ff3603e898587dbd81fbb0f26f56c625b95ed063897fb2cde799be37",
+      "ExactSixthOuter": "134cf9378e73511b71b688defd5cfd62087cce4886677bc045ff4c0f143dc28f"
+    },
+    "dependency_contexts": {
+      "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878",
+      "W03Table": "dd31cc25374b18853ef5a96ff7bb420abd206b626e52488a7aaff1cefd3422f2",
+      "ExactSixthOuter": "ccc55f016ea4f216cf3c40391e10e1ca6e9df88f70a5bc301ac017d67f6915cd"
+    },
+    "context_sha256": "9a9644074d7eaea593c70c160838fdf1f6a47de6004586d37321724e78b9e234",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineScalars.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineScalars.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineScalars.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineScalars.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineScalars.resources",
+    "resource_sha256": "8737095a48ed7c78d1473bbfe38c11b7f0153057802c7cab4c44c384f916fd91",
+    "artifact_bundle_sha256": {
+      ".olean": "88ef24ebb872ba7f364f41ad8acf84716d7c2044c12d8d053344920a9c93fa6f"
+    }
+  },
+  {
+    "module": "WE01BaselineBudget",
+    "exit_code": 0,
+    "seconds": 6.105762496590614,
+    "source_sha256": "6e69b2f2032dc0df28a485a445140e159166143a87c6707ec25e18f7aa0e7b94",
+    "object_sha256": "5c5f3f40372a7eb5fefa4d635e9a22a036c63c31e612a8bedf403ad0b9dff105",
+    "dependencies": {
+      "WE01BaselineScalars": "88ef24ebb872ba7f364f41ad8acf84716d7c2044c12d8d053344920a9c93fa6f"
+    },
+    "dependency_contexts": {
+      "WE01BaselineScalars": "9a9644074d7eaea593c70c160838fdf1f6a47de6004586d37321724e78b9e234"
+    },
+    "context_sha256": "0967c373caf8b1a68f3d852daeb9ebb11c67670210ef264d30bbe2a01c597e20",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineBudget.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineBudget.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineBudget.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineBudget.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineBudget.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineBudget.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineBudget.resources",
+    "resource_sha256": "f97d8e87518d05631ed1254f8c2f57d59df21c4084fbdd23770963edadec1710",
+    "artifact_bundle_sha256": {
+      ".olean": "5c5f3f40372a7eb5fefa4d635e9a22a036c63c31e612a8bedf403ad0b9dff105"
+    }
+  },
+  {
+    "module": "WE01BaselineRoot",
+    "exit_code": 0,
+    "seconds": 5.253514464944601,
+    "source_sha256": "4fc1f8ed900d5588b796bbb749c881cc88f3f18e948c403e82243067ad468dff",
+    "object_sha256": "e62d2ea3cb890331dfd9965cd6e488c80aab79b1b3c64b0e695eae7c9d07bf73",
+    "dependencies": {
+      "WE01BaselineBudget": "5c5f3f40372a7eb5fefa4d635e9a22a036c63c31e612a8bedf403ad0b9dff105"
+    },
+    "dependency_contexts": {
+      "WE01BaselineBudget": "0967c373caf8b1a68f3d852daeb9ebb11c67670210ef264d30bbe2a01c597e20"
+    },
+    "context_sha256": "e7b3335d191e2a4bfd951eb8a17aea284e60628ab2f981f7741f2950d5be7e4e",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineRoot.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineRoot.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE01BaselineRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE01BaselineRoot.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineRoot.log",
+    "log_sha256": "31c3d199a1bc3d5d480a16ddba7533759e07671435fc8bfd7d4508ea556643a5",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE01BaselineRoot.resources",
+    "resource_sha256": "d2f7d0842c585ecc96483dbfb56c3cefd3bd4c88b2224b0f98e5edf777ad6949",
+    "artifact_bundle_sha256": {
+      ".olean": "e62d2ea3cb890331dfd9965cd6e488c80aab79b1b3c64b0e695eae7c9d07bf73"
+    }
+  },
+  {
+    "module": "WE09JointMainBudget",
+    "exit_code": 0,
+    "seconds": 6.45628522336483,
+    "source_sha256": "548ebea091ef38f3e68fa705a8d38f08e76d888c830b72504300824520dbf1f1",
+    "object_sha256": "758fe17f497d3962c8f692ddec5ad0b44a6ae6b746600344aa65a85a1540125f",
+    "dependencies": {
+      "WE09JointMainPayment": "738d2de21f02187054a7db8344aa6bf6b3a72dc36eec83d83ee8ea6bd7aa0cf9",
+      "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+    },
+    "dependency_contexts": {
+      "WE09JointMainPayment": "4eddbfe5db28d048c98bd261de52dfbb9b6cd5d7894c76060344a6d70a217c13",
+      "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878"
+    },
+    "context_sha256": "b126971bab0225df99179e511c0c1fb169d134ffc48dceaf4393735dd0bc0120",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE09JointMainBudget.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE09JointMainBudget.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainBudget.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE09JointMainBudget.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE09JointMainBudget.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainBudget.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainBudget.resources",
+    "resource_sha256": "23a1911c503bdf2b2af9769c3ca786d03b5c136f357d6b88e1643acbec7e02c9",
+    "artifact_bundle_sha256": {
+      ".olean": "758fe17f497d3962c8f692ddec5ad0b44a6ae6b746600344aa65a85a1540125f"
+    }
+  },
+  {
+    "module": "WE09JointMainRoot",
+    "exit_code": 0,
+    "seconds": 5.706322085112333,
+    "source_sha256": "14f4aa3c19164555efe0b2119df9a4cbc21d91f044a6495a9fc4f3cebdf7608f",
+    "object_sha256": "c8d60199ed618348022d2e7d7e6e60f6ff465d75f5b4519e5da8f834a2f1b6f7",
+    "dependencies": {
+      "WE09JointMainBudget": "758fe17f497d3962c8f692ddec5ad0b44a6ae6b746600344aa65a85a1540125f"
+    },
+    "dependency_contexts": {
+      "WE09JointMainBudget": "b126971bab0225df99179e511c0c1fb169d134ffc48dceaf4393735dd0bc0120"
+    },
+    "context_sha256": "e918902a55a141c53301323503f7d878740c7b090ff7c4f13f25632a14e84f73",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE09JointMainRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE09JointMainRoot.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainRoot.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE09JointMainRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE09JointMainRoot.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainRoot.log",
+    "log_sha256": "388dfbfcc904cf3bc414548733bbb29afae468c72cebe8cc4a30a83f7676962c",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE09JointMainRoot.resources",
+    "resource_sha256": "9c44660421f8569bdb92cc71fecec7aa6902ede9fa7d78dbd77f0002c602b98e",
+    "artifact_bundle_sha256": {
+      ".olean": "c8d60199ed618348022d2e7d7e6e60f6ff465d75f5b4519e5da8f834a2f1b6f7"
+    }
+  },
+  {
+    "module": "WE04ContinuousPayment",
+    "exit_code": 0,
+    "seconds": 7.508869137614965,
+    "source_sha256": "c2754df9de030ba180b980ea19d90079585b6b43d7d42f3f13cd64d110ea1fe4",
+    "object_sha256": "cdf0bcc0436d64aec5fb339b1ccd0b2d2a04410a29349245eb921fb23d1a1903",
+    "dependencies": {
+      "WE04ContinuousSurplus": "60d9f581f68e3de8a25903f00f34c999e914fd89695b351042510888adf9f442",
+      "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+    },
+    "dependency_contexts": {
+      "WE04ContinuousSurplus": "95f91c47e6f44b4e154779280f134ca7614636f04ab698bef431be94a26941db",
+      "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878"
+    },
+    "context_sha256": "297efe72262a51093e25026657ad51b5a6e07b8781e6674c2d1d7f3412c93a49",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE04ContinuousPayment.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE04ContinuousPayment.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE04ContinuousPayment.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE04ContinuousPayment.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.resources",
+    "resource_sha256": "1471741aa5a23d4ec556a5903511f786ac7c297f8010cdb2859720a760c75517",
+    "artifact_bundle_sha256": {
+      ".olean": "cdf0bcc0436d64aec5fb339b1ccd0b2d2a04410a29349245eb921fb23d1a1903"
+    }
+  },
+  {
+    "module": "WE04ContinuousRoot",
+    "exit_code": 0,
+    "seconds": 6.6683926694095135,
+    "source_sha256": "3d925365b9b37c4f8e2e3b5bb3b8f8b11e74a06c1537e65d4ace220beb6a5498",
+    "object_sha256": "35628805f142f9fe2714ac3e6b241c5d60214f36d8911ff24f9a73bed05a7aef",
+    "dependencies": {
+      "WE04ContinuousPayment": "cdf0bcc0436d64aec5fb339b1ccd0b2d2a04410a29349245eb921fb23d1a1903"
+    },
+    "dependency_contexts": {
+      "WE04ContinuousPayment": "297efe72262a51093e25026657ad51b5a6e07b8781e6674c2d1d7f3412c93a49"
+    },
+    "context_sha256": "cb8c591ce6b8e4926446c91c9fad97f004592a15c7b4ca835b8a7d8e08a6dc60",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE04ContinuousRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE04ContinuousRoot.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousRoot.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE04ContinuousRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE04ContinuousRoot.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousRoot.log",
+    "log_sha256": "7396f5a801a7631497fc0ca796d55f57224e29f394984a4a113d1c9065ccd909",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousRoot.resources",
+    "resource_sha256": "013b53d184d8c7d34fa73a6192b66e322152e8aa03ca4a718204ca668e4f1fa8",
+    "artifact_bundle_sha256": {
+      ".olean": "35628805f142f9fe2714ac3e6b241c5d60214f36d8911ff24f9a73bed05a7aef"
+    }
+  },
+  {
+    "module": "WE02JointCreditStructure",
+    "exit_code": 0,
+    "seconds": 8.222008358687162,
+    "source_sha256": "a4cf081b3b8c9f162ab998fbd89c6860b9b07be5b7113fb40749416b77be7e4c",
+    "object_sha256": "1e6da30baaa46ce70b5d0784a6ba84967cc80886dcbea407666429d867246483",
+    "dependencies": {
+      "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+    },
+    "dependency_contexts": {
+      "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878"
+    },
+    "context_sha256": "d62ba709f6b8f47e12e3e033a6712b848ebea462adb3475d779bd857fb6f1687",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditStructure.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditStructure.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditStructure.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditStructure.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditStructure.resources",
+    "resource_sha256": "9d9114ed12cc1f6ec55e107acbd04c9c4542ba1e25640397d6c8a52f44ce7d32",
+    "artifact_bundle_sha256": {
+      ".olean": "1e6da30baaa46ce70b5d0784a6ba84967cc80886dcbea407666429d867246483"
+    }
+  },
+  {
+    "module": "WE02JointCreditPayment",
+    "exit_code": 0,
+    "seconds": 6.007167067378759,
+    "source_sha256": "a7ca67833939de71d9c397d6321c951f04dd51cd09b324b20a9b3907907c0c1a",
+    "object_sha256": "43d2dd04976735b73d893faaed92c6a4a09b5a6a15c8da7a0d5c88dd6c9e66b1",
+    "dependencies": {
+      "WE02JointCreditStructure": "1e6da30baaa46ce70b5d0784a6ba84967cc80886dcbea407666429d867246483",
+      "W03Table": "fde7de24ff3603e898587dbd81fbb0f26f56c625b95ed063897fb2cde799be37",
+      "W02Transfer": "bc5a90219ff4a11e2c20e20dd5f6f2c7a438aaab191ce8c6844168e3595629e8"
+    },
+    "dependency_contexts": {
+      "WE02JointCreditStructure": "d62ba709f6b8f47e12e3e033a6712b848ebea462adb3475d779bd857fb6f1687",
+      "W03Table": "dd31cc25374b18853ef5a96ff7bb420abd206b626e52488a7aaff1cefd3422f2",
+      "W02Transfer": "661dc845ab8714488f92952780f5c5329e057156c3ae49c58f65055b3c4769c0"
+    },
+    "context_sha256": "144bd7cbe9e37ab22658e388e0b7220302a3ee4b047153b8853230278b395456",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditPayment.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditPayment.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditPayment.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditPayment.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditPayment.resources",
+    "resource_sha256": "d83238d1b6d426c624b88e306674e0638caf71b80d0d66eba7c282ae18c1f3ae",
+    "artifact_bundle_sha256": {
+      ".olean": "43d2dd04976735b73d893faaed92c6a4a09b5a6a15c8da7a0d5c88dd6c9e66b1"
+    }
+  },
+  {
+    "module": "WE02JointCreditRoot",
+    "exit_code": 0,
+    "seconds": 5.95613744482398,
+    "source_sha256": "8210afd3bfb72f189f6a9ce5d33f021c18998b0af2778860fcacd63b90498bd5",
+    "object_sha256": "17321df24675d3f36b7cdb87afe55bb3dce98fa9ad0e27b31e82e0a489faf7f0",
+    "dependencies": {
+      "WE02JointCreditPayment": "43d2dd04976735b73d893faaed92c6a4a09b5a6a15c8da7a0d5c88dd6c9e66b1"
+    },
+    "dependency_contexts": {
+      "WE02JointCreditPayment": "144bd7cbe9e37ab22658e388e0b7220302a3ee4b047153b8853230278b395456"
+    },
+    "context_sha256": "604c3f0114da54c47b58238bf539a044194ce135dba2247d2c776bc69cfd3d29",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRoot.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRoot.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRoot.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRoot.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRoot.log",
+    "log_sha256": "d6d36e8917ea842e5c2266fc6f216ee606127d0521d379efe0be5ea8723d6d67",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRoot.resources",
+    "resource_sha256": "507636ef38ab7e4d3d249a476a54b9bae84f098bb7f6a952a7b35720fc0c0fcd",
+    "artifact_bundle_sha256": {
+      ".olean": "17321df24675d3f36b7cdb87afe55bb3dce98fa9ad0e27b31e82e0a489faf7f0"
+    }
+  },
+  {
+    "module": "WE02JointCreditRankOneStructure",
+    "exit_code": 0,
+    "seconds": 5.854506440460682,
+    "source_sha256": "471e66714914ec33948bd840a241c69e34ac5d70c727e271dc5e025f7699af60",
+    "object_sha256": "5be4c2bc26d1ae1c6d23da6ce54f3b2c84fec5a87ff5cff96e72b428ae094f8c",
+    "dependencies": {
+      "WE02JointCreditRoot": "17321df24675d3f36b7cdb87afe55bb3dce98fa9ad0e27b31e82e0a489faf7f0",
+      "W02Certified": "b34eb549da7e87db6016db35fc4420932b8822157368947f96c7a262e7388dd0"
+    },
+    "dependency_contexts": {
+      "WE02JointCreditRoot": "604c3f0114da54c47b58238bf539a044194ce135dba2247d2c776bc69cfd3d29",
+      "W02Certified": "3b6c482aa085616b82edeb732bfd3b69be0d89f1fdcdb1155f1d63618b54d359"
+    },
+    "context_sha256": "1a78e9d4b81d329b3721b709316b5a06c24fc31894a5f22790bb694758f9c951",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneStructure.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneStructure.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneStructure.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneStructure.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.log",
+    "log_sha256": "e7633538e6376ffc358ca459ca577d924e6c26632a041a85b331568bbd873c6f",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.resources",
+    "resource_sha256": "70e9a62d9da69c0bcc225c7d7fc39a9b55bd868aa0868d0446e545cfc5514a98",
+    "artifact_bundle_sha256": {
+      ".olean": "5be4c2bc26d1ae1c6d23da6ce54f3b2c84fec5a87ff5cff96e72b428ae094f8c"
+    }
+  },
+  {
+    "module": "WE02JointCreditRankOneRows",
+    "exit_code": 0,
+    "seconds": 8.96027422696352,
+    "source_sha256": "fbdb39dea0676dc577baa434339ed03a8f017cdef79480eb5ca6278be61e3ce3",
+    "object_sha256": "a463a6532af9adbf560bafd4bb5153bf5ebca4f85267b4751c7c8582e58856a5",
+    "dependencies": {
+      "WE02JointCreditRankOneStructure": "5be4c2bc26d1ae1c6d23da6ce54f3b2c84fec5a87ff5cff96e72b428ae094f8c"
+    },
+    "dependency_contexts": {
+      "WE02JointCreditRankOneStructure": "1a78e9d4b81d329b3721b709316b5a06c24fc31894a5f22790bb694758f9c951"
+    },
+    "context_sha256": "ffb1bea97ae89b7378819d39239956f2290d29f829b1d85dc625a8ec306ddad1",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneRows.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneRows.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneRows.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneRows.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.resources",
+    "resource_sha256": "17fb4430b2676f9728921a3e402af20ff26b6a13b4e884aae2ce17f421f90ed7",
+    "artifact_bundle_sha256": {
+      ".olean": "a463a6532af9adbf560bafd4bb5153bf5ebca4f85267b4751c7c8582e58856a5"
+    }
+  },
+  {
+    "module": "WE02JointCreditRankOneNodes",
+    "exit_code": 0,
+    "seconds": 22.325016018003225,
+    "source_sha256": "1334609247d009e56dc96f92d5437b0665eae0540e1dd7e6d919f0b38cddb070",
+    "object_sha256": "ffcf68f358305f69d5869f02a04b9e75f14168ca713f4132c5e2738d8d087ada",
+    "dependencies": {
+      "WE02JointCreditRankOneRows": "a463a6532af9adbf560bafd4bb5153bf5ebca4f85267b4751c7c8582e58856a5"
+    },
+    "dependency_contexts": {
+      "WE02JointCreditRankOneRows": "ffb1bea97ae89b7378819d39239956f2290d29f829b1d85dc625a8ec306ddad1"
+    },
+    "context_sha256": "6f49d6eeaf1378fd936e04d622fe2a3e3aa5948b579c5cd809c4c577bbbcf222",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneNodes.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneNodes.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneNodes.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneNodes.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneNodes.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneNodes.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneNodes.resources",
+    "resource_sha256": "5dac16198e964a9ff9827ac432ae550982517fd69ce63f09be5a9b5bc730b5d9",
+    "artifact_bundle_sha256": {
+      ".olean": "ffcf68f358305f69d5869f02a04b9e75f14168ca713f4132c5e2738d8d087ada"
+    }
+  },
+  {
+    "module": "WE02JointCreditRankOnePayment",
+    "exit_code": 0,
+    "seconds": 13.127574924379587,
+    "source_sha256": "166a11d6e6a853d88c5e348a1670aa7f0a2f3e41a9a696c03cfde669cd38c15b",
+    "object_sha256": "1f4f0869f042fd399f0bf94e2920c2de5abb5832511563ed2e7b156965039dcf",
+    "dependencies": {
+      "WE02JointCreditRankOneNodes": "ffcf68f358305f69d5869f02a04b9e75f14168ca713f4132c5e2738d8d087ada"
+    },
+    "dependency_contexts": {
+      "WE02JointCreditRankOneNodes": "6f49d6eeaf1378fd936e04d622fe2a3e3aa5948b579c5cd809c4c577bbbcf222"
+    },
+    "context_sha256": "7daa1b0d4af526842a68e43e23cfca89029757db2ba4b71b502bb36b0eff83c2",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOnePayment.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOnePayment.lean"
+    ],
+    "execution_command": [
+      "/usr/bin/time",
+      "-v",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOnePayment.resources",
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-R",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+      "-o",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOnePayment.olean",
+      "-DautoImplicit=false",
+      "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOnePayment.lean"
+    ],
+    "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOnePayment.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOnePayment.resources",
+    "resource_sha256": "3c0d3c7d7ebbd9b2a96e310214da3585f8c3e2e571b3cb831d79dba1444af466",
+    "artifact_bundle_sha256": {
+      ".olean": "1f4f0869f042fd399f0bf94e2920c2de5abb5832511563ed2e7b156965039dcf"
+    }
+  }
+]

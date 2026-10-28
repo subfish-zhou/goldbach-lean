@@ -83,19 +83,6 @@ theorem buchstab_pos {u : ℝ} (hu : 1 ≤ u) : 0 < buchstab u := by
 theorem buchstab_nonneg {u : ℝ} (hu : 1 ≤ u) : 0 ≤ buchstab u :=
   (buchstab_pos hu).le
 
-theorem buchstab_ne_zero {u : ℝ} (hu : 1 ≤ u) : buchstab u ≠ 0 :=
-  (buchstab_pos hu).ne'
-
-/-- In particular, the Buchstab factor in a denominator is uniformly safe. -/
-theorem one_div_buchstab_bounds {u : ℝ} (hu : 1 ≤ u) :
-    1 ≤ 1 / buchstab u ∧ 1 / buchstab u ≤ 2 := by
-  have hp := buchstab_pos hu
-  have hb := buchstab_bounds hu
-  constructor
-  · apply (le_div_iff₀ hp).mpr
-    linarith [hb.2]
-  · apply (div_le_iff₀ hp).mpr
-    linarith [hb.1]
 
 /-- The first delayed interval has the familiar logarithmic formula,
 including both endpoints. -/

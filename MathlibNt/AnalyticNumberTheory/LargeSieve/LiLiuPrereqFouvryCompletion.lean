@@ -66,9 +66,6 @@ theorem incompleteReciprocal_completion (d A : ℤ) (L : ℕ) :
 theorem stdAddChar_norm (u : ZMod q) : ‖ZMod.stdAddChar u‖ = 1 := by
   exact Circle.norm_coe (ZMod.toCircle u)
 
-theorem intervalFourier_zero (A : ℤ) (L : ℕ) :
-    intervalFourier q A L 0 = L := by
-  simp [intervalFourier]
 
 theorem intervalFourier_norm_le_length (A : ℤ) (L : ℕ) (m : ZMod q) :
     ‖intervalFourier q A L m‖ ≤ L := by
@@ -121,19 +118,6 @@ theorem completeKloosterman_modulus_one (m : ZMod 1) (d : ℤ) :
   simp only [hu, if_true, he, sum_const, card_univ, ZMod.card, nsmul_eq_mul,
     Nat.cast_one, one_mul]
 
-theorem incompleteReciprocal_modulus_one (d A : ℤ) (L : ℕ) :
-    incompleteReciprocal 1 d A L = L := by
-  have h (u : ZMod 1) : reciprocalPhase 1 d u = 1 := by
-    simp [reciprocalPhase, Subsingleton.elim u 1,
-      Subsingleton.elim (d : ZMod 1) 0]
-  simp [incompleteReciprocal, h]
-
-theorem incompleteReciprocal_zero_frequency (A : ℤ) (L : ℕ) :
-    incompleteReciprocal q 0 A L =
-      (((range L).filter (fun j : ℕ ↦
-        IsUnit ((A : ZMod q) + (j : ZMod q)))).card : ℂ) := by
-  classical
-  simp [incompleteReciprocal, reciprocalPhase, sum_boole]
 
 private theorem sin_pi_mul_lower {t : ℝ} (h0 : 0 ≤ t) (h1 : t ≤ 1) :
     2 * min t (1 - t) ≤ Real.sin (Real.pi * t) := by
@@ -210,14 +194,10 @@ theorem intervalFourier_norm_le_reciprocals (A : ℤ) (L k : ℕ)
 
 private theorem sum_zmod_eq_range (f : ZMod q → ℝ) :
     ∑ u : ZMod q, f u = ∑ k ∈ range q, f (k : ZMod q) := by
-  symm
-  refine sum_bij (fun k _ ↦ (k : ZMod q)) (by simp) ?_ ?_ (by simp)
-  · intro a ha b hb hab
-    have h := congrArg ZMod.val hab
-    simpa only [ZMod.val_natCast_of_lt (mem_range.mp ha),
-      ZMod.val_natCast_of_lt (mem_range.mp hb)] using h
-  · intro u _
-    exact ⟨u.val, mem_range.mpr (ZMod.val_lt u), ZMod.natCast_zmod_val u⟩
+  obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (NeZero.ne q)
+  rw [← Fin.sum_univ_eq_sum_range]
+  exact Finset.sum_congr rfl (fun i _ => congrArg f (ZMod.natCast_zmod_val i).symm)
+
 
 /-- The normalized interval Fourier L1 norm costs only one logarithm. -/
 theorem intervalFourier_lone (A : ℤ) (L : ℕ) (hL : L ≤ q) :

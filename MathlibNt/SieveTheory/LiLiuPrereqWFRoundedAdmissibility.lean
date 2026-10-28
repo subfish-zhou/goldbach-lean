@@ -21,37 +21,18 @@ def RoundedSetAdmissible (upper : Bool) (b : ℕ → ℝ) (D : ℝ) (s : Finset 
   ∀ p ∈ s, (s.filter (fun q => p ≤ q)).card % 2 = (if upper then 1 else 0) →
     (∏ q ∈ s.filter (fun q => p ≤ q), b q) * (b p) ^ 2 < D
 
-@[simp]
-theorem roundedSetAdmissible_empty (upper : Bool) (b : ℕ → ℝ) (D : ℝ) :
-    RoundedSetAdmissible upper b D ∅ := by
-  simp [RoundedSetAdmissible]
 
 /-- The inclusive prime prefix is exactly the first `i + 1` original slots. -/
 theorem rounded_prefix_eq_take (s : Finset ℕ) (i : ℕ)
     (hi : i < (s.sort (· ≥ ·)).length) :
     s.filter (fun q => (s.sort (· ≥ ·))[i] ≤ q) =
       ((s.sort (· ≥ ·)).take (i + 1)).toFinset := by
-  ext q
-  simp only [Finset.mem_filter, List.mem_toFinset]
-  constructor
-  · rintro ⟨hq, hle⟩
-    obtain ⟨j, hj, rfl⟩ :=
-      List.mem_iff_getElem.mp ((Finset.mem_sort (· ≥ ·)).mpr hq)
-    have hji := (s.sortedGT_sort.getElem_le_getElem_iff).mp hle
-    exact List.mem_take_iff_getElem.mpr ⟨j, by omega, rfl⟩
-  · intro hq
-    obtain ⟨j, hj, rfl⟩ := List.mem_take_iff_getElem.mp hq
-    refine ⟨(Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem (by omega)), ?_⟩
-    exact s.sortedGT_sort.getElem_le_getElem_iff.mpr (by omega)
+  exact (LinearSieve.sorted_prefix_toFinset_eq_filter_ge s i hi).symm
 
 theorem rounded_prefix_card (s : Finset ℕ) (i : ℕ)
     (hi : i < (s.sort (· ≥ ·)).length) :
     (s.filter (fun q => (s.sort (· ≥ ·))[i] ≤ q)).card = i + 1 := by
-  rw [rounded_prefix_eq_take s i hi,
-    List.toFinset_card_of_nodup
-      (List.Nodup.sublist (List.take_sublist _ _) (s.sort_nodup (· ≥ ·)))]
-  simp only [List.length_take]
-  omega
+  exact LinearSieve.sorted_prefix_card_eq_filter_ge s i hi
 
 /-- No injectivity of `b` is needed: the product ranges over prime slots. -/
 theorem rounded_prefix_product (b : ℕ → ℝ) (s : Finset ℕ) (i : ℕ)
@@ -121,10 +102,6 @@ theorem roundedSetAdmissible_iff_admissible
   ⟨roundedSetAdmissible_to_admissible hone hmono hsq,
     fun h => (roundedSetAdmissible_iff_cubicPrefixBound upper b D s).mpr h.cubic⟩
 
-/-- Mapping endpoints does not remove equal entries. -/
-theorem rounded_sorted_map_length (b : ℕ → ℝ) (s : Finset ℕ) :
-    ((s.sort (· ≥ ·)).map b).length = s.card := by
-  simp
 
 theorem roundedSetAdmissible_cast_lower_iff (D : ℝ) (s : Finset ℕ) :
     RoundedSetAdmissible false (fun p : ℕ => (p : ℝ)) D s ↔

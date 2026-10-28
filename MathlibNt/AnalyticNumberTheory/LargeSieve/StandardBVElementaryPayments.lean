@@ -1,7 +1,6 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanSmallRangeAndCharacters
 
 /-!
  # Elementary scalar payments for Standard Bombieri--Vinogradov
@@ -186,73 +185,6 @@ theorem directConductorCorrectionMean_vonMangoldt_le (N Q : ℕ) :
       simp
     _ = _ := by rfl
 
-private lemma vonMangoldt_toNat_le_log_v_succ {n : ℤ} {v : ℕ}
-    (hn : 1 ≤ n) (hnv : n.toNat ≤ v) :
-    ArithmeticFunction.vonMangoldt n.toNat ≤ Real.log ((v + 1 : ℕ) : ℝ) := by
-  exact vonMangoldt_le_log_v_succ hn hnv
-
-/-- Every primitive-character small Vaughan prefix is bounded directly by its
-support length `v`; no large-sieve input is needed. -/
-theorem vaughanSmall_primitivePrefixAmplitude_le
-    (N q v : ℕ) (χ : PrimitiveCharacter q) :
-    primitivePrefixAmplitude (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N q χ ≤
-      (v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) := by
-  let C : ℝ := (v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ)
-  have hC : 0 ≤ C := by dsimp [C]; positivity
-  have hmax : primitiveCharacterPrefixMaxSquare
-      (vaughanSmallCoeff vaughanUnitIntegerCoeff v) 0 N q χ ≤ C ^ 2 := by
-    unfold primitiveCharacterPrefixMaxSquare
-    apply Finset.max'_le
-    intro z hz
-    rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
-    unfold primitiveCharacterPrefixSquare
-    simp only [zero_add]
-    let S := (Finset.Icc (1 : ℤ) y).filter (fun n => n.toNat ≤ v)
-    have heq :
-        (∑ n ∈ Finset.Icc (1 : ℤ) y,
-          vaughanSmallCoeff vaughanUnitIntegerCoeff v n * χ.1 (n : ZMod q)) =
-        ∑ n ∈ S,
-          vaughanSmallCoeff vaughanUnitIntegerCoeff v n * χ.1 (n : ZMod q) := by
-      symm
-      apply Finset.sum_subset (Finset.filter_subset _ _)
-      intro n hnI hnS
-      have hnnot : ¬ n.toNat ≤ v := by
-        intro h
-        exact hnS (Finset.mem_filter.mpr ⟨hnI, h⟩)
-      rw [vaughanSmallCoeff_eq_zero_of_v_lt_toNat _ _ (Nat.lt_of_not_ge hnnot)]
-      simp
-    rw [heq]
-    have hnorm :
-        ‖∑ n ∈ S,
-          vaughanSmallCoeff vaughanUnitIntegerCoeff v n * χ.1 (n : ZMod q)‖ ≤ C := by
-      calc
-        _ ≤ ∑ n ∈ S,
-            ‖vaughanSmallCoeff vaughanUnitIntegerCoeff v n *
-              χ.1 (n : ZMod q)‖ := norm_sum_le _ _
-        _ ≤ ∑ _n ∈ S, Real.log ((v + 1 : ℕ) : ℝ) := by
-          apply Finset.sum_le_sum
-          intro n hn
-          have hn' := Finset.mem_filter.mp hn
-          have hn1 : 1 ≤ n := (Finset.mem_Icc.mp hn'.1).1
-          have hΛ0 := ArithmeticFunction.vonMangoldt_nonneg (n := n.toNat)
-          have hΛ := vonMangoldt_toNat_le_log_v_succ hn1 hn'.2
-          rw [vaughanSmallCoeff_eq_of_toNat_le vaughanUnitIntegerCoeff v hn'.2,
-            norm_mul, norm_mul]
-          simp only [vaughanUnitIntegerCoeff, norm_one, one_mul, Complex.norm_real,
-            Real.norm_eq_abs, abs_of_nonneg hΛ0]
-          exact (mul_le_of_le_one_right hΛ0 (χ.1.norm_le_one _)).trans hΛ
-        _ = (S.card : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) := by simp
-        _ ≤ C := by
-          dsimp [C]
-          apply mul_le_mul_of_nonneg_right
-          · have hcardS : S.card ≤ v := by
-              simpa [S, vaughanSmallSupport] using card_vaughanSmallSupport_le y v
-            exact_mod_cast hcardS
-          · positivity
-    exact pow_le_pow_left₀ (norm_nonneg _) hnorm 2
-  rw [← primitivePrefixAmplitude_sq] at hmax
-  nlinarith [primitivePrefixAmplitude_nonneg
-    (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N q χ]
 
 end
 

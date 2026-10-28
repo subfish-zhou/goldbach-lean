@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "completed_at_utc": "2026-10-27T10:13:40.229100+00:00",
+  "main_modules": 1803,
+  "liliu_scope_modules": 1432,
+  "source_inputs_sha256": "60fc889c14c6655bfd9d160402851e08cb016c3d01c640d35e13c1ff9061b8f3",
+  "object_inputs_sha256": "c19c8d1819af099b8c0ef651115f647ae6ff2c61b3196fec13ae2e38224111a9",
+  "observer_sha256": "72b41274f721b7dea5ce3ca7da0764ef6d13a0d99ec71d5964d7e69c550ca9cd",
+  "candidate_counts": {
+    "symmetric-type-candidates.json": 1,
+    "same-type-candidates.json": 59,
+    "orphan-private-fresh-candidates.json": 0
+  },
+  "independent_acyclic_same_or_converse_candidates": 0,
+  "isolated_private_candidates": 0,
+  "report_sha256": {
+    "symmetric-type-candidates.json": "12f34a6b742dc312943ace43241fa7c7280e1de8148631788bdd83fc8739eac7",
+    "same-type-candidates.json": "458857513efdb1c160609f7a3af2ad9b3990f60cc5754194d6cffb1cf820235b",
+    "orphan-private-fresh-candidates.json": "32ad9cd2dd92fe597a1c6e05ad627b156296282c0bfabfbf0cb8929c30b94e76"
+  },
+  "method": "Fresh stable-object census after this production rebuild. Canonicalized identical and reversed terminal Eq/Iff statement hashes preserve all premises and binders; inspect Li-Liu source bodies of at least five effective lines and conservatively union compiled references. Existing graph-export normalization prefers body-bearing declarations to module-interface signatures. Explicit private orphan scan additionally requires zero stored incoming references, one source identifier occurrence, and no preceding attribute block.",
+  "limitations": "Search covers these specified patterns only. Hash matches are candidate signals, not equality proofs. Dependent aliases cannot replace the proofs they consume. No mathematical global minimality, exhaustive bibliography audit or all possible simplifications claim.",
+  "raw_evidence": "Local /tmp/liliu-finite-prefix-symmetry and /tmp/liliu-finite-prefix-cleanup/next-audit; extraction/analyzers are read-only and are not proof dependencies."
+}

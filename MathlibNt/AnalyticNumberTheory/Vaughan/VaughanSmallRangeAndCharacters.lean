@@ -1,6 +1,6 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIEnergy
+import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanPrefixReduction
 
 /-!
  # Vaughan's small range and all-character bookkeeping
@@ -142,54 +142,6 @@ theorem vaughanSmallCoeff_energy_le_v_mul_log_sq
     _ = (v : ℝ) * B ^ 2 * Real.log ((v + 1 : ℕ) : ℝ) ^ 2 :=
       mul_comm _ _
 
-/-- The existing Vaughan prefix ledger with its final opaque lane replaced by
-the proved small-support energy.  This remains a coefficient-energy ledger,
-not a Bombieri--Vinogradov conclusion. -/
-theorem weighted_vaughan_prefix_large_sieve_small_closed_ledger
-    (b : ℤ → ℂ) (N Q u v : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-        ((∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖b n‖ ^ 2 * vaughanTypeICutoffEnergy n.toNat u v) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖b n‖ ^ 2 * vaughanTypeIIDivisorEnergy n.toNat u v) +
-          Real.log ((v + 1 : ℕ) : ℝ) ^ 2 *
-            ∑ n ∈ vaughanSmallSupport N v, ‖b n‖ ^ 2) := by
-  refine (weighted_vaughan_prefix_large_sieve_structured_ledger
-    b N Q u v hQ).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · gcongr
-    exact vaughanSmallCoeff_energy_le_log_support b N v
-  · unfold primitiveLargeSieveConstant
-    positivity
-
-/-- Uniform-coefficient specialization of the closed small lane, displaying
-the exact `v · B² · log(v+1)²` budget. -/
-theorem weighted_vaughan_prefix_large_sieve_small_closed_uniform_ledger
-    (b : ℤ → ℂ) (N Q u v : ℕ) (B : ℝ) (hQ : 0 < Q) (hB : 0 ≤ B)
-    (hb : ∀ n ∈ vaughanSmallSupport N v, ‖b n‖ ≤ B) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-        ((∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖b n‖ ^ 2 * vaughanTypeICutoffEnergy n.toNat u v) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N,
-            ‖b n‖ ^ 2 * vaughanTypeIIDivisorEnergy n.toNat u v) +
-          (v : ℝ) * B ^ 2 * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) := by
-  refine (weighted_vaughan_prefix_large_sieve_structured_ledger
-    b N Q u v hQ).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · gcongr
-    exact vaughanSmallCoeff_energy_le_v_mul_log_sq b N v B hB hb
-  · unfold primitiveLargeSieveConstant
-    positivity
 
 /-! ## Exact conductor and principal-character bookkeeping -/
 
@@ -268,18 +220,6 @@ theorem characterInterval_eq_conductorPrimitive_add_error
         exact characterTerm_eq_conductorPrimitive_add_error χ b n
     _ = _ := by rw [Finset.sum_add_distrib]
 
-/-- The principal contribution is the literal `χ = 1` summand; every remaining
-summand has nontrivial conductor.  This is a finite identity, not a PNT main-term
-asymptotic. -/
-theorem sum_characterIntervals_eq_principal_add_nonprincipal
-    (q : ℕ) (b : ℤ → ℂ) (M : ℤ) (N : ℕ) :
-    (∑ χ : DirichletCharacter ℂ q,
-      ∑ n ∈ Finset.Icc (M + 1) (M + N), b n * χ (n : ZMod q)) =
-      (∑ n ∈ Finset.Icc (M + 1) (M + N),
-        b n * (1 : DirichletCharacter ℂ q) (n : ZMod q)) +
-      ∑ χ ∈ nonprincipalCharacters q,
-        ∑ n ∈ Finset.Icc (M + 1) (M + N), b n * χ (n : ZMod q) := by
-  exact sum_allCharacters_eq_principal_add_nonprincipal _
 
 end
 

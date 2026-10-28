@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedIntegral
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedSource
+import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
+import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorant
+
 
 open scoped Topology
 open Filter
@@ -25,24 +27,5 @@ theorem goldbachG12AuthorBad_normalized_paid (δ : ℝ) (hδ : 0 < δ) :
     _ = (67200 : ℝ)*(Real.log (N : ℝ)/(N : ℝ)^(4/53 : ℝ)) := by field_simp
     _ ≤ δ := (hK N (by omega)).le
 
-/-- Full actual author-weighted linked source, with all product multiplicities.
-The threshold precedes epsilon, which remains completely arbitrary. -/
-theorem goldbachG12AuthorSource_integral_budget (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N ≥ N₀, ∀ ε : ℝ,
-      Real.log (N : ℝ)/N * (400 *
-        goldbachG12WeightedSource N ε (goldbachG12AuthorPrimeWeight N)) ≤
-          (564383/1000000 : ℝ)*goldbachG12PrimeIntegral goldbachG11AuthorWeight + δ := by
-  obtain ⟨K,hK,hrough⟩ := goldbachG12AuthorRough_integral_budget (δ/2) (half_pos hδ)
-  obtain ⟨L,_,hbad⟩ := goldbachG12AuthorBad_normalized_paid (δ/2) (half_pos hδ)
-  refine ⟨max K L,hK.trans (le_max_left _ _),?_⟩
-  intro N hN ε
-  have hN4 : 4 ≤ N := by omega
-  have hn : 0 ≤ Real.log (N : ℝ)/N := div_nonneg
-    (Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))) (Nat.cast_nonneg _)
-  have h := mul_le_mul_of_nonneg_left (goldbachG12AuthorSource_le_fullRough hN4 ε) hn
-  rw [mul_add] at h
-  have hr := hrough N (by omega)
-  have hb := hbad N (by omega)
-  linarith
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

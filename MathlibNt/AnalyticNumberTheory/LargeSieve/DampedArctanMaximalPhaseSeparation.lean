@@ -198,22 +198,6 @@ theorem abs_sin_log_halfstep_le
     _ ≤ t * (2 * Real.log (M : ℝ)) := mul_le_mul_of_nonneg_left hlog ht.le
     _ = 2 * Real.log (M : ℝ) * t := by ring
 
-/-- Uniform positive-integer sine bound for either coefficient coordinate. -/
-theorem abs_sin_log_int_le
-    {M : ℕ} (hM : 1 ≤ M) {m : ℤ} (hm1 : 1 ≤ m) (hmM : m ≤ (M : ℤ))
-    {t : ℝ} (ht : 0 < t) :
-    |Real.sin (t * Real.log (m : ℝ))| ≤ min 1 (Real.log (M : ℝ) * t) := by
-  have hlog := abs_log_int_le_log hM hm1 hmM
-  apply le_min (Real.abs_sin_le_one _)
-  calc
-    |Real.sin (t * Real.log (m : ℝ))| ≤ |t * Real.log (m : ℝ)| := Real.abs_sin_le_abs
-    _ = t * |Real.log (m : ℝ)| := by rw [abs_mul, abs_of_pos ht]
-    _ ≤ t * Real.log (M : ℝ) := mul_le_mul_of_nonneg_left hlog ht.le
-    _ = Real.log (M : ℝ) * t := by ring
-
-/-- Uniform cosine bound, used for `y`, `m`, and `n`. -/
-theorem abs_cos_phase_le_one (x : ℝ) : |Real.cos x| ≤ 1 :=
-  Real.abs_cos_le_one x
 
 /-- `Y` may select a different half-step for every primitive character.  The
 result is the pointwise interface needed before summing and invoking

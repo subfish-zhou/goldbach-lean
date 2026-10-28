@@ -170,15 +170,4 @@ theorem exists_actualT_exp_bound :
           (mul_nonneg (by linarith) (Real.exp_pos _).le)) hlog0
     _ = _ := by ring
 
-#check jr_hat_mul_coordinate_le_exp
-#check jr_errorEnvelope_le_exp
-#check exists_jr_finiteSourceLayer_exp_bound
-#check sourceParameters_twelve_third_five
-#check exists_actualT_exp_bound
-#print axioms jr_hat_mul_coordinate_le_exp
-#print axioms jr_errorEnvelope_le_exp
-#print axioms exists_jr_finiteSourceLayer_exp_bound
-#print axioms sourceParameters_twelve_third_five
-#print axioms exists_actualT_exp_bound
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser

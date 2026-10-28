@@ -30,38 +30,5 @@ theorem goldbachS3_threeElevenths_coefficient_le_retained195190815363 :
   rw [goldbachS3_threeElevenths_coefficient_eq]
   exact goldbachS3_threeElevenths_scalar_le_retained195190815363
 
-theorem goldbachS3_normalized_upper_retained236056871187 (δ ε : ℝ)
-    (hδ : 0 < δ) (hε : 0 < ε) (hεu : ε < (2 : ℝ)/15) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-      (goldbachS3Closed (goldbachDifferenceCarrier N ε) N
-        ((N : ℝ)^(4/53 : ℝ)) ((N : ℝ)^(1/3 : ℝ)) : ℝ) ≤
-        ((1-ε)*(236056871187/10000000000 : ℝ)+δ)*
-          (SingularSeries.liuSingularSeries N*(N : ℝ)/Real.log (N : ℝ)^2) := by
-  obtain ⟨N₀, hN₀, h⟩ := goldbachS3_normalized_upper_oneThird_exp_free δ ε hδ hε hεu
-  refine ⟨N₀, hN₀, ?_⟩
-  intro N hN hEven
-  have hs : 0 ≤ SingularSeries.liuSingularSeries N*(N : ℝ)/Real.log (N : ℝ)^2 :=
-    div_nonneg (mul_nonneg (SingularSeries.liuSingularSeries_pos N).le
-      (Nat.cast_nonneg N)) (sq_nonneg _)
-  exact (h N hN hEven).trans (mul_le_mul_of_nonneg_right
-    (add_le_add (mul_le_mul_of_nonneg_left goldbachS3_oneThird_scalar_le_retained236056871187
-      (by linarith : 0 ≤ 1-ε)) (le_refl δ)) hs)
-
-theorem goldbachS3_normalized_upper_retained195190815363 (δ ε : ℝ)
-    (hδ : 0 < δ) (hε : 0 < ε) (hεu : ε < (2 : ℝ)/15) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-      (goldbachS3Closed (goldbachDifferenceCarrier N ε) N
-        ((N : ℝ)^(4/53 : ℝ)) ((N : ℝ)^(3/11 : ℝ)) : ℝ) ≤
-        ((1-ε)*(195190815363/10000000000 : ℝ)+δ)*
-          (SingularSeries.liuSingularSeries N*(N : ℝ)/Real.log (N : ℝ)^2) := by
-  obtain ⟨N₀, hN₀, h⟩ := goldbachS3_normalized_upper_threeElevenths_exp_free δ ε hδ hε hεu
-  refine ⟨N₀, hN₀, ?_⟩
-  intro N hN hEven
-  have hs : 0 ≤ SingularSeries.liuSingularSeries N*(N : ℝ)/Real.log (N : ℝ)^2 :=
-    div_nonneg (mul_nonneg (SingularSeries.liuSingularSeries_pos N).le
-      (Nat.cast_nonneg N)) (sq_nonneg _)
-  exact (h N hN hEven).trans (mul_le_mul_of_nonneg_right
-    (add_le_add (mul_le_mul_of_nonneg_left goldbachS3_threeElevenths_scalar_le_retained195190815363
-      (by linarith : 0 ≤ 1-ε)) (le_refl δ)) hs)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

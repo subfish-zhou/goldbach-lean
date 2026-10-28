@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
-import PrimeNumberTheoremAnd.MediumPNT
 
 namespace AnalyticNumberTheory.LargeSieve
 

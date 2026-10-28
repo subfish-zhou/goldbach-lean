@@ -240,12 +240,6 @@ theorem buchstab_subproblem_band {x y : ℝ} {k p : ℕ}
       _ ≤ (p : ℝ) ^ (k + 1) := pow_le_pow_left₀ hy0.le hyp _
       _ = (p : ℝ) ^ k * p := pow_succ _ _
 
-theorem log_ratio_le_of_le_pow {x y : ℝ} {k : ℕ}
-    (hy : primeErrorStart ≤ y) (hyx : y ≤ x) (hxy : x ≤ y ^ k) :
-    Real.log x / Real.log y ≤ (k : ℝ) := by
-  apply (div_le_iff₀ (bands_pos hy).2).2
-  have h := Real.log_le_log ((bands_pos hy).1.trans_le hyx) hxy
-  simpa only [Real.log_pow] using h
 
 private theorem buchstab_main_decomposition {x y : ℝ}
     (hx : 1 < x) (hy : 1 < y) :
@@ -384,23 +378,5 @@ theorem roughCount_buchstab_band_error_unrestricted (k : ℕ) {x y : ℝ}
     have hconstant := buchstabBandConstant_ge k
     nlinarith
 
-theorem roughCount_buchstab_band_error (k : ℕ) (_hk : k ≤ 100) {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hyx : y ≤ x) (hxy : x ≤ y ^ k) :
-    |(roughCount x y : ℝ) -
-        x * buchstab (Real.log x / Real.log y) / Real.log y| ≤
-      buchstabBandConstant k *
-        (buchstabRemainder y * (x / Real.log y) + y / Real.log y) := by
-  exact roughCount_buchstab_band_error_unrestricted k hy hyx hxy
-
-/-- In particular, there is one constant for the entire band through `100`. -/
-theorem roughCount_buchstab_band_100 :
-    ∃ C : ℝ, 0 < C ∧ ∀ x y : ℝ,
-      primeErrorStart ≤ y → y ≤ x → x ≤ y ^ (100 : ℕ) →
-      |(roughCount x y : ℝ) -
-        x * buchstab (Real.log x / Real.log y) / Real.log y| ≤
-      C * (buchstabRemainder y * (x / Real.log y) + y / Real.log y) := by
-  refine ⟨buchstabBandConstant 100, by linarith [buchstabBandConstant_ge 100], ?_⟩
-  intro x y hy hyx hxy
-  exact roughCount_buchstab_band_error 100 (by omega) hy hyx hxy
 
 end LiLiuPrereqBuchstab

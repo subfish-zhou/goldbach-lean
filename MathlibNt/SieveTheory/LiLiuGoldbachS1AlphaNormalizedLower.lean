@@ -1,13 +1,7 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Order.Filter.AtTopBot.Basic
 import MathlibNt.Analysis.SieveNormalization
 import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.SieveTheory.LiuSingularSeries
-import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
-import MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
 import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
 import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
 import MathlibNt.SieveTheory.LiLiuGoldbachS1PaidLower
 
@@ -15,15 +9,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 set_option autoImplicit false
 
-private theorem S1AlphaNormalizedLower_exists_logBound (B : ℝ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → B ≤ Real.log (N : ℝ) := by
-  have hlog : ∀ᶠ N : ℕ in Filter.atTop, B ≤ Real.log (N : ℝ) := by
-    exact (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-      (Filter.eventually_ge_atTop B)
-  obtain ⟨N₀, hN₀⟩ := Filter.eventually_atTop.mp hlog
-  refine ⟨max 4 N₀, le_max_left _ _, ?_⟩
-  intro N hN
-  exact hN₀ N ((le_max_right _ _).trans hN)
 
 private theorem S1AlphaNormalizedLower_log_pos {N : ℕ} (hN : 4 ≤ N) :
     0 < Real.log (N : ℝ) := by

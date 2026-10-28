@@ -1,0 +1,45 @@
+{
+  "module": "Hf4ActualNumerator",
+  "exit_code": 0,
+  "seconds": 5.303926069289446,
+  "source_sha256": "91582626e453e93bcf1e8ccbd1d3ee2afebaa7ef72d342e806b6c15582c7bd44",
+  "object_sha256": "0fa8acd69c808af6f2ce174925165dbec0021c65c45a3bf2f8531789bdb7544c",
+  "dependencies": {
+    "Hf4ActualOuter": "ce37c2f787ddd2029e57e2c0927791e67f885a416f816063bc6fab8c3f1f9256"
+  },
+  "dependency_contexts": {
+    "Hf4ActualOuter": "daf2398e7710a6f783455a1c5baa398b82845b190d2bbfb11f791bdefce5b1e5"
+  },
+  "context_sha256": "4f5a50acbf49685a7bdffc01deee21586accbedb1d8524f147740e7741230ad7",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualNumerator.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualNumerator.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualNumerator.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualNumerator.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualNumerator.resources",
+  "resource_sha256": "c14d698e8bac1cff2fa61303242bed26e89f35e17a63b9697b8fefcd4f9d9eb1",
+  "artifact_bundle_sha256": {
+    ".olean": "0fa8acd69c808af6f2ce174925165dbec0021c65c45a3bf2f8531789bdb7544c"
+  }
+}

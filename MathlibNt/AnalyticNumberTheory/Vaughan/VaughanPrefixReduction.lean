@@ -1,6 +1,5 @@
 
 
-import AnalyticNumberTheory.Sieve.VaughanIdentity
 import MathlibNt.AnalyticNumberTheory.LargeSieve.DyadicPrefixMaximal
 
 /-!
@@ -96,21 +95,6 @@ theorem vaughanLambdaCoeff_eq (b : ℤ → ℂ) (u v : ℕ) (n : ℤ) :
   push_cast
   ring
 
-/-- Exact consumption by one primitive character and one finite prefix.  This is
-the algebraic interface used before taking character/modulus sums or prefix
-maxima; no estimate has yet been applied. -/
-theorem primitiveCharacterPrefix_vaughan_eq
-    (b : ℤ → ℂ) (y q u v : ℕ) (χ : PrimitiveCharacter q) :
-    (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanLambdaCoeff b n * χ.1 (n : ZMod q)) =
-      (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanTypeICoeff b u v n * χ.1 (n : ZMod q)) +
-      (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanTypeIICoeff b u v n * χ.1 (n : ZMod q)) +
-      (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanSmallCoeff b v n * χ.1 (n : ZMod q)) := by
-  simp_rw [vaughanLambdaCoeff_eq b u v, add_mul,
-    Finset.sum_add_distrib]
 
 /-- Three-term square-norm inequality with its explicit finite loss. -/
 private theorem norm_add_add_sq_le_three (x y z : ℂ) :
@@ -173,80 +157,6 @@ theorem primitiveCharacterPrefixMaxSquare_le_three
   · simpa [xSmall, primitiveCharacterPrefixMaxSquare,
       primitiveCharacterPrefixSquare] using hSmall
 
-/-- Exact algebraic reduction of every primitive-character prefix maximum of
-`b Λ` to Type I, Type II, and the retained small range.  All four finite
-parameters `N,Q,u,v` remain explicit. -/
-theorem weighted_vaughan_prefix_reduction (b : ℤ → ℂ) (N Q u v : ℕ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * ((∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ : PrimitiveCharacter q,
-            primitiveCharacterPrefixMaxSquare (vaughanTypeICoeff b u v) 0 N q χ) +
-        (∑ q ∈ Finset.Icc 1 Q,
-          ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q,
-              primitiveCharacterPrefixMaxSquare (vaughanTypeIICoeff b u v) 0 N q χ) +
-        (∑ q ∈ Finset.Icc 1 Q,
-          ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q,
-              primitiveCharacterPrefixMaxSquare (vaughanSmallCoeff b v) 0 N q χ)) := by
-  calc
-    _ ≤ ∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ : PrimitiveCharacter q,
-            (3 * (primitiveCharacterPrefixMaxSquare (vaughanTypeICoeff b u v) 0 N q χ +
-              primitiveCharacterPrefixMaxSquare (vaughanTypeIICoeff b u v) 0 N q χ +
-              primitiveCharacterPrefixMaxSquare (vaughanSmallCoeff b v) 0 N q χ)) := by
-      apply Finset.sum_le_sum
-      intro q hq
-      apply mul_le_mul_of_nonneg_left
-      · exact Finset.sum_le_sum fun χ _ =>
-          primitiveCharacterPrefixMaxSquare_le_three _ _ _ _ N q χ
-            (fun n _ => vaughanLambdaCoeff_eq b u v n)
-      · positivity
-    _ = _ := by
-      simp only [mul_add, Finset.sum_add_distrib, Finset.mul_sum]
-      ring_nf
-
-/-- The concrete algebraic consumer of the proved prefix-maximal primitive
-large sieve.  Closing Standard BV from here still requires genuine Type-I and
-Type-II energy estimates; this theorem does not disguise those estimates as a
-Prop premise or a BV conclusion. -/
-theorem weighted_vaughan_prefix_large_sieve_ledger
-    (b : ℤ → ℂ) (N Q u v : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-        ((∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeICoeff b u v n‖ ^ 2) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-  let K := (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-    primitiveLargeSieveConstant N Q
-  have hred := weighted_vaughan_prefix_reduction b N Q u v
-  have hI := weighted_primitive_prefix_maximal
-    (vaughanTypeICoeff b u v) 0 N Q hQ
-  have hII := weighted_primitive_prefix_maximal
-    (vaughanTypeIICoeff b u v) 0 N Q hQ
-  have hSmall := weighted_primitive_prefix_maximal
-    (vaughanSmallCoeff b v) 0 N Q hQ
-  simp only [zero_add] at hI hII hSmall
-  calc
-    _ ≤ 3 * (_ + _ + _) := hred
-    _ ≤ 3 * (K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
-          ‖vaughanTypeICoeff b u v n‖ ^ 2) +
-        K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
-          ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-        K * (∑ n ∈ Finset.Icc (1 : ℤ) N,
-          ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-      exact mul_le_mul_of_nonneg_left (add_le_add (add_le_add hI hII) hSmall)
-        (by norm_num)
-    _ = _ := by dsimp [K]; ring
 
 end
 

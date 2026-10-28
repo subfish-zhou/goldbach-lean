@@ -1,6 +1,5 @@
 import MathlibNt.Wu2004MeanValue.PrincipalMaximal
 import MathlibNt.SieveTheory.LiuPanPrincipalRemainder
-import AnalyticNumberTheory.Sieve.PanMainTerm
 
 /-!
 # The complete induced-principal contribution in Wu's weighted norm

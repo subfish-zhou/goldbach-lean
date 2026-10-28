@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9IntegerFibre
 import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedSieve
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongCoefficient
 
 open Finset
 
@@ -102,15 +101,5 @@ theorem fouvryG9_weighted_natAbs_fibre_le
     _ ≤ _ := add_le_add (fouvryG9_weighted_product_fibre_le U V α β (N + r) hα hβ)
       (fouvryG9_weighted_product_fibre_le U V α β (N - r) hα hβ)
 
-/-- Beyond the centre the lower product is zero and has zero divisor weight. -/
-theorem fouvryG9_weighted_natAbs_fibre_le_of_lt
-    (U V : Finset ℕ) (α β : ℕ → ℝ) (N r : ℕ) (hNr : N < r)
-    (hα : ∀ m ∈ U, 0 ≤ α m ∧ α m ≤ (fouvryTau 2 m : ℝ))
-    (hβ : ∀ n ∈ V, 0 ≤ β n ∧ β n ≤ (fouvryTau 1 n : ℝ)) :
-    (∑ p ∈ U ×ˢ V,
-      if ((N : ℤ) - (p.1 : ℤ) * p.2).natAbs = r then α p.1 * β p.2 else 0) ≤
-      (fouvryTau 3 (N + r) : ℝ) := by
-  simpa [Nat.sub_eq_zero_of_le hNr.le] using
-    fouvryG9_weighted_natAbs_fibre_le U V α β N r hα hβ
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

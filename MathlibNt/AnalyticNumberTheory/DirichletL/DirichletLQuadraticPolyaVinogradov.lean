@@ -1,8 +1,6 @@
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrimitiveRootNumberNorm
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Tactic
 
 /-!
 # Fourier completion for primitive quadratic character sums
@@ -76,40 +74,5 @@ theorem IsPrimitive.sum_range_fourier_completion
       intro n hn
       ring
 
-/-- Norm form of Fourier completion.  This isolates the sole remaining
-Pólya--Vinogradov input as the `L¹` norm of the finite geometric kernels; the
-Gauss sum has already been replaced by `sqrt q`. -/
-theorem IsPrimitive.norm_sum_range_le_sqrt_mul_fourierKernelL1
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hq : 1 < q) (M : ℕ) :
-    ‖∑ n ∈ range M, χ (n : ZMod q)‖ ≤
-      Real.sqrt q / q *
-        ∑ j : ZMod q, ‖∑ n ∈ range M, stdAddChar (j * (n : ZMod q))‖ := by
-  rw [hχ.sum_range_fourier_completion M, norm_mul, norm_mul,
-    hχ.norm_gaussSum_stdAddChar hq]
-  have hqpos : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
-  have hqnorm : ‖((q : ℂ)⁻¹)‖ = ((q : ℝ)⁻¹) := by
-    rw [norm_inv, Complex.norm_natCast]
-  rw [hqnorm]
-  calc
-    (q : ℝ)⁻¹ * Real.sqrt q *
-        ‖∑ j : ZMod q, χ⁻¹ (-j) *
-          ∑ n ∈ range M, stdAddChar (j * (n : ZMod q))‖
-        ≤ (q : ℝ)⁻¹ * Real.sqrt q *
-          ∑ j : ZMod q, ‖χ⁻¹ (-j) *
-            ∑ n ∈ range M, stdAddChar (j * (n : ZMod q))‖ := by
-      gcongr
-      exact norm_sum_le _ _
-    _ ≤ (q : ℝ)⁻¹ * Real.sqrt q *
-          ∑ j : ZMod q, ‖∑ n ∈ range M,
-            stdAddChar (j * (n : ZMod q))‖ := by
-      gcongr
-      rw [norm_mul]
-      exact mul_le_of_le_one_left (norm_nonneg _)
-        (DirichletCharacter.norm_le_one χ⁻¹ (-j))
-    _ = Real.sqrt q / q *
-          ∑ j : ZMod q, ‖∑ n ∈ range M,
-            stdAddChar (j * (n : ZMod q))‖ := by
-      rw [div_eq_mul_inv]
-      ring
 
 end DirichletCharacter

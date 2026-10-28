@@ -1,4 +1,4 @@
-import PrimeNumberTheoremAnd.Consequences
+import PrimeNumberTheoremAnd.MediumPNTQualitativeBridge
 import Mathlib.Analysis.SpecialFunctions.Log.Monotone
 
 /-!

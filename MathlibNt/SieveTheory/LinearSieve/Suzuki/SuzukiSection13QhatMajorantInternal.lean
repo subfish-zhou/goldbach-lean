@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1027ExplicitAdjoint
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1056UniformStationary
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13MajorantsFinal
 
 open scoped Classical BigOperators Interval

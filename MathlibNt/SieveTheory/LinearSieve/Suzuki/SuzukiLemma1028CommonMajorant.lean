@@ -88,33 +88,6 @@ theorem Proposition1020Xi.deriv_pos
   exact one_div_pos.mpr
     (lt_trans (by norm_num : (0 : ℝ) < 1 / 2) (hξ.etaSlopeLower s hs))
 
-/-- The common derivative majorant `2` supplied by the strict `η' > 1/2`
-bound in Proposition 10.20(ii). -/
-theorem Proposition1020Xi.deriv_le_two
-    {ξ : ℝ → ℝ} (hξ : Proposition1020Xi ξ) {s : ℝ} (hs : 1 < s) :
-    deriv ξ s ≤ 2 := by
-  rw [(hξ.hasDerivAt hs).deriv]
-  have hq : (1 / 2 : ℝ) < s - (s - 1) / ξ s := hξ.etaSlopeLower s hs
-  have hq0 : 0 < s - (s - 1) / ξ s := by linarith
-  apply (div_le_iff₀ hq0).2
-  linarith
-
-/-- One-sided common-majorant slope for `ξ` (the `κ = 1` specialization).
-Unlike a unit-shift ratio for a DDE solution, this is a Proposition 10.20
-calculus fact: every secant on `[2,∞)` has slope at most `2`. -/
-theorem proposition1020_oneSidedCommonMajorantSlope
-    {ξ : ℝ → ℝ} (hξ : Proposition1020Xi ξ) {t s : ℝ}
-    (ht : 2 ≤ t) (hts : t ≤ s) :
-    ξ s - ξ t ≤ 2 * (s - t) := by
-  rcases hts.eq_or_lt with rfl | hlt
-  · simp
-  · obtain ⟨c, hc, hcderiv⟩ := exists_hasDerivAt_eq_slope
-      ξ (deriv ξ) hlt hξ.continuous.continuousOn
-      (fun u hu => (hξ.differentiableAt u (by linarith [hu.1, ht])).hasDerivAt)
-    have hcBound : deriv ξ c ≤ 2 :=
-      hξ.deriv_le_two (by linarith [hc.1, ht])
-    rw [hcderiv] at hcBound
-    exact (div_le_iff₀ (sub_pos.mpr hlt)).1 hcBound
 
 /-- The matching lower secant bound; together with the previous theorem this
 is the controlled first-order input used by the Taylor steps in §10. -/
@@ -131,17 +104,6 @@ theorem proposition1020_secant_nonneg
     rw [hcderiv] at hcPos
     exact ((div_pos_iff_of_pos_right (sub_pos.mpr hlt)).mp hcPos).le
 
-/-- Uniform unit-interval form of the common majorant. -/
-theorem proposition1020_unitIntervalError
-    {ξ : ℝ → ℝ} (hξ : Proposition1020Xi ξ) {t s : ℝ}
-    (hs : 3 ≤ s) (ht : t ∈ Icc (s - 1) s) :
-    |ξ t - ξ s| ≤ 2 := by
-  have hlo : 2 ≤ t := by linarith [ht.1]
-  have hupper := proposition1020_oneSidedCommonMajorantSlope hξ hlo ht.2
-  have hlower := proposition1020_secant_nonneg hξ hlo ht.2
-  have hdist : s - t ≤ 1 := by linarith [ht.1]
-  rw [abs_of_nonpos (by linarith)]
-  linarith
 
 /-- The `κ = 1` phase from (10.43). -/
 noncomputable def xiPhase (ξ : ℝ → ℝ) (s : ℝ) : ℝ :=
@@ -179,25 +141,6 @@ theorem lemma1028_logEnvelopeMinus_hasDerivAt
     ring
   exact hsum.congr_deriv hcoeff
 
-/-- Equation (10.44) after multiplication by the positive `s R(s)`.  This is
-exactly the slope-to-envelope bridge needed by the one-sided half of Lemma
-10.28; it assumes a derivative sign, not a unit-shift ratio. -/
-theorem lemma1028_commonMajorantSlope_of_deriv_nonpos
-    {R ξ : ℝ → ℝ} (hξ : Proposition1020Xi ξ) {c s : ℝ}
-    (hs : 0 < s) (hR : 0 < R s)
-    (hDDE : HasDerivAt R (-(2 * R s + R (s - 1)) / s) s)
-    (hslope : deriv (logEnvelopeMinus R ξ c) s ≤ 0) :
-    -(R (s - 1)) + s * (ξ s - c - 2 / s) * R s ≤ 0 := by
-  have hid := lemma1028_logEnvelopeMinus_hasDerivAt hξ (c := c) hs hR hDDE
-  rw [hid.deriv] at hslope
-  have hscale : 0 < s * R s := mul_pos hs hR
-  have heq :
-      -(R (s - 1)) + s * (ξ s - c - 2 / s) * R s =
-        (s * R s) * (-R (s - 1) / (s * R s) + ξ s - c - 2 / s) := by
-    field_simp [ne_of_gt hs, ne_of_gt hR]
-    ring
-  rw [heq]
-  exact mul_nonpos_of_nonneg_of_nonpos hscale.le hslope
 
 /-!
 The remaining source step is genuinely Lemma 10.28, pp.53--58: prove the

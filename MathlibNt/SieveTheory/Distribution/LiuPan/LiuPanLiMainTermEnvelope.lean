@@ -1,5 +1,4 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters
+import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
 import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization
 
 /-! Pointwise envelopes for the literal Liu main term. The additive
@@ -112,23 +111,6 @@ theorem abs_liuPanLi_mainTerm_finset_le (κ : ℝ) (N q : ℕ) (S : Finset ℕ) 
       mul_le_mul_of_nonneg_left (sum_liuWeight_div_finset_le_one_add_log N S)
         (mul_nonneg (liuPanLiEnvelopeConstant_nonneg κ) (Nat.cast_nonneg _))
 
-/-- Uniform interval version, with no upper restriction on A₂. -/
-theorem abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ) (N q A₁ A₂ : ℕ) :
-    |∑ a ∈ (Ioc A₁ A₂).filter (fun a => a.Coprime q),
-        liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-          liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| ≤
-      liuPanLiEnvelopeConstant κ * N * (1 + Real.log N) / q.totient :=
-  abs_liuPanLi_mainTerm_finset_le κ N q _
-
-/-- The constant is selected before all endpoints and moduli. -/
-theorem exists_abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ N q A₁ A₂ : ℕ, 2 ≤ N → 0 < q →
-      |∑ a ∈ (Ioc A₁ A₂).filter (fun a => a.Coprime q),
-          liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-            liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| ≤
-        C * N * (1 + Real.log N) / q.totient :=
-  ⟨liuPanLiEnvelopeConstant κ, liuPanLiEnvelopeConstant_pos κ,
-    fun N q A₁ A₂ _ _ => abs_liuPanLi_mainTerm_Ioc_le κ N q A₁ A₂⟩
 
 /-- The extra reciprocal-totient payment is independent of N, q and the window. -/
 def liuPanLiModulusEnvelopeConstant (κ : ℝ) : ℝ :=
@@ -178,14 +160,5 @@ theorem modulus_mul_abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ)
       liuPanLiModulusEnvelopeConstant κ * N * (1 + Real.log N) ^ 2 :=
   modulus_mul_abs_liuPanLi_mainTerm_finset_le κ hN hq hqN _
 
-/-- Quantifier order suitable for the later actual interval-maximal error bound. -/
-theorem exists_modulus_mul_abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ N q A₁ A₂ : ℕ, 2 ≤ N → 0 < q → q ≤ N →
-      (q : ℝ) * |∑ a ∈ (Ioc A₁ A₂).filter (fun a => a.Coprime q),
-          liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-            liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| ≤
-        C * N * (1 + Real.log N) ^ 2 :=
-  ⟨liuPanLiModulusEnvelopeConstant κ, liuPanLiModulusEnvelopeConstant_pos κ,
-    fun _ _ A₁ A₂ hN hq hqN => modulus_mul_abs_liuPanLi_mainTerm_Ioc_le κ hN hq hqN A₁ A₂⟩
 
 end MathlibNt.SieveTheory.LiuWeight

@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
 import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 noncomputable section
 
@@ -250,30 +248,6 @@ theorem S1BetaGeometry_panModulusCutoff_eventually
 @[simp] theorem S1BetaGeometry_ceil_zeta_eq_Z (N : ℕ) (s : ℝ) :
     Nat.ceil (S1BetaGeometryZeta N s) = S1BetaGeometryZ N s := rfl
 
-theorem S1BetaGeometry_logD_div_logZeta_eq_s {N : ℕ} {s : ℝ}
-    (hD : 2 ≤ S1BetaGeometryD N s) (hs : 0 < s) :
-    Real.log (S1BetaGeometryD N s : ℝ) / Real.log (S1BetaGeometryZeta N s) = s := by
-  have hzetaLogPos : 0 < Real.log (S1BetaGeometryZeta N s) := by
-    exact Real.log_pos (S1BetaGeometry_one_lt_zeta hD hs)
-  have hDpos : 0 < (S1BetaGeometryD N s : ℝ) := by
-    exact_mod_cast (show 0 < S1BetaGeometryD N s by omega)
-  have hlog :
-      Real.log (S1BetaGeometryZeta N s) =
-        (1 / s) * Real.log (S1BetaGeometryD N s : ℝ) := by
-    unfold S1BetaGeometryZeta
-    rw [Real.log_rpow hDpos]
-  apply (div_eq_iff hzetaLogPos.ne').2
-  calc
-    Real.log (S1BetaGeometryD N s : ℝ)
-      = s * ((1 / s) * Real.log (S1BetaGeometryD N s : ℝ)) := by
-          field_simp [hs.ne']
-    _ = s * Real.log (S1BetaGeometryZeta N s) := by rw [hlog]
-
-theorem S1BetaGeometry_Z_le_D {N : ℕ} {s : ℝ}
-    (hD : 2 ≤ S1BetaGeometryD N s) (hs1 : 1 ≤ s) :
-    S1BetaGeometryZ N s ≤ S1BetaGeometryD N s := by
-  unfold S1BetaGeometryZ S1BetaGeometryZeta
-  exact Nat.ceil_le.mpr (S1BetaGeometry_zeta_le_D_real hD hs1)
 
 theorem S1BetaGeometry_lt_D_of_lt_zeta {N p : ℕ} {s : ℝ}
     (hD : 2 ≤ S1BetaGeometryD N s) (hs1 : 1 ≤ s)
@@ -283,11 +257,6 @@ theorem S1BetaGeometry_lt_D_of_lt_zeta {N p : ℕ} {s : ℝ}
     hp.trans_le (S1BetaGeometry_zeta_le_D_real hD hs1)
   exact_mod_cast hpD
 
-theorem S1BetaGeometry_lt_D_of_lt_Z {N p : ℕ} {s : ℝ}
-    (hD : 2 ≤ S1BetaGeometryD N s) (hs1 : 1 ≤ s)
-    (hp : p < S1BetaGeometryZ N s) :
-    p < S1BetaGeometryD N s := by
-  exact lt_of_lt_of_le hp (S1BetaGeometry_Z_le_D hD hs1)
 
 theorem S1BetaGeometry_primeFactor_lt_D
     {N p : ℕ} {s : ℝ} (hN : 2 ≤ N) (hs4 : 4 ≤ s) (hp : p.Prime)
@@ -299,30 +268,5 @@ theorem S1BetaGeometry_primeFactor_lt_D
     (prime_dvd_goldbachS1ProdPrimes_iff hp).mp hpP |>.1
   exact S1BetaGeometry_lt_D_of_lt_zeta (S1BetaGeometry_two_le_D hN hs) hs1 hpz
 
-theorem S1BetaGeometry_threshold
-    (s B η : ℝ) (hs4 : 4 ≤ s) (hslt : s < 33 / 8) (hB : 0 ≤ B) (hη : 0 < η) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      2 ≤ S1BetaGeometryD N s ∧
-      1 < S1BetaGeometryZeta N s ∧
-      2 ≤ S1BetaGeometryZ N s ∧
-      (N : ℝ) ^ (4 / 33 : ℝ) ≤ S1BetaGeometryZeta N s ∧
-      S1BetaGeometryZeta N s ≤ (N : ℝ) ^ ((4 / 33 : ℝ) + η) ∧
-      S1BetaGeometryD N s ≤ MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B + 1 ∧
-      Real.log (S1BetaGeometryD N s : ℝ) / Real.log (S1BetaGeometryZeta N s) = s ∧
-      ∀ p : ℕ, p < S1BetaGeometryZ N s → p < S1BetaGeometryD N s := by
-  obtain ⟨Ncut, hNcut, hcut⟩ :=
-    S1BetaGeometry_panModulusCutoff_eventually s B hs4 hslt hB
-  obtain ⟨Nup, _hNup, hup⟩ := S1BetaGeometry_zeta_le_rpow_eventually s η hs4 hη
-  refine ⟨max Ncut Nup, le_trans hNcut (le_max_left _ _), ?_⟩
-  intro N hN
-  have hNcut' : Ncut ≤ N := (le_max_left _ _).trans hN
-  have hNup' : Nup ≤ N := (le_max_right _ _).trans hN
-  have hs : 0 < s := S1BetaGeometry_s_pos hs4
-  have hs1 : 1 ≤ s := S1BetaGeometry_s_one_le hs4
-  rcases hcut N hNcut' with ⟨hD, hzeta, hZ, hcutoff⟩
-  refine ⟨hD, hzeta, hZ, S1BetaGeometry_rpow_le_zeta hs, hup N hNup', hcutoff,
-    S1BetaGeometry_logD_div_logZeta_eq_s hD hs, ?_⟩
-  intro p hp
-  exact S1BetaGeometry_lt_D_of_lt_Z hD hs1 hp
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

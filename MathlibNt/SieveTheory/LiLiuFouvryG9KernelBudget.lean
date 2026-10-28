@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralEventual
 import MathlibNt.SieveTheory.LiLiuFouvryG9MainScalar
 
 noncomputable section
@@ -8,12 +7,7 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 /-- Positivity of the literal production integral, not an auxiliary integral hypothesis. -/
 theorem fouvryG9KernelBudget_low_nonneg : 0 ≤ fouvryG9RelaxedIntegralLow := by
-  rw [fouvryG9RelaxedIntegralLow_eq_single]
-  apply intervalIntegral.integral_nonneg (by norm_num)
-  intro u hu
-  have hu0 : 0 ≤ u := by linarith [hu.1]
-  have hlog : 0 ≤ Real.log (2-3*u) := Real.log_nonneg (by linarith [hu.2])
-  exact div_nonneg hlog (mul_nonneg hu0 (sq_nonneg _))
+  exact fouvryG9LowIntegral_nonneg
 
 /-- All perturbations, including the actual rho cube, are paid before the N threshold. -/
 theorem fouvryG9RelaxedPairKernel_final (τ : ℝ) (hτ : 0 < τ) :
@@ -72,8 +66,5 @@ theorem fouvryG9RelaxedPairKernel_final (τ : ℝ) (hτ : 0 < τ) :
       mul_le_mul_of_nonneg_right hcube (by positivity)
     _ ≤ B+6*s*(B+1) := hbudget
     _ ≤ B+τ := by linarith
-
-#print axioms fouvryG9KernelBudget_low_nonneg
-#print axioms fouvryG9RelaxedPairKernel_final
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -247,10 +247,5 @@ theorem roughBoundaryMass_le_dimensionOne (upper : Bool) (P : Finset ℕ)
   · exact geometricPrimeBox_upper P (by linarith) _ p
       (geometricSieveLabel_mem P hP (by linarith) hε p hp)
 
-#print axioms crossing_witness
-#print axioms boundary_subset_image
-#check roughBoundaryMass_le_dimensionOne
-#print axioms roughBoundaryMass_le_dimensionOne
-
 end BoundaryAnalytic
 end MathlibNt.SieveTheory.LiLiuPrereqWF

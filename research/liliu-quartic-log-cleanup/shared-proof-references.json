@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "new_shared_helper": "MathlibNt.SieveTheory.LiuWeight.quartic_log_error_absorb_eventually",
+  "verified_original_consumers": [
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB10SiftedCount_normalized_upper",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachS2SwitchedSiftedCount_normalized_upper_nine_nineteen_sub"
+  ],
+  "generic_remainder_provider": "MathlibNt.Analysis.eventually_log_rpow_remainder_lt_of_lower_bound",
+  "actual_generic_reference_reachable": true,
+  "chen_roots_not_reaching_new_helper": [
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "method": "Actual compiled reference cones, including the unchanged general logarithmic remainder producer; the new public helper is outside both Chen public theorem cones even though its source module is imported."
+}

@@ -278,8 +278,5 @@ theorem goldbach_upperRosserDensity_six :
       hmain.trans (mul_le_mul_of_nonneg_left (by linarith [herr.2]) hV0)
     _ = _ := mul_comm _ _
 
-#check goldbach_upperRosserDensity_six
-#print axioms goldbach_upperRosserDensity_six
-
 end
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

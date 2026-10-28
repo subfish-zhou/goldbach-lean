@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open scoped BigOperators
 open Filter
@@ -10,20 +9,6 @@ private theorem TotientCorrection_prime_cast (p : ℕ) (hp : p.Prime) :
     (p.totient : ℝ) = (p : ℝ) - 1 := by
   simp only [Nat.totient_prime hp, Nat.cast_sub hp.one_le, Nat.cast_one]
 
-/-- The omitted term in replacing 1/phi(p) by 1/p is retained exactly.
-Weights need not be positive for this identity. -/
-theorem goldbachPrime_totient_weighted_correction
-    (s : Finset ℕ) (w : ℕ → ℝ) (hs : ∀ p ∈ s, p.Prime) :
-    (∑ p ∈ s, w p / (p.totient : ℝ)) =
-      (∑ p ∈ s, w p / (p : ℝ)) +
-        ∑ p ∈ s, w p / ((p : ℝ) * ((p : ℝ) - 1)) := by
-  rw [← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro p hp
-  have hpr : (1 : ℝ) < p := by exact_mod_cast (hs p hp).one_lt
-  rw [TotientCorrection_prime_cast p (hs p hp)]
-  field_simp [ne_of_gt (show (0 : ℝ) < p by linarith), ne_of_gt (sub_pos.mpr hpr)]
-  ring
 
 /-- Uniform relative payment of the positive correction, valid for every
 nonnegative weight on the actual finite set of primes above Z. -/

@@ -97,5 +97,4 @@ lemma least_downward_crossing
   exact (not_lt_of_ge hzg.le) (hboost z hzS hwindow)
 
 
-
 end Section10Lemma1022

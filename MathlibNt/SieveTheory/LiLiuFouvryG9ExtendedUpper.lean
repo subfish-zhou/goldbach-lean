@@ -75,6 +75,4 @@ theorem exists_externalFamilyDensity_upper_extended :
       (geometricSieveLabel D ε) (primeDensity ω) ≤
         V * (jr1965F (Real.log Q / Real.log z) + Ce * TD) at hupper
     exact hupper.trans (mul_le_mul_of_nonneg_left (add_le_add le_rfl herror) hV)
-
-#print axioms exists_externalFamilyDensity_upper_extended
 end MathlibNt.SieveTheory.LiLiuPrereqWF.G9ExtendedUpper

@@ -177,11 +177,4 @@ theorem exists_smallWeight_source_density_sandwich :
   have hhi := (abs_le.mp habs.2).2
   refine ⟨?_, hbracket.1, hbracket.2, ?_, ?_⟩ <;> nlinarith
 
-#check exists_smallDensityDefects_fundamental_bound
-#check exists_smallWeight_source_fundamental_density
-#check exists_smallWeight_source_density_sandwich
-#print axioms exists_smallDensityDefects_fundamental_bound
-#print axioms exists_smallWeight_source_fundamental_density
-#print axioms exists_smallWeight_source_density_sandwich
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser

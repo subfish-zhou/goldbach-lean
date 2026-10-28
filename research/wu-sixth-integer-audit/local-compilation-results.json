@@ -1,0 +1,65 @@
+[
+  {
+    "module": "WR2ClassicalSixthIntegerData",
+    "exit_code": 0,
+    "seconds": 8.06,
+    "source_sha256": "b3077fe20690da3014aaa3553374ec2f003240a7a3a4ec35f3339574cfa46d9e",
+    "log": "local-logs/WR2ClassicalSixthIntegerData.log"
+  },
+  {
+    "module": "WR2ClassicalSixthIntegerSoundness",
+    "exit_code": 0,
+    "seconds": 12.69,
+    "source_sha256": "40c00820f03ebc6a8c69e17d6bbc18364342a1959041216994d3245673fc7e3e",
+    "log": "local-logs/WR2ClassicalSixthIntegerSoundness.log"
+  },
+  {
+    "module": "WR2ClassicalSixthLowerSums",
+    "exit_code": 0,
+    "seconds": 22.12,
+    "source_sha256": "17e24ae0d1829bd8e10555c139031142e57afb18d8ced9d61ab55f27e1f558f8",
+    "log": "local-logs/WR2ClassicalSixthLowerSums.log"
+  },
+  {
+    "module": "WR2ClassicalSixthUpperSums",
+    "exit_code": 0,
+    "seconds": 17.16,
+    "source_sha256": "33f8a40d31d076e3e260d2692dc32d0a8203d4a835d1de3890a86a527d54834e",
+    "log": "local-logs/WR2ClassicalSixthUpperSums.log"
+  },
+  {
+    "module": "WR2ClassicalSixthLowerPayments",
+    "exit_code": 0,
+    "seconds": 11.34,
+    "source_sha256": "e3e9a6e0155c5606b615ee86c51ad4d3de4400efb7d693c6bdd475b258f6a908",
+    "log": "local-logs/WR2ClassicalSixthLowerPayments.log"
+  },
+  {
+    "module": "WR2ClassicalSixthUpperPayments",
+    "exit_code": 0,
+    "seconds": 16.98,
+    "source_sha256": "35cdaffe43fb7d3ec6044313064770bca76090a10aef59cd5202e8f4c63ae20d",
+    "log": "local-logs/WR2ClassicalSixthUpperPayments.log"
+  },
+  {
+    "module": "WR2ClassicalSixthLowerRoot",
+    "exit_code": 0,
+    "seconds": 9.89,
+    "source_sha256": "d96361523db76b4246fb53e3a7bcb9ccba0b3d05434997d5a1f828f5b9c5a3ab",
+    "log": "local-logs/WR2ClassicalSixthLowerRoot.log"
+  },
+  {
+    "module": "WR2ClassicalSixthUpperRoot",
+    "exit_code": 0,
+    "seconds": 9.05,
+    "source_sha256": "1e5e8a3787190f49e1499db0a63b4e9a0c8072c70c670f95bba76da6d19d3dd0",
+    "log": "local-logs/WR2ClassicalSixthUpperRoot.log"
+  },
+  {
+    "module": "WR2ClassicalSixthCertificate",
+    "exit_code": 0,
+    "seconds": 8.86,
+    "source_sha256": "df81e235ba3e390d6539ad8f9a26be1b3e5145982d9872ae10ff14ac5102d3a5",
+    "log": "local-logs/WR2ClassicalSixthCertificate.log"
+  }
+]

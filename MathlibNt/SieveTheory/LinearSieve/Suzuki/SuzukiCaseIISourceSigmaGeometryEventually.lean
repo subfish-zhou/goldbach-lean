@@ -234,48 +234,5 @@ theorem nat_cubic_cutoff_real_geometry {D y : ℕ}
     nat_cutoff_le_half_of_cubic_lower hD8 hyLower hyUpper⟩
   exact_mod_cast two_le_nat_cutoff_of_cubic_upper hD8 hyUpper
 
-/-- One common eventual threshold supplies the source-`σ` geometry and all
-valid consequences of a natural cubic cutoff. -/
-theorem exists_sourceSigma_and_nat_cubic_geometry_threshold
-    (d : ℝ) (hd : 1 < d) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ (D y : ℕ), D0 ≤ (D : ℝ) →
-      (y - 1) ^ 3 < D → D ≤ y ^ 3 →
-      3 ≤ sourceSigma (D : ℝ) d ∧
-      (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤
-        (D : ℝ) ^ (1 / 3 : ℝ) ∧
-      2 ≤ (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ∧
-      ((y - 1 : ℕ) : ℝ) < (D : ℝ) ^ (1 / 3 : ℝ) ∧
-      (D : ℝ) ^ (1 / 3 : ℝ) ≤ (y : ℝ) ∧
-      2 ≤ (y : ℝ) ∧ (y : ℝ) ≤ (D : ℝ) / 2 := by
-  obtain ⟨Dσ, hDσ, hσ⟩ := exists_sourceSigma_geometry_threshold d hd
-  let D0 : ℝ := max Dσ 8
-  refine ⟨D0, hDσ.trans_le (le_max_left _ _), ?_⟩
-  intro D y hD hyLower hyUpper
-  have hDσD : Dσ ≤ (D : ℝ) := (le_max_left Dσ 8).trans hD
-  have hD8R : (8 : ℝ) ≤ (D : ℝ) := (le_max_right Dσ 8).trans hD
-  have hD8 : 8 ≤ D := by exact_mod_cast hD8R
-  obtain ⟨hthree, hroot, htwo⟩ := hσ (D : ℝ) hDσD
-  obtain ⟨hpred, hcube, hy2, hyhalf⟩ :=
-    nat_cubic_cutoff_real_geometry hD8 hyLower hyUpper
-  exact ⟨hthree, hroot, htwo, hpred, hcube, hy2, hyhalf⟩
-
-/-- Adversarial audit: the natural cubic bracket does **not** imply the exact
-identity `D^(1/3)=y` demanded by the current raw Case-II theorem.  The pair
-`D=2, y=2` is already a counterexample. -/
-theorem nat_cubic_bracket_does_not_force_cubeRoot_eq :
-    ∃ D y : ℕ, (y - 1) ^ 3 < D ∧ D ≤ y ^ 3 ∧
-      (D : ℝ) ^ (1 / 3 : ℝ) ≠ (y : ℝ) := by
-  refine ⟨2, 2, by norm_num, by norm_num, ?_⟩
-  have hlt : (2 : ℝ) ^ (1 / 3 : ℝ) < (8 : ℝ) ^ (1 / 3 : ℝ) :=
-    Real.rpow_lt_rpow (by norm_num) (by norm_num) (by norm_num)
-  have h8 : (8 : ℝ) ^ (1 / 3 : ℝ) = 2 := by
-    calc
-      (8 : ℝ) ^ (1 / 3 : ℝ) = (((2 : ℝ) ^ (3 : ℕ)) ^ (1 / 3 : ℝ)) := by norm_num
-      _ = 2 := by
-        rw [← Real.rpow_natCast, ← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2)]
-        norm_num
-  rw [h8] at hlt
-  exact ne_of_lt hlt
-
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

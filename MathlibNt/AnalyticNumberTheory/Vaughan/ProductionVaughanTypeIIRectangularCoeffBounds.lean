@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularSharpBridge
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMomentExplicit
 
 /-!
 # Honest coefficient bounds for the Type-II rectangular bridge
@@ -25,22 +24,6 @@ theorem finite_norm_sum_sq_le_card_mul_energy
     _ = (S.card : ℝ) * ∑ x ∈ S, Complex.normSq (a x) := by
       simp [Complex.normSq_eq_norm_sq, mul_comm]
 
-/-- Cauchy--Schwarz connector for the rectangular coefficient `L¹` mass. -/
-theorem rectangularCoefficientL1_sq_le_card_mul_energies
-    (a b : ℤ → ℂ) (Ma Mb : ℤ) (Na Nb : ℕ) :
-    rectangularCoefficientL1 a b Ma Mb Na Nb ^ 2 ≤
-      ((Finset.Icc (Ma + 1) (Ma + Na)).card : ℝ) *
-        (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), Complex.normSq (a m)) *
-      (((Finset.Icc (Mb + 1) (Mb + Nb)).card : ℝ) *
-        (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), Complex.normSq (b n))) := by
-  unfold rectangularCoefficientL1
-  rw [mul_pow]
-  exact mul_le_mul
-    (finite_norm_sum_sq_le_card_mul_energy _ a)
-    (finite_norm_sum_sq_le_card_mul_energy _ b)
-    (sq_nonneg _)
-    (mul_nonneg (by positivity)
-      (Finset.sum_nonneg fun n hn => Complex.normSq_nonneg _))
 
 /-- The left rectangular coefficient has the literal dyadic-shell energy. -/
 theorem vaughanTypeIIRectLeftCoeff_energy_le

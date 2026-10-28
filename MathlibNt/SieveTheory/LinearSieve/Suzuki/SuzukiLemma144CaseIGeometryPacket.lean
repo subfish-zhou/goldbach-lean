@@ -1,7 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaGeometryEventually
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144IHInstantiation
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZeroSpecialized
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceRoundedGeometryPacket
 
 open scoped Classical BigOperators
@@ -66,52 +64,6 @@ theorem exists_caseI_preThreshold_geometry_packet
     hpowerSigma := hpowσ
     hpowerS := hpowσ.trans horder
     hpowerOrder := horder }
-
-/-- The first premise not supplied by the global IH, parity domains, and the
-source contract.  Naming it prevents a chain of pointwise implications from
-making the uniform successor vacuous. -/
-def CaseIStrictSourceThreshold
-    (H : Section13HatLayers) (N : ℕ) (s : ℝ) : Prop :=
-  H.betaHat + (ErrorSign.ofDepth N).epsilon < s
-
-/-- `N=3, s=3` is a literal legal parity-boundary point, including the weak
-source lower bound used by the uniform `Σ₁₂` theorem. -/
-theorem odd_boundary_is_legal_caseI_coordinate :
-    (3 : ℝ) ∈ KappaOneModel.parityDomain 2 3 ∧
-    (3 : ℝ) - 1 ∈ KappaOneModel.parityDomain 2 (3 - 1) ∧
-    2 + (ErrorSign.ofDepth 3).epsilon ≤ (3 : ℝ) := by
-  norm_num [KappaOneModel.parityDomain, ErrorSign.ofDepth,
-    ErrorSign.epsilon]
-
-/-- At that legal point every source contract has `betaHat = 2`, so the strict
-threshold demanded next by the successor is false.  This is a theorem-level
-counterexample to deriving the threshold from the advertised inputs. -/
-theorem odd_boundary_does_not_supply_strict_source_threshold
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H) :
-    ¬ CaseIStrictSourceThreshold H 3 3 := by
-  rw [CaseIStrictSourceThreshold, hH.betaHat_eq]
-  norm_num [ErrorSign.ofDepth, ErrorSign.epsilon]
-
-/-- The subsequent odd cubic condition is independently non-automatic for a
-natural ceiling: at `D=2, s=3`, the ceiling is `2`, whose cube exceeds `D`.
-Thus even strengthening the first strict edge would not justify silently
-manufacturing `z^3 ≤ D` from ceiling geometry. -/
-theorem odd_natCeil_cubic_condition_not_automatic :
-    let z := ⌈((2 : ℕ) : ℝ) ^ (1 / (3 : ℝ))⌉₊
-    ¬ z ^ 3 ≤ 2 := by
-  dsimp only
-  let z : ℕ := ⌈((2 : ℕ) : ℝ) ^ (1 / (3 : ℝ))⌉₊
-  obtain ⟨_hlower, hupper⟩ := natCeil_cuberoot_cubeBracket 2 (by omega)
-  change ¬ z ^ 3 ≤ 2
-  change 2 ≤ z ^ 3 at hupper
-  have hz2 : 2 ≤ z := by
-    by_contra h
-    have hz : z ≤ 1 := by omega
-    interval_cases z <;> norm_num at hupper
-  have h8 : 8 ≤ z ^ 3 := by
-    norm_num [pow_succ]
-    nlinarith
-  omega
 
 
 end MathlibNt.SieveTheory

@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11_log_ratio_deriv",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction"
+      ],
+      "kind": "theorem",
+      "typeHash": "2583740314",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_logTriangle",
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_qPrimitive_deriv"
+      ],
+      "outside_provider_consumers": [],
+      "expected_replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv",
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachG12IntegralReduction.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g12_log_ratio_deriv",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG12IntegralReduction"
+      ],
+      "kind": "theorem",
+      "typeHash": "2583740314",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12PrimeIntegral_qPrimitive_deriv"
+      ],
+      "outside_provider_consumers": [],
+      "expected_replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv",
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshIntegration.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g11_integral_four",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshIntegration"
+      ],
+      "kind": "theorem",
+      "typeHash": "148566203",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_eq_meshSource"
+      ],
+      "outside_provider_consumers": [],
+      "expected_replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four",
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachG12CrossMesh.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.g12_integral_four",
+      "owners": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG12CrossMesh"
+      ],
+      "kind": "theorem",
+      "typeHash": "148566203",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12PrimeIntegral_eq_meshSource"
+      ],
+      "outside_provider_consumers": [],
+      "expected_replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four",
+      "replacement": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "exact_statement_replacement_count": 4,
+  "original_consumer_count": 5,
+  "method": "Two original G11 private proofs are promoted under shared public names. Two duplicate G12 private proofs disappear. All four old statements match their shared replacement kinds/type hashes. G11 log differentiation has two original consumers, the others one each; all five now actually reach the shared proofs."
+}

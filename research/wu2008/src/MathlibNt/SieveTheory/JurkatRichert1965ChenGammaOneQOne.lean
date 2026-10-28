@@ -1034,6 +1034,22 @@ noncomputable def theoremOneBoundaryCumulative
   ∑ i ∈ Finset.range r,
     (-1 : ℝ) ^ (i + 1) *
       theoremOneBoundaryDepthSum M k z₁ z y ps (i + 1)
+/-- A finite branching recurrence commutes with a shifted alternating depth sum. -/
+private theorem alternatingFiniteDepthSum_succ
+    {α R : Type*} [CommRing R] (s : Finset α)
+    (a : ℕ → R) (b : α → ℕ → R) (r shift : ℕ)
+    (hstep : ∀ i, a (i + 1) = ∑ q ∈ s, b q i) :
+    (∑ i ∈ Finset.range (r + 1), (-1 : R) ^ (i + shift) * a i) =
+      (-1 : R) ^ shift * a 0 -
+        ∑ q ∈ s, ∑ i ∈ Finset.range r, (-1 : R) ^ (i + shift) * b q i := by
+  have hshift (i : ℕ) : i + 1 + shift = (i + shift) + 1 := by omega
+  rw [Finset.sum_range_succ']
+  simp_rw [hshift, hstep, pow_succ, mul_neg, mul_one, neg_mul,
+    Finset.mul_sum, Finset.sum_neg_distrib]
+  rw [Finset.sum_comm]
+  simp only [zero_add]
+  ring
+
 
 /-- Pulling the first prime out of the signed interior-depth sum. -/
 theorem theoremOneInteriorCumulative_succ
@@ -1043,31 +1059,13 @@ theorem theoremOneInteriorCumulative_succ
         ∑ q ∈ theoremOneInteriorPrimes k z₁ (chainCutoff z ps)
             (chainScale y ps),
           theoremOneInteriorCumulative M k z₁ z y (q :: ps) r := by
-  induction r with
-  | zero =>
-      simp [theoremOneInteriorCumulative, theoremOneInteriorDepthSum]
-  | succ r ih =>
-      have hstep (as : List ℕ) :
-          theoremOneInteriorCumulative M k z₁ z y as (r + 1) =
-            theoremOneInteriorCumulative M k z₁ z y as r +
-              (-1 : ℝ) ^ r *
-                theoremOneInteriorDepthSum M k z₁ z y as z₁ r := by
-        simp [theoremOneInteriorCumulative, Finset.sum_range_succ]
-      have houter :
-          theoremOneInteriorCumulative M k z₁ z y ps (r + 1 + 1) =
-            theoremOneInteriorCumulative M k z₁ z y ps (r + 1) +
-              (-1 : ℝ) ^ (r + 1) *
-                theoremOneInteriorDepthSum M k z₁ z y ps z₁ (r + 1) := by
-        simp [theoremOneInteriorCumulative, Finset.sum_range_succ]
-      rw [houter]
-      simp only [theoremOneInteriorDepthSum]
-      rw [ih]
-      simp_rw [hstep]
-      simp only [Finset.sum_add_distrib, Finset.mul_sum]
-      rw [pow_succ]
-      simp only [mul_neg, mul_one, neg_mul]
-      rw [Finset.sum_neg_distrib]
-      ring
+  simpa only [theoremOneInteriorCumulative, Nat.add_zero, pow_zero, one_mul,
+    theoremOneInteriorDepthSum] using
+    alternatingFiniteDepthSum_succ
+      (s := theoremOneInteriorPrimes k z₁ (chainCutoff z ps) (chainScale y ps))
+      (a := theoremOneInteriorDepthSum M k z₁ z y ps z₁)
+      (b := fun q => theoremOneInteriorDepthSum M k z₁ z y (q :: ps) z₁)
+      (r := r) (shift := 0) (fun _ => rfl)
 
 /-- Pulling the first prime out of the signed boundary-depth sum. -/
 theorem theoremOneBoundaryCumulative_succ
@@ -1079,31 +1077,13 @@ theorem theoremOneBoundaryCumulative_succ
         ∑ q ∈ theoremOneInteriorPrimes k z₁ (chainCutoff z ps)
             (chainScale y ps),
           theoremOneBoundaryCumulative M k z₁ z y (q :: ps) r := by
-  induction r with
-  | zero =>
-      simp [theoremOneBoundaryCumulative, theoremOneBoundaryDepthSum]
-  | succ r ih =>
-      have hstep (as : List ℕ) :
-          theoremOneBoundaryCumulative M k z₁ z y as (r + 1) =
-            theoremOneBoundaryCumulative M k z₁ z y as r +
-              (-1 : ℝ) ^ (r + 1) *
-                theoremOneBoundaryDepthSum M k z₁ z y as (r + 1) := by
-        simp [theoremOneBoundaryCumulative, Finset.sum_range_succ]
-      have houter :
-          theoremOneBoundaryCumulative M k z₁ z y ps (r + 1 + 1) =
-            theoremOneBoundaryCumulative M k z₁ z y ps (r + 1) +
-              (-1 : ℝ) ^ (r + 1 + 1) *
-                theoremOneBoundaryDepthSum M k z₁ z y ps (r + 1 + 1) := by
-        simp [theoremOneBoundaryCumulative, Finset.sum_range_succ]
-      rw [houter]
-      rw [ih]
-      simp only [theoremOneBoundaryDepthSum]
-      simp_rw [hstep]
-      simp only [Finset.sum_add_distrib, Finset.mul_sum]
-      rw [show r + 1 + 1 = (r + 1) + 1 by omega, pow_succ]
-      simp only [mul_neg, mul_one, neg_mul]
-      rw [Finset.sum_neg_distrib]
-      ring
+  simpa only [theoremOneBoundaryCumulative, pow_one, neg_mul, one_mul,
+    theoremOneBoundaryDepthSum] using
+    alternatingFiniteDepthSum_succ
+      (s := theoremOneInteriorPrimes k z₁ (chainCutoff z ps) (chainScale y ps))
+      (a := fun i => theoremOneBoundaryDepthSum M k z₁ z y ps (i + 1))
+      (b := fun q i => theoremOneBoundaryDepthSum M k z₁ z y (q :: ps) (i + 1))
+      (r := r) (shift := 1) (fun _ => rfl)
 
 /-- The nested recursion is exactly the sum of its signed interior levels, its
 last interior level, and all boundary levels. -/
@@ -1353,29 +1333,9 @@ theorem siftedCount_literalQuotientCarrier_eq_divisibilityFiber
 private theorem squarefree_prod_of_primes
     {s : Finset ℕ} (hs : ∀ p ∈ s, p.Prime) :
     Squarefree (s.prod id) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert a s ha ih =>
-      have haPrime : a.Prime := hs a (by simp [ha])
-      have hcoprime : a.Coprime (s.prod id) := by
-        rw [haPrime.coprime_iff_not_dvd]
-        intro hadvd
-        have hprodNe : s.prod id ≠ 0 :=
-          Finset.prod_ne_zero_iff.mpr
-            (fun p hp => (hs p (by simp [hp])).ne_zero)
-        have hamem : a ∈ (s.prod id).primeFactors :=
-          (Nat.mem_primeFactors.mpr ⟨haPrime, hadvd, hprodNe⟩)
-        have hprimeFactors :
-            (s.prod id).primeFactors = s :=
-          Nat.primeFactors_prod (fun p hp => hs p (by simp [hp]))
-        rw [hprimeFactors] at hamem
-        exact ha hamem
-      rw [Finset.prod_insert ha]
-      simpa only [id_eq] using
-        (Nat.squarefree_mul hcoprime).2
-          ⟨haPrime.squarefree,
-            ih (fun p hp => hs p (by simp [hp]))⟩
+  refine Finset.squarefree_prod_of_pairwise_isCoprime
+    (fun p hp q hq hpq => ?_) (fun p hp => (hs p hp).squarefree)
+  exact Nat.coprime_iff_isRelPrime.mp ((Nat.coprime_primes (hs p hp) (hs q hq)).mpr hpq)
 
 /-- The Euler product over any finite prime carrier is its product's exact
 totient ratio. -/

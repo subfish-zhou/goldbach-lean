@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKC2
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanScale
 
 noncomputable section
 open Classical Finset Filter

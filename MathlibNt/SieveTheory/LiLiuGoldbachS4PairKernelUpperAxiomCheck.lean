@@ -1,4 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4PairKernelUpper
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachS4_normalized_upper_pairKernel
-#print axioms goldbachS4_normalized_upper_pairKernel

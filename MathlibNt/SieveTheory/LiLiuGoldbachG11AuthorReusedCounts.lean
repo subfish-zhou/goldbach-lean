@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPairIntegralLedger
 import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpOutputIntegral
 
 open scoped BigOperators

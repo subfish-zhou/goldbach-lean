@@ -102,13 +102,5 @@ theorem norm_coordinate_sum_le_variation_mul_max (lo hi : ι → ℕ) (s : Finse
   norm_coordinate_sum_le_of_prefix_bound lo hi s coord w a hcoord _
     (coordinatePrefix_norm_le_max lo hi s coord a)
 
-/-- Five-coordinate finite-carrier version used by the extracted dispersion phase. -/
-theorem norm_coordinate_sum_five_le (lo hi : Fin 5 → ℕ) (s : Finset α)
-    (coord : α → Fin 5 → ℕ) (w : (Fin 5 → ℕ) → ℂ) (a : α → ℂ)
-    (hcoord : ∀ t ∈ s, ∀ i, lo i ≤ coord t i ∧ coord t i ≤ hi i) :
-    ‖∑ t ∈ s, w (coord t) * a t‖ ≤
-      variation lo hi w * coordinatePrefixMax lo hi s coord a :=
-  norm_coordinate_sum_le_variation_mul_max lo hi s coord w a
-    (fun t ht => (mem_box lo hi (coord t)).mpr (hcoord t ht))
 
 end LiLiuPrereqFouvry.Rectangle

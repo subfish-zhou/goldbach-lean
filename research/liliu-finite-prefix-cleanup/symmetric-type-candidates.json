@@ -1,0 +1,34 @@
+{
+  "status": "read_only_candidates_not_deletions",
+  "method": "Complete stable-object main census with canonical binder names/metadata erased. Only terminal Eq/Iff is reversed; all original forall/let binders and premises remain. Restricted to current byte-matching Li-Liu sources and original bodies>=5effective lines. Compiled type/value/recursor references union conservatively across module parts. The existing graph-export normalization prefers actual body-bearing records over matching module-interface signatures; remaining conflicting type variants are excluded from matching. Hash matches and acyclic paths are candidate signals, never accepted deletions.",
+  "source_input_manifest_sha256": "60fc889c14c6655bfd9d160402851e08cb016c3d01c640d35e13c1ff9061b8f3",
+  "object_input_manifest_sha256": "c19c8d1819af099b8c0ef651115f647ae6ff2c61b3196fec13ae2e38224111a9",
+  "candidates": [
+    {
+      "name": "MathlibNt.SieveTheory.LinearSieve.sorted_prefix_toFinset_eq_filter_ge",
+      "module": "MathlibNt.SieveTheory.LinearSieve.RosserChains",
+      "typeHash": "2357306588",
+      "symmetricTypeHash": "4270053375",
+      "source": {
+        "source_line": 46,
+        "code_lines": 17,
+        "proof_body_code_lines": 13
+      },
+      "alternatives": [
+        {
+          "name": "MathlibNt.SieveTheory.LiLiuPrereqWF.rounded_prefix_eq_take",
+          "module": "MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility",
+          "source": {
+            "source_line": 26,
+            "code_lines": 5,
+            "proof_body_code_lines": 1
+          },
+          "alternative_reaches_candidate": true,
+          "candidate_reaches_alternative": false
+        }
+      ]
+    }
+  ],
+  "known_prefix_positive_control_pass": true,
+  "ambiguous_type_variants_excluded": {}
+}

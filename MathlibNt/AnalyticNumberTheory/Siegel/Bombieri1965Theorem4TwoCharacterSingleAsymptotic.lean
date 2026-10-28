@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairSummatory
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticHarmonicTruncation
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelTotalDiscrepancy
 
 /-!

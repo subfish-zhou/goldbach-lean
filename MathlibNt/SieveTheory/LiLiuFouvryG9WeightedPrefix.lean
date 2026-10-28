@@ -82,7 +82,4 @@ theorem fouvryG9WeightedPrefix_le_primePi {N : ℕ} {e ρ : ℝ}
       intro rs hrs
       exact mul_le_mul_of_nonneg_left
         (fouvryG9RectanglePrefix_thirds_le_primePi hρ rs.1 rs.2) (hV rs hrs)
-
-#print axioms fouvryG9WeightedPrefix_mass_fibres
-#print axioms fouvryG9WeightedPrefix_le_primePi
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

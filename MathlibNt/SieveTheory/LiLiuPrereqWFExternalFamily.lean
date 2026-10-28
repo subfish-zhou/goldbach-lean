@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFInternalSieve
+import MathlibNt.SieveTheory.LiLiuPrereqWFFamilyDensity
+import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinalityExp
 import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedRemainder
 import MathlibNt.SieveTheory.LiLiuPrereqWFExternalParameters
+
 
 /-!
 # Fixed piecewise families at the external edge
@@ -178,12 +180,5 @@ theorem externalFamily_sequence_sieve {ι : Type*} (P : Finset ℕ)
     exact (sequenceSifted_antitone I a hB).trans
       (signedFamily_sequence_sieve _ (fun p hp => hP p (hB hp)) hD hε hεsmall
         (fun p hp => (mem_filter.mp (mem_sdiff.mp hp).1).2) I a X g).2
-
-#check externalTags_card_and_wellFactorable
-#print axioms externalTags_card_and_wellFactorable
-#check externalFamily_sequence_sieve
-#print axioms externalFamily_sequence_sieve
-#check externalRemainder_eq
-#print axioms externalRemainder_eq
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

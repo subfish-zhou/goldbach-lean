@@ -207,59 +207,5 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
   have hx3 : 0 < x ^ 3 := pow_pos hx 3
   linarith
 
-/-- The sharp logarithmic derivative bound, obtained by dividing the derivative
-estimate by the quantitative L-value lower bound above. -/
-theorem norm_logDeriv_LFunction_le_of_nonquadratic_conductorLog
-    {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχsq : χ ^ 2 ≠ 1)
-    {β t : ℝ}
-    (hβ : β ∈ Set.Ico
-      (1 - 1 / (4398046511104 *
-        (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 9)) 1) :
-    ‖deriv χ.LFunction (β + I * t) / χ.LFunction (β + I * t)‖ ≤
-      2199023255552 *
-        (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 9 := by
-  let m : ℕ := dirichletLConductorHeightCutoff q t
-  let L : ℝ := 1 + Real.log m
-  let x : ℝ := 1 / (4398046511104 * L ^ 9)
-  have hχ : χ ≠ 1 := by
-    intro h
-    apply hχsq
-    rw [h, one_pow]
-  have hlogm : 0 < Real.log (m : ℝ) := by
-    simpa only [m] using log_conductorHeightCutoff_pos χ hχ t
-  have hL : 1 < L := by dsimp only [L]; linarith
-  have hL0 : 0 < L := lt_trans zero_lt_one hL
-  have hwidth := nonquadraticConductorLogWidth_bounds hlogm
-  have hx : 0 < x := hwidth.1
-  have hxhalf : x ≤ 1 / 2 := hwidth.2.1
-  have hxlog : x ≤ 1 / Real.log m := hwidth.2.2
-  have hβlower : 1 / 2 ≤ β := by
-    have hleft : 1 - x ≤ β := by simpa only [x, L, m] using hβ.1
-    linarith
-  have hnear : 1 - 1 / Real.log m ≤ β := by
-    have hleft : 1 - x ≤ β := by simpa only [x, L, m] using hβ.1
-    linarith
-  have hderiv : ‖deriv χ.LFunction (β + I * t)‖ ≤ 64 * L ^ 2 := by
-    have hd :=
-      norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
-        χ hχ (σ := β) (t := t) hβlower (by linarith [hβ.2])
-        (by simpa only [m] using hnear)
-    simpa only [L, m] using hd
-  have hlower : 128 * L ^ 2 * x ≤ ‖χ.LFunction (β + I * t)‖ := by
-    simpa only [x, L, m] using
-      norm_LFunction_lower_of_nonquadratic_conductorLog χ hχsq hβ
-  have hden : 0 < 128 * L ^ 2 * x := by positivity
-  rw [norm_div]
-  calc
-    ‖deriv χ.LFunction (β + I * t)‖ / ‖χ.LFunction (β + I * t)‖
-        ≤ (64 * L ^ 2) / (128 * L ^ 2 * x) :=
-          div_le_div₀ (by positivity) hderiv hden hlower
-    _ = 2199023255552 * L ^ 9 := by
-      dsimp only [x]
-      field_simp [ne_of_gt hL0]
-      ring
-    _ = 2199023255552 *
-        (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 9 := by
-      rfl
 
 end AnalyticNumberTheory.LargeSieve

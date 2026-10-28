@@ -1,0 +1,7 @@
+FULL_BUILD_PASS {'status': 'passed', 'root': 'Wu2008Research', 'verified': 4771, 'planned': 4771, 'old_proof_objects_used': False}
+LITERAL_AXIOMS_PASS
+KERNEL_PASS WR2ClassicalCTableCheck
+KERNEL_PASS WR2ClassicalEighthTableCheck
+KERNEL_PASS WR2XiSourceRefinedTarget
+KERNEL_PASS WR2ClassicalCertificate
+CURRENT_TYPE_CENSUS_PASS 4771

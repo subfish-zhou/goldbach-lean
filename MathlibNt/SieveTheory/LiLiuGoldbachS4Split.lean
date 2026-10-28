@@ -4,7 +4,6 @@ open scoped BigOperators
 open Finset
 open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-noncomputable local instance (P : Prop) : Decidable P := Classical.propDecidable P
 
 private theorem mem_goldbachHalfOpenPrimes {N p : ℕ} {z y : ℝ} :
     p ∈ goldbachHalfOpenPrimes N z y ↔

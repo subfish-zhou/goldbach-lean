@@ -1,0 +1,208 @@
+{
+  "status": "isolated_validation_passed_not_adopted",
+  "run": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219",
+  "validation_directory": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400",
+  "plan_sha256": "533e564a47538e7890e07534b13f40d5c5813e90171a647e0d8f1deb415a57ad",
+  "kernel_replays": [
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters"
+      ],
+      "exit_code": 0,
+      "seconds": 7.936399113386869,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters.log",
+      "log_sha256": "5f881a6976c5f104038c61c0b4f122471895ee80a29f7ff292884be6ed1e5da7",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiDyadic",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiDyadic"
+      ],
+      "exit_code": 0,
+      "seconds": 7.73403774574399,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiDyadic.log",
+      "log_sha256": "18f72bc6086d8db6e79f66a86c9258a82863d80e055bb6151fb9c96884bc892e",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiDyadic"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbel",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbel"
+      ],
+      "exit_code": 0,
+      "seconds": 7.835540108382702,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbel.log",
+      "log_sha256": "0b854f2ce8f657cf309344fb7c5a2f1d34f21dfecddf993be411fa83eb48c6b0",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbel"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic"
+      ],
+      "exit_code": 0,
+      "seconds": 7.63038132339716,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic.log",
+      "log_sha256": "9c0371e47df0b1891500a94d287d4e5728ff4843422070197d35f6bba81007db",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedInverseLog",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedInverseLog"
+      ],
+      "exit_code": 0,
+      "seconds": 7.634704053401947,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedInverseLog.log",
+      "log_sha256": "24937423f8c34d39719675f355669cdd3c1087de12035a72d8c809093b6d2a15",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedInverseLog"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters"
+      ],
+      "exit_code": 0,
+      "seconds": 7.684345908463001,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters.log",
+      "log_sha256": "a41615f25d82fcc528f3f3661685f28d8e0b6ac064d89e568af9e5890b6076fe",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve"
+      ],
+      "exit_code": 0,
+      "seconds": 7.634623896330595,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve.log",
+      "log_sha256": "dfd6f61c905f36fded5891d6461f8a742077aa16ea73fd034e256e9298909561",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerPowerSaving",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerPowerSaving"
+      ],
+      "exit_code": 0,
+      "seconds": 7.635135430842638,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerPowerSaving.log",
+      "log_sha256": "b490eb24e40b219ebb614669385537d14612a12dfcca2a83f5b296609b59de65",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerPowerSaving"
+    },
+    {
+      "step": "kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron"
+      ],
+      "exit_code": 0,
+      "seconds": 8.536711007356644,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron.log",
+      "log_sha256": "a731460891e977ab86c854ada6c3f35bc6c5d37f68e0e821e425b1507f273503",
+      "module": "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron"
+    },
+    {
+      "step": "kernel-WR2ClassicalCertificate",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "WR2ClassicalCertificate"
+      ],
+      "exit_code": 0,
+      "seconds": 9.992260564118624,
+      "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/kernel-WR2ClassicalCertificate.log",
+      "log_sha256": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+      "module": "WR2ClassicalCertificate"
+    }
+  ],
+  "current_step": null,
+  "literal_probe": {
+    "step": "literal-axioms",
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-DautoImplicit=false",
+      "-o",
+      "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/WuLiteralAcceptance.olean",
+      "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/WuLiteralAcceptance.lean"
+    ],
+    "exit_code": 0,
+    "seconds": 7.284926574677229,
+    "log": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/literal-axioms.log",
+    "log_sha256": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+    "probe_sha256": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f",
+    "object_sha256": "5679a85d69d49098e66df7435188eda48b20a83666de5c16710f7dd6a8f41890",
+    "axioms": {
+      "WuLegacyLiteralAcceptance": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "WuPaper.ClassicalSlots.one8938": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "WuLiteralAcceptance": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "WuPaper.ClassicalSlots.one894": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "WuPaper.ClassicalSlots.classical_lower": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    }
+  },
+  "verified_modules": 4142,
+  "candidate_modules": [
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiDyadic",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbel",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedInverseLog",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerPowerSaving",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron"
+  ],
+  "candidate_manifest_sha256": "09ecc19d3e22783f39316b733e3e79f48907fbd3aaa44e0d114dbec14873d30c",
+  "manifest_sha256": "c6d2b935b4b87cbdbad0a51a7b9c2b256291979b691bc3473ea939a5b36642e7",
+  "verified_inputs": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/validation-1793115709061242400/verified-inputs.json",
+  "verified_inputs_sha256": "ca51bd366ef7a75db4f6f73a175ddb00ad7f4fb18a86975497c8bd3581eb861d",
+  "input_inventory_digest": "fd2dae6d9f3d63d2226f4fc907e9f533f17a85eaf7ed4deb7f5a177563741782",
+  "lean_path": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+  "compiler_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+  "leanchecker_sha256": "ed46f21c763051c26f89481096cbaaf5db9665d674d602e3daf3391613ba0e6a",
+  "validation_script_sha256": "d55e77db656495ac5d618ad243e2a65d638199b5b1f65725f9175a1a1a7226b5",
+  "lean_sysroot": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+  "stdlib_init_sha256": "1e95ecbedde5d49a3e6550ec04f0d4176245196093254e26015c4b5f5a5844fd",
+  "production_adoption": false
+}

@@ -1,7 +1,4 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGridLimit
 import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
-import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 open Filter MeasureTheory Set
 open scoped Interval

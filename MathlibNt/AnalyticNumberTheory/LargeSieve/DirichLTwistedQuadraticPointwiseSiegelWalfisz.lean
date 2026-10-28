@@ -1,7 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalExactPrefix
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LandauSiegelToLowSWConditionalAdapter
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPointwiseSWPaymentCore
+import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalContourNorm
+import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz
+import MathlibNt.AnalyticNumberTheory.LargeSieve.PointwisePrimitivePrefixAmplitudeBridge
 
 open Set Function Filter Complex Real MeasureTheory
 
@@ -17,11 +16,6 @@ abbrev RawLandauSiegelLowerBound : Prop :=
       χ.IsPrimitive → χ ^ 2 = 1 → χ ≠ 1 →
       c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re
 
-private theorem quadratic_integral_lower_middle_upper
-    (f : ℝ → ℂ) {T : ℝ} (hf : Integrable f) (hT : 0 ≤ T) :
-    (∫ t in Iic (-T), f t) + (∫ t in Ioc (-T) T, f t) +
-        (∫ t in Ici T, f t) = ∫ t, f t := by
-  exact AnalyticNumberTheory.LargeSieve.integral_lower_middle_upper f hf hT
 
 /-- The pointwise quadratic contour keeps the conditional left edge but lets
 the right edge move anywhere inside the quarter-width strip. -/

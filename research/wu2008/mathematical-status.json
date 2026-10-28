@@ -1,6 +1,6 @@
 {
   "global_theorem_proved": true,
-  "scope": "Wu04/Wu08 route to the unconditional 1+1.894 natural-power theorem; exact final endpoint and acceptance scope are recorded in final_acceptance.",
+  "scope": "Wu04/Wu08 route to the unconditional 1+1.8938 natural-power theorem, with the 1+1.894 interface retained.",
   "tasks": [
     {
       "task": "R2Fouvry",
@@ -6701,6 +6701,81 @@
   "historical_records": "Other per-stage records retain the evidence and scope at their original time; final_acceptance is authoritative for the current integrated result.",
   "final_acceptance": {
     "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4151,
+    "manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "../wu-structural-compression-audit/full_cached_receipt_verification.log",
+    "literal_acceptance": "../wu-structural-compression-audit/classical-acceptance.json",
+    "literal_log": "../wu-structural-compression-audit/literal_and_five_axiom_reports.log",
+    "kernel_replay_log": "../wu-structural-compression-audit/fresh_production_final_kernel.log",
+    "kernel_replay_scope": "65 modified/final isolated replays, two bridge-library replays, and a fresh post-adoption production final replay; pinned LEAN_SYSROOT",
+    "records": {
+      "literal_and_five_axiom_reports.log": "a2eaa0edb87f44f88d5e5fe384e4fb5ff7470794aa2f8572d070e1651cafcaaf",
+      "production-verification.json": "d13f60c24222fb0882fadd6ca289ca45eff8e62b2635ff53bd259fd02125494a",
+      "fresh_production_final_kernel.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+      "full_cached_receipt_verification.log": "ae7b0b71948af6991abe018516fb8814882d833655d1d0a392c91145c9f1bcd6",
+      "measurement.json": "6bac757641eb90941f06764cd4a80bac4cc21265c52b50b42242ff9758bed99e",
+      "public-census-root-review.json": "246a48c34d007fd654bb89e856fa113cbf2207debb703720aad1b07b86aa8a40",
+      "classical-acceptance.json": "a32591e34a9a2924e26b4e6768842d94ac4928775eff972ba856085c114b8bce"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 3764,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json",
+    "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json",
+    "eighth_integer_compression_audit": "../wu-eighth-integer-audit/validation.json",
+    "fourth_bq_compression_audit": "../wu-fourth-bq-audit/validation.json",
+    "light_layer_compression_audit": "../wu-light-layer-audit/validation.json",
+    "fifth_integer_compression_audit": "../wu-fifth-integer-audit/validation.json",
+    "liupan_pruning_audit": "../wu-liupan-pruning-audit/validation.json",
+    "validation_sha256": "676e4d73645d6d0173027072a42e794ca0c516e4214584c456a475ce6551da14",
+    "accepted_at_utc": "2026-10-28T09:30:02.855720+00:00",
+    "full_scope_verification": {
+      "modules": 4151,
+      "promoted_actual_compilations": 3500,
+      "verified_unchanged": 651,
+      "fresh_v7": 3304,
+      "genuine_prefix": 196
+    },
+    "source_size": {
+      "whole_tree": {
+        "modules": 4151,
+        "code_lines": 566283,
+        "physical_lines": 667929,
+        "utf8_bytes": 34424418
+      },
+      "theorem_closure": {
+        "modules": 3764,
+        "code_lines": 525529,
+        "physical_lines": 621451,
+        "utf8_bytes": 30215769
+      }
+    },
+    "current_structural_compression_audit": "../wu-structural-compression-audit/validation.json",
+    "production_verification": "../wu-structural-compression-audit/production-verification.json"
+  },
+  "completion_audit": {
+    "status": "pass",
+    "report": "completion-audit.json",
+    "report_sha256": "e0781da29f7e0cace65087101b93576112aabdb4e429c47fddbc61a49b22ce46",
+    "remaining_required_work": [],
+    "scope": "Historical initial completion audit; current acceptance is final_acceptance and ../wu-fifth-integer-audit/validation.json."
+  },
+  "pre_precision_compression_acceptance": {
+    "status": "pass",
     "theorem": "WuPaper.ClassicalSlots.one894",
     "source": "src/WR2ClassicalCertificate.lean",
     "modules": 8826,
@@ -6726,10 +6801,540 @@
     "stronger_endpoint_scope": "No separate literal acceptance of 1.8938 is claimed.",
     "final_source_import_closure_modules": 8444
   },
-  "completion_audit": {
+  "pre_one8938_acceptance": {
     "status": "pass",
-    "report": "completion-audit.json",
-    "report_sha256": "e0781da29f7e0cace65087101b93576112aabdb4e429c47fddbc61a49b22ce46",
-    "remaining_required_work": []
+    "theorem": "WuPaper.ClassicalSlots.one894",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 5441,
+    "manifest_sha256": "3a6bbe46789f2733f8f75e85aeba2ee55702080fcd86e141780606d8437cd1e1",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^500 <= q^447",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/precision-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "precision-compression-build.log": "78cdae54c92035c04f28d48b6ec8e6a7c9685e019646699a87336db501add42e",
+      "classical-acceptance.json": "65c419499842ed696ad21b6860a9c501ef52bc2561572c202ebb8170a926e78c",
+      "classical-literal-axioms.log": "a0644ceb82d242c2f6ff6d4e86bef47d0c226a927bf45e14b908b6f8c785e499",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "No separate literal acceptance of 1.8938 is claimed.",
+    "final_source_import_closure_modules": 5059,
+    "precision_compression_audit": "../wu-precision-audit/validation.json"
+  },
+  "global_wu18938_theorem_complete": true,
+  "pre_structural_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4771,
+    "manifest_sha256": "437b3f50433073acb4aedb6f77e789b295d8de0f8eee606423b8a172fd0ebbef",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/one8938-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "one8938-compression-build.log": "10a13e4b4fe458cade1fb614126fa3fcf815486fd2c219e70268f0bb49431883",
+      "classical-acceptance.json": "d32bbcfe9c6d26317c55ea6e48cb5a555bc232242fcf73f9bad943a977a82cb7",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4389,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894"
+  },
+  "pre_hf4_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4771,
+    "manifest_sha256": "02c13086a68bf2a3e4dcfff2a43a7ab4d0bff01f8af14b0eac9fbf9af1031c05",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/structural-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "structural-build.log": "f8ca7056e9e85b24c6fffe67838b0b91c5a743a611bfe82ee2dd9118c01a47a2",
+      "classical-acceptance.json": "9fa7b4c105c98910e604e71e801b5d6a684b668e2d64a671b4303e3b755ee381",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4384,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json"
+  },
+  "pre_table_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4774,
+    "manifest_sha256": "c443682b009f9642ed3a2dfca4cfbf46bcc03c8178fab80c9968226c2794fccf",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/hf4-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "hf4-compression-build.log": "3bb8d36af49690e6b46a8370a881be664c39eea249ea428c0a24cd34ebe27015",
+      "classical-acceptance.json": "d88df88c7b0cb5efb99e8b64ded2181f61a4166b23b62356fa6f63923def86ae",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4387,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json"
+  },
+  "pre_derived_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4713,
+    "manifest_sha256": "88bd5c6290a45309ba70ebb61f52289f03fbb01c1e68f8528c113631b38d6a3e",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/table-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "table-compression-build.log": "acde7035f537b410dc5c38f648e1dda8c40439bb8fad43cbe5b92d76c0ebc819",
+      "classical-acceptance.json": "b52bfd388c514d2af75ec7a90982e5677e1e96f4880c2dec950f0eb185ee7bf7",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4326,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json"
+  },
+  "pre_shared_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4641,
+    "manifest_sha256": "14972208af950f904a1b9adf5a9799f87a5f256e8c53659518d6aba6aed95ba6",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/derived-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "derived-compression-build.log": "86ac99c3e50bfd292b5a2356573320a3d6c3319d915a07fa99121ab2c5769655",
+      "classical-acceptance.json": "1af71ccaafb0d13261c18354c220e88c59d3a5038f45dda2417a716cf11c68e2",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4254,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json"
+  },
+  "pre_integer_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4643,
+    "manifest_sha256": "ed9f0afeab281eb21087b496c4485502e125feb302f43e600788340d67f357e2",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/shared-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "shared-compression-build.log": "2068d9216163a2ac15b55eecc4f8da418aa9528ec44e50f9fce8f4b22d8cee91",
+      "classical-acceptance.json": "3283498e99808c91fcb14e65fd5d59a0b44f497ae89009dc9946ae52b34465a6",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4256,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json"
+  },
+  "pre_sixth_integer_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4583,
+    "manifest_sha256": "6a3c4335e0220298dd0cd6aa777c7d00e86980f527b2286b7faa8e9c914c7570",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/integer-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "integer-compression-build.log": "53be76ec43fd3ae202f1dfc2bb125541d6f7dface4219cb4da5d1122cc54a68d",
+      "classical-acceptance.json": "539df8199828db89f1c4149f0da37b989134fe3f31aa43af5d38a14227e1c353",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4196,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json"
+  },
+  "pre_eighth_integer_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4459,
+    "manifest_sha256": "8c9dd65e740058743952f190b6adf6f65dc42f1367f550cd21f0c2546f18a0f3",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/sixth-integer-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "sixth-integer-compression-build.log": "84a55cd655e15d8ae29f9bda0e98b81679431206aa52d7110bd7cc3004c5ce50",
+      "classical-acceptance.json": "f5c39025b42b66f198b34072e26b6ccec540c570f3aeb33dc69ac3f5cab89306",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4072,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json",
+    "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json"
+  },
+  "pre_fourth_bq_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4431,
+    "manifest_sha256": "565c170ee038dd36c55920e39751b5446ce916e63107c0360813bf580211286d",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/eighth-integer-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "eighth-integer-compression-build.log": "76e17945101908df10ec14a03dd066fb77b03a9bbdf86cf885c4ba27a8f51d5e",
+      "classical-acceptance.json": "9dbb64a30602ae58680fc4f06c8b75fba3e7eb96964d21e691dc61f1fef6b81b",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 4044,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json",
+    "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json",
+    "eighth_integer_compression_audit": "../wu-eighth-integer-audit/validation.json"
+  },
+  "pre_light_layer_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4267,
+    "manifest_sha256": "15d20ba6c08c4fca7c5dc8c6210f9b05f10fed47882a6b70fd2dce5af709b7b7",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/fourth-bq-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "fourth-bq-compression-build.log": "4b7b63096fc1da8f142a5f9a3b9fd8a89c8deb6fc0f366f4632be8a33820f06a",
+      "classical-acceptance.json": "8f2ffe9bea829aed6a9bd8ef8a6ce558842d4fc5fc204e4eddaa989fbda50a11",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 3880,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json",
+    "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json",
+    "eighth_integer_compression_audit": "../wu-eighth-integer-audit/validation.json",
+    "fourth_bq_compression_audit": "../wu-fourth-bq-audit/validation.json"
+  },
+  "pre_fifth_integer_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4181,
+    "manifest_sha256": "c2e00ac65ebcfc194219cb9bf7a95136a828b4c989c57c538ef004854bd4501a",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "build/light-layer-compression-build.log",
+    "literal_acceptance": "build/classical-acceptance.json",
+    "literal_log": "build/classical-literal-axioms.log",
+    "kernel_replay_log": "build/classical-kernel-replay.log",
+    "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+    "records": {
+      "light-layer-compression-build.log": "7f3910960b1a6f771e9dacade11d51d491f923ecccbb42ca7e7ffd824bab6239",
+      "classical-acceptance.json": "02e05a9f9664ee0f003ea162ee8be9b1a9fac69f0d2ef7e6881682b714ff08c9",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 3794,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json",
+    "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json",
+    "eighth_integer_compression_audit": "../wu-eighth-integer-audit/validation.json",
+    "fourth_bq_compression_audit": "../wu-fourth-bq-audit/validation.json",
+    "light_layer_compression_audit": "../wu-light-layer-audit/validation.json"
+  },
+  "liupan_pruning": {
+    "status": "pass",
+    "accepted_at_utc": "2026-10-27T15:56:59.728279+00:00",
+    "audit": "../wu-liupan-pruning-audit/validation.json",
+    "validation_sha256": "c40ddfd04bc4fb7ee7380d3f308baf6064a902d697da9b38a840747ce7479a4d",
+    "manifest_sha256": "5edafd3f227eabed812038e21b69b0817577ff459d23c0acc1f89f88953f6cfe",
+    "changed_files": 9,
+    "deleted_theorem_lemma_declarations": 383,
+    "effective_lines_removed": 10924,
+    "physical_lines_removed": 11516,
+    "bytes_removed": 514688,
+    "definitions_instances_attributes_contexts_unchanged": true,
+    "precision_and_numerical_values_unchanged": true,
+    "before": {
+      "whole_tree": {
+        "modules": 4142,
+        "code_lines": 584819,
+        "physical_lines": 688537,
+        "utf8_bytes": 35406645
+      },
+      "theorem_closure": {
+        "modules": 3755,
+        "code_lines": 544065,
+        "physical_lines": 642059,
+        "utf8_bytes": 31197996
+      }
+    },
+    "after": {
+      "whole_tree": {
+        "modules": 4142,
+        "code_lines": 573895,
+        "physical_lines": 677021,
+        "utf8_bytes": 34891957
+      },
+      "theorem_closure": {
+        "modules": 3755,
+        "code_lines": 533141,
+        "physical_lines": 630543,
+        "utf8_bytes": 30683308
+      }
+    },
+    "previous_final_acceptance": {
+      "status": "pass",
+      "theorem": "WuPaper.ClassicalSlots.one8938",
+      "source": "src/WR2ClassicalCertificate.lean",
+      "modules": 4142,
+      "manifest_sha256": "c6d2b935b4b87cbdbad0a51a7b9c2b256291979b691bc3473ea939a5b36642e7",
+      "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "build_log": "build/fifth-integer-compression-build.log",
+      "literal_acceptance": "build/classical-acceptance.json",
+      "literal_log": "build/classical-literal-axioms.log",
+      "kernel_replay_log": "build/classical-kernel-replay.log",
+      "kernel_replay_scope": "WR2ClassicalCertificate over the imports rebuilt by the full source build",
+      "records": {
+        "fifth-integer-compression-build.log": "a1ee18cfb1009ca3e30c742ff97d167a1dce5051f5c65816c9899b3f56cac979",
+        "classical-acceptance.json": "ff7e56afe9c8f8032ec4025318d25ac36fadb5f384a18f7be80ec1664ae8a843",
+        "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+        "classical-kernel-replay.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+      },
+      "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+      "final_source_import_closure_modules": 3755,
+      "precision_compression_audit": "../wu18938-audit/validation.json",
+      "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+      "structural_audit": "../wu-structural-audit/validation.json",
+      "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+      "table_compression_audit": "../wu-table-audit/validation.json",
+      "derived_compression_audit": "../wu-derived-audit/validation.json",
+      "shared_compression_audit": "../wu-shared-audit/validation.json",
+      "integer_compression_audit": "../wu-integer-audit/validation.json",
+      "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json",
+      "eighth_integer_compression_audit": "../wu-eighth-integer-audit/validation.json",
+      "fourth_bq_compression_audit": "../wu-fourth-bq-audit/validation.json",
+      "light_layer_compression_audit": "../wu-light-layer-audit/validation.json",
+      "fifth_integer_compression_audit": "../wu-fifth-integer-audit/validation.json"
+    },
+    "future_candidates_included": false
+  },
+  "pre_structural_compression_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one8938",
+    "source": "src/WR2ClassicalCertificate.lean",
+    "modules": 4142,
+    "manifest_sha256": "5edafd3f227eabed812038e21b69b0817577ff459d23c0acc1f89f88953f6cfe",
+    "statement": "exists T : Nat, 512 <= T and forall N : Nat, T <= N -> Even N -> exists p r q : Nat, p.Prime and (r = 1 or r.Prime) and q.Prime and N = p + r*q and r^5000 <= q^4469",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build_log": "../wu-liupan-pruning-audit/production-build.log",
+    "literal_acceptance": "../wu-liupan-pruning-audit/classical-acceptance.json",
+    "literal_log": "../wu-liupan-pruning-audit/classical-literal-axioms.log",
+    "kernel_replay_log": "../wu-liupan-pruning-audit/production-kernel.log",
+    "kernel_replay_scope": "Ten isolated module kernel replays plus a fresh post-adoption WR2ClassicalCertificate replay; LEAN_SYSROOT pinned to the recorded toolchain",
+    "records": {
+      "production-build.log": "c68b8e64b35b7157f5a6c657e49036f8f9e4163009dcbe53cbdf2c6521ce8cf8",
+      "classical-acceptance.json": "7d3404b8a467adfd33a02e8b80a9e96c943d2b9930c703fef66c8b94bb609eab",
+      "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "production-kernel.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+      "isolated-acceptance.json": "d005b2157fb44e05489a4e8c0aad0335d03c85fa4af04f365bf6c79207743902"
+    },
+    "stronger_endpoint_scope": "The exact 1.8938 natural-power statement and legacy 1.894 statement both pass independent literal and standard-axiom acceptance.",
+    "final_source_import_closure_modules": 3755,
+    "precision_compression_audit": "../wu18938-audit/validation.json",
+    "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+    "structural_audit": "../wu-structural-audit/validation.json",
+    "hf4_compression_audit": "../wu-hf4-audit/validation.json",
+    "table_compression_audit": "../wu-table-audit/validation.json",
+    "derived_compression_audit": "../wu-derived-audit/validation.json",
+    "shared_compression_audit": "../wu-shared-audit/validation.json",
+    "integer_compression_audit": "../wu-integer-audit/validation.json",
+    "sixth_integer_compression_audit": "../wu-sixth-integer-audit/validation.json",
+    "eighth_integer_compression_audit": "../wu-eighth-integer-audit/validation.json",
+    "fourth_bq_compression_audit": "../wu-fourth-bq-audit/validation.json",
+    "light_layer_compression_audit": "../wu-light-layer-audit/validation.json",
+    "fifth_integer_compression_audit": "../wu-fifth-integer-audit/validation.json",
+    "liupan_pruning_audit": "../wu-liupan-pruning-audit/validation.json",
+    "validation_sha256": "c40ddfd04bc4fb7ee7380d3f308baf6064a902d697da9b38a840747ce7479a4d",
+    "accepted_at_utc": "2026-10-27T15:56:59.728279+00:00",
+    "full_scope_verification": {
+      "modules": 4142,
+      "fresh_isolated_compilations": 3165,
+      "verified_unchanged_dependencies": 977,
+      "production_full_cache_receipt_check": "BUILD_PASS 4142"
+    },
+    "source_size": {
+      "whole_tree": {
+        "modules": 4142,
+        "code_lines": 573895,
+        "physical_lines": 677021,
+        "utf8_bytes": 34891957
+      },
+      "theorem_closure": {
+        "modules": 3755,
+        "code_lines": 533141,
+        "physical_lines": 630543,
+        "utf8_bytes": 30683308
+      }
+    }
   }
 }

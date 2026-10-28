@@ -7,11 +7,6 @@ open Filter
 open scoped Topology
 noncomputable section
 
-private theorem eventually_nat_div_quarter :
-    ∀ᶠ N : ℕ in atTop, ∀ a : ℕ, 1 ≤ a →
-      (a : ℝ) ≤ (N : ℝ) ^ (2 / 3 : ℝ) →
-      (N : ℝ) ^ (1 / 4 : ℝ) ≤ (N / a : ℕ) := by
-  exact PanQuotientBounds.eventually_nat_div_quarter
 
 private theorem eventually_quotient_parameters (b : ℝ) (M : ℕ) :
     ∀ᶠ N : ℕ in atTop, ∀ a : ℕ, 1 ≤ a →

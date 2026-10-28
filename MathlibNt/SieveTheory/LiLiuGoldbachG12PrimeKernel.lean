@@ -53,24 +53,5 @@ theorem goldbachG12PrimeKernel_logGeometry {N : ℕ} (hN : 4 ≤ N)
   exact ⟨goldbachG12_logPrimeExponent_mem (by omega) hr hl (hrs.trans hs),
     Real.log_pos (by exact_mod_cast hq.one_lt)⟩
 
-theorem goldbachG12PrimeKernel_const (c : ℝ) (N : ℕ) :
-    goldbachG12PrimeKernel (fun _ => c) N = c * goldbachG12PrimeKernel (fun _ => 1) N := by
-  unfold goldbachG12PrimeKernel
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro v _
-  ring
-
-
-theorem goldbachG12PrimeKernel_nonneg (h : ℝ → ℝ)
-    (hh : ∀ x ∈ Icc (4 / 53 : ℝ) (4 / 33), 0 ≤ h x)
-    {N : ℕ} (hN : 4 ≤ N) : 0 ≤ goldbachG12PrimeKernel h N := by
-  apply sum_nonneg
-  intro v hv
-  have hg := goldbachG12PrimeKernel_logGeometry hN hv
-  exact div_nonneg
-    (mul_nonneg (hh _ hg.1) (Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))))
-    (mul_nonneg (Nat.cast_nonneg _) hg.2.le)
-
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

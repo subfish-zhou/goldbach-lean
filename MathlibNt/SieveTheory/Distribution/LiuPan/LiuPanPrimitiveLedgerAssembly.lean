@@ -1,8 +1,6 @@
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorReduction
 import MathlibNt.Analysis.LogPowerBounds
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowEndpoint
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
 
 noncomputable section
 open Finset Filter

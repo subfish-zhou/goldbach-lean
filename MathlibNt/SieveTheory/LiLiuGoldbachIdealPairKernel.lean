@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogKernel
 import MathlibNt.SieveTheory.LiLiuGoldbachLogDarboux
 import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealCoordinate
 
@@ -81,11 +82,6 @@ theorem kernel_div_product_le (N : ℕ) (τ : ℝ) {r s : ℕ} (hr : 0 < r) (hs 
   · exact_mod_cast Nat.totient_pos.mpr (Nat.mul_pos hr hs)
   · exact_mod_cast Nat.totient_le (r*s)
 
-/-- The diagonal retains totient of the square, not a product of totients. -/
-theorem kernel_div_totient_square_eq (N : ℕ) (τ : ℝ) {r : ℕ} (hr : 0 < r) :
-    kernel τ (primeLogExponent N r, primeLogExponent N r) / (Nat.totient (r^2) : ℝ) =
-      goldbachPairIdealWeight N τ (r^2) := by
-  simpa only [pow_two] using kernel_div_totient_eq N τ hr hr
 
 /-- Pointwise truncation loses at most its nonnegative parameter. -/
 theorem kernel_truncation_loss {τ : ℝ} (hτ : 0 ≤ τ) (x : ℝ × ℝ) :

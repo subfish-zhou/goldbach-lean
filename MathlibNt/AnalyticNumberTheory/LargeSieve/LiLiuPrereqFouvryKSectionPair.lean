@@ -53,20 +53,6 @@ theorem wKSectionCarrier_inter
   · rintro ⟨⟨⟨hl, hl'⟩, hu⟩, hp, hp'⟩
     exact ⟨⟨⟨hl, hu⟩, hp⟩, ⟨⟨hl', hu⟩, hp'⟩⟩
 
-/-- The inner weight, including any beta-clean mask, is constant along
-the section. The arbitrary first-modulus coefficient is not included. -/
-theorem wKSectionTuple_innerWeight
-    {K : WExtractedKey} {r n₁ n₂ s k : ℕ}
-    (hf : wKSectionFixedCanonical K r n₁ n₂ s) (hk : 0 < k)
-    (hkδ : k.Coprime K.1.2.2.1)
-    (hkr : k.Coprime (K.1.2.2.2.2 * (r * s)))
-    (he : K.2 * wKSectionDeltaPrime K = K.1.2.2.1 * K.1.2.2.2.2)
-    (h : ℤ) (β ζ : ℕ → ℝ) :
-    wCorrelationInnerWeight K β ζ (wKSectionTuple K r n₁ n₂ s h k) =
-      ζ (wKSectionDeltaPrime K * s) * β (K.1.1 * n₂) := by
-  unfold wCorrelationInnerWeight
-  rw [wKSectionTuple_canonical hf hk hkδ hkr he h]
-  rfl
 
 /-- Exact common-k paired sum on the real cell and prefix. The weight
 `F` can be the full IV.3 Gram kernel, with the small-root product intact. -/

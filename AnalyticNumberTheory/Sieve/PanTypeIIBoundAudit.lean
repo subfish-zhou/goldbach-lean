@@ -1,6 +1,5 @@
 import AnalyticNumberTheory.Sieve.PanMeanValueBody
 import Mathlib.NumberTheory.Chebyshev
-import Mathlib.Tactic
 
 /-!
 # Auxiliary estimates for the all-character Type II audit

@@ -1,9 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.RingTheory.Radical.NatInt
 
 open scoped BigOperators
 
@@ -27,11 +24,6 @@ private theorem largePrimeDivisors_prod_dvd (n : ℕ) (z : ℝ) :
   have hsubset : largePrimeDivisors n z ⊆ n.primeFactors := Finset.filter_subset _ _
   exact (Finset.prod_dvd_prod_of_subset _ _ id hsubset).trans (Nat.prod_primeFactors_dvd n)
 
-private theorem largePrimeDivisors_prod_pos {n : ℕ} {z : ℝ} :
-    0 < ∏ p ∈ largePrimeDivisors n z, p := by
-  refine Finset.prod_pos ?_
-  intro p hp
-  exact Nat.pos_of_mem_primeFactors ((Finset.mem_filter.mp hp).1)
 
 private theorem real_pow_card_le_prod_of_mem_ge (s : Finset ℕ) (z : ℝ)
     (hz : 0 ≤ z) (hmem : ∀ p ∈ s, z ≤ (p : ℝ)) :
@@ -153,12 +145,6 @@ theorem mem_goldbachSquarePrimes_iff {N q : ℕ} {z : ℝ} :
 noncomputable def goldbachQA (A : Finset ℕ) (N : ℕ) (z : ℝ) : ℤ :=
   ∑ q ∈ goldbachSquarePrimes N z, ((A.filter fun n => q ^ 2 ∣ n).card : ℤ)
 
-theorem goldbachQA_nonneg (A : Finset ℕ) (N : ℕ) (z : ℝ) :
-    0 ≤ goldbachQA A N z := by
-  unfold goldbachQA
-  refine Finset.sum_nonneg ?_
-  intro q hq
-  exact_mod_cast Nat.zero_le ((A.filter fun n => q ^ 2 ∣ n).card)
 
 private theorem literalH_le_dvdFiberCard
     (A : Finset ℕ) (M d : ℕ) (x : ℝ) :
@@ -168,7 +154,7 @@ private theorem literalH_le_dvdFiberCard
     (Finset.monotone_filter_right A (p := literalHPoint M d x)
       (q := fun n => d ∣ n) (fun _ _ hn => hn.1))
 
-private theorem literalH_eq_zero_of_large_divisor
+theorem literalH_eq_zero_of_large_divisor
     (A : Finset ℕ) (M d N : ℕ) (x : ℝ)
     (hA : ∀ n ∈ A, 1 ≤ n ∧ n < N) (hNd : N < d) :
     literalH A M d x = 0 := by

@@ -261,13 +261,4 @@ theorem exists_signedFamilyDensity_replacement_bound :
   cases upper <;> simp only [Bool.false_eq_true, if_false, if_true, one_mul,
     neg_mul, abs_neg, neg_neg, abs_of_nonneg hn] <;> exact ⟨hn, hcost⟩
 
-#check signedFamilyDensity_partition
-#check signedFamilyDensity_replacement_identity
-#check negativeRoughMass_bounds
-#print axioms signedFamilyDensity_partition
-#print axioms signedFamilyDensity_replacement_identity
-#print axioms negativeRoughMass_bounds
-#check exists_signedFamilyDensity_replacement_bound
-#print axioms exists_signedFamilyDensity_replacement_bound
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

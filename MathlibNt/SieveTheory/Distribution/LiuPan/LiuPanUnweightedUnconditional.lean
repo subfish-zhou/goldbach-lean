@@ -99,9 +99,6 @@ theorem liuPanUnweightedTheorem2Specialization_proved :
   obtain ⟨N₀, hN₀⟩ := eventually_atTop.mp he
   exact ⟨4 * (K + P), by positivity, B, hB, N₀, hN₀⟩
 
-/-- Existing finite modern weight payment applied to the actual proved source. -/
-theorem liuPanWangDingCorollary230_proved : LiuPanWangDingCorollary230 :=
-  liuPanUnweightedTheorem2Specialization_proved.to_corollary230
 
 /-- Existing source/normalization transport, with no distribution hypothesis. -/
 theorem liuPanCanonicalCoprimeTheorem_proved : LiuPanCanonicalCoprimeTheorem :=

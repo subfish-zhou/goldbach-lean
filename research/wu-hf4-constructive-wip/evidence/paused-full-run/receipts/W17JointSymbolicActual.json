@@ -1,0 +1,47 @@
+{
+  "module": "W17JointSymbolicActual",
+  "exit_code": 0,
+  "seconds": 5.904454879462719,
+  "source_sha256": "c0209035d0c43c25da979ac65b4921a694d20ecfa5708b554d934b117a2fd047",
+  "object_sha256": "c67b2b8f7d49eea9a2e223e87bceecf9860de8957704a3ef069a84652840977e",
+  "dependencies": {
+    "W17JointSplit": "48b26127936d4a71ba5523edda1653918a13eaf3d4f2e9d5d4c81170bbb00e47"
+  },
+  "dependency_contexts": {
+    "W17JointSplit": "bc9560e1a8bcf3ca6fe37178d4bddfe571d2c34b0b95beb4d32d6684107eabf8"
+  },
+  "context_sha256": "6b385beec22c78132e694eb64e306bcc17072676eb87ba8bd6cd845c231ca071",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSymbolicActual.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSymbolicActual.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/W17JointSymbolicActual.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/W17JointSymbolicActual.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/W17JointSymbolicActual.resources",
+  "resource_sha256": "e9616a236683544eb9d31739257fa0f4cc7739b2938acb9e0a9a0db7df8f852a",
+  "artifact_bundle_sha256": {
+    ".olean": "c67b2b8f7d49eea9a2e223e87bceecf9860de8957704a3ef069a84652840977e"
+  }
+}

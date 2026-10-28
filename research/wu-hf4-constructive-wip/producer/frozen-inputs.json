@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "inputs": {
+    "lib/source_counter.py": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+    "lib/legacy_hf4.py": "9c22e28b7566d7f686ec3d3da85c3f2d5fd4a669d965b5682e1c87c6c532ad7a",
+    "stages/constructive/generate.py": "44efbc88f666b74da9c82b31677474db7ee550fe895758a046dc5bd98ded3e2c",
+    "stages/table/generate.py": "f8af92e20b2bba9ebdca06895e2e923ef9ed54ea6e824b20fa91d63dd278ecfe",
+    "stages/complete/generate.py": "b68f21af2655e57e4926de9fcf3aa9049c43105dad681f296853fad76a7e7c59",
+    "stages/complete/complete.py": "3a457eb376c84cdec183982eb73cdf9e6c272bd13ca3037adade59f9efc91a29",
+    "stages/complete/inputs/Hf4CheckedDagSoundness.lean": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51",
+    "stages/complete/inputs/Hf4DirectCoordinates.lean": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+    "stages/complete/inputs/Hf4ConstructionConditions.lean": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+    "stages/complete/inputs/Hf4ConstructionRounding.lean": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+    "stages/complete/inputs/Hf4InverseDagSoundness.lean": "e0b8520fadcf774659ac2f95155cc2c9308a9de9e3aee6cc5d4174e93522da42",
+    "stages/complete/inputs/Hf4InverseDagChunks.lean": "d6ec05778b92db8949bd5ff3d654e00c887c717f9abe2b19892db353829d61c1",
+    "stages/complete/inputs/semantic-fragments.json": "2c107f6d816e4f52879b5101998bf2f69c840243ba9af8f347db799e14a5917c",
+    "stages/complete/inputs/Hf4CheckedDagData.lean": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008",
+    "stages/complete/inputs/Hf4InverseDagData.lean": "78fbc3f1b221d56a54340e6dcd8171fbe471018c02bab4645da7173a9651530d",
+    "frozen/uniform-lineage.json": "2273707bbf2a872a111dd0abe2e06bf1545ffd8804483c1c4e3f40b506becf7e",
+    "frozen/Hf4DirectDagSemantics.lean": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995",
+    "frozen/golden.json": "c9512b8fca4b2546002e784a5f876e952fcd1f304bd34119882658d4f341c673",
+    "frozen/header-origin.json": "4272f0ca6bb7657b9efa5c0dd37469b6e57a8e839e0be36bb9a3c0f0ed7ba119",
+    "frozen/original-headers.json": "07f65f709945142de4fd4d51437552a83fce32e2beb48e66754630646d8ceb3a",
+    "frozen/lineage.json": "4ac55f3c199e58c2937b824b413209762fc281897ae0fef75514a736852a8676",
+    "frozen/Hf4DirectDagSeedSoundness.lean": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f"
+  }
+}

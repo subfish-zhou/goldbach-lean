@@ -83,31 +83,6 @@ theorem card_largeSquareDivisorSet_le_real {T Z : ℝ} (hT : 0 ≤ T) (hZ : 0 < 
     _ ≤ _ := div_le_div_of_nonneg_right
       (mul_le_mul_of_nonneg_left (Nat.floor_le hT) (by positivity)) hZ.le
 
-/-- Any supported factor above `Y` forces membership in the sparse square-divisor set. -/
-theorem mem_largeSquareDivisorSet_of_large_support {n s d T : ℕ} {Y : ℝ}
-    (hn : n ∈ Ioc 0 T) (hs : 0 < s) (hd : 0 < d) (hY : 0 ≤ Y)
-    (hlarge : Y < (s : ℝ))
-    (hsd : ∀ p : ℕ, p.Prime → p ∣ s → p ∣ d) (hdsn : d * s ∣ n) :
-    n ∈ largeSquareDivisorSet T (Real.sqrt Y) := by
-  classical
-  obtain ⟨b, hb, hsb, hbn⟩ :=
-    exists_square_dvd_of_supported_mul_dvd hs hd hsd hdsn
-  refine mem_filter.mpr ⟨hn, b, ?_, hbn⟩
-  apply (Real.sqrt_lt hY (Nat.cast_nonneg b)).mpr
-  exact hlarge.trans_le (by exact_mod_cast hsb)
-
-/-- A uniform sparse envelope, even when the supported factor and `d` vary with `n`. -/
-theorem card_largeSupport_le {T Y : ℝ} (hT : 0 ≤ T) (hY : 0 < Y)
-    (S : Finset ℕ) (hS : S ⊆ Ioc 0 ⌊T⌋₊)
-    (hs : ∀ n ∈ S, ∃ s d : ℕ, 0 < s ∧ 0 < d ∧ Y < (s : ℝ) ∧
-      (∀ p : ℕ, p.Prime → p ∣ s → p ∣ d) ∧ d * s ∣ n) :
-    (S.card : ℝ) ≤ 2 * T / Real.sqrt Y := by
-  have hsub : S ⊆ largeSquareDivisorSet ⌊T⌋₊ (Real.sqrt Y) := by
-    intro n hn
-    obtain ⟨s, d, hs, hd, hlarge, hsd, hdsn⟩ := hs n hn
-    exact mem_largeSquareDivisorSet_of_large_support (hS hn) hs hd hY.le hlarge hsd hdsn
-  exact (Nat.cast_le.mpr (card_le_card hsub)).trans
-    (card_largeSquareDivisorSet_le_real hT (Real.sqrt_pos.mpr hY))
 
 /-- The actual canonical `d₁` cutoff embeds in the same sparse envelope. -/
 theorem wGCDData_mem_largeSquareDivisorSet (q r N₂ : ℕ) {N₁ T : ℕ} {Y : ℝ}

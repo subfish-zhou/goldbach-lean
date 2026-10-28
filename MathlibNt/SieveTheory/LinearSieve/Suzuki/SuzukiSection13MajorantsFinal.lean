@@ -22,12 +22,6 @@ def MovingClaim146iiiConclusion
         (1 - 1 / sourceSigma D d) ^ (1 - Δ) *
           lambda H sign D d 0 s
 
-/-- Semantic audit: both sign-indexed bridges use literally the same `Qhat`.
-There is no plus/minus choice of scalar solution at this interface. -/
-theorem bridge_Qhat_sign_independent
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H) :
-    (section13_bridgeAtThree hH ErrorSign.plus).Qhat =
-      (section13_bridgeAtThree hH ErrorSign.minus).Qhat := rfl
 
 /-- Consequently one honest Lemma-10.28 majorant supplies both sign-indexed
 arguments expected by the moving Claim-14.6 theorem. -/
@@ -47,19 +41,6 @@ theorem moving_claim14_6_iii_of_singleQhatMajorant
     MovingClaim146iiiConclusion H d Δ := by
   exact moving_claim14_6_iii_of_source_contract_and_cutoffMajorants
     hH hd hΔ0 hΔ1 (duplicateQhatMajorant hH Q)
-
-/-- Historical compact-input audit boundary.  The endpoint-derivative blocker has
-been removed by the corrected `Ioc` first-crossing interface.  This structure is
-retained only as a record of the former mismatch and is not used downstream. -/
-structure QhatCompactInitialData
-    (H : Section13HatLayers) where
-  S : ℝ
-  four_le_S : 4 ≤ S
-  endpoint_dde :
-    HasDerivAt (section13Qhat H)
-      (-(2 * section13Qhat H 3 + section13Qhat H (3 - 1)) / 3) 3
-  values : Set.Icc (3 : ℝ) S → ℝ
-  values_eq : ∀ u, values u = section13Qhat H u
 
 
 end Section13MajorantsFinal

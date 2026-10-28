@@ -1,0 +1,139 @@
+{
+  "adopt": [
+    {
+      "name": "WR2ClassicalFifthIntegerData.lean",
+      "old_sha256": null,
+      "new_sha256": "558d23b865a03e461cefa4b89194acd9470cea0930ef449c824536f1b9e5261a"
+    },
+    {
+      "name": "WR2ClassicalFifthIntegerSoundness.lean",
+      "old_sha256": null,
+      "new_sha256": "c259c4cf71d5ab38f8468161cb61654aa3ba5ce271d95e7811cf1f13e2804f1f"
+    },
+    {
+      "name": "WR2ClassicalFifthTerminalRoot.lean",
+      "old_sha256": "c666d05ce31bdaf113eac73dc48c05de6cf8e07cbe0851b7499c903598da94f5",
+      "new_sha256": "62c1a34bf558f86bfd5ab97a8293521e09d92bee30b681d0f0ad0ac9186b25ea"
+    },
+    {
+      "name": "WR2ClassicalFifthIntegerPolynomial.lean",
+      "old_sha256": null,
+      "new_sha256": "e89159320f110c1cf6f7b2f655ae9b7d4385a84ab5e6c7ab31b13533591280e6"
+    },
+    {
+      "name": "WR2ClassicalFifthInitialRoot.lean",
+      "old_sha256": "038d76595d7340ef58b0f1850fa83e01235e4d4fd309cdb57e75f5671cdb0f58",
+      "new_sha256": "d2509e751818fe11926a68265d5c81d6f6183150de365cecb6a1491cadbd8b10"
+    },
+    {
+      "name": "WR2ClassicalFifthIntegerDomains.lean",
+      "old_sha256": null,
+      "new_sha256": "f9f87f4e6a3a658365bed57e13d5ccc5c0b8ab156a81819a5341dfc6ead0e68d"
+    },
+    {
+      "name": "WR2ClassicalFifthPolynomialData.lean",
+      "old_sha256": null,
+      "new_sha256": "fe3c3b3cebfefa0ee544e963b51969133c62937138b1c497c5244603584c9472"
+    },
+    {
+      "name": "WR2ClassicalFifthMiddleRoot.lean",
+      "old_sha256": "4a0ad330dc5bb56b1f7d7391629150f830dca77d56baee7dc0dec78c3d3ebcab",
+      "new_sha256": "d946ca4e0d45150c541be4c817c01e0749816d3e44cf06e33bf201a4c2353312"
+    },
+    {
+      "name": "WR2ClassicalFifthTableCheck.lean",
+      "old_sha256": "5e7c1713ed4dd63bd4b1930beb74987da63b86b2131703050f9d280b31737885",
+      "new_sha256": "e35fff1d0d72fbbf81afadf2b905d293b2ffe6976cdd5e6b5537cb830ef2d319"
+    },
+    {
+      "name": "WR2ClassicalFifthPaymentData.lean",
+      "old_sha256": null,
+      "new_sha256": "065e66640ae3d31df41525fee7a4e1b73f3e0c79e93116f19a924d118b920403"
+    },
+    {
+      "name": "WR2ClassicalFifthTerminalPayments.lean",
+      "old_sha256": "9d29abeea37a590eac260d4797b31a0a47bcaf68fa7c8264779cee390e8788a9",
+      "new_sha256": "005a2545d8b8fe15fc8ac8d76d57c09eaf3dddc9730c2499fa93e59739e56846"
+    },
+    {
+      "name": "WR2ClassicalFifthInitialPayments.lean",
+      "old_sha256": "f4eb1b7b364674cbbf09c85f548785b47c2789c06838e80cfab0fb294e85df06",
+      "new_sha256": "382113f02285a98080db5369d9778a678603d0d6124d2ec51a695cc0b2f508d7"
+    },
+    {
+      "name": "WR2ClassicalFifthMiddlePayments.lean",
+      "old_sha256": "734ef91ecae22b4bfb1c58d469f4d5b46fbd3c64006ebb7fc6d81d0acdb4a81c",
+      "new_sha256": "488413a454b199db2c81d5cd5f8f5fa253e75eb182c7e6b71c4634bd3e0ad756"
+    },
+    {
+      "name": "WR2ClassicalFifthInitialSums.lean",
+      "old_sha256": null,
+      "new_sha256": "32751331f97127c1e85df2a56f0034dbad3426bb37a021c1c195c7b88a7aeedf"
+    },
+    {
+      "name": "WR2ClassicalFifthMiddleSums.lean",
+      "old_sha256": null,
+      "new_sha256": "c6505d8657f1c2609b30edc38c51bbca4e47515528bc0b3e336373c7d1e6e045"
+    },
+    {
+      "name": "WR2ClassicalFifthTerminalSums.lean",
+      "old_sha256": null,
+      "new_sha256": "63787cb06887f335f730482c09ec9a21c3edd847bb03baa9cc2cb6e583787091"
+    }
+  ],
+  "retire": [
+    "WR2ClassicalFifthInitialGridBlock000.lean",
+    "WR2ClassicalFifthInitialGridBlock001.lean",
+    "WR2ClassicalFifthInitialGridBlock002.lean",
+    "WR2ClassicalFifthInitialGridBlock003.lean",
+    "WR2ClassicalFifthInitialGridBlock004.lean",
+    "WR2ClassicalFifthInitialGridBlock005.lean",
+    "WR2ClassicalFifthInitialGridBlock006.lean",
+    "WR2ClassicalFifthInitialGridBlock007.lean",
+    "WR2ClassicalFifthInitialGridBlock008.lean",
+    "WR2ClassicalFifthInitialGridBlock009.lean",
+    "WR2ClassicalFifthInitialGridBlock010.lean",
+    "WR2ClassicalFifthInitialGridBlock011.lean",
+    "WR2ClassicalFifthInitialGridBlock012.lean",
+    "WR2ClassicalFifthInitialGridBlock013.lean",
+    "WR2ClassicalFifthInitialGridBlock014.lean",
+    "WR2ClassicalFifthInitialGridBlock015.lean",
+    "WR2ClassicalFifthMiddleGridBlock000.lean",
+    "WR2ClassicalFifthMiddleGridBlock001.lean",
+    "WR2ClassicalFifthMiddleGridBlock002.lean",
+    "WR2ClassicalFifthMiddleGridBlock003.lean",
+    "WR2ClassicalFifthMiddleGridBlock004.lean",
+    "WR2ClassicalFifthMiddleGridBlock005.lean",
+    "WR2ClassicalFifthMiddleGridBlock006.lean",
+    "WR2ClassicalFifthMiddleGridBlock007.lean",
+    "WR2ClassicalFifthMiddleGridBlock008.lean",
+    "WR2ClassicalFifthMiddleGridBlock009.lean",
+    "WR2ClassicalFifthMiddleGridBlock010.lean",
+    "WR2ClassicalFifthMiddleGridBlock011.lean",
+    "WR2ClassicalFifthMiddleGridBlock012.lean",
+    "WR2ClassicalFifthMiddleGridBlock013.lean",
+    "WR2ClassicalFifthMiddleGridBlock014.lean",
+    "WR2ClassicalFifthMiddleGridBlock015.lean",
+    "WR2ClassicalFifthTerminalGridBlock000.lean",
+    "WR2ClassicalFifthTerminalGridBlock001.lean",
+    "WR2ClassicalFifthTerminalGridBlock002.lean",
+    "WR2ClassicalFifthTerminalGridBlock003.lean",
+    "WR2ClassicalFifthTerminalGridBlock004.lean",
+    "WR2ClassicalFifthTerminalGridBlock005.lean",
+    "WR2ClassicalFifthTerminalGridBlock006.lean",
+    "WR2ClassicalFifthTerminalGridBlock007.lean",
+    "WR2ClassicalFifthTerminalGridBlock008.lean",
+    "WR2ClassicalFifthTerminalGridBlock009.lean",
+    "WR2ClassicalFifthTerminalGridBlock010.lean",
+    "WR2ClassicalFifthTerminalGridBlock011.lean",
+    "WR2ClassicalFifthTerminalGridBlock012.lean",
+    "WR2ClassicalFifthTerminalGridBlock013.lean",
+    "WR2ClassicalFifthTerminalGridBlock014.lean",
+    "WR2ClassicalFifthTerminalGridBlock015.lean"
+  ],
+  "unchanged_outputs": [
+    "WR2ClassicalFifthCertificate.lean"
+  ],
+  "generator": "research/wu2008/diagnostics/classical_fifth_certificates.py",
+  "generator_sha256": "1e035ebf1acfdbd9b26b3c3ebd5f8300d5952e9c87cc76f10142cad31d666b24"
+}

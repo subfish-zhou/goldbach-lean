@@ -11,53 +11,6 @@ open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachB10PanTwoEndpoints (P : Prop) : Decidable P :=
-  Classical.propDecidable P
-
-private theorem B10PanTwoEndpoints_residue_mem_unitResidues
-    {N d : ℕ} (hd : 1 ≤ d) (hdN : Nat.Coprime d N) :
-    N % d ∈ AnalyticNumberTheory.Sieve.unitResidues d := by
-  rw [AnalyticNumberTheory.Sieve.unitResidues]
-  refine Finset.mem_filter.mpr ?_
-  constructor
-  · exact Finset.mem_range.mpr (Nat.mod_lt N (lt_of_lt_of_le Nat.zero_lt_one hd))
-  · exact (ZMod.coprime_mod_iff_coprime N d).2 hdN.symm
-
-private theorem B10PanTwoEndpoints_intervalMaxL_nonneg
-    (main : ℝ → ℝ) (Y A₁ A₂ d : ℕ) (f : ℕ → ℝ) :
-    0 ≤ liuMainPanCoprimeIntervalMaxL main Y A₁ A₂ d f := by
-  unfold liuMainPanCoprimeIntervalMaxL
-  dsimp only
-  by_cases hS : (AnalyticNumberTheory.Sieve.unitResidues d).Nonempty
-  · rw [dif_pos hS]
-    have hmem :
-        ((AnalyticNumberTheory.Sieve.unitResidues d).image
-            (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|)).max'
-            (Finset.image_nonempty.mpr hS) ∈
-          (AnalyticNumberTheory.Sieve.unitResidues d).image
-            (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|) :=
-      Finset.max'_mem _ _
-    rcases Finset.mem_image.mp hmem with ⟨l, _, hl⟩
-    rw [← hl]
-    exact abs_nonneg _
-  · rw [dif_neg hS]
-
-private theorem B10PanTwoEndpoints_abs_intervalSum_le_maxL
-    {N Y A₁ A₂ d : ℕ} {main : ℝ → ℝ} {f : ℕ → ℝ}
-    (hd : 1 ≤ d) (hdN : Nat.Coprime d N) :
-    |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d (N % d) f| ≤
-      liuMainPanCoprimeIntervalMaxL main Y A₁ A₂ d f := by
-  have hl : N % d ∈ AnalyticNumberTheory.Sieve.unitResidues d :=
-    B10PanTwoEndpoints_residue_mem_unitResidues hd hdN
-  have hS : (AnalyticNumberTheory.Sieve.unitResidues d).Nonempty := ⟨N % d, hl⟩
-  unfold liuMainPanCoprimeIntervalMaxL
-  dsimp only
-  rw [dif_pos hS]
-  exact Finset.le_max'
-    ((AnalyticNumberTheory.Sieve.unitResidues d).image
-      (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|))
-    _
-    (Finset.mem_image.mpr ⟨N % d, hl, rfl⟩)
 
 private theorem B10PanTwoEndpoints_remainderIndex_subset_cutoff
     {N M D : ℕ} {B : ℝ}
@@ -131,7 +84,7 @@ theorem goldbachB10PanPrefixRemainder_twoEndpoints_log_saving
             (liuLogarithmicIntegral goldbachB10PanKappa0) N A₁ A₂ d (N % d)
             (goldbachC10CoeffReal N b c)| ≤ EN d := by
       simpa [EN] using
-        (B10PanTwoEndpoints_abs_intervalSum_le_maxL
+        (MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL
           (N := N) (Y := N)
           (A₁ := A₁) (A₂ := A₂) (d := d)
           (main := liuLogarithmicIntegral goldbachB10PanKappa0)
@@ -141,7 +94,7 @@ theorem goldbachB10PanPrefixRemainder_twoEndpoints_log_saving
             (liuLogarithmicIntegral goldbachB10PanKappa0) ⌊ε * (N : ℝ)⌋₊
             A₁ A₂ d (N % d) (goldbachC10CoeffReal N b c)| ≤ EY d := by
       simpa [EY, hY] using
-        (B10PanTwoEndpoints_abs_intervalSum_le_maxL
+        (MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL
           (N := N) (Y := ⌊ε * (N : ℝ)⌋₊)
           (A₁ := A₁) (A₂ := A₂) (d := d)
           (main := liuLogarithmicIntegral goldbachB10PanKappa0)
@@ -157,7 +110,7 @@ theorem goldbachB10PanPrefixRemainder_twoEndpoints_log_saving
     intro d _ hdNot
     exact by
       simp only [EN]
-      exact B10PanTwoEndpoints_intervalMaxL_nonneg
+      exact MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalMaxL_nonneg
         (liuLogarithmicIntegral goldbachB10PanKappa0) N A₁ A₂ d
         (goldbachC10CoeffReal N b c)
   have hsumY :
@@ -166,7 +119,7 @@ theorem goldbachB10PanPrefixRemainder_twoEndpoints_log_saving
     intro d _ hdNot
     exact by
       simp only [EY]
-      exact B10PanTwoEndpoints_intervalMaxL_nonneg
+      exact MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalMaxL_nonneg
         (liuLogarithmicIntegral goldbachB10PanKappa0) Y A₁ A₂ d
         (goldbachC10CoeffReal N b c)
   calc

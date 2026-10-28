@@ -1,0 +1,15 @@
+{
+  "generated_outputs": 58,
+  "candidate_overlay_files": 34,
+  "all_overlay_bytes_match": true,
+  "all_other_generated_bytes_unchanged": true,
+  "adopt_sources": 33,
+  "delete_sources": 104,
+  "formal_sources_modified": false,
+  "Lean_run": false,
+  "generator_sha256": {
+    "classical_c_eighth_certificates.py": "fca1220ab1d40a0dd5cd090e017d3fc4f9128c3a2a8641be353f2d24df86c6b4",
+    "classical_sixth_certificates.py": "34d27e2695d2088cd211f288b4b105b76ff620e7e330a68289e94b81015d9e90",
+    "classical_fourth_certificates.py": "d7b01164bfc431c0f7313882f907f64ccc8ae1dde3b0b7c82420ac55bf655993"
+  }
+}

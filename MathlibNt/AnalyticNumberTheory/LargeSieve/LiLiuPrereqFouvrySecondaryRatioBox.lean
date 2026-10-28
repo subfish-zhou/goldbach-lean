@@ -40,39 +40,6 @@ theorem secondary_frequency_natAbs_injective (i : ℕ) (positive : Bool) :
   obtain ⟨n, _, rfl⟩ := mem_image.mp hk
   cases positive <;> simpa using he
 
-theorem wGramPrefix_coordinate_mem_scale
-    {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
-    {a : ℤ} {x η R S M Z : ℝ} {K : WExtractedKey} {b : ℕ}
-    {j cap : Fin 5 → ℕ} {positive : Bool} {c : Finset (ℕ × ℕ)}
-    {t : WExtractedTuple × ℤ}
-    (ht : t ∈ wCoprimeFiber x N S
-      (wGramPrefix N a x η R S M Z K b j cap positive) c) (i : Fin 5) :
-    wAnalyticCoordinates t i ∈ wGramResonanceScaleInterval (j i) := by
-  have hb := (mem_filter.mp (mem_filter.mp ht).1).1
-  have he := congrFun (mem_filter.mp hb).2.1 i
-  have hp := wAnalyticCoordinates_pos hN (fun _ hq => (mem_Ioc.mp hq).1)
-    (mem_filter.mp hb).1 i
-  exact mem_Ico.mpr ((Nat.log_eq_iff (Or.inr ⟨by decide, hp.ne'⟩)).mp he)
-
-theorem wGramPrefix_frequency_mem_scale
-    {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
-    {a : ℤ} {x η R S M Z : ℝ} {K : WExtractedKey} {b : ℕ}
-    {j cap : Fin 5 → ℕ} {positive : Bool} {c : Finset (ℕ × ℕ)}
-    {t : WExtractedTuple × ℤ}
-    (ht : t ∈ wCoprimeFiber x N S
-      (wGramPrefix N a x η R S M Z K b j cap positive) c) :
-    t.2 ∈ wGramResonanceScaleFrequencies (j 0) positive := by
-  have hn : t.2.natAbs ∈ wGramResonanceScaleInterval (j 0) :=
-    wGramPrefix_coordinate_mem_scale hN ht 0
-  have hs := (mem_filter.mp (mem_filter.mp (mem_filter.mp ht).1).1).2.2
-  apply mem_image.mpr
-  refine ⟨t.2.natAbs, hn, ?_⟩
-  cases positive
-  · have hh : t.2 ≤ 0 := by simpa using hs
-    simp only [Bool.false_eq_true, ↓reduceIte, Int.natCast_natAbs,
-      abs_of_nonpos hh, neg_neg]
-  · have hh : 0 < t.2 := by simpa using hs
-    simp only [↓reduceIte, Int.natCast_natAbs, abs_of_pos hh]
 
 /-- An occupied seven-coordinate base supplies every scale bound before
 any extension to a Cartesian box is made. -/

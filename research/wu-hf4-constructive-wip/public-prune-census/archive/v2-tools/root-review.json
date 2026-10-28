@@ -1,0 +1,35 @@
+{
+  "status": "ROOT_REVIEWED_CORRECTED_CENSUS_RUNTIME_READY_NOT_EXECUTED",
+  "observed_unix": 1793175367.4467804,
+  "reviewed_by": "root",
+  "files": {
+    "run.py": "c5f67a22f7a3691c93cf370043ed9d70a9e97bada5783272e6d30baa550c6240",
+    "pins.json": "a1b9d32c7f3c0a917274e472d22d553c008b2ef62ac3edd375fc606ebc2e14ab",
+    "prior-gates.json": "c05891cac9ba2e9e57fa38ccc71322d8b5695d23a39571d1218845ec51e2ae44",
+    "test_runtime.py": "b072c43ae94d477bfea2c3a792bc17fae14090553e2476d82a169699c1db0b93"
+  },
+  "tests_passed": 32,
+  "real_source_preparation": "PASS:21probes,2096candidates,4151modules,7464sourceauditbindings",
+  "real_terminal_prior_gate_check": "PASS",
+  "old_V7_failure_preserved": true,
+  "actual_corrected_gates_required": {
+    "types": 736,
+    "values": 183,
+    "raw_values": 179,
+    "bounded_bridges": 4,
+    "kernels": 65,
+    "gate_steps": 78,
+    "actual_root_marker": true,
+    "actual_V9_dry_run": true
+  },
+  "unchanged_from_reviewed_V1": [
+    "rawModuleData21scope collector and7464sourceaudit",
+    "sole V7 local library andpinned4.33sysroot",
+    "one tracked exclusive serial compiler at a time",
+    "failedcompile cannotexcusevalid-lookingoutput",
+    "freshsource/object/log/resources/invocationhashes",
+    "full4151source/object/contextauditbeforeafter",
+    "strictunionoutputvalidator andnoautomaticretirement/adoption"
+  ],
+  "production_modified": false
+}

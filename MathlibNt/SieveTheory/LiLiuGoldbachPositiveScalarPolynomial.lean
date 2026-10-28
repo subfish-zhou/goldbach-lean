@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCalculus
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients
 import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarBase
 
 open Set MeasureTheory Finset

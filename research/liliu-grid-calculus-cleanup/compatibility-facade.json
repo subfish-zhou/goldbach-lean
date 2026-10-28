@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean",
+  "original_imports_preserved": [
+    "import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic",
+    "import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergEvenAssembly",
+    "import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve",
+    "import Mathlib.Algebra.BigOperators.Module",
+    "import Mathlib.Analysis.SpecialFunctions.NonIntegrable"
+  ],
+  "removed": "Unused local open/namespace commands and stale empty proof headings. No declaration or import removed."
+}

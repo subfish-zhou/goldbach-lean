@@ -1,5 +1,4 @@
 import MathlibNt.Wu2004MeanValue.RealEndpoints
-import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # Uniform prime-counting error at coefficient-dependent real endpoints

@@ -357,12 +357,6 @@ the convergent universal odd-prime product. -/
 noncomputable def liuSingularSeries (N : ℕ) : ℝ :=
   liuCorrection N * liuUniversalProduct
 
-theorem liuSingularSeries_source_formula (N : ℕ) :
-    liuSingularSeries N =
-      (N.primeFactors.filter (fun p => 2 < p)).prod
-          (fun p => ((p : ℝ) - 1) / ((p : ℝ) - 2)) *
-        ∏' p : ℕ, (1 + liuBaseDeviation p) := by
-  rfl
 
 theorem liuSingularSeries_pos (N : ℕ) : 0 < liuSingularSeries N := by
   exact mul_pos (liuCorrection_pos N) liuUniversalProduct_pos
@@ -437,15 +431,6 @@ theorem liuSingularSeriesTail_le_one (z : ℕ) :
   exact (div_le_one (liuUniversalProductTruncated_pos z)).2
     (liuUniversalProduct_le_truncated z)
 
-theorem tendsto_liuSingularSeriesTail_one :
-    Filter.Tendsto liuSingularSeriesTail Filter.atTop (nhds 1) := by
-  have hc : Filter.Tendsto (fun _ : ℕ => liuUniversalProduct) Filter.atTop
-      (nhds liuUniversalProduct) := tendsto_const_nhds
-  have h := hc.div tendsto_liuUniversalProductTruncated liuUniversalProduct_ne_zero
-  change Filter.Tendsto
-    ((fun _ : ℕ => liuUniversalProduct) / liuUniversalProductTruncated)
-      Filter.atTop (nhds 1)
-  simpa only [div_self liuUniversalProduct_ne_zero] using h
 
 theorem liuSingularSeriesTruncatedAtN_eq_div_tail
     (N : ℕ) (hN : 0 < N) :

@@ -1,10 +1,7 @@
 import MathlibNt.Tactic.PolynomialDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction
 import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralScalar
-/- Retained endpoint only. Necessary private proof copied verbatim apart from
-namespace and final rational terminal; source SHA256 572a3d929740ec86fd043d536a57618456a2bb35c121b89b11047d902e09d3ce. -/
+/- The strongest retained rational endpoint is certified directly here. -/
 set_option pp.deepTerms true
 set_option pp.proofs true
 set_option pp.maxSteps 1000000
@@ -265,76 +262,7 @@ theorem goldbachB10I10_eight_mul_le_540995781 :
   exact (mul_le_mul_of_nonneg_left hmono (by norm_num : (0 : ℝ) ≤ 8)).trans b10H_endpoint
 
 
-/-- Actual B10SiftedCount at the unchanged legal cutoff, retaining (1-ε).
-This statement concerns neither an original G10 count nor a corrected G10 count. -/
-theorem goldbachB10SiftedCount_540995781_upper (δ : ℝ) (hδ : 0 < δ) :
-    ∃ B : ℝ, 0 ≤ B ∧ ∀ ε : ℝ, 0 < ε → ε < 1 →
-      ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-        let Δ := (N : ℝ) ^ ((1 : ℝ) / 2) / Real.log (N : ℝ) ^ (B + 1)
-        let Z := Δ ^ ((1 : ℝ) / 2)
-        (goldbachB10SiftedCount N ε ((N : ℝ) ^ goldbachB10Beta) ((N : ℝ) ^ goldbachB10Gamma) Z : ℝ) ≤
-          ((540995781/100000000 : ℝ) * (1 - ε) + δ) *
-            (MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ) ^ 2) := by
-  obtain ⟨B, hB, hu⟩ := goldbachB10SiftedCount_I10_upper δ hδ
-  refine ⟨B, hB, ?_⟩
-  intro ε hε hεlt
-  obtain ⟨N₀, hN₀, hcount⟩ := hu ε hε hεlt
-  refine ⟨N₀, hN₀, ?_⟩
-  intro N hN hEven
-  have hscale : 0 ≤ MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N * (N : ℝ) /
-      Real.log (N : ℝ)^2 :=
-    div_nonneg (mul_nonneg (MathlibNt.SieveTheory.SingularSeries.liuSingularSeries_pos N).le
-      (Nat.cast_nonneg N)) (sq_nonneg _)
-  have hcoef : 8*(1-ε)*goldbachB10I10 ≤ (540995781/100000000 : ℝ)*(1-ε) := by
-    have h := mul_le_mul_of_nonneg_right goldbachB10I10_eight_mul_le_540995781
-      (show 0 ≤ 1-ε by linarith)
-    nlinarith
-  exact (hcount N hN hEven).trans
-    (mul_le_mul_of_nonneg_right (add_le_add hcoef (le_refl δ)) hscale)
-
-/-- Exact recovery from the previously published rational scalar. -/
-theorem retained_scalar_gain :
-    (540996/100000 : ℝ) - (540995781/100000000 : ℝ) =
-      (219/100000000 : ℝ) := by norm_num
-
-theorem retained_scalar_strict_improvement :
-    (540995781/100000000 : ℝ) < (540996/100000 : ℝ) := by norm_num
-
 -- Complete source-declaration type and transitive axiom coverage (private in-module).
-#check @b10L
-#print axioms b10L
-#check @b10G
-#print axioms b10G
-#check @b10H
-#print axioms b10H
-#check @b10L_bound
-#print axioms b10L_bound
-#check @b10G_bound
-#print axioms b10G_bound
-#check @b10L_nonneg
-#print axioms b10L_nonneg
-#check @b10H_deriv
-#print axioms b10H_deriv
-#check @b10H_endpoint
-#print axioms b10H_endpoint
-#check @b10U
-#print axioms b10U
-#check @b10F
-#print axioms b10F
-#check @b10U_maps
-#print axioms b10U_maps
-#check @b10F_continuous
-#print axioms b10F_continuous
-#check @b10_change_integral
-#print axioms b10_change_integral
-#check @goldbachB10I10_eight_mul_le_540995781
-#print axioms goldbachB10I10_eight_mul_le_540995781
-#check @goldbachB10SiftedCount_540995781_upper
-#print axioms goldbachB10SiftedCount_540995781_upper
-#check @retained_scalar_gain
-#print axioms retained_scalar_gain
-#check @retained_scalar_strict_improvement
-#print axioms retained_scalar_strict_improvement
 
 end
 end B10Retained

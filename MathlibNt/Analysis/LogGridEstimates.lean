@@ -1,9 +1,9 @@
+import Mathlib.Analysis.SpecificLimits.Basic
 import MathlibNt.Analysis.IntegralExcessCover
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 
 /-! Shared estimates for half-open logarithmic grids. The density, cell selection,
@@ -142,5 +142,45 @@ theorem integral_sub_le_three_strips
   simpa [Fin.sum_univ_three, E, Measure.real_def, hAv, hV₀, hV₁, hV₂,
     ENNReal.toReal_ofReal hv₀, ENNReal.toReal_ofReal hv₁,
     ENNReal.toReal_ofReal hv₂, add_mul] using h
+
+/-- Finite weighted cell indicators are integrable when their actual density is
+integrable on each measurable selected cell. No disjointness is required. -/
+theorem integrable_weighted_sum {α ι : Type*} [MeasurableSpace α] {μ : Measure α}
+    (s : Finset ι) (C : ι → Set α) (k : ι → ℝ) (d : α → ℝ)
+    (hC : ∀ i ∈ s, MeasurableSet (C i))
+    (hd : ∀ i ∈ s, IntegrableOn d (C i) μ) :
+    Integrable (fun x => ∑ i ∈ s, k i * (C i).indicator d x) μ := by
+  exact integrable_finsetSum _ fun i hi =>
+    ((hd i hi).integrable_indicator (hC i hi)).const_mul _
+
+/-- Integrating a finite weighted cell sum retains the actual cell integrals.
+Selected cells may overlap and coefficients may have either sign. -/
+theorem integral_weighted_sum {α ι : Type*} [MeasurableSpace α] {μ : Measure α}
+    (s : Finset ι) (C : ι → Set α) (k : ι → ℝ) (d : α → ℝ)
+    (hC : ∀ i ∈ s, MeasurableSet (C i))
+    (hd : ∀ i ∈ s, IntegrableOn d (C i) μ) :
+    (∫ x, ∑ i ∈ s, k i * (C i).indicator d x ∂μ) =
+      ∑ i ∈ s, k i * ∫ x in C i, d x ∂μ := by
+  rw [integral_finsetSum]
+  · apply Finset.sum_congr rfl
+    intro i hi
+    rw [integral_const_mul, integral_indicator (hC i hi)]
+  · intro i hi
+    exact ((hd i hi).integrable_indicator (hC i hi)).const_mul _
+
+/-- An actual upper-sum error bounded by C/n gives convergence along positive
+mesh sizes. The lower bound and every original error constant remain parameters. -/
+theorem tendsto_of_sub_le_div_nat {u : ℕ → ℝ} {L C : ℝ}
+    (hlower : ∀ n, 0 < n → L ≤ u n)
+    (herror : ∀ n, 0 < n → u n - L ≤ C / (n : ℝ)) :
+    Filter.Tendsto (fun n => u (n + 1)) Filter.atTop (nhds L) := by
+  have he : Filter.Tendsto (fun n : ℕ => C / ((n + 1 : ℕ) : ℝ))
+      Filter.atTop (nhds 0) := by
+    simpa only [Nat.cast_add, Nat.cast_one, div_eq_mul_inv, one_mul, mul_zero] using
+      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)).const_mul C
+  have hd := squeeze_zero'
+    (Filter.Eventually.of_forall fun n => sub_nonneg.mpr (hlower _ (Nat.succ_pos n)))
+    (Filter.Eventually.of_forall fun n => herror _ (Nat.succ_pos n)) he
+  simpa only [sub_add_cancel, zero_add] using hd.add (tendsto_const_nhds (x := L))
 
 end MathlibNt.Analysis.LogGridEstimates

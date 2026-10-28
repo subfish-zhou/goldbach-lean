@@ -1,4 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1PositivePair
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachS1_positivePair_normalized_lower
-#print axioms goldbachS1_positivePair_normalized_lower

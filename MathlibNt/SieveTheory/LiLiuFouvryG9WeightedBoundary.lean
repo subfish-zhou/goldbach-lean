@@ -1,6 +1,4 @@
-import MathlibNt.Analysis.MovingIntervalIntegral
 import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralContinuous
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
 
 open MeasureTheory Set
 open scoped BigOperators Interval
@@ -48,11 +46,6 @@ theorem integrableOn_fouvryG9WeightedIntegrand {s : Set (ℝ × ℝ)}
   exact (lt_of_le_of_lt (measure_mono hsub)
     isCompact_goldbachB9LogAmbientBox.measure_lt_top).ne
 
-theorem integrable_fouvryG9WeightedSourceIndicator :
-    Integrable (fouvryG9WeightedSource.indicator fouvryG9WeightedIntegrand) :=
-  integrable_indicator_of_integrableOn measurableSet_fouvryG9WeightedSource
-    (integrableOn_fouvryG9WeightedIntegrand measurableSet_fouvryG9WeightedSource
-      fouvryG9WeightedSource_subset_ambient)
 
 theorem fouvryG9RelaxedIntegralLow_eq_iteratedSetIntegral :
     fouvryG9RelaxedIntegralLow =
@@ -69,13 +62,6 @@ theorem fouvryG9RelaxedIntegralLow_eq_iteratedSetIntegral :
   intro v _
   rfl
 
-theorem fouvryG9WeightedSourceIndicator_integral_section (u : ℝ) :
-    (∫ v, fouvryG9WeightedSource.indicator fouvryG9WeightedIntegrand (u, v)) =
-      (Ioc (4 / 53 : ℝ) (1 / 10)).indicator
-        (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), fouvryG9WeightedIntegrand (u, v)) u := by
-  exact MathlibNt.Analysis.integral_indicator_moving_Ioc_section
-    (Ioc (4 / 53 : ℝ) (1 / 10)) (fun _ => (1 / 3 : ℝ))
-    (fun u => (1 - u) / 2) fouvryG9WeightedIntegrand u
 
 /-- Fubini is applied to an integrable indicator, not to an unspecified integral. -/
 theorem fouvryG9RelaxedIntegralLow_eq_setIntegral :

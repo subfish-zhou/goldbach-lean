@@ -258,23 +258,6 @@ theorem antitoneOn_parityDomain {β : ℝ} (hβ : 1 < β) (n : ℕ) :
     mul_le_mul_of_nonneg_right hst ((regular hβ n).nonneg t ht')
   nlinarith [hscale.trans hweighted, closedDomain_pos hβ hs']
 
-/-- Proposition 9.2(i): clipping the lower endpoint makes the layer vanish
-once `s ≥ β+n`.  This statement does not require a domain hypothesis. -/
-theorem layer_eq_zero_of_upper (β : ℝ) (n : ℕ) {s : ℝ}
-    (hs : β + n ≤ s) : layer β n s = 0 := by
-  cases n with
-  | zero => simp [layer]
-  | succ n =>
-      cases n with
-      | zero =>
-          have hs' : β + 1 ≤ s := by norm_num at hs ⊢; exact hs
-          simp [layer, min_eq_right hs']
-      | succ n =>
-          have hlower : lower β s (n + 2) = β + (n + 2 : ℕ) := by
-            unfold lower
-            apply min_eq_right
-            exact hs.trans (le_max_left _ _)
-          simp [layer, hlower]
 
 /-- The specialized κ=1 model is definitionally the source-correct general layer. -/
 theorem layer_eq_suzukiLayer (β : ℝ) (n : ℕ) (s : ℝ) :
@@ -319,20 +302,5 @@ theorem suzukiLayer_one_nonneg_on_parityDomain {β : ℝ} (hβ : 1 < β) (n : �
   simpa only [KappaOneModel.layer_eq_suzukiLayer] using
     KappaOneModel.nonneg_on_parityDomain hβ n
 
-/-- Proposition 9.2(iii), weighted antitonicity on the exact parity domain. -/
-theorem suzukiLayer_one_weighted_antitoneOn_parityDomain
-    {β : ℝ} (hβ : 1 < β) (n : ℕ) :
-    AntitoneOn (fun s => s * suzukiLayer 1 β n s) (suzukiParityDomainOne β n) := by
-  simpa only [KappaOneModel.layer_eq_suzukiLayer] using
-    KappaOneModel.weighted_antitoneOn_parityDomain hβ n
-
-/-- Proposition 9.2(iii), ordinary antitonicity on the exact parity domain. -/
-theorem suzukiLayer_one_antitoneOn_parityDomain
-    {β : ℝ} (hβ : 1 < β) (n : ℕ) :
-    AntitoneOn (suzukiLayer 1 β n) (suzukiParityDomainOne β n) := by
-  intro a ha b hb hab
-  rw [← KappaOneModel.layer_eq_suzukiLayer,
-    ← KappaOneModel.layer_eq_suzukiLayer]
-  exact KappaOneModel.antitoneOn_parityDomain hβ n ha hb hab
 
 end MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers

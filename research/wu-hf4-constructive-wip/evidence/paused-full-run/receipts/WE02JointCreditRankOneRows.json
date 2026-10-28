@@ -1,0 +1,47 @@
+{
+  "module": "WE02JointCreditRankOneRows",
+  "exit_code": 0,
+  "seconds": 8.96027422696352,
+  "source_sha256": "fbdb39dea0676dc577baa434339ed03a8f017cdef79480eb5ca6278be61e3ce3",
+  "object_sha256": "a463a6532af9adbf560bafd4bb5153bf5ebca4f85267b4751c7c8582e58856a5",
+  "dependencies": {
+    "WE02JointCreditRankOneStructure": "5be4c2bc26d1ae1c6d23da6ce54f3b2c84fec5a87ff5cff96e72b428ae094f8c"
+  },
+  "dependency_contexts": {
+    "WE02JointCreditRankOneStructure": "1a78e9d4b81d329b3721b709316b5a06c24fc31894a5f22790bb694758f9c951"
+  },
+  "context_sha256": "ffb1bea97ae89b7378819d39239956f2290d29f829b1d85dc625a8ec306ddad1",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneRows.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneRows.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneRows.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneRows.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneRows.resources",
+  "resource_sha256": "17fb4430b2676f9728921a3e402af20ff26b6a13b4e884aae2ce17f421f90ed7",
+  "artifact_bundle_sha256": {
+    ".olean": "a463a6532af9adbf560bafd4bb5153bf5ebca4f85267b4751c7c8582e58856a5"
+  }
+}

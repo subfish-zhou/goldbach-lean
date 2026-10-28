@@ -31,11 +31,6 @@ theorem goldbachG12Labels_eq_filter (N : ℕ) (z b c : ℝ) :
     exact mem_goldbachG12Labels_iff.mpr
       ⟨hr, hq, hs, ht, hcop, hzr, hrq, hqs, hsb, hbt, htc⟩
 
-/-- The cross restriction does not depend on the rough cofactor k. -/
-theorem goldbachG12_switch_predicate (v : GoldbachG11Label) (k : ℕ) (b : ℝ) :
-    ((goldbachG11SwitchedBodyOf v k).2.1 : ℝ) ≤ b ∧
-        b ≤ ((goldbachG11SwitchedBodyOf v k).1 : ℝ) ↔
-      (v.2.1 : ℝ) ≤ b ∧ b ≤ (v.1 : ℝ) := Iff.rfl
 
 /-- Same switched body type, with both cross endpoints retained. -/
 noncomputable def goldbachG12CrossSwitchedBodies (N : ℕ) (z b c : ℝ) :

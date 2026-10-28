@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "verified": 15,
+  "total": 15,
+  "target_results": [
+    {
+      "module": "WR2ClassicalFourthBlockouterPay040",
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 57.635,
+      "source_sha256": "cd908cbe83b47c50fa2669c52a51ace250dc9da3a5e615fa521b6b909b98e823",
+      "object_sha256": "b68855b2e3b46c044652697a6e107e8f159fd924738b4fe3c9eac6fddef757a6",
+      "log": "/tmp/wu-light-layer-probe/runs/1793080881828776939-3f6db919/logs/WR2ClassicalFourthBlockouterPay040.log",
+      "log_sha256": "b8ba963978aae409bb9294ecb4c39ea8c6b1e33527e5a7194810aeac9c0f3291",
+      "user_seconds": 42.83,
+      "system_seconds": 14.15,
+      "max_rss_kb": 6072424.0
+    },
+    {
+      "module": "WR2ClassicalFourthouterPayBatch004",
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 366.007,
+      "source_sha256": "60b1750c28a34c2b28008d4185c20924ae49851468e5bb7cb544c6e019e5bd93",
+      "object_sha256": "9aa00b97e812fc92ac84eb1b6e9bff8a848ff3f116093847a9077c016d3d12a2",
+      "log": "/tmp/wu-light-layer-probe/runs/1793080881828776939-3f6db919/logs/WR2ClassicalFourthouterPayBatch004.log",
+      "log_sha256": "631d78cb5010876e6de7a0a61a12c2125e6e2fe714903e0e2921ee1f691388c4",
+      "user_seconds": 318.09,
+      "system_seconds": 39.85,
+      "max_rss_kb": 6845768.0
+    }
+  ]
+}

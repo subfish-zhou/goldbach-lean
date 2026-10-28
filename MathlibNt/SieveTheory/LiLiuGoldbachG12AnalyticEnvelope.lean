@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpMassIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
 
 noncomputable section
 open MeasureTheory Set

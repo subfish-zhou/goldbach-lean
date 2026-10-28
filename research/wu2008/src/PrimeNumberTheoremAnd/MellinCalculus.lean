@@ -43,10 +43,6 @@ lemma MeasureTheory.integral_comp_mul_right_I0i_haar
   rw [mul_comm (a : 𝕂), div_mul, mul_div_assoc, div_self ?_, mul_one]
   exact (RCLike.ofReal_ne_zero).mpr <| ne_of_gt ha
 
-lemma MeasureTheory.integral_comp_mul_right_I0i_haar_real
-    (f : ℝ → ℝ) {a : ℝ} (ha : 0 < a) :
-    ∫ (y : ℝ) in Ioi 0, f (y * a) / y = ∫ (y : ℝ) in Ioi 0, f y / y :=
-  MeasureTheory.integral_comp_mul_right_I0i_haar f ha
 
 lemma MeasureTheory.integral_comp_mul_left_I0i_haar
     (f : ℝ → 𝕂) {a : ℝ} (ha : 0 < a) :
@@ -83,11 +79,6 @@ lemma MeasureTheory.integral_comp_div_I0i_haar
   · rw [mul_one_div]
   · rw [one_div_one_div]
 
-theorem Complex.ofReal_rpow {x : ℝ} (h : x > 0) (y : ℝ) :
-    (((x : ℝ) ^ (y : ℝ)) : ℝ) = (x : ℂ) ^ (y : ℂ) := by
-  rw [rpow_def_of_pos h, ofReal_exp, ofReal_mul, Complex.ofReal_log h.le,
-    Complex.cpow_def_of_ne_zero]
-  simp only [ne_eq, ofReal_eq_zero, ne_of_gt h, not_false_eq_true]
 
 @[simp]
 lemma Function.support_abs {α : Type*} (f : α → 𝕂) :
@@ -103,15 +94,6 @@ lemma Function.support_mul_subset_of_subset {s : Set ℝ} {f g : ℝ → 𝕂}
     (fSupp : f.support ⊆ s) : (f * g).support ⊆ s := by
   simp_rw [support_mul', inter_subset, subset_union_of_subset_right fSupp]
 
-lemma Function.support_of_along_fiber_subset_subset {α β M : Type*} [Zero M]
-    {f : α × β → M} {s : Set α} {t : Set β}
-    (hx : ∀ (y : β), (fun x ↦ f (x, y)).support ⊆ s)
-    (hy : ∀ (x : α), (fun y ↦ f (x, y)).support ⊆ t) :
-    f.support ⊆ s ×ˢ t := by
-  intro ⟨x, y⟩ hxy
-  constructor
-  · exact hx y (by simp only [Function.mem_support, ne_eq] at hxy ⊢; exact hxy)
-  · exact hy x (by simp only [Function.mem_support, ne_eq] at hxy ⊢; exact hxy)
 
 lemma Function.support_deriv_subset_Icc {a b : ℝ} {f : ℝ → 𝕂}
     (fSupp : f.support ⊆ Set.Icc a b) :
@@ -121,22 +103,6 @@ lemma Function.support_deriv_subset_Icc {a b : ℝ} {f : ℝ → 𝕂}
     have := subset_trans this <| closure_mono fSupp
     rwa [closure_Icc] at this
 
-lemma IntervalIntegral.integral_eq_integral_of_support_subset_Icc {a b : ℝ} {μ : Measure ℝ}
-    [NullSingletonClass μ] {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-    {f : ℝ → E} (h : f.support ⊆ Icc a b) :
-    ∫ x in a..b, f x ∂μ = ∫ x, f x ∂μ := by
-  rcases le_total a b with hab | hab
-  · rw [intervalIntegral.integral_of_le hab, ← integral_Icc_eq_integral_Ioc,
-    ← integral_indicator measurableSet_Icc, indicator_eq_self.2 h]
-  · by_cases hab2 : b = a
-    · rw [hab2] at h ⊢
-      simp only [intervalIntegral.integral_same]
-      simp only [Icc_self] at h
-      have : ∫ (x : ℝ), f x ∂μ = ∫ (x : ℝ) in {a}, f x ∂μ := by
-        rw [ ← integral_indicator (by simp), indicator_eq_self.2 h]
-      rw [this, integral_singleton]; simp [Measure.real]
-    · rw [Icc_eq_empty_iff.mpr <| by exact fun x ↦ hab2 <| le_antisymm hab x, subset_empty_iff,
-          Function.support_eq_empty_iff] at h; simp [h]
 
 lemma SetIntegral.integral_eq_integral_inter_of_support_subset {μ : Measure ℝ}
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -194,9 +160,6 @@ lemma deriv.ofReal_comp' {f : ℝ → ℝ} :
     deriv (fun x : ℝ ↦ (f x : ℂ)) = (fun x ↦ ((deriv f) x : ℂ)) :=
   funext fun _ ↦ deriv.ofReal_comp
 
-lemma deriv.comp_ofReal' {e : ℂ → ℂ} (hf : Differentiable ℂ e) :
-    deriv (fun x : ℝ ↦ e x) = fun (x : ℝ) ↦ deriv e x :=
-  funext fun _ ↦ deriv.comp_ofReal (hf.differentiableAt)
 
 
 /-- *Need differentiability, and decay at `0` and `∞`* -/
@@ -433,10 +396,6 @@ lemma MellinConvolutionTransform (f g : ℝ → ℂ) (s : ℂ)
 
 
 
-lemma mem_within_strip (σ₁ σ₂ : ℝ) :
-    {s : ℂ | σ₁ ≤ s.re ∧ s.re ≤ σ₂} ∈
-      𝓟 {s | σ₁ ≤ s.re ∧ s.re ≤ σ₂} :=
-  mem_principal_self _
 
 set_option backward.isDefEq.respectTransparency false in
 lemma MellinOfPsi_aux {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
@@ -796,19 +755,6 @@ noncomputable def Smooth1 (ν : ℝ → ℝ) (ε : ℝ) : ℝ → ℝ :=
 
 -- This lemma might not be necessary, but the RHS is supported on [0, infinity), which makes
 -- results like `support_MellinConvolution_subsets` easier to apply.
-lemma Smooth1_def_ite {ν : ℝ → ℝ} {ε x : ℝ} (xpos : 0 < x) :
-    Smooth1 ν ε x = MellinConvolution (fun x ↦ if 0 < x ∧ x ≤ 1 then 1 else 0)
-      (fun x ↦ if x < 0 then 0 else DeltaSpike ν ε x) x := by
-  unfold Smooth1
-  rw [MellinConvolutionSymmetric _ _ xpos]
-  conv => lhs; rw [MellinConvolutionSymmetric _ _ xpos]
-  unfold MellinConvolution
-  apply MeasureTheory.integral_congr_ae
-  filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioi]
-  simp +contextual only [mem_Ioi, true_and, ite_mul, one_mul, zero_mul, RCLike.ofReal_real_eq_id,
-    id_eq, mul_ite, mul_zero]
-  intro y ypos
-  rw [eq_comm, if_neg (by push Not; positivity)]
 
 /-% ** Wrong delimiters on purpose, no need to include this in blueprint
 \begin{lemma}[Smooth1Properties_estimate]\label{Smooth1Properties_estimate}
@@ -948,27 +894,6 @@ lemma Smooth1Properties_above_aux {x ε : ℝ} (hx : 1 + (2 * Real.log 2) * ε �
       rw [← rpow_add (by norm_num), add_neg_cancel, sub_self]
     conv => lhs; lhs; ring_nf; rhs; simp [this]
 
-lemma Smooth1Properties_above_aux2 {x y ε : ℝ} (hε : ε ∈ Ioo 0 1) (hy : y ∈ Ioc 0 1)
-  (hx2 : 2 ^ ε < x) :
-    2 < (x / y) ^ (1 / ε) := by
-  obtain ⟨εpos, ε1⟩ := hε
-  obtain ⟨ypos, y1⟩ := hy
-  calc
-    _ > (2 ^ ε / y) ^ (1 / ε) := ?_
-    _ = 2 / y ^ (1 / ε) := ?_
-    _ ≥ 2 / y := ?_
-    _ ≥ 2 := ?_
-  · rw [gt_iff_lt, div_rpow, div_rpow, lt_div_iff₀, mul_comm_div, div_self, mul_one]
-    <;> try positivity
-    · exact rpow_lt_rpow (by positivity) hx2 (by positivity)
-    · exact LT.lt.le <| lt_trans (by positivity) hx2
-  · rw [div_rpow, ← rpow_mul, mul_div_cancel₀ 1 <| ne_of_gt εpos, rpow_one] <;> positivity
-  · have : y ^ (1 / ε) ≤ y := by
-      nth_rewrite 2 [← rpow_one y]
-      exact rpow_le_rpow_of_exponent_ge ypos y1 (by linarith [one_lt_one_div εpos ε1])
-    have pos : 0 < y ^ (1 / ε) := rpow_pos_of_pos ypos _
-    rw [ge_iff_le, div_le_iff₀, div_mul_eq_mul_div, le_div_iff₀', mul_comm] <;> try linarith
-  · rw [ge_iff_le, le_div_iff₀ <| ypos]; exact (mul_le_iff_le_one_right zero_lt_two).mpr y1
 
 @[blueprint
   (title := "Smooth1Properties-above")

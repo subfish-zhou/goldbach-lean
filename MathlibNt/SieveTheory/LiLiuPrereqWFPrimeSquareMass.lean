@@ -219,21 +219,4 @@ theorem badModuli_mass_le_log (T : ℕ) (R : Finset ℕ) (u : ℝ)
   apply mul_le_mul_of_nonneg_left _ (by positivity)
   exact pow_le_pow_left₀ (harmonicSum_nonneg T) (harmonicSum_le_one_add_log T) 2
 
-#check sum_inv_totient_le_harmonic_sq
-#print axioms sum_inv_totient_le_harmonic_sq
-#check sum_inv_totient_multiples_le
-#print axioms sum_inv_totient_multiples_le
-#check badModuli_mass_le_totient_tail
-#print axioms badModuli_mass_le_totient_tail
-#check badModuli_mass_le_prime_sq_tail
-#print axioms badModuli_mass_le_prime_sq_tail
-#check sum_inv_sq_le_of_lower_bound
-#print axioms sum_inv_sq_le_of_lower_bound
-#check badModuli_mass_le_harmonic
-#print axioms badModuli_mass_le_harmonic
-#check harmonicSum_le_one_add_log
-#print axioms harmonicSum_le_one_add_log
-#check badModuli_mass_le_log
-#print axioms badModuli_mass_le_log
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.PrimeSquareMass

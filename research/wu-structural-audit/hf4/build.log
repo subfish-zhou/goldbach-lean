@@ -1,0 +1,4 @@
+'Hf4Quad.series7_lower_dominates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hf4Quad.series7_upper_dominates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hf4Quad.series7_upper_dominates_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hf4Quad.series7_log_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]

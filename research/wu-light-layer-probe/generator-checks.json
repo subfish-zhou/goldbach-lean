@@ -1,0 +1,20 @@
+{
+  "all_three_public_checks_pass": true,
+  "protected_producer_AST_unchanged": {
+    "classical_c_eighth_certificates.py": [
+      "c_payments",
+      "eighth_payments"
+    ],
+    "classical_sixth_certificates.py": [
+      "point_data",
+      "integer_values"
+    ],
+    "classical_fourth_certificates.py": [
+      "table_data",
+      "natural_sources"
+    ]
+  },
+  "effective_line_delta": -517,
+  "module_delta": -86,
+  "no_Lean_run": true
+}

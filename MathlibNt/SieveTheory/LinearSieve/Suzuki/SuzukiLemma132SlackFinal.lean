@@ -1,7 +1,6 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132FiniteHatUniformInterface
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132EndpointSlack
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132OddLowStrip
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132ExactParityTail
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132BaseOneDirect
 
 open scoped Classical BigOperators Interval

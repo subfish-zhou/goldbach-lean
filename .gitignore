@@ -12,3 +12,4 @@ __pycache__/
 /blueprint/lean_decls
 /blueprint/src/*.paux
 /.venv-blueprint/
+papers/

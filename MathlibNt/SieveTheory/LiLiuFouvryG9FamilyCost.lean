@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9TotalError
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridCost
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9RectangleC2
 import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
+
 
 noncomputable section
 open Finset

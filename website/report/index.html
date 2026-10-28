@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Li–Liu (1+1.9): proof structure and paper correspondence</title>
-<meta name="description" content="The Li–Liu Goldbach result in Lean: exact statements, two proof exits, distribution contracts and a source-pinned paper correspondence ledger.">
+<meta name="description" content="The Li–Liu Goldbach result in Lean: exact statements, a shared quantitative argument, distribution contracts and a source-pinned paper correspondence ledger.">
 <link rel="stylesheet" href="../home.css">
 <style>
 .report-section{padding:32px 0;border-top:1px solid var(--line)}
@@ -37,7 +37,7 @@
 <a href="#proof-structure">Proof structure</a>
 </li>
 <li>
-<a href="#interfaces">Four interfaces, two exits</a>
+<a href="#interfaces">Four interfaces, one count argument</a>
 </li>
 <li>
 <a href="#paper-map">Paper → Lean ledger</a>
@@ -85,16 +85,16 @@
 <p><a href="../blueprint/liliu.html">Density, switching and integral arguments</a></p>
 </details>
 <details class="math-stage">
-<summary>Two retained assemblies → existence and quantitative bounds</summary>
-<p>The earlier positive-margin assembly supplies natural-power witnesses and their equivalent real-exponent form. The author-G11 assembly retains the stronger signed coefficient budget used for the strict paper count and the fixed-coefficient family. The public interfaces below keep those routes separate.</p>
+<summary>One quantitative assembly → count and existence</summary>
+<p>The author-G11 assembly supplies the strict paper count and the fixed-coefficient family. Positivity of that count gives natural-power witnesses, and the exact exponent bridge gives the real-power form.</p>
 <div data-proof-node="bp:liliu-public-natural"></div>
 <div data-proof-node="bp:liliu-public-count"></div>
-<p><a href="#interfaces">Exact interfaces and the two assemblies</a></p>
+<p><a href="#interfaces">Exact interfaces and their shared argument</a></p>
 </details>
 </section>
 <section id="interfaces" class="report-section">
-<h2>Four public interfaces, two actual proof exits</h2>
-<p>Import <code>Goldbach.OnePlusOneNine</code>. The four declarations expose two completed routes with different retained margins.</p>
+<h2>Four public interfaces from one quantitative argument</h2>
+<p>Import <code>Goldbach.OnePlusOneNine</code>. The four declarations share the quantitative count proof and its existence consequences.</p>
 <div class="table-scroll">
 <table class="facades">
 <thead>
@@ -111,8 +111,8 @@
 <code>Goldbach.one_plus_one_nine</code>
 </a>
 </th>
-<td>Existence / earlier margin<br>
-<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L55-L59">goldbach_onePlusOneNine_nat_unconditional</a>
+<td>Existence / positive count<br>
+<a href="../docs/find/?pattern=MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_nat_unconditional#doc">goldbach_onePlusOneNine_nat_unconditional</a>
 </td>
 <td>Natural-power witnesses: r¹⁰ ≤ q⁹. <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L15-L19">Source</a>
 </td>
@@ -123,8 +123,8 @@
 <code>Goldbach.one_plus_one_nine_real</code>
 </a>
 </th>
-<td>Existence / earlier margin<br>
-<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L63-L71">goldbach_onePlusOneNine_unconditional</a>
+<td>Existence / positive count<br>
+<a href="../docs/find/?pattern=MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_onePlusOneNine_unconditional#doc">goldbach_onePlusOneNine_unconditional</a>
 </td>
 <td>The same witnesses transported to the real exponent (19/10)−1. <a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/Goldbach/OnePlusOneNine.lean#L22-L26">Source</a>
 </td>
@@ -156,9 +156,9 @@
 </tbody>
 </table>
 </div>
-<h3>Existence: the earlier positive margin</h3>
+<h3>Existence from a positive count</h3>
 <p>
-<code>LiLiuGoldbachOneNineUnconditional</code> proves positivity of its own integral margin, bounded below by 126891/200000000. The actual-count ledger gives D19(N)&gt;0, then extracts natural-power witnesses. The real-exponent theorem applies the proved equivalence. These two facades retain this earlier route.</p>
+<code>LiLiuGoldbachOneNineUnconditional</code> applies the strict count to obtain D19(N)&gt;0 and extracts natural-power witnesses through the finite cardinality theorem. The exact exponent equivalence supplies the real-power form. The shared G67 certificate lives in <code>LiLiuGoldbachG67IntegralCertificate</code> below the quantitative assembly.</p>
 <h3>Count: the author-G11 estimate</h3>
 <p>The stronger route applies the original-count pair lower bound, G9 upper bound, author-G11 upper bound and cross-G12 upper bound before closing its signed ledger. Its exact retained coefficient on 4D19 is</p>
 <p class="formula">54233/10000 + 124341093/200000000 − 527231/100000 − 10191/100000 − 66821/100000 = 515093/200000000.</p>
@@ -166,7 +166,8 @@
 </section>
 <section id="paper-map" class="report-section">
 <h2>Paper stage → Lean declaration → comparison status</h2>
-<p>The fixed source is <a href="https://arxiv.org/html/2606.05224v1">arXiv:2606.05224v1</a>, <em>Theorem (1+1.9) on the Goldbach Conjecture</em>, by Jiamin Li and Jianya Liu. The numbered references below were read in that public HTML. Lean source links are pinned to revision <a href="https://github.com/subfish-zhou/goldbach-lean/tree/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f">
+<p>The proof-route text reflects the local cleanup. Commit links preserve earlier source-comparison anchors; they are not evidence that this working tree has been deployed.</p>
+<p>The fixed source is <a href="https://arxiv.org/html/2606.05224v1">arXiv:2606.05224v1</a>, <em>Theorem (1+1.9) on the Goldbach Conjecture</em>, by Jiamin Li and Jianya Liu. The numbered references below were read in that public HTML. Historical source comparison links below are pinned to revision <a href="https://github.com/subfish-zhou/goldbach-lean/tree/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f">
 <code>5c4ecc0</code>
 </a>.</p>
 <p>
@@ -316,10 +317,10 @@
 <small>
 <code>MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean</code>, lines 10-41</small>
 <hr>
-<a href="https://github.com/subfish-zhou/goldbach-lean/blob/5c4ecc0550703f8d2053662f3e0e0a2e26aa2e5f/MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean#L9-L18">goldbachG67IntegralConstant_lower_certified</a>
+<a href="../docs/find/?pattern=MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG67IntegralConstant_lower_certified#doc">goldbachG67IntegralConstant_lower_certified</a>
 <br>
 <small>
-<code>MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean</code>, lines 9-18</small>
+<code>MathlibNt/SieveTheory/LiLiuGoldbachG67IntegralCertificate.lean</code></small>
 </td>
 <td>
 <strong>Original-count bound; alternative scalar certificate</strong>

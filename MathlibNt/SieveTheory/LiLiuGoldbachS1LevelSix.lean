@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
 import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 noncomputable section
 
@@ -146,19 +145,6 @@ theorem S1LevelSix_ceil_rootD_eq_Z (N : ℕ) :
     norm_num
   rw [hroot, Nat.ceil_natCast]
 
-theorem S1LevelSix_logD_div_logZ_eq_six {N : ℕ} (hZ : 2 ≤ S1LevelSixZ N) :
-    Real.log (S1LevelSixD N : ℝ) / Real.log (S1LevelSixZ N : ℝ) = 6 := by
-  have hz0 : 0 < (S1LevelSixZ N : ℝ) := by
-    exact_mod_cast (show 0 < S1LevelSixZ N by omega)
-  have hlogZ : 0 < Real.log (S1LevelSixZ N : ℝ) := by
-    exact Real.log_pos (by exact_mod_cast (show 1 < S1LevelSixZ N by omega))
-  have hlog :
-      Real.log (S1LevelSixD N : ℝ) = 6 * Real.log (S1LevelSixZ N : ℝ) := by
-    unfold S1LevelSixD
-    rw [Nat.cast_pow, ← Real.rpow_natCast, Real.log_rpow hz0]
-    norm_num
-  apply (div_eq_iff hlogZ.ne').2
-  linarith
 
 theorem S1LevelSix_lt_Z_of_lt_rpow {N ℓ : ℕ}
     (hℓ : (ℓ : ℝ) < (N : ℝ) ^ (4 / 53 : ℝ)) :
@@ -179,12 +165,5 @@ theorem S1LevelSix_lt_D_of_lt_Z {N p : ℕ}
     p < S1LevelSixD N := by
   simpa [S1LevelSixD] using S1LevelSix_lt_powSix_of_lt hZ hp
 
-theorem S1LevelSix_primeFactor_lt_D
-    {N p : ℕ} (hN : 2 ≤ N) (hp : p.Prime)
-    (hpP : p ∣ goldbachB10ProdPrimes N ((N : ℝ) ^ (4 / 53 : ℝ))) :
-    p < S1LevelSixD N := by
-  have hpZ : p < S1LevelSixZ N :=
-    S1LevelSix_lt_Z_of_lt_rpow (prime_dvd_goldbachB10ProdPrimes_lt hp hpP)
-  exact S1LevelSix_lt_D_of_lt_Z (S1LevelSix_two_le_Z hN) hpZ
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

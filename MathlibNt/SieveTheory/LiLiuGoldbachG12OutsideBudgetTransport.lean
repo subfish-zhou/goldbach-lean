@@ -53,34 +53,5 @@ theorem family_budget {N : ℕ} (hN : 2 ≤ N) (ε : ℝ)
     (fun d => if Int.gcd (N : ℤ) d = 1 then residue N A d else 0)
     (20 * N) (by positivity) (masked_majorant hN ε A hA _)
 
-/-- Pair cells retain their original coefficient after the canonical embedding. -/
-theorem rectangle_residue (N : ℕ) (ε : ℝ) (M T d : ℕ) :
-    residue N ((G12LowRectangle.rectangle N ε M T).image G12RectangleWF.linkedEmbed) d =
-      G12RectangleWF.residue N ε M T d := by
-  unfold residue divisibility mass G12RectangleWF.residue G12RectangleWF.mass
-  rw [sum_image, sum_image]
-  · rfl
-  · exact fun _ _ _ _ h => G12RectangleWF.linkedEmbed_injective h
-  · exact fun _ _ _ _ h => G12RectangleWF.linkedEmbed_injective h
-
-theorem rectangle_outside (N : ℕ) (ε Z Q : ℝ) (M T : ℕ) (c : ℕ → ℝ) :
-    outside N ((G12LowRectangle.rectangle N ε M T).image G12RectangleWF.linkedEmbed) Z Q c =
-      G12RectangleWF.outsidePrimorial N ε Z Q M T c := by
-  unfold outside G12RectangleWF.outsidePrimorial
-  simp_rw [rectangle_residue]
-
-/-- The literal third term in the accepted dyadic G12 decomposition is paid. -/
-theorem rectangle_family_budget {N : ℕ} (hN : 2 ≤ N) (ε Z Q η : ℝ) (M T : ℕ)
-    (hlow : (N : ℝ)^(4/53 : ℝ) ≤ T)
-    (hhigh : (2*T : ℕ) < (N : ℝ)^(1/10 : ℝ))
-    (hD : 2 ≤ externalInternalLevel Q η) (hη : 0 < η) (hηsmall : η < 1/8) :
-    (∑ t ∈ externalTags true (goldbachB10SiftingPrimes N Z) (externalInternalLevel Q η) η Z,
-      |G12RectangleWF.outsidePrimorial N ε Z Q M T
-        (externalTerm true (goldbachB10SiftingPrimes N Z) (externalInternalLevel Q η) η Z t)|) ≤
-      ((externalTags true (goldbachB10SiftingPrimes N Z) (externalInternalLevel Q η) η Z).card : ℝ) *
-        (20 * N) * (4 / (externalInternalLevel Q η) ^ (η^2)) * (1 + Real.log ⌊Q⌋₊)^2 := by
-  have h := family_budget hN ε _
-    (G12RectangleWF.rectangle_image_subset N ε M T hlow hhigh) Z Q η hD hη hηsmall
-  simpa only [rectangle_outside] using h
 
 end G12OutsideBudget

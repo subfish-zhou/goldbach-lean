@@ -1,7 +1,6 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport
-import MathlibNt.AnalyticNumberTheory.Vaughan.ActualVaughanTypeIIBlockOrdinaryLS
+import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualDecomposition
 
 /-!
  # Rank-one rectangular primitive L¹ means
@@ -145,74 +144,6 @@ theorem rankOneRectangularWeightedPrimitiveMean_le
   rw [mul_pow, Real.sq_sqrt hA, Real.sq_sqrt hB]
   exact hs
 
-/-- The unique analytic residual: separation of one actual hyperbolic collected
-shell into finitely many rank-one rectangles.  Everything after this interface
-is the proved rectangular theorem above and finite summation. -/
-def VaughanTypeIIHyperbolicSeparation
-    {ι : Type*} [Fintype ι]
-    (N u v k l : ℕ) (S : Finset ℕ)
-    (left right : ι → ℤ → ℂ) (leftStart rightStart : ι → ℤ)
-    (leftLength rightLength : ι → ℕ) : Prop :=
-  blockWeightedVaughanActualCollectedShellMean N u v k l S ≤
-    ∑ i : ι, rankOneRectangularWeightedPrimitiveMean
-      (left i) (right i) (leftStart i) (rightStart i)
-      (leftLength i) (rightLength i) S
-
-/-- A separated actual shell is paid solely by the two one-dimensional large
-sieves for each rank-one rectangle. -/
-theorem blockWeightedVaughanActualCollectedShellMean_le_of_hyperbolicSeparation
-    {ι : Type*} [Fintype ι]
-    (N u v k l Q : ℕ) (hQ : 0 < Q) (S : Finset ℕ)
-    (hS : S ⊆ Finset.Icc 1 Q)
-    (left right : ι → ℤ → ℂ) (leftStart rightStart : ι → ℤ)
-    (leftLength rightLength : ι → ℕ)
-    (hsep : VaughanTypeIIHyperbolicSeparation N u v k l S
-      left right leftStart rightStart leftLength rightLength) :
-    blockWeightedVaughanActualCollectedShellMean N u v k l S ≤
-      ∑ i : ι,
-        Real.sqrt (largeSieveBound (leftLength i) (1 / (Q : ℝ) ^ 2) *
-          ∑ m ∈ Finset.Icc (leftStart i + 1) (leftStart i + leftLength i),
-            ‖left i m‖ ^ 2) *
-        Real.sqrt (largeSieveBound (rightLength i) (1 / (Q : ℝ) ^ 2) *
-          ∑ n ∈ Finset.Icc (rightStart i + 1) (rightStart i + rightLength i),
-            ‖right i n‖ ^ 2) := by
-  refine hsep.trans ?_
-  exact Finset.sum_le_sum fun i hi =>
-    rankOneRectangularWeightedPrimitiveMean_le
-      (left i) (right i) (leftStart i) (rightStart i)
-      (leftLength i) (rightLength i) Q hQ S hS
-
-/-- Connection to the actual Vaughan fixed-conductor-block L¹ mean.  The only
-premise not discharged by existing finite decomposition or one-dimensional
-large sieve is `VaughanTypeIIHyperbolicSeparation`, once for each active shell. -/
-theorem exactVaughanTypeII_blockWeighted_mean_le_of_hyperbolicSeparation
-    {ι : Type*} [Fintype ι]
-    (N u v Q : ℕ) (hQ : 0 < Q) (S : Finset ℕ)
-    (hS : S ⊆ Finset.Icc 1 Q)
-    (left right : ℕ × ℕ → ι → ℤ → ℂ)
-    (leftStart rightStart : ℕ × ℕ → ι → ℤ)
-    (leftLength rightLength : ℕ × ℕ → ι → ℕ)
-    (hsep : ∀ kl ∈ vaughanTypeIIActiveCanonicalRectangles N u v,
-      VaughanTypeIIHyperbolicSeparation N u v kl.1 kl.2 S
-        (left kl) (right kl) (leftStart kl) (rightStart kl)
-        (leftLength kl) (rightLength kl)) :
-    typeIIBlockWeightedPrimitiveMean
-        (vaughanTypeIICoeff vaughanUnitIntegerCoeff u v) N S ≤
-      ∑ kl ∈ vaughanTypeIIActiveCanonicalRectangles N u v,
-        ∑ i : ι,
-          Real.sqrt (largeSieveBound (leftLength kl i) (1 / (Q : ℝ) ^ 2) *
-            ∑ m ∈ Finset.Icc (leftStart kl i + 1)
-              (leftStart kl i + leftLength kl i), ‖left kl i m‖ ^ 2) *
-          Real.sqrt (largeSieveBound (rightLength kl i) (1 / (Q : ℝ) ^ 2) *
-            ∑ n ∈ Finset.Icc (rightStart kl i + 1)
-              (rightStart kl i + rightLength kl i), ‖right kl i n‖ ^ 2) := by
-  refine (blockWeightedExactVaughanTypeII_le_active_collected_shells N u v S).trans ?_
-  apply Finset.sum_le_sum
-  intro kl hkl
-  exact blockWeightedVaughanActualCollectedShellMean_le_of_hyperbolicSeparation
-    N u v kl.1 kl.2 Q hQ S hS
-    (left kl) (right kl) (leftStart kl) (rightStart kl)
-    (leftLength kl) (rightLength kl) (hsep kl hkl)
 
 end
 

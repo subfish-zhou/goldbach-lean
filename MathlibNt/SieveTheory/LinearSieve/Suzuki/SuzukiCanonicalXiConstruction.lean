@@ -167,7 +167,6 @@ noncomputable def etaOrderIso : (Ici (0 : ℝ)) ≃o (Ici (1 : ℝ)) :=
   (eta_strictMonoOn.orderIso eta (Ici 0)).trans
     (OrderIso.setCongr (eta '' Ici (0 : ℝ)) (Ici 1) eta_image_Ici)
 
-lemma etaOrderIso_apply (x : Ici (0 : ℝ)) : (etaOrderIso x : ℝ) = eta x := rfl
 
 /-- Canonical global extension: the positive inverse on `(1,∞)`, and zero on `(-∞,1]`. -/
 noncomputable def xi (s : ℝ) : ℝ :=

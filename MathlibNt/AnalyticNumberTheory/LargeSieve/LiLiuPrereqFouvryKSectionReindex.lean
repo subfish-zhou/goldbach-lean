@@ -33,6 +33,17 @@ def wKSectionGridLower (M Z : ℝ) (K : WExtractedKey) (r s : ℕ)
 def wKSectionGridUpper (R S : ℝ) (K : WExtractedKey) (j cap : Fin 5 → ℕ) : ℕ :=
   min (wKSectionUpper R S K) (min (cap 1) (2 ^ (j 1 + 1) - 1))
 
+/-- The literal inclusive upper endpoint, not an interval assumption on a mask. -/
+theorem directPayMain_span (R S : ℝ) (K : WExtractedKey) (j cap : Fin 5 → ℕ) :
+    ((wKSectionGridUpper R S K j cap + 1 : ℕ) : ℝ) ≤ 2 * (2 : ℝ) ^ j 1 := by
+  have hu : wKSectionGridUpper R S K j cap ≤ 2 ^ (j 1 + 1) - 1 :=
+    (min_le_right _ _).trans (min_le_right _ _)
+  have hp : 0 < (2 : ℕ) ^ (j 1 + 1) := by positivity
+  have hh : wKSectionGridUpper R S K j cap + 1 ≤ 2 ^ (j 1 + 1) := by omega
+  have hh' : ((wKSectionGridUpper R S K j cap + 1 : ℕ) : ℝ) ≤
+      (2 : ℝ) ^ (j 1 + 1) := by exact_mod_cast hh
+  simpa only [pow_succ, mul_comm] using hh'
+
 /-- A filter of an explicitly given interval, with no hidden membership
 test. Every condition apart from `wKSectionCoprime` is fixed on the section. -/
 def wKSectionCarrier (N : Finset ℕ) (a : ℤ) (x η R S M Z : ℝ)

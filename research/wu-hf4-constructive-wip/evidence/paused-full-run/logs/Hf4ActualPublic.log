@@ -1,0 +1,112 @@
+@Hf4Actual.gap_factor : ∀ {x : ℝ},
+  1 ≤ x →
+    RemainingHf.basicUpper x - RemainingHf.basicLower x =
+      1 / 105 * ((x - 1) / x) ^ 2 * ((x - 1) / (x + 1)) ^ 4 * (x - 1) ^ 2 * ((9 * x + 5) / (x ^ 2 + 8 * x + 1))
+'Hf4Actual.gap_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.gap_ratio_cap : ∀ {x : ℝ}, 1 ≤ x → (9 * x + 5) / (x ^ 2 + 8 * x + 1) ≤ 2
+'Hf4Actual.gap_ratio_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.gap_cap : ∀ {x a b c : ℝ},
+  1 ≤ x →
+    (x - 1) / x ≤ a →
+      (x - 1) / (x + 1) ≤ b →
+        x - 1 ≤ c → RemainingHf.basicUpper x - RemainingHf.basicLower x ≤ 1 / 105 * a ^ 2 * b ^ 4 * c ^ 2 * 2
+'Hf4Actual.gap_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.gap_big : ∀ {x : ℝ}, x ∈ Set.Icc 1 2 → RemainingHf.basicUpper x - RemainingHf.basicLower x ≤ 1 / 16000
+'Hf4Actual.gap_big' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.gap_small : ∀ {x : ℝ},
+  x ∈ Set.Icc 1 (3 / 2) → RemainingHf.basicUpper x - RemainingHf.basicLower x ≤ 1 / 1000000
+'Hf4Actual.gap_small' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.log_error_big : ∀ {x : ℝ}, x ∈ Set.Icc 1 2 → Real.log x ≤ RemainingHf.basicLower x + 1 / 16000
+'Hf4Actual.log_error_big' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.log_error_small : ∀ {x : ℝ},
+  x ∈ Set.Icc 1 (3 / 2) →
+    Real.log x - RemainingHf.basicLower x ≤ 1 / 1000000 ∧ RemainingHf.basicUpper x - Real.log x ≤ 1 / 1000000
+'Hf4Actual.log_error_small' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.split_errors : ∀ {x : ℝ},
+  x ∈ Set.Icc 1 2 →
+    Real.log x - RemainingHf.splitLower x ≤ 1 / 500000 ∧ RemainingHf.splitUpper x - Real.log x ≤ 1 / 500000
+'Hf4Actual.split_errors' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.ratio_caps : ∀ {t : ℝ},
+  t ∈ Set.Icc 1 3 →
+    SigmaVariableOuterPayment.zeroRatio t ≤ 2 ∧
+      SigmaVariableOuterPayment.negRatio t ≤ 2 ∧
+        SigmaVariableOuterPayment.quadRatio t ≤ 2 ∧ SigmaVariableOuterPayment.radRatio t ≤ 2
+'Hf4Actual.ratio_caps' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.coefficient_caps : ∀ {t : ℝ},
+  t ∈ Set.Icc 1 3 →
+    -SigmaVariableFull.logZeroCoeff (-(t + 1)) ≤ 100 ∧
+      SigmaVariableFull.logNegCoeff (-(t + 1)) ≤ 100 ∧
+        SigmaVariableFull.logQuadCoeff (-(t + 1)) ≤ 100 ∧ SigmaVariableFull.logRadCoeff (-(t + 1)) ≤ 100
+'Hf4Actual.coefficient_caps' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.outer_weight_upper : ∀ {t : ℝ},
+  t ∈ Set.Icc 1 3 → SigmaVariableFull.weight t ≤ SigmaVariableOuterPayment.paidWeight t + 1 / 1250
+'Hf4Actual.outer_weight_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.sigma_upper : ∀ {t : ℝ},
+  t ∈ Set.Icc 1 3 → NodeExtension.sigma 3 (t + 2) (t + 1) ≤ SigmaVariableFull.innerMass t + 1 / 24000
+'Hf4Actual.sigma_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.sigma_weight_upper : ∀ {t : ℝ},
+  t ∈ Set.Icc 1 3 →
+    NodeExtension.sigma 3 (t + 2) (t + 1) / t ≤ SigmaVariableOuterPayment.paidWeight t + (1 / 1250 + 1 / 24000)
+'Hf4Actual.sigma_weight_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.profile_mass_cap : ∫ (t : ℝ) in 1..3, NodeExtension.nineProfile NineFeedbackStrength.originalH t ≤ 1 / 25
+'Hf4Actual.profile_mass_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@Hf4Actual.weighted_transfer : ∀ {f g : ℝ → ℝ} {c : ℝ},
+  0 ≤ c →
+    IntervalIntegrable (fun t => NodeExtension.nineProfile NineFeedbackStrength.originalH t * f t) MeasureTheory.volume
+        1 3 →
+      IntervalIntegrable (fun t => NodeExtension.nineProfile NineFeedbackStrength.originalH t * g t)
+          MeasureTheory.volume 1 3 →
+        (∀ t ∈ Set.Icc 1 3, f t ≤ g t + c) →
+          ∫ (t : ℝ) in 1..3, NodeExtension.nineProfile NineFeedbackStrength.originalH t * f t ≤
+            (∫ (t : ℝ) in 1..3, NodeExtension.nineProfile NineFeedbackStrength.originalH t * g t) + c / 25
+'Hf4Actual.weighted_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.actual_numerator_upper : ∫ (t : ℝ) in 1..3,
+    NodeExtension.nineProfile NineFeedbackStrength.originalH t / t * NodeExtension.sigma 3 (t + 2) (t + 1) ≤
+  SigmaActualBlockSeparable.endpointNumerator NineFeedbackStrength.originalH + (1 / 31250 + 1 / 600000)
+'Hf4Actual.actual_numerator_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_D0_upper : NodeExtension.D0 ≤ D0FullDensity.dPaid + 1 / 750000
+'Hf4Actual.true_D0_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_D0_cap : NodeExtension.D0 ≤ 171695 / 1000000
+'Hf4Actual.true_D0_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.e_paid_integral : ∫ (t : ℝ) in 1..3,
+    NodeExtension.nineProfile NineFeedbackStrength.originalH t * TerminalE.density t =
+  TerminalECells.mass NineFeedbackStrength.originalH
+'Hf4Actual.e_paid_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.actual_e_upper : ∫ (t : ℝ) in 1..3,
+    NodeExtension.nineProfile NineFeedbackStrength.originalH t / t * Real.log ((t + 1) / 2) ≤
+  TerminalECells.mass NineFeedbackStrength.originalH + 1 / 12500000
+'Hf4Actual.actual_e_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_numerator_cap : ∫ (t : ℝ) in 1..3,
+    NodeExtension.nineProfile NineFeedbackStrength.originalH t / t * NodeExtension.sigma 3 (t + 2) (t + 1) ≤
+  957 / 1000000
+'Hf4Actual.true_numerator_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_profile_cap : NodeExtension.aProfile (NodeExtension.nineProfile NineFeedbackStrength.originalH) ≤
+  957 / 1000000 / (1 - 171695 / 1000000)
+'Hf4Actual.true_profile_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_feedback_cap : ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3 ≤ 728 / 100000
+'Hf4Actual.true_feedback_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_feedback_interval : 72504 / 10000000 ≤
+    ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3 ∧
+  ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3 ≤ 728 / 100000
+'Hf4Actual.true_feedback_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_feedback_lt_originalH8 : ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3 <
+  NineFeedbackStrength.originalH 8
+'Hf4Actual.true_feedback_lt_originalH8' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.original_flat_profile_hf4_false : ¬NineFeedbackStrength.originalH 8 ≤
+    ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3
+'Hf4Actual.original_flat_profile_hf4_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.true_feedback_deficit : 143 / 10000000 ≤
+  NineFeedbackStrength.originalH 8 - ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3
+'Hf4Actual.true_feedback_deficit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Actual.old_first_row_certificate_impossible : ¬∀ (i : Fin 5),
+    NineFeedbackStrength.originalH (Fin.natAdd 4 i) ≤
+      Wu04FirstCore.publication i +
+        ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH (ActualNineFeedback.firstNode i)
+          (ActualNineFeedback.firstS i)
+'Hf4Actual.old_first_row_certificate_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
+def NineFeedbackStrength.originalH : Fin 9 → ℝ :=
+![223939e-7, 217196e-7, 202876e-7, 181433e-7, 158644e-7, 129923e-7, 100686e-7, 78162e-7, 72943e-7]
+def NodeExtension.nineProfile : (Fin 9 → ℝ) → ℝ → ℝ :=
+fun z t => ∑ i, (Set.Ioc (NodeExtension.upperLeft i) (NodeExtension.upperNode i)).indicator (fun x => z i) t
+def ActualNineFeedback.firstFeedback : (Fin 9 → ℝ) → ℝ → ℝ → ℝ :=
+fun z s S => NodeExtension.eProfile (NodeExtension.nineProfile z) S + ActualNineFeedback.profileJ z s S / 2

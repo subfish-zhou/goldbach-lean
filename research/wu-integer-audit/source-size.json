@@ -1,0 +1,186 @@
+{
+  "whole_tree": {
+    "before": {
+      "modules": 4643,
+      "code_lines": 620401,
+      "physical_lines": 724235,
+      "utf8_bytes": 36405664
+    },
+    "after": {
+      "modules": 4583,
+      "code_lines": 615278,
+      "physical_lines": 718960,
+      "utf8_bytes": 36281237
+    },
+    "reduction": {
+      "modules": 60,
+      "code_lines": 5123,
+      "physical_lines": 5275,
+      "utf8_bytes": 124427
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 4256,
+      "code_lines": 579647,
+      "physical_lines": 677757,
+      "utf8_bytes": 32197015
+    },
+    "after": {
+      "modules": 4196,
+      "code_lines": 574524,
+      "physical_lines": 672482,
+      "utf8_bytes": 32072588
+    },
+    "reduction": {
+      "modules": 60,
+      "code_lines": 5123,
+      "physical_lines": 5275,
+      "utf8_bytes": 124427
+    }
+  },
+  "modified_modules": [
+    "WR2ClassicalCCertificate",
+    "WR2ClassicalCPayments",
+    "WR2ClassicalCTableCheck"
+  ],
+  "added_modules": [
+    "WR2ClassicalCIntegerData",
+    "WR2ClassicalCIntegerSoundness",
+    "WR2ClassicalCSums",
+    "WR2IntegerLogHorner"
+  ],
+  "removed_modules": [
+    "WR2ClassicalCGridBlock000",
+    "WR2ClassicalCGridBlock001",
+    "WR2ClassicalCGridBlock002",
+    "WR2ClassicalCGridBlock003",
+    "WR2ClassicalCGridBlock004",
+    "WR2ClassicalCGridBlock005",
+    "WR2ClassicalCGridBlock006",
+    "WR2ClassicalCGridBlock007",
+    "WR2ClassicalCGridBlock008",
+    "WR2ClassicalCGridBlock009",
+    "WR2ClassicalCGridBlock010",
+    "WR2ClassicalCGridBlock011",
+    "WR2ClassicalCGridBlock012",
+    "WR2ClassicalCGridBlock013",
+    "WR2ClassicalCGridBlock014",
+    "WR2ClassicalCGridBlock015",
+    "WR2ClassicalCGridBlock016",
+    "WR2ClassicalCGridBlock017",
+    "WR2ClassicalCGridBlock018",
+    "WR2ClassicalCGridBlock019",
+    "WR2ClassicalCGridBlock020",
+    "WR2ClassicalCGridBlock021",
+    "WR2ClassicalCGridBlock022",
+    "WR2ClassicalCGridBlock023",
+    "WR2ClassicalCGridBlock024",
+    "WR2ClassicalCGridBlock025",
+    "WR2ClassicalCGridBlock026",
+    "WR2ClassicalCGridBlock027",
+    "WR2ClassicalCGridBlock028",
+    "WR2ClassicalCGridBlock029",
+    "WR2ClassicalCGridBlock030",
+    "WR2ClassicalCGridBlock031",
+    "WR2ClassicalCGridBlock032",
+    "WR2ClassicalCGridBlock033",
+    "WR2ClassicalCGridBlock034",
+    "WR2ClassicalCGridBlock035",
+    "WR2ClassicalCGridBlock036",
+    "WR2ClassicalCGridBlock037",
+    "WR2ClassicalCGridBlock038",
+    "WR2ClassicalCGridBlock039",
+    "WR2ClassicalCGridBlock040",
+    "WR2ClassicalCGridBlock041",
+    "WR2ClassicalCGridBlock042",
+    "WR2ClassicalCGridBlock043",
+    "WR2ClassicalCGridBlock044",
+    "WR2ClassicalCGridBlock045",
+    "WR2ClassicalCGridBlock046",
+    "WR2ClassicalCGridBlock047",
+    "WR2ClassicalCGridBlock048",
+    "WR2ClassicalCGridBlock049",
+    "WR2ClassicalCGridBlock050",
+    "WR2ClassicalCGridBlock051",
+    "WR2ClassicalCGridBlock052",
+    "WR2ClassicalCGridBlock053",
+    "WR2ClassicalCGridBlock054",
+    "WR2ClassicalCGridBlock055",
+    "WR2ClassicalCGridBlock056",
+    "WR2ClassicalCGridBlock057",
+    "WR2ClassicalCGridBlock058",
+    "WR2ClassicalCGridBlock059",
+    "WR2ClassicalCGridBlock060",
+    "WR2ClassicalCGridBlock061",
+    "WR2ClassicalCGridBlock062",
+    "WR2ClassicalCGridBlock063"
+  ],
+  "families": {
+    "common_integer_log": {
+      "before": {
+        "modules": 0,
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 0
+      },
+      "after": {
+        "modules": 1,
+        "code_lines": 98,
+        "physical_lines": 121,
+        "utf8_bytes": 5382
+      },
+      "reduction": {
+        "modules": -1,
+        "code_lines": -98,
+        "physical_lines": -121,
+        "utf8_bytes": -5382
+      }
+    },
+    "c_integer": {
+      "before": {
+        "modules": 80,
+        "code_lines": 6384,
+        "physical_lines": 6761,
+        "utf8_bytes": 185392
+      },
+      "after": {
+        "modules": 19,
+        "code_lines": 1163,
+        "physical_lines": 1365,
+        "utf8_bytes": 55583
+      },
+      "reduction": {
+        "modules": 61,
+        "code_lines": 5221,
+        "physical_lines": 5396,
+        "utf8_bytes": 129809
+      }
+    },
+    "sixth_integer": {
+      "before": {
+        "modules": 144,
+        "code_lines": 12544,
+        "physical_lines": 12774,
+        "utf8_bytes": 370134
+      },
+      "after": {
+        "modules": 144,
+        "code_lines": 12544,
+        "physical_lines": 12774,
+        "utf8_bytes": 370134
+      },
+      "reduction": {
+        "modules": 0,
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 0
+      }
+    }
+  },
+  "unchanged_modules": 4576,
+  "preserved_public_statements": 118,
+  "retired_internal_statements": {
+    "WR2ClassicalCTableCheck:condition_sound": "Retired with the64 numerical CGridBlock consumers; generic integer soundness now supplies the original pointwise bound."
+  }
+}

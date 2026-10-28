@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryFiniteSieve
-import MathlibNt.SieveTheory.LiLiuFouvryG9ReducedWeights
 
 open Finset
 open scoped BigOperators Classical

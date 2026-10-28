@@ -32,9 +32,6 @@ theorem box_unique {ρ : ℝ} (hρ : 1 < ρ) {N : ℕ} {k l p : ℕ × ℕ}
     (unique hρ ((mem_clipped _ _ _ _ _).mp hkr).2
     ((mem_clipped _ _ _ _ _).mp hlr).2)
 
-theorem box_disjoint {ρ : ℝ} (hρ : 1 < ρ) (N : ℕ) {k l : ℕ × ℕ} (hkl : k ≠ l) :
-    Disjoint (box ρ N k) (box ρ N l) := by
-  exact disjoint_left.mpr (fun _ hk hl => hkl (box_unique hρ hk hl))
 
 theorem cell_disjoint {ρ : ℝ} (hρ : 1 < ρ) (N : ℕ) (ε : ℝ)
     {k l : ℕ × ℕ} (hkl : k ≠ l) : Disjoint (motherCell ρ N ε k) (motherCell ρ N ε l) := by
@@ -117,19 +114,5 @@ theorem weighted_partition {ρ : ℝ} (hρ : 1 < ρ) (N : ℕ) (ε : ℝ) (f : �
     exact cell_disjoint hρ N ε hkl
   rw [← mother_partition hρ N ε, sum_union hd, sum_biUnion hpair, mul_add]
 
-/-- Literal original low fibre count, not a replacement coefficient. -/
-theorem original_low_partition {ρ : ℝ} (hρ : 1 < ρ) (N : ℕ) (ε : ℝ) :
-    (∑ m ∈ goldbachG12ActiveProductSupport N,
-      (goldbachG12ProductCoefficient N ((N : ℝ)^(4/53 : ℝ))
-        ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)) m : ℝ) *
-      (((goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).filter
-        (fun r : ℕ => (r : ℝ) < (N : ℝ)^(1/10 : ℝ))).card : ℝ)) =
-    (400 * ∑ p ∈ cutoffSlice N ε, goldbachG12NormalizedCoefficient N p.1 *
-      (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) +
-    400 * ∑ k ∈ indices ρ N, ∑ p ∈ motherCell ρ N ε k,
-      goldbachG12NormalizedCoefficient N p.1 *
-        (if (N-p.2*p.1).Prime then (1 : ℝ) else 0) := by
-  rw [← G12LowRectangle.original_low_count]
-  exact weighted_partition hρ N ε _
 
 end G12FineGrid

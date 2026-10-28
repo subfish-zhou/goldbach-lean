@@ -7,26 +7,10 @@ open Classical Finset LiLiuPrereqBuchstab
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-def goldbachG12MainMassGood (N : ℕ) (ε : ℝ) : ℝ :=
-  ∑ m ∈ goldbachG12ActiveProductSupport N, goldbachG12NormalizedCoefficient N m *
-    (((goldbachG11LinkedPrimeWindow N ε m).filter (fun r => ¬r ∣ N)).card : ℝ)
 def goldbachG12MainMassBad (N : ℕ) (ε : ℝ) : ℝ :=
   ∑ m ∈ goldbachG12ActiveProductSupport N, goldbachG12NormalizedCoefficient N m *
     (((goldbachG11LinkedPrimeWindow N ε m).filter (fun r => r ∣ N)).card : ℝ)
 
-theorem goldbachG12WindowWeightSum_eq_good_add_bad (N : ℕ) (ε : ℝ) :
-    (∑ m ∈ goldbachG12ActiveProductSupport N, goldbachG12NormalizedCoefficient N m *
-      ((goldbachG11LinkedPrimeWindow N ε m).card : ℝ)) =
-      goldbachG12MainMassGood N ε + goldbachG12MainMassBad N ε := by
-  unfold goldbachG12MainMassGood goldbachG12MainMassBad
-  rw [← sum_add_distrib]
-  apply sum_congr rfl
-  intro m _
-  rw [← mul_add, ← Nat.cast_add]
-  congr 2
-  simpa only [add_comm] using
-    (card_filter_add_card_filter_not (s := goldbachG11LinkedPrimeWindow N ε m)
-      (p := fun r => r ∣ N)).symm
 
 theorem goldbachG12NormalizedCoefficient_mul_four_hundred (N m : ℕ) :
     400 * goldbachG12NormalizedCoefficient N m =
@@ -81,75 +65,6 @@ theorem goldbachG12MainMass_good_pair_mem {N r : ℕ} {ε : ℝ}
     exact_mod_cast goldbachG11LabelProd_pos (goldbachG12Labels_subset_goldbachG11Labels _ _ _ _ hv))).mpr
   exact_mod_cast (by simpa only [Nat.mul_comm] using hPk)
 
-private def g12ActiveGoodWindow (N : ℕ) (ε : ℝ) (m : ℕ) : Finset ℕ :=
-  if m ∈ goldbachG12ActiveProductSupport N then
-    (goldbachG11LinkedPrimeWindow N ε m).filter (fun r => ¬r ∣ N) else ∅
-
-theorem goldbachG12MainMassGood_le_fullRough (N : ℕ) (ε : ℝ) :
-    400 * goldbachG12MainMassGood N ε ≤ goldbachG12FullRoughMass N := by
-  let z : ℝ := (N : ℝ) ^ (4 / 53 : ℝ)
-  let b : ℝ := (N : ℝ) ^ (4 / 33 : ℝ)
-  let c : ℝ := (N : ℝ) ^ (3/11 : ℝ)
-  let W := g12ActiveGoodWindow N ε
-  have hgroup :
-      (∑ u ∈ goldbachG12GoodCrossBodies N z b c,
-        ((W (goldbachG11SwitchedBodyProd u)).card : ℝ)) =
-      ∑ m ∈ goldbachG12ProductSupport N z b c,
-        (goldbachG12ProductCoefficient N z b c m : ℝ) * (W m).card := by
-    exact_mod_cast goldbachG12GoodCross_sum_product N z b c
-      (fun m => ((W m).card : ℤ))
-  have hmass : 400 * goldbachG12MainMassGood N ε =
-      ∑ m ∈ goldbachG12ProductSupport N z b c,
-        (goldbachG12ProductCoefficient N z b c m : ℝ) * (W m).card := by
-    unfold goldbachG12MainMassGood
-    rw [mul_sum]
-    calc
-      _ = ∑ m ∈ goldbachG12ActiveProductSupport N,
-          (goldbachG12ProductCoefficient N z b c m : ℝ) * (W m).card := by
-        apply sum_congr rfl
-        intro m hm
-        simp only [W, g12ActiveGoodWindow, if_pos hm,
-          ← mul_assoc, goldbachG12NormalizedCoefficient_mul_four_hundred, z, b, c]
-      _ = _ := sum_subset (filter_subset _ _) (by
-        intro m _ hm
-        simp only [W, g12ActiveGoodWindow, if_neg hm, card_empty, Nat.cast_zero, mul_zero])
-  let S := (goldbachG12GoodCrossBodies N z b c).sigma
-    (fun u => W (goldbachG11SwitchedBodyProd u))
-  let T := (goldbachG12Labels N z b c).sigma
-    (fun v => roughNumbers ((N : ℝ) / goldbachG11LabelProd v) v.2.2.2)
-  let f : (Σ _u : GoldbachG11SwitchedBody, ℕ) → (Σ _v : GoldbachG11Label, ℕ) :=
-    fun a => ⟨⟨a.1.1, a.1.2.1, a.2, a.1.2.2.1⟩, a.1.2.2.2⟩
-  have hmap : ∀ a ∈ S, f a ∈ T := by
-    rintro ⟨u, r⟩ ha
-    obtain ⟨hu, hr⟩ := mem_sigma.mp ha
-    have hm : goldbachG11SwitchedBodyProd u ∈ goldbachG12ActiveProductSupport N := by
-      by_contra hn
-      simp only [W, g12ActiveGoodWindow, if_neg hn, notMem_empty] at hr
-    have hr' : r ∈ (goldbachG11LinkedPrimeWindow N ε
-        (goldbachG11SwitchedBodyProd u)).filter (fun r => ¬r ∣ N) := by
-      simpa only [W, g12ActiveGoodWindow, if_pos hm] using hr
-    exact mem_sigma.mpr
-      (goldbachG12MainMass_good_pair_mem hu hm (mem_filter.mp hr').1 (mem_filter.mp hr').2)
-  have hinj : Set.InjOn f S := by
-    rintro ⟨⟨t, s, q, k⟩, r⟩ _ ⟨⟨t', s', q', k'⟩, r'⟩ _ he
-    have ht := congrArg (fun a => a.1.1) he
-    have hs := congrArg (fun a => a.1.2.1) he
-    have hr := congrArg (fun a => a.1.2.2.1) he
-    have hq := congrArg (fun a => a.1.2.2.2) he
-    have hk := congrArg (fun a => a.2) he
-    dsimp [f] at ht hs hr hq hk
-    subst t'; subst s'; subst r'; subst q'; subst k'
-    rfl
-  have hc : S.card ≤ T.card := card_le_card_of_injOn f hmap hinj
-  rw [hmass, ← hgroup]
-  have hS : (S.card : ℝ) =
-      ∑ u ∈ goldbachG12GoodCrossBodies N z b c,
-        ((W (goldbachG11SwitchedBodyProd u)).card : ℝ) := by
-    simp only [S, card_sigma, Nat.cast_sum]
-  have hT : (T.card : ℝ) = goldbachG12FullRoughMass N := by
-    simp only [T, card_sigma, Nat.cast_sum, goldbachG12FullRoughMass, roughCount, z, b, c]
-  rw [← hS, ← hT]
-  exact_mod_cast hc
 
 theorem goldbachG12MainMassBad_le {N : ℕ} (hN : 4 ≤ N) (ε : ℝ) :
     goldbachG12MainMassBad N ε ≤ 21 * N / (N : ℝ) ^ (4 / 53 : ℝ) := by
@@ -217,32 +132,5 @@ theorem goldbachG12MainMassBad_le {N : ℕ} (hN : 4 ≤ N) (ε : ℝ) :
         (div_nonneg (Nat.cast_nonneg _) hz.le)
     _ = 21 * N / (N : ℝ) ^ (4 / 53 : ℝ) := by rw [mul_div_assoc]
 
-/-- The lower window endpoint is discarded only for an upper bound.
-The exceptional prime divisors of N are paid separately. -/
-theorem goldbachG12WindowWeightSum_le_fullRough {N : ℕ}
-    (hN : 4 ≤ N) (ε : ℝ) :
-    400 * (∑ m ∈ goldbachG12ActiveProductSupport N, goldbachG12NormalizedCoefficient N m *
-      ((goldbachG11LinkedPrimeWindow N ε m).card : ℝ)) ≤
-      goldbachG12FullRoughMass N + 8400 * N / (N : ℝ) ^ (4 / 53 : ℝ) := by
-  rw [goldbachG12WindowWeightSum_eq_good_add_bad, mul_add]
-  apply add_le_add (goldbachG12MainMassGood_le_fullRough N ε)
-  calc
-    400 * goldbachG12MainMassBad N ε ≤
-        400 * (21 * N / (N : ℝ) ^ (4 / 53 : ℝ)) :=
-      mul_le_mul_of_nonneg_left (goldbachG12MainMassBad_le hN ε) (by norm_num)
-    _ = 8400 * N / (N : ℝ) ^ (4 / 53 : ℝ) := by ring
-
-/-- The same cross mother now has the uniform Buchstab upper mass.
-This still precedes the output-prime sieve, which supplies another logarithm. -/
-theorem goldbachG12WindowWeightSum_le_buchstab (η : ℝ) (hη : 0 < η) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → ∀ ε : ℝ,
-      400 * (∑ m ∈ goldbachG12ActiveProductSupport N, goldbachG12NormalizedCoefficient N m *
-        ((goldbachG11LinkedPrimeWindow N ε m).card : ℝ)) ≤
-        goldbachG12BuchstabUpperMass N η + 8400 * N / (N : ℝ)^(4/53 : ℝ) := by
-  obtain ⟨N₀,hN₀,hn⟩ := goldbachG12FullRoughMass_le_buchstabUpper η hη
-  refine ⟨N₀,hN₀,?_⟩
-  intro N hN ε
-  exact (goldbachG12WindowWeightSum_le_fullRough (hN₀.trans hN) ε).trans
-    (add_le_add (hn N hN) le_rfl)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

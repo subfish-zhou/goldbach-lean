@@ -1,4 +1,3 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConjugation
 
 /-!
@@ -25,19 +24,6 @@ noncomputable def quadraticHarmonicTruncation
     (χ : DirichletCharacter ℂ q) (m : ℕ) : ℝ :=
   (∑ n ∈ range m, cpowWeight (1 : ℂ) n * χ n).re
 
-omit [NeZero q] in
-/-- A finite harmonic truncation of a quadratic character is itself real as a
-complex number.  This uses the pointwise quadratic reality of the character,
-not positivity of `L(1, χ)`. -/
-theorem quadratic_harmonic_sum_im_eq_zero_of_sq_eq_one
-    (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1) (m : ℕ) :
-    (∑ n ∈ range m, cpowWeight (1 : ℂ) n * χ n).im = 0 := by
-  let S : ℂ := ∑ n ∈ range m, cpowWeight (1 : ℂ) n * χ n
-  have hstar : starRingEnd ℂ S = S := by
-    dsimp [S]
-    simpa using
-      (conj_sum_range_cpowWeight_character_of_sq_eq_one χ hquad (1 : ℂ) m)
-  exact Complex.conj_eq_iff_im.mp hstar
 
 /-- Abel truncation at the real point `1`: the error in approximating a
 nonprincipal Dirichlet L-value by its first `m` natural terms is at most
@@ -74,16 +60,5 @@ theorem abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le
     simpa [quadraticHarmonicTruncation] using hre
   exact hre'.trans hnorm
 
-/-- One-sided transfer from a finite harmonic-sum estimate to `L(1, χ)`.
-This is convenient for the next large-conductor lower-bound module. -/
-theorem quadraticHarmonicTruncation_sub_error_le_LFunction_one_re
-    (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
-    {m : ℕ} (hm : 1 ≤ m) :
-    quadraticHarmonicTruncation χ m - 2 * (q : ℝ) / (m : ℝ) ≤
-      (χ.LFunction 1).re := by
-  have h := abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le
-    χ hχ hm
-  rw [abs_le] at h
-  linarith
 
 end DirichletCharacter

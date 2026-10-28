@@ -27,13 +27,6 @@ theorem goldbachB9HighFirstSupport_subset (N : ℕ) (hN : 2 ≤ N) :
   rw [goldbachC10HighFirstPairs_eq_filter N hN, ← goldbachC9Pairs_eq_C10Pairs]
   exact image_subset_image (filter_subset _ _)
 
-theorem goldbachX9High_eq_pair_sum (N : ℕ) :
-    goldbachX9High N =
-      ∑ rs ∈ goldbachC10Pairs N ((N : ℝ) ^ (1 / 10 : ℝ)) ((N : ℝ) ^ (1 / 3 : ℝ)),
-        liuLogarithmicIntegral (2 / Real.log 2) ((N : ℝ) / goldbachC10Prod rs) := by
-  unfold goldbachX9High goldbachB9HighFirstSupport goldbachC10ProductSupport
-    goldbachB9PlusLiWeight
-  exact sum_image (fun _ hx _ hy h => goldbachC10Prod_injOn hx hy h)
 
 theorem goldbachK9High_eq_support_sum (N : ℕ) :
     goldbachK9High N =

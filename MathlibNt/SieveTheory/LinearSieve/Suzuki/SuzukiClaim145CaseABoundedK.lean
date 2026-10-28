@@ -138,25 +138,5 @@ theorem exists_claim14_5Bound_caseA_boundedK_uniform_in_S
     nlinarith [mul_le_mul_of_nonneg_left hscale hC0.le])
   simpa [Claim14_5Bound] using hfinal
 
-/-- Compatibility specialization of the sieve-uniform bounded-`K` producer. -/
-theorem exists_claim14_5Bound_caseA_boundedK
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (hH : Section13HatSourceContract H)
-    {d Δ C1 Θ Kmax : ℝ}
-    (hd : 2 < d) (hC1 : 0 ≤ C1) (hΘ : 0 ≤ Θ) (hKmax : 1 ≤ Kmax) :
-    ∃ C145 : ℝ, 0 < C145 ∧
-      ∀ (N D z : ℕ) (K s : ℝ),
-        1 ≤ K → K ≤ Kmax → HasDimensionOneLocalProductBound S K →
-        2 ≤ D → z = ⌈(D : ℝ) ^ (1 / s)⌉₊ → 2 ≤ s →
-        Real.log (D : ℝ) ≤ C1 * K ^ Θ →
-        Claim14_5Bound
-          (fun m D' z' => suzukiActualT S m ⌈D'⌉₊ ⌈z'⌉₊)
-          S H N (D : ℝ) (z : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K s C145 := by
-  obtain ⟨C145, hC145, hall⟩ :=
-    exists_claim14_5Bound_caseA_boundedK_uniform_in_S
-      H hH hd hC1 hΘ hKmax
-  exact ⟨C145, hC145, hall S⟩
-
 
 end MathlibNt.SieveTheory

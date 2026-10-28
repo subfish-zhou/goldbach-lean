@@ -1,6 +1,10 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpWeight
-import MathlibNt.SieveTheory.LiLiuGoldbachAuthorCrossIntegralLedger
+import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorAssemblyTools
+import MathlibNt.SieveTheory.LiLiuGoldbachG12OriginalHighNormalized
+import MathlibNt.SieveTheory.LiLiuGoldbachPairIntegralLedger
+import MathlibNt.SieveTheory.LiLiuGoldbachG12IntegralReduction
 import MathlibNt.SieveTheory.LiLiuGoldbachG67ElementaryIntegralBridge
+
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

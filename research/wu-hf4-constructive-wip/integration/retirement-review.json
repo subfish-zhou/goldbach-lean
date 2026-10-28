@@ -1,0 +1,2411 @@
+{
+  "status": "ACTUAL_INSTALLED_BASELINE_SOURCE_REFERENCE_AND_REGISTRATION_REVIEW_NOT_FORMAL_NAME_CENSUS",
+  "plan_sha256": "a3c6a7d76c2ddab52de70e75e6f09769ceb4b213e43f3f249190f8d13a57a04e",
+  "baseline_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+  "retired_module_count": 17,
+  "explicit_retired_declaration_count": 27080,
+  "preserved_original_mass_headers": 40,
+  "retired_source_registration_commands": [],
+  "baseline_reference_audit": {
+    "status": "STATIC_NAME_AND_OPEN_SCOPE_AUDIT_NOT_LEAN_RESOLUTION",
+    "resolved_references": [
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel0.mass_bounds",
+        "qname": "Hf4Quad.Panel0.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel1.mass_bounds",
+        "qname": "Hf4Quad.Panel1.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel2.mass_bounds",
+        "qname": "Hf4Quad.Panel2.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel3.mass_bounds",
+        "qname": "Hf4Quad.Panel3.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel4.mass_bounds",
+        "qname": "Hf4Quad.Panel4.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel5.mass_bounds",
+        "qname": "Hf4Quad.Panel5.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel6.mass_bounds",
+        "qname": "Hf4Quad.Panel6.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel7.mass_bounds",
+        "qname": "Hf4Quad.Panel7.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel8.mass_bounds",
+        "qname": "Hf4Quad.Panel8.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel9.mass_bounds",
+        "qname": "Hf4Quad.Panel9.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel10.mass_bounds",
+        "qname": "Hf4Quad.Panel10.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel11.mass_bounds",
+        "qname": "Hf4Quad.Panel11.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel12.mass_bounds",
+        "qname": "Hf4Quad.Panel12.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel13.mass_bounds",
+        "qname": "Hf4Quad.Panel13.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel14.mass_bounds",
+        "qname": "Hf4Quad.Panel14.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel15.mass_bounds",
+        "qname": "Hf4Quad.Panel15.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel16.mass_bounds",
+        "qname": "Hf4Quad.Panel16.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel17.mass_bounds",
+        "qname": "Hf4Quad.Panel17.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel18.mass_bounds",
+        "qname": "Hf4Quad.Panel18.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel19.mass_bounds",
+        "qname": "Hf4Quad.Panel19.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel20.mass_bounds",
+        "qname": "Hf4Quad.Panel20.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel21.mass_bounds",
+        "qname": "Hf4Quad.Panel21.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel22.mass_bounds",
+        "qname": "Hf4Quad.Panel22.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel23.mass_bounds",
+        "qname": "Hf4Quad.Panel23.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel0.mass_bounds",
+        "qname": "Hf4Quad.Panel0.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel1.mass_bounds",
+        "qname": "Hf4Quad.Panel1.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel2.mass_bounds",
+        "qname": "Hf4Quad.Panel2.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel3.mass_bounds",
+        "qname": "Hf4Quad.Panel3.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel4.mass_bounds",
+        "qname": "Hf4Quad.Panel4.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel5.mass_bounds",
+        "qname": "Hf4Quad.Panel5.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel6.mass_bounds",
+        "qname": "Hf4Quad.Panel6.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel7.mass_bounds",
+        "qname": "Hf4Quad.Panel7.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel8.mass_bounds",
+        "qname": "Hf4Quad.Panel8.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel9.mass_bounds",
+        "qname": "Hf4Quad.Panel9.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel10.mass_bounds",
+        "qname": "Hf4Quad.Panel10.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel11.mass_bounds",
+        "qname": "Hf4Quad.Panel11.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel12.mass_bounds",
+        "qname": "Hf4Quad.Panel12.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel13.mass_bounds",
+        "qname": "Hf4Quad.Panel13.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel14.mass_bounds",
+        "qname": "Hf4Quad.Panel14.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel15.mass_bounds",
+        "qname": "Hf4Quad.Panel15.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel16.mass_bounds",
+        "qname": "Hf4Quad.Panel16.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel17.mass_bounds",
+        "qname": "Hf4Quad.Panel17.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel18.mass_bounds",
+        "qname": "Hf4Quad.Panel18.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel19.mass_bounds",
+        "qname": "Hf4Quad.Panel19.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel20.mass_bounds",
+        "qname": "Hf4Quad.Panel20.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel21.mass_bounds",
+        "qname": "Hf4Quad.Panel21.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel22.mass_bounds",
+        "qname": "Hf4Quad.Panel22.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel23.mass_bounds",
+        "qname": "Hf4Quad.Panel23.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 30,
+        "token": "Panel24.mass_bounds",
+        "qname": "Hf4Quad.Panel24.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 30,
+        "token": "Panel25.mass_bounds",
+        "qname": "Hf4Quad.Panel25.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 33,
+        "token": "Panel24.mass_bounds",
+        "qname": "Hf4Quad.Panel24.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 33,
+        "token": "Panel25.mass_bounds",
+        "qname": "Hf4Quad.Panel25.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 45,
+        "token": "Panel26.mass_bounds",
+        "qname": "Hf4Quad.Panel26.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 45,
+        "token": "Panel27.mass_bounds",
+        "qname": "Hf4Quad.Panel27.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 48,
+        "token": "Panel26.mass_bounds",
+        "qname": "Hf4Quad.Panel26.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 48,
+        "token": "Panel27.mass_bounds",
+        "qname": "Hf4Quad.Panel27.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 60,
+        "token": "Panel28.mass_bounds",
+        "qname": "Hf4Quad.Panel28.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 60,
+        "token": "Panel29.mass_bounds",
+        "qname": "Hf4Quad.Panel29.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 63,
+        "token": "Panel28.mass_bounds",
+        "qname": "Hf4Quad.Panel28.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 63,
+        "token": "Panel29.mass_bounds",
+        "qname": "Hf4Quad.Panel29.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 75,
+        "token": "Panel30.mass_bounds",
+        "qname": "Hf4Quad.Panel30.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 75,
+        "token": "Panel31.mass_bounds",
+        "qname": "Hf4Quad.Panel31.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 78,
+        "token": "Panel30.mass_bounds",
+        "qname": "Hf4Quad.Panel30.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 78,
+        "token": "Panel31.mass_bounds",
+        "qname": "Hf4Quad.Panel31.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 90,
+        "token": "Panel32.mass_bounds",
+        "qname": "Hf4Quad.Panel32.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 90,
+        "token": "Panel33.mass_bounds",
+        "qname": "Hf4Quad.Panel33.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 93,
+        "token": "Panel32.mass_bounds",
+        "qname": "Hf4Quad.Panel32.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 93,
+        "token": "Panel33.mass_bounds",
+        "qname": "Hf4Quad.Panel33.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 105,
+        "token": "Panel34.mass_bounds",
+        "qname": "Hf4Quad.Panel34.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 105,
+        "token": "Panel35.mass_bounds",
+        "qname": "Hf4Quad.Panel35.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 108,
+        "token": "Panel34.mass_bounds",
+        "qname": "Hf4Quad.Panel34.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 108,
+        "token": "Panel35.mass_bounds",
+        "qname": "Hf4Quad.Panel35.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 120,
+        "token": "Panel36.mass_bounds",
+        "qname": "Hf4Quad.Panel36.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 120,
+        "token": "Panel37.mass_bounds",
+        "qname": "Hf4Quad.Panel37.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 123,
+        "token": "Panel36.mass_bounds",
+        "qname": "Hf4Quad.Panel36.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 123,
+        "token": "Panel37.mass_bounds",
+        "qname": "Hf4Quad.Panel37.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 135,
+        "token": "Panel38.mass_bounds",
+        "qname": "Hf4Quad.Panel38.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 135,
+        "token": "Panel39.mass_bounds",
+        "qname": "Hf4Quad.Panel39.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 138,
+        "token": "Panel38.mass_bounds",
+        "qname": "Hf4Quad.Panel38.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 138,
+        "token": "Panel39.mass_bounds",
+        "qname": "Hf4Quad.Panel39.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 3,
+        "token": "Hf4Quad.Panel0.mass_bounds",
+        "qname": "Hf4Quad.Panel0.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 4,
+        "token": "Hf4Quad.Panel1.mass_bounds",
+        "qname": "Hf4Quad.Panel1.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 5,
+        "token": "Hf4Quad.Panel2.mass_bounds",
+        "qname": "Hf4Quad.Panel2.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 6,
+        "token": "Hf4Quad.Panel3.mass_bounds",
+        "qname": "Hf4Quad.Panel3.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 7,
+        "token": "Hf4Quad.Panel4.mass_bounds",
+        "qname": "Hf4Quad.Panel4.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 8,
+        "token": "Hf4Quad.Panel5.mass_bounds",
+        "qname": "Hf4Quad.Panel5.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 9,
+        "token": "Hf4Quad.Panel6.mass_bounds",
+        "qname": "Hf4Quad.Panel6.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 10,
+        "token": "Hf4Quad.Panel7.mass_bounds",
+        "qname": "Hf4Quad.Panel7.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 11,
+        "token": "Hf4Quad.Panel8.mass_bounds",
+        "qname": "Hf4Quad.Panel8.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 12,
+        "token": "Hf4Quad.Panel9.mass_bounds",
+        "qname": "Hf4Quad.Panel9.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 13,
+        "token": "Hf4Quad.Panel10.mass_bounds",
+        "qname": "Hf4Quad.Panel10.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 14,
+        "token": "Hf4Quad.Panel11.mass_bounds",
+        "qname": "Hf4Quad.Panel11.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 15,
+        "token": "Hf4Quad.Panel12.mass_bounds",
+        "qname": "Hf4Quad.Panel12.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 16,
+        "token": "Hf4Quad.Panel13.mass_bounds",
+        "qname": "Hf4Quad.Panel13.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 17,
+        "token": "Hf4Quad.Panel14.mass_bounds",
+        "qname": "Hf4Quad.Panel14.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 18,
+        "token": "Hf4Quad.Panel15.mass_bounds",
+        "qname": "Hf4Quad.Panel15.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 19,
+        "token": "Hf4Quad.Panel16.mass_bounds",
+        "qname": "Hf4Quad.Panel16.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 20,
+        "token": "Hf4Quad.Panel17.mass_bounds",
+        "qname": "Hf4Quad.Panel17.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 21,
+        "token": "Hf4Quad.Panel18.mass_bounds",
+        "qname": "Hf4Quad.Panel18.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 22,
+        "token": "Hf4Quad.Panel19.mass_bounds",
+        "qname": "Hf4Quad.Panel19.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 23,
+        "token": "Hf4Quad.Panel20.mass_bounds",
+        "qname": "Hf4Quad.Panel20.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 24,
+        "token": "Hf4Quad.Panel21.mass_bounds",
+        "qname": "Hf4Quad.Panel21.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 25,
+        "token": "Hf4Quad.Panel22.mass_bounds",
+        "qname": "Hf4Quad.Panel22.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 26,
+        "token": "Hf4Quad.Panel23.mass_bounds",
+        "qname": "Hf4Quad.Panel23.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 27,
+        "token": "Hf4Quad.Panel24.mass_bounds",
+        "qname": "Hf4Quad.Panel24.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 28,
+        "token": "Hf4Quad.Panel25.mass_bounds",
+        "qname": "Hf4Quad.Panel25.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 29,
+        "token": "Hf4Quad.Panel26.mass_bounds",
+        "qname": "Hf4Quad.Panel26.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 30,
+        "token": "Hf4Quad.Panel27.mass_bounds",
+        "qname": "Hf4Quad.Panel27.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 31,
+        "token": "Hf4Quad.Panel28.mass_bounds",
+        "qname": "Hf4Quad.Panel28.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 32,
+        "token": "Hf4Quad.Panel29.mass_bounds",
+        "qname": "Hf4Quad.Panel29.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 33,
+        "token": "Hf4Quad.Panel30.mass_bounds",
+        "qname": "Hf4Quad.Panel30.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 34,
+        "token": "Hf4Quad.Panel31.mass_bounds",
+        "qname": "Hf4Quad.Panel31.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 35,
+        "token": "Hf4Quad.Panel32.mass_bounds",
+        "qname": "Hf4Quad.Panel32.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 36,
+        "token": "Hf4Quad.Panel33.mass_bounds",
+        "qname": "Hf4Quad.Panel33.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 37,
+        "token": "Hf4Quad.Panel34.mass_bounds",
+        "qname": "Hf4Quad.Panel34.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 38,
+        "token": "Hf4Quad.Panel35.mass_bounds",
+        "qname": "Hf4Quad.Panel35.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 39,
+        "token": "Hf4Quad.Panel36.mass_bounds",
+        "qname": "Hf4Quad.Panel36.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 40,
+        "token": "Hf4Quad.Panel37.mass_bounds",
+        "qname": "Hf4Quad.Panel37.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 41,
+        "token": "Hf4Quad.Panel38.mass_bounds",
+        "qname": "Hf4Quad.Panel38.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadPublic",
+        "line": 42,
+        "token": "Hf4Quad.Panel39.mass_bounds",
+        "qname": "Hf4Quad.Panel39.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      }
+    ],
+    "unpreserved_resolved_references": [],
+    "retired_namespace_commands": [],
+    "raw_unqualified_leaf_occurrence_counts": {
+      "h5": 549,
+      "h6": 437,
+      "mass_bounds": 6,
+      "h1": 2170,
+      "h2": 2122,
+      "h0": 850,
+      "h3": 1031,
+      "h4": 663,
+      "h7": 306,
+      "h34": 17,
+      "h54": 60,
+      "h43": 18,
+      "h8": 231,
+      "h9": 144,
+      "h10": 195,
+      "h11": 140,
+      "h12": 119,
+      "h13": 42,
+      "h14": 57,
+      "h15": 43,
+      "h16": 43,
+      "h17": 46,
+      "f0": 107,
+      "c0": 47,
+      "c1": 104,
+      "c2": 83,
+      "c3": 60,
+      "f2": 66,
+      "f3": 63,
+      "f1": 66,
+      "h18": 14,
+      "c43": 16,
+      "c54": 16,
+      "h87": 19,
+      "h65": 4,
+      "h21": 118,
+      "h23": 79,
+      "h20": 100,
+      "h30": 10,
+      "h32": 22,
+      "h44": 6,
+      "h71": 8,
+      "h72": 8,
+      "h91": 15,
+      "h92": 12,
+      "h93": 8,
+      "h24": 4,
+      "h19": 12,
+      "h64": 4,
+      "h143": 3,
+      "h146": 36,
+      "h131": 6,
+      "h27": 34,
+      "h141": 10,
+      "h149": 15,
+      "h86": 2,
+      "h310": 2,
+      "h240": 2,
+      "h45": 5,
+      "h126": 2,
+      "h81": 7,
+      "h82": 7,
+      "h78": 3,
+      "h112": 5,
+      "h122": 5,
+      "h40": 2,
+      "c4": 27,
+      "c5": 21,
+      "h50": 1,
+      "h51": 1,
+      "h73": 7,
+      "h83": 6,
+      "h76": 2,
+      "h35": 2,
+      "h53": 19,
+      "h22": 29,
+      "h123": 3,
+      "h25": 1,
+      "h67": 7,
+      "h68": 8,
+      "h66": 9,
+      "h42": 14,
+      "h58": 8,
+      "h75": 3,
+      "h84": 6,
+      "h134": 4
+    },
+    "limitation": "ASCII namespace/open lexical resolution; raw local leaf collisions do not identify declarations. No source scan replaces future Lean name lookup and full compilation."
+  },
+  "new_reference_audit": {
+    "status": "STATIC_NAME_AND_OPEN_SCOPE_AUDIT_NOT_LEAN_RESOLUTION",
+    "resolved_references": [
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 9,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel0.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 21,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel1.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 33,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel2.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 45,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel3.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 57,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel4.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 69,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel5.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 81,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel6.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 93,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel7.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 105,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel8.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 117,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel9.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 129,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel10.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 141,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel11.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 153,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel12.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 165,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel13.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 177,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel14.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 189,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel15.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 201,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel16.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 213,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel17.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 225,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel18.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 237,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel19.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 249,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel20.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 261,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel21.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 273,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel22.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 285,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel23.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 297,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel24.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 309,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel25.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 321,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel26.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 333,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel27.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 345,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel28.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 357,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel29.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 369,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel30.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 381,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel31.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 393,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel32.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 405,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel33.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 417,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel34.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 429,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel35.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 441,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel36.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 453,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel37.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 465,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel38.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 477,
+        "token": "mass_bounds",
+        "qname": "Hf4Quad.Panel39.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel0.mass_bounds",
+        "qname": "Hf4Quad.Panel0.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel1.mass_bounds",
+        "qname": "Hf4Quad.Panel1.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel2.mass_bounds",
+        "qname": "Hf4Quad.Panel2.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel3.mass_bounds",
+        "qname": "Hf4Quad.Panel3.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel4.mass_bounds",
+        "qname": "Hf4Quad.Panel4.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel5.mass_bounds",
+        "qname": "Hf4Quad.Panel5.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel6.mass_bounds",
+        "qname": "Hf4Quad.Panel6.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel7.mass_bounds",
+        "qname": "Hf4Quad.Panel7.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel8.mass_bounds",
+        "qname": "Hf4Quad.Panel8.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel9.mass_bounds",
+        "qname": "Hf4Quad.Panel9.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel10.mass_bounds",
+        "qname": "Hf4Quad.Panel10.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel11.mass_bounds",
+        "qname": "Hf4Quad.Panel11.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel12.mass_bounds",
+        "qname": "Hf4Quad.Panel12.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel13.mass_bounds",
+        "qname": "Hf4Quad.Panel13.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel14.mass_bounds",
+        "qname": "Hf4Quad.Panel14.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel15.mass_bounds",
+        "qname": "Hf4Quad.Panel15.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel16.mass_bounds",
+        "qname": "Hf4Quad.Panel16.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel17.mass_bounds",
+        "qname": "Hf4Quad.Panel17.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel18.mass_bounds",
+        "qname": "Hf4Quad.Panel18.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel19.mass_bounds",
+        "qname": "Hf4Quad.Panel19.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel20.mass_bounds",
+        "qname": "Hf4Quad.Panel20.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel21.mass_bounds",
+        "qname": "Hf4Quad.Panel21.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel22.mass_bounds",
+        "qname": "Hf4Quad.Panel22.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 15,
+        "token": "Panel23.mass_bounds",
+        "qname": "Hf4Quad.Panel23.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel0.mass_bounds",
+        "qname": "Hf4Quad.Panel0.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel1.mass_bounds",
+        "qname": "Hf4Quad.Panel1.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel2.mass_bounds",
+        "qname": "Hf4Quad.Panel2.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel3.mass_bounds",
+        "qname": "Hf4Quad.Panel3.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel4.mass_bounds",
+        "qname": "Hf4Quad.Panel4.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel5.mass_bounds",
+        "qname": "Hf4Quad.Panel5.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel6.mass_bounds",
+        "qname": "Hf4Quad.Panel6.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel7.mass_bounds",
+        "qname": "Hf4Quad.Panel7.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel8.mass_bounds",
+        "qname": "Hf4Quad.Panel8.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel9.mass_bounds",
+        "qname": "Hf4Quad.Panel9.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel10.mass_bounds",
+        "qname": "Hf4Quad.Panel10.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel11.mass_bounds",
+        "qname": "Hf4Quad.Panel11.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel12.mass_bounds",
+        "qname": "Hf4Quad.Panel12.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel13.mass_bounds",
+        "qname": "Hf4Quad.Panel13.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel14.mass_bounds",
+        "qname": "Hf4Quad.Panel14.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel15.mass_bounds",
+        "qname": "Hf4Quad.Panel15.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel16.mass_bounds",
+        "qname": "Hf4Quad.Panel16.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel17.mass_bounds",
+        "qname": "Hf4Quad.Panel17.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel18.mass_bounds",
+        "qname": "Hf4Quad.Panel18.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel19.mass_bounds",
+        "qname": "Hf4Quad.Panel19.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel20.mass_bounds",
+        "qname": "Hf4Quad.Panel20.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel21.mass_bounds",
+        "qname": "Hf4Quad.Panel21.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel22.mass_bounds",
+        "qname": "Hf4Quad.Panel22.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 18,
+        "token": "Panel23.mass_bounds",
+        "qname": "Hf4Quad.Panel23.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 30,
+        "token": "Panel24.mass_bounds",
+        "qname": "Hf4Quad.Panel24.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 30,
+        "token": "Panel25.mass_bounds",
+        "qname": "Hf4Quad.Panel25.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 33,
+        "token": "Panel24.mass_bounds",
+        "qname": "Hf4Quad.Panel24.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 33,
+        "token": "Panel25.mass_bounds",
+        "qname": "Hf4Quad.Panel25.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 45,
+        "token": "Panel26.mass_bounds",
+        "qname": "Hf4Quad.Panel26.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 45,
+        "token": "Panel27.mass_bounds",
+        "qname": "Hf4Quad.Panel27.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 48,
+        "token": "Panel26.mass_bounds",
+        "qname": "Hf4Quad.Panel26.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 48,
+        "token": "Panel27.mass_bounds",
+        "qname": "Hf4Quad.Panel27.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 60,
+        "token": "Panel28.mass_bounds",
+        "qname": "Hf4Quad.Panel28.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 60,
+        "token": "Panel29.mass_bounds",
+        "qname": "Hf4Quad.Panel29.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 63,
+        "token": "Panel28.mass_bounds",
+        "qname": "Hf4Quad.Panel28.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 63,
+        "token": "Panel29.mass_bounds",
+        "qname": "Hf4Quad.Panel29.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 75,
+        "token": "Panel30.mass_bounds",
+        "qname": "Hf4Quad.Panel30.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 75,
+        "token": "Panel31.mass_bounds",
+        "qname": "Hf4Quad.Panel31.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 78,
+        "token": "Panel30.mass_bounds",
+        "qname": "Hf4Quad.Panel30.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 78,
+        "token": "Panel31.mass_bounds",
+        "qname": "Hf4Quad.Panel31.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 90,
+        "token": "Panel32.mass_bounds",
+        "qname": "Hf4Quad.Panel32.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 90,
+        "token": "Panel33.mass_bounds",
+        "qname": "Hf4Quad.Panel33.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 93,
+        "token": "Panel32.mass_bounds",
+        "qname": "Hf4Quad.Panel32.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 93,
+        "token": "Panel33.mass_bounds",
+        "qname": "Hf4Quad.Panel33.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 105,
+        "token": "Panel34.mass_bounds",
+        "qname": "Hf4Quad.Panel34.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 105,
+        "token": "Panel35.mass_bounds",
+        "qname": "Hf4Quad.Panel35.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 108,
+        "token": "Panel34.mass_bounds",
+        "qname": "Hf4Quad.Panel34.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 108,
+        "token": "Panel35.mass_bounds",
+        "qname": "Hf4Quad.Panel35.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 120,
+        "token": "Panel36.mass_bounds",
+        "qname": "Hf4Quad.Panel36.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 120,
+        "token": "Panel37.mass_bounds",
+        "qname": "Hf4Quad.Panel37.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 123,
+        "token": "Panel36.mass_bounds",
+        "qname": "Hf4Quad.Panel36.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 123,
+        "token": "Panel37.mass_bounds",
+        "qname": "Hf4Quad.Panel37.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 135,
+        "token": "Panel38.mass_bounds",
+        "qname": "Hf4Quad.Panel38.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 135,
+        "token": "Panel39.mass_bounds",
+        "qname": "Hf4Quad.Panel39.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 138,
+        "token": "Panel38.mass_bounds",
+        "qname": "Hf4Quad.Panel38.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      },
+      {
+        "module": "Hf4QuadAggregate",
+        "line": 138,
+        "token": "Panel39.mass_bounds",
+        "qname": "Hf4Quad.Panel39.mass_bounds",
+        "classification": "PRESERVED_MASS_BOUNDS"
+      }
+    ],
+    "unpreserved_resolved_references": [],
+    "retired_namespace_commands": [
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 7,
+        "namespace": "Hf4Quad.Panel0",
+        "command": "namespace Hf4Quad.Panel0"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 19,
+        "namespace": "Hf4Quad.Panel1",
+        "command": "namespace Hf4Quad.Panel1"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 31,
+        "namespace": "Hf4Quad.Panel2",
+        "command": "namespace Hf4Quad.Panel2"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 43,
+        "namespace": "Hf4Quad.Panel3",
+        "command": "namespace Hf4Quad.Panel3"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 55,
+        "namespace": "Hf4Quad.Panel4",
+        "command": "namespace Hf4Quad.Panel4"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 67,
+        "namespace": "Hf4Quad.Panel5",
+        "command": "namespace Hf4Quad.Panel5"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 79,
+        "namespace": "Hf4Quad.Panel6",
+        "command": "namespace Hf4Quad.Panel6"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 91,
+        "namespace": "Hf4Quad.Panel7",
+        "command": "namespace Hf4Quad.Panel7"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 103,
+        "namespace": "Hf4Quad.Panel8",
+        "command": "namespace Hf4Quad.Panel8"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 115,
+        "namespace": "Hf4Quad.Panel9",
+        "command": "namespace Hf4Quad.Panel9"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 127,
+        "namespace": "Hf4Quad.Panel10",
+        "command": "namespace Hf4Quad.Panel10"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 139,
+        "namespace": "Hf4Quad.Panel11",
+        "command": "namespace Hf4Quad.Panel11"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 151,
+        "namespace": "Hf4Quad.Panel12",
+        "command": "namespace Hf4Quad.Panel12"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 163,
+        "namespace": "Hf4Quad.Panel13",
+        "command": "namespace Hf4Quad.Panel13"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 175,
+        "namespace": "Hf4Quad.Panel14",
+        "command": "namespace Hf4Quad.Panel14"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 187,
+        "namespace": "Hf4Quad.Panel15",
+        "command": "namespace Hf4Quad.Panel15"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 199,
+        "namespace": "Hf4Quad.Panel16",
+        "command": "namespace Hf4Quad.Panel16"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 211,
+        "namespace": "Hf4Quad.Panel17",
+        "command": "namespace Hf4Quad.Panel17"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 223,
+        "namespace": "Hf4Quad.Panel18",
+        "command": "namespace Hf4Quad.Panel18"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 235,
+        "namespace": "Hf4Quad.Panel19",
+        "command": "namespace Hf4Quad.Panel19"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 247,
+        "namespace": "Hf4Quad.Panel20",
+        "command": "namespace Hf4Quad.Panel20"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 259,
+        "namespace": "Hf4Quad.Panel21",
+        "command": "namespace Hf4Quad.Panel21"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 271,
+        "namespace": "Hf4Quad.Panel22",
+        "command": "namespace Hf4Quad.Panel22"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 283,
+        "namespace": "Hf4Quad.Panel23",
+        "command": "namespace Hf4Quad.Panel23"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 295,
+        "namespace": "Hf4Quad.Panel24",
+        "command": "namespace Hf4Quad.Panel24"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 307,
+        "namespace": "Hf4Quad.Panel25",
+        "command": "namespace Hf4Quad.Panel25"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 319,
+        "namespace": "Hf4Quad.Panel26",
+        "command": "namespace Hf4Quad.Panel26"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 331,
+        "namespace": "Hf4Quad.Panel27",
+        "command": "namespace Hf4Quad.Panel27"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 343,
+        "namespace": "Hf4Quad.Panel28",
+        "command": "namespace Hf4Quad.Panel28"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 355,
+        "namespace": "Hf4Quad.Panel29",
+        "command": "namespace Hf4Quad.Panel29"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 367,
+        "namespace": "Hf4Quad.Panel30",
+        "command": "namespace Hf4Quad.Panel30"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 379,
+        "namespace": "Hf4Quad.Panel31",
+        "command": "namespace Hf4Quad.Panel31"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 391,
+        "namespace": "Hf4Quad.Panel32",
+        "command": "namespace Hf4Quad.Panel32"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 403,
+        "namespace": "Hf4Quad.Panel33",
+        "command": "namespace Hf4Quad.Panel33"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 415,
+        "namespace": "Hf4Quad.Panel34",
+        "command": "namespace Hf4Quad.Panel34"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 427,
+        "namespace": "Hf4Quad.Panel35",
+        "command": "namespace Hf4Quad.Panel35"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 439,
+        "namespace": "Hf4Quad.Panel36",
+        "command": "namespace Hf4Quad.Panel36"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 451,
+        "namespace": "Hf4Quad.Panel37",
+        "command": "namespace Hf4Quad.Panel37"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 463,
+        "namespace": "Hf4Quad.Panel38",
+        "command": "namespace Hf4Quad.Panel38"
+      },
+      {
+        "module": "Hf4ConstructiveTablePublic",
+        "line": 475,
+        "namespace": "Hf4Quad.Panel39",
+        "command": "namespace Hf4Quad.Panel39"
+      }
+    ],
+    "raw_unqualified_leaf_occurrence_counts": {
+      "mass_bounds": 41,
+      "f0": 25,
+      "f1": 6,
+      "f2": 5,
+      "f3": 4,
+      "f4": 5,
+      "f5": 4,
+      "f6": 4,
+      "f7": 12,
+      "f8": 5,
+      "f9": 4,
+      "f10": 4,
+      "f11": 4,
+      "f12": 6,
+      "f13": 5,
+      "f14": 4,
+      "f15": 4,
+      "f16": 4,
+      "f17": 8,
+      "f18": 5,
+      "f19": 4,
+      "f20": 4,
+      "f21": 5,
+      "f22": 5,
+      "f23": 4,
+      "f24": 4,
+      "f25": 5,
+      "f26": 5,
+      "f27": 4,
+      "f28": 4,
+      "f29": 4,
+      "f30": 5,
+      "f31": 4,
+      "f32": 4,
+      "f33": 5,
+      "f34": 4,
+      "f35": 5,
+      "f36": 4,
+      "f37": 4,
+      "f38": 5,
+      "f39": 4,
+      "f40": 4,
+      "f41": 16,
+      "f42": 6,
+      "f43": 5,
+      "f44": 5,
+      "f45": 4,
+      "f46": 4,
+      "f47": 4,
+      "f48": 5,
+      "f49": 7,
+      "f50": 5,
+      "f51": 4,
+      "f52": 16,
+      "f53": 8,
+      "f54": 4,
+      "f55": 4,
+      "f56": 12,
+      "f57": 13,
+      "f58": 4,
+      "f59": 8,
+      "f60": 4,
+      "f61": 8,
+      "f62": 4,
+      "f63": 4,
+      "f64": 4,
+      "f65": 4,
+      "f66": 4,
+      "f67": 8,
+      "f68": 4,
+      "f69": 4,
+      "f70": 4,
+      "f71": 4,
+      "f72": 16,
+      "f73": 4,
+      "f74": 4,
+      "f75": 4,
+      "f76": 4,
+      "f77": 4,
+      "f78": 4,
+      "f79": 4,
+      "f80": 5,
+      "f81": 4,
+      "f82": 4,
+      "f83": 4,
+      "f84": 4,
+      "f85": 4,
+      "f86": 12,
+      "f87": 4,
+      "f88": 4,
+      "f89": 4,
+      "f90": 4,
+      "f91": 4,
+      "f92": 4,
+      "f93": 4,
+      "f94": 4,
+      "f95": 4,
+      "f96": 4,
+      "f97": 4,
+      "f98": 4,
+      "f99": 4,
+      "f100": 4,
+      "f101": 4,
+      "f102": 4,
+      "f103": 4,
+      "f104": 4,
+      "f105": 5,
+      "f106": 4,
+      "f107": 4,
+      "f108": 4,
+      "f109": 4,
+      "f110": 4,
+      "f111": 4,
+      "f112": 7,
+      "f113": 4,
+      "f114": 6,
+      "f115": 4,
+      "f116": 6,
+      "f117": 4,
+      "f118": 4,
+      "f119": 5,
+      "f120": 4,
+      "f121": 5,
+      "f122": 4,
+      "f123": 4,
+      "f124": 4,
+      "f125": 5,
+      "f126": 4,
+      "f127": 5,
+      "f128": 4,
+      "f129": 4,
+      "f130": 4,
+      "f131": 5,
+      "f132": 5,
+      "f133": 4,
+      "f134": 4,
+      "f135": 5,
+      "f136": 4,
+      "f137": 5,
+      "f138": 4,
+      "f139": 4,
+      "f140": 5,
+      "f141": 4,
+      "f142": 4,
+      "f143": 4,
+      "f144": 11,
+      "f145": 5,
+      "f146": 5,
+      "f147": 10,
+      "f148": 4,
+      "f149": 4,
+      "f150": 4,
+      "f151": 10,
+      "f152": 4,
+      "f153": 4,
+      "f154": 10,
+      "f155": 4,
+      "f156": 4,
+      "f157": 10,
+      "f158": 4,
+      "f159": 4,
+      "f160": 10,
+      "f161": 4,
+      "f162": 4,
+      "f163": 10,
+      "f164": 4,
+      "f165": 4,
+      "f166": 5,
+      "f167": 4,
+      "f168": 4,
+      "f169": 4,
+      "f170": 10,
+      "f171": 4,
+      "f172": 4,
+      "f173": 4,
+      "f174": 4,
+      "f175": 4,
+      "f176": 4,
+      "f177": 11,
+      "f178": 5,
+      "f179": 5,
+      "f180": 4,
+      "f181": 4,
+      "f182": 4,
+      "f183": 4,
+      "f184": 4,
+      "f185": 4,
+      "f186": 4,
+      "f187": 4,
+      "f188": 4,
+      "f189": 4,
+      "f190": 4,
+      "f191": 4,
+      "f192": 4,
+      "f193": 5,
+      "f194": 4,
+      "f195": 4,
+      "f196": 4,
+      "f197": 4,
+      "f198": 4,
+      "f199": 4,
+      "f200": 4,
+      "f201": 4,
+      "f202": 4,
+      "f203": 4,
+      "f204": 4,
+      "f205": 4,
+      "f206": 5,
+      "f207": 4,
+      "f208": 6,
+      "f209": 4,
+      "f210": 4,
+      "f211": 5,
+      "f212": 4,
+      "f213": 6,
+      "f214": 4,
+      "f215": 4,
+      "f216": 5,
+      "f217": 6,
+      "f218": 4,
+      "f219": 4,
+      "f220": 4,
+      "f221": 4,
+      "f222": 4,
+      "f223": 4,
+      "f224": 5,
+      "f225": 4,
+      "f226": 6,
+      "f227": 5,
+      "f228": 6,
+      "f229": 4,
+      "f230": 5,
+      "f231": 4,
+      "f232": 4,
+      "f233": 4,
+      "f234": 4,
+      "f235": 4,
+      "f236": 11,
+      "f237": 5,
+      "f238": 5,
+      "f239": 4,
+      "f240": 4,
+      "f241": 4,
+      "f242": 4,
+      "f243": 4,
+      "f244": 4,
+      "f245": 4,
+      "f246": 4,
+      "f247": 4,
+      "f248": 4,
+      "f249": 4,
+      "f250": 4,
+      "f251": 4,
+      "f252": 5,
+      "f253": 4,
+      "f254": 4,
+      "f255": 4,
+      "f256": 4,
+      "f257": 4,
+      "f258": 4,
+      "f259": 4,
+      "f260": 4,
+      "f261": 4,
+      "f262": 11,
+      "f263": 5,
+      "f264": 5,
+      "f265": 4,
+      "f266": 4,
+      "f267": 4,
+      "f268": 4,
+      "f269": 4,
+      "f270": 4,
+      "f271": 4,
+      "f272": 4,
+      "f273": 4,
+      "f274": 4,
+      "f275": 4,
+      "f276": 4,
+      "f277": 4,
+      "f278": 5,
+      "f279": 4,
+      "f280": 4,
+      "f281": 4,
+      "f282": 4,
+      "f283": 4,
+      "f284": 4,
+      "f285": 4,
+      "f286": 4,
+      "f287": 4,
+      "f288": 4,
+      "f289": 4,
+      "f290": 4,
+      "f291": 5,
+      "f292": 4,
+      "f293": 5,
+      "f294": 4,
+      "f295": 4,
+      "f296": 5,
+      "f297": 4,
+      "f298": 4,
+      "f299": 5,
+      "f300": 4,
+      "f301": 4,
+      "f302": 4,
+      "f303": 7,
+      "f304": 5,
+      "f305": 4,
+      "f306": 4,
+      "f307": 4,
+      "f308": 4,
+      "f309": 11,
+      "f310": 5,
+      "f311": 5,
+      "f312": 4,
+      "f313": 4,
+      "f314": 4,
+      "f315": 4,
+      "f316": 4,
+      "f317": 4,
+      "f318": 4,
+      "f319": 4,
+      "f320": 4,
+      "f321": 4,
+      "f322": 4,
+      "f323": 4,
+      "f324": 4,
+      "f325": 5,
+      "f326": 4,
+      "f327": 4,
+      "f328": 4,
+      "f329": 4,
+      "f330": 4,
+      "f331": 4,
+      "f332": 4,
+      "f333": 4,
+      "f334": 4,
+      "f335": 11,
+      "f336": 5,
+      "f337": 5,
+      "f338": 4,
+      "f339": 4,
+      "f340": 4,
+      "f341": 4,
+      "f342": 4,
+      "f343": 4,
+      "f344": 4,
+      "f345": 4,
+      "f346": 4,
+      "f347": 4,
+      "f348": 4,
+      "f349": 4,
+      "f350": 4,
+      "f351": 5,
+      "f352": 4,
+      "f353": 4,
+      "f354": 4,
+      "f355": 4,
+      "f356": 4,
+      "f357": 4,
+      "f358": 4,
+      "f359": 4,
+      "f360": 4,
+      "f361": 4,
+      "f362": 4,
+      "f363": 4,
+      "f364": 4,
+      "f365": 4,
+      "f366": 4,
+      "f367": 4,
+      "f368": 4,
+      "f369": 4,
+      "f370": 5,
+      "h0": 3,
+      "h1": 3
+    },
+    "limitation": "ASCII namespace/open lexical resolution; raw local leaf collisions do not identify declarations. No source scan replaces future Lean name lookup and full compilation."
+  },
+  "limitations": "Source name/open-scope resolution only; generated private names and reflection are not exhaustively enumerated. Complete formal source-context and public-interface checks remain separate."
+}

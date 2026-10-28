@@ -115,13 +115,4 @@ theorem externalFamily_weighted_sequence_sieve_centered (P : Finset ℕ)
   rw [← weightedExternalUpper_centering]
   exact externalFamily_weighted_sequence_sieve P hP hD hε hεsmall hcut I a w hw
 
-#print axioms weightedDivCount
-#print axioms weightedSequenceSifted
-#print axioms weightedExternalUpper
-#print axioms externalFamily_pointwise_upper
-#print axioms weightedExternalUpper_eq_sum_points
-#print axioms externalFamily_weighted_sequence_sieve
-#print axioms weightedExternalUpper_centering
-#print axioms externalFamily_weighted_sequence_sieve_centered
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

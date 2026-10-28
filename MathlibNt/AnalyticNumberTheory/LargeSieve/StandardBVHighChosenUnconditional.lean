@@ -16,7 +16,8 @@ open scoped BigOperators ArithmeticFunction Topology
 noncomputable section
 set_option maxHeartbeats 2400000
 
-/-- Explicit Pan exponent for the chosen all-aspect Type-II payment. -/
+
+/-- Explicit Pan exponent used when unfolding the chosen Type-II parameters. -/
 def standardBVHighChosenUnconditionalTypeIIExponent (A : ℕ) : ℕ := 3 * A + 200
 
 /-- Explicit conductor exponent for the chosen all-aspect Type-II payment. -/
@@ -68,12 +69,6 @@ theorem standardBVHighChosenUnconditionalTypeII_activeCard_le (A N : ℕ) :
       (standardBVHighChosenUnconditionalTypeIICutoff A N)
       (standardBVHighChosenUnconditionalTypeIICutoff A N)
 
-private theorem chosen_discreteAbelAmplifierPrefixMax_le_three (N : ℕ) :
-    discreteAbelAmplifierPrefixMax N ≤ 3 := by
-  refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_
-  have htwo : (2 / 3 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]
-  rw [mul_inv_le_iff₀ (Real.log_pos (by norm_num : (1 : ℝ) < 2))]
-  linarith
 
 /-- Unconditional closure of exactly the chosen-parameter Type-II
 high-conductor contribution. -/
@@ -459,11 +454,6 @@ theorem standardBVHighChosenUnconditional_cutoff_le_balanced_eventually (A : ℕ
   unfold logConductorThreshold standardBVBalancedSmallCutoff
   exact Nat.floor_mono (by simpa [x, C] using hrpow)
 
-private lemma highConductorSet_eq_interval_highChosenUnconditional (N Q C : ℕ)
-    (hR : 1 ≤ logConductorThreshold N C) :
-    highConductorSet N Q C =
-      Finset.Icc (logConductorThreshold N C + 1) Q := by
-  exact highConductorSet_eq_interval N Q C hR
 
 /-- Unconditional closure of exactly the small Vaughan lane at the
 chosen parameters `B=3*A+200`, `C=2*(A+50)`, and

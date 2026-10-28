@@ -1,0 +1,57 @@
+{
+  "status": "pass",
+  "results": [
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.RosserChains",
+      "probe_file": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LinearSieve.RosserChains.lean",
+      "probe_sha256": "42355cbde190e793ee008159fafb2c2dbffcbf40e2c3b1270df6a7669cc15cd9",
+      "planned_production_sha256": "42355cbde190e793ee008159fafb2c2dbffcbf40e2c3b1270df6a7669cc15cd9",
+      "log": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LinearSieve.RosserChains.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "elapsed_seconds": 8.15487252920866,
+      "before_source_sha256": "80fbacee889c3d3af71a3b31ec2990dcc2929e0b3e6b42537ec35b7213f4f7b8",
+      "net_code_lines_if_applied": -22
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility",
+      "probe_file": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility.lean",
+      "probe_sha256": "5534acbfa9f3ecc1d29ac15837c3fa9604ed113f6a22c8a1dc8036d297db59f5",
+      "planned_production_sha256": "c97415cff28049d25d1f8ff8d5c9fb75362dfcc187e4d0b64a17e9f2920a3263",
+      "log": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "elapsed_seconds": 6.824493084102869,
+      "before_source_sha256": "1ccc9ec18ddb86ff35fefad6f96d9f62c4b72fe292c0b7cf7f4adfe27cb88a6d",
+      "net_code_lines_if_applied": -15
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.FiniteWeights",
+      "probe_file": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LinearSieve.FiniteWeights.lean",
+      "probe_sha256": "0ca634af293f132e484d8deb2fce0a61cf55acd7c47a0ad2ae5a9863df98d446",
+      "planned_production_sha256": "0ca634af293f132e484d8deb2fce0a61cf55acd7c47a0ad2ae5a9863df98d446",
+      "log": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LinearSieve.FiniteWeights.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "elapsed_seconds": 5.243944138288498,
+      "before_source_sha256": "fd0b9d02ea33d403f3701964086d360f477253b1f56546fe3223f8b9755f00d9",
+      "net_code_lines_if_applied": -27
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser",
+      "probe_file": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser.lean",
+      "probe_sha256": "eb50e578c785cfbb592d35fd9a12d8cd5c183f8edcafbf5209515f2ee8aa23c4",
+      "planned_production_sha256": "eb50e578c785cfbb592d35fd9a12d8cd5c183f8edcafbf5209515f2ee8aa23c4",
+      "log": "/tmp/liliu-shared-calculus-cleanup/next-wave/MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "elapsed_seconds": 5.369335297495127,
+      "before_source_sha256": "a96814301a8a0217cac81dea2fc0030d6fd91ff2bbb1c2fb5d5449f58e8a68f5",
+      "net_code_lines_if_applied": -2
+    }
+  ],
+  "finished_at_utc": "2026-10-27T09:37:13.302061+00:00",
+  "net_main_code_lines_if_applied": -66,
+  "record_scope": "Historical complete-file prototype receipts before application. Production import combination accepted separately in validation.json. Rounded-prefix consumer prototype includes actual promoted cardinality proof rather than a forward assumption.",
+  "accepted_full_combination_validation": "validation.json"
+}

@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.b9HighUnitBox",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.weightedUnitBox",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_b9HighUnitBox",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_weightedUnitBox",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "method": "Both original private unit-box definitions and their volume statements retain their names and kinds/type hashes."
+}

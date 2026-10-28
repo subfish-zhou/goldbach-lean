@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigma11Sigma12MiddleRange
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOne
 
 open scoped Classical BigOperators
 open Finset MeasureTheory Set
@@ -109,101 +107,6 @@ theorem naturalCeil_inherited_error_le_claim14_13
           (Real.log (D : ℝ) / Real.log (p : ℝ)) := by
       rw [← hsourceCoord]
       exact h1413
-
-/-- Global scaling closure of the concrete `sigmaTwelve` from (14.10), followed
-by the exact integral-plus-endpoint conclusion of qD Lemma 8.7. -/
-theorem sigmaTwelve_suzukiVProduct_le_qD_lemma8_7
-    {S : BoundingSieve} {H : Section13HatLayers}
-    {β C K d Δ w v s τ σ : ℝ} {N D znat : ℕ}
-    (hH : Section13HatContract H β)
-    (hD : 1 < (D : ℝ)) (hz2 : 2 ≤ (znat : ℝ))
-    (hv2 : 2 ≤ v) (hw2 : 2 ≤ w)
-    (hwv : w ≤ v) (hvz : v ≤ (znat : ℝ))
-    (hz : (znat : ℝ) = (D : ℝ) ^ (1 / s))
-    (hv : v = (D : ℝ) ^ (1 / τ))
-    (hw : w = (D : ℝ) ^ (1 / σ))
-    (hτ : H.betaHat + (ErrorSign.ofDepth N).epsilon < τ)
-    (hτσ : τ ≤ σ) (hK : 2 ≤ K)
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hii : Claim14_6_MonotoneQPremise H (D : ℝ) d Δ σ)
-    (hC : 0 ≤ C) (hΔ : 0 ≤ Δ)
-    (hCeil : ∀ p ∈ S.prodPrimes.primeFactors,
-      w ≤ (p : ℝ) → (p : ℝ) < v → 2 ≤ p ∧ 2 * p ≤ D)
-    (hT : ∀ p ∈ S.prodPrimes.primeFactors,
-      w ≤ (p : ℝ) → (p : ℝ) < v →
-      0 ≤ H.T (ErrorSign.ofDepth (N - 1)) (inheritedCoordinate D p))
-    (h1413 : ∀ p ∈ S.prodPrimes.primeFactors,
-      w ≤ (p : ℝ) → (p : ℝ) < v →
-      Claim14_13PointwisePremise H N (D : ℝ) d Δ
-        (Real.log (D : ℝ) / Real.log (p : ℝ)) ((D : ℝ) / (p : ℝ))) :
-    sigmaTwelve S.prodPrimes.primeFactors S.nu
-        (fun p => suzukiVProduct S (p : ℝ))
-        (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-        (suzukiVProduct S (znat : ℝ)) C K Δ N D σ τ ≤
-      C * Real.exp (Real.sqrt K) * suzukiVProduct S (znat : ℝ) *
-        ((Real.log (D : ℝ)) ^ (-Δ) *
-          ((1 / s) * (∫ t in τ..σ,
-              qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ t) +
-            (6 * K ^ 2 *
-                qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ τ /
-              Real.log w) * (τ / s))) := by
-  classical
-  let Q : ℝ → ℝ := qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ
-  have hcarrier : sigmaOneCarrier S.prodPrimes.primeFactors D σ τ =
-      S.prodPrimes.primeFactors.filter
-        (fun p : ℕ => w ≤ (p : ℝ) ∧ (p : ℝ) < v) := by
-    ext p
-    simp only [sigmaOneCarrier, Finset.mem_filter]
-    rw [hw, hv]
-  have hsum :
-      (∑ p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D σ τ,
-        S.nu p * suzukiVProduct S (p : ℝ) / suzukiVProduct S (znat : ℝ) *
-          errorEnvelope H (N - 1) ((D ⌈/⌉ p : ℕ) : ℝ) d
-            (inheritedCoordinate D p) *
-          Real.log ((D ⌈/⌉ p : ℕ) : ℝ) ^ (-Δ)) ≤
-        (Real.log (D : ℝ)) ^ (-Δ) *
-          suzukiLemmaEightSevenPrimeSum S (D : ℝ) w v (znat : ℝ) Q := by
-    rw [hcarrier]
-    unfold suzukiLemmaEightSevenPrimeSum
-    rw [Finset.mul_sum]
-    apply Finset.sum_le_sum
-    intro p hp
-    have hp' := Finset.mem_filter.mp hp
-    have hpz : (p : ℝ) < (znat : ℝ) := hp'.2.2.trans_le hvz
-    have hpprime : p.Prime := Nat.prime_of_mem_primeFactors hp'.1
-    have hpdiv : p ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hp'.1).2.1
-    have hnu : 0 ≤ S.nu p := (S.nu_pos_of_prime p hpprime hpdiv).le
-    have hsuffix : 0 ≤ ∏ q ∈ S.prodPrimes.primeFactors.filter
-        (fun q : ℕ => p ≤ q ∧ (q : ℝ) < (znat : ℝ)), (1 - S.nu q)⁻¹ := by
-      apply Finset.prod_nonneg
-      intro q hq
-      have hq' := Finset.mem_filter.mp hq
-      have hqprime : q.Prime := Nat.prime_of_mem_primeFactors hq'.1
-      have hqdiv : q ∣ S.prodPrimes := (Nat.mem_primeFactors.mp hq'.1).2.1
-      exact inv_nonneg.mpr
-        (sub_nonneg.mpr (S.nu_lt_one_of_prime q hqprime hqdiv).le)
-    have herr := naturalCeil_inherited_error_le_claim14_13 H
-      (hCeil p hp'.1 hp'.2.1 hp'.2.2).1
-      (hCeil p hp'.1 hp'.2.1 hp'.2.2).2 hΔ
-      (hT p hp'.1 hp'.2.1 hp'.2.2)
-      (h1413 p hp'.1 hp'.2.1 hp'.2.2)
-    rw [show S.nu p * suzukiVProduct S (p : ℝ) /
-        suzukiVProduct S (znat : ℝ) =
-        S.nu p * (suzukiVProduct S (p : ℝ) /
-          suzukiVProduct S (znat : ℝ)) by ring]
-    rw [suzukiVProduct_div_eq_suffix S hpz]
-    dsimp [Q]
-    have hmul := mul_le_mul_of_nonneg_left herr (mul_nonneg hnu hsuffix)
-    nlinarith
-  have houter : 0 ≤ C * Real.exp (Real.sqrt K) * suzukiVProduct S (znat : ℝ) :=
-    mul_nonneg (mul_nonneg hC (Real.exp_nonneg _)) (suzukiVProduct_pos S _).le
-  unfold sigmaTwelve
-  apply (mul_le_mul_of_nonneg_left hsum houter).trans
-  apply mul_le_mul_of_nonneg_left _ houter
-  apply mul_le_mul_of_nonneg_left _ (Real.rpow_nonneg (Real.log_nonneg hD.le) _)
-  exact sigma12_middle_le_qD_lemma8_7 (S := S) (H := H)
-    (ErrorSign.ofDepth N) Q (fun p hp hpw hpv => le_rfl)
-    hH hD hz2 hv2 hw2 hwv hvz hz hv hw hτ hτσ hK hlocal hii
 
 
 end SuzukiLemma144KappaOne

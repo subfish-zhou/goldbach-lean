@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition1023Phase
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1022DownwardCrossingCore
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval

@@ -1,0 +1,141 @@
+{
+  "strict_options": [
+    "warningAsError=true",
+    "autoImplicit=false",
+    "j1"
+  ],
+  "official_dependencies": true,
+  "fresh_objects": "/tmp/wu-integer-payments",
+  "production_modules": [
+    {
+      "module": "WR2IntegerLogHorner",
+      "source_sha256": "85f3cd4443233f0c0448c465e42d4ed2edefc95c9210623fcb8b1c4c105713f7",
+      "elapsed": "0:12.73",
+      "max_rss_kib": 7939600,
+      "axiom_lines": [
+        "'WuPaper.IntegerLogHorner.homogeneous_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.IntegerLogHorner.logLo_nat_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.IntegerLogHorner.splitRatio_nat' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.IntegerLogHorner.quotient_payment_of_exact' depends on axioms: [propext, Classical.choice, Quot.sound]"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCIntegerData",
+      "source_sha256": "44eea1bb61ad424f29b7d2ddfd6b5230bbc744a1b2f4e7dce4651bc929fe5826",
+      "elapsed": "0:09.64",
+      "max_rss_kib": 7832116,
+      "axiom_lines": []
+    },
+    {
+      "module": "WR2ClassicalCSums",
+      "source_sha256": "ceea9eef8a3415c4d1904a2f9b5b2ebd9976f4c19cd52714372b262a2a21b2aa",
+      "elapsed": "0:15.57",
+      "max_rss_kib": 9428976,
+      "axiom_lines": [
+        "'WuPaper.ClassicalC.c_sum_block_000' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_001' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_002' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_003' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_004' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_005' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_006' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_007' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_008' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_009' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_010' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_011' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_012' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_013' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_014' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_015' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_016' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_017' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_018' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_019' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_020' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_021' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_022' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_023' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_024' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_025' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_026' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_027' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_028' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_029' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_030' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_031' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_032' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_033' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_034' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_035' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_036' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_037' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_038' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_039' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_040' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_041' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_042' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_043' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_044' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_045' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_046' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_047' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_048' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_049' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_050' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_051' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_052' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_053' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_054' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_055' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_056' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_057' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_058' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_059' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_060' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_061' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_062' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.c_sum_block_063' depends on axioms: [propext, Classical.choice, Quot.sound]"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCPayments",
+      "source_sha256": "30373ae14cdbabd43c7c14fc8a079152eeca09182990b213fa87fc6a3dc3d4dd",
+      "elapsed": "0:07.21",
+      "max_rss_kib": 7906144,
+      "axiom_lines": [
+        "'WuPaper.ClassicalC.cPayment_total' depends on axioms: [propext, Classical.choice, Quot.sound]"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCTableCheck",
+      "source_sha256": "4c8ac0101dfc9500336fcf4b6c15d46c81c3d082a208cfbdb032ecb29340ef27",
+      "elapsed": "0:06.54",
+      "max_rss_kib": 7894588,
+      "axiom_lines": []
+    },
+    {
+      "module": "WR2ClassicalCIntegerSoundness",
+      "source_sha256": "2933d58505daa8a698553884ac31f92c6f7709bb6e4a57c9e46c28b9124695a3",
+      "elapsed": "0:07.43",
+      "max_rss_kib": 7912532,
+      "axiom_lines": [
+        "'WuPaper.CIntegerPayment.raw_fraction_eq' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.CIntegerPayment.integer_paid_real' depends on axioms: [propext, Classical.choice, Quot.sound]"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCCertificate",
+      "source_sha256": "8bb41c1d62640b729e023c8ea96a3954d7f029b897bf973abbaf3f3a708360ff",
+      "elapsed": "0:07.11",
+      "max_rss_kib": 7900872,
+      "axiom_lines": [
+        "'WuPaper.ClassicalC.first_C_lower' depends on axioms: [propext, Classical.choice, Quot.sound]",
+        "'WuPaper.ClassicalC.first_main_lower' depends on axioms: [propext, Classical.choice, Quot.sound]"
+      ]
+    }
+  ],
+  "individual_blocks_passed_before_grouping": 64,
+  "eighth_unchanged_modules": 92,
+  "full_payment_equality": "4096 Python exact matches against SHA-bound fixed Git baseline; grouped Lean separately certifies all 64 sums and generic all-index soundness"
+}

@@ -83,9 +83,4 @@ theorem fouvryG9RelaxedIntegral_upperSum_delta {n : ℕ} (hn : 0 < n)
   simpa only [mul_assoc] using mul_le_mul_of_nonneg_right
     (fouvryG9RelaxedIntegral_corner_delta hn hδ0 hδ q) hm
 
-#print axioms fouvryG9RelaxedIntegral_kernel_le_grid
-#print axioms fouvryG9RelaxedIntegral_kernel_le_upperSum_eventually
-#print axioms fouvryG9RelaxedIntegral_upperSum_delta
-#print axioms fouvryG9RelaxedIntegralLow_eq_single
-
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

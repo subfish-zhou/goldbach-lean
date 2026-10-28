@@ -1,4 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteBoundaryTermination
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerDepthFourMass
 
 open scoped Classical BigOperators
 open Finset

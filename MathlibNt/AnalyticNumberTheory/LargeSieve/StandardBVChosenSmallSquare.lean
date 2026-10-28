@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
 
 namespace AnalyticNumberTheory.LargeSieve
@@ -9,9 +8,6 @@ open scoped BigOperators ArithmeticFunction Topology
 
 noncomputable section
 
-/-- Legacy degenerate cutoff retained only for compatibility shims that still
-expect the historically zeroed small lane. -/
-def standardBVChosenSmallCutoff (N : ℕ) : ℕ := min N 1
 
 /-- Production balanced cutoff for the retained small lane. -/
 def standardBVBalancedSmallCutoff (N : ℕ) : ℕ :=
@@ -83,27 +79,6 @@ theorem standardBVSmall_squareLedger_energy_le (N Q C v : ℕ) (hQ : 0 < Q) :
   · unfold primitiveLargeSieveConstant
     positivity
 
-/-- Ordinary primitive prefix-maximal large sieve, specialized to the exact
-production small coefficient. -/
-theorem standardBVChosenSmall_squareLedger_le (N Q C : ℕ) (hQ : 0 < Q) :
-    primitivePrefixSquareLedgerOn
-        (vaughanSmallCoeff vaughanUnitIntegerCoeff (standardBVBalancedSmallCutoff N)) N
-        (highConductorSet N Q C) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-        ((standardBVBalancedSmallCutoff N : ℝ) *
-          Real.log ((standardBVBalancedSmallCutoff N + 1 : ℕ) : ℝ) ^ 2) := by
-  exact standardBVSmall_squareLedger_energy_le N Q C (standardBVBalancedSmallCutoff N) hQ
-
-/-- At the chosen endpoint, the exact production small coefficient is zero. -/
-theorem standardBVChosenSmallCoeff_eq_zero (N : ℕ) :
-    vaughanSmallCoeff vaughanUnitIntegerCoeff (standardBVChosenSmallCutoff N) = 0 := by
-  funext n
-  unfold vaughanSmallCoeff standardBVChosenSmallCutoff vaughanSmall
-  simp only [vaughanUnitIntegerCoeff, one_mul]
-  split_ifs with h
-  · have hn : n.toNat = 0 ∨ n.toNat = 1 := by omega
-    rcases hn with hn | hn <;> simp [hn]
-  · rfl
 
 /-- Uniform envelope for the complete weighted square ledger.  The coefficient
 is unchanged; only its energy is bounded.  The logarithmic costs are respectively
@@ -318,23 +293,6 @@ theorem standardBVSmall_weightedSquareLedger_payable
     _ ≤ K₀ ^ 2 * ((N : ℝ) ^ 2 / Real.log N ^ (2 * (A + κ))) := by gcongr
     _ = (K₀ * ((N : ℝ) / Real.log N ^ (A + κ))) ^ 2 := by ring
 
-set_option maxHeartbeats 1000000 in
-/-- The complete weighted small square ledger is paid unconditionally with the
-production balanced cutoff and no coefficient zeroing. -/
-theorem standardBVChosenSmall_squareLedger_payable (A κ B C : ℕ) :
-    ∃ K₀ : ℝ, 0 < K₀ ∧
-      ∀ᶠ N : ℕ in Filter.atTop,
-        let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-        let R := logConductorThreshold N C
-        let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-        let X := (N : ℝ) / Real.log N ^ (A + κ)
-        P ^ 2 * (3 * highConductorHarmonicFactor Q R *
-            primitivePrefixSquareLedgerOn
-              (vaughanSmallCoeff vaughanUnitIntegerCoeff
-                (standardBVBalancedSmallCutoff N)) N
-              (highConductorSet N Q C)) ≤ (K₀ * X) ^ 2 := by
-  exact standardBVSmall_weightedSquareLedger_payable standardBVBalancedSmallCutoff
-    (Filter.Eventually.of_forall fun _ => le_rfl) A κ B C
 
 end
 end AnalyticNumberTheory.LargeSieve

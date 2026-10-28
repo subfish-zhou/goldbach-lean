@@ -158,37 +158,6 @@ theorem boxProduct_primeProduct_eq_indicator {ι : Type*} [DecidableEq ι]
     have hs := boxProduct_primeSupported s B k (P.prod id) hne
     exact hsub (by simpa only [id_eq, Nat.primeFactors_prod hP] using hs)
 
-/-- The existing full-integer `boxProduct` has coefficient exactly one on the
-squarefree integers with the prescribed box counts, and zero on all other
-squarefree integers. -/
-theorem boxProduct_squarefree_eq_indicator {ι : Type*} [DecidableEq ι]
-    (s : Finset ι) (B : ι → Finset ℕ) (k : ι → ℕ)
-    (hdisj : ∀ ⦃i⦄, i ∈ s → ∀ ⦃j⦄, j ∈ s → i ≠ j → Disjoint (B i) (B j))
-    {n : ℕ} (hn : Squarefree n) :
-    boxProduct s B k n =
-      if n.primeFactors ⊆ s.biUnion B ∧
-        (∀ i ∈ s, (n.primeFactors ∩ B i).card = k i) then 1 else 0 := by
-  simpa only [id_eq, Nat.prod_primeFactors_of_squarefree hn] using
-    boxProduct_primeProduct_eq_indicator s B k hdisj n.primeFactors
-      (fun p hp => Nat.prime_of_mem_primeFactors hp)
-
-theorem boxProduct_squarefree_eq_one_iff {ι : Type*} [DecidableEq ι]
-    (s : Finset ι) (B : ι → Finset ℕ) (k : ι → ℕ)
-    (hdisj : ∀ ⦃i⦄, i ∈ s → ∀ ⦃j⦄, j ∈ s → i ≠ j → Disjoint (B i) (B j))
-    {n : ℕ} (hn : Squarefree n) :
-    boxProduct s B k n = 1 ↔ n.primeFactors ⊆ s.biUnion B ∧
-      (∀ i ∈ s, (n.primeFactors ∩ B i).card = k i) := by
-  rw [boxProduct_squarefree_eq_indicator s B k hdisj hn]
-  split_ifs <;> simp_all
-
-theorem boxProduct_squarefree_eq_zero_iff {ι : Type*} [DecidableEq ι]
-    (s : Finset ι) (B : ι → Finset ℕ) (k : ι → ℕ)
-    (hdisj : ∀ ⦃i⦄, i ∈ s → ∀ ⦃j⦄, j ∈ s → i ≠ j → Disjoint (B i) (B j))
-    {n : ℕ} (hn : Squarefree n) :
-    boxProduct s B k n = 0 ↔ ¬ (n.primeFactors ⊆ s.biUnion B ∧
-      (∀ i ∈ s, (n.primeFactors ∩ B i).card = k i)) := by
-  rw [boxProduct_squarefree_eq_indicator s B k hdisj hn]
-  split_ifs <;> simp_all
 
 /-- The actual small-prime coefficient survives the canonical small/big split.
 Only its prime support is assumed; no boundedness, sign, or sieve conclusion is
@@ -255,22 +224,5 @@ theorem smallWeight_boxProduct_squarefree_eq_indicator {ι : Type*} [DecidableEq
   simpa only [id_eq, Nat.prod_primeFactors_of_squarefree hn] using
     smallWeight_boxProduct_primeProduct_eq_indicator s B k hdisj B₀ ψ hsep hψ
       n.primeFactors (fun p hp => Nat.prime_of_mem_primeFactors hp)
-
-#check mul_apply_of_primeSupported
-#print axioms mul_apply_of_primeSupported
-#check boxWeight_squarefree_eq_indicator
-#print axioms boxWeight_squarefree_eq_indicator
-#check boxProduct_primeProduct_eq_indicator
-#print axioms boxProduct_primeProduct_eq_indicator
-#check boxProduct_squarefree_eq_indicator
-#print axioms boxProduct_squarefree_eq_indicator
-#check boxProduct_squarefree_eq_one_iff
-#print axioms boxProduct_squarefree_eq_one_iff
-#check boxProduct_squarefree_eq_zero_iff
-#print axioms boxProduct_squarefree_eq_zero_iff
-#check smallWeight_boxProduct_primeProduct_eq_indicator
-#print axioms smallWeight_boxProduct_primeProduct_eq_indicator
-#check smallWeight_boxProduct_squarefree_eq_indicator
-#print axioms smallWeight_boxProduct_squarefree_eq_indicator
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

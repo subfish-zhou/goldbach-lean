@@ -1,0 +1,45 @@
+{
+  "status": "ACTUAL_INSTALLED_SOURCE_MEASUREMENT_AFTER_PRODUCTION_VERIFICATION",
+  "observed_unix": 1793179228.8712294,
+  "manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+  "whole": {
+    "modules": 4151,
+    "effective": 566283,
+    "physical": 667929,
+    "bytes": 34424418
+  },
+  "final_closure": {
+    "modules": 3764,
+    "effective": 525529,
+    "physical": 621451,
+    "bytes": 30215769
+  },
+  "before_accepted_first383": {
+    "whole": {
+      "modules": 4142,
+      "effective": 573895,
+      "physical": 677021,
+      "bytes": 34891957
+    },
+    "final_closure": {
+      "modules": 3755,
+      "effective": 533141,
+      "physical": 630543,
+      "bytes": 30683308
+    }
+  },
+  "metric": "scripts/check.py count_code_lines: nonempty lines after lexical comment handling, keep_strings=True; identical published baseline metric",
+  "counting_script_sha256": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+  "savings": {
+    "whole": {
+      "effective": 7612,
+      "physical": 9092,
+      "bytes": 467539
+    },
+    "final_closure": {
+      "effective": 7612,
+      "physical": 9092,
+      "bytes": 467539
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "module": "Hf4ConstructiveTableChecks",
+  "exit_code": 0,
+  "seconds": 152.07015676051378,
+  "source_sha256": "4bfae798d1e436c0d86e939b31553ac8adeba0f8e10a984a544b1459e26eec6d",
+  "object_sha256": "db4ec52ec0d011380a79f4607cf1a67b25e2165645ff2fde2e3a563694a516cf",
+  "dependencies": {
+    "Hf4ConstructiveTableData": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb"
+  },
+  "dependency_contexts": {
+    "Hf4ConstructiveTableData": "02e8470bd34b71b68d27ef5bc3b9e172b92d742b61edec98af51e0ab3cc37ee9"
+  },
+  "context_sha256": "fb53b946bdc3fa1f1c9111e416144051644e94be37c76d331021a1f35ef0ba75",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableChecks.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableChecks.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableChecks.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableChecks.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableChecks.resources",
+  "resource_sha256": "58eebb5a78aabf4cddb021bda659a40d4431c4d70ecc29323ce38b8c3ca5d059",
+  "artifact_bundle_sha256": {
+    ".olean": "db4ec52ec0d011380a79f4607cf1a67b25e2165645ff2fde2e3a563694a516cf"
+  }
+}

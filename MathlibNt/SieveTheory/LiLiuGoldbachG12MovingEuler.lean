@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12ScaledC2Sieve
-import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
 
 noncomputable section
 open Classical Finset Filter

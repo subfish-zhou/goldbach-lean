@@ -1,0 +1,173 @@
+def WuTarget.E09JointMain.jointGain : ℝ :=
+2 * Wu2008DoubleSieve.FixedCoefficientUpperEnclosure.a ^ 2 / 9
+def WuTarget.E09JointMain.surplusDensity : ℝ → ℝ :=
+fun t => 4 / 3 * Wu2008DoubleSieve.FixedCoefficientUpperEnclosure.a * (Wu2008DoubleSieve.Phase22.u t - 3) ^ 5
+def WuTarget.E09JointMain.lowDensity : ℝ → ℝ :=
+fun t => BaseSharedSlack.density t + WuTarget.E09JointMain.surplusDensity t
+def WuTarget.E09JointMain.payment : ℝ :=
+WuTarget.W11Credit.payment + WuTarget.E09JointMain.jointGain
+def WuTarget.E09JointMain.netGain : ℝ :=
+WuTarget.E09JointMain.jointGain / 4
+def WuTarget.E09JointMain.selectedCredit : ℝ :=
+Max.max (3 * Wu08TerminalAlignment.firstMain - WuTarget.W11.pairUpper)
+  (WuTarget.W11.correlatedCredit + WuTarget.E09JointMain.jointGain)
+def WuTarget.E09JointMain.paidCoefficient : ℝ :=
+WuTarget.W17Accepted.paidCoefficient + WuTarget.E09JointMain.netGain
+def WuTarget.E09JointMain.remainingCoefficient : ℝ :=
+WuTarget.W17Accepted.remainingCoefficient + WuTarget.E09JointMain.netGain
+WuTarget.E09JointMain.lowDensity_exact (t : ℝ) :
+  WuTarget.E09JointMain.lowDensity t = 16 * (8 - 24 * t) * (Wu2008DoubleSieve.Phase22.u t - 3) ^ 4 / 288
+'WuTarget.E09JointMain.lowDensity_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.low_density_paid {t : ℝ}
+  (ht :
+    t ∈
+      Set.Icc (Wu2008DoubleSieve.FixedCoefficientHLowerEnclosure.c 4)
+        Wu2008DoubleSieve.FixedCoefficientUpperEnclosure.s) :
+  WuTarget.E09JointMain.lowDensity t ≤
+    Wu2008DoubleSieve.SharedRationalEnvelope.weight t *
+      (Wu2008DoubleSieve.SharedRationalEnvelope.p (Wu2008DoubleSieve.Phase22.u t) -
+        Wu2008DoubleSieve.wuUpperCoefficient (Wu2008DoubleSieve.Phase22.u t))
+'WuTarget.E09JointMain.low_density_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.surplus_ftc :
+  ∫ (t : ℝ) in
+      Wu2008DoubleSieve.FixedCoefficientHLowerEnclosure.c 4..Wu2008DoubleSieve.FixedCoefficientUpperEnclosure.s,
+      WuTarget.E09JointMain.surplusDensity t =
+    WuTarget.E09JointMain.jointGain
+'WuTarget.E09JointMain.surplus_ftc' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.low_ftc :
+  ∫ (t : ℝ) in
+      Wu2008DoubleSieve.FixedCoefficientHLowerEnclosure.c 4..Wu2008DoubleSieve.FixedCoefficientUpperEnclosure.s,
+      WuTarget.E09JointMain.lowDensity t =
+    BaseSharedSlack.lowGain + WuTarget.E09JointMain.jointGain
+'WuTarget.E09JointMain.low_ftc' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.low_gain_paid :
+  BaseSharedSlack.lowGain + WuTarget.E09JointMain.jointGain ≤ Wu2008DoubleSieve.BaseGSharedActualRecovery.lowKernel
+'WuTarget.E09JointMain.low_gain_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.jointGain_exact : WuTarget.E09JointMain.jointGain = 20000 / 15848361
+'WuTarget.E09JointMain.jointGain_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.jointGain_pos : 0 < WuTarget.E09JointMain.jointGain
+'WuTarget.E09JointMain.jointGain_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.shared_recovery_paid :
+  WuTarget.W11.sharedRecovery + WuTarget.E09JointMain.jointGain ≤ Wu2008DoubleSieve.AnalyticTotalThreshold.sharedLoss
+'WuTarget.E09JointMain.shared_recovery_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.correlated_gain_le_actual :
+  WuTarget.W11.correlatedCredit + WuTarget.E09JointMain.jointGain ≤
+    3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain
+'WuTarget.E09JointMain.correlated_gain_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.payment_exact :
+  WuTarget.E09JointMain.payment =
+    83078419629618575238304346189387006860549400910521240176775087 /
+      61155381611119450770290424186958629545268860216769067968750000
+'WuTarget.E09JointMain.payment_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.netGain_exact : WuTarget.E09JointMain.netGain = 5000 / 15848361
+'WuTarget.E09JointMain.netGain_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.netGain_pos : 0 < WuTarget.E09JointMain.netGain
+'WuTarget.E09JointMain.netGain_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.payment_net : WuTarget.E09JointMain.payment - WuTarget.W11Credit.payment = 20000 / 15848361
+'WuTarget.E09JointMain.payment_net' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.payment_strict : WuTarget.W11Credit.payment < WuTarget.E09JointMain.payment
+'WuTarget.E09JointMain.payment_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.payment_le_actual :
+  WuTarget.E09JointMain.payment ≤
+    3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain
+'WuTarget.E09JointMain.payment_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.actual_normalized_payment :
+  WuTarget.E09JointMain.payment / 4 ≤
+    (3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain) / 4
+'WuTarget.E09JointMain.actual_normalized_payment' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.correlated_remaining_exact :
+  3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain -
+      (WuTarget.W11.correlatedCredit + WuTarget.E09JointMain.jointGain) =
+    Wu2008DoubleSieve.AnalyticTotalThreshold.sharedLoss -
+      (WuTarget.W11.sharedRecovery + WuTarget.E09JointMain.jointGain)
+'WuTarget.E09JointMain.correlated_remaining_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.payment_remaining_exact :
+  3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain -
+      WuTarget.E09JointMain.payment =
+    Wu2008DoubleSieve.AnalyticTotalThreshold.sharedLoss -
+        (WuTarget.W11.sharedRecovery + WuTarget.E09JointMain.jointGain) +
+      (WuTarget.W11.correlatedCredit - WuTarget.W11Credit.payment)
+'WuTarget.E09JointMain.payment_remaining_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.selectedCredit_le_actual :
+  WuTarget.E09JointMain.selectedCredit ≤
+    3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain
+'WuTarget.E09JointMain.selectedCredit_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.previous_selected_le : WuTarget.W11Accepted.selectedCredit ≤ WuTarget.E09JointMain.selectedCredit
+'WuTarget.E09JointMain.previous_selected_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.payment_le_selected : WuTarget.E09JointMain.payment ≤ WuTarget.E09JointMain.selectedCredit
+'WuTarget.E09JointMain.payment_le_selected' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.first_lower_transport {f : ℝ} (hf : f ≤ Wu08TerminalAlignment.firstMain) :
+  Max.max (3 * f - WuTarget.W11.pairUpper) (WuTarget.W11.correlatedCredit + WuTarget.E09JointMain.jointGain) ≤
+    WuTarget.E09JointMain.selectedCredit
+'WuTarget.E09JointMain.first_lower_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.shifted_w11_le_actual_core :
+  WuTarget.W11CreditAccepted.paidCoefficient + WuTarget.E09JointMain.netGain ≤
+    WuTarget.W14Accepted.paidCoefficient WuTarget.W04Accepted.enhanced
+'WuTarget.E09JointMain.shifted_w11_le_actual_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.shifted_w13_lt_actual :
+  WuTarget.W13TightAccepted.paidCoefficient + WuTarget.E09JointMain.netGain <
+    WuTarget.W01.ordinaryCoefficient WuTarget.W04Accepted.enhanced
+'WuTarget.E09JointMain.shifted_w13_lt_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.paid_net :
+  WuTarget.E09JointMain.paidCoefficient - WuTarget.W17Accepted.paidCoefficient = 5000 / 15848361
+'WuTarget.E09JointMain.paid_net' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.remaining_net :
+  WuTarget.E09JointMain.remainingCoefficient - WuTarget.W17Accepted.remainingCoefficient = 5000 / 15848361
+'WuTarget.E09JointMain.remaining_net' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.paid_strict : WuTarget.W17Accepted.paidCoefficient < WuTarget.E09JointMain.paidCoefficient
+'WuTarget.E09JointMain.paid_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.paid_lt_actual :
+  WuTarget.E09JointMain.paidCoefficient < WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced
+'WuTarget.E09JointMain.paid_lt_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.paid_exact :
+  WuTarget.E09JointMain.paidCoefficient =
+    (WuTarget.E09JointMain.payment + Wu08TerminalAlignment.sixthMain - WuTarget.W13Tight.pairUpper +
+                    WuTarget.W02Accepted.nodeGain) /
+                  4 +
+                WuTarget.W14Accepted.retainedSlack +
+              WuTarget.W12Accepted.debitSlack +
+            535927 / 200000 +
+          2493 / 4000000 -
+        2956239 / 1000000 +
+      WuTarget.W17Accepted.jointCredit
+'WuTarget.E09JointMain.paid_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.ordinary_P2_paid {ε dmax : ℝ} (hε : 0 < ε) (hdmax : 0 < dmax) :
+  ∃ δ,
+    0 < δ ∧
+      δ < dmax ∧
+        δ ≤ 1 / 100 ∧
+          ∃ T,
+            512 ≤ T ∧
+              ∀ (N : ℕ),
+                T ≤ N →
+                  Even N →
+                    (WuTarget.E09JointMain.paidCoefficient - ε) * U8CanonicalMother.M N ≤
+                      ↑{p ∈ Finset.range (N + 1) |
+                            Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+'WuTarget.E09JointMain.ordinary_P2_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.paid_threshold_iff :
+  4491 / 5000 ≤ WuTarget.E09JointMain.paidCoefficient ↔ 840977 / 800000 ≤ WuTarget.E09JointMain.remainingCoefficient
+'WuTarget.E09JointMain.paid_threshold_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.old_remaining_threshold_iff :
+  4491 / 5000 ≤ WuTarget.E09JointMain.paidCoefficient ↔
+    13324107088697 / 12678688800000 ≤ WuTarget.W17Accepted.remainingCoefficient
+'WuTarget.E09JointMain.old_remaining_threshold_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.refined_target (h : 13324107088697 / 12678688800000 ≤ WuTarget.W17Accepted.remainingCoefficient) :
+  ∃ T,
+    512 ≤ T ∧
+      ∀ (N : ℕ),
+        T ≤ N →
+          Even N →
+            WuTarget.RefinedExit.margin / 2 * U8CanonicalMother.M N ≤
+                ↑(Wu2004MeanValue.refinedGood N (9469 / 5000)).card ∧
+              ∃ p r q, Nat.Prime p ∧ (r = 1 ∨ Nat.Prime r) ∧ Nat.Prime q ∧ N = p + r * q ∧ ↑r ≤ ↑q ^ (4469 / 5000)
+'WuTarget.E09JointMain.refined_target' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.actual_rational_payment :
+  83078419629618575238304346189387006860549400910521240176775087 /
+      61155381611119450770290424186958629545268860216769067968750000 ≤
+    3 * Wu08TerminalAlignment.firstMain - Wu08TerminalAlignment.thirdMain - Wu08TerminalAlignment.fourthMain
+'WuTarget.E09JointMain.actual_rational_payment' depends on axioms: [propext, Classical.choice, Quot.sound]
+WuTarget.E09JointMain.actual_coefficient_gain :
+  WuTarget.W17Accepted.paidCoefficient + 5000 / 15848361 <
+    WuTarget.W01.ordinaryCoefficient WuTarget.W17Accepted.enhanced
+'WuTarget.E09JointMain.actual_coefficient_gain' depends on axioms: [propext, Classical.choice, Quot.sound]

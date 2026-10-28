@@ -220,9 +220,4 @@ theorem exists_signedFamilyDensity_ff :
     _ ≤ V * (jr1965F (Real.log D / Real.log z) + (Ca + Cf) * T)
   constructor <;> nlinarith
 
-#check exists_signedFamilyDensity_coarse_comparison_target
-#print axioms exists_signedFamilyDensity_coarse_comparison_target
-#check exists_signedFamilyDensity_ff
-#print axioms exists_signedFamilyDensity_ff
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

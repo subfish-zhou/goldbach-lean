@@ -1,0 +1,49 @@
+{
+  "module": "Hf4AmountCore",
+  "exit_code": 0,
+  "seconds": 4.753239318728447,
+  "source_sha256": "449003813583411856a34695fed3ffc7a2479c61b03a174e079e1c5810cf0b58",
+  "object_sha256": "5efc5f1642dfee16d4dbdbe87190e529669e4836e8dc4a59eccde49dd1c05d40",
+  "dependencies": {
+    "Hf4QuadPublic": "eeaba3e19956d2f81cc19e1cade93bdc7154d163aee85a3a624cd0af4fdec8e3",
+    "Hf4DEOriginalMass": "9aee4087d3903bac176fe48dca355cb0406f7de095b2e386f0ef30025f0d3f34",
+    "Hf4TargetVariation": "610274449f818eecbf523c06ae947778143cf347f0621c1041ff249587138e1e"
+  },
+  "dependency_contexts": {
+    "Hf4QuadPublic": "9a10b26444a6d93a83f49a25019d6cba2a5b3b97d1d09abbb8a1d02d91c0ac6f",
+    "Hf4DEOriginalMass": "7400478f6739a2f94e3c159c6cfc33ce63d9e5943d78af62b7a1693d3c928e76",
+    "Hf4TargetVariation": "78159f4a1d3ca6eb9dd9676fad90744e5ed5d5e8239fd25d4a6e0646924c24bb"
+  },
+  "context_sha256": "aef5398b02852d5e56043571461859c31b800ec6fab7b7adf8cd1d1dd89040c4",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountCore.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountCore.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountCore.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountCore.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountCore.resources",
+  "resource_sha256": "05c4ea2b93856a4f291946b715038bf86525f91e6f25203f299334096458a79c",
+  "artifact_bundle_sha256": {
+    ".olean": "5efc5f1642dfee16d4dbdbe87190e529669e4836e8dc4a59eccde49dd1c05d40"
+  }
+}

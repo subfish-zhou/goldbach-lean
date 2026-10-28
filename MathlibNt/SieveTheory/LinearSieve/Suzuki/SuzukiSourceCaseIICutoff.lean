@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIINaturalCutoff
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
 
 open scoped Classical BigOperators
 open Finset

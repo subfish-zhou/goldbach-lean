@@ -10,7 +10,6 @@ open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachDoubleDifference (P : Prop) : Decidable P := Classical.propDecidable P
 
 /-- At cutoff `r`, adjoining the prime factor `r` to the sieve modulus does
 not change which smaller primes are sifted. -/

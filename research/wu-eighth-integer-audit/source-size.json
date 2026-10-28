@@ -1,0 +1,112 @@
+{
+  "validation_scope": "Source scope, retained contracts and size only; not Lean or numerical acceptance.",
+  "whole_tree": {
+    "before": {
+      "modules": 4459,
+      "code_lines": 604478,
+      "physical_lines": 708195,
+      "utf8_bytes": 35991380
+    },
+    "after": {
+      "modules": 4431,
+      "code_lines": 601997,
+      "physical_lines": 705772,
+      "utf8_bytes": 35929214
+    },
+    "reduction": {
+      "modules": 28,
+      "code_lines": 2481,
+      "physical_lines": 2423,
+      "utf8_bytes": 62166
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 4072,
+      "code_lines": 563724,
+      "physical_lines": 661717,
+      "utf8_bytes": 31782731
+    },
+    "after": {
+      "modules": 4044,
+      "code_lines": 561243,
+      "physical_lines": 659294,
+      "utf8_bytes": 31720565
+    },
+    "reduction": {
+      "modules": 28,
+      "code_lines": 2481,
+      "physical_lines": 2423,
+      "utf8_bytes": 62166
+    }
+  },
+  "modified_modules": [
+    "WR2ClassicalEighthRawCertificate",
+    "WR2ClassicalEighthRawPayments"
+  ],
+  "added_modules": [
+    "WR2ClassicalEighthRawIntegerData",
+    "WR2ClassicalEighthRawIntegerSoundness",
+    "WR2ClassicalEighthRawSums",
+    "WR2IntegerLogUpper"
+  ],
+  "removed_modules": [
+    "WR2ClassicalEighthRawGridBlock000",
+    "WR2ClassicalEighthRawGridBlock001",
+    "WR2ClassicalEighthRawGridBlock002",
+    "WR2ClassicalEighthRawGridBlock003",
+    "WR2ClassicalEighthRawGridBlock004",
+    "WR2ClassicalEighthRawGridBlock005",
+    "WR2ClassicalEighthRawGridBlock006",
+    "WR2ClassicalEighthRawGridBlock007",
+    "WR2ClassicalEighthRawGridBlock008",
+    "WR2ClassicalEighthRawGridBlock009",
+    "WR2ClassicalEighthRawGridBlock010",
+    "WR2ClassicalEighthRawGridBlock011",
+    "WR2ClassicalEighthRawGridBlock012",
+    "WR2ClassicalEighthRawGridBlock013",
+    "WR2ClassicalEighthRawGridBlock014",
+    "WR2ClassicalEighthRawGridBlock015",
+    "WR2ClassicalEighthRawGridBlock016",
+    "WR2ClassicalEighthRawGridBlock017",
+    "WR2ClassicalEighthRawGridBlock018",
+    "WR2ClassicalEighthRawGridBlock019",
+    "WR2ClassicalEighthRawGridBlock020",
+    "WR2ClassicalEighthRawGridBlock021",
+    "WR2ClassicalEighthRawGridBlock022",
+    "WR2ClassicalEighthRawGridBlock023",
+    "WR2ClassicalEighthRawGridBlock024",
+    "WR2ClassicalEighthRawGridBlock025",
+    "WR2ClassicalEighthRawGridBlock026",
+    "WR2ClassicalEighthRawGridBlock027",
+    "WR2ClassicalEighthRawGridBlock028",
+    "WR2ClassicalEighthRawGridBlock029",
+    "WR2ClassicalEighthRawGridBlock030",
+    "WR2ClassicalEighthRawGridBlock031"
+  ],
+  "families": {
+    "eighth_raw_integer": {
+      "before": {
+        "modules": 34,
+        "code_lines": 2845,
+        "physical_lines": 2845,
+        "utf8_bytes": 78631
+      },
+      "after": {
+        "modules": 6,
+        "code_lines": 364,
+        "physical_lines": 422,
+        "utf8_bytes": 16465
+      },
+      "reduction": {
+        "modules": 28,
+        "code_lines": 2481,
+        "physical_lines": 2423,
+        "utf8_bytes": 62166
+      }
+    }
+  },
+  "unchanged_modules": 4425,
+  "preserved_public_statements": 3,
+  "retired_internal_statements": {}
+}

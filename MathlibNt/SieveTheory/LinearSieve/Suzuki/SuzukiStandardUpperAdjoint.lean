@@ -1,13 +1,10 @@
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 /-
 Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingNormalization
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 
 /-!
 # Suzuki's standard upper adjoint `r_{1,-1}`
@@ -134,16 +131,6 @@ theorem integrableOn_standardUpperAdjoint_integrand {s : ℝ} (hs : 0 < s) :
     have hEin := suzukiEin_nonneg (le_of_lt hx)
     linarith
 
-/-- Positivity of the standard adjoint follows from its positive Laplace
-kernel, not from an imposed initial value. -/
-theorem suzukiStandardUpperAdjoint_pos {s : ℝ} (hs : 0 < s) :
-    0 < suzukiStandardUpperAdjoint s := by
-  unfold suzukiStandardUpperAdjoint
-  rw [MeasureTheory.integral_pos_iff_support_of_nonneg_ae]
-  · simp [Function.support, Real.exp_ne_zero]
-  · filter_upwards with x
-    positivity
-  · exact integrableOn_standardUpperAdjoint_integrand hs
 
 /-- Exact finite-interval primitive identity behind
 `r_{1,-1}(1)=exp(-γ)`.  This is the earliest normalization node and does not

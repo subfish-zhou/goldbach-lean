@@ -1,5 +1,5 @@
-import AnalyticNumberTheory.Mertens.Product
 import Mathlib.Analysis.Normed.Group.Tannery
+import AnalyticNumberTheory.Mertens.Product
 import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
 import Mathlib.NumberTheory.Harmonic.GammaDeriv
 

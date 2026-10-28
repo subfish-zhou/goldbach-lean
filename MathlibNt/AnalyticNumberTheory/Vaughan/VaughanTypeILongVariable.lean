@@ -1,7 +1,6 @@
 
 
 import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIBilinear
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanPrefixReduction
 
 /-!
  # Vaughan Type I in the long variable
@@ -255,17 +254,6 @@ primitive prefix large sieve. -/
 def vaughanTypeILongCoeff (b : ℤ → ℂ) (u v : ℕ) (n : ℤ) : ℂ :=
   b n * (vaughanTypeI n.toNat u v : ℂ)
 
-/-- The literal finite coefficient moment; no pointwise divisor-cardinality
-majorant has been inserted. -/
-def vaughanTypeILongCoeffMoment (b : ℤ → ℂ) (N u v : ℕ) : ℝ :=
-  ∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeILongCoeff b u v n‖ ^ 2
-
-/-- Prefix maximum written on the rearranged long-variable forms themselves. -/
-def vaughanTypeILongPrefixMaxSquare
-    (b : ℤ → ℂ) (N u v q : ℕ) (χ : PrimitiveCharacter q) : ℝ :=
-  ((Finset.range (N + 1)).image (fun y =>
-      ‖vaughanTypeILongPrefix (fun n => b n) y u v q χ‖ ^ 2)).max'
-    (Finset.image_nonempty.mpr ⟨0, by simp⟩)
 
 /-- Every prefix of the collected coefficient sequence is literally the
 previously rearranged short-times-long expression. -/
@@ -296,113 +284,6 @@ theorem primitiveCharacterPrefixSquare_typeI_eq_long
   simp only [vaughanTypeILongCoeff, Int.toNat_natCast]
   ring
 
-/-- The generic prefix maximum and the maximum of the exact long-variable
-forms are equal, not merely comparable. -/
-theorem primitiveCharacterPrefixMaxSquare_typeI_eq_long
-    (b : ℤ → ℂ) (N u v q : ℕ) (χ : PrimitiveCharacter q) :
-    primitiveCharacterPrefixMaxSquare (vaughanTypeILongCoeff b u v) 0 N q χ =
-      vaughanTypeILongPrefixMaxSquare b N u v q χ := by
-  unfold primitiveCharacterPrefixMaxSquare vaughanTypeILongPrefixMaxSquare
-  congr 2
-  funext y
-  exact primitiveCharacterPrefixSquare_typeI_eq_long b y u v q χ
-
-/-- Minimal BV-scale scalar hypothesis.  It is a coefficient moment only, not a
-Type-I character-sum conclusion.  All of `u,v,N` remain explicit. -/
-def VaughanTypeILongCoeffMomentBound
-    (b : ℤ → ℂ) (N u v : ℕ) (C : ℝ) (κ : ℕ) : Prop :=
-  vaughanTypeILongCoeffMoment b N u v ≤
-    C * (N : ℝ) * Real.log (N + 1 : ℕ) ^ κ
-
-/-- Primitive large sieve applied only after the exact long-variable
-rearrangement. -/
-theorem weighted_primitive_vaughanTypeILong
-    (b : ℤ → ℂ) (N Q u v : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanTypeILongCoeff b u v) 0 N q χ) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-          vaughanTypeILongCoeffMoment b N u v := by
-  simpa [vaughanTypeILongCoeffMoment] using
-    weighted_primitive_prefix_maximal (vaughanTypeILongCoeff b u v) 0 N Q hQ
-
-/-- Primitive large sieve in the publication-facing, genuinely rearranged
-form: its left side is a maximum of short-variable coefficients multiplying
-long-variable character sums. -/
-theorem weighted_primitive_vaughanTypeILong_rearranged
-    (b : ℤ → ℂ) (N Q u v : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          vaughanTypeILongPrefixMaxSquare b N u v q χ) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-          vaughanTypeILongCoeffMoment b N u v := by
-  simpa only [← primitiveCharacterPrefixMaxSquare_typeI_eq_long] using
-    weighted_primitive_vaughanTypeILong b N Q u v hQ
-
-/-- Explicit BV-compatible `N * log^κ` coefficient scale.  The only premise is
-the minimal coefficient moment above. -/
-theorem weighted_primitive_vaughanTypeILong_of_moment
-    (b : ℤ → ℂ) (N Q u v : ℕ) (C : ℝ) (κ : ℕ) (hQ : 0 < Q)
-    (hMoment : VaughanTypeILongCoeffMomentBound b N u v C κ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanTypeILongCoeff b u v) 0 N q χ) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-          (C * (N : ℝ) * Real.log (N + 1 : ℕ) ^ κ) := by
-  refine (weighted_primitive_vaughanTypeILong b N Q u v hQ).trans ?_
-  apply mul_le_mul_of_nonneg_left hMoment
-  unfold primitiveLargeSieveConstant
-  positivity
-
-/-- Weighted Vaughan ledger with the old pointwise Type-I energy removed.
-Type I is charged by the exact long-variable coefficient moment; Type II and
-the small range retain their existing coefficient moments. -/
-theorem weighted_vaughan_prefix_large_sieve_long_typeI_ledger
-    (b : ℤ → ℂ) (N Q u v : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-        (vaughanTypeILongCoeffMoment b N u v +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-  simpa [vaughanTypeILongCoeffMoment, vaughanTypeILongCoeff,
-    vaughanTypeICoeff] using
-      weighted_vaughan_prefix_large_sieve_ledger b N Q u v hQ
-
-/-- The integrated weighted Vaughan ledger after inserting precisely the
-BV-scale coefficient-moment premise.  No Type-I character-sum estimate is
-assumed: the primitive large sieve was proved above from the coefficient
-moment. -/
-theorem weighted_vaughan_prefix_large_sieve_long_typeI_ledger_of_moment
-    (b : ℤ → ℂ) (N Q u v : ℕ) (C : ℝ) (κ : ℕ) (hQ : 0 < Q)
-    (hMoment : VaughanTypeILongCoeffMomentBound b N u v C κ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-        ((C * (N : ℝ) * Real.log (N + 1 : ℕ) ^ κ) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-  refine (weighted_vaughan_prefix_large_sieve_long_typeI_ledger
-    b N Q u v hQ).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · gcongr
-    exact hMoment
-  · have hLS : 0 ≤ primitiveLargeSieveConstant N Q := by
-      unfold primitiveLargeSieveConstant
-      positivity
-    positivity
 
 end
 

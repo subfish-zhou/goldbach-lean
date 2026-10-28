@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
-import MathlibNt.SieveTheory.LiLiuFouvryG9ReducedWeights
 
 open Finset
 open scoped BigOperators Classical

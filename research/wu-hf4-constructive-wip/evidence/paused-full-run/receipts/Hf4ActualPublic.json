@@ -1,0 +1,45 @@
+{
+  "module": "Hf4ActualPublic",
+  "exit_code": 0,
+  "seconds": 3.5491749234497547,
+  "source_sha256": "ed11ac8bd837a9319cba392eecf6a108aef194739c38c8289cd1b8a436e53421",
+  "object_sha256": "8c6e48a7b5a9840030f3a1b4e1d43ef0a89b7aba692e249c55d3b7e4328719ee",
+  "dependencies": {
+    "Hf4ActualRoute": "2b25695ffe5f26e6d642dd9324cd3a29b54a4537e08f7ba7b1746d57aab76fd2"
+  },
+  "dependency_contexts": {
+    "Hf4ActualRoute": "3ddf7bc0b4ffc1d09918980be61739b87fec4c95cdbe6cfe225059f6c9cab229"
+  },
+  "context_sha256": "b3886fcd5df2eb30101c1a99346d6671d646e39c073908b52c745c1dafa9a87d",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualPublic.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualPublic.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualPublic.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualPublic.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.log",
+  "log_sha256": "56d805100b5d65b7ad96711ac9c3fb6e782176b488cee0a8483049ded6f8286d",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualPublic.resources",
+  "resource_sha256": "9b1b8f75be9d42aab8caf3473c76fc180847dc307acc49651d77671ffde47f2b",
+  "artifact_bundle_sha256": {
+    ".olean": "8c6e48a7b5a9840030f3a1b4e1d43ef0a89b7aba692e249c55d3b7e4328719ee"
+  }
+}

@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
 import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open Filter
 

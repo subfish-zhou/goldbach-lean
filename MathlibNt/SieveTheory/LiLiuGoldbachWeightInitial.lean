@@ -10,8 +10,6 @@ open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachWeightInitial (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The weakly ordered closed double sum
 `Σ_{z≤r≤s≤b, r,s∈P(N)} H(A,N,rs;z)`. -/
@@ -93,67 +91,6 @@ private theorem goldbachHalfOpenPrimes_subset_closed
   rcases mem_goldbachHalfOpenPrimes_iff.mp hp with ⟨hpPrime, hpN, hpz, hpy⟩
   exact mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpy.le⟩
 
-private theorem goldbachWeightClosedPrimes_filter_lt_eq_halfOpen
-    (N : ℕ) (z y : ℝ) :
-    (goldbachClosedPrimes N z y).filter (fun p : ℕ => (p : ℝ) < y) =
-      goldbachHalfOpenPrimes N z y := by
-  ext p
-  constructor
-  · intro hp
-    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpy⟩
-    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, hpz, _⟩
-    exact mem_goldbachHalfOpenPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpy⟩
-  · intro hp
-    rcases mem_goldbachHalfOpenPrimes_iff.mp hp with ⟨hpPrime, hpN, hpz, hpy⟩
-    exact Finset.mem_filter.mpr
-      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpy.le⟩, hpy⟩
-
-private theorem goldbachWeightClosedPrimes_filter_not_lt_self_eq_singleton
-    (N : ℕ) (z : ℝ) {t : ℕ}
-    (ht : t ∈ goldbachClosedPrimes N z (t : ℝ)) :
-    ((goldbachClosedPrimes N z (t : ℝ)).filter fun p : ℕ => ¬(p : ℝ) < t) = {t} := by
-  ext p
-  constructor
-  · intro hp
-    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpNotLt⟩
-    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨_, _, _, hpt⟩
-    have htp : (t : ℝ) ≤ p := not_lt.mp hpNotLt
-    have hptNat : p ≤ t := by exact_mod_cast hpt
-    have htpNat : t ≤ p := by exact_mod_cast htp
-    exact Finset.mem_singleton.mpr (le_antisymm hptNat htpNat)
-  · intro hp
-    rcases Finset.mem_singleton.mp hp with rfl
-    exact Finset.mem_filter.mpr ⟨ht, not_lt.mpr le_rfl⟩
-
-private theorem goldbachWeightClosedPrimes_filter_lt_eq_halfOpen_of_le
-    (N : ℕ) (z b c : ℝ) (hbc : b ≤ c) :
-    (goldbachClosedPrimes N z c).filter (fun p : ℕ => (p : ℝ) < b) =
-      goldbachHalfOpenPrimes N z b := by
-  ext p
-  constructor
-  · intro hp
-    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpb⟩
-    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, hpz, _⟩
-    exact mem_goldbachHalfOpenPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpb⟩
-  · intro hp
-    rcases mem_goldbachHalfOpenPrimes_iff.mp hp with ⟨hpPrime, hpN, hpz, hpb⟩
-    exact Finset.mem_filter.mpr
-      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpb.le.trans hbc⟩, hpb⟩
-
-private theorem goldbachWeightClosedPrimes_filter_not_lt_eq_closed
-    (N : ℕ) (z b c : ℝ) (hzb : z ≤ b) :
-    (goldbachClosedPrimes N z c).filter (fun p : ℕ => ¬(p : ℝ) < b) =
-      goldbachClosedPrimes N b c := by
-  ext p
-  constructor
-  · intro hp
-    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpNotLt⟩
-    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, _, hpc⟩
-    exact mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, not_lt.mp hpNotLt, hpc⟩
-  · intro hp
-    rcases mem_goldbachClosedPrimes_iff.mp hp with ⟨hpPrime, hpN, hpb, hpc⟩
-    exact Finset.mem_filter.mpr
-      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hzb.trans hpb, hpc⟩, not_lt.mpr hpb⟩
 
 private theorem goldbachWeightClosedPairSlice_eq
     (A : Finset ℕ) (N : ℕ) (z : ℝ) {s : ℕ}
@@ -166,8 +103,8 @@ private theorem goldbachWeightClosedPairSlice_eq
       (goldbachClosedPrimes N z (s : ℝ))
       (fun r : ℕ => (r : ℝ) < s)
       (fun r => literalH A N (r * s) z)
-  rw [goldbachWeightClosedPrimes_filter_lt_eq_halfOpen,
-    goldbachWeightClosedPrimes_filter_not_lt_self_eq_singleton N z hsClosed,
+  rw [goldbachClosedPrimes_filter_lt_eq_halfOpen,
+    goldbachClosedPrimes_filter_not_lt_self_eq_singleton N z hsClosed,
     Finset.sum_singleton] at hsplit
   simpa [pow_two] using hsplit.symm
 
@@ -327,8 +264,8 @@ private theorem goldbachS3Closed_split
       (goldbachClosedPrimes N z c)
       (fun t : ℕ => (t : ℝ) < b)
       (fun t => literalH A N t z)
-  rw [goldbachWeightClosedPrimes_filter_lt_eq_halfOpen_of_le N z b c hbc,
-    goldbachWeightClosedPrimes_filter_not_lt_eq_closed N z b c hzb] at hsplit
+  rw [goldbachClosedPrimes_filter_lt_eq_halfOpen_of_le N z b c hbc,
+    goldbachClosedPrimes_filter_not_lt_eq_closed N z b c hzb] at hsplit
   simpa [not_lt] using hsplit.symm
 
 private theorem goldbachS3Closed_eq_weightCross
@@ -365,30 +302,6 @@ private theorem goldbachS3Closed_eq_weightCross
           goldbachWeightCStrict A N z b c + goldbachWeightA15 A N z b c := by
           rfl
 
-theorem goldbachWeightD6_nonneg (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
-    0 ≤ goldbachWeightD6 A N z b := by
-  unfold goldbachWeightD6
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A N (r ^ 2) z
-
-theorem goldbachWeightB6pair_nonneg (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
-    0 ≤ goldbachWeightB6pair A N z b := by
-  unfold goldbachWeightB6pair
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A N (r * s) z
-
-theorem goldbachWeightB7_nonneg (A : Finset ℕ) (N : ℕ) (z b c : ℝ) :
-    0 ≤ goldbachWeightB7 A N z b c := by
-  unfold goldbachWeightB7
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A N (r * t) z
 
 private theorem goldbachWeightG6_eq_goldbachWeightPStrict_add_goldbachWeightD6_add_goldbachWeightB6pair
     (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
@@ -401,7 +314,7 @@ private theorem goldbachWeightG6_eq_goldbachWeightPStrict_add_goldbachWeightD6_a
       (fun s : ℕ => (s : ℝ) < b)
       (fun s =>
         ∑ r ∈ goldbachClosedPrimes N z (s : ℝ), literalH A N (r * s) z)
-  rw [goldbachWeightClosedPrimes_filter_lt_eq_halfOpen] at hsplit
+  rw [goldbachClosedPrimes_filter_lt_eq_halfOpen] at hsplit
   have hslices :
       ∑ s ∈ goldbachHalfOpenPrimes N z b,
           ∑ r ∈ goldbachClosedPrimes N z (s : ℝ), literalH A N (r * s) z =
@@ -459,7 +372,7 @@ private theorem goldbachWeightG7_eq_goldbachWeightCStrict_add_goldbachWeightB7
               (goldbachClosedPrimes N z b)
               (fun r : ℕ => (r : ℝ) < b)
               (fun r => literalH A N (r * t) z)
-          rw [goldbachWeightClosedPrimes_filter_lt_eq_halfOpen] at hsplit
+          rw [goldbachClosedPrimes_filter_lt_eq_halfOpen] at hsplit
           simpa [not_lt] using hsplit.symm
     _ =
       (∑ t ∈ goldbachClosedPrimes N b c,

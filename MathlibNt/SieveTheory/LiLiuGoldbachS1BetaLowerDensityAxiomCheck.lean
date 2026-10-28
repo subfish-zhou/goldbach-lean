@@ -1,6 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity
-
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-
-#check goldbachS1_beta_lowerDensity
-#print axioms goldbachS1_beta_lowerDensity

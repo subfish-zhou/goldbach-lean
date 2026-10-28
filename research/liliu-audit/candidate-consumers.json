@@ -1,0 +1,1661 @@
+{
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryConnectionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9Discrepancy": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9PositiveCover": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ProductionCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9TotalError": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryGoldbachRectangle": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKC2ProductionCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaOriginal": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWAxioms": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanReduction": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanFirstGCD"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectC2": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCellC2": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectKeyC2"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficientsConsumer": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMassConsumer"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectKeyC2": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectTotalCost"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalizationRoots": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryUniform": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCellC2"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryWeight": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryUniform"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectTotalCost": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectC2"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDelta": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLocalGlobalBridge": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaPayment": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorPayment": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeReduction"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaPayment": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaPaymentDyadic": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDExclusion": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanReduction"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportPayment": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportPaymentDyadic": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportReduction"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportPayment": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportPaymentDyadic"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportPaymentDyadic": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportReduction"
+    ]
+  },
+  "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeReduction": {
+    "inside_candidate_pool": [
+      "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanReduction"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuBuchstabSharpAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuBuchstabSharpClosureAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuBuchstabTailPropagationAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuFouvryG9AnalyticSieve": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuFouvryG9DimensionOne": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrectionObstruction": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuFouvryG9LowFinalPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuFouvryG9LowFinalReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuFouvryG9PrimeMassUpper": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachActiveCrossLedger": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachPairIntegralLedger"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachAnalyticScalarPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachAnalyticScalarReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachAuthorCrossIntegralLedger": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachAuthorOutputPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachAuthorOutputReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10CommonRemainderAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMainAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10EndpointScaleAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieveAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReductionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralScalar": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralScalarUpper",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightThreeNegativeScalars"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralScalarUpper": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10KernelUpper": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10KernelUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10LiKernelAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10LogMassAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudgetAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10MainLogSumAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeightAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10PaidUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10PanDistributionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometryAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixesAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpointsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10ProductAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactorAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProductAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10SupportAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10UpperErrorAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10ZeroPrefix": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB10ZeroPrefixAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8DiagonalStripAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8FixedGridLimitAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReductionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridLimitAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8MainMassTransportAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMassAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8PaidUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB8PanDistributionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9C10BridgeAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegralAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9InnerIntegralAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9LowPositivePrefixAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9MainGateAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9MainMassTransport": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridAxiomCheck",
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5IntegralUpper",
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5PairKernelUpper"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachB9LogGrid",
+      "MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit",
+      "MathlibNt.SieveTheory.LiLiuGoldbachB9LogKernel"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9MainMassTransportAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9PaidNormalizedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9PaidUpper": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachB9NormalizedMainMass"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9PanDistributionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReductionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachBadBoundAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieveAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachBuchstabAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachClosedCrossIntegralLedger": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachClosedIntegralPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachClosedIntegralReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachClosedLowerBoundAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachConditionalFinalAssembly": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachConditionalFinalAssemblyAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachCrossFrontierPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachCrossFrontierReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachCrossProductLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachActiveCrossLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundationsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFinalCoefficientsPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFinalCoefficientsReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFiniteBudgetAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFiniteMainLedger": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFiniteMainPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFiniteMainReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFlexiblePaidPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachFlexiblePaidReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG10CorrectedIntegralUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11ActiveProductGeometryAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorActualContract": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorBuchstabIntegral": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorBuchstabIntegralChecks"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorBuchstabIntegralChecks": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalConsumed": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralChecks": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorProductionAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitativeAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11BodyMinFacAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11BoundingSieve": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabSieve",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11EulerProduct",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11PaidRosser",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SmallOutput",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11PaidConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11RosserFactor",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RosserFactor"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabAllAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabSieve": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralBound",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabSieve",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11BuchstabConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11IntegralConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11EffectiveProductSupportAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11EulerFactorNormalizedAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11EulerProduct": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabSieve"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryFamilyError": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11GeometryAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDivisorDistribution": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindowAP": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDivisorDistribution",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SmallOutput",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDivisorDistribution",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassBuchstab": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabSieve"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralBound": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SharpBuchstabConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11IntegralConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralClosureAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PaidRosser": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11PaidConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PaidRosserAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiCenter": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PositivePrefixGeometry": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11CofactorWindow"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PositivePrefixGeometryAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeCutoffBoundaryAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelClosureAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelPartialAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11ProductAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11RemainderPaymentsAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11RoughAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11SharpBuchstabAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11SharpBuchstabConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11UniformScalarCount"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11SmallOutput": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11PaidRosser"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11UniformScalar": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11UniformScalarCount"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11UniformScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG11UniformScalarCount": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachConditionalFinalAssembly",
+      "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitAllRetainedConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitG11Consumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitRetainedConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightUniformRationalConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorBranchForm": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorOutputIntegral": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachAuthorCrossIntegralLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedIntegral": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorSourceBudget"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12BoundarySource": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabKernelMass": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12NormalizedIntegralEnvelope"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabSieve": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12NormalizedIntegralBound",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12NormalizedIntegralEnvelope"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMassBuchstab",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12PaidRosser"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMassBuchstab": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12ConsumedPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12ConsumedReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleCorrectionSaving": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangleC2": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleC2Sieve",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFOutput"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12NormalizedIntegralBound": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachUniformCrossIntegralLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12NormalizedIntegralEnvelope": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12NormalizedIntegralBound"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12OccupiedC2Sieve": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12OccupiedSource": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12OccupiedC2Sieve"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12OriginalPaidGrid": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12OutputEnvelope": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabSieve"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12PaidRosser": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12OutputEnvelope"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RawBoundarySmallMesh": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleC2Sieve": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFOutput": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleC2Sieve"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFRemainder": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleC2Sieve",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFOutput"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12OutsideBudgetTransport"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachFiniteMainLedger",
+      "MathlibNt.SieveTheory.LiLiuGoldbachMovingKernelLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RoughPaidPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG12RoughPaidReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG67Analytic": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG67RationalLower"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG67MovingPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG67MovingReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG67PaidPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG67PaidReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachG67RationalLower": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachGeometricScalePublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachGeometricScaleReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachIdealKernelLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachCrossProductLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachIdealLedgerPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachIdealLedgerReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachMovingKernelLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachIdealKernelLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachMovingLedgerPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachMovingLedgerReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachNormalizedBoundaryPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachNormalizedBoundaryReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachOneNineLiteralExponent": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachSharpG9CertifiedLedger"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFiniteAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairLowerFinite": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachCompositeSieveAP",
+      "MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairPaidLower"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPairIntegralPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPairIntegralReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperAllRetainedPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperAllRetainedReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperG11PublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperG11Reachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperRetainedPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperRetainedReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitAllRetainedConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitG11Consumed": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitRetainedConsumed": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPi10IntegralUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPi10NormalizedUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachPreG11FinalLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachConditionalFinalAssembly"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachQuadraturePublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachQuadratureReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachRationalEndpointsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachRectangleFrontierPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachRectangleFrontierReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachRepeatBoundAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachRetainedEndpointsAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachRetainedScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1AlphaNormalizedLowerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFactorContinuityAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaGeometryAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensityAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaMainScaleAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaNormalizedLowerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1BetaPaidLowerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1LevelSixAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySixAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosserAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1MainMassAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1MainScaleAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1PaidLowerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1PositivePairAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS1SieveProductLowerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS2MainMassUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS2PrimePairsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS2SieveGateAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistributionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarClosed": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightFiveNegativeScalars"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarEnvelopeBounds": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3LiEulerUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3NumericClosureAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernelAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4CountTransportAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4FiniteErrorAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralScalar": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightS4ScalarConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4PairKernelUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4SplitAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrierAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransportAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5FinitePreparationAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplitAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarAnalytic": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarChange",
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarPolynomial",
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarScalar"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarChange": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarScalar"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarPolynomial": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarScalar"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5HighScalarScalar": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachPreG11FinalLedger",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightHighFirstRationalConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5IntegralUpper": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFourCoarse"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5IntegralUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5PairKernelUpper": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachS5IntegralUpper"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5PairKernelUpperAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrierAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachSharpCrossIntegralLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachSharpG9CertifiedLedger",
+      "MathlibNt.SieveTheory.LiLiuGoldbachSharpPiecewiseLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachSharpG9CertifiedLedger": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachSharpIntegralPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachSharpIntegralReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachSharpPiecewiseLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachSharpG9CertifiedLedger"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachSmallEpsilonAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachStrictTripleAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachThreeNegativeScalarsAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachTotientCorrectionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachUniformCrossIntegralLedger": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachClosedCrossIntegralLedger"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachUniformCrossPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachUniformCrossReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachUpperDensitySixAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachUpperThirdIntervalAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightFourPaperConsumed": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11BuchstabConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11IntegralConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11GoodConsumedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11IntegralConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SharpBuchstabConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11PaidConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachConditionalFinalAssembly",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabSieve",
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SharpBuchstabConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachPreG11FinalLedger",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11BuchstabConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11IntegralConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightUniformRationalConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11RoughConsumedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightHighFirstConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11SharpBuchstabConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachPreG11FinalLedger",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightFourPaperConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11BuchstabConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11IntegralConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11PaidConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightHighFirstRationalConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightLowPositivePrefixConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightLowPrefixRationalConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11GoodConsumed",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11RoughConsumed"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightHighFirstConsumedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightHighFirstRationalConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightLowPrefixRationalConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightI10ConsumerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialPaidAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScaleAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightLowPositivePrefixConsumed": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightG11RoughConsumed"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightLowPositivePrefixConsumedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightLowPrefixRationalConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightUniformRationalConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightProduct": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightProductAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruplePaidAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingEightAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFiveAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFourCoarseAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSixAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSixConsumerAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachPaperSplitRetainedConsumed"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightS4ScalarAudit": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightS4ScalarConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightThreeNegativeScalars"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightSifted": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightProduct"
+    ],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightSiftedAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightThreeNegativeScalars": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightFiveNegativeScalars"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartitionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightTwelveAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWeightUniformRationalConsumed": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachPreG11FinalLedger",
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightRetainedRationalConsumed"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWindowBoundaryPublicStd": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuGoldbachWindowBoundaryReachability": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPanBoundedAggregateAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPanBoundedPrincipalAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabBandsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabBaseAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabBaseEstimateAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabBoundsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabCountAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunctionAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabIntegralAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNTAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNTSourceAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabPrimeSumsAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniformAbelAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniformAxiomCheck": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryLayers": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuPrereqWFIntervalDensity"
+    ]
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqWFExternalPrimeDensity": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqWFExternalTransport": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqWFInternalSieve": {
+    "inside_candidate_pool": [],
+    "outside_candidate_pool": []
+  },
+  "MathlibNt.SieveTheory.LiLiuPrereqWFProgressionAdapter": {
+    "inside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuPrereqWFExternalTransport"
+    ],
+    "outside_candidate_pool": [
+      "MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption"
+    ]
+  }
+}

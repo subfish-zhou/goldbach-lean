@@ -234,12 +234,6 @@ private theorem sum_reciprocalTau_le (k N : ℕ) :
         rw [pow_succ]
         exact mul_le_mul_of_nonneg_right ih (reciprocalSum_nonneg _)
 
-/-- The reciprocal mean needed when paying modulus weights. Order zero is
-allowed in this estimate. -/
-theorem sum_fouvryTau_div_le (k N : ℕ) :
-    (∑ n ∈ Ioc 0 N, (fouvryTau k n : ℝ) / n) ≤ (1 + Real.log N) ^ k := by
-  exact (sum_reciprocalTau_le k N).trans
-    (pow_le_pow_left₀ (reciprocalSum_nonneg _) (reciprocalSum_le_log _) _)
 
 /-- Reciprocal divisor means at a real endpoint. -/
 theorem sum_fouvryTau_div_le_real (k : ℕ) {x : ℝ} (hx : 1 ≤ x) :
@@ -262,29 +256,6 @@ theorem sum_fouvryTau_div_totient_le_real (k : ℕ) {x : ℝ} (hx : 1 ≤ x) :
       sum_le_sum (fun n _ => fouvryTau_div_totient_le k n)
     _ ≤ _ := sum_fouvryTau_div_le_real _ hx
 
-/-- The reciprocal second moment, useful for sums of modulus weights. -/
-theorem sum_fouvryTau_sq_div_le_real (k : ℕ) {x : ℝ} (hx : 1 ≤ x) :
-    (∑ n ∈ Ioc 0 ⌊x⌋₊, (fouvryTau k n : ℝ) ^ 2 / n) ≤
-      (1 + Real.log x) ^ (k ^ 2) := by
-  calc
-    _ ≤ ∑ n ∈ Ioc 0 ⌊x⌋₊, (fouvryTau (k ^ 2) n : ℝ) / n := by
-      apply sum_le_sum
-      intro n _
-      apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
-      exact_mod_cast fouvryTau_sq_le k n
-    _ ≤ _ := sum_fouvryTau_div_le_real _ hx
-
-/-- Totient-weighted second moments also retain a fixed logarithm exponent. -/
-theorem sum_fouvryTau_sq_div_totient_le_real (k : ℕ) {x : ℝ} (hx : 1 ≤ x) :
-    (∑ n ∈ Ioc 0 ⌊x⌋₊, (fouvryTau k n : ℝ) ^ 2 / n.totient) ≤
-      (1 + Real.log x) ^ (2 * k ^ 2) := by
-  calc
-    _ ≤ ∑ n ∈ Ioc 0 ⌊x⌋₊, (fouvryTau (k ^ 2) n : ℝ) / n.totient := by
-      apply sum_le_sum
-      intro n _
-      apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
-      exact_mod_cast fouvryTau_sq_le k n
-    _ ≤ _ := sum_fouvryTau_div_totient_le_real _ hx
 
 private theorem sum_fouvryTau_le_harmonic (k N : ℕ) :
     (∑ n ∈ Ioc 0 N, (fouvryTau (k + 1) n : ℝ)) ≤

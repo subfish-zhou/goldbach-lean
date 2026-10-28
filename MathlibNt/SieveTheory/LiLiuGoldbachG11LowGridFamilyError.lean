@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridCost
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFLevel
 
 open Finset Filter
 open scoped BigOperators Classical

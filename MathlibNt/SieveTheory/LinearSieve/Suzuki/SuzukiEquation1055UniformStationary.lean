@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053KernelExpansion
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer
 
 open Set Filter Topology MeasureTheory intervalIntegral
@@ -101,18 +100,6 @@ lemma PlusFirstCrossing.slope_pos_before
   · exact w.initial_pos u ⟨hβu, hu⟩
   · exact w.before_crossing_pos u (lt_of_not_ge hu) hus
 
-/-- The witness really records the least point in the closed nonpositive set. -/
-lemma PlusFirstCrossing.isLeast_nonpositive
-    {R ξ : ℝ → ℝ} {c β s₀ : ℝ}
-    (w : PlusFirstCrossing R ξ c β s₀) :
-    IsLeast {u : ℝ | s₀ ≤ u ∧ w.slope u ≤ 0} w.s := by
-  constructor
-  · exact ⟨w.s₀_lt_s.le, w.crossing_nonpos⟩
-  · intro u hu
-    by_contra hsu
-    have hus : u < w.s := lt_of_not_ge hsu
-    have hβu : β ≤ u := le_trans w.beta_lt_s₀.le hu.1
-    exact (not_lt_of_ge hu.2) (w.slope_pos_before hβu hus)
 
 /-- Continuity turns the weak sign at the first point into stationarity. -/
 lemma PlusFirstCrossing.slope_at_crossing_eq_zero
@@ -305,10 +292,6 @@ noncomputable def plusPairingScalarRatio
       Real.exp (-psiPlus explicitKappaOneAdjointPlus ξ c t)) /
     Real.exp (-psiPlus explicitKappaOneAdjointPlus ξ c (s - 1))
 
-/-- The strict scalar conclusion of (10.55), separated from the topological and
-pairing argument rather than hidden in a final exclusion field. -/
-def PlusPairingScalarInequality (ξ : ℝ → ℝ) (c s : ℝ) : Prop :=
-  1 < plusPairingScalarRatio ξ c s
 
 /-- Equations (10.54)--(10.55), lower half: pairing and stationarity force the
 plus scalar ratio to be at most one. -/
@@ -531,176 +514,6 @@ open Section10Lemma1028PlusAssembly
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
-
-/-- The denominator `A = ξ(s) + c - λ/s` in the first factor of (10.55). -/
-noncomputable def equation1055PlusDenominator (lam c s : ℝ) : ℝ :=
-  xi s + c - lam / s
-
-/-- The exponentially small negative term displayed in the plus case of
-(10.55). -/
-noncomputable def equation1055PlusExponentialTerm (lam c s : ℝ) : ℝ :=
-  lam * Real.exp (-c / 2) / (s * xi s)
-
-/-- The literal two-factor scalar on the right of source (10.55).  In
-particular, its positive correction is `λ / (s A)`, not merely `1/A`. -/
-noncomputable def equation1055PlusScalarRatio
-    (lam c s remainder : ℝ) : ℝ :=
-  (1 + lam / (s * equation1055PlusDenominator lam c s)) *
-    (1 - equation1055PlusExponentialTerm lam c s + remainder)
-
-/-- A candidate is required to be stationary and to lie beyond the fixed
-source cutoff `S₀`; no unconditional assertion over all points at infinity is
-used. -/
-structure PlusStationaryCandidate
-    (R : ℝ → ℝ) (c S₀ : ℝ) where
-  s : ℝ
-  cutoff_le : S₀ ≤ s
-  stationary : normalizedMinusBase R xi s + c = 0
-
-/-- The source inputs used after (10.45)--(10.46).  The fields are the
-stationary expansion (10.55), its two quantitative remainder estimates, and a
-bounded fixed initial segment.  There is deliberately no final strict
-inequality and no first-crossing producer field. -/
-structure Equation1055StationarySource
-    (R : ℝ → ℝ) (β S₀ : ℝ) where
-  lam : ℝ
-  C : ℝ
-  remainder : ℝ → ℝ → ℝ
-  lambda_pos : 0 < lam
-  one_le_C : 1 ≤ C
-  cutoff_pos : 0 < S₀
-  initial_bounded :
-    ∃ B : ℝ, ∀ u ∈ Icc β S₀, -normalizedMinusBase R xi u ≤ B
-  denominator_pos : ∀ c, C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-    0 < equation1055PlusDenominator lam c w.s
-  correction_lt_one : ∀ c, C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-    lam / (w.s * equation1055PlusDenominator lam c w.s) < 1
-  exponential_dominated : ∀ c, C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-    equation1055PlusExponentialTerm lam c w.s ≤
-      (1 / 4 : ℝ) * (lam / (w.s * equation1055PlusDenominator lam c w.s))
-  remainder_control : ∀ c, C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-    |remainder c w.s| ≤
-      (1 / 4 : ℝ) * (lam / (w.s * equation1055PlusDenominator lam c w.s))
-  expansion : ∀ c, C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-    plusPairingScalarRatio xi c w.s =
-      equation1055PlusScalarRatio lam c w.s (remainder c w.s)
-
-/-- The source (10.55) scalar is strictly greater than one at every stationary
-candidate, uniformly for all `c ≥ C`.  The positive `λ/(sA)` correction absorbs
-both the exponentially small term and the signed remainder. -/
-theorem equation1055_strict_at_stationary
-    {R : ℝ → ℝ} {β S₀ c : ℝ}
-    (src : Equation1055StationarySource R β S₀) (hc : src.C ≤ c)
-    (w : PlusStationaryCandidate R c S₀) :
-    1 < plusPairingScalarRatio xi c w.s := by
-  let q : ℝ := src.lam /
-    (w.s * equation1055PlusDenominator src.lam c w.s)
-  let d : ℝ := equation1055PlusExponentialTerm src.lam c w.s
-  let e : ℝ := src.remainder c w.s
-  have hs0 : 0 < w.s := src.cutoff_pos.trans_le w.cutoff_le
-  have hA : 0 < equation1055PlusDenominator src.lam c w.s :=
-    src.denominator_pos c hc w
-  have hq : 0 < q := by
-    dsimp [q]
-    exact div_pos src.lambda_pos (mul_pos hs0 hA)
-  have hq1 : q < 1 := by
-    simpa only [q] using src.correction_lt_one c hc w
-  have hd : d ≤ (1 / 4 : ℝ) * q := by
-    simpa only [d, q] using src.exponential_dominated c hc w
-  have heabs : |e| ≤ (1 / 4 : ℝ) * q := by
-    simpa only [e, q] using src.remainder_control c hc w
-  have he : -(1 / 4 : ℝ) * q ≤ e := by
-    have := (abs_le.mp heabs).1
-    linarith
-  have hform : plusPairingScalarRatio xi c w.s =
-      (1 + q) * (1 - d + e) := by
-    rw [src.expansion c hc w]
-    rfl
-  rw [hform]
-  nlinarith
-
-/-- Uniform stationary formulation: for the fixed `S₀`, every `c` beyond the
-single source threshold excludes every stationary candidate by strict (10.55).
--/
-theorem equation1055_uniform_stationary
-    {R : ℝ → ℝ} {β S₀ : ℝ}
-    (src : Equation1055StationarySource R β S₀) :
-    ∀ c, src.C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-      1 < plusPairingScalarRatio xi c w.s := by
-  intro c hc w
-  exact equation1055_strict_at_stationary src hc w
-
-private def crossing_to_stationaryCandidate
-    {R : ℝ → ℝ} {β c S₀ : ℝ}
-    (h : FirstCrossingDDEApparatus R β)
-    (w : PlusFirstCrossing R xi c β S₀) (hS : S₀ ≤ w.s) :
-    PlusStationaryCandidate R c S₀ := by
-  refine ⟨w.s, hS, ?_⟩
-  have heq := w.stationary_equation h canonicalXi_proposition1020
-  dsimp [normalizedMinusBase]
-  calc
-    -R (w.s - 1) / (w.s * R w.s) + xi w.s - 2 / w.s + c =
-        -(R (w.s - 1) / (w.s * R w.s)) +
-          (xi w.s + c - 2 / w.s) := by ring
-    _ = 0 := by rw [heq]; ring
-
-/-- Plus common majorant with both former residual premises removed.  The
-already-proved topological producer is invoked internally, and strict (10.55)
-is needed only for the stationary crossing it produces. -/
-noncomputable def section10_plus_commonMajorant_of_stationary_source
-    {R : ℝ → ℝ} {β S₀ : ℝ}
-    (h : FirstCrossingDDEApparatus R β)
-    (hadj : h.adjoint = explicitKappaOneAdjointPlus)
-    (hβ : β ≤ 3) (hβS : β < S₀) (hβoneS : β + 1 ≤ S₀)
-    (src : Equation1055StationarySource R β S₀) :
-    Section10PlusCommonMajorant R := by
-  let B : ℝ := Classical.choose src.initial_bounded
-  have hB : ∀ u ∈ Icc β S₀, -normalizedMinusBase R xi u ≤ B :=
-    Classical.choose_spec src.initial_bounded
-  let c : ℝ := max src.C (max 1 (B + 1))
-  have hCc : src.C ≤ c := le_max_left _ _
-  have hc1 : 1 ≤ c := (le_max_left 1 (B + 1)).trans
-    (le_max_right src.C (max 1 (B + 1)))
-  have hBc : B + 1 ≤ c := (le_max_right 1 (B + 1)).trans
-    (le_max_right src.C (max 1 (B + 1)))
-  have hinitial : ∀ u ∈ Icc β S₀,
-      0 < normalizedMinusBase R xi u + c := by
-    intro u hu
-    have huB := hB u hu
-    linarith
-  have hproducer : ProducesPlusFirstCrossing R β c S₀ :=
-    producesPlusFirstCrossing h hβS hβoneS hinitial
-  have hslope : ∀ s, 4 ≤ s → 0 ≤ normalizedMinusBase R xi s + c := by
-    intro v hv4
-    by_cases hvS : v ≤ S₀
-    · have hβv : β ≤ v := hβ.trans (by linarith)
-      exact (hinitial v ⟨hβv, hvS⟩).le
-    · have hSv : S₀ ≤ v := (lt_of_not_ge hvS).le
-      by_contra hn
-      have hvnonpos : normalizedMinusBase R xi v + c ≤ 0 := le_of_not_ge hn
-      obtain ⟨w, hSw⟩ := hproducer v hSv hvnonpos
-      let wc : PlusStationaryCandidate R c S₀ :=
-        crossing_to_stationaryCandidate h w hSw
-      have hlower0 := equation1055_strict_at_stationary src hCc wc
-      have hlower : 1 < plusPairingScalarRatio xi c w.s := by
-        simpa only [wc, crossing_to_stationaryCandidate] using hlower0
-      have hupper : plusPairingScalarRatio xi c w.s ≤ 1 :=
-        plusFirstCrossing_scalarRatio_le_one h hadj w
-      linarith
-  refine ⟨c, 4, hc1, le_rfl, ?_⟩
-  intro s hs
-  have hs0 : 0 < s := by linarith
-  have hRs : 0 < R s := h.positive s (by linarith [hβ])
-  have hn := hslope s hs
-  have hscale : 0 < s * R s := mul_pos hs0 hRs
-  have heq :
-      -(R (s - 1)) + s * (xi s + c - 2 / s) * R s =
-        (s * R s) * (normalizedMinusBase R xi s + c) := by
-    dsimp [normalizedMinusBase]
-    field_simp [ne_of_gt hs0, ne_of_gt hRs]
-    ring
-  rw [heq]
-  exact mul_nonneg hscale.le hn
 
 
 end Section10Equation1055UniformStationary

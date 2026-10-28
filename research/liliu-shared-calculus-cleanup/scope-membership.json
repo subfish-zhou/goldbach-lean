@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "modified_modules": [
+    "MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionContinuation",
+    "MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterContinuation",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalScalar",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshIntegration",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightBounds",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG12CrossMesh",
+    "MathlibNt.SieveTheory.LiLiuGoldbachG12IntegralReduction"
+  ],
+  "all_in_liliu_closure": true,
+  "chen_modified_modules": [
+    "MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionContinuation",
+    "MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterContinuation"
+  ],
+  "original_import_lists_unchanged": true,
+  "original_g12_provider_paths_present": true,
+  "method": "Fresh complete compiled import graph. Existing G11 ancestors supply both shared proofs to G12; existing weight definition provider supplies its global cap. Only the two Mellin continuation files belong to Chen."
+}

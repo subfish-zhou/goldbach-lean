@@ -33,7 +33,9 @@ then the [unconditional existence endpoints](../MathlibNt/SieveTheory/LiLiuGoldb
 and [quantitative assembly](../MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean).
 The quantitative assembly applies the G11 estimates to the original counts
 and combines them with the certified G67, G9 and G12 integral estimates before
-passing to `D19`. [THEOREMS.md](THEOREMS.md) records the exact coefficients,
+passing to `D19`. The existence assembly extracts witnesses from this positive
+count and applies the exact exponent bridge. The G67 numerical certificate
+lives below both assemblies to keep their imports acyclic. [THEOREMS.md](THEOREMS.md) records the exact coefficients,
 normalization and quantifier order.
 
 ## Chen public import graph
@@ -104,19 +106,20 @@ consumer to dependency; other references are omitted.
 flowchart TD
    existence["Goldbach.chen_theorem"] --> qualitative["Existence endpoint"]
    count["Goldbach.representation_lower_bound"] --> quantitative["Quantitative endpoint"]
-   qualitative --> shared["liuPanCanonicalCoprimeTheorem_proved"]
-   quantitative --> shared
+   qualitative --> quantitative
+   quantitative --> shared["liuPanCanonicalCoprimeTheorem_proved"]
 ```
 
 In [ChensTheoremUnconditional](../MathlibNt/ChensTheoremUnconditional.lean), the
 existence endpoint is `chens_theorem_unconditional` and the quantitative endpoint
 is `chen_good_representations_lower_bound_unconditional`, both in namespace
-`MathlibNt.ChensTheorem`. Each supplies the same proved input to its respective
-conditional assembly in
+`MathlibNt.ChensTheorem`. The wrappers supply the proved input to
+the assembly in
 [ChenVerifiedPrerequisites](../MathlibNt/SieveTheory/Chen/ChenVerifiedPrerequisites.lean).
-The existence endpoint derives positivity through its own assembly; the
-quantitative endpoint exposes the `0.67` representation bound. The mathematical
-roadmap explains the argument, while this graph records the selected declaration
+The existence proof reuses the quantitative assembly
+`chen_good_representations_lower_bound_of_liu_coprime` and derives a
+representation from its positive count. The quantitative endpoint exposes
+the same `0.67` bound. The mathematical roadmap explains the argument, while this graph records the selected declaration
 references.
 
 ## Public boundary
@@ -183,7 +186,6 @@ when following an input into its implementation.
 | [Suzuki](../MathlibNt/SieveTheory/LinearSieve/Suzuki/) | Comparison and source-layer estimates |
 | [JurkatRichert](../MathlibNt/SieveTheory/LinearSieve/JurkatRichert/) | Delay functions and the actual source consumer |
 | [Richert](../MathlibNt/SieveTheory/LinearSieve/Richert/) | Weighted finite identities and error payment |
-| [LevelSupported](../MathlibNt/SieveTheory/LinearSieve/LevelSupported/) | Supported-coefficient interfaces |
 | [Distribution](../MathlibNt/SieveTheory/Distribution/) | Chen-facing distribution consumers and Liu-Pan estimates |
 | [Selberg](../MathlibNt/SieveTheory/Selberg/) | Upper sieve and Liu source specialization |
 | [Liu](../MathlibNt/SieveTheory/Liu/) | Source weights, prime-pair estimates, and integral bridges |
@@ -192,9 +194,126 @@ when following an input into its implementation.
 </details>
 
 The [switching facade](../MathlibNt/SieveTheory/SwitchingPrinciple.lean) and
-[linear-sieve facade](../MathlibNt/SieveTheory/LinearSieve.lean) expose focused
+[finite sieve coefficients](../MathlibNt/SieveTheory/LinearSieve/FiniteWeights.lean) expose focused
 submodules. A physical module path identifies where to import a proof;
 a declaration namespace identifies its stable mathematical name.
+
+The generic [lower factor](../MathlibNt/SieveTheory/LinearSieve/DimensionOneLowerFactor.lean)
+owns the explicit inner integral, lower factor and continuity on `[4,6]`.
+Chen at `5` and Li–Liu at `33/8` specialize this shared theorem. The generic
+[upper factor](../MathlibNt/SieveTheory/LinearSieve/DimensionOneUpperFactor.lean)
+owns the upper factor and dimension-one fundamental-lemma interface. Generic
+Suzuki producers use these lower modules; actual Chen consumers import the
+source-specific sieve and distribution modules explicitly. See the
+[cleanup report](LILIU_CLEANUP.md) for both waves and their acceptance evidence.
+
+The shared [logarithmic-coordinate foundation](../MathlibNt/SieveTheory/Liu/PrimePairs/LiuLogCoordinates.lean)
+owns density/kernel functions, rectangle integration, continuity and reciprocal
+bounds. Liu, B8 and B10 specialize it; full grid convergence remains with its
+original source module. The [harmonic-weight foundation](../MathlibNt/SieveTheory/Liu/Weights/LiuWeightHarmonic.lean)
+owns elementary finite harmonic and Liu source-weight bounds. Actual consumers
+import these lower modules directly. The primitive Perron proof imports its
+actual Mathlib/PNT providers; original Selberg and application proofs remain
+available. Public namespaces and types are preserved. See the
+[foundation cleanup report](LILIU_LOG_KERNEL_CLEANUP.md).
+
+The [log-grid calculus](../MathlibNt/Analysis/LogGridEstimates.lean) also handles
+finite weighted-cell integrability and exact integration for arbitrary real
+coefficients and measurable cells in any measure space. The Liu, B8, B10, B9
+high-first and G11/G12 grids supply their actual selected cells and densities.
+Its inverse-mesh convergence lemma keeps the limit and original error bound as
+parameters; the source-specific estimates stay with their consumers. See the
+[calculus cleanup report](LILIU_GRID_CALCULUS_CLEANUP.md).
+
+The shared lower-factor module now also exposes the existing inner-integral
+continuity lemma, allowing the third upper-interval source to reuse both continuity
+results. Scalar logarithmic domination specializes `Analysis.LogPowerBounds`.
+The absolute local Euler deviation uses its summable nonnegative series and
+unit term; its three positivity interfaces hold for every natural `N`. Signed
+Euler and uniform summability interfaces retain their original hypotheses.
+See the [shared-lemma cleanup report](LILIU_SHARED_LEMMA_CLEANUP.md).
+
+The focused [S1 local-product module](../MathlibNt/SieveTheory/LiLiuGoldbachS1LocalProduct.lean)
+owns the Mertens-based witness uniform in every S1 sieve parameter. Beta lower-density,
+level-six lower-density and S3 upper-density consumers import that source instead
+of copying its proof. B8, B9 high-first and G11 normalized-error consumers specialize
+the existing `Analysis.LogScaleAbsorption` theorem with Liu's actual singular-series
+floor. B10 and S2 share the general interval-maximum nonnegativity theorem.
+See the [local-product cleanup report](LILIU_PRODUCT_CLEANUP.md).
+
+Exact closed/half-open prime-carrier filter identities now live in
+[ClosedTriples](../MathlibNt/SieveTheory/LiLiuGoldbachClosedTriples.lean), shared by
+WeightInitial and WeightTriplePartition. The general real log-power estimate
+lives in `Analysis.LogPowerBounds`, with the original beta-payment API retained.
+The two public Gram prefix scale-membership names live in the upstream
+GramResonanceScaleBox module; SecondaryRatioBox imports and reuses them.
+S4/S5 consumers apply Mathlib's finite-fiber bound directly with the original
+maps-to/fiber conditions and constant 400. See the
+[carrier/growth cleanup report](LILIU_CARRIER_CLEANUP.md).
+
+The [S1 carrier](../MathlibNt/SieveTheory/LiLiuGoldbachS1Carrier.lean) now owns the
+exact endpoint lower bound and its genuine-integral positivity consequence,
+shared by the S3 paid/normalized and composite/pair moving consumers. MainWeight,
+S2PaidUpper and ErrorFoundations expose their existing floor-scale, quarter-cutoff
+and large-divisor bounds for downstream reuse. The existing public
+`goldbachB10Atom_prod_lt` name is defined in Pi10Sifted and imported by
+B10Congruence; its strict labelled-carrier statement remains the same.
+See the [endpoint cleanup report](LILIU_ENDPOINT_CLEANUP.md).
+
+The main-library LowSource now defines the existing generic
+`balanced_lowMovingSource_le_budget` name; BalancedLowSource imports and reuses
+it, while both full low-conductor ranges remain distinct. LowPrefix directly
+imports PanQuotientBounds rather than reproducing its quotient arguments.
+The actual Pan error-envelope provider owns the shared pointwise maximum bound
+used at both B10 endpoints and the S2 endpoint. The literal Jurkat–Richert
+squarefree prime-product helper invokes Mathlib's generic squarefree-product
+result. See the [low-conductor/Pan cleanup report](LILIU_LOW_BUDGET_CLEANUP.md).
+
+`FiniteCoprimeGateBudget` owns the four existing generic `G11FiniteGate`
+estimates under their original public names. It imports DirectConductorWeight
+and has no application-carrier dependency. B10 specializes its weighted gate at
+two distinct prime factors; G11 imports it for general finite supports and keeps
+its application-specific support bound. The common module is outside Chen's
+import closure. See the [finite coprimality-gate report](LILIU_GATE_BUDGET_CLEANUP.md).
+
+KSectionReindex now owns the existing `directPayMain_span` theorem immediately
+after the actual grid-upper definition. Both local payment consumers already
+import it; the secondary public alias invokes the same inclusive-endpoint proof.
+The B8/B9/G11 log payments use Arithmetic.LiuLogScaleAbsorption's existing genuine
+singular-series theorem, and WF transport invokes the general real-log-power
+budget. The finite ZMod identities use Mathlib's sum/cast results directly.
+See the [finite-helper cleanup report](LILIU_FINITE_HELPER_CLEANUP.md).
+
+B9 high and weighted G9 directly import the existing Analysis.IntegralExcessCover
+provider for their finite strip covers, retaining their original integrability,
+pointwise caps, exact areas and final errors. RelaxedIntegral now owns the existing
+unconditional `fouvryG9LowIntegral_nonneg` name/proof; S5Kernel imports it and
+KernelBudget's original public alias calls the same proof. No application is
+imported back into an arithmetic/analysis producer. See the
+[boundary-integral cleanup report](LILIU_BOUNDARY_INTEGRAL_CLEANUP.md).
+
+Arithmetic.LiuLogScaleAbsorption owns the shared
+`LiuWeight.quartic_log_error_absorb_eventually` theorem used by B10 and S2.
+The original genuine-singular-series inverse-log proof remains unchanged. The
+canonical provider is imported by Chen, so the new theorem increases its source
+closure count while staying outside both Chen public theorem reference cones.
+See the [quartic-log cleanup report](LILIU_QUARTIC_LOG_CLEANUP.md).
+
+G11PrimeKernelReduction and G11PrimeKernelMeshIntegration now expose the shared
+`goldbach_log_ratio_deriv` and `goldbach_integral_four` proof names. G12 already
+imports these providers and reuses the same statements. G11PrimeKernel owns the
+existing global author-weight cap beside its weight definition; G12 retains its
+original public alias without importing G11's later final application. The two
+Mellin continuations use Complex.cpow_add directly for their retained private
+shift statements. See the [shared-calculus report](LILIU_SHARED_CALCULUS_CLEANUP.md).
+
+LinearSieve.FiniteWeights owns the canonical squarefree-divisor sum proof and
+reuses Mathlib directly; WF SmallRosser retains its public wrapper. RosserChains
+owns the shared sorted-prefix identity and now-public prefix-cardinality proof;
+WF rounded admissibility retains its original public wrappers. These existing
+provider paths require no imports back into WF. Natural label order, rounded
+multiplicities and strict parity/cubic tests remain unchanged. See the
+[finite-prefix report](LILIU_FINITE_PREFIX_CLEANUP.md).
 
 ## Interactive Blueprint
 
@@ -404,14 +523,6 @@ The weight remains the actual logarithmic density, not an area surrogate.
 The three-strip integral estimate is one-sided: each application retains its
 own geometric excess cover, constants and integrability proofs. Liu and B10
 also retain the separate lower bounds needed for their convergence results.
-
-[BoundaryRegularity](../MathlibNt/SieveTheory/LinearSieve/BoundaryRegularity.lean)
-proves joint continuity of complete moving integrals using a fixed local
-integrable majorant. Compactness then supplies the original uniform moduli
-directly, instead of repeatedly estimating common intervals and short strips.
-The original depth induction, positive lower screens and zero-depth jump
-exceptions remain. Clipping the inherited upper face at one is removed
-exactly on the original domain; this gives no explicit convergence rate.
 
 The [Jurkat--Richert auxiliary estimates](../MathlibNt/SieveTheory/JurkatRichert1965ChenGammaOneQOne.lean)
 bound a smooth reciprocal tail directly by a finite weighted moment and its

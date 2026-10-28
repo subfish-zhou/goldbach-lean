@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget
 import MathlibNt.SieveTheory.LiLiuGoldbachTwoBasic
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open Filter
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine

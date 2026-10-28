@@ -1,9 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints
-
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-
-#check goldbachB10PanPrefixRemainder_twoEndpoints_log_saving
-#check goldbachB10PanPrefixRemainder_floor_twoEndpoints_log_saving
-
-#print axioms goldbachB10PanPrefixRemainder_twoEndpoints_log_saving
-#print axioms goldbachB10PanPrefixRemainder_floor_twoEndpoints_log_saving

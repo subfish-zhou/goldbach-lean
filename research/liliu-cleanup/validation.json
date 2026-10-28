@@ -1,0 +1,121 @@
+{
+  "phase": "Li-Liu cleanup waves 1 and 2",
+  "status": "pass",
+  "started_at_utc": "2026-10-26T08:39:18.510286+00:00",
+  "source_modules": 1799,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "47c80dd8d2008c3a32350d27d93051205fb6b3aa3636721320035630ca62d33d"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "7420ae21f38af70f06a230912a6d12c0e57d4cbd8d31ebd8d8a19934e0ee8a98"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "e5b54f31e117be6256fc32354ecd5eac2fa65b645959da471f454f571112104f"
+    }
+  },
+  "external_wu_checks": {
+    "current_wu_source_receipts": {
+      "exit_code": 0,
+      "log_sha256": "7a6c284e8b383c90e266c092eaf950db32edefeaa8761e880cb7d9ac727e2768"
+    },
+    "wu_literal_and_receipt_validation": {
+      "exit_code": 1,
+      "log_sha256": "8ab1bf6e1e0859f1a02d3c31c0a2b0813d0d4dca2235b11427961414b512b545"
+    }
+  },
+  "external_wu_status": "not accepted: concurrent edits to WR2ClassicalNinthCertificate changed its source while source/object receipts were being checked; external gates are outside this main-library acceptance.",
+  "scope": "Main Chen and Li-Liu libraries; concurrent separate Wu research edits excluded.",
+  "finished_at_utc": "2026-10-26T09:10:29.087067+00:00",
+  "input_manifest_sha256": "e2edd4335a4cd2378a50fbf0e71673ff8fa59b0636fc71687f8097202bdccf26",
+  "source_state": "Uncommitted main-source working tree identified by validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "base_head": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "type_preservation_report": "type-preservation.json",
+  "last_accepted_wu_manifest_sha256": "c443682b009f9642ed3a2dfca4cfbf46bcc03c8178fab80c9968226c2794fccf",
+  "concurrent_wu_validation": "../wu-hf4-audit/validation.json",
+  "scope_limits": "Main-library acceptance only. Optional Wu receipt/literal checks are recorded separately and are not accepted for the concurrently changing research tree. Its last independent acceptance is linked; no fresh full Wu build is claimed.",
+  "english_document_translations": {
+    "WU_PRECISION_COMPRESSION": {
+      "before_sha256": "0b858cde8594a51120223d1f89be03a01e72aa806fa89c25c61712e389a9d93a",
+      "after_sha256": "cab62d631b2eb2a72cd03e7f52d2070430712f75b5b5bc45b246b68df5c2c497",
+      "scope": "Documentation-only faithful translation for the existing release English gate; no Wu proof or numeric evidence changed."
+    },
+    "WU_18938_COMPRESSION": {
+      "before_sha256": "ba19526d0e7625aa288945ed1402ec6a07bcb956f03b9dc944bb7e90e426006d",
+      "after_sha256": "ea2071fd4c1bb1f1a9d672f8e7f51ab4cbbfbfbc1925d2152508d286b7a87561",
+      "scope": "Documentation-only faithful translation for the existing release English gate; no Wu proof or numeric evidence changed."
+    },
+    "WU_HF4_COMPRESSION": {
+      "before_sha256": "4992f5dc2658529ebac89c71a370a80e6fdd99466f44fe4044367779756906e0",
+      "after_sha256": "7af9c2bb121ee7942f2cbff204ba99f971e68455ba1d554476ee904b84a5982e",
+      "scope": "Documentation-only faithful translation for the existing release English gate; no Wu proof or numeric evidence changed."
+    },
+    "WU_STRUCTURAL_SIMPLIFICATION": {
+      "before_sha256": "73ca1f895a4c923c842d657cb5f2892ebf9b2f3cc646dbfb0d6335b4a4b562d8",
+      "after_sha256": "a293ff0bb9074bbc53fff2fc40dcd090eaebdea9262de605586c5041e5f9d14b",
+      "scope": "Documentation-only faithful translation for the existing release English gate; no Wu proof or numeric evidence changed."
+    }
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-cleanup/reproduce.py": "24395c4db7209a4e45bddff424228826fffc424d76ef410c3c855d8e0199c718",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-cleanup/scan_redundancy.py": "7629fd40821d0397621509e5aa9c5a516cea5868971b1e942556db72bda28b90",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846",
+    "scripts/generate_blueprint.py": "cbe9bf3dfb298f110451413654ee3459b10392d43504cc1d425cf9b686dde8c7",
+    "scripts/update_blueprint_graph.py": "2ed66c3b20d879067c6551984f74b86d119ea819e277450885f9c9b8c3048d23",
+    "scripts/verify_blueprint.py": "6b4951a0cb5c6a6f84f695b74285c060d221f860867b2af3d0c44eb75e78b397"
+  },
+  "evidence_sha256": {
+    "type-preservation.json": "403865935f645805274542f7adc6144dc85442e758e1e8b37b6e8002181d9790",
+    "source-size.json": "f7a1c80fb99d718eca2565dc2893497b5d3d426823397662fc601d611ac537c1",
+    "changes.json": "cf67d582079830ae45a55a9f6e778562ac4ee43fa334b2a7b1f372e84361b782",
+    "analysis.json": "533595e71fc129c5b8fdab2a059ddff8cd1f9057fec8fa3ec4e9f7ee2c500d9d",
+    "next-wave-scan.json": "b5dff856755fd6a75bca5c22ae4a8948661c9d9565c7c14931c04f242df4576c",
+    "moved-definitions.json": "4046b96ccb28ce3049c1c0c3979e3dfd9af6cc98fd5eebf612b014f64c04d034",
+    "blueprint-validation.json": "da9ae0ec59ab74b06c11e8d1612d724d56898844394441edd361b89086904332"
+  },
+  "final_review_at_utc": "2026-10-26T09:13:43.483774+00:00",
+  "final_documentation_check": {
+    "exit_code": 0,
+    "log_sha256": "6ab510bc893f0c0393ab4acb6576620ac54bf41f7eb18c16170a7921c3fd1f99"
+  },
+  "documentation_sha256": {
+    "README.md": "521b08fcafaf83fb184fa4ce9b29612d3668e92f0a513165118a499e0ffc6018",
+    "docs/LILIU_CLEANUP.md": "c8ac1dcb543045f769876dcd97fa61344b1d9be56ecc13ea0c69fdf43a31ed99",
+    "docs/LILIU_REDUNDANCY_AUDIT.md": "da0ab348ba65ce948432883d5686683fe835f6e1d3702edd1d94288c85c40361",
+    "docs/SOURCE_SIZE.md": "a3de7959c78b02302355a7dbe204ae68b7b3804130f2274ae8460e843400705d",
+    "docs/VERIFICATION.md": "3a5c5c66bc5f35311346c63322e22862fa792082feb7a7f291a93227716fe216",
+    "docs/RELEASE_NOTES.md": "9ecd0f279e6b6426ad57f1399733bf3380a816701073a7026bfcd23ef334b5bc",
+    "docs/ARCHITECTURE.md": "db2ee4e9f1534d02761166074e6481377e2906641639dcf89527de916ef83d50",
+    "docs/PROVENANCE.md": "4d628f08b6248b767e2f53018b9aedbd6d50e869c9902f136f5030d5b96c2104",
+    "docs/THEOREMS.md": "cd125a53fbd85a8b7a0d74091275d8e2d3e9163be7e75c73c725f0d27c8c6aa8",
+    "website/report/index.html": "94cf2e12f89fdf74df4df6ea498b9e2415b8b64e2dd4e4c35d812926accd31b3",
+    "blueprint/src/chapters/liliu.tex": "4bbc0d111536833929a1c2b708ee0624f67f6b2d78d97df83cebfe971def338e",
+    "blueprint/nodes.json": "7d380414812f9148d8d19ebbc2f1d326936183e584247f9b2a737f6c2ddf18f1",
+    "blueprint/graph.json": "307ec818d77770cc7607fbca5b6d9783c01b2b00b67766e56783edb7306025b3"
+  }
+}

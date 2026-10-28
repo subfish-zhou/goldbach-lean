@@ -1,0 +1,103 @@
+{
+  "status": "pass",
+  "baseline_census": "Accepted endpoint complete main census",
+  "removed_private_declarations": [
+    {
+      "private_name": "_private.MathlibNt.Wu2004MeanValue.LowSource.0.Wu2004MeanValue.lowMovingSource_le_budget",
+      "providers": [
+        "MathlibNt.Wu2004MeanValue.LowSource"
+      ],
+      "consumers": [
+        "MathlibNt.Wu2004MeanValue.LowSource"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "Wu2004MeanValue.balanced_lowMovingSource_le_budget",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.Wu2004MeanValue.LowPrefix.0.Wu2004MeanValue.eventually_quotient_quarter",
+      "providers": [
+        "MathlibNt.Wu2004MeanValue.LowPrefix"
+      ],
+      "consumers": [
+        "MathlibNt.Wu2004MeanValue.LowPrefix"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "AnalyticNumberTheory.LargeSieve.PanQuotientBounds.eventually_nat_div_quarter",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.Wu2004MeanValue.LowPrefix.0.Wu2004MeanValue.eventually_quotient_parameters",
+      "providers": [
+        "MathlibNt.Wu2004MeanValue.LowPrefix"
+      ],
+      "consumers": [
+        "MathlibNt.Wu2004MeanValue.LowPrefix"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "AnalyticNumberTheory.LargeSieve.PanQuotientBounds.eventually_quotient_parameters",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10PanTwoEndpoints_residue_mem_unitResidues",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": null,
+      "same_kind_and_type_hash": null,
+      "role": "The original residue-membership proof is inlined into the new shared maximum theorem with the same d>=1 and Coprime d N assumptions; no separate public membership alias is introduced.",
+      "old_incoming_declarations": [
+        "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10PanTwoEndpoints_abs_intervalSum_le_maxL"
+      ],
+      "shared_maximum_theorem": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL"
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10PanTwoEndpoints_abs_intervalSum_le_maxL",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL",
+      "same_kind_and_type_hash": true
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Switched_residue_mem_unitResidues",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": null,
+      "same_kind_and_type_hash": null,
+      "role": "The original residue-membership proof is inlined into the new shared maximum theorem with the same d>=1 and Coprime d N assumptions; no separate public membership alias is introduced.",
+      "old_incoming_declarations": [
+        "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Switched_abs_intervalSum_le_maxL"
+      ],
+      "shared_maximum_theorem": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL"
+    },
+    {
+      "private_name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2Switched_abs_intervalSum_le_maxL",
+      "providers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution"
+      ],
+      "consumers": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution"
+      ],
+      "outside_provider_consumers": [],
+      "replacement": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCoprimeIntervalSum_abs_le_maxL",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "same_replacement_kind_type_hash_count": 5,
+  "inlined_residue_membership_proofs": 2,
+  "scope": "Seven private names disappear after sharing or inlining. Some existing proofs move upstream; this does not claim seven independently redundant complete proofs."
+}

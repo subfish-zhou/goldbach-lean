@@ -41,22 +41,4 @@ theorem fouvryG9RectanglePrefix_uniform_PNT {ζ : ℝ} (hζ : 0 < ζ) :
   have hmul := mul_le_mul_of_nonneg_right henv hm
   nlinarith
 
-/-- Genuine finite prefix merging followed by the existing uniform PNT.
-The sole size condition is on the prefix endpoint, not on each third box. -/
-theorem fouvryG9RectanglePrefix_thirds_PNT {ζ : ℝ} (hζ : 0 < ζ) :
-    ∃ Y : ℝ, 3 ≤ Y ∧ ∀ (N : ℕ) (e ρ : ℝ), 1 < ρ → ∀ n s : ℕ,
-      Y ≤ ρ^3*(N : ℝ)/((n : ℝ)*s) →
-      ((∑ k ∈ fouvryG9GridUsed N e ρ,
-        (fouvryG9RectanglePrefixThirds N ρ n s k).card : ℕ) : ℝ) ≤
-      (1+ζ)*((ρ^3*(N : ℝ)/((n : ℝ)*s))/
-        Real.log (ρ^3*(N : ℝ)/((n : ℝ)*s))) := by
-  obtain ⟨Y, hY, h⟩ := fouvryG9RectanglePrefix_uniform_PNT hζ
-  refine ⟨Y, hY, ?_⟩
-  intro N e ρ hρ n s hx
-  exact (fouvryG9RectanglePrefix_thirds_le_primePi (e := e) hρ n s).trans
-    (h Y le_rfl _ hx)
-
-#print axioms fouvryG9RectanglePrefix_thirds_le_primePi
-#print axioms fouvryG9RectanglePrefix_uniform_PNT
-#print axioms fouvryG9RectanglePrefix_thirds_PNT
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

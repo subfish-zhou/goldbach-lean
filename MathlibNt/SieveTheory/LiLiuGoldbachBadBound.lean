@@ -1,8 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachClosedLowerBound
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-noncomputable local instance instDecidableGoldbachBadBound (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- An actual noncoprime difference N-p comes from a prime divisor of N.
 No coprimality or parity exception is removed from the original carrier. -/

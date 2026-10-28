@@ -1,5 +1,3 @@
-import MathlibNt.Tactic.ElementaryDeriv
-import MathlibNt.Tactic.PolynomialDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticPrimitives
 import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
 

@@ -81,7 +81,6 @@ theorem B_zero : B 0 = 0 := by norm_num [B]
 
 theorem D_zero : D 0 = 0 := by norm_num [D]
 
-theorem T_zero : T 0 = 0 := by norm_num [T]
 
 theorem dA_residual (x : ℝ) :
     (2+x)*dA x - L x = (282654114997 / 9025222055850 : ℝ) * x^34 := by

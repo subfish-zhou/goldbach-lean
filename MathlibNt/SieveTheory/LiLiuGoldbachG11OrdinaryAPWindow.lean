@@ -1,7 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindowAP
-import MathlibNt.SieveTheory.LiLiuFouvryG9IntegerFibre
-
+import MathlibNt.SieveTheory.FiniteRealWindows
+import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
 open Finset
 open scoped BigOperators Classical
 open Wu2004MeanValue AnalyticNumberTheory.Sieve

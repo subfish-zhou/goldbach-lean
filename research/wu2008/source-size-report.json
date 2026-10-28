@@ -35,6 +35,21 @@
         "code_lines": 1126636,
         "utf8_bytes": 71480862
       }
+    },
+    "1+1.8938": {
+      "root": "WR2ClassicalCertificate",
+      "legacy_endpoint": "1+1.894",
+      "current": {
+        "modules": 3764,
+        "code_lines": 525529,
+        "physical_lines": 621451,
+        "utf8_bytes": 30215769
+      },
+      "manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+      "measurement": "../wu-structural-compression-audit/measurement.json",
+      "validation": "../wu-structural-compression-audit/validation.json",
+      "accepted_at_utc": "2026-10-28T09:30:02.855720+00:00",
+      "measurement_date_utc": "2026-10-28"
     }
   },
   "whole_trees": {
@@ -55,6 +70,12 @@
       "physical_lines": 1303650,
       "code_lines": 1166974,
       "utf8_bytes": 75671118
+    },
+    "accepted_current_wu": {
+      "modules": 4151,
+      "code_lines": 566283,
+      "physical_lines": 667929,
+      "utf8_bytes": 34424418
     }
   },
   "working_tree_changes_vs_head": {
@@ -1070,5 +1091,6 @@
       "code_lines": -129,
       "utf8_bytes": -8961
     }
-  }
+  },
+  "mixed_snapshot_note": "Historical main and original Wu rows retain their original dates. Only the 1+1.8938 and whole_trees.accepted_current_wu rows reflect the 2026-10-28 structural acceptance; Chen/Li–Liu measurements are not refreshed."
 }

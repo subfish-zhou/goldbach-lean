@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerShort
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingTheoremADyadicCoverage
-import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 /-!
@@ -134,9 +133,6 @@ def longMean (f : ℕ → ℂ) (m A₁ A₂ k : ℕ) (R T : ℝ) (s : ℂ) : ℝ
     ∑ χ : PrimitiveCharacter q,
       ‖panDyadicG f m A₁ A₂ k χ s * longF₂ m (shortCutoff R) T χ s‖
 
-theorem mem_long_interval_iff (R : ℝ) {T : ℝ} (hT : 0 ≤ T) (n : ℕ) :
-    n ∈ Ioc (shortCutoff R) ⌊T⌋₊ ↔ R ^ 2 < n ∧ (n : ℝ) ≤ T := by
-  simp only [mem_Ioc, shortCutoff, Nat.floor_lt (sq_nonneg R), Nat.le_floor_iff hT]
 
 theorem polynomial_eq_sum_dyadic (c : ℕ → ℂ) (H K : ℕ) (hH : 0 < H)
     {q : ℕ} (χ : PrimitiveCharacter q) (s : ℂ) :

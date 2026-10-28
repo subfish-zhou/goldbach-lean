@@ -1,0 +1,16 @@
+{
+  "status": "ROOT_REVIEWED_V3_RESOURCE_ONLY_CHANGE_READY_NOT_EXECUTED",
+  "observed_unix": 1793176020.899123,
+  "files": {
+    "run.py": "e9c58e8db40c1a3b4f8450661e45b5d1354de0fa858035ae384b7e42548be9c2",
+    "pins.json": "f7fe8fcb1cd11e7b347ebcbda3f4cadb4601289f14c560322a2da6507e99b3eb",
+    "prior-gates.json": "94b1c5db16caa63fe1dae49ef31d95b73353e17bcb5c8ae86fd1b4ada32d8ef0",
+    "test_runtime.py": "d911255a24cd6452ecc12fd2452093b8685aa7b77a1a01cde0d888f11b1ecce4"
+  },
+  "tests_passed": 32,
+  "actual_prior_terminal_guard": "PASS",
+  "change": "Only strict Lean CLI adds -DmaxRecDepth=16384; additionalpins preserveV2failedmetadatajob. CollectorTemplate/source reconstruction/payloadschema/scope unchanged.",
+  "official_pinned_source_checked": "Lean.Compiler.LCNF.Simp.SimpM.withIncRecDepth uses MonadRecDepth.getMaxRecDepth; Lean.CoreM context initializes it from maxRecDepth option.",
+  "no_proof_or_precision_changes": true,
+  "no_adoption": true
+}

@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDifferenceBound
 

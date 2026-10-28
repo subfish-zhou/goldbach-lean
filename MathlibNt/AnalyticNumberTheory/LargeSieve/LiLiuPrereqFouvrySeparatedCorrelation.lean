@@ -25,15 +25,6 @@ def wCorrelationInnerWeight (K : WExtractedKey) (β ζ : ℕ → ℝ)
   ζ ((K.1.2.2.1 * K.1.2.2.2.2 / K.2) * t.1.1.2.2) *
     β (K.1.1 * (wGCDTuple (wExtractedOriginal t.1)).n₂)
 
-/-- Equality of the two inner arithmetic coordinates suffices. Neither
-the first modulus nor its coefficient is concealed in this weight. -/
-theorem wCorrelationInnerWeight_eq (K : WExtractedKey) (β ζ : ℕ → ℝ)
-    {t u : WExtractedTuple × ℤ}
-    (hn : (wGCDTuple (wExtractedOriginal t.1)).n₂ =
-      (wGCDTuple (wExtractedOriginal u.1)).n₂)
-    (hs : t.1.1.2.2 = u.1.1.2.2) :
-    wCorrelationInnerWeight K β ζ t = wCorrelationInnerWeight K β ζ u := by
-  simp only [wCorrelationInnerWeight, hn, hs]
 
 theorem wExtractedCoefficient_eq_outer_inner
     {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
@@ -152,32 +143,5 @@ theorem wCoprimeFiber_separated_cauchy
       exact congrArg Complex.re (wCorrelationOuterFiber_gram hN hQ hU c o
         (fun t => (wCorrelationInnerWeight K β ζ t : ℂ)))
 
-/-- The selected prefix of a cell is a real original tuple carrier, not
-an arbitrary family of weights inserted into an interval theorem. -/
-theorem wCoprimePrefixMax_sq_le_separated_correlation
-    {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
-    {a : ℤ} {x η R S : ℝ} {b : ℕ} {K : WExtractedKey}
-    {U : Finset (WExtractedTuple × ℤ)}
-    (hU : U ⊆ wExtractedKeyFiber H N Q a (c2FiveSmallMask x η)
-      R S (highOmegaCutoff x) b K)
-    (c : Finset (ℕ × ℕ)) (j : Fin 5 → ℕ) (β c₁ γ ζ : ℕ → ℝ) :
-    ∃ cap ∈ _root_.LiLiuPrereqFouvry.Rectangle.box (wAnalyticBoxLo j) (wAnalyticBoxHi j),
-      wAnalyticBlockPrefixMax (wCoprimeFiber x N S U c) j β c₁ γ ζ a ^ 2 ≤
-        wCorrelationOuterMass x N S (wAnalyticPrefix U cap) c K β c₁ γ *
-          wSeparatedCorrelationEnergy x N S (wAnalyticPrefix U cap) c K β ζ a := by
-  obtain ⟨cap, hcap, he⟩ :=
-    wAnalyticBlockPrefixMax_attained (wCoprimeFiber x N S U c) j β c₁ γ ζ a
-  refine ⟨cap, hcap, ?_⟩
-  rw [he]
-  have hc : wAnalyticPrefix (wCoprimeFiber x N S U c) cap =
-      wCoprimeFiber x N S (wAnalyticPrefix U cap) c := by
-    ext t
-    simp only [wAnalyticPrefix, wCoprimeFiber, mem_filter]
-    tauto
-  unfold wAnalyticPrefixSum
-  rw [hc]
-  exact wCoprimeFiber_separated_cauchy hN hQ
-    (fun _ ht => hU (mem_filter.mp ht).1) c β c₁ γ ζ
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

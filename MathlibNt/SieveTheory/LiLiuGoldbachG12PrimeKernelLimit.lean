@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
-import MathlibNt.SieveTheory.PrimeReciprocalLogRectangle
 
 open Finset Filter Set
 open scoped BigOperators Topology
@@ -10,16 +9,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 open PrimeReciprocalLogScale PrimeReciprocalLogRectangle
 
-theorem goldbachG12PrimeKernel_eq_logCoordinateSum (h : ℝ → ℝ) (N : ℕ) :
-    goldbachG12PrimeKernel h N =
-      ∑ v ∈ goldbachG12Labels N ((N : ℝ) ^ (4 / 53 : ℝ)) ((N : ℝ) ^ (4 / 33 : ℝ)) ((N : ℝ) ^ (3 / 11 : ℝ)),
-        (h (Real.log (v.2.2.1 : ℝ) / Real.log (N : ℝ)) /
-          (Real.log (v.2.2.2 : ℝ) / Real.log (N : ℝ))) *
-            (1 / (goldbachG11LabelProd v : ℝ)) := by
-  apply Finset.sum_congr rfl
-  intro v _
-  simp only [div_eq_mul_inv, mul_inv, inv_inv]
-  ring
 
 def goldbachG12PrimeBoxContribution (h : ℝ → ℝ) (N : ℕ) (lo hi : Fin 4 → ℝ) : ℝ :=
   ∑ v ∈ (goldbachG12Labels N ((N : ℝ) ^ (4 / 53 : ℝ))

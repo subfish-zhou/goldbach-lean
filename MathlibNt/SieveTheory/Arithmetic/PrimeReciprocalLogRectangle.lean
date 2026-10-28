@@ -60,25 +60,6 @@ theorem tendsto_primeReciprocalLogRectangle {a₀ a₁ b₀ b₁ : ℝ}
     (tendsto_primeReciprocalLogInterval ha₀ ha).mul
       (tendsto_primeReciprocalLogInterval hb₀ hb)
 
-/-- Eventual epsilon form of the fixed logarithmic rectangle limit. -/
-theorem eventually_abs_primeReciprocalLogRectangle_sub_lt
-    {a₀ a₁ b₀ b₁ ε : ℝ} (ha₀ : 0 < a₀) (ha : a₀ < a₁)
-    (hb₀ : 0 < b₀) (hb : b₀ < b₁) (hε : 0 < ε) :
-    ∀ᶠ N : ℕ in atTop,
-      |primeReciprocalLogRectangle N a₀ a₁ b₀ b₁ -
-        logarithmicRectangleMass a₀ a₁ b₀ b₁| < ε := by
-  simpa only [Real.dist_eq] using
-    (Metric.tendsto_nhds.mp (tendsto_primeReciprocalLogRectangle ha₀ ha hb₀ hb)) ε hε
-
-/-- Threshold form of the fixed logarithmic rectangle limit. -/
-theorem exists_abs_primeReciprocalLogRectangle_sub_lt
-    {a₀ a₁ b₀ b₁ ε : ℝ} (ha₀ : 0 < a₀) (ha : a₀ < a₁)
-    (hb₀ : 0 < b₀) (hb : b₀ < b₁) (hε : 0 < ε) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      |primeReciprocalLogRectangle N a₀ a₁ b₀ b₁ -
-        logarithmicRectangleMass a₀ a₁ b₀ b₁| < ε := by
-  simpa only [eventually_atTop] using
-    (eventually_abs_primeReciprocalLogRectangle_sub_lt ha₀ ha hb₀ hb hε)
 
 variable {ι : Type*}
 
@@ -99,34 +80,5 @@ theorem tendsto_weighted_sum_primeReciprocalLogRectangle
   exact (tendsto_primeReciprocalLogRectangle
     (ha₀ i hi) (ha i hi) (hb₀ i hi) (hb i hi)).const_mul (c i)
 
-/-- Eventual epsilon form of finite-grid convergence. -/
-theorem eventually_abs_weighted_sum_primeReciprocalLogRectangle_sub_lt
-    (s : Finset ι) (c a₀ a₁ b₀ b₁ : ι → ℝ)
-    (ha₀ : ∀ i ∈ s, 0 < a₀ i) (ha : ∀ i ∈ s, a₀ i < a₁ i)
-    (hb₀ : ∀ i ∈ s, 0 < b₀ i) (hb : ∀ i ∈ s, b₀ i < b₁ i)
-    {ε : ℝ} (hε : 0 < ε) :
-    ∀ᶠ N : ℕ in atTop,
-      |(∑ i ∈ s, c i *
-          primeReciprocalLogRectangle N (a₀ i) (a₁ i) (b₀ i) (b₁ i)) -
-        ∑ i ∈ s, c i *
-          logarithmicRectangleMass (a₀ i) (a₁ i) (b₀ i) (b₁ i)| < ε := by
-  simpa only [Real.dist_eq] using
-    (Metric.tendsto_nhds.mp (tendsto_weighted_sum_primeReciprocalLogRectangle
-      s c a₀ a₁ b₀ b₁ ha₀ ha hb₀ hb)) ε hε
-
-/-- Threshold form of fixed finite weighted-grid convergence. -/
-theorem exists_abs_weighted_sum_primeReciprocalLogRectangle_sub_lt
-    (s : Finset ι) (c a₀ a₁ b₀ b₁ : ι → ℝ)
-    (ha₀ : ∀ i ∈ s, 0 < a₀ i) (ha : ∀ i ∈ s, a₀ i < a₁ i)
-    (hb₀ : ∀ i ∈ s, 0 < b₀ i) (hb : ∀ i ∈ s, b₀ i < b₁ i)
-    {ε : ℝ} (hε : 0 < ε) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      |(∑ i ∈ s, c i *
-          primeReciprocalLogRectangle N (a₀ i) (a₁ i) (b₀ i) (b₁ i)) -
-        ∑ i ∈ s, c i *
-          logarithmicRectangleMass (a₀ i) (a₁ i) (b₀ i) (b₁ i)| < ε := by
-  simpa only [eventually_atTop] using
-    (eventually_abs_weighted_sum_primeReciprocalLogRectangle_sub_lt
-      s c a₀ a₁ b₀ b₁ ha₀ ha hb₀ hb hε)
 
 end MathlibNt.SieveTheory.PrimeReciprocalLogRectangle

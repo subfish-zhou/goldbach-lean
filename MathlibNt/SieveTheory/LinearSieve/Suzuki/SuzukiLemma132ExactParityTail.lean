@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -225,20 +224,6 @@ theorem Lemma132FiniteTailIdentity_exactRecursionThreshold :
           apply integral_congr_ae
           filter_upwards [] with t
           exact finiteSourceRecursionIntegrand_eq 2 N t
-
-/-- On the even parity branch, Suzuki's exact parity-domain lower endpoint is
-already the exact recursion threshold. -/
-theorem Lemma132FiniteTailIdentity_even_parityDomain
-    (N : ℕ) (x : ℝ) (hN : 2 ≤ N) (hEven : N % 2 = 0)
-    (hx : x ∈ KappaOneModel.parityDomain 2 N) :
-    IntegrableOn (fun t => finiteSourceLayer 1 2 (N - 1) (t - 1)) (Ioi x) ∧
-      x * finiteSourceLayer 1 2 N x =
-        ∫ t in Ioi x, finiteSourceLayer 1 2 (N - 1) (t - 1) := by
-  apply Lemma132FiniteTailIdentity_exactRecursionThreshold N x hN
-  unfold KappaOneModel.parityDomain at hx
-  rw [hEven] at hx ⊢
-  norm_num at hx ⊢
-  exact hx
 
 
 end MathlibNt.SieveTheory

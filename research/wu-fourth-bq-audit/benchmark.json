@@ -1,0 +1,47 @@
+{
+  "records": {
+    "baseline": {
+      "mode": "baseline",
+      "module": "WR2ClassicalFourthBlockouterPay040",
+      "exit_code": 0,
+      "seconds": 76.319,
+      "source_sha256": "9175099ef203e1342293e7474e0de70923f251e8e4f81362b4df2a17756f8b84",
+      "log": "benchmark-logs/baseline.log",
+      "user_seconds": 57.5,
+      "system_seconds": 18.52,
+      "max_rss_kb": 14900016.0
+    },
+    "candidate": {
+      "mode": "candidate",
+      "module": "WR2ClassicalFourthBlockouterPay040",
+      "exit_code": 0,
+      "seconds": 52.925,
+      "source_sha256": "9175099ef203e1342293e7474e0de70923f251e8e4f81362b4df2a17756f8b84",
+      "log": "benchmark-logs/candidate.log",
+      "user_seconds": 37.55,
+      "system_seconds": 15.27,
+      "max_rss_kb": 12181036.0
+    }
+  },
+  "same_source": true,
+  "single_worker": true,
+  "strict_flags": [
+    "-j1",
+    "warningAsError=true",
+    "autoImplicit=false"
+  ],
+  "formal_sources_modified": false,
+  "affected_dependencies": [
+    "WR2ClassicalFourthDataBq",
+    "WR2ClassicalFourthDataB",
+    "WR2ClassicalFourthDataC",
+    "WR2ClassicalFourthDataD",
+    "WR2ClassicalFourthDataouterq",
+    "WR2ClassicalFourthDataouter",
+    "WR2ClassicalFourthConditions",
+    "WR2ClassicalFourthBlockouterPay040"
+  ],
+  "wall_ratio_candidate_over_baseline": 0.6934708263997169,
+  "production_DataBq_sha256": "d1a40c94e1f72c704db6249c634db41319ba3a061546038d2ab8429af85afcc6",
+  "interpretation": "Single sequential run per version, same machine and strict flags; representative comparison, not a general performance guarantee."
+}

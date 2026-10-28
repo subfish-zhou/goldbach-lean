@@ -109,18 +109,7 @@ def paperQStyleModulus (N w : ℕ) : ℕ :=
 /-- The prime factors of a product over a finite prime set recover that set. -/
 theorem primeFactors_prod_eq_self_paperQ {S : Finset ℕ}
     (hS : ∀ p ∈ S, p.Prime) : (S.prod id).primeFactors = S := by
-  induction S using Finset.induction_on with
-  | empty => simp [Nat.primeFactors_one]
-  | insert p S hp ih =>
-      rw [Finset.prod_insert hp]
-      show (p * S.prod id).primeFactors = insert p S
-      have hp' := hS p (Finset.mem_insert_self _ _)
-      have h0p : p ≠ 0 := hp'.ne_zero
-      have h0s : S.prod id ≠ 0 := ne_of_gt <| Finset.prod_pos fun q hq =>
-        Nat.Prime.pos (hS q (Finset.mem_insert_of_mem hq))
-      rw [Nat.primeFactors_mul h0p h0s, Nat.Prime.primeFactors hp',
-        ih fun q hq => hS q (Finset.mem_insert_of_mem hq)]
-      rfl
+  exact Nat.primeFactors_prod hS
 
 /-- The generic modulus is nonzero because every factor is prime. -/
 theorem paperQStyleModulus_ne_zero (N w : ℕ) :
@@ -193,52 +182,6 @@ theorem liuMainNoncoprimeMajorant_liuWeight_mod_eq_abs_main_sum_of_dvd_paperQSty
  · intro r hr hrd
    exact (prime_le_and_not_dvd_of_dvd_paperQStyleModulus hd hr hrd).2
 
-/-- Signed finite arbitrary-model `R₁` bound for a divisor of the generic
-modulus. -/
-theorem abs_liuMainNoncoprimeSum_liuWeight_mod_le_abs_main_sum_of_dvd_paperQStyleModulus
-   (main : ℝ → ℝ) (N z w y Y X d : ℕ) (hwy : w ≤ y)
-   (hd : d ∣ paperQStyleModulus N w) :
-   |liuMainNoncoprimeSum main Y X d (N % d) (liuWeight N z y)| ≤
-     ∑ p ∈ (liuWeightPairs N z y).filter
-         (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-       |main ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
- apply abs_liuMainNoncoprimeSum_liuWeight_mod_le_abs_main_sum
-   main N z w y Y X d hwy
- · intro r hr hrd
-   exact (prime_le_and_not_dvd_of_dvd_paperQStyleModulus hd hr hrd).1
- · intro r hr hrd
-   exact (prime_le_and_not_dvd_of_dvd_paperQStyleModulus hd hr hrd).2
-
-/-- **Proxy specialization.** Exact finite `R₁` majorant using ANT's historical
-`x / log x` model. This is not a theorem about the paper's true `li`. -/
-theorem panDistributionNoncoprimeMajorant_liuWeight_mod_eq_abs_li_sum_of_dvd_paperQStyleModulus
-    (N z w y Y X d : ℕ) (hwy : w ≤ y)
-    (hd : d ∣ paperQStyleModulus N w) :
-    AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-        Y X d (N % d) (liuWeight N z y) =
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
- simpa [← liuMainNoncoprimeMajorant_proxy] using
-   liuMainNoncoprimeMajorant_liuWeight_mod_eq_abs_main_sum_of_dvd_paperQStyleModulus
-     AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y Y X d hwy hd
-
-/-- **Proxy specialization.** Signed finite `R₁` bound using ANT's historical
-`x / log x` model. Its type exhibits `N`, independent `z,w,y`, and the
-hypothesis `d ∣ Q(N,w)`. -/
-theorem abs_panDistributionNoncoprimeSum_liuWeight_mod_le_abs_li_sum_of_dvd_paperQStyleModulus
-    (N z w y Y X d : ℕ) (hwy : w ≤ y)
-    (hd : d ∣ paperQStyleModulus N w) :
-    |AnalyticNumberTheory.Sieve.panDistributionNoncoprimeSum
-        Y X d (N % d) (liuWeight N z y)| ≤
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
-  simpa [← liuMainNoncoprimeSum_proxy] using
-    abs_liuMainNoncoprimeSum_liuWeight_mod_le_abs_main_sum_of_dvd_paperQStyleModulus
-      AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y Y X d hwy hd
 
 /-- The exact divisor index in Liu 2022, `main.tex` lines 296--300 (`eqn-r0`),
 using the explicit non-strict `paperQStyleModulus` convention. In particular,
@@ -254,12 +197,6 @@ noncomputable def paperQStyleMainR1Majorant
     (3 : ℝ) ^ d.primeFactors.card *
       liuMainNoncoprimeMajorant main N X d (N % d) (liuWeight N z y)
 
-/-- The corresponding finite outer signed sum for an arbitrary main-term model. -/
-noncomputable def paperQStyleMainR1SignedSum
-    (main : ℝ → ℝ) (N z w y D X : ℕ) : ℝ :=
-  ∑ d ∈ paperQStyleR1Divisors N w D,
-    (3 : ℝ) ^ d.primeFactors.card *
-      liuMainNoncoprimeSum main N X d (N % d) (liuWeight N z y)
 
 /-- Exact outer arbitrary-model rewrite before every analytic estimate in Liu
 2022 `main.tex` line 304. -/
@@ -279,36 +216,6 @@ theorem paperQStyleMainR1Majorant_eq_abs_main_sum
   rw [liuMainNoncoprimeMajorant_liuWeight_mod_eq_abs_main_sum_of_dvd_paperQStyleModulus
     main N z w y N X d hwy (Nat.mem_divisors.mp hd.1).1]
 
-/-- Outer triangle bound for the arbitrary-model signed finite sum. -/
-theorem abs_paperQStyleMainR1SignedSum_le_majorant
-    (main : ℝ → ℝ) (N z w y D X : ℕ) :
-    |paperQStyleMainR1SignedSum main N z w y D X| ≤
-      paperQStyleMainR1Majorant main N z w y D X := by
-  classical
-  unfold paperQStyleMainR1SignedSum paperQStyleMainR1Majorant
-  calc
-    |∑ d ∈ paperQStyleR1Divisors N w D,
-        (3 : ℝ) ^ d.primeFactors.card *
-          liuMainNoncoprimeSum main N X d (N % d) (liuWeight N z y)| ≤
-        ∑ d ∈ paperQStyleR1Divisors N w D,
-          |(3 : ℝ) ^ d.primeFactors.card *
-            liuMainNoncoprimeSum main N X d (N % d) (liuWeight N z y)| :=
-      Finset.abs_sum_le_sum_abs _ _
-    _ = ∑ d ∈ paperQStyleR1Divisors N w D,
-          (3 : ℝ) ^ d.primeFactors.card *
-            |liuMainNoncoprimeSum main N X d (N % d) (liuWeight N z y)| := by
-      apply Finset.sum_congr rfl
-      intro d _
-      rw [abs_mul, abs_of_nonneg (by positivity :
-        0 ≤ (3 : ℝ) ^ d.primeFactors.card)]
-    _ ≤ ∑ d ∈ paperQStyleR1Divisors N w D,
-          (3 : ℝ) ^ d.primeFactors.card *
-            liuMainNoncoprimeMajorant main N X d (N % d) (liuWeight N z y) := by
-      apply Finset.sum_le_sum
-      intro d _
-      exact mul_le_mul_of_nonneg_left
-        (abs_liuMainNoncoprimeSum_le main N X d (N % d) (liuWeight N z y))
-        (by positivity)
 
 /-- Source-facing Liu `R₁` majorant with the paper scale fixed as `X = N`.
 The function `main` remains abstract, so this definition does not identify the
@@ -317,10 +224,6 @@ noncomputable def paperQStyleSourceR1Majorant
     (main : ℝ → ℝ) (N z w y D : ℕ) : ℝ :=
   paperQStyleMainR1Majorant main N z w y D N
 
-/-- Source-facing signed Liu `R₁` sum with `X = N`. -/
-noncomputable def paperQStyleSourceR1SignedSum
-    (main : ℝ → ℝ) (N z w y D : ℕ) : ℝ :=
-  paperQStyleMainR1SignedSum main N z w y D N
 
 /-- Source-facing outer rewrite with `X = N`, matching the `N` in Liu's
 `eqn-delta-def` and `eqn-r0`. -/
@@ -334,12 +237,6 @@ theorem paperQStyleSourceR1Majorant_eq_abs_main_sum
             |main ((N : ℝ) / (p.1 * p.2))| / Nat.totient d) := by
   exact paperQStyleMainR1Majorant_eq_abs_main_sum main N z w y D N hwy
 
-/-- Source-facing outer triangle bound with `X = N`. -/
-theorem abs_paperQStyleSourceR1SignedSum_le_majorant
-    (main : ℝ → ℝ) (N z w y D : ℕ) :
-    |paperQStyleSourceR1SignedSum main N z w y D| ≤
-      paperQStyleSourceR1Majorant main N z w y D :=
-  abs_paperQStyleMainR1SignedSum_le_majorant main N z w y D N
 
 /-! ## Reduction under a paper-li upper model -/
 
@@ -450,48 +347,6 @@ noncomputable def paperQStyleR1PairReciprocalSum
       (fun p => p.1 * p.2 ≤ N ∧ p.1 ∣ d),
     1 / ((p.1 : ℝ) * p.2)
 
-/-- The exact outer `p₁` index in Liu's nested source sum, including primality
-and `p₁ ∣ d`. -/
-noncomputable def liuSourceR1P₁Range (N d : ℕ) : Finset ℕ :=
-  (range (N + 1)).filter fun p₁ =>
-    p₁.Prime ∧ liuSourceZ10 N < p₁ ∧ p₁ ≤ liuSourceY3 N ∧ p₁ ∣ d
-
-/-- The exact inner `p₂` index in Liu's nested source sum. The root-free size
-condition is exactly the square-root cutoff from `eqn-adef`. -/
-noncomputable def liuSourceR1P₂Range (N p₁ : ℕ) : Finset ℕ :=
-  (range (N + 1)).filter fun p₂ =>
-    p₂.Prime ∧ liuSourceY3 N < p₂ ∧ p₁ * p₂ ^ 2 ≤ N
-
-/-- Liu's pair reciprocal sum written as an exact nested `p₁,p₂` finite sum. -/
-noncomputable def liuSourceR1NestedPairReciprocalSum (N d : ℕ) : ℝ :=
-  ∑ p₁ ∈ liuSourceR1P₁Range N d,
-    ∑ p₂ ∈ liuSourceR1P₂Range N p₁, 1 / ((p₁ : ℝ) * p₂)
-
-/-- Exact reindexing of the retained pair sum into Liu's nested source ranges.
-The redundant `p₁*p₂ ≤ N` filter follows from the exact square-root condition. -/
-theorem paperQStyleR1PairReciprocalSum_source_eq_nested (N d : ℕ) :
-    paperQStyleR1PairReciprocalSum
-        N (liuSourceZ10 N) (liuSourceY3 N) d =
-      liuSourceR1NestedPairReciprocalSum N d := by
-  classical
-  unfold paperQStyleR1PairReciprocalSum liuWeightPairs
-    liuSourceR1NestedPairReciprocalSum liuSourceR1P₁Range liuSourceR1P₂Range
-  simp only [Finset.sum_filter]
-  change (∑ a ∈ range (N + 1) ×ˢ range (N + 1), _) = _
-  rw [Finset.sum_product]
-  apply Finset.sum_congr rfl
-  intro p₁ hp₁
-  by_cases h1 : p₁.Prime <;> by_cases hz : liuSourceZ10 N < p₁ <;>
-    by_cases hy1 : p₁ ≤ liuSourceY3 N <;> by_cases hd : p₁ ∣ d <;>
-    simp [LiuPairConditions, h1, hz, hy1, hd]
-  all_goals
-    apply Finset.sum_congr rfl
-    intro p₂ hp₂
-    by_cases h2 : p₂.Prime <;> by_cases hy2 : liuSourceY3 N < p₂ <;>
-      by_cases hs : p₁ * p₂ ^ 2 ≤ N <;> simp [h2, hy2, hs]
-    have hprod : p₁ * p₂ ≤ N := liuWeightSupport_le
-      ⟨(p₁, p₂), mem_liuWeightPairs.mpr ⟨h1, h2, hz, hy1, hy2, hs⟩, rfl⟩
-    simp [hprod]
 
 /-- The corrected rectangular source range: `p₁ > N^(1/10)` and
 `N^(1/3) < p₂ ≤ N^(9/20)`, with primality and `p₁ ∣ d` retained. -/
@@ -791,15 +646,6 @@ def PaperQStyleR1PairUniformBound
   0 ≤ M ∧ ∀ d ∈ paperQStyleR1Divisors N w D,
     paperQStyleR1PairReciprocalSum N z y d ≤ M
 
-/-- Every per-modulus pair reciprocal sum is nonnegative. -/
-lemma paperQStyleR1PairReciprocalSum_nonneg
-    (N z y d : ℕ) :
-    0 ≤ paperQStyleR1PairReciprocalSum N z y d := by
-  classical
-  unfold paperQStyleR1PairReciprocalSum
-  apply Finset.sum_nonneg
-  intro p hp
-  positivity
 
 /-- At the frozen source cutoffs and `D₂`, every per-modulus pair sum is bounded
 by `5 C₂ N^(-1/10)`. -/
@@ -1253,65 +1099,6 @@ theorem PaperLiUpperModel.paperQStyleSourceR1Majorant_le_log_square
               ((Real.log ↑N)⁻¹ * Real.log ↑N ^ 3) := by ring
         _ = _ := by rw [hNpow, hlogpow]
 
-/-- The finite outer non-coprime majorant from Liu 2022, `main.tex` lines
-296--300, with `Y = N`, canonical residue `N % d`, and a generic support cutoff
-`X`. **This legacy declaration is the ANT `x / log x` proxy specialization**, not
-the paper's true-`li` layer. -/
-noncomputable def paperQStyleOuterR1Majorant
-    (N z w y D X : ℕ) : ℝ :=
-  ∑ d ∈ paperQStyleR1Divisors N w D,
-    (3 : ℝ) ^ d.primeFactors.card *
-      AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-        N X d (N % d) (liuWeight N z y)
-
-/-- The corresponding finite outer signed non-coprime sum. -/
-noncomputable def paperQStyleOuterR1SignedSum
-    (N z w y D X : ℕ) : ℝ :=
-  ∑ d ∈ paperQStyleR1Divisors N w D,
-    (3 : ℝ) ^ d.primeFactors.card *
-      AnalyticNumberTheory.Sieve.panDistributionNoncoprimeSum
-        N X d (N % d) (liuWeight N z y)
-
-/-- The legacy outer majorant is exactly the ANT proxy specialization. -/
-theorem paperQStyleMainR1Majorant_proxy
-    (N z w y D X : ℕ) :
-    paperQStyleMainR1Majorant
-        AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y D X =
-      paperQStyleOuterR1Majorant N z w y D X := by
-  rfl
-
-/-- The legacy outer signed sum is exactly the ANT proxy specialization. -/
-theorem paperQStyleMainR1SignedSum_proxy
-    (N z w y D X : ℕ) :
-    paperQStyleMainR1SignedSum
-        AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y D X =
-      paperQStyleOuterR1SignedSum N z w y D X := by
-  rfl
-
-/-- **Proxy specialization.** Exact outer rewrite with ANT's `x / log x`
-compatibility model. It is not an identification with the paper's true `li`. -/
-theorem paperQStyleOuterR1Majorant_eq_abs_li_sum
-    (N z w y D X : ℕ) (hwy : w ≤ y) :
-    paperQStyleOuterR1Majorant N z w y D X =
-      ∑ d ∈ paperQStyleR1Divisors N w D,
-        (3 : ℝ) ^ d.primeFactors.card *
-          (∑ p ∈ (liuWeightPairs N z y).filter
-              (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-            |AnalyticNumberTheory.Sieve.logarithmicIntegral
-              ((N : ℝ) / (p.1 * p.2))| / Nat.totient d) := by
-  simpa [paperQStyleMainR1Majorant_proxy] using
-    paperQStyleMainR1Majorant_eq_abs_main_sum
-      AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y D X hwy
-
-/-- **Proxy specialization.** Outer triangle bound for the legacy signed finite
-sum. This does not assert a true-`li` model or any estimate from lines 304--319. -/
-theorem abs_paperQStyleOuterR1SignedSum_le_majorant
-    (N z w y D X : ℕ) (_hwy : w ≤ y) :
-    |paperQStyleOuterR1SignedSum N z w y D X| ≤
-      paperQStyleOuterR1Majorant N z w y D X := by
-  simpa [paperQStyleMainR1SignedSum_proxy, paperQStyleMainR1Majorant_proxy] using
-    abs_paperQStyleMainR1SignedSum_le_majorant
-      AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y D X
 
 /-- The natural cutoff obtained by flooring the paper's real exponent
 `N^(1/4 - ε/2)`. -/

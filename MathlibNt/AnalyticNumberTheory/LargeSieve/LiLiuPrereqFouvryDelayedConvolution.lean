@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
 
 /-!
 # Delayed decomposition of the second modulus coefficient
@@ -110,18 +109,6 @@ theorem mem_wDelayedTuples_iff {N Q : Finset ℕ} {a : ℤ}
     mem_filter, mem_product]
   tauto
 
-theorem wDelayedTuples_spec {N Q : Finset ℕ} {a : ℤ}
-    {P : WOriginalTuple → Prop} {r s : ℕ} {u : ℕ × (ℕ × ℕ)}
-    (hu : u ∈ wDelayedTuples N Q a P r s) :
-    u.1 ∈ reducedModuli Q a ∧ r * s ∈ reducedModuli Q a ∧
-      u.2.1 ∈ N ∧ u.2.2 ∈ N ∧
-      WCompatible u.1 (r * s) u.2.1 u.2.2 ∧ P ((u.1, r * s), u.2) := by
-  obtain ⟨⟨hq₁, hn₁, hn₂⟩, hq₂, hcompat, hP⟩ :=
-    (show (u.1 ∈ reducedModuli Q a ∧ u.2.1 ∈ N ∧ u.2.2 ∈ N) ∧
-        r * s ∈ reducedModuli Q a ∧
-        WCompatible u.1 (r * s) u.2.1 u.2.2 ∧ P ((u.1, r * s), u.2) from
-      by simpa only [wDelayedTuples, mem_filter, mem_product] using hu)
-  exact ⟨hq₁, hq₂, hn₁, hn₂, hcompat, hP⟩
 
 /-- Eliminate the second modulus from its exact product fiber. -/
 theorem sum_wMaskedTuples_productFiber {A : Type*} [AddCommMonoid A]

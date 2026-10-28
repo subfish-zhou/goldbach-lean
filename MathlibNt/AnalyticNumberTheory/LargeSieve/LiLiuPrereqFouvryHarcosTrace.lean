@@ -213,27 +213,6 @@ def harcosCurveArtinSchreierEquiv (p : ℕ) (htwo : (2 : F) ≠ 0)
         · apply Subtype.ext
           exact Prod.ext rfl hinv)
 
-@[simp] theorem harcosCurveArtinSchreierEquiv_apply
-    (p : ℕ) (htwo : (2 : F) ≠ 0) (a b : F) (ha : a ≠ 0) (hb : b ≠ 0)
-    (xt : {xt : F × Fˣ // xt.1 ^ p - xt.1 = a * (xt.2 : F) + b / (xt.2 : F)}) :
-    (harcosCurveArtinSchreierEquiv p htwo a b ha hb xt).1 =
-      (xt.1.1, 2 * a * (xt.1.2 : F) - (xt.1.1 ^ p - xt.1.1)) := rfl
-
-theorem harcosCurveArtinSchreierEquiv_symm_apply
-    (p : ℕ) (htwo : (2 : F) ≠ 0) (a b : F) (ha : a ≠ 0) (hb : b ≠ 0)
-    (xy : {xy : F × F // xy.2 ^ 2 = (xy.1 ^ p - xy.1) ^ 2 - 4 * a * b}) :
-    ((harcosCurveArtinSchreierEquiv p htwo a b ha hb).symm xy).1.1 = xy.1.1 ∧
-      (((harcosCurveArtinSchreierEquiv p htwo a b ha hb).symm xy).1.2 : F) =
-        (xy.1.2 + (xy.1.1 ^ p - xy.1.1)) / (2 * a) := by
-  have h := congrArg Subtype.val
-    ((harcosCurveArtinSchreierEquiv p htwo a b ha hb).apply_symm_apply xy)
-  rw [harcosCurveArtinSchreierEquiv_apply] at h
-  have hx := congrArg Prod.fst h
-  have hy := congrArg Prod.snd h
-  dsimp only at hx hy
-  refine ⟨hx, (eq_div_iff (mul_ne_zero htwo ha)).mpr ?_⟩
-  rw [hx] at hy
-  linear_combination hy
 
 end ChangeOfVariables
 
@@ -276,13 +255,6 @@ theorem harcosCurvePointCount_eq_card_mul_traceZero
       intro t _
       split_ifs <;> simp
 
-/-- Artin--Schreier fibers over the prime field have size `p` precisely at
-trace-zero elements. This uses `Algebra.trace`, not a fiber-count surrogate. -/
-theorem harcos_artinSchreier_prime_fiber_card (p : ℕ) [Fact p.Prime]
-    [Algebra (ZMod p) F] (c : F) :
-    (univ.filter fun x : F => x ^ p - x = c).card =
-      if Algebra.trace (ZMod p) F c = 0 then p else 0 := by
-  simpa only [ZMod.card] using harcos_artinSchreier_fiber_card (ZMod p) F c
 
 /-- The last six counting lines of Harcos, Corollary 3, page 8. -/
 theorem harcosCurvePointCount_eq_prime_mul_traceZero (p : ℕ) [Fact p.Prime]

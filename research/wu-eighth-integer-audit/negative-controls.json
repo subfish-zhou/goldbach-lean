@@ -1,0 +1,41 @@
+{
+  "validation_scope": "Python audit rejection paths only; no Lean or production writes",
+  "cases": [
+    {
+      "case": "shared_horner",
+      "rejected": true,
+      "reason": "Frozen shared module changed: WR2IntegerLogHorner"
+    },
+    {
+      "case": "spurious_25_factor",
+      "rejected": true,
+      "reason": "Lean formula changed: hiNumerator"
+    },
+    {
+      "case": "shared_ceil",
+      "rejected": true,
+      "reason": "Frozen shared module changed: WR2ClassicalCumulativeDivision"
+    },
+    {
+      "case": "grid_formula",
+      "rejected": true,
+      "reason": "Lean formula changed: gridNumerator"
+    },
+    {
+      "case": "quotient_guard",
+      "rejected": true,
+      "reason": "Lean formula changed: paymentNumerator"
+    },
+    {
+      "case": "block_sum_target",
+      "rejected": true,
+      "reason": "Block target mismatch"
+    },
+    {
+      "case": "total_target",
+      "rejected": true,
+      "reason": "Total statement changed"
+    }
+  ],
+  "all_rejected": true
+}

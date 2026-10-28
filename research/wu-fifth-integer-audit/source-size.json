@@ -1,0 +1,113 @@
+{
+  "whole_tree": {
+    "before": {
+      "modules": 4181,
+      "code_lines": 588598,
+      "physical_lines": 692236,
+      "utf8_bytes": 35501282
+    },
+    "after": {
+      "modules": 4142,
+      "code_lines": 584819,
+      "physical_lines": 688537,
+      "utf8_bytes": 35406645
+    },
+    "reduction": {
+      "modules": 39,
+      "code_lines": 3779,
+      "physical_lines": 3699,
+      "utf8_bytes": 94637
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 3794,
+      "code_lines": 547844,
+      "physical_lines": 645758,
+      "utf8_bytes": 31292633
+    },
+    "after": {
+      "modules": 3755,
+      "code_lines": 544065,
+      "physical_lines": 642059,
+      "utf8_bytes": 31197996
+    },
+    "reduction": {
+      "modules": 39,
+      "code_lines": 3779,
+      "physical_lines": 3699,
+      "utf8_bytes": 94637
+    }
+  },
+  "modified_modules": [
+    "WR2ClassicalFifthInitialPayments",
+    "WR2ClassicalFifthInitialRoot",
+    "WR2ClassicalFifthMiddlePayments",
+    "WR2ClassicalFifthMiddleRoot",
+    "WR2ClassicalFifthTableCheck",
+    "WR2ClassicalFifthTerminalPayments",
+    "WR2ClassicalFifthTerminalRoot"
+  ],
+  "added_modules": [
+    "WR2ClassicalFifthInitialSums",
+    "WR2ClassicalFifthIntegerData",
+    "WR2ClassicalFifthIntegerDomains",
+    "WR2ClassicalFifthIntegerPolynomial",
+    "WR2ClassicalFifthIntegerSoundness",
+    "WR2ClassicalFifthMiddleSums",
+    "WR2ClassicalFifthPaymentData",
+    "WR2ClassicalFifthPolynomialData",
+    "WR2ClassicalFifthTerminalSums"
+  ],
+  "removed_modules": [
+    "WR2ClassicalFifthInitialGridBlock000",
+    "WR2ClassicalFifthInitialGridBlock001",
+    "WR2ClassicalFifthInitialGridBlock002",
+    "WR2ClassicalFifthInitialGridBlock003",
+    "WR2ClassicalFifthInitialGridBlock004",
+    "WR2ClassicalFifthInitialGridBlock005",
+    "WR2ClassicalFifthInitialGridBlock006",
+    "WR2ClassicalFifthInitialGridBlock007",
+    "WR2ClassicalFifthInitialGridBlock008",
+    "WR2ClassicalFifthInitialGridBlock009",
+    "WR2ClassicalFifthInitialGridBlock010",
+    "WR2ClassicalFifthInitialGridBlock011",
+    "WR2ClassicalFifthInitialGridBlock012",
+    "WR2ClassicalFifthInitialGridBlock013",
+    "WR2ClassicalFifthInitialGridBlock014",
+    "WR2ClassicalFifthInitialGridBlock015",
+    "WR2ClassicalFifthMiddleGridBlock000",
+    "WR2ClassicalFifthMiddleGridBlock001",
+    "WR2ClassicalFifthMiddleGridBlock002",
+    "WR2ClassicalFifthMiddleGridBlock003",
+    "WR2ClassicalFifthMiddleGridBlock004",
+    "WR2ClassicalFifthMiddleGridBlock005",
+    "WR2ClassicalFifthMiddleGridBlock006",
+    "WR2ClassicalFifthMiddleGridBlock007",
+    "WR2ClassicalFifthMiddleGridBlock008",
+    "WR2ClassicalFifthMiddleGridBlock009",
+    "WR2ClassicalFifthMiddleGridBlock010",
+    "WR2ClassicalFifthMiddleGridBlock011",
+    "WR2ClassicalFifthMiddleGridBlock012",
+    "WR2ClassicalFifthMiddleGridBlock013",
+    "WR2ClassicalFifthMiddleGridBlock014",
+    "WR2ClassicalFifthMiddleGridBlock015",
+    "WR2ClassicalFifthTerminalGridBlock000",
+    "WR2ClassicalFifthTerminalGridBlock001",
+    "WR2ClassicalFifthTerminalGridBlock002",
+    "WR2ClassicalFifthTerminalGridBlock003",
+    "WR2ClassicalFifthTerminalGridBlock004",
+    "WR2ClassicalFifthTerminalGridBlock005",
+    "WR2ClassicalFifthTerminalGridBlock006",
+    "WR2ClassicalFifthTerminalGridBlock007",
+    "WR2ClassicalFifthTerminalGridBlock008",
+    "WR2ClassicalFifthTerminalGridBlock009",
+    "WR2ClassicalFifthTerminalGridBlock010",
+    "WR2ClassicalFifthTerminalGridBlock011",
+    "WR2ClassicalFifthTerminalGridBlock012",
+    "WR2ClassicalFifthTerminalGridBlock013",
+    "WR2ClassicalFifthTerminalGridBlock014",
+    "WR2ClassicalFifthTerminalGridBlock015"
+  ],
+  "unchanged_modules": 4126
+}

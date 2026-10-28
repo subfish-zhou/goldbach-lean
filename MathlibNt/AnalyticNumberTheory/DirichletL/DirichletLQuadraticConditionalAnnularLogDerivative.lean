@@ -357,41 +357,5 @@ theorem norm_logDerivative_le_on_quadraticConditionalWholeBand
     exact habd.trans (by
       simpa only [τ] using le_add_of_nonneg_left hcentralNonneg)
 
-/-- Closed quantitative headline: the zeta constant and a positive common width
-are selected before the modulus, character, height and point. -/
-theorem exists_quadraticConditionalWholeBand_logDerivativeBound
-    (c η : ℝ) (hc : 0 < c) (hη : 0 < η) :
-    ∃ A : ℝ, 0 < A ∧
-      ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (T β t : ℝ),
-        χ ^ 2 = 1 → χ ≠ 1 → 0 < T →
-        c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re →
-        1 - dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ β →
-        β ≤ 1 → |t| ≤ T →
-        ‖deriv χ.LFunction (β + I * t) / χ.LFunction (β + I * t)‖ ≤
-          (128 * (dirichletLQuadraticConditionalCentralH q T) ^ 2) /
-              (c * (q : ℝ) ^ (-η)) +
-            (dirichletLQuadraticConditionalFixedH q
-              (dirichletLQuadraticConditionalCentralHeight c η q T) T) ^ 12 /
-              (A * (q : ℝ) ^ (-2 * η)) := by
-  obtain ⟨Z, hZ, hzeta⟩ := zeta_pole_plus_log_bound
-  let A : ℝ := min (c / 256) (min (1 / 2) (1 / (16 * Z * 192 ^ 4)))
-  have hA : 0 < A := by
-    dsimp only [A]
-    exact lt_min (div_pos hc (by norm_num))
-      (lt_min (by norm_num) (by positivity))
-  refine ⟨A, hA, ?_⟩
-  intro q _ χ T β t hquad hχ hT hSiegel hβ hβone htT
-  apply norm_logDerivative_le_on_quadraticConditionalWholeBand
-    Z hZ hzeta χ hquad hχ hA
-  · exact min_le_left _ _
-  · exact (min_le_right _ _).trans (min_le_left _ _)
-  · exact (min_le_right _ _).trans (min_le_right _ _)
-  · exact hc
-  · exact hη
-  · exact hT
-  · exact hSiegel
-  · exact hβ
-  · exact hβone
-  · exact htT
 
 end AnalyticNumberTheory.LargeSieve

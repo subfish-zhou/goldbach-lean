@@ -1,0 +1,126 @@
+{
+  "phase": "fulltext-comparison",
+  "status": "pass",
+  "started_at_utc": "2026-10-26T04:26:07.160209+00:00",
+  "source_modules": 2143,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log": "full-build.log",
+      "log_sha256": "ba5d3ae8531fe1ab7ad63098df24416d34e3645f4e81354361345d4bb5614654"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log": "public-checks.log",
+      "log_sha256": "2809cea36843618c7f117dce65690b2b3d5b002022b82ac627448333f17dc31b"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.Theorem.log",
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.Checks.log",
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.OnePlusOneNine.log",
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.OnePlusOneNineChecks.log",
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log": "kernel-Goldbach.All.log",
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log": "script-tests.log",
+      "log_sha256": "f64e8b3a4e63aed95d5cdea49562bd6ccff9a84b2b68a507e5f64a74c5305a1a"
+    },
+    "wu_sources_unchanged": {
+      "exit_code": 0,
+      "log": "wu-source-hashes.log",
+      "log_sha256": "701181b64274a87076b63578206571c49566c72c64b82a2ca4ddf0630353a6db"
+    },
+    "wu_literal_and_receipt_validation": {
+      "exit_code": 0,
+      "log": "wu-literal-receipts.log",
+      "log_sha256": "b2e0a0577e18b47cbd8151d3bbce4c23bd286704240e90dbf1c3376f8d2fc37e"
+    }
+  },
+  "finished_at_utc": "2026-10-26T05:06:32.826317+00:00",
+  "input_manifest_sha256": "033edbbe0b87bd880cc9f1ecdc52f15e398789f0f8c786542f5cf4aee9e8b5e9",
+  "source_state": "Uncommitted structural-cleanup plus original-paper follow-up; exact source/config/checker fingerprints are in validation-inputs.json.",
+  "base_head": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "previous_accepted_validation": "../chen-audit/validation.json",
+  "validation_environment": {
+    "LEAN_NUM_THREADS": 4,
+    "build_command": [
+      "lake",
+      "--rehash",
+      "--wfail",
+      "build"
+    ]
+  },
+  "type_preservation": {
+    "scope": "All surviving public, non-obvious-generated declarations from the complete previously accepted main library. Types compared structurally after erasing binder names and metadata; universe parameter names retained.",
+    "compared_declarations": 11864,
+    "type_hash_mismatches": [],
+    "missing_public_declarations": [],
+    "status": "pass",
+    "kind_mismatches": [],
+    "added_public_declarations": [
+      "MathlibNt.SieveTheory.LiuWeight.sum_nu_mul_truncatedSelbergOptimalLambda_eq_optimalX",
+      "MathlibNt.SieveTheory.LiuWeight.truncatedSelbergOptimalX_eq_sum_nu_mul_lambda"
+    ],
+    "excluded_names": {
+      "prefix": "_",
+      "substrings": [
+        "._proof_",
+        "._simp_",
+        ".match_",
+        ".eq_",
+        "._sunfold"
+      ]
+    },
+    "baseline_modules": 2142,
+    "current_modules": 2143
+  },
+  "source_size": {
+    "modules": 2143,
+    "physical_lines": 275804,
+    "code_lines": 233959,
+    "utf8_bytes": 14165140
+  },
+  "incremental_net_code_lines": -598,
+  "script_tests": {
+    "discovered": 116,
+    "passed": 115,
+    "skipped": 1,
+    "skip_reason": "Optional full project-structure export corruption fixture was not supplied."
+  },
+  "research_scope": "Wu sources/history hashes and literal/axiom/source-bound receipts revalidated for all 8826 modules; unchanged research tree not rebuilt in this phase.",
+  "paper_manifest_sha256": "2c18e9b4075c94e8abc1696b141c0452dec8d51559473d9091815da7d99d9465",
+  "auxiliary_tools_sha256": {
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846",
+    "tools/ProjectStructure.lean": "b83a185d1c17d2c4adb7e2db0345187bd507df63ea25f37682ee8850dd531aba",
+    "scripts/build_project_structure.py": "78362b5aa85965b53f022b85044de7f2d9b0ec64f25985955f37b3ea6dd788be",
+    "research/chen-audit/reproduce.py": "eba1447215871e29a719d61d99bb4312bb26e2d84a663b0f90fe095742a40122",
+    "scripts/generate_blueprint.py": "cbe9bf3dfb298f110451413654ee3459b10392d43504cc1d425cf9b686dde8c7",
+    "scripts/update_blueprint_graph.py": "2ed66c3b20d879067c6551984f74b86d119ea819e277450885f9c9b8c3048d23",
+    "scripts/verify_blueprint.py": "6b4951a0cb5c6a6f84f695b74285c060d221f860867b2af3d0c44eb75e78b397"
+  },
+  "incremental_measurement_sha256": "2bd33a0d09b042ec67b54f9eee594bd4f2fe90d40b82796f59b9a92b3a834ac8",
+  "baseline_input_manifest_sha256": "341882534cf5f5f03c3d247231be3b680fc06c720af005738455009822aed211",
+  "type_input_manifest_sha256": "6a13f31c471b5fd566e3ed009ed86b4c213f27879f741ade6eb817f81e736bb0",
+  "main_input_count": 2149,
+  "type_census_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependency_analysis_sha256": "bfa79ed7438c17d9babf55a87e485e941c7839862a4a0676a57d0e1fee095da4"
+}

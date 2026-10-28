@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145OddLowStripSmallLogScalar
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowSFinal
 
 open scoped Classical BigOperators
@@ -206,30 +205,6 @@ theorem claim145_odd_lowStrip_pointwise_of_scalar
           errorEnvelope H N (D : ℝ) d s := by nlinarith
   unfold ActualClaim145BoundAt
   exact hT.trans (hexpL.trans htarget)
-
-
-
-/-- Production-facing completion of Suzuki's omitted source-small odd strip.
-The chosen coefficient precedes `K,N,D,s` literally, and the conclusion now
-covers every `K ≥ 2`. -/
-theorem claim145_odd_lowStrip_smallLog_actual
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ C1 Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hC1 : 0 ≤ C1) (hΘ : 0 < Θ) (hd : 0 < d)
-    (hsource : 2 / d < 1 / Θ) (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1) :
-    ∃ C145 : ℝ, 0 ≤ C145 ∧
-      ∀ (K : ℝ) (N D : ℕ) (s : ℝ),
-        2 ≤ K → Odd N → HasDimensionOneLocalProductBound S K →
-        2 ≤ D → 1 < s → s ≤ 2 →
-        Real.log (D : ℝ) ≤ C1 * K ^ Θ →
-        ActualClaim145BoundAt S H N D d Δ K s C145 := by
-  rcases claim145_odd_lowStrip_smallLog_scalarUniform
-      hC1 hΘ hd hsource hΔ0 hΔ1 with ⟨A, hA, hscalar⟩
-  refine ⟨A, hA, ?_⟩
-  intro K N D s hK hN hlocal hD hs1 hs2 hsmall
-  exact claim145_odd_lowStrip_pointwise_of_scalar S H hH.toSection13HatContract
-    hN hlocal (by linarith) hA hD hs1 hs2 (hscalar K D hK hD hsmall)
 
 
 end MathlibNt.SieveTheory

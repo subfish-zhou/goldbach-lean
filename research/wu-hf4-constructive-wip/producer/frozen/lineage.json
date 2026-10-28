@@ -1,0 +1,27 @@
+{
+  "complete_manifest_sha256": "2c796866096a67b8d39546e4cbe54e2216edbd3f9506376bb176d222a9cef7bf",
+  "table_manifest_sha256": "cab0794742247c604066913cf3df23898a4f97a21acc1dac1b695a2a41d9cb58",
+  "constructive_manifest_sha256": "c3590452b8c57805efc4a034d9c187a3cba17d054bc83da5cbff5e07ac1e7859",
+  "original_producers_sha256": {
+    "/tmp/wu-hf4-direct371-complete-candidate-v2/generate.py": "410c60914381a24f2a6beeccdcc1b9137a988f66a2833e201856e0c2e3811bc0",
+    "/tmp/wu-hf4-direct371-complete-candidate-v2/complete.py": "1dace3c593e93af0b97a443d6d04f71bede802ff36f222536a98d4a582231c5b"
+  },
+  "original_table_producer_sha256": "b20de4178fa733194d7943b456f3b8ad43e1df1f59c55e1f5621a995b8ea5694",
+  "original_constructive_producer_sha256": "e4cfbd39bbde57bee93e07c610f8cf7f232f1f4e0014ee7a68ff23f06b94ecd1",
+  "legacy_numeric_generator_sha256": "9c22e28b7566d7f686ec3d3da85c3f2d5fd4a669d965b5682e1c87c6c532ad7a",
+  "frozen_counter_sha256": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+  "semantic01_original_sha256": "f71d44cab8c3849fe882626afe8360434ccf813ea0acbec7705f7f4ff549f83b",
+  "semantic_fragment_lengths": {
+    "expected_get": 399,
+    "run_suffix": 1308
+  },
+  "no_original_runtime_source_needed": true,
+  "qualification_fix": {
+    "old_constructive_manifest_sha256": "7b449f2de1e9ece43201e6af0dc892f5662c64205adbe6a99ad70309c4a0cd15",
+    "only_changed_generated_Lean": "Hf4ConstructiveTablePublic.lean",
+    "replacement": "InverseDag.DirectTable -> ConstructiveDag.DirectTable in Public proof bodies",
+    "occurrences": 240,
+    "original40headers_unchanged": true,
+    "numeric_changes": 0
+  }
+}

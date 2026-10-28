@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/Arithmetic/LiuLogScaleAbsorption.lean",
+      "status": "modified",
+      "before_sha256": "88f7eeb3dd627dad7b8e5658a3d31b410c25f24dbda680ac2c34db72a7e1221a",
+      "after_sha256": "ef9d3cf6dd32c9ea312762b23c04749358799d304880c56ce9101873c0847384",
+      "before": {
+        "code_lines": 19,
+        "physical_lines": 25,
+        "utf8_bytes": 1094
+      },
+      "after": {
+        "code_lines": 35,
+        "physical_lines": 45,
+        "utf8_bytes": 2139
+      },
+      "delta": {
+        "code_lines": 16,
+        "physical_lines": 20,
+        "utf8_bytes": 1045
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB10NormalizedUpper.lean",
+      "status": "modified",
+      "before_sha256": "f65ebc6d4d2d879ab8b7fb948de52379ca1d19e59bcd955e26da9d834625d713",
+      "after_sha256": "ae8904c46bdbd46c817ed4704289e158dd5fadf95c25ee8465b98861fec3f62a",
+      "before": {
+        "code_lines": 360,
+        "physical_lines": 376,
+        "utf8_bytes": 17976
+      },
+      "after": {
+        "code_lines": 344,
+        "physical_lines": 358,
+        "utf8_bytes": 17086
+      },
+      "delta": {
+        "code_lines": -16,
+        "physical_lines": -18,
+        "utf8_bytes": -890
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachS2NormalizedUpper.lean",
+      "status": "modified",
+      "before_sha256": "1c61db372f5c93662b492185e979d06277bb0e35566b9c3b7a3c80ef33799e63",
+      "after_sha256": "5f27671ef19fb7e51b58a3f466c68529f24b8e49cf6ef46e0275bfcac476a4c4",
+      "before": {
+        "code_lines": 514,
+        "physical_lines": 540,
+        "utf8_bytes": 25835
+      },
+      "after": {
+        "code_lines": 498,
+        "physical_lines": 522,
+        "utf8_bytes": 24947
+      },
+      "delta": {
+        "code_lines": -16,
+        "physical_lines": -18,
+        "utf8_bytes": -888
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -16,
+    "physical_lines": -16,
+    "utf8_bytes": -733
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

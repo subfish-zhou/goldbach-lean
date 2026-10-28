@@ -1,0 +1,47 @@
+[
+  {
+    "case": "payment_budget",
+    "rejected": true,
+    "reason": "('proof/statement/budget/QName', 'BPay', 0)"
+  },
+  {
+    "case": "payment_statement",
+    "rejected": true,
+    "reason": "('proof/statement/budget/QName', 'BPay', 0)"
+  },
+  {
+    "case": "payment_proof",
+    "rejected": true,
+    "reason": "('proof/statement/budget/QName', 'BPay', 0)"
+  },
+  {
+    "case": "aggregate_print",
+    "rejected": true,
+    "reason": "('aggregate body', 'BPay')"
+  },
+  {
+    "case": "aggregate_reference",
+    "rejected": true,
+    "reason": "('aggregate body', 'BPay')"
+  },
+  {
+    "case": "moved_nat",
+    "rejected": true,
+    "reason": "Nat declaration move"
+  },
+  {
+    "case": "moved_rational",
+    "rejected": true,
+    "reason": "rational definitions changed"
+  },
+  {
+    "case": "frozen_data",
+    "rejected": true,
+    "reason": "('unapproved source change', 'WR2ClassicalFourthDataBq.lean')"
+  },
+  {
+    "case": "import_only_body",
+    "rejected": true,
+    "reason": "('body changed', 'WR2ClassicalCumulativeTable.lean')"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "G11FiniteGate.inv_totient_prime_le",
+      "before_provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget"
+      ],
+      "after_provider": [
+        "MathlibNt.SieveTheory.FiniteCoprimeGateBudget"
+      ],
+      "same_public_kind_and_type_hash": true
+    },
+    {
+      "name": "G11FiniteGate.bad_inverseTotientMass_le",
+      "before_provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget"
+      ],
+      "after_provider": [
+        "MathlibNt.SieveTheory.FiniteCoprimeGateBudget"
+      ],
+      "same_public_kind_and_type_hash": true
+    },
+    {
+      "name": "G11FiniteGate.weightMass_le",
+      "before_provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget"
+      ],
+      "after_provider": [
+        "MathlibNt.SieveTheory.FiniteCoprimeGateBudget"
+      ],
+      "same_public_kind_and_type_hash": true
+    },
+    {
+      "name": "G11FiniteGate.sum_gate_le_logCube",
+      "before_provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget"
+      ],
+      "after_provider": [
+        "MathlibNt.SieveTheory.FiniteCoprimeGateBudget"
+      ],
+      "same_public_kind_and_type_hash": true
+    }
+  ],
+  "verified_b10_consumer": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.sum_gateLoss_le_logCube",
+  "actual_shared_gate_reference_reachable": true,
+  "shared_inverse_mass_and_weight_mass_reachable": true,
+  "method": "Four complete generic proofs move unchanged into one common module. B10 specializes the common weighted gate at K=2; G11 keeps the same common public gate name."
+}

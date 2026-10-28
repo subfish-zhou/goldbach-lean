@@ -38,35 +38,10 @@ theorem card_partition_le_log {T : ℕ} (hT : 2 ≤ T) (ω : ℕ) :
       push_cast
       exact pow_le_pow_left₀ (by positivity) (by exact_mod_cast bitColor_card_le_log hT) _
 
-/-- The integer pairs with real upper cutoff `T`. -/
-noncomputable def realAdmissiblePairs (T : ℝ) (ω : ℕ) : Finset (ℕ × ℕ) :=
-  admissiblePairs ⌊T⌋₊ ω
-
-theorem mem_realAdmissiblePairs {T : ℝ} (hT : 0 ≤ T) {ω : ℕ} {a : ℕ × ℕ} :
-    a ∈ realAdmissiblePairs T ω ↔
-      (1 ≤ a.1 ∧ (a.1 : ℝ) ≤ T) ∧ (1 ≤ a.2 ∧ (a.2 : ℝ) ≤ T) ∧
-        a.1.Coprime a.2 ∧ a.1.primeFactors.card ≤ ω ∧ a.2.primeFactors.card ≤ ω := by
-  simp only [realAdmissiblePairs, mem_admissiblePairs, Nat.le_floor_iff hT]
 
 noncomputable def realPartition (T : ℝ) (ω : ℕ) : Finset (Finset (ℕ × ℕ)) :=
   partition ⌊T⌋₊ ω
 
-theorem realPartition_nonempty {T : ℝ} {ω : ℕ} {s : Finset (ℕ × ℕ)}
-    (hs : s ∈ realPartition T ω) : s.Nonempty :=
-  partition_nonempty hs
-
-theorem realPartition_pairwise_disjoint (T : ℝ) (ω : ℕ) :
-    (realPartition T ω : Set (Finset (ℕ × ℕ))).PairwiseDisjoint id :=
-  partition_pairwise_disjoint _ _
-
-theorem realPartition_cover (T : ℝ) (ω : ℕ) :
-    (realPartition T ω).biUnion id = realAdmissiblePairs T ω :=
-  partition_cover _ _
-
-theorem realPartition_cross_coprime {T : ℝ} {ω : ℕ} {s : Finset (ℕ × ℕ)}
-    (hs : s ∈ realPartition T ω) {a b : ℕ × ℕ} (ha : a ∈ s) (hb : b ∈ s) :
-    a.1.Coprime b.2 :=
-  partition_cross_coprime hs ha hb
 
 theorem card_realPartition_le_log {T : ℝ} (hT : 2 ≤ T) (ω : ℕ) :
     ((realPartition T ω).card : ℝ) ≤ (partitionConstant * Real.log T) ^ (ω ^ 2) := by
@@ -82,26 +57,5 @@ theorem card_realPartition_le_log {T : ℝ} (hT : 2 ≤ T) (ω : ℕ) :
       (mul_le_mul_of_nonneg_left (Real.log_le_log hfloor₀ (Nat.floor_le hT₀))
         partitionConstant_pos.le) _
 
-theorem sum_realPartition {M : Type*} [AddCommMonoid M] (T : ℝ) (ω : ℕ)
-    (f : ℕ × ℕ → M) :
-    ∑ s ∈ realPartition T ω, ∑ a ∈ s, f a = ∑ a ∈ realAdmissiblePairs T ω, f a :=
-  sum_partition _ _ _
-
-/-- F87, Lemma 7, with a constructed finite partition and an explicit absolute constant.
-The statement also allows `ω = 0`; the printed lemma only requires `ω ≥ 1`. -/
-theorem fouvry_coprime_partition :
-    ∃ C : ℝ, 0 < C ∧ ∀ (T : ℝ), 2 ≤ T → ∀ (ω : ℕ),
-      ∃ P : Finset (Finset (ℕ × ℕ)),
-        (∀ s ∈ P, s.Nonempty) ∧
-        (P : Set (Finset (ℕ × ℕ))).PairwiseDisjoint id ∧
-        P.biUnion id = realAdmissiblePairs T ω ∧
-        (∀ s ∈ P, ∀ a ∈ s, ∀ b ∈ s, a.1.Coprime b.2) ∧
-        (P.card : ℝ) ≤ (C * Real.log T) ^ (ω ^ 2) := by
-  refine ⟨partitionConstant, partitionConstant_pos, ?_⟩
-  intro T hT ω
-  exact ⟨realPartition T ω, fun _ hs => realPartition_nonempty hs,
-    realPartition_pairwise_disjoint T ω, realPartition_cover T ω,
-    fun _ hs _ ha _ hb => realPartition_cross_coprime hs ha hb,
-    card_realPartition_le_log hT ω⟩
 
 end LiLiuPrereqFouvry.CoprimePartition

@@ -45,7 +45,7 @@ theorem literalH_nonneg (A : Finset ℕ) (M d : ℕ) (x : ℝ) :
   unfold literalH
   exact_mod_cast Nat.zero_le ((A.filter (literalHPoint M d x)).card)
 
-private theorem goldbachClosedPrimes_filter_lt_eq_halfOpen
+theorem goldbachClosedPrimes_filter_lt_eq_halfOpen
     (N : ℕ) (z y : ℝ) :
     (goldbachClosedPrimes N z y).filter (fun p : ℕ => (p : ℝ) < y) =
       goldbachHalfOpenPrimes N z y := by
@@ -60,7 +60,7 @@ private theorem goldbachClosedPrimes_filter_lt_eq_halfOpen
     exact Finset.mem_filter.mpr
       ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpy.le⟩, hpy⟩
 
-private theorem goldbachClosedPrimes_filter_not_lt_self_eq_singleton
+theorem goldbachClosedPrimes_filter_not_lt_self_eq_singleton
     (N : ℕ) (z : ℝ) {t : ℕ}
     (ht : t ∈ goldbachClosedPrimes N z (t : ℝ)) :
     ((goldbachClosedPrimes N z (t : ℝ)).filter fun p : ℕ => ¬(p : ℝ) < t) = {t} := by
@@ -380,5 +380,35 @@ theorem goldbachS5HalfOpen_le_goldbachS5Closed
             intro rs hrs
             exact literalH_nonneg A (N * rs.1) (rs.1 * rs.2) rs.2
   linarith
+
+theorem goldbachClosedPrimes_filter_lt_eq_halfOpen_of_le
+    (N : ℕ) (z b c : ℝ) (hbc : b ≤ c) :
+    (goldbachClosedPrimes N z c).filter (fun p : ℕ => (p : ℝ) < b) =
+      goldbachHalfOpenPrimes N z b := by
+  ext p
+  constructor
+  · intro hp
+    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpb⟩
+    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, hpz, _⟩
+    exact mem_goldbachHalfOpenPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpb⟩
+  · intro hp
+    rcases mem_goldbachHalfOpenPrimes_iff.mp hp with ⟨hpPrime, hpN, hpz, hpb⟩
+    exact Finset.mem_filter.mpr
+      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hpz, hpb.le.trans hbc⟩, hpb⟩
+
+theorem goldbachClosedPrimes_filter_not_lt_eq_closed
+    (N : ℕ) (z b c : ℝ) (hzb : z ≤ b) :
+    (goldbachClosedPrimes N z c).filter (fun p : ℕ => ¬(p : ℝ) < b) =
+      goldbachClosedPrimes N b c := by
+  ext p
+  constructor
+  · intro hp
+    rcases Finset.mem_filter.mp hp with ⟨hpClosed, hpNotLt⟩
+    rcases mem_goldbachClosedPrimes_iff.mp hpClosed with ⟨hpPrime, hpN, _, hpc⟩
+    exact mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, not_lt.mp hpNotLt, hpc⟩
+  · intro hp
+    rcases mem_goldbachClosedPrimes_iff.mp hp with ⟨hpPrime, hpN, hpb, hpc⟩
+    exact Finset.mem_filter.mpr
+      ⟨mem_goldbachClosedPrimes_iff.mpr ⟨hpPrime, hpN, hzb.trans hpb, hpc⟩, not_lt.mpr hpb⟩
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -71,7 +71,6 @@ noncomputable def deriv (f : CS (n + 1) E) : CS n E where
 lemma hasDerivAt (f : CS (n + 1) E) (x : ℝ) : HasDerivAt f (f.deriv x) x :=
   (f.h1.differentiable (by simp)).differentiableAt.hasDerivAt
 
-lemma deriv_apply {f : CS (n + 1) E} {x : ℝ} : f.deriv x = _root_.deriv f x := rfl
 
 lemma deriv_smul {f : CS (n + 1) E} : (R • f).deriv = R • f.deriv := by
   ext x ; exact (f.hasDerivAt x |>.const_smul R).deriv

@@ -1,8 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
 import MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget
 import MathlibNt.SieveTheory.LiLiuGoldbachB10PanDistribution
-import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 noncomputable section
 
@@ -12,8 +10,6 @@ open MathlibNt.SieveTheory.LiuWeight
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableB10CommonRemainder (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The actual common main-term remainder, with the divisor gate removed from the main mass. -/
 noncomputable def goldbachB10CommonRemainder

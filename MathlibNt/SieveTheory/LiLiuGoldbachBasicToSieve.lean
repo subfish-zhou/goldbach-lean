@@ -155,10 +155,6 @@ theorem goldbachS4Point_nonneg (N n : ℕ) (u : ℝ) :
   exact_mod_cast Nat.zero_le ((goldbachS4Pairs N u).filter fun rs =>
     literalHPoint (N * rs.1) (rs.1 * rs.2) rs.2 n).card
 
-theorem goldbachBadPoint_nonneg (N n : ℕ) :
-    0 ≤ goldbachBadPoint N n := by
-  unfold goldbachBadPoint
-  split_ifs <;> omega
 
 private theorem head_le_of_mem_tail :
     ∀ {a : ℕ} {l : List ℕ},

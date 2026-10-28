@@ -17,13 +17,6 @@ theorem rough_prime_iff {z : ℝ} {p : ℕ} (hp : p.Prime) :
     Rough z p ↔ z ≤ (p : ℝ) := by
   rw [rough_iff_minFac hp.ne_one, hp.minFac_eq]
 
-theorem sq_le_of_rough_composite {z : ℝ} {n : ℕ} (hz : 0 ≤ z)
-    (hn0 : 0 < n) (hn1 : n ≠ 1) (hnp : ¬n.Prime) (hr : Rough z n) :
-    z ^ 2 ≤ (n : ℝ) := by
-  have hmin := (rough_iff_minFac hn1).mp hr
-  have hs : (n.minFac : ℝ) ^ 2 ≤ n := by
-    exact_mod_cast Nat.minFac_sq_le_self hn0 hnp
-  nlinarith
 
 theorem rough_composite_at_sq {x z : ℝ} {n : ℕ} (hz : 0 ≤ z)
     (hx : x ≤ z ^ 2) (hn : n ∈ roughNumbers x z)
@@ -40,23 +33,6 @@ theorem rough_composite_at_sq {x z : ℝ} {n : ℕ} (hz : 0 ≤ z)
   refine ⟨n.minFac, Nat.minFac_prime hn1, hpz, ?_, by linarith⟩
   exact_mod_cast (show (n : ℝ) = (n.minFac : ℝ) ^ 2 by rw [hpz, hnz])
 
-theorem rough_below_sq_iff {x z : ℝ} (hz : 0 ≤ z) (hx : x < z ^ 2) {n : ℕ} :
-    n ∈ roughNumbers x z ↔
-      (n = 1 ∧ 1 ≤ x) ∨ (n.Prime ∧ z ≤ (n : ℝ) ∧ (n : ℝ) ≤ x) := by
-  constructor
-  · intro hn
-    by_cases hn1 : n = 1
-    · subst n
-      exact Or.inl ⟨rfl, one_mem_roughNumbers.mp hn⟩
-    · obtain ⟨hn0, hnx, hr⟩ := mem_roughNumbers.mp hn
-      have hnp : n.Prime := by
-        by_contra h
-        have := sq_le_of_rough_composite hz hn0 hn1 h hr
-        linarith
-      exact Or.inr ⟨hnp, (rough_prime_iff hnp).mp hr, hnx⟩
-  · rintro (⟨rfl, hx⟩ | ⟨hnp, hzn, hnx⟩)
-    · exact one_mem_roughNumbers.mpr hx
-    · exact mem_roughNumbers.mpr ⟨hnp.pos, hnx, (rough_prime_iff hnp).mpr hzn⟩
 
 noncomputable def primeNumbers (x z : ℝ) : Finset ℕ :=
   (roughNumbers x z).filter Nat.Prime
@@ -70,17 +46,6 @@ noncomputable def primeNumbers (x z : ℝ) : Finset ℕ :=
   · rintro ⟨hp, hzn, hnx⟩
     exact ⟨⟨hp.pos, hnx, (rough_prime_iff hp).mpr hzn⟩, hp⟩
 
-/-- This base formula uses actual primes and includes the unit. -/
-theorem roughCount_below_sq {x z : ℝ} (hz : 0 ≤ z)
-    (hx1 : 1 ≤ x) (hx : x < z ^ 2) :
-    roughCount x z = 1 + (primeNumbers x z).card := by
-  classical
-  have he : roughNumbers x z = insert 1 (primeNumbers x z) := by
-    ext n
-    rw [rough_below_sq_iff hz hx, Finset.mem_insert, mem_primeNumbers]
-    simp [hx1]
-  have hn : 1 ∉ primeNumbers x z := by simp [Nat.not_prime_one]
-  rw [roughCount, he, Finset.card_insert_of_notMem hn, Nat.add_comm]
 
 /-- The only nonunit, nonprime rough integer at the square endpoint is `p²`. -/
 theorem roughNumbers_prime_sq {p : ℕ} (hp : p.Prime) :

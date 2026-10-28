@@ -26,7 +26,7 @@ theorem eventually_nat_div_quarter :
   have hgap : (N : ℝ) ^ (1 / 4 : ℝ) + 1 ≤ (N : ℝ) ^ (1 / 3 : ℝ) := by
     have h := mul_le_mul_of_nonneg_left hG (Real.rpow_nonneg hN0.le (1 / 4 : ℝ))
     rw [hsplit] at h
-    linarith only [hquarter, h]
+    linarith
   have hprod : (N : ℝ) ^ (1 / 3 : ℝ) * (a : ℝ) ≤ N := by
     calc
       _ ≤ (N : ℝ) ^ (1 / 3 : ℝ) * (N : ℝ) ^ (2 / 3 : ℝ) :=
@@ -34,13 +34,8 @@ theorem eventually_nat_div_quarter :
       _ = N := by rw [← Real.rpow_add hN0]; norm_num
   have hfloor : (N : ℝ) < (N / a : ℕ) * (a : ℝ) + a := by
     exact_mod_cast (Nat.lt_div_mul_add (show 0 < a by omega) : N < N / a * a + a)
-  have hlt : (N : ℝ) ^ (1 / 3 : ℝ) < (N / a : ℕ) + 1 := by
-    apply (mul_lt_mul_iff_left₀ ha0).mp
-    calc
-      (N : ℝ) ^ (1 / 3 : ℝ) * (a : ℝ) ≤ N := hprod
-      _ < ((N / a : ℕ) + 1) * (a : ℝ) := by
-        simpa only [add_mul, one_mul] using hfloor
-  linarith only [hgap, hlt]
+  have hlt : (N : ℝ) ^ (1 / 3 : ℝ) < (N / a : ℕ) + 1 := by nlinarith
+  linarith
 
 theorem eventually_quotient_parameters (b : ℝ) (M : ℕ) :
     ∀ᶠ N : ℕ in atTop, ∀ a : ℕ, 1 ≤ a →

@@ -1,0 +1,12 @@
+{
+  "status": "source_and_values_checked_pending_full_acceptance",
+  "baseline": "accepted Eighth integer compression",
+  "baseline_modules": 4431,
+  "baseline_code_lines": 601997,
+  "archive_index_hash_matches": 4431,
+  "retained_non_log_fourth_statements": 145,
+  "allowed_source_changes": "DataBq, AllLog, retired BlockLog modules, and new BqSoundness only",
+  "shared_horner_must_remain_byte_identical": true,
+  "production_fourth_bq_validation": "10541 exact ceil values, zero/tail, 145 retained contracts and 7 negative controls checked; full Lean acceptance belongs to root pipeline",
+  "lean_run_by_this_scaffold": false
+}

@@ -23,10 +23,6 @@ theorem primeSW_deleted_card_le (N : Finset ℕ) {h : ℕ} (hh : h ≠ 0) :
     (N.filter (fun n => n.Prime ∧ ¬n.Coprime h)).card ≤ h.primeFactors.card :=
   card_le_card (primeSW_deleted_subset N hh)
 
-/-- The literal prime coefficient, without an additional coprimality mask. -/
-theorem primeSWBeta_nonneg (n : ℕ) : 0 ≤ primeSWBeta n := by
-  unfold primeSWBeta
-  split_ifs <;> norm_num
 
 /-- The loss is absorbed by the fixed second divisor function. -/
 theorem primeSW_primeFactors_le_tau (h : ℕ) : h.primeFactors.card ≤ fouvryTau 2 h := by
@@ -119,11 +115,6 @@ theorem primeSW_sieve_discrepancy_sub_le (N : Finset ℕ) {d h : ℕ}
       add_le_add hAP (div_le_div_of_nonneg_right hmass hφ0.le)
     _ ≤ _ := by have := div_le_self (Nat.cast_nonneg (fouvryTau 2 h)) hφ; linarith
 
-/-- The modulus-one endpoint vanishes even with the independent sieve. -/
-theorem primeSW_discrepancy_one (N : Finset ℕ) (h b : ℕ) :
-    betaCoprimeAPDiscrepancy N primeSWBeta 1 h b = 0 := by
-  simp only [betaCoprimeAPDiscrepancy, coprimeMass, Nat.ModEq, Nat.mod_one,
-    and_true, one_mul, Nat.totient_one, Nat.cast_one, div_one, sub_self]
 
 /-- A predicate can only decrease the literal prime mass. -/
 theorem primeSWSum_mono (N M : Finset ℕ) (P Q : ℕ → Prop)

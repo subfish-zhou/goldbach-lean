@@ -1,7 +1,6 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10EndpointScale
 import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
 import MathlibNt.SieveTheory.LiuPanWangDingSource
-import Mathlib.Analysis.SpecialFunctions.Sqrt
 
 open Filter
 

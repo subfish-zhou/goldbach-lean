@@ -1,0 +1,84 @@
+difference_eq : ∀ (i : Fin 9),
+  difference i =
+    W09.increment i + matrixApply W17Joint.jointMatrix (fun k => W04Accepted.enhanced k - Wu04Bypass.v8 k) i +
+      matrixApply addedMatrix Wu04Bypass.v8 i
+'WuTarget.E02JointCredit.difference_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+difference_remainders_nonneg : ∀ (i : Fin 9),
+  0 ≤ matrixApply W17Joint.jointMatrix (fun k => W04Accepted.enhanced k - Wu04Bypass.v8 k) i ∧
+    0 ≤ matrixApply addedMatrix Wu04Bypass.v8 i
+'WuTarget.E02JointCredit.difference_remainders_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+increment_le_difference : ∀ (i : Fin 9), W09.increment i ≤ difference i
+'WuTarget.E02JointCredit.increment_le_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+transferredDifference_eq : ∀ (j : Fin 21),
+  transferredDifference j =
+    matrixApply transferMatrix W17Accepted.enhanced j - matrixApply transferMatrix W04Accepted.enhanced j
+'WuTarget.E02JointCredit.transferredDifference_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+transferredDifference_nonneg : ∀ (j : Fin 21), 0 ≤ transferredDifference j
+'WuTarget.E02JointCredit.transferredDifference_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+jointCredit_eq_gamma : W17Accepted.jointCredit = DirectFiniteF6.Gamma transferredDifference 0 / 4
+'WuTarget.E02JointCredit.jointCredit_eq_gamma' depends on axioms: [propext, Classical.choice, Quot.sound]
+jointCredit_eq_weights : W17Accepted.jointCredit = (∑ j, W03.weight j * transferredDifference j) / 4
+'WuTarget.E02JointCredit.jointCredit_eq_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+paid_difference_lower : (∑ j, W03.paidWeights j * transferredDifference j) / 4 ≤ W17Accepted.jointCredit
+'WuTarget.E02JointCredit.paid_difference_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+rational_difference_lower : (∑ j, W03.paidWeights j * matrixApply W02.rationalMatrix difference j) / 4 ≤
+  W17Accepted.jointCredit
+'WuTarget.E02JointCredit.rational_difference_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+first_transfer_paid : 1 / 2 ≤ transferMatrix 0 0
+'WuTarget.E02JointCredit.first_transfer_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+first_difference_paid : 1 / 2 * (602223 / 1000000000000) ≤ transferredDifference 0
+'WuTarget.E02JointCredit.first_difference_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+amount_eq : amount = 904256 / 6350645 * (1 / 2) * (602223 / 1000000000000) / 4
+'WuTarget.E02JointCredit.amount_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+actual_jointCredit_lower : 8508808767 / 793830625000000000 ≤ W17Accepted.jointCredit
+'WuTarget.E02JointCredit.actual_jointCredit_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+actual_jointCredit_gt : 1 / 100000000 < W17Accepted.jointCredit
+'WuTarget.E02JointCredit.actual_jointCredit_gt' depends on axioms: [propext, Classical.choice, Quot.sound]
+actual_lowGain_difference_lower : 4 * (8508808767 / 793830625000000000) ≤
+  W01.lowGain W17Accepted.enhanced - W01.lowGain W04Accepted.enhanced
+'WuTarget.E02JointCredit.actual_lowGain_difference_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+actual_coefficient_gain : W01.ordinaryCoefficient W04Accepted.enhanced + 8508808767 / 793830625000000000 ≤
+  W01.ordinaryCoefficient W17Accepted.enhanced
+'WuTarget.E02JointCredit.actual_coefficient_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+paid_budget_gain : W13TightAccepted.paidCoefficient + amount ≤ W17Accepted.paidCoefficient
+'WuTarget.E02JointCredit.paid_budget_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+remaining_budget_gain : W13TightAccepted.remainingCoefficient + amount ≤ W17Accepted.remainingCoefficient
+'WuTarget.E02JointCredit.remaining_budget_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+net_amount_identity : W01.ordinaryCoefficient W17Accepted.enhanced =
+  W01.ordinaryCoefficient W04Accepted.enhanced + amount + (W17Accepted.jointCredit - amount)
+'WuTarget.E02JointCredit.net_amount_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+net_remainder_nonneg : 0 ≤ W17Accepted.jointCredit - amount
+'WuTarget.E02JointCredit.net_remainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ordinary_P2_with_amount : ∀ {ε dmax : ℝ},
+  0 < ε →
+    0 < dmax →
+      ∃ δ,
+        0 < δ ∧
+          δ < dmax ∧
+            δ ≤ 1 / 100 ∧
+              (∀ (i : Fin 9), W17Accepted.enhanced i ≤ actualNine δ i) ∧
+                (∀ (j : Fin 21),
+                    matrixApply transferMatrix W17Accepted.enhanced j ≤ wuImprovementLimit false δ (rNode (↑j + 1))) ∧
+                  ∃ T,
+                    512 ≤ T ∧
+                      ∀ (N : ℕ),
+                        T ≤ N →
+                          Even N →
+                            (W01.ordinaryCoefficient W04Accepted.enhanced + 8508808767 / 793830625000000000 - ε) *
+                                U8CanonicalMother.M N ≤
+                              ↑{p ∈ Finset.range (N + 1) |
+                                    Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+'WuTarget.E02JointCredit.ordinary_P2_with_amount' depends on axioms: [propext, Classical.choice, Quot.sound]
+W03.Gamma_eq_weights : ∀ (w : Fin 21 → ℝ), DirectFiniteF6.Gamma w 0 = ∑ j, W03.weight j * w j
+'WuTarget.W03.Gamma_eq_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+@W03.paid_weights_consumer : ∀ {w : Fin 21 → ℝ},
+  (∀ (j : Fin 21), 0 ≤ w j) → ∑ j, W03.paidWeights j * w j ≤ DirectFiniteF6.Gamma w 0
+'WuTarget.W03.paid_weights_consumer' depends on axioms: [propext, Classical.choice, Quot.sound]
+def WuTarget.E02JointCredit.amount : ℝ :=
+8508808767 / 793830625000000000
+def WuTarget.E02JointCredit.difference : Fin 9 → ℝ :=
+fun i => W17Accepted.enhanced i - W04Accepted.enhanced i
+def WuTarget.E02JointCredit.transferredDifference : Fin 21 → ℝ :=
+matrixApply transferMatrix difference
+def WuTarget.E02JointCredit.addedMatrix : Fin 9 → Fin 9 → ℝ :=
+fun i k => W17Joint.jointMatrix i k - W04.augmentedMatrix i k

@@ -189,9 +189,4 @@ theorem roughCollisionPairMass_le_dimensionOne (P : Finset ℕ)
 
 end CollisionAnalytic
 
-#check CollisionAnalytic.sameBox_partner_sum_le
-#print axioms CollisionAnalytic.sameBox_partner_sum_le
-#check CollisionAnalytic.roughCollisionPairMass_le_dimensionOne
-#print axioms CollisionAnalytic.roughCollisionPairMass_le_dimensionOne
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

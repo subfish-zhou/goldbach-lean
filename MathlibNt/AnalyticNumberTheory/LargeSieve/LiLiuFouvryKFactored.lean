@@ -1,7 +1,6 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFiveSmall
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFactorDifference
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

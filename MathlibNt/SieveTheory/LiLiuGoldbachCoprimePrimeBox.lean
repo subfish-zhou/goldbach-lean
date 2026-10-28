@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiuPrimePairLogKernel
 import MathlibNt.SieveTheory.LiuPanPrimePowerCharacters
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-! Coprime prime mass on fixed half-open intervals; endpoints precede the limit. -/
 namespace MathlibNt.SieveTheory.LiuWeight

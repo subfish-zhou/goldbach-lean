@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergUniformEuler
-import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
 
 /-!
 # Growth of Liu's prime-divisor Euler factors

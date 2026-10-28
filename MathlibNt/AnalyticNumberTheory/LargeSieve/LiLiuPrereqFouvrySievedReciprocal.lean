@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySievedReciprocalInterval
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainTerm
 
 /-!
 # One coprimality sieve on a unit residue-class interval
@@ -104,25 +103,6 @@ theorem sievedReciprocalInterval_eq_moebius
       intro k _
       split_ifs <;> simp_all
 
-/-- Divisors meeting either modulus can be deleted before estimating. -/
-theorem sievedReciprocalInterval_eq_moebius_unit_divisors
-    (q : ℕ) [NeZero q] (d : ℤ) (b v A L U : ℕ)
-    (hA : A ≠ 0) (hbv : b.Coprime v) :
-    sievedReciprocalInterval q d b v A L U =
-      ∑ e ∈ A.divisors.filter (fun e ↦ e.Coprime q ∧ e.Coprime v),
-        (ArithmeticFunction.moebius e : ℂ) * reciprocalDivisorInterval q d b v e L U := by
-  rw [sievedReciprocalInterval_eq_moebius q d b v A L U hA, Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro e _
-  by_cases heq : e.Coprime q
-  · by_cases hev : e.Coprime v
-    · exact (if_pos ⟨heq, hev⟩).symm
-    · rw [if_neg (by tauto),
-        reciprocalDivisorInterval_eq_zero_of_not_coprime_step q d b v e L U hbv hev,
-        mul_zero]
-  · rw [if_neg (by tauto),
-      reciprocalDivisorInterval_eq_zero_of_not_coprime_modulus q d b v e L U heq,
-      mul_zero]
 
 /-- Each surviving divisor keeps the stronger interval length divided by `e*v`. -/
 theorem reciprocalDivisorInterval_fouvry {ε : ℝ} (hε : 0 < ε) :

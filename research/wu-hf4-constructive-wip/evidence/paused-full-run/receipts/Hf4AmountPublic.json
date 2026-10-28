@@ -1,0 +1,45 @@
+{
+  "module": "Hf4AmountPublic",
+  "exit_code": 0,
+  "seconds": 3.449769988656044,
+  "source_sha256": "488a971117ca2fbd091d2ee7e2be20fb200825a1aa051d76d29662b732b71ab6",
+  "object_sha256": "2c22da8b3e104795d1a6cd68d78824cdeae035bc122df1e2fe13281caae4a10b",
+  "dependencies": {
+    "Hf4AmountCore": "5efc5f1642dfee16d4dbdbe87190e529669e4836e8dc4a59eccde49dd1c05d40"
+  },
+  "dependency_contexts": {
+    "Hf4AmountCore": "aef5398b02852d5e56043571461859c31b800ec6fab7b7adf8cd1d1dd89040c4"
+  },
+  "context_sha256": "bac345baa97b689af02f56b1a61707099efc9282b5ae7dfa8caef1a9b40de4e9",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountPublic.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountPublic.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4AmountPublic.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4AmountPublic.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.log",
+  "log_sha256": "28d59d41d6ea2791a6c893dbfcfc2abd61e9cbb9368c40aadb44e67555b742bf",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4AmountPublic.resources",
+  "resource_sha256": "fb579e57f525262c089d895de79e78af153b771fbd20476f2a59312177dd48f1",
+  "artifact_bundle_sha256": {
+    ".olean": "2c22da8b3e104795d1a6cd68d78824cdeae035bc122df1e2fe13281caae4a10b"
+  }
+}

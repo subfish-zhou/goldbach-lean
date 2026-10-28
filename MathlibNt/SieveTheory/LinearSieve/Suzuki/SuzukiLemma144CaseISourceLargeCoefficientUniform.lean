@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIAbsorption
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIICubicClosedEndpoint
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeilClosed
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -250,60 +248,6 @@ theorem exists_sigmaTwelve_internal_contraction_binderUniform_in_S
     have hfinal := hraw.trans hslack
     simpa [σ, a, A, B, R, sigma12InheritedBudget,
       sigma12EndpointRemainder, mul_assoc] using hfinal
-
-/-- Compatibility specialization of the threshold-uniform-in-`S` contraction. -/
-theorem exists_sigmaTwelve_internal_contraction_binderUniform
-    {S : BoundingSieve} {H : Section13HatLayers}
-    {d Δ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hd1 : 1 < d) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) :
-    ∃ D₀ : ℝ, 1 < D₀ ∧
-      ∀ (C K : ℝ), 2 ≤ K → HasDimensionOneLocalProductBound S K → 0 ≤ C →
-      ∀ (D N : ℕ) (s : ℝ) (z : ℕ), D₀ ≤ (D : ℝ) →
-      0 < s →
-      2 + (ErrorSign.ofDepth N).epsilon ≤ s →
-      1 < sourceSigma (D : ℝ) d →
-      s ≤ sourceSigma (D : ℝ) d →
-      1 < (D : ℝ) →
-      2 ≤ (D : ℝ) ^ (1 / s) →
-      2 ≤ (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) →
-      (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (D : ℝ) ^ (1 / s) →
-      z = ⌈(D : ℝ) ^ (1 / s)⌉₊ →
-      H.betaHat + (ErrorSign.ofDepth N).epsilon ≤ s →
-      (∀ p ∈ S.prodPrimes.primeFactors,
-        (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (p : ℝ) →
-        (p : ℝ) < (D : ℝ) ^ (1 / s) → 2 ≤ p ∧ 2 * p ≤ D) →
-      (∀ p ∈ S.prodPrimes.primeFactors,
-        (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (p : ℝ) →
-        (p : ℝ) < (D : ℝ) ^ (1 / s) →
-        0 ≤ H.T (ErrorSign.ofDepth (N - 1)) (inheritedCoordinate D p)) →
-      (∀ p ∈ S.prodPrimes.primeFactors,
-        (D : ℝ) ^ (1 / sourceSigma (D : ℝ) d) ≤ (p : ℝ) →
-        (p : ℝ) < (D : ℝ) ^ (1 / s) →
-        Claim14_13PointwisePremise H N (D : ℝ) d Δ
-          (Real.log (D : ℝ) / Real.log (p : ℝ)) ((D : ℝ) / (p : ℝ))) →
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma (D : ℝ) d) Δ) / 2 ∧
-        sigmaTwelve S.prodPrimes.primeFactors S.nu
-            (fun p => suzukiVProduct S (p : ℝ))
-            (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-            (suzukiVProduct S (z : ℝ)) C K Δ N D
-            (sourceSigma (D : ℝ) d) s ≤
-          sigma12ContractionMultiplier (sourceSigma (D : ℝ) d) Δ *
-              sigma12InheritedBudget S H N D z C K d Δ s +
-            sigma12EndpointRemainder S H N D z C K d Δ s
-              (sourceSigma (D : ℝ) d) ∧
-        sigmaTwelve S.prodPrimes.primeFactors S.nu
-            (fun p => suzukiVProduct S (p : ℝ))
-            (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-            (suzukiVProduct S (z : ℝ)) C K Δ N D
-            (sourceSigma (D : ℝ) d) s ≤
-          q.ρ * sigma12InheritedBudget S H N D z C K d Δ s +
-            sigma12EndpointRemainder S H N D z C K d Δ s
-              (sourceSigma (D : ℝ) d) := by
-  obtain ⟨D₀, hD₀, hall⟩ :=
-    exists_sigmaTwelve_internal_contraction_binderUniform_in_S hH hd1 hΔ0 hΔ1
-  exact ⟨D₀, hD₀, hall S⟩
 
 
 end MathlibNt.SieveTheory

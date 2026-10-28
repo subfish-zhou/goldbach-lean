@@ -49,23 +49,6 @@ def rightSinTwist (b : ℤ → ℂ) (t : ℝ) (n : ℤ) : ℂ :=
 def rightCosTwist (b : ℤ → ℂ) (t : ℝ) (n : ℤ) : ℂ :=
   b n * (Real.cos (t * Real.log (n : ℝ)) : ℂ)
 
-/-- Exact pointwise rank-one separation at a nonzero frequency.  The common
-factor `1/t` is deliberately outside the four coefficient twists. -/
-theorem truncatedPerronIntegrand_log_div_int_mul_eq_rankOne
-    {y t : ℝ} {m n : ℤ} (hy : 0 < y) (hm : 0 < m) (hn : 0 < n) (ht : t ≠ 0) :
-    (truncatedPerronIntegrand (Real.log (y / ((m * n : ℤ) : ℝ))) t : ℂ) =
-      (1 / (t : ℂ)) *
-        (((Real.sin (t * (Real.log y - Real.log (m : ℝ))) : ℂ) *
-            (Real.cos (t * Real.log (n : ℝ)) : ℂ)) -
-          ((Real.cos (t * (Real.log y - Real.log (m : ℝ))) : ℂ) *
-            (Real.sin (t * Real.log (n : ℝ)) : ℂ))) := by
-  rw [truncatedPerronIntegrand, if_neg ht]
-  rw [log_div_int_mul_eq_sub_log_sub_log hy hm hn]
-  rw [show t * ((Real.log y - Real.log (m : ℝ)) - Real.log (n : ℝ)) =
-      t * (Real.log y - Real.log (m : ℝ)) - t * Real.log (n : ℝ) by ring]
-  rw [Real.sin_sub]
-  push_cast
-  field_simp
 
 /-- The original rectangular double sum with the truncated Perron integrand. -/
 def rectangularKernelCharacterSum
@@ -76,36 +59,6 @@ def rectangularKernelCharacterSum
       a m * b n * χ.1 ((m * n : ℤ) : ZMod q) *
         (truncatedPerronIntegrand (Real.log (y / ((m * n : ℤ) : ℝ))) t : ℂ)
 
-/-- Four one-dimensional rectangular Dirichlet sums reproduce the original
-kernel-weighted double sum exactly.  Its quantifier order and interval format
-match `rankOneRectangularWeightedPrimitiveMean_le` directly. -/
-theorem rectangularKernelCharacterSum_eq_rankOne
-    (a b : ℤ → ℂ) {y t : ℝ} (hy : 0 < y) (ht : t ≠ 0)
-    (Ma Mb : ℤ) (Na Nb q : ℕ) (χ : PrimitiveCharacter q)
-    (hm : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), 0 < m)
-    (hn : ∀ n ∈ Finset.Icc (Mb + 1) (Mb + Nb), 0 < n) :
-    rectangularKernelCharacterSum a b y t Ma Mb Na Nb q χ =
-      (1 / (t : ℂ)) *
-        ((∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-            leftSinTwist a y t m * χ.1 (m : ZMod q)) *
-          (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-            rightCosTwist b t n * χ.1 (n : ZMod q)) -
-         (∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na),
-            leftCosTwist a y t m * χ.1 (m : ZMod q)) *
-          (∑ n ∈ Finset.Icc (Mb + 1) (Mb + Nb),
-            rightSinTwist b t n * χ.1 (n : ZMod q))) := by
-  unfold rectangularKernelCharacterSum
-  simp only [Finset.sum_mul]
-  simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
-  apply Finset.sum_congr rfl
-  intro m hmm
-  apply Finset.sum_congr rfl
-  intro n hnn
-  rw [truncatedPerronIntegrand_log_div_int_mul_eq_rankOne
-    hy (hm m hmm) (hn n hnn) ht]
-  simp only [leftSinTwist, leftCosTwist, rightSinTwist, rightCosTwist]
-  rw [Int.cast_mul, map_mul]
-  ring
 
 /-- A sine twist costs the square of `min 1 (L*|t|)` when the logarithmic
 coordinate has absolute value at most `L`. -/
@@ -135,14 +88,6 @@ theorem sum_norm_sq_leftSinTwist_le
       min 1 (L * |t|) ^ 2 := (sq_le_sq₀ (abs_nonneg _) hmin).2 hs
   simpa [mul_comm] using mul_le_mul_of_nonneg_left hs2 (sq_nonneg ‖a m‖)
 
-/-- Nonnegative-frequency form with the literal damping factor `min 1 (L*t)`. -/
-theorem sum_norm_sq_leftSinTwist_le_of_nonneg
-    (a : ℤ → ℂ) (y t L : ℝ) (s : Finset ℤ)
-    (ht : 0 ≤ t) (hL : 0 ≤ L)
-    (hlog : ∀ m ∈ s, |Real.log y - Real.log (m : ℝ)| ≤ L) :
-    ∑ m ∈ s, ‖leftSinTwist a y t m‖ ^ 2 ≤
-      (min 1 (L * t)) ^ 2 * ∑ m ∈ s, ‖a m‖ ^ 2 := by
-  simpa [abs_of_nonneg ht] using sum_norm_sq_leftSinTwist_le a y t L s hL hlog
 
 /-- A cosine twist never enlarges coefficient energy. -/
 theorem sum_norm_sq_leftCosTwist_le
@@ -166,13 +111,6 @@ theorem sum_norm_sq_rightSinTwist_le
   simpa [leftSinTwist, rightSinTwist, mul_neg, Real.sin_neg] using
     sum_norm_sq_leftSinTwist_le b 1 t L s hL (by simpa using hlog)
 
-/-- Nonnegative-frequency right sine-energy form. -/
-theorem sum_norm_sq_rightSinTwist_le_of_nonneg
-    (b : ℤ → ℂ) (t L : ℝ) (s : Finset ℤ)
-    (ht : 0 ≤ t) (hL : 0 ≤ L) (hlog : ∀ n ∈ s, |Real.log (n : ℝ)| ≤ L) :
-    ∑ n ∈ s, ‖rightSinTwist b t n‖ ^ 2 ≤
-      (min 1 (L * t)) ^ 2 * ∑ n ∈ s, ‖b n‖ ^ 2 := by
-  simpa [abs_of_nonneg ht] using sum_norm_sq_rightSinTwist_le b t L s hL hlog
 
 /-- Right cosine energy bound. -/
 theorem sum_norm_sq_rightCosTwist_le
@@ -236,21 +174,6 @@ theorem abs_log_div_int_le_two_log
   rw [← Real.log_div hypos.ne' hmrealpos.ne']
   exact (abs_le).2 ⟨by simpa only [neg_mul] using hlogLo, hlogHi⟩
 
-/-- Half-step specialization of the left sine-energy estimate on a rectangle.
-This is in exactly the `Icc (start+1) (start+length)` format consumed by the
-rank-one primitive mean theorem. -/
-theorem sum_norm_sq_leftSinTwist_Icc_le_of_halfstep
-    (a : ℤ → ℂ) (y t : ℝ) (Ma : ℤ) (Na M : ℕ)
-    (hM : 3 ≤ M) (hy0 : 1 / 2 ≤ y) (hyM : y ≤ (M : ℝ) + 1 / 2)
-    (hm1 : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), 1 ≤ m)
-    (hmM : ∀ m ∈ Finset.Icc (Ma + 1) (Ma + Na), m ≤ (M : ℤ)) :
-    ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖leftSinTwist a y t m‖ ^ 2 ≤
-      (min 1 ((2 * Real.log (M : ℝ)) * |t|)) ^ 2 *
-        ∑ m ∈ Finset.Icc (Ma + 1) (Ma + Na), ‖a m‖ ^ 2 := by
-  apply sum_norm_sq_leftSinTwist_le
-  · exact mul_nonneg (by norm_num) (Real.log_nonneg (by exact_mod_cast (le_trans (by norm_num) hM)))
-  · intro m hm
-    exact abs_log_div_int_le_two_log hM hy0 hyM (hm1 m hm) (hmM m hm)
 
 /-- Positive-support specialization of the right sine-energy estimate on the
 same rectangle format. -/

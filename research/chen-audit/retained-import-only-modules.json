@@ -1,0 +1,3076 @@
+{
+  "scope": "No declaration reached from the two Chen public results in the conservative ModuleData graph does not imply source or project redundancy. Incoming references are from the complete current main-library census.",
+  "modules": [
+    {
+      "module": "AnalyticNumberTheory",
+      "reason": "Documented public library import interface",
+      "source_sha256": "507b56d2e2269b61f46ce2259afbf9d349bcf9ce0eb57d896bf16d07ce6340b0",
+      "declaration_records": 0,
+      "cross_module_reference_count": 0,
+      "cross_module_references": []
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.BombieriVinogradov",
+      "reason": "Stored references from other retained main-library consumers",
+      "source_sha256": "50b7db6289149003c2c0766d0ca44fade374c309c8517ae237436562a07ca744",
+      "declaration_records": 1,
+      "cross_module_reference_count": 31,
+      "cross_module_references": [
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedPrimeWindow_card_eq_primeCount",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass",
+          "consumer_declaration": "AnalyticNumberTheory.Sieve.primesInAP.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual_epsilon_one",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual_eq_prefix_sub",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDivisorDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedDivisorResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindowAP",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedAPWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryAPWindow",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11OrdinaryAPWindow_card_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryCountCenter",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11OrdinaryDivCount_centered",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers",
+          "consumer_declaration": "G12ClippedWindow.highAPResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution",
+          "consumer_declaration": "G12ClippedWindow.residual_eq_prefix_sub",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution",
+          "consumer_declaration": "G12ClippedWindow.residual",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution",
+          "consumer_declaration": "G12ClippedWindow.residual.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedGeometry",
+          "consumer_declaration": "G12ClippedWindow.window_card",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedGeometry",
+          "consumer_declaration": "G12ClippedWindow.apWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedMass",
+          "consumer_declaration": "G12ClippedWindow.divisorResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedSemantics",
+          "consumer_declaration": "G12ClippedWindow.residual_eq_ap_counts",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedPrimeWindow_card_eq_primeCount",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual_epsilon_one",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual_eq_prefix_sub",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDivisorDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedDivisorResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedAPWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LowHighOutputWindow",
+          "consumer_declaration": "G12LowHighOutput.highAPWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.APWeightTransfer",
+          "consumer_declaration": "Wu2004MeanValue.totient_mul_abs_ebar_le",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.PrimeCentered",
+          "consumer_declaration": "Wu2004MeanValue.primeCenteredAPSum_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.RealEndpoints",
+          "consumer_declaration": "Wu2004MeanValue.scaledPrimeCount_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.RealEndpoints",
+          "consumer_declaration": "Wu2004MeanValue.ebar_moving_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.SmallSource",
+          "consumer_declaration": "Wu2004MeanValue.small_ebar_le_prime_prefix",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAP",
+          "outside_original_chen_import_closure": true
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanMeanValueBody",
+      "reason": "Stored references from other retained main-library consumers",
+      "source_sha256": "4f6b7ebf9d00e1b0f4f15ba8755e11c87c6999791cc4f9a1b02c5cced8e5f1ff",
+      "declaration_records": 11,
+      "cross_module_reference_count": 35,
+      "cross_module_references": [
+        {
+          "consumer_module": "AnalyticNumberTheory.Sieve.PanTypeIIBoundAudit",
+          "consumer_declaration": "AnalyticNumberTheory.Sieve.panTypeIICharSqSum_ge_trivial",
+          "reference": "AnalyticNumberTheory.Sieve.panTypeIDistributionSum._proof_1",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "AnalyticNumberTheory.Sieve.PanTypeIIBoundAudit",
+          "consumer_declaration": "AnalyticNumberTheory.Sieve.panTypeIICharSqSum_ge_trivial",
+          "reference": "AnalyticNumberTheory.Sieve.panTypeIICharSqSum",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "AnalyticNumberTheory.Sieve.PanTypeIIBoundAudit",
+          "consumer_declaration": "AnalyticNumberTheory.Sieve.panTypeIICharSqSum_ge_trivial",
+          "reference": "AnalyticNumberTheory.Sieve.panTypeIIV3CharSum",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedPrimeWindow_card_eq_primeCount",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual_epsilon_one",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual_eq_prefix_sub",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedWindowResidual.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDivisorDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedDivisorResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindowAP",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11LinkedAPWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryAPWindow",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11OrdinaryAPWindow_card_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryCountCenter",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11OrdinaryDivCount_centered",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers",
+          "consumer_declaration": "G12ClippedWindow.highAPResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution",
+          "consumer_declaration": "G12ClippedWindow.residual_eq_prefix_sub",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution",
+          "consumer_declaration": "G12ClippedWindow.residual",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution",
+          "consumer_declaration": "G12ClippedWindow.residual.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedGeometry",
+          "consumer_declaration": "G12ClippedWindow.window_card",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedGeometry",
+          "consumer_declaration": "G12ClippedWindow.apWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedMass",
+          "consumer_declaration": "G12ClippedWindow.divisorResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedSemantics",
+          "consumer_declaration": "G12ClippedWindow.residual_eq_ap_counts",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12CommonMass",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedPrimeWindow_card_eq_primeCount",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual_epsilon_one",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual_eq_prefix_sub",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedWindowResidual.eq_1",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDivisorDistribution",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedDivisorResidual_eq",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12LinkedAPWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LowHighOutputWindow",
+          "consumer_declaration": "G12LowHighOutput.highAPWindow_card_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.APWeightTransfer",
+          "consumer_declaration": "Wu2004MeanValue.totient_mul_abs_ebar_le",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.PrimeCentered",
+          "consumer_declaration": "Wu2004MeanValue.primeCenteredAPSum_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.RealEndpoints",
+          "consumer_declaration": "Wu2004MeanValue.scaledPrimeCount_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.RealEndpoints",
+          "consumer_declaration": "Wu2004MeanValue.scaledPrimeCount_eq_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.primesInAPBelow_eq_primesInAP_inv",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.RealEndpoints",
+          "consumer_declaration": "Wu2004MeanValue.ebar_moving_inverse",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.SmallSource",
+          "consumer_declaration": "Wu2004MeanValue.small_ebar_le_prime_prefix",
+          "reference": "AnalyticNumberTheory.Sieve.isUnit_natInvMod_mul_residue",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.Wu2004MeanValue.SmallSource",
+          "consumer_declaration": "Wu2004MeanValue.small_ebar_le_prime_prefix",
+          "reference": "AnalyticNumberTheory.Sieve.natInvMod",
+          "outside_original_chen_import_closure": true
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.SelbergIdentities",
+      "reason": "Stored references from other retained main-library consumers",
+      "source_sha256": "8bf16b1b51d0af0eafc150477fa153635851b0abde19a30fec63ac9b1cf05940",
+      "declaration_records": 1,
+      "cross_module_reference_count": 1,
+      "cross_module_references": [
+        {
+          "consumer_module": "MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne",
+          "consumer_declaration": "MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_selbergTerm_prime",
+          "reference": "AnalyticNumberTheory.Sieve.selbergTerm_prime",
+          "outside_original_chen_import_closure": true
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds",
+      "reason": "Stored references from other retained main-library consumers",
+      "source_sha256": "6be009d9f4d15468db14dca03434e22259f1d26fe137005f888c76227c1d74ea",
+      "declaration_records": 13,
+      "cross_module_reference_count": 5,
+      "cross_module_references": [
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_gcd_div_le_tau_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_gcd_div_le_tau_log",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_div_multiples_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_div_multiples_le_log",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.one_div_lcm_eq_gcd_div",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.one_div_lcm_eq_gcd_div",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_abs_lcm_weight_le_log",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_one_div_lcm_le_tau_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds.sum_one_div_lcm_le_tau_log",
+          "outside_original_chen_import_closure": true
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean",
+      "reason": "Stored references from other retained main-library consumers",
+      "source_sha256": "f7ea9851687dda40b726ad8b4f70ac240377149ba00c17cb16224c8f55aef7a0",
+      "declaration_records": 50,
+      "cross_module_reference_count": 338,
+      "cross_module_references": [
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9Discrepancy",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9Multiplicity_le_tau_two",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9Discrepancy",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9Multiplicity_le_tau_two",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LevelTransport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.SignedWellFactorable.level_mono",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongCoefficient",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9LongAlpha_bounds",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongCoefficient",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9LongAlpha_bounds",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ModulusSupport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.SignedWellFactorable.factorSupported",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9RectangleC2",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RectangleError_uniform",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryGoldbachRectangle",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeC2_goldbach_rectangle",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_signedError_sq_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_signedError_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCell",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_retained_cell_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_signedError_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_divisorPart_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_totient_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_signedError_sq_le_clean_nonzeroMode_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_signedError_sq_le_nonzeroMode_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanScale",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_eventually_tau_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanSmooth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_dispersionUV_smooth_c2_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanSmooth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_dispersionUV_smooth_c2_dyadic_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanSmooth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_alpha_sq_mul_smooth_envelopes_le_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanSmooth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_alpha_sq_mul_smooth_envelopes_le_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanSmooth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kClean_alpha_sq_mul_smooth_envelopes_c2_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeDelta_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeDelta_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_largeDelta_power_saving_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_twoGCD_truncated_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_shifted_tau_sum_le_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeGCD_pair_mass_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKExtracted",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_five_small_extracted_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFactorDifference",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.factorLowOmega_signedError_difference_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFactored",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_five_small_factored_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFactored",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_five_small_factored_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFirstGCD",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_clean_firstGCD_truncated_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFiveSmall",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_five_small_truncated_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFloorReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_floor_key_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFloorReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_floor_extracted_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeC2_goldbach_rectangle_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_highOmega_signedError_bound_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_highOmega_signedError_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_firstGCD_truncated_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_original_signedError_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKKey",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_key_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeGCD_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_abs_le_largeGCD_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_power_saving_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_alpha_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_alpha_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_alpha_real_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedTruncated_largeGCD_power_saving_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeGCD_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_modulus_support_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_modulus_support_power_saving_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_modulus_support_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_modulus_support_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModulusHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_modulusHighOmega_signedError_dyadic_bound_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModulusHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.modulusHighOmega_signedError_dyadic_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModulusHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_modulusHighOmega_signedError_bound_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModulusHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_modulusHighOmega_signedError_dyadic_log_payment_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPrefixReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_floor_prefix_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeSupport_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_largeSupport_power_saving_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeSupport_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeSupport_dyadic_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_twoGCD_support_truncated_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKTotalCost",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_total_prefix_cost_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeC2_unconditional",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeC2_clean_unconditional",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSWBeta_le_order_one",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSWBeta_le_order_one",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSWSum_sieve_abs_sub_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_primeFactors_le_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_primeFactors_le_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_sieve_discrepancy_sub_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_interval_discrepancy_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_tau_two_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_tau_two_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWFamily",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_BetaCoprimeSWFamily",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWFamily",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_uniform_real",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWFamily",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_uniform_real",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWUniform",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_uniform_eventually",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWUniform",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.primeSW_uniform_eventually",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPartialSummation",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_floor_prefix_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_betaDivisorPart_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_betaDivisorPart_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_succ",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_abs_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_le_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_le_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_succ",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_betaDivisorPart_uniform_rpow",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanFirstGCD",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_clean_firstGCD_truncated_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaPayment_eventually_tau_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaPayment_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaPayment_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_totient_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaPayment_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_signedError_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaDivisorPart_signedError_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeGCD_dyadic",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_clean_nonzeroMode_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily.betaClean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily.betaClean_uniform",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_betaDivisorPart_uniform_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTail_uniformCutoff_alpha_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTail_uniformCutoff_alpha_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePrefix",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_coprime_prefix_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedFactorExtraction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_five_small_extracted_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectAlphaMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_alpha_mass_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_signedError_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_signedError_sq_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCellC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_retained_cell_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficients",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_tau_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficients",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_fixedOrder_envelopes",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficientsConsumer",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_envelopes",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficientsConsumer",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_gram_fixedOrder",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficientsConsumer",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_prefix_fixedOrder",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficientsSupport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_actual_weights",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectJoinedPrefix",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_retained_prefix_three_terms",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectKeyC2",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_key_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainSubpowerEnergy",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramDirectMainCostFactor_le_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainSubpowerEnergy",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramDirectMainCostFactor_le_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_outerMass_fixedOrder",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMassConsumer",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_wellFactorable_prefix_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMassConsumer",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_outerMass_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryGrowth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPaySecondary_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPaySecondaryGrowth",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.directPaySecondary_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectTotalCost",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.direct_total_prefix_cost_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryEffectiveAnalytic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_floor_extracted_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryEffectiveAnalytic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_floor_key_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedAnalyticReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_fullLevel_exponential_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedAnalyticReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_fullLevel_dyadic_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedKeyBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_fullLevel_key_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.SignedWellFactorable",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.SignedWellFactorable.c2_split",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.factorConvolution_abs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_five_small_factored_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.factorLowOmega_signedError_difference_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wellFactorable_signedError_sq_le_five_small_factored_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_ceil_sub_floor_alpha_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_ceil_sub_floor_alpha_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_ceil_sub_floor_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramResonanceFiber_card_le_local_scales",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramResonanceFiber_card_le_divisor_sum",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_gcd_div_le_tau_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWULargeDelta_abs_le_highDelta",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWULargeDelta_abs_le_highDelta",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_one_div_lcm_le_tau_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_betaHighOmega_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.two_pow_card_primeFactors_le_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.two_pow_card_primeFactors_le_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.abs_betaHighOmega_le_rankin",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_rankin_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_rankin_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_mul_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_sum_tau_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_sum_tau_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_shifted_tau_sum_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_shifted_tau_sum_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_sq_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_convolution_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_totient_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_highOmega_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_highOmega_signedError_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_firstGCD_truncated_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.highOmega_original_signedError_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily.betaLowOmega_clean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily.betaLowOmega",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_betaHighOmega_uniform_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaSW",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily.betaLowOmega_uniform",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_largeGCDPairs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_largeGCDPairs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_gcd_pairs_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_gcd_pairs_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_gcd_pairs_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportHarmonic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_one_div_multiples_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportHarmonic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_one_div_multiples_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportHarmonic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_one_div_multiples_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.jointGcd",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.index_sum_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.index_sum_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainRestricted_sqrt_gcd_sum",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainRestricted_sqrt_gcd_sum",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.joint_sum_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.jointGcd.eq_1",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_mean_envelope",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.joint_triangle_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.joint_triangle_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_angular_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointNormalization",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_radial_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointNormalization",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_radial_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_mean_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.joint_unweighted_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_rectangular_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.mainJoint_mean_unweighted_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.modulusHighOmega_abs_le_rankin",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.modulusHighOmega_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.modulusHighOmega_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_totient_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_modulusHighOmega_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_modulusHighOmega_modEq_abs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_modulusHighOmega_signedError_dyadic_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.modulusHighOmega_signedError_dyadic_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.modulusHighOmega_eventually_signedError_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_modulusHighOmega_signedError_dyadic_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_sparse_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_sparse_pairs_uniform",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_sparse_uniform",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_card_le_local_scales",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_divisor_sum_le_local_scales",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_divisor_sum_le_local_scales",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_divisor_sum_le_local_scales",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_zero",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_card_le_divisor_sum",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_sum_le_const_mul",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.card_iv3ResonanceDivisorPairs",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.card_iv3ResonanceDivisorPairs",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceDomain",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.iv3_resonance_sum_le_const_mul_of_fixedSupport",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_pair_gcd_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_pair_gcd_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCount",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_pair_gcd_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryScaleBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramSecondaryBases_mean_le_scaleEnvelope",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryScaleBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wGramSecondaryBases_mean_le_scaleEnvelope",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_tau_div_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_tau_div_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_mul_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_tau_div_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWUSmallDelta_abs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.abs_lcm_weight_mul_tau_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_div_le_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_div_le_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_succ",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_div_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_div_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily.double_scale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWUSmallDelta_abs_le_SW",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWUSmallDelta_SWFamily_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smoothWU_sub_large_SWFamily_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smoothWU_sub_large_SWFamily_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.BetaCoprimeSWFamily",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothVErrorEnvelope_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.dispersionU_smooth_fouvryTau_uniform_error",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_card_divisors_div_totient_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_card_divisors_div_totient_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_mul_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_card_divisors_div_totient_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_reduced_abs_mul_card_divisors_div_totient_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_div_totient_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothUErrorEnvelope_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_le_fouvryTau_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_le_fouvryTau_mean",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.dispersionV_smooth_fouvryTau_uniform_error",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.dispersionUV_smooth_c2_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.dispersionUV_smooth_c2_dyadic_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smooth_envelopes_c2_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smooth_envelopes_le_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smooth_envelopes_le_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_le_const_rpow",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_fouvryTau_le_rpow",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_cutoff_largeDeltaWitness_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_cutoff_largeDeltaWitness_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta_row_cap",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta_pair_mass",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta_pair_mass_kscale",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "_private.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound.0.MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.kDelta_pair_sum_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeDelta",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_largeDelta_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeDelta_dyadic",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_twoGCD_truncated_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaZero",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_largeDelta_energy",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaZero",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_largeDelta",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaZero",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_largeDelta",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_alpha_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_largeGCD_alpha_real_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedTruncated_largeGCD_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDExclusion",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTruncated_abs_le_largeGCD",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeGCD_pair_mass",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wLargeBetaGCDOriginal_abs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeGCD",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_modEq_abs_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_modEq_abs_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_succ",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_largeGCD",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wLargeBetaGCDZeroMode_abs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_largeSupport",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_largeSupportPairs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_largeSupportPairs_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_le_fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_largeSupport",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_largeSupport_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_largeSupport_dyadic",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_twoGCD_support_truncated_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportOriginal",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_modulus_support",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportPayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_wMaskedOriginal_zero_modulus_support_power_saving",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_modulus_support_dyadic",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportPaymentDyadic",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean_wMaskedTruncated_modulus_support_dyadic",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_lowOmega_five_small_truncated_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportZero",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_modulus_support",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPairMaskBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedZeroMode_abs_le_pair_mass",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPairMaskBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedOriginal_abs_le_pair_mass",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.wMaskedTail_uniformCutoff_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_divisors_completion_loss",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.eventually_divisors_completion_loss",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_pow_pointwise",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_pow_pointwise",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_fouvryTau_pow_le_real",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.one_le_fouvryTau_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.one_le_fouvryTau_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.one_le_fouvryTau_succ",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_succ",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_mul_quotient_tau_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_abs_lcm_weight_mul_quotient_tau_le_log",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_mul_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWMain_sub_smoothUMain_abs_le_coprimeAP_lcm",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smoothWU_SWFamily_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.alpha_sq_mul_smoothWU_SWFamily_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.sum_alpha_sq_dyadic_le",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWU_SWFamily_log_payment",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.smoothWMain_sub_smoothUMain_abs_le_SW",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeReduction",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.signedError_sq_le_nonzeroMode_c2",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9MainUpper",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RectangleMain_upper",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9NormalizedMass",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RectangleMass_nonneg",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibre",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_two_one_convolution",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibre",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryG9_weighted_natAbs_fibre_le_of_lt",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibre",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryG9_weighted_product_fibre_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibre",
+          "consumer_declaration": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryG9_weighted_natAbs_fibre_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibreActual",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9Long_prime_product_fibre_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibreActual",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9Long_prime_natAbs_fibre_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibreActual",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9_prime_copN_beta_bounds",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorant",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RemainderMajorant_fibres",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantActual",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RemainderMajorant_actual",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuPrereqWF.boundedOne_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuPrereqWF.wellFactorable_to_signed",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_normalized_Fouvry_rectangle",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11NormalizedProductCoefficient_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11NormalizedProductCoefficient_le_fouvryTau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryPrimorialPairing",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_external_primorial_pairing",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryPrimorialPairing",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11_external_primorial_pairing",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11NormalizedProductCoefficient_le_tau_two",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11NormalizedProductCoefficient_le_tau_two",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Rectangle_fibres_subpower",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres",
+          "consumer_declaration": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Rectangle_natAbs_fibre_le",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangle",
+          "consumer_declaration": "G12FlexibleRectangle.alpha_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangle",
+          "consumer_declaration": "G12FlexibleRectangle.alpha_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangleC2",
+          "consumer_declaration": "G12FlexibleRectangle.rectangle_C2_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle",
+          "consumer_declaration": "G12LowRectangle.alpha_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle",
+          "consumer_declaration": "G12LowRectangle.alpha_tau",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau_order_one",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangleC2",
+          "consumer_declaration": "G12LowRectangle.rectangle_C2_bound",
+          "reference": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.fouvryTau",
+          "outside_original_chen_import_closure": true
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Switching.BoundaryDensity",
+      "reason": "Stored references from other retained main-library consumers",
+      "source_sha256": "4d427ad612e731409b8a490ddffac4c49d285ce2309fa890159c12df59189e22",
+      "declaration_records": 8,
+      "cross_module_reference_count": 2,
+      "cross_module_references": [
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor",
+          "consumer_declaration": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10RosserFactor_upperRosserWeight_certificate",
+          "reference": "MathlibNt.SieveTheory.SwitchingPrinciple.lt_floor_add_one_of_le_of_log_ratio",
+          "outside_original_chen_import_closure": true
+        },
+        {
+          "consumer_module": "MathlibNt.SieveTheory.LiLiuGoldbachS2RosserFactor",
+          "consumer_declaration": "_private.MathlibNt.SieveTheory.LiLiuGoldbachS2RosserFactor.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S2RosserFactor_upperRosserWeight_certificate",
+          "reference": "MathlibNt.SieveTheory.SwitchingPrinciple.lt_floor_add_one_of_le_of_log_ratio",
+          "outside_original_chen_import_closure": true
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.SwitchingPrinciple",
+      "reason": "Documented public library import interface",
+      "source_sha256": "70d8bd3edd7fd1a77676de15916b4f14dffba0232b9d2e5ac046dc1a9957a814",
+      "declaration_records": 0,
+      "cross_module_reference_count": 0,
+      "cross_module_references": []
+    },
+    {
+      "module": "MathlibNt.Tactic.ElementaryDeriv",
+      "reason": "Required source elaboration support; stored references also listed when present",
+      "source_sha256": "d7379acf0564eec965100bb1ac6ee8bcbadf6004fead85a0b8731f53dbdd26fb",
+      "declaration_records": 8,
+      "cross_module_reference_count": 0,
+      "cross_module_references": []
+    },
+    {
+      "module": "PrimeNumberTheoremAnd.Sobolev",
+      "reason": "Required source elaboration support; stored references also listed when present",
+      "source_sha256": "92773872623c64e50862c8a97d09910e7041c106d15927677fba81f7a4de24c7",
+      "declaration_records": 141,
+      "cross_module_reference_count": 84,
+      "cross_module_references": [
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W1.deriv",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W1.differentiable",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W21.hf",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W21.hf'",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Fourier",
+          "consumer_declaration": "fourierIntegral_self_add_deriv_deriv",
+          "reference": "W21.hf''",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim1",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim1",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "CS",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "CS.scale",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "CS.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W1.instSub",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21.hf",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21.instHMulCSOfNatNatRealComplex",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21.norm_nonneg",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21.ofCS2",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "W21_approximation",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "contDiff_ofReal",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_W21",
+          "reference": "trunc.toCS",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_aux",
+          "reference": "CS",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_aux",
+          "reference": "CS.h1",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_aux",
+          "reference": "CS.h2",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_aux",
+          "reference": "CS.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "exists_trunc",
+          "reference": "CS.mk",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "exists_trunc",
+          "reference": "trunc",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "exists_trunc",
+          "reference": "trunc.mk",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier",
+          "reference": "CS",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier",
+          "reference": "CS.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier",
+          "reference": "W21.ofCS2",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor_schwartz",
+          "reference": "W1.of_Schwartz",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "W21.norm.eq_1",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "W21.norm.eq_1",
+          "reference": "W21.norm._proof_1",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W21.hf",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W21.hf''",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W21.instNorm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_key",
+          "reference": "W21.norm._proof_1",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "wiener_ikehara_smooth",
+          "reference": "contDiff_ofReal",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1'",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1'",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1'",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I1'",
+          "reference": "W21.norm_nonneg",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor",
+          "reference": "CS",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_cor",
+          "reference": "CS.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "continuous_FourierIntegral",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "continuous_FourierIntegral",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "continuous_FourierIntegral",
+          "reference": "W21.hf",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_cor",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_cor",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "decay_bounds_cor",
+          "reference": "W21.instNorm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier_aux",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier_aux",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier_aux",
+          "reference": "W21.instNorm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier_aux",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier_aux",
+          "reference": "W21.norm._proof_1",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "wiener_ikehara_smooth_real",
+          "reference": "contDiff_ofReal",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I2",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I2",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I2",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_I2",
+          "reference": "W21.norm_nonneg",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "summable_fourier",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim2",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim2",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "W21.integrable_fourier",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "W21.integrable_fourier",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim3",
+          "reference": "CS",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim3",
+          "reference": "CS.h1",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim3",
+          "reference": "CS.h2",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "limiting_fourier_lim3",
+          "reference": "CS.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_main",
+          "reference": "W1.toFun",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_main",
+          "reference": "W21",
+          "outside_original_chen_import_closure": false
+        },
+        {
+          "consumer_module": "PrimeNumberTheoremAnd.Wiener",
+          "consumer_declaration": "bound_main",
+          "reference": "W21.norm",
+          "outside_original_chen_import_closure": false
+        }
+      ]
+    },
+    {
+      "module": "PrimeNumberTheoremAnd.Tactic.AdditiveCombination",
+      "reason": "Required source elaboration support; stored references also listed when present",
+      "source_sha256": "ea898bb0a4889d82fe4b94b7052daa73083d1f3aa3cddb5336f0513580a17040",
+      "declaration_records": 14,
+      "cross_module_reference_count": 0,
+      "cross_module_references": []
+    }
+  ]
+}

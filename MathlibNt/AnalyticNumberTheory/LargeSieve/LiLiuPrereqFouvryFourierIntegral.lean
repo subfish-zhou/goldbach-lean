@@ -60,10 +60,6 @@ theorem dyadicCutoffMass_le_three : dyadicCutoffMass ≤ 3 := by
   norm_num [Real.volume_real_Icc] at hb
   linarith
 
-theorem scaledDyadicCutoff_integral_le_three_mul {M : ℝ} (hM : 0 < M) :
-    (∫ x : ℝ, scaledDyadicCutoff M x) ≤ 3 * M := by
-  rw [scaledDyadicCutoff_integral hM, mul_comm 3 M]
-  exact mul_le_mul_of_nonneg_left dyadicCutoffMass_le_three hM.le
 
 /-- Continuous exponential sums can be integrated against the scaled cutoff. -/
 theorem scaledDyadicCutoff_mul_integrable {M : ℝ} (hM : 0 < M)

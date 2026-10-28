@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053NonCircular
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval
@@ -51,19 +50,6 @@ lemma MinusFirstCrossing.slope_neg_before
   · exact w.initial_neg u ⟨hβu, hu⟩
   · exact w.before_crossing_neg u (lt_of_not_ge hu) hus
 
-/-- `s` really is the least point at or after `s₀` where the logarithmic
-derivative is nonnegative. -/
-lemma MinusFirstCrossing.isLeast_nonnegative
-    {R ξ : ℝ → ℝ} {c β s₀ : ℝ}
-    (w : MinusFirstCrossing R ξ c β s₀) :
-    IsLeast {u : ℝ | s₀ ≤ u ∧ 0 ≤ w.slope u} w.s := by
-  constructor
-  · exact ⟨w.s₀_lt_s.le, w.crossing_nonneg⟩
-  · intro u hu
-    by_contra hsu
-    have hus : u < w.s := lt_of_not_ge hsu
-    have hβu : β ≤ u := le_trans w.beta_lt_s₀.le hu.1
-    exact (not_lt_of_ge hu.2) (w.slope_neg_before hβu hus)
 
 /-- Continuity of the logarithmic derivative turns the weak sign at the least
 crossing into equality. -/

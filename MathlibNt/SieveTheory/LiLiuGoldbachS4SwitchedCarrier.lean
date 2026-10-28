@@ -205,16 +205,6 @@ theorem goldbachS4Switch_mem_primeAtoms {N : ℕ} {eps : ℝ}
     simpa [hnp, Nat.sub_sub_self hpN] using hp
   exact ⟨Finset.mem_filter.mpr ⟨hmem, hout⟩, by simpa [← heq] using hb.2.2⟩
 
-private theorem S4_card_le_mul_of_fibers {α : Type*} [DecidableEq α]
-    (A : Finset α) (T : Finset ℕ) (f : α → ℕ) (k : ℕ)
-    (hmaps : ∀ x ∈ A, f x ∈ T)
-    (hfiber : ∀ p ∈ T, (A.filter fun x => f x = p).card ≤ k) :
-    A.card ≤ T.card * k := by
-  calc
-    A.card = ∑ p ∈ T, (A.filter fun x => f x = p).card :=
-      Finset.card_eq_sum_card_fiberwise hmaps
-    _ ≤ ∑ _p ∈ T, k := Finset.sum_le_sum hfiber
-    _ = T.card * k := by simp
 
 theorem goldbachS4ActualAtoms_fiber_card_le_fourHundred {N n : ℕ} {eps : ℝ}
     (hn1 : 1 ≤ n) (hnN : n < N) :
@@ -254,8 +244,7 @@ theorem goldbachS4BadAtoms_card_le {N : ℕ} {eps : ℝ} (heps : 0 < eps) :
       exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp hx).1, heq⟩
     exact (Finset.card_le_card hsub).trans
       (goldbachS4ActualAtoms_fiber_card_le_fourHundred hb.1 hb.2.1)
-  have h := S4_card_le_mul_of_fibers (goldbachS4BadAtoms N eps) T
-    (fun x => x.2) 400 hmaps hfiber
+  have h := Finset.card_le_mul_card_image_of_maps_to hmaps 400 hfiber
   unfold goldbachBadCount
   exact_mod_cast (by simpa [T, mul_comm] using h :
     (goldbachS4BadAtoms N eps).card ≤
@@ -322,7 +311,7 @@ theorem goldbachB8Plus_low_card_le (N : ℕ) {Z : ℝ} (hZ : 1 ≤ Z) :
       obtain ⟨hx, heq⟩ := Finset.mem_filter.mp hx
       exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp hx).1, heq⟩
     exact (Finset.card_le_card hsub).trans (goldbachB8PlusOutputFiber_card_le_fourHundred N p)
-  have h := S4_card_le_mul_of_fibers A T (goldbachB8PlusOutput N) 400 hmaps hfiber
+  have h := Finset.card_le_mul_card_image_of_maps_to hmaps 400 hfiber
   have hcardT : T.card = Nat.floor Z := by simp [T, Nat.card_Icc]
   rw [hcardT] at h
   exact_mod_cast (by simpa [A, mul_comm] using h :

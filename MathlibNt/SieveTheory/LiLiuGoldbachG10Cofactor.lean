@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
 import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Data.Nat.Factorization.Basic
 
 open scoped BigOperators
 
@@ -159,11 +157,6 @@ theorem mem_goldbachG10BadActualAtoms_iff
       x ∈ goldbachG10ActualAtoms N ε b c ∧ ¬Nat.Coprime x.2 N := by
   simp [goldbachG10BadActualAtoms]
 
-theorem mem_goldbachG10NonbadActualAtoms_iff
-    {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ} :
-    x ∈ goldbachG10NonbadActualAtoms N ε b c ↔
-      x ∈ goldbachG10ActualAtoms N ε b c ∧ Nat.Coprime x.2 N := by
-  simp [goldbachG10NonbadActualAtoms]
 
 theorem mem_goldbachG10RSquareActualAtoms_iff
     {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ} :
@@ -173,13 +166,6 @@ theorem mem_goldbachG10RSquareActualAtoms_iff
   constructor <;> intro hx <;>
     simpa [goldbachG10RSquareActualAtoms, goldbachG10NonbadActualAtoms, and_assoc] using hx
 
-theorem mem_goldbachG10NoRSquareActualAtoms_iff
-    {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ} :
-    x ∈ goldbachG10NoRSquareActualAtoms N ε b c ↔
-      x ∈ goldbachG10ActualAtoms N ε b c ∧
-        Nat.Coprime x.2 N ∧ ¬x.1.1 ^ 2 ∣ x.2 := by
-  constructor <;> intro hx <;>
-    simpa [goldbachG10NoRSquareActualAtoms, goldbachG10NonbadActualAtoms, and_assoc] using hx
 
 theorem mem_goldbachG10SSquareActualAtoms_iff
     {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ} :
@@ -264,16 +250,6 @@ theorem mem_goldbachPi10Atoms_iff
         x.2 ∈ range (N + 1) ∧ goldbachPi10Point N ε x.1 x.2 := by
   simp [goldbachPi10Atoms, goldbachPi10Fiber]
 
-theorem goldbachG10GoodActualAtom_pair_ne
-    {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ}
-    (hx : x ∈ goldbachG10GoodActualAtoms N ε b c) :
-    x.1.1 ≠ x.1.2 := by
-  intro hEq
-  have hdiv : x.1.1 ^ 2 ∣ x.2 := by
-    rcases mem_goldbachG10GoodActualAtoms_iff.mp hx with ⟨hActual, _, _, _⟩
-    have hprod : goldbachC10Prod x.1 ∣ x.2 := (mem_goldbachG10ActualAtoms_iff.mp hActual).2.2.1
-    simpa [goldbachC10Prod, hEq, pow_two] using hprod
-  exact (mem_goldbachG10GoodActualAtoms_iff.mp hx).2.2.1 hdiv
 
 theorem goldbachG10Cofactor_coprime
     {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ}

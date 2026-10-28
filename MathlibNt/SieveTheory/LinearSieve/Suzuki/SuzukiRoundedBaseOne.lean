@@ -4,7 +4,6 @@ The discrete source carrier is transported exactly to the strict real carrier;
 there is no equality between the cast ceiling and the real root and no cutoff
 error term.
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOne
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
 

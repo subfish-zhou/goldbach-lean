@@ -88,17 +88,5 @@ theorem weighted_sum_divisors_le_rectangle
         exact mul_nonneg (by positivity) (mul_nonneg (by positivity) (hF m d))
     _ = _ := (mul_sum _ _ _).symm
 
-/-- A uniform whole-payload inner bound leaves precisely the cofactor mass.
-This finite implication does not assert an analytic bound for the payload. -/
-theorem weighted_sum_divisors_le_uniform
-    (F : ℕ → ℕ → ℝ) (hF : ∀ m d, 0 ≤ F m d) (D : ℕ) (M : ℝ)
-    (hM : ∀ m ∈ Icc 1 D, ∑ d ∈ Icc 1 D, (d.totient : ℝ)⁻¹ * F m d ≤ M) :
-    (∑ q ∈ Icc 1 D, (q.totient : ℝ)⁻¹ * ∑ d ∈ q.divisors, F (q / d) d) ≤
-      M * ∑ m ∈ Icc 1 D, (m.totient : ℝ)⁻¹ := by
-  refine (weighted_sum_divisors_le_rectangle F hF D).trans ?_
-  calc
-    _ ≤ ∑ m ∈ Icc 1 D, (m.totient : ℝ)⁻¹ * M := by
-      exact sum_le_sum fun m hm => mul_le_mul_of_nonneg_left (hM m hm) (by positivity)
-    _ = _ := by rw [← sum_mul, mul_comm]
 
 end AnalyticNumberTheory.LargeSieve.PanCofactor

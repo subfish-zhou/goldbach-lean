@@ -32,9 +32,6 @@ theorem wAnalyticCoordinates_pos {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
 
 def wDyadicScale (n : ℕ) : ℝ := (2 : ℝ) ^ Nat.log 2 n
 
-theorem wDyadicScale_pos (n : ℕ) : 0 < wDyadicScale n := by
-  unfold wDyadicScale
-  positivity
 
 theorem wDyadicScale_bounds {n : ℕ} (hn : 0 < n) :
     wDyadicScale n ≤ (n : ℝ) ∧ (n : ℝ) < 2 * wDyadicScale n := by
@@ -45,12 +42,6 @@ theorem wDyadicScale_bounds {n : ℕ} (hn : 0 < n) :
     rw [pow_succ, mul_comm] at hb
     exact_mod_cast hb
 
-theorem wDyadicScale_normalized {n : ℕ} (hn : 0 < n) :
-    (n : ℝ) / wDyadicScale n ∈ Set.Icc (1 : ℝ) 2 := by
-  have hb := wDyadicScale_bounds hn
-  rw [Set.mem_Icc, le_div_iff₀ (wDyadicScale_pos n),
-    div_le_iff₀ (wDyadicScale_pos n), one_mul]
-  exact ⟨hb.1, hb.2.le⟩
 
 def wAnalyticDyadicKey (t : WExtractedTuple × ℤ) : Fin 5 → ℕ :=
   fun i => Nat.log 2 (wAnalyticCoordinates t i)
@@ -108,18 +99,6 @@ unit rectangle used by the smooth-weight estimate. -/
 def wAnalyticUnitCoordinates (j : Fin 5 → ℕ) (t : WExtractedTuple × ℤ) : Fin 5 → ℝ :=
   fun i => (wAnalyticCoordinates t i : ℝ) / (2 : ℝ) ^ j i
 
-theorem wAnalyticUnitCoordinates_mem {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
-    {a : ℤ} {P : WOriginalTuple → Prop} {R S ξ : ℝ} {b : ℕ}
-    {K : WExtractedKey} {j : Fin 5 → ℕ} {positive : Bool}
-    {t : WExtractedTuple × ℤ}
-    (ht : t ∈ wAnalyticDyadicBlock
-      (wExtractedKeyFiber H N Q a P R S ξ b K) j positive) (i : Fin 5) :
-    wAnalyticUnitCoordinates j t i ∈ Set.Icc (1 : ℝ) 2 := by
-  have hb := wAnalyticDyadicBlock_bounds hN hQ ht i
-  dsimp only [wAnalyticUnitCoordinates]
-  rw [Set.mem_Icc, le_div_iff₀ (by positivity), div_le_iff₀ (by positivity), one_mul]
-  exact ⟨hb.1, hb.2.le⟩
 
 /-- An exact finite partition into signed dyadic rectangles. Repeated
 coordinate values, including different `n₂` values, retain multiplicity. -/

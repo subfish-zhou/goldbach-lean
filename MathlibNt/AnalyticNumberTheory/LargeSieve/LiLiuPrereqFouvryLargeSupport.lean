@@ -45,12 +45,6 @@ theorem exists_square_dvd_of_supported_mul_dvd {s d n : ℕ}
   obtain ⟨b, hb, hsb, hbd⟩ := exists_square_dvd_of_prime_support hs hd hsd
   exact ⟨b, hb, hsb, hbd.trans hn⟩
 
-/-- In the five-gcd coordinates, a large `d₁` forces a square divisor of `N₁`. -/
-theorem WGCDData.Valid.exists_square_dvd_N₁ {v : WGCDData} {q r N₁ N₂ : ℕ}
-    (hv : v.Valid q r N₁ N₂) :
-    ∃ b : ℕ, 0 < b ∧ v.d₁ ≤ b ^ 2 ∧ b ^ 2 ∣ N₁ :=
-  exists_square_dvd_of_supported_mul_dvd hv.d₁_pos hv.d_pos hv.d₁_support
-    ⟨v.n₁, hv.N₁_eq⟩
 
 /-- The canonical supported quotient has the square witness without any
 hypothesis on the other modulus or the auxiliary indices. -/

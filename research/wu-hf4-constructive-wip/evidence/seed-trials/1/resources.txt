@@ -1,0 +1,24 @@
+Command exited with non-zero status 1
+	Command being timed: "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean -j1 -DwarningAsError=true -DautoImplicit=false -R /tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/sources -o /tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/lib/Hf4DirectDagSeedSoundness.olean /tmp/wu-hf4-uniform-seed-trial-v1/trial-1793179846049189439/sources/Hf4DirectDagSeedSoundness.lean"
+	User time (seconds): 44.08
+	System time (seconds): 6.35
+	Percent of CPU this job got: 70%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:11.47
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 3330992
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 34331
+	Minor (reclaiming a frame) page faults: 160405
+	Voluntary context switches: 89925
+	Involuntary context switches: 600
+	Swaps: 0
+	File system inputs: 6545216
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

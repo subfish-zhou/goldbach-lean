@@ -6,8 +6,6 @@ open Finset MathlibNt.SieveTheory.LiuWeight
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableB10PanDistribution (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- Actual B10 divisor remainder at half level with a logarithmic loss.
 All analytic and geometric inputs are supplied. The threshold is uniform in beta,

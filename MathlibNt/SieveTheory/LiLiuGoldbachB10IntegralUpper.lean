@@ -1,5 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10KernelUpper
+import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
+import MathlibNt.SieveTheory.LiLiuGoldbachB10MainLogSum
 import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
+
+
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
@@ -54,42 +57,5 @@ theorem goldbachB10MainMass_le_I10_eventually (ε η : ℝ)
         (mul_le_mul_of_nonneg_left hkN (by positivity)) le_rfl) hscale
     _ ≤ _ := mul_le_mul_of_nonneg_right hcoef hscale
 
-/-- Actual B10 count at a legal chosen cutoff, bounded by the printed integral.
-This theorem does not assume or certify any decimal approximation to the integral. -/
-theorem goldbachB10SiftedCount_I10_upper (δ : ℝ) (hδ : 0 < δ) :
-    ∃ B : ℝ, 0 ≤ B ∧ ∀ ε : ℝ, 0 < ε → ε < 1 →
-      ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-        let Δ := (N : ℝ) ^ ((1 : ℝ) / 2) / Real.log (N : ℝ) ^ (B + 1)
-        let Z := Δ ^ ((1 : ℝ) / 2)
-        (goldbachB10SiftedCount N ε ((N : ℝ) ^ goldbachB10Beta) ((N : ℝ) ^ goldbachB10Gamma) Z : ℝ) ≤
-          (8 * (1 - ε) * goldbachB10I10 + δ) *
-            (MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ) ^ 2) := by
-  let e : ℝ := min 1 (δ / (goldbachB10I10 + 10))
-  have hi := goldbachB10I10_nonneg
-  have he : 0 < e := lt_min zero_lt_one (by positivity)
-  have he1 : e ≤ 1 := min_le_left _ _
-  have heδ : e * (goldbachB10I10 + 10) ≤ δ :=
-    (le_div_iff₀ (by positivity)).mp (min_le_right _ _)
-  obtain ⟨B, hB, hu⟩ := goldbachB10SiftedCount_kernel_upper e he
-  obtain ⟨Nk, _hNk, hk⟩ := goldbachB10ActualTriangleMass_le_I10_eventually he
-  refine ⟨B, hB, ?_⟩
-  intro ε hε hεlt
-  obtain ⟨Nu, hNu, hu'⟩ := hu ε goldbachB10Gamma hε hεlt (by norm_num [goldbachB10Gamma])
-  refine ⟨max Nu Nk, hNu.trans (le_max_left _ _), ?_⟩
-  intro N hN hEven
-  have hNu' := (le_max_left Nu Nk).trans hN
-  have hscale : 0 ≤ MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N * (N : ℝ) /
-      Real.log (N : ℝ) ^ 2 := by
-    have hi := (MathlibNt.SieveTheory.SingularSeries.liuSingularSeries_pos N).le
-    positivity
-  have huN := hu' N hNu' hEven goldbachB10Beta (by norm_num [goldbachB10Beta])
-  rw [goldbachB10MainLogProductSum_eq_actualTriangleMass] at huN
-  have hkN := hk N ((le_max_right Nu Nk).trans hN)
-  have hesq : e ^ 2 ≤ e := by nlinarith [mul_le_mul_of_nonneg_left he1 he.le]
-  have hc : (8 * (1 - ε) + e) * (goldbachB10I10 + e) + e ≤
-      8 * (1 - ε) * goldbachB10I10 + δ := by
-    nlinarith [mul_nonneg hε.le he.le]
-  refine huN.trans (mul_le_mul_of_nonneg_right ?_ hscale)
-  exact (add_le_add (mul_le_mul_of_nonneg_left hkN (by positivity)) le_rfl).trans hc
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

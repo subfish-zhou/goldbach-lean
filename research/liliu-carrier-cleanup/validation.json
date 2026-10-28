@@ -1,0 +1,88 @@
+{
+  "phase": "Li-Liu carrier identities, analytic growth and finite fibers",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T05:55:56.653704+00:00",
+  "source_modules": 1802,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "c0a5c44808cab7978a60e5540e774043e1b4c9996b547cffcc5b09c4160b8be0"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "390dc37cf6d2580eb22b49dd9e2663e0cdc6ff92ebbee04f9bee2f3d5fecb46d"
+    },
+    "strengthened_internal_statement_contracts": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "633237714cb0db444468dd7a1f3ffb3efae7e918446b27e8789e0b925479e693"
+    }
+  },
+  "auxiliary_input_sha256": {
+    "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean": "e670fe75c11a6cbd25cc97f31e28cd107b46762947e81a58d03716ba851d2f17"
+  },
+  "finished_at_utc": "2026-10-27T06:21:01.323426+00:00",
+  "input_manifest_sha256": "524936b3223ec3a6956026ac0d86f70edf896c1a07d3ececd4280dd4b38298d8",
+  "scope": "Main Chen and Li-Liu libraries only; separate concurrent Wu sources and numerical certificates excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "c8265d377a7cbdacf7e4880c7cab66d538599cd7f0ab4328d9ddb1c112b9adee",
+  "net_main_code_lines": -154,
+  "new_auxiliary_lean_code_lines": 0,
+  "net_liliu_closure_code_lines": -154,
+  "net_chen_closure_code_lines": 22,
+  "type_preservation_report": "type-preservation.json",
+  "final_review_at_utc": "2026-10-27T06:24:29.119785+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "49ad6fdb8ef79ec0a01e97bee89938ab888715ed069c9be4e666cc0be6de8d95"
+  },
+  "evidence_sha256": {
+    "changes.json": "8a88e5bdb8175f45d6ac16970de8705d7bee5b630e272c8ba6e10ecd9c71e6a5",
+    "source-size.json": "eae1b81e6c35a7423ba7043af5776062fcd3b71204eeb8f28975e46f3df48473",
+    "type-preservation.json": "637573021cced0071713a70df482cd8f7518833a58f468b77124d20cf89842f0",
+    "private-proof-redirects.json": "6c5139ad98286d38681cfc65dab9e275a4e72f6acc838ce6628110e1928ca873",
+    "moved-public-proofs.json": "44aaaf4199e76220889fcd29526edffcb5cdff1b27a4a2d63c6eafe10b438b95",
+    "standalone-probes.json": "f6681656654405168afe933c1daf515956725d3582067e78814712542d309f96",
+    "blueprint-validation.json": "069ca3b793f0bdf1c2bbdb5970edb9b9e6565eed91282b9b818b5c7b07a77a97",
+    "analysis.json": "ff2277567c99471e4bd8716fc581c4121391b98b2ca99d4a2af0f217b4490fd9",
+    "historical-table-restoration.json": "d14eb55563f254869be48af282eb42e782738b0187452648c6430c2bd219ef70",
+    "followup-scan.json": "dcf53bcde5b2df23441aaa9cd81d4d6c914f20d7dccceb1eeab44ba19b3d10a3"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-carrier-cleanup/reproduce.py": "80befa780c8ec7bbd5edffd8dbd668f631d7aa90189a828ea9e27066262320e7",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "057bef88c1e7926911705309426b5f3e2722c87879245c56499353ac5b1624dc",
+    "docs/LILIU_CARRIER_CLEANUP.md": "4111e1ac7b3a38b3672756d5c9cc2928250dce055da99d832144f376cd89696d",
+    "docs/SOURCE_SIZE.md": "7916196d88462f5009f9c6c776838b85e87187021d84cf79d3b76cfd7102d228",
+    "docs/VERIFICATION.md": "416e55dd9b00f352c76d744e7f03d3668635dfcdcbacd92d8bda06fa76e3aa80",
+    "docs/RELEASE_NOTES.md": "dd304eaeba3d596a8980b6c9af55dfcaf8787c48735232005a4d11d096fd271b",
+    "docs/ARCHITECTURE.md": "ba88f6edfeb6d5f9a45fabc5ec0dceffc1f3b57a7202ac1590ebf557940626c6"
+  }
+}

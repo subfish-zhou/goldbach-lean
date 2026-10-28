@@ -93,20 +93,5 @@ theorem goldbachG12AuthorLowHigh_le_source {N : ℕ} (hN : 4 ≤ N) (ε : ℝ) :
   rw [goldbachG12AuthorSource_split hN]
   exact add_le_add (goldbachG12AuthorLowMother_le_source N ε) le_rfl
 
-/-- Actual low physical weighted mother plus ungated high mass; the cutoff is
-uniform in every later epsilon. This is a raw-mother, ONE-logarithm bound. -/
-theorem goldbachG12AuthorLowHigh_integral_budget (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N ≥ N₀, ∀ ε : ℝ,
-      Real.log (N : ℝ)/N * (400 * (goldbachG12AuthorLowMotherMass N ε +
-        8 * G12ClippedWindow.highMass N ε)) ≤
-          (564383/1000000 : ℝ)*goldbachG12PrimeIntegral goldbachG11AuthorWeight + δ := by
-  obtain ⟨K,hK,hb⟩ := goldbachG12AuthorSource_integral_budget δ hδ
-  refine ⟨K,hK,?_⟩
-  intro N hN ε
-  have hn : 0 ≤ Real.log (N : ℝ)/N := div_nonneg
-    (Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))) (Nat.cast_nonneg _)
-  exact (mul_le_mul_of_nonneg_left
-    (mul_le_mul_of_nonneg_left (goldbachG12AuthorLowHigh_le_source (hK.trans hN) ε)
-      (by norm_num : (0 : ℝ) ≤ 400)) hn).trans (hb N hN ε)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

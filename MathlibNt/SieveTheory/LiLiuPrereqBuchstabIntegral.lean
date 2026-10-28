@@ -93,21 +93,6 @@ theorem integral_buchstab_log_kernel {a b L : ℝ}
         -((L / Real.log a) * buchstab (L / Real.log a)) / L := he
     _ = _ := by ring
 
-/-- The corresponding exact change of variable `v = L / log t`. -/
-theorem integral_buchstab_log_substitution {a b L : ℝ}
-    (ha : 1 < a) (hab : a ≤ b) (hLb : L / Real.log b = 2) :
-    (∫ t in a..b, buchstab (L / Real.log t - 1) / (t * (Real.log t) ^ 2)) =
-      (∫ v in (2 : ℝ)..L / Real.log a, buchstab (v - 1)) / L := by
-  have hloga : 0 < Real.log a := Real.log_pos ha
-  have hlogb : 0 < Real.log b := Real.log_pos (lt_of_lt_of_le ha hab)
-  have hL : L = 2 * Real.log b := (div_eq_iff hlogb.ne').mp hLb
-  have hu : 2 ≤ L / Real.log a := by
-    apply (le_div_iff₀ hloga).mpr
-    have hlogab := Real.log_le_log (lt_trans zero_lt_one ha) hab
-    linarith
-  rw [integral_buchstab_log_kernel ha hab hLb, mul_buchstab_eq_integral hu]
-  congr 1
-  ring
 
 /-- The upper logarithmic endpoint is exactly `2`, not merely asymptotic. -/
 theorem log_div_log_sqrt {x : ℝ} (hx : 1 < x) :
@@ -117,14 +102,6 @@ theorem log_div_log_sqrt {x : ℝ} (hx : 1 < x) :
   rw [Real.log_sqrt hx₀]
   field_simp
 
-/-- The square-cutoff hypothesis places the lower transformed endpoint in
-the domain of the Buchstab integral equation, including equality at `2`. -/
-theorem two_le_log_div_log_of_sq_le {x y : ℝ}
-    (hy : 1 < y) (hxy : y ^ 2 ≤ x) :
-    2 ≤ Real.log x / Real.log y := by
-  apply (le_div_iff₀ (Real.log_pos hy)).mpr
-  have hlog := Real.log_le_log (sq_pos_of_pos (lt_trans zero_lt_one hy)) hxy
-  simpa only [Real.log_pow, Nat.cast_ofNat] using hlog
 
 /-- Exact unscaled evaluation on the interval from `y` to `sqrt x`. -/
 theorem integral_buchstab_log_kernel_sqrt {x y : ℝ}

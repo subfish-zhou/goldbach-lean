@@ -50,13 +50,4 @@ theorem goldbachG11PrimeIntegral_author_scalar_le_10191 :
       10191 / 100000 := by
   exact (mul_le_mul_of_nonneg_left goldbachG11PrimeIntegral_author_le_primitives
     (by norm_num : (0 : ℝ) ≤ 561522 / 1000000)).trans g11Author_primitives_scalar_bound
-
-#check g11Author_log53_bounds
-#print axioms g11Author_log53_bounds
-#check g11Author_log40_bounds
-#print axioms g11Author_log40_bounds
-#check g11Author_primitives_scalar_bound
-#print axioms g11Author_primitives_scalar_bound
-#check goldbachG11PrimeIntegral_author_scalar_le_10191
-#print axioms goldbachG11PrimeIntegral_author_scalar_le_10191
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

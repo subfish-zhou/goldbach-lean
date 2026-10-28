@@ -1,0 +1,47 @@
+{
+  "module": "Hf4DirectCoordinates",
+  "exit_code": 0,
+  "seconds": 3.3010941483080387,
+  "source_sha256": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+  "object_sha256": "6be2b5cf39fa5cc53c160aa1af739f6075ab31a71a25956041f6fa2c5e1fec37",
+  "dependencies": {
+    "Hf4QuadCompactKernelCore": "5d1b22ba9f5ef13d4481103b7fa0756611c9b49d66180613cac407f721d1c4e6"
+  },
+  "dependency_contexts": {
+    "Hf4QuadCompactKernelCore": "12cd20b495291632fea93137711d13090b88705b6637016da954753cf4387fa5"
+  },
+  "context_sha256": "148ec85c39a9391f83bce0e52220001674b415ab83db0d23df5d2af88a6d2544",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectCoordinates.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectCoordinates.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectCoordinates.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectCoordinates.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectCoordinates.resources",
+  "resource_sha256": "4c16f19d5ef079e926545be3feeff07c561e25f7190fda46bf25b342390e7aca",
+  "artifact_bundle_sha256": {
+    ".olean": "6be2b5cf39fa5cc53c160aa1af739f6075ab31a71a25956041f6fa2c5e1fec37"
+  }
+}

@@ -1,11 +1,8 @@
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
 import MathlibNt.Analysis.LogGridEstimates
 import MathlibNt.Analysis.MovingIntervalIntegral
-import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
 import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainIntegral
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
 
 /-!
 # The canonical logarithmic grid tends to Liu's source integral
@@ -24,16 +21,6 @@ noncomputable section
 
 open PrimeReciprocalLogRectangle
 
-/-- The logarithmic density in the two exponent coordinates. -/
-def liuLogDensity (x : ℝ × ℝ) : ℝ := 1 / (x.1 * x.2)
-
-/-- Liu's remaining kernel in logarithmic coordinates. -/
-def liuLogKernel (x : ℝ × ℝ) : ℝ := 1 / (1 - x.1 - x.2)
-
-/-- The full density occurring in Liu's source integral. -/
-def liuLogIntegrand (x : ℝ × ℝ) : ℝ :=
-  liuLogKernel x * liuLogDensity x
-
 /-- A half-open canonical grid cell. -/
 def liuLogGridCell (n : ℕ) (q : Fin n × Fin n) : Set (ℝ × ℝ) :=
   Ioc (liuAlphaGridPoint n q.1) (liuAlphaGridPoint n (q.1 + 1)) ×ˢ
@@ -48,66 +35,6 @@ def liuLogSourceRegion : Set (ℝ × ℝ) :=
   {x | x.1 ∈ Ioc (1 / 10 : ℝ) (1 / 3) ∧
     x.2 ∈ Ioc (1 / 3 : ℝ) ((1 - x.1) / 2)}
 
-/-- A logarithmic rectangle mass is exactly the iterated integral of the
-logarithmic density. -/
-theorem logarithmicRectangleMass_eq_iteratedIntegral
-    {a₀ a₁ b₀ b₁ : ℝ} (ha₀ : 0 < a₀) (ha : a₀ < a₁)
-    (hb₀ : 0 < b₀) (hb : b₀ < b₁) :
-    logarithmicRectangleMass a₀ a₁ b₀ b₁ =
-      ∫ α in a₀..a₁, ∫ β in b₀..b₁, 1 / (α * β) := by
-  have ha₁ : 0 < a₁ := ha₀.trans ha
-  have hb₁ : 0 < b₁ := hb₀.trans hb
-  have hia : (∫ α in a₀..a₁, 1 / α) = Real.log (a₁ / a₀) := by
-    simpa only [one_div] using integral_inv_of_pos ha₀ ha₁
-  have hib : (∫ β in b₀..b₁, 1 / β) = Real.log (b₁ / b₀) := by
-    simpa only [one_div] using integral_inv_of_pos hb₀ hb₁
-  calc
-    logarithmicRectangleMass a₀ a₁ b₀ b₁ =
-        Real.log (a₁ / a₀) * Real.log (b₁ / b₀) := rfl
-    _ = (∫ α in a₀..a₁, 1 / α) * (∫ β in b₀..b₁, 1 / β) := by
-      rw [hia, hib]
-    _ = ∫ α in a₀..a₁, (1 / α) * (∫ β in b₀..b₁, 1 / β) := by
-      rw [intervalIntegral.integral_mul_const]
-    _ = ∫ α in a₀..a₁, ∫ β in b₀..b₁, 1 / (α * β) := by
-      apply intervalIntegral.integral_congr
-      intro α hα
-      change (1 / α) * (∫ β in b₀..b₁, 1 / β) =
-        ∫ β in b₀..b₁, 1 / (α * β)
-      rw [← intervalIntegral.integral_const_mul]
-      apply intervalIntegral.integral_congr
-      intro β hβ
-      simp [one_div]
-      ring
-
-/-- The same identity as a product-set integral. -/
-theorem logarithmicRectangleMass_eq_setIntegral
-    {a₀ a₁ b₀ b₁ : ℝ} (ha₀ : 0 < a₀) (ha : a₀ < a₁)
-    (hb₀ : 0 < b₀) (hb : b₀ < b₁) :
-    logarithmicRectangleMass a₀ a₁ b₀ b₁ =
-      ∫ x in Ioc a₀ a₁ ×ˢ Ioc b₀ b₁, liuLogDensity x := by
-  have ha₁ : 0 < a₁ := ha₀.trans ha
-  have hb₁ : 0 < b₁ := hb₀.trans hb
-  change logarithmicRectangleMass a₀ a₁ b₀ b₁ =
-    ∫ x in Ioc a₀ a₁ ×ˢ Ioc b₀ b₁, 1 / (x.1 * x.2)
-  have hfactor :
-      (∫ x in Ioc a₀ a₁ ×ˢ Ioc b₀ b₁, 1 / (x.1 * x.2)) =
-        ∫ x in Ioc a₀ a₁ ×ˢ Ioc b₀ b₁, (1 / x.1) * (1 / x.2) := by
-    apply MeasureTheory.setIntegral_congr_fun
-      (measurableSet_Ioc.prod measurableSet_Ioc)
-    intro x hx
-    simpa only [one_div] using (mul_inv x.1 x.2)
-  rw [hfactor]
-  rw [MeasureTheory.Measure.volume_eq_prod ℝ ℝ,
-    MeasureTheory.setIntegral_prod_mul
-    (fun α : ℝ => 1 / α) (fun β : ℝ => 1 / β)]
-  rw [← intervalIntegral.integral_of_le ha.le,
-    ← intervalIntegral.integral_of_le hb.le]
-  have hia : (∫ α in a₀..a₁, 1 / α) = Real.log (a₁ / a₀) := by
-    simpa only [one_div] using integral_inv_of_pos ha₀ ha₁
-  have hib : (∫ β in b₀..b₁, 1 / β) = Real.log (b₁ / b₀) := by
-    simpa only [one_div] using integral_inv_of_pos hb₀ hb₁
-  rw [hia, hib]
-  rfl
 
 /-- Canonical half-open cells are measurable. -/
 lemma measurableSet_liuLogGridCell (n : ℕ) (q : Fin n × Fin n) :
@@ -240,8 +167,6 @@ theorem liuLogGridRegion_geometry {n : ℕ} (hn : 0 < n) {x : ℝ × ℝ}
 def liuLogAmbientBox : Set (ℝ × ℝ) :=
   Icc (1 / 10 : ℝ) (1 / 3) ×ˢ Icc (1 / 3 : ℝ) (9 / 20)
 
-lemma measurableSet_liuLogAmbientBox : MeasurableSet liuLogAmbientBox :=
-  measurableSet_Icc.prod measurableSet_Icc
 
 lemma isCompact_liuLogAmbientBox : IsCompact liuLogAmbientBox :=
   isCompact_Icc.prod isCompact_Icc
@@ -260,11 +185,6 @@ lemma liuLogGridRegion_subset_ambientBox {n : ℕ} (hn : 0 < n) :
     ⟨(liuLogGridRegion_geometry hn hx).2.1.1.le,
       (liuLogGridRegion_geometry hn hx).2.1.2⟩⟩
 
-lemma measurableSet_liuLogGridRegion (n : ℕ) :
-    MeasurableSet (liuLogGridRegion n) := by
-  classical
-  rw [liuLogGridRegion]
-  exact Finset.measurableSet_biUnion _ fun q _ => measurableSet_liuLogGridCell n q
 
 lemma measurableSet_liuLogSourceRegion : MeasurableSet liuLogSourceRegion := by
   exact (measurableSet_Ioc.preimage measurable_fst).inter
@@ -273,17 +193,13 @@ lemma measurableSet_liuLogSourceRegion : MeasurableSet liuLogSourceRegion := by
 
 lemma liuLogDensity_nonneg {x : ℝ × ℝ} (hx : x ∈ liuLogAmbientBox) :
     0 ≤ liuLogDensity x := by
-  dsimp [liuLogDensity]
-  apply one_div_nonneg.mpr
-  exact mul_nonneg (by linarith [hx.1.1]) (by linarith [hx.2.1])
+  change 0 ≤ 1 / (x.1 * x.2)
+  exact one_div_nonneg.mpr (mul_nonneg (by linarith [hx.1.1]) (by linarith [hx.2.1]))
 
 lemma liuLogKernel_nonneg {x : ℝ × ℝ} (hx : x ∈ liuLogAmbientBox) :
     0 ≤ liuLogKernel x := by
-  dsimp [liuLogKernel]
-  have hden : 0 < 1 - x.1 - x.2 := by
-    rcases hx with ⟨hx₁, hx₂⟩
-    linarith [hx₁.2, hx₂.2]
-  positivity
+  change 0 ≤ 1 / (1 - x.1 - x.2)
+  exact one_div_nonneg.mpr (by linarith [hx.1.2, hx.2.2])
 
 lemma liuLogIntegrand_nonneg {x : ℝ × ℝ} (hx : x ∈ liuLogAmbientBox) :
     0 ≤ liuLogIntegrand x := by
@@ -291,19 +207,10 @@ lemma liuLogIntegrand_nonneg {x : ℝ × ℝ} (hx : x ∈ liuLogAmbientBox) :
   exact mul_nonneg (liuLogKernel_nonneg hx) (liuLogDensity_nonneg hx)
 
 lemma continuousOn_liuLogDensity : ContinuousOn liuLogDensity liuLogAmbientBox := by
-  unfold liuLogDensity
-  apply ContinuousOn.div continuousOn_const
-    (continuous_fst.continuousOn.mul continuous_snd.continuousOn)
-  intro x hx
-  exact mul_ne_zero (by linarith [hx.1.1]) (by linarith [hx.2.1])
+  exact continuousOn_liuLogDensity_box (by norm_num) (by norm_num)
 
 lemma continuousOn_liuLogKernel : ContinuousOn liuLogKernel liuLogAmbientBox := by
-  unfold liuLogKernel
-  apply ContinuousOn.div continuousOn_const
-    ((continuousOn_const.sub continuous_fst.continuousOn).sub continuous_snd.continuousOn)
-  intro x hx
-  change 1 - x.1 - x.2 ≠ 0
-  linarith [hx.1.2, hx.2.2]
+  exact continuousOn_liuLogKernel_box (by norm_num)
 
 lemma continuousOn_liuLogIntegrand : ContinuousOn liuLogIntegrand liuLogAmbientBox := by
   exact continuousOn_liuLogKernel.mul continuousOn_liuLogDensity
@@ -365,11 +272,6 @@ noncomputable def liuLogGridUpperIntegrand (n : ℕ) (x : ℝ × ℝ) : ℝ :=
       liuBetaGridPoint n (q.2 + 1))) *
       (liuLogGridCell n q).indicator liuLogDensity x
 
-lemma integrable_indicator_of_integrableOn {f : ℝ × ℝ → ℝ} {s : Set (ℝ × ℝ)}
-    (hs : MeasurableSet s) (hf : IntegrableOn f s) :
-    Integrable (s.indicator f) := by
-  exact hf.integrable_indicator hs
-
 lemma liuLogGridCell_subset_ambientBox {n : ℕ} (hn : 0 < n)
     {q : Fin n × Fin n} (hq : q ∈ liuLogGridCells n) :
     liuLogGridCell n q ⊆ liuLogAmbientBox := by
@@ -380,32 +282,24 @@ lemma liuLogGridCell_subset_ambientBox {n : ℕ} (hn : 0 < n)
 
 theorem liuLogGridUpperSum_eq_integral (n : ℕ) (hn : 0 < n) :
     liuLogGridUpperSum n = ∫ x, liuLogGridUpperIntegrand n x := by
-  classical
   unfold liuLogGridUpperSum liuLogGridUpperIntegrand
-  rw [MeasureTheory.integral_finsetSum]
-  · apply Finset.sum_congr rfl
-    intro q hq
-    rw [MeasureTheory.integral_const_mul,
-      MeasureTheory.integral_indicator (measurableSet_liuLogGridCell n q)]
-    rw [logarithmicRectangleMass_eq_setIntegral
-      (liuAlphaGridPoint_pos hn) (liuAlphaGridPoint_lt_succ hn)
-      (liuBetaGridPoint_pos hn) (liuBetaGridPoint_lt_succ hn)]
-    rfl
-  · intro q hq
-    exact (integrable_indicator_of_integrableOn
-      (measurableSet_liuLogGridCell n q)
-      (integrableOn_liuLogDensity (measurableSet_liuLogGridCell n q)
-        (liuLogGridCell_subset_ambientBox hn hq))).const_mul _
+  rw [MathlibNt.Analysis.LogGridEstimates.integral_weighted_sum _ _ _ _
+    (fun q _ => measurableSet_liuLogGridCell n q)
+    (fun q hq => integrableOn_liuLogDensity (measurableSet_liuLogGridCell n q)
+      (liuLogGridCell_subset_ambientBox hn hq))]
+  apply Finset.sum_congr rfl
+  intro q _
+  rw [logarithmicRectangleMass_eq_setIntegral
+    (liuAlphaGridPoint_pos hn) (liuAlphaGridPoint_lt_succ hn)
+    (liuBetaGridPoint_pos hn) (liuBetaGridPoint_lt_succ hn)]
+  rfl
 
 lemma integrable_liuLogGridUpperIntegrand (n : ℕ) (hn : 0 < n) :
     Integrable (liuLogGridUpperIntegrand n) := by
-  classical
-  unfold liuLogGridUpperIntegrand
-  exact integrable_finsetSum _ fun q hq =>
-    (integrable_indicator_of_integrableOn
-      (measurableSet_liuLogGridCell n q)
-      (integrableOn_liuLogDensity (measurableSet_liuLogGridCell n q)
-        (liuLogGridCell_subset_ambientBox hn hq))).const_mul _
+  exact MathlibNt.Analysis.LogGridEstimates.integrable_weighted_sum _ _ _ _
+    (fun q _ => measurableSet_liuLogGridCell n q)
+    (fun q hq => integrableOn_liuLogDensity (measurableSet_liuLogGridCell n q)
+      (liuLogGridCell_subset_ambientBox hn hq))
 
 lemma liuLogGridUpperIntegrand_nonneg {n : ℕ} (hn : 0 < n)
     (x : ℝ × ℝ) : 0 ≤ liuLogGridUpperIntegrand n x := by
@@ -505,16 +399,9 @@ lemma liuLogGrid_upperKernel_sub_le {n : ℕ} (hn : 0 < n)
 /-- The logarithmic density is uniformly bounded on the ambient box. -/
 lemma liuLogDensity_le_thirty {x : ℝ × ℝ} (hx : x ∈ liuLogAmbientBox) :
     liuLogDensity x ≤ 30 := by
-  have hx₁ : 0 < x.1 := by linarith [hx.1.1]
-  have hx₂ : 0 < x.2 := by linarith [hx.2.1]
-  have hprod : (1 / 30 : ℝ) ≤ x.1 * x.2 := by
-    calc
-      (1 / 30 : ℝ) = (1 / 10) * (1 / 3) := by norm_num
-      _ ≤ x.1 * x.2 :=
-        mul_le_mul hx.1.1 hx.2.1 (by norm_num) (by linarith [hx.1.1])
-  unfold liuLogDensity
-  rw [div_le_iff₀ (mul_pos hx₁ hx₂)]
-  nlinarith
+  convert liuLogDensity_le_of_lower_bounds
+    (by norm_num : (0 : ℝ) < 1/10) (by norm_num : (0 : ℝ) < 1/3)
+    hx.1.1 hx.2.1 using 1; norm_num
 
 /-- Every selected upper corner has remaining kernel at most five. -/
 lemma liuLogGrid_upperKernel_le_five {n : ℕ} (hn : 0 < n)
@@ -608,32 +495,6 @@ lemma liuLogGridUpperIntegrand_le_integrand_add {n : ℕ} (hn : 0 < n)
   dsimp [liuLogIntegrand]
   ring
 
-/-- A global integrable majorant separates the source error from the thin
-geometric excess strip. -/
-lemma liuLogGridUpperIntegrand_majorized {n : ℕ} (hn : 0 < n)
-    (x : ℝ × ℝ) :
-    liuLogGridUpperIntegrand n x ≤
-      liuLogSourceRegion.indicator liuLogIntegrand x +
-        (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1).indicator
-          (fun _ => 750 / (n : ℝ)) x +
-        (liuLogExcessStrip n).indicator (fun _ => 150) x := by
-  classical
-  have h := MathlibNt.Analysis.IntegralExcessCover.majorized_of_excess_cover
-    (liuLogGridRegion n) liuLogSourceRegion (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1)
-    (fun _ : Fin 1 => liuLogExcessStrip n)
-    (liuLogGridUpperIntegrand n) liuLogIntegrand (750 / (n : ℝ)) 150
-    (by positivity) (by norm_num)
-    (fun _ hx => liuLogIntegrand_nonneg (liuLogSourceRegion_subset_ambientBox hx))
-    (fun _ hx => liuLogGridUpperIntegrand_eq_zero_of_notMem hx)
-    (by
-      intro x hx
-      have hb := liuLogSourceRegion_subset_ambientBox hx.2
-      exact ⟨⟨by linarith [hb.1.1], by linarith [hb.1.2]⟩,
-        ⟨by linarith [hb.2.1], by linarith [hb.2.2]⟩⟩)
-    (fun _ hx => liuLogGridUpperIntegrand_le_integrand_add hn hx.2)
-    (fun _ hx => ⟨0, liuLogGridRegion_diff_source_subset_excessStrip hn hx⟩)
-    (fun _ hx => liuLogGridUpperIntegrand_le_oneHundredFifty hn hx.1)
-  simpa using h x
 
 /-- The grid upper sum exceeds Liu's source integral by at most `759/n`. -/
 theorem liuLogGridUpperSum_sub_source_le (n : ℕ) (hn : 0 < n) :
@@ -676,28 +537,8 @@ integral as the mesh tends to zero. -/
 theorem tendsto_liuLogGridUpperSum_sourceMainIntegral :
     Tendsto (fun n : ℕ => liuLogGridUpperSum (n + 1)) atTop
       (nhds liuSourceMainIntegral) := by
-  have herror :
-      Tendsto (fun n : ℕ => (759 : ℝ) / ((n + 1 : ℕ) : ℝ)) atTop (nhds 0) := by
-    simpa only [Nat.cast_add, Nat.cast_one, div_eq_mul_inv, one_mul, mul_zero] using
-      (Tendsto.const_mul (759 : ℝ)
-        (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ) :
-          Tendsto (fun n : ℕ => 1 / ((n : ℝ) + 1)) atTop (nhds 0)))
-  have hdiff :
-      Tendsto
-        (fun n : ℕ => liuLogGridUpperSum (n + 1) - liuSourceMainIntegral)
-        atTop (nhds 0) := by
-    apply squeeze_zero'
-    · exact Filter.Eventually.of_forall fun n =>
-        sub_nonneg.mpr
-          (liuSourceMainIntegral_le_liuLogGridUpperSum (n + 1) (Nat.succ_pos n))
-    · exact Filter.Eventually.of_forall fun n =>
-        liuLogGridUpperSum_sub_source_le (n + 1) (Nat.succ_pos n)
-    · exact herror
-  have hconst :
-      Tendsto (fun _ : ℕ => liuSourceMainIntegral) atTop
-        (nhds liuSourceMainIntegral) :=
-    tendsto_const_nhds
-  simpa only [sub_add_cancel, zero_add] using hdiff.add hconst
+  exact MathlibNt.Analysis.LogGridEstimates.tendsto_of_sub_le_div_nat
+    (fun n hn => liuSourceMainIntegral_le_liuLogGridUpperSum n hn) (fun n hn => liuLogGridUpperSum_sub_source_le n hn)
 
 end
 

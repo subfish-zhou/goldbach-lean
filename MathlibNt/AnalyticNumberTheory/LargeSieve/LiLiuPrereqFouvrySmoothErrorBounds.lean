@@ -163,44 +163,6 @@ theorem smoothVErrorEnvelope_le_fouvryTau
       rw [show 5 * j - 1 = (j - 1) + 4 * j by omega, pow_add]
       ring
 
-/-- A global bound for the signed U error itself, with a constant chosen
-before all changing arithmetic data and both fixed divisor orders. -/
-theorem dispersionU_smooth_fouvryTau_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ S : Finset ℕ,
-      (∀ m : ℕ, scaledDyadicCutoff M m ≠ 0 → m ∈ S) →
-      ∀ k : ℕ, 1 ≤ k → ∀ j : ℕ, ∀ T L : ℝ, 1 ≤ T → 1 ≤ L →
-      ∀ N Q : Finset ℕ, N ⊆ Ioc 0 ⌊T⌋₊ → Q ⊆ Ioc 0 ⌊L⌋₊ →
-      ∀ β c : ℕ → ℝ, (∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ)) →
-      (∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) → ∀ a : ℤ,
-      |dispersionU S N Q (fun m => scaledDyadicCutoff M m) β c a -
-          smoothUMain M N Q β c a| ≤
-        C * ((T * (1 + Real.log T) ^ (k - 1)) ^ 2 * (1 + Real.log L) ^ (8 * j)) := by
-  obtain ⟨C, hC, h⟩ := dispersionU_smooth_uniform_error
-  refine ⟨C, hC, fun M hM S hS k hk j T L hT hL N Q hN hQ β c hβ hc a => ?_⟩
-  exact (h M hM S hS N Q β c a
-    (fun q hq => (mem_Ioc.mp (hQ hq)).1.ne')).trans
-    (mul_le_mul_of_nonneg_left
-      (smoothUErrorEnvelope_le_fouvryTau hk j hT hL N Q hN hQ β c hβ hc a) hC.le)
-
-/-- A global bound for the signed V error itself; no error-envelope premise
-is left to the consumer. -/
-theorem dispersionV_smooth_fouvryTau_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ S : Finset ℕ,
-      (∀ m : ℕ, scaledDyadicCutoff M m ≠ 0 → m ∈ S) →
-      ∀ k j : ℕ, 1 ≤ k → 1 ≤ j → ∀ T L : ℝ, 1 ≤ T → 1 ≤ L →
-      ∀ N Q : Finset ℕ, N ⊆ Ioc 0 ⌊T⌋₊ → Q ⊆ Ioc 0 ⌊L⌋₊ →
-      ∀ β c : ℕ → ℝ, (∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ)) →
-      (∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) → ∀ a : ℤ,
-      |dispersionV S N Q (fun m => scaledDyadicCutoff M m) β c a -
-          smoothUMain M N Q β c a| ≤
-        C * ((T * (1 + Real.log T) ^ (k - 1)) ^ 2 * L *
-          (1 + Real.log L) ^ (5 * j - 1)) := by
-  obtain ⟨C, hC, h⟩ := dispersionV_smooth_uniform_error
-  refine ⟨C, hC, fun M hM S hS k j hk hj T L hT hL N Q hN hQ β c hβ hc a => ?_⟩
-  exact (h M hM S hS N Q β c a
-    (fun q hq => (mem_Ioc.mp (hQ hq)).1.ne')).trans
-    (mul_le_mul_of_nonneg_left
-      (smoothVErrorEnvelope_le_fouvryTau hk hj hT hL N Q hN hQ β c hβ hc a) hC.le)
 
 end
 

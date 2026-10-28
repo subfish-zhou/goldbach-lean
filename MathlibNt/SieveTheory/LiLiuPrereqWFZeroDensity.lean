@@ -116,28 +116,6 @@ theorem dimensionOneProductBound_truncate {P : Finset ℕ} {g : ℕ → ℝ} {K 
     have hratio : 1 ≤ Real.log z / Real.log w := (one_le_div hwlog).mpr hzlog
     exact one_le_mul_of_one_le_of_one_le hratio hfactor
 
-theorem densityDefects_delete_zero (B : Finset ℕ) {L : ℝ} (g : ℕ → ℝ)
-    (hL : 1 < L) (hB : ∀ p ∈ B, p.Prime) (hcut : ∀ p ∈ B, (p : ℝ) < L) :
-    lowerDensityDefect L g ((nonzeroDensityPrimes B g).sort (· ≤ ·)) =
-      lowerDensityDefect L g (B.sort (· ≤ ·)) ∧
-    upperDensityDefect L g ((nonzeroDensityPrimes B g).sort (· ≤ ·)) =
-      upperDensityDefect L g (B.sort (· ≤ ·)) := by
-  have hlo (T : Finset ℕ) (hT : T ⊆ B) :=
-    lowerSetDensity_eq_euler_sub_defect g hL (T.sort (· ≤ ·))
-      (T.sort_nodup _) (T.pairwise_sort _)
-      (fun p hp => hB p (hT (by simpa using hp)))
-      (fun p hp => hcut p (hT (by simpa using hp)))
-  have hup (T : Finset ℕ) (hT : T ⊆ B) :=
-    upperSetDensity_eq_euler_add_defect g hL (T.sort (· ≤ ·))
-      (T.sort_nodup _) (T.pairwise_sort _)
-      (fun p hp => hB p (hT (by simpa using hp)))
-  have hlB := hlo B (Finset.Subset.refl _)
-  have hlT := hlo _ (nonzeroDensityPrimes_subset B g)
-  have huB := hup B (Finset.Subset.refl _)
-  have huT := hup _ (nonzeroDensityPrimes_subset B g)
-  simp only [Finset.sort_toFinset, lowerSetDensity_delete_zero,
-    upperSetDensity_delete_zero, eulerProduct_delete_zero] at hlB hlT huB huT
-  constructor <;> linarith
 
 /-- Exact density of the original divisor weights after deleting zero primes. -/
 theorem weightDensities_delete_zero (B : Finset ℕ) (L : ℝ)

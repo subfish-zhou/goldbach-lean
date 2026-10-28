@@ -1,0 +1,51 @@
+{
+  "module": "Hf4ConstructiveTableSoundness",
+  "exit_code": 0,
+  "seconds": 11.867941822856665,
+  "source_sha256": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff",
+  "object_sha256": "437af8b9d639cb8d6fdf9a9c14e10893ed1d8e8029019b3b56b8043438016650",
+  "dependencies": {
+    "Hf4ConstructiveTableData": "36bf2b3adcbf0f2b25051f81a1330adb7fa1e5cd774ccc072bac3ad487ad39fb",
+    "Hf4ConstructiveOriginalSoundness": "598e9aac4af3a77d256fe8a74fa36882c14ea2fb7c24b0131844e7422420c4b4",
+    "Hf4QuadCompactIntegral": "918b1423b38f3369b151852b0af310058fc76fc7256dfe0b9a5d03b595eed181"
+  },
+  "dependency_contexts": {
+    "Hf4ConstructiveTableData": "02e8470bd34b71b68d27ef5bc3b9e172b92d742b61edec98af51e0ab3cc37ee9",
+    "Hf4ConstructiveOriginalSoundness": "7de9b08bcd13a54a2b894a7e588f73b995280709d1b035e46dab99694b34b502",
+    "Hf4QuadCompactIntegral": "abfc584bed35f5d8e8fdb76e759d466e82ecd89c69cae095f2cb331a8c94db83"
+  },
+  "context_sha256": "0a3a72efbb6996b74ace19baddb212983130d5fe73a1045fdf723c10ba05651d",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableSoundness.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableSoundness.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ConstructiveTableSoundness.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ConstructiveTableSoundness.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.log",
+  "log_sha256": "a9bb7fcc8fd1edfe3c35425f3efcb7eb7e79170ce906e4cec892153a802233b1",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ConstructiveTableSoundness.resources",
+  "resource_sha256": "7181489abcf03c538f675b5eafc028c82d5fde4e75c447d243dd25edeb3701cc",
+  "artifact_bundle_sha256": {
+    ".olean": "437af8b9d639cb8d6fdf9a9c14e10893ed1d8e8029019b3b56b8043438016650"
+  }
+}

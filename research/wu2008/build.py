@@ -21,6 +21,21 @@ args=ap.parse_args()
 if args.jobs < 1 or args.lean_threads < 1:ap.error('jobs and lean-threads must be positive')
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def save(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+
+def context_sha256(source_sha256, object_sha256, dependency_contexts):
+ # Objects may be byte-identical even when a transitive import disappears.
+ # Bind the complete dependency context recursively, not just direct objects.
+ payload={'source_sha256':source_sha256,'object_sha256':object_sha256,
+          'dependency_contexts':dependency_contexts}
+ return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+def context_matches(receipt, dependency_contexts):
+ # Missing legacy context fields intentionally force recompilation. A migration
+ # requires independently audited evidence and must not happen in this builder.
+ return (receipt.get('dependency_contexts')==dependency_contexts and
+         receipt.get('context_sha256')==context_sha256(
+          receipt['source_sha256'],receipt['object_sha256'],dependency_contexts))
+
 manifest_path=ROOT/'source-manifest.json'
 manifest_bytes=manifest_path.read_bytes()
 manifest_sha256=hashlib.sha256(manifest_bytes).hexdigest()
@@ -86,7 +101,7 @@ def module_paths(n):
          (B/'lib'/rel).with_suffix('.olean'),
          (B/'receipts'/rel).with_suffix('.json'))
 
-def compile_module(n,deps):
+def compile_module(n,deps,dependency_contexts):
  # Workers write only their own objects, logs and receipts. The coordinator
  # alone releases dependents and updates the overall build status.
  row=manifest[n];source,obj,receipt=module_paths(n)
@@ -101,6 +116,8 @@ def compile_module(n,deps):
  changed=input_change(n,deps)
  if changed:rc=125
  r={'module':n,'exit_code':rc,'source_sha256':row['source_sha256'],'object_sha256':sha(obj) if obj.exists() else None,'dependencies':deps,'log':str(log.relative_to(ROOT)),'log_sha256':sha(log),'command':cmd,'seconds':time.time()-start}
+ r['dependency_contexts']=dependency_contexts
+ r['context_sha256']=context_sha256(r['source_sha256'],r['object_sha256'],dependency_contexts)
  if changed:r['input_change']=changed
  save(log.with_suffix('.json'),r);save(receipt,r)
  return r
@@ -128,16 +145,17 @@ with ThreadPoolExecutor(max_workers=args.jobs) as pool:
    _,n=heapq.heappop(ready)
    source,obj,receipt=module_paths(n)
    deps={k:receipts[k]['object_sha256'] for k in manifest[n]['imports'] if k in positions}
+   dependency_contexts={k:receipts[k]['context_sha256'] for k in deps}
    changed=input_change(n,deps)
    if changed:
     failure={'module':n,'exit_code':125,'input_change':changed};break
    if receipt.exists() and obj.exists():
     r=json.loads(receipt.read_text())
-    if r.get('exit_code')==0 and r['source_sha256']==sha(source) and r['dependencies']==deps and r['object_sha256']==sha(obj):
+    if r.get('exit_code')==0 and r['source_sha256']==sha(source) and r['dependencies']==deps and r['object_sha256']==sha(obj) and context_matches(r,dependency_contexts):
      accept(n,r);continue
    if args.limit is not None and count>=args.limit:
     limited.append(n);continue
-   running[pool.submit(compile_module,n,deps)]=n;count+=1
+   running[pool.submit(compile_module,n,deps,dependency_contexts)]=n;count+=1
   if not running:break
   done,_=wait(running,return_when=FIRST_COMPLETED)
   for future in sorted(done,key=lambda f:positions[running[f]]):
@@ -169,6 +187,9 @@ for n,row in manifest.items():
  source=ROOT/'src'/Path(*n.split('.')).with_suffix('.lean')
  if sha(source)!=row['source_sha256']:stop_changed('source changed during build: '+n)
 for n,r in receipts.items():
+ dependency_contexts={k:receipts[k]['context_sha256'] for k in manifest[n]['imports'] if k in receipts}
+ if not context_matches(r,dependency_contexts):
+  stop_changed('dependency context changed during build: '+n)
  obj=(B/'lib'/Path(*n.split('.'))).with_suffix('.olean')
  if not obj.exists() or sha(obj)!=r['object_sha256']:
   stop_changed('output object changed during build: '+n)

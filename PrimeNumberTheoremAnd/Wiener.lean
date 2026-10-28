@@ -1,4 +1,3 @@
-import Architect
 import Mathlib.Analysis.Fourier.RiemannLebesgueLemma
 import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Analysis.SumIntegralComparisons
@@ -163,10 +162,6 @@ lemma first_fourier (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
         simp
 
 
-
-@[continuity]
-lemma continuous_multiplicative_ofAdd : Continuous (⇑Multiplicative.ofAdd : ℝ → ℝ) := ⟨fun _ ↦ id⟩
-
 attribute [fun_prop] measurable_coe_nnreal_ennreal
 
 lemma second_fourier_integrable_aux1a (hσ : 1 < σ') :
@@ -296,17 +291,6 @@ can be obtained fairly easily in applications).
 
 lemma one_add_sq_pos (u : ℝ) : 0 < 1 + u ^ 2 := zero_lt_one.trans_le (by simpa using sq_nonneg u)
 
-@[blueprint "prelim-decay"
-  (title := "Preliminary decay bound I")
-  (statement := /--
-  If $\psi:\R \to \C$ is absolutely integrable then $$ |\hat \psi(u)| \leq \| \psi \|_1 $$
-  for all $u \in \R$. where $C$ is an absolute constant.
-  -/)
-  (proof := /-- Immediate from the triangle inequality. -/)
-  (latexEnv := "lemma")
-  (discussion := 561)]
-theorem prelim_decay (ψ : ℝ → ℂ) (u : ℝ) : ‖𝓕 (ψ : ℝ → ℂ) u‖ ≤ ∫ t, ‖ψ t‖ :=
-  VectorFourier.norm_fourierIntegral_le_integral_norm ..
 
 /-!
 The upstream file also contains three unused alternate Fourier-decay
@@ -330,57 +314,6 @@ lemma decay_bounds_key (f : W21) (u : ℝ) : ‖𝓕 (f : ℝ → ℂ) u‖ ≤ 
   rw [norm_neg, F_mul, norm_mul, W21.norm]
   gcongr <;> apply VectorFourier.norm_fourierIntegral_le_integral_norm
 
-lemma decay_bounds_aux {f : ℝ → ℂ} (hf : AEStronglyMeasurable f volume)
-    (h : ∀ t, ‖f t‖ ≤ A * (1 + t ^ 2)⁻¹) :
-    ∫ t, ‖f t‖ ≤ π * A := by
-  have l1 : Integrable (fun x ↦ A * (1 + x ^ 2)⁻¹) := integrable_inv_one_add_sq.const_mul A
-  simp_rw [← integral_univ_inv_one_add_sq, mul_comm, ← integral_const_mul]
-  exact integral_mono (l1.mono' hf (Eventually.of_forall h)).norm l1 h
-
-theorem decay_bounds_W21 (f : W21) (hA : ∀ t, ‖f t‖ ≤ A / (1 + t ^ 2))
-    (hA' : ∀ t, ‖deriv (deriv f) t‖ ≤ A / (1 + t ^ 2)) (u) :
-    ‖𝓕 (f : ℝ → ℂ) u‖ ≤ (π + 1 / (4 * π)) * A / (1 + u ^ 2) := by
-  have l0 : 1 * (4 * π)⁻¹ * A = (4 * π ^ 2)⁻¹ * (π * A) := by field_simp
-  have l1 : ∫ (v : ℝ), ‖f v‖ ≤ π * A := by
-    apply decay_bounds_aux f.continuous.aestronglyMeasurable
-    simp_rw [← div_eq_mul_inv] ; exact hA
-  have l2 : ∫ (v : ℝ), ‖deriv (deriv f) v‖ ≤ π * A := by
-    apply decay_bounds_aux f.deriv.deriv.continuous.aestronglyMeasurable
-    simp_rw [← div_eq_mul_inv] ; exact hA'
-  apply decay_bounds_key f u |>.trans
-  change W21.norm _ * _ ≤ _
-  simp_rw [W21.norm, div_eq_mul_inv, add_mul, l0] ; gcongr
-
-@[blueprint
-  "decay"
-  (title := "Decay bounds")
-  (statement := /--
-    If $\psi:\R \to \C$ is $C^2$ and obeys the bounds
-    $$ |\psi(t)|, |\psi''(t)| \leq A / (1 + |t|^2)$$
-    for all $t \in \R$, then
-  $$ |\hat \psi(u)| \leq C A / (1+|u|^2)$$
-  for all $u \in \R$, where $C$ is an absolute constant.
-  -/)
-  (proof := /--
-   From two integration by parts we obtain the identity
-  $$ (1+u^2) \hat \psi(u) = \int_{\bf R} (\psi(t) - \frac{u}{4\pi^2} \psi''(t)) e(-tu)\ dt.$$
-  Now apply the triangle inequality and the identity $\int_{\bf R} \frac{dt}{1+t^2}\ dt = \pi$ to
-  obtain the claim with $C = \pi + 1 / 4 \pi$.
-  -/)
-  (latexEnv := "lemma")]
-lemma decay_bounds (ψ : CS 2 ℂ) (hA : ∀ t, ‖ψ t‖ ≤ A / (1 + t ^ 2))
-    (hA' : ∀ t, ‖deriv^[2] ψ t‖ ≤ A / (1 + t ^ 2)) :
-    ‖𝓕 (ψ : ℝ → ℂ) u‖ ≤ (π + 1 / (4 * π)) * A / (1 + u ^ 2) := by
-  exact decay_bounds_W21 ψ hA hA' u
-
-lemma decay_bounds_cor_aux (ψ : CS 2 ℂ) : ∃ C : ℝ, ∀ u, ‖ψ u‖ ≤ C / (1 + u ^ 2) := by
-  have l1 : HasCompactSupport (fun u : ℝ => ((1 + u ^ 2) : ℝ) * ψ u) := by exact ψ.h2.mul_left
-  have := ψ.h1.continuous
-  obtain ⟨C, hC⟩ := l1.exists_bound_of_continuous (by fun_prop)
-  refine ⟨C, fun u => ?_⟩
-  specialize hC u
-  simp only [norm_mul, Complex.norm_real, norm_of_nonneg (one_add_sq_pos u).le] at hC
-  rwa [le_div_iff₀' (one_add_sq_pos _)]
 
 lemma decay_bounds_cor (ψ : W21) :
     ∃ C : ℝ, ∀ u, ‖𝓕 (ψ : ℝ → ℂ) u‖ ≤ C / (1 + u ^ 2) := by
@@ -401,9 +334,6 @@ lemma W21.integrable_fourier (ψ : W21) (hc : c ≠ 0) :
   obtain ⟨C, h⟩ := decay_bounds_cor ψ
   apply @Integrable.mono' ℝ ℂ _ volume _ _ (fun u => C / (1 + (u / c) ^ 2)) (l1 C) l2 ?_
   apply Eventually.of_forall (fun x => h _)
-
-
-
 
 
 lemma continuous_LSeries_aux (hf : Summable (nterm f σ')) :
@@ -495,17 +425,12 @@ lemma cumsum_nonneg {u : ℕ → ℝ} (hu : 0 ≤ u) : 0 ≤ cumsum u :=
 omit [Sub α] in
 lemma neg_nabla [Ring E] {u : α → E} : -(nabla u) = nnabla u := by ext n ; simp [nabla, nnabla]
 
-omit [Sub α] in
-@[simp] lemma nabla_mul [Ring E] {u : α → E} {c : E} : nabla (fun n => c * u n) = c • nabla u := by
-  ext n ; simp [nabla, mul_sub]
 
 omit [Sub α] in
 @[simp] lemma nnabla_mul [Ring E] {u : α → E} {c : E} :
     nnabla (fun n => c * u n) = c • nnabla u := by
   ext n ; simp [nnabla, mul_sub]
 
-lemma nnabla_cast (u : ℝ → E) [Sub E] : nnabla u ∘ ((↑) : ℕ → ℝ) = nnabla (u ∘ (↑)) := by
-  ext n ; simp [nnabla]
 
 end nabla
 
@@ -513,17 +438,11 @@ lemma Finset.sum_shift_front {E : Type*} [Ring E] {u : ℕ → E} {n : ℕ} :
     cumsum u (n + 1) = u 0 + cumsum (shift u) n := by
   simp_rw [add_comm n, cumsum, sum_range_add, sum_range_one, add_comm 1] ; rfl
 
-lemma Finset.sum_shift_front' {E : Type*} [Ring E] {u : ℕ → E} :
-    shift (cumsum u) = (fun _ => u 0) + cumsum (shift u) := by
-  ext n ; apply Finset.sum_shift_front
 
 lemma Finset.sum_shift_back {E : Type*} [Ring E] {u : ℕ → E} {n : ℕ} :
     cumsum u (n + 1) = cumsum u n + u n := by
   simp [cumsum, Finset.range_add_one, add_comm]
 
-lemma Finset.sum_shift_back' {E : Type*} [Ring E] {u : ℕ → E} :
-    shift (cumsum u) = cumsum u + u := by
-  ext n ; apply Finset.sum_shift_back
 
 lemma summation_by_parts {E : Type*} [Ring E] {a A b : ℕ → E} (ha : a = nabla A) {n : ℕ} :
     cumsum (a * b) (n + 1) = A (n + 1) * b n - A 0 * b 0 -
@@ -653,11 +572,6 @@ lemma isLittleO_const_of_tendsto_atTop {α : Type*} [Preorder α] (a : ℝ) {f :
     (hf : Tendsto f atTop atTop) : (fun _ => a) =o[atTop] f := by
   simp [tendsto_norm_atTop_atTop.comp hf]
 
-lemma isBigO_pow_pow_of_le {m n : ℕ} (h : m ≤ n) :
-    (fun x : ℝ => x ^ m) =O[atTop] (fun x : ℝ => x ^ n) := by
-  apply IsBigO.of_bound 1
-  filter_upwards [eventually_ge_atTop 1] with x l1
-  simpa [abs_eq_self.mpr (zero_le_one.trans l1)] using pow_le_pow_right₀ l1 h
 
 lemma isLittleO_mul_add_sq (a b : ℝ) : (fun x => a * x + b) =o[atTop] (fun x => x ^ 2) := by
   apply IsLittleO.add
@@ -1073,8 +987,6 @@ lemma limiting_fourier (hcheby : cheby f)
   simpa [eventuallyEq_nhdsWithin_iff] using! Eventually.of_forall (limiting_fourier_aux hG' hf ψ hx)
 
 
-
-
 set_option backward.isDefEq.respectTransparency false in
 lemma limiting_cor_aux {f : ℝ → ℂ} : Tendsto (fun x : ℝ ↦ ∫ t, f t * x ^ (t * I)) atTop (𝓝 0) := by
 
@@ -1122,9 +1034,6 @@ lemma limiting_cor (ψ : CS 2 ℂ) (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (
     limiting_fourier hcheby hG hG' hf ψ hx |>.symm
 
 
-
-
-
 @[blueprint
   "smooth-ury"
   (title := "Smooth Urysohn lemma")
@@ -1146,27 +1055,13 @@ lemma smooth_urysohn (a b c d : ℝ) (h1 : a < b) (h3 : c < d) : ∃ Ψ : ℝ �
   refine ⟨ψ, l1, l2, l3, l4⟩
 
 
-
 noncomputable def exists_trunc : trunc := by
   choose ψ h1 h2 h3 h4 using smooth_urysohn (-2) (-1) (1) (2) (by linarith) (by linarith)
   exact ⟨⟨ψ, h1.of_le (by norm_cast), h2⟩, h3, h4⟩
 
-lemma one_div_sub_one (n : ℕ) : 1 / (↑(n - 1) : ℝ) ≤ 2 / n := by
-  match n with
-  | 0 => simp
-  | 1 => simp
-  | n + 2 => { norm_cast ; rw [div_le_div_iff₀] <;> simp [mul_add] <;> linarith }
-
-lemma quadratic_pos (a b c x : ℝ) (ha : 0 < a) (hΔ : discrim a b c < 0) :
-    0 < a * x ^ 2 + b * x + c := by
-  have l1 : a * x ^ 2 + b * x + c = a * (x + b / (2 * a)) ^ 2 - discrim a b c / (4 * a) := by
-    simp only [discrim]; field_simp; ring
-  have l2 : 0 < - discrim a b c := by linarith
-  rw [l1, sub_eq_add_neg, ← neg_div] ; positivity
 
 noncomputable def pp (a x : ℝ) : ℝ := a ^ 2 * (x + 1) ^ 2 + (1 - a) * (1 + a)
 
-noncomputable def pp' (a x : ℝ) : ℝ := a ^ 2 * (2 * (x + 1))
 
 lemma pp_pos {a : ℝ} (ha : a ∈ Ioo (-1) 1) (x : ℝ) : 0 < pp a x := by
   simp only [pp]
@@ -1174,18 +1069,6 @@ lemma pp_pos {a : ℝ} (ha : a ∈ Ioo (-1) 1) (x : ℝ) : 0 < pp a x := by
   have : 0 < 1 + a := by linarith [ha.1]
   positivity
 
-lemma pp_deriv (a x : ℝ) : HasDerivAt (pp a) (pp' a x) x := by
-  unfold pp pp'
-  simpa using hasDerivAt_id x |>.add_const 1 |>.pow 2 |>.const_mul _
-
-lemma pp_deriv_eq (a : ℝ) : deriv (pp a) = pp' a := by
-  ext x ; exact pp_deriv a x |>.deriv
-
-lemma pp'_deriv (a x : ℝ) : HasDerivAt (pp' a) (a ^ 2 * 2) x := by
-  simpa using! hasDerivAt_id x |>.add_const 1 |>.const_mul 2 |>.const_mul (a ^ 2)
-
-lemma pp'_deriv_eq (a : ℝ) : deriv (pp' a) = fun _ => a ^ 2 * 2 := by
-  ext x ; exact pp'_deriv a x |>.deriv
 
 noncomputable def hh (a t : ℝ) : ℝ := (t * (1 + (a * log t) ^ 2))⁻¹
 
@@ -1193,18 +1076,6 @@ noncomputable def hh' (a t : ℝ) : ℝ := - pp a (log t) * hh a t ^ 2
 
 lemma hh_nonneg (a : ℝ) {t : ℝ} (ht : 0 ≤ t) : 0 ≤ hh a t := by dsimp only [hh] ; positivity
 
-lemma hh_le (a t : ℝ) (ht : 0 ≤ t) : |hh a t| ≤ t⁻¹ := by
-  by_cases h0 : t = 0
-  · simp [hh, h0]
-  replace ht : 0 < t := lt_of_le_of_ne ht (by tauto)
-  unfold hh
-  rw [abs_inv, inv_le_inv₀ (by positivity) ht, abs_mul, abs_eq_self.mpr ht.le]
-  convert_to! t * 1 ≤ _
-  · simp
-  apply mul_le_mul le_rfl ?_ zero_le_one ht.le
-  rw [abs_eq_self.mpr (by positivity)]
-  simp only [le_add_iff_nonneg_right]
-  positivity
 
 lemma hh_deriv (a : ℝ) {t : ℝ} (ht : t ≠ 0) : HasDerivAt (hh a) (hh' a t) t := by
   have e1 : t * (1 + (a * log t) ^ 2) ≠ 0 := mul_ne_zero ht (_root_.ne_of_lt (by positivity)).symm
@@ -1241,11 +1112,6 @@ lemma gg_of_hh {x : ℝ} (hx : x ≠ 0) (i : ℝ) : gg x i = x⁻¹ * hh (1 / (2
   simp only [gg, hh]
   field_simp
 
-lemma gg_l1 {x : ℝ} (hx : 0 < x) (n : ℕ) : |gg x n| ≤ 1 / n := by
-  simp only [gg_of_hh hx.ne.symm, one_div, mul_inv_rev, abs_mul]
-  apply mul_le_mul le_rfl (hh_le _ _ (by positivity)) (by positivity) (by positivity) |>.trans
-    (le_of_eq ?_)
-  simp [abs_inv, abs_eq_self.mpr hx.le] ; field_simp
 
 lemma gg_le_one (i : ℕ) : gg x i ≤ 1 := by
   by_cases hi : i = 0 <;> simp only [gg, hi, CharP.cast_eq_zero, div_zero, one_div, mul_inv_rev,
@@ -1270,8 +1136,6 @@ lemma one_div_two_pi_mem_Ioo : 1 / (2 * π) ∈ Ioo (-1) 1 := by
     · exact one_le_two
     · exact two_le_pi
 
-lemma sum_telescopic (a : ℕ → ℝ) (n : ℕ) : ∑ i ∈ Finset.range n, (a (i + 1) - a i) = a n - a 0 := by
-  apply Finset.sum_range_sub
 
 lemma cancel_aux {C : ℝ} {f g : ℕ → ℝ} (hf : 0 ≤ f) (hg : 0 ≤ g)
     (hf' : ∀ n, cumsum f n ≤ C * n) (hg' : Antitone g) (n : ℕ) :
@@ -1317,12 +1181,6 @@ lemma cancel_aux' {C : ℝ} {f g : ℕ → ℝ} (hf : 0 ≤ f) (hg : 0 ≤ g)
   simp only [nsmul_eq_mul, ← Finset.mul_sum, sum_range_succ] at this
   convert this using 1 ; unfold cumsum ; ring
 
-lemma cancel_main {C : ℝ} {f g : ℕ → ℝ} (hf : 0 ≤ f) (hg : 0 ≤ g)
-    (hf' : ∀ n, cumsum f n ≤ C * n) (hg' : Antitone g) (n : ℕ) (hn : 2 ≤ n) :
-    cumsum (f * g) n ≤ C * cumsum g n := by
-  convert! cancel_aux' hf hg hf' hg' n using 1
-  match n with
-  | n + 2 => simp only [cumsum_succ] ; push_cast ; ring
 
 lemma cancel_main' {C : ℝ} {f g : ℕ → ℝ} (hf : 0 ≤ f) (hf0 : f 0 = 0) (hg : 0 ≤ g)
     (hf' : ∀ n, cumsum f n ≤ C * n) (hg' : Antitone g) (n : ℕ) :
@@ -1748,9 +1606,6 @@ lemma limiting_cor_schwartz (ψ : 𝓢(ℝ, ℂ)) (hf : ∀ (σ' : ℝ), 1 < σ'
   limiting_cor_W21 ψ hf hcheby hG hG'
 
 
-
-
-
 -- just the surjectivity is stated here, as this is all that is needed for the current
 -- application, but perhaps one should state and prove bijectivity instead
 
@@ -1773,8 +1628,6 @@ lemma limiting_cor_schwartz (ψ : 𝓢(ℝ, ℂ)) (hf : ∀ (σ' : ℝ), 1 < σ'
 lemma fourier_surjection_on_schwartz (f : 𝓢(ℝ, ℂ)) : ∃ g : 𝓢(ℝ, ℂ), 𝓕 g = f := by
   refine ⟨𝓕⁻ f, ?_⟩
   exact FourierTransform.fourier_fourierInv_eq f
-
-
 
 
 noncomputable def toSchwartz (f : ℝ → ℂ) (h1 : ContDiff ℝ ∞ f)
@@ -1873,7 +1726,6 @@ theorem wiener_ikehara_smooth_sub (h1 : Integrable Ψ)
   simp [ht]
 
 
-
 @[blueprint
   "WienerIkeharaSmooth"
   (title := "Smoothed Wiener-Ikehara")
@@ -1947,7 +1799,6 @@ lemma wiener_ikehara_smooth (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f
   simpa [tsum_div_const] using (key.congr' <| EventuallyEq.sub l2 l3) |>.add l4
 
 
-
 lemma wiener_ikehara_smooth' (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ')) (hcheby : cheby f)
     (hG : ContinuousOn G {s | 1 ≤ s.re})
     (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re})
@@ -1958,9 +1809,6 @@ lemma wiener_ikehara_smooth' (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm 
 
 local instance {E : Type*} : Coe (E → ℝ) (E → ℂ) := ⟨fun f n => f n⟩
 
-@[norm_cast]
-theorem set_integral_ofReal {f : ℝ → ℝ} {s : Set ℝ} : ∫ x in s, (f x : ℂ) = ∫ x in s, f x :=
-  integral_ofReal
 
 lemma wiener_ikehara_smooth_real {f : ℕ → ℝ} {Ψ : ℝ → ℝ}
     (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
@@ -2232,18 +2080,12 @@ lemma WienerIkeharaInterval {f : ℕ → ℝ} (hpos : 0 ≤ f) (hf : ∀ (σ' : 
   refine tendsto_of_liminf_eq_limsup ?_ ?_ Iab2 Iab3 <;> linarith
 
 
-
-lemma le_floor_mul_iff (hb : 0 ≤ b) (hx : 0 < x) : n ≤ ⌊b * x⌋₊ ↔ n / x ≤ b := by
-  rw [div_le_iff₀ hx, Nat.le_floor_iff] ; positivity
-
 lemma lt_ceil_mul_iff (hx : 0 < x) : n < ⌈b * x⌉₊ ↔ n / x < b := by
   rw [div_lt_iff₀ hx, Nat.lt_ceil]
 
 lemma ceil_mul_le_iff (hx : 0 < x) : ⌈a * x⌉₊ ≤ n ↔ a ≤ n / x := by
   rw [le_div_iff₀ hx, Nat.ceil_le]
 
-lemma mem_Icc_iff_div (hb : 0 ≤ b) (hx : 0 < x) : n ∈ Finset.Icc ⌈a * x⌉₊ ⌊b * x⌋₊ ↔ n / x ∈ Icc a b := by
-  rw [Finset.mem_Icc, mem_Icc, ceil_mul_le_iff hx, le_floor_mul_iff hb hx]
 
 lemma mem_Ico_iff_div (hx : 0 < x) : n ∈ Finset.Ico ⌈a * x⌉₊ ⌈b * x⌉₊ ↔ n / x ∈ Ico a b := by
   rw [Finset.mem_Ico, mem_Ico, ceil_mul_le_iff hx, lt_ceil_mul_iff hx]
@@ -2269,7 +2111,6 @@ lemma WienerIkeharaInterval_discrete' {f : ℕ → ℝ} (hpos : 0 ≤ f) (hf : �
   WienerIkeharaInterval_discrete hpos hf hcheby hG hG' ha hb |>.comp tendsto_natCast_atTop_atTop
 
 -- TODO with `Ico`
-
 
 
 /-- A version of the *Wiener-Ikehara Tauberian Theorem*: If `f` is a nonnegative arithmetic
@@ -2398,529 +2239,6 @@ section auto_cheby
 
 variable {f : ℕ → ℝ}
 
-lemma norm_x_cpow_it (x t : ℝ) (hx : 0 < x) : ‖(x : ℂ) ^ (t * I)‖ = 1 := by
-  rw [cpow_def_of_ne_zero <| ofReal_ne_zero.mpr hx.ne', ← ofReal_log hx.le]
-  convert norm_exp_ofReal_mul_I (t * x.log) using 2
-  push_cast; ring_nf
-
-set_option backward.isDefEq.respectTransparency false in
-lemma limiting_fourier_aux_gt_zero (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re})
-    (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ')) (ψ : CS 2 ℂ) (hx : 0 < x) (σ' : ℝ) (hσ' : 1 < σ') :
-    ∑' n, term f σ' n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * π) * log (n / x)) -
-    A * (x ^ (1 - σ') : ℝ) * ∫ u in Ici (- log x), rexp (-u * (σ' - 1)) * 𝓕 (ψ : ℝ → ℂ) (u / (2 * π)) =
-    ∫ t : ℝ, G (σ' + t * I) * ψ t * x ^ (t * I) := by
-  have hint : Integrable ψ := ψ.h1.continuous.integrable_of_hasCompactSupport ψ.h2
-  have l8 : Continuous fun t : ℝ ↦ (x : ℂ) ^ (t * I) :=
-    continuous_const.cpow (continuous_ofReal.mul continuous_const) (by simp [hx])
-  have l4 : Integrable fun t : ℝ ↦ LSeries f (↑σ' + ↑t * I) * ψ t * ↑x ^ (↑t * I) :=
-    (((continuous_LSeries_aux (hf _ hσ')).mul ψ.h1.continuous).mul l8).integrable_of_hasCompactSupport
-      ψ.h2.mul_left.mul_right
-  have e2 (u : ℝ) : σ' + u * I - 1 ≠ 0 := fun h ↦ by
-    have := congrArg Complex.re (sub_eq_zero.mp h); simp at this; linarith
-  have l5 : Integrable fun a ↦ A * ↑(x ^ (1 - σ')) *
-      (↑(x ^ (σ' - 1)) * (1 / (σ' + a * I - 1) * ψ a * x ^ (a * I))) := by
-    have : Continuous fun a ↦ A * ↑(x ^ (1 - σ')) *
-        (↑(x ^ (σ' - 1)) * (1 / (σ' + a * I - 1) * ψ a * x ^ (a * I))) := by
-      simp only [one_div, ← mul_assoc]
-      exact ((continuous_const.mul (Continuous.inv₀ (by fun_prop) e2)).mul ψ.h1.continuous).mul l8
-    exact this.integrable_of_hasCompactSupport ψ.h2.mul_left.mul_right.mul_left.mul_left
-  simp_rw [first_fourier hf hint hx hσ', second_fourier ψ.h1.continuous.measurable hint hx hσ',
-    ← integral_const_mul, ← integral_sub l4 l5]
-  refine integral_congr_ae (.of_forall fun u ↦ ?_)
-  have e1 : 1 < ((σ' : ℂ) + (u : ℂ) * I).re := by simp [hσ']
-  simp_rw [hG' e1, sub_mul, ← mul_assoc]
-  simp only [one_div, sub_right_inj, mul_eq_mul_right_iff, cpow_eq_zero_iff, ofReal_eq_zero, ne_eq,
-    mul_eq_zero, I_ne_zero, or_false]
-  field_simp [e2]; norm_cast; simp [mul_assoc, ← rpow_add hx]
-
-theorem limiting_fourier_lim2_gt_zero (A : ℝ) (ψ : W21) (hx : 0 < x) :
-    Tendsto (fun σ' ↦ A * ↑(x ^ (1 - σ')) *
-      ∫ u in Ici (-Real.log x), rexp (-u * (σ' - 1)) * 𝓕 (ψ : ℝ → ℂ) (u / (2 * π)))
-        (𝓝[>] 1) (𝓝 (A * ∫ u in Ici (-Real.log x), 𝓕 (ψ : ℝ → ℂ) (u / (2 * π)))) := by
-  obtain ⟨C, hC⟩ := decay_bounds_cor ψ
-  refine Tendsto.mul ?_ (tendsto_integral_filter_of_dominated_convergence _
-    (.of_forall fun _ ↦ (by continuity : Continuous _).aestronglyMeasurable) ?_
-    (limiting_fourier_lim2_aux x C) (.of_forall fun u ↦ ?_))
-  · suffices Tendsto (fun σ' : ℝ ↦ x ^ (1 - σ')) (𝓝[>] 1) (𝓝 1) by
-      simpa using ((continuous_ofReal.tendsto 1).comp this).const_mul ↑A
-    have : Tendsto (fun σ' : ℝ ↦ 1 - σ') (𝓝[>] 1) (𝓝 0) :=
-      tendsto_nhdsWithin_of_tendsto_nhds (by simpa using (continuous_id.tendsto (1 : ℝ)).const_sub 1)
-    simpa using tendsto_const_nhds.rpow this (Or.inl hx.ne')
-  · refine eventually_of_mem (Ioo_mem_nhdsGT_of_mem (by norm_num : (1 : ℝ) ∈ Set.Ico 1 2)) fun σ' hσ' ↦ ?_
-    obtain ⟨h1, h2⟩ := hσ'
-    rw [ae_restrict_iff' measurableSet_Ici]
-    refine .of_forall fun t ht ↦ ?_
-    simp only [norm_mul, neg_mul, ofReal_exp, ofReal_neg, ofReal_mul, ofReal_sub, ofReal_one,
-      norm_exp, neg_re, mul_re, ofReal_re, sub_re, one_re, ofReal_im, sub_im, one_im,
-      sub_self, mul_zero, sub_zero]
-    refine mul_le_mul ?_ (hC _) (norm_nonneg _) ((abs_nonneg x).trans (le_max_left _ _))
-    have hα0 : 0 ≤ σ' - 1 := by linarith
-    have hα1 : σ' - 1 ≤ 1 := by linarith
-    have hmul1 : (-x.log) * (σ' - 1) ≤ t * (σ' - 1) := mul_le_mul_of_nonneg_right ht hα0
-    calc Real.exp (-(t * (σ' - 1)))
-        ≤ Real.exp (x.log * (σ' - 1)) := Real.exp_monotone (by linarith)
-      _ ≤ max |x| 1 := by
-          by_cases hx1 : 1 ≤ x
-          · calc _ ≤ Real.exp x.log :=
-                Real.exp_monotone (mul_le_of_le_one_right (Real.log_nonneg hx1) hα1)
-              _ = |x| := by rw [Real.exp_log hx, abs_of_pos hx]
-              _ ≤ _ := le_max_left _ _
-          · calc _ ≤ 1 := (Real.exp_monotone (mul_nonpos_of_nonpos_of_nonneg
-                  ((Real.log_neg_iff hx).2 (by linarith)).le hα0)).trans_eq Real.exp_zero
-              _ ≤ _ := le_max_right _ _
-  · suffices Tendsto (fun n ↦ ((rexp (-u * (n - 1))) : ℂ)) (𝓝[>] 1) (𝓝 1) by simpa using this.mul_const _
-    refine Tendsto.mono_left ?_ nhdsWithin_le_nhds
-    have : Continuous (fun n ↦ ((rexp (-u * (n - 1))) : ℂ)) := by continuity
-    simpa using this.tendsto 1
-
-theorem limiting_fourier_lim3_gt_zero
-    (hG : ContinuousOn G {s | 1 ≤ s.re}) (ψ : CS 2 ℂ) (hx : 0 < x) :
-    Tendsto (fun σ' : ℝ ↦ ∫ t : ℝ, G (σ' + t * I) * ψ t * x ^ (t * I)) (𝓝[>] 1)
-      (𝓝 (∫ t : ℝ, G (1 + t * I) * ψ t * x ^ (t * I))) := by
-  by_cases hh : tsupport ψ = ∅
-  · simp [tsupport_eq_empty_iff.mp hh]
-  obtain ⟨a₀, ha₀⟩ := Set.nonempty_iff_ne_empty.mpr hh
-  let S : Set ℂ := reProdIm (Icc 1 2) (tsupport ψ)
-  have l1 : IsCompact S := Metric.isCompact_iff_isClosed_bounded.mpr
-    ⟨isClosed_Icc.reProdIm (isClosed_tsupport ψ), (Metric.isBounded_Icc 1 2).reProdIm ψ.h2.isBounded⟩
-  have l2 : S ⊆ {s : ℂ | 1 ≤ s.re} := fun z hz => (mem_reProdIm.mp hz).1.1
-  obtain ⟨z, -, hmax⟩ := l1.exists_isMaxOn ⟨1 + a₀ * I, by simp [S, mem_reProdIm, ha₀]⟩ (hG.mono l2).norm
-  have hxC : (x : ℂ) ≠ 0 := ofReal_ne_zero.mpr hx.ne'
-  refine tendsto_integral_filter_of_dominated_convergence (bound := fun a ↦ ‖G z‖ * ‖ψ a‖)
-    (eventually_of_mem (Icc_mem_nhdsGT_of_mem (by norm_num : (1 : ℝ) ∈ Set.Ico 1 2)) fun u hu ↦
-      ((hG.comp_continuous (by fun_prop) (by simp [hu.1])).mul ψ.h1.continuous).mul
-        (by simpa using Continuous.const_cpow (by fun_prop) (Or.inl hxC)) |>.aestronglyMeasurable)
-    (eventually_of_mem (Icc_mem_nhdsGT_of_mem (by norm_num : (1 : ℝ) ∈ Set.Ico 1 2)) fun u hu ↦
-      .of_forall fun v ↦ ?_)
-    ((continuous_const.mul ψ.h1.continuous.norm).integrable_of_hasCompactSupport ψ.h2.norm.mul_left)
-    (.of_forall fun t ↦ ?_)
-  · by_cases h : v ∈ tsupport ψ
-    · simp_rw [norm_mul, norm_x_cpow_it x v hx, mul_one]
-      exact mul_le_mul_of_nonneg_right (isMaxOn_iff.mp hmax _ (by simp [S, mem_reProdIm, hu.1, hu.2, h])) (norm_nonneg _)
-    · have : v ∉ Function.support ψ := fun a ↦ h (subset_tsupport ψ a)
-      simp [Function.notMem_support.mp this]
-  · exact ((hG (1 + t * I) (by simp)).tendsto.comp <| tendsto_nhdsWithin_iff.mpr
-      ⟨((continuous_ofReal.tendsto _).add tendsto_const_nhds).mono_left nhdsWithin_le_nhds,
-       eventually_nhdsWithin_of_forall fun _ hx' ↦ by simp [(Set.mem_Ioi.mp hx').le]⟩).mul_const _ |>.mul_const _
-
-lemma tendsto_tsum_of_monotone_convergence
-    {β : Type*} {f : ℕ → β → ENNReal} {g : β → ENNReal}
-    (hmono : ∀ k, Monotone (fun n => f n k))
-    (hlim : ∀ k, Tendsto (fun n => f n k) atTop (𝓝 (g k))) :
-    Tendsto (fun n => ∑' k, f n k) atTop (𝓝 (∑' k, g k)) := by
-  let : MeasurableSpace β := ⊤
-  let μ : Measure β := Measure.count
-  have hg_iSup (k : β) : (⨆ n : ℕ, f n k) = g k := iSup_eq_of_tendsto (hmono k) (hlim k)
-  have h_tend_lint : Tendsto (fun n => ∫⁻ k, f n k ∂μ) atTop (𝓝 (∫⁻ k, (⨆ n, f n k) ∂μ)) := by
-    have hmeas : ∀ n, Measurable fun k : β => f n k := fun _ _ _ ↦ trivial
-    have hmono_fn : Monotone (fun n => fun k : β => f n k) := fun _ _ hnm k ↦ hmono k hnm
-    simpa [lintegral_iSup hmeas hmono_fn] using
-      tendsto_atTop_iSup fun _ _ hmn ↦ lintegral_mono fun k ↦ hmono k hmn
-  simpa [μ, lintegral_count, hg_iSup] using h_tend_lint
-
-lemma tendsto_tsum_of_monotone_convergence_nhdsGT_one
-    {F : ℝ → ℕ → ℝ}
-    (hF_nonneg : ∀ σ n, 0 ≤ F σ n)
-    (hF_antitone : ∀ n, AntitoneOn (fun σ : ℝ => F σ n) (Set.Ioi (1 : ℝ)))
-    (hF_tend : ∀ n, Tendsto (fun σ : ℝ => F σ n) (𝓝[>] (1 : ℝ)) (𝓝 (F 1 n)))
-    (hSumm : ∀ σ, 1 < σ → Summable (fun n : ℕ => F σ n))
-    (hbounded :
-      BoundedAtFilter (𝓝[>] (1 : ℝ)) (fun σ : ℝ => (∑' n : ℕ, F σ n))) :
-    Tendsto (fun σ : ℝ => ∑' n : ℕ, F σ n) (𝓝[>] (1 : ℝ)) (𝓝 (∑' n : ℕ, F 1 n)) := by
-  let T : ℝ → ℝ := fun σ => ∑' n : ℕ, F σ n
-  have hT_antitone : AntitoneOn T (Set.Ioi (1 : ℝ)) := fun a ha b hb hab ↦
-    (hSumm b hb).tsum_le_tsum_of_inj (fun n ↦ n) (fun _ _ h ↦ h) (fun c hc ↦ (hc ⟨c, rfl⟩).elim)
-      (fun n ↦ hF_antitone n ha hb hab) (hSumm a ha)
-  have hT_bdd : BddAbove (T '' Set.Ioi (1 : ℝ)) := by
-    obtain ⟨C, hC⟩ := isBigO_iff.1 hbounded
-    have hC' : ∀ᶠ σ : ℝ in 𝓝[>] (1 : ℝ), T σ ≤ C := by
-      filter_upwards [hC] with σ hσ
-      calc T σ ≤ |T σ| := le_abs_self _
-        _ = ‖T σ‖ := (Real.norm_eq_abs _).symm
-        _ ≤ C * ‖(1 : ℝ → ℝ) σ‖ := hσ
-        _ = C := by simp
-    obtain ⟨U, hU, V, hV, hUV⟩ := Filter.mem_inf_iff_superset.1 hC'
-    obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.1 hU
-    have hIoi_sub : Set.Ioi (1 : ℝ) ⊆ V := Filter.mem_principal.mp hV
-    have hUsub : U ∩ Set.Ioi (1 : ℝ) ⊆ {σ : ℝ | T σ ≤ C} := fun σ hσ ↦ hUV ⟨hσ.1, hIoi_sub hσ.2⟩
-    have hσ0_Ioi : 1 + ε / 2 ∈ Set.Ioi (1 : ℝ) := by simp [half_pos hε]
-    have hσ0_leC : T (1 + ε / 2) ≤ C :=
-      hUsub ⟨hball (by simp only [Metric.mem_ball, Real.dist_eq, add_sub_cancel_left,
-        abs_of_pos (half_pos hε)]; exact half_lt_self hε), hσ0_Ioi⟩
-    refine ⟨C, ?_⟩
-    rintro _ ⟨σ, hσIoi, rfl⟩
-    by_cases hσlt : σ < 1 + ε / 2
-    · exact hUsub ⟨hball (by
-        simp only [Metric.mem_ball, Real.dist_eq]
-        rw [abs_of_pos (sub_pos.2 (Set.mem_Ioi.mp hσIoi))]
-        linarith [half_lt_self hε]), hσIoi⟩
-    · exact (hT_antitone hσ0_Ioi hσIoi (le_of_not_gt hσlt)).trans hσ0_leC
-  have hT_tend_sup : Tendsto T (𝓝[>] (1 : ℝ)) (𝓝 (sSup (T '' Set.Ioi (1 : ℝ)))) :=
-    hT_antitone.tendsto_nhdsGT hT_bdd
-  let σseq : ℕ → ℝ := fun k => 1 + 1 / (k + 1 : ℝ)
-  have hσseq_mem (k) : σseq k ∈ Set.Ioi (1 : ℝ) := by
-    simp only [σseq, Set.mem_Ioi, lt_add_iff_pos_right]
-    positivity
-  have hσseq_tend_nhds : Tendsto σseq atTop (𝓝 (1 : ℝ)) := by
-    have : Tendsto (fun k : ℕ => (1 : ℝ) + ((k + 1 : ℕ) : ℝ)⁻¹) atTop (𝓝 ((1 : ℝ) + 0)) :=
-      tendsto_const_nhds.add (tendsto_inv_atTop_nhds_zero_nat.comp (tendsto_add_atTop_nat 1))
-    simp only [add_zero] at this
-    convert this using 1; ext k; simp [σseq, one_div]
-  have hσseq_tend_nhdsWithin : Tendsto σseq atTop (𝓝[>] (1 : ℝ)) :=
-    tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within _ hσseq_tend_nhds
-      (.of_forall hσseq_mem)
-  have hσseq_antitone : Antitone σseq := fun k₁ k₂ hk ↦ by simp only [σseq]; gcongr
-  have hmono_seq (n) : Monotone (fun k => F (σseq k) n) := fun k₁ k₂ hk ↦
-    hF_antitone n (hσseq_mem k₂) (hσseq_mem k₁) (hσseq_antitone hk)
-  have htend_seq (n) : Tendsto (fun k => F (σseq k) n) atTop (𝓝 (F 1 n)) :=
-    (hF_tend n).comp hσseq_tend_nhdsWithin
-  have hTseq : Tendsto (fun k : ℕ => T (σseq k)) atTop (𝓝 (T 1)) := by
-    have hsum1 : Summable (fun n : ℕ => F (1 : ℝ) n) := by
-      obtain ⟨C, hC⟩ := hT_bdd
-      refine summable_of_sum_range_le (hF_nonneg 1) fun m ↦ le_of_tendsto
-        (tendsto_finsetSum _ fun i _ ↦ hF_tend i)
-        (eventually_of_mem self_mem_nhdsWithin fun σ hσ ↦
-          ((hSumm σ hσ).sum_le_tsum _ (fun n _ ↦ hF_nonneg σ n)).trans (hC ⟨σ, hσ, rfl⟩))
-    have hg_ne_top : (∑' n : ℕ, ENNReal.ofReal (F 1 n)) ≠ ⊤ := hsum1.tsum_ofReal_ne_top
-    have hENN : Tendsto (fun k => ∑' n, ENNReal.ofReal (F (σseq k) n)) atTop
-        (𝓝 (∑' n, ENNReal.ofReal (F 1 n))) :=
-      tendsto_tsum_of_monotone_convergence (fun n _ _ hk ↦ ENNReal.ofReal_le_ofReal (hmono_seq n hk))
-        (fun n ↦ ENNReal.tendsto_ofReal (htend_seq n))
-    have hrew (σ) : (∑' n, ENNReal.ofReal (F σ n)).toReal = ∑' n, F σ n := by
-      rw [ENNReal.tsum_toReal_eq (fun n ↦ by simp)]
-      exact tsum_congr fun n ↦ by simp [hF_nonneg σ n]
-    simp only [T, ← hrew]; exact (ENNReal.tendsto_toReal hg_ne_top).comp hENN
-  have hsSup_eq : sSup (T '' Set.Ioi (1 : ℝ)) = T 1 :=
-    tendsto_nhds_unique (hT_tend_sup.comp hσseq_tend_nhdsWithin) hTseq
-  simpa [T, hsSup_eq] using hT_tend_sup
-
-lemma limiting_fourier_variant_lim1_aux
-    {f : ℕ → ℝ} {x : ℝ} (ψ : CS 2 ℂ)
-    (hpos : 0 ≤ f)
-    (hf : ∀ (σ : ℝ), 1 < σ → Summable (nterm f σ))
-    (hψpos : ∀ y, 0 ≤ (𝓕 (ψ : ℝ → ℂ) y).re ∧ (𝓕 (ψ : ℝ → ℂ) y).im = 0) :
-    ∀ (σ : ℝ), 1 < σ →
-      Summable (fun n : ℕ =>
-        (if n = 0 then 0 else f n / ((n : ℝ) ^ σ)) *
-          (𝓕 ψ.toFun (1 / (2 * π) * Real.log ((n : ℝ) / x))).re) := by
-  intro σ hσ
-  let y : ℕ → ℝ := fun n => (1 / (2 * π)) * Real.log ((n : ℝ) / x)
-  let W : ℕ → ℝ := fun n => (𝓕 ψ.toFun (y n)).re
-  let base : ℕ → ℝ := fun n => if n = 0 then 0 else f n / ((n : ℝ) ^ σ)
-  obtain ⟨C, hC⟩ := decay_bounds_cor (W21.ofCS2 ψ)
-  have hC_nonneg : 0 ≤ C := (norm_nonneg _).trans ((hC 0).trans (by simp))
-  have hW_nonneg (n : ℕ) : 0 ≤ W n := (hψpos (y n)).1
-  have hnorm_four (n : ℕ) : ‖𝓕 ψ.toFun (y n)‖ = W n := by
-    have him0 : (𝓕 ψ.toFun (y n)).im = 0 := (hψpos (y n)).2
-    rw [show 𝓕 ψ.toFun (y n) = W n by exact Complex.ext rfl him0]
-    simp [abs_of_nonneg (hW_nonneg n)]
-  have hW_le_C (n : ℕ) : W n ≤ C := by
-    rw [← hnorm_four]; exact (hC (y n)).trans (div_le_self hC_nonneg (by nlinarith [sq_nonneg (y n)]))
-  have hbase_summ : Summable base := by
-    convert hf σ hσ using 1; ext n
-    by_cases hn : n = 0 <;> simp [nterm, base, hn, Real.norm_eq_abs, abs_of_nonneg (hpos n)]
-  refine (hbase_summ.mul_left C).of_norm_bounded fun n ↦ ?_
-  by_cases hn : n = 0
-  · simp [base, hn]
-  · have hnpos : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
-    have hbase_nonneg : 0 ≤ base n := by
-      simp only [base, hn, if_false]
-      exact div_nonneg (hpos n) (Real.rpow_pos_of_pos hnpos σ).le
-    calc |base n * W n| = base n * W n := abs_of_nonneg (mul_nonneg hbase_nonneg (hW_nonneg n))
-      _ ≤ base n * C := mul_le_mul_of_nonneg_left (hW_le_C n) hbase_nonneg
-      _ = C * base n := mul_comm _ _
-
-
-theorem limiting_fourier_variant_lim1
-    {f : ℕ → ℝ} {x : ℝ} {ψ : CS 2 ℂ}
-    (hpos : 0 ≤ f)
-    (hψpos : ∀ y, 0 ≤ (𝓕 (ψ : ℝ → ℂ) y).re ∧ (𝓕 (ψ : ℝ → ℂ) y).im = 0)
-    (S : ℝ → ℂ)
-    (hSdef :
-      ∀ σ' : ℝ,
-        S σ' =
-          ∑' n : ℕ,
-            term (fun n ↦ (f n : ℂ)) (σ' : ℝ) n *
-              𝓕 ψ.toFun (π⁻¹ * 2⁻¹ * Real.log ((n : ℝ) / x)))
-    (hbounded : BoundedAtFilter (𝓝[>] (1 : ℝ)) (fun σ' : ℝ => ‖S σ'‖))
-    (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ')) :
-    Tendsto
-      (fun σ' : ℝ =>
-        ∑' n : ℕ,
-          term (fun n ↦ (f n : ℂ)) (σ' : ℝ) n *
-            𝓕 ψ.toFun (π⁻¹ * 2⁻¹ * Real.log ((n : ℝ) / x)))
-      (𝓝[>] (1 : ℝ))
-      (𝓝
-        (∑' n : ℕ,
-          (f n : ℂ) / (n : ℂ) *
-            𝓕 ψ.toFun (π⁻¹ * 2⁻¹ * Real.log ((n : ℝ) / x)))) := by
-
-  let y : ℕ → ℝ := fun n => (π⁻¹ * 2⁻¹) * Real.log ((n : ℝ) / x)
-  let w : ℕ → ℝ := fun n => (𝓕 ψ.toFun (y n)).re
-
-  have hw_nonneg : ∀ n, 0 ≤ w n := by
-    intro n
-    exact (hψpos (y n)).1
-
-  have hFour_eq_ofReal : ∀ n, 𝓕 ψ.toFun (y n) = Complex.ofReal (w n) := by
-    intro n
-    have h := hψpos (y n)
-    refine Complex.ext ?_ ?_
-    · simp [w]
-    · simp [w, h.2]
-
-  let rterm : ℝ → ℕ → ℝ :=
-    fun σ n =>
-      if h0 : n = 0 then 0 else (f n) / ((n : ℝ) ^ σ) * (w n)
-
-  have summand_eq_ofReal :
-      ∀ (σ : ℝ) (n : ℕ),
-        term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n)
-          = Complex.ofReal (rterm σ n) := by
-    intro σ n
-    by_cases hn : n = 0
-    · subst hn
-      simp [rterm, y]
-    · have hnpos : (0 : ℝ) < (n : ℝ) := by
-        exact_mod_cast (Nat.pos_of_ne_zero hn)
-      have hn0 : 0 ≤ (n : ℝ) := le_of_lt hnpos
-      have hcpow :
-          ( (n : ℂ) ^ ((σ : ℝ) : ℂ) ) = ( ( (n : ℝ) ^ σ : ℝ) : ℂ ) := by
-        simpa using (Complex.ofReal_cpow hn0 σ).symm
-      have hpow_ne : ((n : ℝ) ^ σ) ≠ 0 := by
-        exact (ne_of_gt (Real.rpow_pos_of_pos hnpos σ))
-      calc
-        term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n)
-            =
-          ((f n : ℂ) / ((n : ℂ) ^ ((σ : ℝ) : ℂ))) * ( (w n : ℝ) : ℂ ) := by
-            simp [term, LSeries.term, hn, hFour_eq_ofReal]
-        _ =
-          ((f n : ℂ) / (((n : ℝ) ^ σ : ℝ) : ℂ)) * ((w n : ℝ) : ℂ) := by
-            simp [hcpow]
-        _ =
-          (( (f n : ℝ) : ℂ) / (((n : ℝ) ^ σ : ℝ) : ℂ)) * ((w n : ℝ) : ℂ) := by
-            simp
-        _ =
-          ( ( (f n : ℝ) / ((n : ℝ) ^ σ) : ℝ) : ℂ ) * ((w n : ℝ) : ℂ) := by
-            simp [Complex.ofReal_div]
-        _ =
-          ( ( (f n : ℝ) / ((n : ℝ) ^ σ) * (w n) : ℝ ) : ℂ ) := by
-            simp [Complex.ofReal_mul]
-        _ =
-          Complex.ofReal (rterm σ n) := by
-            simp [rterm, hn]
-
-  let T : ℝ → ℝ := fun σ => ∑' n, rterm σ n
-
-  have tsum_eq_ofReal_T : ∀ σ : ℝ,
-      (∑' n : ℕ, term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n))
-        = Complex.ofReal (T σ) := by
-    intro σ
-    have hcongr :
-        (∑' n : ℕ, term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n))
-          = ∑' n : ℕ, (Complex.ofReal (rterm σ n)) := by
-      refine tsum_congr ?_
-      intro n
-      simpa using (summand_eq_ofReal σ n)
-
-    calc
-      (∑' n : ℕ, term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n))
-          = ∑' n : ℕ, (Complex.ofReal (rterm σ n)) := hcongr
-      _ = Complex.ofReal (∑' n : ℕ, rterm σ n) := by
-            simpa using (Complex.ofReal_tsum (fun n : ℕ => rterm σ n)).symm
-      _ = Complex.ofReal (T σ) := by rfl
-
-  have hS_ofReal_T : ∀ σ : ℝ, S σ = Complex.ofReal (T σ) := by
-    intro σ
-    simpa [hSdef σ, y] using (tsum_eq_ofReal_T σ)
-
-  have rterm_nonneg : ∀ σ n, 0 ≤ rterm σ n := by
-    intro σ n
-    by_cases hn : n = 0
-    · subst hn; simp [rterm]
-    · have hf : 0 ≤ f n := hpos n
-      have hw : 0 ≤ w n := hw_nonneg n
-      have hnpos : 0 < (n : ℝ) := by
-        exact_mod_cast (Nat.pos_of_ne_zero hn)
-      have hden : 0 < (n : ℝ) ^ σ := Real.rpow_pos_of_pos hnpos σ
-      have : 0 ≤ (f n) / ((n : ℝ) ^ σ) := div_nonneg hf (le_of_lt hden)
-      simp [rterm, hn, mul_nonneg this hw]
-
-  have T_nonneg : ∀ σ, 0 ≤ T σ := by
-    intro σ
-    exact tsum_nonneg (fun n => rterm_nonneg σ n)
-
-  have hT_eq_normS : ∀ σ, T σ = ‖S σ‖ := by
-    intro σ
-    have := hS_ofReal_T σ
-    calc
-      T σ = ‖Complex.ofReal (T σ)‖ := by simp [abs_of_nonneg (T_nonneg σ)]
-      _ = ‖S σ‖ := by simp [this]
-
-  have hboundedT : BoundedAtFilter (𝓝[>] (1 : ℝ)) (fun σ : ℝ => T σ) := by
-    have : (fun σ : ℝ => T σ) = (fun σ : ℝ => ‖S σ‖) := by
-      funext σ; exact hT_eq_normS σ
-    simpa [this] using hbounded
-
-  have rterm_antitone : ∀ n, AntitoneOn (fun σ => rterm σ n) (Set.Ioi 1) := by
-    intro n σ₁ hσ₁ σ₂ hσ₂ hσ₁₂
-    by_cases hn : n = 0
-    · subst hn; simp [rterm]
-    · have hf : 0 ≤ f n := hpos n
-      have hw : 0 ≤ w n := hw_nonneg n
-      have hnpos : 0 < (n : ℝ) := by exact_mod_cast (Nat.pos_of_ne_zero hn)
-      have hn1 : (1 : ℝ) ≤ (n : ℝ) := by
-        exact_mod_cast (Nat.one_le_iff_ne_zero.mpr hn)
-      have hpow : (n : ℝ) ^ σ₁ ≤ (n : ℝ) ^ σ₂ :=
-        Real.rpow_le_rpow_of_exponent_le hn1 hσ₁₂
-      have hinv :
-      (1 / ((n : ℝ) ^ σ₂)) ≤ (1 / ((n : ℝ) ^ σ₁)) := by
-        have hpos1 : 0 < (n : ℝ) ^ σ₁ := Real.rpow_pos_of_pos hnpos σ₁
-        exact one_div_le_one_div_of_le hpos1 hpow
-      have hinv_inv : ((n : ℝ) ^ σ₂)⁻¹ ≤ ((n : ℝ) ^ σ₁)⁻¹ := by
-        simpa [one_div] using hinv
-      have hmul1 :
-          (f n) * (((n : ℝ) ^ σ₂)⁻¹) ≤ (f n) * (((n : ℝ) ^ σ₁)⁻¹) :=
-        mul_le_mul_of_nonneg_left hinv_inv hf
-      have hmul2 :
-          ((f n) * (((n : ℝ) ^ σ₂)⁻¹)) * (w n)
-            ≤ ((f n) * (((n : ℝ) ^ σ₁)⁻¹)) * (w n) :=
-        mul_le_mul_of_nonneg_right hmul1 hw
-      simpa [rterm, hn, div_eq_mul_inv, mul_assoc] using hmul2
-
-  have rterm_tend : ∀ n, Tendsto (fun σ : ℝ => rterm σ n) (𝓝[>] (1 : ℝ)) (𝓝 (rterm 1 n)) := by
-    intro n
-    have hterm :
-        Tendsto (fun σ : ℝ => term (fun n ↦ (f n : ℂ)) (σ : ℝ) n)
-          (𝓝[>] (1 : ℝ)) (𝓝 ((f n : ℂ) / (n : ℂ))) := by
-      by_cases hn : n = 0
-      · subst hn
-        simp [term, LSeries.term]
-      · have hden :
-            Tendsto (fun σ : ℝ => ((n : ℂ) ^ ((σ : ℝ) : ℂ))) (𝓝[>] (1 : ℝ)) (𝓝 ((n : ℂ) ^ (1 : ℂ))) := by
-          simpa using ((continuous_ofReal.tendsto (1 : ℝ)).mono_left nhdsWithin_le_nhds).const_cpow
-
-        have hden' :
-            Tendsto (fun σ : ℝ => ((n : ℂ) ^ ((σ : ℝ) : ℂ))) (𝓝[>] (1 : ℝ)) (𝓝 (n : ℂ)) := by
-          simpa using hden
-
-        have hnC : (n : ℂ) ≠ 0 := by
-          exact_mod_cast hn
-
-        have hterm :
-            Tendsto (fun σ : ℝ => term (fun n ↦ (f n : ℂ)) (σ : ℝ) n)
-              (𝓝[>] (1 : ℝ)) (𝓝 ((f n : ℂ) / (n : ℂ))) := by
-          have hnC : (n : ℂ) ≠ 0 := by
-            exact_mod_cast hn
-          simpa [term, LSeries.term, hn] using!
-            (tendsto_const_nhds.div hden' hnC)
-        exact hterm
-
-    have hsummand :
-        Tendsto
-          (fun σ : ℝ =>
-            term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n))
-          (𝓝[>] (1 : ℝ))
-          (𝓝 (((f n : ℂ) / (n : ℂ)) * 𝓕 ψ.toFun (y n))) := by
-      simpa [mul_assoc, mul_left_comm, mul_comm] using (hterm.mul_const (𝓕 ψ.toFun (y n)))
-
-    have hre : ∀ σ, rterm σ n =
-        (term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n)).re := by
-      intro σ
-      have := congrArg Complex.re (summand_eq_ofReal σ n)
-      simpa [Complex.ofReal_re] using this.symm
-
-    have hRe : Tendsto
-        (fun σ : ℝ =>
-          (term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n)).re)
-        (𝓝[>] (1 : ℝ))
-        (𝓝 ((((f n : ℂ) / (n : ℂ)) * 𝓕 ψ.toFun (y n)).re)) :=
-      (continuous_re.tendsto _).comp hsummand
-
-    have hlimit_re :
-      (f n / (n : ℝ)) * (𝓕 ψ.toFun (y n)).re = rterm 1 n := by
-      have h0 :
-          (term (fun n ↦ (f n : ℂ)) (1 : ℝ) n * 𝓕 ψ.toFun (y n)).re = rterm 1 n := by
-        have := congrArg Complex.re (summand_eq_ofReal (σ := (1 : ℝ)) n)
-        simpa [Complex.ofReal_re] using this
-
-      by_cases hn : n = 0
-      · subst hn
-        simp [rterm, y]
-      · have h1 :
-            (term (fun n ↦ (f n : ℂ)) (1 : ℝ) n * 𝓕 ψ.toFun (y n)).re
-              = (f n / (n : ℝ)) * (𝓕 ψ.toFun (y n)).re := by
-          simp [Complex.mul_re, term, LSeries.term, hn, y,
-                (hψpos (y n)).2]
-
-        exact (h1.symm.trans h0)
-
-    simpa [hre, hlimit_re] using hRe
-
-  have hSumm_rterm : ∀ σ : ℝ, 1 < σ → Summable (fun n : ℕ => rterm σ n) := by
-    simpa [rterm] using limiting_fourier_variant_lim1_aux (ψ := ψ)
-      (f := f) (x := x) hpos hf hψpos
-
-  have hT_tend :
-      Tendsto T (𝓝[>] (1 : ℝ)) (𝓝 (T 1)) := by
-    have :
-        Tendsto (fun σ : ℝ => ∑' n : ℕ, rterm σ n)
-          (𝓝[>] (1 : ℝ))
-          (𝓝 (∑' n : ℕ, rterm (1 : ℝ) n)) := by
-      refine tendsto_tsum_of_monotone_convergence_nhdsGT_one
-        (F := rterm)
-        (hF_nonneg := rterm_nonneg)
-        (hF_antitone := rterm_antitone)
-        (hF_tend := rterm_tend)
-        (hSumm := hSumm_rterm)
-        (hbounded := hboundedT)
-
-    simpa [T] using this
-
-  have hToReal :
-      Tendsto (fun σ => Complex.ofReal (T σ)) (𝓝[>] (1 : ℝ)) (𝓝 (Complex.ofReal (T 1))) :=
-    (continuous_ofReal.tendsto _).comp hT_tend
-
-  have hsource :
-      (fun σ : ℝ =>
-        ∑' n : ℕ,
-          term (fun n ↦ (f n : ℂ)) (σ : ℝ) n * 𝓕 ψ.toFun (y n))
-        = fun σ : ℝ => Complex.ofReal (T σ) := by
-    funext σ
-    exact (tsum_eq_ofReal_T σ)
-
-  have hσ1 :
-    (∑' n : ℕ, term (fun n ↦ (f n : ℂ)) (↑(1:ℝ)) n * 𝓕 ψ.toFun (y n))
-      = (↑(T 1) : ℂ) :=
-    by simpa using (tsum_eq_ofReal_T (σ := (1:ℝ)))
-  have hterm1 :
-      ∀ n : ℕ, term (fun n ↦ (f n : ℂ)) (1 : ℂ) n = (f n : ℂ) / (n : ℂ) := by
-    intro n
-    by_cases hn : n = 0
-    · subst hn
-      simp [term, LSeries.term]
-    · simp [term, LSeries.term, hn]
-
-  have hrewrite :
-      (∑' n : ℕ,
-        term (fun n ↦ (f n : ℂ)) (1 : ℂ) n * 𝓕 ψ.toFun (y n))
-        =
-      (∑' n : ℕ,
-        (f n : ℂ) / (n : ℂ) * 𝓕 ψ.toFun (y n)) := by
-    refine tsum_congr ?_
-    intro n
-    simp [hterm1 n]
-
-  have htarget :
-      (∑' n : ℕ,
-        (f n : ℂ) / (n : ℂ) * 𝓕 ψ.toFun (y n))
-        = (↑(T 1) : ℂ) := by
-    exact (hrewrite.symm.trans hσ1)
-
-  simpa [hsource, htarget, y] using hToReal
-
-
-
 
 blueprint_comment /--
 \section{Removing the Chebyshev hypothesis}
@@ -2929,958 +2247,12 @@ In this section we do *not* assume the bound \eqref{cheby}, but instead derive i
 
 -/
 
-@[blueprint "limiting-fourier-variant"
-  (title := "limiting-fourier-variant")
-  (statement := /--
-    If $\psi: \R \to \C$ is $C^2$ and compactly supported with $f$ and $\hat \psi$ non-negative, and $0 < x$, then
-  $$ \sum_{n=1}^\infty \frac{f(n)}{n} \hat \psi( \frac{1}{2\pi} \log \frac{n}{x} ) - A \int_{-\log x}^\infty \hat \psi(\frac{u}{2\pi})\ du =  \int_\R G(1+it) \psi(t) x^{it}\ dt.$$
-  -/)
-  (proof := /-- Repeat the proof of Lemma \ref{limiting-fourier-variant}, but use monotone convergence instead of dominated convergence.  (The proof should be simpler, as one no longer needs to establish domination for the sum.) -/)
-  (proofUses := ["decay", "second-fourier", "first-fourier"])
-  (latexEnv := "lemma")]
-lemma limiting_fourier_variant
-    (hpos : 0 ≤ f)
-    (hG : ContinuousOn G {s | 1 ≤ s.re})
-    (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re})
-    (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
-    (ψ : CS 2 ℂ)
-    (hψpos : ∀ y, 0 ≤ (𝓕 (ψ : ℝ → ℂ) y).re ∧ (𝓕 (ψ : ℝ → ℂ) y).im = 0)
-    (hx : 0 < x) :
-    ∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * π) * log (n / x)) -
-      A * ∫ u in Set.Ici (-log x), 𝓕 (ψ : ℝ → ℂ) (u / (2 * π)) =
-      ∫ (t : ℝ), (G (1 + t * I)) * (ψ t) * x ^ (t * I) := by
-
-  have l2 := limiting_fourier_lim2_gt_zero (A := A) (x := x) ψ hx
-  have l3 := limiting_fourier_lim3_gt_zero (G := G) (x := x) hG ψ hx
-
-  let S : ℝ → ℂ := fun σ' =>
-    ∑' n : ℕ,
-      term (fun n ↦ (f n : ℂ)) σ' n *
-        𝓕 ψ.toFun (1 / (2 * π) * Real.log ((n : ℝ) / x))
-  let Pole : ℝ → ℂ := fun σ' =>
-    (A : ℂ) * ((x ^ (1 - σ') : ℝ) : ℂ) *
-      ∫ u in Set.Ici (-Real.log x),
-        (rexp (-u * (σ' - 1)) : ℂ) *
-          𝓕 (W21.ofCS2 ψ).toFun (u / (2 * π))
-  let RHS : ℝ → ℂ := fun σ' =>
-    ∫ t : ℝ, G (σ' + t * I) * ψ.toFun t * (x : ℂ) ^ (t * I)
-
-
-  have haux :
-    (fun σ' ↦
-        ∑' (n : ℕ),
-          term (fun n ↦ (f n : ℂ)) (σ' : ℂ) n *
-            𝓕 ψ.toFun (π⁻¹ * 2⁻¹ * Real.log ((n : ℝ) / x))
-        - (A : ℂ) * ((x ^ (1 - σ') : ℝ) : ℂ) *
-          ∫ (u : ℝ) in Ici (-Real.log x),
-            cexp (-( (u : ℂ) * ((σ' : ℂ) - 1))) *
-              𝓕 (W21.ofCS2 ψ).toFun (u / (2 * π)))
-      =ᶠ[𝓝[>] (1 : ℝ)]
-    (fun σ' ↦
-      ∫ (t : ℝ), G ((σ' : ℂ) + (t : ℂ) * I) * ψ.toFun t * (x : ℂ) ^ ((t : ℂ) * I)) := by
-    rw [Filter.EventuallyEq]
-
-    refine eventually_nhdsWithin_of_forall ?_
-    intro σ' hσ'
-    have hσ' : (1 : ℝ) < σ' := by
-      simpa [Set.mem_Ioi] using hσ'
-    simpa using! (limiting_fourier_aux_gt_zero (G := G) (f := f) (A := A) hG' hf ψ hx σ' hσ')
-
-  have haux' :
-    (fun σ' : ℝ => S σ') =ᶠ[𝓝[>] (1 : ℝ)] (fun σ' : ℝ => RHS σ' + Pole σ') := by
-    rw [Filter.EventuallyEq] at haux ⊢
-    filter_upwards [haux] with σ' hσ'
-    have hσ'' : S σ' - Pole σ' = RHS σ' := by
-      simpa [S, Pole, RHS] using hσ'
-    have hadd : (S σ' - Pole σ') + Pole σ' = RHS σ' + Pole σ' :=
-      congrArg (fun z : ℂ => z + Pole σ') hσ''
-    simpa [sub_eq_add_neg, add_assoc, add_left_comm, add_comm] using hadd
-
-  let Pole₁ : ℂ := (A : ℂ) * ∫ u in Set.Ici (-Real.log x), 𝓕 (W21.ofCS2 ψ).toFun (u / (2 * π))
-  let RHS₁ : ℂ := ∫ t : ℝ, G (1 + (t : ℂ) * I) * ψ.toFun t * (x : ℂ) ^ ((t : ℂ) * I)
-
-  have hRHS_le :
-      ∀ᶠ σ' : ℝ in 𝓝[>] (1 : ℝ), ‖RHS σ'‖ ≤ ‖RHS₁‖ + 1 := by
-    have hball : Metric.ball RHS₁ (1 : ℝ) ∈ 𝓝 RHS₁ := by
-      simpa using (Metric.ball_mem_nhds (x := RHS₁) (ε := (1 : ℝ)) (by norm_num))
-    have hpre : {σ' : ℝ | RHS σ' ∈ Metric.ball RHS₁ (1 : ℝ)} ∈ (𝓝[>] (1 : ℝ)) :=
-      l3 hball
-    filter_upwards [hpre] with σ' hmem
-    have hdist' : dist (RHS σ') RHS₁ < (1 : ℝ) := by
-      simpa [Metric.mem_ball] using hmem
-    have hdist : ‖RHS σ' - RHS₁‖ < (1 : ℝ) := by
-      simpa [dist_eq_norm] using hdist'
-    have htri : ‖RHS σ'‖ ≤ ‖RHS₁‖ + ‖RHS σ' - RHS₁‖ := by
-      have h := norm_add_le (RHS σ' - RHS₁) RHS₁
-      simpa [sub_add_cancel, add_comm, add_left_comm, add_assoc] using h
-    have hle : ‖RHS₁‖ + ‖RHS σ' - RHS₁‖ ≤ ‖RHS₁‖ + (1 : ℝ) := by
-      exact add_le_add_right (le_of_lt hdist) ‖RHS₁‖
-    exact htri.trans hle
-
-  have hPole_le :
-    ∀ᶠ σ' : ℝ in 𝓝[>] (1 : ℝ), ‖Pole σ'‖ ≤ ‖Pole₁‖ + 1 := by
-    have hball : Metric.ball Pole₁ 1 ∈ 𝓝 Pole₁ := by
-      simpa using (Metric.ball_mem_nhds Pole₁ (by norm_num : (0 : ℝ) < 1))
-    have hpre : {σ' : ℝ | Pole σ' ∈ Metric.ball Pole₁ 1} ∈ (𝓝[>] (1 : ℝ)) := l2 hball
-    filter_upwards [hpre] with σ' hmem
-    have hdist : ‖Pole σ' - Pole₁‖ < 1 := by
-      simpa [Metric.mem_ball, dist_eq_norm] using hmem
-    have htri : ‖Pole σ'‖ ≤ ‖Pole₁‖ + ‖Pole σ' - Pole₁‖ := by
-      have hdecomp : Pole σ' = Pole₁ + (Pole σ' - Pole₁) := by abel
-      have hnorm_eq : ‖Pole σ'‖ = ‖Pole₁ + (Pole σ' - Pole₁)‖ := by
-        simp [congrArg (fun z : ℂ => ‖z‖) hdecomp]
-      calc
-        ‖Pole σ'‖ = ‖Pole₁ + (Pole σ' - Pole₁)‖ := hnorm_eq
-        _ ≤ ‖Pole₁‖ + ‖Pole σ' - Pole₁‖ := norm_add_le _ _
-    have hdist_le : ‖Pole σ' - Pole₁‖ ≤ 1 := le_of_lt hdist
-    have hsum : ‖Pole₁‖ + ‖Pole σ' - Pole₁‖ ≤ ‖Pole₁‖ + 1 := by
-      simpa [add_comm, add_left_comm, add_assoc] using (add_le_add_left hdist_le ‖Pole₁‖)
-    exact htri.trans hsum
-
-  have hS_le :
-      ∀ᶠ σ' : ℝ in 𝓝[>] (1 : ℝ),
-        ‖S σ'‖ ≤ (‖RHS₁‖ + 1) + (‖Pole₁‖ + 1) := by
-    rw [Filter.EventuallyEq] at haux'
-    filter_upwards [haux', hRHS_le, hPole_le] with σ' hEq hR hP
-    calc
-      ‖S σ'‖ = ‖RHS σ' + Pole σ'‖ := by simp [hEq]
-      _ ≤ ‖RHS σ'‖ + ‖Pole σ'‖ := norm_add_le _ _
-      _ ≤ (‖RHS₁‖ + 1) + (‖Pole₁‖ + 1) := by
-        exact add_le_add hR hP
-
-  have hbounded : BoundedAtFilter (𝓝[>] (1 : ℝ)) (fun σ' : ℝ => ‖S σ'‖) := by
-    let C : ℝ := ‖RHS₁‖ + 1 + (‖Pole₁‖ + 1)
-    simp only [BoundedAtFilter, Asymptotics.IsBigO, Asymptotics.IsBigOWith]
-    refine ⟨C, ?_⟩
-    filter_upwards [hS_le] with σ' hσ'
-    simpa [Real.norm_eq_abs, abs_of_nonneg (norm_nonneg (S σ'))] using hσ'
-
-  have hcoef : (1 / (2 * π) : ℝ) = (π⁻¹ * 2⁻¹ : ℝ) := by field_simp [pi_ne_zero]
-
-  have l1 :=
-    limiting_fourier_variant_lim1
-      (f := f) (x := x) (ψ := ψ)
-      hpos hψpos
-      (S := S)
-      (hSdef := by
-        intro σ
-        simp [S, hcoef] )
-      hbounded
-      hf
-  have l1S :
-    Tendsto S (𝓝[>] (1 : ℝ))
-      (𝓝 (∑' n : ℕ, (f n : ℂ) / (n : ℂ) * 𝓕 ψ.toFun (1 / (2 * π) * Real.log (↑n / x)))) := by
-    simpa [S, hcoef] using l1
-
-  have l12 : Tendsto (fun σ' : ℝ => S σ' - Pole σ') (𝓝[>] (1 : ℝ))
-    (𝓝 ((∑' n : ℕ, (f n : ℂ) / (n : ℂ) * 𝓕 ψ.toFun (1 / (2 * π) * Real.log (↑n / x))) - Pole₁)) :=
-  l1S.sub l2
-
-  have hPole : (Pole : ℝ → ℂ) =ᶠ[𝓝[>] (1 : ℝ)] Pole := by simp
-  have haux_sub :
-    (fun σ' : ℝ => S σ' - Pole σ') =ᶠ[𝓝[>] (1 : ℝ)] RHS := by
-    filter_upwards [haux'] with σ' hσ'
-    calc
-      S σ' - Pole σ'
-          = (RHS σ' + Pole σ') - Pole σ' := by simp [hσ']
-      _   = RHS σ' := by simp
-  have hlim :=
-    tendsto_nhds_unique_of_eventuallyEq (l1S.sub l2) l3 haux_sub
-
-  simpa [Pole₁, RHS₁] using! hlim
-
-
-lemma norm_mul_integral_Ici_le_integral_norm
-    (A : ℂ) (F : ℝ → ℂ) (a : ℝ)
-    (_hF : IntegrableOn F (Set.Ici a))
-    (hnorm : Integrable (fun u : ℝ => ‖F u‖)) :
-    ‖A * (∫ u in Set.Ici a, F u)‖ ≤ ‖A‖ * (∫ u : ℝ, ‖F u‖) := by
-  calc
-    ‖A * (∫ u in Set.Ici a, F u)‖ = ‖A‖ * ‖∫ u in Set.Ici a, F u‖ := norm_mul _ _
-    _ ≤ ‖A‖ * (∫ u in Set.Ici a, ‖F u‖) :=
-      mul_le_mul_of_nonneg_left (norm_integral_le_integral_norm _) (norm_nonneg A)
-    _ ≤ ‖A‖ * (∫ u : ℝ, ‖F u‖) :=
-      mul_le_mul_of_nonneg_left
-        (setIntegral_le_integral hnorm (.of_forall fun u ↦ norm_nonneg (F u))) (norm_nonneg A)
-
-lemma fourier_decay_of_CS2
-    (ψ : CS 2 ℂ) :
-    ∃ C : ℝ, ∀ u : ℝ, ‖𝓕 (ψ : ℝ → ℂ) u‖ ≤ C / (1 + u ^ 2) := by
-  simpa using! decay_bounds_cor (ψ : W21)
-
-lemma integrable_norm_fourier_scaled_of_CS2
-    (ψ : CS 2 ℂ) :
-    Integrable (fun u : ℝ => ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) := by
-  simpa using! ((ψ : W21).integrable_fourier (by positivity : 2 * Real.pi ≠ 0)).norm
-
-lemma exists_bound_norm_G_on_tsupport
-    (hG : ContinuousOn G {s : ℂ | 1 ≤ s.re})
-    (ψ : CS 2 ℂ) :
-    ∃ K : ℝ, ∀ t : ℝ, t ∈ tsupport (ψ : ℝ → ℂ) →
-      ‖G (1 + t * Complex.I)‖ ≤ K := by
-  let s : Set ℝ := tsupport (ψ : ℝ → ℂ)
-  have hscompact : IsCompact s := by
-    simpa [s] using (ψ.h2.isCompact : IsCompact (tsupport (ψ : ℝ → ℂ)))
-  have hphi_cont : Continuous (fun t : ℝ => (1 : ℂ) + t * Complex.I) := by continuity
-  have hphi_maps :
-      Set.MapsTo (fun t : ℝ => (1 : ℂ) + t * Complex.I) s {z : ℂ | 1 ≤ z.re} := by
-    intro t ht
-    simp
-  have hGcomp : ContinuousOn (fun t : ℝ => G ((1 : ℂ) + t * Complex.I)) s :=
-    hG.comp hphi_cont.continuousOn hphi_maps
-  have hnorm_contOn : ContinuousOn (fun t : ℝ => ‖G ((1 : ℂ) + t * Complex.I)‖) s := hGcomp.norm
-  have hbdd : BddAbove ((fun t : ℝ => ‖G ((1 : ℂ) + t * Complex.I)‖) '' s) :=
-    (hscompact.image_of_continuousOn hnorm_contOn).bddAbove
-  refine ⟨sSup ((fun t : ℝ => ‖G ((1 : ℂ) + t * Complex.I)‖) '' s), ?_⟩
-  intro t ht
-  have : ‖G ((1 : ℂ) + t * Complex.I)‖ ∈
-      (fun t : ℝ => ‖G ((1 : ℂ) + t * Complex.I)‖) '' s := ⟨t, ht, rfl⟩
-  exact le_csSup hbdd this
-
-lemma norm_integrand_le_K_mul_norm_psi
-    {x K : ℝ}
-    (hx : 0 < x)
-    (hK : ∀ t : ℝ, t ∈ Function.support ψ → ‖G (1 + t * Complex.I)‖ ≤ K) :
-    ∀ t : ℝ,
-      ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖ ≤ K * ‖ψ t‖ := by
-  intro t
-  by_cases ht : t ∈ Function.support ψ
-  · have hxnorm : ‖((x : ℂ) ^ (t * Complex.I))‖ = 1 := norm_x_cpow_it x t hx
-    calc
-      ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖
-          = ‖G (1 + t * Complex.I)‖ * ‖ψ t‖ * ‖((x : ℂ) ^ (t * Complex.I))‖ := by
-              simp [mul_left_comm, mul_comm]
-      _   = ‖G (1 + t * Complex.I)‖ * ‖ψ t‖ * 1 := by simp [hxnorm]
-      _   ≤ K * ‖ψ t‖ := by
-            have hGle : ‖G (1 + t * Complex.I)‖ ≤ K := hK t ht
-            have : ‖G (1 + t * Complex.I)‖ * ‖ψ t‖ ≤ K * ‖ψ t‖ :=
-              mul_le_mul_of_nonneg_right hGle (norm_nonneg _)
-            simpa [mul_assoc, mul_left_comm, mul_comm] using this
-  · have hψ0 : ψ t = 0 := by
-      by_contra hψ0
-      exact ht (by simpa [Function.support] using hψ0)
-    simp [hψ0, mul_comm]
-
-
-lemma norm_error_integral_le
-    (ψ : ℝ → ℂ) (x K : ℝ)
-    (hGline_meas : Measurable (fun t : ℝ => G (1 + t * I)))
-    (hψ_meas : AEStronglyMeasurable ψ)
-    (hx : 0 < x)
-    (hK : ∀ t : ℝ, t ∈ Function.support ψ → ‖G (1 + t * Complex.I)‖ ≤ K)
-    (hψ : Integrable (fun t : ℝ => ‖ψ t‖) ) :
-    ‖∫ t : ℝ, (G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖
-      ≤ K * (∫ t : ℝ, ‖ψ t‖) := by
-  have h1 : ‖∫ t : ℝ, (G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖
-        ≤ ∫ t : ℝ, ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖ := by
-    simpa using (norm_integral_le_integral_norm
-        (f := fun t : ℝ => (G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))))
-  have hmeas_main : AEStronglyMeasurable
-        (fun t : ℝ => (G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))) := by
-    have hG' : AEMeasurable fun t : ℝ => G (1 + t * Complex.I) := hGline_meas.aemeasurable
-    have hψ_meas' : AEMeasurable ψ := hψ_meas.aemeasurable
-    have hx_ne : (x : ℂ) ≠ 0 := by exact_mod_cast (ne_of_gt hx)
-    have hx_ne' : NeZero (x : ℂ) := ⟨hx_ne⟩
-    have hxpow_meas : AEMeasurable fun t : ℝ => ((x : ℂ) ^ (t * Complex.I)) := by
-      have hcontℂ : Continuous fun z : ℂ => ((x : ℂ) ^ z) :=
-        continuous_const_cpow (z := (x : ℂ))
-      have hcont : Continuous fun t : ℝ => ((x : ℂ) ^ ((t : ℂ) * Complex.I)) :=
-        hcontℂ.comp (by
-          have h : Continuous fun t : ℝ => (t : ℂ) * Complex.I := by
-            simpa using! (continuous_ofReal.mul continuous_const)
-          simpa [mul_comm] using h)
-      exact hcont.measurable.aemeasurable
-    have hGψ_meas : AEMeasurable fun t : ℝ => (G (1 + t * Complex.I)) * (ψ t) := hG'.mul hψ_meas'
-    have htotal : AEMeasurable (fun t : ℝ =>
-            (G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))) :=
-      hGψ_meas.mul hxpow_meas
-    exact htotal.aestronglyMeasurable
-  have hpt : (fun t : ℝ =>
-          ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖)
-        ≤ᵐ[volume] (fun t : ℝ => K * ‖ψ t‖) := by
-    refine Eventually.of_forall ?_
-    intro t
-    exact norm_integrand_le_K_mul_norm_psi (hx := hx) (hK := hK) t
-  have hR : Integrable (fun t : ℝ => K * ‖ψ t‖) := hψ.const_mul K
-  have hL : Integrable (fun t : ℝ =>
-        ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖) := by
-      have hpt_norm :
-          (fun t : ℝ => ‖‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖‖)
-            ≤ᵐ[volume] (fun t : ℝ => K * ‖ψ t‖) := hpt.mono (by
-          intro t ht
-          simpa [norm_mul, mul_comm, mul_left_comm, mul_assoc] using ht)
-      exact hR.mono' hmeas_main.norm hpt_norm
-  have h2 : (∫ t : ℝ, ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖)
-        ≤ ∫ t : ℝ, K * ‖ψ t‖ := integral_mono_ae (μ := (volume : Measure ℝ)) hL hR hpt
-  have h3 : (∫ t : ℝ, K * ‖ψ t‖) = K * (∫ t : ℝ, ‖ψ t‖) := by
-    simp [integral_const_mul]
-  calc
-    ‖∫ t : ℝ, (G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖
-        ≤ ∫ t : ℝ, ‖(G (1 + t * Complex.I)) * (ψ t) * ((x : ℂ) ^ (t * Complex.I))‖ := h1
-    _   ≤ ∫ t : ℝ, K * ‖ψ t‖ := h2
-    _   = K * (∫ t : ℝ, ‖ψ t‖) := h3
-
-
-
-@[blueprint "crude-upper-bound"
-  (title := "crude-upper-bound")
-  (statement := /--
-    If $\psi: \R \to \C$ is $C^2$ and compactly supported with $f$ and $\hat \psi$ non-negative, then there exists a constant $B$ such that
-  $$ |\sum_{n=1}^\infty \frac{f(n)}{n} \hat \psi( \frac{1}{2\pi} \log \frac{n}{x} )| \leq B$$
-  for all $x > 0$.
-  -/)
-  (proof := /-- This readily follows from the previous lemma and the triangle inequality. -/)
-  (proofUses := ["limiting-fourier-variant"])
-  (latexEnv := "corollary")]
-lemma crude_upper_bound
-    (hpos : 0 ≤ f)
-    (hG : ContinuousOn G {s | 1 ≤ s.re})
-    (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re})
-    (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
-    (ψ : CS 2 ℂ)
-    (hψpos : ∀ y, 0 ≤ (𝓕 (ψ : ℝ → ℂ) y).re ∧ (𝓕 (ψ : ℝ → ℂ) y).im = 0) :
-    ∃ B : ℝ, ∀ x : ℝ, 0 < x → ‖∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * π) * log (n / x))‖ ≤ B := by
-
-  -- Integrability of ψ
-  have hψ_int : MeasureTheory.Integrable (ψ : ℝ → ℂ) := by
-    simpa using (ψ.h1.continuous.integrable_of_hasCompactSupport ψ.h2)
-  have hψ_norm_int : MeasureTheory.Integrable (fun t : ℝ => ‖(ψ : ℝ → ℂ) t‖) :=
-    hψ_int.norm
-  have hψ_meas : MeasureTheory.AEStronglyMeasurable (ψ : ℝ → ℂ) :=
-    hψ_int.aestronglyMeasurable
-
-  -- Uniform bound K for ‖G(1+it)‖ on support ψ
-  rcases exists_bound_norm_G_on_tsupport (G := G) hG ψ with ⟨K, hK_ts⟩
-  have hK_support :
-      ∀ t : ℝ, t ∈ Function.support (ψ : ℝ → ℂ) → ‖G (1 + t * Complex.I)‖ ≤ K := by
-    have hbnG (hKts : ∀ t : ℝ, t ∈ tsupport ψ → ‖G (1 + t * Complex.I)‖ ≤ K) :
-      ∀ t : ℝ, t ∈ Function.support ψ → ‖G (1 + t * Complex.I)‖ ≤ K := by
-      intro t ht
-      exact hKts t ((subset_tsupport ψ) ht)
-    exact hbnG hK_ts
-
-  -- Measurability of the line restriction t ↦ G(1 + t I) from continuity-on
-  have hGline_meas : Measurable (fun t : ℝ => G (1 + t * Complex.I)) := by
-    have hline_cont : Continuous (fun t : ℝ => (1 : ℂ) + t * Complex.I) := by
-      continuity
-    have hmem : ∀ t : ℝ, ((1 : ℂ) + t * Complex.I) ∈ {s : ℂ | 1 ≤ s.re} := by
-      intro t
-      simp
-    have hcont : Continuous (G ∘ fun t : ℝ => (1 : ℂ) + t * Complex.I) :=
-      hG.comp_continuous hline_cont hmem
-    simpa [Function.comp] using! hcont.measurable
-
-  -- L¹ bound for the scaled Fourier transform norm
-  have hF_norm_int :
-      MeasureTheory.Integrable (fun u : ℝ => ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) :=
-    integrable_norm_fourier_scaled_of_CS2 ψ
-  have hF_meas :
-      MeasureTheory.AEStronglyMeasurable
-        (fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))) := by
-    have hcont : Continuous fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) u := by
-      simpa using! continuous_FourierIntegral (ψ : W21)
-    have hcont_scaled : Continuous fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi)) :=
-      hcont.comp (by continuity)
-    exact hcont_scaled.aestronglyMeasurable
-  have hF_int :
-      MeasureTheory.Integrable (fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))) :=
-    by
-      have hfin_norm :
-          MeasureTheory.HasFiniteIntegral
-            (fun u : ℝ => ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) :=
-        hF_norm_int.hasFiniteIntegral
-      have hfin :
-          MeasureTheory.HasFiniteIntegral
-            (fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))) := by
-        simpa [MeasureTheory.hasFiniteIntegral_iff_norm] using hfin_norm
-      exact ⟨hF_meas, hfin⟩
-  refine ⟨K * (∫ t : ℝ, ‖(ψ : ℝ → ℂ) t‖)
-            + ‖A‖ * (∫ u : ℝ, ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖), ?_⟩
-  intro x hx
-  set I : ℂ := ∫ u in Set.Ici (-Real.log x), 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi)) with hI
-
-  -- Lemma 12
-  have hlim :=
-    limiting_fourier_variant (f := f) (A := A) (G := G)
-      hpos hG hG' hf ψ hψpos hx
-  have hlim' :
-      (∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * Real.pi) * Real.log (n / x)))
-        - A * I
-      = ∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I) := by
-    simpa [hI] using hlim
-
-  -- express the tsum as RHS + A*I
-  have htsum :
-      (∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * Real.pi) * Real.log (n / x)))
-      = (∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)) + A * I := by
-    have h' :
-        (∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * Real.pi) * Real.log (n / x)))
-          = (∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)) + A * I :=
-      eq_add_of_sub_eq hlim'
-    simpa [add_comm, mul_comm, mul_left_comm, mul_assoc] using h'
-
-  -- bound the RHS integral
-  have hRHS_bound :
-      ‖∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)‖
-        ≤ K * (∫ t : ℝ, ‖(ψ : ℝ → ℂ) t‖) :=
-    norm_error_integral_le (G := G) (ψ := (ψ : ℝ → ℂ)) (x := x) (K := K)
-      hGline_meas hψ_meas hx hK_support hψ_norm_int
-
-  -- bound the A * I term
-  have hA_bound :
-      ‖A * I‖ ≤ ‖A‖ * (∫ u : ℝ, ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) := by
-    have hF_on : MeasureTheory.IntegrableOn
-        (fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi)))
-        (Set.Ici (-Real.log x)) :=
-      hF_int.integrableOn
-    simpa [hI] using
-      norm_mul_integral_Ici_le_integral_norm (A := A)
-        (F := fun u : ℝ => 𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi)))
-        (a := -Real.log x) hF_on hF_norm_int
-
-  -- combine bounds
-  have htsum_std :
-      (∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ) (1 / (2 * Real.pi) * Real.log ((n : ℝ) / x)))
-        = (∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)) + A * I := by
-    simpa [one_div, mul_comm, mul_left_comm, mul_assoc] using htsum
-
-  -- bound in the normalized form
-  have hbound :
-      ‖∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ)
-          (1 / (2 * Real.pi) * Real.log ((n : ℝ) / x))‖
-        ≤ K * (∫ t : ℝ, ‖(ψ : ℝ → ℂ) t‖)
-          + ‖A‖ * (∫ u : ℝ, ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) := by
-    have hnorm :
-        ‖∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ)
-            (1 / (2 * Real.pi) * Real.log ((n : ℝ) / x))‖ =
-          ‖(∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)) + A * I‖ :=
-      congrArg norm htsum_std
-    calc
-      ‖∑' n, f n / n * 𝓕 (ψ : ℝ → ℂ)
-          (1 / (2 * Real.pi) * Real.log ((n : ℝ) / x))‖
-          = ‖(∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)) + A * I‖ := hnorm
-      _ ≤ ‖∫ (t : ℝ), (G (1 + t * Complex.I)) * (ψ t) * x ^ (t * Complex.I)‖ + ‖A * I‖ :=
-            norm_add_le _ _
-      _ ≤ K * (∫ t : ℝ, ‖(ψ : ℝ → ℂ) t‖)
-          + ‖A‖ * (∫ u : ℝ, ‖𝓕 (ψ : ℝ → ℂ) (u / (2 * Real.pi))‖) :=
-            add_le_add hRHS_bound hA_bound
-  exact hbound
-
-set_option backward.isDefEq.respectTransparency false in
-lemma Real.fourierIntegral_convolution {f g : ℝ → ℂ} (hf : Integrable f) (hg : Integrable g) :
-    𝓕 (convolution f g (ContinuousLinearMap.mul ℂ ℂ) volume) = 𝓕 f * 𝓕 g := by
-  ext y
-  simp only [Pi.mul_apply, FourierTransform.fourier, MeasureTheory.convolution,
-    VectorFourier.fourierIntegral, ContinuousLinearMap.mul_apply']
-  have h_int : Integrable (fun p : ℝ × ℝ ↦ 𝐞 (-(y * p.1)) • (f p.2 * g (p.1 - p.2))) := by
-    simp only [Circle.smul_def, smul_eq_mul]
-    refine (Integrable.convolution_integrand (ContinuousLinearMap.mul ℂ ℂ) hf hg).bdd_mul
-      (c := 1) ?_ ?_
-    · exact (by continuity : Continuous _).aestronglyMeasurable
-    · filter_upwards with p; simp
-  calc ∫ v, 𝐞 (-(y * v)) • ∫ t, f t * g (v - t)
-      = ∫ v, ∫ t, 𝐞 (-(y * v)) • (f t * g (v - t)) := by
-        simp only [Circle.smul_def, smul_eq_mul, ← integral_const_mul]
-    _ = ∫ t, ∫ v, 𝐞 (-(y * v)) • (f t * g (v - t)) := integral_integral_swap h_int
-    _ = ∫ t, f t • ∫ v, 𝐞 (-(y * v)) • g (v - t) := by
-        simp only [Circle.smul_def, smul_eq_mul, mul_left_comm, integral_const_mul]
-    _ = ∫ t, f t • ∫ u, 𝐞 (-(y * (u + t))) • g u := by
-        congr 1; ext t
-        rw [← integral_add_right_eq_self (fun v ↦ 𝐞 (-(y * v)) • g (v - t)) t]; simp
-    _ = ∫ t, f t • ∫ u, (𝐞 (-(y * t)) * 𝐞 (-(y * u))) • g u := by
-        congr 2 with t; congr 1
-        simp only [mul_add, neg_add, mul_comm, Real.fourierChar.map_add_eq_mul]
-    _ = ∫ t, 𝐞 (-(y * t)) • f t • ∫ u, 𝐞 (-(y * u)) • g u := by
-        congr 1; ext t
-        simp only [mul_smul, Circle.smul_def, smul_eq_mul, integral_const_mul]; ring
-    _ = (∫ t, 𝐞 (-(y * t)) • f t) * ∫ u, 𝐞 (-(y * u)) • g u := by
-        simp only [Circle.smul_def, smul_eq_mul, ← mul_assoc, integral_mul_const]
-
-lemma Real.fourierIntegral_conj_neg {f : ℝ → ℂ} (y : ℝ) :
-    𝓕 (fun x ↦ conj (f (-x))) y = conj (𝓕 f y) := by
-  simp only [fourier_real_eq]
-  have h_conj : ∀ x, 𝐞 (-(x * y)) • conj (f (-x)) = conj (𝐞 (x * y) • f (-x)) := fun x ↦ by
-    simp only [Circle.smul_def, Real.fourierChar_apply, map_mul, smul_eq_mul, neg_mul,
-      Complex.ofReal_neg, mul_neg]
-    congr 1
-    rw [← Complex.exp_conj]
-    simp only [map_mul, Complex.conj_I, Complex.conj_ofReal, mul_neg]
-  calc ∫ x, 𝐞 (-(x * y)) • conj (f (-x))
-      = ∫ x, conj (𝐞 (x * y) • f (-x)) := by congr 1; ext x; exact h_conj x
-    _ = conj (∫ x, 𝐞 (x * y) • f (-x)) := integral_conj
-    _ = conj (∫ x, 𝐞 (-(x * y)) • f x) := by
-        rw [← integral_neg_eq_self (fun x => 𝐞 (-(x * y)) • f x)]
-        congr 2 with x; ring_nf
-
-/-- Smooth compactly supported function with non-negative Fourier transform via self-convolution. -/
-lemma auto_cheby_exists_smooth_nonneg_fourier_kernel :
-    ∃ (ψ : ℝ → ℂ), ContDiff ℝ ∞ ψ ∧ HasCompactSupport ψ ∧
-    (∀ y, 0 ≤ (𝓕 ψ y).re ∧ (𝓕 ψ y).im = 0) ∧ 0 < (𝓕 ψ 0).re := by
-  obtain ⟨φ_real, hφSmooth, hφCompact, hφIcc, _, hφsupp⟩ :=
-    smooth_urysohn_support_Ioo (a := 1/2) (b := 1) (c := 1) (d := 2) (by norm_num) (by norm_num)
-  let φ : ℝ → ℂ := Complex.ofReal ∘ φ_real
-  let φ_rev : ℝ → ℂ := fun x ↦ conj (φ (-x))
-  let ψ_fun : ℝ → ℂ := convolution φ φ_rev (ContinuousLinearMap.mul ℂ ℂ) volume
-  have hφSmooth' : ContDiff ℝ ∞ φ := contDiff_ofReal.comp hφSmooth
-  have hφCompact' : HasCompactSupport φ := hφCompact.comp_left rfl
-  have hφRevSmooth : ContDiff ℝ ∞ φ_rev := Complex.conjCLE.contDiff.comp (hφSmooth'.comp contDiff_neg)
-  have hφRevCompact : HasCompactSupport φ_rev := (hφCompact'.comp_homeomorph (Homeomorph.neg ℝ)).comp_left (by simp)
-  have hφInt : Integrable φ := hφSmooth'.continuous.integrable_of_hasCompactSupport hφCompact'
-  have hφRevInt : Integrable φ_rev := hφRevSmooth.continuous.integrable_of_hasCompactSupport hφRevCompact
-  have hψSmooth : ContDiff ℝ ∞ ψ_fun := by
-    convert! hφRevCompact.contDiff_convolution_right (ContinuousLinearMap.mul ℝ ℂ)
-      (hφSmooth'.continuous.locallyIntegrable (μ := volume)) hφRevSmooth
-  have hψCompact : HasCompactSupport ψ_fun :=
-    HasCompactSupport.convolution (ContinuousLinearMap.mul ℂ ℂ) hφCompact' hφRevCompact
-  refine ⟨ψ_fun, hψSmooth, hψCompact, fun y ↦ ?_, ?_⟩
-  · rw [Real.fourierIntegral_convolution hφInt hφRevInt, Pi.mul_apply,
-      Real.fourierIntegral_conj_neg y, mul_comm, ← Complex.normSq_eq_conj_mul_self]
-    exact ⟨Complex.normSq_nonneg _, rfl⟩
-  · have hφ_nonneg : ∀ x, 0 ≤ φ_real x := fun x ↦ by
-      have hx := hφIcc x; by_cases h : x ∈ Set.Icc (1:ℝ) 1
-      · simp only [Set.indicator_of_mem h, Pi.one_apply] at hx; linarith
-      · simp only [Set.indicator_of_notMem h] at hx; exact hx
-    have hvol_supp : (1 : ENNReal) ≤ volume (Function.support φ_real) := by
-      have hsub : Set.Ico (1:ℝ) 2 ⊆ Function.support φ_real := fun x hx ↦
-        hφsupp.symm ▸ Set.mem_Ioo.mpr ⟨by linarith [hx.1], hx.2⟩
-      calc _ = volume (Set.Ico (1:ℝ) 2) := by simp [Real.volume_Ico]; norm_num
-           _ ≤ _ := volume.mono hsub
-    have hφint_pos : 0 < ∫ x, φ_real x :=
-      (integral_pos_iff_support_of_nonneg_ae (.of_forall hφ_nonneg)
-        (hφSmooth.continuous.integrable_of_hasCompactSupport hφCompact)).2
-        (lt_of_lt_of_le (by simp) hvol_supp)
-    have hFφ0_re : 0 < (𝓕 φ 0).re := by
-      simp only [φ, fourier_real_eq, mul_zero, neg_zero, AddChar.map_zero_eq_one, one_smul,
-        Function.comp_apply]
-      have hint : Integrable (fun x => (φ_real x : ℂ)) :=
-        (hφSmooth.continuous.integrable_of_hasCompactSupport hφCompact).ofReal
-      calc (∫ x, (φ_real x : ℂ)).re = ∫ x, (φ_real x : ℂ).re := (integral_re hint).symm
-        _ = ∫ x, φ_real x := by simp only [Complex.ofReal_re]
-        _ > 0 := hφint_pos
-    rw [Real.fourierIntegral_convolution hφInt hφRevInt, Pi.mul_apply,
-      Real.fourierIntegral_conj_neg 0, mul_comm, ← Complex.normSq_eq_conj_mul_self]
-    exact Complex.normSq_pos.2 (fun h ↦ (ne_of_gt hFφ0_re) (by simp [h]))
-
-
-/-- The series `∑ f(n)/n · 𝓕ψ(log(n/x)/(2π))` is summable for `x ≥ 1`. -/
-lemma auto_cheby_fourier_summable (hpos : 0 ≤ f) (hf : ∀ σ', 1 < σ' → Summable (nterm f σ'))
-    (hG : ContinuousOn G {s | 1 ≤ s.re})
-    (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re})
-    (ψ : ℝ → ℂ) (hψSmooth : ContDiff ℝ ∞ ψ) (hψCompact : HasCompactSupport ψ)
-    (hψpos : ∀ y, 0 ≤ (𝓕 ψ y).re ∧ (𝓕 ψ y).im = 0) (x : ℝ) (hx : 1 ≤ x) :
-    Summable fun n ↦ (f n : ℂ) / n * 𝓕 ψ (1 / (2 * π) * Real.log (n / x)) := by
-  let ψCS : CS 2 ℂ := ⟨ψ, hψSmooth.of_le (by norm_cast), hψCompact⟩
-  let S : ℝ → ℂ := fun σ' ↦ ∑' n, term (f · : ℕ → ℂ) σ' n * 𝓕 ψCS.toFun (1 / (2 * π) * Real.log (n / x))
-  let Pole : ℝ → ℂ := fun σ' ↦ (A : ℂ) * (x ^ (1 - σ') : ℝ) *
-    ∫ u in Set.Ici (-Real.log x), (rexp (-u * (σ' - 1)) : ℂ) * 𝓕 (W21.ofCS2 ψCS).toFun (u / (2 * π))
-  let RHS : ℝ → ℂ := fun σ' ↦ ∫ t : ℝ, G (σ' + t * I) * ψCS.toFun t * (x : ℂ) ^ (t * I)
-  have l2 := limiting_fourier_lim2 (A := A) (x := x) ψCS hx
-  have l3 := limiting_fourier_lim3 (G := G) hG ψCS hx
-  have haux : (fun σ' ↦ S σ' - Pole σ') =ᶠ[𝓝[>] 1] RHS := eventually_nhdsWithin_of_forall fun σ' hσ' ↦ by
-    simpa [S, Pole, RHS] using! limiting_fourier_aux hG' hf ψCS hx σ' hσ'
-  have hS_tendsto : Tendsto S (𝓝[>] 1) (𝓝 (RHS 1 + A * ∫ u in Set.Ici (-Real.log x),
-      𝓕 (W21.ofCS2 ψCS).toFun (u / (2 * π)))) := by
-    convert! (l3.congr' haux.symm).add l2 using 1; ext σ'; simp [S, Pole]
-  have hbounded : BoundedAtFilter (𝓝[>] 1) (fun σ' ↦ ‖S σ'‖) := by
-    simp only [BoundedAtFilter]
-    let L := ‖RHS 1 + A * ∫ u in Set.Ici (-Real.log x), 𝓕 (W21.ofCS2 ψCS).toFun (u / (2 * π))‖
-    have : ∀ᶠ σ' in 𝓝[>] 1, ‖S σ'‖ < L + 1 :=
-      hS_tendsto.norm.eventually_lt tendsto_const_nhds (lt_add_one L)
-    exact Asymptotics.IsBigO.of_bound (L + 1) (by filter_upwards [this] with σ h; simpa using h.le)
-  let y : ℕ → ℝ := fun n ↦ (1 / (2 * π)) * Real.log (n / x)
-  let w : ℕ → ℝ := fun n ↦ (𝓕 ψCS.toFun (y n)).re
-  have hw : ∀ n, 0 ≤ w n := fun n ↦ (hψpos (y n)).1
-  let rt : ℝ → ℕ → ℝ := fun σ n ↦ if n = 0 then 0 else f n / (n : ℝ) ^ σ * w n
-  have rt_nn σ n : 0 ≤ rt σ n := by
-    simp only [rt]; split_ifs with hn
-    · rfl
-    · exact mul_nonneg (div_nonneg (hpos n) (Real.rpow_pos_of_pos (Nat.cast_pos.mpr
-        (Nat.pos_of_ne_zero hn)) σ).le) (hw n)
-  have hS_eq σ' (hσ' : 1 < σ') : S σ' = ↑(∑' n, rt σ' n) := by
-    rw [Complex.ofReal_tsum]; apply tsum_congr; intro n
-    simp only [rt, term, LSeries.term, y, w, one_div, mul_inv_rev]
-    split_ifs with hn <;> simp only [hn, CharP.cast_eq_zero, Complex.ofReal_zero, zero_mul,
-      Complex.ofReal_mul, Complex.ofReal_div]
-    rw [Complex.ofReal_cpow (Nat.cast_nonneg n)]; congr 1
-    exact Complex.ext rfl (hψpos _).2
-  have hMono n : AntitoneOn (fun σ ↦ rt σ n) (Set.Ioi 1) := fun σ₁ _ σ₂ _ h ↦ by
-    simp only [rt]; split_ifs with hn; · rfl
-    apply mul_le_mul_of_nonneg_right _ (hw n)
-    apply div_le_div_of_nonneg_left (hpos n) (Real.rpow_pos_of_pos (Nat.cast_pos.mpr
-      (Nat.pos_of_ne_zero hn)) σ₁)
-    exact Real.rpow_le_rpow_of_exponent_le (Nat.one_le_cast.mpr (Nat.pos_of_ne_zero hn)) h
-  have hT_bdd : BoundedAtFilter (𝓝[>] 1) fun σ ↦ ∑' n, rt σ n := by
-    rw [BoundedAtFilter, Asymptotics.isBigO_iff] at hbounded ⊢
-    obtain ⟨C, hC⟩ := hbounded
-    refine ⟨C, ?_⟩
-    filter_upwards [hC, self_mem_nhdsWithin] with σ hnorm hσ
-    rw [hS_eq σ hσ] at hnorm; simpa using hnorm
-  have hSumm σ (hσ : 1 < σ) : Summable (rt σ ·) := by
-    simpa [rt, w, y] using limiting_fourier_variant_lim1_aux ψCS hpos hf hψpos σ hσ
-  have hSumm_1 : Summable (rt 1 ·) := by
-    let σ_seq : ℕ → ℝ := fun k ↦ 1 + 1 / ((k : ℝ) + 1)
-    have hσ_gt k : 1 < σ_seq k := by simp only [σ_seq, lt_add_iff_pos_right, one_div]; positivity
-    have h_tendsto : Tendsto σ_seq atTop (𝓝[>] 1) := by
-      rw [tendsto_nhdsWithin_iff]
-      refine ⟨?_, by filter_upwards with k; exact hσ_gt k⟩
-      have : Tendsto (fun k : ℕ ↦ 1 / ((k : ℝ) + 1)) atTop (𝓝 0) := by
-        simp only [one_div]; exact (tendsto_natCast_atTop_atTop.atTop_add tendsto_const_nhds).inv_tendsto_atTop
-      simpa [σ_seq] using tendsto_const_nhds.add this
-    have h_ptwise n : Tendsto (fun k ↦ rt (σ_seq k) n) atTop (𝓝 (rt 1 n)) := by
-      simp only [rt]; split_ifs with hn; · exact tendsto_const_nhds
-      refine ((tendsto_const_nhds.rpow (tendsto_nhdsWithin_iff.mp h_tendsto).1 (Or.inl ?_)).inv₀
-        (by simp [hn])).const_mul (f n) |>.mul_const (w n)
-      exact (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)).ne'
-    obtain ⟨C, hC⟩ := Asymptotics.isBigO_iff.mp (hT_bdd.comp_tendsto h_tendsto)
-    refine summable_of_sum_range_le (c := C) (rt_nn 1) fun m ↦ le_of_tendsto (tendsto_finsetSum _
-        fun i _ ↦ h_ptwise i) ?_
-    filter_upwards [h_tendsto.eventually self_mem_nhdsWithin, hC] with k hk hCk
-    calc ∑ i ∈ Finset.range m, rt (σ_seq k) i
-        ≤ ∑' n, rt (σ_seq k) n := (hSumm _ hk).sum_le_tsum _ fun n _ ↦ rt_nn _ n
-      _ ≤ |∑' n, rt (σ_seq k) n| := le_abs_self _
-      _ ≤ C := by simpa using hCk
-  rw [show (fun n ↦ (f n : ℂ) / n * 𝓕 ψ (1 / (2 * π) * Real.log (n / x))) =
-      Complex.ofRealCLM ∘ (rt 1 ·) from ?_]
-  · exact hSumm_1.map Complex.ofRealCLM Complex.ofRealCLM.continuous
-  ext n; simp only [rt, Real.rpow_one, one_div, w, y, Function.comp_apply]
-  split_ifs with hn; · simp [hn]
-  have him0 : (𝓕 ψCS.toFun ((2 * π)⁻¹ * Real.log (n / x))).im = 0 := (hψpos _).2
-  have hre_eq : 𝓕 ψCS.toFun ((2 * π)⁻¹ * Real.log (n / x)) =
-      Complex.ofReal ((𝓕 ψCS.toFun ((2 * π)⁻¹ * Real.log (n / x))).re) := by
-    rw [← Complex.re_add_im (𝓕 ψCS.toFun _), him0]; simp
-  conv_lhs => rw [show ψ = ψCS.toFun from rfl, hre_eq]
-  simp only [Complex.ofRealCLM_apply, Complex.ofReal_div, Complex.ofReal_mul, Complex.ofReal_natCast]
-
-/-- Short interval bound from global filtered bound: if `∑ f(n)/n · 𝓕ψ(log(n/x)) ≤ B`,
-then `∑_{(1-ε)x < n ≤ x} f(n) ≤ Cx` for some `ε, C > 0`. -/
-lemma auto_cheby_short_interval_bound (hpos : 0 ≤ f)
-    (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
-    (hG : ContinuousOn G {s | 1 ≤ s.re})
-    (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re})
-    (B : ℝ) (ψ : ℝ → ℂ) (hψSmooth : ContDiff ℝ ∞ ψ) (hψCompact : HasCompactSupport ψ)
-    (hψpos : ∀ y, 0 ≤ (𝓕 ψ y).re ∧ (𝓕 ψ y).im = 0) (hψ0 : 0 < (𝓕 ψ 0).re)
-    (hB_bound : ∀ x ≥ 1, ‖∑' n, f n / n * 𝓕 ψ (1 / (2 * Real.pi) * Real.log (n / x))‖ ≤ B) :
-    ∃ (ε : ℝ) (C : ℝ), ε > 0 ∧ ε < 1 ∧ C > 0 ∧ ∀ x ≥ 1,
-      ∑' n, (f n) * (Set.indicator (Set.Ioc ((1 - ε) * x) x) (fun _ ↦ 1) (n : ℝ)) ≤ C * x := by
-  have hF : Continuous (𝓕 ψ) := VectorFourier.fourierIntegral_continuous Real.continuous_fourierChar
-    (by continuity) (hψSmooth.continuous.integrable_of_hasCompactSupport hψCompact)
-  have hg : Continuous fun y ↦ (𝓕 ψ y).re := Complex.continuous_re.comp hF
-  obtain ⟨δ, hδpos, hball⟩ := Metric.mem_nhds_iff.1 <|
-    hg.continuousAt.preimage_mem_nhds (IsOpen.mem_nhds isOpen_Ioi (half_lt_self hψ0))
-  let c := (𝓕 ψ 0).re / 2
-  have hcpos : 0 < c := by dsimp only [c]; linarith
-  have h_psi_ge_c : ∀ y, |y| < δ → c ≤ (𝓕 ψ y).re := fun y hy ↦ (hball (mem_ball_zero_iff.mpr hy)).le
-  let ε := 1 - Real.exp (-2 * π * δ)
-  have hε : 0 < ε ∧ ε < 1 := by
-    have h1 : Real.exp (-2 * π * δ) < 1 := Real.exp_lt_one_iff.mpr (by nlinarith [Real.pi_pos])
-    exact ⟨by simp only [ε]; linarith, by simp only [ε]; linarith [Real.exp_pos (-2 * π * δ)]⟩
-  have hB_nonneg : 0 ≤ B := (norm_nonneg _).trans (hB_bound 1 le_rfl)
-  refine ⟨ε, B / c + 1, hε.1, hε.2, by positivity, fun x hx ↦ ?_⟩
-  have h_summable : Summable fun n ↦ (f n : ℂ) / n * 𝓕 ψ (1 / (2 * π) * Real.log (n / x)) :=
-    auto_cheby_fourier_summable hpos hf hG hG' ψ hψSmooth hψCompact hψpos x hx
-  have hx_pos : 0 < x := by linarith
-  have h_sum_lower : c / x * ∑' n, f n * Set.indicator (Set.Ioc ((1 - ε) * x) x) 1 (n : ℝ)
-      ≤ ∑' n, f n / n * (𝓕 ψ (1 / (2 * π) * Real.log (n / x))).re := by
-    rw [← tsum_mul_left]
-    refine Summable.tsum_le_tsum (fun n ↦ ?_) ?_ ?_
-    · by_cases hn : (n : ℝ) ∈ Set.Ioc ((1 - ε) * x) x
-      · rw [Set.indicator_of_mem hn, Pi.one_apply, mul_one]
-        have hn_pos : 0 < (n : ℝ) := by nlinarith [hn.1, hε.2]
-        let y := (1 / (2 * π)) * Real.log (n / x)
-        have h_arg_small : |y| < δ := by
-          have h2pi : 0 < 2 * π := by linarith [Real.pi_pos]
-          simp only [y, abs_mul, abs_div, abs_one, abs_of_pos h2pi]
-          field_simp [ne_of_gt h2pi]; rw [mul_comm, abs_lt]
-          have h_log_lower : -2 * π * δ < Real.log (n / x) := by
-            rw [← Real.log_exp (-2 * π * δ), Real.log_lt_log_iff (Real.exp_pos _) (by positivity)]
-            have : Real.exp (-2 * π * δ) = 1 - ε := by simp only [ε]; ring
-            rw [this]; field_simp; exact hn.1
-          have h_log_upper : Real.log (n / x) ≤ 0 :=
-            Real.log_nonpos (by positivity) (div_le_one_of_le₀ hn.2 hx_pos.le)
-          constructor <;> nlinarith [Real.pi_pos]
-        have h1 : x⁻¹ ≤ (n : ℝ)⁻¹ := by rw [inv_le_inv₀ hx_pos hn_pos]; exact hn.2
-        have h2 : c ≤ (𝓕 ψ y).re := h_psi_ge_c y h_arg_small
-        have hfn : 0 ≤ f n := hpos n
-        have hre : 0 ≤ (𝓕 ψ y).re := (hψpos y).1
-        have hn_inv : 0 ≤ (n : ℝ)⁻¹ := inv_nonneg.mpr hn_pos.le
-        calc c / x * f n = c * x⁻¹ * f n := by rw [div_eq_mul_inv]
-          _ ≤ c * (n : ℝ)⁻¹ * f n := by gcongr
-          _ ≤ (𝓕 ψ y).re * (n : ℝ)⁻¹ * f n := by gcongr
-          _ = (n : ℝ)⁻¹ * (𝓕 ψ y).re * f n := by ring
-          _ = f n / n * (𝓕 ψ y).re := by ring
-      · rw [Set.indicator_of_notMem hn, mul_zero, mul_zero]
-        exact mul_nonneg (div_nonneg (hpos n) (Nat.cast_nonneg n)) (hψpos _).1
-    · refine summable_of_hasFiniteSupport <| (Set.finite_le_nat ⌊x⌋₊).subset fun n hn ↦ ?_
-      simp only [Function.mem_support, ne_eq, mul_eq_zero, not_or, Set.indicator_apply_ne_zero] at hn
-      exact Nat.le_floor hn.2.2.1.2
-    · rw [← Complex.summable_ofReal]; convert h_summable using 1; ext n
-      rw [Complex.ofReal_mul, Complex.ofReal_div]
-      norm_cast
-      rw [Complex.ofReal_mul]
-      congr 1
-      apply Complex.ext
-      · simp only [Complex.ofReal_re]
-      · simp only [Complex.ofReal_im]; exact (hψpos _).2.symm
-  have h_real_eq : ∑' n, f n / n * (𝓕 ψ (1 / (2 * π) * Real.log (n / x))).re =
-      (∑' n, (f n : ℂ) / n * 𝓕 ψ (1 / (2 * π) * Real.log (n / x))).re := by
-    rw [Complex.re_tsum h_summable]; congr with n
-    rw [Complex.mul_re]; norm_cast; simp only [zero_mul, sub_zero]
-  calc ∑' n, f n * Set.indicator (Set.Ioc ((1 - ε) * x) x) 1 (n : ℝ)
-      = x / c * (c / x * ∑' n, f n * Set.indicator (Set.Ioc ((1 - ε) * x) x) 1 (n : ℝ)) := by
-        field_simp [ne_of_gt hcpos, ne_of_gt hx_pos]
-    _ ≤ x / c * B := by
-        gcongr; rw [h_real_eq] at h_sum_lower
-        exact h_sum_lower.trans ((Complex.re_le_norm _).trans (hB_bound x hx))
-    _ = (B / c) * x := by field_simp [ne_of_gt hcpos]
-    _ ≤ (B / c + 1) * x := by nlinarith
-
-/-- Bootstraps short interval bounds to global Chebyshev bound via strong induction.
-If `∑_{(1-ε)x < n ≤ x} f(n) ≤ Cx` for all `x ≥ 1`, then `∑_{n ≤ x} f(n) = O(x)`. -/
-lemma auto_cheby_bootstrap_induction (hpos : 0 ≤ f)
-    (h_short : ∃ (ε : ℝ) (C : ℝ), ε > 0 ∧ ε < 1 ∧ C > 0 ∧ ∀ x ≥ 1,
-      ∑' n, (f n) * (Set.indicator (Set.Ioc ((1 - ε) * x) x) (fun _ ↦ 1) (n : ℝ)) ≤ C * x) :
-    cheby f := by
-  obtain ⟨ε, C₀, hε, hε1, hC₀, h_bound⟩ := h_short
-  let C := C₀ / ε + f 0 + 1
-  have hf0 : (0 : ℝ) ≤ f 0 := hpos 0
-  have hdiv : 0 ≤ C₀ / ε := div_nonneg hC₀.le hε.le
-  have hC : 0 ≤ C := by linarith
-  refine ⟨C, fun n ↦ ?_⟩
-  induction n using Nat.strong_induction_on with | h n ih =>
-  rcases lt_or_ge n 2 with hn | hn
-  · interval_cases n
-    · simp [cumsum]
-    · simp only [cumsum, Finset.sum_range_one, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hf0,
-        Nat.cast_one, mul_one, C]
-      linarith
-  let x := (n : ℝ) - 1
-  have hx : x ≥ 1 := by simp only [x, ge_iff_le, le_sub_iff_add_le]; norm_cast
-  let m := ⌊(1 - ε) * x⌋₊ + 1
-  have hm_lt : m < n := by
-    simp only [m, x]
-    have h1 : (1 - ε) * (n - 1 : ℝ) < (n - 1 : ℕ) := by
-      calc (1 - ε) * (↑n - 1) < 1 * (↑n - 1) := by gcongr; linarith
-        _ = ↑n - 1 := by ring
-        _ = ↑(n - 1) := by simp [Nat.cast_sub (by omega : 1 ≤ n)]
-    have h2 : ⌊(1 - ε) * (n - 1 : ℝ)⌋₊ < n - 1 :=
-      (Nat.floor_lt (mul_nonneg (by linarith) (by linarith : (0 : ℝ) ≤ n - 1))).mpr h1
-    omega
-  have hm_gt : (m : ℝ) > (1 - ε) * x := by
-    simp only [m, Nat.cast_add, Nat.cast_one, gt_iff_lt]
-    exact Nat.lt_floor_add_one ((1 - ε) * x)
-  have h_decomp : cumsum (fun k ↦ ‖(f k : ℂ)‖) n = cumsum (fun k ↦ ‖(f k : ℂ)‖) m + ∑ k ∈ Finset.Ico m n, f k := by
-    simp only [cumsum, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hpos _),
-      Finset.sum_range_add_sum_Ico _ (by omega : m ≤ n)]
-  have h_Ico : ∑ k ∈ Finset.Ico m n, f k ≤ C₀ * x := by
-    calc ∑ k ∈ Finset.Ico m n, f k
-        = ∑ k ∈ Finset.Ico m n, f k * Set.indicator (Set.Ioc ((1 - ε) * x) x) 1 (k : ℝ) := by
-          refine Finset.sum_congr rfl fun k hk ↦ ?_
-          have ⟨hkm, hkn⟩ := Finset.mem_Ico.mp hk
-          have hk_gt : (k : ℝ) > (1 - ε) * x := by linarith [hm_gt, (Nat.cast_le (α := ℝ)).mpr hkm]
-          have hk_le : (k : ℝ) ≤ x := by
-            have h1 : k ≤ n - 1 := Nat.le_pred_of_lt hkn
-            have h2 : (k : ℝ) ≤ (n - 1 : ℕ) := by exact_mod_cast h1
-            simp only [Nat.cast_sub (by omega : 1 ≤ n), Nat.cast_one, x] at h2 ⊢; exact h2
-          simp only [Set.indicator_of_mem (Set.mem_Ioc.mpr ⟨hk_gt, hk_le⟩), Pi.one_apply, mul_one]
-      _ ≤ ∑' k, f k * Set.indicator (Set.Ioc ((1 - ε) * x) x) 1 (k : ℝ) := by
-          refine Summable.sum_le_tsum _ (fun k _ ↦ mul_nonneg (hpos k) (Set.indicator_nonneg (by simp) _)) ?_
-          refine summable_of_hasFiniteSupport <| (Set.finite_le_nat ⌊x⌋₊).subset fun k hk ↦ ?_
-          simp only [Function.mem_support, ne_eq, mul_eq_zero, not_or, Set.indicator_apply_ne_zero] at hk
-          exact Nat.le_floor hk.2.1.2
-      _ ≤ C₀ * x := h_bound x hx
-  have hm_le : (m : ℝ) ≤ (1 - ε) * x + 1 := by
-    have hpos' : 0 ≤ (1 - ε) * x := mul_nonneg (by linarith) (by linarith : (0 : ℝ) ≤ x)
-    simp only [m, Nat.cast_add, Nat.cast_one]
-    linarith [Nat.floor_le hpos']
-  have hnorm : ∀ k, ‖(f k : ℂ)‖ = f k := fun k ↦ by simp [abs_of_nonneg (hpos k)]
-  simp only [hnorm] at h_decomp ih ⊢
-  calc cumsum f n = cumsum f m + ∑ k ∈ Finset.Ico m n, f k := h_decomp
-    _ ≤ C * m + C₀ * x := by linarith [ih m hm_lt, h_Ico]
-    _ ≤ C * ((1 - ε) * x + 1) + C₀ * x := by nlinarith [hC]
-    _ = (C * (1 - ε) + C₀) * x + C := by ring
-    _ ≤ C * x + C := by
-        have : C₀ ≤ C * ε := by
-          calc C₀ = (C₀ / ε) * ε := by field_simp [ne_of_gt hε]
-            _ ≤ (C₀ / ε + f 0 + 1) * ε := by gcongr; linarith [hpos 0]
-            _ = C * ε := by simp only [C]
-        nlinarith [hε, hε1, hx]
-    _ ≤ C * n := by simp only [x]; ring_nf; linarith [hC]
-
-@[blueprint "auto-cheby"
-  (title := "auto-cheby")
-  (statement := /-- One has $$ \sum_{n \leq x} f(n) = O(x)$$ for all $x \geq 1$. -/)
-  (proof := /--
-  By applying Corollary \ref{crude-upper-bound} for a specific compactly supported function $\psi$,
-  one can obtain a bound of the form $\sum_{(1-\varepsilon)x < n \leq x} f(n) = O(x)$ for all $x$
-  and some absolute constant $\varepsilon$ (which can be made explicit).
-
-  If $C$ is a sufficiently large constant, the claim $|\sum_{n \leq x} f(n)| \leq Cx$ can now be
-  proven by strong induction on $x$, as the claim for $(1-\varepsilon)x$ implies the claim for $x$
-  by the triangle inequality (and the claim is trivial for $x < 1$).
-  -/)
-  (proofUses := ["crude-upper-bound", "WienerIkehara"])
-  (latexEnv := "corollary")]
-lemma auto_cheby (hpos : 0 ≤ f) (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
-    (hG : ContinuousOn G {s | 1 ≤ s.re})
-    (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re}) : cheby f := by
-  obtain ⟨ψ_fun, hψSmooth, hψCompact, hψpos, hψ0⟩ := auto_cheby_exists_smooth_nonneg_fourier_kernel
-  obtain ⟨B, hB⟩ := crude_upper_bound hpos hG hG' hf ⟨ψ_fun, hψSmooth.of_le ENat.LEInfty.out, hψCompact⟩ hψpos
-  exact auto_cheby_bootstrap_induction hpos <| auto_cheby_short_interval_bound hpos hf hG hG' B ψ_fun
-    hψSmooth hψCompact hψpos hψ0 fun x hx ↦ hB x (by linarith)
-
-@[blueprint "WienerIkehara2"
-  (title := "Wiener-Ikehara Theorem (2)")
-  (statement := /-- We have $$ \sum_{n\leq x} f(n) = A x + o(x).$$ -/)
-  (proof := /-- Use Corollary \ref{auto-cheby} to remove the Chebyshev hypothesis in Theorem \ref{WienerIkehara}. -/)
-  (latexEnv := "theorem")]
-theorem WienerIkeharaTheorem'' (hpos : 0 ≤ f) (hf : ∀ (σ' : ℝ), 1 < σ' → Summable (nterm f σ'))
-    (hG : ContinuousOn G {s | 1 ≤ s.re})
-    (hG' : Set.EqOn G (fun s ↦ LSeries f s - A / (s - 1)) {s | 1 < s.re}) :
-    Tendsto (fun N => cumsum f N / N) atTop (𝓝 A) :=
-  WienerIkeharaTheorem' hpos hf (auto_cheby (f := f) (A := A) (G := G) hpos hf hG hG') hG hG'
 
 end auto_cheby
 
 blueprint_comment /--
 \section{The prime number theorem in arithmetic progressions}
 -/
-
-@[blueprint "WeakPNT-character"
-  (title := "WeakPNT-character")
-  (statement := /--
-    If $q ≥ 1$ and $a$ is coprime to $q$, and $\mathrm{Re} s > 1$, we have
-  $$
-  \sum_{n: n = a\ (q)} \frac{\Lambda(n)}{n^s} = - \frac{1}{\varphi(q)} \sum_{\chi\ (q)}
-  \overline{\chi(a)} \frac{L'(s,\chi)}{L(s,\chi)}.$$
-  -/)
-  (proof := /--
-    From the Fourier inversion formula on the multiplicative group $(\Z/q\Z)^\times$, we have
-  $$ 1_{n=a\ (q)} = \frac{\varphi(q)}{q} \sum_{\chi\ (q)} \overline{\chi(a)} \chi(n).$$
-  On the other hand, from standard facts about L-series we have for each character $\chi$ that
-  $$
-  \sum_{n} \frac{\Lambda(n) \chi(n)}{n^s} = - \frac{L'(s,\chi)}{L(s,\chi)}.$$
-  Combining these two facts, we obtain the claim.
-  -/)
-  (latexEnv := "lemma")]
-theorem WeakPNT_character
-    {q a : ℕ} (hq : q ≥ 1) (ha : Nat.Coprime a q) (ha' : a < q) {s : ℂ} (hs : 1 < s.re) :
-    LSeries (fun n ↦ if n % q = a then Λ n else 0) s =
-      - (∑' χ : DirichletCharacter ℂ q,
-          ((starRingEnd ℂ) (χ a) * ((deriv (LSeries (fun n:ℕ ↦ χ n)) s)) /
-          (LSeries (fun n:ℕ ↦ χ n) s))) / (Nat.totient q : ℂ) := by
-  have : NeZero q := ⟨by omega⟩
-  convert vonMangoldt.LSeries_residueClass_eq ((ZMod.isUnit_iff_coprime a q).mpr ha) hs using 1
-  · congr with n
-    have : n % q = a ↔ (n : ZMod q) = a := by
-      rw [ZMod.natCast_eq_natCast_iff', Nat.mod_eq_of_lt ha']
-    simp [this]
-    split_ifs <;> simp [*]
-  · rw [div_eq_inv_mul, neg_mul_comm, tsum_fintype]
-    congr 3 with χ
-    rw [DirichletCharacter.deriv_LFunction_eq_deriv_LSeries _ hs,
-      DirichletCharacter.LFunction_eq_LSeries _ hs, mul_div]
-    congr 2
-    rw [starRingEnd_apply, MulChar.star_apply', MulChar.inv_apply_eq_inv',
-      ← ZMod.coe_unitOfCoprime a ha, ZMod.inv_coe_unit, map_units_inv]
-
-
-@[blueprint "WeakPNT-AP-prelim"
-  (title := "WeakPNT-AP-prelim")
-  (statement := /--
-  If $q ≥ 1$ and $a$ is coprime to $q$, the Dirichlet series
-  $\sum_{n \leq x: n = a\ (q)} \frac{\Lambda(n)}{n^s}$ converges for $\mathrm{Re}(s) > 1$ to
-  $\frac{1}{\varphi(q)} \frac{1}{s-1} + G(s)$ where $G$ has a continuous extension to
-  $\mathrm{Re}(s)=1$.
-  -/)
-  (proof := /--
-  We expand out the left-hand side using Lemma \ref{WeakPNT-character}.  The contribution of the
-  non-principal characters $\chi$ extend continuously to $\mathrm{Re}(s) = 1$ thanks to the
-  non-vanishing of $L(s,\chi)$ on this line (which should follow from another component of
-  this project), so it suffices to show that for the principal character $\chi_0$, that
-  $$ -\frac{L'(s,\chi_0)}{L(s,\chi_0)} - \frac{1}{s-1}$$
-  also extends continuously here.  But we already know that
-  $$ -\frac{\zeta'(s)}{\zeta(s)} - \frac{1}{s-1}$$
-  extends, and from Euler product machinery one has the identity
-  $$ \frac{L'(s,\chi_0)}{L(s,\chi_0)}
-  = \frac{\zeta'(s)}{\zeta(s)} + \sum_{p|q} \frac{\log p}{p^s-1}.$$
-  Since there are only finitely many primes dividing $q$, and each summand $\frac{\log p}{p^s-1}$
-  extends continuously, the claim follows.
-  -/)
-  (proofUses := ["ChebyshevPsi", "WeakPNT-character"])
-  (latexEnv := "proposition")]
-theorem WeakPNT_AP_prelim {q : ℕ} {a : ℕ} (hq : q ≥ 1) (ha : Nat.Coprime a q) (ha' : a < q) :
-    ∃ G: ℂ → ℂ, (ContinuousOn G {s | 1 ≤ s.re}) ∧
-    (Set.EqOn G (fun s ↦ LSeries (fun n ↦ if n % q = a then Λ n else 0) s - 1 /
-      ((Nat.totient q) * (s - 1))) {s | 1 < s.re}) := by
-  have : NeZero q := NeZero.of_pos hq
-  have hG : ∃ G : ℂ → ℂ, ContinuousOn G {s | 1 ≤ s.re} ∧ Set.EqOn G
-      (fun s ↦ LSeries (fun n ↦ if (n : ZMod q) = a then Λ n else 0) s - (q.totient : ℂ)⁻¹ / (s - 1)) {s | 1 < s.re} := by
-    use vonMangoldt.LFunctionResidueClassAux (a : ZMod q), vonMangoldt.continuousOn_LFunctionResidueClassAux (q := q) (a := a)
-    have := vonMangoldt.eqOn_LFunctionResidueClassAux ((ZMod.isUnit_iff_coprime a q).mpr ha)
-    convert this using 6; split <;> simp_all
-  convert hG using 6
-  · simp [ZMod.natCast_eq_natCast_iff', Nat.mod_eq_of_lt ha']
-  · rw [inv_eq_one_div, div_div]
-
-/-- The von Mangoldt function divided by `n ^ s` is summable for `s > 1`. -/
-lemma summable_vonMangoldt_div_rpow {s : ℝ} (hs : 1 < s) : Summable (fun n ↦ Λ n / n ^ s) := by
-  have h_log_bound : ∀ n : ℕ, (Λ n : ℝ) ≤ Real.log n := fun n ↦ vonMangoldt_le_log
-  suffices h_log_sum : Summable fun n : ℕ ↦ Real.log n / (n : ℝ) ^ s by
-    exact .of_nonneg_of_le (fun n ↦ div_nonneg vonMangoldt_nonneg (by positivity))
-      (fun n ↦ div_le_div_of_nonneg_right (h_log_bound n) (by positivity)) h_log_sum
-  have h_log_le_n_eps : ∀ ε > 0, ∃ C > 0, ∀ n : ℕ, n ≥ 2 → Real.log n / (n : ℝ) ^ s ≤ C * (n : ℝ) ^ (ε - s) := by
-    intro ε hε_pos
-    obtain ⟨C, hC_pos, hC⟩ : ∃ C > 0, ∀ n : ℕ, n ≥ 2 → Real.log n ≤ C * (n : ℝ) ^ ε := by
-      refine ⟨1 / ε, by positivity, fun n hn ↦ ?_⟩
-      have := log_le_sub_one_of_pos (by positivity : 0 < (n : ℝ) ^ ε)
-      rw [log_rpow (by positivity)] at this
-      nlinarith [rpow_pos_of_pos (by positivity : 0 < (n : ℝ)) ε, mul_div_cancel₀ 1 hε_pos.ne']
-    refine ⟨C, hC_pos, fun n hn ↦ ?_⟩
-    rw [rpow_sub (by positivity)]
-    exact le_trans (div_le_div_of_nonneg_right (hC n hn) (by positivity)) (by rw [div_eq_mul_inv]; ring_nf; norm_num)
-  obtain ⟨C, _, hC⟩ : ∃ C > 0, ∀ n : ℕ, n ≥ 2 → Real.log n / (n : ℝ) ^ s ≤ C * (n : ℝ) ^ ((s - 1) / 2 - s) :=
-    h_log_le_n_eps ((s - 1) / 2) (by linarith)
-  rw [← summable_nat_add_iff 2]
-  exact Summable.of_nonneg_of_le (fun n ↦ div_nonneg (log_nonneg (by norm_cast; omega))
-    (rpow_nonneg (by positivity) _)) (fun n ↦ hC _ (by omega)) (Summable.mul_left _ <| by
-      simpa using summable_nat_add_iff 2 |>.2 <| summable_nat_rpow.2 <| by linarith)
-
-@[blueprint "WeakPNT-AP"
-  (title := "WeakPNT-AP")
-  (statement := /--
-  If $q ≥ 1$ and $a$ is coprime to $q$, we have
-  $$ \sum_{n \leq x: n = a\ (q)} \Lambda(n) = \frac{x}{\varphi(q)} + o(x).$$
-  -/)
-  (proof := /-- Apply Theorem \ref{WienerIkehara} (or Theorem \ref{WienerIkehara2} to avoid
-  checking the Chebyshev condition) using Proposition \ref{WeakPNT-AP-prelim}.-/)
-  (proofUses := ["WienerIkehara", "WeakPNT-AP-prelim"])]
-theorem WeakPNT_AP {q : ℕ} {a : ℕ} (hq : q ≥ 1) (ha : a.Coprime q) (ha' : a < q) :
-    Tendsto (fun N ↦ cumsum (fun n ↦ if n % q = a then Λ n else 0) N / N) atTop (𝓝 (1 / q.totient)) := by
-  have h_summable : ∀ s : ℝ, 1 < s → Summable (fun n ↦ (if n % q = a then Λ n else 0) / n ^ s) := by
-    intro s hs
-    refine .of_nonneg_of_le (fun n ↦ ?_) (fun n ↦ ?_) (summable_vonMangoldt_div_rpow hs)
-    · split_ifs <;> positivity
-    · split_ifs <;> norm_num; exact div_nonneg vonMangoldt_nonneg (by positivity)
-  obtain ⟨G, hG₁, hG₂⟩ := WeakPNT_AP_prelim hq ha ha'
-  convert WienerIkeharaTheorem'' _ _ _ _ using 1
-  · use G
-  · intro n
-    simp_all only [ge_iff_le, one_div, mul_inv_rev, Pi.ofNat_apply]
-    split
-    next h => subst h; simp_all only [vonMangoldt_nonneg]
-    next h => simp_all only [le_refl]
-  · intro σ' hσ'
-    specialize h_summable σ' hσ'
-    simp_all only [ge_iff_le, one_div, mul_inv_rev]
-    convert h_summable using 1
-    ext
-    simp only [nterm, norm_real, norm_eq_abs]
-    ring_nf
-    split_ifs <;> simp [*, mul_comm]
-  · assumption
-  · convert hG₂ using 3
-    · exact tsum_congr fun n ↦ by cases n <;> aesop
-    · norm_num [div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm]
 
 
 blueprint_comment /--

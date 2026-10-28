@@ -1,0 +1,8 @@
+{
+  "status": "pass",
+  "name": "MathlibNt.SieveTheory.LiuWeight.eventually_inverse_log_remainder_le_liuSingularSeries",
+  "same_original_provider_prefix_and_suffix": true,
+  "same_normalized_compiled_references": true,
+  "quartic_proof_copied_from_old_b10": true,
+  "method": "The old provider text is retained as an identical prefix/suffix around the appended shared quartic theorem. The original natural cubic remainder proof and its compiled reference record are unchanged."
+}

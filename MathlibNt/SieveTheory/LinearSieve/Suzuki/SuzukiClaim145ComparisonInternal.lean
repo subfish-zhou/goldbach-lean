@@ -196,66 +196,6 @@ theorem suzukiLemma14_3_le_claim145Scale_of_scalar_at
   exact hlog.trans (hlogmono.trans (hscalar.trans
     (mul_le_mul_of_nonneg_left hlower hC145)))
 
-/-- Pointwise closure of Lemma 14.3 against the explicit Proposition-13.1(ii)
-lower profile.  The final numerical premise is stated entirely in elementary
-real functions and contains neither `Claim14_5Bound`, `claim14_5Scale`, nor the
-discrete object.  It is the scalar large-logarithm inequality to be discharged
-by the eventual asymptotic calculation. -/
-theorem suzukiLemma14_3_le_claim145Scale_of_scalar
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {N D : ℕ} {d Δ σ K C M C145 : ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hD : 2 ≤ D) (hσ : 2 ≤ σ) (hM : M ≤ σ)
-    (hKpos : 0 < K) (hC145 : 0 ≤ C145)
-    (hprop : ∀ (sign : ErrorSign) (t : ℝ), M ≤ t →
-      proposition131iiLowerProfile C t ≤ H.T sign t)
-    (hsourceLarge : Real.exp 1 * suzukiSourceL (D : ℝ) K ≤ σ - 2)
-    (hscalar :
-      Real.exp
-          (suzukiSourceL (D : ℝ) K +
-            (σ - 2) *
-              (1 + Real.log (suzukiSourceL (D : ℝ) K) - Real.log (σ - 2))) ≤
-        C145 *
-          (claim14_5VProduct S (D : ℝ) *
-            (Real.exp (Real.sqrt K) / (Real.log (D : ℝ) * σ)) *
-            ((1 + σ ^ d / Real.log (D : ℝ)) ^ σ * σ *
-              proposition131iiLowerProfile C σ) *
-            (Real.log (D : ℝ)) ^ (-Δ))) :
-    suzukiActualT S N D ⌈(D : ℝ) ^ (1 / σ)⌉₊ ≤
-      C145 * claim14_5Scale S H N (D : ℝ) d Δ σ K σ := by
-  exact suzukiLemma14_3_le_claim145Scale_of_scalar_at (s := σ)
-    S H hlocal hD (by linarith only [hσ]) hσ hM hKpos hC145 hprop hsourceLarge hscalar
-
-/-- The same comparison with the quantifier over the discrete depth moved after
-all analytic data.  In particular one scalar estimate and one Proposition
-13.1(ii) pair of signwise bounds work for every `N`. -/
-theorem suzukiLemma14_3_le_claim145Scale_uniformN_of_scalar
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {D : ℕ} {d Δ σ K C M C145 : ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hD : 2 ≤ D) (hσ : 2 ≤ σ) (hM : M ≤ σ)
-    (hKpos : 0 < K) (hC145 : 0 ≤ C145)
-    (hprop : ∀ (sign : ErrorSign) (t : ℝ), M ≤ t →
-      proposition131iiLowerProfile C t ≤ H.T sign t)
-    (hsourceLarge : Real.exp 1 * suzukiSourceL (D : ℝ) K ≤ σ - 2)
-    (hscalar :
-      Real.exp
-          (suzukiSourceL (D : ℝ) K +
-            (σ - 2) *
-              (1 + Real.log (suzukiSourceL (D : ℝ) K) - Real.log (σ - 2))) ≤
-        C145 *
-          (claim14_5VProduct S (D : ℝ) *
-            (Real.exp (Real.sqrt K) / (Real.log (D : ℝ) * σ)) *
-            ((1 + σ ^ d / Real.log (D : ℝ)) ^ σ * σ *
-              proposition131iiLowerProfile C σ) *
-            (Real.log (D : ℝ)) ^ (-Δ))) :
-    ∀ N : ℕ,
-      suzukiActualT S N D ⌈(D : ℝ) ^ (1 / σ)⌉₊ ≤
-        C145 * claim14_5Scale S H N (D : ℝ) d Δ σ K σ := by
-  intro N
-  exact suzukiLemma14_3_le_claim145Scale_of_scalar S H hlocal hD hσ hM
-    hKpos hC145 hprop hsourceLarge hscalar
-
 
 /-! ## Shared scalar comparisons for the endpoint and all-coordinate estimates -/
 
@@ -361,22 +301,5 @@ theorem claim145_caseB_scalar_exponent_comparison
         Real.exp_add, Real.exp_add, Real.exp_neg, Real.exp_log hx]
       field_simp
 
-/-- Elementary logarithmic comparison used after all moving quantities have
-been bounded.  It keeps the decisive negative `-s log s` term on both sides. -/
-theorem claim145_scalar_exponent_comparison
-    {x q L s b C Q : ℝ}
-    (hx : 0 < x) (hq : 0 < q) (hL : 1 ≤ L) (hs : 4 ≤ s)
-    (hQ : 0 < Q) (hqlog : q = Real.log x)
-    (hLsq : L ≤ q ^ 2) (hlogs : Real.log s ≤ 3 * q)
-    (habsorb : q ^ 2 + 9 * q + |Real.log Q| ≤ s)
-    (hgap : Real.log L + Real.log (Real.log (3 * s)) + C + 2 + Real.log 2 ≤
-      Real.log b) :
-    Real.exp
-        (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) ≤
-      Q / x ^ 3 *
-        Real.exp (s * Real.log b - s * Real.log s -
-          s * Real.log (Real.log (3 * s)) - C * s) := by
-  apply claim145_caseB_scalar_exponent_comparison hx hq hL hs hQ hqlog ?_ hgap
-  linarith only [hLsq, hlogs, habsorb]
 
 end MathlibNt.SieveTheory

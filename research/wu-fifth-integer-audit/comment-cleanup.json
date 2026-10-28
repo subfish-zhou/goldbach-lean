@@ -1,0 +1,26 @@
+{
+  "status": "comments_only_pending_fresh_build",
+  "changes": {
+    "WR2ClassicalFifthIntegerData.lean": {
+      "old_sha256": "ae858e61e5895350c48f82a2fed3faa1445f4623d42e1f1a98aaf2890435f1f2",
+      "new_sha256": "558d23b865a03e461cefa4b89194acd9470cea0930ef449c824536f1b9e5261a",
+      "code_outside_comments_byte_identical": true
+    },
+    "WR2ClassicalFifthIntegerDomains.lean": {
+      "old_sha256": "34155686acdff31a3a2e39ee1a53a51fbf74dab1fe87db5e545435bfe9d09b97",
+      "new_sha256": "f9f87f4e6a3a658365bed57e13d5ccc5c0b8ab156a81819a5341dfc6ead0e68d",
+      "code_outside_comments_byte_identical": true
+    },
+    "WR2ClassicalFifthIntegerPolynomial.lean": {
+      "old_sha256": "04c9db7b22bd009d27470af954f30254dbd7ae21a5dfcd69c5fa6e135c71572d",
+      "new_sha256": "e89159320f110c1cf6f7b2f655ae9b7d4385a84ab5e6c7ab31b13533591280e6",
+      "code_outside_comments_byte_identical": true
+    },
+    "WR2ClassicalFifthIntegerSoundness.lean": {
+      "old_sha256": "4ecf8a622561c09be134700cb28a4f693c1e7e719901f42ef1e8df2e47588534",
+      "new_sha256": "c259c4cf71d5ab38f8468161cb61654aa3ba5ce271d95e7811cf1f13e2804f1f",
+      "code_outside_comments_byte_identical": true
+    }
+  },
+  "generator_sha256": "1e035ebf1acfdbd9b26b3c3ebd5f8300d5952e9c87cc76f10142cad31d666b24"
+}

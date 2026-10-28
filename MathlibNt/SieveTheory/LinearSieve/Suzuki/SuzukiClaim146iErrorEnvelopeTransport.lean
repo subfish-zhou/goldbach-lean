@@ -1,6 +1,3 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13HatLayersKappaOne
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayersKappaOne
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
 
 /-!
@@ -26,14 +23,6 @@ theorem errorEnvelope_eq_lambda_div_internal
       lambda H (ErrorSign.ofDepth N) D d 0 s / s := by
   exact errorEnvelope_eq_lambda_div H hs
 
-/-- Equivalent orientation: `lambda` is `s` times the error envelope, rather
-than literally the error envelope. -/
-theorem lambda_eq_s_mul_errorEnvelope
-    (H : Section13HatLayers) {N : ℕ} {D d s : ℝ} (hs : 0 < s) :
-    lambda H (ErrorSign.ofDepth N) D d 0 s =
-      s * errorEnvelope H N D d s := by
-  rw [errorEnvelope_eq_lambda_div_internal H hs]
-  field_simp [ne_of_gt hs]
 
 /-- Claim 14.6(i) makes the production error envelope antitone on the matching
 parity interval. -/

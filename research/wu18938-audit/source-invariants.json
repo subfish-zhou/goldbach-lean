@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "modules": 4771,
+  "unchanged_outside_cohort": 4669,
+  "unchanged_numeric_tables": {
+    "WR2ClassicalFifthInitialPayments": "f4eb1b7b364674cbbf09c85f548785b47c2789c06838e80cfab0fb294e85df06",
+    "WR2ClassicalFifthMiddlePayments": "734ef91ecae22b4bfb1c58d469f4d5b46fbd3c64006ebb7fc6d81d0acdb4a81c",
+    "WR2ClassicalFifthTerminalPayments": "9d29abeea37a590eac260d4797b31a0a47bcaf68fa7c8264779cee390e8788a9",
+    "WR2ClassicalFourthDataB": "d2a8bd20ac142d9be9d84dada08a27015fa944c185a0b2c6187d1d071a166e1f",
+    "WR2ClassicalFourthDataBq": "9e1a3769d6801c9adf04417d4690f9d734e772f5960db208811929f7e8bac1a4",
+    "WR2ClassicalFourthDataC": "5a0dc8a6c04bf8050d7660b189283307763bf4238d910621ffeef63a08f5dffb",
+    "WR2ClassicalFourthDataD": "33ec3b6db94444f4021234e774fa1940f1bf1d679b176f9d5bacffba8cdd70ba",
+    "WR2ClassicalFourthDataouter": "77d13f96dab6fbb3062f5ea1c71c9eb4b07a1fbdef74d0794fbf25f8e655ee30",
+    "WR2ClassicalFourthDataouterq": "e963014e2a819f49cf497f2f02f8eb6587943b7a726722fc8bd6584b8dcde17b",
+    "WR2ClassicalSixthLowerPayments": "48ac8ecc2ec501af2b0e9c1a26aa29928e99530d25084a21840e4d1263194550",
+    "WR2ClassicalSixthUpperPayments": "e9eef1c99f95cf61a565bb7802f9669f2ea2ac8d156ec4dc2101bb871ac3d772",
+    "WR2ClassicalCPayments": "289a63130201118189360a18610bb8f00a833bfafc202fcf480ff13087a29b83",
+    "WR2ClassicalEighthRawPayments": "8b03ce0657cbfd1cf2e4b70305e36bc51cb0463fa655d65345f8fe2078a22578"
+  },
+  "prohibited_tokens": []
+}

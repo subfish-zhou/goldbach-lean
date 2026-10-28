@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141LocalProductMass
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143NatCeilSupport
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma142InfiniteTail
 
 /-!
 # Suzuki Lemmas 14.1--14.3: explicit uniform exponential tail

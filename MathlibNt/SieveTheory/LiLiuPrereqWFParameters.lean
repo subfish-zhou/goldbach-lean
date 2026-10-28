@@ -155,23 +155,6 @@ theorem small_rounded_moving_range {D ε : ℝ}
     ((Real.rpow_pos_of_pos (by linarith : 0 < D) ε).trans_le (Nat.le_ceil _))
     (by linarith) hp hlog
 
-theorem exists_small_rounded_moving_threshold {ε : ℝ}
-    (hε : 0 < ε) (hεsmall : ε < 1 / 8) :
-    ∃ D₀ : ℝ, 2 ≤ D₀ ∧ ∀ D : ℝ, D₀ ≤ D →
-      let R : ℝ := (⌈D ^ ε⌉₊ : ℝ)
-      let s := roundedSieveCoordinate (D ^ ε) (D ^ (ε ^ 2))
-      8 < s ∧
-        s ≤ (Real.log R) ^ (1 / 12 : ℝ) * Real.log (Real.log (27 * R)) ∧
-        (1 + s ^ 12 / Real.log R) ^ s ≤ Real.exp 1 := by
-  let T := max (max (Real.log 2) ((2 / ε) ^ 13)) (Real.exp 1)
-  refine ⟨max 2 (Real.exp (T / ε)), le_max_left _ _, ?_⟩
-  intro D hD
-  have hD2 : 2 ≤ D := (le_max_left _ _).trans hD
-  have hlog := Real.log_le_log (Real.exp_pos (T / ε))
-    ((le_max_right _ _).trans hD)
-  rw [Real.log_exp] at hlog
-  apply small_rounded_moving_range hD2 hε hεsmall
-  exact (div_le_iff₀ hε).mp hlog |>.trans_eq (mul_comm _ _)
 
 theorem small_rounded_decay_bounds {D ε : ℝ}
     (hD : 2 ≤ D) (hε : 0 < ε) (hlarge : Real.log 2 ≤ ε * Real.log D) :

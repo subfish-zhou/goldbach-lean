@@ -83,13 +83,5 @@ theorem actual_constant_lower : 4 * elementaryIntegral ≤ goldbachG67IntegralCo
   rw [← mul_assoc, hscale] at h
   exact h
 
-/-- Literal public endpoint: no JR function, exponential, or analytic premise on the lower side. -/
-theorem actual_constant_lower_explicit :
-    4 * ((1/2 : ℝ) *
-      (∫ u in (4/53 : ℝ)..(4/33 : ℝ), ∫ v in (4/53 : ℝ)..(4/33 : ℝ),
-        max 0 (Real.log ((1/2-u-v-(4/53 : ℝ))/(4/53 : ℝ))/(1/2-u-v))/(u*v)) +
-      (∫ u in (4/53 : ℝ)..(4/33 : ℝ), ∫ v in (4/33 : ℝ)..(3/11 : ℝ),
-        max 0 (Real.log ((1/2-u-v-(4/53 : ℝ))/(4/53 : ℝ))/(1/2-u-v))/(u*v))) ≤
-      goldbachG67IntegralConstant := actual_constant_lower
 
 end G67ElementaryIntegral

@@ -22,17 +22,6 @@ variable {q : ℕ} [NeZero q]
 def reciprocalInterval (q : ℕ) [NeZero q] (d : ℤ) (X Y : ℝ) : ℂ :=
   ∑ c ∈ Ioc ⌊X⌋ ⌊Y⌋, reciprocalPhase q d (c : ZMod q)
 
-theorem reciprocalInterval_eq_coprime_sum (d : ℤ) (X Y : ℝ) :
-    reciprocalInterval q d X Y =
-      ∑ c ∈ (Ioc ⌊X⌋ ⌊Y⌋).filter (fun c : ℤ ↦ IsCoprime (q : ℤ) c),
-        ZMod.stdAddChar ((d : ZMod q) * (c : ZMod q)⁻¹) := by
-  classical
-  simp only [reciprocalInterval, reciprocalPhase, sum_filter,
-    ZMod.coe_int_isUnit_iff_isCoprime]
-
-theorem mem_reciprocalInterval (c : ℤ) (X Y : ℝ) :
-    c ∈ Ioc ⌊X⌋ ⌊Y⌋ ↔ X < (c : ℝ) ∧ (c : ℝ) ≤ Y := by
-  simp only [mem_Ioc, Int.floor_lt, Int.le_floor]
 
 theorem reciprocalInterval_eq_incomplete (d : ℤ) {X Y : ℝ} (hXY : X ≤ Y) :
     reciprocalInterval q d X Y =

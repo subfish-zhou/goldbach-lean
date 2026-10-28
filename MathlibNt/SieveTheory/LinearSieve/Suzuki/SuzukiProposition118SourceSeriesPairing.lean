@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118KappaOneBoundaryAdjoint
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveAmplitudeLimit
 
 /-!
 # Suzuki Proposition 11.8: source parity series and the boundary pairing
@@ -128,25 +127,6 @@ noncomputable def suzukiProposition118SourceQ (s : ℝ) : ℝ :=
   if s < 2 then SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude / s
   else suzukiProposition118SourceTPlus s + suzukiProposition118SourceTMinus s
 
-/-- The genuine source `P` of Proposition 11.8. -/
-noncomputable def suzukiProposition118SourceP (s : ℝ) : ℝ :=
-  if s < 2 then SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude / s
-  else suzukiProposition118SourceTPlus s - suzukiProposition118SourceTMinus s + 2
-
-/-- The exact initial-history equation `s Q(s)=A`, printed before and in the
-proof of Proposition 11.8. -/
-theorem suzukiProposition118SourceQ_initial {s : ℝ} (hs1 : 1 < s) (hs2 : s < 2) :
-    s * suzukiProposition118SourceQ s =
-      SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude := by
-  rw [suzukiProposition118SourceQ, if_pos hs2]
-  field_simp [ne_of_gt (by linarith : 0 < s)]
-
-/-- The exact initial-history equation `s P(s)=A`. -/
-theorem suzukiProposition118SourceP_initial {s : ℝ} (hs1 : 1 < s) (hs2 : s < 2) :
-    s * suzukiProposition118SourceP s =
-      SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude := by
-  rw [suzukiProposition118SourceP, if_pos hs2]
-  field_simp [ne_of_gt (by linarith : 0 < s)]
 
 /-- At `β=2`, the source series has the boundary value
 `Q(2)=(A-B)/2`, deduced from the actual odd/even real series. -/

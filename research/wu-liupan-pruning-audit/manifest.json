@@ -1,0 +1,3608 @@
+{
+  "status": "static_only",
+  "baseline_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "baseline_prefix": "research/wu2008/src/",
+  "offset_units": "Unicode code points, half-open [start,end); fragment SHA over UTF-8",
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean",
+      "before_sha256": "70b2cdea392de96e5e06d30ba6dcfff95fe6accac9240027df788ea4d8ed8074",
+      "after_sha256": "9497588d203868a044658cd7c632bb73c7d3a3e540fe72b7062f2348935354aa",
+      "before": {
+        "effective_lines": 3291,
+        "physical_lines": 3777,
+        "utf8_bytes": 165488
+      },
+      "after": {
+        "effective_lines": 664,
+        "physical_lines": 994,
+        "utf8_bytes": 39941
+      },
+      "deletions": [
+        {
+          "start": 1528,
+          "end": 3124,
+          "declaration_start": 1600,
+          "name": "liuPanLogLambdaCharacterPrefix_eq_discreteAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogLambdaCharacterPrefix_eq_discreteAbel",
+          "kind": "theorem",
+          "fragment_sha256": "9ff19f9ec0df16ca9ad62a5c8f011553cf3543fe2c3c5af51722adbfe14dc3f4"
+        },
+        {
+          "start": 3125,
+          "end": 3649,
+          "declaration_start": 3194,
+          "name": "liuPanSourceCharacterPrefix_eq_coprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceCharacterPrefix_eq_coprime",
+          "kind": "theorem",
+          "fragment_sha256": "24f7d6bafc8483caf3b27bf39c713e4d69a3af8e19d31d9d1c1d44b73bd2a862"
+        },
+        {
+          "start": 3650,
+          "end": 4296,
+          "declaration_start": 3713,
+          "name": "liuPanAPPsi_complex_eq_characterMean",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAPPsi_complex_eq_characterMean",
+          "kind": "theorem",
+          "fragment_sha256": "5ff9507ea6b5eb333c38666a2ac74c160fe493a436a0bcf5211fbbbb9607a55c"
+        },
+        {
+          "start": 4297,
+          "end": 5448,
+          "declaration_start": 4433,
+          "name": "star_dirichletCharacter_natInvMod_mul",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.star_dirichletCharacter_natInvMod_mul",
+          "kind": "theorem",
+          "fragment_sha256": "1d28c2d0ca42291b938029a0ceca5963db64d7a25bb40fe961b7ef5da3b7c859"
+        },
+        {
+          "start": 6129,
+          "end": 8268,
+          "declaration_start": 6207,
+          "name": "liuPanAggregateAPPsiComplex_eq_characterMean",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiComplex_eq_characterMean",
+          "kind": "theorem",
+          "fragment_sha256": "c00a85d5b876d3d8611dce17e9a497651de75ecead2f300e1c7ebc765e6f4011"
+        },
+        {
+          "start": 8269,
+          "end": 8877,
+          "declaration_start": 8417,
+          "name": "liuPanSourceCharacterPrefix_one_eq_coprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceCharacterPrefix_one_eq_coprime",
+          "kind": "theorem",
+          "fragment_sha256": "4efb8723e4b1d2a5a0304c4f746328c29dfc8bbbdec346e7e27104fb2bd08943"
+        },
+        {
+          "start": 8878,
+          "end": 9408,
+          "declaration_start": 8949,
+          "name": "liuPanAggregateAPPsiComplex_eq_real",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiComplex_eq_real",
+          "kind": "theorem",
+          "fragment_sha256": "4f3d175414ff2a720c45d09aa94704e886170edab0fb992817270b20da75a508"
+        },
+        {
+          "start": 9409,
+          "end": 11163,
+          "declaration_start": 9519,
+          "name": "liuPanAggregateAPPsiDiscrepancy_complex_eq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_complex_eq",
+          "kind": "theorem",
+          "fragment_sha256": "787dc941ab1c61debedcfe3e9c0af045055a61a84fb4e14345389f3b6f1bc5ba"
+        },
+        {
+          "start": 12490,
+          "end": 13784,
+          "declaration_start": 12661,
+          "name": "liuPanAggregateAPPsiDiscrepancy_complex_eq_characterExpansion",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_complex_eq_characterExpansion",
+          "kind": "theorem",
+          "fragment_sha256": "23ba47ae9d4f2894816d82622d1c1c92d6c45224e61639f374cb6a6409b3df74"
+        },
+        {
+          "start": 13953,
+          "end": 14239,
+          "declaration_start": 14067,
+          "name": "liuPanPsiPrefix_eq_chebyshevPsi",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPsiPrefix_eq_chebyshevPsi",
+          "kind": "theorem",
+          "fragment_sha256": "1d277f5c720da0753b7043eb23fe8b3fdfe1c03b7b4bba424171e0618ae97132"
+        },
+        {
+          "start": 14622,
+          "end": 16168,
+          "declaration_start": 14817,
+          "name": "eventually_abs_liuPanPNTError_le_mediumPNT",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_abs_liuPanPNTError_le_mediumPNT",
+          "kind": "theorem",
+          "fragment_sha256": "9baf3b914b58bb52ec6158e7beda4daf63e001da38a2f9debf909a296a098a67"
+        },
+        {
+          "start": 16169,
+          "end": 18317,
+          "declaration_start": 16275,
+          "name": "eventually_abs_liuPanPNTError_le_div_log_rpow",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_abs_liuPanPNTError_le_div_log_rpow",
+          "kind": "theorem",
+          "fragment_sha256": "05e1ca4bf1cb2cca58d36bd13361ce6a38e988447e5c2ec08ff025c905d7126d"
+        },
+        {
+          "start": 18318,
+          "end": 19199,
+          "declaration_start": 18449,
+          "name": "abs_liuPanPNTError_le_global_linear",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanPNTError_le_global_linear",
+          "kind": "theorem",
+          "fragment_sha256": "cee68a434cc926c4da56e6a9d5dc9e65b07a03cdec1ca41db349874d0e6b524e"
+        },
+        {
+          "start": 19200,
+          "end": 21164,
+          "declaration_start": 19289,
+          "name": "sum_liuPanInverseLogAbelWeight_le_inv_log_two",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_liuPanInverseLogAbelWeight_le_inv_log_two",
+          "kind": "theorem",
+          "fragment_sha256": "0440c11b526796c3ea3a7965e213e8c8630964f108c2e8dc5eff1a138cb1b398"
+        },
+        {
+          "start": 21165,
+          "end": 22938,
+          "declaration_start": 21283,
+          "name": "liuPanInverseLogAbelWeight_le_div_mul_log_sq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanInverseLogAbelWeight_le_div_mul_log_sq",
+          "kind": "theorem",
+          "fragment_sha256": "3f47405fec778768323274ddc7035ef2f0a3d043fa8c1dfb667ea468aae3f349"
+        },
+        {
+          "start": 22939,
+          "end": 25361,
+          "declaration_start": 23096,
+          "name": "sum_Ico_liuPanInverseLogAbelWeight_mul_div_log_pow_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_Ico_liuPanInverseLogAbelWeight_mul_div_log_pow_le",
+          "kind": "theorem",
+          "fragment_sha256": "4ebb97b31d3d483cb1ded654fa4184128749b4259c2b8a272b26aed0c4ed863f"
+        },
+        {
+          "start": 25362,
+          "end": 26527,
+          "declaration_start": 25515,
+          "name": "sum_Ico_liuPanInverseLogAbelWeight_mul_absPNTError_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_Ico_liuPanInverseLogAbelWeight_mul_absPNTError_le",
+          "kind": "theorem",
+          "fragment_sha256": "0c114335046942132cf97a719abf3ecb2729044793890b3409e9d18eeabe71a0"
+        },
+        {
+          "start": 26528,
+          "end": 30080,
+          "declaration_start": 26687,
+          "name": "abs_liuPanLogPNTError_le_global_linear",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanLogPNTError_le_global_linear",
+          "kind": "theorem",
+          "fragment_sha256": "9fdc8741298331cd789ca3fc62a1bf523484429353878cfd1384319ce1fd189f"
+        },
+        {
+          "start": 30081,
+          "end": 40642,
+          "declaration_start": 30220,
+          "name": "eventually_abs_liuPanLogPNTError_le_div_log_pow",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_abs_liuPanLogPNTError_le_div_log_pow",
+          "kind": "theorem",
+          "fragment_sha256": "b80095e90aa790b5a6bf9f5bb9e93b82392317a11707503b662f67f864816311"
+        },
+        {
+          "start": 40643,
+          "end": 42180,
+          "declaration_start": 40788,
+          "name": "eventually_abs_liuPanLogPNTError_le_div_log_rpow",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_abs_liuPanLogPNTError_le_div_log_rpow",
+          "kind": "theorem",
+          "fragment_sha256": "d0de93cb47f2c77e3c282b939359541b0fba7631e24518fd68224d23e472de25"
+        },
+        {
+          "start": 45060,
+          "end": 46630,
+          "declaration_start": 45195,
+          "name": "liuPanNoncoprimePrimePowerCount_le_primeFactors_mul_log",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanNoncoprimePrimePowerCount_le_primeFactors_mul_log",
+          "kind": "theorem",
+          "fragment_sha256": "b44704b31c13209d8573a2faf10c4bf59b19cb120003b94178013030c922f472"
+        },
+        {
+          "start": 46631,
+          "end": 47235,
+          "declaration_start": 46742,
+          "name": "liuPanLogNoncoprimeCorrection_eq_sum_primePowers",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogNoncoprimeCorrection_eq_sum_primePowers",
+          "kind": "theorem",
+          "fragment_sha256": "3115e56db7793d66c8cebf9c29d57735c61ec925f290e9bd7e1a16d18331a414"
+        },
+        {
+          "start": 47236,
+          "end": 48308,
+          "declaration_start": 47332,
+          "name": "liuPanLogNoncoprimeCorrection_le_primePowerCount",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogNoncoprimeCorrection_le_primePowerCount",
+          "kind": "theorem",
+          "fragment_sha256": "64d6780217557b18ccda7eda897556399710306230b7a96de3932434647944b1"
+        },
+        {
+          "start": 48591,
+          "end": 49113,
+          "declaration_start": 48668,
+          "name": "liuPanNoncoprimePrimePowerCountMax_le_primeFactors_mul_log",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanNoncoprimePrimePowerCountMax_le_primeFactors_mul_log",
+          "kind": "theorem",
+          "fragment_sha256": "9f6bd862cd2f6629b65586c07d57366f5aa3ff1d76c094cc4ff89f22cfdb7a34"
+        },
+        {
+          "start": 49114,
+          "end": 51006,
+          "declaration_start": 49209,
+          "name": "liuPanNoncoprimePrimePowerCountMax_le_log_sq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanNoncoprimePrimePowerCountMax_le_log_sq",
+          "kind": "theorem",
+          "fragment_sha256": "ac715e82d9edc638048dedf61ec954f2f1cf18e8ff1637b2c65b0ed6c1d3110d"
+        },
+        {
+          "start": 51007,
+          "end": 51309,
+          "declaration_start": 51007,
+          "name": "liuPanNoncoprimePrimePowerCount_le_max",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanNoncoprimePrimePowerCount_le_max",
+          "kind": "theorem",
+          "fragment_sha256": "f869fcb3a90aaebc23ff0695c63d8f9febe8ab6ffb94e5f59dac8907ac59074e"
+        },
+        {
+          "start": 51310,
+          "end": 51600,
+          "declaration_start": 51310,
+          "name": "liuPanLogNoncoprimeCorrection_le_primePowerCountMax",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogNoncoprimeCorrection_le_primePowerCountMax",
+          "kind": "theorem",
+          "fragment_sha256": "a3e4306ef80b1b042501a90518983c2860ad2f4db854a3a22363ab6d9e2c5a6b"
+        },
+        {
+          "start": 51850,
+          "end": 52615,
+          "declaration_start": 51938,
+          "name": "liuPanLambdaCharacterPrefix_one_eq_psi_sub_noncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLambdaCharacterPrefix_one_eq_psi_sub_noncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "c0b98e9bc2f7c8fa3a189b09f04acaa0e61501362165c72691af76dd41674171"
+        },
+        {
+          "start": 53127,
+          "end": 53856,
+          "declaration_start": 53258,
+          "name": "liuPanAggregatePrincipalPNTTerm_eq_real",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregatePrincipalPNTTerm_eq_real",
+          "kind": "theorem",
+          "fragment_sha256": "3cb8d4ca21805dc11e4b100d341500df2f88a35e4b228bdef6a6f429154c46ed"
+        },
+        {
+          "start": 54440,
+          "end": 55232,
+          "declaration_start": 54578,
+          "name": "liuPanAggregatePrincipalNoncoprimePsiTerm_eq_real",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregatePrincipalNoncoprimePsiTerm_eq_real",
+          "kind": "theorem",
+          "fragment_sha256": "4ce5431619a6c5af97f9e294718dea4c017423b078d00af589413dfccba3d574"
+        },
+        {
+          "start": 58597,
+          "end": 59140,
+          "declaration_start": 58694,
+          "name": "liuPanAggregatePrincipalPsiTerm_eq_pnt_sub_noncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregatePrincipalPsiTerm_eq_pnt_sub_noncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "4e439a82b83d9dd85efe61a19649d649563a42ddb61631b40091d7b7ce1ad2c6"
+        },
+        {
+          "start": 59970,
+          "end": 60684,
+          "declaration_start": 60044,
+          "name": "liuPanAggregateAPPsiDiscrepancy_complex_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_complex_one",
+          "kind": "theorem",
+          "fragment_sha256": "7441e5eadb598ada3f8555e33ece789951d1b0bd984f369ba8aa3de9fc74992f"
+        },
+        {
+          "start": 60928,
+          "end": 61613,
+          "declaration_start": 61056,
+          "name": "liuPanSourceCharacterPrefix_eq_zeroExtension",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceCharacterPrefix_eq_zeroExtension",
+          "kind": "theorem",
+          "fragment_sha256": "097be7c1c12626ca4f37824d410a0884d8799a9dea106b9c122f7a4af95a0cd4"
+        },
+        {
+          "start": 61614,
+          "end": 62341,
+          "declaration_start": 61726,
+          "name": "liuPanSourceCharacterPrefix_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceCharacterPrefix_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "e0c43c8953b4113169ec6df452e573cf9275d2485358623bd2263432a2e950ee"
+        },
+        {
+          "start": 62342,
+          "end": 63013,
+          "declaration_start": 62460,
+          "name": "liuPanLambdaCharacterPrefix_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLambdaCharacterPrefix_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "7e14dd42b81dd8e2fa9e9937866ab2c08d3ca8b551ff4b2a31605ca0cf4b532c"
+        },
+        {
+          "start": 63014,
+          "end": 64083,
+          "declaration_start": 63162,
+          "name": "liuPanSource_mul_lambda_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSource_mul_lambda_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "3a96c571e9dfdd862d8331f4c01044d6d4cadd9f2b7ae2a7325d8433396bbefc"
+        },
+        {
+          "start": 65159,
+          "end": 66020,
+          "declaration_start": 65293,
+          "name": "sum_liuPanNonprincipalCharacters_by_conductor",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_liuPanNonprincipalCharacters_by_conductor",
+          "kind": "theorem",
+          "fragment_sha256": "edafd450870a997ffaeab823373cfa6f69c5a152c03ae08de57c452306ef9702"
+        },
+        {
+          "start": 66021,
+          "end": 66570,
+          "declaration_start": 66146,
+          "name": "liuPanAggregateNonprincipalPsiTerm_eq_conductorSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateNonprincipalPsiTerm_eq_conductorSum",
+          "kind": "theorem",
+          "fragment_sha256": "78e027f5bb0da0653e880bf17dc34feb829f247e2fa4f1aad47fc357fadd5f75"
+        },
+        {
+          "start": 67377,
+          "end": 68450,
+          "declaration_start": 67455,
+          "name": "liuPanAggregatePsiConductorSum_eq_primitiveLiftSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregatePsiConductorSum_eq_primitiveLiftSum",
+          "kind": "theorem",
+          "fragment_sha256": "6af97edb1833df8d949bd65c315ccbe279c13014ba57776efdfcae1f3b26ebb5"
+        },
+        {
+          "start": 69276,
+          "end": 69870,
+          "declaration_start": 69423,
+          "name": "liuPanAggregateInverseLogPsiTerm_complex_eq_characterTerm",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPsiTerm_complex_eq_characterTerm",
+          "kind": "theorem",
+          "fragment_sha256": "a335307e04dd10e2cbd94e1093214dd41a43c4577d0bbae553fde00824312825"
+        },
+        {
+          "start": 71450,
+          "end": 72002,
+          "declaration_start": 71533,
+          "name": "liuPanAggregatePNTError_endpoint_shell",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregatePNTError_endpoint_shell",
+          "kind": "theorem",
+          "fragment_sha256": "909e51465ff6ea68631a95b1a53eb7df6acf17389f17edaa428e5cde15de4ca4"
+        },
+        {
+          "start": 72003,
+          "end": 72467,
+          "declaration_start": 72102,
+          "name": "liuPanAggregatePNTError_prefix_swap",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregatePNTError_prefix_swap",
+          "kind": "theorem",
+          "fragment_sha256": "91cf08157eb73f76bcf9e054c61304c5b5cfebeac4299c6a60959f3c391a8919"
+        },
+        {
+          "start": 72468,
+          "end": 73791,
+          "declaration_start": 72587,
+          "name": "liuPanAggregateInverseLogPNTError_eq_source",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPNTError_eq_source",
+          "kind": "theorem",
+          "fragment_sha256": "a69c648371f9ff6110f80f3f7f4547f14d004c48d5046142e7f407c9780b4469"
+        },
+        {
+          "start": 73792,
+          "end": 74351,
+          "declaration_start": 73907,
+          "name": "liuPanAggregateInverseLogPrincipalPNTTerm_eq_real",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPrincipalPNTTerm_eq_real",
+          "kind": "theorem",
+          "fragment_sha256": "34dadb23b822fdb212abbae95a00476f590ab03292301370627bdca2c22af0e8"
+        },
+        {
+          "start": 74352,
+          "end": 74891,
+          "declaration_start": 74505,
+          "name": "liuPanAggregateInverseLogPrincipalPNTTerm_eq_source",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPrincipalPNTTerm_eq_source",
+          "kind": "theorem",
+          "fragment_sha256": "27b40c90b54f42fdf2980b55de1480cfb1893486a9b29325bdf0650d063b73e2"
+        },
+        {
+          "start": 76000,
+          "end": 78396,
+          "declaration_start": 76148,
+          "name": "abs_liuPanPrincipalPNTSourceSum_le_global",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanPrincipalPNTSourceSum_le_global",
+          "kind": "theorem",
+          "fragment_sha256": "f85f06300c328acbb1e1b136e39a947190711eec4d968da9433c48f2dcb89b36"
+        },
+        {
+          "start": 78397,
+          "end": 80950,
+          "declaration_start": 78583,
+          "name": "eventually_liuWeight_quotient_ge_rpow_one_ninth",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuWeight_quotient_ge_rpow_one_ninth",
+          "kind": "theorem",
+          "fragment_sha256": "02be0006af44a0eca0bd6b0b2dd8ddc66eeac22fc9373a990a433f89482e0138"
+        },
+        {
+          "start": 80951,
+          "end": 86310,
+          "declaration_start": 81076,
+          "name": "abs_liuPanPrincipalPNTSourceSum_le_large",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanPrincipalPNTSourceSum_le_large",
+          "kind": "theorem",
+          "fragment_sha256": "bdcdc2f4c9240f6099516d766d26ab03e3b0a111fbd1118d46f305dc7fb530e0"
+        },
+        {
+          "start": 89392,
+          "end": 90013,
+          "declaration_start": 89505,
+          "name": "liuPanAggregateInverseLogPrincipalNoncoprimePsiTerm_eq_real",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPrincipalNoncoprimePsiTerm_eq_real",
+          "kind": "theorem",
+          "fragment_sha256": "c7318a0b161fbc686899c9db8f21d56960e9c490cd15691d3740c0cb1ffc986c"
+        },
+        {
+          "start": 90683,
+          "end": 92420,
+          "declaration_start": 90876,
+          "name": "liuPanAggregateInverseLogNoncoprimeCorrection_source_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNoncoprimeCorrection_source_le",
+          "kind": "theorem",
+          "fragment_sha256": "cfe81219608a8878cad5c350311abb7b4b249ca8741b1c1dc8fd6e40d126ff1d"
+        },
+        {
+          "start": 92801,
+          "end": 93369,
+          "declaration_start": 92879,
+          "name": "liuPanAggregateInverseLogNoncoprimeCorrectionMaxY_source_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNoncoprimeCorrectionMaxY_source_le",
+          "kind": "theorem",
+          "fragment_sha256": "ebf42125f068dfa90a538c586a1612f96e90937cdcfebe1b996faead745dbcce"
+        },
+        {
+          "start": 93643,
+          "end": 93972,
+          "declaration_start": 93643,
+          "name": "liuPanNoncoprimePrimePowerCountMax_le_maxModulus",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanNoncoprimePrimePowerCountMax_le_maxModulus",
+          "kind": "theorem",
+          "fragment_sha256": "70dd58f8a301b44e32de4664b3fa9c0ba3ed9785522fd4aefdba0076644a61ba"
+        },
+        {
+          "start": 94361,
+          "end": 96396,
+          "declaration_start": 94508,
+          "name": "liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_source_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_source_le",
+          "kind": "theorem",
+          "fragment_sha256": "3a96d8f5badb2b01f71605d45dcb822a87ed8675cbbf7823811345ae556b74a5"
+        },
+        {
+          "start": 96397,
+          "end": 98553,
+          "declaration_start": 96544,
+          "name": "liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_source_le_log_sq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_source_le_log_sq",
+          "kind": "theorem",
+          "fragment_sha256": "ef53da3b3cd37912f21fc33cfd24feedb0b9cff19dd7a61166a9d2a440a56dde"
+        },
+        {
+          "start": 98554,
+          "end": 100915,
+          "declaration_start": 98683,
+          "name": "liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_le_rpow_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_le_rpow_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "fdf5ff41f6e0578c8ad2fde844dcc358048851833f462e11c4b152ad3af21d02"
+        },
+        {
+          "start": 100916,
+          "end": 103337,
+          "declaration_start": 101043,
+          "name": "eventually_liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuMainPanAggregateInverseLogNoncoprimeCorrectionAverage_le",
+          "kind": "theorem",
+          "fragment_sha256": "fe81fd1dae214bd1d6b76d435b4e50bcf00fe03d5930c7806985850d980921e1"
+        },
+        {
+          "start": 103338,
+          "end": 104051,
+          "declaration_start": 103496,
+          "name": "liuPanAggregateInverseLogPrincipalPsiTerm_eq_pnt_sub_noncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPrincipalPsiTerm_eq_pnt_sub_noncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "b783382469b13fdd4cbb9ebe3d71bb8fd37796b251b7ee92c0ba8ce4ffb9e0cb"
+        },
+        {
+          "start": 105465,
+          "end": 107818,
+          "declaration_start": 105578,
+          "name": "liuPanSourceLogLambdaCharacterHyperbola_eq_abel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceLogLambdaCharacterHyperbola_eq_abel",
+          "kind": "theorem",
+          "fragment_sha256": "b29328e7d211954a5ca4a606cd9cbc3e43b8e05cd3393d418f23b66c07ed9d02"
+        },
+        {
+          "start": 108702,
+          "end": 110341,
+          "declaration_start": 108897,
+          "name": "liuPanAggregateInverseLogNonprincipalPsiTerm_eq_logLambdaHyperbola",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNonprincipalPsiTerm_eq_logLambdaHyperbola",
+          "kind": "theorem",
+          "fragment_sha256": "6a453c07327a68ed481df4853617ebf7fab9d8368661e587a668b4dfd956b3cf"
+        },
+        {
+          "start": 110342,
+          "end": 111175,
+          "declaration_start": 110461,
+          "name": "liuPanAggregateInverseLogNonprincipalPsiTerm_eq_character_hyperbola",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNonprincipalPsiTerm_eq_character_hyperbola",
+          "kind": "theorem",
+          "fragment_sha256": "8c073713d93e38d83b9b5e3ddf88084777679943038facfa27f5b5d3448d79eb"
+        },
+        {
+          "start": 112001,
+          "end": 112592,
+          "declaration_start": 112122,
+          "name": "liuPanAggregateNonprincipalLogLambdaHyperbola_eq_conductorSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateNonprincipalLogLambdaHyperbola_eq_conductorSum",
+          "kind": "theorem",
+          "fragment_sha256": "9422b3b77ff754c1a17024db68e3b5ca3e913c6b07705c3b1ba73cb133d3ed94"
+        },
+        {
+          "start": 113571,
+          "end": 114706,
+          "declaration_start": 113645,
+          "name": "liuPanAggregateLogLambdaConductorSum_eq_primitiveLiftSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateLogLambdaConductorSum_eq_primitiveLiftSum",
+          "kind": "theorem",
+          "fragment_sha256": "5f538b21cdc2ed373a53b8a5828685cc559eaf45851dc006206264069f8be6b5"
+        },
+        {
+          "start": 116738,
+          "end": 117521,
+          "declaration_start": 116819,
+          "name": "liuPanAggregateLogLambdaPrimitiveLiftSum_eq_low_add_mediumHigh",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateLogLambdaPrimitiveLiftSum_eq_low_add_mediumHigh",
+          "kind": "theorem",
+          "fragment_sha256": "827e20717bd7d2c75aa34d962ac5d51138125f9fd76d7b40b29171e5d365fc5c"
+        },
+        {
+          "start": 117522,
+          "end": 118251,
+          "declaration_start": 117632,
+          "name": "liuPanAggregateInverseLogNonprincipalPsiTerm_eq_low_add_mediumHigh",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNonprincipalPsiTerm_eq_low_add_mediumHigh",
+          "kind": "theorem",
+          "fragment_sha256": "a5c913bf7a1c29d5fe388d233f79a922f669e5144b4b1a10652e1e7fa84edf53"
+        },
+        {
+          "start": 119360,
+          "end": 120112,
+          "declaration_start": 119443,
+          "name": "liuPanAggregateInverseLogPsiTerm_complex_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPsiTerm_complex_one",
+          "kind": "theorem",
+          "fragment_sha256": "998c0f6ff3ac9ea452b6c28e6935e6956c1d8d628efca368e988adfc0d3be61f"
+        },
+        {
+          "start": 120113,
+          "end": 120768,
+          "declaration_start": 120293,
+          "name": "liuPanAggregateInverseLogPsiCharacterTerm_eq_principal_add_hyperbola",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPsiCharacterTerm_eq_principal_add_hyperbola",
+          "kind": "theorem",
+          "fragment_sha256": "16bab95525b984012b58ca46bed26a034d120040639769be6e1c22114383b84f"
+        },
+        {
+          "start": 120769,
+          "end": 121420,
+          "declaration_start": 120840,
+          "name": "liuPanAggregateInverseLogPsiCharacterTerm_eq_principal_add_low_add_mediumHigh",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPsiCharacterTerm_eq_principal_add_low_add_mediumHigh",
+          "kind": "theorem",
+          "fragment_sha256": "9474c33abf820e7d6cd3a62391794aa0e5f2736da5c338a014bab26dedf7e738"
+        },
+        {
+          "start": 125168,
+          "end": 127348,
+          "declaration_start": 125299,
+          "name": "liuPanAggregateInverseLogNonprincipalPsiMaxL_le_low_add_mediumHigh",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNonprincipalPsiMaxL_le_low_add_mediumHigh",
+          "kind": "theorem",
+          "fragment_sha256": "693ea08b4517f2ad11cd2ea02d76407acb2b6ec7a60ef10f34302b771ca5d6b1"
+        },
+        {
+          "start": 127349,
+          "end": 128533,
+          "declaration_start": 127425,
+          "name": "liuPanAggregateInverseLogNonprincipalPsiMaxY_le_low_add_mediumHigh",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNonprincipalPsiMaxY_le_low_add_mediumHigh",
+          "kind": "theorem",
+          "fragment_sha256": "11b415581c21863063e1fceb26e9c1fef92744eb0974fc4dcc085300083561f1"
+        },
+        {
+          "start": 128534,
+          "end": 129405,
+          "declaration_start": 128666,
+          "name": "liuMainPanAggregateInverseLogNonprincipalPsiAverage_le_low_add_mediumHigh",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogNonprincipalPsiAverage_le_low_add_mediumHigh",
+          "kind": "theorem",
+          "fragment_sha256": "f47c3d0064a17732a766902d3cb6ad602b2f4a5d42e4471c69b64b25920038fc"
+        },
+        {
+          "start": 129406,
+          "end": 130169,
+          "declaration_start": 129478,
+          "name": "liuPanAggregateInverseLogNoncoprimeCorrection_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogNoncoprimeCorrection_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "be066e238e9ac0cdebed915887d9cc9b355c06d51aa4afd6165e1e5b6379791d"
+        },
+        {
+          "start": 130170,
+          "end": 132732,
+          "declaration_start": 130330,
+          "name": "abs_liuPanAggregateInverseLogPsiTerm_le_pnt_add_noncoprime_add_nonprincipal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanAggregateInverseLogPsiTerm_le_pnt_add_noncoprime_add_nonprincipal",
+          "kind": "theorem",
+          "fragment_sha256": "3a9611b65ee2e9075ba1cf66eaee4e11a2fc6aef3ea9fcd8b00c9c892f5138cc"
+        },
+        {
+          "start": 132733,
+          "end": 134495,
+          "declaration_start": 132859,
+          "name": "liuPanAggregateInverseLogPsiMaxL_le_pnt_add_noncoprime_add_nonprincipal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPsiMaxL_le_pnt_add_noncoprime_add_nonprincipal",
+          "kind": "theorem",
+          "fragment_sha256": "eaf288697e79173d275679d804b1cc388c998445b7377bf821a39327c59e1404"
+        },
+        {
+          "start": 134496,
+          "end": 135739,
+          "declaration_start": 134567,
+          "name": "liuPanAggregateInverseLogPsiMaxY_le_pnt_add_noncoprime_add_nonprincipal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPsiMaxY_le_pnt_add_noncoprime_add_nonprincipal",
+          "kind": "theorem",
+          "fragment_sha256": "ab0ed91c323a37c74fa5b2042dc6a98f63ba70809861a1e18c3d1465cee3251b"
+        },
+        {
+          "start": 135740,
+          "end": 137519,
+          "declaration_start": 135962,
+          "name": "liuMainPanAggregateInverseLogPsiAverage_le_decomposition",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogPsiAverage_le_decomposition",
+          "kind": "theorem",
+          "fragment_sha256": "0733196ff1c941f384ca66808a038610fffef289273add19afbd8ffa04da56ed"
+        },
+        {
+          "start": 137520,
+          "end": 140227,
+          "declaration_start": 137623,
+          "name": "liuPanAggregateInverseLogPrincipalPNTMaxY_le_split",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogPrincipalPNTMaxY_le_split",
+          "kind": "theorem",
+          "fragment_sha256": "8e4f0d47b1b382876c5c492f0401639e42d3dd0a9e53ab9ea53383864b3a6f26"
+        },
+        {
+          "start": 140228,
+          "end": 142045,
+          "declaration_start": 140353,
+          "name": "liuMainPanAggregateInverseLogPrincipalPNTAverage_le_split_mul_H3",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogPrincipalPNTAverage_le_split_mul_H3",
+          "kind": "theorem",
+          "fragment_sha256": "098ff246434894bb888b2a1f618b60daa51257010ffe73cef30f6a741a5e5cd6"
+        },
+        {
+          "start": 142534,
+          "end": 149707,
+          "declaration_start": 142758,
+          "name": "eventually_liuMainPanAggregateInverseLogPrincipalPNTAverage_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuMainPanAggregateInverseLogPrincipalPNTAverage_le",
+          "kind": "theorem",
+          "fragment_sha256": "dba9e4fc6e172b1527882d09ed825afc2c11e2678bddcbaae6b8a6e9f42b38c2"
+        },
+        {
+          "start": 149708,
+          "end": 150148,
+          "declaration_start": 149828,
+          "name": "liuMainPanAggregateInverseLogPrincipalPNTSourceFamilyBound",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogPrincipalPNTSourceFamilyBound",
+          "kind": "theorem",
+          "fragment_sha256": "ed40ff3ec27763e2c117a1e2319330ad248a2b8449659b6090712b6a41f27494"
+        },
+        {
+          "start": 153197,
+          "end": 154548,
+          "declaration_start": 153355,
+          "name": "LiuMainPanAggregateInverseLogPsiConductorSplitSourceFamilyBound.to_remaining",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogPsiConductorSplitSourceFamilyBound.to_remaining",
+          "kind": "theorem",
+          "fragment_sha256": "41e1db04a37423479020c621824de6c50b7ccef42dd2d00a56a65c0779bfae2c"
+        },
+        {
+          "start": 154549,
+          "end": 156200,
+          "declaration_start": 154702,
+          "name": "LiuMainPanAggregateInverseLogPsiNonprincipalConductorSourceFamilyBound.to_remaining",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogPsiNonprincipalConductorSourceFamilyBound.to_remaining",
+          "kind": "theorem",
+          "fragment_sha256": "460daee6ffb96a3d77e105d47dd68a6bbf72a570b7d9d2f8cfd1b4b2fe0f5c72"
+        },
+        {
+          "start": 156201,
+          "end": 157967,
+          "declaration_start": 156350,
+          "name": "LiuMainPanAggregateInverseLogPsiRemainingSourceFamilyBound.to_psi",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogPsiRemainingSourceFamilyBound.to_psi",
+          "kind": "theorem",
+          "fragment_sha256": "a0eadd837d065b111569940c85a57e53a66c0198f16d508d60b80f5f42d0ea69"
+        },
+        {
+          "start": 157968,
+          "end": 158367,
+          "declaration_start": 158131,
+          "name": "LiuMainPanAggregateInverseLogPsiConductorSplitSourceFamilyBound.to_psi",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogPsiConductorSplitSourceFamilyBound.to_psi",
+          "kind": "theorem",
+          "fragment_sha256": "aa3668eb2e1b1a658fc7979754a21263894ba21caf35d97cc8ce7c857a2b45db"
+        },
+        {
+          "start": 158368,
+          "end": 158842,
+          "declaration_start": 158582,
+          "name": "LiuMainPanAggregateInverseLogPsiNonprincipalConductorSourceFamilyBound.to_psi",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogPsiNonprincipalConductorSourceFamilyBound.to_psi",
+          "kind": "theorem",
+          "fragment_sha256": "b63b526e8532b41557e204e74e598863064c11199155ed5506f85ec4ef7a645f"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimePowerLargeSieve.lean",
+      "before_sha256": "0063223beb297f59e3ae3e5a58625c6ee950b8db44730704b2c87c134689d9f5",
+      "after_sha256": "7be7e743bca0dac89f9fdde931803becfb6c6e5d1add0b7dc4faa6b9173bb9db",
+      "before": {
+        "effective_lines": 2568,
+        "physical_lines": 2842,
+        "utf8_bytes": 119550
+      },
+      "after": {
+        "effective_lines": 238,
+        "physical_lines": 388,
+        "utf8_bytes": 12869
+      },
+      "deletions": [
+        {
+          "start": 953,
+          "end": 2346,
+          "declaration_start": 953,
+          "name": "dyadicPrefixBlocks_sum",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlocks_sum",
+          "kind": "theorem",
+          "fragment_sha256": "f03a236c62c198b96398b644f9698b5f81687968f800ec0effde77494867a743"
+        },
+        {
+          "start": 2347,
+          "end": 4085,
+          "declaration_start": 2347,
+          "name": "dyadicPrefixBlocks_card_le",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlocks_card_le",
+          "kind": "theorem",
+          "fragment_sha256": "207089e5374db893e95bcfb7928cdbc225313f526f517d85573b69f4ad697593"
+        },
+        {
+          "start": 4086,
+          "end": 4402,
+          "declaration_start": 4086,
+          "name": "list_norm_sum_le",
+          "qname": "MathlibNt.SieveTheory.list_norm_sum_le",
+          "kind": "theorem",
+          "fragment_sha256": "8299ed8137cdbe803d1bdfbd73e8bba1835ca784d2303a128d1f906fdd3be9b8"
+        },
+        {
+          "start": 4403,
+          "end": 5027,
+          "declaration_start": 4403,
+          "name": "list_sq_sum_le",
+          "qname": "MathlibNt.SieveTheory.list_sq_sum_le",
+          "kind": "theorem",
+          "fragment_sha256": "2162e59b3b1cf5e9b1029c1d7422e77a4372f2ecdd0998abf20698edf3db478b"
+        },
+        {
+          "start": 5028,
+          "end": 6500,
+          "declaration_start": 5028,
+          "name": "dyadic_prefix_norm_sq_le",
+          "qname": "MathlibNt.SieveTheory.dyadic_prefix_norm_sq_le",
+          "kind": "theorem",
+          "fragment_sha256": "fb937978c34bc9d7d8bb0644e933cb0a6e32c48ddfbd32a30c8afba827acf769"
+        },
+        {
+          "start": 6501,
+          "end": 6886,
+          "declaration_start": 6501,
+          "name": "sum_divisors_moebius_complex",
+          "qname": "MathlibNt.SieveTheory.sum_divisors_moebius_complex",
+          "kind": "theorem",
+          "fragment_sha256": "3ea6ff535c40f6dc11c6d17940372191333698bea4b429daa343650e473e01ff"
+        },
+        {
+          "start": 6887,
+          "end": 7420,
+          "declaration_start": 6993,
+          "name": "sum_moebius_if_dvd_eq_coprime",
+          "qname": "MathlibNt.SieveTheory.sum_moebius_if_dvd_eq_coprime",
+          "kind": "theorem",
+          "fragment_sha256": "aae0f72d1f5a3bdecc2d42a757c191608d3c023c503cbe0984e518fe0e3cf92b"
+        },
+        {
+          "start": 8820,
+          "end": 9509,
+          "declaration_start": 8915,
+          "name": "dirichletCharacter_eq_primitive_mul_moebius",
+          "qname": "MathlibNt.SieveTheory.dirichletCharacter_eq_primitive_mul_moebius",
+          "kind": "theorem",
+          "fragment_sha256": "668edc66d2d106eea2b86c3cb2ab4b4e36bd4009aedbf27a62d3e9ab478d75fc"
+        },
+        {
+          "start": 9510,
+          "end": 10473,
+          "declaration_start": 9586,
+          "name": "sum_range_ite_dvd",
+          "qname": "MathlibNt.SieveTheory.sum_range_ite_dvd",
+          "kind": "theorem",
+          "fragment_sha256": "e32a2af95386f516e4f58785b19869c616d4a658106d0cb5d38f064d4c5a30b3"
+        },
+        {
+          "start": 10474,
+          "end": 12960,
+          "declaration_start": 10691,
+          "name": "characterPrefixSum_eq_sum_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.characterPrefixSum_eq_sum_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "013a156209ef48b919759b2fbd82fa28a2a53f71cd128d7d0fc0aa7c4095572a"
+        },
+        {
+          "start": 13479,
+          "end": 15012,
+          "declaration_start": 13677,
+          "name": "characterPrefixSum_norm_le_sum_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.characterPrefixSum_norm_le_sum_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "26271e8a4a16ce87363d9c3113a91bdc95b7f3403c51864986eed84516b133fc"
+        },
+        {
+          "start": 15833,
+          "end": 18259,
+          "declaration_start": 16060,
+          "name": "characterPrefixSquareMax_le_dyadic",
+          "qname": "MathlibNt.SieveTheory.characterPrefixSquareMax_le_dyadic",
+          "kind": "theorem",
+          "fragment_sha256": "fb747e9b788314ce463d1cdece3aae620bfabfc7bfc9c3a2f6a01ae8ba5be7f0"
+        },
+        {
+          "start": 18868,
+          "end": 20587,
+          "declaration_start": 19014,
+          "name": "primitiveCharacterPrefixMaxMean_le_dyadic",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterPrefixMaxMean_le_dyadic",
+          "kind": "theorem",
+          "fragment_sha256": "4247f2c3a13b12ec8088806e847742efcd5dd99034027dbe2f3b5415b7e42081"
+        },
+        {
+          "start": 20826,
+          "end": 21963,
+          "declaration_start": 20826,
+          "name": "natZeroExtension_block_sum",
+          "qname": "MathlibNt.SieveTheory.natZeroExtension_block_sum",
+          "kind": "theorem",
+          "fragment_sha256": "6d2cde4500d1567953f609d557d8fef39db225ad2253f87f863114d0afebebe4"
+        },
+        {
+          "start": 21964,
+          "end": 23026,
+          "declaration_start": 21964,
+          "name": "natZeroExtension_block_norm_sq_sum",
+          "qname": "MathlibNt.SieveTheory.natZeroExtension_block_norm_sq_sum",
+          "kind": "theorem",
+          "fragment_sha256": "f5f5de1b327289d3329b95838eaa5f3c67c198c564fe7413d5f57c38574edddd"
+        },
+        {
+          "start": 23027,
+          "end": 23797,
+          "declaration_start": 23158,
+          "name": "primitiveCharacterBlockMean_le_largeSieve",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterBlockMean_le_largeSieve",
+          "kind": "theorem",
+          "fragment_sha256": "0254d90cca4c9048e03f8e5e30c8fbe1e983963b29545d3bba306bd1731c3e85"
+        },
+        {
+          "start": 23798,
+          "end": 24234,
+          "declaration_start": 23874,
+          "name": "dyadicAlignedBlocks_sum",
+          "qname": "MathlibNt.SieveTheory.dyadicAlignedBlocks_sum",
+          "kind": "theorem",
+          "fragment_sha256": "72bbfbbbd9704de52eb0d6494590694550da602946f98965e2c2633f41f83e25"
+        },
+        {
+          "start": 24235,
+          "end": 24674,
+          "declaration_start": 24325,
+          "name": "dyadicAlignedBlocks_energy_le",
+          "qname": "MathlibNt.SieveTheory.dyadicAlignedBlocks_energy_le",
+          "kind": "theorem",
+          "fragment_sha256": "5439c2428a8eddc7cf71a10105383501f05f6a0cf9bb7af6ee65eac2832ba58a"
+        },
+        {
+          "start": 24675,
+          "end": 24878,
+          "declaration_start": 24675,
+          "name": "largeSieveBound_mono_length",
+          "qname": "MathlibNt.SieveTheory.largeSieveBound_mono_length",
+          "kind": "theorem",
+          "fragment_sha256": "e79be172ae12aa4c2f8876a47c5f8346d8b6f162aae23ead27216b20b31cd146"
+        },
+        {
+          "start": 24879,
+          "end": 26508,
+          "declaration_start": 25036,
+          "name": "primitiveCharacterAlignedDyadicBlockMean_le",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterAlignedDyadicBlockMean_le",
+          "kind": "theorem",
+          "fragment_sha256": "1558444cb27fee15dc42e70c3b18ff89ac73133235d4a42fe8e4e9e34c5f232e"
+        },
+        {
+          "start": 26509,
+          "end": 27792,
+          "declaration_start": 26618,
+          "name": "primitiveCharacterAlignedDyadicMean_le",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterAlignedDyadicMean_le",
+          "kind": "theorem",
+          "fragment_sha256": "82cd73ee03327217eb95f0d8fad8fede1b768cb9a4ce524e642fba58268ca2bb"
+        },
+        {
+          "start": 27793,
+          "end": 28736,
+          "declaration_start": 27918,
+          "name": "dyadicPrefixBlocks_start_le",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlocks_start_le",
+          "kind": "theorem",
+          "fragment_sha256": "ee1bdc6216014cdb742f896c1437e43caec4f11ba791dd6d347f5b2c15bf247b"
+        },
+        {
+          "start": 28737,
+          "end": 29539,
+          "declaration_start": 28737,
+          "name": "dyadicPrefixBlocks_nodup",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlocks_nodup",
+          "kind": "theorem",
+          "fragment_sha256": "a2d2b5bcff692a00b8ee3ec437ce5a9ceb3d3e8c1e35d6ef39badccc8c4e2569"
+        },
+        {
+          "start": 29540,
+          "end": 31919,
+          "declaration_start": 29658,
+          "name": "dyadicPrefixBlocks_aligned_aux",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlocks_aligned_aux",
+          "kind": "theorem",
+          "fragment_sha256": "d03944ab6f33926acb7e8f446fead046717e7b2e649b1fd8e75bc65a0868fb7d"
+        },
+        {
+          "start": 31920,
+          "end": 32177,
+          "declaration_start": 31920,
+          "name": "dyadicPrefixBlocks_aligned",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlocks_aligned",
+          "kind": "theorem",
+          "fragment_sha256": "f3d7afa3cda3ba36c44103fb6841c1d55dae057825d05a29ffb700aec9b46cb8"
+        },
+        {
+          "start": 32805,
+          "end": 33717,
+          "declaration_start": 32805,
+          "name": "dyadicPrefixBlock_mem_alignedDyadicBlockIndices",
+          "qname": "MathlibNt.SieveTheory.dyadicPrefixBlock_mem_alignedDyadicBlockIndices",
+          "kind": "theorem",
+          "fragment_sha256": "81cb8a5f67599eba29ca29759fabbcfdaef4b6f62dea7d4184923e295b4fbf98"
+        },
+        {
+          "start": 33718,
+          "end": 34057,
+          "declaration_start": 33718,
+          "name": "alignedDyadicBlockIndices_sum",
+          "qname": "MathlibNt.SieveTheory.alignedDyadicBlockIndices_sum",
+          "kind": "theorem",
+          "fragment_sha256": "eec0e5598d7f3826fa44d5067a06db5d873edbe807847b5b667fe04441a0bc1c"
+        },
+        {
+          "start": 34058,
+          "end": 34722,
+          "declaration_start": 34058,
+          "name": "characterDyadicPrefixEnergy_le_aligned",
+          "qname": "MathlibNt.SieveTheory.characterDyadicPrefixEnergy_le_aligned",
+          "kind": "theorem",
+          "fragment_sha256": "b843448cbb0629a5f7d71bc4c206cb125b83d622d3bea6304cb8c2c310a6f0b6"
+        },
+        {
+          "start": 34723,
+          "end": 35241,
+          "declaration_start": 34723,
+          "name": "characterDyadicPrefixEnergyMax_le_aligned",
+          "qname": "MathlibNt.SieveTheory.characterDyadicPrefixEnergyMax_le_aligned",
+          "kind": "theorem",
+          "fragment_sha256": "416a6e1c0171ad2df206898fb6d7019e4221435ddde96f4443335793c836138e"
+        },
+        {
+          "start": 35242,
+          "end": 35947,
+          "declaration_start": 35242,
+          "name": "primitiveCharacterDyadicMaxMean_le_alignedIndices",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterDyadicMaxMean_le_alignedIndices",
+          "kind": "theorem",
+          "fragment_sha256": "9dfd519f6d1e6a0b697c03221a7d613ca9f8140f422d0227c1506cc712739265"
+        },
+        {
+          "start": 35948,
+          "end": 36443,
+          "declaration_start": 35948,
+          "name": "dependent_sum_comm",
+          "qname": "MathlibNt.SieveTheory.dependent_sum_comm",
+          "kind": "theorem",
+          "fragment_sha256": "2225803f31da7853577c1dcc612b5eaf44da5cafb7e425ffd9c38ce4fa58842f"
+        },
+        {
+          "start": 36444,
+          "end": 38346,
+          "declaration_start": 36595,
+          "name": "primitiveCharacterDyadicMaxMean_le_aligned",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterDyadicMaxMean_le_aligned",
+          "kind": "theorem",
+          "fragment_sha256": "41d9081bf6b062f9af1309c0eb1faed59db9bcd85ab64570586ccf1e363f3d9e"
+        },
+        {
+          "start": 38347,
+          "end": 39493,
+          "declaration_start": 38557,
+          "name": "primitiveCharacterPrefixMaxMean_le_largeSieve",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterPrefixMaxMean_le_largeSieve",
+          "kind": "theorem",
+          "fragment_sha256": "1673b7b7439c631eb3e1ad7095d7a4d4d68f82d3fcb02bab76e1d8f277cecbd4"
+        },
+        {
+          "start": 39494,
+          "end": 40362,
+          "declaration_start": 39611,
+          "name": "characterPrefixSquareMax_truncate",
+          "qname": "MathlibNt.SieveTheory.characterPrefixSquareMax_truncate",
+          "kind": "theorem",
+          "fragment_sha256": "310a3772bdbf633cd20005c8f104dbec8872c7c1ac6c48211dd57947eeef2dd2"
+        },
+        {
+          "start": 40363,
+          "end": 41576,
+          "declaration_start": 40539,
+          "name": "primitiveCharacterPrefixMaxMean_le_largeSieve_exact",
+          "qname": "MathlibNt.SieveTheory.primitiveCharacterPrefixMaxMean_le_largeSieve_exact",
+          "kind": "theorem",
+          "fragment_sha256": "bac868c0ab06ced11b1cefccc9ecb6c214cd8d833242b77bfeb666ecbe36a67d"
+        },
+        {
+          "start": 41577,
+          "end": 44395,
+          "declaration_start": 41681,
+          "name": "largeSieveBound_le_mul_log_of_sq_le",
+          "qname": "MathlibNt.SieveTheory.largeSieveBound_le_mul_log_of_sq_le",
+          "kind": "theorem",
+          "fragment_sha256": "10fac52fbbce704aac1b6d6aaabb7be8d40f6dac1147619f65cf40db4e3b128a"
+        },
+        {
+          "start": 44450,
+          "end": 45767,
+          "declaration_start": 44587,
+          "name": "liuPanPrimePowerDilatedCoefficientEnergy_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDilatedCoefficientEnergy_le",
+          "kind": "theorem",
+          "fragment_sha256": "31c97e31adab80e772e4891a7aab00cd3339c0ba80a141475dd496556127a1a9"
+        },
+        {
+          "start": 45768,
+          "end": 46647,
+          "declaration_start": 45885,
+          "name": "liuPanPrimePowerDilatedPrefixMaxMean_le_largeSieve",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDilatedPrefixMaxMean_le_largeSieve",
+          "kind": "theorem",
+          "fragment_sha256": "22399b64fcdcbd623041da50f505df42aaadc0f63202407c83d004e1e16e175e"
+        },
+        {
+          "start": 46648,
+          "end": 48367,
+          "declaration_start": 46752,
+          "name": "liuPanPrimePowerDilatedPrefixMaxMean_sqrt_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDilatedPrefixMaxMean_sqrt_le",
+          "kind": "theorem",
+          "fragment_sha256": "68724ba8927edb9eca8344ba5b380afca41117332ada82bb9a713f4fa6f65406"
+        },
+        {
+          "start": 49014,
+          "end": 49749,
+          "declaration_start": 49102,
+          "name": "characterPrefixNorm_le_sqrt_squareMax",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.characterPrefixNorm_le_sqrt_squareMax",
+          "kind": "theorem",
+          "fragment_sha256": "35eb4ff981b0f162334b822955b550a35c5948df48290958d694d81841db50f8"
+        },
+        {
+          "start": 49750,
+          "end": 50507,
+          "declaration_start": 49868,
+          "name": "liuPanPrimePowerCharacterPrefixNorm_le_inducedPrefixUpper",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCharacterPrefixNorm_le_inducedPrefixUpper",
+          "kind": "theorem",
+          "fragment_sha256": "b18a70de77d8df6a0ee90b2fd7f5962adcd312901b57f220c8610c17218bb2fe"
+        },
+        {
+          "start": 50508,
+          "end": 52249,
+          "declaration_start": 50616,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancy_abs_le_characterPrefixNormSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancy_abs_le_characterPrefixNormSum",
+          "kind": "theorem",
+          "fragment_sha256": "497f0ce2ef966977aabe5dd39543317e786a62be04e238c84efe5e66d213a184"
+        },
+        {
+          "start": 52250,
+          "end": 53657,
+          "declaration_start": 52401,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancyMaxY_le_inducedPrefixUpper",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancyMaxY_le_inducedPrefixUpper",
+          "kind": "theorem",
+          "fragment_sha256": "a26c50f6bc7490a7c15789b9bb4ce419677c07714ab0c02d3b5d180d7e290505"
+        },
+        {
+          "start": 55058,
+          "end": 55718,
+          "declaration_start": 55211,
+          "name": "primitiveCharacter_apply_eq_self_of_isPrimitive",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.primitiveCharacter_apply_eq_self_of_isPrimitive",
+          "kind": "theorem",
+          "fragment_sha256": "542e32e1ac73812d78505b5de3a02d6493eb2da367a3628aa9645892597c8404"
+        },
+        {
+          "start": 55719,
+          "end": 56492,
+          "declaration_start": 55869,
+          "name": "characterPrefixSquare_changeLevel_primitive",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.characterPrefixSquare_changeLevel_primitive",
+          "kind": "theorem",
+          "fragment_sha256": "f830d53eb6754a0d05a2710995e697d18d9e00cf3e5356fd38f9e1a16c77b431"
+        },
+        {
+          "start": 56493,
+          "end": 57433,
+          "declaration_start": 56638,
+          "name": "characterPrefixSquareMax_changeLevel_primitive",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.characterPrefixSquareMax_changeLevel_primitive",
+          "kind": "theorem",
+          "fragment_sha256": "62695bc06b2c2cfa5a4fbd4e2be0d1036717b19688f5f6e6cdbd5df60e87de82"
+        },
+        {
+          "start": 57434,
+          "end": 57873,
+          "declaration_start": 57479,
+          "name": "characterPrefixSquareMax_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.characterPrefixSquareMax_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "72400f6a7324c81ddafff988a2fe76b5cb66ab6093ad2f009a4969c89e7e32de"
+        },
+        {
+          "start": 57874,
+          "end": 58444,
+          "declaration_start": 57977,
+          "name": "liuPanPrimePowerPrimitiveCharacters_card_le_totient",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPrimitiveCharacters_card_le_totient",
+          "kind": "theorem",
+          "fragment_sha256": "f59357e5fef1676fae8835a2e03e2e43667dc3ff914d958181b6abb0c68b3be2"
+        },
+        {
+          "start": 58445,
+          "end": 59748,
+          "declaration_start": 58522,
+          "name": "primitiveCharacterPrefixSqrtSum_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.primitiveCharacterPrefixSqrtSum_le",
+          "kind": "theorem",
+          "fragment_sha256": "2bd1397ecd6abbcced3c94fe96080cf45c4beb742b93412ac5daf0820d85c9b1"
+        },
+        {
+          "start": 59749,
+          "end": 60617,
+          "declaration_start": 59879,
+          "name": "liuPanPrimePowerInducedPrefixUpper_changeLevel_primitive",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerInducedPrefixUpper_changeLevel_primitive",
+          "kind": "theorem",
+          "fragment_sha256": "091b41ff18fc655c6263450bd16a75758b3401f6121243345cefbbe2b3b4a606"
+        },
+        {
+          "start": 60618,
+          "end": 61878,
+          "declaration_start": 60759,
+          "name": "liuPanPrimePowerNonprincipalCharacters_filter_conductor_eq_lifts",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalCharacters_filter_conductor_eq_lifts",
+          "kind": "theorem",
+          "fragment_sha256": "80471b8ed4ee6ff8c94aa727c1248fc4f74214add00025cea4aa4d58920f04cd"
+        },
+        {
+          "start": 61879,
+          "end": 62698,
+          "declaration_start": 62019,
+          "name": "liuPanPrimePowerInducedPrefixUpper_sum_conductor_eq_primitive_lifts",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerInducedPrefixUpper_sum_conductor_eq_primitive_lifts",
+          "kind": "theorem",
+          "fragment_sha256": "348bac800f84d9a03df4baf638c7bb4106586b37113081ee4ef31ac8a6fd24ce"
+        },
+        {
+          "start": 63977,
+          "end": 64983,
+          "declaration_start": 64093,
+          "name": "sum_Icc_dvd_eq_sum_Icc_div",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_Icc_dvd_eq_sum_Icc_div",
+          "kind": "theorem",
+          "fragment_sha256": "70f898d6db701c86aae87e32edfc4ed0a4550a0d77df5521c4f84ed802b510cf"
+        },
+        {
+          "start": 64984,
+          "end": 65860,
+          "declaration_start": 65103,
+          "name": "liuPanPrimePowerCofactorWeightSum_le_H3Mass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorWeightSum_le_H3Mass",
+          "kind": "theorem",
+          "fragment_sha256": "63b55b233e6e0e5e813422a83b5cffdc1bb8d031080f316ebfa1e69b5359b374"
+        },
+        {
+          "start": 65861,
+          "end": 66882,
+          "declaration_start": 66001,
+          "name": "liuPanPrimePowerModulusWeight_div_totient_le_three_factors",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_div_totient_le_three_factors",
+          "kind": "theorem",
+          "fragment_sha256": "fe6eb7799afdd175a2c88ba9973fedca8994cb95ee88a2ab33bfc2708d5966df"
+        },
+        {
+          "start": 68923,
+          "end": 70436,
+          "declaration_start": 69063,
+          "name": "liuPanPrimePowerWeight_sqrt_totient_factor",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerWeight_sqrt_totient_factor",
+          "kind": "theorem",
+          "fragment_sha256": "656f702fea6cc1a61bf4d241ab7fcbba6369dc45362cff92d7a35b77ee37ea31"
+        },
+        {
+          "start": 70437,
+          "end": 71306,
+          "declaration_start": 70515,
+          "name": "liuPanPrimePowerModulusWeight_sq_div_eq_J9_term",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_sq_div_eq_J9_term",
+          "kind": "theorem",
+          "fragment_sha256": "c3fe002badf66051e98a91cef24c0194978f3d898f3a060241ddc92771f6cdab"
+        },
+        {
+          "start": 71307,
+          "end": 71880,
+          "declaration_start": 71389,
+          "name": "liuPanPrimePowerConductorWeightSqSum_le_J9Mass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerConductorWeightSqSum_le_J9Mass",
+          "kind": "theorem",
+          "fragment_sha256": "fa6f0bc49608bf21418512ac8b498ccacf7acb24d84962dbfdf314e7051dc4f6"
+        },
+        {
+          "start": 71881,
+          "end": 72590,
+          "declaration_start": 71976,
+          "name": "primitiveCharacterPrefixMaxMean_Icc_two_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.primitiveCharacterPrefixMaxMean_Icc_two_le",
+          "kind": "theorem",
+          "fragment_sha256": "0b831e5841f842bce9344f40347a21ca197ab15faac41311e22cda8a94f5fe8b"
+        },
+        {
+          "start": 73144,
+          "end": 73638,
+          "declaration_start": 73218,
+          "name": "liuPanPrimePowerModulusWeightSum_le_H3Mass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeightSum_le_H3Mass",
+          "kind": "theorem",
+          "fragment_sha256": "60e77f300c9ba89d70842cc5e76dae4854eb3874b32228bc57af33b2a5796a0e"
+        },
+        {
+          "start": 73639,
+          "end": 75878,
+          "declaration_start": 73778,
+          "name": "liuPanPrimePowerH3J9PrefixTransfer_le_largeSieve",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerH3J9PrefixTransfer_le_largeSieve",
+          "kind": "theorem",
+          "fragment_sha256": "9389944e123c13ab7dc40e0c8c7ef02af33466e1a6ddd3810e55dc2510ee3e1c"
+        },
+        {
+          "start": 75879,
+          "end": 78866,
+          "declaration_start": 76007,
+          "name": "liuPanPrimePowerCofactorSum_le_H3Mass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorSum_le_H3Mass",
+          "kind": "theorem",
+          "fragment_sha256": "6d869b69a937a12879dc2c2f213366002db2007f8656ba30c1dfd551f60fbb7a"
+        },
+        {
+          "start": 78867,
+          "end": 81999,
+          "declaration_start": 78970,
+          "name": "liuPanPrimePowerCofactorDilationPrefixTransfer_le_H3",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorDilationPrefixTransfer_le_H3",
+          "kind": "theorem",
+          "fragment_sha256": "c5daac04a85deae3d04d14947b2fdf419e19f8f10f68d1b1fe030659e723ab88"
+        },
+        {
+          "start": 82000,
+          "end": 85312,
+          "declaration_start": 82122,
+          "name": "liuPanPrimePowerH3DilationPrefixTransfer_le_primitiveCauchy",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerH3DilationPrefixTransfer_le_primitiveCauchy",
+          "kind": "theorem",
+          "fragment_sha256": "3ea0cfe940ba7f41dff8c0138c7ea2f6af438414e5fd374cc1ccc351679419c4"
+        },
+        {
+          "start": 85313,
+          "end": 87930,
+          "declaration_start": 85415,
+          "name": "liuPanPrimePowerPrimitiveCauchyPrefixTransfer_le_H3_J9",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPrimitiveCauchyPrefixTransfer_le_H3_J9",
+          "kind": "theorem",
+          "fragment_sha256": "de91866c840b29713b4c4c0a03b74945566c954eff352590c02156f5293b9e91"
+        },
+        {
+          "start": 87931,
+          "end": 89696,
+          "declaration_start": 88010,
+          "name": "liuPanPrimePowerPrimitiveDilationPrefixTransfer_eq_cofactor",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPrimitiveDilationPrefixTransfer_eq_cofactor",
+          "kind": "theorem",
+          "fragment_sha256": "e2b32c75490e54b92fa8a523b9012ca30aaec2f497b5146578eb86bfd63edb4d"
+        },
+        {
+          "start": 89697,
+          "end": 90584,
+          "declaration_start": 89832,
+          "name": "liuPanPrimePowerPrimitiveDilationPrefixTransfer_le_H3_J9",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPrimitiveDilationPrefixTransfer_le_H3_J9",
+          "kind": "theorem",
+          "fragment_sha256": "3acfb6e5f8ba104214c0fd10d5fe7b3a48326036ebafcf0fa32bafa4d121b039"
+        },
+        {
+          "start": 90585,
+          "end": 91562,
+          "declaration_start": 90650,
+          "name": "liuPanPrimePowerPrimitiveLiftPrefixTransfer_eq_dilation",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPrimitiveLiftPrefixTransfer_eq_dilation",
+          "kind": "theorem",
+          "fragment_sha256": "28b5db09b5ad4c2fc87a4d6b7c179b1cd0b73ab0251495745c812c783131302b"
+        },
+        {
+          "start": 91563,
+          "end": 92073,
+          "declaration_start": 91658,
+          "name": "liuPanPrimePowerNonprincipalCharacters_filter_conductor_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalCharacters_filter_conductor_one",
+          "kind": "theorem",
+          "fragment_sha256": "b07068c3a9c31da84dc589e88668890c950f6da243a47da5e93fe8044769f432"
+        },
+        {
+          "start": 92074,
+          "end": 93342,
+          "declaration_start": 92210,
+          "name": "liuPanPrimePowerConductorPrefixTransfer_eq_primitiveLiftPrefixTransfer",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerConductorPrefixTransfer_eq_primitiveLiftPrefixTransfer",
+          "kind": "theorem",
+          "fragment_sha256": "e83605fc2f7418ce3abdf72e3e1ab9a5eaaf0032612aa8e467c54c661d0a228b"
+        },
+        {
+          "start": 93343,
+          "end": 96049,
+          "declaration_start": 93450,
+          "name": "liuPanPrimePowerInducedPrefixTransfer_eq_conductorPrefixTransfer",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerInducedPrefixTransfer_eq_conductorPrefixTransfer",
+          "kind": "theorem",
+          "fragment_sha256": "8e9106e1949e1f60db71188b19be690277493b97db569d63eced7c12093d1939"
+        },
+        {
+          "start": 96050,
+          "end": 97687,
+          "declaration_start": 96235,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_inducedPrefixTransfer",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_inducedPrefixTransfer",
+          "kind": "theorem",
+          "fragment_sha256": "82ffa8cfaac39a0709f948578b55d744f7285da9a84a8a400f359897162a9a74"
+        },
+        {
+          "start": 97688,
+          "end": 98151,
+          "declaration_start": 97748,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_conductorPrefixTransfer",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_conductorPrefixTransfer",
+          "kind": "theorem",
+          "fragment_sha256": "9193512d17a0080f518b7db375b1573f64c0f9c2cf8459660d68c582bb70d26e"
+        },
+        {
+          "start": 98152,
+          "end": 99003,
+          "declaration_start": 98305,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_primitiveLiftPrefixTransfer",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_primitiveLiftPrefixTransfer",
+          "kind": "theorem",
+          "fragment_sha256": "01791238cf57362777edfdef9d150ec593e9a6f4346379f7acddc031fa111c51"
+        },
+        {
+          "start": 99004,
+          "end": 99951,
+          "declaration_start": 99116,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_H3_J9",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_H3_J9",
+          "kind": "theorem",
+          "fragment_sha256": "7fafe1c900c33891c60e29268fd3ea1551d9eccbc1fee459963a2cf0d3e54d5a"
+        },
+        {
+          "start": 99952,
+          "end": 100358,
+          "declaration_start": 100055,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_eq_zero_of_cutoff_eq_zero",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_eq_zero_of_cutoff_eq_zero",
+          "kind": "theorem",
+          "fragment_sha256": "d9522ec7788a87bbd561e30e81b350781288448b6ddff8579c522e9a17b700f8"
+        },
+        {
+          "start": 100359,
+          "end": 101238,
+          "declaration_start": 100506,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_largeSieveEnergy",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_largeSieveEnergy",
+          "kind": "theorem",
+          "fragment_sha256": "75dbc9bf66e5178945667b42054e069a2424f92d700335b65866ae11d0b328a1"
+        },
+        {
+          "start": 101239,
+          "end": 103024,
+          "declaration_start": 101357,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_largeSieveCoefficientBound",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_largeSieveCoefficientBound",
+          "kind": "theorem",
+          "fragment_sha256": "1ba7396196aaee58a75d4217ed1becd5466ed3faa6cfa0dae6270c390eb04895"
+        },
+        {
+          "start": 104087,
+          "end": 104497,
+          "declaration_start": 104087,
+          "name": "liuPanPrimePower_log_add_two_le_two_mul_log",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePower_log_add_two_le_two_mul_log",
+          "kind": "theorem",
+          "fragment_sha256": "cc9a3c070846bab8166608e9683f7683b6b00f743d7065b7f415cd96a03797b4"
+        },
+        {
+          "start": 104498,
+          "end": 105239,
+          "declaration_start": 104498,
+          "name": "liuPanPrimePower_cutoff_log_add_two_le_two_mul_log",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePower_cutoff_log_add_two_le_two_mul_log",
+          "kind": "theorem",
+          "fragment_sha256": "009ce81e8c675acda8716344990f53173c36bd889e7ba0e3ac494a583e571f9f"
+        },
+        {
+          "start": 105240,
+          "end": 106856,
+          "declaration_start": 105412,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_explicitScalar",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_explicitScalar",
+          "kind": "theorem",
+          "fragment_sha256": "995bcdb9a625a186b32c6f4e3e9c3783fa5c0fd0fe513aecd98419cbe8e9ba57"
+        },
+        {
+          "start": 106857,
+          "end": 115003,
+          "declaration_start": 107011,
+          "name": "liuMainPanPrimePowerCharacterNoncoprimeResidual_le_rpow_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanPrimePowerCharacterNoncoprimeResidual_le_rpow_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "467908487a4503806cbf70ceac96d800e5fafccc6f2ef83d415379d650cb12e5"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimePowerCharacters.lean",
+      "before_sha256": "c4c1382ee50753ca41e003e2123cdf1c48882344bc5148500da3e81395948040",
+      "after_sha256": "2393577cb612c67799139829c5c7ffba18b9fb5bca607d7c1ea2b11a2335957a",
+      "before": {
+        "effective_lines": 1483,
+        "physical_lines": 1732,
+        "utf8_bytes": 73393
+      },
+      "after": {
+        "effective_lines": 349,
+        "physical_lines": 505,
+        "utf8_bytes": 18468
+      },
+      "deletions": [
+        {
+          "start": 3730,
+          "end": 4039,
+          "declaration_start": 3730,
+          "name": "liuPanPrimePowerKappa_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerKappa_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "b94550241abc65ec4c57eb7255babdbb9d996576630b9db6d51d254efe1f3469"
+        },
+        {
+          "start": 4040,
+          "end": 4516,
+          "declaration_start": 4114,
+          "name": "liuPanPrimePowerKappa_le_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerKappa_le_one",
+          "kind": "theorem",
+          "fragment_sha256": "d8339f21bb599c2cfec14223f352bb41c986dfa53fbac005a040a667b9b5792a"
+        },
+        {
+          "start": 4517,
+          "end": 4826,
+          "declaration_start": 4558,
+          "name": "liuPanPrimePowerCoefficient_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoefficient_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "3d52d8347207fbc435a2a428fc62b00afda0ae60f7a50e9d14e8d5af1136c2e0"
+        },
+        {
+          "start": 4827,
+          "end": 6959,
+          "declaration_start": 4965,
+          "name": "liuPanPrimePowerCoefficient_le_primeFactors_sq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoefficient_le_primeFactors_sq",
+          "kind": "theorem",
+          "fragment_sha256": "8139ca9632aead211481d404db8fb3e5a8e7e3c399025214db3905e0231cb33d"
+        },
+        {
+          "start": 8070,
+          "end": 9322,
+          "declaration_start": 8160,
+          "name": "liuPanPrimePowerCoefficient_le_log_sq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoefficient_le_log_sq",
+          "kind": "theorem",
+          "fragment_sha256": "71fb954eb207a6efb1599ff8097a26ce81eceac8c9579c470b183599e50e6c04"
+        },
+        {
+          "start": 9323,
+          "end": 11016,
+          "declaration_start": 9472,
+          "name": "liuPanPrimePowerCoefficient_sq_sum_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoefficient_sq_sum_le",
+          "kind": "theorem",
+          "fragment_sha256": "c859c8a555b19c496637b7c95cc2aabf59c137625675d57fb457ee6890d2b922"
+        },
+        {
+          "start": 11017,
+          "end": 11661,
+          "declaration_start": 11111,
+          "name": "liuPanPrimePowerCoefficient_eq_zero_of_sq_lt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoefficient_eq_zero_of_sq_lt",
+          "kind": "theorem",
+          "fragment_sha256": "77c5d2b55b41568bae25c0436020eadb19011ae5c39e61b6ea8de2316bbcb173"
+        },
+        {
+          "start": 11662,
+          "end": 11935,
+          "declaration_start": 11759,
+          "name": "liuPanPrimePowerCoefficient_eq_zero_of_lt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoefficient_eq_zero_of_lt",
+          "kind": "theorem",
+          "fragment_sha256": "37657d1f291f23f24df09fc49933024e52fd87906904e96642136405183e4114"
+        },
+        {
+          "start": 11936,
+          "end": 12648,
+          "declaration_start": 12045,
+          "name": "liuPanPrimePower_mem_range_mul_iff",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePower_mem_range_mul_iff",
+          "kind": "theorem",
+          "fragment_sha256": "69f7a49bea3fe67cc6dd61cb7cb2ea4de2a77e622566624a06a91e22b7a9fdb1"
+        },
+        {
+          "start": 12649,
+          "end": 13264,
+          "declaration_start": 12782,
+          "name": "liuPanPrimePower_mul_mod_iff",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePower_mul_mod_iff",
+          "kind": "theorem",
+          "fragment_sha256": "af5f869576d2c6df8fac2a167c8bf457e55901094e7e793dc6200a6961c63257"
+        },
+        {
+          "start": 13265,
+          "end": 13885,
+          "declaration_start": 13463,
+          "name": "liuPanPrimePower_coprime_of_mul_modEq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePower_coprime_of_mul_modEq",
+          "kind": "theorem",
+          "fragment_sha256": "b7d620a0ce08b58d0028dc9715a7e9addade13a9c1434ac0aeb55fa9a8c7517e"
+        },
+        {
+          "start": 13886,
+          "end": 14738,
+          "declaration_start": 14028,
+          "name": "liuPanPrimePowerCorrectionKernel_eq_productSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCorrectionKernel_eq_productSum",
+          "kind": "theorem",
+          "fragment_sha256": "bafdf9a2a30e9b955c3053cc35466ca6bdc9d1d951c542557c23238d20eb3a0d"
+        },
+        {
+          "start": 14739,
+          "end": 16919,
+          "declaration_start": 14872,
+          "name": "liuPanSignedCorrectionBound_eq_coprimeSourceAPSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSignedCorrectionBound_eq_coprimeSourceAPSum",
+          "kind": "theorem",
+          "fragment_sha256": "ade9b719a77c34acb08eb0ca1843563c6ead12406b54837b2b6daf95f3c21dcb"
+        },
+        {
+          "start": 16920,
+          "end": 17692,
+          "declaration_start": 17068,
+          "name": "liuPanPrimePowerCoprimeSourceAPSum_eq_sourceAPSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoprimeSourceAPSum_eq_sourceAPSum",
+          "kind": "theorem",
+          "fragment_sha256": "cd2a0cae49208326347729d7d99e81adf0f51a5adbfe5b83577ab718bef336d3"
+        },
+        {
+          "start": 17693,
+          "end": 17861,
+          "declaration_start": 17693,
+          "name": "liuPanPrimePower_sum_eq_ite_of_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePower_sum_eq_ite_of_le",
+          "kind": "theorem",
+          "fragment_sha256": "1a53152e8f104f79cec4115d60dae9b4b040280880018b56231f29206a465f02"
+        },
+        {
+          "start": 17862,
+          "end": 20329,
+          "declaration_start": 18004,
+          "name": "liuPanPrimePowerAPSum_eq_sourceAPSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerAPSum_eq_sourceAPSum",
+          "kind": "theorem",
+          "fragment_sha256": "1d06a629930aa8dbc9b69cd2c7815dec524e839d12637d8dec375b6a17099816"
+        },
+        {
+          "start": 20330,
+          "end": 20881,
+          "declaration_start": 20477,
+          "name": "liuPanSignedCorrectionBound_eq_apSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSignedCorrectionBound_eq_apSum",
+          "kind": "theorem",
+          "fragment_sha256": "f05af08f841e116086f6a624e245797dd197a8bdc7f9fe144fc2b4577d396333"
+        },
+        {
+          "start": 20882,
+          "end": 21423,
+          "declaration_start": 20971,
+          "name": "liuPanPrimePowerCharacterMean_eq_apSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCharacterMean_eq_apSum",
+          "kind": "theorem",
+          "fragment_sha256": "913adcaf2f8df5c2d058b8c31cd84f9d520d2ea535ba6fcef3c3bfea3be6abee"
+        },
+        {
+          "start": 21424,
+          "end": 21755,
+          "declaration_start": 21495,
+          "name": "liuPanPrimePowerCharacterMean_re_eq_apSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCharacterMean_re_eq_apSum",
+          "kind": "theorem",
+          "fragment_sha256": "ceba28b62910f82257d6c4e39a51d9b57ad0c3102abd27d01fe02ee22291dee8"
+        },
+        {
+          "start": 22164,
+          "end": 23085,
+          "declaration_start": 22242,
+          "name": "liuPanPrimePowerPrincipalCharacterTerm_eq_coprimeTotal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPrincipalCharacterTerm_eq_coprimeTotal",
+          "kind": "theorem",
+          "fragment_sha256": "67cbb77eee7fa2d28d4b6e67463a8e20ecef30128fce1d0d7ffda95e30fae28f"
+        },
+        {
+          "start": 23086,
+          "end": 24675,
+          "declaration_start": 23227,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancy_eq_re_nonprincipalCharacterMean",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancy_eq_re_nonprincipalCharacterMean",
+          "kind": "theorem",
+          "fragment_sha256": "a79561597986294336ccd70c756bbeb0e4ae0542159ec43758144a50337a06a0"
+        },
+        {
+          "start": 25316,
+          "end": 27773,
+          "declaration_start": 25462,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancy_abs_le_cauchySchwarz",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancy_abs_le_cauchySchwarz",
+          "kind": "theorem",
+          "fragment_sha256": "014ccc314bc00705d4231b76f23e3e7ce88f3d00cf5fef7942a650e00a4b7cdf"
+        },
+        {
+          "start": 27774,
+          "end": 28337,
+          "declaration_start": 27854,
+          "name": "liuPanPrimePowerTotal_eq_coprime_add_noncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerTotal_eq_coprime_add_noncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "7924ab6dd069bf3a7d5576955a6e97e184131486a2da8e139fe1058f624c2c23"
+        },
+        {
+          "start": 28338,
+          "end": 28655,
+          "declaration_start": 28390,
+          "name": "liuPanPrimePowerCoprimeTotal_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoprimeTotal_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "5c02fb805204630fcbc4c5c03834eababf806041c9fecf822ff0ac3150e5c863"
+        },
+        {
+          "start": 28656,
+          "end": 28904,
+          "declaration_start": 28713,
+          "name": "liuPanPrimePowerTotal_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerTotal_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "a9763194b99b490129fe68caa438108f82bcefbe09595c6f77a149cd739d3104"
+        },
+        {
+          "start": 28905,
+          "end": 29448,
+          "declaration_start": 28977,
+          "name": "liuPanPrimePowerTotal_eq_correctionBound_mod_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerTotal_eq_correctionBound_mod_one",
+          "kind": "theorem",
+          "fragment_sha256": "a505355ac26a5a4f54f3f865215936d0dc7d1b82c29c16a03b2ecb02da5c4560"
+        },
+        {
+          "start": 29449,
+          "end": 30084,
+          "declaration_start": 29580,
+          "name": "liuPanPrimePowerTotal_le_pairSqrtMass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerTotal_le_pairSqrtMass",
+          "kind": "theorem",
+          "fragment_sha256": "af41e509aac9370497c6db690bb9d95476afa7bc5bb41d367a39219a0a8abb69"
+        },
+        {
+          "start": 30085,
+          "end": 30328,
+          "declaration_start": 30141,
+          "name": "liuPanPrimePowerPairSqrtMass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPairSqrtMass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "25afda96eb45c42c81944cff1602c009be816636163c7d7463998bb180f4d247"
+        },
+        {
+          "start": 30329,
+          "end": 31291,
+          "declaration_start": 30461,
+          "name": "liuWeightPairs_source_card_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuWeightPairs_source_card_le",
+          "kind": "theorem",
+          "fragment_sha256": "89594a984ac9067f740cfbbdb3b631a9109f2a624e87e48b40fbd02a7ff4c387"
+        },
+        {
+          "start": 31292,
+          "end": 32809,
+          "declaration_start": 31362,
+          "name": "liuWeightPairs_source_card_cast_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuWeightPairs_source_card_cast_le",
+          "kind": "theorem",
+          "fragment_sha256": "0b278c57d786fd93ed19e94e15a3cf3622f9e4e5a174bcdb84ec720a3c2c6af7"
+        },
+        {
+          "start": 32810,
+          "end": 34773,
+          "declaration_start": 32969,
+          "name": "liuPanPrimePowerPairSqrtMass_le_rpow",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerPairSqrtMass_le_rpow",
+          "kind": "theorem",
+          "fragment_sha256": "398ea86df7482675f77e925566798deccd5066df67984ffe86b697edc765aa70"
+        },
+        {
+          "start": 34774,
+          "end": 35255,
+          "declaration_start": 34854,
+          "name": "liuPanPrimePowerCoprimeTotal_le_total",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoprimeTotal_le_total",
+          "kind": "theorem",
+          "fragment_sha256": "22be53c962d1e2322aba4412a41cc384cd4ed879e968f5c7011aabe444d7e0ba"
+        },
+        {
+          "start": 35256,
+          "end": 35707,
+          "declaration_start": 35329,
+          "name": "liuPanPrimePowerCoprimeTotal_mono",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCoprimeTotal_mono",
+          "kind": "theorem",
+          "fragment_sha256": "d03e6ccd794ab9261927fc17a6cc8be02fe6b77ddfe8e7c869610c3ac1537779"
+        },
+        {
+          "start": 35708,
+          "end": 36157,
+          "declaration_start": 35805,
+          "name": "liuPanPrimePowerAPSum_eq_density_add_discrepancy",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerAPSum_eq_density_add_discrepancy",
+          "kind": "theorem",
+          "fragment_sha256": "8fd382ae460c3f26b2084a30f93eb8c3fa556c737f53ac72821e959aaf6e7a04"
+        },
+        {
+          "start": 36158,
+          "end": 36536,
+          "declaration_start": 36238,
+          "name": "liuPanPrimePowerAPSum_eq_coprimeDensity_add_nonprincipal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerAPSum_eq_coprimeDensity_add_nonprincipal",
+          "kind": "theorem",
+          "fragment_sha256": "e3fc32acb604e88e36180fd2fd1d0d5b090bec0d7e4418b1a68b275f448b8077"
+        },
+        {
+          "start": 36537,
+          "end": 37195,
+          "declaration_start": 36689,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancy_eq_discrepancy_add_noncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancy_eq_discrepancy_add_noncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "fa6656dd09f29e2b83cbb782b4e139c6f3fcf84af5aa4ab177962db0dcbdc6b7"
+        },
+        {
+          "start": 37196,
+          "end": 37790,
+          "declaration_start": 37345,
+          "name": "liuPanSignedCorrectionBound_eq_density_add_discrepancy",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSignedCorrectionBound_eq_density_add_discrepancy",
+          "kind": "theorem",
+          "fragment_sha256": "013dd7b96ba954e9d3ca04fd7a6ba23d8381e5c9ed22b22f2834ce20d66103d8"
+        },
+        {
+          "start": 37791,
+          "end": 38319,
+          "declaration_start": 37860,
+          "name": "liuPanSignedCorrectionBound_eq_coprimeDensity_add_nonprincipal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSignedCorrectionBound_eq_coprimeDensity_add_nonprincipal",
+          "kind": "theorem",
+          "fragment_sha256": "70ea7b56968618bfa3fe8d514887547b9bffda6a81c236052b9614a94a15b619"
+        },
+        {
+          "start": 38320,
+          "end": 38834,
+          "declaration_start": 38386,
+          "name": "liuPanPrimePowerDiscrepancy_mod_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDiscrepancy_mod_one",
+          "kind": "theorem",
+          "fragment_sha256": "4bce38a3694705fa869ca392b92b50e2ebcbfa461871ca398fff5338c117a4c9"
+        },
+        {
+          "start": 38835,
+          "end": 39176,
+          "declaration_start": 38917,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancy_mod_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancy_mod_one",
+          "kind": "theorem",
+          "fragment_sha256": "7932e80c676843d5fbc2a46ee6d59d56c0f363efa3840635b0cfbd6dab405234"
+        },
+        {
+          "start": 39355,
+          "end": 39566,
+          "declaration_start": 39431,
+          "name": "liuPanPrimePowerModulusWeight_zero",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_zero",
+          "kind": "theorem",
+          "fragment_sha256": "4ea3a6b1fbc8427af7cf79d96c9be1e768dedacb1d3f8db830d99201ef660758"
+        },
+        {
+          "start": 39567,
+          "end": 39855,
+          "declaration_start": 39653,
+          "name": "liuPanPrimePowerModulusWeight_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "9498a84a789d5c3dca5ad999e96be69bd177b93942dc85a228fe0b13426abcba"
+        },
+        {
+          "start": 39856,
+          "end": 40160,
+          "declaration_start": 39902,
+          "name": "liuPanPrimePowerModulusWeight_eq_zero_of_not_squarefree",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_eq_zero_of_not_squarefree",
+          "kind": "theorem",
+          "fragment_sha256": "c4a37c5b250c64a911913c10ac53e8a5c49b282bd295db7ddbb985ec505cf9ee"
+        },
+        {
+          "start": 40161,
+          "end": 41404,
+          "declaration_start": 40274,
+          "name": "liuPanPrimePowerModulusWeight_div_totient_mul_of_coprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_div_totient_mul_of_coprime",
+          "kind": "theorem",
+          "fragment_sha256": "f2101df6197ac820b310f05707cdebe14cc7b695eaf1d947ef4d7ffe3276ecee"
+        },
+        {
+          "start": 41405,
+          "end": 42784,
+          "declaration_start": 41554,
+          "name": "liuPanPrimePowerModulusWeight_div_totient_eq_three_factors",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerModulusWeight_div_totient_eq_three_factors",
+          "kind": "theorem",
+          "fragment_sha256": "a3c4955d7e422eee747996759590315981bddb59af56b20a18201b6048011d13"
+        },
+        {
+          "start": 43751,
+          "end": 43976,
+          "declaration_start": 43751,
+          "name": "liuPanPrimePowerH3Mass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerH3Mass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "1fab35cd99e33e4b4977af7e66ee535aceccba4dd3177d8d3143d15af8e841a3"
+        },
+        {
+          "start": 43977,
+          "end": 44229,
+          "declaration_start": 43977,
+          "name": "liuPanPrimePowerJ9Mass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerJ9Mass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "fdd15575b36c75125eb2fe887d511f9b399b294df19a9490d38e0e05bfcb8e3e"
+        },
+        {
+          "start": 47083,
+          "end": 47384,
+          "declaration_start": 47083,
+          "name": "liuPanPrimePowerCofactorSqrtMass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorSqrtMass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "d785099013679fd90783f2e83aae25e13ccf01f0781a1f210e044b8f7e418749"
+        },
+        {
+          "start": 47385,
+          "end": 47691,
+          "declaration_start": 47385,
+          "name": "liuPanPrimePowerCofactorLinearMass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorLinearMass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "cb062b30458ba68f0cb369bc5ee904ce0433f12aac3e9543e8494993e3537a2d"
+        },
+        {
+          "start": 47692,
+          "end": 47833,
+          "declaration_start": 47692,
+          "name": "liuPanPrimePowerH3Mass_eq_panMainTotientWeightedSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerH3Mass_eq_panMainTotientWeightedSum",
+          "kind": "theorem",
+          "fragment_sha256": "0736cd2680329f9fc7279cbe4a1ee5aad00c8bff64167cd3df71f9da6765e6ed"
+        },
+        {
+          "start": 47834,
+          "end": 48497,
+          "declaration_start": 47949,
+          "name": "liuPanPrimePowerCofactorSqrtMass_le_H3Mass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorSqrtMass_le_H3Mass",
+          "kind": "theorem",
+          "fragment_sha256": "0def43c7ca1240982814b96cfcdadf521dc49a07ca6d47f084e0cda59af84ece"
+        },
+        {
+          "start": 48498,
+          "end": 49044,
+          "declaration_start": 48566,
+          "name": "liuPanPrimePowerCofactorLinearMass_le_H3Mass",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerCofactorLinearMass_le_H3Mass",
+          "kind": "theorem",
+          "fragment_sha256": "502636c19dd753fa9e94cdbbe4b7286c57987748fa519e07671e92c0b0c65ee2"
+        },
+        {
+          "start": 49045,
+          "end": 49408,
+          "declaration_start": 49145,
+          "name": "liuPanPrimePowerH3Mass_le_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerH3Mass_le_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "8a831e34c5f2ad4cfd789261298628ee400a5086f82750049a178f6486e82165"
+        },
+        {
+          "start": 55192,
+          "end": 55517,
+          "declaration_start": 55240,
+          "name": "liuPanPrimePowerDensityModulusMass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDensityModulusMass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "d6863abb21369b4154894d57751ca9e3ce9152f4fb49703f4ae419ead62b1a4d"
+        },
+        {
+          "start": 55518,
+          "end": 55840,
+          "declaration_start": 55634,
+          "name": "liuPanPrimePowerDensityModulusMass_eq_panMainTotientWeightedSum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDensityModulusMass_eq_panMainTotientWeightedSum",
+          "kind": "theorem",
+          "fragment_sha256": "fbc2a12344348dedc42cfccc31913fc982934692f84bfd77b5095997490f70e3"
+        },
+        {
+          "start": 55841,
+          "end": 56382,
+          "declaration_start": 55988,
+          "name": "liuPanPrimePowerDensityModulusMass_le_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDensityModulusMass_le_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "9d85ca5b8af9a63717fcaddd190c13a119522c990605d7508a348058e9936fb6"
+        },
+        {
+          "start": 56383,
+          "end": 57526,
+          "declaration_start": 56539,
+          "name": "liuPanPrimePowerTotal_le_rpow",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerTotal_le_rpow",
+          "kind": "theorem",
+          "fragment_sha256": "ac3abf171a80c1238f998f3c4230716561fd146bcfb272d6dc184e968d1f5225"
+        },
+        {
+          "start": 57527,
+          "end": 58617,
+          "declaration_start": 57636,
+          "name": "liuPanPrimePowerDensityProduct_le_rpow_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDensityProduct_le_rpow_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "0f05b5c1aaae2db839624e835d5147a7609a4c461f10039e8e0702be87a2128d"
+        },
+        {
+          "start": 60635,
+          "end": 60926,
+          "declaration_start": 60635,
+          "name": "liuPanPrimePowerTotal_mono",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerTotal_mono",
+          "kind": "theorem",
+          "fragment_sha256": "48430863e0a9be12f752cd405fba11004b61df1ec6b8d244a71569126ecba610"
+        },
+        {
+          "start": 60927,
+          "end": 61861,
+          "declaration_start": 60927,
+          "name": "liuPanPrimePowerDiscrepancy_le_maxY",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerDiscrepancy_le_maxY",
+          "kind": "theorem",
+          "fragment_sha256": "1b234d0e8fcb0de8e6d92ed8361f6efbb3d897daf1905cdf0c48accb83c58c8e"
+        },
+        {
+          "start": 61862,
+          "end": 62928,
+          "declaration_start": 61862,
+          "name": "liuPanPrimePowerNonprincipalDiscrepancy_le_maxY",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimePowerNonprincipalDiscrepancy_le_maxY",
+          "kind": "theorem",
+          "fragment_sha256": "84f665e8979d3398ec60ecbff8dbfb983cfdd1d99c8c483ca07808d66a703b5b"
+        },
+        {
+          "start": 62929,
+          "end": 64166,
+          "declaration_start": 62929,
+          "name": "liuPanAPPrimePowerCorrectionMaxY_le_coprimeDensity_add_nonprincipal",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAPPrimePowerCorrectionMaxY_le_coprimeDensity_add_nonprincipal",
+          "kind": "theorem",
+          "fragment_sha256": "6de02713a522282cb62b19c110cd9adaae82b84975a88013156886cf9c25aacb"
+        },
+        {
+          "start": 64167,
+          "end": 65330,
+          "declaration_start": 64167,
+          "name": "liuPanAPPrimePowerCorrectionMaxY_le_density_add_character",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAPPrimePowerCorrectionMaxY_le_density_add_character",
+          "kind": "theorem",
+          "fragment_sha256": "a83af082ffe9f0b35e22a854c4a8bb7325af90bc44a7bfa83ffa82646f782dc6"
+        },
+        {
+          "start": 65331,
+          "end": 67180,
+          "declaration_start": 65540,
+          "name": "liuMainPanAPPrimePowerCorrectionAverage_le_density_add_character",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAPPrimePowerCorrectionAverage_le_density_add_character",
+          "kind": "theorem",
+          "fragment_sha256": "b83cde32f5933fa39e7c79654e8c18fd13976e8070159abdc9d1c0fa10e1dfc0"
+        },
+        {
+          "start": 67181,
+          "end": 69290,
+          "declaration_start": 67407,
+          "name": "liuMainPanAPPrimePowerCorrectionAverage_le_density_add_characterNoncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAPPrimePowerCorrectionAverage_le_density_add_characterNoncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "1c5501a8f8b4661dc881006e7174b5b5d3b302dac17fd4ee8dc0b2ec3486589b"
+        },
+        {
+          "start": 69291,
+          "end": 70282,
+          "declaration_start": 69446,
+          "name": "liuMainPanAPPrimePowerCorrectionAverage_le_polylog_add_characterNoncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAPPrimePowerCorrectionAverage_le_polylog_add_characterNoncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "d10934c45049ca655342b13e0d0dbd976d4e70c720332f4569927e6f4e1a87f6"
+        },
+        {
+          "start": 70283,
+          "end": 71213,
+          "declaration_start": 70442,
+          "name": "liuMainPanAPPrimePowerCorrectionAverage_le_rpow_polylog_add_characterNoncoprime",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAPPrimePowerCorrectionAverage_le_rpow_polylog_add_characterNoncoprime",
+          "kind": "theorem",
+          "fragment_sha256": "c92163f8254a4c7670babc9a1eae61e1a73686f11ca212c2290559d4d9c65cb0"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiDyadic.lean",
+      "before_sha256": "89ea59d1d9543bdf7de37d0e228db4699f3088a8125b11e76030736b9045426d",
+      "after_sha256": "4c395d8bfb43e14192f95a398da855bf339601f21168e26f83e9657dcce818f0",
+      "before": {
+        "effective_lines": 2315,
+        "physical_lines": 2590,
+        "utf8_bytes": 113446
+      },
+      "after": {
+        "effective_lines": 302,
+        "physical_lines": 487,
+        "utf8_bytes": 20530
+      },
+      "deletions": [
+        {
+          "start": 962,
+          "end": 1156,
+          "declaration_start": 962,
+          "name": "mem_liuPanDyadicShell_iff_log",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.mem_liuPanDyadicShell_iff_log",
+          "kind": "theorem",
+          "fragment_sha256": "39fd8c9b74be4bf44965e87c43abe3db5ddb22de7aa85bccad6f6fdff04abfb1"
+        },
+        {
+          "start": 1157,
+          "end": 2573,
+          "declaration_start": 1344,
+          "name": "sum_Icc_eq_sum_dyadicShell_of_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_Icc_eq_sum_dyadicShell_of_le",
+          "kind": "theorem",
+          "fragment_sha256": "da6b991bd17ac238abdb802201f7500a81529c2cee7b47631b146f94421d6e5c"
+        },
+        {
+          "start": 2574,
+          "end": 2885,
+          "declaration_start": 2574,
+          "name": "sum_range_succ_eq_sum_Icc_of_zero",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_range_succ_eq_sum_Icc_of_zero",
+          "kind": "theorem",
+          "fragment_sha256": "844219629bda404c6b3f5cb7c7aca38a3878de6eac7839142039ff06557c0e58"
+        },
+        {
+          "start": 3467,
+          "end": 3954,
+          "declaration_start": 3467,
+          "name": "norm_liuPanLogLambdaCoefficient_le_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanLogLambdaCoefficient_le_one",
+          "kind": "theorem",
+          "fragment_sha256": "475ff1b16cf1cc15cf2ca713f105b9d8254e9f45a07f429febf387ac42f947bc"
+        },
+        {
+          "start": 3955,
+          "end": 4659,
+          "declaration_start": 4026,
+          "name": "liuPanLogLambdaCharacterPrefix_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogLambdaCharacterPrefix_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "6f33d75fa5ba88638b9e7dca1a082258ffbe8e8cfe57937461b045e48a676b23"
+        },
+        {
+          "start": 5522,
+          "end": 6656,
+          "declaration_start": 5522,
+          "name": "liuPanSourceLogLambdaCharacterHyperbola_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceLogLambdaCharacterHyperbola_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "f490a82f5c75d16562a2bd91178dc0d24434703bc9b59452f1db7be98fba94ff"
+        },
+        {
+          "start": 7030,
+          "end": 8112,
+          "declaration_start": 7251,
+          "name": "norm_liuPanPrimitiveLogLambdaDilationPrefix_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPrimitiveLogLambdaDilationPrefix_le",
+          "kind": "theorem",
+          "fragment_sha256": "4134e3ddccdacab1f3a5adcd586f092ac7bc9be8f41c4e9f4db8434101f45ffb"
+        },
+        {
+          "start": 8712,
+          "end": 9711,
+          "declaration_start": 8842,
+          "name": "liuPanAggregateLogLambdaLowConductorSum_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateLogLambdaLowConductorSum_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "c427cc8739e01fa1a2f23f41fa0165a7e68826108d964180871683f9964d023b"
+        },
+        {
+          "start": 11301,
+          "end": 11714,
+          "declaration_start": 11301,
+          "name": "liuPanAggregateLogLambdaLowConductorMaxL_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateLogLambdaLowConductorMaxL_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "4a8cfc2a9ac7789c08b273d069868276178d430787da1e1733a386dc4dbf76ab"
+        },
+        {
+          "start": 11715,
+          "end": 12123,
+          "declaration_start": 11715,
+          "name": "liuPanAggregateLogLambdaLowConductorMaxY_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateLogLambdaLowConductorMaxY_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "618f311c8e8885e5603de75a4596eb986e00f23a187783d37ed4c964075079cd"
+        },
+        {
+          "start": 12124,
+          "end": 12573,
+          "declaration_start": 12124,
+          "name": "liuMainPanAggregateLogLambdaLowConductorAverage_eq_primitive_dilations",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateLogLambdaLowConductorAverage_eq_primitive_dilations",
+          "kind": "theorem",
+          "fragment_sha256": "2c5f7ef510366211804d4b896319f1186e2b6c317e7f2b0cad03472f99c91626"
+        },
+        {
+          "start": 13172,
+          "end": 13948,
+          "declaration_start": 13345,
+          "name": "norm_liuPanPrimitiveLogLambdaDilationPrefix_le_min_of_siegelWalfisz",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPrimitiveLogLambdaDilationPrefix_le_min_of_siegelWalfisz",
+          "kind": "theorem",
+          "fragment_sha256": "4e541952a51220334df35bd7542364c3d666d756f1430975c6d405f6312031a4"
+        },
+        {
+          "start": 13949,
+          "end": 14342,
+          "declaration_start": 14043,
+          "name": "norm_liuPanPrimitiveLogLambdaDilationPrefix_le_of_reduced_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPrimitiveLogLambdaDilationPrefix_le_of_reduced_le",
+          "kind": "theorem",
+          "fragment_sha256": "ecb3a36709204afb993729ef5b43949d35f64188f3f69ac5ba036813ab01c224"
+        },
+        {
+          "start": 14343,
+          "end": 15073,
+          "declaration_start": 14470,
+          "name": "norm_liuPanSourceZeroExtension_source_eq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanSourceZeroExtension_source_eq",
+          "kind": "theorem",
+          "fragment_sha256": "6c14c9ab2852de022383541dd09c798148bf0c9faec12c7668eb16fe590f676b"
+        },
+        {
+          "start": 15074,
+          "end": 15552,
+          "declaration_start": 15144,
+          "name": "sum_norm_liuPanSourceZeroExtension_source_le_three_mul_rpow_two_thirds",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_norm_liuPanSourceZeroExtension_source_le_three_mul_rpow_two_thirds",
+          "kind": "theorem",
+          "fragment_sha256": "9f7f9e9166a7b879a02613addaab8b8fac73717b59db6cbb4565d430f058e179"
+        },
+        {
+          "start": 15553,
+          "end": 15978,
+          "declaration_start": 15656,
+          "name": "sum_norm_liuPanSourceZeroExtension_source_div_le_one_add_log",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sum_norm_liuPanSourceZeroExtension_source_div_le_one_add_log",
+          "kind": "theorem",
+          "fragment_sha256": "25108d5b82601c2f768f5373468c46ea8a45eefed8360b38d614f1f159a586f4"
+        },
+        {
+          "start": 16829,
+          "end": 17715,
+          "declaration_start": 17060,
+          "name": "norm_liuPanPrimitiveDilationLogLambdaHyperbola_le_envelope",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPrimitiveDilationLogLambdaHyperbola_le_envelope",
+          "kind": "theorem",
+          "fragment_sha256": "d73785d74d86ad7b0f0b90cac5ce95c69e13f6d8899bc932747a1992b748bd31"
+        },
+        {
+          "start": 18514,
+          "end": 19956,
+          "declaration_start": 18743,
+          "name": "norm_liuPanPrimitiveDilationLogLambdaHyperbola_le_splitEnvelope",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPrimitiveDilationLogLambdaHyperbola_le_splitEnvelope",
+          "kind": "theorem",
+          "fragment_sha256": "950b6e99fd7adfd0c41070d7dfa53da1683d78ccc0e4b1feb0e61a3b6872bc87"
+        },
+        {
+          "start": 23606,
+          "end": 24709,
+          "declaration_start": 23696,
+          "name": "liuPanSourceDilationMass_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceDilationMass_le",
+          "kind": "theorem",
+          "fragment_sha256": "d668a9115e0daac20c3623c8b81ba0a339d966e00845329f07e2c753c1e95554"
+        },
+        {
+          "start": 24710,
+          "end": 26143,
+          "declaration_start": 24807,
+          "name": "liuPanSourceDilationReciprocalMass_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceDilationReciprocalMass_le",
+          "kind": "theorem",
+          "fragment_sha256": "39e8d10b3634e50a4c7aae3e39d698e6f49beb8b7470edc83b320bbc8dd3ba75"
+        },
+        {
+          "start": 26144,
+          "end": 29384,
+          "declaration_start": 26262,
+          "name": "liuPanLongReducedPrefixSiegelWalfiszTerm_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLongReducedPrefixSiegelWalfiszTerm_le",
+          "kind": "theorem",
+          "fragment_sha256": "483955e9da0c305ae65d1a17e26653c049a6e2530ae4089dc93b48b639e8deb4"
+        },
+        {
+          "start": 29385,
+          "end": 35034,
+          "declaration_start": 29538,
+          "name": "liuPanFixedDilationsSplitSum_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanFixedDilationsSplitSum_le",
+          "kind": "theorem",
+          "fragment_sha256": "2fb424a24a24efce17f2351aa2641346c05ed6d20c7f9262ca045c7baf922e6e"
+        },
+        {
+          "start": 35035,
+          "end": 41190,
+          "declaration_start": 35239,
+          "name": "LiuPanPrimitiveLowConductorSourceTransferLocalBoundAt.of_primitive_siegelWalfisz",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuPanPrimitiveLowConductorSourceTransferLocalBoundAt.of_primitive_siegelWalfisz",
+          "kind": "theorem",
+          "fragment_sha256": "bc4e0a70bd5d53b795857c32196ed192f570b565fedb7a79158c763444daaaae"
+        },
+        {
+          "start": 41191,
+          "end": 55827,
+          "declaration_start": 41434,
+          "name": "LiuPanAggregateLowConductorSourceTransferBoundAt.of_local",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuPanAggregateLowConductorSourceTransferBoundAt.of_local",
+          "kind": "theorem",
+          "fragment_sha256": "c7a0022ce84090f888740eb6acce4285e87434a6027ca81550aff679a0245bc8"
+        },
+        {
+          "start": 56893,
+          "end": 57193,
+          "declaration_start": 56893,
+          "name": "liuPanLowConductorCofactorEnvelopeMass_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductorCofactorEnvelopeMass_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "534a1b22bdcef3738120feac8b1572c49ed69fc44ab586e42d8161c2006bf8e9"
+        },
+        {
+          "start": 57194,
+          "end": 58163,
+          "declaration_start": 57194,
+          "name": "liuPanLowConductorCofactorEnvelope_term_squarefree",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductorCofactorEnvelope_term_squarefree",
+          "kind": "theorem",
+          "fragment_sha256": "e85dad7de000899cf058340e7db8bfa698c83eddef7e7541abb5adb4f19733ac"
+        },
+        {
+          "start": 58164,
+          "end": 58444,
+          "declaration_start": 58164,
+          "name": "liuPanLowConductorCofactorEnvelope_term_non_squarefree",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductorCofactorEnvelope_term_non_squarefree",
+          "kind": "theorem",
+          "fragment_sha256": "7d4ebe2798fddfcdfcf6e82f2d7fb731c8aa3c26e5c6ff5690e22e4186fb53e2"
+        },
+        {
+          "start": 58445,
+          "end": 60421,
+          "declaration_start": 58513,
+          "name": "liuPanLowConductorCofactorEnvelopeMass_le_prod_one_add",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductorCofactorEnvelopeMass_le_prod_one_add",
+          "kind": "theorem",
+          "fragment_sha256": "80c10baa8be13e283572e05023a51ba98f7bd263b75675ae19d9dd26b51f878f"
+        },
+        {
+          "start": 60422,
+          "end": 66157,
+          "declaration_start": 60565,
+          "name": "liuPanLowConductorCofactorEnvelopeMass_le_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductorCofactorEnvelopeMass_le_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "086dd763c044fbcc09ff161183d92365703ad08dd340bdb453fd28c684d6cbba"
+        },
+        {
+          "start": 66158,
+          "end": 67245,
+          "declaration_start": 66269,
+          "name": "liuPanLowConductor_divisors_card_le_two_pow",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductor_divisors_card_le_two_pow",
+          "kind": "theorem",
+          "fragment_sha256": "cba2595da5782d478374bb78d7bbc8071e8a7a81dde138ff506428d7f82470c4"
+        },
+        {
+          "start": 67246,
+          "end": 67622,
+          "declaration_start": 67246,
+          "name": "liuPanLowConductor_reciprocal_divisor_sum_le_card",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductor_reciprocal_divisor_sum_le_card",
+          "kind": "theorem",
+          "fragment_sha256": "eae062137844734c761ea23354d7aeba7fb98a2054ea1d75d28c29f66e5a0412"
+        },
+        {
+          "start": 67623,
+          "end": 70585,
+          "declaration_start": 67779,
+          "name": "liuPanLowConductor_short_inner_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductor_short_inner_le",
+          "kind": "theorem",
+          "fragment_sha256": "24efb73d1747bbb9e4c162b4b94ba0014a140531a00b1f77e04f0f1661d05146"
+        },
+        {
+          "start": 70586,
+          "end": 71750,
+          "declaration_start": 70731,
+          "name": "liuPanLowConductor_long_inner_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductor_long_inner_le",
+          "kind": "theorem",
+          "fragment_sha256": "5f78809b829f6174e0906a17a7dd14658abb0a2f3c364e60f1087dfde79b262b"
+        },
+        {
+          "start": 71751,
+          "end": 73337,
+          "declaration_start": 71888,
+          "name": "liuPanLowConductor_weighted_inner_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductor_weighted_inner_le",
+          "kind": "theorem",
+          "fragment_sha256": "e4a239508c37fa01fd74121611304a4c07997258b458625d1ff64f257709b9ce"
+        },
+        {
+          "start": 73338,
+          "end": 77444,
+          "declaration_start": 73530,
+          "name": "liuPanLowConductorWeightedCofactorMasses_le_envelope",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLowConductorWeightedCofactorMasses_le_envelope",
+          "kind": "theorem",
+          "fragment_sha256": "00c0468ac455ceb7c107f015a3f37c1132ed68202f15692dec6ba964ea6f2a17"
+        },
+        {
+          "start": 77445,
+          "end": 80959,
+          "declaration_start": 77663,
+          "name": "exists_liuPanLowConductorWeightedCofactorMassBoundAt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.exists_liuPanLowConductorWeightedCofactorMassBoundAt",
+          "kind": "theorem",
+          "fragment_sha256": "dff4ed606eb866e92057e2e2a99201168a1ce7994072f8f5c5bbdac1669305e9"
+        },
+        {
+          "start": 80960,
+          "end": 83126,
+          "declaration_start": 81137,
+          "name": "LiuMainPanAggregateLowConductorSiegelWalfiszBoundAt.of_primitive",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateLowConductorSiegelWalfiszBoundAt.of_primitive",
+          "kind": "theorem",
+          "fragment_sha256": "30a6651e6101dcd0ea338c1e32016536c8ce062aa6dbb3c94f85f6a8f26a8638"
+        },
+        {
+          "start": 84132,
+          "end": 90161,
+          "declaration_start": 84266,
+          "name": "exists_liuPanLowConductorSiegelWalfiszScalarBoundAt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.exists_liuPanLowConductorSiegelWalfiszScalarBoundAt",
+          "kind": "theorem",
+          "fragment_sha256": "22295d00254c5602e1ecac934b425aefd0314515a85d96f94aa25ded2750aa28"
+        },
+        {
+          "start": 90162,
+          "end": 91863,
+          "declaration_start": 90384,
+          "name": "LiuPanPrimitiveLogLambdaDilationSiegelWalfiszProducer.to_lowConductorSourceFamily",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuPanPrimitiveLogLambdaDilationSiegelWalfiszProducer.to_lowConductorSourceFamily",
+          "kind": "theorem",
+          "fragment_sha256": "09be098250d40aed8ece03274e875ccd60e6a6cefb2bf793848596d837aca63b"
+        },
+        {
+          "start": 93818,
+          "end": 94854,
+          "declaration_start": 93923,
+          "name": "liuPanPrimitiveDilationLogLambdaHyperbola_eq_dyadicExpansion",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimitiveDilationLogLambdaHyperbola_eq_dyadicExpansion",
+          "kind": "theorem",
+          "fragment_sha256": "22470d61cd566fe920bfa6757a16d81cffed2704c11fa40172960394bfcd5945"
+        },
+        {
+          "start": 94855,
+          "end": 95255,
+          "declaration_start": 94855,
+          "name": "liuPanSourceLogLambdaCharacterHyperbola_eq_dyadicExpansion",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceLogLambdaCharacterHyperbola_eq_dyadicExpansion",
+          "kind": "theorem",
+          "fragment_sha256": "cb8e914b3f643c7e1bd131ac26f7118e88035873a2ca083db0c9c297b92679d4"
+        },
+        {
+          "start": 95256,
+          "end": 95551,
+          "declaration_start": 95361,
+          "name": "liuPanDyadicStaircaseIndex_card",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanDyadicStaircaseIndex_card",
+          "kind": "theorem",
+          "fragment_sha256": "8d844ec516f5821de7bd551acc3ed9a96a95216e650a7b9401e2fba1af2ef3b6"
+        },
+        {
+          "start": 95552,
+          "end": 96061,
+          "declaration_start": 95687,
+          "name": "liuPanDyadicStaircaseIndex_card_le_sq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanDyadicStaircaseIndex_card_le_sq",
+          "kind": "theorem",
+          "fragment_sha256": "d224c14c4d3638c237042480a9da81769ca0237c91cd3df6345c5c9c74a9e7b5"
+        },
+        {
+          "start": 96062,
+          "end": 96933,
+          "declaration_start": 96142,
+          "name": "liuPanLogLambdaDyadicEnergy_le_card",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogLambdaDyadicEnergy_le_card",
+          "kind": "theorem",
+          "fragment_sha256": "ad164c65dcba16329c38d4b74ef09c100abcdf793f68166e9fc48df0a5cff4e1"
+        },
+        {
+          "start": 96934,
+          "end": 97970,
+          "declaration_start": 97066,
+          "name": "liuWeight_ne_zero_source_bounds",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuWeight_ne_zero_source_bounds",
+          "kind": "theorem",
+          "fragment_sha256": "d0bfc09eeda81178c58c4859d75382f097717d114b15d0e8c86532ef034aacb3"
+        },
+        {
+          "start": 97971,
+          "end": 99243,
+          "declaration_start": 98085,
+          "name": "liuWeight_hyperbola_lambda_lt_rpow_seventeen_thirtieth",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuWeight_hyperbola_lambda_lt_rpow_seventeen_thirtieth",
+          "kind": "theorem",
+          "fragment_sha256": "08ae6f6c89c3a1da717a4a7be59453777801049a91da070cee507ebc203d4f00"
+        },
+        {
+          "start": 100091,
+          "end": 100544,
+          "declaration_start": 100246,
+          "name": "Icc_inter_liuPanDyadicShell_eq_Ico",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.Icc_inter_liuPanDyadicShell_eq_Ico",
+          "kind": "theorem",
+          "fragment_sha256": "53d6b64d506e9a86930d41b0ee9336232696fdd9a186b5a153ad41b63ef3ac15"
+        },
+        {
+          "start": 100545,
+          "end": 101947,
+          "declaration_start": 100673,
+          "name": "liuPanDilationStaircase_eq_filter",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanDilationStaircase_eq_filter",
+          "kind": "theorem",
+          "fragment_sha256": "3e718d1751688005042842dc0d0334230759b99c2e594d296c91cbbad6f98eb1"
+        },
+        {
+          "start": 101948,
+          "end": 102888,
+          "declaration_start": 102104,
+          "name": "liuPanPrimitiveDilationDyadicExpansion_eq_sum_blocks",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPrimitiveDilationDyadicExpansion_eq_sum_blocks",
+          "kind": "theorem",
+          "fragment_sha256": "c51eef2baf00a71db081b86e657becc1acad6841b6eec74ae55477e7e6fb85ce"
+        },
+        {
+          "start": 103389,
+          "end": 104097,
+          "declaration_start": 103504,
+          "name": "liuPanSourceDilationDyadicEnergy_le_card",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceDilationDyadicEnergy_le_card",
+          "kind": "theorem",
+          "fragment_sha256": "63d0539393ec15e7d38f35712b5fa62bb09fb1de82e6b948c756d244c7411395"
+        },
+        {
+          "start": 104098,
+          "end": 104658,
+          "declaration_start": 104179,
+          "name": "liuPanLogLambdaDilationDyadicEnergy_le_card",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanLogLambdaDilationDyadicEnergy_le_card",
+          "kind": "theorem",
+          "fragment_sha256": "c4f25dced52fbc3b243a3f2d29813b0dfd8737383a2f4e86b29a984a4027b70f"
+        },
+        {
+          "start": 107862,
+          "end": 108814,
+          "declaration_start": 108069,
+          "name": "LiuMainPanAggregateMediumHighConductorBilinearBoundAt.of_local_blocks",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateMediumHighConductorBilinearBoundAt.of_local_blocks",
+          "kind": "theorem",
+          "fragment_sha256": "ae12f81a34b5a5435f0b78fe6b020c622dfd143296224d22df4718380febc141"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimePowerPowerSaving.lean",
+      "before_sha256": "a10dfbd52c00cba8aa25e9635bf6d34b8295114756d3ecd9fbf8ef5b8e67d1e4",
+      "after_sha256": "86e78f061c7f9111cd8cb365c2d4cb4a88defeb652ec93d56b2fb06ae89a309f",
+      "before": {
+        "effective_lines": 470,
+        "physical_lines": 537,
+        "utf8_bytes": 25381
+      },
+      "after": {
+        "effective_lines": 33,
+        "physical_lines": 78,
+        "utf8_bytes": 2699
+      },
+      "deletions": [
+        {
+          "start": 2528,
+          "end": 6058,
+          "declaration_start": 2671,
+          "name": "exists_liuMainPanAPPrimePowerPowerSavingBoundAt_source",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.exists_liuMainPanAPPrimePowerPowerSavingBoundAt_source",
+          "kind": "theorem",
+          "fragment_sha256": "1776e1875033792d9ecec52cd772ca531b5bb55a38d6c05c9811c275cdb24f44"
+        },
+        {
+          "start": 6059,
+          "end": 6547,
+          "declaration_start": 6127,
+          "name": "eventually_liuMainPanAPPrimePowerPowerSavingBoundAt_source",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuMainPanAPPrimePowerPowerSavingBoundAt_source",
+          "kind": "theorem",
+          "fragment_sha256": "c353f7a7c2e7c0e1d89ca2fc83f556aaa9acb123d69addd10213ce91618840ba"
+        },
+        {
+          "start": 6548,
+          "end": 8053,
+          "declaration_start": 6706,
+          "name": "liuPaperQSourceCoprimeDistributionMajorant_le_liuMainPanAverage",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPaperQSourceCoprimeDistributionMajorant_le_liuMainPanAverage",
+          "kind": "theorem",
+          "fragment_sha256": "cbda4a4ef93b9e50d6e122d380d1bcb14b3fe96ebb438fe5f87f29783376c071"
+        },
+        {
+          "start": 8054,
+          "end": 11302,
+          "declaration_start": 8182,
+          "name": "liuMainPanAverage_le_of_primePowerPowerSavingInputsAt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAverage_le_of_primePowerPowerSavingInputsAt",
+          "kind": "theorem",
+          "fragment_sha256": "98b3d2709f097b4c3f28ccf5907bec8f61d80d5f7ce0658c3ad99b88f4adaaa6"
+        },
+        {
+          "start": 11303,
+          "end": 13264,
+          "declaration_start": 11450,
+          "name": "liuPaperQSourceFullDistributionMajorant_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputsAt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPaperQSourceFullDistributionMajorant_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputsAt",
+          "kind": "theorem",
+          "fragment_sha256": "d09634c5c714581cc6282daa9868243ce2306e30fb3a12781f0d5fe76cd904a8"
+        },
+        {
+          "start": 13265,
+          "end": 14523,
+          "declaration_start": 13334,
+          "name": "eventually_liuPaperQSourceFullDistributionMajorant_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputs",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuPaperQSourceFullDistributionMajorant_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputs",
+          "kind": "theorem",
+          "fragment_sha256": "414b145c08648a76d5f7fb3eb99459d67405c0eea2341583d43ee5a4b6b3b640"
+        },
+        {
+          "start": 14524,
+          "end": 15839,
+          "declaration_start": 14603,
+          "name": "abs_liuSelbergRemainder_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputsAt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuSelbergRemainder_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputsAt",
+          "kind": "theorem",
+          "fragment_sha256": "5ce689cc579bb0d56e9cc2b2cdefa29d03f15052382b7ea7ceb235571390f3d2"
+        },
+        {
+          "start": 15840,
+          "end": 17270,
+          "declaration_start": 15918,
+          "name": "eventually_abs_liuSelbergRemainder_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputs",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_abs_liuSelbergRemainder_liuLogarithmicIntegral_le_of_primePowerPowerSavingInputs",
+          "kind": "theorem",
+          "fragment_sha256": "bbb9b32721ca7d13996d59fd59a1b60821b31a0602a2496cc47a5d257312cba5"
+        },
+        {
+          "start": 17271,
+          "end": 18782,
+          "declaration_start": 17369,
+          "name": "liuSelbergSwitchedCount_le_of_mainTermUpperBound_primePowerPowerSavingInputsAt",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuSelbergSwitchedCount_le_of_mainTermUpperBound_primePowerPowerSavingInputsAt",
+          "kind": "theorem",
+          "fragment_sha256": "ac9965d5c0cdeeaf1b650c30f1e613f91e6e816606f673e41a961166fb9e92fa"
+        },
+        {
+          "start": 18783,
+          "end": 20335,
+          "declaration_start": 18866,
+          "name": "eventually_liuSelbergSwitchedCount_le_of_mainTermUpperBound_primePowerPowerSavingInputs",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuSelbergSwitchedCount_le_of_mainTermUpperBound_primePowerPowerSavingInputs",
+          "kind": "theorem",
+          "fragment_sha256": "504671423de0c258085beb48575bb3aae8e99dfb5a83c3d6c92c3bfcbcf3bc75"
+        },
+        {
+          "start": 20336,
+          "end": 22323,
+          "declaration_start": 20419,
+          "name": "eventually_liuSelbergOptimalSquareCount_le_even_of_primePowerPowerSavingInputs",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuSelbergOptimalSquareCount_le_even_of_primePowerPowerSavingInputs",
+          "kind": "theorem",
+          "fragment_sha256": "40bfd5c610a4c5a9cae40d9da36f133f1fe897e88a24c3b014f41032eff84327"
+        },
+        {
+          "start": 22365,
+          "end": 23336,
+          "declaration_start": 22504,
+          "name": "tendsto_primePowerPowerSavingScale_div_mainScale",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_primePowerPowerSavingScale_div_mainScale",
+          "kind": "theorem",
+          "fragment_sha256": "f05567d08f6dd820e03d8c44d2f3467101508e9a0fb0b10ca734e461cd949a89"
+        },
+        {
+          "start": 23337,
+          "end": 23848,
+          "declaration_start": 23489,
+          "name": "tendsto_liuR1Scale_div_mainScale",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_liuR1Scale_div_mainScale",
+          "kind": "theorem",
+          "fragment_sha256": "9b89833a847ca85eee57b714825502b08b5be0e0eb4d513ee9e3697e53104a62"
+        },
+        {
+          "start": 23849,
+          "end": 24573,
+          "declaration_start": 23990,
+          "name": "tendsto_primePower_add_liuR1_div_mainScale",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_primePower_add_liuR1_div_mainScale",
+          "kind": "theorem",
+          "fragment_sha256": "86169688707be2cd7af0b915f0e204ee2cafa59d35d3496e0d90a47ab5ba2384"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbel.lean",
+      "before_sha256": "6536f1652118a94740f2b64c7f547b4d3dbf4e08763fa7848cbff32dddd43f74",
+      "after_sha256": "e50a481656bd0f734aad758da779edb2822a792406d366a43b80e26229085bbb",
+      "before": {
+        "effective_lines": 839,
+        "physical_lines": 1022,
+        "utf8_bytes": 41865
+      },
+      "after": {
+        "effective_lines": 347,
+        "physical_lines": 496,
+        "utf8_bytes": 19551
+      },
+      "deletions": [
+        {
+          "start": 2255,
+          "end": 2931,
+          "declaration_start": 2255,
+          "name": "liuPanInverseLogAbelWeight_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanInverseLogAbelWeight_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "f320e5c112f42c79271b7371cd06cf09bcdbe4349ae81b0e5521cc6055d5251c"
+        },
+        {
+          "start": 2932,
+          "end": 3042,
+          "declaration_start": 2932,
+          "name": "natCast_log_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.natCast_log_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "13394cf8a80d91351f24e2c6a2c6d22d7fab7eda50da0a12581c576e2dfb7c68"
+        },
+        {
+          "start": 3043,
+          "end": 4331,
+          "declaration_start": 3253,
+          "name": "apLogVonMangoldt_eq_discreteAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.apLogVonMangoldt_eq_discreteAbel",
+          "kind": "theorem",
+          "fragment_sha256": "7afa328c2d70dee4400e0c9d8f12f43c89d63757573ce6efd515ed8264e21fe9"
+        },
+        {
+          "start": 4332,
+          "end": 5687,
+          "declaration_start": 4572,
+          "name": "apLogVonMangoldt_sub_liuLogarithmicIntegral_eq_discreteAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.apLogVonMangoldt_sub_liuLogarithmicIntegral_eq_discreteAbel",
+          "kind": "theorem",
+          "fragment_sha256": "a577b83e285c1dc2edc9420bbbd6483524541b597ee57a8fa2b81be263bc09b7"
+        },
+        {
+          "start": 11741,
+          "end": 12578,
+          "declaration_start": 11824,
+          "name": "liuPanAggregateAPPsiDiscrepancy_endpoint_shell",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_endpoint_shell",
+          "kind": "theorem",
+          "fragment_sha256": "62e045482196f62cc5cc0adfac04cf1a5f838aaed56dc54344d5181376ca8d54"
+        },
+        {
+          "start": 12579,
+          "end": 13252,
+          "declaration_start": 12641,
+          "name": "liuPanAggregateAPPsiDiscrepancy_inverseLog_endpoint_shell",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_inverseLog_endpoint_shell",
+          "kind": "theorem",
+          "fragment_sha256": "c7c198e6a37f1b2c098fe28dcccfc80203e55ca97b927105ce91c909ab4a7559"
+        },
+        {
+          "start": 13253,
+          "end": 14491,
+          "declaration_start": 13324,
+          "name": "liuPanAggregateAPPsiDiscrepancy_prefix_swap",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_prefix_swap",
+          "kind": "theorem",
+          "fragment_sha256": "e4f592ee13f646293f8de5abdad41adf016b4097cd2b5d03ab23c2ff144c9240"
+        },
+        {
+          "start": 14492,
+          "end": 15070,
+          "declaration_start": 14565,
+          "name": "liuPanAggregateAPPsiDiscrepancy_abel_prefix_swap",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateAPPsiDiscrepancy_abel_prefix_swap",
+          "kind": "theorem",
+          "fragment_sha256": "ed1ee8890361b9ac88b317f7294fdefb1c4903ff8240dcafe805c9cb34ff4667"
+        },
+        {
+          "start": 15970,
+          "end": 18188,
+          "declaration_start": 16112,
+          "name": "liuPanCombinedInverseLogDiscrepancy_eq_aggregateAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogDiscrepancy_eq_aggregateAbel",
+          "kind": "theorem",
+          "fragment_sha256": "a72b3d2d3674cdb808aa054d277a5cfa7f57056d6b7326251db0b1637981eeba"
+        },
+        {
+          "start": 18189,
+          "end": 19033,
+          "declaration_start": 18340,
+          "name": "liuPanCombinedInverseLogDiscrepancy_le_aggregateAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogDiscrepancy_le_aggregateAbel",
+          "kind": "theorem",
+          "fragment_sha256": "e00ae183763373e630887e4b4b5986985ac5452631bc33e7a32d9f2c28df1620"
+        },
+        {
+          "start": 22705,
+          "end": 23621,
+          "declaration_start": 22788,
+          "name": "liuPanCombinedInverseLogMaxL_le_aggregateAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxL_le_aggregateAbel",
+          "kind": "theorem",
+          "fragment_sha256": "eea81a2d010550add7ad2511116d1b3a150321c2bcdf614ee069544048823a6c"
+        },
+        {
+          "start": 23622,
+          "end": 24647,
+          "declaration_start": 23747,
+          "name": "liuPanCombinedInverseLogMaxY_le_aggregateAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxY_le_aggregateAbel",
+          "kind": "theorem",
+          "fragment_sha256": "707349df74b2f53cd39ecbc059e0ef2eb86cffbc53d5efca2ca13a2dab29dd5d"
+        },
+        {
+          "start": 26659,
+          "end": 27593,
+          "declaration_start": 26774,
+          "name": "liuMainPanCombinedInverseLogAverage_le_aggregateAbel",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCombinedInverseLogAverage_le_aggregateAbel",
+          "kind": "theorem",
+          "fragment_sha256": "bdbcf73617f20e681ba304f8ed3ebc9ac0e80438ccc86f50a2c296da49e94b3f"
+        },
+        {
+          "start": 27594,
+          "end": 28925,
+          "declaration_start": 27801,
+          "name": "LiuMainPanAggregateInverseLogSourceFamilyBound.to_combinedInverseLog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogSourceFamilyBound.to_combinedInverseLog",
+          "kind": "theorem",
+          "fragment_sha256": "3ca0a53aecd11f607ee7b62f3811d3b528046a6832c56813047ccbdac99de823"
+        },
+        {
+          "start": 29653,
+          "end": 30058,
+          "declaration_start": 29653,
+          "name": "liuPanPsiAbelMajorant_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPsiAbelMajorant_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "9a1fd63e0972b07094a7866fd4b96b0ed399c34cb73459292c51fa22c8cfe8f8"
+        },
+        {
+          "start": 30059,
+          "end": 32361,
+          "declaration_start": 30184,
+          "name": "abs_apLogVonMangoldt_sub_liuLogarithmicIntegral_le_psiAbelMajorant",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_apLogVonMangoldt_sub_liuLogarithmicIntegral_le_psiAbelMajorant",
+          "kind": "theorem",
+          "fragment_sha256": "834499d96e910d8f9af86cf579956191c4238cc00c7c7a41057cfa385f23c930"
+        },
+        {
+          "start": 32845,
+          "end": 33195,
+          "declaration_start": 32845,
+          "name": "liuPanSourceWeightedPsiAbelMajorant_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceWeightedPsiAbelMajorant_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "6ce8d155c010161360a96381e5e5b974033e9dd2feb3688882adfa55f56b59c9"
+        },
+        {
+          "start": 33196,
+          "end": 34612,
+          "declaration_start": 33365,
+          "name": "liuPanCombinedInverseLogDiscrepancy_le_sourceWeightedPsiAbelMajorant",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogDiscrepancy_le_sourceWeightedPsiAbelMajorant",
+          "kind": "theorem",
+          "fragment_sha256": "b63a57e3063fded3dfdededeaaa472239d51502df8951f48fc2e3fabdc418f56"
+        },
+        {
+          "start": 35994,
+          "end": 36384,
+          "declaration_start": 35994,
+          "name": "liuPanSourceWeightedPsiAbelMaxY_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanSourceWeightedPsiAbelMaxY_one",
+          "kind": "theorem",
+          "fragment_sha256": "2f41db89eb6537ec2f010093c7a24a7d1d554ec2f573bea3f3c294713640a7f2"
+        },
+        {
+          "start": 36385,
+          "end": 37247,
+          "declaration_start": 36385,
+          "name": "liuPanCombinedInverseLogMaxL_le_sourceWeightedPsiAbelMaxL",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxL_le_sourceWeightedPsiAbelMaxL",
+          "kind": "theorem",
+          "fragment_sha256": "7d5ec623fb196b7d7af3b7547c22fb52cfea5df29a6d74ef95190fb0bd3a70cd"
+        },
+        {
+          "start": 37248,
+          "end": 37966,
+          "declaration_start": 37248,
+          "name": "liuPanCombinedInverseLogMaxY_le_sourceWeightedPsiAbelMaxY",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxY_le_sourceWeightedPsiAbelMaxY",
+          "kind": "theorem",
+          "fragment_sha256": "6d5603677b5dd004b925b0996c52bb72a77c4832319c7c83e1d0d5c62c7ae63c"
+        },
+        {
+          "start": 39253,
+          "end": 39937,
+          "declaration_start": 39361,
+          "name": "liuMainPanCombinedInverseLogAverage_le_psiAbelAverage",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanCombinedInverseLogAverage_le_psiAbelAverage",
+          "kind": "theorem",
+          "fragment_sha256": "1cf027c15909eac139ba52c6ecf36f017b26613ab00daad1c959976c2ba995fd"
+        },
+        {
+          "start": 39938,
+          "end": 40507,
+          "declaration_start": 40083,
+          "name": "LiuMainPanPsiAbelSourceFamilyBound.to_combinedInverseLog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanPsiAbelSourceFamilyBound.to_combinedInverseLog",
+          "kind": "theorem",
+          "fragment_sha256": "bbbd5cd3dd7e7dda725b5a2649ab6fd5f92f281125ba6df2461276302e784b9b"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedAbelDeterministic.lean",
+      "before_sha256": "b996ec5f9a06b03a1e94b88695e380c444d6490a54325fe035ffb96671393d14",
+      "after_sha256": "8b7452b2ba42e3ec8088925fdc615768401d74c38a308213157bc87f0f111f9f",
+      "before": {
+        "effective_lines": 644,
+        "physical_lines": 711,
+        "utf8_bytes": 32522
+      },
+      "after": {
+        "effective_lines": 20,
+        "physical_lines": 59,
+        "utf8_bytes": 1570
+      },
+      "deletions": [
+        {
+          "start": 895,
+          "end": 1194,
+          "declaration_start": 895,
+          "name": "inverseLogDensity_antitoneOn",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.inverseLogDensity_antitoneOn",
+          "kind": "lemma",
+          "fragment_sha256": "00ec8758a0f948bac92a0f5ed92171e5feb17ff01a087fb685e7473db8581b84"
+        },
+        {
+          "start": 1195,
+          "end": 1509,
+          "declaration_start": 1195,
+          "name": "liuPanDiscreteInverseLogMain_succ",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanDiscreteInverseLogMain_succ",
+          "kind": "lemma",
+          "fragment_sha256": "6a339008cae71c7532243a7eddc2f0e646175d926983c938b1a93241744512dc"
+        },
+        {
+          "start": 1510,
+          "end": 2586,
+          "declaration_start": 1576,
+          "name": "liuPanDiscreteInverseLogMain_eq_sum",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanDiscreteInverseLogMain_eq_sum",
+          "kind": "theorem",
+          "fragment_sha256": "2ed8db1959bd924d3c5032db803abf4d7291fab63eac307bdde2d45a78d9adc2"
+        },
+        {
+          "start": 2587,
+          "end": 4845,
+          "declaration_start": 2587,
+          "name": "inverseLogDensity_sum_le_integral",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.inverseLogDensity_sum_le_integral",
+          "kind": "lemma",
+          "fragment_sha256": "299457b58124658dd01f199563fb41e1e3225e3fb17e69fb9b9421f9e3dec63c"
+        },
+        {
+          "start": 4846,
+          "end": 9069,
+          "declaration_start": 4846,
+          "name": "integral_le_inverseLogDensity_sum_add",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.integral_le_inverseLogDensity_sum_add",
+          "kind": "lemma",
+          "fragment_sha256": "fbc284f1aa1cc56b20638b54ef0f87b54c41a536da3a8ad2e51c1a7efd79fe71"
+        },
+        {
+          "start": 9070,
+          "end": 10100,
+          "declaration_start": 9223,
+          "name": "abs_liuPanDiscreteInverseLogMain_floor_sub_liuLogarithmicIntegral_le_of_two_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanDiscreteInverseLogMain_floor_sub_liuLogarithmicIntegral_le_of_two_le",
+          "kind": "theorem",
+          "fragment_sha256": "47a08533c4884e101f6d5132aa27df0cd6b969bf4c888ab9b6f56f40b35ad41b"
+        },
+        {
+          "start": 10101,
+          "end": 10472,
+          "declaration_start": 10296,
+          "name": "floor_natCast_div_natCast_eq_div",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.floor_natCast_div_natCast_eq_div",
+          "kind": "theorem",
+          "fragment_sha256": "9599dbfde15fea563b1eb445a13db0d07ee896d25874a1933fa9908a2ba96ecf"
+        },
+        {
+          "start": 10473,
+          "end": 12053,
+          "declaration_start": 10473,
+          "name": "sub_one_inv_isBigO_inverseLogDensity",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.sub_one_inv_isBigO_inverseLogDensity",
+          "kind": "lemma",
+          "fragment_sha256": "557cc60b06fc05c111c2ec95e14c69f00d54d90667507f4179d0b5e543084796"
+        },
+        {
+          "start": 12054,
+          "end": 12483,
+          "declaration_start": 12174,
+          "name": "integral_inverseLogDensity_eq_zero_of_le_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.integral_inverseLogDensity_eq_zero_of_le_one",
+          "kind": "lemma",
+          "fragment_sha256": "54bd95c697e1470ad7be8691aee5d178ae7c1a48cca525880c6cbcd63b93bb2d"
+        },
+        {
+          "start": 12484,
+          "end": 15078,
+          "declaration_start": 12620,
+          "name": "abs_integral_inverseLogDensity_le_log_inv_sub_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_integral_inverseLogDensity_le_log_inv_sub_one",
+          "kind": "lemma",
+          "fragment_sha256": "829aa67764ce7ca8d606bf7fa83c29a0413ada9c650de13a5d9bea7ed23369fc"
+        },
+        {
+          "start": 15079,
+          "end": 15984,
+          "declaration_start": 15283,
+          "name": "abs_liuPanDiscreteInverseLogMain_floor_sub_liuLogarithmicIntegral_le_of_nonneg_lt_two",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanDiscreteInverseLogMain_floor_sub_liuLogarithmicIntegral_le_of_nonneg_lt_two",
+          "kind": "theorem",
+          "fragment_sha256": "c37e561a07f30cad970944602284a17dfd06a2ccaaeeba2dda329f28da382774"
+        },
+        {
+          "start": 15985,
+          "end": 17591,
+          "declaration_start": 16217,
+          "name": "abs_liuPanDiscreteInverseLogMain_floor_sub_liuLogarithmicIntegral_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanDiscreteInverseLogMain_floor_sub_liuLogarithmicIntegral_le",
+          "kind": "theorem",
+          "fragment_sha256": "4b567b79756bc0f5da86eaa0d6f8b2b11698d61d82262028ff3c86e888939716"
+        },
+        {
+          "start": 17592,
+          "end": 19567,
+          "declaration_start": 17747,
+          "name": "abs_liuPanDiscreteInverseLogMain_div_sub_liuLogarithmicIntegral_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanDiscreteInverseLogMain_div_sub_liuLogarithmicIntegral_le",
+          "kind": "theorem",
+          "fragment_sha256": "be7d67ed6d1af5ccdf684c4111540ef8d5398665f70189ce39f866b97edb5366"
+        },
+        {
+          "start": 19781,
+          "end": 19986,
+          "declaration_start": 19781,
+          "name": "liuPanInverseLogDeterministicErrorBound_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanInverseLogDeterministicErrorBound_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "4cf3e15837991df647650843835c2e7ab2251802ff46de760c5ee96ec376746e"
+        },
+        {
+          "start": 19987,
+          "end": 22326,
+          "declaration_start": 20101,
+          "name": "abs_liuPanAggregateInverseLogDeterministicTerm_source_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanAggregateInverseLogDeterministicTerm_source_le",
+          "kind": "theorem",
+          "fragment_sha256": "021879b8defcdade1aa43916a35eb07d38938350db34640202caa4fe132aec91"
+        },
+        {
+          "start": 22327,
+          "end": 23136,
+          "declaration_start": 22388,
+          "name": "liuPanAggregateInverseLogDeterministicMaxY_source_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanAggregateInverseLogDeterministicMaxY_source_le",
+          "kind": "theorem",
+          "fragment_sha256": "69ff77054c4d0a8d62c3f3d804ecfefa6569d272f41b3de96c5ae181e3cbb500"
+        },
+        {
+          "start": 23137,
+          "end": 24468,
+          "declaration_start": 23205,
+          "name": "liuMainPanAggregateInverseLogDeterministicAverage_source_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogDeterministicAverage_source_le",
+          "kind": "theorem",
+          "fragment_sha256": "b655f482c0323da01a244758eb2feb8eddd1463fb9beeb4a5e550d0c1e7a66e8"
+        },
+        {
+          "start": 24469,
+          "end": 27851,
+          "declaration_start": 24586,
+          "name": "liuMainPanAggregateInverseLogDeterministicAverage_source_le_rpow_polylog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanAggregateInverseLogDeterministicAverage_source_le_rpow_polylog",
+          "kind": "theorem",
+          "fragment_sha256": "95104c989669f8cb76718c9767d2e55cbf54e0eb02a9a80050cc45f7a744ed58"
+        },
+        {
+          "start": 27852,
+          "end": 30417,
+          "declaration_start": 27982,
+          "name": "eventually_liuMainPanAggregateInverseLogDeterministicBoundAt_source",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuMainPanAggregateInverseLogDeterministicBoundAt_source",
+          "kind": "theorem",
+          "fragment_sha256": "9435b1727481526d2380d78166a49edd4668939d51e88fd1ca00be73f5080f8e"
+        },
+        {
+          "start": 30778,
+          "end": 31500,
+          "declaration_start": 30916,
+          "name": "LiuMainPanAggregateInverseLogPsiSourceFamilyBound.to_sourceFamilyBound",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.LiuMainPanAggregateInverseLogPsiSourceFamilyBound.to_sourceFamilyBound",
+          "kind": "theorem",
+          "fragment_sha256": "7b269400d201f419e365a3c4365fe9283e0bd975df259921f0fc598922393e49"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanCombinedInverseLog.lean",
+      "before_sha256": "8b831e2e292661b90b91274e1494b6de2e3f6734a5d85586da82e8b3a7623380",
+      "after_sha256": "e65120c6bac7f26d059b4b7b34cc2bd2b5c3f767a90d93749cc5f31d9451e557",
+      "before": {
+        "effective_lines": 407,
+        "physical_lines": 490,
+        "utf8_bytes": 22139
+      },
+      "after": {
+        "effective_lines": 63,
+        "physical_lines": 124,
+        "utf8_bytes": 4401
+      },
+      "deletions": [
+        {
+          "start": 1264,
+          "end": 2060,
+          "declaration_start": 1392,
+          "name": "liuPanCombinedInverseLogDiscrepancy_eq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogDiscrepancy_eq",
+          "kind": "theorem",
+          "fragment_sha256": "9ce9f8412d9518667e99a6ee968a082b7a1a65274561b0fa7cd5fdf00cbff11d"
+        },
+        {
+          "start": 2061,
+          "end": 2760,
+          "declaration_start": 2129,
+          "name": "liuPanCombinedInverseLogDiscrepancy_source_eq",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogDiscrepancy_source_eq",
+          "kind": "theorem",
+          "fragment_sha256": "94753c782cc609db0e815af021d6eb752aa08cd806e473f14c21cced935036d5"
+        },
+        {
+          "start": 4486,
+          "end": 4950,
+          "declaration_start": 4553,
+          "name": "liuPanCombinedInverseLogMaxY_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxY_one",
+          "kind": "theorem",
+          "fragment_sha256": "eb8b6344efd4481995cc8807d6882d3f6f9388cc32fc6d738ba92eaf23a06c04"
+        },
+        {
+          "start": 4951,
+          "end": 5140,
+          "declaration_start": 4951,
+          "name": "liuPanCombinedInverseLogDiscrepancy_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogDiscrepancy_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "b6007156096ae56140bd4675175d6077e746f2addba04151b150fd5828ffe6b2"
+        },
+        {
+          "start": 5141,
+          "end": 5601,
+          "declaration_start": 5141,
+          "name": "liuPanCombinedInverseLogMaxL_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxL_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "5f0fe3136b965ae82c67039cf64be1e27b190c962abdac72fa213b653ab88453"
+        },
+        {
+          "start": 5602,
+          "end": 5938,
+          "declaration_start": 5602,
+          "name": "liuPanCombinedInverseLogMaxY_nonneg",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanCombinedInverseLogMaxY_nonneg",
+          "kind": "theorem",
+          "fragment_sha256": "b6be93bb26631651fbd80159e85df5efd1223c12e689fb4d31702762b59219df"
+        },
+        {
+          "start": 5989,
+          "end": 6635,
+          "declaration_start": 6104,
+          "name": "abs_liuMainPanCoprimeSum_le_combinedInverseLog_add_primePower",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuMainPanCoprimeSum_le_combinedInverseLog_add_primePower",
+          "kind": "theorem",
+          "fragment_sha256": "cb95b2e16fce938e0010c782f3082e36143c1114c63d4e656e9a35dd2099235a"
+        },
+        {
+          "start": 6636,
+          "end": 7870,
+          "declaration_start": 6724,
+          "name": "liuMainPanMaxL_le_combinedInverseLog_add_primePower",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanMaxL_le_combinedInverseLog_add_primePower",
+          "kind": "theorem",
+          "fragment_sha256": "401c640f6f888ff855d9ab8654d4dca7773086fc1b56bc12a3e6c90cc0599af2"
+        },
+        {
+          "start": 7871,
+          "end": 8945,
+          "declaration_start": 7951,
+          "name": "liuMainPanMaxY_le_combinedInverseLog_add_primePower",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanMaxY_le_combinedInverseLog_add_primePower",
+          "kind": "theorem",
+          "fragment_sha256": "fed6943c667995d38059959684a17f5085bd71410eeae038c3b8920082e44f57"
+        },
+        {
+          "start": 10019,
+          "end": 12586,
+          "declaration_start": 10147,
+          "name": "liuMainPanWeightedSum_le_combinedInverseLog_add_primePower",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuMainPanWeightedSum_le_combinedInverseLog_add_primePower",
+          "kind": "theorem",
+          "fragment_sha256": "2f5ff17d141f9cd0c0a95d896a81791fe6ba4df82cc6d161a0d9df7aac110cd5"
+        },
+        {
+          "start": 12587,
+          "end": 14472,
+          "declaration_start": 12723,
+          "name": "liuPaperQSourceFullDistributionMajorant_le_of_combinedInverseLog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPaperQSourceFullDistributionMajorant_le_of_combinedInverseLog",
+          "kind": "theorem",
+          "fragment_sha256": "c78d8a9974889db038673ba526a34847f2d8e6c9b4c26828fc0951f66b713d6a"
+        },
+        {
+          "start": 14522,
+          "end": 15998,
+          "declaration_start": 14668,
+          "name": "eventually_liuPaperQSourceFullDistributionMajorant_le_of_combinedInverseLog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.eventually_liuPaperQSourceFullDistributionMajorant_le_of_combinedInverseLog",
+          "kind": "theorem",
+          "fragment_sha256": "983b5af0c11e89bf0398cb83ed821ae421f46365b2bced1d93303f9b1bd8f5ff"
+        },
+        {
+          "start": 15999,
+          "end": 16875,
+          "declaration_start": 16074,
+          "name": "tendsto_inverseLogCubeScale_div_mainScale",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_inverseLogCubeScale_div_mainScale",
+          "kind": "theorem",
+          "fragment_sha256": "83ed25bff03edfbffd018a2a936c39296d65b419c45fa46d3a47af5d9fd9088a"
+        },
+        {
+          "start": 16876,
+          "end": 19972,
+          "declaration_start": 17098,
+          "name": "tendsto_liuPaperQSourceFullDistributionMajorant_div_mainScale_of_combinedInverseLog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPaperQSourceFullDistributionMajorant_div_mainScale_of_combinedInverseLog",
+          "kind": "theorem",
+          "fragment_sha256": "eb609934ae4f6041ee6b35dc053dacc4416ad734a8845224be52069e56074af7"
+        },
+        {
+          "start": 19973,
+          "end": 21395,
+          "declaration_start": 20117,
+          "name": "tendsto_abs_liuSelbergRemainder_div_mainScale_of_combinedInverseLog",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_abs_liuSelbergRemainder_div_mainScale_of_combinedInverseLog",
+          "kind": "theorem",
+          "fragment_sha256": "181c27b080557cc2378f5a2402bfacf414071100342e54cc98fc43021d78bab9"
+        }
+      ]
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanPrimitivePerron.lean",
+      "before_sha256": "477e0482f296649b964499faf46b36421fffe069604e949fde7bfae50b9cd537",
+      "after_sha256": "6a7f6af820e3f47d118416457a3bf91114df98b173209dfff9e13d06c0825a1b",
+      "before": {
+        "effective_lines": 3240,
+        "physical_lines": 3469,
+        "utf8_bytes": 138183
+      },
+      "after": {
+        "effective_lines": 2317,
+        "physical_lines": 2523,
+        "utf8_bytes": 97250
+      },
+      "deletions": [
+        {
+          "start": 4820,
+          "end": 5481,
+          "declaration_start": 4897,
+          "name": "one_half_le_abs_liuPanPerronHalfStep_sub_natCast",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.one_half_le_abs_liuPanPerronHalfStep_sub_natCast",
+          "kind": "theorem",
+          "fragment_sha256": "9d0af1761294b3436b5a1da3b57d94898159be61413b529729e6de4e20f7278a"
+        },
+        {
+          "start": 8680,
+          "end": 8874,
+          "declaration_start": 8680,
+          "name": "liuPanPerronSigma_pos",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPerronSigma_pos",
+          "kind": "theorem",
+          "fragment_sha256": "49f19356410954a0de8856c6d41b4205280613a528e3928d2b6f658c85459d67"
+        },
+        {
+          "start": 8875,
+          "end": 9005,
+          "declaration_start": 8875,
+          "name": "liuPanPerronHeight_pos",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPerronHeight_pos",
+          "kind": "theorem",
+          "fragment_sha256": "67cb571dd893980333fafa4f2c1d3af441bba62ff75aa6132831f53986eb3863"
+        },
+        {
+          "start": 9006,
+          "end": 9581,
+          "declaration_start": 9102,
+          "name": "rpow_liuPanPerronSigma_le_exp_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.rpow_liuPanPerronSigma_le_exp_one",
+          "kind": "theorem",
+          "fragment_sha256": "4feb80d103b2947183ebdb4ca2ec66c627fd47860cef791d5c4d52290f47da65"
+        },
+        {
+          "start": 9582,
+          "end": 10089,
+          "declaration_start": 9658,
+          "name": "natCast_rpow_neg_liuPanPerronSigma_le_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.natCast_rpow_neg_liuPanPerronSigma_le_one",
+          "kind": "theorem",
+          "fragment_sha256": "f50dcd213ae463cbbfbf737970b28680e7b7010704221ad1c67a73cfde1aabfb"
+        },
+        {
+          "start": 27089,
+          "end": 27605,
+          "declaration_start": 27247,
+          "name": "cauchySeq_liuPanPerronSincIntegral",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.cauchySeq_liuPanPerronSincIntegral",
+          "kind": "theorem",
+          "fragment_sha256": "6856aa773940fc71b5de70680988baa7aaa45d6e1849611972ad9a4cd407e71d"
+        },
+        {
+          "start": 27606,
+          "end": 27888,
+          "declaration_start": 27661,
+          "name": "exists_liuPanPerronSincIntegralLimit",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.exists_liuPanPerronSincIntegralLimit",
+          "kind": "theorem",
+          "fragment_sha256": "8f40ac215dc531615ba42bc58be858822ecdba13c0966fc57a618e87457e925f"
+        },
+        {
+          "start": 28710,
+          "end": 39206,
+          "declaration_start": 28710,
+          "name": "norm_liuPanIntervalIntegralExpNegMulSincTail_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanIntervalIntegralExpNegMulSincTail_le",
+          "kind": "theorem",
+          "fragment_sha256": "d0a5739b3022f32da222957559fa034cc729a5ce29ced7f7a1a2f144c4b2338f"
+        },
+        {
+          "start": 39207,
+          "end": 40149,
+          "declaration_start": 39207,
+          "name": "liuPanIntegrableOnExpNegMulSinc",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanIntegrableOnExpNegMulSinc",
+          "kind": "theorem",
+          "fragment_sha256": "f49f4d58dea01bc94adad424d9f9d693585fddc6c8cc7bca3a037bd9cdf596d2"
+        },
+        {
+          "start": 40150,
+          "end": 41370,
+          "declaration_start": 40150,
+          "name": "norm_liuPanIntegralIoiExpNegMulSincTail_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanIntegralIoiExpNegMulSincTail_le",
+          "kind": "theorem",
+          "fragment_sha256": "7dbae01332586f06f0bbd05b6c3cc134b19acee0314effd4bc8a41fd5a2945e1"
+        },
+        {
+          "start": 41371,
+          "end": 42382,
+          "declaration_start": 41371,
+          "name": "tendsto_liuPanIntervalIntegralExpNegMulSinc_nhdsGT_zero",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanIntervalIntegralExpNegMulSinc_nhdsGT_zero",
+          "kind": "theorem",
+          "fragment_sha256": "9eebff2e8951879795f05d16ab34273aed2407998de28a40a4d93f2e6f4548a0"
+        },
+        {
+          "start": 42383,
+          "end": 45974,
+          "declaration_start": 42383,
+          "name": "tendsto_liuPanIntegralIoiExpNegMulSinc_of_tendsto",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanIntegralIoiExpNegMulSinc_of_tendsto",
+          "kind": "theorem",
+          "fragment_sha256": "271732e9512163006ee8fb1112bed8f3eba448f60869b67a98943884ab5aaad5"
+        },
+        {
+          "start": 53274,
+          "end": 54019,
+          "declaration_start": 53274,
+          "name": "tendsto_liuPanIntegralIoiExpNegMulSinc_nhdsGT_zero",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanIntegralIoiExpNegMulSinc_nhdsGT_zero",
+          "kind": "theorem",
+          "fragment_sha256": "894333f418fc7f02e1d000bed186d3a892a6b586909aa7447c55eba2519a0517"
+        },
+        {
+          "start": 54369,
+          "end": 54834,
+          "declaration_start": 54445,
+          "name": "liuPanPerronSincNormalization",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPerronSincNormalization",
+          "kind": "theorem",
+          "fragment_sha256": "f0fcbb64cc948628ccaf57ceff446a370b3fa7f4248dbc5b6befca527501a131"
+        },
+        {
+          "start": 54835,
+          "end": 55613,
+          "declaration_start": 54835,
+          "name": "liuPanPositivePerronSineIntegral_eq_sinc",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPositivePerronSineIntegral_eq_sinc",
+          "kind": "theorem",
+          "fragment_sha256": "a039815002b56fc25649b4a7c964cd2b6f9020d68b07771dbeffa2c99dcf3538"
+        },
+        {
+          "start": 55614,
+          "end": 57172,
+          "declaration_start": 55712,
+          "name": "tendsto_liuPanPerronSineIntegral_atTop",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanPerronSineIntegral_atTop",
+          "kind": "theorem",
+          "fragment_sha256": "bb7a2af231ddb81c40a48d4e3335394b33f52a10abb1a2e1b2aedb84367f437c"
+        },
+        {
+          "start": 57173,
+          "end": 58582,
+          "declaration_start": 57173,
+          "name": "abs_liuPanPerronSincIntegral_sub_pi_div_two_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanPerronSincIntegral_sub_pi_div_two_le",
+          "kind": "theorem",
+          "fragment_sha256": "4871141cbfc69b33bd26425b820aae8217706495cbaccdb3cf868d05911e8b99"
+        },
+        {
+          "start": 58583,
+          "end": 60389,
+          "declaration_start": 58720,
+          "name": "abs_liuPanPerronSineIntegral_sub_limit_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.abs_liuPanPerronSineIntegral_sub_limit_le",
+          "kind": "theorem",
+          "fragment_sha256": "d34bb80c9189a170bfc7a9372b02ad640d678591c26e21620872c2356b79483b"
+        },
+        {
+          "start": 114806,
+          "end": 116165,
+          "declaration_start": 114806,
+          "name": "liuPanPerronHalfStep_div_rpow_sigma_le_exp_two",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep_div_rpow_sigma_le_exp_two",
+          "kind": "theorem",
+          "fragment_sha256": "7397a67b505b054d990a4c7bada1fb33d9d1313dd47f82672379b052cf2622fb"
+        },
+        {
+          "start": 116166,
+          "end": 116666,
+          "declaration_start": 116166,
+          "name": "liuPanPerronSigma_le_one",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPerronSigma_le_one",
+          "kind": "theorem",
+          "fragment_sha256": "38fcda4280188e03eef5d9e62332576c5375f9e3a9a2b9e2b55fd03a1784359c"
+        },
+        {
+          "start": 116667,
+          "end": 120605,
+          "declaration_start": 116814,
+          "name": "norm_liuPanTruncatedPerronKernel_standard_halfStep_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanTruncatedPerronKernel_standard_halfStep_le",
+          "kind": "theorem",
+          "fragment_sha256": "14ba10a91112c147d54a4e8200d1e998c2060f18d724e2b6610367a338c8307d"
+        },
+        {
+          "start": 120606,
+          "end": 121099,
+          "declaration_start": 120716,
+          "name": "liuPanTruncatedPerronKernelApproximationAt_standard",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanTruncatedPerronKernelApproximationAt_standard",
+          "kind": "theorem",
+          "fragment_sha256": "4db0e0a89de72bad62fe5f2df07d9df32eb7732b45f4f8a849167137ca179217"
+        },
+        {
+          "start": 126909,
+          "end": 127370,
+          "declaration_start": 127022,
+          "name": "liuPanPerronHyperbolaSum_eq_integral_add_error",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.liuPanPerronHyperbolaSum_eq_integral_add_error",
+          "kind": "theorem",
+          "fragment_sha256": "c60f8828245c4d7aa8368ac69d6d21a82aeca3e7c591a3124f844901ce868300"
+        },
+        {
+          "start": 127371,
+          "end": 131379,
+          "declaration_start": 127494,
+          "name": "norm_liuPanTruncatedPerronError_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanTruncatedPerronError_le",
+          "kind": "theorem",
+          "fragment_sha256": "3ff8234cdbe8cafbc88bbb516144667a9d0a45862586b9ace99a6a22706202ed"
+        },
+        {
+          "start": 131380,
+          "end": 131974,
+          "declaration_start": 131459,
+          "name": "norm_liuPanTruncatedPerronError_standard_le",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.norm_liuPanTruncatedPerronError_standard_le",
+          "kind": "theorem",
+          "fragment_sha256": "bc71330ab5e045b3d414dc8975e00fc55b449d43f16cd45baca19bd2c137b6cc"
+        },
+        {
+          "start": 131975,
+          "end": 132902,
+          "declaration_start": 132104,
+          "name": "exists_liuPanPerronHyperbolaSum_eq_standardIntegral_add_error",
+          "qname": "MathlibNt.SieveTheory.LiuWeight.exists_liuPanPerronHyperbolaSum_eq_standardIntegral_add_error",
+          "kind": "theorem",
+          "fragment_sha256": "b79fde7190e08e8a3d9d8322584ef0a55e1a19bc544106742383b617d31544d1"
+        }
+      ]
+    }
+  ]
+}

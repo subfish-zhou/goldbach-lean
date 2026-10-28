@@ -84,69 +84,6 @@ theorem section13Qhat_pos
     {s : ℝ} (hs : 0 < s) : 0 < section13Qhat H s := by
   exact add_pos (hH.positive .plus s hs) (hH.positive .minus s hs)
 
-/-- Initial history of `Q̂` on the common interval `(0,2]`. -/
-theorem section13Qhat_initial
-    {H : Section13HatLayers} (hH : Section13HatContract H 2)
-    {s : ℝ} (hs : 0 < s) (hs2 : s ≤ 2) :
-    section13Qhat H s = 3 / s ^ 2 := by
-  have hp := hH.initial_plus s hs (by linarith)
-  have hm := hH.initial_minus s hs hs2
-  rw [weightedHat] at hp hm
-  have hs0 : s ^ 2 ≠ 0 := pow_ne_zero _ (ne_of_gt hs)
-  dsimp [section13Qhat]
-  apply (mul_left_cancel₀ hs0)
-  rw [mul_add, hp, hm]
-  field_simp [hs0]
-  norm_num
-
-/-- The weighted symmetric solution tends to zero, directly from (T5). -/
-theorem section13Qhat_weighted_tendsto_zero
-    {H : Section13HatLayers} (hH : Section13HatContract H 2) :
-    Tendsto (fun s => s ^ 2 * section13Qhat H s) atTop (𝓝 0) := by
-  have hp := hH.weighted_tendsto_zero .plus
-  have hm := hH.weighted_tendsto_zero .minus
-  simpa [section13Qhat, weightedHat, mul_add] using hp.add hm
-
-/-- The complete `Q̂` package obtained internally from `Section13HatContract`.
-Unlike the former downstream bridge, it has no adjoint, pairing, or comparison
-field hidden inside it. -/
-structure Section13QhatCore (Q : ℝ → ℝ) : Prop where
-  dde : ∀ s, 3 < s → HasDerivAt Q (-(2 * Q s + Q (s - 1)) / s) s
-  continuous : ContinuousOn Q (Ioi 0)
-  positive : ∀ s, 0 < s → 0 < Q s
-  initial : ∀ s, 0 < s → s ≤ 2 → Q s = 3 / s ^ 2
-  weighted_tendsto_zero : Tendsto (fun s => s ^ 2 * Q s) atTop (𝓝 0)
-
-theorem section13Qhat_core
-    {H : Section13HatLayers} (hH : Section13HatContract H 2) :
-    Section13QhatCore (section13Qhat H) where
-  dde := fun _ hs => section13Qhat_dde hH hs
-  continuous := section13Qhat_continuousOn hH
-  positive := fun _ hs => section13Qhat_pos hH hs
-  initial := fun _ hs hs2 => section13Qhat_initial hH hs hs2
-  weighted_tendsto_zero := section13Qhat_weighted_tendsto_zero hH
-
-/-- The Section 10 bilinear concomitant.  This is a definition, not an assumed
-vanishing condition. -/
-noncomputable def section13Pairing (Q q : ℝ → ℝ) (s : ℝ) : ℝ :=
-  s * q s * Q s - ∫ t in s - 1..s, q (t + 1) * Q t
-
-/-- Earlier-Section-10 standard-adjoint interface.  It deliberately contains
-no pairing assertion and no comparison between either hat layer and `Q̂`.
-The missing construction of this object belongs to the standard-adjoint
-existence theorem, upstream of Lemma 10.17. -/
-structure Section10StandardAdjoint (q : ℝ → ℝ) : Prop where
-  continuous : Continuous q
-  positive : ∀ s, 2 ≤ s → 0 < q s
-  dde : ∀ s, 0 < s →
-    HasDerivAt (fun u => u * q u) (2 * q s + q (s + 1)) s
-
-/-- Algebraic reconstruction of the two hat layers from `P̂,Q̂`. -/
-theorem section13_T_eq_Q_add_sign_P
-    (H : Section13HatLayers) (sign : ErrorSign) (s : ℝ) :
-    H.T sign s =
-      (section13Qhat H s + (if sign = .plus then section13Phat H s else -section13Phat H s)) / 2 := by
-  cases sign <;> simp [section13Qhat, section13Phat]; ring
 
 /-- The exact order-theoretic last step in the Lemma 10.17 bridge.  The hard
 input is only a strict contraction of `P̂` relative to `Q̂`; no final

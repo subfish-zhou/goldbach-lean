@@ -1,0 +1,22 @@
+Hf4Amount.payment_cap : Hf4Outer.payment < 1 / 10000000000
+'Hf4Amount.payment_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.numerator_bounds : 9227603 / 10000000000 ≤ Hf4Outer.numerator ∧ Hf4Outer.numerator ≤ 923967 / 1000000000
+'Hf4Amount.numerator_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.profile_bounds : 9227603 / 10000000000 / (1 - 858467 / 5000000) ≤ Hf4Outer.profile ∧
+  Hf4Outer.profile ≤ 923967 / 1000000000 / (1 - 17169341 / 100000000)
+'Hf4Amount.profile_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.terminal_bounds : 72504 / 10000000 ≤ Hf4Outer.terminal ∧ Hf4Outer.terminal ≤ 72516 / 10000000
+'Hf4Amount.terminal_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.terminal_gap_bounds : 427 / 10000000 ≤ NineFeedbackStrength.originalH 8 - Hf4Outer.terminal ∧
+  NineFeedbackStrength.originalH 8 - Hf4Outer.terminal ≤ 439 / 10000000
+'Hf4Amount.terminal_gap_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.whole_paid_terminal_insufficient : Hf4Outer.terminal < NineFeedbackStrength.originalH 8
+'Hf4Amount.whole_paid_terminal_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.original_feedback_lower : 72504 / 10000000 ≤
+  ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3
+'Hf4Amount.original_feedback_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Hf4Amount.actual_remaining_gap : NineFeedbackStrength.originalH 8 ≤
+    ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3 ↔
+  NineFeedbackStrength.originalH 8 - Hf4Outer.terminal ≤
+    ActualNineFeedback.firstFeedback NineFeedbackStrength.originalH 3 3 - Hf4Outer.terminal
+'Hf4Amount.actual_remaining_gap' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,4 @@
+leanchecker found a problem in WR2ClassicalFourthBqSoundness
+replaying WR2ClassicalFourthBqSoundness
+uncaught exception: while replaying declaration 'WuPaper.FourthBqInteger.raw_fraction_eq':
+(kernel) unknown constant 'StarOrderedRing.toIsOrderedRing'

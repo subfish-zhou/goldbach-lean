@@ -1,0 +1,235 @@
+{
+  "plan_sha256": "80dda5ba00a865de1657980dd41756b209dad7b52b9f23e67fc1ac1ecd114463",
+  "targets": [
+    "WR2ClassicalFourthBlockouterPay040",
+    "WR2ClassicalFourthouterPayBatch004"
+  ],
+  "order": [
+    "WR2ExactRationalLogData",
+    "WR2IntegerLogHorner",
+    "WR2ClassicalCumulativeTable",
+    "WR2ClassicalCumulativePayment",
+    "WR2ClassicalCumulativeDivision",
+    "WR2IntegerLogUpper",
+    "WR2ClassicalFourthDataBq",
+    "WR2ClassicalFourthDataB",
+    "WR2ClassicalFourthDataC",
+    "WR2ClassicalFourthDataD",
+    "WR2ClassicalFourthDataouterq",
+    "WR2ClassicalFourthDataouter",
+    "WR2ClassicalFourthIntegerConditions",
+    "WR2ClassicalFourthBlockouterPay040",
+    "WR2ClassicalFourthouterPayBatch004"
+  ],
+  "strict_flags": [
+    "-j1",
+    "-DwarningAsError=true",
+    "-DautoImplicit=false"
+  ],
+  "lean": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+  "LEAN_PATH": [
+    "/tmp/wu-light-layer-probe/runs/1793080881828776939-3f6db919/lib",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean",
+    "/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean",
+    "/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean"
+  ],
+  "single_worker": true,
+  "source_rows": [
+    {
+      "module": "WR2ExactRationalLogData",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ExactRationalLogData.lean",
+      "source_origin": "/tmp/wu-light-rational-layer/candidate/WR2ExactRationalLogData.lean",
+      "source_sha256": "237f2c41ea34d135332559ecb57e90f0c72f6402b0f81cc79f69b658e8dbeac2",
+      "local_imports": [],
+      "external_imports": [
+        "Mathlib.Algebra.Order.Field.Rat",
+        "Mathlib.Algebra.BigOperators.Group.Finset.Basic"
+      ]
+    },
+    {
+      "module": "WR2IntegerLogHorner",
+      "source": "/tmp/wu-light-layer-probe/src/WR2IntegerLogHorner.lean",
+      "source_origin": "/tmp/wu-light-rational-layer/candidate/WR2IntegerLogHorner.lean",
+      "source_sha256": "2643a2684d439c340022190ead79920933f2678296273dc3d90725a04f133cc8",
+      "local_imports": [
+        "WR2ExactRationalLogData"
+      ],
+      "external_imports": [
+        "Mathlib.Tactic.FieldSimp",
+        "Mathlib.Tactic.NormNum",
+        "Mathlib.Tactic.Positivity",
+        "Mathlib.Tactic.Ring",
+        "Lean.Elab.Tactic.NormCast",
+        "Lean.Elab.Tactic.Omega",
+        "Mathlib.Data.Nat.Cast.Order.Field"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCumulativeTable",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalCumulativeTable.lean",
+      "source_origin": "/tmp/wu-fourth-light-layers/group8-aggregate-prints/WR2ClassicalCumulativeTable.lean",
+      "source_sha256": "018b7beeb288393b21ac4f34872e57a8e47a41d0a6acc97c6c4780b80a034ca1",
+      "local_imports": [],
+      "external_imports": [
+        "Mathlib.Data.Nat.Basic"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCumulativePayment",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalCumulativePayment.lean",
+      "source_origin": "/tmp/wu-fourth-light-layers/group8-aggregate-prints/WR2ClassicalCumulativePayment.lean",
+      "source_sha256": "62637988aaa6d772f6ab375a2a6a738dcda3ee89af63e1b82107537d8bd8b07f",
+      "local_imports": [
+        "WR2ClassicalCumulativeTable"
+      ],
+      "external_imports": [
+        "Mathlib.Tactic.NormNum",
+        "Lean.Elab.Tactic.Omega"
+      ]
+    },
+    {
+      "module": "WR2ClassicalCumulativeDivision",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalCumulativeDivision.lean",
+      "source_origin": "/tmp/wu-fourth-light-layers/group8-aggregate-prints/WR2ClassicalCumulativeDivision.lean",
+      "source_sha256": "a5ad11a4f843810b5a807755ea67bb5c29c134a9acf6f5db29d37e473ecc466e",
+      "local_imports": [
+        "WR2ClassicalCumulativePayment"
+      ],
+      "external_imports": [
+        "Mathlib.Tactic.Linarith"
+      ]
+    },
+    {
+      "module": "WR2IntegerLogUpper",
+      "source": "/tmp/wu-light-layer-probe/src/WR2IntegerLogUpper.lean",
+      "source_origin": "/tmp/wu-light-rational-layer/candidate/WR2IntegerLogUpper.lean",
+      "source_sha256": "9772541af0e346f40e2ba755390d39bce0874414842763dde664d9b4f3fadff6",
+      "local_imports": [
+        "WR2IntegerLogHorner",
+        "WR2ClassicalCumulativeDivision"
+      ],
+      "external_imports": []
+    },
+    {
+      "module": "WR2ClassicalFourthDataBq",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthDataBq.lean",
+      "source_origin": "/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFourthDataBq.lean",
+      "source_sha256": "d1a40c94e1f72c704db6249c634db41319ba3a061546038d2ab8429af85afcc6",
+      "local_imports": [
+        "WR2IntegerLogUpper"
+      ],
+      "external_imports": [
+        "Init"
+      ]
+    },
+    {
+      "module": "WR2ClassicalFourthDataB",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthDataB.lean",
+      "source_origin": "/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFourthDataB.lean",
+      "source_sha256": "da97b70a19dd0dbddbb95d4b598492dc2c583ad5a2ebfcbcadf8fec53a469113",
+      "local_imports": [
+        "WR2ClassicalFourthDataBq",
+        "WR2ClassicalCumulativeTable"
+      ],
+      "external_imports": [
+        "Init"
+      ]
+    },
+    {
+      "module": "WR2ClassicalFourthDataC",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthDataC.lean",
+      "source_origin": "/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFourthDataC.lean",
+      "source_sha256": "fc9e88a1e7a212f8d7b2bb277199866321008f2a70d661c3d0e51bc5010334a7",
+      "local_imports": [
+        "WR2ClassicalFourthDataB",
+        "WR2ClassicalCumulativeDivision"
+      ],
+      "external_imports": [
+        "Init"
+      ]
+    },
+    {
+      "module": "WR2ClassicalFourthDataD",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthDataD.lean",
+      "source_origin": "/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFourthDataD.lean",
+      "source_sha256": "44b284e2921155476b7339db24c62ca36f3307b9ffc00774d492bdbeba462a04",
+      "local_imports": [
+        "WR2ClassicalFourthDataC",
+        "WR2ClassicalCumulativeDivision"
+      ],
+      "external_imports": [
+        "Init"
+      ]
+    },
+    {
+      "module": "WR2ClassicalFourthDataouterq",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthDataouterq.lean",
+      "source_origin": "/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFourthDataouterq.lean",
+      "source_sha256": "b768586f167998e4c2a2fa7c76fdbb87fe41bbdc5ca0c94aa9d2336b84d329c9",
+      "local_imports": [
+        "WR2ClassicalFourthDataB",
+        "WR2ClassicalFourthDataD"
+      ],
+      "external_imports": [
+        "Init"
+      ]
+    },
+    {
+      "module": "WR2ClassicalFourthDataouter",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthDataouter.lean",
+      "source_origin": "/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFourthDataouter.lean",
+      "source_sha256": "07c4147c532f6bed5a7ebf596eeae3d6f633ba4a37456463115b42779ac85805",
+      "local_imports": [
+        "WR2ClassicalFourthDataouterq",
+        "WR2ClassicalCumulativeTable"
+      ],
+      "external_imports": [
+        "Init"
+      ]
+    },
+    {
+      "module": "WR2ClassicalFourthIntegerConditions",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthIntegerConditions.lean",
+      "source_origin": "/tmp/wu-fourth-light-layers/group8-aggregate-prints/WR2ClassicalFourthIntegerConditions.lean",
+      "source_sha256": "266e18caf7830621a030a9dfa45dbc0610a0dbf04e4a1aa5628e73b701eeb52c",
+      "local_imports": [
+        "WR2ClassicalFourthDataBq",
+        "WR2ClassicalFourthDataB",
+        "WR2ClassicalFourthDataC",
+        "WR2ClassicalFourthDataD",
+        "WR2ClassicalFourthDataouterq",
+        "WR2ClassicalFourthDataouter"
+      ],
+      "external_imports": []
+    },
+    {
+      "module": "WR2ClassicalFourthBlockouterPay040",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthBlockouterPay040.lean",
+      "source_origin": "/tmp/wu-fourth-light-layers/ungrouped/WR2ClassicalFourthBlockouterPay040.lean",
+      "source_sha256": "cd908cbe83b47c50fa2669c52a51ace250dc9da3a5e615fa521b6b909b98e823",
+      "local_imports": [
+        "WR2ClassicalFourthIntegerConditions",
+        "WR2ClassicalCumulativePayment"
+      ],
+      "external_imports": []
+    },
+    {
+      "module": "WR2ClassicalFourthouterPayBatch004",
+      "source": "/tmp/wu-light-layer-probe/src/WR2ClassicalFourthouterPayBatch004.lean",
+      "source_origin": "/tmp/wu-fourth-light-layers/group8-aggregate-prints/WR2ClassicalFourthouterPayBatch004.lean",
+      "source_sha256": "60b1750c28a34c2b28008d4185c20924ae49851468e5bb7cb544c6e019e5bd93",
+      "local_imports": [
+        "WR2ClassicalFourthIntegerConditions",
+        "WR2ClassicalCumulativePayment"
+      ],
+      "external_imports": []
+    }
+  ]
+}

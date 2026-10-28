@@ -117,21 +117,5 @@ theorem exists_quadratic_LFunction_one_lower_of_eventual
         (Real.rpow_nonneg (Nat.cast_nonneg q) (-η))).trans
       (hLarge q χ (Nat.le_of_not_gt hq) hprimitive hquad hnonprincipal)
 
-/-- Quantifier-level reduction of the full Landau--Siegel lower bound: it is
-enough to establish each exponent uniformly beyond some conductor threshold.
-All finite exceptions are discharged unconditionally by the preceding theorem. -/
-theorem quadratic_LFunction_one_lower_of_eventual_forall_exponents
-    (hlarge : ∀ η : ℝ, 0 < η →
-      ∃ (Q : ℕ) (c : ℝ), 0 < c ∧
-        ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q),
-          Q ≤ q → χ.IsPrimitive → χ ^ 2 = 1 → χ ≠ 1 →
-            c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re) :
-    ∀ η : ℝ, 0 < η →
-      ∃ c : ℝ, 0 < c ∧
-        ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q),
-          χ.IsPrimitive → χ ^ 2 = 1 → χ ≠ 1 →
-            c * (q : ℝ) ^ (-η) ≤ (χ.LFunction 1).re := by
-  intro η hη
-  exact exists_quadratic_LFunction_one_lower_of_eventual η hη (hlarge η hη)
 
 end DirichletCharacter

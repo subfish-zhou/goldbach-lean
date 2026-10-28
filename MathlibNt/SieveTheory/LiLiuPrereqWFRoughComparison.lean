@@ -204,21 +204,6 @@ theorem roughSignedDensity_comparison
     convert mul_le_mul_of_nonneg_right (hsign.trans hbad) (hprod s hs) using 1
     simp only [add_mul, ite_mul, one_mul, zero_mul]
 
-theorem roughSignedDensity_abs_sub_le
-    (upper : Bool) (b c : ℕ → ℝ) (D : ℝ) (R : Finset ℕ) (g : ℕ → ℝ)
-    (hb : ∀ p ∈ R, 0 ≤ b p)
-    (hbp : ∀ p ∈ R, b p ≤ (p : ℝ))
-    (hpc : ∀ p ∈ R, (p : ℝ) ≤ c p)
-    (hg : ∀ p ∈ R, 0 ≤ g p) :
-    |roughSignedDensity upper b c D R g - roughOrdinaryDensity upper D R g| ≤
-      roughCollisionMass b R g + roughBoundaryMass upper b c D R g := by
-  obtain ⟨h0, h1⟩ := roughSignedDensity_comparison upper b c D R g hb hbp hpc hg
-  cases upper <;> simp only [Bool.false_eq_true, if_false, if_true,
-    one_mul, neg_one_mul] at *
-  · rw [abs_of_nonpos (by linarith)]
-    exact h1
-  · rw [abs_of_nonneg h0]
-    exact h1
 
 /-- Removing a compulsory subset leaves freely chosen complementary slots. -/
 theorem sum_powerset_superset_prod (R A : Finset ℕ) (hA : A ⊆ R)
@@ -344,22 +329,6 @@ theorem roughCollisionMass_le_pair_euler (b : ℕ → ℝ) (R : Finset ℕ)
     _ = (∏ p ∈ R, (1 + g p)) * roughCollisionPairMass b R g := by
       simp only [roughCollisionPairMass, Finset.mul_sum]
 
-/-- The remaining finite error consists of a same-box pair mass times the
-rough Euler product and the strict boundary mass. -/
-theorem roughSignedDensity_comparison_pair_bound
-    (upper : Bool) (b c : ℕ → ℝ) (D : ℝ) (R : Finset ℕ) (g : ℕ → ℝ)
-    (hb : ∀ p ∈ R, 0 ≤ b p)
-    (hbp : ∀ p ∈ R, b p ≤ (p : ℝ))
-    (hpc : ∀ p ∈ R, (p : ℝ) ≤ c p)
-    (hg : ∀ p ∈ R, 0 ≤ g p) :
-    0 ≤ (if upper then 1 else -1) *
-        (roughSignedDensity upper b c D R g - roughOrdinaryDensity upper D R g) ∧
-      (if upper then 1 else -1) *
-        (roughSignedDensity upper b c D R g - roughOrdinaryDensity upper D R g) ≤
-        (∏ p ∈ R, (1 + g p)) * roughCollisionPairMass b R g +
-          roughBoundaryMass upper b c D R g := by
-  obtain ⟨h0, h1⟩ := roughSignedDensity_comparison upper b c D R g hb hbp hpc hg
-  exact ⟨h0, h1.trans (add_le_add (roughCollisionMass_le_pair_euler b R g hg) le_rfl)⟩
 
 /-- Canonical geometric endpoints discharge the enclosure assumptions at
 the original D and epsilon; no new coarse level or box family is chosen. -/
@@ -404,27 +373,5 @@ theorem roughSignedDensity_canonical_pair_bound
   dsimp only
   obtain ⟨h0, h1⟩ := roughSignedDensity_canonical_comparison upper P hP hD hε g hg
   exact ⟨h0, h1.trans (add_le_add (roughCollisionMass_le_pair_euler _ _ g hg) le_rfl)⟩
-
-#check roughBoundaryCrossing_iff
-#check normalizedSignedSet_eq_ordinaryRoughSet_of_good
-#check normalizedSignedSet_abs_sub_le_one
-#check roughSignedDensity_comparison
-#check sum_powerset_contains_pair_prod
-#check roughCollisionMass_le_pair_euler
-#check roughSignedDensity_comparison_pair_bound
-#check roughSignedDensity_canonical_comparison
-#check roughSignedDensity_canonical_pair_bound
-#print axioms roughBoundaryCrossing_iff
-#print axioms normalizedSignedSet_eq_ordinaryRoughSet_of_good
-#print axioms normalizedSignedSet_abs_sub_le_one
-#print axioms roughSignedDensity_comparison
-#print axioms roughSignedDensity_abs_sub_le
-#print axioms sum_powerset_superset_prod
-#print axioms sum_powerset_contains_pair_prod
-#print axioms roughCollision_iff_exists_pair
-#print axioms roughCollisionMass_le_pair_euler
-#print axioms roughSignedDensity_comparison_pair_bound
-#print axioms roughSignedDensity_canonical_comparison
-#print axioms roughSignedDensity_canonical_pair_bound
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

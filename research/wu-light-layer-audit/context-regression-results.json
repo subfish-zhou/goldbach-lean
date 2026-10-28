@@ -1,0 +1,10 @@
+{
+  "exit_code": 0,
+  "test_count": 18,
+  "real_Lean_invoked": false,
+  "sha256": {
+    "research/wu2008/build.py": "cf5ff7a722e4154504489686ab3dd5b62b9bbd6b967063d15ee2e1c37efd6316",
+    "research/wu2008/test_build.py": "93ef181014d52fe91e1bcdf97cc083c18cc2104c0081dd3670b86e556ebd2461"
+  },
+  "log_sha256": "156ef6ba9b51fab02dcb2fb2c197a445e365b01a1b926555cc6b23dba9d9aad2"
+}

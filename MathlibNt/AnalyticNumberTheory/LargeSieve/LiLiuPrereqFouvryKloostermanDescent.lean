@@ -91,28 +91,5 @@ theorem completeKloosterman_common_factor (q r : ℕ) [NeZero q] [NeZero r]
   rw [completeKloosterman_common_factor_mul]
   field_simp
 
-/-- For a nontrivial retained prime power, every removed prime-power factor
-contributes exactly its size. This includes `p=2` and `t=0`. -/
-theorem completeKloosterman_prime_power_common_factor (p k t : ℕ) [Fact p.Prime]
-    (a d : ℤ) :
-    completeKloosterman (p ^ (k + 1) * p ^ t)
-        ((p ^ t * a : ℤ) : ZMod (p ^ (k + 1) * p ^ t)) (p ^ t * d) =
-      (p : ℂ) ^ t * completeKloosterman (p ^ (k + 1)) (a : ZMod (p ^ (k + 1))) d := by
-  have hφ : (p ^ (k + 1) * p ^ t).totient = p ^ t * (p ^ (k + 1)).totient := by
-    rw [← pow_add, show k + 1 + t = (k + t) + 1 by omega,
-      Nat.totient_prime_pow_succ Fact.out, Nat.totient_prime_pow_succ Fact.out,
-      pow_add]
-    ring
-  have hq : ((p ^ (k + 1)).totient : ℂ) ≠ 0 := by
-    exact_mod_cast (Nat.totient_pos.mpr (pow_pos (Fact.out : p.Prime).pos _)).ne'
-  have hh := completeKloosterman_common_factor (p ^ (k + 1)) (p ^ t) a d
-  rw [hφ, Nat.cast_mul, mul_div_cancel_right₀ _ hq, Nat.cast_pow] at hh
-  simpa only [Nat.cast_pow] using hh
-
-/-- The fully degenerate endpoint has size `φ(q)`, not `q`. -/
-theorem completeKloosterman_zero_zero (q : ℕ) [NeZero q] :
-    completeKloosterman q 0 0 = q.totient := by
-  rw [completeKloosterman_eq_sum_units]
-  simp [ZMod.card_units_eq_totient]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

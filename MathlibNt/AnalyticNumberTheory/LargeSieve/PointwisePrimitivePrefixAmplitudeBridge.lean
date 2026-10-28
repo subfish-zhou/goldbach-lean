@@ -1,6 +1,5 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVExactLowHighConnector
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowSiegelWalfiszProducer
 
 /-!

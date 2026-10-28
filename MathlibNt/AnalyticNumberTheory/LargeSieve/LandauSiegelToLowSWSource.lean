@@ -1,6 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PointwisePrimitivePrefixAmplitudeBridge
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalNonprincipalOnly
 
 /-!
@@ -57,19 +55,6 @@ theorem nonprincipalPrimitivePsiSiegelWalfiszSource_of_rawLandauSiegelLowerBound
         gcongr
         exact le_add_of_nonneg_right hKq.le
 
-/-- Honest conditional Standard Bombieri--Vinogradov headline: after the
-fixed smoothing data, the only analytic hypothesis is the raw Landau--Siegel
-lower bound. -/
-theorem standardBombieriVinogradov_of_rawLandauSiegelLowerBound
-    (hLandauSiegel : RawLandauSiegelLowerBound)
-    {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
-    (νpos : ∀ x > 0, 0 ≤ ν x)
-    (suppν : support ν ⊆ Icc (1 / 2) 2)
-    (mass_one : ∫ x in Ioi (0 : ℝ), ν x / x = 1) :
-    MathlibNt.SieveTheory.BombieriVinogradov.StandardBombieriVinogradov :=
-  standardBombieriVinogradov_of_nonprincipalPrimitivePsi
-    (nonprincipalPrimitivePsiSiegelWalfiszSource_of_rawLandauSiegelLowerBound
-      hLandauSiegel diffν νpos suppν mass_one)
 
 end
 

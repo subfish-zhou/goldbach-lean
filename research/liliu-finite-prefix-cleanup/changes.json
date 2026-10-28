@@ -1,0 +1,95 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuPrereqWFRoundedAdmissibility.lean",
+      "status": "modified",
+      "before_sha256": "1ccc9ec18ddb86ff35fefad6f96d9f62c4b72fe292c0b7cf7f4adfe27cb88a6d",
+      "after_sha256": "c97415cff28049d25d1f8ff8d5c9fb75362dfcc187e4d0b64a17e9f2920a3263",
+      "before": {
+        "code_lines": 101,
+        "physical_lines": 133,
+        "utf8_bytes": 6179
+      },
+      "after": {
+        "code_lines": 86,
+        "physical_lines": 118,
+        "utf8_bytes": 5570
+      },
+      "delta": {
+        "code_lines": -15,
+        "physical_lines": -15,
+        "utf8_bytes": -609
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuPrereqWFSmallRosser.lean",
+      "status": "modified",
+      "before_sha256": "a96814301a8a0217cac81dea2fc0030d6fd91ff2bbb1c2fb5d5449f58e8a68f5",
+      "after_sha256": "eb50e578c785cfbb592d35fd9a12d8cd5c183f8edcafbf5209515f2ee8aa23c4",
+      "before": {
+        "code_lines": 393,
+        "physical_lines": 511,
+        "utf8_bytes": 22431
+      },
+      "after": {
+        "code_lines": 391,
+        "physical_lines": 509,
+        "utf8_bytes": 22299
+      },
+      "delta": {
+        "code_lines": -2,
+        "physical_lines": -2,
+        "utf8_bytes": -132
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LinearSieve/FiniteWeights.lean",
+      "status": "modified",
+      "before_sha256": "fd0b9d02ea33d403f3701964086d360f477253b1f56546fe3223f8b9755f00d9",
+      "after_sha256": "0ca634af293f132e484d8deb2fce0a61cf55acd7c47a0ad2ae5a9863df98d446",
+      "before": {
+        "code_lines": 685,
+        "physical_lines": 820,
+        "utf8_bytes": 34954
+      },
+      "after": {
+        "code_lines": 658,
+        "physical_lines": 793,
+        "utf8_bytes": 33809
+      },
+      "delta": {
+        "code_lines": -27,
+        "physical_lines": -27,
+        "utf8_bytes": -1145
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LinearSieve/RosserChains.lean",
+      "status": "modified",
+      "before_sha256": "80fbacee889c3d3af71a3b31ec2990dcc2929e0b3e6b42537ec35b7213f4f7b8",
+      "after_sha256": "42355cbde190e793ee008159fafb2c2dbffcbf40e2c3b1270df6a7669cc15cd9",
+      "before": {
+        "code_lines": 546,
+        "physical_lines": 634,
+        "utf8_bytes": 27236
+      },
+      "after": {
+        "code_lines": 524,
+        "physical_lines": 612,
+        "utf8_bytes": 26527
+      },
+      "delta": {
+        "code_lines": -22,
+        "physical_lines": -22,
+        "utf8_bytes": -709
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -66,
+    "physical_lines": -66,
+    "utf8_bytes": -2595
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

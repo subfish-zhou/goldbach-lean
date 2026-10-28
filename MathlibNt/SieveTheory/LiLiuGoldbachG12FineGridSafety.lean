@@ -99,14 +99,6 @@ theorem mother_long_scale {N m r : ℕ} {ε : ℝ}
     (N : ℝ)^(4/53 : ℝ) ≤ (m : ℝ) := by
   exact (goldbachG12ActiveProductSupport_data (mem_product.mp (mem_filter.mp hp).1).1).2.2.2.1
 
-/-- Equality at the high real cutoff is excluded even if the cutoff is prime. -/
-theorem high_endpoint_excluded {N m r : ℕ} {ε : ℝ}
-    (hr : (r : ℝ) = (N : ℝ)^(1/10 : ℝ)) :
-    (m,r) ∉ G12FlexibleRectangle.mother N ε := by
-  intro h
-  have hh := (mem_filter.mp h).2.2.2.2.2.2.2
-  change (r : ℝ) < (N : ℝ)^(1/10 : ℝ) at hh
-  linarith
 
 /-- The retained slice has precisely its literal mother predicate. -/
 theorem cutoffSlice_iff (N m r : ℕ) (ε : ℝ) :
@@ -130,31 +122,5 @@ theorem occupied_endpoint_order {ρ : ℝ} {N : ℕ} {k p : ℕ × ℕ}
   exact ⟨(mem_Ioc.mp hm).1.trans_le (mem_Ioc.mp hm).2,
     (mem_Ioc.mp hr).1.trans_le (mem_Ioc.mp hr).2⟩
 
-/-- A high endpoint in the original fibre stays in the high half, with no
-assumption that the endpoint is composite. -/
-theorem original_high_endpoint {N m r : ℕ} {ε : ℝ}
-    (hf : r ∈ goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m)
-    (hr : (r : ℝ) = (N : ℝ)^(1/10 : ℝ)) :
-    r ∈ (goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).filter
-      (fun r : ℕ => (N : ℝ)^(1/10 : ℝ) ≤ (r : ℝ)) := by
-  exact mem_filter.mpr ⟨hf,hr.ge⟩
-
-/-- Full original count, retaining both the slice and all three safety failures. -/
-theorem original_low_safe_partition {ρ : ℝ} (hρ : 1 < ρ) {N : ℕ} (hN : 1 ≤ N)
-    (ε : ℝ) :
-    (∑ m ∈ goldbachG12ActiveProductSupport N,
-      (goldbachG12ProductCoefficient N ((N : ℝ)^(4/53 : ℝ))
-        ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)) m : ℝ) *
-      (((goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).filter
-        (fun r : ℕ => (r : ℝ) < (N : ℝ)^(1/10 : ℝ))).card : ℝ)) =
-    (400 * ∑ p ∈ cutoffSlice N ε, goldbachG12NormalizedCoefficient N p.1 *
-      (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) +
-    400 * ∑ k ∈ indices ρ N,
-      ((∑ p ∈ safe ρ N ε k, goldbachG12NormalizedCoefficient N p.1 *
-        (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) +
-      ∑ p ∈ boundaryCell ρ N ε k, goldbachG12NormalizedCoefficient N p.1 *
-        (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) := by
-  rw [← G12LowRectangle.original_low_count]
-  exact refined_weighted_partition hρ hN ε _
 
 end G12FineGrid

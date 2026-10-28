@@ -1,3 +1,4 @@
+import Mathlib.Topology.Order.LeftRight
 import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedRosser
 import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
 
@@ -13,16 +14,9 @@ theorem choose_eight_loss (δ : ℝ) (hδ : 0 < δ) :
     ∃ t : ℝ, 0 < t ∧ t ≤ 1 ∧ 8*(1+t)^3 ≤ 8+δ := by
   let f : ℝ → ℝ := fun t => 8*(1+t)^3
   have hc : ContinuousAt f 0 := by dsimp [f]; fun_prop
-  obtain ⟨r,hr,hclose⟩ := Metric.continuousAt_iff.mp hc δ hδ
-  let t : ℝ := min (r/2) (1/2)
-  have ht : 0 < t := lt_min (by positivity) (by norm_num)
-  have ht1 : t ≤ 1 := (min_le_right _ _).trans (by norm_num)
-  have htr : t < r := lt_of_le_of_lt (min_le_left _ _) (by linarith)
-  have hf := hclose (show dist t 0 < r by simpa [Real.dist_eq,abs_of_pos ht] using htr)
-  have hup := (abs_lt.mp (show |f t - f 0| < δ by simpa [Real.dist_eq] using hf)).2
-  refine ⟨t,ht,ht1,?_⟩
-  dsimp [f] at hup
-  nlinarith only [hup]
+  have he := hc.eventually (gt_mem_nhds (lt_add_of_pos_right (f 0) hδ))
+  obtain ⟨t,ht,ht1,hf⟩ := ((eventually_lt_nhds (by norm_num : (0 : ℝ) < 1)).and he).exists_gt
+  exact ⟨t,ht,ht1.le,by simpa [f] using hf.le⟩
 
 /-- The second logarithm for the actual ungated clipped prime outputs.
 No hypothesis on epsilon's sign or fixed-window choice is required. -/

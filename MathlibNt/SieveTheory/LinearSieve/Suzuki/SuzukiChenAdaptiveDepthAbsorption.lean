@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenParameterBridge
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13HatLayersKappaOne
 
 open Set Filter Topology
 
@@ -130,21 +129,6 @@ theorem chen_eventually_all_depth_suzuki_error_absorption
   have hN := (tendsto_chenLevel_atTop hε).eventually hD
   obtain ⟨N₀, hN₀⟩ := eventually_atTop.1 hN
   exact ⟨N₀, fun N hN depth => (hN₀ N hN depth).2⟩
-
-/-- Adaptive-depth corollary: `Nadapt` is completely arbitrary and hence may
-track the growing finite carrier. -/
-theorem chen_eventually_adaptive_depth_suzuki_error_absorption
-    (H : Section13HatLayers) {β C K ε : ℝ}
-    (hH : Section13HatContract H β) (hC : 0 ≤ C)
-    (hε0 : 0 ≤ ε) (hε : ε < 1 / 10)
-    (Nadapt : ℕ → ℕ) (ρ : ℝ) (hρ : 0 < ρ) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
-      C * Real.exp (Real.sqrt K) *
-          errorEnvelope H (Nadapt N) (chenLevel N ε : ℝ) 16 (chenS ε) *
-            (Real.log (chenLevel N ε : ℝ)) ^ (-(1 / 2 : ℝ)) < ρ := by
-  obtain ⟨N₀, hN₀⟩ := chen_eventually_all_depth_suzuki_error_absorption
-    H hH hC hε0 hε ρ hρ
-  exact ⟨N₀, fun N hN => hN₀ N hN (Nadapt N)⟩
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

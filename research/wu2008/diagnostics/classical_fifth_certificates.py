@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""Reproduce the fifth classical-slot certificates with exact rational arithmetic.
+"""Reproduce the exact fifth-slot integer certificates.
 
-Three 1024-point midpoint grids generate 192 point modules, 192 coverage
-modules, three payment tables, three roots and one final assembly. The degree
-12 correction polynomial is obtained by integrating two polynomial products.
-Neither symbolic-algebra packages nor stored numerical data are required.
-Byte reproduction is separate from Lean verification of all dependencies.
+Three unchanged1024-point grids and scale10^12;48 independent64-point sums.
+The original rational producers remain the numerical authority. Fixed Git
+literal payments are cross-checked at every point. Lean verification is separate.
 """
 from fractions import Fraction as F
 from pathlib import Path
-import argparse
+import argparse,re,subprocess
 
 def correction_coefficients():
     """Coefficients of C(x) = integral_0^x B(t) Q_3(t), B' = logPoly Q_2."""
@@ -58,162 +56,48 @@ def point_data():
         rows.append({'tag': tag, 'n': count, 'sum': sum((p['q'] for p in points)), 'points': points})
     return rows
 
-def point_sources(data):
-    out = {}
+FIXED_SOURCES = {'WR2ClassicalFifthIntegerData.lean': 'import WR2ClassicalFifthIntegerPolynomial\n\n/-! Exact integer payment formulas on the original Fifth grids.\nSoundness uses grid bounds, positive ratio denominators, ratio>=1, and\n0<=s-4<=1 on middle/terminal before rewriting each Nat subtraction. -/\nnamespace WuPaper.FifthIntegerPayment\nopen IntegerLogHorner\n\ninductive Branch where\n  | initial | middle | terminal\n  deriving DecidableEq\n\ndef scale : ℕ := 1000000000000\ndef gridDenominator : Branch → ℕ\n  | .middle => 21094400\n  | _ => 42188800\ndef gridNumerator : Branch → ℕ → ℕ\n  | .initial, i => 144037888+12069*(2*i+1)\n  | .middle, i => 84377600+253*(2*i+1)\n  | .terminal, i => 169791488+12575*(2*i+1)\n\ndef extraNumerator (branch : Branch) (i : ℕ) : ℕ :=\n  match branch with\n  | .initial => 0\n  | _ => FifthIntegerPolynomial.homogeneous\n      (gridNumerator branch i-4*gridDenominator branch) (gridDenominator branch)\ndef extraDenominator (branch : Branch) : ℕ :=\n  match branch with\n  | .initial => 1\n  | _ => FifthIntegerPolynomial.commonDen*(gridDenominator branch)^12\n\ndef ratioNumerator (branch : Branch) (i : ℕ) : ℕ :=\n  match branch with\n  | .terminal => 1127*gridDenominator branch-200*gridNumerator branch i\n  | _ => 265400*gridDenominator branch\ndef ratioDenominator (branch : Branch) (i : ℕ) : ℕ :=\n  match branch with\n  | .terminal => 200*gridDenominator branch\n  | _ => 828048*gridDenominator branch-164800*gridNumerator branch i\n\ndef rawNumerator (branch : Branch) (i : ℕ) : ℕ :=\n  scale*2654*(gridDenominator branch)^2*\n    (numerator (gridNumerator branch i-2*gridDenominator branch) (gridNumerator branch i)*\n      extraDenominator branch+\n      extraNumerator branch i*denominator (gridNumerator branch i))*\n    numerator (ratioNumerator branch i-ratioDenominator branch i)\n      (ratioNumerator branch i+ratioDenominator branch i)\ndef rawDenominator (branch : Branch) (i : ℕ) : ℕ :=\n  denominator (gridNumerator branch i)*extraDenominator branch*\n    denominator (ratioNumerator branch i+ratioDenominator branch i)*\n    gridNumerator branch i*(1327*gridDenominator branch-200*gridNumerator branch i)\ndef paymentNumerator (branch : Branch) (i : ℕ) : ℕ :=\n  if i < 1024 then rawNumerator branch i/rawDenominator branch i else 0\n\nend WuPaper.FifthIntegerPayment\n', 'WR2ClassicalFifthIntegerSoundness.lean': "import WR2ClassicalFifthIntegerDomains\nimport WR2ClassicalFifthTableCheck\n\n/-! Exact payment identities and lower bounds on the original Fifth grids.\nHigh-degree logarithm expressions remain abstract in the payment algebra. -/\nnamespace WuPaper.FifthIntegerPayment\nopen IntegerLogHorner\n\nprivate theorem denominator_pos {q : ℕ} (hq : 0 < q) : 0 < denominator q := by\n  unfold denominator IntegerLogHorner.commonDen\n  positivity\n\ndef sample (b : Branch) (i : ℕ) : ℚ :=\n  (gridNumerator b i : ℚ) / (gridDenominator b : ℚ)\n\ntheorem first_log (b : Branch) {i : ℕ} (hi : i < 1024) :\n    (numerator (gridNumerator b i-2*gridDenominator b) (gridNumerator b i):ℚ) /\n      (denominator (gridNumerator b i):ℚ) = ExactRational.logLo (sample b i-1) := by\n  obtain ⟨hd,hs,_⟩ := grid_domain b hi\n  have hds : gridDenominator b ≤ gridNumerator b i := by omega\n  have hnd : gridDenominator b ≤ gridNumerator b i-gridDenominator b := by omega\n  have he := logLo_nat_ratio hnd hd\n  have hsub : gridNumerator b i-gridDenominator b-gridDenominator b =\n      gridNumerator b i-2*gridDenominator b := by omega\n  have hadd : gridNumerator b i-gridDenominator b+gridDenominator b =\n      gridNumerator b i := by omega\n  rw [hsub,hadd] at he\n  rw [← he, Nat.cast_sub hds]\n  congr 1\n  unfold sample\n  have hdq : (gridDenominator b:ℚ) ≠ 0 := by exact_mod_cast hd.ne'\n  field_simp [hdq]\n\ntheorem second_log (b : Branch) {i : ℕ} (hi : i < 1024) :\n    (numerator (ratioNumerator b i-ratioDenominator b i)\n      (ratioNumerator b i+ratioDenominator b i):ℚ) /\n      (denominator (ratioNumerator b i+ratioDenominator b i):ℚ) =\n    ExactRational.logLo ((ratioNumerator b i:ℚ)/(ratioDenominator b i:ℚ)) := by\n  obtain ⟨hd,hn⟩ := ratio_domain b hi\n  exact (logLo_nat_ratio hn hd).symm\n\nprivate theorem extra_exact (b : Branch) (hb : b ≠ .initial)\n    {i : ℕ} (hi : i < 1024) :\n    (extraNumerator b i:ℚ)/(extraDenominator b:ℚ) =\n      ClassicalFifthTableCheck.cPoly (sample b i-4) := by\n  obtain ⟨hsub,hy⟩ := extra_domain b hb hi\n  have hd := (grid_domain b hi).1\n  have hp := FifthIntegerPolynomial.cPoly_nat hy hd\n  have hx : ((gridNumerator b i-4*gridDenominator b:ℕ):ℚ)/(gridDenominator b:ℚ)\n      = sample b i-4 := by\n    rw [Nat.cast_sub hsub, Nat.cast_mul, Nat.cast_ofNat]\n    unfold sample\n    have hdq : (gridDenominator b:ℚ) ≠ 0 := by exact_mod_cast hd.ne'\n    field_simp\n  rw [hx] at hp\n  cases b with\n  | initial => exact (hb rfl).elim\n  | middle => simpa only [extraNumerator, extraDenominator, Nat.cast_mul, Nat.cast_pow] using hp\n  | terminal => simpa only [extraNumerator, extraDenominator, Nat.cast_mul, Nat.cast_pow] using hp\n\n/-- This low-degree identity never sees the polynomial or log implementation. -/\nprivate theorem weight_identity (S D : ℚ) (hd : D ≠ 0) :\n    (S/D)*(1/2-(100/1327)*(S/D)) = S*(1327*D-200*S)/(2654*D^2) := by\n  field_simp [hd]\n  ring\n\nprivate theorem payment_algebra (K D S A B C E F G : ℚ)\n    (hd : D ≠ 0) (hs : S ≠ 0) (hb : B ≠ 0) (he : E ≠ 0)\n    (hg : G ≠ 0) (_hw : 1327*D-200*S ≠ 0) :\n    K*2654*D^2*(A*E+C*B)*F/(B*E*G*S*(1327*D-200*S)) =\n    K*((A/B+C/E)*(F/G)/((S/D)*(1/2-(100/1327)*(S/D)))) := by\n  rw [weight_identity S D hd]\n  field_simp [hd, hs, hb, he, hg, _hw]\n\nprivate theorem raw_exact (b : Branch) {i : ℕ} (hi : i < 1024) :\n    (rawNumerator b i:ℚ)/(rawDenominator b i:ℚ) =\n    (scale:ℚ)*ClassicalFifthTableCheck.value\n      ((extraNumerator b i:ℚ)/(extraDenominator b:ℚ))\n      ((ratioNumerator b i:ℚ)/(ratioDenominator b i:ℚ)) (sample b i) := by\n  obtain ⟨hd,hs,hw⟩ := grid_domain b hi\n  obtain ⟨hr,hn⟩ := ratio_domain b hi\n  have hsp : 0 < gridNumerator b i := by omega\n  have hep : 0 < extraDenominator b := by\n    cases b <;> norm_num [extraDenominator, FifthIntegerPolynomial.commonDen, gridDenominator]\n  have hbp := denominator_pos hsp\n  have hgp : 0 < denominator (ratioNumerator b i+ratioDenominator b i) :=\n    denominator_pos (by omega)\n  have hdq : (gridDenominator b:ℚ) ≠ 0 := by exact_mod_cast hd.ne'\n  have hsq : (gridNumerator b i:ℚ) ≠ 0 := by exact_mod_cast hsp.ne'\n  have heq : (extraDenominator b:ℚ) ≠ 0 := by exact_mod_cast hep.ne'\n  have hbq : (denominator (gridNumerator b i):ℚ) ≠ 0 := by exact_mod_cast hbp.ne'\n  have hgq : (denominator (ratioNumerator b i+ratioDenominator b i):ℚ) ≠ 0 := by\n    exact_mod_cast hgp.ne'\n  have hwq : (1327:ℚ)*(gridDenominator b:ℚ)-200*(gridNumerator b i:ℚ) ≠ 0 := by\n    have h : (200:ℚ)*(gridNumerator b i:ℚ) < 1327*(gridDenominator b:ℚ) := by exact_mod_cast hw\n    linarith\n  simp only [rawNumerator, rawDenominator, Nat.cast_mul, Nat.cast_add,\n    Nat.cast_pow, Nat.cast_ofNat, Nat.cast_sub (Nat.le_of_lt hw)]\n  rw [payment_algebra _ _ _ _ _ _ _ _ _ hdq hsq hbq heq hgq hwq]\n  rw [first_log b hi, second_log b hi]\n  rfl\n\n-- BRANCH BRIDGES\n\ntheorem initial_midpoint (i : ℕ) : sample .initial i =\n    ExactRational.midpoint ClassicalFifthTableCheck.lo 4 1024 i := by\n  simp only [sample, gridNumerator, gridDenominator, ExactRational.midpoint,\n    ClassicalFifthTableCheck.lo,\n    Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat]\n  ring\n\nprivate theorem initial_ratio {i : ℕ} (hi : i < 1024) :\n    (ratioNumerator .initial i:ℚ)/(ratioDenominator .initial i:ℚ) = (1327/824)/(1327/200-1327/824-sample .initial i) := by\n  have h := initial_ratio_domain hi\n  have hq : (164800:ℚ)*(gridNumerator .initial i:ℚ) <\n      828048*(gridDenominator .initial:ℚ) := by exact_mod_cast h.1\n  have hdiv : (1327/200:ℚ)-1327/824-sample .initial i ≠ 0 := by\n    simp only [sample, gridDenominator] at *\n    norm_num only [Nat.cast_ofNat] at hq ⊢\n    intro hz\n    linarith\n  have hden : (828048:ℚ)*(gridDenominator .initial:ℚ)-\n      164800*(gridNumerator .initial i:ℚ) ≠ 0 := by linarith\n  simp only [ratioNumerator, ratioDenominator]\n  rw [Nat.cast_sub (Nat.le_of_lt h.1)]\n  simp only [Nat.cast_mul, Nat.cast_ofNat]\n  unfold sample at hdiv ⊢\n  norm_num only [gridDenominator, Nat.cast_ofNat] at hdiv hden ⊢\n  apply (div_eq_div_iff hden hdiv).2\n  ring\n\ntheorem initial_raw_exact {i : ℕ} (hi : i < 1024) :\n    (rawNumerator .initial i:ℚ)/(rawDenominator .initial i:ℚ) =\n      (scale:ℚ)*ClassicalFifthTableCheck.initialValue (sample .initial i) := by\n  have h := raw_exact .initial hi\n  rw [initial_ratio hi] at h\n  simp only [extraNumerator, extraDenominator, Nat.cast_zero, Nat.cast_one, zero_div] at h\n  exact h\n\ntheorem initial_payment_condition {i : ℕ} (hi : i < 1024) :\n    ClassicalFifthTableCheck.initialCondition (paymentNumerator .initial) i := by\n  have h := quotient_payment_of_exact (by norm_num [scale] : 0 < scale)\n    (initial_raw_exact hi)\n  simpa only [ClassicalFifthTableCheck.initialCondition, paymentNumerator, if_pos hi,\n    scale, Nat.cast_ofNat, initial_midpoint] using h\n\ntheorem initial_payment_sound {i : ℕ} (hi : i < 1024) :\n    (paymentNumerator .initial i:ℝ)/1000000000000 ≤\n      ClassicalFifthRational.initialValue\n        ((ClassicalUniformMidpoint.point ClassicalFifthSource.lo 4 1024 i +\n          ClassicalUniformMidpoint.point ClassicalFifthSource.lo 4 1024 (i+1))/2) := by\n  exact ClassicalFifthTableCheck.initialCondition_sound (initial_payment_condition hi)\n\ntheorem middle_midpoint (i : ℕ) : sample .middle i =\n    ExactRational.midpoint 4 ClassicalFifthTableCheck.cut 1024 i := by\n  simp only [sample, gridNumerator, gridDenominator, ExactRational.midpoint,\n    ClassicalFifthTableCheck.cut,\n    Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat]\n  ring\n\nprivate theorem middle_ratio {i : ℕ} (hi : i < 1024) :\n    (ratioNumerator .middle i:ℚ)/(ratioDenominator .middle i:ℚ) = (1327/824)/(1327/200-1327/824-sample .middle i) := by\n  have h := middle_ratio_domain hi\n  have hq : (164800:ℚ)*(gridNumerator .middle i:ℚ) <\n      828048*(gridDenominator .middle:ℚ) := by exact_mod_cast h.1\n  have hdiv : (1327/200:ℚ)-1327/824-sample .middle i ≠ 0 := by\n    simp only [sample, gridDenominator] at *\n    norm_num only [Nat.cast_ofNat] at hq ⊢\n    intro hz\n    linarith\n  have hden : (828048:ℚ)*(gridDenominator .middle:ℚ)-\n      164800*(gridNumerator .middle i:ℚ) ≠ 0 := by linarith\n  simp only [ratioNumerator, ratioDenominator]\n  rw [Nat.cast_sub (Nat.le_of_lt h.1)]\n  simp only [Nat.cast_mul, Nat.cast_ofNat]\n  unfold sample at hdiv ⊢\n  norm_num only [gridDenominator, Nat.cast_ofNat] at hdiv hden ⊢\n  apply (div_eq_div_iff hden hdiv).2\n  ring\n\ntheorem middle_raw_exact {i : ℕ} (hi : i < 1024) :\n    (rawNumerator .middle i:ℚ)/(rawDenominator .middle i:ℚ) =\n      (scale:ℚ)*ClassicalFifthTableCheck.middleValue (sample .middle i) := by\n  have h := raw_exact .middle hi\n  rw [middle_ratio hi] at h\n  rw [extra_exact .middle (by decide) hi] at h\n  exact h\n\ntheorem middle_payment_condition {i : ℕ} (hi : i < 1024) :\n    ClassicalFifthTableCheck.middleCondition (paymentNumerator .middle) i := by\n  have h := quotient_payment_of_exact (by norm_num [scale] : 0 < scale)\n    (middle_raw_exact hi)\n  simpa only [ClassicalFifthTableCheck.middleCondition, paymentNumerator, if_pos hi,\n    scale, Nat.cast_ofNat, middle_midpoint] using h\n\ntheorem middle_payment_sound {i : ℕ} (hi : i < 1024) :\n    (paymentNumerator .middle i:ℝ)/1000000000000 ≤\n      ClassicalFifthRational.middleValue\n        ((ClassicalUniformMidpoint.point 4 ClassicalFifthSource.cut 1024 i +\n          ClassicalUniformMidpoint.point 4 ClassicalFifthSource.cut 1024 (i+1))/2) := by\n  exact ClassicalFifthTableCheck.middleCondition_sound (middle_payment_condition hi)\n\ntheorem terminal_midpoint (i : ℕ) : sample .terminal i =\n    ExactRational.midpoint ClassicalFifthTableCheck.cut ClassicalFifthTableCheck.hi 1024 i := by\n  simp only [sample, gridNumerator, gridDenominator, ExactRational.midpoint,\n    ClassicalFifthTableCheck.cut, ClassicalFifthTableCheck.hi,\n    Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat]\n  ring\n\nprivate theorem terminal_ratio {i : ℕ} (hi : i < 1024) :\n    (ratioNumerator .terminal i:ℚ)/(ratioDenominator .terminal i:ℚ) = 1327/200-1-sample .terminal i := by\n  have h := terminal_ratio_domain hi\n  simp only [ratioNumerator, ratioDenominator]\n  rw [Nat.cast_sub h.1]\n  simp only [Nat.cast_mul, Nat.cast_ofNat, sample, gridDenominator]\n  field_simp\n  ring\n\ntheorem terminal_raw_exact {i : ℕ} (hi : i < 1024) :\n    (rawNumerator .terminal i:ℚ)/(rawDenominator .terminal i:ℚ) =\n      (scale:ℚ)*ClassicalFifthTableCheck.terminalValue (sample .terminal i) := by\n  have h := raw_exact .terminal hi\n  rw [terminal_ratio hi] at h\n  rw [extra_exact .terminal (by decide) hi] at h\n  exact h\n\ntheorem terminal_payment_condition {i : ℕ} (hi : i < 1024) :\n    ClassicalFifthTableCheck.terminalCondition (paymentNumerator .terminal) i := by\n  have h := quotient_payment_of_exact (by norm_num [scale] : 0 < scale)\n    (terminal_raw_exact hi)\n  simpa only [ClassicalFifthTableCheck.terminalCondition, paymentNumerator, if_pos hi,\n    scale, Nat.cast_ofNat, terminal_midpoint] using h\n\ntheorem terminal_payment_sound {i : ℕ} (hi : i < 1024) :\n    (paymentNumerator .terminal i:ℝ)/1000000000000 ≤\n      ClassicalFifthRational.terminalValue\n        ((ClassicalUniformMidpoint.point ClassicalFifthSource.cut ClassicalFifthSource.hi 1024 i +\n          ClassicalUniformMidpoint.point ClassicalFifthSource.cut ClassicalFifthSource.hi 1024 (i+1))/2) := by\n  exact ClassicalFifthTableCheck.terminalCondition_sound (terminal_payment_condition hi)\n\nend WuPaper.FifthIntegerPayment\n#print axioms WuPaper.FifthIntegerPayment.initial_payment_sound\n#print axioms WuPaper.FifthIntegerPayment.middle_payment_sound\n#print axioms WuPaper.FifthIntegerPayment.terminal_payment_sound\n", 'WR2ClassicalFifthTerminalRoot.lean': 'import WR2ClassicalFifthTerminalPayments\nimport WR2ClassicalFifthIntegerSoundness\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\nopen ClassicalFifthSource ClassicalUniformMidpoint\nset_option maxHeartbeats 4000000 in\ntheorem all_terminal_paid (i : ℕ) (hindex : i < 1024) : terminalPayment i ≤\n    terminalValue ((point cut hi 1024 i+point cut hi 1024 (i+1))/2) := by\n  simpa only [terminalPayment, terminalNumerator] using\n    FifthIntegerPayment.terminal_payment_sound hindex\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.all_terminal_paid\n', 'WR2ClassicalFifthIntegerPolynomial.lean': "import WR2IntegerLogHorner\nimport WR2ClassicalFifthPolynomialData\n\n/-! Exact paired natural-number evaluation of the original polynomial.\nExact regrouping only: the coefficients, domain and payment precision are unchanged. -/\nnamespace WuPaper.FifthIntegerPolynomial\n\n/-- This hypothesis, not an assumption about Nat subtraction, justifies every pair. -/\ntheorem pair_no_truncation {Y D a b : ℕ} (hYD : Y ≤ D) (hba : b ≤ a) :\n    b*Y ≤ a*D := Nat.mul_le_mul hba hYD\n\ndef commonDen : ℕ := 52254720\n\ndef homogeneous (Y D : ℕ) : ℕ :=\n  Y^3*((1451520*D-1088640*Y)*D^8+\n    Y^2*((653184*D-374976*Y)*D^6+\n      Y^2*((155616*D-57108*Y)*D^4+\n        Y^2*((18212*D-4030*Y)*D^2+\n          Y^2*(780*D-105*Y)))))\n\ndef rationalHomogeneous (Y D : ℚ) : ℚ :=\n  Y^3*((1451520*D-1088640*Y)*D^8+\n    Y^2*((653184*D-374976*Y)*D^6+\n      Y^2*((155616*D-57108*Y)*D^4+\n        Y^2*((18212*D-4030*Y)*D^2+\n          Y^2*(780*D-105*Y)))))\n\n/-- All five subtractions are exact before any cast is distributed. -/\ntheorem cast_homogeneous {Y D : ℕ} (hYD : Y ≤ D) :\n    (homogeneous Y D : ℚ) = rationalHomogeneous (Y:ℚ) (D:ℚ) := by\n  have h0 : 1088640*Y ≤ 1451520*D := pair_no_truncation hYD (by decide)\n  have h1 : 374976*Y ≤ 653184*D := pair_no_truncation hYD (by decide)\n  have h2 : 57108*Y ≤ 155616*D := pair_no_truncation hYD (by decide)\n  have h3 : 4030*Y ≤ 18212*D := pair_no_truncation hYD (by decide)\n  have h4 : 105*Y ≤ 780*D := pair_no_truncation hYD (by decide)\n  simp only [homogeneous,rationalHomogeneous,Nat.cast_mul,Nat.cast_add,\n    Nat.cast_pow,Nat.cast_sub h0,Nat.cast_sub h1,Nat.cast_sub h2,\n    Nat.cast_sub h3,Nat.cast_sub h4,Nat.cast_ofNat]\n\n/-- Prove this at abstract Y,D; do not expand a concrete grid denominator. -/\ntheorem cPoly_abstract (Y D : ℚ) (hD : D ≠ 0) :\n    ClassicalFifthTableCheck.cPoly (Y/D) =\n      rationalHomogeneous Y D / ((commonDen:ℚ)*D^12) := by\n  norm_num [ClassicalFifthTableCheck.cPoly,rationalHomogeneous,commonDen]\n  field_simp [hD]\n  ring\n\n/-- Exact cPoly evaluation by Nat arithmetic on its original nonnegative domain. -/\ntheorem cPoly_nat {Y D : ℕ} (hYD : Y ≤ D) (hD : 0 < D) :\n    (homogeneous Y D:ℚ)/((commonDen:ℚ)*(D:ℚ)^12) =\n      ClassicalFifthTableCheck.cPoly ((Y:ℚ)/(D:ℚ)) := by\n  have hd : (D:ℚ) ≠ 0 := by exact_mod_cast hD.ne'\n  rw [cast_homogeneous hYD]\n  exact (cPoly_abstract (Y:ℚ) (D:ℚ) hd).symm\n\nend WuPaper.FifthIntegerPolynomial\n#print axioms WuPaper.FifthIntegerPolynomial.cPoly_nat\n", 'WR2ClassicalFifthInitialRoot.lean': 'import WR2ClassicalFifthInitialPayments\nimport WR2ClassicalFifthIntegerSoundness\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\nopen ClassicalFifthSource ClassicalUniformMidpoint\nset_option maxHeartbeats 4000000 in\ntheorem all_initial_paid (i : ℕ) (hindex : i < 1024) : initialPayment i ≤\n    initialValue ((point lo 4 1024 i+point lo 4 1024 (i+1))/2) := by\n  simpa only [initialPayment, initialNumerator] using\n    FifthIntegerPayment.initial_payment_sound hindex\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.all_initial_paid\n', 'WR2ClassicalFifthIntegerDomains.lean': 'import WR2ClassicalFifthIntegerData\n\n/-! Natural-number domain bounds for the original Fifth grids. -/\nnamespace WuPaper.FifthIntegerPayment\n\ntheorem grid_domain (branch : Branch) {i : ℕ} (hi : i < 1024) :\n    0 < gridDenominator branch ∧\n    2*gridDenominator branch ≤ gridNumerator branch i ∧\n    200*gridNumerator branch i < 1327*gridDenominator branch := by\n  cases branch <;> simp only [gridDenominator, gridNumerator] <;> omega\n\ntheorem extra_domain (branch : Branch) (hb : branch ≠ .initial)\n    {i : ℕ} (hi : i < 1024) :\n    4*gridDenominator branch ≤ gridNumerator branch i ∧\n    gridNumerator branch i-4*gridDenominator branch ≤ gridDenominator branch := by\n  cases branch with\n  | initial => exact (hb rfl).elim\n  | middle => simp only [gridDenominator, gridNumerator]; omega\n  | terminal => simp only [gridDenominator, gridNumerator]; omega\n\ntheorem initial_ratio_domain {i : ℕ} (hi : i < 1024) :\n    164800*gridNumerator .initial i < 828048*gridDenominator .initial ∧\n    ratioDenominator .initial i ≤ ratioNumerator .initial i := by\n  simp only [ratioNumerator, ratioDenominator, gridDenominator, gridNumerator]\n  omega\n\ntheorem middle_ratio_domain {i : ℕ} (hi : i < 1024) :\n    164800*gridNumerator .middle i < 828048*gridDenominator .middle ∧\n    ratioDenominator .middle i ≤ ratioNumerator .middle i := by\n  simp only [ratioNumerator, ratioDenominator, gridDenominator, gridNumerator]\n  omega\n\ntheorem terminal_ratio_domain {i : ℕ} (hi : i < 1024) :\n    200*gridNumerator .terminal i ≤ 1127*gridDenominator .terminal ∧\n    ratioDenominator .terminal i ≤ ratioNumerator .terminal i := by\n  simp only [ratioNumerator, ratioDenominator, gridDenominator, gridNumerator]\n  omega\n\ntheorem ratio_domain (branch : Branch) {i : ℕ} (hi : i < 1024) :\n    0 < ratioDenominator branch i ∧\n    ratioDenominator branch i ≤ ratioNumerator branch i := by\n  cases branch <;>\n    simp only [ratioNumerator, ratioDenominator, gridDenominator, gridNumerator] <;>\n    omega\n\nend WuPaper.FifthIntegerPayment\n', 'WR2ClassicalFifthPolynomialData.lean': 'import Mathlib.Algebra.Order.Field.Rat\n\nnamespace WuPaper.ClassicalFifthTableCheck\n\ndef cPoly (y : ℚ) : ℚ := (1/36:ℚ)*y^3+(-1/48:ℚ)*y^4+(1/80:ℚ)*y^5+(-31/4320:ℚ)*y^6+(1621/544320:ℚ)*y^7+(-4759/4354560:ℚ)*y^8+(4553/13063680:ℚ)*y^9+(-403/5225472:ℚ)*y^10+(13/870912:ℚ)*y^11+(-1/497664:ℚ)*y^12\n\nend WuPaper.ClassicalFifthTableCheck\n', 'WR2ClassicalFifthMiddleRoot.lean': 'import WR2ClassicalFifthMiddlePayments\nimport WR2ClassicalFifthIntegerSoundness\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\nopen ClassicalFifthSource ClassicalUniformMidpoint\nset_option maxHeartbeats 4000000 in\ntheorem all_middle_paid (i : ℕ) (hindex : i < 1024) : middlePayment i ≤\n    middleValue ((point 4 cut 1024 i+point 4 cut 1024 (i+1))/2) := by\n  simpa only [middlePayment, middleNumerator] using\n    FifthIntegerPayment.middle_payment_sound hindex\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.all_middle_paid\n', 'WR2ClassicalFifthTableCheck.lean': 'import WR2ClassicalFifthPolynomialData\nimport WR2ClassicalFifthAssembly\nimport WR2ExactRationalLog\n\n/-! Exact evaluation of the unchanged fifth-slot polynomial and midpoint tables. -/\n\nnamespace WuPaper.ClassicalFifthTableCheck\nopen ExactRational\n\ndef lo : ℚ := (1/2-2*(25/206))/(100/1327)\ndef cut : ℚ := (1/2-(100/1327)-(25/206))/(100/1327)\ndef hi : ℚ := 1327/200-2\n\ndef value (extra ratio s : ℚ) : ℚ :=\n  (logLo (s-1)+extra)*logLo ratio/(s*(1/2-(100/1327)*s))\ndef initialValue (s : ℚ) : ℚ := value 0 ((1327/824)/(1327/200-1327/824-s)) s\ndef middleValue (s : ℚ) : ℚ := value (cPoly (s-4)) ((1327/824)/(1327/200-1327/824-s)) s\ndef terminalValue (s : ℚ) : ℚ := value (cPoly (s-4)) (1327/200-1-s) s\n\n@[simp] theorem cast_cPoly (s : ℚ) :\n    (cPoly s : ℝ) = ClassicalCPolynomial.cPoly (s : ℝ) := by\n  simp [cPoly, ClassicalCPolynomial.cPoly]\n\n@[simp] theorem cast_value (extra ratio s : ℚ) :\n    (value extra ratio s : ℝ) = ClassicalFifthRational.value (extra : ℝ) (ratio : ℝ) (s : ℝ) := by\n  simp [value, ClassicalFifthRational.value]\n\n@[simp] theorem cast_initialValue (s : ℚ) :\n    (initialValue s : ℝ) = ClassicalFifthRational.initialValue (s : ℝ) := by\n  simp [initialValue, ClassicalFifthRational.initialValue, ClassicalSixthBranch.v, ClassicalSixthBranch.R, ClassicalSixthBranch.r]\n\n@[simp] theorem cast_middleValue (s : ℚ) :\n    (middleValue s : ℝ) = ClassicalFifthRational.middleValue (s : ℝ) := by\n  simp [middleValue, ClassicalFifthRational.middleValue, ClassicalSixthBranch.v, ClassicalSixthBranch.R, ClassicalSixthBranch.r]\n\n@[simp] theorem cast_terminalValue (s : ℚ) :\n    (terminalValue s : ℝ) = ClassicalFifthRational.terminalValue (s : ℝ) := by\n  simp [terminalValue, ClassicalFifthRational.terminalValue, ClassicalSixthBranch.u, ClassicalSixthBranch.R]\n\ndef initialCondition (q : ℕ → ℕ) (i : ℕ) : Prop :=\n  (q i : ℚ)/1000000000000 ≤ initialValue (midpoint lo 4 1024 i)\n\ntheorem initialCondition_sound {q : ℕ → ℕ} {i : ℕ} (h : initialCondition q i) :\n    (q i : ℝ)/1000000000000 ≤ ClassicalFifthRational.initialValue\n      ((ClassicalUniformMidpoint.point ClassicalFifthSource.lo 4 1024 i +\n        ClassicalUniformMidpoint.point ClassicalFifthSource.lo 4 1024 (i+1))/2) := by\n  have hh := Rat.cast_le (K := ℝ) |>.mpr h\n  simpa [ExactRational.midpoint, lo, ClassicalFifthSource.lo, WuSource.SrcSixthGain.split, QuarterTrim.alpha, QuarterTrim.beta,\n    ClassicalUniformMidpoint.point, ClassicalUniformMidpoint.step] using hh\n\ndef middleCondition (q : ℕ → ℕ) (i : ℕ) : Prop :=\n  (q i : ℚ)/1000000000000 ≤ middleValue (midpoint 4 cut 1024 i)\n\ntheorem middleCondition_sound {q : ℕ → ℕ} {i : ℕ} (h : middleCondition q i) :\n    (q i : ℝ)/1000000000000 ≤ ClassicalFifthRational.middleValue\n      ((ClassicalUniformMidpoint.point 4 ClassicalFifthSource.cut 1024 i +\n        ClassicalUniformMidpoint.point 4 ClassicalFifthSource.cut 1024 (i+1))/2) := by\n  have hh := Rat.cast_le (K := ℝ) |>.mpr h\n  simpa [ExactRational.midpoint, cut, ClassicalFifthSource.cut, WuSource.SrcSixthGain.endpoint, QuarterTrim.alpha, QuarterTrim.beta,\n    ClassicalUniformMidpoint.point, ClassicalUniformMidpoint.step] using hh\n\ndef terminalCondition (q : ℕ → ℕ) (i : ℕ) : Prop :=\n  (q i : ℚ)/1000000000000 ≤ terminalValue (midpoint cut hi 1024 i)\n\ntheorem terminalCondition_sound {q : ℕ → ℕ} {i : ℕ} (h : terminalCondition q i) :\n    (q i : ℝ)/1000000000000 ≤ ClassicalFifthRational.terminalValue\n      ((ClassicalUniformMidpoint.point ClassicalFifthSource.cut ClassicalFifthSource.hi 1024 i +\n        ClassicalUniformMidpoint.point ClassicalFifthSource.cut ClassicalFifthSource.hi 1024 (i+1))/2) := by\n  have hh := Rat.cast_le (K := ℝ) |>.mpr h\n  simpa [ExactRational.midpoint, cut, hi, ClassicalFifthSource.cut, ClassicalFifthSource.hi, WuSource.SrcSixthGain.endpoint, ClassicalFifthBranch.endpoint, ClassicalSixthBranch.R, QuarterTrim.alpha, QuarterTrim.beta,\n    ClassicalUniformMidpoint.point, ClassicalUniformMidpoint.step] using hh\n\nend WuPaper.ClassicalFifthTableCheck\n', 'WR2ClassicalFifthPaymentData.lean': 'import WR2ClassicalFifthIntegerData\n\nnamespace WuPaper.ClassicalFifthRational\nopen Finset\n\ndef initialNumerator (i : ℕ) : ℕ := FifthIntegerPayment.paymentNumerator .initial i\ndef initialPaymentBlockSum (b : ℕ) : ℕ := ∑ j ∈ range 64, initialNumerator (64*b+j)\n\ndef middleNumerator (i : ℕ) : ℕ := FifthIntegerPayment.paymentNumerator .middle i\ndef middlePaymentBlockSum (b : ℕ) : ℕ := ∑ j ∈ range 64, middleNumerator (64*b+j)\n\ndef terminalNumerator (i : ℕ) : ℕ := FifthIntegerPayment.paymentNumerator .terminal i\ndef terminalPaymentBlockSum (b : ℕ) : ℕ := ∑ j ∈ range 64, terminalNumerator (64*b+j)\n\nend WuPaper.ClassicalFifthRational\n', 'WR2ClassicalFifthTerminalPayments.lean': 'import WR2ClassicalFifthTerminalSums\nimport WR2ClassicalFifthAssembly\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\nopen Finset\n\ndef terminalPayment (i : ℕ) : ℝ := (terminalNumerator i:ℝ)/1000000000000\n\ntheorem terminal_sum : (∑ i ∈ range 1024, terminalNumerator i) = 405237426677551 := by\n  rw [show 1024=16*64 by norm_num, IntegerLogHorner.sum_blocks]\n  change (∑ b ∈ range 16, terminalPaymentBlockSum b) = _\n  simp only [Finset.sum_range_succ, Finset.sum_range_zero]\n  rw [terminal_sum_block_000, terminal_sum_block_001, terminal_sum_block_002, terminal_sum_block_003, terminal_sum_block_004, terminal_sum_block_005, terminal_sum_block_006, terminal_sum_block_007, terminal_sum_block_008, terminal_sum_block_009, terminal_sum_block_010, terminal_sum_block_011, terminal_sum_block_012, terminal_sum_block_013, terminal_sum_block_014, terminal_sum_block_015]\n\ntheorem terminal_total : (405237426677551:ℝ)/1000000000000 ≤ ∑ i ∈ range 1024, terminalPayment i := by\n  simp only [terminalPayment,← Finset.sum_div,← Nat.cast_sum,terminal_sum]\n  rfl\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.terminal_total\n', 'WR2ClassicalFifthInitialPayments.lean': 'import WR2ClassicalFifthInitialSums\nimport WR2ClassicalFifthAssembly\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\nopen Finset\n\ndef initialPayment (i : ℕ) : ℝ := (initialNumerator i:ℝ)/1000000000000\n\ntheorem initial_sum : (∑ i ∈ range 1024, initialNumerator i) = 273358482524540 := by\n  rw [show 1024=16*64 by norm_num, IntegerLogHorner.sum_blocks]\n  change (∑ b ∈ range 16, initialPaymentBlockSum b) = _\n  simp only [Finset.sum_range_succ, Finset.sum_range_zero]\n  rw [initial_sum_block_000, initial_sum_block_001, initial_sum_block_002, initial_sum_block_003, initial_sum_block_004, initial_sum_block_005, initial_sum_block_006, initial_sum_block_007, initial_sum_block_008, initial_sum_block_009, initial_sum_block_010, initial_sum_block_011, initial_sum_block_012, initial_sum_block_013, initial_sum_block_014, initial_sum_block_015]\n\ntheorem initial_total : (273358482524540:ℝ)/1000000000000 ≤ ∑ i ∈ range 1024, initialPayment i := by\n  simp only [initialPayment,← Finset.sum_div,← Nat.cast_sum,initial_sum]\n  rfl\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.initial_total\n', 'WR2ClassicalFifthMiddlePayments.lean': 'import WR2ClassicalFifthMiddleSums\nimport WR2ClassicalFifthAssembly\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\nopen Finset\n\ndef middlePayment (i : ℕ) : ℝ := (middleNumerator i:ℝ)/1000000000000\n\ntheorem middle_sum : (∑ i ∈ range 1024, middleNumerator i) = 661191362320992 := by\n  rw [show 1024=16*64 by norm_num, IntegerLogHorner.sum_blocks]\n  change (∑ b ∈ range 16, middlePaymentBlockSum b) = _\n  simp only [Finset.sum_range_succ, Finset.sum_range_zero]\n  rw [middle_sum_block_000, middle_sum_block_001, middle_sum_block_002, middle_sum_block_003, middle_sum_block_004, middle_sum_block_005, middle_sum_block_006, middle_sum_block_007, middle_sum_block_008, middle_sum_block_009, middle_sum_block_010, middle_sum_block_011, middle_sum_block_012, middle_sum_block_013, middle_sum_block_014, middle_sum_block_015]\n\ntheorem middle_total : (661191362320992:ℝ)/1000000000000 ≤ ∑ i ∈ range 1024, middlePayment i := by\n  simp only [middlePayment,← Finset.sum_div,← Nat.cast_sum,middle_sum]\n  rfl\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.middle_total\n', 'WR2ClassicalFifthCertificate.lean': 'import WR2ClassicalFifthInitialRoot\nimport WR2ClassicalFifthMiddleRoot\nimport WR2ClassicalFifthTerminalRoot\nnoncomputable section\nnamespace WuPaper.ClassicalFifthRational\n\ntheorem fifth_main_lower : (165533:ℝ)/100000 ≤ Wu08TerminalAlignment.fifthMain :=\n  ClassicalFifthAssembly.fifth_lower_of_payments initialPayment middlePayment terminalPayment\n    all_initial_paid all_middle_paid all_terminal_paid initial_total middle_total terminal_total\n\nend WuPaper.ClassicalFifthRational\n#print axioms WuPaper.ClassicalFifthRational.fifth_main_lower\n'}
 
-    def lit(v):
-        return f'({v.numerator}/{v.denominator}:ℝ)'
-    for row in data:
-        tag = row['tag']
-        cap = tag.capitalize()
-        for block in range(64):
-            name = f'WR2ClassicalFifth{cap}Points{block:03d}'
-            s = """import WR2ClassicalFifthRational
-noncomputable section
-namespace WuPaper.ClassicalFifthRational
-set_option maxRecDepth 10000
-set_option maxHeartbeats 4000000
-"""
-            names = []
-            for i in range(block * 16, (block + 1) * 16):
-                p = row['points'][i]
-                x = F(p['s'])
-                ratio = F(p['ratio'])
-                extra = '0' if tag == 'initial' else f'(ClassicalCPolynomial.cPoly {lit(x - 4)})'
-                thm = f'paid_{tag}_{i}'
-                names.append(thm)
-                s += f'theorem {thm} : ({p['q']}:ℝ)/1000000000000 ≤ value {extra} {lit(ratio)} {lit(x)} := by\n  norm_num [value,WuSource.SrcFourEnclosure.logLo,Finset.sum_range_succ' + (',ClassicalCPolynomial.cPoly' if tag != 'initial' else '') + ']\n\n'
-            s += 'end WuPaper.ClassicalFifthRational\n' + ''.join((f'#print axioms WuPaper.ClassicalFifthRational.{n}\n' for n in names))
-            out[name + '.lean'] = s
-    return out
+FIXED_REVISION = 'c4e1b8d00dda9661140f95e0f03f0d5a08d636c2'
+ORIGINAL_TOTALS = {'initial': 273358482524540, 'middle': 661191362320992, 'terminal': 405237426677551}
 
-def payment_sources(data):
-    root = {}
-    K = 10 ** 12
-    for row, start, stop in zip(data, ['lo', '4', 'cut'], ['4', 'cut', 'hi']):
-        key = row['tag']
-        tag = key.capitalize()
-        nums = [p['q'] for p in row['points']]
-        s = """import WR2ClassicalFifthAssembly
-noncomputable section
-namespace WuPaper.ClassicalFifthRational
-open Finset
-"""
-        for b in range(64):
-            s += f"""def {key}Block{b:03d} : ℕ → ℕ
-"""
-            for j in range(16):
-                s += f"""  | {j} => {nums[16 * b + j]}
-"""
-            s += """  | _ => 0
-"""
-        s += f"""def {key}Numerator (i : ℕ) : ℕ :=
-  match i/16 with
-"""
-        for b in range(64):
-            s += f"""  | {b} => {key}Block{b:03d} (i%16)
-"""
-        s += f"""  | _ => 0
-def {key}Payment (i : ℕ) : ℝ := ({key}Numerator i:ℝ)/{K}
-"""
-        s += f"""set_option maxRecDepth 30000 in
-set_option maxHeartbeats 4000000 in
-theorem {key}_sum : (∑ i ∈ range 1024, {key}Numerator i) = {row['sum']} := by
-  decide +kernel
+def repository():
+    for start in (Path(__file__).resolve().parent, Path.cwd().resolve()):
+        for candidate in (start, *start.parents):
+            if (candidate/'.git').exists():
+                return candidate
+    raise RuntimeError('Run inside the repository containing the fixed baseline Git revision')
 
-theorem {key}_total : ({row['sum']}:ℝ)/{K} ≤ ∑ i ∈ range 1024, {key}Payment i := by
-  simp only [{key}Payment,← Finset.sum_div,← Nat.cast_sum,{key}_sum]
-  rfl
-end WuPaper.ClassicalFifthRational
-#print axioms WuPaper.ClassicalFifthRational.{key}_total
-"""
-        root[f'WR2ClassicalFifth{tag}Payments.lean'] = s
-        for b in range(64):
-            s = f"""import WR2ClassicalFifth{tag}Payments
-import WR2ClassicalFifth{tag}Points{b:03d}
-noncomputable section
-namespace WuPaper.ClassicalFifthRational
-open ClassicalFifthSource ClassicalUniformMidpoint
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 2000000 in
-theorem {key}_grid_block_{b:03d} (j : Fin 16) : {key}Payment (16*{b}+j.val) ≤
-    {key}Value ((point {start} {stop} 1024 (16*{b}+j.val)+point {start} {stop} 1024 (16*{b}+j.val+1))/2) := by
-  fin_cases j
-"""
-            for j in range(16):
-                i = 16 * b + j
-                p = row['points'][i]
-                x = F(p['s'])
-                ratio = F(p['ratio'])
-                lit = f'({x.numerator}:ℝ)/{x.denominator}'
-                rr = f'({ratio.numerator}:ℝ)/{ratio.denominator}'
-                exp = f'ClassicalSixthBranch.r/ClassicalSixthBranch.v ({lit})' if key != 'terminal' else f'ClassicalSixthBranch.u ({lit})'
-                s += f"""  · change {key}Payment {i} ≤ {key}Value ((point {start} {stop} 1024 {i}+point {start} {stop} 1024 {i + 1})/2)
-    have hp : {key}Payment {i} = ({nums[i]}:ℝ)/{K} := rfl
-    have hx : (point {start} {stop} 1024 {i}+point {start} {stop} 1024 {i + 1})/2 = {lit} := by
-      norm_num [point,step,lo,cut,hi,WuSource.SrcSixthGain.split,WuSource.SrcSixthGain.endpoint,
-        ClassicalFifthBranch.endpoint,ClassicalSixthBranch.R,QuarterTrim.alpha,QuarterTrim.beta]
-    have hr : {exp} = {rr} := by
-      norm_num [ClassicalSixthBranch.u,ClassicalSixthBranch.v,ClassicalSixthBranch.R,ClassicalSixthBranch.r]
-    rw [hp,hx]
-    unfold {key}Value
-    rw [hr]
-"""
-                if key != 'initial':
-                    xx = x - 4
-                    s += f"""    rw [show ({lit})-4 = ({xx.numerator}:ℝ)/{xx.denominator} by norm_num]
-"""
-                s += f"""    exact paid_{key}_{i}
-"""
-            s += f"""end WuPaper.ClassicalFifthRational
-#print axioms WuPaper.ClassicalFifthRational.{key}_grid_block_{b:03d}
-"""
-            root[f'WR2ClassicalFifth{tag}GridBlock{b:03d}.lean'] = s
-        s = ''.join((f'import WR2ClassicalFifth{tag}GridBlock{b:03d}\n' for b in range(64)))
-        s += f"""noncomputable section
-namespace WuPaper.ClassicalFifthRational
-open ClassicalFifthSource ClassicalUniformMidpoint
-set_option maxHeartbeats 4000000 in
-theorem all_{key}_paid (i : ℕ) (hin : i < 1024) : {key}Payment i ≤
-    {key}Value ((point {start} {stop} 1024 i+point {start} {stop} 1024 (i+1))/2) := by
-  have hj : i%16 < 16 := Nat.mod_lt _ (by norm_num)
-  have hb : i/16 < 64 := by omega
-  have hh (b : Fin 64) : {key}Payment (16*b.val+i%16) ≤
-      {key}Value ((point {start} {stop} 1024 (16*b.val+i%16)+point {start} {stop} 1024 (16*b.val+i%16+1))/2) := by
-    fin_cases b
-"""
-        for b in range(64):
-            s += f"""    · exact {key}_grid_block_{b:03d} ⟨i%16,hj⟩
-"""
-        s += f"""  have he : 16*(i/16)+i%16=i := by omega
-  simpa only [he] using hh ⟨i/16,hb⟩
-end WuPaper.ClassicalFifthRational
-#print axioms WuPaper.ClassicalFifthRational.all_{key}_paid
-"""
-        root[f'WR2ClassicalFifth{tag}Root.lean'] = s
-    s = """import WR2ClassicalFifthInitialRoot
-import WR2ClassicalFifthMiddleRoot
-import WR2ClassicalFifthTerminalRoot
-noncomputable section
-namespace WuPaper.ClassicalFifthRational
-
-theorem fifth_main_lower : (165533:ℝ)/100000 ≤ Wu08TerminalAlignment.fifthMain :=
-  ClassicalFifthAssembly.fifth_lower_of_payments initialPayment middlePayment terminalPayment
-    all_initial_paid all_middle_paid all_terminal_paid initial_total middle_total terminal_total
-
-end WuPaper.ClassicalFifthRational
-#print axioms WuPaper.ClassicalFifthRational.fifth_main_lower
-"""
-    root['WR2ClassicalFifthCertificate.lean'] = s
-    return root
+def checked_rows():
+    rows = point_data()
+    assert [row['tag'] for row in rows] == ['initial', 'middle', 'terminal']
+    for row in rows:
+        branch = row['tag']
+        old = subprocess.check_output(['git', 'show', FIXED_REVISION+
+            ':research/wu2008/src/WR2ClassicalFifth'+branch.title()+'Payments.lean'],
+            cwd=repository(), text=True)
+        values = [int(v) for v in re.findall(r'^  \| \d+ => (\d+)$', old, re.M)]
+        assert row['n'] == len(row['points']) == len(values) == 1024
+        assert [p['q'] for p in row['points']] == values, branch
+        assert row['sum'] == sum(values) == ORIGINAL_TOTALS[branch]
+        assert old.count('  | _ => 0') == 65
+        assert re.search(r'theorem '+branch+r'_sum .*? = (\d+) :=',old).group(1) == str(row['sum'])
+    return rows
 
 def generate():
-    data = point_data()
-    sources = point_sources(data)
-    payments = payment_sources(data)
-    assert not sources.keys() & payments.keys()
-    sources.update(payments)
-    return sources
+    result = dict(FIXED_SOURCES)
+    for row in checked_rows():
+        branch = row['tag']; values = [p['q'] for p in row['points']]
+        text = 'import WR2ClassicalFifthPaymentData\nnamespace WuPaper.ClassicalFifthRational\n\n'
+        for b in range(16):
+            value = sum(values[64*b:64*(b+1)])
+            text += f'set_option maxRecDepth 30000 in\nset_option maxHeartbeats 4000000 in\ntheorem {branch}_sum_block_{b:03d} :\n    {branch}PaymentBlockSum {b} = {value} := by\n  decide +kernel\n\n'
+        text += 'end WuPaper.ClassicalFifthRational\n'
+        blocks = re.findall(branch+r'PaymentBlockSum (\d+) = (\d+)', text)
+        assert len(blocks) == 16 and [int(i) for i,_ in blocks] == list(range(16))
+        assert sum(int(v) for _,v in blocks) == row['sum']
+        result[f'WR2ClassicalFifth{branch.title()}Sums.lean'] = text
+    return result
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -222,6 +106,13 @@ def main():
     mode.add_argument('--write', type=Path, metavar='DIR', help='Write generated Lean sources into DIR.')
     args = parser.parse_args()
     sources = generate()
+    destination = args.check or args.write
+    obsolete = sorted(destination.glob('WR2ClassicalFifth*GridBlock*.lean'))
+    if args.check is not None and obsolete:
+        raise SystemExit('Retired generated grid modules remain: '+str(obsolete[0]))
+    if args.write is not None:
+        for path in obsolete:
+            path.unlink()
     if args.check is not None:
         mismatches = [name for name, text in sources.items() if not (args.check / name).is_file() or (args.check / name).read_bytes() != text.encode()]
         if mismatches:

@@ -1,0 +1,8 @@
+{
+  "source_modules": 4181,
+  "historical_path_records": 4127,
+  "historical_unique_sources": 1292,
+  "historical_worktrees": 69,
+  "source_hash_check": "passed",
+  "lean_build": "separate"
+}

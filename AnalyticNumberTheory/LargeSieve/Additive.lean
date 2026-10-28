@@ -48,60 +48,12 @@ noncomputable section
 
 /-! ## 1. Additive characters and exponential sums on the circle modulo 1 -/
 
-/-- `e(x) = exp(2πix)`: the standard additive character on `AddCircle 1`
-(mathlib's `AddCircle.toCircle`; see `AddCircle.toCircle_apply_mk`). -/
-def unitChar (x : AddCircle (1 : ℝ)) : Circle :=
-  AddCircle.toCircle (T := (1 : ℝ)) x
-
-/-- `e(nx) = e(x)^n` (`n : ℤ`): compatibility of the character with integer
-multiplication (`AddCircle.toCircle_zsmul`). -/
-def charPow (n : ℤ) (x : AddCircle (1 : ℝ)) : Circle :=
-  unitChar (n • x)
-
-/-- The weighted exponential sum `Σ_{M<n≤M+N} a_n e(nx)` on `(M, M+N]`. -/
-noncomputable def circleCharSum (M : ℤ) (N : ℕ) (a : ℤ → ℂ) (x : AddCircle (1 : ℝ)) : ℂ :=
-  ∑ n ∈ Finset.Icc (M + 1) (M + N), a n * (charPow n x : ℂ)
-
-/-- `X ⊆ AddCircle 1` is `δ`-well-spaced: any two distinct points have
-distance modulo 1 at least `δ`. -/
-noncomputable def wellSpaced (X : Finset (AddCircle (1 : ℝ))) (δ : ℝ) : Prop :=
-  ∀ ⦃x : AddCircle (1 : ℝ)⦄, x ∈ X → ∀ ⦃y : AddCircle (1 : ℝ)⦄, y ∈ X → x ≠ y → δ ≤ dist x y
 
 /-! ## 2. Additive large-sieve target statements -/
 
-/-- **Additive large sieve** (Montgomery, primal form): for a `δ`-well-spaced
-set `X` and any finitely supported complex sequence `a : ℤ → ℂ`,
-
-  Σ_{x∈X} |Σ_{M<n≤M+N} a_n e(nx)|² ≤ (N + 1/δ) · Σ_{M<n≤M+N} |a_n|².
-
-This is a target proposition, not a bound proved here. The classical proof uses
-the dual form, a geometric-sum bound, and the Schur test. -/
-def MontgomeryLargeSievePrimal (M : ℤ) (N : ℕ) : Prop :=
-  ∀ δ : ℝ, 0 < δ → ∀ X : Finset (AddCircle (1 : ℝ)), wellSpaced X δ →
-    ∀ a : ℤ → ℂ,
-      ∑ x ∈ X, ‖circleCharSum M N a x‖ ^ 2 ≤
-        ((N : ℝ) + 1 / δ) * ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖a n‖ ^ 2
-
-/-- **Dual additive large sieve** (defined using the conjugate transpose):
-
-  Σ_{M<n≤M+N} |Σ_{x∈X} conj(e(nx))·b_x|² ≤ (N + 1/δ) · Σ_{x∈X} |b_x|².
-
-In the classical formulation, `conj(e(nx))` is written as `e(-nx)`; conjugating
-`b` gives the equivalent form with the opposite sign in the exponential. -/
-def MontgomeryLargeSieveDual (M : ℤ) (N : ℕ) : Prop :=
-  ∀ δ : ℝ, 0 < δ → ∀ X : Finset (AddCircle (1 : ℝ)), wellSpaced X δ →
-    ∀ b : AddCircle (1 : ℝ) → ℂ,
-      ∑ n ∈ Finset.Icc (M + 1) (M + N),
-        ‖∑ x ∈ X, star (charPow n x : ℂ) * b x‖ ^ 2 ≤
-        ((N : ℝ) + 1 / δ) * ∑ x ∈ X, ‖b x‖ ^ 2
 
 /-! ## 3. Duality lemma (the algebraic foundation of the large sieve) -/
 
-/-- **Real Cauchy--Schwarz** (Finset): `(Σ aᵢbᵢ)² ≤ (Σ aᵢ²)(Σ bᵢ²)`.
-This is Mathlib's finite-sum Cauchy--Schwarz inequality. -/
-theorem realCauchySchwarz {ι : Type*} (s : Finset ι) (a b : ι → ℝ) :
-    (∑ i ∈ s, a i * b i) ^ 2 ≤ (∑ i ∈ s, a i ^ 2) * (∑ i ∈ s, b i ^ 2) :=
-  Finset.sum_mul_sq_le_sq_mul_sq s a b
 
 /-- **Complex Cauchy--Schwarz** (Finset):
 `|Σᵢ xᵢ·conj(yᵢ)| ≤ √(Σ‖xᵢ‖²)·√(Σ‖yᵢ‖²)`, proved using the triangle
@@ -223,27 +175,6 @@ theorem largeSieveDuality {ι κ : Type*}
       (A := fun j i => star (A i j)) hC hDual
     simpa [star_star] using hPrim a
 
-/-- **Additive large sieve: primal ⟺ dual**. Apply the general duality lemma
-to the character matrix `A x n = e(nx)` with `C = N + 1/δ`. Thus the two
-target statements are equivalent: proving either one gives the other. -/
-theorem montgomeryDuality (M : ℤ) (N : ℕ) :
-    MontgomeryLargeSievePrimal M N ↔ MontgomeryLargeSieveDual M N := by
-  have hC : ∀ δ : ℝ, 0 < δ → 0 ≤ (N : ℝ) + 1 / δ := by
-    intro δ hδ
-    positivity
-  constructor
-  · intro hprimal δ hδ X hws b
-    have hpr : ∀ a : ℤ → ℂ, ∑ x ∈ X,
-        ‖∑ n ∈ Finset.Icc (M + 1) (M + N), (charPow n x : ℂ) * a n‖ ^ 2 ≤
-          ((N : ℝ) + 1 / δ) * ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖a n‖ ^ 2 := by
-      simpa [circleCharSum, mul_comm] using hprimal δ hδ X hws
-    have hdual := (largeSieveDuality (s := X) (t := Finset.Icc (M + 1) (M + N))
-      (A := fun x n => (charPow n x : ℂ)) (hC δ hδ)).1 hpr
-    exact hdual b
-  · intro hdual δ hδ X hws a
-    have hpr := (largeSieveDuality (s := X) (t := Finset.Icc (M + 1) (M + N))
-      (A := fun x n => (charPow n x : ℂ)) (hC δ hδ)).2 (hdual δ hδ X hws)
-    simpa [circleCharSum, mul_comm] using hpr a
 
 end
 

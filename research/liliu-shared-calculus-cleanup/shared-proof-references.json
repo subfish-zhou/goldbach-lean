@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "shared_helpers": [
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv"
+  ],
+  "verified_original_consumers": [
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_logTriangle",
+      "target": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_qPrimitive_deriv",
+      "target": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12PrimeIntegral_qPrimitive_deriv",
+      "target": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11PrimeIntegral_eq_meshSource",
+      "target": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12PrimeIntegral_eq_meshSource",
+      "target": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four"
+    }
+  ],
+  "promoted_provider_owners": {
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_log_ratio_deriv": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction"
+    ],
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_integral_four": [
+      "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshIntegration"
+    ]
+  },
+  "author_weight_consumer": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG12AuthorWeight_le_eight",
+  "author_weight_provider": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11AuthorWeight_global_upper",
+  "mathlib_complex_provider": "Complex.cpow_add",
+  "method": "Actual compiled references verify all five original analytic consumers, the retained G12 weight alias, and both original private complex shift proofs."
+}

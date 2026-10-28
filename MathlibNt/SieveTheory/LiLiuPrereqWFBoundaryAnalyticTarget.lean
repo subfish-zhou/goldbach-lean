@@ -210,38 +210,6 @@ theorem roughBoundaryMass_le_target (upper : Bool) (P : Finset ℕ)
   dsimp only at hmass
   nlinarith
 
-/-- The uniform threshold precedes the carrier, density and `K`. -/
-theorem exists_roughBoundaryMass_le_target :
-    ∃ C : ℝ, 0 < C ∧ ∀ ε : ℝ, 0 < ε → ε < 1 / 8 →
-      ∃ D₀ : ℝ, 2 ≤ D₀ ∧ ∀ D : ℝ, D₀ ≤ D →
-        ∀ P : Finset ℕ, (∀ p ∈ P, p.Prime) →
-          (∀ p ∈ P \ geometricSmallPrimes P D ε, (p : ℝ) < Real.sqrt D) →
-          ∀ g : ℕ → ℝ, (∀ p ∈ P, 0 ≤ g p ∧ g p < 1) →
-            ∀ K : ℝ, 0 ≤ K → DimensionOneProductBound P g K →
-              ∀ upper : Bool,
-                let R := P \ geometricSmallPrimes P D ε
-                let b := fun p => geometricLower D ε (ε ^ 9) (geometricSieveLabel D ε p)
-                roughBoundaryMass upper b (fun p => b p ^ (1 + ε ^ 9)) D R g ≤
-                  C * (∏ p ∈ R, (1 - g p)) *
-                    (ε + (ε ^ 8)⁻¹ * Real.exp (6 * K + 2) *
-                      Real.log D ^ (-(1 / 3 : ℝ))) := by
-  refine ⟨10, by norm_num, ?_⟩
-  intro ε hε hεsmall
-  refine ⟨max 2 (Real.exp (1 / ε ^ 2)), le_max_left _ _, ?_⟩
-  intro D hD P hP hcut g hg K hK hdim upper
-  have hlarge : 1 ≤ ε ^ 2 * Real.log D := by
-    have hh := Real.log_le_log (Real.exp_pos (1 / ε ^ 2))
-      ((le_max_right _ _).trans hD)
-    rw [Real.log_exp] at hh
-    exact (div_le_iff₀ (sq_pos_of_pos hε)).mp hh |>.trans_eq (mul_comm _ _)
-  exact roughBoundaryMass_le_target upper P hP ((le_max_left _ _).trans hD)
-    hε hεsmall hlarge hK hcut hg hdim
-
-#print axioms boundary_scalar
-#check roughBoundaryMass_le_target
-#print axioms roughBoundaryMass_le_target
-#check exists_roughBoundaryMass_le_target
-#print axioms exists_roughBoundaryMass_le_target
 
 end BoundaryAnalytic
 end MathlibNt.SieveTheory.LiLiuPrereqWF

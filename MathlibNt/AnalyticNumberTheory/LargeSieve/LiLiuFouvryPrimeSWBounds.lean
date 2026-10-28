@@ -8,19 +8,6 @@ open AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418
 open MathlibNt.SieveTheory
 noncomputable section
 
-/-- An individual genuine AP error is bounded by its term in unconditional BV. -/
-theorem primeSW_small_prefix (A : ℝ) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧ ∃ K : ℝ, 0 < K ∧ ∀ᶠ N : ℕ in atTop,
-      2 ≤ N → ∀ d ∈ Icc 1 (LiuWeight.panModulusCutoff N C),
-      ∀ x ∈ Icc 2 N, ∀ b ∈ AnalyticNumberTheory.Sieve.unitResidues d,
-      |primeAPError x d b| ≤ K * (N : ℝ) / Real.log N ^ A := by
-  obtain ⟨C, hC, K, hK, hBV⟩ := richert418 A hA
-  refine ⟨C, hC, K, hK, ?_⟩
-  filter_upwards [hBV] with N hN
-  intro hN2 d hd x hx b hb
-  exact ((abs_primeAPError_le_residueMax hb).trans
-    (primeAPResidueMaxError_le_prefixMax hx)).trans
-    ((single_le_sum (fun q _ => primeAPPrefixMaxError_nonneg N q) hd).trans (hN hN2))
 
 /-- Literal interval subtraction for an arbitrary fixed predicate. -/
 theorem primeSWSum_Ioc (P : ℕ → Prop) [DecidablePred P] {u v : ℕ} (huv : u ≤ v) :

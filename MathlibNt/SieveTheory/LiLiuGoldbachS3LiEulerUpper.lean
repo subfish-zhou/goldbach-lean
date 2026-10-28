@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
-import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
 import MathlibNt.SieveTheory.LiuWeightMainSum
 import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
 
@@ -142,12 +141,6 @@ theorem goldbachS3_strictEndpoint_mainMass_upper (ε η : ℝ)
     _ ≤ (1 - ε + η) * ((N : ℝ) / Real.log (N : ℝ)) :=
       mul_le_mul_of_nonneg_right hcoef (by positivity)
 
-/-- Conditioning the carrier does not change either `nu` or `prodPrimes`. -/
-theorem goldbachS3BoundingSieve_sieveProduct_eq_S1
-    (N : ℕ) (hEven : Even N) (ε z : ℝ) (p : ℕ) :
-    sieveProductPrimeFactors (goldbachS3BoundingSieve N hEven ε z p) =
-      sieveProductPrimeFactors (goldbachS1BoundingSieve N hEven ε z) := by
-  rfl
 
 /-- The strict S3 Li prefactor times the actual Euler product at `N^(4/53)`,
 with a fully paid additive budget on the genuine Liu singular-series scale. -/

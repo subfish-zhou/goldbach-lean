@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowCarrierCorrection
-import Mathlib.NumberTheory.Harmonic.Bounds
 
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Classical Finset Filter

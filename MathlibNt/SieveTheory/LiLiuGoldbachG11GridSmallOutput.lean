@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSubpowerBudget
-import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutput
 
 open Finset
 open scoped BigOperators Classical

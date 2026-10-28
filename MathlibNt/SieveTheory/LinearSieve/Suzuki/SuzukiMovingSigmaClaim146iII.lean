@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146ShortInterval
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaGeometryEventually
 
 open Set Filter Topology
@@ -87,83 +86,6 @@ theorem claim14_6_i_of_explicit_derivative_domination
         t * H.T sign.opposite (t - 1)) ≤ 0
     exact mul_nonpos_of_nonneg_of_nonpos hp0 (sub_nonpos.mpr
       (hdom sign ε t hε htstrict htupper))
-
-/-- Uniform moving-source closure of Claim 14.6(i) from its explicit derivative
-condition.  `sourceSigma` growth is used to put both signs' left endpoints below
-the moving endpoint. -/
-theorem eventually_claim14_6_i_at_sourceSigma_of_derivative_domination
-    {H : Section13HatLayers} {β d : ℝ}
-    (hH : Section13HatContract H β) (hd1 : 1 < d)
-    (hdom : ∃ Da : ℝ, 1 < Da ∧ ∀ D : ℝ, Da ≤ D →
-      ∀ (sign : ErrorSign) (ε t : ℝ),
-        (ε = 0 ∨ ε = 1) → β + sign.epsilon < t →
-        t < sourceSigma D d →
-        weightedHat H sign t * perturbationSlope D d ε t ≤
-          t * H.T sign.opposite (t - 1)) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ D : ℝ, D0 ≤ D →
-      3 ≤ sourceSigma D d ∧
-      Claim14_6_MonotoneLambdaPremise H D d (sourceSigma D d) := by
-  obtain ⟨Da, hDa, hdom⟩ := hdom
-  obtain ⟨D3, hD3, hthree⟩ :=
-    exists_sourceSigma_three_threshold d (zero_lt_one.trans hd1)
-  let D0 := max Da D3
-  refine ⟨D0, hDa.trans_le (le_max_left _ _), ?_⟩
-  intro D hD
-  have hDaD : Da ≤ D := (le_max_left _ _).trans hD
-  have hD3D : D3 ≤ D := (le_max_right _ _).trans hD
-  have hD1 : 1 < D := hDa.trans_le hDaD
-  have hσ3 : 3 ≤ sourceSigma D d := hthree D hD3D
-  exact ⟨hσ3, claim14_6_i_of_explicit_derivative_domination hH
-    (Real.log_pos hD1) (hdom D hDaD)⟩
-
-/-- WITHDRAWN / source-incompatible for moving `sourceSigma`.
-The second and fourth fields force asymptotically incompatible lower and upper
-bounds on `ρ D` (see `CLAIM146_I_II_SOURCE_AUDIT.md`).  Retained only so older
-conditional lemmas continue to elaborate; do not use in the production chain. -/
-def MovingClaim14_6TailCertificate
-    (H : Section13HatLayers) (β d Δ : ℝ) : Prop :=
-  ∃ D0 : ℝ, 1 < D0 ∧ ∃ ρ : ℝ → ℝ, ∀ D : ℝ, D0 ≤ D →
-    0 < ρ D ∧
-    (1 + sourceSigma D d * d) * (sourceSigma D d + 1) ^ d ≤
-      ρ D * Real.log D ∧
-    (∀ (sign : ErrorSign) (t : ℝ), β + sign.epsilon < t →
-      t ≤ sourceSigma D d →
-      ρ D * weightedHat H sign t ≤ t * H.T sign.opposite (t - 1)) ∧
-    ρ D * (sourceSigma D d * (sourceSigma D d - 1)) ≤ 1 + Δ
-
-/-- Moving-source Claims 14.6(i)/(ii) close uniformly from the exact tail/DDE
-certificate above.  This theorem is source-faithful: all dependence on the
-moving endpoint remains inside one `∀ D ≥ D0` statement. -/
-theorem eventually_claim14_6_i_ii_at_sourceSigma_of_tailCertificate
-    {H : Section13HatLayers} {β d Δ : ℝ}
-    (hH : Section13HatContract H β) (hd1 : 1 < d)
-    (hΔ : -1 ≤ Δ) (hβ2 : β = 2)
-    (hcert : MovingClaim14_6TailCertificate H β d Δ) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ D : ℝ, D0 ≤ D →
-      Claim14_6_MonotoneLambdaPremise H D d (sourceSigma D d) ∧
-      Claim14_6_MonotoneQPremise H D d Δ (sourceSigma D d) := by
-  rcases hcert with ⟨Da, hDa, ρ, hcert⟩
-  obtain ⟨D3, hD3, hthree⟩ :=
-    exists_sourceSigma_three_threshold d (zero_lt_one.trans hd1)
-  let D0 := max Da D3
-  refine ⟨D0, hDa.trans_le (le_max_left _ _), ?_⟩
-  intro D hD
-  have hDaD : Da ≤ D := (le_max_left _ _).trans hD
-  have hD3D : D3 ≤ D := (le_max_right _ _).trans hD
-  have hD1 : 1 < D := hDa.trans_le hDaD
-  have hσ3 : 3 ≤ sourceSigma D d := hthree D hD3D
-  have hσ : ∀ sign : ErrorSign, β + sign.epsilon ≤ sourceSigma D d := by
-    intro sign
-    subst β
-    cases sign <;> simp [ErrorSign.epsilon] <;> linarith
-  rcases hcert D hDaD with ⟨hρ, hlarge, hdelay, hshort⟩
-  have hi := claim14_6_i_of_log_bound hH (zero_le_one.trans hd1.le) hσ hρ
-    (Real.log_pos hD1) hlarge hdelay
-  have hii := claim14_6_ii_of_log_bound hH (zero_le_one.trans hd1.le) hΔ hσ hρ
-    (Real.log_pos hD1) hlarge hdelay hshort
-  constructor
-  · simpa [Claim14_6_MonotoneLambdaPremise, hH.betaHat_eq] using hi
-  · exact hii
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

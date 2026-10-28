@@ -1,0 +1,25 @@
+{
+  "B": {
+    "values": 10541,
+    "anchors": 2636,
+    "exact_original_match": true,
+    "final_value": 582213039803965,
+    "source_sha256": "da97b70a19dd0dbddbb95d4b598492dc2c583ad5a2ebfcbcadf8fec53a469113"
+  },
+  "outer": {
+    "values": 10541,
+    "anchors": 2636,
+    "exact_original_match": true,
+    "final_value": 4910932051664422,
+    "source_sha256": "07c4147c532f6bed5a7ebf596eeae3d6f633ba4a37456463115b42779ac85805"
+  },
+  "default_tail": "The compressed definition explicitly returns zero for every i > 10540, matching the original block tables.",
+  "arithmetic": "Exact Python integers, not floating point; Lean consumers are checked separately.",
+  "baseline_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "original_source_sha256": {
+    "B": "d2a8bd20ac142d9be9d84dada08a27015fa944c185a0b2c6187d1d071a166e1f",
+    "Bq": "9e1a3769d6801c9adf04417d4690f9d734e772f5960db208811929f7e8bac1a4",
+    "outer": "77d13f96dab6fbb3062f5ea1c71c9eb4b07a1fbdef74d0794fbf25f8e655ee30",
+    "outerq": "e963014e2a819f49cf497f2f02f8eb6587943b7a726722fc8bd6584b8dcde17b"
+  }
+}

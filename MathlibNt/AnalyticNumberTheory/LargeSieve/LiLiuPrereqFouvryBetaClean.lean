@@ -29,29 +29,12 @@ theorem abs_betaClean_le (β : ℕ → ℝ) (a : ℤ) (n : ℕ) :
   unfold betaClean
   split_ifs <;> simp
 
-theorem abs_betaDivisorPart_le (β : ℕ → ℝ) (a : ℤ) (n : ℕ) :
-    |betaDivisorPart β a n| ≤ |β n| := by
-  unfold betaDivisorPart
-  split_ifs <;> simp
 
 theorem betaClean_nonzero_not_dvd {β : ℕ → ℝ} {a : ℤ} {n : ℕ}
     (hn : betaClean β a n ≠ 0) : ¬(n : ℤ) ∣ a := by
   intro hd
   exact hn (if_pos hd)
 
-theorem support_betaClean_subset (β : ℕ → ℝ) (a : ℤ) :
-    Function.support (betaClean β a) ⊆ Function.support β := by
-  intro n hn
-  change β n ≠ 0
-  intro h
-  exact hn (by simp [betaClean, h])
-
-theorem support_betaDivisorPart_subset (β : ℕ → ℝ) (a : ℤ) :
-    Function.support (betaDivisorPart β a) ⊆ Function.support β := by
-  intro n hn
-  change β n ≠ 0
-  intro h
-  exact hn (by simp [betaDivisorPart, h])
 
 theorem betaClean_abs_le_fouvryTau {k : ℕ} {N : Finset ℕ}
     {β : ℕ → ℝ} (hβ : ∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ)) (a : ℤ) :

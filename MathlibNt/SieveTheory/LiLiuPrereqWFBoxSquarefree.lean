@@ -55,8 +55,4 @@ theorem boxWeight_squarefree_eq_one (B : Finset ℕ) (k : ℕ) {n : ℕ}
   rw [boxWeight_apply, primeBox_pow_squarefree B k hn hB hk]
   exact div_self (by exact_mod_cast Nat.factorial_ne_zero k)
 
-#check primeBox_pow_squarefree
-#print axioms primeBox_pow_squarefree
-#print axioms boxWeight_squarefree_eq_one
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

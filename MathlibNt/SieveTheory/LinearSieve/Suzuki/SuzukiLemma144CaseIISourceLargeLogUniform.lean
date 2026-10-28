@@ -1,8 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CommonScaleUniformCutoff
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIBracketGapQuantitative
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointCoefficientUniform
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioCoefficients
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIIntegralTransportRelative
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology Asymptotics

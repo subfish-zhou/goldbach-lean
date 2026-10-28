@@ -32,14 +32,6 @@ def vaughanTypeIIRectangularEright (N k : ℕ) : ℝ :=
   27 * (vaughanTypeIIRectangularX N k : ℝ) *
     Real.log (vaughanTypeIIRectangularX N k + 1 : ℕ) ^ 5
 
-/-- The literal `(D+Q²)` expression.  It is recorded for comparison only: the
-current definition of `rankOneRectangularLSRHS` uses `largeSieveBound`, which is
-strictly wider and cannot honestly be bounded by this expression in general. -/
-def vaughanTypeIIRectangularCanonicalRexp (N k l Q : ℕ) : ℝ :=
-  Real.sqrt ((((vaughanTypeIIRectangularD k : ℕ) : ℝ) + (Q : ℝ) ^ 2) *
-      (vaughanTypeIIRectangularD k : ℝ)) *
-    Real.sqrt ((((vaughanTypeIIRectangularT N k l : ℕ) : ℝ) + (Q : ℝ) ^ 2) *
-      vaughanTypeIIRectangularEright N k)
 
 /-- Honest explicit rank-one majorant for the large-sieve constant currently
 present in `rankOneRectangularLSRHS`. -/

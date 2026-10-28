@@ -61,13 +61,6 @@ theorem suzukiUpperSourceP_of_two_lt {s : ℝ} (hs : 2 < s) :
     suzukiContinuousLowerFactor, suzukiContinuousLowerTail]
   ring
 
-/-- The actual upper source has the exact Section-10 initial history
-`s P(s)=A` (including the harmless chosen switching-point value). -/
-theorem mul_suzukiUpperSourceP_eq_amplitude {s : ℝ}
-    (hs₀ : s ≠ 0) (hs₂ : s ≤ 2) :
-    s * suzukiUpperSourceP s = suzukiLowerSieveAmplitude := by
-  rw [suzukiUpperSourceP_of_le_two hs₂]
-  field_simp
 
 /-- Integrating the standard upper-adjoint equation on `[1,2]` gives the exact
 boundary coefficient used in Suzuki's Proposition 11.8 formula. -/

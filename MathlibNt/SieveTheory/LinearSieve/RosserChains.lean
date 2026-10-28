@@ -48,43 +48,21 @@ theorem sorted_prefix_toFinset_eq_filter_ge (s : Finset ℕ) (i : ℕ)
     ((s.sort (· ≥ ·)).take (i + 1)).toFinset =
       s.filter (fun q => (s.sort (· ≥ ·))[i] ≤ q) := by
   symm
-  have hl := Finset.sortedGT_sort s
-  ext x
+  ext q
   simp only [Finset.mem_filter, List.mem_toFinset]
   constructor
-  · rintro ⟨hxs, hix⟩
-    have hxl : x ∈ s.sort (· ≥ ·) := (Finset.mem_sort (· ≥ ·)).mpr hxs
-    obtain ⟨j, hjlen, hjx⟩ := List.mem_iff_getElem.mp hxl
-    have hji : j ≤ i := by
-      by_contra hnot
-      have hij : i < j := by omega
-      have hrel := hl.getElem_gt_getElem_of_lt
-        (i := j) (j := i) (hi := hjlen) (hj := hi) hij
-      rw [hjx] at hrel
-      exact (not_lt_of_ge hix) hrel
-    rw [List.mem_take_iff_getElem]
-    exact ⟨j, lt_min (by omega) hjlen, hjx⟩
-  · intro hx
-    rw [List.mem_take_iff_getElem] at hx
-    obtain ⟨j, hj, hjx⟩ := hx
-    have hjlen : j < (s.sort (· ≥ ·)).length :=
-      lt_of_lt_of_le hj (Nat.min_le_right _ _)
-    have hxs : x ∈ s := (Finset.mem_sort (· ≥ ·)).mp <| by
-      rw [← hjx]
-      exact List.getElem_mem hjlen
-    refine ⟨hxs, ?_⟩
-    have hji : j ≤ i := by
-      have : j < i + 1 := lt_of_lt_of_le hj (Nat.min_le_left _ _)
-      omega
-    rcases hji.eq_or_lt with rfl | hji
-    · exact hjx.le
-    · have hrel := hl.getElem_gt_getElem_of_lt
-        (i := i) (j := j) (hi := hi) (hj := hjlen) hji
-      rw [hjx] at hrel
-      exact hrel.le
+  · rintro ⟨hq, hle⟩
+    obtain ⟨j, hj, rfl⟩ :=
+      List.mem_iff_getElem.mp ((Finset.mem_sort (· ≥ ·)).mpr hq)
+    have hji := (s.sortedGT_sort.getElem_le_getElem_iff).mp hle
+    exact List.mem_take_iff_getElem.mpr ⟨j, by omega, rfl⟩
+  · intro hq
+    obtain ⟨j, hj, rfl⟩ := List.mem_take_iff_getElem.mp hq
+    refine ⟨(Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem (by omega)), ?_⟩
+    exact s.sortedGT_sort.getElem_le_getElem_iff.mpr (by omega)
 
 /-- The filtered prefix through index `i` has exactly `i + 1` entries. -/
-private theorem sorted_prefix_card_eq_filter_ge (s : Finset ℕ) (i : ℕ)
+theorem sorted_prefix_card_eq_filter_ge (s : Finset ℕ) (i : ℕ)
     (hi : i < (s.sort (· ≥ ·)).length) :
     (s.filter (fun q => (s.sort (· ≥ ·))[i] ≤ q)).card = i + 1 := by
   rw [← sorted_prefix_toFinset_eq_filter_ge s i hi,
@@ -346,47 +324,6 @@ theorem mem_lowerRosserBoundaryChains_iff
     rw [hsort]
     exact hchain
 
-/-- The zero-based pair-depth slice consists of chains of length `2*k+1`.
-It corresponds to Suzuki's full-chain source index `2*k+2` and Iwaniec's
-lower depth `k+1`. -/
-theorem mem_lowerRosserBoundaryChains_fixedPairDepth0_iff
-    {D q : ℕ} {P : Finset ℕ} (hqs : q ∉ P) (hqprime : q.Prime)
-    (hqmin : ∀ p ∈ P, q ≤ p) {l : List ℕ} (k : ℕ) :
-    l ∈ (lowerRosserBoundaryChains D q P).filter
-          (fun l => l.length = 2 * k + 1) ↔
-      l.Nodup ∧ l.SortedGT ∧ l.toFinset ⊆ P ∧
-        LowerRosserBoundaryChain D q l ∧ l.length = 2 * k + 1 := by
-  rw [Finset.mem_filter, mem_lowerRosserBoundaryChains_iff hqs hqprime hqmin]
-  tauto
-
-/-- Lower boundary chains at Suzuki's full-chain source index `n`.  The terminal
-least prime is external to the stored list, hence `l.length + 1 = n`. -/
-noncomputable def lowerRosserBoundaryChainsAtSourceIndex
-    (D q : ℕ) (P : Finset ℕ) (n : ℕ) : Finset (List ℕ) :=
-  (lowerRosserBoundaryChains D q P).filter (fun l => l.length + 1 = n)
-
-/-- Exact source-index membership characterization. -/
-theorem mem_lowerRosserBoundaryChainsAtSourceIndex_iff
-    {D q n : ℕ} {P : Finset ℕ} (hqs : q ∉ P) (hqprime : q.Prime)
-    (hqmin : ∀ p ∈ P, q ≤ p) {l : List ℕ} :
-    l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P n ↔
-      l.Nodup ∧ l.SortedGT ∧ l.toFinset ⊆ P ∧
-        LowerRosserBoundaryChain D q l ∧ l.length + 1 = n := by
-  rw [lowerRosserBoundaryChainsAtSourceIndex, Finset.mem_filter,
-    mem_lowerRosserBoundaryChains_iff hqs hqprime hqmin]
-  tauto
-
-/-- Every inhabited lower source-index slice has even Suzuki index. -/
-theorem even_sourceIndex_of_mem_lowerRosserBoundaryChainsAtSourceIndex
-    {D q n : ℕ} {P : Finset ℕ} {l : List ℕ}
-    (hl : l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P n) : Even n := by
-  have hparts := Finset.mem_filter.mp hl
-  have hodd : ¬Even l.length := by
-    unfold lowerRosserBoundaryChains at hparts
-    obtain ⟨s, hs, rfl⟩ := Finset.mem_image.mp hparts.1
-    simpa using (Finset.mem_filter.mp hs).2.1
-  rw [← hparts.2]
-  exact Nat.even_add_one.mpr hodd
 
 /-- Exact injective finite reindexing of the lower-boundary powerset sum by
 canonical odd decreasing chains. -/
@@ -425,24 +362,6 @@ noncomputable def lowerRosserBoundaryChainsFixedPairDepth0Density
       (fun l => l.length = 2 * k + 1),
     (l.map nu).prod
 
-/-- Zero-based pair-depth `k` is Suzuki's full-chain source index `2*k+2`. -/
-theorem lowerRosserBoundaryChainsFixedPairDepth0Density_eq_sourceIndex
-    (nu : ℕ → ℝ) (D q : ℕ) (P : Finset ℕ) (k : ℕ) :
-    lowerRosserBoundaryChainsFixedPairDepth0Density nu D q P k =
-      ∑ l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P (2 * k + 2),
-        (l.map nu).prod := by
-  have hcarrier :
-      (lowerRosserBoundaryChains D q P).filter
-          (fun l => l.length = 2 * k + 1) =
-        lowerRosserBoundaryChainsAtSourceIndex D q P (2 * k + 2) := by
-    ext l
-    simp only [lowerRosserBoundaryChainsAtSourceIndex, Finset.mem_filter]
-    constructor
-    · rintro ⟨hl, hlen⟩
-      exact ⟨hl, by omega⟩
-    · rintro ⟨hl, hlen⟩
-      exact ⟨hl, by omega⟩
-  rw [lowerRosserBoundaryChainsFixedPairDepth0Density, hcarrier]
 
 /-- The singleton lower-boundary density is exactly the one-prime terminal
 cubic shell. -/
@@ -490,15 +409,6 @@ theorem lowerRosserBoundaryChainsFixedPairDepth0Density_zero
   · intro p hp r hr hpr
     simpa using hpr
 
-/-- Pair-depth zero is precisely source index `n = 2`. -/
-theorem lowerRosserBoundaryChainsFixedPairDepth0Density_zero_eq_sourceIndex_two
-    (nu : ℕ → ℝ) (D q : ℕ) (P : Finset ℕ) :
-    lowerRosserBoundaryChainsFixedPairDepth0Density nu D q P 0 =
-      ∑ l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P 2,
-        (l.map nu).prod := by
-  simpa using
-    lowerRosserBoundaryChainsFixedPairDepth0Density_eq_sourceIndex
-      nu D q P 0
 
 /-- Exact carrier recursion for positive pair-depth lower Rosser boundary
 chains.  Peeling the two largest selected primes shifts source index by two. -/
@@ -697,291 +607,6 @@ theorem upperRosserBoundaryChain_cons_cons_iff
               simpa [j, mul_assoc] using h
     · have h := (ceilDiv_le_iff_le_mul hc).1 hterminal
       simpa [mul_assoc] using h
-
-/-- Logarithmic coordinates of a finite prime chain, relative to the sifting
-cutoff `z`. -/
-noncomputable def logarithmicCoordinates (z : ℝ) (l : List ℕ) : List ℝ :=
-  List.map (fun p : ℕ => Real.log (p : ℝ) / Real.log z) l
-
-theorem sum_logarithmicCoordinates_eq_log_prod
-    {z : ℝ} (l : List ℕ) (hl : ∀ p ∈ l, 0 < p) :
-    (logarithmicCoordinates z l).sum = Real.log l.prod / Real.log z := by
-  induction l with
-  | nil => simp [logarithmicCoordinates]
-  | cons p l ih =>
-      have hp : 0 < p := hl p (by simp)
-      have hl' : ∀ q ∈ l, 0 < q := fun q hq => hl q (by simp [hq])
-      have hprod : (0 : ℝ) < (l.prod : ℕ) := by
-        exact_mod_cast List.prod_pos hl'
-      change Real.log (p : ℝ) / Real.log z +
-          (logarithmicCoordinates z l).sum =
-        Real.log ((p * l.prod : ℕ) : ℝ) / Real.log z
-      rw [ih hl', Nat.cast_mul,
-        Real.log_mul (by exact_mod_cast hp.ne') hprod.ne']
-      ring
-
-theorem logarithmicCoordinates_sortedGT
-    {z : ℝ} {l : List ℕ} (hz : 1 < z)
-    (hlpos : ∀ p ∈ l, 0 < p) (hl : l.SortedGT) :
-    (logarithmicCoordinates z l).SortedGT := by
-  intro i j hij
-  have hi : i.val < l.length := by
-    simpa [logarithmicCoordinates] using i.isLt
-  have hj : j.val < l.length := by
-    simpa [logarithmicCoordinates] using j.isLt
-  let ii : Fin l.length := ⟨i.val, hi⟩
-  let jj : Fin l.length := ⟨j.val, hj⟩
-  have hnat : l.get jj < l.get ii := hl (show ii < jj from hij)
-  have hposj : (0 : ℝ) < l.get jj := by
-    exact_mod_cast hlpos _ (List.get_mem l jj)
-  have hposi : (0 : ℝ) < l.get ii := by
-    exact_mod_cast hlpos _ (List.get_mem l ii)
-  have hlog : Real.log (l.get jj : ℝ) < Real.log (l.get ii : ℝ) :=
-    Real.strictMonoOn_log hposj hposi (by exact_mod_cast hnat)
-  have hdiv := (div_lt_div_iff_of_pos_right (Real.log_pos hz)).2 hlog
-  change (logarithmicCoordinates z l)[j.val] <
-    (logarithmicCoordinates z l)[i.val]
-  simpa [logarithmicCoordinates, ii, jj] using hdiv
-
-/-- If a chain lies strictly above `q` and below `z`, then each logarithmic
-coordinate lies in `(log q / log z, 1]`. -/
-theorem logarithmicCoordinates_mem_Ioc
-    {z : ℝ} (hz : 1 < z) {q : ℕ} {l : List ℕ}
-    (hqpos : 0 < q) (hql : ∀ p ∈ l, q < p)
-    (hlz : ∀ p ∈ l, (p : ℝ) ≤ z) :
-    ∀ x ∈ logarithmicCoordinates z l,
-      Real.log q / Real.log z < x ∧ x ≤ 1 := by
-  intro x hx
-  obtain ⟨p, hp, rfl⟩ := List.mem_map.mp hx
-  have hppos : 0 < p := lt_trans hqpos (hql p hp)
-  have hqR : (0 : ℝ) < q := by exact_mod_cast hqpos
-  have hpR : (0 : ℝ) < p := by exact_mod_cast hppos
-  have hqpR : (q : ℝ) < p := by exact_mod_cast hql p hp
-  constructor
-  · exact (div_lt_div_iff_of_pos_right (Real.log_pos hz)).2
-      (Real.strictMonoOn_log hqR hpR hqpR)
-  · have hzpos : 0 < z := by linarith
-    have hlog : Real.log (p : ℝ) ≤ Real.log z :=
-      Real.strictMonoOn_log.monotoneOn hpR hzpos (hlz p hp)
-    have hdiv := (div_le_div_iff_of_pos_right (Real.log_pos hz)).2 hlog
-    simpa [(Real.log_pos hz).ne'] using hdiv
-
-theorem logarithmicCoordinates_prefix_cube
-    {z : ℝ} {l : List ℕ} (hl : ∀ p ∈ l, 0 < p) (i : Fin l.length) :
-    (logarithmicCoordinates z (l.take i.val)).sum +
-        3 * (Real.log (l.get i : ℝ) / Real.log z) =
-      Real.log (((l.take i.val).prod * (l.get i) ^ 3 : ℕ) : ℝ) /
-        Real.log z := by
-  rw [sum_logarithmicCoordinates_eq_log_prod]
-  · have htakepos : 0 < (l.take i.val).prod :=
-      List.prod_pos fun p hp => hl p (List.mem_of_mem_take hp)
-    have higetpos : 0 < l.get i := hl _ (List.get_mem l i)
-    rw [Nat.cast_mul, Nat.cast_pow,
-      Real.log_mul (by exact_mod_cast htakepos.ne') (by positivity),
-      Real.log_pow]
-    ring
-  · intro p hp
-    exact hl p (List.mem_of_mem_take hp)
-
-theorem log_nat_div_log_le_of_lt_floor_add_one
-    {z Δ : ℝ} {n : ℕ} (hz : 1 < z) (hΔ : 0 < Δ) (hn : 0 < n)
-    (h : n < Nat.floor Δ + 1) :
-    Real.log n / Real.log z ≤ Real.log Δ / Real.log z := by
-  have hnFloor : n ≤ Nat.floor Δ := by omega
-  have hnΔ : (n : ℝ) ≤ Δ := by
-    have hcast : (n : ℝ) ≤ (Nat.floor Δ : ℝ) := by
-      exact_mod_cast hnFloor
-    exact hcast.trans (Nat.floor_le hΔ.le)
-  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
-  have hlog : Real.log (n : ℝ) ≤ Real.log Δ :=
-    Real.strictMonoOn_log.monotoneOn hnR hΔ hnΔ
-  exact (div_le_div_iff_of_pos_right (Real.log_pos hz)).2 hlog
-
-theorem log_div_log_lt_of_floor_add_one_le
-    {z Δ : ℝ} {n : ℕ} (hz : 1 < z) (hΔ : 0 < Δ)
-    (h : Nat.floor Δ + 1 ≤ n) :
-    Real.log Δ / Real.log z < Real.log n / Real.log z := by
-  have hfloor : Δ < (Nat.floor Δ + 1 : ℕ) := by
-    simpa using Nat.lt_floor_add_one Δ
-  have hcast : ((Nat.floor Δ + 1 : ℕ) : ℝ) ≤ (n : ℝ) := by
-    exact_mod_cast h
-  have hΔn : Δ < (n : ℝ) := hfloor.trans_le hcast
-  have hnpos : (0 : ℝ) < n := hΔ.trans hΔn
-  have hlog : Real.log Δ < Real.log (n : ℝ) :=
-    Real.strictMonoOn_log hΔ hnpos hΔn
-  exact (div_lt_div_iff_of_pos_right (Real.log_pos hz)).2 hlog
-
-/-- The real-coordinate region cut out by the decreasing-order, alternating
-prefix, and terminal-shell conditions of an upper Rosser boundary chain. -/
-def UpperRosserLogRegion (s a : ℝ) (x : List ℝ) : Prop :=
-  x.SortedGT ∧ Even x.length ∧ x.sum ≤ s ∧
-    (∀ i (hi : i < x.length), Even i →
-      (x.take i).sum + 3 * x[i] ≤ s) ∧
-    s < x.sum + 3 * a
-
-/-- The empty upper Rosser region is exactly its terminal cubic shell. -/
-theorem upperRosserLogRegion_nil_iff {s a : ℝ} :
-    UpperRosserLogRegion s a [] ↔ 0 ≤ s ∧ s < 3 * a := by
-  constructor
-  · rintro ⟨_, _, hsum, _, hterminal⟩
-    simpa using And.intro hsum hterminal
-  · rintro ⟨hs, hterminal⟩
-    refine ⟨?_, by simp, by simpa using hs, ?_, by simpa using hterminal⟩
-    · intro i
-      exact Fin.elim0 i
-    · intro i hi
-      simp at hi
-
-/-- Removing the first pair of coordinates gives the exact Buchstab recursion
-for the real upper Rosser region. -/
-theorem upperRosserLogRegion_cons_cons_iff
-    {s a x₀ x₁ : ℝ} {xs : List ℝ} :
-    UpperRosserLogRegion s a (x₀ :: x₁ :: xs) ↔
-      (x₀ :: x₁ :: xs).SortedGT ∧ 3 * x₀ ≤ s ∧
-        UpperRosserLogRegion (s - x₀ - x₁) a xs := by
-  constructor
-  · rintro ⟨hsorted, heven, hsum, hprefix, hterminal⟩
-    refine ⟨hsorted, ?_, ?_⟩
-    · have h := hprefix 0 (by simp) (by simp)
-      norm_num at h ⊢
-      exact h
-    · refine ⟨?_, ?_, ?_, ?_, ?_⟩
-      · intro i j hij
-        have hij' : i.val + 2 < j.val + 2 := Nat.add_lt_add_right hij 2
-        have h := hsorted
-          (a := ⟨i.val + 2, by simp⟩)
-          (b := ⟨j.val + 2, by simp⟩) hij'
-        simpa using h
-      · simpa [Nat.even_add] using heven
-      · simp only [List.sum_cons] at hsum
-        linarith
-      · intro i hi hiEven
-        have hiEven' : Even (i + 2) := hiEven.add (by norm_num)
-        have h := hprefix (i + 2) (by simp; omega) hiEven'
-        simp only [List.take_succ_cons, List.sum_cons, List.getElem_cons_succ] at h
-        linarith
-      · simp only [List.sum_cons] at hterminal
-        linarith
-  · rintro ⟨hsorted, hhead, _, heven, hsum, hprefix, hterminal⟩
-    refine ⟨hsorted, ?_, ?_, ?_, ?_⟩
-    · simpa [Nat.even_add] using heven
-    · simp only [List.sum_cons]
-      linarith
-    · intro i hi hiEven
-      cases i with
-      | zero =>
-          norm_num
-          exact hhead
-      | succ i =>
-          cases i with
-          | zero => simp at hiEven
-          | succ i =>
-              have hiEven' : Even i := by
-                simpa [Nat.even_add] using hiEven
-              have h := hprefix i (by simp at hi ⊢; omega) hiEven'
-              simp only [List.take_succ_cons, List.sum_cons, List.getElem_cons_succ]
-              linarith
-    · simp only [List.sum_cons]
-      linarith
-
-private theorem sortedGT_pair_iff {x₀ x₁ : ℝ} :
-    [x₀, x₁].SortedGT ↔ x₁ < x₀ := by
-  constructor
-  · intro h
-    simpa using h (a := ⟨0, by simp⟩) (b := ⟨1, by simp⟩) (by norm_num)
-  · intro h i j hij
-    fin_cases i <;> fin_cases j
-    · simp at hij
-    · simpa using h
-    · simp at hij
-    · simp at hij
-
-/-- The first nonempty upper Rosser region is the explicit two-coordinate shell
-used by the first Buchstab correction. -/
-theorem upperRosserLogRegion_pair_iff {s a x₀ x₁ : ℝ} :
-    UpperRosserLogRegion s a [x₀, x₁] ↔
-      x₁ < x₀ ∧ 3 * x₀ ≤ s ∧ x₀ + x₁ ≤ s ∧ s < x₀ + x₁ + 3 * a := by
-  rw [upperRosserLogRegion_cons_cons_iff, upperRosserLogRegion_nil_iff,
-    sortedGT_pair_iff]
-  constructor
-  · rintro ⟨h10, hhead, hsum, hterminal⟩
-    exact ⟨h10, hhead, by linarith, by linarith⟩
-  · rintro ⟨h10, hhead, hsum, hterminal⟩
-    exact ⟨h10, hhead, by linarith, by linarith⟩
-
-/-- The upper Rosser region with every selected coordinate strictly between the
-terminal coordinate `a` and an inherited upper cutoff `b`. -/
-def UpperRosserLogRegionBelow (s a b : ℝ) (x : List ℝ) : Prop :=
-  UpperRosserLogRegion s a x ∧ ∀ y ∈ x, a < y ∧ y < b
-
-theorem upperRosserLogRegionBelow_nil_iff {s a b : ℝ} :
-    UpperRosserLogRegionBelow s a b [] ↔ 0 ≤ s ∧ s < 3 * a := by
-  simp [UpperRosserLogRegionBelow, upperRosserLogRegion_nil_iff]
-
-/-- Exact bounded form of pair removal.  The second peeled coordinate becomes
-the strict upper cutoff for every coordinate in the residual region. -/
-theorem upperRosserLogRegionBelow_cons_cons_iff
-    {s a b x₀ x₁ : ℝ} {xs : List ℝ} :
-    UpperRosserLogRegionBelow s a b (x₀ :: x₁ :: xs) ↔
-      a < x₁ ∧ x₁ < x₀ ∧ x₀ < b ∧ 3 * x₀ ≤ s ∧
-        UpperRosserLogRegionBelow (s - x₀ - x₁) a x₁ xs := by
-  rw [UpperRosserLogRegionBelow, upperRosserLogRegion_cons_cons_iff,
-    UpperRosserLogRegionBelow]
-  constructor
-  · rintro ⟨⟨hsorted, hhead, htail⟩, hbounds⟩
-    have hpair := List.sortedGT_iff_pairwise.mp hsorted
-    simp only [List.pairwise_cons] at hpair
-    refine ⟨(hbounds x₁ (by simp)).1, hpair.1 x₁ (by simp),
-      (hbounds x₀ (by simp)).2, hhead, htail, ?_⟩
-    intro y hy
-    exact ⟨(hbounds y (by simp [hy])).1, hpair.2.1 y hy⟩
-  · rintro ⟨ha1, h10, h0b, hhead, htail, hbounds⟩
-    refine ⟨⟨?_, hhead, htail⟩, ?_⟩
-    · rw [List.sortedGT_iff_pairwise, List.pairwise_cons, List.pairwise_cons,
-        ← List.sortedGT_iff_pairwise]
-      constructor
-      · intro y hy
-        simp only [List.mem_cons] at hy
-        rcases hy with rfl | hy
-        · exact h10
-        · exact (hbounds y hy).2.trans h10
-      · constructor
-        · intro y hy
-          exact (hbounds y hy).2
-        · exact htail.1
-    · intro y hy
-      simp only [List.mem_cons] at hy
-      rcases hy with rfl | hy
-      · exact ⟨ha1.trans h10, h0b⟩
-      · rcases hy with rfl | hy
-        · exact ⟨ha1, h10.trans h0b⟩
-        · exact ⟨(hbounds y hy).1,
-            (hbounds y hy).2.trans (h10.trans h0b)⟩
-
-/-- Induction-ready decomposition of every positive even-depth bounded Rosser
-region into its first ordered pair and a depth-two-shorter residual region. -/
-theorem upperRosserLogRegionBelow_of_length_succ_iff
-    {s a b : ℝ} {x : List ℝ} {k : ℕ} (hlen : x.length = 2 * (k + 1)) :
-    UpperRosserLogRegionBelow s a b x ↔
-      ∃ x₀ x₁ xs, x = x₀ :: x₁ :: xs ∧ xs.length = 2 * k ∧
-        a < x₁ ∧ x₁ < x₀ ∧ x₀ < b ∧ 3 * x₀ ≤ s ∧
-          UpperRosserLogRegionBelow (s - x₀ - x₁) a x₁ xs := by
-  constructor
-  · intro hregion
-    cases x with
-    | nil => simp at hlen
-    | cons x₀ tail =>
-        cases tail with
-        | nil =>
-            simp only [List.length_cons, List.length_nil] at hlen
-            omega
-        | cons x₁ xs =>
-            refine ⟨x₀, x₁, xs, rfl, ?_, ?_⟩
-            · simp only [List.length_cons] at hlen
-              omega
-            · exact upperRosserLogRegionBelow_cons_cons_iff.mp hregion
-  · rintro ⟨x₀, x₁, xs, rfl, _, hregion⟩
-    exact upperRosserLogRegionBelow_cons_cons_iff.mpr hregion
 
 
 end MathlibNt.SieveTheory.LinearSieve

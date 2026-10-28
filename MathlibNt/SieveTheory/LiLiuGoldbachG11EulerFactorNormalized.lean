@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters
-import MathlibNt.SieveTheory.LiLiuGoldbachG11EulerProduct
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 noncomputable section

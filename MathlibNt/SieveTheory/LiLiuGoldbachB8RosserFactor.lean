@@ -1,9 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
 import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
-import MathlibNt.SieveTheory.MertensTheorem
-import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
-import MathlibNt.SieveTheory.SuzukiClaim145SourceParameters
-import MathlibNt.SieveTheory.SuzukiUpperRosserDensityEndpointDirect
 
 open scoped BigOperators
 open AnalyticNumberTheory.Sieve

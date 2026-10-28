@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 open MeasureTheory Set
 open scoped Interval
@@ -9,7 +7,7 @@ noncomputable section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-private theorem g11_log_ratio_deriv {b x : ℝ} (hb : 0 < b) (hx : 0 < x) :
+theorem goldbach_log_ratio_deriv {b x : ℝ} (hb : 0 < b) (hx : 0 < x) :
     HasDerivAt (fun y : ℝ => Real.log (b / y)) (-1 / x) x := by
   have hd := ((hasDerivAt_const x b).div (hasDerivAt_id x) hx.ne').log
     (div_ne_zero hb.ne' hx.ne')
@@ -29,7 +27,7 @@ theorem goldbachG11PrimeIntegral_logTriangle {b q : ℝ} (hq : 0 < q) (hqb : q �
       HasDerivAt (fun s : ℝ => -(Real.log (b / s) ^ 2) / 2)
         (Real.log (b / x) / x) x := by
     have hx0 := hq.trans_le hx.1
-    apply (((g11_log_ratio_deriv hb hx0).pow 2).neg.div_const 2).congr_deriv
+    apply (((goldbach_log_ratio_deriv hb hx0).pow 2).neg.div_const 2).congr_deriv
     ring
   have he := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (fun x hx => hd x (by rwa [uIcc_of_le hqb] at hx))
@@ -86,7 +84,7 @@ theorem goldbachG11PrimeIntegral_qPrimitive_deriv {b q : ℝ}
     HasDerivAt (fun x : ℝ =>
       -(Real.log (b / x) ^ 2 - 2 * Real.log (b / x) + 2) / x)
       (Real.log (b / q) ^ 2 / q ^ 2) q := by
-  have hd := g11_log_ratio_deriv hb hq
+  have hd := goldbach_log_ratio_deriv hb hq
   apply ((((hd.pow 2).sub (hd.const_mul 2)).add_const 2).neg.div
     (hasDerivAt_id q) hq.ne').congr_deriv
   dsimp
@@ -152,15 +150,6 @@ theorem intervalIntegrable_goldbachG11PrimeSingleIntegrand (h : ℝ → ℝ)
       continuousOn_id hn).sub continuousOn_const)).div_const 2).intervalIntegrable_of_Icc
         (by norm_num)
 
-theorem goldbachG11PrimeIntegral_one_eq_single :
-    goldbachG11PrimeIntegral (fun _ => 1) =
-      ∫ r in (4 / 53 : ℝ)..(4 / 33),
-        ((Real.log ((4 / 33 : ℝ) / r) ^ 2 -
-          2 * Real.log ((4 / 33 : ℝ) / r) + 2) / r - 2 / (4 / 33 : ℝ)) / (2 * r) := by
-  rw [goldbachG11PrimeIntegral_eq_single]
-  apply intervalIntegral.integral_congr
-  intro r _
-  ring
 
 theorem goldbachG11PrimeIntegral_author_eq_single :
     goldbachG11PrimeIntegral goldbachG11AuthorWeight =
@@ -170,30 +159,6 @@ theorem goldbachG11PrimeIntegral_author_eq_single :
             2 * Real.log ((4 / 33 : ℝ) / r) + 2) / r - 2 / (4 / 33 : ℝ)) / 2 :=
   goldbachG11PrimeIntegral_eq_single _
 
-theorem goldbachG11PrimeIntegral_nonneg (h : ℝ → ℝ)
-    (hh : ∀ r ∈ Icc (4 / 53 : ℝ) (4 / 33), 0 ≤ h r) :
-    0 ≤ goldbachG11PrimeIntegral h := by
-  unfold goldbachG11PrimeIntegral
-  apply intervalIntegral.integral_nonneg (by norm_num)
-  intro r hr
-  apply intervalIntegral.integral_nonneg hr.2
-  intro q hq
-  apply intervalIntegral.integral_nonneg hq.2
-  intro s hs
-  apply intervalIntegral.integral_nonneg hs.2
-  intro t ht
-  have hr0 : 0 ≤ r := by linarith [hr.1]
-  have hs0 : 0 ≤ s := by linarith [hq.1, hs.1]
-  have ht0 : 0 ≤ t := hs0.trans ht.1
-  exact div_nonneg (hh r hr) (mul_nonneg (mul_nonneg (mul_nonneg hr0 (sq_nonneg q)) hs0) ht0)
-
-theorem goldbachG11PrimeIntegral_const (c : ℝ) :
-    goldbachG11PrimeIntegral (fun _ => c) = c * goldbachG11PrimeIntegral (fun _ => 1) := by
-  rw [goldbachG11PrimeIntegral_eq_single, goldbachG11PrimeIntegral_eq_single,
-    ← intervalIntegral.integral_const_mul]
-  apply intervalIntegral.integral_congr
-  intro r _
-  ring
 
 theorem goldbachG11PrimeIntegral_author_split :
     goldbachG11PrimeIntegral goldbachG11AuthorWeight =

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalPrimeDensity
+import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
 import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensity
+
+
+
+
 
 /-!
 # The common well-factorable linear sieve at the prescribed external level
@@ -169,10 +173,5 @@ theorem exists_external_sieve_common_family {ι : Type*} :
     constructor
     · nlinarith only [hsieve.1, hlo]
     · nlinarith only [hsieve.2, hup]
-
-#check exists_externalFamilyDensity_ff
-#print axioms exists_externalFamilyDensity_ff
-#check exists_external_sieve_common_family
-#print axioms exists_external_sieve_common_family
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

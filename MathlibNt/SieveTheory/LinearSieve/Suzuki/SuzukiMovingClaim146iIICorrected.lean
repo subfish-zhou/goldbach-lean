@@ -165,56 +165,5 @@ theorem eventually_claim14_6_i_ii_at_sourceSigma_of_derivativeDDE
             (hlow ⟨hx.1, hx4⟩ ⟨by norm_num, le_rfl⟩ hx4)
         · exact hhigh ⟨(lt_of_not_ge hx4).le, hx.2⟩ ⟨h4y, hy.2⟩ hxy
 
-/-- The proved Section-13 cutoff majorant supplies the unshifted (`ε=0`) half
-of the corrected pointwise certificate through Proposition 13.1's moving
-ratio.  The shifted half remains explicit in the corrected interface rather
-than being hidden in an impossible scalar `ρ`. -/
-theorem eventually_unshifted_derivativeDDE_of_cutoffMajorants
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    {d : ℝ} (hd : 0 < d)
-    (majorant : ∀ sign,
-      CutoffMajorant (section13_bridgeAtThree hH sign).Qhat) :
-    ∃ M D₀ : ℝ, 1 < M ∧ 1 < D₀ ∧ ∀ D : ℝ, D₀ ≤ D →
-      M ≤ sourceSigma D d ∧ ∀ sign t, M ≤ t → t ≤ sourceSigma D d →
-      weightedHat H sign t * perturbationSlope D d 0 t ≤
-        t * H.T sign.opposite (t - 1) := by
-  obtain ⟨M, hM, hratio⟩ :=
-    exists_common_ratioOnSource_of_cutoffMajorants hH hd majorant
-  obtain ⟨Dp, hDp, hp⟩ :=
-    movingDDEAsymptoticCertificateOnSource_of_proposition131_ratioOnSource
-      hH.toSection13HatContract ErrorSign.plus (hratio ErrorSign.plus)
-  obtain ⟨Dm, hDm, hm⟩ :=
-    movingDDEAsymptoticCertificateOnSource_of_proposition131_ratioOnSource
-      hH.toSection13HatContract ErrorSign.minus (hratio ErrorSign.minus)
-  let D₀ := max Dp Dm
-  refine ⟨M, D₀, hM, hDp.trans_le (le_max_left _ _), ?_⟩
-  intro D hD
-  have hpD := hp D ((le_max_left Dp Dm).trans hD)
-  have hmD := hm D ((le_max_right Dp Dm).trans hD)
-  refine ⟨hpD.1, ?_⟩
-  intro sign t hMt htσ
-  have hs : weightedHat H sign t * perturbationSlope D d 0 t ≤
-      t * H.T sign.opposite (t - 1) *
-        ((t ^ d / Real.log D) / (1 + t ^ d / Real.log D)) := by
-    cases sign with
-    | plus =>
-        by_cases hcut : t ≤ (Real.log D) ^ (1 / d)
-        · exact hpD.2.1 t hMt hcut htσ
-        · exact hpD.2.2 t (lt_of_not_ge hcut) htσ
-    | minus =>
-        by_cases hcut : t ≤ (Real.log D) ^ (1 / d)
-        · exact hmD.2.1 t hMt hcut htσ
-        · exact hmD.2.2 t (lt_of_not_ge hcut) htσ
-  have hD1 : 1 < D := hDp.trans_le ((le_max_left Dp Dm).trans hD)
-  have ht0 : 0 < t := by linarith
-  have hA0 : 0 ≤ t * H.T sign.opposite (t - 1) :=
-    (mul_pos ht0 (hH.toSection13HatContract.positive sign.opposite (t - 1) (by linarith))).le
-  have hz0 : 0 ≤ t ^ d / Real.log D :=
-    div_nonneg (Real.rpow_nonneg ht0.le _) (Real.log_pos hD1).le
-  have hzle : (t ^ d / Real.log D) / (1 + t ^ d / Real.log D) ≤ 1 := by
-    apply (div_le_one (by linarith)).2
-    linarith
-  exact hs.trans (mul_le_of_le_one_right hA0 hzle)
-
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

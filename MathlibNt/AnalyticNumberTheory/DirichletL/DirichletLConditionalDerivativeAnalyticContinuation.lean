@@ -2,7 +2,6 @@ import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivative
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Analysis.Calculus.FDeriv.Analytic
 import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Complex.Convex
 
 /-!
 # Analytic continuation of the conditionally convergent derivative series
@@ -34,14 +33,6 @@ noncomputable def orderedDerivativeFunction
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (s : ℂ) : ℂ :=
   if hs : 0 < s.re then orderedLogDerivativeSeries χ hχ s hs else 0
 
-/-- The value of the dependent ordered sum does not depend on the proof of
-`0 < re s`.  This explicit lemma prevents dependent proof arguments from leaking
-into the function-level analytic statements. -/
-lemma orderedLogDerivativeSeries_proof_irrel
-    (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (s : ℂ)
-    (hs ht : 0 < s.re) :
-    orderedLogDerivativeSeries χ hχ s hs = orderedLogDerivativeSeries χ hχ s ht := by
-  rfl
 
 lemma orderedDerivativeFunction_eq (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     (s : ℂ) (hs : 0 < s.re) :

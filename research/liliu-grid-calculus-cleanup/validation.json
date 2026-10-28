@@ -1,0 +1,78 @@
+{
+  "phase": "Li-Liu finite weighted-cell calculus and convergence sharing",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T04:02:49.527709+00:00",
+  "source_modules": 1801,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "457e33cade7d2cc9c09d960579562496183b35746343a4f6b01cf2256ca5f5cb"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "dbeb4e17d66af693981ab1260e093ef82c48f70dd202270d689e9f61155548ee"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "9fe9c1091a0ffb17bc4e53e67036cc63de6026d3249d774c3dec5e39f8bbac72"
+    }
+  },
+  "finished_at_utc": "2026-10-27T04:14:57.089383+00:00",
+  "input_manifest_sha256": "0149d459f9a025771999b229c7f3c74c20dcb84bb1ab27f38ef539c81b6af5f9",
+  "scope": "Main Chen and Li-Liu libraries only; separate concurrent Wu research sources excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "a263ff1fd6b39d15f0fb22fb77dc1d629958ce6f8f83255c6efa360093c5294b",
+  "net_main_code_lines": -89,
+  "net_liliu_closure_code_lines": -54,
+  "net_chen_closure_code_lines": 4,
+  "type_preservation_report": "type-preservation.json",
+  "final_review_at_utc": "2026-10-27T04:18:07.555189+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "c5ebc2a242308a41a9b308efa6bab6f196a09c84fc68a16aa6af6b855700b83d"
+  },
+  "evidence_sha256": {
+    "changes.json": "1362f1ef548183d66825c35d21eef6abadf09141b49cf80eaff65d106911da9c",
+    "source-size.json": "6732469613fc5f612a41d2b86c5d62c960d7df83c9a94351e1bcd64842ee9330",
+    "type-preservation.json": "eff9eca7940c4c039b7fbf3e384c77a3d873d1b87b6d9e3f9d923443fb775404",
+    "compatibility-facade.json": "6d7354f71b4996b8da16188ec0fe3d1adc1c41dff38fc8ed9a893d28eda3246b",
+    "standalone-probes.json": "56a6701dd5214274af1b04c53ded6534101af13f6cc6f0fd2e865633b9d58909",
+    "followup-scan.json": "85dda776f09ee192b0c7f1e0c6992264d0967d9e05e75e976b6b722a4ebfd9ed",
+    "blueprint-validation.json": "a8510158423ea82a0a1697aa7e131faeba2abf3211ea5aa215c6dd34ec14ef56",
+    "analysis.json": "6ee2d6a61756f98bf3062f0b5c954847512f4b75e6c8514dc4c5e2dd7c6c9582"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-grid-calculus-cleanup/reproduce.py": "bb185d9d498b9a976e080d889be69da1366a16747169b735e4c24b940536368c",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "4f2fc207f0915de4f49db43f9d6090fec67d48d12fcdd7387476cc46c4f77f32",
+    "docs/LILIU_GRID_CALCULUS_CLEANUP.md": "1ab869286316a83afa9f68c84a53a781060791e72b9b85ad439392541d1a0bbd",
+    "docs/SOURCE_SIZE.md": "340733f53c5a4cd01497a60ce9f5b7bb728adeceb79100ca737397c814a969dd",
+    "docs/VERIFICATION.md": "fd8fe8e6148cb58bb9982c2facd1162ad0355fa2590e0ecb916080bf3fac5227",
+    "docs/RELEASE_NOTES.md": "7275617a3b6d87cdb22dd81c965c1396bb8217bee2463ab3ade08c85256efc5c",
+    "docs/ARCHITECTURE.md": "e8ef182ab992258ac3376693b04d4c10f68b3cd415f9d44be3ea9cb53ad107fc"
+  }
+}

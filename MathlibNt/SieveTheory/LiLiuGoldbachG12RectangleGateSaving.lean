@@ -61,36 +61,6 @@ theorem numerical_log_saving (U : ℝ) :
           div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hbudget hNpos.le) hz.le
         _ = N := mul_div_cancel_right₀ _ (ne_of_gt hz)
 
-/-- Uniform in the atom subset, window, modulus carrier and full signed coefficient. -/
-theorem gate_log_saving (U : ℝ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N ≥ N₀, ∀ (ε : ℝ) (A : Finset (ℕ × ℕ))
-      (Q : Finset ℕ) (c : ℕ → ℝ),
-      linkEmbed A ⊆ goldbachG12LinkedAtoms N ε → Q ⊆ Icc 1 N →
-      (∀ d ∈ reducedModuli Q (N : ℤ), |c d| ≤ 1) →
-      |G12RectangleWF.gate N A Q c| ≤ N/Real.log (N : ℝ)^U := by
-  obtain ⟨N₀,hN₀,h⟩ := numerical_log_saving U
-  refine ⟨N₀,hN₀,?_⟩
-  intro N hN ε A Q c hA hQ hc
-  exact (gate_le (by omega) le_rfl hA hQ hc).trans (h N hN)
-
-/-- Original body multiplicity 400 is included in the actual singular-series scale. -/
-theorem gate_normalized (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N ≥ N₀, ∀ (ε : ℝ) (A : Finset (ℕ × ℕ))
-      (Q : Finset ℕ) (c : ℕ → ℝ),
-      linkEmbed A ⊆ goldbachG12LinkedAtoms N ε → Q ⊆ Icc 1 N →
-      (∀ d ∈ reducedModuli Q (N : ℤ), |c d| ≤ 1) →
-      400*|G12RectangleWF.gate N A Q c| ≤
-        δ*(SingularSeries.liuSingularSeries N*N/Real.log (N : ℝ)^2) := by
-  obtain ⟨K,hK,hg⟩ := gate_log_saving 3
-  obtain ⟨L,hL⟩ := eventually_atTop.mp (goldbachBV_logCube_normalized 400 δ hδ)
-  refine ⟨max K L,by omega,?_⟩
-  intro N hN ε A Q c hA hQ hc
-  have h := hg N (by omega) ε A Q c hA hQ hc
-  simp only [Real.rpow_ofNat] at h
-  calc
-    _ ≤ 400*(N/Real.log (N : ℝ)^3) := mul_le_mul_of_nonneg_left h (by norm_num)
-    _ = 400*N/Real.log (N : ℝ)^3 := by ring
-    _ ≤ _ := hL N (by omega)
 
 /-- Full real-level interval: no primorial or squarefree mask is introduced. -/
 theorem real_interval_subset {N : ℕ} {Q : ℝ} (hQ : Q ≤ N) :
@@ -108,39 +78,5 @@ theorem gate_wellFactorable {N : ℕ} {ε Q : ℝ} {A : Finset (ℕ × ℕ)}
       (800*N/(N : ℝ)^(4/53 : ℝ))*(1+Real.log (N : ℝ))^2 :=
   gate_le hN le_rfl hA (real_interval_subset hQ) (fun d _ => hf.2.1 d)
 
-/-- Literal original rectangle, under its already-proved inclusion geometry. -/
-theorem rectangle_gate_le {N : ℕ} (hN : 2 ≤ N) (ε : ℝ) (M T : ℕ)
-    (hlow : (N : ℝ)^(4/53 : ℝ) ≤ T)
-    (hhigh : (2*T : ℕ) < (N : ℝ)^(1/10 : ℝ))
-    {Q : ℝ} (hQ : Q ≤ N) {f : ArithmeticFunction ℝ} (hf : WellFactorable f Q) :
-    |G12RectangleWF.gate N (G12LowRectangle.rectangle N ε M T) (Ioc 0 ⌊Q⌋₊) f| ≤
-      (800*N/(N : ℝ)^(4/53 : ℝ))*(1+Real.log (N : ℝ))^2 :=
-  gate_wellFactorable hN hQ (G12RectangleWF.rectangle_image_subset N ε M T hlow hhigh) hf
-
-/-- Fixed logarithmic saving for the actual full real-level rectangle gate. -/
-theorem rectangle_gate_log_saving (U : ℝ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N ≥ N₀, ∀ (ε : ℝ) (M T : ℕ),
-      (N : ℝ)^(4/53 : ℝ) ≤ T → (2*T : ℕ) < (N : ℝ)^(1/10 : ℝ) →
-      ∀ (Q : ℝ) (f : ArithmeticFunction ℝ), Q ≤ N → WellFactorable f Q →
-      |G12RectangleWF.gate N (G12LowRectangle.rectangle N ε M T) (Ioc 0 ⌊Q⌋₊) f| ≤
-        N/Real.log (N : ℝ)^U := by
-  obtain ⟨N₀,hN₀,h⟩ := gate_log_saving U
-  refine ⟨N₀,hN₀,?_⟩
-  intro N hN ε M T hlo hhi Q f hQ hf
-  exact h N hN ε _ _ f (G12RectangleWF.rectangle_image_subset N ε M T hlo hhi)
-    (real_interval_subset hQ) (fun d _ => hf.2.1 d)
-
-/-- The normalization cutoff is selected before every changing rectangle and WF member. -/
-theorem rectangle_gate_normalized (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N ≥ N₀, ∀ (ε : ℝ) (M T : ℕ),
-      (N : ℝ)^(4/53 : ℝ) ≤ T → (2*T : ℕ) < (N : ℝ)^(1/10 : ℝ) →
-      ∀ (Q : ℝ) (f : ArithmeticFunction ℝ), Q ≤ N → WellFactorable f Q →
-      400*|G12RectangleWF.gate N (G12LowRectangle.rectangle N ε M T) (Ioc 0 ⌊Q⌋₊) f| ≤
-        δ*(SingularSeries.liuSingularSeries N*N/Real.log (N : ℝ)^2) := by
-  obtain ⟨N₀,hN₀,h⟩ := gate_normalized δ hδ
-  refine ⟨N₀,hN₀,?_⟩
-  intro N hN ε M T hlo hhi Q f hQ hf
-  exact h N hN ε _ _ f (G12RectangleWF.rectangle_image_subset N ε M T hlo hhi)
-    (real_interval_subset hQ) (fun d _ => hf.2.1 d)
 
 end G12RectangleGate

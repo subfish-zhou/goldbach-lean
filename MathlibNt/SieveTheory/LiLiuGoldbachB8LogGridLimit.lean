@@ -1,8 +1,5 @@
-import MathlibNt.Analysis.LogGridEstimates
-import MathlibNt.Analysis.MovingIntervalIntegral
-import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridRegion
-import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
 
 open Finset MeasureTheory Set
 open scoped ENNReal BigOperators Interval
@@ -35,15 +32,11 @@ theorem goldbachB8LogIntegrand_eq (u v : ℝ) :
 theorem goldbachB8LogDensity_bounds {x : ℝ × ℝ}
     (hx : x ∈ goldbachB8LogAmbientBox) :
     0 ≤ liuLogDensity x ∧ liuLogDensity x ≤ 16 := by
-  have hprod : (1 / 16 : ℝ) ≤ x.1 * x.2 := by
-    calc
-      (1 / 16 : ℝ) = (1 / 4 : ℝ) * (1 / 4 : ℝ) := by norm_num
-      _ ≤ x.1 * x.2 := mul_le_mul hx.1.1 hx.2.1 (by norm_num) (by linarith [hx.1.1])
-  change 0 ≤ 1 / (x.1 * x.2) ∧ 1 / (x.1 * x.2) ≤ 16
   constructor
-  · exact one_div_nonneg.mpr (by linarith)
-  · rw [div_le_iff₀ (by linarith : 0 < x.1 * x.2)]
-    linarith
+  · exact one_div_nonneg.mpr (mul_nonneg (by linarith [hx.1.1]) (by linarith [hx.2.1]))
+  · convert liuLogDensity_le_of_lower_bounds
+      (by norm_num : (0 : ℝ) < 1/4) (by norm_num : (0 : ℝ) < 1/4)
+      hx.1.1 hx.2.1 using 1; norm_num
 
 theorem goldbachB8LogKernel_bounds {x : ℝ × ℝ}
     (hx : x ∈ goldbachB8LogAmbientBox) :
@@ -65,21 +58,11 @@ theorem goldbachB8LogIntegrand_bounds {x : ℝ × ℝ}
 
 private theorem continuousOn_b8Density :
     ContinuousOn liuLogDensity goldbachB8LogAmbientBox := by
-  unfold liuLogDensity
-  apply ContinuousOn.div continuousOn_const
-    (continuous_fst.continuousOn.mul continuous_snd.continuousOn)
-  intro x hx
-  exact mul_ne_zero (by linarith [hx.1.1]) (by linarith [hx.2.1])
+  exact continuousOn_liuLogDensity_box (by norm_num) (by norm_num)
 
 private theorem continuousOn_b8Kernel :
     ContinuousOn liuLogKernel goldbachB8LogAmbientBox := by
-  unfold liuLogKernel
-  apply ContinuousOn.div continuousOn_const
-    ((continuousOn_const.sub continuous_fst.continuousOn).sub continuous_snd.continuousOn)
-  intro x hx
-  have hg := goldbachB8LogAmbientBox_gap hx
-  change 1 - x.1 - x.2 ≠ 0
-  linarith
+  exact continuousOn_liuLogKernel_box (by norm_num)
 
 private theorem integrableOn_b8Density {s : Set (ℝ × ℝ)}
     (hs : MeasurableSet s) (hsub : s ⊆ goldbachB8LogAmbientBox) :
@@ -93,11 +76,6 @@ theorem integrableOn_goldbachB8LogIntegrand {s : Set (ℝ × ℝ)}
   exact (continuousOn_b8Kernel.mul continuousOn_b8Density).integrableOn_of_subset_isCompact isCompact_goldbachB8LogAmbientBox hs hsub
     (ne_top_of_le_ne_top isCompact_goldbachB8LogAmbientBox.measure_ne_top (measure_mono hsub))
 
-theorem integrable_goldbachB8SourceIndicator :
-    Integrable (goldbachB8LogSourceRegion.indicator liuLogIntegrand) :=
-  integrable_indicator_of_integrableOn measurableSet_goldbachB8LogSourceRegion
-    (integrableOn_goldbachB8LogIntegrand measurableSet_goldbachB8LogSourceRegion
-      goldbachB8LogSourceRegion_subset_ambientBox)
 
 private theorem goldbachB8MainIntegral_eq_iteratedSetIntegral :
     goldbachB8MainIntegral =
@@ -132,29 +110,25 @@ theorem goldbachB8MainIntegral_nonneg : 0 ≤ goldbachB8MainIntegral := by
 
 theorem integrable_goldbachB8LogGridUpperIntegrand (n : ℕ) (hn : 0 < n) :
     Integrable (goldbachB8LogGridUpperIntegrand n) := by
-  classical
-  exact integrable_finsetSum _ fun q _ =>
-    (integrable_indicator_of_integrableOn (measurableSet_goldbachB8LogGridCell n q)
-      (integrableOn_b8Density (measurableSet_goldbachB8LogGridCell n q)
-        (goldbachB8LogGridCell_subset_ambientBox hn q))).const_mul _
+  exact MathlibNt.Analysis.LogGridEstimates.integrable_weighted_sum _ _ _ _
+    (fun q _ => measurableSet_goldbachB8LogGridCell n q)
+    (fun q _ => integrableOn_b8Density (measurableSet_goldbachB8LogGridCell n q)
+      (goldbachB8LogGridCell_subset_ambientBox hn q))
 
 /-- This is the production upper sum, with its original selected cells unchanged. -/
 theorem goldbachB8LogGridUpperSum_eq_integral (n : ℕ) (hn : 0 < n) :
     goldbachB8LogGridUpperSum n = ∫ x, goldbachB8LogGridUpperIntegrand n x := by
-  classical
   unfold goldbachB8LogGridUpperSum goldbachB8LogGridUpperIntegrand
-  rw [integral_finsetSum]
-  · apply Finset.sum_congr rfl
-    intro q _
-    rw [integral_const_mul, integral_indicator (measurableSet_goldbachB8LogGridCell n q)]
-    rw [logarithmicRectangleMass_eq_setIntegral
-      (goldbachB8AlphaGridPoint_pos n q.1) (goldbachB8AlphaGridPoint_lt_succ hn)
-      (goldbachB8BetaGridPoint_pos n q.2) (goldbachB8BetaGridPoint_lt_succ hn)]
-    rfl
-  · intro q _
-    exact (integrable_indicator_of_integrableOn (measurableSet_goldbachB8LogGridCell n q)
-      (integrableOn_b8Density (measurableSet_goldbachB8LogGridCell n q)
-        (goldbachB8LogGridCell_subset_ambientBox hn q))).const_mul _
+  rw [MathlibNt.Analysis.LogGridEstimates.integral_weighted_sum _ _ _ _
+    (fun q _ => measurableSet_goldbachB8LogGridCell n q)
+    (fun q _ => integrableOn_b8Density (measurableSet_goldbachB8LogGridCell n q)
+      (goldbachB8LogGridCell_subset_ambientBox hn q))]
+  apply Finset.sum_congr rfl
+  intro q _
+  rw [logarithmicRectangleMass_eq_setIntegral
+    (goldbachB8AlphaGridPoint_pos n q.1) (goldbachB8AlphaGridPoint_lt_succ hn)
+    (goldbachB8BetaGridPoint_pos n q.2) (goldbachB8BetaGridPoint_lt_succ hn)]
+  rfl
 
 private theorem b8UpperIntegrand_eq_of_mem {n : ℕ} (hn : 0 < n)
     {q : Fin n × Fin n} (hq : q ∈ goldbachB8LogGridCells n)
@@ -214,20 +188,18 @@ private theorem b8UpperIntegrand_le_integrand_add {n : ℕ} (hn : 0 < n)
   rw [b8UpperIntegrand_eq_of_mem hn hq hxq]
   have hd := goldbachB8LogDensity_bounds (goldbachB8LogGridCell_subset_ambientBox hn q hxq)
   have hk := goldbachB8LogGrid_kernel_variation hn q hxq
-  have hmul := mul_le_mul hk.2 hd.2 hd.1 (by positivity : 0 ≤ 4 / (n : ℝ))
-  have heq : (4 / (n : ℝ)) * 16 = 64 / (n : ℝ) := by ring
-  rw [heq] at hmul
-  unfold liuLogIntegrand
-  nlinarith
+  have h := MathlibNt.Analysis.LogGridEstimates.weighted_error hd.1 hd.2
+    (by positivity : 0 ≤ 4 / (n : ℝ)) hk.2
+  convert h using 1
+  dsimp [liuLogIntegrand]
+  ring
 
-private def b8UnitBox : Set (ℝ × ℝ) := Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1
 
 private theorem volume_b8UnitBox :
     volume (Icc (0 : ℝ) 1 ×ˢ Icc (0 : ℝ) 1) = 1 := by
   rw [Measure.volume_eq_prod ℝ ℝ, Measure.prod_prod]
   norm_num [Real.volume_Icc]
 
-theorem goldbachB8LogGridErrorConstant_pos : (0 : ℝ) < 1000 := by norm_num
 
 /-- One-sided structural error for every positive mesh size, not an assumed limit. -/
 theorem goldbachB8LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :

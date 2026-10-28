@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "accepted_at_utc": "2026-10-27T04:35:26.670678+00:00",
+  "manifest_sha256": "6a3c4335e0220298dd0cd6aa777c7d00e86980f527b2286b7faa8e9c914c7570",
+  "modules": 4583,
+  "theorem_closure_modules": 4196,
+  "effective_lines_removed": 5123,
+  "preserved_public_statements": 118,
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+  "generators": {
+    "classical_c_eighth_certificates.py": "14cab9f3079177e23d4e890b44a94ef97bc7361988694a13406d153f438b9c2b",
+    "classical_sixth_certificates.py": "eac1763739629f1e47f90dd168b7d9637aab6838185acf2b5ad7d6b4f7cfdd80"
+  },
+  "kernel_replays": [
+    "WR2ClassicalCertificate",
+    "WR2ClassicalCCertificate",
+    "WR2ClassicalCIntegerSoundness",
+    "WR2ClassicalCSums",
+    "WR2IntegerLogHorner",
+    "WR2ClassicalCPayments"
+  ],
+  "files": {
+    "README.md": "893b0fd1057c20f9cf64704013ca7d2e790f96cd0cb0717cb46f5d22efce2274",
+    "baseline-acceptance.json": "38d1d11c11a0a3d5bcc96f9bdf0b305efd9b019d50c185e3608d5f7970c7cc69",
+    "baseline-source-index.json": "73f221a7879f7080a772586c6b63e0e72bdff2e794db8f46498bf6b1b7694419",
+    "baseline-statements.json": "e0b482d26c44c878c387ef85fcb36a12123afce6351de15180cd325b1cf12108",
+    "c-source-audit.json": "68755a9e7375936b64d40de14b4730d2d3c38e3d63662e27c520ae6b08d2a1ac",
+    "c-validation.json": "5d6cd648db73e9d8a3a3ecb64d6ec3bbfc4226bca981c57a3d822dd3d6f320d3",
+    "c-values.json": "c914ee63998453302576f423f1a7963ad525ad3eebf7a405afb055262801c585",
+    "check_values.py": "607e1b1970f3f29df04c9d44655c1f226dbcbe1c06c3923ecd629adb8a7396ea",
+    "classical-acceptance.json": "539df8199828db89f1c4149f0da37b989134fe3f31aa43af5d38a14227e1c353",
+    "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+    "eighth-unchanged.json": "06ba89f4e0604d8b54b20c2a35187fd8f764b435bd51f96214ca5e5144d226fb",
+    "full-build.log": "53be76ec43fd3ae202f1dfc2bb125541d6f7dface4219cb4da5d1122cc54a68d",
+    "generator-c-eighth.log": "4bbbd34b284cd4a63b4e65e537808f98ff81eb9a505f0a5197214b2954288459",
+    "generator-sixth.log": "1581f99aee29971ed31ca850253cfe6db1ac87319d90977e780f88c479d07120",
+    "kernel-WR2ClassicalCCertificate.log": "052bc638cdfd4b026bdffdca421f712a13c01fec2cd62ec8dea7e4e4a276f6af",
+    "kernel-WR2ClassicalCIntegerSoundness.log": "1e9e00e8728f3606ead69a71fc2691f13b1598203c89796c7526bb52a21a4024",
+    "kernel-WR2ClassicalCPayments.log": "425dcde8369f0e82e2460da4b30fa2669b839d5574c5e6ee240479a62daf58a6",
+    "kernel-WR2ClassicalCSums.log": "7ce0c79879e42dd659ad6750ab03c42795fb54a3a37e925ddb31d6dd80225c4f",
+    "kernel-WR2ClassicalCertificate.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+    "kernel-WR2IntegerLogHorner.log": "307bedde1bd2df649606e0a75ed3703c19a5719b8bfb137b61c2b40e810f95c3",
+    "literal-check.log": "63dde43ff9f76f7abf5fc4db8868db8a965b3abbaed6005f285035efe63bc6f3",
+    "measure.py": "b785f6455126e7bdc4cfa72c0652b8c4d0374565fb671634effd27d5b3e5183d",
+    "preserved-data.json": "f9edae8009e063a957cd4663a91a7bcc29665aa6d22d0bd422c466a892d78a55",
+    "retired-internal-statements.json": "bd6ed66812626a7f5ef5d88d60a9d5fdf9d804ae41a867ac29cfc0848fa15af8",
+    "source-size.json": "4d178bff293e11fe42c331fe09fd4d1e86188025572728465da2147c60525be1",
+    "verify-sources.log": "95ce0af98692b2fffc2593de2df63c2f654eb67cf7e8d81818dca196c6bdacfb"
+  }
+}

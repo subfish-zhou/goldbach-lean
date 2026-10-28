@@ -80,45 +80,5 @@ theorem goldbachG6Pairs_half_square_le (N : ℕ) (z b : ℝ) (W : ℕ → ℕ �
     Finset.sum_nonneg hdiag
   linarith
 
-/-- Product-dependent weights are symmetric without any separability assumption. -/
-theorem goldbachG6Pairs_product_sum (N : ℕ) (z b : ℝ) (h : ℕ → ℝ) :
-    2 * (∑ a ∈ goldbachG6Pairs N z b, h (a.1 * a.2)) =
-      (∑ r ∈ goldbachClosedPrimes N z b,
-        ∑ s ∈ goldbachClosedPrimes N z b, h (r * s)) +
-      ∑ r ∈ goldbachClosedPrimes N z b, h (r ^ 2) := by
-  simpa only [pow_two] using
-    goldbachG6Pairs_symmetric_sum N z b (fun r s => h (r * s))
-      (fun r s => congrArg h (Nat.mul_comm r s))
-
-/-- A signed product kernel needs nonnegativity only at the square labels. -/
-theorem goldbachG6Pairs_product_half_square_le (N : ℕ) (z b : ℝ) (h : ℕ → ℝ)
-    (hdiag : ∀ r ∈ goldbachClosedPrimes N z b, 0 ≤ h (r ^ 2)) :
-    (1 / 2 : ℝ) * (∑ r ∈ goldbachClosedPrimes N z b,
-      ∑ s ∈ goldbachClosedPrimes N z b, h (r * s)) ≤
-      ∑ a ∈ goldbachG6Pairs N z b, h (a.1 * a.2) := by
-  apply goldbachG6Pairs_half_square_le N z b (fun r s => h (r * s))
-    (fun r s => congrArg h (Nat.mul_comm r s))
-  simpa only [pow_two] using hdiag
-
-/-- The totient is evaluated at the full product, including the square diagonal.
-The original closed-prime carrier, hence its coprimality screen, is unchanged. -/
-theorem goldbachG6Pairs_totient_product_sum (N : ℕ) (z b : ℝ) (h : ℕ → ℝ) :
-    2 * (∑ a ∈ goldbachG6Pairs N z b,
-      h (a.1 * a.2) / (Nat.totient (a.1 * a.2) : ℝ)) =
-      (∑ r ∈ goldbachClosedPrimes N z b,
-        ∑ s ∈ goldbachClosedPrimes N z b, h (r * s) / (Nat.totient (r * s) : ℝ)) +
-      ∑ r ∈ goldbachClosedPrimes N z b, h (r ^ 2) / (Nat.totient (r ^ 2) : ℝ) :=
-  goldbachG6Pairs_product_sum N z b (fun m => h m / (Nat.totient m : ℝ))
-
-/-- No off-diagonal sign condition or false totient factorization is needed. -/
-theorem goldbachG6Pairs_totient_product_half_square_le (N : ℕ) (z b : ℝ) (h : ℕ → ℝ)
-    (hdiag : ∀ r ∈ goldbachClosedPrimes N z b, 0 ≤ h (r ^ 2)) :
-    (1 / 2 : ℝ) * (∑ r ∈ goldbachClosedPrimes N z b,
-      ∑ s ∈ goldbachClosedPrimes N z b, h (r * s) / (Nat.totient (r * s) : ℝ)) ≤
-      ∑ a ∈ goldbachG6Pairs N z b,
-        h (a.1 * a.2) / (Nat.totient (a.1 * a.2) : ℝ) := by
-  apply goldbachG6Pairs_product_half_square_le N z b (fun m => h m / (Nat.totient m : ℝ))
-  intro r hr
-  exact div_nonneg (hdiag r hr) (Nat.cast_nonneg _)
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

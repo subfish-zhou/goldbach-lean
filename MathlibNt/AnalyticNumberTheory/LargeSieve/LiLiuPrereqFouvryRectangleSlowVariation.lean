@@ -235,11 +235,6 @@ theorem variation_normalizedWeight_div_le
   · intro i
     exact (div_le_iff₀ (hR i)).mpr (hhi i)
 
-theorem variation_singleton (x : Fin 5 → ℕ) (w : (Fin 5 → ℕ) → ℂ) :
-    variation x x w = ‖w x‖ := by
-  have h := reconstruct x x w x (by simp)
-  simp only [box_self, Finset.sum_singleton] at h
-  simp [variation, h]
 
 theorem variation_eq_zero_of_box_empty (lo hi : Fin 5 → ℕ)
     (w : (Fin 5 → ℕ) → ℂ) (h : box lo hi = ∅) :
@@ -264,54 +259,5 @@ theorem variation_normalizedWeight_div_le_all
     have hV0 : 0 ≤ V := (add_nonneg (abs_nonneg A) (abs_nonneg B)).trans hV
     positivity
 
-/-- Complete smooth-weight removal on an arbitrary finite carrier. All repeated
-coordinates, signs, support masks, and arithmetic phases remain in `a`. -/
-theorem norm_coordinate_sum_normalizedWeight_le {α : Type*}
-    (A B V : ℝ) (hV : |A| + |B| ≤ V) (lo hi : Fin 5 → ℕ)
-    (hbox : ∀ i, lo i ≤ hi i) (g : Fin 5 → ℕ → ℝ)
-    (hg : ∀ i, Monotone (g i))
-    (hlo : ∀ i, 1 ≤ g i (lo i)) (hhi : ∀ i, g i (hi i) ≤ 2)
-    (s : Finset α) (coord : α → Fin 5 → ℕ) (a : α → ℂ)
-    (hcoord : ∀ t ∈ s, coord t ∈ box lo hi) :
-    ‖∑ t ∈ s, SlowFactor.normalizedWeight A B (gridPoint g (coord t)) * a t‖ ≤
-      (2048 * (6 + 2 * Real.pi) ^ 5 * (1 + V) ^ 5) *
-        coordinatePrefixMax lo hi s coord a :=
-  (norm_coordinate_sum_le_variation_mul_max lo hi s coord
-    (fun u => SlowFactor.normalizedWeight A B (gridPoint g u)) a hcoord).trans
-      (mul_le_mul_of_nonneg_right
-        (variation_normalizedWeight_le A B V hV lo hi hbox g hg hlo hhi)
-        (coordinatePrefixMax_nonneg lo hi s coord a))
-
-/-- Dyadic-reference version of complete smooth-weight removal. -/
-theorem norm_coordinate_sum_normalizedWeight_div_le {α : Type*}
-    (A B V : ℝ) (hV : |A| + |B| ≤ V) (lo hi : Fin 5 → ℕ)
-    (hbox : ∀ i, lo i ≤ hi i) (R : Fin 5 → ℝ) (hR : ∀ i, 0 < R i)
-    (hlo : ∀ i, R i ≤ (lo i : ℝ)) (hhi : ∀ i, (hi i : ℝ) ≤ 2 * R i)
-    (s : Finset α) (coord : α → Fin 5 → ℕ) (a : α → ℂ)
-    (hcoord : ∀ t ∈ s, coord t ∈ box lo hi) :
-    ‖∑ t ∈ s, SlowFactor.normalizedWeight A B (fun i => (coord t i : ℝ) / R i) * a t‖ ≤
-      (2048 * (6 + 2 * Real.pi) ^ 5 * (1 + V) ^ 5) *
-        coordinatePrefixMax lo hi s coord a :=
-  (norm_coordinate_sum_le_variation_mul_max lo hi s coord
-    (fun u => SlowFactor.normalizedWeight A B (fun i => (u i : ℝ) / R i)) a hcoord).trans
-      (mul_le_mul_of_nonneg_right
-        (variation_normalizedWeight_div_le A B V hV lo hi hbox R hR hlo hhi)
-        (coordinatePrefixMax_nonneg lo hi s coord a))
-
-/-- Empty-box-safe finite-carrier version of the concrete weight-removal theorem. -/
-theorem norm_coordinate_sum_normalizedWeight_div_le_all {α : Type*}
-    (A B V : ℝ) (hV : |A| + |B| ≤ V) (lo hi : Fin 5 → ℕ)
-    (R : Fin 5 → ℝ) (hR : ∀ i, 0 < R i)
-    (hlo : ∀ i, R i ≤ (lo i : ℝ)) (hhi : ∀ i, (hi i : ℝ) ≤ 2 * R i)
-    (s : Finset α) (coord : α → Fin 5 → ℕ) (a : α → ℂ)
-    (hcoord : ∀ t ∈ s, coord t ∈ box lo hi) :
-    ‖∑ t ∈ s, SlowFactor.normalizedWeight A B (fun i => (coord t i : ℝ) / R i) * a t‖ ≤
-      (2048 * (6 + 2 * Real.pi) ^ 5 * (1 + V) ^ 5) *
-        coordinatePrefixMax lo hi s coord a :=
-  (norm_coordinate_sum_le_variation_mul_max lo hi s coord
-    (fun u => SlowFactor.normalizedWeight A B (fun i => (u i : ℝ) / R i)) a hcoord).trans
-      (mul_le_mul_of_nonneg_right
-        (variation_normalizedWeight_div_le_all A B V hV lo hi R hR hlo hhi)
-        (coordinatePrefixMax_nonneg lo hi s coord a))
 
 end LiLiuPrereqFouvry.Rectangle

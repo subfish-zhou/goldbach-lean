@@ -53,14 +53,6 @@ theorem tendsto_coprimePrimeReciprocalLogRectangle {a b c d : ℝ}
     (tendsto_coprimePrimeReciprocalLogInterval ha hab).mul
       (tendsto_coprimePrimeReciprocalLogInterval hc hcd)
 
-/-- The literal filtered original carrier, without a carrier-identification premise. -/
-theorem tendsto_sum_filter_coprime_primeLogRectanglePairs {a b c d : ℝ}
-    (ha : 0 < a) (hab : a < b) (hc : 0 < c) (hcd : c < d) :
-    Tendsto (fun N : ℕ =>
-      ∑ p ∈ (primeLogRectanglePairs N a b c d).filter
-        (fun p => Nat.Coprime (p.1 * p.2) N), 1 / ((p.1 : ℝ) * p.2)) atTop
-      (nhds (logarithmicRectangleMass a b c d)) :=
-  tendsto_coprimePrimeReciprocalLogRectangle ha hab hc hcd
 
 variable {ι : Type*}
 

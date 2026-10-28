@@ -1,4 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseI1423SigmaCubedDecay
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
 
 open Filter Topology Asymptotics

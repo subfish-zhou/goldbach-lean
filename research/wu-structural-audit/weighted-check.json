@@ -1,0 +1,28 @@
+{
+  "matrix_all_entries_strictly_positive": true,
+  "row_sums": [
+    "369/1000",
+    "363/1000",
+    "179/500",
+    "89/250",
+    "361/1000",
+    "359/1000",
+    "363/1000",
+    "93/250",
+    "199/500"
+  ],
+  "maximum_row_sum": "199/500",
+  "hypothetical_removed_modules": [
+    "WR2XiCandidateBaseCount",
+    "WR2XiCandidateCount",
+    "WR2XiContinuousMonotone"
+  ],
+  "hypothetical_removed_physical_lines": 125,
+  "remaining_W17_importers": [
+    "W17AcceptedBudget",
+    "W17AcceptedCount",
+    "W17JointRecoveryRoot",
+    "W17JointSymbolicActual",
+    "WE10FourBudget"
+  ]
+}

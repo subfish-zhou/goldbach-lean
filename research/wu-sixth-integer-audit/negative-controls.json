@@ -1,0 +1,36 @@
+{
+  "validation_scope": "Python audit rejection paths only; no Lean or production writes",
+  "cases": [
+    {
+      "case": "shared_horner",
+      "rejected": true,
+      "reason": "Shared Horner changed from the accepted C baseline"
+    },
+    {
+      "case": "grid_formula",
+      "rejected": true,
+      "reason": "Lean formula changed: gridNumerator"
+    },
+    {
+      "case": "quotient_guard",
+      "rejected": true,
+      "reason": "Lean formula changed: paymentNumerator"
+    },
+    {
+      "case": "consumer_branch",
+      "rejected": true,
+      "reason": "Lean formula changed: lowerNumerator"
+    },
+    {
+      "case": "block_sum_target",
+      "rejected": true,
+      "reason": "lower block target mismatch"
+    },
+    {
+      "case": "total_target",
+      "rejected": true,
+      "reason": "upper total statement changed"
+    }
+  ],
+  "all_rejected": true
+}

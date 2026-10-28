@@ -1,9 +1,7 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper
 import MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachS3RatioGeometry
 import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
 import MathlibNt.SieveTheory.LiLiuGoldbachS3LiEulerUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachUpperDensitySix
 
 open scoped BigOperators
 open Filter
@@ -26,19 +24,6 @@ theorem goldbachS3_primeKernelIntegral_nonneg
   exact div_nonneg ((by norm_num : (0 : ℝ) ≤ 1).trans
     (goldbach_one_le_suzukiUpperFactor hs)) (by linarith [hu.1])
 
-private theorem S3NormalizedUpper_li_nonneg
-    {N : ℕ} {ε : ℝ} (hN : 4 ≤ N) (hεu : ε < (2 : ℝ) / 15) :
-    0 ≤ trueLogarithmicIntegral (goldbachS1Endpoint N ε) := by
-  have hNR : (4 : ℝ) ≤ N := by exact_mod_cast hN
-  have hx : 3 ≤ (1 - ε) * (N : ℝ) := by nlinarith
-  have hc : 3 ≤ Nat.ceil ((1 - ε) * (N : ℝ)) := by
-    exact_mod_cast hx.trans (Nat.le_ceil ((1 - ε) * (N : ℝ)))
-  have hm : 2 ≤ goldbachS1Endpoint N ε := by
-    unfold goldbachS1Endpoint
-    omega
-  exact LiuWeight.liuLogarithmicIntegral_nonneg (2 / Real.log 2)
-    (div_nonneg (by norm_num) (Real.log_pos (by norm_num)).le)
-    (by exact_mod_cast hm)
 
 private theorem S3NormalizedUpper_product_nonneg
     (N : ℕ) (hEven : Even N) (ε z : ℝ) :
@@ -238,7 +223,7 @@ theorem goldbachS3_normalized_upper (β δ ε : ℝ)
     (goldbachS1BoundingSieve N hEven ε ((N : ℝ) ^ (4 / 53 : ℝ)))
   let scale : ℝ := SingularSeries.liuSingularSeries N * (N : ℝ) /
     Real.log (N : ℝ) ^ 2
-  have hX : 0 ≤ X := S3NormalizedUpper_li_nonneg hN4 hεu
+  have hX : 0 ≤ X := goldbachS1Endpoint_li_nonneg hN4 hεu
   have hscale : 0 ≤ scale :=
     div_nonneg (mul_nonneg (SingularSeries.liuSingularSeries_pos N).le
       (Nat.cast_nonneg N)) (sq_nonneg _)

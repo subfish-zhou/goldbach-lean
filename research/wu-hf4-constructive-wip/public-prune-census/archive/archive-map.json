@@ -1,0 +1,720 @@
+{
+  "status": "ARCHIVED_ACTUAL_CENSUS_EVIDENCE_NOT_PUBLIC_RETIREMENT_ACCEPTANCE",
+  "executed_before_structural_adoption": true,
+  "actual_successful_processes": 21,
+  "scanned_modules": 4151,
+  "candidates_with_zero_direct_incoming_references": 2096,
+  "provisional_code_lines_only": 31152,
+  "files": {
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/00/Probe.lean",
+      "sha256": "e979f0dff73614bdf61328f349b85ce997fc96929dcd794140091dd0a3c5a13b"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/00/Probe.olean",
+      "sha256": "b8618422bc1636a1b9e29f35a4ff69bcc7d40c11df5ffe0a55ffc1437bf23a2e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/compile.log": {
+      "archive": "public-constant-use-census/runtime/00/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/invocation.json": {
+      "archive": "public-constant-use-census/runtime/00/invocation.json",
+      "sha256": "4fb322bead580f387dcdcaac478abb33648edc85683f5e51382b71abffd8df02"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/resources.txt": {
+      "archive": "public-constant-use-census/runtime/00/resources.txt",
+      "sha256": "bbb3c05d36538e01d1714c7074c7882273c4d4ecb3bb0b162562dd80b4baf67d"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/result.json": {
+      "archive": "public-constant-use-census/runtime/00/result.json",
+      "sha256": "5948e608b84a1b23a4a2ad823cb2f6f923c5f962cf8fbd51a3b74931c6c84e5f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/00/uses.json": {
+      "archive": "public-constant-use-census/runtime/00/uses.json",
+      "sha256": "eb8009a9ce56e4f1d3129edba412db4c7d0389fc49f470bf17054c29eb450a56"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/01/Probe.lean",
+      "sha256": "e0d43eef7de43d7a2f9a7f5ab23b3e4c383f65b3c31e8eee9c2ee424be7e9d79"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/01/Probe.olean",
+      "sha256": "621f268f41f07070c553b5b97e118a23529837f0f73acae355250c9c06c09294"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/compile.log": {
+      "archive": "public-constant-use-census/runtime/01/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/invocation.json": {
+      "archive": "public-constant-use-census/runtime/01/invocation.json",
+      "sha256": "820334d2f1ae31791ea1b82b8e9b11039ab4c9b49dea5586b6d2cf76e2c12f37"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/resources.txt": {
+      "archive": "public-constant-use-census/runtime/01/resources.txt",
+      "sha256": "bab05f03c976c0cca3ca018f5c31cbd452fb294de93b60caf356b82241bf2ca4"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/result.json": {
+      "archive": "public-constant-use-census/runtime/01/result.json",
+      "sha256": "acfc59aa44b3d4bd453ecb96f80c0639f91799dac3fe94b268d54d38b01bfbe0"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/01/uses.json": {
+      "archive": "public-constant-use-census/runtime/01/uses.json",
+      "sha256": "a1fd53e6cef6724f3fafd8e852b33e23c02668a563d246f3270f84080cf37956"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/02/Probe.lean",
+      "sha256": "9da6d2fc26dac76a8bd7b6bd59a1af7f5143aa8c09d769c7f95422990362962f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/02/Probe.olean",
+      "sha256": "b42dfb4f4a8ffec6a6e856f6fb581faf742feafa1be7bb018addd75ed99e81b2"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/compile.log": {
+      "archive": "public-constant-use-census/runtime/02/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/invocation.json": {
+      "archive": "public-constant-use-census/runtime/02/invocation.json",
+      "sha256": "d6feae1c66209ef0766c167baf94b4e17147a931b7f811053f16b53cf6247235"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/resources.txt": {
+      "archive": "public-constant-use-census/runtime/02/resources.txt",
+      "sha256": "5778e605bfff598e1d735d93c4650a2794df4f0fda1ce55ad8e9c13919a6a175"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/result.json": {
+      "archive": "public-constant-use-census/runtime/02/result.json",
+      "sha256": "72de930c92af40c7bfde91764eceac7572b66ee86466d575d8b616475eb89c14"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/02/uses.json": {
+      "archive": "public-constant-use-census/runtime/02/uses.json",
+      "sha256": "5ee73b6c33cae3162b34736dc30958759cec9b55f73567f8c871435c604d2596"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/03/Probe.lean",
+      "sha256": "35a873e83dff543bb8d82c69e98feb809a78cbcb5fe6bc6bde3aec48aee3a680"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/03/Probe.olean",
+      "sha256": "54266debd2b860a6e75b2b0a4f3b5e952777b0dd8bec036933e93171a97859f7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/compile.log": {
+      "archive": "public-constant-use-census/runtime/03/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/invocation.json": {
+      "archive": "public-constant-use-census/runtime/03/invocation.json",
+      "sha256": "2204fce26b701ab8173f65c2a149427f9c576529e0c31388400f6e7b987d5197"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/resources.txt": {
+      "archive": "public-constant-use-census/runtime/03/resources.txt",
+      "sha256": "df63cd808ff79b54974be9325fd4f816188abfb94878503eb72767c8f00a0e1f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/result.json": {
+      "archive": "public-constant-use-census/runtime/03/result.json",
+      "sha256": "35c23e8fbcb7f9f5bd3dacab25911a68af3bc8274975ba87215beb112020b409"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/03/uses.json": {
+      "archive": "public-constant-use-census/runtime/03/uses.json",
+      "sha256": "f4cf5aa683deb51467925b774c9abf364339f346f7471dfe2abb60e20caa83b0"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/04/Probe.lean",
+      "sha256": "0f70497c32d82be4f5178606bca71d2bc75f517dd366d1ae234dbc69be500094"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/04/Probe.olean",
+      "sha256": "7dff0f990555278970876bc6887ae94bf6772edb3ac531ba73403c620acdab60"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/compile.log": {
+      "archive": "public-constant-use-census/runtime/04/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/invocation.json": {
+      "archive": "public-constant-use-census/runtime/04/invocation.json",
+      "sha256": "f50d3c83cc47e155d5cd875e1e00f17056716439f4438827d269c5ddd3231367"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/resources.txt": {
+      "archive": "public-constant-use-census/runtime/04/resources.txt",
+      "sha256": "b868a2ba64f38ea1c2e7f272e5a0988def08f3995a318c85a505b8ee68559783"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/result.json": {
+      "archive": "public-constant-use-census/runtime/04/result.json",
+      "sha256": "2d3b8c630b7792d0babe10e4b0d2aa626e3573e9d9bb74d887f288d0f6713f82"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/04/uses.json": {
+      "archive": "public-constant-use-census/runtime/04/uses.json",
+      "sha256": "940c981a4720cc37d3f12860be11881fb49caa74ec41dd264bfbc4b9f1bb79e2"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/05/Probe.lean",
+      "sha256": "d4c2d2e14df8adeaaa1b04a6309ca4e65c29db2d2cddd8a3a0b1bae50539d5f9"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/05/Probe.olean",
+      "sha256": "74f2d7cf9b26afea734cd62d7276e8ee9757d87db47b06781eb7a3f7e1e273c6"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/compile.log": {
+      "archive": "public-constant-use-census/runtime/05/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/invocation.json": {
+      "archive": "public-constant-use-census/runtime/05/invocation.json",
+      "sha256": "49ac8cc03822ade2db2d0ccd8a20b2259b76292f58b989ca4714724a48fec227"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/resources.txt": {
+      "archive": "public-constant-use-census/runtime/05/resources.txt",
+      "sha256": "7cf8995f6ab06844095a89c5fa3b97237077d7d185d9c713599cf0511216ba01"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/result.json": {
+      "archive": "public-constant-use-census/runtime/05/result.json",
+      "sha256": "2c0da1dabfb76e001306d4c3425b3dbd79c2567b5de6d654d669d3fe37bd7fce"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/05/uses.json": {
+      "archive": "public-constant-use-census/runtime/05/uses.json",
+      "sha256": "a66867e294ad6f0b1a7555a4aa1a4e3ba754b18dea27b8928ad15b189855f629"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/06/Probe.lean",
+      "sha256": "155db43437051aa21d2cdc67d3e08a71f505c78396eb80314de0d012549853b2"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/06/Probe.olean",
+      "sha256": "8fb496eb7caa206e02305c947c0915a44fe2347c76c6118ecf28148a064c800f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/compile.log": {
+      "archive": "public-constant-use-census/runtime/06/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/invocation.json": {
+      "archive": "public-constant-use-census/runtime/06/invocation.json",
+      "sha256": "c78e2f4dd86145d2415343e86a68b0a3cb9b281f795a145307fc07756fd30c41"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/resources.txt": {
+      "archive": "public-constant-use-census/runtime/06/resources.txt",
+      "sha256": "8e920ce1cf2b8b2a1fd24c14b20c3658b6edd8ecfb979c59dd8467ed4e3103dc"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/result.json": {
+      "archive": "public-constant-use-census/runtime/06/result.json",
+      "sha256": "74456d9ea32c3534d80b62cb5065b6cc87b5695f722fd95ea02fb8edc8d3f107"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/06/uses.json": {
+      "archive": "public-constant-use-census/runtime/06/uses.json",
+      "sha256": "ecf60c0a40778a487233aa238448c835202178a8989dd6479851333b9ace2246"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/07/Probe.lean",
+      "sha256": "73a434addfd11d50960f4791e8f5d24ff3666dab4a0389fce5e378777006ed17"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/07/Probe.olean",
+      "sha256": "dd2c73a3d0adb3561019f1297e656f5053766b76fae8479f0e3099b184f29bff"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/compile.log": {
+      "archive": "public-constant-use-census/runtime/07/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/invocation.json": {
+      "archive": "public-constant-use-census/runtime/07/invocation.json",
+      "sha256": "5c4a237a608a690915069248ebaaeb26bc26f451fc28bb048b22902d6e02d784"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/resources.txt": {
+      "archive": "public-constant-use-census/runtime/07/resources.txt",
+      "sha256": "1bdec4f38e289b7c54b28472f4ed36b3e02cc31d2dc58e5919b56d0fa76c3361"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/result.json": {
+      "archive": "public-constant-use-census/runtime/07/result.json",
+      "sha256": "fb02327f2e1eab3ce71b49eaac7313fb312ed84f5155363cd68a496caff8b628"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/07/uses.json": {
+      "archive": "public-constant-use-census/runtime/07/uses.json",
+      "sha256": "a68ecd3793ed4637e8f86dbde6c2035b3145f7142fdd1a3e4de3bde18f49eefe"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/08/Probe.lean",
+      "sha256": "0b4e14907ff84b8b79e7f43da0f8be78a520be5b4b2385fff617ac7e2f678299"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/08/Probe.olean",
+      "sha256": "8acaef0456fd26e35023fd18d788e1b37ee0df6a66ec1864d0c1e61920075e7d"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/compile.log": {
+      "archive": "public-constant-use-census/runtime/08/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/invocation.json": {
+      "archive": "public-constant-use-census/runtime/08/invocation.json",
+      "sha256": "ca83759b0e038de56a9b4a6b4ea6028a3b7b981a26f3edc83467ec1c7722bb71"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/resources.txt": {
+      "archive": "public-constant-use-census/runtime/08/resources.txt",
+      "sha256": "fc6e3701fc1ae35549b454ce6636645e121d800691756d15528f9a3e30755812"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/result.json": {
+      "archive": "public-constant-use-census/runtime/08/result.json",
+      "sha256": "922920587afcbcad5ef955f759a4bb7a8a4d406dba7b0e849ace3a30d965082f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/08/uses.json": {
+      "archive": "public-constant-use-census/runtime/08/uses.json",
+      "sha256": "bff6f5006b44a74d18dd33c718b63714d5447b98d82915b2f135c33997ef8d2f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/09/Probe.lean",
+      "sha256": "e9781372543d728204d07faf93acc75352c133be6cbcbceea4dab1c44b46e6c3"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/09/Probe.olean",
+      "sha256": "7eddb257e05cd645eba75c46dea77f77d63cf98343272d95d902150c64363de0"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/compile.log": {
+      "archive": "public-constant-use-census/runtime/09/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/invocation.json": {
+      "archive": "public-constant-use-census/runtime/09/invocation.json",
+      "sha256": "5098dadd2545c7e3e53127fcf29225e26a4c14014bc65f7ce4eabf7544483d74"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/resources.txt": {
+      "archive": "public-constant-use-census/runtime/09/resources.txt",
+      "sha256": "e5f74424a26d812d026f3e991caf81fd08fc5241a07722a8f2cb4ff53f1154b3"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/result.json": {
+      "archive": "public-constant-use-census/runtime/09/result.json",
+      "sha256": "0ac437ae37e6e84bbd178482d363eb93ad53f92c0b8641fa18118e55d6ac0d65"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/09/uses.json": {
+      "archive": "public-constant-use-census/runtime/09/uses.json",
+      "sha256": "2374fa94afeb19d1d8343fd64bef6765f337a1f0f80027282077ef15f19cc4c6"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/10/Probe.lean",
+      "sha256": "81ff8e940480de8f33ac907706d32a9573ecbb20deefd4ee29afa2448670d690"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/10/Probe.olean",
+      "sha256": "4149de8199bc1e24428d7b51e5a990a1562fe844e39fb2ee16f594738e74d76c"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/compile.log": {
+      "archive": "public-constant-use-census/runtime/10/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/invocation.json": {
+      "archive": "public-constant-use-census/runtime/10/invocation.json",
+      "sha256": "f1d78775b079c0934279a08ca1fb7e48f6d5a23caf4aad99eca238ada30e46a1"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/resources.txt": {
+      "archive": "public-constant-use-census/runtime/10/resources.txt",
+      "sha256": "0010d7a7742782949104be0d9b5389ded4dafd5364f60d69c537418b7fe9bdc6"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/result.json": {
+      "archive": "public-constant-use-census/runtime/10/result.json",
+      "sha256": "f6f9a908275d906884f9bcc2cfcb507dbf6b7389a6c784bee455903af4cfa7c3"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/10/uses.json": {
+      "archive": "public-constant-use-census/runtime/10/uses.json",
+      "sha256": "629e353bb140d78a460514ded6e1f70064864736bfba22faba14415161a31655"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/11/Probe.lean",
+      "sha256": "0c693700adce83b076fb67a858ccbde25cd14cc98a48e547dedb411b3df69432"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/11/Probe.olean",
+      "sha256": "d05afb9c51993019ef3c0a2c159037bbdb1b47c8832844aee586ec079ca5df94"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/compile.log": {
+      "archive": "public-constant-use-census/runtime/11/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/invocation.json": {
+      "archive": "public-constant-use-census/runtime/11/invocation.json",
+      "sha256": "e0ce6838daf741e46f24941cbd91eb9b9d1dd3ff4062a81d3a770bdc7002a131"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/resources.txt": {
+      "archive": "public-constant-use-census/runtime/11/resources.txt",
+      "sha256": "0ef854d788195f7452c3c34243a1f2b5cc02b0bcafd8dfc054c622eeae37aeee"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/result.json": {
+      "archive": "public-constant-use-census/runtime/11/result.json",
+      "sha256": "55137bb0ccddc447264d3b6ab90c951acf204ea12824b4292f9f04faf9db36e4"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/11/uses.json": {
+      "archive": "public-constant-use-census/runtime/11/uses.json",
+      "sha256": "ef7c1855f080ef0a842e13ce2460c4dc3c1e710cf229d40aadf8b456198de5ac"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/12/Probe.lean",
+      "sha256": "e352f78bacd5de4376943f9a2193c949c0de263db77847c62961deed0fd0473a"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/12/Probe.olean",
+      "sha256": "0a2e4c59a66f77fc455d5e4ca757f87cfae7f0e72c1a514dc793f2be2709ce2a"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/compile.log": {
+      "archive": "public-constant-use-census/runtime/12/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/invocation.json": {
+      "archive": "public-constant-use-census/runtime/12/invocation.json",
+      "sha256": "f6efda3d3e7611f89ce4a1f51bf3db7ccaf241f85cce4ef10a7c07d19b7d8fa6"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/resources.txt": {
+      "archive": "public-constant-use-census/runtime/12/resources.txt",
+      "sha256": "23afb4447a16b6d3630195a17d07b1de12847293a23b5edad8effeec31d77c02"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/result.json": {
+      "archive": "public-constant-use-census/runtime/12/result.json",
+      "sha256": "cfe271fc0e5fc95a3c4a331c2f99bebd0bf0047742b4ef54f89c9a5640f4f451"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/12/uses.json": {
+      "archive": "public-constant-use-census/runtime/12/uses.json",
+      "sha256": "14755e792973545e584d42015f27c03afe08180eba5188beaba96dfc10449fb4"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/13/Probe.lean",
+      "sha256": "2ddbe0286ae8a038c52cf4c7db586468f422b6a58765275aaad79b8155009ee7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/13/Probe.olean",
+      "sha256": "05827cd3e44798b2e7d4d9ad0fa734b3cf0a38cd8dbf9280c3cfa919d283f482"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/compile.log": {
+      "archive": "public-constant-use-census/runtime/13/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/invocation.json": {
+      "archive": "public-constant-use-census/runtime/13/invocation.json",
+      "sha256": "91a05e245452e9f2fda549ca1deb6747a8f12cd97cce66596744fead393d4cb0"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/resources.txt": {
+      "archive": "public-constant-use-census/runtime/13/resources.txt",
+      "sha256": "40d3fe1cd3081798ab6ff354e37e91e12cbb2aca8c3ca721ca041c5f3d8fb727"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/result.json": {
+      "archive": "public-constant-use-census/runtime/13/result.json",
+      "sha256": "a3c615a5c44cfea11d1d486336592edef77655d04849ba8fdf763c57631133af"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/13/uses.json": {
+      "archive": "public-constant-use-census/runtime/13/uses.json",
+      "sha256": "1d5a36b6d5fd2202d2012df4e4341e8252db8cc2101f0c1a87a569827ed8ef8a"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/14/Probe.lean",
+      "sha256": "63cc2438a7f188a18d9c42b88e613494ed898502b976330832f82509cbc53f2e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/14/Probe.olean",
+      "sha256": "6dbeb0bf7dd4e25fee9bf692f1a223588e60087f6b64340851e7a76c2d909e00"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/compile.log": {
+      "archive": "public-constant-use-census/runtime/14/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/invocation.json": {
+      "archive": "public-constant-use-census/runtime/14/invocation.json",
+      "sha256": "fdf4c1e55a0a451f3ac66e3c5b59e2656863173cdbf48233ab4688acf66a9aa7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/resources.txt": {
+      "archive": "public-constant-use-census/runtime/14/resources.txt",
+      "sha256": "9df70fd60eae9519edda4c15dbeabea8d909b049fb08f7c997aa55ad86c2eeda"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/result.json": {
+      "archive": "public-constant-use-census/runtime/14/result.json",
+      "sha256": "d7a1ef0a47ef75a89d8abb891d292c9f6dff8658c36569104e4b52ef8644dc01"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/14/uses.json": {
+      "archive": "public-constant-use-census/runtime/14/uses.json",
+      "sha256": "e4dde13ea202930eb75677856c4c3ad704cabca258a1c3836b0c0be0e15b09c7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/15/Probe.lean",
+      "sha256": "208a8e503206a8ce45f20c014651116364049dae44c7bd7e820a5c0133372555"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/15/Probe.olean",
+      "sha256": "65e79e62a08edf2753b5c699860d417cc54561ac0287183eb4a2553681a3a65f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/compile.log": {
+      "archive": "public-constant-use-census/runtime/15/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/invocation.json": {
+      "archive": "public-constant-use-census/runtime/15/invocation.json",
+      "sha256": "758789a39968732b860b1bc4f450dccd38d87a16602770a714944ac77ddda2f7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/resources.txt": {
+      "archive": "public-constant-use-census/runtime/15/resources.txt",
+      "sha256": "bb7691875cb73dc634eb35d7a67e4678e3e2f240cb4ea67f5ee9ff2f0b3299ef"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/result.json": {
+      "archive": "public-constant-use-census/runtime/15/result.json",
+      "sha256": "777011de0fd0e7bb1fb1ceb6fe49a42bcdf00bd46d82580816a4b90dbb5094aa"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/15/uses.json": {
+      "archive": "public-constant-use-census/runtime/15/uses.json",
+      "sha256": "64df2278f6bffae27f52db7bd28d5863e175b3b3281e38eea70b417d7408f69b"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/16/Probe.lean",
+      "sha256": "5bfdd7169f55c24eb98cd511563dd8edfcb00b77c4539b5a1858961b97fe7837"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/16/Probe.olean",
+      "sha256": "b5924d8f928225b7f2a640ff8a6d8acd98c1398cbb1f9edca6f29fd964bb3fc7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/compile.log": {
+      "archive": "public-constant-use-census/runtime/16/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/invocation.json": {
+      "archive": "public-constant-use-census/runtime/16/invocation.json",
+      "sha256": "1d63b792ec2ecdd7da608a4950c2bd384138134d7893113872ede1aa4e8f7f05"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/resources.txt": {
+      "archive": "public-constant-use-census/runtime/16/resources.txt",
+      "sha256": "e9d7f0ede0ee62470af70eafd8babaeae24ee59585576d295494810681bc7a01"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/result.json": {
+      "archive": "public-constant-use-census/runtime/16/result.json",
+      "sha256": "ee7cbccbbe74f6e30815bf7e8a68c96a4f891eaa32a550c3ac6e7280d0e563e6"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/16/uses.json": {
+      "archive": "public-constant-use-census/runtime/16/uses.json",
+      "sha256": "421d6a5130e7e177942589abcbc3f73e16d84d355870718e189f0641dff55b8f"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/17/Probe.lean",
+      "sha256": "4b7c7a578a1bc8046dfcf1caf4a27e960f029178f717e5a590472219044c17d1"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/17/Probe.olean",
+      "sha256": "3265da221a49fc2ec4638a42082c5a26db111e6dfc51fb870bb8c427f336ea1e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/compile.log": {
+      "archive": "public-constant-use-census/runtime/17/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/invocation.json": {
+      "archive": "public-constant-use-census/runtime/17/invocation.json",
+      "sha256": "9636f99e731dbd9e55f5bb01c8926aa178044c87ec7891391017447449d3f259"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/resources.txt": {
+      "archive": "public-constant-use-census/runtime/17/resources.txt",
+      "sha256": "bfc52b7e335eefbcc63cac95785391809a6dcadf19896c9c7b11ed2e93e2bf5e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/result.json": {
+      "archive": "public-constant-use-census/runtime/17/result.json",
+      "sha256": "2592c0bfb2078dc1a7180c392f1aa650b4fe11b663fa32925927a967e96a3886"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/17/uses.json": {
+      "archive": "public-constant-use-census/runtime/17/uses.json",
+      "sha256": "3c5b05b2b0d38f190b28049781fe96a4f63ef97c2a4ba30377ac8e39632c7933"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/18/Probe.lean",
+      "sha256": "1418b520cf7dd2a6c1a33cef63be29f51c525f727af3c59d1ce9e54829e21461"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/18/Probe.olean",
+      "sha256": "d29601344b7ca0b5791e506b9cbf4fe88831a23bc3e92dd472d1a2bbe186ee12"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/compile.log": {
+      "archive": "public-constant-use-census/runtime/18/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/invocation.json": {
+      "archive": "public-constant-use-census/runtime/18/invocation.json",
+      "sha256": "f2e6fe390791b285ec9a81f58d02f512e6f61b911457e2cf11846f37f45e8f31"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/resources.txt": {
+      "archive": "public-constant-use-census/runtime/18/resources.txt",
+      "sha256": "30454795a20cca012ad49c41d8fcdc1b65f2902f9d2f85c549e1bfad708a0978"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/result.json": {
+      "archive": "public-constant-use-census/runtime/18/result.json",
+      "sha256": "2efac9118e02b3e9f3fc6c7c749f8768b899876d8a713824a2f70b2877fb51b2"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/18/uses.json": {
+      "archive": "public-constant-use-census/runtime/18/uses.json",
+      "sha256": "77f75f16b96daa5e574eecd7b27f1fe1bdfadf36a2ef602f24e42bb0752b8e27"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/19/Probe.lean",
+      "sha256": "86626cc3bef5983cfeb9fb002c411df15d588e6525f9abe7c4002650fd3fe62d"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/19/Probe.olean",
+      "sha256": "2173340c6425d11d32fa4c63d1e74be41372f4b300a70f8058fa1ad350f3f27d"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/compile.log": {
+      "archive": "public-constant-use-census/runtime/19/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/invocation.json": {
+      "archive": "public-constant-use-census/runtime/19/invocation.json",
+      "sha256": "1118e69b2882fa4598ad62911a8edc24bbd7625af76557605b5f843a0cb73701"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/resources.txt": {
+      "archive": "public-constant-use-census/runtime/19/resources.txt",
+      "sha256": "bed243d21ebee4c20dfc40a0b5deacf7310e552029f92d6e21c60acf47fcd6f3"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/result.json": {
+      "archive": "public-constant-use-census/runtime/19/result.json",
+      "sha256": "69822e6a663086e3dca04f0ee41669f974b0cb04e0b4d4c00ea91fe263adf766"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/19/uses.json": {
+      "archive": "public-constant-use-census/runtime/19/uses.json",
+      "sha256": "879d87edf7bfd9ab98cf774449d2999ff976c415b0671df33a4724f5e80d6c7b"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/Probe.lean": {
+      "archive": "public-constant-use-census/runtime/20/Probe.lean",
+      "sha256": "6cebf2fab2b26cd543f4f6c55823615fa934fc723b0b5aa7f92395486bb7439e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/Probe.olean": {
+      "archive": "public-constant-use-census/runtime/20/Probe.olean",
+      "sha256": "6f92fa6f134320bdf1c8da7525d538f2209ef12ea41f95db9ac84d674e8df624"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/compile.log": {
+      "archive": "public-constant-use-census/runtime/20/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/invocation.json": {
+      "archive": "public-constant-use-census/runtime/20/invocation.json",
+      "sha256": "1deae21d948b3a553e55b3debb3c32b8407fb82c18ff81cc51be21fb77a9344e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/resources.txt": {
+      "archive": "public-constant-use-census/runtime/20/resources.txt",
+      "sha256": "2b24f6e8db45b5d412d73e3cb84e11474a978dfa533aada50c1c67f2d109650e"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/result.json": {
+      "archive": "public-constant-use-census/runtime/20/result.json",
+      "sha256": "d77d71459cf09c8cb875234f67147a85badb970d74797e36535ea8eb73f515f9"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/20/uses.json": {
+      "archive": "public-constant-use-census/runtime/20/uses.json",
+      "sha256": "e9a234f6e2648db75011e1deefe24b92e8b9f6de034219710cd316e3f39c1026"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/input-index.json": {
+      "archive": "public-constant-use-census/runtime/input-index.json",
+      "sha256": "19b41fa6697568905ff34499bd908b8bb71e0d88048bf39db8b74296f4e2c2d0"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/own-process.json": {
+      "archive": "public-constant-use-census/runtime/own-process.json",
+      "sha256": "7ae2d7ea9006a6d4cd27a2f750ee94f4ecb843c955b2656c6c4d8c21267d8510"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/payload-consistency.json": {
+      "archive": "public-constant-use-census/runtime/payload-consistency.json",
+      "sha256": "63894cabb4ad5093b82ad4c78ea28c7c39c6c9ccfc73d7c53907e4d545bcae3b"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/prior-controller.json": {
+      "archive": "public-constant-use-census/runtime/prior-controller.json",
+      "sha256": "5108bb62b7bb7a8f499990f9318d415a3020dace3c73012ad858110d1bee86e7"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/report.json": {
+      "archive": "public-constant-use-census/runtime/report.json",
+      "sha256": "98690866fcb7352771ae6ca99c283b61cbfafecc137a16b2d78ef3143f374182"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/static-after.json": {
+      "archive": "public-constant-use-census/runtime/static-after.json",
+      "sha256": "c73c669975002332d42afd78c22dd33e15e41198c58801a7676e91905c2e1640"
+    },
+    "/tmp/wu-public-census-runtime-v3/run-1793176066055309769/static-before.json": {
+      "archive": "public-constant-use-census/runtime/static-before.json",
+      "sha256": "c73c669975002332d42afd78c22dd33e15e41198c58801a7676e91905c2e1640"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/00/Probe.lean": {
+      "archive": "public-constant-use-census/failed-runtime-v2/00/Probe.lean",
+      "sha256": "ba11b4dc52482c989c35f34193877e69ba312a0cd2715d2a48dcad044605e87e"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/00/compile.log": {
+      "archive": "public-constant-use-census/failed-runtime-v2/00/compile.log",
+      "sha256": "1101b31f5a0ecbc0ff86c3da90bceed6c6adc956c9ceb1635b62599d7bc79f65"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/00/invocation.json": {
+      "archive": "public-constant-use-census/failed-runtime-v2/00/invocation.json",
+      "sha256": "e258b0a770786fde2036ac67f5e485b9a6bc86154bbfec8ea6fc9ef4cdbfb4cd"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/00/resources.txt": {
+      "archive": "public-constant-use-census/failed-runtime-v2/00/resources.txt",
+      "sha256": "25e0d58652b885871cf652e1c370b265f80dd1c5a7fac28fc2b903af4ac6a64d"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/own-process.json": {
+      "archive": "public-constant-use-census/failed-runtime-v2/own-process.json",
+      "sha256": "9ee1e60923d0faa3b11c4ad4f7762b33c06a90f612dd175a14550ede13b3db88"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/prior-controller.json": {
+      "archive": "public-constant-use-census/failed-runtime-v2/prior-controller.json",
+      "sha256": "5108bb62b7bb7a8f499990f9318d415a3020dace3c73012ad858110d1bee86e7"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/report.json": {
+      "archive": "public-constant-use-census/failed-runtime-v2/report.json",
+      "sha256": "f00428ecb9d3f799bd38a89015d7ef2a32f1d8676a0a7af09ee2c7f0fc3a234d"
+    },
+    "/tmp/wu-public-census-runtime-v2/run-1793175477499311096/static-before.json": {
+      "archive": "public-constant-use-census/failed-runtime-v2/static-before.json",
+      "sha256": "a20d0a3c1d4776aacea60cad8566df35449f4c2b71ff619ae0990e5bbaa6828b"
+    },
+    "/tmp/wu-public-census-runtime-v3/run.py": {
+      "archive": "public-constant-use-census/v3-tools/run.py",
+      "sha256": "e9c58e8db40c1a3b4f8450661e45b5d1354de0fa858035ae384b7e42548be9c2"
+    },
+    "/tmp/wu-public-census-runtime-v3/pins.json": {
+      "archive": "public-constant-use-census/v3-tools/pins.json",
+      "sha256": "f7fe8fcb1cd11e7b347ebcbda3f4cadb4601289f14c560322a2da6507e99b3eb"
+    },
+    "/tmp/wu-public-census-runtime-v3/prior-gates.json": {
+      "archive": "public-constant-use-census/v3-tools/prior-gates.json",
+      "sha256": "94b1c5db16caa63fe1dae49ef31d95b73353e17bcb5c8ae86fd1b4ada32d8ef0"
+    },
+    "/tmp/wu-public-census-runtime-v3/root-review.json": {
+      "archive": "public-constant-use-census/v3-tools/root-review.json",
+      "sha256": "7fdb346ff799d67c090ad245fb0ea35ca83b1de2df41d44093b78f2e1bd92179"
+    },
+    "/tmp/wu-public-census-runtime-v3/test_runtime.py": {
+      "archive": "public-constant-use-census/v3-tools/test_runtime.py",
+      "sha256": "d911255a24cd6452ecc12fd2452093b8685aa7b77a1a01cde0d888f11b1ecce4"
+    },
+    "/tmp/wu-public-census-runtime-v2/run.py": {
+      "archive": "public-constant-use-census/v2-tools/run.py",
+      "sha256": "c5f67a22f7a3691c93cf370043ed9d70a9e97bada5783272e6d30baa550c6240"
+    },
+    "/tmp/wu-public-census-runtime-v2/pins.json": {
+      "archive": "public-constant-use-census/v2-tools/pins.json",
+      "sha256": "a1b9d32c7f3c0a917274e472d22d553c008b2ef62ac3edd375fc606ebc2e14ab"
+    },
+    "/tmp/wu-public-census-runtime-v2/prior-gates.json": {
+      "archive": "public-constant-use-census/v2-tools/prior-gates.json",
+      "sha256": "c05891cac9ba2e9e57fa38ccc71322d8b5695d23a39571d1218845ec51e2ae44"
+    },
+    "/tmp/wu-public-census-runtime-v2/root-review.json": {
+      "archive": "public-constant-use-census/v2-tools/root-review.json",
+      "sha256": "30f006e4d443fd051b906e8451a02494826b2537ff9115b0ef388e99b2317857"
+    },
+    "/tmp/wu-public-census-runtime-v2/test_runtime.py": {
+      "archive": "public-constant-use-census/v2-tools/test_runtime.py",
+      "sha256": "b072c43ae94d477bfea2c3a792bc17fae14090553e2476d82a169699c1db0b93"
+    },
+    "/tmp/wu-public-constant-use-probe-v2/Template.lean": {
+      "archive": "public-constant-use-census/collector/Template.lean",
+      "sha256": "437c47321e34c6216bbd05f3bdb262e2763161843859f3843d0949f75b7b9658"
+    },
+    "/tmp/wu-public-constant-use-probe-v2/prepare.py": {
+      "archive": "public-constant-use-census/collector/prepare.py",
+      "sha256": "4db5bb8caf5178f7bdd66ba9066b8462a60c251d74c763b14c55ce68f6c22c35"
+    },
+    "/tmp/wu-public-constant-use-probe-v2/prepared-scope-cover/preparation.json": {
+      "archive": "public-constant-use-census/collector/preparation.json",
+      "sha256": "c6439a0a10a14d7edb000880def7f651e9856902b0b777e64d4261228a73df27"
+    },
+    "/tmp/wu-public-census-output-validator/validate.py": {
+      "archive": "public-constant-use-census/collector/payload-validator.py",
+      "sha256": "240a7d3797268d9afdc2beee8377798f059a47b88be8e2a644a6681be74fb4f1"
+    },
+    "/tmp/wu-main-port-audit/public-census-v3-actual-root-review.json": {
+      "archive": "public-constant-use-census/ROOT-REVIEW.json",
+      "sha256": "246a48c34d007fd654bb89e856fa113cbf2207debb703720aad1b07b86aa8a40"
+    }
+  },
+  "source_and_object_context_snapshot": "runtime/static-before.json and static-after.json; original baseline preserved by structural transaction backups and old-source-manifest",
+  "public_retirement_authorized": false
+}

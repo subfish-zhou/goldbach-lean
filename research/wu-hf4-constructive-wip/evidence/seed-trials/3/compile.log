@@ -1,0 +1,4 @@
+/tmp/wu-hf4-uniform-seed-trial-v3/trial-1793180036980395298/sources/Hf4DirectDagSeedSoundness.lean:31:32: error: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+'Hf4Quad.CheckedDag.DirectSemantics.seed_sound' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
-"""Measure local theorem import closures and the recorded refactoring cohort.
+"""Measure local theorem import closures and complete source-tree changes.
 
 Print JSON to stdout; sources and the checked-in report are never changed.
 """
 from pathlib import Path
-import subprocess, importlib.util, json, re, hashlib, datetime
+import argparse, subprocess, importlib.util, json, re, hashlib, datetime
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('release_checks', ROOT / 'scripts/check.py')
 checks = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checks)
-BASE = '09b97db5764ade1246bfb77206baa1b124760958'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--baseline', default='c4e1b8d00dda9661140f95e0f03f0d5a08d636c2',
+                    help='Git revision used for the complete before/after source comparison.')
+args = parser.parse_args()
+BASE = subprocess.check_output(['git', 'rev-parse', args.baseline], cwd=ROOT, text=True).strip()
 IMPORT = re.compile(r'^\s*(?:(?:public|meta)\s+)*import\s+(.+)', re.M)
 
 def measure(raw):
@@ -69,7 +73,8 @@ def difference(a,b):
 roots = [('1+2','Goldbach.Theorem'),('1+1.9','Goldbach.OnePlusOneNine')]
 results = {}
 for label, entry in roots:
-    results[label] = {'root':entry,'current':summarize(current,closure(current,entry))}
+    results[label] = {'root':entry,'baseline':summarize(baseline,closure(baseline,entry)),
+                      'current':summarize(current,closure(current,entry))}
 results['1+1.894'] = {'root':'WR2ClassicalCertificate','current':summarize(research,closure(research,'WR2ClassicalCertificate'))}
 changed = {n for n in baseline.keys() & current.keys() if baseline[n]['sha256']!=current[n]['sha256']}
 added = current.keys()-baseline.keys(); deleted = baseline.keys()-current.keys()
@@ -84,22 +89,8 @@ report = {'measured_at_utc':datetime.datetime.now(datetime.timezone.utc).isoform
  'method':{'scope':'Complete transitive local module import closure, including the selected entry module. Each module counted once per closure. Mathlib and other external Lake dependencies excluded. Shared dependencies are counted in each separate theorem closure.',
            'code_lines':'Nonblank lines after masking Lean nested block comments and line comments; strings retained. Includes definitions, theorem statements, proofs, imports, and commands. This is source size, not minimal declaration-level proof size.',
            'physical_lines':'All text lines, including blank lines and comments; terminal line without newline also counted.',
-           'baseline_scope':'The baseline is a source snapshot, not necessarily a closed build environment. Working-tree additions include proof construction as well as refactoring. The targeted cohort counts moved code in all three split-out modules.'},
+           'baseline_scope':'The complete baseline source snapshot is compared with the working tree, counting all additions, deletions and moved code. Historical import closures are source measurements; the selected default baseline was independently accepted before cleanup.'},
  'theorems':results,
- 'working_tree_changes_vs_head':{'modified_existing_modules':len(changed),'added_modules':len(added),'deleted_modules':len(deleted),'affected_before':before,'affected_after':after,'net_delta':difference(before,after),'files':file_changes},
+ 'working_tree_changes_vs_baseline':{'modified_existing_modules':len(changed),'added_modules':len(added),'deleted_modules':len(deleted),'affected_before':before,'affected_after':after,'net_delta':difference(before,after),'files':file_changes},
  'whole_trees':{'baseline_main':summarize(baseline,set(baseline)),'current_main':summarize(current,set(current)),'current_research':summarize(research,set(research))}}
-split_modules = {
-    'MathlibNt.SieveTheory.Chen.Representations',
-    'MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarTables',
-    'MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialData',
-}
-assert split_modules <= added, 'Recorded split modules must be additions to the baseline'
-cohort_before = summarize(baseline, changed)
-cohort_after = summarize(current, changed | split_modules)
-report['targeted_refactoring'] = {
-    'scope': 'Modified tracked main modules plus the three split-out data/representation modules; other added proof modules are counted separately in whole-tree changes.',
-    'baseline': cohort_before,
-    'current': cohort_after,
-    'delta': difference(cohort_before, cohort_after),
-}
 print(json.dumps(report, ensure_ascii=False, indent=2))

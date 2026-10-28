@@ -1,9 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection10CutoffCorrectedRatio
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131TailDecay
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146SourceAssembly
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDDEAsymptoticClosure
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFixedGapRpowMargin
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead
 
 open scoped Classical BigOperators Interval
@@ -26,10 +22,6 @@ def SourceCutoffLogDomination
           max 1 (Real.log (1 + t ^ d / Real.log D)) ≤
         Real.log (Real.exp 1 * t)
 
-private lemma source_bridge_Qhat_rfl
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    (sign : ErrorSign) :
-    (section13_bridgeAtThree hH sign).Qhat = section13Qhat H := rfl
 
 private lemma source_bridge_K_opposite_rfl
     {H : Section13HatLayers} (hH : Section13HatSourceContract H)
@@ -37,19 +29,6 @@ private lemma source_bridge_K_opposite_rfl
     (section13_bridgeAtThree hH sign.opposite).K =
       (section13_bridgeAtThree hH sign).K := rfl
 
-private lemma max_one_le_one_add (x : ℝ) (hx0 : 0 ≤ x) :
-    max 1 x ≤ 1 + x := by
-  by_cases hx : x ≤ 1
-  · rw [max_eq_left hx]
-    linarith
-  · rw [max_eq_right (le_of_not_ge hx)]
-    linarith
-
-private lemma source_cutoff_case_one_bound
-    {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 < d)
-    (ht : 0 < t) (hcut : t ≤ (Real.log D) ^ (1 / d)) :
-    t ^ d / Real.log D ≤ 1 := by
-  exact moving_below_cutoff_z_le_one hlog hd ht hcut
 
 theorem exists_sourceCutoffLogDomination
     {K A d : ℝ} (hd : 0 < d) (hK : 1 ≤ K) (hA : 1 ≤ A) :
@@ -160,17 +139,6 @@ theorem exists_sourceCutoffLogDomination
   rw [Real.log_mul (Real.exp_ne_zero 1) ht0.ne', Real.log_exp]
   exact hmax.trans (le_add_of_nonneg_left zero_le_one)
 
-private lemma slope_le_log
-    {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 ≤ d) (ht : 0 < t) :
-    perturbationSlope D d 0 t ≤
-      (d + 1) * Real.log (1 + t ^ d / Real.log D) := by
-  exact moving_perturbationSlope_le_log hlog hd ht
-
-private lemma above_cutoff_one_lt_z
-    {D d t : ℝ} (hlog : 0 < Real.log D) (hd : 0 < d)
-    (hcut : (Real.log D) ^ (1 / d) < t) :
-    1 < t ^ d / Real.log D := by
-  exact moving_above_cutoff_one_lt_z hlog hd hcut
 
 theorem proposition131MovingDelayedCurrentRatioOnSource_mono
     {H : Section13HatLayers} (sign : ErrorSign) {d M₀ M : ℝ} (hd : 0 < d)

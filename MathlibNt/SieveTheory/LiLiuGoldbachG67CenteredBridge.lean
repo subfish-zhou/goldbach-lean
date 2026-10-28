@@ -157,13 +157,6 @@ theorem rectangleLate_integral_loss :
     norm_num [a,b,c,cutoff] at hs ⊢
     constructor <;> linarith [hs.1,hs.2]
 
-/-- The exact weighted length includes the half-square and all three rectangle branches. -/
-theorem weighted_length :
-    (1/2 : ℝ)*((a+b-2*a)+(2*b-(a+b))) +
-      ((2*b-(a+b))+(a+c-2*b)+(cutoff-(a+c))) = cutoff-2*a := by ring
-
-theorem errorBudget_value : errorBudget = (21/4240000 : ℝ) := by
-  norm_num [errorBudget,cutoff,a]
 
 /-- The unconditional real analytic bridge for the unchanged frozen candidate. -/
 theorem polynomialIntegral_sub_errorBudget_le_piecewiseIntegral :

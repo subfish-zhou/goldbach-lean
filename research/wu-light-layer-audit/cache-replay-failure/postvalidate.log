@@ -1,0 +1,16 @@
+literal-check PASS
+verify-sources PASS
+generator-classical_c_eighth_certificates PASS
+generator-classical_sixth_certificates PASS
+generator-classical_fourth_certificates PASS
+measure PASS
+preservation PASS
+KERNEL_PASS WR2ExactRationalLog
+KERNEL_PASS WR2ClassicalFourthConditions
+Traceback (most recent call last):
+  File "/tmp/wu-light-layer-production/postvalidate.py", line 16, in <module>
+    with (out/f'kernel-{n}.log').open('w') as f:subprocess.run([prefix+'/bin/leanchecker','--verbose',n],cwd=wu,env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker', '--verbose', 'WR2ClassicalFourthBqSoundness']' returned non-zero exit status 1.

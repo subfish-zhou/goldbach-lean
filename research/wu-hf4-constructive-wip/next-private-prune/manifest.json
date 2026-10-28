@@ -1,0 +1,345 @@
+{
+  "status": "UNCOMPILED_DELETION_CANDIDATE_NOT_ADOPTED",
+  "Lean_executed": false,
+  "production_modified": false,
+  "audit_path": "/tmp/wu-next-private-prune-audit/opportunities.json",
+  "audit_sha256": "5009f198766b7513f42effdf55423f52d6ce886f60dabf27e2f74ee23b5d1e95",
+  "files": [
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "file": "AnalyticNumberTheory/Sieve/PanVaughanPointwise.lean",
+      "before_sha256": "d28942b547971d01d871bbab6b272f1dfffc88e80bc30ad3d9327aadcd4d23ff",
+      "after_sha256": "7cf38f00f6bf044d1b60a48ee5d7a2faba9403952a0120a3e107a93bbb5d97dc",
+      "deletions": [
+        {
+          "name": "vonMangoldt_zero",
+          "start": 52091,
+          "end": 52242,
+          "fragment": "/-- The von Mangoldt arithmetic function vanishes at zero. -/\nprivate lemma vonMangoldt_zero : Λ 0 = 0 := by\n  simp only [ArithmeticFunction.map_zero]\n",
+          "fragment_sha256": "f5bd4ab9769710276093d3eada45fb5d12e0651d7295170a05b28c68b873943c"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 2,
+        "physical_lines": 3,
+        "bytes": 152
+      }
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973MellinMoment",
+      "file": "MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973MellinMoment.lean",
+      "before_sha256": "b2ea96b339992e0aae70f8da233cd8b87ed9dbf0b470d65695c6bfb78699f978",
+      "after_sha256": "7ca340008a8f7195e80b0a3411564cb9bc066d3b0b725ad00abe2cae93e2eba9",
+      "deletions": [
+        {
+          "name": "chen_rexp_neg_deriv",
+          "start": 4399,
+          "end": 4636,
+          "fragment": "private theorem chen_rexp_neg_deriv :\n    ∀ x ∈ univ, HasDerivWithinAt (Real.exp ∘ Neg.neg) (-Real.exp (-x)) univ x :=\n  fun x _ ↦ mul_neg_one (Real.exp (-x)) ▸\n    ((Real.hasDerivAt_exp (-x)).comp x (hasDerivAt_neg x)).hasDerivWithinAt\n",
+          "fragment_sha256": "a6def8352e4f054617d9dbf16f61deb406d203501541a2188be7ae9b8d24386d"
+        },
+        {
+          "name": "chen_rexp_neg_image",
+          "start": 4637,
+          "end": 4819,
+          "fragment": "private theorem chen_rexp_neg_image : Real.exp ∘ Neg.neg '' univ = Ioi 0 := by\n  rw [Set.image_comp, Set.image_univ_of_surjective neg_surjective, Set.image_univ,\n    Real.range_exp]\n",
+          "fragment_sha256": "f6c08d57912ecb0f183cb597e977e83a98c282760bd498091b85b5ac3ac56b5e"
+        },
+        {
+          "name": "chen_rexp_neg_injOn",
+          "start": 4820,
+          "end": 4966,
+          "fragment": "private theorem chen_rexp_neg_injOn : univ.InjOn (Real.exp ∘ Neg.neg) :=\n  Real.exp_injective.injOn.comp neg_injective.injOn (univ.mapsTo_univ _)\n",
+          "fragment_sha256": "a7439349464c07731a42b4df42e1c514143129614da73c0261483f03f235cba5"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 9,
+        "physical_lines": 9,
+        "bytes": 579
+      }
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorLocalPrimitiveLargeSieve",
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/ConductorLocalPrimitiveLargeSieve.lean",
+      "before_sha256": "046fbc9038d08a39dd749ed646a5bf91739cd7f36cb32d1aaf68356f5f980d02",
+      "after_sha256": "2fd3c292c6092a31419fa4f0227aba68f54e84681c2ab916c145fd1e73a9a191",
+      "deletions": [
+        {
+          "name": "localRowAmplitude_nonneg",
+          "start": 1551,
+          "end": 1741,
+          "fragment": "private lemma localRowAmplitude_nonneg\n    (b : ℤ → ℂ) (M : ℤ) (L d : ℕ) (χ : PrimitiveCharacter d) :\n    0 ≤ Real.sqrt (primitiveCharacterPrefixMaxSquare b M L d χ) :=\n  Real.sqrt_nonneg _\n",
+          "fragment_sha256": "94210ad5ca64d445af346cf98ed31206275ec2455444d2e46cdda993af83acc6"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 4,
+        "physical_lines": 4,
+        "bytes": 204
+      }
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVAdaptiveSmallCutoff",
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVAdaptiveSmallCutoff.lean",
+      "before_sha256": "f0ae7f50a03079c559a3ee21136c48434991707151386afab74a956e1ae3e349",
+      "after_sha256": "39a242bde90d7a974b456ad459c7db2416cc567981d77089e925ebaff2037a8a",
+      "deletions": [
+        {
+          "name": "highConductorSet_subset_Icc_one_adaptive",
+          "start": 1195,
+          "end": 1360,
+          "fragment": "private lemma highConductorSet_subset_Icc_one_adaptive (N Q C : ℕ) :\n    highConductorSet N Q C ⊆ Finset.Icc 1 Q := by\n  exact highConductorSet_subset_Icc_one N Q C\n",
+          "fragment_sha256": "d90375384e466d2ae94eb058505ee4cef8d306f1a536d26b169eba04c9de0c53"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 3,
+        "physical_lines": 3,
+        "bytes": 169
+      }
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVBlockL1WeightedPrimitive",
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVBlockL1WeightedPrimitive.lean",
+      "before_sha256": "8f98cd513d9880794bac402bff0ca1d4af7aebf1752759b3376091548682e768",
+      "after_sha256": "880f0ceb70dc5886a896c9ba3a79c3f13477a1e409d6f1a335edf5b8f9580ade",
+      "deletions": [
+        {
+          "name": "highConductorSet_eq_interval_blockL1",
+          "start": 21489,
+          "end": 21727,
+          "fragment": "private lemma highConductorSet_eq_interval_blockL1 (N Q C : ℕ)\n    (hR : 1 ≤ logConductorThreshold N C) :\n    highConductorSet N Q C =\n      Finset.Icc (logConductorThreshold N C + 1) Q := by\n  exact highConductorSet_eq_interval N Q C hR\n",
+          "fragment_sha256": "d7f924c77801c867676985d9bedb0f7f343159309e38268d2eb0033db424a978"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 5,
+        "physical_lines": 5,
+        "bytes": 242
+      }
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVHighChosenUnconditional",
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean",
+      "before_sha256": "a0052398b365ea7ce97d622811e051e3a1212fdb4df6fbaa4d482f6cd01ef87d",
+      "after_sha256": "1d90c7b349a44f267bc1aa260063ba34712ea764ab5aa9a7ba9282fc87c3ad07",
+      "deletions": [
+        {
+          "name": "chosen_discreteAbelAmplifierPrefixMax_le_three",
+          "start": 3214,
+          "end": 3558,
+          "fragment": "private theorem chosen_discreteAbelAmplifierPrefixMax_le_three (N : ℕ) :\n    discreteAbelAmplifierPrefixMax N ≤ 3 := by\n  refine (discreteAbelAmplifierPrefixMax_le_two_inv_log_two N).trans ?_\n  have htwo : (2 / 3 : ℝ) < Real.log 2 := by linarith [Real.log_two_gt_d9]\n  rw [mul_inv_le_iff₀ (Real.log_pos (by norm_num : (1 : ℝ) < 2))]\n  linarith\n",
+          "fragment_sha256": "3285bc2a5c067ebc680c3f70b30cfa804ea48d156e9946ebd123524176448b3f"
+        },
+        {
+          "name": "highConductorSet_eq_interval_highChosenUnconditional",
+          "start": 22279,
+          "end": 22533,
+          "fragment": "private lemma highConductorSet_eq_interval_highChosenUnconditional (N Q C : ℕ)\n    (hR : 1 ≤ logConductorThreshold N C) :\n    highConductorSet N Q C =\n      Finset.Icc (logConductorThreshold N C + 1) Q := by\n  exact highConductorSet_eq_interval N Q C hR\n",
+          "fragment_sha256": "c3169ceb0cce29dc94009154e728bd82149f94d2875d43e8c8fd541777ab3a28"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 11,
+        "physical_lines": 11,
+        "bytes": 612
+      }
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Vaughan.HighConductorVaughanTypeIIShellSum",
+      "file": "MathlibNt/AnalyticNumberTheory/Vaughan/HighConductorVaughanTypeIIShellSum.lean",
+      "before_sha256": "e66b98b3bf3c63d7f27e071b9d3534e8f6ec231e6f52ad0100d30ff6b6bcdc45",
+      "after_sha256": "07e8a30d221f9488a6e6c119149220d87fc6af2d412086aa56e75cd1335da0e7",
+      "deletions": [
+        {
+          "name": "vaughanTypeIIFixedShellPrefixSquare_nonneg",
+          "start": 4370,
+          "end": 4630,
+          "fragment": "private theorem vaughanTypeIIFixedShellPrefixSquare_nonneg\n    (N k y d : ℕ) (a : ℕ → ℂ) (c : ℕ → ℕ → ℂ)\n    (χ : PrimitiveCharacter d) :\n    0 ≤ vaughanTypeIIFixedShellPrefixSquare N k y d a c χ := by\n  unfold vaughanTypeIIFixedShellPrefixSquare\n  positivity\n",
+          "fragment_sha256": "ea45a17d0288125551a770cdaa01285145f7ddb9f76011b9c0f0a3c2328734d1"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 6,
+        "physical_lines": 6,
+        "bytes": 282
+      }
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Arithmetic.MertensTheorem",
+      "file": "MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean",
+      "before_sha256": "7e6cb18f3aedc340c585693f4ce28d5f2e22428df38189f1f393547731b89cde",
+      "after_sha256": "e361a66d0309b9c54229dd14848e3fb01c94a13007982f5a9c83cd080cceff3a",
+      "deletions": [
+        {
+          "name": "log_one_sub_prime_odd_bound",
+          "start": 56905,
+          "end": 58113,
+          "fragment": "/-- Local logarithmic correction for an odd prime p ≥ 3:\n|log(1 - 1/(p-1)) + 1/(p-1)| ≤ 2/(p-1)². -/\nprivate lemma log_one_sub_prime_odd_bound {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) :\n    |log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1)| ≤ 2 / ((p : ℝ) - 1) ^ 2 := by\n  let t : ℝ := 1 / ((p : ℝ) - 1)\n  have hp3 : 3 ≤ p := by\n    have h2lt : 2 < p := by\n      have h2le : 2 ≤ p := hp.two_le\n      omega\n    omega\n  have ht0 : 0 < t := by\n    unfold t\n    have hpos : 0 < (p : ℝ) - 1 := by\n      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3\n      linarith\n    exact div_pos one_pos hpos\n  have htle : t ≤ 1 / 2 := by\n    unfold t\n    have h2le : (2 : ℝ) ≤ (p : ℝ) - 1 := by\n      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3\n      linarith\n    exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2le\n  have hp1 : (p : ℝ) - 1 ≠ 0 := by\n    have : (3 : ℝ) ≤ p := by exact_mod_cast hp3\n    have : 0 < (p : ℝ) - 1 := by linarith\n    exact ne_of_gt this\n  have hsubst : |log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1)| =\n      |log (1 - t) + t| := by\n    simp [t]\n  have hrhs : 2 * t ^ 2 = 2 / ((p : ℝ) - 1) ^ 2 := by\n    unfold t\n    field_simp [hp1]\n  rw [hsubst, ← hrhs]\n  exact log_one_sub_bound ht0 htle\n",
+          "fragment_sha256": "cf43e778f8f6967bb73a52105371df93b208a77b87972ba75e3b1a52f9e9c32f"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 32,
+        "physical_lines": 34,
+        "bytes": 1271
+      }
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10LogKernel",
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB10LogKernel.lean",
+      "before_sha256": "8c4a5f9a9946b19986005c43ac6375b91d1f9cfa0fe98f13ae2b517665fd6763",
+      "after_sha256": "a9a6bd7a5a7dcd5934e96341c82a29bafea010c4ed0649cfda955415d93d8f8b",
+      "deletions": [
+        {
+          "name": "goldbachB10Beta_gt_one_tenth",
+          "start": 1961,
+          "end": 2080,
+          "fragment": "private lemma goldbachB10Beta_gt_one_tenth : (1 / 10 : ℝ) < goldbachB10Beta := by\n  dsimp [goldbachB10Beta]\n  norm_num\n",
+          "fragment_sha256": "7fdd0f3f3e0a6e5ecf23040fd2fea2b918f0c3e341d356c8a8a4f832717a14b5"
+        },
+        {
+          "name": "goldbachB10Gamma_gt_one_fourth",
+          "start": 2081,
+          "end": 2203,
+          "fragment": "private lemma goldbachB10Gamma_gt_one_fourth : (1 / 4 : ℝ) < goldbachB10Gamma := by\n  dsimp [goldbachB10Gamma]\n  norm_num\n",
+          "fragment_sha256": "e73c97ecd6cfc937c234111f57f7d63518d2899b227d87c5756d33dafbab2ee5"
+        },
+        {
+          "name": "goldbachB10Beta_pos",
+          "start": 2204,
+          "end": 2303,
+          "fragment": "private lemma goldbachB10Beta_pos : 0 < goldbachB10Beta := by\n  dsimp [goldbachB10Beta]\n  norm_num\n",
+          "fragment_sha256": "9f9a959af02676d76bfd99e9d1b0014e0c11a2309185302b863760a1ce68506e"
+        },
+        {
+          "name": "goldbachB10Gamma_pos",
+          "start": 2304,
+          "end": 2406,
+          "fragment": "private lemma goldbachB10Gamma_pos : 0 < goldbachB10Gamma := by\n  dsimp [goldbachB10Gamma]\n  norm_num\n",
+          "fragment_sha256": "2ba62bb575a3fa7f1596beb55241122e9c296d907ccf8ba62e0c112f001f93c0"
+        },
+        {
+          "name": "goldbachB10Beta_lt_gamma",
+          "start": 2407,
+          "end": 2544,
+          "fragment": "private lemma goldbachB10Beta_lt_gamma : goldbachB10Beta < goldbachB10Gamma := by\n  dsimp [goldbachB10Beta, goldbachB10Gamma]\n  norm_num\n",
+          "fragment_sha256": "2ec8b23935d29499f8d77acf6201d410925e6d9c9ec4e314b03c88590eaff0f3"
+        },
+        {
+          "name": "goldbachB10Gamma_lt_one",
+          "start": 2545,
+          "end": 2650,
+          "fragment": "private lemma goldbachB10Gamma_lt_one : goldbachB10Gamma < 1 := by\n  dsimp [goldbachB10Gamma]\n  norm_num\n",
+          "fragment_sha256": "9a9fcbe1dce1180dab6c28211541ba56318dcf31c590ca3e8a59a043f82650c9"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 18,
+        "physical_lines": 18,
+        "bytes": 688
+      }
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations",
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachErrorFoundations.lean",
+      "before_sha256": "0b0f3b3fe7aa3505c5127a1aa4062734ec91b4f284a480ae467fbc90557df782",
+      "after_sha256": "08765771c14c48a29563f49465065d0733d195ed10ac8d96a083d089081b9b08",
+      "deletions": [
+        {
+          "name": "largePrimeDivisors_prod_pos",
+          "start": 1159,
+          "end": 1374,
+          "fragment": "private theorem largePrimeDivisors_prod_pos {n : ℕ} {z : ℝ} :\n    0 < ∏ p ∈ largePrimeDivisors n z, p := by\n  refine Finset.prod_pos ?_\n  intro p hp\n  exact Nat.pos_of_mem_primeFactors ((Finset.mem_filter.mp hp).1)\n",
+          "fragment_sha256": "d8a487f26bcca89a9fdc1dac957e3e43373069756e8b6da8761b4abf3a8faab4"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 5,
+        "physical_lines": 5,
+        "bytes": 223
+      }
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized",
+      "file": "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiCutoffClaim146iiiSanitized.lean",
+      "before_sha256": "9d4befca43fa95aecf8243f297f3dce69401c95d854100465aebe78268a469a5",
+      "after_sha256": "5a640f5c7c435b5c96a2031c0725af8f24c1128f4dbeac47459c96cf20f7bc69",
+      "deletions": [
+        {
+          "name": "source_bridge_Qhat_rfl",
+          "start": 14472,
+          "end": 14667,
+          "fragment": "private lemma source_bridge_Qhat_rfl\n    {H : Section13HatLayers} (hH : Section13HatSourceContract H)\n    (sign : ErrorSign) :\n    (section13_bridgeAtThree hH sign).Qhat = section13Qhat H := rfl\n",
+          "fragment_sha256": "88ee3b44433b1a9d1a0bc7b938817a2524b74ae78204d7a1851bf853a81c97d1"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 4,
+        "physical_lines": 4,
+        "bytes": 195
+      }
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141ElementaryMass",
+      "file": "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma141ElementaryMass.lean",
+      "before_sha256": "5b42b3033e0a754013d10a4f97d737cf7be485c2aacb99607f491c1f4c8a5842",
+      "after_sha256": "b62f2d82a24158077241da8fa9a4c9117cddcf599e85e775442b1983c22267d0",
+      "deletions": [
+        {
+          "name": "sourceDiscreteEuler_nonneg",
+          "start": 3829,
+          "end": 4159,
+          "fragment": "private theorem sourceDiscreteEuler_nonneg (S : BoundingSieve) (z : ℕ) :\n    0 ≤ sourceDiscreteEuler S z := by\n  unfold sourceDiscreteEuler\n  apply prod_nonneg\n  intro p hp\n  have hpP := (mem_filter.mp hp).1\n  have hlt := S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hpP)\n    (Nat.mem_primeFactors.mp hpP).2.1\n  linarith\n",
+          "fragment_sha256": "a7cb48f2eea7b1d4fb38039d6f37c58064d4b58ff60f476ac4f046b3111ea043"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 9,
+        "physical_lines": 9,
+        "bytes": 334
+      }
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorConvolution",
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean",
+      "before_sha256": "e7ac1498c313cfb6db381d707188d4dc17634418cb30c2a335d4044f5356ce65",
+      "after_sha256": "5e4f7c8e55af3d5f5c29e28642fb883711ebaba76bfa07fdd79f5770333a7e6c",
+      "deletions": [
+        {
+          "name": "liuSelbergArithmeticFunction_prime_pow_zero",
+          "start": 13132,
+          "end": 13268,
+          "fragment": "private theorem liuSelbergArithmeticFunction_prime_pow_zero\n    (N p : ℕ) :\n    liuSelbergArithmeticFunction N (p ^ 0) = 1 := by\n  simp\n",
+          "fragment_sha256": "48f37b79e6142eeaad86494b0654d2b803cc96f0037f38ebebd5530c50c1bbac"
+        },
+        {
+          "name": "liuMoebiusReciprocal_prime_pow_zero",
+          "start": 14157,
+          "end": 14296,
+          "fragment": "private theorem liuMoebiusReciprocal_prime_pow_zero\n    (p : ℕ) :\n    liuMoebiusReciprocal (p ^ 0) = 1 := by\n  simp [liuMoebiusReciprocal]\n",
+          "fragment_sha256": "3836f3661dc3574e84a5509f986e2feaf515c27ef626ec6bf25ca9b97ab18c4c"
+        }
+      ],
+      "predicted_removed": {
+        "effective_lines": 8,
+        "physical_lines": 8,
+        "bytes": 279
+      }
+    }
+  ],
+  "declarations": 22,
+  "modules": 13,
+  "predicted_removed": {
+    "effective_lines": 116,
+    "physical_lines": 119,
+    "bytes": 5230
+  },
+  "retained_source_characters_identical": true,
+  "exact_roundtrip_restoration": true,
+  "public_declarations_removed": 0,
+  "definitions_or_numeric_values_modified": 0,
+  "overlaps_active_v7_changed_modules": false,
+  "remaining": "Actual source/module compilation, retained interfaces/registrations and downstream/full-project/kernel checks; include only after active pipeline clears, no restart of V7."
+}

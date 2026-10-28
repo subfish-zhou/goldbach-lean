@@ -1,4 +1,3 @@
-import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFRemainder
 
 noncomputable section
@@ -11,43 +10,6 @@ open MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
 namespace G12FlexibleWF
 
-/-- The finite pushforward uses the physical weights and inherits the B10 density. -/
-def sieve (N : ℕ) (hEven : Even N) (A : Finset (ℕ × ℕ)) (Z : ℝ) : BoundingSieve :=
-  { goldbachB10BoundingSieve N hEven 0 0 0 Z (mass N A) with
-    support := A.image (fun p => N-p.2*p.1)
-    weights := fun n => ∑ p ∈ A.filter (fun p => N-p.2*p.1=n),
-      goldbachG12NormalizedCoefficient N p.1
-    weights_nonneg := fun _ => sum_nonneg
-      (fun p _ => (goldbachG12NormalizedCoefficient_bounds N p.1).1) }
-
-theorem sieve_totalMass (N : ℕ) (hEven : Even N) (A : Finset (ℕ × ℕ)) (Z : ℝ) :
-    (sieve N hEven A Z).totalMass = mass N A := rfl
-
-theorem sieve_test (N : ℕ) (hEven : Even N) (A : Finset (ℕ × ℕ)) (Z : ℝ)
-    (P : ℕ → Prop) [DecidablePred P] :
-    (∑ n ∈ (sieve N hEven A Z).support.filter P, (sieve N hEven A Z).weights n) =
-      ∑ p ∈ A, if P (N-p.2*p.1) then goldbachG12NormalizedCoefficient N p.1 else 0 := by
-  let out := fun p : ℕ × ℕ => N-p.2*p.1
-  have hf := MathlibNt.SieveTheory.sum_fibres_filter_image A out P
-    (fun p => goldbachG12NormalizedCoefficient N p.1)
-  simpa only [sieve, out, sum_filter] using hf
-
-theorem sieve_rem (N : ℕ) (hEven : Even N) (A : Finset (ℕ × ℕ)) (Z : ℝ)
-    {d : ℕ} (hd : d ∣ goldbachB10ProdPrimes N Z) :
-    (sieve N hEven A Z).rem d = residue N A d := by
-  have hm : (sieve N hEven A Z).multSum d =
-      ∑ p ∈ A, if d ∣ N-p.2*p.1 then goldbachG12NormalizedCoefficient N p.1 else 0 := by
-    unfold BoundingSieve.multSum
-    rw [← sum_filter]
-    exact sieve_test N hEven A Z (fun n => d ∣ n)
-  unfold BoundingSieve.rem
-  rw [hm, sieve_totalMass]
-  have hnu : (sieve N hEven A Z).nu d = (1 : ℝ)/d.totient :=
-    goldbachB10BoundingSieve_nu_eq_inv_totient (ε := 0) (b := 0) (c := 0)
-      (X := mass N A) hEven hd
-  rw [hnu]
-  unfold residue
-  ring
 
 /-- Any genuine global subfamily inherits the established small-output bound. -/
 theorem smallOutput_le (N : ℕ) (hN : 2 ≤ N) (ε Z : ℝ) (A : Finset (ℕ × ℕ))

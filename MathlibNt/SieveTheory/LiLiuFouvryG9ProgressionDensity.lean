@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
-import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedRemainder
 
 /-! The actual progression density, in the standard multiplicative omega interface.
 All identities retain the given density at every natural number, including zero.
@@ -73,24 +72,5 @@ theorem progressionOmega_prime_nonneg_lt_one (v : ℕ) {p : ℕ}
   simpa only [primeDensity_progressionOmega_apply] using
     progressionDensity_prime_nonneg_lt_one v hp hp2
 
-/-- The genuine Euler product, on any finite set of primes. -/
-theorem progressionOmega_eulerProduct (v : ℕ) (P : Finset ℕ)
-    (hP : ∀ p ∈ P, p.Prime) :
-    (∏ p ∈ P, (1 - progressionOmega v p / (p : ℝ))) =
-      ∏ p ∈ P, (1 - if p.Coprime v then 1 / ((p : ℝ) - 1) else 0) := by
-  apply prod_congr rfl
-  intro p hp
-  rw [← primeDensity_apply, primeDensity_progressionOmega_apply,
-    progressionDensity_prime v (hP p hp)]
-
-/-- Primes dividing the progression parameter contribute the exact unit factor. -/
-theorem progressionOmega_eulerProduct_filter (v : ℕ) (P : Finset ℕ)
-    (hP : ∀ p ∈ P, p.Prime) :
-    (∏ p ∈ P, (1 - progressionOmega v p / (p : ℝ))) =
-      ∏ p ∈ P.filter (fun p => p.Coprime v), (1 - 1 / ((p : ℝ) - 1)) := by
-  rw [progressionOmega_eulerProduct v P hP, prod_filter]
-  apply prod_congr rfl
-  intro p _
-  split_ifs <;> simp
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

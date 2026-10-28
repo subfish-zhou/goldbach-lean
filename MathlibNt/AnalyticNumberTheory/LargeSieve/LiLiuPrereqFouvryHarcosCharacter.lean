@@ -1,6 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosTrace
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
-
 /-!
 # Harcos's extension-field character sums
 
@@ -23,23 +22,6 @@ def harcosTraceKloosterman (a b m : ZMod p) : ℂ :=
     (algebraMap (ZMod p) F a * (t : F) +
       algebraMap (ZMod p) F b * (t : F)⁻¹))
 
-omit [DecidableEq F] in
-theorem harcos_trace_eq_frobenius_sum (x : F) :
-    algebraMap (ZMod p) F (Algebra.trace (ZMod p) F x) =
-      ∑ i ∈ range (Module.finrank (ZMod p) F), x ^ (p ^ i) := by
-  simpa only [Nat.card_eq_fintype_card, ZMod.card] using
-    FiniteField.algebraMap_trace_eq_sum_pow (ZMod p) F x
-
-omit [DecidableEq F] in
-theorem harcos_trace_eq_frobenius_sum_of_card (n : ℕ)
-    (hcard : Fintype.card F = p ^ n) (x : F) :
-    algebraMap (ZMod p) F (Algebra.trace (ZMod p) F x) =
-      ∑ i ∈ range n, x ^ (p ^ i) := by
-  have hd : Module.finrank (ZMod p) F = n := by
-    apply Nat.pow_right_injective (Fact.out : p.Prime).one_lt
-    have h := Module.card_eq_pow_finrank (K := ZMod p) (V := F)
-    simpa only [ZMod.card, hcard] using h.symm
-  rw [harcos_trace_eq_frobenius_sum, hd]
 
 theorem harcosTraceKloosterman_zero (a b : ZMod p) :
     harcosTraceKloosterman p F a b 0 = Fintype.card Fˣ := by
@@ -83,35 +65,6 @@ theorem harcosTraceKloosterman_nonzero_sum_eq_curve [CharP F p]
     Nat.cast_one] at h
   linear_combination h
 
-theorem harcosTraceKloosterman_algEquiv
-    (G : Type*) [Field G] [Fintype G] [DecidableEq G] [Algebra (ZMod p) G]
-    (e : F ≃ₐ[ZMod p] G) (a b m : ZMod p) :
-    harcosTraceKloosterman p F a b m = harcosTraceKloosterman p G a b m := by
-  unfold harcosTraceKloosterman
-  apply Fintype.sum_equiv (Units.mapEquiv e.toRingEquiv.toMulEquiv).toEquiv
-  intro t
-  change ZMod.stdAddChar (m * Algebra.trace (ZMod p) F
-    (algebraMap (ZMod p) F a * (t : F) + algebraMap (ZMod p) F b * (t : F)⁻¹)) =
-      ZMod.stdAddChar (m * Algebra.trace (ZMod p) G
-        (algebraMap (ZMod p) G a * e (t : F) +
-          algebraMap (ZMod p) G b * (e (t : F))⁻¹))
-  congr 2
-  simpa only [map_add, map_mul, map_inv₀, e.commutes] using
-    (Algebra.trace_eq_of_algEquiv e
-      (algebraMap (ZMod p) F a * (t : F) +
-        algebraMap (ZMod p) F b * (t : F)⁻¹)).symm
-
-theorem harcosTraceKloosterman_primeField (a b m : ZMod p) :
-    harcosTraceKloosterman p (ZMod p) a b m =
-      completeKloosterman p (m * a) ((m * b).val : ℤ) := by
-  rw [completeKloosterman_eq_sum_units]
-  unfold harcosTraceKloosterman
-  apply sum_congr rfl
-  intro t _
-  simp only [Algebra.algebraMap_self, RingHom.id_apply, Algebra.trace_self,
-    LinearMap.id_apply, Int.cast_natCast, ZMod.natCast_zmod_val, Units.val_inv_eq_inv_val]
-  congr 1
-  ring
 
 theorem harcosTraceKloosterman_nonzero_sum_bound [CharP F p]
     (hp2 : p ≠ 2) (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 0)
@@ -143,14 +96,6 @@ def harcosExtensionKloosterman (a b m : ZMod p) (n : ℕ) : ℂ := by
   letI := Classical.decEq (GaloisField p n)
   exact harcosTraceKloosterman p (GaloisField p n) a b m
 
-theorem harcosExtensionKloosterman_one (a b m : ZMod p) :
-    harcosExtensionKloosterman p a b m 1 =
-      completeKloosterman p (m * a) ((m * b).val : ℤ) := by
-  let := Fintype.ofFinite (GaloisField p 1)
-  let := Classical.decEq (GaloisField p 1)
-  exact (harcosTraceKloosterman_algEquiv p (GaloisField p 1)
-    (ZMod p) (GaloisField.equivZmodP p) a b m).trans
-      (harcosTraceKloosterman_primeField p a b m)
 
 theorem harcosExtensionKloosterman_nonzero_sum_bound
     (hp2 : p ≠ 2) (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 0)

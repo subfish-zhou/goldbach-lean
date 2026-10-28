@@ -2,7 +2,6 @@ import MathlibNt.SieveTheory.LiLiuGoldbachBuchstab
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-noncomputable local instance (P : Prop) : Decidable P := Classical.propDecidable P
 
 /-- Weakly ordered double sum, with the diagonal retained. -/
 noncomputable def goldbachV (A : Finset ℕ) (N : ℕ) (z y : ℝ) : ℤ :=

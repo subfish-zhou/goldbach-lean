@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "finished_at_utc": "2026-10-27T07:34:19.211808+00:00",
+  "results": [
+    {
+      "module": "MathlibNt.SieveTheory.FiniteCoprimeGateBudget",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/prototypes/MathlibNt.SieveTheory.FiniteCoprimeGateBudget.lean",
+      "probe_sha256": "50eec146da83d65b7bb6dddeb6291d6ffdfe7fe9feeed688387a062eab243807",
+      "planned_production_sha256": "50eec146da83d65b7bb6dddeb6291d6ffdfe7fe9feeed688387a062eab243807",
+      "exit_code": 0,
+      "log": "/tmp/liliu-gate-budget-cleanup/prototypes/common.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/prototypes/MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget.lean",
+      "probe_sha256": "6b35eb82ed6051f6d86d51f8cb0c0d061addd07dc1639f2d86f37effbf011e8f",
+      "planned_production_sha256": "2f155956169fda99cb165e14d64244d33b58b0ffd64539c9ac6eae1b5fd6e771",
+      "exit_code": 0,
+      "log": "/tmp/liliu-gate-budget-cleanup/prototypes/g11.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget",
+      "probe_file": "/tmp/liliu-gate-budget-cleanup/prototypes/MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget.lean",
+      "probe_sha256": "abcc38990aca67e7f373abd2f20b806e15120b56ab3df02271927725922e2f91",
+      "planned_production_sha256": "a70a27752c3b8b926ba09be76d29db854ac3ee46c7181d7b871d5de06f5204da",
+      "exit_code": 0,
+      "log": "/tmp/liliu-gate-budget-cleanup/prototypes/b10.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "method": "Complete provider proof and complete consumer prototypes compile with warningAsError. Consumers include the actual shared theorem proofs after their old provider imports, rather than assumed or forward declarations; the accepted production combination is validated separately.",
+  "record_scope": "Historical complete provider/consumer prototype receipts before application. Production import combination is accepted separately in validation.json.",
+  "accepted_full_combination_validation": "validation.json"
+}

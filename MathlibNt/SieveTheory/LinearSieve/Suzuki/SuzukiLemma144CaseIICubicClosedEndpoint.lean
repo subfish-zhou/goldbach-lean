@@ -178,7 +178,6 @@ theorem sigma12_middle_le_qD_lemma8_7_closed
 end SwitchingPrinciple.SuzukiLemma144KappaOne
 
 
-
 /-- Natural-ceiling `Σ₁₂` estimate at the closed lower endpoint. -/
 theorem sigmaTwelve_suzukiVProduct_le_qD_lemma8_7_natCeil_closed
     {S : BoundingSieve} {H : Section13HatLayers}

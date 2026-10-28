@@ -1,7 +1,6 @@
 
 
 import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSufficientAssembly
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
 import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualPhysical
 
 /-!
@@ -26,84 +25,6 @@ open scoped BigOperators ArithmeticFunction Topology
 
 noncomputable section
 
-/-- A positive `L*N` lane cannot fit inside `K*N/logPow` once
-`K < L*logPow`.  The modulus data `Q,B` are deliberately present but absent
-from the hypotheses and conclusion: changing them cannot alter this lane. -/
-theorem positive_N_lane_not_paid_by_modulus_cutoff
-    (N L K logPow _Q _B : ℝ) (hN : 0 < N) (_hL : 0 < L)
-    (hlogPow : 0 < logPow) (hgap : K < L * logPow) :
-    K * N / logPow < L * N := by
-  rw [div_lt_iff₀ hlogPow]
-  nlinarith [mul_lt_mul_of_pos_right hgap hN]
-
-/-- Formal contradiction certificate for any physical majorant which retains a
-positive multiple of `N` but is advertised at inverse-logarithmic scale. -/
-theorem physical_majorant_with_positive_N_lane_obstructed
-    (N L K logPow Q B physical : ℝ) (hN : 0 < N) (hL : 0 < L)
-    (hlogPow : 0 < logPow) (hgap : K < L * logPow)
-    (hNlane : L * N ≤ physical)
-    (hbudget : physical ≤ K * N / logPow) : False := by
-  have hstrict := positive_N_lane_not_paid_by_modulus_cutoff
-    N L K logPow Q B hN hL hlogPow hgap
-  exact (not_lt_of_ge (hNlane.trans hbudget)) hstrict
-
-/-- A delta mass at the top conductor.  It is the generic obstruction to
-extracting an `R^{-1}` gain merely by deleting `d ≤ R`. -/
-def topConductorDelta (Q d : ℕ) : ℝ := if d = Q then 1 else 0
-
-lemma topConductorDelta_nonneg (Q d : ℕ) : 0 ≤ topConductorDelta Q d := by
-  unfold topConductorDelta
-  split_ifs <;> positivity
-
-/-- If the high interval is nonempty, a nonnegative lane can be concentrated
-entirely at its top conductor, so its high-conductor mass is still exactly one. -/
-theorem sum_topConductorDelta_high (Q R : ℕ) (hRQ : R < Q) :
-    (∑ d ∈ Finset.Icc (R + 1) Q, topConductorDelta Q d) = 1 := by
-  simp [topConductorDelta, Finset.sum_ite_eq', Nat.succ_le_iff.mpr hRQ]
-
-/-- Consequently no universal `high mass ≤ full mass / R` inequality follows
-from positivity and the cutoff alone when `R>1`. -/
-theorem no_inverse_cutoff_gain_from_restriction
-    (Q R : ℕ) (hR : 1 < R) (hRQ : R < Q) :
-    ¬ ((∑ d ∈ Finset.Icc (R + 1) Q, topConductorDelta Q d) ≤ (1 : ℝ) / R) := by
-  rw [sum_topConductorDelta_high Q R hRQ]
-  have hRreal : (1 : ℝ) < R := by exact_mod_cast hR
-  have hinv : (1 : ℝ) / R < 1 := by
-    rw [div_lt_one (by positivity : (0 : ℝ) < R)]
-    exact hRreal
-  exact not_le_of_gt hinv
-
-/-- Positivity restricts either Vaughan coefficient family to high conductors
-without improving the full-conductor bound. -/
-private theorem highConductor_primitiveMean_le_full
-    (a : ℤ → ℂ) (N Q C : ℕ) :
-    apNormalizedPrimitiveMeanOn a N (highConductorSet N Q C) ≤
-      apNormalizedPrimitiveMean a N Q := by
-  unfold apNormalizedPrimitiveMeanOn apNormalizedPrimitiveMean
-  apply Finset.sum_le_sum_of_subset_of_nonneg
-  · intro d hd
-    simp only [highConductorSet, Finset.mem_filter] at hd
-    exact Finset.mem_Icc.mpr ⟨by omega, (Finset.mem_Icc.mp hd.1).2⟩
-  · intro d hd hnot
-    exact mul_nonneg (by positivity)
-      (Finset.sum_nonneg fun ψ _ => primitivePrefixAmplitude_nonneg _ _ _ _)
-
-/-- Restricting Type I to high conductors uses only positivity and therefore
-retains the full-conductor right-hand side. -/
-theorem highConductorVaughanTypeIMean_le_full
-    (N Q C u v : ℕ) :
-    highConductorVaughanTypeIMean N Q C u v ≤
-      apNormalizedVaughanTypeIMean N Q u v := by
-  exact highConductor_primitiveMean_le_full _ N Q C
-
-/-- The identical monotonicity restriction for Type II.  This is the strongest
-automatic bridge from the current full-range physical producer; it gives no
-factor depending on the lower conductor cutoff. -/
-theorem highConductorVaughanTypeIIMean_le_full
-    (N Q C u v : ℕ) :
-    highConductorVaughanTypeIIMean N Q C u v ≤
-      apNormalizedVaughanTypeIIMean N Q u v := by
-  exact highConductor_primitiveMean_le_full _ N Q C
 
 /-- Narrowest honest missing analytic contract.  It asks only for the exact
 post-conductor-transport high Vaughan hybrid, not for a BV conclusion.  The
@@ -135,13 +56,6 @@ def StandardBVHighTypeITypeIIHybridChosenSource : Prop :=
               highConductorVaughanSmallMean N Q C (v N)) ≤
           K * (N : ℝ) / Real.log N ^ A
 
-/-- Compatibility adapter from the legacy uniformly quantified interface. -/
-theorem standardBVHighTypeITypeIIHybridChosenSource_of_legacy
-    (hhigh : StandardBVHighTypeITypeIIHybridMovingSource) :
-    StandardBVHighTypeITypeIIHybridChosenSource := by
-  intro A
-  refine ⟨A + 3, 1, le_rfl, ?_⟩
-  exact hhigh A 1 (A + 3)
 
 /-- Pan's cutoff at a chosen `B ≥ A+3` meets the elementary payload margin. -/
 private theorem panModulusCutoff_le_standardBVMargin
@@ -193,20 +107,6 @@ theorem standardBV_of_lowSW_highTypeITypeII_chosen
   exact standardBV_sufficient_at_closed A B C N Q (u N) (v N) KL KH
     (by omega) rfl hLN hHN (hpayload Q hcut)
 
-/-- Real consumer for the moving-cutoff high-conductor contract.  All finite
-connectors and elementary lanes remain internal, exactly as in the fixed-cutoff
-consumer; only the pointwise Vaughan cutoffs are instantiated after `N`. -/
-theorem standardBV_of_lowSW_highTypeITypeII_moving
-    (hlow : StandardBVLowSiegelWalfiszSource)
-    (hhigh : StandardBVHighTypeITypeIIHybridMovingSource) :
-    ∀ A : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
-      ∀ᶠ N : ℕ in Filter.atTop,
-        (∑ q ∈ Finset.Icc 1
-            (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)),
-          MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-          K * (N : ℝ) / Real.log N ^ A := by
-  exact standardBV_of_lowSW_highTypeITypeII_chosen hlow
-    (standardBVHighTypeITypeIIHybridChosenSource_of_legacy hhigh)
 
 end
 

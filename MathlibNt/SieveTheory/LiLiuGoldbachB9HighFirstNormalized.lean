@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
 import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstDistribution
 import MathlibNt.SieveTheory.LiLiuGoldbachB9NormalizedMainMass
 
@@ -23,28 +24,10 @@ private theorem highFirst_paid_error (C η : ℝ) (hη : 0 < η) :
     ∀ᶠ N : ℕ in atTop,
       C * (N : ℝ) / Real.log (N : ℝ) ^ (3 : ℝ) ≤
         η * (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ) ^ 2) := by
-  have hηU : 0 < η * SingularSeries.liuUniversalProduct :=
-    mul_pos hη SingularSeries.liuUniversalProduct_pos
-  have hlogs := (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-    (eventually_ge_atTop (max 1 (C / (η * SingularSeries.liuUniversalProduct))))
-  filter_upwards [hlogs] with N hN
-  have hl : 0 < Real.log (N : ℝ) :=
-    lt_of_lt_of_le zero_lt_one ((le_max_left _ _).trans hN)
-  have hC : C / Real.log (N : ℝ) ≤ η * SingularSeries.liuUniversalProduct := by
-    apply (div_le_iff₀ hl).mpr
-    simpa [mul_comm] using (div_le_iff₀ hηU).mp ((le_max_right _ _).trans hN)
-  calc
-    _ = (C / Real.log (N : ℝ)) * ((N : ℝ) / Real.log (N : ℝ) ^ 2) := by
-      rw [Real.rpow_ofNat]
-      field_simp
-    _ ≤ (η * SingularSeries.liuUniversalProduct) *
-        ((N : ℝ) / Real.log (N : ℝ) ^ 2) :=
-      mul_le_mul_of_nonneg_right hC (by positivity)
-    _ ≤ (η * SingularSeries.liuSingularSeries N) *
-        ((N : ℝ) / Real.log (N : ℝ) ^ 2) :=
-      mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left
-        (SingularSeries.liuUniversalProduct_le_liuSingularSeries N) hη.le) (by positivity)
-    _ = _ := by ring
+  simpa only [Real.rpow_ofNat, mul_assoc, mul_div_assoc] using
+    (MathlibNt.SieveTheory.LiuWeight.eventually_inverse_log_remainder_le_liuSingularSeries
+      C η hη)
+
 
 /-- The actual high BoundingSieve, uniform Euler product and relative Li estimate.
 Only the scalar cutoff geometry is borrowed from the full-domain consumer. -/

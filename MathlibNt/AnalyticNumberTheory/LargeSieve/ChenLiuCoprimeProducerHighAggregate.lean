@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerronAssembly
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingTheoremADyadicCoverage
 
 /-!
 # The full high-conductor Pan source sum

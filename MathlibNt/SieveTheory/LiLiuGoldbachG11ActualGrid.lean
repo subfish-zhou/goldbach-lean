@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCover
 import MathlibNt.SieveTheory.LiLiuGoldbachG11EffectiveProductSupport
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridIndex
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9IntervalEndpoints
 
 open Finset
 open scoped BigOperators Classical

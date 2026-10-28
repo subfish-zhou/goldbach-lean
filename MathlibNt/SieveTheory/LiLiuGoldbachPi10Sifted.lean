@@ -89,7 +89,9 @@ private theorem Pi10Sifted_prod_pos_of_pair_mem
   rcases mem_goldbachC10Pairs_iff.mp hrs with ⟨hrPrime, hsPrime, _, _, _, _, _⟩
   exact Nat.mul_pos hrPrime.pos hsPrime.pos
 
-private theorem Pi10Sifted_prod_lt_N_of_B10Atom
+/-- A genuine labelled `B10` atom always satisfies the strict product bound
+`mq < N`. -/
+theorem goldbachB10Atom_prod_lt
     {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ}
     (hx : x ∈ goldbachB10Atoms N ε b c) :
     goldbachC10Prod x.1 * x.2 < N := by
@@ -109,7 +111,7 @@ private theorem Pi10Sifted_prod_lt_N_of_Pi10Atom
     goldbachC10Prod x.1 * x.2 < N := by
   rcases mem_goldbachPi10Atoms_iff.mp hx with
     ⟨hrsMem, hqRange, hqPrime, hqLower, hqUpper, _⟩
-  exact Pi10Sifted_prod_lt_N_of_B10Atom
+  exact goldbachB10Atom_prod_lt
     (mem_goldbachB10Atoms_iff.mpr ⟨hrsMem, hqRange, hqPrime, hqLower, hqUpper⟩)
 
 private theorem Pi10Sifted_literalHPoint_of_prime_ge

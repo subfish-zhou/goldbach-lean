@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87DimensionOne
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
 
 open scoped Classical BigOperators

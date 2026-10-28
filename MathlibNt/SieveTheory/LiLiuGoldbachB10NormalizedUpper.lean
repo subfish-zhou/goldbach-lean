@@ -1,11 +1,7 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import MathlibNt.Analysis.LogScaleAbsorption
+import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
 import MathlibNt.Analysis.SieveNormalization
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
 import MathlibNt.SieveTheory.LiLiuGoldbachB10PaidUpper
 import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
-import MathlibNt.SieveTheory.LiuSingularSeries
-import MathlibNt.SieveTheory.SwitchingPrinciple
 
 noncomputable section
 
@@ -16,30 +12,15 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 private theorem B10NormalizedUpper_eight_mul_one_add_cube_le
     {τ δ : ℝ} (hτ0 : 0 ≤ τ) (hτ1 : τ ≤ 1) (hτδ : 56 * τ ≤ δ) :
     8 * (1 + τ) ^ 3 ≤ 8 + δ := by
-  have hτ2 : τ ^ 2 ≤ τ := by
-    nlinarith [sq_nonneg (τ - 1)]
-  have hτ3 : τ ^ 3 ≤ τ := by
-    have hmul := mul_le_mul_of_nonneg_left hτ2 hτ0
-    nlinarith
-  have hmain : 24 * τ + 24 * τ ^ 2 + 8 * τ ^ 3 ≤ 56 * τ := by
-    nlinarith
-  calc
-    8 * (1 + τ) ^ 3 = 8 + (24 * τ + 24 * τ ^ 2 + 8 * τ ^ 3) := by ring
-    _ ≤ 8 + 56 * τ := by gcongr
-    _ ≤ 8 + δ := by linarith
+  have hτ2 : τ ^ 2 ≤ τ := by nlinarith [mul_nonneg hτ0 (sub_nonneg.mpr hτ1)]
+  nlinarith [mul_le_mul_of_nonneg_left hτ2 hτ0]
 
 private theorem B10NormalizedUpper_tendsto_logLog_div_log :
     Tendsto (fun N : ℕ => Real.log (Real.log (N : ℝ)) / Real.log (N : ℝ))
       atTop (nhds 0) := by
-  have hreal : Tendsto (fun x : ℝ => Real.log x / x) atTop (nhds 0) := by
-    simpa [Real.rpow_one] using
-      (isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
-  have hlog : Tendsto (fun N : ℕ => Real.log (N : ℝ)) atTop atTop :=
-    Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
-  change Tendsto
-    (((fun x : ℝ => Real.log x / x) ∘ fun N : ℕ => Real.log (N : ℝ)))
-    atTop (nhds 0)
-  exact hreal.comp hlog
+  simpa only [Real.rpow_one, Function.comp_def] using
+    ((isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero).comp
+      (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
 
 private theorem B10NormalizedUpper_Z_large_eventually
     (B K : ℝ) (_hB : 0 ≤ B) (hK : 0 < K) :
@@ -191,24 +172,6 @@ private theorem B10NormalizedUpper_logN_div_logZ_le_eventually
     exact hrecip
   exact ⟨hlogZpos, hratio⟩
 
-private theorem B10NormalizedUpper_paid_error_absorb_eventually
-    (C δ : ℝ) (hC : 0 < C) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      C * (N : ℝ) / Real.log (N : ℝ) ^ (4 : ℝ) ≤
-        δ * SingularSeries.liuUniversalProduct * (N : ℝ) /
-          Real.log (N : ℝ) ^ (2 : ℝ) := by
-  -- Normalize the positive paid coefficient to its absolute-value envelope.
-  have hbase :=
-    MathlibNt.Analysis.eventually_log_rpow_remainder_lt_of_lower_bound
-      |C| SingularSeries.liuUniversalProduct δ 2
-      SingularSeries.liuUniversalProduct_pos hδ (by norm_num)
-  obtain ⟨M, hM⟩ := Filter.eventually_atTop.mp hbase
-  refine ⟨max 4 M, le_max_left _ _, ?_⟩
-  intro N hN
-  have h := (hM N ((le_max_right _ _).trans hN)
-    2 SingularSeries.liuUniversalProduct le_rfl).le
-  simpa only [abs_of_pos hC, show (2 : ℝ) + 2 = 4 by norm_num] using h
-
 /-- The already-produced paid upper bound and sieve-product estimate combine to
 the genuine coefficient `8 + δ` once the cutoff is normalized by
 `Z = ((N^(1/2))/log(N)^(B+1))^(1/2)`. The theorem retains the real main mass
@@ -256,7 +219,7 @@ theorem goldbachB10SiftedCount_normalized_upper
   obtain ⟨Nratio, hNratio4, hratio⟩ :=
     B10NormalizedUpper_logN_div_logZ_le_eventually B τ hB hτ hτ1
   obtain ⟨Nerr, hNerr4, herr⟩ :=
-    B10NormalizedUpper_paid_error_absorb_eventually C δ hC hδ
+    LiuWeight.quartic_log_error_absorb_eventually C δ hC hδ
   let N₀ := max 4 (max Npaid (max Nmass (max NZ (max Nratio Nerr))))
   refine ⟨N₀, le_max_left _ _, ?_⟩
   intro N hN hEven β hβ

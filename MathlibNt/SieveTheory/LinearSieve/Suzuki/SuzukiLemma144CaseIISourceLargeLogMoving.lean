@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioDirectAssembly
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIMovingFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform
 
 open scoped Classical BigOperators Interval
@@ -383,26 +382,6 @@ theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_i
       (bracket := caseIIConcreteRoundedRelativeBracketSourceLarge N (D : ℝ)
         d Δ (sourceSigma (D : ℝ) d) K)
       hendpoint hrelative)
-
-/-- Compatibility wrapper for the original fixed-sieve moving Case-II API. -/
-theorem exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {Dmin : ℕ} {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ)
-    (hDmin : 2 ≤ Dmin) :
-    ∃ C1min : ℝ, 1 ≤ C1min ∧
-      ∀ (C1 C K : ℝ) (N D : ℕ) (s : ℝ),
-        C1min ≤ C1 → 3 ≤ C → 2 ≤ K → 2 ≤ D →
-        HasDimensionOneLocalProductBound S K →
-        C1 * K ^ Θ < Real.log (D : ℝ) →
-        Odd N → 3 ≤ N → 1 < s → s ≤ 3 →
-        Lemma144MovingDomainGlobalDepthAt S H C K d Δ (N - 1) Dmin →
-        Lemma144CaseIISameCAt S H N D d Δ C K s := by
-  obtain ⟨C1min, hC1min, hall⟩ :=
-    exists_lemma144_caseII_odd_sameC_sourceLargeLog_uniform_moving_uniform_in_S
-      H hH hsrc hDmin
-  exact ⟨C1min, hC1min, hall S⟩
 
 
 end MathlibNt.SieveTheory

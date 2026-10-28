@@ -77,50 +77,6 @@ theorem WGCDData.Valid.slow_denominator {v : WGCDData} {q r N₁ N₂ : ℕ}
   unfold WGCDData.D'
   ring
 
-/-- A scale bound for the two smooth phase monomials, retaining the
-original beta support and the uniform large-residue range. -/
-theorem wAnalytic_phase_budget
-    {v : WGCDData} {q r N₁ N₂ : ℕ} (hv : v.Valid q r N₁ N₂)
-    {M T x u : ℝ} (hM : 0 ≤ M) (hT : 0 < T)
-    (hNT : T ≤ (N₁ : ℝ)) (hx : x = 4 * M * T) {a : ℤ}
-    (ha : |(a : ℝ)| ≤ x) (hu : |u| ≤ 3 * M) (h : ℤ) :
-    |(h : ℝ)| * (|u| / (v.D * v.k₁ * v.k₂ : ℕ) +
-      |(a : ℝ)| / (v.n₁ * v.k₁ * v.k₂ * v.D' : ℕ)) ≤
-        7 * M * |(h : ℝ)| / (q.lcm r : ℝ) := by
-  have hN₁ : (0 : ℝ) < N₁ := hT.trans_le hNT
-  have hl : (0 : ℝ) < q.lcm r := by
-    rw [hv.lcm_eq]
-    exact_mod_cast Nat.mul_pos (Nat.mul_pos hv.D_pos hv.k₁_pos) hv.k₂_pos
-  have ha' : |(a : ℝ)| ≤ 4 * M * (N₁ : ℝ) :=
-    ha.trans (hx ▸ mul_le_mul_of_nonneg_left hNT (by positivity))
-  rw [hv.slow_denominator, ← hv.lcm_eq, Nat.cast_mul]
-  have hb : |(a : ℝ)| / ((N₁ : ℝ) * (q.lcm r : ℝ)) ≤
-      4 * M / (q.lcm r : ℝ) := by
-    apply (div_le_div_iff₀ (mul_pos hN₁ hl) hl).mpr
-    nlinarith [mul_le_mul_of_nonneg_right ha' hl.le]
-  have hb' := add_le_add (div_le_div_of_nonneg_right hu hl.le) hb
-  calc
-    _ ≤ |(h : ℝ)| * (3 * M / (q.lcm r : ℝ) + 4 * M / (q.lcm r : ℝ)) :=
-      mul_le_mul_of_nonneg_left hb' (abs_nonneg _)
-    _ = _ := by ring
-
-/-- The actual ceiling cutoff only supplies `Z + M/lcm`. This explicitly
-records the boundary-frequency issue before any small-power variation claim. -/
-theorem wUniformCutoff_phase_scale_le {M Z : ℝ} (hM : 0 < M) (hZ : 0 ≤ Z)
-    {q r : ℕ} (hq : q ≠ 0) (hr : r ≠ 0) {h : ℤ}
-    (hh : h.natAbs ≤ wUniformCutoff M Z q r) :
-    M * |(h : ℝ)| / (q.lcm r : ℝ) ≤ Z + M / (q.lcm r : ℝ) := by
-  have hl : (0 : ℝ) < q.lcm r :=
-    Nat.cast_pos.mpr (Nat.pos_of_ne_zero (Nat.lcm_ne_zero hq hr))
-  have hh' : |(h : ℝ)| ≤ (wUniformCutoff M Z q r : ℝ) := by
-    simpa only [Nat.cast_natAbs, Int.cast_abs] using (Nat.cast_le (α := ℝ)).mpr hh
-  have hceil : (wUniformCutoff M Z q r : ℝ) ≤ (q.lcm r : ℝ) / M * Z + 1 :=
-    le_of_lt (Nat.ceil_lt_add_one (by positivity))
-  calc
-    _ ≤ M * ((q.lcm r : ℝ) / M * Z + 1) / (q.lcm r : ℝ) := by
-      gcongr
-      exact hh'.trans hceil
-    _ = _ := by field_simp
 
 /-- Positive dyadic reference scales enlarge the phase budget by at most
 sixteen. The estimate is for the complete rectangle, not just its masked

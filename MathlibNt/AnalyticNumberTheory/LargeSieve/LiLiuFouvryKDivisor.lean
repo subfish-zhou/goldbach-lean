@@ -1,4 +1,3 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
 
 noncomputable section
@@ -26,25 +25,6 @@ theorem wMaskedOriginal_abs_le_largeGCD_pair_mass_kscale (j : ℕ)
   convert hb using 1
   ring
 
-/-- The original shifted moment is dominated by a larger auxiliary interval.
-The original shift and its two-preimage multiplicity are unchanged. -/
-theorem highOmega_shifted_tau_sum_le_kscale (r s : ℕ)
-    {Cscale x : ℝ} (hC : 1 ≤ Cscale) (hx : 1 ≤ x)
-    (a : ℤ) (ha : |(a : ℝ)| ≤ Cscale*x) :
-    (∑ t ∈ Ioc 0 ⌊x⌋₊, (fouvryTau r t : ℝ)*fouvryTau s ((t : ℤ)-a).natAbs) ≤
-      5*Cscale*x*(1+Real.log (2*Cscale*x))^(r^2+s^2) := by
-  have hxx : x ≤ Cscale*x := le_mul_of_one_le_left (by linarith) hC
-  calc
-    _ ≤ ∑ t ∈ Ioc 0 ⌊Cscale*x⌋₊,
-        (fouvryTau r t : ℝ)*fouvryTau s ((t : ℤ)-a).natAbs := by
-      apply sum_le_sum_of_subset_of_nonneg
-      · intro t ht
-        exact mem_Ioc.mpr ⟨(mem_Ioc.mp ht).1,
-          (mem_Ioc.mp ht).2.trans (Nat.floor_mono hxx)⟩
-      · intro t _ _; positivity
-    _ ≤ 5*(Cscale*x)*(1+Real.log (2*(Cscale*x)))^(r^2+s^2) :=
-      highOmega_shifted_tau_sum_le r s (hx.trans hxx) a ha
-    _ = _ := by ring_nf
 
 /-- The fixed enlargement costs a constant, not an extra power of the main scale. -/
 theorem kscale_log_cost {Cscale x : ℝ} (hC : 1 ≤ Cscale) (hx : 1 ≤ x) (p : ℕ) :

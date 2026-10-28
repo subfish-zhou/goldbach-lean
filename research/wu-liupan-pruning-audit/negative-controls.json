@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "lean_run": false,
+  "negative_controls": [
+    {
+      "case": "baseline_identity",
+      "status": "rejected",
+      "reason": "fixed baseline identity"
+    },
+    {
+      "case": "baseline_blob_sha",
+      "status": "rejected",
+      "reason": "baseline blob SHA: MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean"
+    },
+    {
+      "case": "interval_offset",
+      "status": "rejected",
+      "reason": "fragment SHA: MathlibNt.SieveTheory.LiuWeight.liuPanLogLambdaCharacterPrefix_eq_discreteAbel"
+    },
+    {
+      "case": "fragment_sha",
+      "status": "rejected",
+      "reason": "fragment SHA: MathlibNt.SieveTheory.LiuWeight.liuPanLogLambdaCharacterPrefix_eq_discreteAbel"
+    },
+    {
+      "case": "survivor_changed_rehashed",
+      "status": "rejected",
+      "reason": "survivor/context reconstruction: MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean"
+    },
+    {
+      "case": "candidate_bytes",
+      "status": "rejected",
+      "reason": "candidate SHA: MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanAggregatePsiCharacters.lean"
+    }
+  ]
+}

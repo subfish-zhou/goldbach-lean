@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB10Atom_prod_lt",
+      "before_provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence"
+      ],
+      "after_provider": [
+        "MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted"
+      ],
+      "same_public_kind_and_type_hash": true
+    }
+  ],
+  "method": "The existing public strict-product name and statement move upstream, retaining their original docstring. Downstream consumers reuse that proof without reversing the import graph."
+}

@@ -38,13 +38,6 @@ theorem profile_error {s : ℝ} (hs : s ∈ Icc (2*a) cutoff) :
   unfold profilePolynomial
   constructor <;> linarith [hl.1,hl.2,hc.1,hc.2]
 
-theorem log_product_center {x y : ℝ} (hx : 0 < x) (hy : 0 < y) :
-    Real.log (x*y/(a*b)) = Real.log (center^2/(a*b)) +
-      Real.log (x/center)+Real.log (y/center) := by
-  obtain ⟨ha, hb, _, hc⟩ := g67CenteredEnvelope_constants_pos
-  simp (disch := positivity) only [Real.log_div, Real.log_mul, Real.log_pow]
-  ring
-
 
 def squareEarlyArgument (s : ℝ) : ℝ := (s-a)*(s-a)/(a*a)
 

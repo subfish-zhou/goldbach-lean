@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9LowIntegral_nonneg",
+      "before_provider": [
+        "MathlibNt.SieveTheory.LiLiuFouvryG9S5Kernel"
+      ],
+      "after_provider": [
+        "MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral"
+      ],
+      "same_public_kind_and_type_hash": true
+    }
+  ],
+  "verified_consumer": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9KernelBudget_low_nonneg",
+  "actual_shared_nonnegativity_reference_reachable": true,
+  "method": "The existing unconditional positivity proof moves upstream with its public name/type. Both consumers already import the integral provider. The second original public positivity name retains its full type and invokes this proof."
+}

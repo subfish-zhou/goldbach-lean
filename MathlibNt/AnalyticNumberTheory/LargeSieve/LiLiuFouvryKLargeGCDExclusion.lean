@@ -1,7 +1,7 @@
+import MathlibNt.Analysis.LogPowerBounds
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDOriginal
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-!
 # Quantitative first large-gcd exclusion for the actual nonzero W sum
@@ -66,28 +66,6 @@ theorem wMaskedTruncated_abs_le_largeGCD_kscale
         (wMaskedZeroMode_abs_le_largeGCD hk j hT hL hY M N Q hN hQ β c hβ hc a P hP))
       (hTail M Z hM0 hZ k j hk hj T L hT hL N Q hN hQ β c hβ hc a P)
 
-private theorem eventually_log_mul_rpow_le (K : ℝ) (hK : 0 ≤ K) (n : ℕ)
-    {b d : ℝ} (hbd : b < d) :
-    ∀ᶠ x : ℝ in atTop, K * (1 + Real.log x) ^ n * x ^ b ≤ x ^ d := by
-  have hb := ((isLittleO_log_rpow_rpow_atTop (n : ℝ)
-    (sub_pos.mpr hbd)).const_mul_left (K * 2 ^ n)).bound
-    (show (0 : ℝ) < 1 by norm_num)
-  filter_upwards [hb, eventually_ge_atTop (1 : ℝ),
-    Real.tendsto_log_atTop.eventually_ge_atTop (1 : ℝ)] with x hx hx1 hlog
-  have hx0 : 0 < x := by linarith
-  have hlog0 : 0 ≤ Real.log x := by linarith
-  have hb' : K * 2 ^ n * Real.log x ^ n ≤ x ^ (d - b) := by
-    simpa only [Real.rpow_natCast, Real.norm_eq_abs, one_mul,
-      abs_of_nonneg (by positivity : 0 ≤ K * 2 ^ n * Real.log x ^ n),
-      abs_of_nonneg (Real.rpow_nonneg hx0.le _)] using hx
-  calc
-    _ ≤ K * (2 * Real.log x) ^ n * x ^ b := by
-      gcongr
-      linarith
-    _ = (K * 2 ^ n * Real.log x ^ n) * x ^ b := by rw [mul_pow]; ring
-    _ ≤ x ^ (d - b) * x ^ b :=
-      mul_le_mul_of_nonneg_right hb' (Real.rpow_nonneg hx0.le _)
-    _ = x ^ d := by rw [← Real.rpow_add hx0]; congr 1; ring
 
 private theorem sqrt_log_div_rpow_le {x T η : ℝ}
     (hx : 1 ≤ x) (hT : 1 ≤ T) (hTx : T ≤ x) :
@@ -137,11 +115,11 @@ theorem eventually_wMaskedTruncated_largeGCD_power_saving_kscale
   let s := 2 * j ^ 2 + 1
   let v := 2 * (j - 1) + 2 * (k - 1)
   filter_upwards [eventually_ge_atTop (1 : ℝ),
-    eventually_log_mul_rpow_le C hC.le (p + 1)
+    MathlibNt.Analysis.eventually_log_mul_rpow_le C hC.le (p + 1)
       (show η / 8 - η / 2 < -η / 8 by linarith),
-    eventually_log_mul_rpow_le |dyadicCutoffMass| (abs_nonneg _) (p + 1 + s)
+    MathlibNt.Analysis.eventually_log_mul_rpow_le |dyadicCutoffMass| (abs_nonneg _) (p + 1 + s)
       (show -η / 2 < -η / 8 by linarith),
-    eventually_log_mul_rpow_le D hD.le v
+    MathlibNt.Analysis.eventually_log_mul_rpow_le D hD.le v
       (show 2 - η * (l : ℝ) < -η / 8 by linarith)] with x hx hOrig hZero hTail
   intro M T hM hT hMT N Q hN hQ β c hβ hc a ha hs P hP
   have hx0 : 0 < x := by linarith
@@ -206,22 +184,6 @@ theorem eventually_wMaskedTruncated_largeGCD_power_saving_kscale
       dsimp [p, s, H] at hOrig' hZero' hTail'
       linarith
 
-/-- Explicit uniform threshold version of the power saving. -/
-theorem wMaskedTruncated_largeGCD_power_saving_kscale
-    {k j : ℕ} (hk : 1 ≤ k) (hj : 1 ≤ j) {η Cscale : ℝ} (hη : 0 < η) (hCscale : 1 ≤ Cscale) :
-    ∃ x₀ : ℝ, 1 ≤ x₀ ∧ ∀ x : ℝ, x₀ ≤ x → ∀ M T : ℝ,
-      1 ≤ M → 1 ≤ T → M * T ≤ x →
-      ∀ N Q : Finset ℕ, N ⊆ Ioc 0 ⌊T⌋₊ → Q ⊆ Ioc 0 ⌊x⌋₊ →
-      ∀ β c : ℕ → ℝ, (∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ)) →
-      (∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) →
-      ∀ a : ℤ, |(a : ℝ)| ≤ Cscale * x → (∀ n ∈ N, β n ≠ 0 → ¬(n : ℤ) ∣ a) →
-      ∀ P : WOriginalTuple → Prop,
-      (∀ t ∈ wOriginalTuples N Q a, P t → x ^ η < (t.2.1.gcd t.2.2 : ℝ)) →
-      |wMaskedTruncated M (wUniformCutoff M (x ^ η)) N Q β c a P| ≤
-        3 * M * T ^ 2 * x ^ (-η / 8) := by
-  obtain ⟨x₀, hx₀⟩ := eventually_atTop.mp
-    (eventually_wMaskedTruncated_largeGCD_power_saving_kscale hk hj hη hCscale)
-  exact ⟨max 1 x₀, le_max_left _ _, fun x hx ↦ hx₀ x ((le_max_right _ _).trans hx)⟩
 
 /-- The actual alpha square sum pays every fixed natural logarithmic loss.
 The threshold is uniform in both scales, all three signed coefficients,
@@ -247,7 +209,7 @@ theorem wMaskedTruncated_largeGCD_alpha_log_payment_kscale
   let u := i ^ 2 - 1
   let K : ℝ := 6 * 2 ^ u
   filter_upwards [eventually_wMaskedTruncated_largeGCD_power_saving_kscale hk hj hη hCscale,
-    eventually_log_mul_rpow_le K (by dsimp [K]; positivity) (u + A)
+    MathlibNt.Analysis.eventually_log_mul_rpow_le K (by dsimp [K]; positivity) (u + A)
       (show -η / 8 < 0 by linarith),
     eventually_ge_atTop (2 : ℝ),
     Real.tendsto_log_atTop.eventually_ge_atTop (1 : ℝ)] with x hW hb hx hlog
@@ -320,4 +282,3 @@ theorem wMaskedTruncated_largeGCD_alpha_real_log_payment_kscale
     Real.rpow_le_rpow_of_exponent_le hlog (Nat.le_ceil A)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
-

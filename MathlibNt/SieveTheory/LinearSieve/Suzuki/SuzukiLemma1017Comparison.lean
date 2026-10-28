@@ -18,27 +18,6 @@ noncomputable def adjointPlus (s : ℝ) : ℝ := s ^ 2 - 2 * s + 1 / 2
 
 def adjointMinus (_s : ℝ) : ℝ := 1
 
-theorem adjointPlus_dde (s : ℝ) :
-    HasDerivAt (fun u => u * adjointPlus u)
-      (2 * adjointPlus s + adjointPlus (s + 1)) s := by
-  have hsquare := (hasDerivAt_id s).mul (hasDerivAt_id s)
-  have hpoly := (hsquare.sub ((hasDerivAt_id s).const_mul 2)).add_const (1 / 2)
-  have h := (hasDerivAt_id s).mul hpoly
-  have hev :
-      (id * fun u : ℝ => u * u - 2 * u + 1 / 2) =
-        (fun u => u * adjointPlus u) := by
-    funext u
-    simp [adjointPlus, pow_two]
-  rw [← hev]
-  apply h.congr_deriv
-  norm_num [adjointPlus]
-  ring
-
-theorem adjointMinus_dde (s : ℝ) :
-    HasDerivAt (fun u => u * adjointMinus u)
-      (2 * adjointMinus s - adjointMinus (s + 1)) s := by
-  norm_num [adjointMinus]
-  exact hasDerivAt_id s
 
 theorem adjointPlus_pos {s : ℝ} (hs : 2 ≤ s) : 0 < adjointPlus s := by
   dsimp [adjointPlus]
@@ -174,25 +153,6 @@ theorem compact_eta_extraction
     have hrs : r s ≤ r x := hxmax hs
     exact (div_le_iff₀ (hQpos s hs)).mp hrs
 
-/-- For the Section 13 definitions `P=T⁺-T⁻` and `Q=T⁺+T⁻`, the compact seed
-is automatic from strict positivity of the two hat layers.  Thus the exported
-seed theorem does not take any P/Q comparison as a premise. -/
-theorem compact_eta_for_positive_pair
-    {Tplus Tminus : ℝ → ℝ} (hp : Continuous Tplus) (hm : Continuous Tminus)
-    {a b : ℝ} (hab : a ≤ b)
-    (hp_pos : ∀ s ∈ Icc a b, 0 < Tplus s)
-    (hm_pos : ∀ s ∈ Icc a b, 0 < Tminus s) :
-    ∃ η : ℝ, 0 ≤ η ∧ η < 1 ∧
-      ∀ s ∈ Icc a b,
-        |Tplus s - Tminus s| ≤ η * (Tplus s + Tminus s) := by
-  apply compact_eta_extraction (hp.sub hm) (hp.add hm) hab
-  · intro s hs
-    exact add_pos (hp_pos s hs) (hm_pos s hs)
-  · intro s hs
-    rw [abs_lt]
-    change -(Tplus s + Tminus s) < Tplus s - Tminus s ∧
-      Tplus s - Tminus s < Tplus s + Tminus s
-    constructor <;> linarith [hp_pos s hs, hm_pos s hs]
 
 /-- The compact seed followed by Claim 10.18 at its right endpoint. -/
 theorem compact_eta_and_one_step
@@ -213,27 +173,6 @@ theorem compact_eta_and_one_step
     have hη₀η : η₀ ≤ η := by dsimp [η]; linarith
     exact (hseed₀ t ht).trans (mul_le_mul_of_nonneg_right hη₀η hQt.le)
   exact ⟨η, hη, hη1, hseed, claim10_18_one_step_strict h hη (by linarith) hseed⟩
-
-/-- Section-13-shaped public endpoint: positivity of `T⁺,T⁻`, the defining
-identities for `P,Q`, signed DDEs, explicit adjoints and pairing-zero produce a
-uniform compact coefficient and its strict Claim-10.18 improvement.  There is
-no comparison hypothesis in this statement. -/
-theorem positive_pair_compact_eta_and_one_step
-    {Tplus Tminus P Q : ℝ → ℝ} (h : SignedPQData P Q)
-    (hP : P = fun s => Tplus s - Tminus s)
-    (hQ : Q = fun s => Tplus s + Tminus s)
-    {a : ℝ} (ha : 4 ≤ a)
-    (hp_pos : ∀ s ∈ Icc (a - 1) a, 0 < Tplus s)
-    (hm_pos : ∀ s ∈ Icc (a - 1) a, 0 < Tminus s) :
-    ∃ η : ℝ, 0 < η ∧ η < 1 ∧
-      (∀ s ∈ Icc (a - 1) a, |P s| ≤ η * Q s) ∧
-      |P a| < η * Q a := by
-  apply compact_eta_and_one_step h ha
-  intro s hs
-  rw [hP, hQ, abs_lt]
-  change -(Tplus s + Tminus s) < Tplus s - Tminus s ∧
-    Tplus s - Tminus s < Tplus s + Tminus s
-  constructor <;> linarith [hp_pos s hs, hm_pos s hs]
 
 
 end Section10Lemma1017Comparison

@@ -85,18 +85,6 @@ theorem exists_product_crt_residue {q r n₁ n₂ : ℕ}
   simpa only [Int.lcm, Int.natAbs_natCast] using
     (Int.modEq_and_modEq_iff_modEq_lcm (a := m) (b := b) (m := q) (n := r))
 
-/-- Solvability over all integers is exactly the gcd compatibility condition. -/
-theorem exists_product_congruences_iff {q r n₁ n₂ : ℕ} (hq : 0 < q)
-    (h₁ : n₁.Coprime q) (h₂ : n₂.Coprime r) {a : ℤ}
-    (ha : Int.gcd a q = 1) :
-    (∃ m : ℤ, Int.ModEq q (m * n₁) a ∧ Int.ModEq r (m * n₂) a) ↔
-      Nat.ModEq (q.gcd r) n₁ n₂ := by
-  constructor
-  · rintro ⟨m, hm₁, hm₂⟩
-    exact product_congruences_compatible hq ha hm₁ hm₂
-  · intro hc
-    obtain ⟨b, hb₁, hb₂, _⟩ := exists_product_crt_residue h₁ h₂ hc a
-    exact ⟨b, hb₁, hb₂⟩
 
 /-- The original, unpruned inner sum in (8.1). -/
 def productProgressionWeight (S : Finset ℕ) (w : ℕ → ℝ) (a : ℤ)
@@ -251,18 +239,6 @@ def wPoissonFrequency (M : ℝ) (a : ℤ) (q r n₁ n₂ : ℕ) (h : ℤ) : ℂ 
   dyadicCutoffPoissonRemainder (M / (q.lcm r))
     ((productCRTResidue q r n₁ n₂ a : ℝ) / (q.lcm r)) h
 
-@[simp] theorem wPoissonFrequency_zero
-    (M : ℝ) (a : ℤ) (q r n₁ n₂ : ℕ) :
-    wPoissonFrequency M a q r n₁ n₂ 0 = 0 := rfl
-
-/-- Absolute convergence holds without a modulus-versus-scale restriction. -/
-theorem wPoissonFrequency_summable_norm {M : ℝ} (hM : 0 < M)
-    (a : ℤ) {q r : ℕ} (hq : q ≠ 0) (hr : r ≠ 0) (n₁ n₂ : ℕ) :
-    Summable (fun h : ℤ ↦ ‖wPoissonFrequency M a q r n₁ n₂ h‖) := by
-  obtain ⟨C, _, hbound⟩ := dyadicCutoffPoissonRemainder_uniform
-  exact (hbound (M / (q.lcm r))
-    (div_pos hM (by exact_mod_cast Nat.pos_of_ne_zero (Nat.lcm_ne_zero hq hr)))
-    ((productCRTResidue q r n₁ n₂ a : ℝ) / (q.lcm r))).1
 
 theorem productProgressionWeight_eq_main_add_fourier
     {M : ℝ} (hM : 0 < M) (a : ℤ) {q r n₁ n₂ : ℕ}
@@ -341,60 +317,5 @@ theorem dispersionW_eq_smoothWMain_add_nonzeroMode
     ring
   · simp only [if_neg hc, add_zero]
 
-/-- The unpruned absolute coefficient envelope. Its growth is not estimated. -/
-def smoothWErrorEnvelope (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ) : ℝ :=
-  ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-    ∑ n₁ ∈ N, ∑ n₂ ∈ N,
-      if WCompatible q r n₁ n₂ then |c q * c r * β n₁ * β n₂| else 0
-
-theorem smoothWErrorEnvelope_nonneg
-    (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ) :
-    0 ≤ smoothWErrorEnvelope N Q β c a := by
-  classical
-  exact Finset.sum_nonneg fun _ _ ↦ Finset.sum_nonneg fun _ _ ↦
-    Finset.sum_nonneg fun _ _ ↦ Finset.sum_nonneg fun _ _ ↦
-      by split_ifs <;> positivity
-
-/-- A universal coarse error bound, chosen before every arithmetic input.
-This is not sufficient for the F87 distribution theorem: the exact oscillatory
-remainder above still needs cancellation estimates. -/
-theorem dispersionW_smooth_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ N Q : Finset ℕ,
-      ∀ β c : ℕ → ℝ, ∀ a : ℤ, (∀ q ∈ Q, q ≠ 0) →
-      |dispersionW (dyadicCutoffNatSupport M) N Q
-          (fun m ↦ scaledDyadicCutoff M m) β c a - smoothWMain M N Q β c a| ≤
-        C * smoothWErrorEnvelope N Q β c a := by
-  classical
-  obtain ⟨C, hC, hbound⟩ := dyadicCutoffPoissonRemainder_uniform
-  refine ⟨C, hC, fun M hM N Q β c a hQ ↦ ?_⟩
-  rw [dispersionW_eq_smoothWMain_add_nonzeroMode hM N Q β c a hQ,
-    add_sub_cancel_left]
-  unfold smoothWNonzeroMode smoothWErrorEnvelope
-  simp only [Finset.mul_sum]
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro q hq
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro r hr
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro n₁ _
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro n₂ _
-  by_cases hc : WCompatible q r n₁ n₂
-  · simp only [if_pos hc]
-    rw [abs_mul]
-    have hp : 0 < (q.lcm r : ℝ) := by
-      exact_mod_cast Nat.pos_of_ne_zero (Nat.lcm_ne_zero
-        (hQ q (Finset.mem_filter.mp hq).1) (hQ r (Finset.mem_filter.mp hr).1))
-    have hb := (hbound (M / (q.lcm r)) (div_pos hM hp)
-      ((productCRTResidue q r n₁ n₂ a : ℝ) / (q.lcm r))).2
-    calc
-      _ ≤ |c q * c r * β n₁ * β n₂| * C :=
-        mul_le_mul_of_nonneg_left ((Complex.abs_re_le_norm _).trans hb) (abs_nonneg _)
-      _ = _ := by ring
-  · simp only [if_neg hc, abs_zero, mul_zero, le_refl]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

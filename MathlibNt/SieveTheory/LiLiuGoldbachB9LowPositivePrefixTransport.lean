@@ -35,16 +35,5 @@ theorem goldbachS5ClosedBelow_le_positivePrefix_sifted_normalized_of_pos (eps de
   have hsquare := hq N hqN
   linarith
 
-theorem goldbachS5ClosedBelow_le_positivePrefix_sifted_normalized
-    (delta : ℝ) (hdelta : 0 < delta) (eps : ℝ)
-    (heps : 0 < eps ∧ eps < (2 : ℝ) / 15) :
-    ∃ N0 : ℕ, 4 ≤ N0 ∧ ∀ N : ℕ, N0 ≤ N → ∀ Z : ℝ,
-      1 ≤ Z → Z ≤ Real.sqrt (N : ℝ) →
-      (goldbachS5ClosedBelow (goldbachDifferenceCarrier N eps) N
-        ((N : ℝ) ^ (4 / 53 : ℝ)) ((N : ℝ) ^ (1 / 3 : ℝ))
-        ((N : ℝ) ^ (1 / 10 : ℝ)) : ℝ) ≤
-        (goldbachB9LowPositivePrefixSiftedCount N eps Z : ℝ) +
-        delta * (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ) ^ 2) :=
-  goldbachS5ClosedBelow_le_positivePrefix_sifted_normalized_of_pos eps delta heps.1 hdelta
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

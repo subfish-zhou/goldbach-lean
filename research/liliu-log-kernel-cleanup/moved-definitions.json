@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "original_public_names_moved": 13,
+  "unchanged_source_blocks": [
+    {
+      "target": "MathlibNt/SieveTheory/Liu/PrimePairs/LiuLogCoordinates.lean",
+      "block": "defs",
+      "unchanged_source_block_sha256": "89ff026b5113f771e84a0dccd25494028111d595db0df141c9bd4d4f79ece960"
+    },
+    {
+      "target": "MathlibNt/SieveTheory/Liu/PrimePairs/LiuLogCoordinates.lean",
+      "block": "rectangle",
+      "unchanged_source_block_sha256": "85a6365130a04151e51297352ab6dcd73089e6ebfad9d94741236d5e74f3d0b1"
+    },
+    {
+      "target": "MathlibNt/SieveTheory/Liu/PrimePairs/LiuLogCoordinates.lean",
+      "block": "indicator",
+      "unchanged_source_block_sha256": "15e08b8a13071865508485495bf62672516dabbe879eb786f7718686fae1d484"
+    },
+    {
+      "target": "MathlibNt/SieveTheory/Liu/Weights/LiuWeightHarmonic.lean",
+      "block": "defs",
+      "unchanged_source_block_sha256": "46c36e14ad58afa88c2f17041187c9b37ce6db1a4a6171961e8ccb7f0fb4a9b3"
+    },
+    {
+      "target": "MathlibNt/SieveTheory/Liu/Weights/LiuWeightHarmonic.lean",
+      "block": "bounds",
+      "unchanged_source_block_sha256": "60cf9a5f2e8d61f9911fc390adb219afbd1d147f2e79fff4a1437c17072a776e"
+    },
+    {
+      "target": "MathlibNt/SieveTheory/Liu/Weights/LiuWeightHarmonic.lean",
+      "block": "weight",
+      "unchanged_source_block_sha256": "5695fa764f7879c6ef5e2a88790191775a94e30f4cd040866c4383a2566b203c"
+    }
+  ],
+  "scope": "All original full grid-convergence, Selberg and application proofs retained. Public names and types independently compared in the whole main census."
+}

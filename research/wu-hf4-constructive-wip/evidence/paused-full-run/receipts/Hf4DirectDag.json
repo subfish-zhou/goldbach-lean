@@ -1,0 +1,47 @@
+{
+  "module": "Hf4DirectDag",
+  "exit_code": 0,
+  "seconds": 4.300756376236677,
+  "source_sha256": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f",
+  "object_sha256": "1ffe49c07d41f53825455b74808cdff0d5100953a2bb42c0441bde60b923ce6d",
+  "dependencies": {
+    "Hf4DirectKernel": "8ab571036e5e3be01937a62265c0f5b72a4b74b231f8c55400bd00cbd5216737"
+  },
+  "dependency_contexts": {
+    "Hf4DirectKernel": "2954e44aa790643cc87b4288c00f9238b8249e4e095d147a3bd0ae8c37638f47"
+  },
+  "context_sha256": "f2c68103fcb21638a60dceb2398c7759e1fccee29c8b181aaba05b22157f8315",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDag.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDag.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4DirectDag.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4DirectDag.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4DirectDag.resources",
+  "resource_sha256": "150643b9475b3fb9a18eaf8f5701b1a00ca09750996de2187c32953bff587e98",
+  "artifact_bundle_sha256": {
+    ".olean": "1ffe49c07d41f53825455b74808cdff0d5100953a2bb42c0441bde60b923ce6d"
+  }
+}

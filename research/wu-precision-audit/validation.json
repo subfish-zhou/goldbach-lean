@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "completed_at_utc": "2026-10-26T07:42:33.592265+00:00",
+  "scope": "Wu research tree only; unchanged Chen/Li-Liu proofs not rebuilt in this phase.",
+  "build": {
+    "status": "passed",
+    "root": "Wu2008Research",
+    "verified": 5441,
+    "planned": 5441,
+    "old_proof_objects_used": false
+  },
+  "recompiled_distinct_modules_across_attempts": 505,
+  "resolved_build_issue": "Renamed the finite-index hypothesis to hindex so it does not shadow the fifth terminal endpoint hi; all affected generated roots rebuilt.",
+  "cache_policy": "Unchanged source/object/dependency hashes may reuse verified build receipts; all changed modules and affected dependents are recompiled.",
+  "manifest_sha256": "3a6bbe46789f2733f8f75e85aeba2ee55702080fcd86e141780606d8437cd1e1",
+  "literal_acceptance": {
+    "status": "pass",
+    "theorem": "WuPaper.ClassicalSlots.one894",
+    "modules": 5441,
+    "manifest_sha256": "3a6bbe46789f2733f8f75e85aeba2ee55702080fcd86e141780606d8437cd1e1",
+    "literal_probe_sha256": "6563566d2467881a788bddb92381093546dd10fe5a5c9801edddff4946b252db",
+    "log": "build/classical-literal-axioms.log"
+  },
+  "kernel_replays": [
+    "WR2ExactRationalLog",
+    "WR2ClassicalFourthTableCheck",
+    "WR2ClassicalFifthTableCheck",
+    "WR2ClassicalSixthTableCheck",
+    "WR2ClassicalCertificate"
+  ],
+  "kernel_scope": "Each named module replayed over imports verified by the full source build; not a separate replay of every imported declaration.",
+  "preserved_numeric_tables": 11,
+  "unchanged_non_generated_modules": 4926,
+  "unchanged_public_types": 223214,
+  "unchanged_non_generated_public_types": 222046,
+  "changed_internal_block_types": 487,
+  "changed_coverage_auxiliary_types": 28,
+  "generator_modules": {
+    "fourth": 323,
+    "fifth": 55,
+    "sixth": 133
+  },
+  "logs_sha256": {
+    "kernel-WR2ClassicalFourthTableCheck.log": "13bdd64365cee958d9aae4c28460be5bb4802570629da1462edf0c69a5ac095a",
+    "type-comparison.log": "4ca748f0fef628334c7f7b294887d338b6fc722a1ffb9feefa1e626ddbedc478",
+    "kernel-WR2ClassicalSixthTableCheck.log": "660f3acc30baca68ac04c9d6a221126a9bc238adb79109427b1e1baa41515b9e",
+    "verify-sources.log": "64727fa91c567b5e34b507f7ee0fd3d9171d144de3ee3397b267f544941e64d5",
+    "postvalidate.log": "f0f534c9cdd73e6afb28837589cef3dca62c4edb914ed05591c4b297ff8cb5f0",
+    "literal-check.log": "b826ce257373df526928f06a0090bb449eecefd8aa25bac4d3efec96c9bb8a6c",
+    "kernel-WR2ClassicalCertificate.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+    "kernel-WR2ClassicalFifthTableCheck.log": "3a33b0f4ae4339e7c700dd417d8174b0f2ec1f6ad831c3b78d955f6ffb4e0f97",
+    "full-build-before-name-fix.log": "06c748df1c586e476ea8c4936992e0d89e772bd78ffc440100a06d01bebb0919",
+    "literal-axioms.log": "a0644ceb82d242c2f6ff6d4e86bef47d0c226a927bf45e14b908b6f8c785e499",
+    "kernel-WR2ExactRationalLog.log": "c5148362beaa2e40797bec7a3203b8f4ca7e7d3260bd095a419ae7a0d9b3e70a",
+    "resolved-name-shadowing.log": "312b308d6457b17199f2b5c39be05b980b9666f39136ac2c1266225877a2fc8b",
+    "fifth-check.log": "119d518f9281a6416d97e4a2e51afee0880e131f70a0582667d4758300e4d6d5",
+    "sixth-check.log": "1581f99aee29971ed31ca850253cfe6db1ac87319d90977e780f88c479d07120",
+    "fourth-check.log": "1d8b42219de91592d9932c9265f5f9c84ebb4a5937205a20a8ffa5c0d8ec03e3",
+    "full-build.log": "78cdae54c92035c04f28d48b6ec8e6a7c9685e019646699a87336db501add42e"
+  },
+  "evidence_sha256": {
+    "source-size.json": "a457f734f0dcefe0f366da1498ccb5c4427bb72206bcc11c67a9c7d12d9eddaa",
+    "source-invariants.json": "6645019d07fbd995c71708003fe60592d4a866851c962fca7765b3c242803d53",
+    "type-comparison.json": "3820b0a7fce2795784c84b0c1961afcce6c3db7cc3c4b06bf2a74aa171343820",
+    "generated-change-plan.json": "ec634a10e3b31ce212c885c7c1810845eaf6b4e82585f716125bb2913d44a797"
+  }
+}

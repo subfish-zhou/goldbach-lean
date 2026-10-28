@@ -86,46 +86,5 @@ theorem boxWeight_supportedAt (B : Finset ℕ) {U : ℝ} (hU : 0 ≤ U)
     SupportedAt (boxWeight B k) (U ^ k) :=
   supportedAt_smul _ (supportedAt_pow (primeBox_supportedAt B hB) hU k)
 
-private theorem prod_map_constant {α : Type*} (l : List α) (U : ℝ) :
-    (l.map (fun _ => U)).prod = U ^ l.length := by
-  simp
-
-/-- Allocation of k identical box widths with one extra width of slack. -/
-theorem exists_slot_split {U Q₁ Q₂ : ℝ} (hU : 1 ≤ U)
-    (hQ₁ : 1 ≤ Q₁) (hQ₂ : 1 ≤ Q₂) (k : ℕ)
-    (hsplit : Q₁ * Q₂ = U ^ (k + 1)) :
-    ∃ a b : ℕ, a + b = k ∧ U ^ a ≤ Q₁ ∧ U ^ b ≤ Q₂ := by
-  let input : List Unit := List.replicate k ()
-  have hprefix : PrefixSquareBound (fun _ : Unit => U) (Q₁ * Q₂) input := by
-    intro i hi
-    have hik : i < k := by simpa [input] using hi
-    change ((input.take i).map (fun _ : Unit => U)).prod * U ^ 2 ≤ Q₁ * Q₂
-    rw [prod_map_constant, List.length_take]
-    rw [Nat.min_eq_left hi.le, hsplit, ← pow_add]
-    exact pow_le_pow_right₀ hU (by omega)
-  obtain ⟨left, right, hpart, hleft, hright⟩ :=
-    exists_boxPartition_of_prefixSquareBound (fun _ : Unit => U) hQ₁ hQ₂ input hprefix
-  refine ⟨left.length, right.length, ?_, ?_, ?_⟩
-  · simpa [input] using hpart.perm.length_eq
-  · simpa only [prod_map_constant] using hleft
-  · simpa only [prod_map_constant] using hright
-
-/-- A concrete common WF weight. B and k are fixed before every level split;
-the only split-dependent objects are the two explicitly normalized factors. -/
-theorem boxWeight_wellFactorable (B : Finset ℕ) {U : ℝ} (hU : 1 ≤ U)
-    (hB : ∀ p ∈ B, p.Prime → (p : ℝ) ≤ U) (k : ℕ) :
-    WellFactorable (boxWeight B k) (U ^ (k + 1)) := by
-  have hU₀ : 0 ≤ U := le_trans zero_le_one hU
-  refine ⟨one_le_pow₀ hU, boxWeight_abs_le_one B k, ?_, ?_⟩
-  · exact supportedAt_mono (boxWeight_supportedAt B hU₀ hB k)
-      (pow_le_pow_right₀ hU (Nat.le_succ k))
-  · intro Q₁ Q₂ hQ₁ hQ₂ hsplit
-    obtain ⟨a, b, hab, ha, hb⟩ := exists_slot_split hU hQ₁ hQ₂ k hsplit
-    subst k
-    obtain ⟨heq, hleft, hright⟩ := boxWeight_bounded_split B a b
-    refine ⟨_, _, hleft, ?_, hright, ?_, heq⟩
-    · exact supportedAt_smul _
-        (supportedAt_mono (boxWeight_supportedAt B hU₀ hB a) ha)
-    · exact supportedAt_mono (boxWeight_supportedAt B hU₀ hB b) hb
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

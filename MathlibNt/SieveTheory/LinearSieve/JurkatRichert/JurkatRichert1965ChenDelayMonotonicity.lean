@@ -263,22 +263,6 @@ theorem monotoneOn_jr1965f : MonotoneOn jr1965f (Ioi 0) := by
       (antitoneOn_jr1965F.mono (fun _ hz => hz.1))
       ⟨(lt_of_not_ge hx2).le, hxy⟩ ⟨by linarith, le_rfl⟩ hxy
 
-theorem deriv_jr1965F_neg {u : ℝ} (hu : 0 < u) : deriv jr1965F u < 0 := by
-  by_cases hu2 : u ≤ 2
-  · rw [(hasDerivAt_jr1965F_initial hu (by linarith)).deriv]
-    exact div_neg_of_neg_of_pos (neg_neg_of_pos (by
-      unfold jr1965DelayConstant; positivity)) (sq_pos_of_pos hu)
-  · rw [(hasDerivAt_jr1965F (lt_of_not_ge hu2)).deriv]
-    exact div_neg_of_neg_of_pos
-      (sub_neg.mpr (jr1965f_sub_one_lt_jr1965F (lt_of_not_ge hu2).le)) hu
-
-theorem deriv_jr1965f_pos {u : ℝ} (hu : 2 < u) : 0 < deriv jr1965f u := by
-  rw [(hasDerivAt_jr1965f hu).deriv]
-  apply div_pos _ (by linarith)
-  apply sub_pos.mpr
-  exact (jr1965f_lt_jr1965F (by linarith)).trans_le
-    (antitoneOn_jr1965F (by change 0 < u - 1; linarith)
-      (by change 0 < u; linarith) (by linarith))
 
 theorem jr1965F_le_delayConstant {u : ℝ} (hu : 1 ≤ u) :
     jr1965F u ≤ jr1965DelayConstant := by
@@ -291,54 +275,5 @@ theorem jr1965f_le_delayConstant {u : ℝ} (hu : 1 ≤ u) :
   (jr1965f_lt_jr1965F (lt_of_lt_of_le zero_lt_one hu)).le.trans
     (jr1965F_le_delayConstant hu)
 
-theorem jr1965g_nonneg (ν : ℕ) {u : ℝ} (hu : 0 < u) : 0 ≤ jr1965g ν u := by
-  unfold jr1965g
-  split_ifs
-  · exact (jr1965F_pos hu).le
-  · exact jr1965f_nonneg hu
-
-theorem jr1965g_le_delayConstant (ν : ℕ) {u : ℝ} (hu : 1 ≤ u) :
-    jr1965g ν u ≤ jr1965DelayConstant := by
-  unfold jr1965g
-  split_ifs
-  · exact jr1965F_le_delayConstant hu
-  · exact jr1965f_le_delayConstant hu
-
-theorem abs_jr1965g_le_delayConstant (ν : ℕ) {u : ℝ} (hu : 1 ≤ u) :
-    |jr1965g ν u| ≤ jr1965DelayConstant := by
-  rw [abs_of_nonneg (jr1965g_nonneg ν (lt_of_lt_of_le zero_lt_one hu))]
-  exact jr1965g_le_delayConstant ν hu
-
-/-- Uniform total variation on the entire unbounded sieve range. In particular,
-the bound does not depend on either endpoint of a finite subinterval. -/
-theorem eVariationOn_jr1965g_Ici_le (ν : ℕ) :
-    eVariationOn (jr1965g ν) (Ici 1) ≤ ENNReal.ofReal jr1965DelayConstant := by
-  have hid : eVariationOn (id : ℝ → ℝ) (Icc 0 jr1965DelayConstant) =
-      ENNReal.ofReal jr1965DelayConstant := by
-    simp [eVariationOn_id_Icc]
-  have hmapsF : MapsTo jr1965F (Ici 1) (Icc 0 jr1965DelayConstant) :=
-    fun _ hx => ⟨(jr1965F_pos (lt_of_lt_of_le zero_lt_one hx)).le,
-      jr1965F_le_delayConstant hx⟩
-  have hmapsf : MapsTo jr1965f (Ici 1) (Icc 0 jr1965DelayConstant) :=
-    fun _ hx => ⟨jr1965f_nonneg (lt_of_lt_of_le zero_lt_one hx),
-      jr1965f_le_delayConstant hx⟩
-  unfold jr1965g
-  split_ifs
-  · simpa only [Function.id_comp, hid] using
-      eVariationOn.comp_le_of_antitoneOn (id : ℝ → ℝ) jr1965F
-        (t := Ici 1) (s := Icc 0 jr1965DelayConstant)
-        (antitoneOn_jr1965F.mono (fun _ hx => lt_of_lt_of_le zero_lt_one hx)) hmapsF
-  · simpa only [Function.id_comp, hid] using
-      eVariationOn.comp_le_of_monotoneOn (id : ℝ → ℝ) jr1965f
-        (t := Ici 1) (s := Icc 0 jr1965DelayConstant)
-        (monotoneOn_jr1965f.mono (fun _ hx => lt_of_lt_of_le zero_lt_one hx)) hmapsf
-
-theorem boundedVariationOn_jr1965g_Ici (ν : ℕ) :
-    BoundedVariationOn (jr1965g ν) (Ici 1) :=
-  ne_of_lt ((eVariationOn_jr1965g_Ici_le ν).trans_lt ENNReal.ofReal_lt_top)
-
-theorem eVariationOn_jr1965g_Icc_le (ν : ℕ) {a b : ℝ} (ha : 1 ≤ a) :
-    eVariationOn (jr1965g ν) (Icc a b) ≤ ENNReal.ofReal jr1965DelayConstant :=
-  (eVariationOn.mono _ (fun _ hx => ha.trans hx.1)).trans (eVariationOn_jr1965g_Ici_le ν)
 
 end MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne

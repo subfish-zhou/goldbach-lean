@@ -3,7 +3,7 @@
 A Lean 4 project formalizing progress toward **Goldbach's conjecture** and
 building reusable analytic number theory, with **Chen's 1+2 theorem** and
 **Li–Liu's 1+1.9 theorem** formalized. The separate
-[Wu04/Wu08 development](research/wu2008/README.md) derives **1+1.894**;
+[Wu04/Wu08 development](research/wu2008/README.md) derives **1+1.8938**;
 its full source build, statement and axiom checks, and final module kernel
 replay have passed.
 
@@ -22,6 +22,53 @@ another prime or a product of two primes, whose factors may be equal.
 The [release notes](docs/RELEASE_NOTES.md) describe the new results and retain the
 historical v1.0.0 record. The [source-size report](docs/SOURCE_SIZE.md) gives the
 current theorem import-closure sizes and measured refactoring changes.
+The [structural Chen audit](docs/CHEN_REDUNDANCY_AUDIT.md) records a net saving
+of 115,586 effective main-library lines. The subsequent
+[comparison with five original papers](docs/CHEN_PAPER_COMPARISON.md)
+shares three finite Selberg optimizer proofs and saves another 598 lines.
+The current Chen import closure contains 99,214 effective code lines.
+The [implemented Li–Liu cleanup](docs/LILIU_CLEANUP.md) follows the
+[original-paper audit](docs/LILIU_REDUNDANCY_AUDIT.md), unifies the count and
+existence routes, removes duplicate certificates and separates generic sieve
+factors from Chen applications. Two waves saved 30,897 main-library lines. The
+[continuity follow-up](docs/LILIU_CONTINUITY_CLEANUP.md) saves another 60 lines
+using existing one-sided-neighborhood lemmas. The
+[shared-foundation follow-up](docs/LILIU_LOG_KERNEL_CLEANUP.md) saves another
+11 main lines and 1,086 Li–Liu import-closure lines, counting both
+new modules and all moved code. The
+[finite-cell calculus follow-up](docs/LILIU_GRID_CALCULUS_CLEANUP.md) shares integration
+and convergence arguments across six grids and saves another 89 main lines.
+The [shared-lemma follow-up](docs/LILIU_SHARED_LEMMA_CLEANUP.md) removes another
+84 production lines and drops redundant evenness assumptions from three internal
+Euler positivity statements. The
+[local-product follow-up](docs/LILIU_PRODUCT_CLEANUP.md) shares the uniform sieve-product
+witness and normalized error payments, saving another 192 lines including its
+new shared module. The [carrier and growth follow-up](docs/LILIU_CARRIER_CLEANUP.md)
+shares exact carrier and scale-membership proofs and uses Mathlib's finite-fiber
+bound, saving another 154 main lines including all moved bodies and imports.
+The [endpoint follow-up](docs/LILIU_ENDPOINT_CLEANUP.md) shares exact endpoint
+positivity, floor-scale and large-divisor bounds, saving another 78 main lines
+including all moved proof bodies. The [low-conductor/Pan follow-up](docs/LILIU_LOW_BUDGET_CLEANUP.md)
+shares the generic low-conductor budget and Pan maximum bound, saving another
+187 main lines, counting all shared code. The [finite coprimality-gate follow-up](docs/LILIU_GATE_BUDGET_CLEANUP.md)
+lets B10 specialize G11's general finite-support estimate, saving another 181 lines,
+including all 116 lines in the new common provider. The
+[finite-helper follow-up](docs/LILIU_FINITE_HELPER_CLEANUP.md) reuses existing finite-sum,
+log-payment and inclusive grid bounds, saving another 34 main lines with all moved
+code counted. The [boundary-integral follow-up](docs/LILIU_BOUNDARY_INTEGRAL_CLEANUP.md)
+shares the exact B9/G9 excess-cover estimates and low-integral positivity, saving
+another 127 lines with all moved code counted. The
+[quartic-log follow-up](docs/LILIU_QUARTIC_LOG_CLEANUP.md) shares B10/S2's identical
+quartic remainder payment, saving another 16 main/Li–Liu lines including its full
+shared proof. Chen's source closure grows by 16 lines through that shared provider.
+The [shared-calculus follow-up](docs/LILIU_SHARED_CALCULUS_CLEANUP.md) reuses the
+original G11 derivative/Fubini proofs and global author-weight cap, and simplifies
+two complex-power identities, saving another 27 main/Li–Liu lines and 6 Chen lines.
+The [finite-prefix follow-up](docs/LILIU_FINITE_PREFIX_CLEANUP.md) shares the original
+squarefree-divisor and sorted-prefix proofs, saving another 66 main/Li–Liu lines
+and 49 Chen lines.
+Current main size: 201,756 effective lines; current Li–Liu import closure:
+194,201 lines.
 The [recorded build benchmarks](docs/BUILD_BENCHMARK.md)
 measure the v1.0.0-rc1 and v1.0.0 **1+2** developments.
 
@@ -125,19 +172,28 @@ The quantitative theorem gives an eventual lower bound of
 actual good-representation set, for even `N`. See
 [`docs/THEOREMS.md`](docs/THEOREMS.md) for definitions and normalization.
 
-## Wu04/Wu08: 1+1.894
+## Wu04/Wu08: 1+1.8938
 
 The self-contained [research development](research/wu2008/README.md) has its own
 source manifest, build driver, and acceptance checks. Its final module is
 [`WR2ClassicalCertificate`](research/wu2008/src/WR2ClassicalCertificate.lean),
-whose theorem `WuPaper.ClassicalSlots.one894` states that every sufficiently
+whose theorem `WuPaper.ClassicalSlots.one8938` states that every sufficiently
 large even `N` has `N = p + r*q`, with `p` and `q` prime, `r = 1` or prime,
-and `r^500 ≤ q^447`.
+and `r^5000 ≤ q^4469`. The previous `one894` interface is retained.
 
-The sources are integrated, and the complete 8826-module research build,
-independent statement and axiom checks, and final module kernel replay have
-passed. Follow the research README for the separate verification commands,
-proof source map, and acceptance records.
+The complete 4,151-module research scope, independent literal statement and axiom
+checks, and final module kernel replay have passed. The production receipt check
+reuses 3,500 actual compiled source proofs and verifies 651 unchanged dependencies.
+Follow the research README for separate verification commands and acceptance records.
+The latest [structural compression](docs/WU_STRUCTURAL_COMPRESSION.md) saves 7,612
+effective lines while preserving precision and budgets. The final theorem import
+closure now contains 525,529 effective lines, 601,107 fewer than the original version.
+The preceding [LiuPan lemma pruning](docs/WU_LIUPAN_PRUNING.md) remains a historical
+accepted phase with 383 removed declarations and 10,924 lines saved.
+
+The [paused next Hf4 candidate](research/wu-hf4-constructive-wip/README.md) is
+preserved separately with its producer and partial verification evidence; it is
+excluded from the accepted totals above.
 
 ## Build and check
 
@@ -204,7 +260,7 @@ work depends on your cache state and selected target.
 - `PrimeNumberTheoremAnd/`: the attributed, adapted prime-number-theorem source closure.
 - `scripts/`: reproducible source and trust checks.
 - `docs/`: theorem map, architecture, provenance, and verification instructions.
-- `research/wu2008/`: the separately built and accepted Wu04/Wu08 1+1.894 proof.
+- `research/wu2008/`: the separately built and accepted Wu04/Wu08 1+1.8938 proof.
 
 The proof uses a modern combination of Jurkat–Richert/Richert linear sieve,
 Suzuki comparison results, Selberg upper sieve, and proved distribution bounds.

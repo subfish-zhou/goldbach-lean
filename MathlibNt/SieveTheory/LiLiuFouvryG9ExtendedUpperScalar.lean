@@ -72,7 +72,4 @@ theorem large_dimension_scalar {a ε x y K : ℝ}
   calc
     _ = 16 * (y / 4 / a * (1 + K / a)) ^ 2 := by ring
     _ ≤ _ := by simpa only [mul_assoc] using h'
-
-#print axioms small_dimension_scalar
-#print axioms large_dimension_scalar
 end MathlibNt.SieveTheory.LiLiuPrereqWF.G9ExtendedUpper

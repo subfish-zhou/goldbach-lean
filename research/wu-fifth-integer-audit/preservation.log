@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "baseline_archive_sha256": "e128462a39a69261442b5f6e0c717ff41e1678472e287d02d6959a43dae6eb26",
+  "modules_before": 4181,
+  "modules_after": 4142,
+  "unchanged_outside_old_candidate_cohort": 4126,
+  "fixed_Git_payment_equality": 3072,
+  "interpreted_actual_Lean_Nat_payments": 3072,
+  "independent_64point_sums": 48,
+  "public_Payment_definitions": 3,
+  "Numerator_signatures": 3,
+  "sum_total_declarations": 6,
+  "Root_all_paid_declarations": 3,
+  "unchanged_Certificate": true,
+  "cPoly_body_and_QName_preserved": true,
+  "TableCheck_other_body_preserved": true,
+  "outside_support_zero_guard_exact": true,
+  "interpreter_sha256": "56e4f779dac849d4d95d6c1065176efd424d8f9a83273ebf621c42e2d5df499b",
+  "Lean_run": false
+}

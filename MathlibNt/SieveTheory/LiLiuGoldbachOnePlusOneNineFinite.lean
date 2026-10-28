@@ -65,13 +65,6 @@ theorem D19_pos_iff (N : ℕ) :
     mem_onePlusOneNineRepresentedPrimes_iff, IsOnePlusOneNineRepresentation,
     exists_and_left]
 
-theorem D19_ne_zero_iff (N : ℕ) :
-    D19 N ≠ 0 ↔
-      ∃ p r q : ℕ,
-        p ≤ N ∧ p.Prime ∧ (r = 1 ∨ r.Prime) ∧ q.Prime ∧
-          N = p + r * q ∧ r ^ 10 ≤ q ^ 9 := by
-  rw [← D19_pos_iff]
-  omega
 
 /-! ## A literal finite form of the first `Goldbachbasic` weight -/
 
@@ -136,23 +129,6 @@ noncomputable def goldbachPrimeCarrier (N : ℕ) (ε : ℝ) : Finset ℕ := by
 /-- Exact natural cutoff, preserving the real weak inequality at integer primes. -/
 noncomputable def goldbachPowerCutoff (N : ℕ) (β : ℝ) : ℕ := ⌈(N : ℝ) ^ β⌉₊
 
-theorem leastPrimeFactorAtLeast_powerCutoff_iff (N n : ℕ) (β : ℝ) :
-    LeastPrimeFactorAtLeast (goldbachPowerCutoff N β) n ↔
-      ∀ r : ℕ, r.Prime → r ∣ n → (N : ℝ) ^ β ≤ r := by
-  simp only [LeastPrimeFactorAtLeast, goldbachPowerCutoff, Nat.ceil_le]
-
-/-- For actual differences n ≥ 2, the encoded cutoff is exactly the paper's
-real inequality for the least prime factor P⁻(n). -/
-theorem leastPrimeFactorAtLeast_powerCutoff_iff_minFac (N n : ℕ) (β : ℝ)
-    (hn : 2 ≤ n) :
-    LeastPrimeFactorAtLeast (goldbachPowerCutoff N β) n ↔
-      (N : ℝ) ^ β ≤ (n.minFac : ℝ) := by
-  rw [leastPrimeFactorAtLeast_powerCutoff_iff]
-  constructor
-  · intro h
-    exact h n.minFac (Nat.minFac_prime (by omega)) (Nat.minFac_dvd n)
-  · intro h r hr hd
-    exact h.trans (by exact_mod_cast Nat.minFac_le_of_dvd hr.two_le hd)
 
 /-- Every positive weight comes from a prime or a two-prime product with a
 prime factor strictly below the upper cutoff. Multiplicity is retained. -/
@@ -378,20 +354,5 @@ theorem goldbachBasic_finite_le_D19 (ε : ℝ) (hε : 0 < ε) :
           ⟨Nat.le_of_lt_succ (Finset.mem_range.mp (hP hp.1)), hp.2⟩)
     _ = (D19 N : ℤ) := rfl
 
-/-- A positive actual Goldbachbasic RHS yields a literal 1+1.9 representation.
-Only positivity of the four finite counts remains, not a pointwise input. -/
-theorem exists_representation_of_goldbachBasicFiniteRHS_pos (ε : ℝ) (hε : 0 < ε) :
-    ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N → ∀ α : ℝ,
-      0 < goldbachBasicFiniteRHS (goldbachDifferenceCarrier N ε)
-        (goldbachPowerCutoff N α) (goldbachPowerCutoff N ((9 : ℝ) / 19 - ε)) →
-      ∃ p r q : ℕ,
-        p ≤ N ∧ p.Prime ∧ (r = 1 ∨ r.Prime) ∧ q.Prime ∧
-          N = p + r * q ∧ r ^ 10 ≤ q ^ 9 := by
-  obtain ⟨N0, hN0⟩ := goldbachBasic_finite_le_D19 ε hε
-  refine ⟨N0, ?_⟩
-  intro N hN α hpos
-  rw [← D19_pos_iff]
-  have hle := hN0 N hN α
-  omega
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine

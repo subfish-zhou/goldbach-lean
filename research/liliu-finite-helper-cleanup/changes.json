@@ -1,0 +1,200 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/DirichletL/DirichletLQuadraticPolyaVinogradovExplicit.lean",
+      "status": "modified",
+      "before_sha256": "350f482d1201c01bf861506802d86a8f2c5b53a01f3f4f31a48bca8501f052e1",
+      "after_sha256": "026849ca676f4f30d0b348f97bf8c43011dc0c0214221f2054d88b373b22d521",
+      "before": {
+        "code_lines": 308,
+        "physical_lines": 327,
+        "utf8_bytes": 15969
+      },
+      "after": {
+        "code_lines": 301,
+        "physical_lines": 321,
+        "utf8_bytes": 15700
+      },
+      "delta": {
+        "code_lines": -7,
+        "physical_lines": -6,
+        "utf8_bytes": -269
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryCompletion.lean",
+      "status": "modified",
+      "before_sha256": "ad3e11d7b6070602d8edbfb16e0ba630e38b51f8253372ef55385d63202ed826",
+      "after_sha256": "9f231ca00dc63bf30bd0e3ed0e9a74a3ba8648ee91fce05315b96d1509235a06",
+      "before": {
+        "code_lines": 212,
+        "physical_lines": 250,
+        "utf8_bytes": 10916
+      },
+      "after": {
+        "code_lines": 207,
+        "physical_lines": 246,
+        "utf8_bytes": 10762
+      },
+      "delta": {
+        "code_lines": -5,
+        "physical_lines": -4,
+        "utf8_bytes": -154
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryDirectPayMainLocal.lean",
+      "status": "modified",
+      "before_sha256": "9ad611bd862d038f75517c367db1364a8d7a5e3c8c36b36a24298385f6fbb5f9",
+      "after_sha256": "b6a0098df7ba5f42b7e40109212773e035a1e59bf4112cb5affb86a5ab8a6861",
+      "before": {
+        "code_lines": 68,
+        "physical_lines": 79,
+        "utf8_bytes": 3890
+      },
+      "after": {
+        "code_lines": 59,
+        "physical_lines": 68,
+        "utf8_bytes": 3224
+      },
+      "delta": {
+        "code_lines": -9,
+        "physical_lines": -11,
+        "utf8_bytes": -666
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryDirectPaySecondaryLocal.lean",
+      "status": "modified",
+      "before_sha256": "3f63f8ccb86c2e19eaec857e47376b3f3401d6be6d48488dfe0a14c059dd6843",
+      "after_sha256": "aef8466ec8b7c1ba7e9256697d606780ae3ae014b81ff82765a8166765bb7f40",
+      "before": {
+        "code_lines": 66,
+        "physical_lines": 76,
+        "utf8_bytes": 3717
+      },
+      "after": {
+        "code_lines": 60,
+        "physical_lines": 70,
+        "utf8_bytes": 3346
+      },
+      "delta": {
+        "code_lines": -6,
+        "physical_lines": -6,
+        "utf8_bytes": -371
+      }
+    },
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuPrereqFouvryKSectionReindex.lean",
+      "status": "modified",
+      "before_sha256": "f5593fc7f2086f3be8b77a318bed9cd6dc59e6f48efc8a26227c9b234129d469",
+      "after_sha256": "544a450aa7839185bc1bc01f68b3ac3ad39161e13d5db66aaf8c547bdda92f8e",
+      "before": {
+        "code_lines": 171,
+        "physical_lines": 199,
+        "utf8_bytes": 9883
+      },
+      "after": {
+        "code_lines": 180,
+        "physical_lines": 210,
+        "utf8_bytes": 10549
+      },
+      "delta": {
+        "code_lines": 9,
+        "physical_lines": 11,
+        "utf8_bytes": 666
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB8NormalizedMainMass.lean",
+      "status": "modified",
+      "before_sha256": "a1483990f2f6dc676d54331b6c7c7dcd8095f5aae333ec71e48d6361d69a5d8b",
+      "after_sha256": "cf1494139e8baa5cd8320908fc10fe7d2bbd17cd25534bd9d58335105893f8f6",
+      "before": {
+        "code_lines": 286,
+        "physical_lines": 304,
+        "utf8_bytes": 16163
+      },
+      "after": {
+        "code_lines": 282,
+        "physical_lines": 301,
+        "utf8_bytes": 15928
+      },
+      "delta": {
+        "code_lines": -4,
+        "physical_lines": -3,
+        "utf8_bytes": -235
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB9HighFirstNormalized.lean",
+      "status": "modified",
+      "before_sha256": "ca762050a6b2969cd961b501b26300bd606f9b3dd2dcc9fd92e8b12d664605e4",
+      "after_sha256": "f8d099a9a2c49b43b10e4e013c425158d07f60b1fe767dc823865e7f0900b482",
+      "before": {
+        "code_lines": 175,
+        "physical_lines": 185,
+        "utf8_bytes": 9870
+      },
+      "after": {
+        "code_lines": 171,
+        "physical_lines": 182,
+        "utf8_bytes": 9635
+      },
+      "delta": {
+        "code_lines": -4,
+        "physical_lines": -3,
+        "utf8_bytes": -235
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachG11NormalizedIntegralEnvelope.lean",
+      "status": "modified",
+      "before_sha256": "6189924ce6faeb39c19a8e319c3972e969b363a94abcc8bad4955064ae353bf0",
+      "after_sha256": "4afdbb2a519a360c4df23ea636d9556013839b10407033aa8ac41e0cbe6b0c28",
+      "before": {
+        "code_lines": 21,
+        "physical_lines": 27,
+        "utf8_bytes": 1316
+      },
+      "after": {
+        "code_lines": 17,
+        "physical_lines": 24,
+        "utf8_bytes": 1081
+      },
+      "delta": {
+        "code_lines": -4,
+        "physical_lines": -3,
+        "utf8_bytes": -235
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuPrereqWFTransportAbsorption.lean",
+      "status": "modified",
+      "before_sha256": "ae30f1854e5c265dad52b14f9626799af01d5f1a5f5ce23c4f989e0cbc24dd41",
+      "after_sha256": "4f7d50a0ea5b0c11afbd4b0fc6abfded5d6388c7bd778c98503140bd845f41d2",
+      "before": {
+        "code_lines": 30,
+        "physical_lines": 51,
+        "utf8_bytes": 1889
+      },
+      "after": {
+        "code_lines": 26,
+        "physical_lines": 47,
+        "utf8_bytes": 1648
+      },
+      "delta": {
+        "code_lines": -4,
+        "physical_lines": -4,
+        "utf8_bytes": -241
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -34,
+    "physical_lines": -29,
+    "utf8_bytes": -1740
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

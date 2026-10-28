@@ -58,26 +58,6 @@ theorem sum_Icc_primeReciprocalCoeff (n : ℕ) :
   · rintro ⟨hkn, hkprime⟩
     exact ⟨⟨hkprime.one_lt.le, Nat.le_of_lt_succ hkn⟩, hkprime⟩
 
-theorem primeReciprocalSum_le_succ (n : ℕ) :
-    primeReciprocalSum n ≤ (n + 1 : ℕ) := by
-  unfold primeReciprocalSum
-  calc
-    (primesUpTo n).sum (fun p => 1 / (p : ℝ))
-        ≤ (primesUpTo n).sum (fun _ => (1 : ℝ)) := by
-          apply sum_le_sum
-          intro p hp
-          have hp0 : (0 : ℝ) < p := by
-            exact_mod_cast (mem_primesUpTo.mp hp).1.pos
-          rw [one_div]
-          exact (inv_le_one₀ hp0).2 (by
-            exact_mod_cast (mem_primesUpTo.mp hp).1.one_le)
-    _ = ((primesUpTo n).card : ℝ) := by simp
-    _ ≤ (n + 1 : ℕ) := by
-      have hcard := card_le_card (show primesUpTo n ⊆ range (n + 1) by
-        intro p hp
-        exact mem_range.mpr (Nat.lt_succ_of_le (mem_primesUpTo.mp hp).2))
-      have hcard' : (primesUpTo n).card ≤ n + 1 := by simpa using hcard
-      exact_mod_cast hcard'
 
 /-- The reciprocal-prime sum is bounded by the corresponding harmonic sum. -/
 theorem primeReciprocalSum_le_one_add_log (n : ℕ) :
@@ -98,17 +78,6 @@ theorem primeReciprocalSum_le_one_add_log (n : ℕ) :
       simp [one_div]
     _ ≤ 1 + Real.log n := harmonic_le_one_add_log n
 
-/-- A coarse unconditional growth bound, sufficient for the half-plane `1 < re s`. -/
-theorem primeReciprocalSum_isBigO_natCast :
-    primeReciprocalSum =O[atTop] fun n : ℕ => (n : ℝ) := by
-  rw [isBigO_iff]
-  refine ⟨2, ?_⟩
-  filter_upwards [eventually_ge_atTop 1] with n hn
-  have hnonneg := primeReciprocalSum_nonneg n
-  have hle := primeReciprocalSum_le_succ n
-  rw [Real.norm_eq_abs, abs_of_nonneg hnonneg, Real.norm_eq_abs,
-    abs_of_nonneg (Nat.cast_nonneg n)]
-  exact hle.trans (by exact_mod_cast (show n + 1 ≤ 2 * n by omega))
 
 /-- The reciprocal-prime sum grows more slowly than every positive real
 power.  This elementary estimate extends the Abel bridge to `Re(s) > 0`. -/
@@ -206,18 +175,5 @@ theorem realPrimeDirichletSum_eq_mul_integral_of_pos
       · rfl
     _ = _ := primeDirichletSum_eq_mul_integral_of_pos ε hε
 
-/--
-An unconditional specialization of the Abel/Mellin bridge.  Its coarse growth
-proof only gives `1 < re s`; sharper Mertens bounds can instead be supplied to
-`primeReciprocalLSeries_eq_mul_integral` to reach every positive real part.
--/
-theorem primeReciprocalLSeries_eq_mul_integral_of_one_lt_re
-    {s : ℂ} (hs : 1 < s.re) :
-    LSeries (fun n => primeReciprocalCoeff n) s =
-      s * ∫ t in Set.Ioi (1 : ℝ),
-        (primeReciprocalSum ⌊t⌋₊ : ℂ) * (t : ℂ) ^ (-(s + 1)) := by
-  have hO : primeReciprocalSum =O[atTop] fun n : ℕ => (n : ℝ) ^ (1 : ℝ) := by
-    simpa only [Real.rpow_one] using primeReciprocalSum_isBigO_natCast
-  exact primeReciprocalLSeries_eq_mul_integral zero_le_one hs hO
 
 end AnalyticNumberTheory.Mertens

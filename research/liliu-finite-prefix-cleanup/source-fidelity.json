@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "all_changes_limited_to_identified_proof_bodies_and_card_visibility": true,
+  "all_import_lists_unchanged": true,
+  "canonical_prefix_copies_old_wf_proof_with_symmetry": true,
+  "canonical_divisor_copies_old_wf_mathlib_proof": true,
+  "rounded_definitions_products_and_parity_tests_source_unchanged": true,
+  "method": "Construct complete expected post-change file texts from the four archived sources using only the specified proof-body substitutions and one private-to-public visibility change, then require byte-for-byte equality."
+}

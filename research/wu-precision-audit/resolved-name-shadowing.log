@@ -1,0 +1,33 @@
+/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFifthTerminalRoot.lean:22:30: error: Application type mismatch: The argument
+  hi
+has type
+  i < 1024
+of sort `Prop` but is expected to have type
+  ℝ
+of sort `Type` in the application
+  point cut hi
+/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFifthTerminalRoot.lean:22:50: error: Application type mismatch: The argument
+  hi
+has type
+  i < 1024
+of sort `Prop` but is expected to have type
+  ℝ
+of sort `Type` in the application
+  point cut hi
+/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFifthTerminalRoot.lean:26:32: error: Application type mismatch: The argument
+  hi
+has type
+  i < 1024
+of sort `Prop` but is expected to have type
+  ℝ
+of sort `Type` in the application
+  point cut hi
+/home/azureuser/goldbach-lean/research/wu2008/src/WR2ClassicalFifthTerminalRoot.lean:26:66: error: Application type mismatch: The argument
+  hi
+has type
+  i < 1024
+of sort `Prop` but is expected to have type
+  ℝ
+of sort `Type` in the application
+  point cut hi
+'WuPaper.ClassicalFifthRational.all_terminal_paid' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

@@ -1,0 +1,160 @@
+@paidCell_le_eRemainder : ∀ {S : ℝ},
+  3 ≤ S →
+    S - 2 ≤ NodeExtension.upperNode 0 →
+      ∀ (k : Fin 9),
+        RemainingHf.paidCell S (FirstFeedbackIntegrals.cellLeft (S - 2) k) (NodeExtension.upperNode k) ≤
+          W06.eRemainder (NodeExtension.nodeBasis k) S
+'WuTarget.W17Joint.paidCell_le_eRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+@rationalJ_le_jRemainder : ∀ {s S : ℝ},
+  2 ≤ s →
+    3 ≤ S →
+      S ≤ 5 →
+        s ≤ S →
+          2 ≤ S - S / s → ∀ (k : Fin 9), W05.rationalJCoefficient s S k ≤ W06.jRemainder (NodeExtension.nodeBasis k) s S
+'WuTarget.W17Joint.rationalJ_le_jRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+remainderMatrix : Fin 9 → Fin 9 → ℝ
+'WuTarget.W17Joint.remainderMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+remainderMatrix_nonneg : ∀ (i k : Fin 9), 0 ≤ remainderMatrix i k
+'WuTarget.W17Joint.remainderMatrix_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+remainderMatrix_le : ∀ (i k : Fin 9), remainderMatrix i k ≤ W06.nonSigmaMatrix i k
+'WuTarget.W17Joint.remainderMatrix_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+eWeightLower : ℝ → ℝ
+'WuTarget.W17Joint.eWeightLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+jWeightLower : ℝ → ℝ → ℝ
+'WuTarget.W17Joint.jWeightLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+@eWeightLower_bounds : ∀ {S : ℝ}, 3 ≤ S → S ≤ 5 → 0 ≤ eWeightLower S ∧ eWeightLower S ≤ W06.eCoefficient S
+'WuTarget.W17Joint.eWeightLower_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+@jWeightLower_bounds : ∀ {s S : ℝ}, 2 ≤ s → s ≤ S → 0 ≤ jWeightLower s S ∧ jWeightLower s S ≤ W06.jCoefficient s S
+'WuTarget.W17Joint.jWeightLower_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+rowWeightLower : Fin 9 → ℝ
+'WuTarget.W17Joint.rowWeightLower' depends on axioms: [propext, Classical.choice, Quot.sound]
+rowWeightLower_bounds : ∀ (i : Fin 9), 0 ≤ rowWeightLower i ∧ rowWeightLower i ≤ W06.rowCoefficient i
+'WuTarget.W17Joint.rowWeightLower_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+rationalSigmaMatrix : Fin 9 → Fin 9 → ℝ
+'WuTarget.W17Joint.rationalSigmaMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+rationalSigmaMatrix_nonneg : ∀ (i k : Fin 9), 0 ≤ rationalSigmaMatrix i k
+'WuTarget.W17Joint.rationalSigmaMatrix_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+rationalSigmaMatrix_le : ∀ (i k : Fin 9), rationalSigmaMatrix i k ≤ W06.sigmaMatrix i k
+'WuTarget.W17Joint.rationalSigmaMatrix_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+jointMatrix : Fin 9 → Fin 9 → ℝ
+'WuTarget.W17Joint.jointMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+jointMatrix_nonneg : ∀ (i k : Fin 9), 0 ≤ jointMatrix i k
+'WuTarget.W17Joint.jointMatrix_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+jointMatrix_le_feedbackMatrix : ∀ (i k : Fin 9), jointMatrix i k ≤ ActualNineFeedback.feedbackMatrix i k
+'WuTarget.W17Joint.jointMatrix_le_feedbackMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+baseline_le_jointMatrix : ∀ (i k : Fin 9), Wu04Bypass.M i k ≤ jointMatrix i k
+'WuTarget.W17Joint.baseline_le_jointMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+symbolic_matrix_bounds : ∀ (i k : Fin 9),
+  0 ≤ jointMatrix i k ∧ Wu04Bypass.M i k ≤ jointMatrix i k ∧ jointMatrix i k ≤ ActualNineFeedback.feedbackMatrix i k
+'WuTarget.W17Joint.symbolic_matrix_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+@symbolic_apply_le_feedback : ∀ {z : Fin 9 → ℝ},
+  (∀ (k : Fin 9), 0 ≤ z k) →
+    ∀ (i : Fin 9),
+      ActualNineFeedback.matrixApply jointMatrix z i ≤
+        ActualNineFeedback.matrixApply ActualNineFeedback.feedbackMatrix z i
+'WuTarget.W17Joint.symbolic_apply_le_feedback' depends on axioms: [propext, Classical.choice, Quot.sound]
+symbolic_seed_nonneg : ∀ (i : Fin 9), 0 ≤ W09.seed i
+'WuTarget.W17Joint.symbolic_seed_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+symbolic_seed_stronger : ∀ (i : Fin 8), NineFeedbackStrength.publication i.castSucc < W09.seed i.castSucc
+'WuTarget.W17Joint.symbolic_seed_stronger' depends on axioms: [propext, Classical.choice, Quot.sound]
+@symbolic_actual_with_seed : ∀ {δ : ℝ},
+  0 < δ →
+    δ ≤ W09.commonRadius →
+      ∀ (i : Fin 9),
+        W09.seed i + ActualNineFeedback.matrixApply jointMatrix (NodeExtension.actualNine δ) i ≤
+          NodeExtension.actualNine δ i
+'WuTarget.W17Joint.symbolic_actual_with_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@symbolic_seed_le_actual : ∀ {δ : ℝ},
+  0 < δ → δ ≤ W09.commonRadius → ∀ (i : Fin 9), W09.seed i ≤ NodeExtension.actualNine δ i
+'WuTarget.W17Joint.symbolic_seed_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+symbolic_same_delta_system : (∀ (i k : Fin 9), 0 ≤ jointMatrix i k) ∧
+  (∀ (i k : Fin 9), Wu04Bypass.M i k ≤ jointMatrix i k) ∧
+    (∀ (i : Fin 9), 0 ≤ W09.seed i) ∧
+      ∃ d,
+        0 < d ∧
+          d ≤ 1 / 10 ∧
+            ∀ (δ : ℝ),
+              0 < δ →
+                δ ≤ d →
+                  (∀ (i : Fin 9), W09.seed i ≤ NodeExtension.actualNine δ i) ∧
+                    ∀ (i : Fin 9),
+                      W09.seed i + ActualNineFeedback.matrixApply jointMatrix (NodeExtension.actualNine δ) i ≤
+                        NodeExtension.actualNine δ i
+'WuTarget.W17Joint.symbolic_same_delta_system' depends on axioms: [propext, Classical.choice, Quot.sound]
+@symbolic_paid_update : ∀ {δ : ℝ},
+  0 < δ →
+    δ ≤ W09.commonRadius →
+      ∀ {x y : Fin 9 → ℝ},
+        (∀ (k : Fin 9), x k ≤ NodeExtension.actualNine δ k) →
+          (∀ (i : Fin 9), y i ≤ W09.seed i + ActualNineFeedback.matrixApply jointMatrix x i) →
+            ∀ (i : Fin 9), y i ≤ NodeExtension.actualNine δ i
+'WuTarget.W17Joint.symbolic_paid_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+@W04.clippedCell_le_eKernel : ∀ {S : ℝ}, 3 ≤ S → S ≤ 5 → ∀ (k : Fin 9), W04.clippedCell S k ≤ W04.eKernel S k
+'WuTarget.W04.clippedCell_le_eKernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@W05.rationalJCoefficients_paid : ∀ {z : Fin 9 → ℝ},
+  (∀ (k : Fin 9), 0 ≤ z k) →
+    ∀ {s S : ℝ},
+      2 ≤ s →
+        3 ≤ S →
+          S ≤ 5 →
+            s ≤ S →
+              2 ≤ S - S / s →
+                NodeExtension.aProfile (NodeExtension.nineProfile z) * Real.log ((S - 1) / (s - 1)) +
+                    ∑ k, W05.rationalJCoefficient s S k * z k ≤
+                  ActualNineFeedback.profileJ z s S
+'WuTarget.W05.rationalJCoefficients_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+W06.feedbackMatrix_split : ∀ (i k : Fin 9),
+  ActualNineFeedback.feedbackMatrix i k =
+    W06.rowCoefficient i * NodeExtension.aProfile (NodeExtension.nineProfile (NodeExtension.nodeBasis k)) +
+      W06.nonSigmaMatrix i k
+'WuTarget.W06.feedbackMatrix_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+W06.sigmaMatrix_add_nonSigma_le : ∀ (i k : Fin 9),
+  W06.sigmaMatrix i k + W06.nonSigmaMatrix i k ≤ ActualNineFeedback.feedbackMatrix i k
+'WuTarget.W06.sigmaMatrix_add_nonSigma_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+W07.paidTable_le_densityEntry : ∀ (i : Fin 4) (k : Fin 9),
+  W07.paidTable i k ≤ W07.densityEntry (ActualNineFeedback.coupledRow i) k
+'WuTarget.W07.paidTable_le_densityEntry' depends on axioms: [propext, Classical.choice, Quot.sound]
+@W08.paidCells_le_kernel : ∀ {z : Fin 9 → ℝ},
+  (∀ (k : Fin 9), 0 ≤ z k) →
+    ∀ {S : ℝ},
+      3 ≤ S →
+        S - 2 ≤ NodeExtension.upperNode 0 →
+          RemainingHf.paidCells z S ≤
+            ∫ (t : ℝ) in S - 2..3, NodeExtension.nineProfile z t * (Real.log ((t + 1) / (S - 1)) / t)
+'WuTarget.W08.paidCells_le_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@W09.seed_feedback_actual : ∀ {δ : ℝ},
+  0 < δ →
+    δ ≤ W09.commonRadius →
+      ∀ (i : Fin 9),
+        W09.seed i + ActualNineFeedback.matrixApply ActualNineFeedback.feedbackMatrix (NodeExtension.actualNine δ) i ≤
+          NodeExtension.actualNine δ i
+'WuTarget.W09.seed_feedback_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+W09.commonRadius_pos : 0 < W09.commonRadius
+'WuTarget.W09.commonRadius_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+W09.commonRadius_cap : W09.commonRadius ≤ 1 / 10
+'WuTarget.W09.commonRadius_cap' depends on axioms: [propext, Classical.choice, Quot.sound]
+def WuTarget.W17Joint.jointMatrix : Fin 9 → Fin 9 → ℝ :=
+fun i k => rationalSigmaMatrix i k + remainderMatrix i k
+def WuTarget.W17Joint.remainderMatrix : Fin 9 → Fin 9 → ℝ :=
+fun i k => W08.paidMatrix i k + W04.extraMatrix i k + W05.jTable i k + W07.paidMatrix i k
+def WuTarget.W17Joint.rowWeightLower : Fin 9 → ℝ :=
+fun i =>
+  if h : ↑i < 4 then
+    (4 * eWeightLower (ActualNineFeedback.coupledRow ⟨↑i, h⟩).S +
+              eWeightLower (ActualNineFeedback.coupledRow ⟨↑i, h⟩).kappa1 +
+            jWeightLower (ActualNineFeedback.coupledRow ⟨↑i, h⟩).s (ActualNineFeedback.coupledRow ⟨↑i, h⟩).S +
+          jWeightLower (ActualNineFeedback.coupledRow ⟨↑i, h⟩).kappa2 (ActualNineFeedback.coupledRow ⟨↑i, h⟩).S +
+        jWeightLower (ActualNineFeedback.coupledRow ⟨↑i, h⟩).kappa3 (ActualNineFeedback.coupledRow ⟨↑i, h⟩).S) /
+      5
+  else
+    eWeightLower (ActualNineFeedback.firstS ⟨↑i - 4, ⋯⟩) +
+      jWeightLower (ActualNineFeedback.firstNode ⟨↑i - 4, ⋯⟩) (ActualNineFeedback.firstS ⟨↑i - 4, ⋯⟩) / 2
+def WuTarget.W09.seedQ : Fin 9 → ℚ :=
+![15826959223 / 1000000000000, 15255699828 / 1000000000000, 13904075181 / 1000000000000, 11781229047 / 1000000000000,
+  9411030887 / 1000000000000, 6562045207 / 1000000000000, 3537860555 / 1000000000000, 1056766244 / 1000000000000, 0]
+def WuTarget.W09.commonRadius : ℝ :=
+min (W09.radius 0)
+  (min (W09.radius 1)
+    (min (W09.radius 2)
+      (min (W09.radius 3) (min (W09.radius 4) (min (W09.radius 5) (min (W09.radius 6) (W09.radius 7)))))))
+W17 recovery cone: 90231 constants; missing=[]; forbidden=[]

@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.FourFactorUnconditionalEndpoints
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCorrection
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
 
 /-! Actual prime-character prefixes for the nonprincipal low-conductor lane.

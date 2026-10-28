@@ -1,0 +1,132 @@
+{
+  "status": "pass_standalone_only",
+  "files": 13,
+  "main_candidate_net_code_lines": -154,
+  "next_wave_results": {
+    "status": "pass",
+    "finished_at_utc": "2026-10-27T05:52:03.601021+00:00",
+    "results": [
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachClosedTriples.lean",
+        "probe_sha256": "c431c6656a314c68c04bed4a589ece8ea8d4e3f12db7ac37ac750b18135dd1bf",
+        "exit_code": 0,
+        "elapsed_seconds": 6.633538842201233,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachClosedTriples.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachWeightInitial.lean",
+        "probe_sha256": "744e279511b30d49d02ee1f7a314fff016a1d2d63a0a5d46c537739e6e94e101",
+        "exit_code": 0,
+        "elapsed_seconds": 7.169469173997641,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachWeightInitial.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachWeightTriplePartition.lean",
+        "probe_sha256": "751a758c2f303d13dc9e4c1b0ba05e8f7005b76f846725053eb6c37442e5e899",
+        "exit_code": 0,
+        "elapsed_seconds": 6.590492855757475,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachWeightTriplePartition.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuPrereqFouvryBetaCleanPayment.lean",
+        "probe_sha256": "e69ddfbfa829001f3ac3e577f78f783610426ea5d0ee8637852e27c3ec4d70dd",
+        "exit_code": 0,
+        "elapsed_seconds": 9.904061429202557,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuPrereqFouvryBetaCleanPayment.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.Analysis.LogPowerBounds",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LogPowerBounds.lean",
+        "probe_sha256": "6b35ee2d935eb28997a13ccba2b952b547ce84744cb4764defb7129bcccd559f",
+        "exit_code": 0,
+        "elapsed_seconds": 5.121895112097263,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LogPowerBounds.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuFouvryKLargeGCDExclusion.lean",
+        "probe_sha256": "7ce2a82544211d3804ed32195bc671891bc5c9054bf73fe702e92c4be256c830",
+        "exit_code": 0,
+        "elapsed_seconds": 11.986703678965569,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuFouvryKLargeGCDExclusion.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachB10NormalizedUpper.lean",
+        "probe_sha256": "f65ebc6d4d2d879ab8b7fb948de52379ca1d19e59bcd955e26da9d834625d713",
+        "exit_code": 0,
+        "elapsed_seconds": 11.843465879559517,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachB10NormalizedUpper.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachS2PaidUpper.lean",
+        "probe_sha256": "1f2ccc08cee53ee314d26b5ac9e24d53cf216dba48d5e767285d8c5b07bf4d2b",
+        "exit_code": 0,
+        "elapsed_seconds": 8.62069996073842,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachS2PaidUpper.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachB8NormalizedMainMass.lean",
+        "probe_sha256": "a1483990f2f6dc676d54331b6c7c7dcd8095f5aae333ec71e48d6361d69a5d8b",
+        "exit_code": 0,
+        "elapsed_seconds": 9.674158304929733,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuGoldbachB8NormalizedMainMass.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuPrereqFouvryGramResonanceScaleBox.lean",
+        "probe_sha256": "1deedfa8b15a026381d773ad08ce066b12f8dfb205d3017f952d183947baf6b2",
+        "exit_code": 0,
+        "elapsed_seconds": 7.81483881175518,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuPrereqFouvryGramResonanceScaleBox.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioBox",
+        "probe_file": "/tmp/liliu-product-payments/next-wave/probes/LiLiuPrereqFouvrySecondaryRatioBox.lean",
+        "probe_sha256": "ee652754eeff7dc3d6a071947489ebb62852e174b4c3021552e3643aa215e789",
+        "exit_code": 0,
+        "elapsed_seconds": 8.036708485335112,
+        "log": "/tmp/liliu-product-payments/next-wave/probes/LiLiuPrereqFouvrySecondaryRatioBox.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "initial_failure": "Three limit compositions needed explicit Function.comp_def simplification; actual initial results/logs retained in initial-probes. No production source or accepted statement changed."
+  },
+  "fiber_results": {
+    "status": "pass",
+    "results": [
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier",
+        "probe_sha256": "dc619c3dc15c9243bf124326f49e74fa00b3e362ffe5078f7e640133bdb7fc6e",
+        "exit_code": 0,
+        "log": "/tmp/liliu-product-payments/fiber-candidates/LiLiuGoldbachS4SwitchedCarrier.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier",
+        "probe_sha256": "7ec51e7dfa4ba7936e81b95c9a94b63380ac91b0b48d6f622e2922ddfa495bd0",
+        "exit_code": 0,
+        "log": "/tmp/liliu-product-payments/fiber-candidates/LiLiuGoldbachS5SwitchedCarrier.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "record_scope": "Historical standalone prototype proof receipts before application; accepted full production combination is recorded separately in validation.json.",
+  "accepted_full_combination_validation": "validation.json"
+}

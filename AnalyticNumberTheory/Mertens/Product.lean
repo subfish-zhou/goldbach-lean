@@ -1,5 +1,4 @@
 import AnalyticNumberTheory.Mertens.PartialSummation
-import Mathlib.Analysis.SumIntegralComparisons
 
 /-!
 # Finite logarithmic bridge for Mertens' product theorem
@@ -59,23 +58,6 @@ private theorem norm_logarithmicCorrectionTerm_le (p : ℕ) :
 theorem summable_logarithmicCorrectionTerm : Summable logarithmicCorrectionTerm :=
   summable_two_div_nat_sq.of_norm_bounded norm_logarithmicCorrectionTerm_le
 
-/-- The finite correction converges to its absolutely convergent series. -/
-theorem tendsto_logarithmicCorrection :
-    Tendsto logarithmicCorrection atTop (𝓝 logarithmicCorrectionLimit) := by
-  have hpartial : Tendsto (fun x : ℕ =>
-      ∑ p ∈ Finset.range (x + 1), logarithmicCorrectionTerm p)
-      atTop (𝓝 logarithmicCorrectionLimit) := by
-    change Tendsto ((fun n : ℕ =>
-      ∑ p ∈ Finset.range n, logarithmicCorrectionTerm p) ∘ fun x : ℕ => x + 1)
-      atTop (𝓝 (∑' p : ℕ, logarithmicCorrectionTerm p))
-    exact summable_logarithmicCorrectionTerm.tendsto_sum_tsum_nat.comp
-      (tendsto_add_atTop_nat 1)
-  have hfun : logarithmicCorrection = fun x : ℕ =>
-      ∑ p ∈ Finset.range (x + 1), logarithmicCorrectionTerm p := by
-    funext x
-    exact logarithmicCorrection_eq_sum_range x
-  rw [hfun]
-  exact hpartial
 
 /-- The difference between the limiting correction and its finite version is
 the shifted tail of the absolutely convergent series. -/

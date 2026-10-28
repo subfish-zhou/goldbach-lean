@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorAssemblyTools
 import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpMassIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachG12OriginalHighNormalized
 
 noncomputable section
 open Classical Finset

@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensitySource
-import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridge
 import MathlibNt.SieveTheory.LiLiuPrereqWFRoughComparison
 
 /-!
@@ -173,9 +172,5 @@ theorem exists_roughOrdinaryDensity_ff_of_powerBudget :
     V + suzukiActualT S (2 * T.card + 1) r ⌈z⌉₊ ≤
       V * (jr1965F (Real.log D / Real.log z) + E)
   constructor <;> nlinarith
-
-#check exists_roughOrdinaryDensity_ff_of_powerBudget
-#print axioms dimensionOneProductBound_subset
-#print axioms exists_roughOrdinaryDensity_ff_of_powerBudget
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF.CoarseDensity

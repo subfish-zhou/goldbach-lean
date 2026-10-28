@@ -1,4 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10KernelUpper
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachB10SiftedCount_kernel_upper
-#print axioms goldbachB10SiftedCount_kernel_upper

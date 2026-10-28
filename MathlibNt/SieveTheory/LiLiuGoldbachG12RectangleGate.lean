@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
-import MathlibNt.SieveTheory.LiLiuGoldbachG12GateBudget
 
 noncomputable section
 open Classical Finset Filter

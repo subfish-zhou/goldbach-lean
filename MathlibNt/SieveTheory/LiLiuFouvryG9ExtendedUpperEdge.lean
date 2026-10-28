@@ -160,7 +160,4 @@ theorem exists_signedFamilyDensity_upper_extended :
       _ ≤ V * (jr1965F s + C * T) := by
         apply mul_le_mul_of_nonneg_left _ hV.le
         linarith [mul_le_mul_of_nonneg_right hconst hT]
-
-
-#print axioms exists_signedFamilyDensity_upper_extended
 end MathlibNt.SieveTheory.LiLiuPrereqWF.G9ExtendedUpper

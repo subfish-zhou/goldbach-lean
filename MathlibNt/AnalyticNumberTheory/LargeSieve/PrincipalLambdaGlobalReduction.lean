@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
-import MathlibNt.AnalyticNumberTheory.LargeSieve.VonMangoldtConductorCorrection
 
 /-!
 # Reduction of every principal character to the global PNT source
@@ -189,53 +188,6 @@ theorem principalLambdaPrefixMaxError_le_global_add_bad
         (fun y => ‖principalLambdaMainError y 1‖)) _
       (Finset.mem_image.mpr ⟨y, hy, rfl⟩)) le_rfl
 
-/-- Summing all principal errors through `Q` costs one copy of the global error
-per modulus and an explicit `Q log₂Q log₂N log N` scalar. -/
-theorem sum_principalLambdaPrefixMaxError_le_global
-    {N Q : ℕ} (hN : 2 ≤ N) :
-    (∑ q ∈ Finset.Icc 1 Q, principalLambdaPrefixMaxError N q) ≤
-      (Q : ℝ) * principalLambdaPrefixMaxError N 1 +
-        (Q : ℝ) * ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) *
-          Real.log (N : ℝ)) := by
-  calc
-    _ ≤ ∑ q ∈ Finset.Icc 1 Q,
-        (principalLambdaPrefixMaxError N 1 +
-          (Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by
-      apply Finset.sum_le_sum
-      intro q hq
-      refine (principalLambdaPrefixMaxError_le_global_add_bad
-        (Finset.mem_Icc.mp hq).1 hN).trans ?_
-      gcongr
-      rw [Nat.log2_eq_log_two, Nat.log2_eq_log_two]
-      exact_mod_cast Nat.log_mono_right (Finset.mem_Icc.mp hq).2
-    _ = _ := by simp [mul_add]
-
-/-- In a `Q ≤ √N/log^B N` range, the complete bad-prime-power aggregate is
-paid once the displayed scalar (with `Q` eliminated) fits the target budget. -/
-theorem sum_principal_badCorrection_BVRange_payable
-    {N Q : ℕ} {A B C : ℝ} (_hN : 2 ≤ N)
-    (hQ : (Q : ℝ) ≤ Real.sqrt N / Real.log (N : ℝ) ^ B)
-    (hscalar :
-      (Real.sqrt N / Real.log (N : ℝ) ^ B) *
-          ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) ≤
-        C * (N : ℝ) / Real.log N ^ A) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      (Nat.log2 q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) ≤
-        C * (N : ℝ) / Real.log N ^ A := by
-  calc
-    _ ≤ ∑ _q ∈ Finset.Icc 1 Q,
-        ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by
-      apply Finset.sum_le_sum
-      intro q hq
-      gcongr
-      rw [Nat.log2_eq_log_two, Nat.log2_eq_log_two]
-      exact_mod_cast Nat.log_mono_right (Finset.mem_Icc.mp hq).2
-    _ = (Q : ℝ) *
-        ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) := by simp
-    _ ≤ (Real.sqrt N / Real.log (N : ℝ) ^ B) *
-        ((Nat.log2 Q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ)) :=
-      mul_le_mul_of_nonneg_right hQ (by positivity)
-    _ ≤ _ := hscalar
 
 /-- The all-modulus partial-summation bridge with the principal term reduced
 literally to the modulus-one PNT error plus bad prime powers. -/
@@ -264,46 +216,6 @@ theorem standardPrimeAPPrefixMaxError_le_global_principal_bridge
       (principalLambdaPrefixMaxError_le_global_add_bad hq hN) le_rfl
   · exact le_rfl
 
-/-- The global source contract now feeds the prime-AP bridge for every positive
-`q`; only the explicit bad-prime-power term and nonprincipal transforms remain. -/
-theorem globalSourceContract_to_all_moduli_primeAPBridge
-    (hsource : GlobalChebyshevToLiPrincipalPNTSourceContract) :
-    ∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧
-      ∀ᶠ N : ℕ in Filter.atTop, 2 ≤ N → ∀ q : ℕ, 0 < q →
-        MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q ≤
-          discreteAbelAmplifierPrefixMax N *
-            ((q.totient : ℝ)⁻¹ *
-                ((Nat.log2 q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ) +
-                  ∑ χ ∈ nonprincipalCharacters q,
-                    lambdaCharacterPrefixMaxAmplitude N q χ) +
-              lambdaPrimePowerCorrectionPrefixMaxError N q) +
-            (q.totient : ℝ)⁻¹ * (C * (N : ℝ) / Real.log N ^ A) := by
-  intro A hA
-  obtain ⟨C, hC, hsourceC⟩ := globalPartialSummationSource_payable hsource A hA
-  refine ⟨C, hC, ?_⟩
-  filter_upwards [hsourceC] with N hglobal
-  intro hN q hq
-  refine (standardPrimeAPPrefixMaxError_le_global_principal_bridge hq hN).trans ?_
-  have hφ : 0 ≤ (q.totient : ℝ)⁻¹ := inv_nonneg.mpr (by positivity)
-  have hglobal' := hglobal hN
-  calc
-    _ = discreteAbelAmplifierPrefixMax N *
-          ((q.totient : ℝ)⁻¹ *
-              ((Nat.log2 q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ) +
-                ∑ χ ∈ nonprincipalCharacters q,
-                  lambdaCharacterPrefixMaxAmplitude N q χ) +
-            lambdaPrimePowerCorrectionPrefixMaxError N q) +
-        (q.totient : ℝ)⁻¹ *
-          (discreteAbelAmplifierPrefixMax N * principalLambdaPrefixMaxError N 1 +
-            globalChebyshevToLiSourcePrefixMaxError N) := by ring
-    _ ≤ discreteAbelAmplifierPrefixMax N *
-          ((q.totient : ℝ)⁻¹ *
-              ((Nat.log2 q : ℝ) * (Nat.log2 N + 1 : ℝ) * Real.log (N : ℝ) +
-                ∑ χ ∈ nonprincipalCharacters q,
-                  lambdaCharacterPrefixMaxAmplitude N q χ) +
-            lambdaPrimePowerCorrectionPrefixMaxError N q) +
-        (q.totient : ℝ)⁻¹ * (C * (N : ℝ) / Real.log N ^ A) := by
-      exact add_le_add le_rfl (mul_le_mul_of_nonneg_left hglobal' hφ)
 
 end
 

@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "definitions": [
+    {
+      "declaration": "MathlibNt.SieveTheory.SwitchingPrinciple.jurkatRichertInnerIntegral",
+      "before_module": "MathlibNt/SieveTheory/Switching/WeightedCounting.lean",
+      "after_module": "MathlibNt/SieveTheory/LinearSieve/DimensionOneLowerFactor.lean",
+      "identical_definition_source_sha256": "e107f84755b082664641f3ec0a81350cf926464308814d6d78b6c169c5ee39ac"
+    },
+    {
+      "declaration": "MathlibNt.SieveTheory.SwitchingPrinciple.dimensionOneLowerLinearSieveFactor",
+      "before_module": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean",
+      "after_module": "MathlibNt/SieveTheory/LinearSieve/DimensionOneLowerFactor.lean",
+      "identical_definition_source_sha256": "8334cc511502661eb54ae60abf00c4fbfdf64d58fb0bf8400816081afeb81401"
+    },
+    {
+      "declaration": "MathlibNt.SieveTheory.SwitchingPrinciple.jurkatRichertUpperLinearSieveFactor",
+      "before_module": "MathlibNt/SieveTheory/Switching/SourceSieve.lean",
+      "after_module": "MathlibNt/SieveTheory/LinearSieve/DimensionOneUpperFactor.lean",
+      "identical_definition_source_sha256": "ec6d1d1d3e7ddc10163104cca7e817a415f6d1b554695ddfc88b7fb99643f93f"
+    },
+    {
+      "declaration": "MathlibNt.SieveTheory.SwitchingPrinciple.DimensionOneUpperRosserDensityFundamentalLemma",
+      "before_module": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean",
+      "after_module": "MathlibNt/SieveTheory/LinearSieve/DimensionOneUpperFactor.lean",
+      "identical_definition_source_sha256": "7a2d0ec035de9fd6bd1f267d324da4e985376a7cf93f7df2655dac8ecdbc634a"
+    }
+  ],
+  "unchanged_counting_definitions": [
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.IsOnePlusOneNineRepresentation",
+      "identical_definition_source_sha256": "30d12d011f2847ab94e56f31c31724edd76c84b2835882ed58c0091b637e3ed8"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.onePlusOneNineRepresentedPrimes",
+      "identical_definition_source_sha256": "c48c9f389f76dad5da75eeb6d74faa0aa66047a74218700607c22d85700bae10"
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.D19",
+      "identical_definition_source_sha256": "f3353fbd81f2f49d2d2256adfe45d5abf4c6cb1ce47437a9e935e1239cf9ade1"
+    }
+  ]
+}

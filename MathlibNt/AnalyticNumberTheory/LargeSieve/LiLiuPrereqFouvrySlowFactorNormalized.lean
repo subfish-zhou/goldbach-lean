@@ -7,10 +7,6 @@ noncomputable section
 
 namespace LiLiuPrereqFouvry.SlowFactor
 
-def mixedDeriv : List (Fin 5) → (Point → ℂ) → Point → ℂ
-  | [], f => f
-  | j :: js, f => fun x =>
-      deriv (fun t => mixedDeriv js f (Function.update x j t)) (x j)
 
 def inverseFactors (js : List (Fin 5)) (v : Point) : ℝ :=
   (js.map (fun j => (v j)⁻¹)).prod
@@ -70,24 +66,6 @@ theorem positive_update (v : Point) (hv : ∀ i, 0 < v i) (j : Fin 5)
     simpa using ht
   · simpa [Function.update_of_ne h] using hv i
 
-/-- Identification with recursively defined, ordinary coordinate derivatives.
-`Nodup` is exactly the condition that each coordinate is differentiated at most
-once. Reversing the list merely reconciles the two recursion conventions. -/
-theorem mixedDeriv_normalizedWeight (A B : ℝ) (js : List (Fin 5))
-    (hjs : js.Nodup) (v : Point) (hv : ∀ i, 0 < v i) :
-    mixedDeriv js (normalizedWeight A B) v = normalizedJet A B js.reverse v := by
-  induction js generalizing v with
-  | nil => exact (normalizedJet_nil A B v hv).symm
-  | cons j js ih =>
-    obtain ⟨hj, hjs⟩ := List.nodup_cons.mp hjs
-    have hj' : j ∉ js.reverse := by simpa using hj
-    have hd := hasDerivAt_normalizedJet A B js.reverse v j hj' (hv j).ne'
-    have heq : (fun t => mixedDeriv js (normalizedWeight A B) (Function.update v j t))
-        =ᶠ[nhds (v j)] (fun t => normalizedJet A B js.reverse (Function.update v j t)) := by
-      filter_upwards [eventually_gt_nhds (hv j)] with t ht
-      exact ih hjs _ (positive_update v hv j t ht)
-    simpa only [mixedDeriv, List.reverse_cons] using
-      (hd.congr_of_eventuallyEq heq).deriv
 
 theorem abs_inverseFactors_le_one (js : List (Fin 5)) (v : Point)
     (hv : ∀ i, 1 ≤ v i) :
@@ -116,17 +94,5 @@ theorem norm_normalizedJet_le_five (A B V : ℝ) (hV : |A| + |B| ≤ V)
       rw [one_mul]
       exact normalized_log_mixed_bound A B V hV js hn v hv
 
-/-- The complete five-variable, order-at-most-one-in-each-coordinate bound for
-the actual nonseparable normalized weight. The only size assumption is on the
-two explicit phase parameters. -/
-theorem norm_mixedDeriv_normalizedWeight_le (A B V : ℝ) (hV : |A| + |B| ≤ V)
-    (js : List (Fin 5)) (hjs : js.Nodup) (v : Point)
-    (hv : ∀ i, 1 ≤ v i ∧ v i ≤ 2) :
-    ‖mixedDeriv js (normalizedWeight A B) v‖ ≤
-      64 * (6 + 2 * Real.pi) ^ 5 * (1 + V) ^ 5 := by
-  rw [mixedDeriv_normalizedWeight A B js hjs v (fun i => by linarith [(hv i).1])]
-  apply norm_normalizedJet_le_five A B V hV js.reverse _ v hv
-  rw [List.length_reverse]
-  exact le_trans (List.Nodup.length_le_card hjs) (by decide)
 
 end LiLiuPrereqFouvry.SlowFactor

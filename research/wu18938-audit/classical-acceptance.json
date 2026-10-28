@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+  "modules": 4771,
+  "manifest_sha256": "437b3f50433073acb4aedb6f77e789b295d8de0f8eee606423b8a172fd0ebbef",
+  "literal_probe_sha256": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f",
+  "log": "build/classical-literal-axioms.log"
+}

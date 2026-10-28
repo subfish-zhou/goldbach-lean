@@ -1,3 +1,5 @@
+import Hf4QuadModelBasic
+import Hf4QuadModelRadical
 import Hf4QuadKernel
 import SigmaActualNineCellFTC
 
@@ -5,30 +7,6 @@ noncomputable section
 namespace Hf4Quad
 open Real Set MeasureTheory SigmaVariableOuterPayment SigmaActualBlockSeparable
 open scoped Interval
-
-theorem Model.neg {f : ℝ → ℝ} {p : Cubic} {e : ℝ} (hf : Model f p e) :
-    Model (fun x => -f x) ⟨-p.a,-p.b,-p.c,-p.d⟩ e := by
-  intro x hx
-  have he : -f x-Cubic.eval ⟨-p.a,-p.b,-p.c,-p.d⟩ x = -(f x-p.eval x) := by
-    simp only [Cubic.eval]
-    ring
-  rw [he,abs_neg]
-  exact hf x hx
-
-theorem Model.constant (a : ℝ) : Model (fun _ => a) ⟨a,0,0,0⟩ 0 := by
-  intro x _
-  simp [Cubic.eval]
-
-theorem Model.variable (m h : ℝ) : Model (fun x => m+h*x) ⟨m,h,0,0⟩ 0 := by
-  intro x _
-  simp [Cubic.eval]
-
-theorem Model.radical : Model (fun _ => TerminalE.radical)
-    ⟨(7745966692415/2000000000000),0,0,0⟩ (1/2000000000000) := by
-  intro x _
-  simp only [Cubic.eval,zero_mul,add_zero]
-  apply abs_le.mpr
-  constructor <;> linarith only [Hf4Target.radical_bounds.1,Hf4Target.radical_bounds.2]
 
 def Cubic.primitive (p : Cubic) (m h t : ℝ) : ℝ :=
   h*(p.a*((t-m)/h)+p.b*((t-m)/h)^2/2+p.c*((t-m)/h)^3/3+p.d*((t-m)/h)^4/4)

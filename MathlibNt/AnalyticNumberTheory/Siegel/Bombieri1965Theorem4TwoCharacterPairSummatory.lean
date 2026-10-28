@@ -199,23 +199,5 @@ theorem norm_sum_Icc_floor_character_pair_convolution_le_three_mul_sqrt [NeZero 
     ψ η hψ hη ⌊X⌋₊).trans ?_
   exact mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt (Nat.floor_le hX)) (by positivity)
 
-/-- Cancellation for the actual pair `b = ψ * (χψ)` in the fourfold
-convolution, written as its exact twist `ψ(n) (ζ * χ)(n)`. -/
-theorem norm_sum_Icc_character_twist_zetaMul_le_three_mul_sqrt [NeZero q]
-    (χ ψ : DirichletCharacter ℂ q) (hψ : ψ ≠ 1) (hχψ : χ * ψ ≠ 1) (N : ℕ) :
-    ‖∑ n ∈ Icc 1 N, ψ n * χ.zetaMul n‖ ≤
-      3 * (q : ℝ) * Real.sqrt N := by
-  simpa only [character_mul_product_apply] using
-    norm_sum_Icc_character_pair_convolution_le_three_mul_sqrt ψ (χ * ψ) hψ hχψ N
-
-/-- Real-endpoint form for the actual twisted pair. -/
-theorem norm_sum_Icc_floor_character_twist_zetaMul_le_three_mul_sqrt [NeZero q]
-    (χ ψ : DirichletCharacter ℂ q) (hψ : ψ ≠ 1) (hχψ : χ * ψ ≠ 1)
-    {X : ℝ} (hX : 0 ≤ X) :
-    ‖∑ n ∈ Icc 1 ⌊X⌋₊, ψ n * χ.zetaMul n‖ ≤
-      3 * (q : ℝ) * Real.sqrt X := by
-  simpa only [character_mul_product_apply] using
-    norm_sum_Icc_floor_character_pair_convolution_le_three_mul_sqrt
-      ψ (χ * ψ) hψ hχψ hX
 
 end DirichletCharacter

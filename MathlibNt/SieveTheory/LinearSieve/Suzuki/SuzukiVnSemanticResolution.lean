@@ -55,58 +55,5 @@ theorem suzukiSourceV_succ_of_pos
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
   rfl
 
-/-- The corrected index-two carrier before simplification.  It has no invented
-`q < ceil(D/p)` condition. -/
-theorem suzukiSourceV_two_eq (S : BoundingSieve) (D z : ℕ) :
-    suzukiSourceV S 2 D z =
-      ∑ p ∈ suzukiSourceOuterCarrier 2 D z S.prodPrimes.primeFactors,
-        S.nu p *
-          ∑ q ∈ (suzukiSupportedBelow S p).filter
-              (fun q => D ⌈/⌉ p ≤ q ^ 3),
-            S.nu q * sourceDiscreteEuler S q := by
-  rfl
-
-/-- At n=2 Suzuki's literal terminal test accepts (D,p,q)=(9,5,2), while the
-Section 14 extended recursive totalization rejects it because it additionally asks q<D/p. -/
-theorem section14Extended_n2_rejects_source_chain :
-    (9 ≤ 5 * 2 ^ 3) ∧
-      ¬ (2 < 9 ⌈/⌉ 5 ∧ 9 ⌈/⌉ 5 ≤ 2 ^ 3) := by
-  norm_num
-
-/-- The production lower-boundary singleton accepts the same source chain:
-its active-prefix clause is `p<D`, not the Section 14 extended recursive `p*q<D`. -/
-theorem lower_boundary_n2_accepts_source_chain :
-    (5 < 9 ∧ 9 ≤ 5 * 2 ^ 3) := by
-  norm_num
-
-/-- In Suzuki's even parity domain (`z^2 <= D`), the lower boundary's apparent
-extra n=2 prefix `p<D` is automatic. -/
-theorem lower_boundary_n2_prefix_redundant
-    {D z p : ℕ} (hp2 : 2 ≤ p) (hpz : p < z) (hzD : z ^ 2 ≤ D) : p < D := by
-  have hp2lt : p < p ^ 2 := by nlinarith
-  have hpow : p ^ 2 < z ^ 2 := Nat.pow_lt_pow_left hpz (by norm_num)
-  omega
-
-/-- In the same domain, the old divided-level predicate and Suzuki's literal
-n=2 terminal condition agree.  Thus the mismatch is outside the theorem's
-legal domain, not a missing lower-chain prefix. -/
-theorem section14Extended_n2_iff_source_in_even_domain
-    {D z p q : ℕ} (hp : 0 < p) (hq : q < p) (hpz : p < z)
-    (hzD : z ^ 2 ≤ D) :
-    (q < D ⌈/⌉ p ∧ D ⌈/⌉ p ≤ q ^ 3) ↔ D ≤ p * q ^ 3 := by
-  have hpqD : p * q < D := by
-    have hp2z2 : p ^ 2 < z ^ 2 := Nat.pow_lt_pow_left hpz (by norm_num)
-    have hpq_lt_p2 : p * q < p ^ 2 := by
-      simpa [pow_two] using (Nat.mul_lt_mul_left hp).2 hq
-    omega
-  have hqceil : q < D ⌈/⌉ p := by
-    rw [← not_le, ceilDiv_le_iff_le_mul hp]
-    omega
-  constructor
-  · rintro ⟨_, hceil⟩
-    exact (ceilDiv_le_iff_le_mul hp).1 hceil
-  · intro hterminal
-    exact ⟨hqceil, (ceilDiv_le_iff_le_mul hp).2 hterminal⟩
-
 
 end MathlibNt.SieveTheory

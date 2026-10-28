@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaOriginal
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginalBound
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaZero
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
+
 
 /-!
 # Power payment for the same large-common-modulus mask

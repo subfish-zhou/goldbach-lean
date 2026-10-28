@@ -97,17 +97,6 @@ theorem goldbachCompositeSieve_pair_coprime_N
   rcases mem_goldbachClosedPrimes_iff.mp hs with ⟨hsp, hsN, _, _⟩
   exact (hrp.coprime_iff_not_dvd.mpr hrN).mul_left (hsp.coprime_iff_not_dvd.mpr hsN)
 
-theorem goldbachCompositeSieve_pair_rem_eq_standardPrimeAPError
-    {N : ℕ} (hEven : Even N) {ε z y₁ y₂ : ℝ} {r s d : ℕ}
-    (hε : 0 ≤ ε) (hm : 2 ≤ goldbachS1Endpoint N ε)
-    (hr : r ∈ goldbachClosedPrimes N z y₁)
-    (hs : s ∈ goldbachClosedPrimes N z y₂)
-    (hd : d ∣ goldbachS1ProdPrimes N z) :
-    (goldbachS3BoundingSieve N hEven ε z (r * s)).rem d =
-      standardPrimeAPError (goldbachS1Endpoint N ε) ((r * s) * d)
-        (N % ((r * s) * d)) := by
-  exact goldbachCompositeSieve_rem_eq_standardPrimeAPError hEven hε hm
-    (goldbachCompositeSieve_pair_coprime_of_dvd_prodPrimes hr hs hd) hd
 
 theorem goldbachCompositeSieve_pair_abs_rem_le_prefix
     {N : ℕ} (hEven : Even N) {ε z y₁ y₂ : ℝ} {r s d : ℕ}
@@ -123,30 +112,5 @@ theorem goldbachCompositeSieve_pair_abs_rem_le_prefix
     (goldbachCompositeSieve_pair_coprime_of_dvd_prodPrimes hr hs hd)
     (goldbachCompositeSieve_pair_coprime_N hr hs) hd
 
-/-- The diagonal keeps `φ(r²)`, not `φ(r)²`. -/
-theorem goldbachCompositeSieve_square_rem_eq
-    {N : ℕ} (hEven : Even N) {ε z y : ℝ} {r d : ℕ}
-    (hε : 0 ≤ ε) (hm : 2 ≤ goldbachS1Endpoint N ε)
-    (hr : r ∈ goldbachClosedPrimes N z y)
-    (hd : d ∣ goldbachS1ProdPrimes N z) :
-    (goldbachS3BoundingSieve N hEven ε z (r ^ 2)).rem d =
-      (primesInAP (goldbachS1Endpoint N ε) (r ^ 2 * d) (N % (r ^ 2 * d)) : ℝ) -
-        trueLogarithmicIntegral (goldbachS1Endpoint N ε) /
-          ((Nat.totient (r ^ 2) : ℝ) * Nat.totient d) := by
-  have hcop : Nat.Coprime (r ^ 2) d := by
-    simpa only [pow_two] using
-      goldbachCompositeSieve_pair_coprime_of_dvd_prodPrimes hr hr hd
-  rw [goldbachCompositeSieve_rem_eq_standardPrimeAPError hEven hε hm hcop hd]
-  simp only [standardPrimeAPError, Nat.totient_mul hcop, Nat.cast_mul]
-
-theorem goldbachCompositeSieve_square_abs_rem_le_prefix
-    {N : ℕ} (hEven : Even N) {ε z y : ℝ} {r d : ℕ}
-    (hε : 0 ≤ ε) (hm : 2 ≤ goldbachS1Endpoint N ε)
-    (hr : r ∈ goldbachClosedPrimes N z y)
-    (hd : d ∣ goldbachS1ProdPrimes N z) :
-    |(goldbachS3BoundingSieve N hEven ε z (r ^ 2)).rem d| ≤
-      standardPrimeAPPrefixMaxError N (r ^ 2 * d) := by
-  simpa only [pow_two] using
-    goldbachCompositeSieve_pair_abs_rem_le_prefix hEven hε hm hr hr hd
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

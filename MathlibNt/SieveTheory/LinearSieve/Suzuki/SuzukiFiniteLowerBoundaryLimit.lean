@@ -20,20 +20,6 @@ open SwitchingPrinciple.SuzukiLemma144KappaOne
 noncomputable def suzukiLowerBoundaryLimit : ℝ :=
   2 * (1 - suzukiEvenSourceLowerLayerLimit 2)
 
-/-- The finite constants `B_m=2(1-T_{2m}(2))` decrease with depth. -/
-theorem antitone_suzukiFiniteLowerBoundary : Antitone suzukiFiniteLowerBoundary := by
-  intro m n hmn
-  unfold suzukiFiniteLowerBoundary
-  have hmono := suzukiEvenSourceLowerPartialSum_monotone (s := (2 : ℝ)) (by norm_num)
-  have hle := hmono hmn
-  linarith
-
-/-- Exact finite normalization `2*T_{2m}(2)=2-B_m`. -/
-theorem suzuki_finite_lower_normalization (m : ℕ) :
-    2 * suzukiEvenSourceLowerPartialSum m 2 =
-      2 - suzukiFiniteLowerBoundary m := by
-  unfold suzukiFiniteLowerBoundary
-  ring
 
 /-- The finite boundary constants converge in `ℝ` to their genuine series
 normalization. -/

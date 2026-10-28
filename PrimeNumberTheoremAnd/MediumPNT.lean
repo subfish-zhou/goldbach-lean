@@ -1,4 +1,3 @@
-import Architect
 import PrimeNumberTheoremAnd.MellinCalculus
 import PrimeNumberTheoremAnd.ZetaBounds
 import PrimeNumberTheoremAnd.ZetaConj
@@ -36,18 +35,6 @@ theorem psi_eq_sum_range (x : ℝ) :
 
 end Chebyshev
 
-@[blueprint "ChebyshevPsi"
-  (title := "ChebyshevPsi")
-  (statement := /--
-  The (second) Chebyshev Psi function is defined as
-  $$
-  \psi(x) := \sum_{n \le x} \Lambda(n),
-  $$
-  where $\Lambda(n)$ is the von Mangoldt function.
-  -/)
-  (latexEnv := "definition")]
-noncomputable abbrev ChebyshevPsi (x : ℝ) : ℝ :=
-  Chebyshev.psi x
 
 blueprint_comment /--
 It has already been established that zeta doesn't vanish on the 1 line, and has a pole at $s=1$
@@ -1107,17 +1094,6 @@ theorem SmoothedChebyshevPull1_aux_integrable {SmoothingF : ℝ → ℝ} {ε : �
       norm_cast
       linarith
 
-@[blueprint
-  (title := "BddAboveOnRect")
-  (statement := /-- Let $g : \C \to \C$ be a holomorphic function on a rectangle, then $g$ is bounded above on the rectangle. -/)
-  (proof := /-- Use the compactness of the rectangle and the fact that holomorphic functions are continuous. -/)
-  (latexEnv := "lemma")]
-lemma BddAboveOnRect {g : ℂ → ℂ} {z w : ℂ} (holoOn : HolomorphicOn g (z.Rectangle w)) :
-    BddAbove (norm ∘ g '' (z.Rectangle w)) := by
-  have compact_rect : IsCompact (z.Rectangle w) := by
-    apply IsCompact.reProdIm <;> apply isCompact_uIcc
-  refine IsCompact.bddAbove_image compact_rect ?_
-  apply holoOn.continuousOn.norm
 
 @[blueprint
   (title := "SmoothedChebyshevPull1")
@@ -1558,37 +1534,7 @@ blueprint_comment /--
 We insert this information in $\psi_{\epsilon}$. We add and subtract the integral over the box
 $[1-\delta,2] \times_{ℂ} [-T,T]$, which we evaluate as follows
 -/
-@[blueprint
-  (title := "ZetaBoxEval")
-  (statement := /--
-  For all $\epsilon > 0$ sufficiently close to $0$, the rectangle integral over $[1-\delta,2] \times_{ℂ} [-T,T]$ of the integrand in
-  $\psi_{\epsilon}$ is
-  $$
-  \frac{X^{1}}{1}\mathcal{M}(\widetilde{1_{\epsilon}})(1)
-  = X(1+O(\epsilon))
-  ,$$
-  where the implicit constant is independent of $X$.
-  -/)
-  (proof := /-- Unfold the definitions and apply Lemma \ref{MellinOfSmooth1c}. -/)]
-theorem ZetaBoxEval {SmoothingF : ℝ → ℝ}
-    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
-    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1)
-    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF) :
-    ∃ C, ∀ᶠ ε in (nhdsWithin 0 (Ioi 0)), ∀ X : ℝ, 0 ≤ X →
-    ‖𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X - X‖ ≤ C * ε * X := by
-  have := MellinOfSmooth1c ContDiffSmoothingF suppSmoothingF mass_one
-  clear suppSmoothingF mass_one ContDiffSmoothingF
-  rw[Asymptotics.isBigO_iff] at this
-  obtain ⟨C, hC⟩ := this
-  use C
-  have εpos : ∀ᶠ (ε : ℝ) in nhdsWithin 0 (Ioi 0), ε > 0 :=
-    eventually_mem_of_tendsto_nhdsWithin fun ⦃U⦄ hU ↦ hU
-  filter_upwards [hC, εpos] with ε hC εpos
-  rw[id_eq, norm_of_nonneg (le_of_lt εpos)] at hC
-  intro X Xnne
-  nth_rw 2 [← one_mul (X : ℂ)]
-  rw[← sub_mul, norm_mul, norm_real, norm_of_nonneg Xnne]
-  exact mul_le_mul_of_nonneg_right hC Xnne
+
 
 theorem poisson_kernel_integrable (x : ℝ) (hx : x ≠ 0) :
   MeasureTheory.Integrable (fun (t : ℝ) ↦ (‖x + t * I‖^2)⁻¹) := by

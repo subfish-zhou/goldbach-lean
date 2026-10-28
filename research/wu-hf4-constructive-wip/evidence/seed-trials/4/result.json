@@ -1,0 +1,10 @@
+{
+  "status": "SINGLE_MODULE_TRIAL_NOT_KERNEL_OR_PROJECT_ACCEPTANCE",
+  "exit_code": 0,
+  "seconds": 19.868116781115532,
+  "source_sha256": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f",
+  "log_sha256": "2c3d8a86fbc37121d242a7ea855e41f6607641fb4e5776e9c6135447e09129e2",
+  "object_sha256": "3766642e81067fd48f8b2edcafddcbb8d79f7e9baed5e1a6a00cab6782fbd319",
+  "resources_sha256": "bad22ec9fbefcea8613a11742da1c2499a05841a094f350ea12887b06954b9f5",
+  "bindings_verified": 67
+}

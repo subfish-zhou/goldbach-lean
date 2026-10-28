@@ -1,0 +1,86 @@
+{
+  "phase": "Li-Liu endpoint positivity, floor scales and labelled atoms",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T06:29:21.360967+00:00",
+  "source_modules": 1802,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "56d64acacbddf7e41baa097ae573f2b92199b8b3dd4fdf5070427ac59e7e135e"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "390dc37cf6d2580eb22b49dd9e2663e0cdc6ff92ebbee04f9bee2f3d5fecb46d"
+    },
+    "strengthened_internal_statement_contracts": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "fc07e0e45f440f2d9798a45830eea5b697786724ec39e5ed758bbf6d4ce95cfd"
+    }
+  },
+  "auxiliary_input_sha256": {
+    "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean": "e670fe75c11a6cbd25cc97f31e28cd107b46762947e81a58d03716ba851d2f17"
+  },
+  "finished_at_utc": "2026-10-27T06:55:12.948224+00:00",
+  "input_manifest_sha256": "efeb2391abd043bd7e53eef15d952b045f48fe835f7e0112c7a001c2c985eddb",
+  "scope": "Main Chen and Li-Liu libraries only; separate concurrent Wu sources and numerical certificates excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "663efc73b4c8dc7703bf7ab6efcb7bd5e3b9cc9e5bd73b1a7f05df5fe3aac7d6",
+  "net_main_code_lines": -78,
+  "new_auxiliary_lean_code_lines": 0,
+  "net_liliu_closure_code_lines": -78,
+  "net_chen_closure_code_lines": 0,
+  "type_preservation_report": "type-preservation.json",
+  "final_review_at_utc": "2026-10-27T06:58:18.716640+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "49ad6fdb8ef79ec0a01e97bee89938ab888715ed069c9be4e666cc0be6de8d95"
+  },
+  "evidence_sha256": {
+    "changes.json": "c971452367d28f84f4eb81983194d220790c77c839f558b9ec7d0efcc22711fe",
+    "source-size.json": "245ac466ab398497e16cd9dacf073dd193b7b764f250134bdf1e752d283db676",
+    "type-preservation.json": "4d24785e6a9d54fd461888436f5c9e09c72321d38e2257bd6cdcc0a62784e538",
+    "private-proof-redirects.json": "584a5ba240e09d8299a2d19a1c484671f64ec46833604e3c23ec12ac753f729a",
+    "moved-public-proofs.json": "032cabcd03fd2c449b259f9c937a7b66bf8c1a60e48c964d6b656ce29d89ec01",
+    "standalone-probes.json": "56d3a64eaed6e0e459ba0c8f599b5f1a467d35f86f439a432239f8e93b2fbc95",
+    "blueprint-validation.json": "27c8fa4b878abcf83771b635cdd4a3f45dec6db124705aaec2c68b352930b129",
+    "analysis.json": "60dfbd7a9e7613f3e32838da8404cfb2373782ad3c68318b6c010a622f7de371"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-endpoint-cleanup/reproduce.py": "26a32412dd36e50f6d2deeef2fe686decc129fcdf14d7d8764870d4b923b0303",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "351c50824bd14a24556da8f7a3e68051c8e01b83177e93351327b723dc55fd0f",
+    "docs/LILIU_ENDPOINT_CLEANUP.md": "86b082d8b4045c426f0e90f7cc6d59e9d485b2df1ede33d20bbb48542f6831ad",
+    "docs/SOURCE_SIZE.md": "0555f27a9a9e26accfa283fd8d232376fb95fb54fe5be612323c60ecdc5816f1",
+    "docs/VERIFICATION.md": "ca6bdbb166bb91d60176953a1ec67871261f8c27162d5bb76a1306f7bcfbccad",
+    "docs/RELEASE_NOTES.md": "9ac5b775205409c1d42ca495d83fc418d720746756d7848b469d39644c5aaaf5",
+    "docs/ARCHITECTURE.md": "1172b2c9b18e9d4062d9d9e421af942fe9af344a1cf6bf62cd5da76801ebeb6b"
+  }
+}

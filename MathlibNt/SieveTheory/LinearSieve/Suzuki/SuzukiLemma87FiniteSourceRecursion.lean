@@ -177,27 +177,6 @@ theorem suzukiLayerNumerator_eq_sourceRecursion_of_two_le
   exact SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
     β s hn
 
-/-- Lemma 8.7 with its main term rewritten as the aggregate `(9.2)` recursion
-increment for the source indices of `T_N`. -/
-theorem suzukiLemmaEightSeven_finiteSourceLayer_recursionIncrement
-    {S : BoundingSieve} {D z v w s τ σ K β : ℝ} {N : ℕ}
-    (hβ : 1 < β)
-    (hτdom : τ - 1 ∈ suzukiParityDomainOne β (N - 1))
-    (hτσ : τ ≤ σ)
-    (hD : 1 < D) (hz2 : 2 ≤ z) (hv2 : 2 ≤ v) (hw2 : 2 ≤ w)
-    (hwv : w ≤ v) (hvz : v ≤ z)
-    (hz : z = D ^ (1 / s)) (hv : v = D ^ (1 / τ))
-    (hw : w = D ^ (1 / σ))
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K) :
-    suzukiLemmaEightSevenPrimeSum S D w v z
-        (fun t => finiteSourceLayer 1 β (N - 1) (t - 1)) ≤
-      (1 / s) * (∫ t in τ..σ, finiteSourceRecursionIntegrand β N t) +
-        (6 * K ^ 2 * finiteSourceLayer 1 β (N - 1) (τ - 1) /
-          Real.log w) * (τ / s) := by
-  have h := suzukiLemmaEightSeven_finiteSourceLayer_shift hβ hτdom hτσ
-    hD hz2 hv2 hw2 hwv hvz hz hv hw hK hlocal
-  rwa [integral_finiteSourceLayer_shift_eq_recursionIntegrand] at h
-
 
 private theorem one_step
     {β s τ σ : ℝ} {n : ℕ} (hβ : 1 < β) (hn : 2 ≤ n)

@@ -1,0 +1,10 @@
+All public theorem axiom reports use only the standard classical axioms.
+{
+  "status": "pass",
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+  "modules": 4142,
+  "manifest_sha256": "c6d2b935b4b87cbdbad0a51a7b9c2b256291979b691bc3473ea939a5b36642e7",
+  "literal_probe_sha256": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f",
+  "log": "build/classical-literal-axioms.log"
+}

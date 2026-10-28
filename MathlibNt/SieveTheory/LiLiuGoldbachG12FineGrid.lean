@@ -24,9 +24,6 @@ theorem mem_clipped (ρ : ℝ) (L H i n : ℕ) :
 
 theorem endpoint_zero (ρ : ℝ) : endpoint ρ 0 = 0 := by simp [endpoint]
 
-theorem endpoint_mono {ρ : ℝ} (hρ : 1 < ρ) : Monotone (endpoint ρ) := by
-  intro i j hij
-  exact Nat.sub_le_sub_right (Nat.ceil_mono (pow_le_pow_right₀ hρ.le hij)) 1
 
 theorem mem_cell_iff {ρ : ℝ} (hρ : 1 < ρ) {i n : ℕ} (hn : 1 ≤ n) :
     n ∈ cell ρ i ↔ ρ^i ≤ (n : ℝ) ∧ (n : ℝ) < ρ^(i+1) := by
@@ -41,9 +38,6 @@ theorem unique {ρ : ℝ} (hρ : 1 < ρ) {i j n : ℕ}
   exact fouvryG9RectanglePrefix_index_unique hρ
     ((mem_cell_iff hρ hn).mp hi) ((mem_cell_iff hρ hn).mp hj)
 
-theorem disjoint {ρ : ℝ} (hρ : 1 < ρ) {i j : ℕ} (hij : i ≠ j) :
-    Disjoint (cell ρ i) (cell ρ j) := by
-  exact disjoint_left.mpr (fun _ hi hj => hij (unique hρ hi hj))
 
 /-- A finite cover works even when several adjacent endpoints coincide. -/
 theorem cover_to_endpoint (ρ : ℝ) (K : ℕ) {n : ℕ}
@@ -113,39 +107,5 @@ theorem clipped_dyadic {ρ : ℝ} (hρ : 1 < ρ) (hu : ρ ≤ 3/2) (L H i : ℕ)
   have he : (min H (endpoint ρ (i+1)) : ℝ) ≤ 2 * (max L (endpoint ρ i) : ℝ) := by nlinarith
   exact_mod_cast he
 
-
-/-- Occupancy singles out a unique nonempty cell, not merely a chosen index. -/
-theorem cover_nonempty {ρ : ℝ} (hρ : 1 < ρ) {N n : ℕ} (hn : 1 ≤ n) (hN : n ≤ N) :
-    ∃! i, i < count ρ N ∧ n ∈ cell ρ i ∧ (cell ρ i).Nonempty := by
-  obtain ⟨i, hi, hu⟩ := cover hρ hn hN
-  exact ⟨i, ⟨hi.1, hi.2, ⟨n, hi.2⟩⟩, fun j hj => hu j ⟨hj.1,hj.2.1⟩⟩
-
-theorem clipped_disjoint {ρ : ℝ} (hρ : 1 < ρ) (L H : ℕ) {i j : ℕ} (hij : i ≠ j) :
-    Disjoint (clipped ρ L H i) (clipped ρ L H j) := by
-  exact disjoint_left.mpr (fun n hi hj => hij
-    (unique hρ ((mem_clipped ρ L H i n).mp hi).2 ((mem_clipped ρ L H j n).mp hj).2))
-
-theorem clipped_cover {ρ : ℝ} (hρ : 1 < ρ) {L H n : ℕ} (hn : n ∈ Ioc L H) :
-    ∃! i, i < count ρ H ∧ n ∈ clipped ρ L H i := by
-  obtain ⟨hl,hh⟩ := mem_Ioc.mp hn
-  obtain ⟨i,hi,hu⟩ := cover hρ (by omega : 1 ≤ n) hh
-  exact ⟨i, ⟨hi.1, (mem_clipped _ _ _ _ _).mpr ⟨hn,hi.2⟩⟩,
-    fun j hj => hu j ⟨hj.1,((mem_clipped _ _ _ _ _).mp hj.2).2⟩⟩
-
-/-- Empty and reversed clipping intervals are included in this exact equality. -/
-theorem clipped_union {ρ : ℝ} (hρ : 1 < ρ) (L H : ℕ) :
-    (range (count ρ H)).biUnion (clipped ρ L H) = Ioc L H := by
-  ext n
-  constructor
-  · intro hn
-    obtain ⟨i,_,hi⟩ := mem_biUnion.mp hn
-    exact ((mem_clipped _ _ _ _ _).mp hi).1
-  · intro hn
-    obtain ⟨i,⟨hi,hm⟩,_⟩ := clipped_cover hρ hn
-    exact mem_biUnion.mpr ⟨i,mem_range.mpr hi,hm⟩
-
-theorem endpoint_dyadic {ρ : ℝ} (hρ : 1 < ρ) (hu : ρ ≤ 3/2) (i : ℕ)
-    (hi : 3 ≤ endpoint ρ i) : endpoint ρ (i+1) ≤ 2 * endpoint ρ i := by
-  simpa using clipped_dyadic hρ hu 0 (endpoint ρ (i+1)) i (by simpa using hi)
 
 end G12FineGrid

@@ -45,15 +45,6 @@ theorem liuPairConditions_factors_le {N z y p₁ p₂ : ℕ}
       refine ⟨p₁ * p₂, ?_⟩
       simp [pow_two, mul_left_comm])).trans h.2.2.2.2.2
 
-/-- The root-free cutoff is exactly the intended real square-root cutoff when
-`p₁` is positive. -/
-theorem liuSizeCondition_iff_real_sqrt {N p₁ p₂ : ℕ} (hp₁ : 0 < p₁) :
-    p₁ * p₂ ^ 2 ≤ N ↔
-      (p₂ : ℝ) ≤ Real.sqrt ((N : ℝ) / (p₁ : ℝ)) := by
-  rw [Real.le_sqrt (by positivity) (by positivity),
-    (le_div_iff₀ (by exact_mod_cast hp₁ : (0 : ℝ) < (p₁ : ℝ)))]
-  norm_cast
-  simp [mul_comm]
 
 /-- The finite set of ordered prime pairs occurring in Liu's weight. -/
 def liuWeightPairs (N z y : ℕ) : Finset (ℕ × ℕ) :=
@@ -112,10 +103,6 @@ witness set contains an admissible pair whose product is `a`. -/
 def liuWeight (N z y a : ℕ) : ℝ :=
   if LiuWeightSupport N z y a then 1 else 0
 
-@[simp]
-theorem liuWeight_eq_one_iff {N z y a : ℕ} :
-    liuWeight N z y a = 1 ↔ LiuWeightSupport N z y a := by
-  simp [liuWeight]
 
 @[simp]
 theorem liuWeight_eq_zero_iff {N z y a : ℕ} :
@@ -135,69 +122,6 @@ theorem abs_liuWeight_le_one (N z y a : ℕ) : |liuWeight N z y a| ≤ 1 := by
   unfold liuWeight
   split <;> norm_num
 
-/-- The number of Liu source pairs obtained from a strict ordered triple by
-pairing its medium prime with either large prime. -/
-noncomputable def liuOrderedTriplePairMultiplicity
-    (N z y p₁ p₂ p₃ : ℕ) : ℝ :=
-  liuWeight N z y (p₁ * p₂) + liuWeight N z y (p₁ * p₃)
-
-/-- A strict ordered triple contributes once through its smaller large prime,
-and a second time exactly when the larger prime also satisfies Liu's square
-cutoff.  Thus the source weight has multiplicity one or two, not uniformly two. -/
-theorem liuOrderedTriplePairMultiplicity_eq_one_add_indicator
-    {N z y p₁ p₂ p₃ : ℕ}
-    (hp₁ : p₁.Prime) (hp₂ : p₂.Prime) (hp₃ : p₃.Prime)
-    (hzp₁ : z < p₁) (hp₁y : p₁ ≤ y) (hyp₂ : y < p₂)
-    (hp₂p₃ : p₂ < p₃) (hprod : p₁ * p₂ * p₃ ≤ N) :
-    liuOrderedTriplePairMultiplicity N z y p₁ p₂ p₃ =
-      1 + if p₁ * p₃ ^ 2 ≤ N then 1 else 0 := by
-  have hsmall : p₁ * p₂ ^ 2 ≤ N := by
-    calc
-      p₁ * p₂ ^ 2 = p₁ * p₂ * p₂ := by ring
-      _ ≤ p₁ * p₂ * p₃ := Nat.mul_le_mul_left (p₁ * p₂) hp₂p₃.le
-      _ ≤ N := hprod
-  have hpair₂ : LiuPairConditions N z y p₁ p₂ :=
-    ⟨hp₁, hp₂, hzp₁, hp₁y, hyp₂, hsmall⟩
-  have hw₂ : liuWeight N z y (p₁ * p₂) = 1 :=
-    liuWeight_eq_one_iff.mpr
-      (liuWeightSupport_iff.mpr ⟨p₁, p₂, hpair₂, rfl⟩)
-  by_cases hlarge : p₁ * p₃ ^ 2 ≤ N
-  · have hpair₃ : LiuPairConditions N z y p₁ p₃ :=
-      ⟨hp₁, hp₃, hzp₁, hp₁y, hyp₂.trans hp₂p₃, hlarge⟩
-    have hw₃ : liuWeight N z y (p₁ * p₃) = 1 :=
-      liuWeight_eq_one_iff.mpr
-        (liuWeightSupport_iff.mpr ⟨p₁, p₃, hpair₃, rfl⟩)
-    simp [liuOrderedTriplePairMultiplicity, hw₂, hw₃, hlarge]
-  · have hw₃ : liuWeight N z y (p₁ * p₃) = 0 := by
-      rw [liuWeight_eq_zero_iff]
-      intro hs
-      rcases liuWeightSupport_iff.mp hs with ⟨q₁, q₂, hq, heq⟩
-      have hq₁dvd : q₁ ∣ p₁ * p₃ := by
-        rw [heq]
-        exact dvd_mul_right q₁ q₂
-      rcases hq.1.dvd_mul.mp hq₁dvd with hq₁p₁ | hq₁p₃
-      · have hq₁eq : q₁ = p₁ :=
-          (Nat.prime_dvd_prime_iff_eq hq.1 hp₁).mp hq₁p₁
-        subst q₁
-        have hq₂eq : q₂ = p₃ := Nat.mul_left_cancel hp₁.pos heq.symm
-        subst q₂
-        exact hlarge hq.2.2.2.2.2
-      · have hq₁eq : q₁ = p₃ :=
-          (Nat.prime_dvd_prime_iff_eq hq.1 hp₃).mp hq₁p₃
-        have : q₁ ≤ y := hq.2.2.2.1
-        omega
-    simp [liuOrderedTriplePairMultiplicity, hw₂, hw₃, hlarge]
-
-/-- A concrete strict ordered triple for which Liu's source multiplicity is
-one.  This is the local obstruction to dividing the source count by two. -/
-theorem liuOrderedTriplePairMultiplicity_one_witness :
-    liuOrderedTriplePairMultiplicity 1000 1 9 3 11 23 = 1 := by
-  have h := liuOrderedTriplePairMultiplicity_eq_one_add_indicator
-    (N := 1000) (z := 1) (y := 9) (p₁ := 3) (p₂ := 11) (p₃ := 23)
-    (by decide) (by decide) (by decide)
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  norm_num at h
-  exact h
 
 /-- The exact finite size consequence retained in place of an unproved
 natural/real `N^(2/3)` floor bridge. -/
@@ -395,13 +319,6 @@ theorem primesInAPBelow_mul_eq_zero_of_dvd_modulus
   apply hp₁l
   exact (hcong.dvd_iff hp₁d).mp ⟨p₂ * p, by ring⟩
 
-/-- The residue-count collapse at `l = N % d`. -/
-theorem primesInAPBelow_mul_mod_eq_zero
-    {N Y p₁ p₂ d : ℕ} (hp₁d : p₁ ∣ d) (hp₁N : ¬p₁ ∣ N) :
-    AnalyticNumberTheory.Sieve.primesInAPBelow
-        Y (p₁ * p₂) d (N % d) = 0 := by
-  apply primesInAPBelow_mul_eq_zero_of_dvd_modulus hp₁d
-  rwa [Nat.dvd_mod_iff hp₁d]
 
 /-! ## Main-term-parametric finite `R₁` seam -/
 
@@ -426,29 +343,6 @@ noncomputable def liuMainNoncoprimeMajorant
  ∑ a ∈ range (X + 1),
    if ¬a.Coprime d then |f a| * |liuScaledAPError main Y a d l| else 0
 
-/-- ANT's historical Pan error is exactly the specialization to its
-`x / log x` compatibility proxy. -/
-@[simp] theorem liuScaledAPError_proxy
-   (Y a d l : ℕ) :
-   liuScaledAPError AnalyticNumberTheory.Sieve.logarithmicIntegral Y a d l =
-     AnalyticNumberTheory.Sieve.panDistributionError Y a d l := by
- rfl
-
-/-- The legacy signed non-coprime Pan sum is exactly the proxy specialization. -/
-theorem liuMainNoncoprimeSum_proxy
-   (Y X d l : ℕ) (f : ℕ → ℝ) :
-   liuMainNoncoprimeSum AnalyticNumberTheory.Sieve.logarithmicIntegral
-       Y X d l f =
-     AnalyticNumberTheory.Sieve.panDistributionNoncoprimeSum Y X d l f := by
- rfl
-
-/-- The legacy non-coprime Pan majorant is exactly the proxy specialization. -/
-theorem liuMainNoncoprimeMajorant_proxy
-   (Y X d l : ℕ) (f : ℕ → ℝ) :
-   liuMainNoncoprimeMajorant AnalyticNumberTheory.Sieve.logarithmicIntegral
-       Y X d l f =
-     AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant Y X d l f := by
- rfl
 
 /-- The signed non-coprime sum is bounded by its main-parametric majorant. -/
 theorem abs_liuMainNoncoprimeSum_le
@@ -470,15 +364,6 @@ theorem abs_liuMainNoncoprimeSum_le
      intro a _
      by_cases hcop : a.Coprime d <;> simp [hcop, abs_mul]
 
-/-- When the progression count vanishes, the arbitrary-model error is exactly
-the negative main term. -/
-theorem liuScaledAPError_mul_eq_neg_main_div_totient
-   (main : ℝ → ℝ) {Y p₁ p₂ d l : ℕ}
-   (hp₁d : p₁ ∣ d) (hp₁l : ¬p₁ ∣ l) :
-   liuScaledAPError main Y (p₁ * p₂) d l =
-     -(main ((Y : ℝ) / (p₁ * p₂)) / Nat.totient d) := by
- simp [liuScaledAPError,
-   primesInAPBelow_mul_eq_zero_of_dvd_modulus hp₁d hp₁l]
 
 /-- Absolute-value form of the zero-count reduction, with no sign assumption on
 `main`. -/
@@ -490,14 +375,6 @@ theorem abs_liuScaledAPError_mul_eq_abs_main_div_totient
  simp [liuScaledAPError,
    primesInAPBelow_mul_eq_zero_of_dvd_modulus hp₁d hp₁l, abs_div]
 
-/-- Zero-count reduction at the canonical residue `N % d`. -/
-theorem liuScaledAPError_mul_mod_eq_neg_main_div_totient
-   (main : ℝ → ℝ) {N Y p₁ p₂ d : ℕ}
-   (hp₁d : p₁ ∣ d) (hp₁N : ¬p₁ ∣ N) :
-   liuScaledAPError main Y (p₁ * p₂) d (N % d) =
-     -(main ((Y : ℝ) / (p₁ * p₂)) / Nat.totient d) :=
- liuScaledAPError_mul_eq_neg_main_div_totient main hp₁d (by
-   rwa [Nat.dvd_mod_iff hp₁d])
 
 /-- Absolute-value zero-count reduction at the canonical residue `N % d`. -/
 theorem abs_liuScaledAPError_mul_mod_eq_abs_main_div_totient
@@ -558,15 +435,6 @@ theorem liuMainNoncoprimeMajorant_liuWeight_eq_p₁DividesMainSum
  exact liuMainSupportNoncoprimeSum_eq_p₁DividesMainSum
    main N z w y Y X d l hwy hd
 
-/-- The signed arbitrary-model non-coprime sum is bounded by the same pair sum. -/
-theorem abs_liuMainNoncoprimeSum_liuWeight_le_p₁DividesMainSum
-   (main : ℝ → ℝ) (N z w y Y X d l : ℕ) (hwy : w ≤ y)
-   (hd : ∀ r, r.Prime → r ∣ d → r ≤ w) :
-   |liuMainNoncoprimeSum main Y X d l (liuWeight N z y)| ≤
-     liuP₁DividesMainSum main N z y Y X d l := by
- rw [← liuMainNoncoprimeMajorant_liuWeight_eq_p₁DividesMainSum
-   main N z w y Y X d l hwy hd]
- exact abs_liuMainNoncoprimeSum_le main Y X d l (liuWeight N z y)
 
 /-- At `N % d`, the arbitrary-model pair sum is exactly the explicit
 `|main(Y/(p₁p₂))|/φ(d)` sum. -/
@@ -598,171 +466,8 @@ theorem liuMainNoncoprimeMajorant_liuWeight_mod_eq_abs_main_sum
    main N z w y Y X d (N % d) hwy hd]
  exact liuP₁DividesMainSum_mod_eq_abs_main_sum main N z y Y X d havoid
 
-/-- Signed per-modulus arbitrary-model sum bounded by the explicit main sum. -/
-theorem abs_liuMainNoncoprimeSum_liuWeight_mod_le_abs_main_sum
-   (main : ℝ → ℝ) (N z w y Y X d : ℕ) (hwy : w ≤ y)
-   (hd : ∀ r, r.Prime → r ∣ d → r ≤ w)
-   (havoid : ∀ r, r.Prime → r ∣ d → ¬r ∣ N) :
-   |liuMainNoncoprimeSum main Y X d (N % d) (liuWeight N z y)| ≤
-     ∑ p ∈ (liuWeightPairs N z y).filter
-         (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-       |main ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
- rw [← liuP₁DividesMainSum_mod_eq_abs_main_sum main N z y Y X d havoid]
- exact abs_liuMainNoncoprimeSum_liuWeight_le_p₁DividesMainSum
-   main N z w y Y X d (N % d) hwy hd
 
 /-! ## Compatibility-proxy specializations -/
 
-/-- **Proxy specialization.** With the progression count zero, ANT's historical
-Pan error is the negative `x / log x` main term. -/
-theorem panDistributionError_mul_eq_neg_li_div_totient
-    {Y p₁ p₂ d l : ℕ} (hp₁d : p₁ ∣ d) (hp₁l : ¬p₁ ∣ l) :
-    AnalyticNumberTheory.Sieve.panDistributionError Y (p₁ * p₂) d l =
-      -(AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p₁ * p₂)) / Nat.totient d) := by
-  exact liuScaledAPError_mul_eq_neg_main_div_totient
-    AnalyticNumberTheory.Sieve.logarithmicIntegral hp₁d hp₁l
-
-/-- The sign-free consequence retains `|li|`; no positivity of the logarithmic
-integral is assumed. -/
-theorem abs_panDistributionError_mul_eq_abs_li_div_totient
-    {Y p₁ p₂ d l : ℕ} (hp₁d : p₁ ∣ d) (hp₁l : ¬p₁ ∣ l) :
-    |AnalyticNumberTheory.Sieve.panDistributionError Y (p₁ * p₂) d l| =
-      |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p₁ * p₂))| / Nat.totient d := by
-  exact abs_liuScaledAPError_mul_eq_abs_main_div_totient
-    AnalyticNumberTheory.Sieve.logarithmicIntegral hp₁d hp₁l
-
-/-- Specialization of the exact signed formula to the residue `N % d`. -/
-theorem panDistributionError_mul_mod_eq_neg_li_div_totient
-    {N Y p₁ p₂ d : ℕ} (hp₁d : p₁ ∣ d) (hp₁N : ¬p₁ ∣ N) :
-    AnalyticNumberTheory.Sieve.panDistributionError
-        Y (p₁ * p₂) d (N % d) =
-      -(AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p₁ * p₂)) / Nat.totient d) :=
-  panDistributionError_mul_eq_neg_li_div_totient hp₁d (by
-    rwa [Nat.dvd_mod_iff hp₁d])
-
-/-- Specialization of the absolute-value formula to the residue `N % d`. -/
-theorem abs_panDistributionError_mul_mod_eq_abs_li_div_totient
-    {N Y p₁ p₂ d : ℕ} (hp₁d : p₁ ∣ d) (hp₁N : ¬p₁ ∣ N) :
-    |AnalyticNumberTheory.Sieve.panDistributionError
-        Y (p₁ * p₂) d (N % d)| =
-      |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p₁ * p₂))| / Nat.totient d :=
-  abs_panDistributionError_mul_eq_abs_li_div_totient hp₁d (by
-    rwa [Nat.dvd_mod_iff hp₁d])
-
-/-- The paper-shaped finite sum after the `p₂ ∤ d` observation. -/
-noncomputable def liuP₁DividesSum
-    (N z y Y X d l : ℕ) : ℝ :=
-  ∑ p ∈ (liuWeightPairs N z y).filter
-      (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-    |AnalyticNumberTheory.Sieve.panDistributionError Y (p.1 * p.2) d l|
-
-/-- The legacy finite pair sum is exactly the `x / log x` proxy specialization. -/
-theorem liuP₁DividesMainSum_proxy
-    (N z y Y X d l : ℕ) :
-    liuP₁DividesMainSum AnalyticNumberTheory.Sieve.logarithmicIntegral
-        N z y Y X d l =
-      liuP₁DividesSum N z y Y X d l := by
-  rfl
-
-/-- The termwise non-coprime majorant is first exactly the sum over supported
-products that are not coprime to `d`. -/
-theorem panDistributionNoncoprimeMajorant_liuWeight_eq_support_sum
-    (N z y Y X d l : ℕ) :
-    AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-        Y X d l (liuWeight N z y) =
-      ∑ a ∈ (range (X + 1)).filter
-          (fun a => LiuWeightSupport N z y a ∧ ¬a.Coprime d),
-        |AnalyticNumberTheory.Sieve.panDistributionError Y a d l| := by
-  exact liuMainNoncoprimeMajorant_liuWeight_eq_support_sum
-    AnalyticNumberTheory.Sieve.logarithmicIntegral N z y Y X d l
-
-/-- Exact reindexing of the supported non-coprime sum by the unique admissible
-pair. -/
-theorem liuSupportNoncoprimeSum_eq_p₁DividesSum
-    (N z w y Y X d l : ℕ) (hwy : w ≤ y)
-    (hd : ∀ r, r.Prime → r ∣ d → r ≤ w) :
-    (∑ a ∈ (range (X + 1)).filter
-        (fun a => LiuWeightSupport N z y a ∧ ¬a.Coprime d),
-      |AnalyticNumberTheory.Sieve.panDistributionError Y a d l|) =
-      liuP₁DividesSum N z y Y X d l := by
-  exact liuMainSupportNoncoprimeSum_eq_p₁DividesMainSum
-    AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y Y X d l hwy hd
-
-/-- **Exact equality for the majorant.**  On moduli whose prime divisors are at
-most the independent cutoff `w ≤ y`, Liu's weight with lower cutoff `z` has
-non-coprime majorant precisely equal to the finite `p₁ ∣ d` pair sum. -/
-theorem panDistributionNoncoprimeMajorant_liuWeight_eq_p₁DividesSum
-    (N z w y Y X d l : ℕ) (hwy : w ≤ y)
-    (hd : ∀ r, r.Prime → r ∣ d → r ≤ w) :
-    AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-        Y X d l (liuWeight N z y) =
-      liuP₁DividesSum N z y Y X d l := by
-  rw [panDistributionNoncoprimeMajorant_liuWeight_eq_support_sum]
-  exact liuSupportNoncoprimeSum_eq_p₁DividesSum N z w y Y X d l hwy hd
-
-/-- **Termwise majorant, not an equality for the signed sum.**  This is the
-finite `R₁` reduction available before the still-open outer `d ∣ Q` weighted
-asymptotic estimate. -/
-theorem abs_panDistributionNoncoprimeSum_liuWeight_le_p₁DividesSum
-    (N z w y Y X d l : ℕ) (hwy : w ≤ y)
-    (hd : ∀ r, r.Prime → r ∣ d → r ≤ w) :
-    |AnalyticNumberTheory.Sieve.panDistributionNoncoprimeSum
-        Y X d l (liuWeight N z y)| ≤
-      liuP₁DividesSum N z y Y X d l := by
-  rw [← panDistributionNoncoprimeMajorant_liuWeight_eq_p₁DividesSum
-    N z w y Y X d l hwy hd]
-  exact AnalyticNumberTheory.Sieve.abs_panDistributionNoncoprimeSum_le
-    Y X d l (liuWeight N z y)
-
-/-- Termwise residue collapse through Liu's finite `p₁ ∣ d` sum.  The explicit
-hypothesis is exactly what is needed to pass from `p₁ ∣ d` to `p₁ ∤ N`; in the
-corrected Chen application it follows from `d ∣ correctedChenSiftingProduct N`.
--/
-theorem liuP₁DividesSum_mod_eq_abs_li_sum
-    (N z y Y X d : ℕ)
-    (havoid : ∀ r, r.Prime → r ∣ d → ¬r ∣ N) :
-    liuP₁DividesSum N z y Y X d (N % d) =
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
-  exact liuP₁DividesMainSum_mod_eq_abs_main_sum
-    AnalyticNumberTheory.Sieve.logarithmicIntegral N z y Y X d havoid
-
-/-- Exact non-coprime majorant after every relevant prime divisor of `d` is
-known not to divide `N`.  The absolute value on `li` is retained. -/
-theorem panDistributionNoncoprimeMajorant_liuWeight_mod_eq_abs_li_sum
-    (N z w y Y X d : ℕ) (hwy : w ≤ y)
-    (hd : ∀ r, r.Prime → r ∣ d → r ≤ w)
-    (havoid : ∀ r, r.Prime → r ∣ d → ¬r ∣ N) :
-    AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-        Y X d (N % d) (liuWeight N z y) =
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
-  rw [panDistributionNoncoprimeMajorant_liuWeight_eq_p₁DividesSum
-    N z w y Y X d (N % d) hwy hd]
-  exact liuP₁DividesSum_mod_eq_abs_li_sum N z y Y X d havoid
-
-/-- Signed non-coprime sum bounded by the same exact finite `|li|` expression.
-No outer modulus sum, cutoff estimate, or logarithmic estimate is asserted. -/
-theorem abs_panDistributionNoncoprimeSum_liuWeight_mod_le_abs_li_sum
-    (N z w y Y X d : ℕ) (hwy : w ≤ y)
-    (hd : ∀ r, r.Prime → r ∣ d → r ≤ w)
-    (havoid : ∀ r, r.Prime → r ∣ d → ¬r ∣ N) :
-    |AnalyticNumberTheory.Sieve.panDistributionNoncoprimeSum
-        Y X d (N % d) (liuWeight N z y)| ≤
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
-  rw [← liuP₁DividesSum_mod_eq_abs_li_sum N z y Y X d havoid]
-  exact abs_panDistributionNoncoprimeSum_liuWeight_le_p₁DividesSum
-    N z w y Y X d (N % d) hwy hd
 
 end MathlibNt.SieveTheory.LiuWeight

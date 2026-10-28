@@ -1,0 +1,129 @@
+sigma_le_addedMatrix : ∀ (i k : Fin 9), W17Joint.rationalSigmaMatrix i k ≤ addedMatrix i k
+'WuTarget.E02JointCredit.sigma_le_addedMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_apply : ∀ (i : Fin 9),
+  matrixApply W17Joint.rationalSigmaMatrix Wu04Bypass.v8 i = W17Joint.rowWeightLower i * rankOneSigmaMass
+'WuTarget.E02JointCredit.rankOne_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneRows_le_difference : ∀ (i : Fin 9), rankOneRows i ≤ difference i
+'WuTarget.E02JointCredit.rankOneRows_le_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_remainder_eq : ∀ (i : Fin 9),
+  difference i - rankOneRows i =
+    matrixApply W17Joint.jointMatrix (fun k => W04Accepted.enhanced k - Wu04Bypass.v8 k) i +
+      matrixApply (fun j k => addedMatrix j k - W17Joint.rationalSigmaMatrix j k) Wu04Bypass.v8 i
+'WuTarget.E02JointCredit.rankOne_remainder_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_remainder_nonneg : ∀ (i : Fin 9), 0 ≤ difference i - rankOneRows i
+'WuTarget.E02JointCredit.rankOne_remainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_rational_payment : (∑ j, W03.paidWeights j * matrixApply W02.rationalMatrix rankOneRows j) / 4 ≤
+  W17Accepted.jointCredit
+'WuTarget.E02JointCredit.rankOne_rational_payment' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneSigmaMass_exact : rankOneSigmaMass = 57153427687978657391 / 77653743750000000000000
+'WuTarget.E02JointCredit.rankOneSigmaMass_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneRowLower_le : ∀ (i : Fin 9), ↑(rankOneRowLower i) ≤ rankOneRows i
+'WuTarget.E02JointCredit.rankOneRowLower_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneRowLower_le_difference : ∀ (i : Fin 9), ↑(rankOneRowLower i) ≤ difference i
+'WuTarget.E02JointCredit.rankOneRowLower_le_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneTransferLower_le_q : ∀ (j : Fin 21), rankOneTransferLower j ≤ rankOneQTransfer j
+'WuTarget.E02JointCredit.rankOneTransferLower_le_q' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneQTransfer_cast : ∀ (j : Fin 21),
+  ↑(rankOneQTransfer j) = matrixApply W02.rationalMatrix (fun k => ↑(rankOneRowLower k)) j
+'WuTarget.E02JointCredit.rankOneQTransfer_cast' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneTransferLower_le_rational : ∀ (j : Fin 21),
+  ↑(rankOneTransferLower j) ≤ matrixApply W02.rationalMatrix difference j
+'WuTarget.E02JointCredit.rankOneTransferLower_le_rational' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneTransferLower_le_actual : ∀ (j : Fin 21), ↑(rankOneTransferLower j) ≤ transferredDifference j
+'WuTarget.E02JointCredit.rankOneTransferLower_le_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneWeightedPayment_le : rankOneWeightedPayment ≤ W17Accepted.jointCredit
+'WuTarget.E02JointCredit.rankOneWeightedPayment_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneAmount_paid : rankOneAmount ≤ rankOneWeightedPayment
+'WuTarget.E02JointCredit.rankOneAmount_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_actual_jointCredit_lower : 91 / 500000 ≤ W17Accepted.jointCredit
+'WuTarget.E02JointCredit.rankOne_actual_jointCredit_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneAmount_improves_old : 16000 * amount < rankOneAmount
+'WuTarget.E02JointCredit.rankOneAmount_improves_old' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneAmount_preserves_old : amount < rankOneAmount
+'WuTarget.E02JointCredit.rankOneAmount_preserves_old' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneUpgrade_exact : rankOneUpgrade = 144468664941233 / 793830625000000000
+'WuTarget.E02JointCredit.rankOneUpgrade_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneUpgrade_pos : 0 < rankOneUpgrade
+'WuTarget.E02JointCredit.rankOneUpgrade_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneUpgrade_lower : 9 / 50000 < rankOneUpgrade
+'WuTarget.E02JointCredit.rankOneUpgrade_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOneUpgrade_paid : amount + rankOneUpgrade ≤ W17Accepted.jointCredit
+'WuTarget.E02JointCredit.rankOneUpgrade_paid' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_net_identity : W17Accepted.jointCredit = amount + rankOneUpgrade + (W17Accepted.jointCredit - rankOneAmount)
+'WuTarget.E02JointCredit.rankOne_net_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_net_remainder_nonneg : 0 ≤ W17Accepted.jointCredit - rankOneAmount
+'WuTarget.E02JointCredit.rankOne_net_remainder_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_actual_lowGain_difference_lower : 91 / 125000 ≤
+  W01.lowGain W17Accepted.enhanced - W01.lowGain W04Accepted.enhanced
+'WuTarget.E02JointCredit.rankOne_actual_lowGain_difference_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rankOne_actual_coefficient_gain : W01.ordinaryCoefficient W04Accepted.enhanced + 91 / 500000 ≤
+  W01.ordinaryCoefficient W17Accepted.enhanced
+'WuTarget.E02JointCredit.rankOne_actual_coefficient_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_paid_budget_gain : W13TightAccepted.paidCoefficient + 91 / 500000 ≤ W17Accepted.paidCoefficient
+'WuTarget.E02JointCredit.rankOne_paid_budget_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_remaining_budget_gain : W13TightAccepted.remainingCoefficient + 91 / 500000 ≤ W17Accepted.remainingCoefficient
+'WuTarget.E02JointCredit.rankOne_remaining_budget_gain' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_remaining_net_identity : W17Accepted.remainingCoefficient =
+  W13TightAccepted.remainingCoefficient + amount + rankOneUpgrade + (W17Accepted.jointCredit - rankOneAmount)
+'WuTarget.E02JointCredit.rankOne_remaining_net_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+rankOne_coefficient_net_identity : W01.ordinaryCoefficient W17Accepted.enhanced =
+  W01.ordinaryCoefficient W04Accepted.enhanced + amount + rankOneUpgrade + (W17Accepted.jointCredit - rankOneAmount)
+'WuTarget.E02JointCredit.rankOne_coefficient_net_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ordinary_P2_rankOne_amount : ∀ {ε dmax : ℝ},
+  0 < ε →
+    0 < dmax →
+      ∃ δ,
+        0 < δ ∧
+          δ < dmax ∧
+            δ ≤ 1 / 100 ∧
+              (∀ (i : Fin 9), W17Accepted.enhanced i ≤ actualNine δ i) ∧
+                (∀ (j : Fin 21),
+                    matrixApply transferMatrix W17Accepted.enhanced j ≤ wuImprovementLimit false δ (rNode (↑j + 1))) ∧
+                  ∃ T,
+                    512 ≤ T ∧
+                      ∀ (N : ℕ),
+                        T ≤ N →
+                          Even N →
+                            (W01.ordinaryCoefficient W04Accepted.enhanced + 91 / 500000 - ε) * U8CanonicalMother.M N ≤
+                              ↑{p ∈ Finset.range (N + 1) |
+                                    Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+'WuTarget.E02JointCredit.ordinary_P2_rankOne_amount' depends on axioms: [propext, Classical.choice, Quot.sound]
+@ordinary_P2_rankOne_budget : ∀ {ε dmax : ℝ},
+  0 < ε →
+    0 < dmax →
+      ∃ δ,
+        0 < δ ∧
+          δ < dmax ∧
+            δ ≤ 1 / 100 ∧
+              ∃ T,
+                512 ≤ T ∧
+                  ∀ (N : ℕ),
+                    T ≤ N →
+                      Even N →
+                        (W13TightAccepted.paidCoefficient + 91 / 500000 - ε) * U8CanonicalMother.M N ≤
+                          ↑{p ∈ Finset.range (N + 1) |
+                                Nat.Prime p ∧ 0 < N - p ∧ ArithmeticFunction.cardFactors (N - p) ≤ 2}.card
+'WuTarget.E02JointCredit.ordinary_P2_rankOne_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+def WuTarget.E02JointCredit.rankOneSigmaMass : ℝ :=
+W06.sigmaLower Wu04Bypass.v8
+def WuTarget.E02JointCredit.rankOneRows : Fin 9 → ℝ :=
+fun i => W09.increment i + W17Joint.rowWeightLower i * rankOneSigmaMass
+def WuTarget.E02JointCredit.rankOneRowLower : Fin 9 → ℚ :=
+![187615043 / 500000000000, 191387593 / 500000000000, 380354511 / 1000000000000, 198824317 / 500000000000,
+  406884743 / 1000000000000, 199668871 / 500000000000, 391474491 / 1000000000000, 47735957 / 125000000000,
+  368001753 / 1000000000000]
+def WuTarget.E02JointCredit.rankOneTransferLower : Fin 21 → ℚ :=
+![320758699 / 1000000000000, 151851393 / 500000000000, 286646873 / 1000000000000, 3369887 / 12500000000,
+  252535047 / 1000000000000, 117739567 / 500000000000, 218423221 / 1000000000000, 50341827 / 250000000000,
+  36862279 / 200000000000, 83627741 / 500000000000, 150199569 / 1000000000000, 16642957 / 125000000000,
+  116501257 / 1000000000000, 3145411 / 31250000000, 84747207 / 1000000000000, 69097793 / 1000000000000,
+  54307507 / 1000000000000, 1613051 / 40000000000, 5431547 / 200000000000, 1489101 / 100000000000,
+  12305207 / 1000000000000]
+def WuTarget.E02JointCredit.rankOneWeightedPayment : ℝ :=
+(∑ j, W03.paidWeights j * ↑(rankOneTransferLower j)) / 4
+def WuTarget.E02JointCredit.rankOneAmount : ℝ :=
+91 / 500000
+def WuTarget.E02JointCredit.rankOneUpgrade : ℝ :=
+rankOneAmount - amount

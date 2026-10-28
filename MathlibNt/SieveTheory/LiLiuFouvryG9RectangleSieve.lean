@@ -56,13 +56,5 @@ theorem fouvryG9Rectangle_weighted_upper (N : ℕ) (ρ : ℝ) (k : ℕ × ℕ ×
   simp only [heq] at hc
   exact hc
 
-/-- The full reduced sum on this very same rectangle is the previously
-proved actual G9 error, not a substitute discrepancy. -/
-theorem fouvryG9Rectangle_full_error_eq (N : ℕ) (ρ δ : ℝ) (k : ℕ × ℕ × ℕ)
-    (c : ℕ → ℝ) :
-    signedError (fouvryG9LongProducts N ρ k) (fouvryG9RectanglePrimeSupport N ρ k)
-      (Ioc 0 ⌊(N : ℝ)^(5/9-δ)/(((2/3 : ℝ)*ρ^k.1)^(5/9 : ℝ))⌋₊)
-      (fouvryG9LongAlpha N ρ k) (fouvryG9RectangleBeta N) c N =
-        fouvryG9RectangleError N ρ δ k c := rfl
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -1,0 +1,45 @@
+{
+  "module": "Hf4ActualDE",
+  "exit_code": 0,
+  "seconds": 4.451769571751356,
+  "source_sha256": "c6563fe62c61efd1c61c0636e5f2fcd4d8564c2ae3406490d000caeb8b29473b",
+  "object_sha256": "c5cae56522f005b807f7e5290190feed39a79262d05f703c71138853568a0c2f",
+  "dependencies": {
+    "Hf4ActualNumerator": "0fa8acd69c808af6f2ce174925165dbec0021c65c45a3bf2f8531789bdb7544c"
+  },
+  "dependency_contexts": {
+    "Hf4ActualNumerator": "4f5a50acbf49685a7bdffc01deee21586accbedb1d8524f147740e7741230ad7"
+  },
+  "context_sha256": "df2ff4ef03b5c2d3088cb8fc7e1b98ea783290c82f00634027534f901d9d4ee9",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualDE.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualDE.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4ActualDE.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4ActualDE.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4ActualDE.resources",
+  "resource_sha256": "a13d4b68cf71292854a0eef721775a61b0b874ecb2542c15df173916478a66a9",
+  "artifact_bundle_sha256": {
+    ".olean": "c5cae56522f005b807f7e5290190feed39a79262d05f703c71138853568a0c2f"
+  }
+}

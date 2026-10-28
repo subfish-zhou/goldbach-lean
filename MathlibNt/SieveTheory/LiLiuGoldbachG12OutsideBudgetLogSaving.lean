@@ -47,53 +47,5 @@ theorem denominator_lower {n Q η σ : ℝ} (hn : 0 ≤ n) (hη : 0 < η)
   have hQ0 : 0 ≤ Q := (Real.rpow_nonneg hn _).trans hQ
   simpa only [externalInternalLevel, ← Real.rpow_mul hQ0] using h
 
-/-- The threshold precedes every submother, epsilon, cutoff and actual family.
-The tag cardinality is retained rather than assumed bounded. -/
-theorem family_log_saving (B : ℕ) {η σ : ℝ}
-    (hη : 0 < η) (hηsmall : η < 1/8) (hσ : 0 < σ) :
-    ∀ᶠ N : ℕ in atTop, ∀ (ε : ℝ) (A : Finset GoldbachG12LinkedAtom),
-      A ⊆ goldbachG12LinkedAtoms N ε → ∀ Z Q : ℝ,
-      (N : ℝ)^σ ≤ Q → Q ≤ N → 2 ≤ externalInternalLevel Q η →
-      (∑ t ∈ externalTags true (goldbachB10SiftingPrimes N Z) (externalInternalLevel Q η) η Z,
-        |outside N A Z Q
-          (externalTerm true (goldbachB10SiftingPrimes N Z) (externalInternalLevel Q η) η Z t)|) ≤
-        ((externalTags true (goldbachB10SiftingPrimes N Z) (externalInternalLevel Q η) η Z).card : ℝ) *
-          N / (Real.log N)^B := by
-  let δ := σ*((1+η+η^9)⁻¹*η^2)
-  have hc : 0 < 1+η+η^9 := by linarith [(external_dilation_bounds hη hηsmall).1]
-  have hδ : 0 < δ := mul_pos hσ (mul_pos (inv_pos.mpr hc) (sq_pos_of_pos hη))
-  filter_upwards [tendsto_natCast_atTop_atTop.eventually (scalar_log_saving B hδ)] with N hN
-  intro ε A hA Z Q hQl hQu hD
-  have hN2 : 2 ≤ N := by exact_mod_cast hN.1
-  have hN0 : (0 : ℝ) < N := by linarith [hN.1]
-  have hQ1 : 1 ≤ Q := (Real.one_le_rpow (by linarith : (1 : ℝ) ≤ N) hσ.le).trans hQl
-  have hf1 : (1 : ℝ) ≤ (⌊Q⌋₊ : ℕ) := by
-    exact_mod_cast (Nat.le_floor (by simpa only [Nat.cast_one] using hQ1) : 1 ≤ ⌊Q⌋₊)
-  have hfN : (⌊Q⌋₊ : ℝ) ≤ N := (Nat.floor_le (by linarith : 0 ≤ Q)).trans hQu
-  have hlog : Real.log (⌊Q⌋₊ : ℕ) ≤ Real.log N :=
-    Real.log_le_log (by linarith) hfN
-  have hlog0 : 0 ≤ Real.log (⌊Q⌋₊ : ℕ) := Real.log_nonneg hf1
-  have hs : (1 + Real.log (⌊Q⌋₊ : ℕ))^2 ≤ (1 + Real.log N)^2 := by nlinarith
-  have hden := denominator_lower hN0.le hη hηsmall hQl
-  have hpow : 0 < (N : ℝ)^δ := Real.rpow_pos_of_pos hN0 δ
-  have hcoef : 20 * (4 / (externalInternalLevel Q η)^(η^2)) *
-      (1 + Real.log (⌊Q⌋₊ : ℕ))^2 ≤ 1 / (Real.log N)^B := by
-    calc
-      _ ≤ 20 * (4 / (externalInternalLevel Q η)^(η^2)) * (1 + Real.log N)^2 :=
-        mul_le_mul_of_nonneg_left hs (by positivity)
-      _ ≤ 20 * (4 / (N : ℝ)^δ) * (1 + Real.log N)^2 :=
-        mul_le_mul_of_nonneg_right
-          (mul_le_mul_of_nonneg_left (div_le_div_of_nonneg_left (by norm_num) hpow hden)
-            (by norm_num)) (sq_nonneg _)
-      _ = 80 * (1 + Real.log N)^2 / (N : ℝ)^δ := by ring
-      _ ≤ _ := hN.2
-  have hb := family_budget hN2 ε A hA Z Q η hD hη hηsmall
-  have hm := mul_le_mul_of_nonneg_left hcoef
-    (show 0 ≤ ((externalTags true (goldbachB10SiftingPrimes N Z)
-      (externalInternalLevel Q η) η Z).card : ℝ) * N by positivity)
-  calc
-    _ ≤ _ := hb
-    _ ≤ _ := by
-      simpa only [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm, one_mul] using hm
 
 end G12OutsideBudget

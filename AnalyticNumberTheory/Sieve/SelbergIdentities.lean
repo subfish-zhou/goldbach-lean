@@ -25,21 +25,5 @@ theorem selbergTerm_prime {S : BoundingSieve} {p : ℕ} (hp : p.Prime) :
   rw [BoundingSieve.selbergTerms_apply, Nat.Prime.primeFactors hp]
   simp
 
-/-- The Selberg divisor sum of any `BoundingSieve` factors over its prime
-factors: `Σ_{d | P} g(d) = ∏_{p | P} (1 - ν(p))⁻¹`. -/
-theorem selbergSum_eq_prod_inv {S : BoundingSieve} :
-    ∑ d ∈ S.prodPrimes.divisors, S.selbergTerms d =
-      ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p)⁻¹ := by
-  rw [← ArithmeticFunction.IsMultiplicative.prodPrimeFactors_one_add_of_squarefree
-    S.selbergTerms_isMultiplicative S.prodPrimes_squarefree]
-  apply Finset.prod_congr rfl
-  intro p hp
-  have hp_prime : p.Prime := Nat.prime_of_mem_primeFactors hp
-  rw [selbergTerm_prime hp_prime]
-  have hp_dvd : p ∣ S.prodPrimes := Nat.dvd_of_mem_primeFactors hp
-  have hlt : S.nu p < 1 := S.nu_lt_one_of_prime p hp_prime hp_dvd
-  have hne : (1 : ℝ) - S.nu p ≠ 0 := by linarith
-  field_simp [hne]
-  ring
 
 end AnalyticNumberTheory.Sieve

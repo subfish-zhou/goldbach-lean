@@ -1,0 +1,94 @@
+{
+  "status": "pass",
+  "accepted_at_utc": "2026-10-27T15:56:59.728279+00:00",
+  "manifest_sha256": "5edafd3f227eabed812038e21b69b0817577ff459d23c0acc1f89f88953f6cfe",
+  "modules": 4142,
+  "theorem_closure_modules": 3755,
+  "theorem": "WuPaper.ClassicalSlots.one8938",
+  "legacy_theorem": "WuPaper.ClassicalSlots.one894",
+  "deleted_declarations": 383,
+  "changed_sources": 9,
+  "effective_lines_removed": 10924,
+  "physical_lines_removed": 11516,
+  "byte_reduction": 514688,
+  "modules_removed": 0,
+  "precision_and_numerical_values_unchanged": true,
+  "literal_natural_power_statement": "r ^ 5000 ≤ q ^ 4469",
+  "kernel_replays": [
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiCharacters",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanAggregatePsiDyadic",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbel",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedAbelDeterministic",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCombinedInverseLog",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerPowerSaving",
+    "MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron",
+    "WR2ClassicalCertificate"
+  ],
+  "production_final_kernel": true,
+  "standard_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "before": {
+    "whole_tree": {
+      "modules": 4142,
+      "code_lines": 584819,
+      "physical_lines": 688537,
+      "utf8_bytes": 35406645
+    },
+    "theorem_closure": {
+      "modules": 3755,
+      "code_lines": 544065,
+      "physical_lines": 642059,
+      "utf8_bytes": 31197996
+    }
+  },
+  "after": {
+    "whole_tree": {
+      "modules": 4142,
+      "code_lines": 573895,
+      "physical_lines": 677021,
+      "utf8_bytes": 34891957
+    },
+    "theorem_closure": {
+      "modules": 3755,
+      "code_lines": 533141,
+      "physical_lines": 630543,
+      "utf8_bytes": 30683308
+    }
+  },
+  "method": "Effective lines exclude blank lines and nested/line comments, retain strings, imports, definitions, statements and commands; complete local source closures, external Lake packages excluded; not a minimal declaration-level proof length.",
+  "baseline_git_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "source_survivors_character_identical": true,
+  "retained_definitions_instances_attributes_and_contexts": true,
+  "negative_controls": 6,
+  "adoption_archive": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893",
+  "build_old_timeout_and_resume_preserved": true,
+  "initial_checker_environment_failure_preserved": true,
+  "checker_sysroot_fixed_to_pinned_toolchain": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+  "stdlib_init_sha256": "1e95ecbedde5d49a3e6550ec04f0d4176245196093254e26015c4b5f5a5844fd",
+  "files": {
+    "README.txt": "dc582d0bb204d9869e8016e653d012a7aa1418b6f11c956f0e48c4d73e9062ff",
+    "adoption-summary.json": "199de53b67de3f13f9eb6adc986cf8eab4433c10538f143c13cff408c6b3a1d7",
+    "audit.py": "c78203672effa8e68bcd087d06bcb39e4891cedb5966883c2fe5af33854e8a4a",
+    "classical-acceptance.json": "7d3404b8a467adfd33a02e8b80a9e96c943d2b9930c703fef66c8b94bb609eab",
+    "classical-literal-axioms.log": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+    "isolated-acceptance.json": "d005b2157fb44e05489a4e8c0aad0335d03c85fa4af04f365bf6c79207743902",
+    "manifest.json": "6bd7006db602d707c54a031718ee39445e3a002c1b7b8ca868abfe82bb1b9796",
+    "negative-controls.json": "f2f3f4370c45d34c6efda2dfe6d94fd5556906f3230799937fdf6aeaca5d6356",
+    "production-build.log": "c68b8e64b35b7157f5a6c657e49036f8f9e4163009dcbe53cbdf2c6521ce8cf8",
+    "production-kernel.json": "0b1106f6717707b576d0f8bcde36c34f5788418cd359df2b8ec41730bbad1bb7",
+    "production-kernel.log": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+    "production-literal.log": "c48d0401f3a43c0486b46599dd9c070e102e5445927f2cda45175677f0d08012",
+    "resume-history-copy-manifest.json": "e81a87d145943a2eeb71e18368d0f9994c2bb6fe2af9d24dcf95ee2e43c917fd",
+    "source-audit.json": "ad3abea83ecc00c8dd941560686644e11d2764e2c5fa432624fcca0e6768d9a1",
+    "source-size-after.json": "e573a01261060b103cdd8743c09ed310e46f29fc0e909c627dbdc0b6f893bd60",
+    "source-size-before.json": "0e1d206457ca93cdace3d6f94f5575c3d7519f5dd9d20f3cabfff033ec6e6817",
+    "sysroot-history-copy-manifest.json": "6bd2adb131c12bc7b8d9b29e954193347a7d8cf663ff9f51e495250ff2a4dd77",
+    "sysroot-validator-fix.json": "efa01dd6c681db010a9ce61e7315ca31f804426ff1ebb84c7de89470c71c69e2",
+    "test_negative_controls.py": "a956b983bef6c131959664167ea2b0231cfbc3f6409588e7f1aff5a69d7ab692"
+  }
+}

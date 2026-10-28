@@ -1,0 +1,12 @@
+[
+  {
+    "label": "bp:liliu-s1-density-six",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean:104",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean:59"
+  },
+  {
+    "label": "bp:liliu-s3-main-six",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean:60",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean:15"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "url": "https://arxiv.org/html/2606.05224v1",
+  "authors": [
+    "Jiamin Li",
+    "Jianya Liu"
+  ],
+  "title": "Theorem (1+1.9) on the Goldbach Conjecture",
+  "retrieved_html_sha256": "c4a15f7e274901b45598f26acb4572417e348f0ee5a39b46c6ca9c32b9647cf4",
+  "review_scope": [
+    "Theorem 1.1",
+    "Lemma 3.5",
+    "(4.18)",
+    "Sections 5.1–5.5"
+  ],
+  "full_text_tracked": false
+}

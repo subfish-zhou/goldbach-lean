@@ -49,17 +49,5 @@ theorem sum_gcd_le {a : ℕ} (ha : a ≠ 0) (N : ℕ) :
       Finset.sum_le_sum (fun d _ => Nat.mul_div_le N d)
     _ = _ := by simp [Nat.mul_comm]
 
-theorem sum_int_gcd_le (a : ℤ) (ha : a ≠ 0) (N : ℕ) :
-    (∑ n ∈ Ioc 0 N, Int.gcd a n) ≤ N * a.natAbs.divisors.card := by
-  simpa [Int.gcd] using
-    sum_gcd_le (a := a.natAbs) (by simpa using ha) N
-
-theorem sum_int_gcd_le_real (a : ℤ) (ha : a ≠ 0) {x : ℝ} (hx : 0 ≤ x) :
-    (∑ n ∈ Ioc 0 ⌊x⌋₊, (Int.gcd a n : ℝ)) ≤
-      x * (a.natAbs.divisors.card : ℝ) := by
-  calc
-    _ ≤ (⌊x⌋₊ : ℝ) * (a.natAbs.divisors.card : ℝ) := by
-      exact_mod_cast sum_int_gcd_le a ha ⌊x⌋₊
-    _ ≤ _ := mul_le_mul_of_nonneg_right (Nat.floor_le hx) (by positivity)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

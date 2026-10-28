@@ -151,9 +151,4 @@ theorem exists_roughOrdinaryDensity_ff_target :
     · linarith [jr1965f_le_one (show 1 ≤ Real.log D / Real.log z by linarith)]
     · linarith [one_le_jr1965F (show 1 ≤ Real.log D / Real.log z by linarith)]
 
-#check coarse_rounded_power_budget
-#check exists_roughOrdinaryDensity_ff_target
-#print axioms coarse_rounded_power_budget
-#print axioms exists_roughOrdinaryDensity_ff_target
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.CoarseDensity

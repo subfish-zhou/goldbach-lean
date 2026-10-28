@@ -101,28 +101,6 @@ theorem exists_caseI_errorEnvelope_transport_quotient_cutoff_uniform_in_S
     (hinherited p hpCarrier) (coordinate_bounds hp2 h2pD).1
     (hrecursiveUpper p hpCarrier)
 
-/-- Compatibility specialization of the sieve-uniform quotient cutoff. -/
-theorem exists_caseI_errorEnvelope_transport_quotient_cutoff
-    (S : BoundingSieve) (H : Section13HatLayers) {d Δ : ℝ}
-    (hH : Section13HatSourceContract H) (hd1 : 1 < d)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) :
-    ∃ Dmin : ℕ, 2 ≤ Dmin ∧
-      ∀ (D N : ℕ) (s : ℝ),
-        CarrierQuotientThresholdGeometry S.prodPrimes.primeFactors D Dmin
-          (sourceSigma (D : ℝ) d) s →
-        (∀ p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D
-            (sourceSigma (D : ℝ) d) s,
-          inheritedCoordinate D p ∈ KappaOneModel.parityDomain 2 (N - 1)) →
-        (∀ p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D
-            (sourceSigma (D : ℝ) d) s,
-          recursiveCoordinate D p ≤
-            sourceSigma ((D ⌈/⌉ p : ℕ) : ℝ) d) →
-        CaseIErrorEnvelopeTransport S H N D d (sourceSigma (D : ℝ) d) s := by
-  obtain ⟨Dmin, hDmin, hall⟩ :=
-    exists_caseI_errorEnvelope_transport_quotient_cutoff_uniform_in_S
-      H hH hd1 hΔ0 hΔ1
-  exact ⟨Dmin, hDmin, fun D N s => hall S D N s⟩
-
 
 /-- A square global cutoff puts every Case-I carrier quotient above the threshold. -/
 theorem caseI_carrier_quotient_scale
@@ -181,23 +159,6 @@ theorem eventually_caseI_errorEnvelope_transport_uniform_in_S
   exact htransport S D N s
     (caseI_carrier_quotient_scale S hDmin hD hs)
     hinherited hrecursiveUpper
-
-/-- Compatibility specialization of the sieve-uniform eventual theorem. -/
-theorem eventually_caseI_errorEnvelope_transport_uniform
-    (S : BoundingSieve) (H : Section13HatLayers) {d Δ : ℝ}
-    (hH : Section13HatSourceContract H) (hd1 : 1 < d)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) :
-    ∀ᶠ D : ℕ in atTop, ∀ (N : ℕ) (s : ℝ), 2 ≤ s →
-      (∀ p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D
-          (sourceSigma (D : ℝ) d) s,
-        inheritedCoordinate D p ∈ KappaOneModel.parityDomain 2 (N - 1)) →
-      (∀ p ∈ sigmaOneCarrier S.prodPrimes.primeFactors D
-          (sourceSigma (D : ℝ) d) s,
-        recursiveCoordinate D p ≤
-          sourceSigma ((D ⌈/⌉ p : ℕ) : ℝ) d) →
-      CaseIErrorEnvelopeTransport S H N D d (sourceSigma (D : ℝ) d) s :=
-  (eventually_caseI_errorEnvelope_transport_uniform_in_S H hH hd1 hΔ0 hΔ1).mono
-    (fun _ hD => hD S)
 
 
 end MathlibNt.SieveTheory

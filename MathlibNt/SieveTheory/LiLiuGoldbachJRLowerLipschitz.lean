@@ -58,13 +58,5 @@ theorem lower_le_add_abs (x y : ℝ) :
   have hneg := neg_le_abs (jr1965f x - jr1965f y)
   linarith
 
-/-- If the source is at or below two, the target may lie on either side of two. -/
-theorem lower_le_near_two {x y η : ℝ} (hx : x ≤ 2)
-    (hclose : |x - y| < η) :
-    jr1965f y ≤ jr1965DelayConstant / 2 * η := by
-  have h := lower_le_add_abs x y
-  rw [jr1965f_initial hx, zero_add] at h
-  have hc : 0 < jr1965DelayConstant / 2 := div_pos delayConstant_pos (by norm_num)
-  exact h.trans (mul_lt_mul_of_pos_left hclose hc).le
 
 end MathlibNt.SieveTheory.LiLiuGoldbachJRLowerLipschitz

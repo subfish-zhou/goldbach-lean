@@ -109,31 +109,5 @@ theorem factorLowOmega_supported {S : ℝ} {ζ : ℕ → ℝ}
   intro hz
   exact hn (by simp [betaLowOmega, hz])
 
-theorem factorLowOmega_eq_self_at_one {ζ : ℕ → ℝ}
-    (hζ : factorSupported 1 ζ) {ξ : ℝ} (hξ : 0 ≤ ξ) :
-    betaLowOmega ζ ξ = ζ := by
-  funext n
-  by_cases hz : ζ n = 0
-  · simp [betaLowOmega, hz]
-  obtain ⟨hn, hle⟩ := hζ n hz
-  have hn1 : n = 1 := by
-    have : n ≤ 1 := by exact_mod_cast hle
-    omega
-  simp [betaLowOmega, hn1, hξ]
-
-/-- The original level is preserved exactly, including the near-endpoint
-branch where the second factor is supported only at one. -/
-theorem SignedWellFactorable.c2_split {k : ℕ} {x ν ε : ℝ} {c : ℕ → ℝ}
-    (hc : SignedWellFactorable k (x ^ ((5 - 5 * ν) / 9 - ε)) c)
-    (hx : 1 ≤ x) (hε : 0 ≤ ε) (hεν : ε ≤ ν) (hν : ν ≤ 1 / 10) :
-    let R := x ^ c2RExponent ν ε
-    let S := x ^ c2SExponent ν ε
-    R * S = x ^ ((5 - 5 * ν) / 9 - ε) ∧
-      ∃ γ ζ : ℕ → ℝ,
-        factorSupported R γ ∧ factorSupported S ζ ∧
-        (∀ r, |γ r| ≤ (fouvryTau k r : ℝ)) ∧
-        (∀ s, |ζ s| ≤ (fouvryTau k s : ℝ)) ∧ c = factorConvolution γ ζ := by
-  obtain ⟨hR, hS, hRS, _⟩ := c2_factor_levels hx hε hεν hν
-  exact ⟨hRS, hc.2 _ _ hR hS hRS⟩
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

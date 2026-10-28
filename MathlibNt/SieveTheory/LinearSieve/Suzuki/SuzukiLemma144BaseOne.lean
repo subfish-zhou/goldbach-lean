@@ -5,7 +5,7 @@ The production API currently represents V₁(D,z)/V(z), rather than V₁(D,z)
 itself: each summand is ν(p) V(p)/V(z).  This is the exact finite object to
 which Suzuki Lemma 8.4 applies.  No final Lemma-14.4 error package is assumed.
 -/
-import MathlibNt.SieveTheory.SwitchingPrinciple
+import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
 
 open scoped Classical BigOperators Interval
@@ -205,33 +205,6 @@ theorem suzukiVOne_le_V_mul_fOne_add_localError
     (suzukiVOneNormalized_le_fOne_add_localError
       hD hβ hs hsβ hz hz2 hK hlocal)
     (suzukiVProduct_pos S z).le
-
-/-- The discrete base object vanishes in the support branch `s ≥ β+1`. -/
-theorem suzukiVOneNormalized_eq_zero_of_upper
-    (S : BoundingSieve) {D β z s : ℝ}
-    (hD : 1 < D) (hβ : 1 < β) (hβs : β + 1 ≤ s)
-    (hz : z = D ^ (1 / s)) :
-    suzukiVOneNormalized S D β z = 0 := by
-  have hβp : 0 < β + 1 := by linarith
-  have hExp : 1 / s ≤ 1 / (β + 1) :=
-    one_div_le_one_div_of_le hβp hβs
-  have hzy : z ≤ suzukiYOne D β := by
-    rw [hz, suzukiYOne]
-    exact Real.rpow_le_rpow_of_exponent_le hD.le hExp
-  unfold suzukiVOneNormalized suzukiLemmaEightSixPrimeSum
-  apply Finset.sum_eq_zero
-  intro p hp
-  have hpdata := Finset.mem_filter.mp hp
-  exact False.elim ((not_lt_of_ge hpdata.2.1) (hpdata.2.2.trans_le hzy))
-
-/-- Source support branch: for `s ≥ β+1`, the continuous `f₁` vanishes. -/
-theorem finiteSourceLayer_one_eq_zero_of_upper
-    (β : ℝ) {s : ℝ} (hs : β + 1 ≤ s) :
-    finiteSourceLayer 1 β 1 s = 0 := by
-  rw [finiteSourceLayer_one_eq_suzukiLayer]
-  apply suzukiLayer_eq_zero_of_le 1 β 1
-  norm_num at hs ⊢
-  exact hs
 
 
 end SwitchingPrinciple

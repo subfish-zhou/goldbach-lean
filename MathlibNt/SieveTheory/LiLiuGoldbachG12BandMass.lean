@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG12BandWindows
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 noncomputable section
 open Classical Finset Filter

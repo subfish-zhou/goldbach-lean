@@ -1,7 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrefixBoundedHarmonicTail
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Tactic
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticHarmonicTruncation
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradov
 
 open Complex Finset ZMod
 open scoped BigOperators Real
@@ -210,15 +208,9 @@ private lemma q_div_min_le_q_mul_inv_add_inv {n : ℕ} (hn1 : 1 ≤ n) (_hnq : n
 private lemma sum_univ_zmod_eq_sum_range (f : ZMod q → ℝ) :
     (∑ j : ZMod q, f j) = ∑ n ∈ range q, f (n : ZMod q) := by
   obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (NeZero.ne q)
-  calc
-    ∑ j : ZMod r.succ, f j = ∑ i : Fin r.succ, f ((i : ℕ) : ZMod r.succ) := by
-      symm
-      apply Fintype.sum_equiv (ZMod.finEquiv r.succ).toEquiv
-      intro i
-      congr 1
-      exact ZMod.natCast_zmod_val (ZMod.finEquiv r.succ i)
-    _ = ∑ n ∈ range r.succ, f (n : ZMod r.succ) := by
-      exact Fin.sum_univ_eq_sum_range (fun n : ℕ => f (n : ZMod r.succ)) r.succ
+  rw [← Fin.sum_univ_eq_sum_range]
+  exact Finset.sum_congr rfl (fun i _ => congrArg f (ZMod.natCast_zmod_val i).symm)
+
 
 /-- Explicit scan-free weighted Fourier-kernel bound with generous constant `4`. -/
 theorem IsPrimitive.norm_weighted_fourierKernel_sum_le_four_mul_q_mul_one_add_log
@@ -325,34 +317,5 @@ theorem IsPrimitive.norm_sum_range_le_four_mul_sqrt_q_mul_one_add_log
     _ = 4 * Real.sqrt q * (1 + Real.log q) := by
       field_simp [ne_of_gt hqpos]
 
-/-- Integrated harmonic-tail bound from the explicit primitive prefix estimate. -/
-theorem IsPrimitive.norm_LFunction_one_sub_harmonic_sum_le_eight_mul_sqrt_q_mul_one_add_log_div
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hχne : χ ≠ 1)
-    (hq : 1 < q) {m : ℕ} (hm : 1 ≤ m) :
-    ‖χ.LFunction 1 - ∑ k ∈ range m, cpowWeight (1 : ℂ) k * χ k‖ ≤
-      8 * Real.sqrt q * (1 + Real.log q) / (m : ℝ) := by
-  have hprefix : ∀ N : ℕ, ‖∑ k ∈ range N, χ k‖ ≤ 4 * Real.sqrt q * (1 + Real.log q) := by
-    intro N
-    simpa using hχ.norm_sum_range_le_four_mul_sqrt_q_mul_one_add_log hq N
-  have htail :=
-    norm_LFunction_one_sub_harmonic_sum_le_of_prefix_bound
-      χ hχne (4 * Real.sqrt q * (1 + Real.log q)) hprefix hm
-  convert htail using 1
-  ring
-
-/-- Real quadratic truncation form of the same explicit harmonic-tail bound. -/
-theorem IsPrimitive.abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_eight_mul_sqrt_q_mul_one_add_log_div
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hχne : χ ≠ 1)
-    (hq : 1 < q) {m : ℕ} (hm : 1 ≤ m) :
-    |(χ.LFunction 1).re - quadraticHarmonicTruncation χ m| ≤
-      8 * Real.sqrt q * (1 + Real.log q) / (m : ℝ) := by
-  have hprefix : ∀ N : ℕ, ‖∑ k ∈ range N, χ k‖ ≤ 4 * Real.sqrt q * (1 + Real.log q) := by
-    intro N
-    simpa using hχ.norm_sum_range_le_four_mul_sqrt_q_mul_one_add_log hq N
-  have htail :=
-    abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_of_prefix_bound
-      χ hχne (4 * Real.sqrt q * (1 + Real.log q)) hprefix hm
-  convert htail using 1
-  ring
 
 end DirichletCharacter

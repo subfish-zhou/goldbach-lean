@@ -1,5 +1,5 @@
+import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanActualErrorEnvelope
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969BombieriWeightPayment
 
 /-! The only analytic input below is the explicitly conditional unweighted
 Pan (1975) Theorem 2 specialization for the actual convolution error.
@@ -44,7 +44,8 @@ theorem liuPanWeightedSum_eq_squarefree (κ : ℝ) (N : ℕ) (B : ℝ) :
   apply sum_congr rfl
   intro q _
   by_cases hq : Squarefree q
-  · rw [if_pos hq, SwitchingPrinciple.moebius_sq_eq_one_of_squarefree hq, one_mul]
+  · rw [if_pos hq, (show (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) = 1 by
+      exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hq), one_mul]
     rfl
   · rw [if_neg hq, ArithmeticFunction.moebius_eq_zero_of_not_squarefree hq]
     simp

@@ -28,10 +28,9 @@ def opposite : ErrorSign → ErrorSign
   | .plus => .minus
   | .minus => .plus
 
+
 @[simp] theorem opposite_plus : opposite .plus = .minus := rfl
 @[simp] theorem opposite_minus : opposite .minus = .plus := rfl
-@[simp] theorem opposite_opposite (sign : ErrorSign) : sign.opposite.opposite = sign := by
-  cases sign <;> rfl
 
 /-- Suzuki's convention: odd depth uses `+`, even depth uses `-`. -/
 def ofDepth (N : ℕ) : ErrorSign := if Odd N then .plus else .minus
@@ -57,12 +56,12 @@ theorem ofDepth_pred_eq_opposite {N : ℕ} (hN : 1 ≤ N) :
       have hkpos : 0 < k := by omega
       refine ⟨k - 1, ?_⟩
       omega
-    simp [ofDepth_of_even hEven, ofDepth_of_odd hPredOdd]
+    simp [ofDepth_of_even hEven, ofDepth_of_odd hPredOdd, opposite]
   · have hPredEven : Even (N - 1) := by
       obtain ⟨k, hk⟩ := hOdd
       refine ⟨k, ?_⟩
       omega
-    simp [ofDepth_of_odd hOdd, ofDepth_of_even hPredEven]
+    simp [ofDepth_of_odd hOdd, ofDepth_of_even hPredEven, opposite]
 
 end ErrorSign
 
@@ -139,25 +138,6 @@ def Claim14_13PointwisePremise
   errorEnvelope H (N - 1) x d (s - 1) * (Real.log x) ^ (-Δ) ≤
     (Real.log D) ^ (-Δ) * qD H (ErrorSign.ofDepth N).opposite D d Δ s
 
-/-- Pure sum algebra in (14.13): a pointwise inherited-error bound remains
-valid after multiplication by nonnegative sieve weights and finite summation. -/
-theorem equation14_13_finset
-    {ι : Type*} (S : Finset ι) (weight inherited qvalue : ι → ℝ)
-    (logFactor : ℝ) (hweight : ∀ i ∈ S, 0 ≤ weight i)
-    (hpointwise : ∀ i ∈ S, inherited i ≤ logFactor * qvalue i) :
-    ∑ i ∈ S, weight i * inherited i ≤
-      logFactor * ∑ i ∈ S, weight i * qvalue i := by
-  calc
-    ∑ i ∈ S, weight i * inherited i ≤
-        ∑ i ∈ S, weight i * (logFactor * qvalue i) := by
-      apply Finset.sum_le_sum
-      intro i hi
-      exact mul_le_mul_of_nonneg_left (hpointwise i hi) (hweight i hi)
-    _ = logFactor * ∑ i ∈ S, weight i * qvalue i := by
-      simp only [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro i hi
-      ring
 
 /-- Algebraic identity (14.14), specialized to κ=1. -/
 theorem equation14_14
@@ -203,20 +183,6 @@ theorem errorEnvelope_nonneg
   exact mul_nonneg
     (mul_nonneg (Real.rpow_nonneg hbase _) (Real.rpow_nonneg hs _)) hT
 
-/-- Positivity of `q_D^±` on its source range. -/
-theorem qD_nonneg
-    (H : Section13HatLayers) (sign : ErrorSign) {D d Δ s : ℝ}
-    (hD : 1 < D) (hs : 1 ≤ s) (hT : 0 ≤ H.T sign (s - 1)) :
-    0 ≤ qD H sign D d Δ s := by
-  unfold qD
-  have hs0 : 0 ≤ s := zero_le_one.trans hs
-  have hsm0 : 0 ≤ s - 1 := sub_nonneg.mpr hs
-  have hbase : 0 ≤ 1 + s ^ d / Real.log D := (errorBase_pos hD hs0).le
-  have hratio : 0 ≤ s / (s - 1) := div_nonneg hs0 hsm0
-  exact mul_nonneg
-    (mul_nonneg
-      (mul_nonneg (Real.rpow_nonneg hbase _) (Real.rpow_nonneg hsm0 _)) hT)
-    (Real.rpow_nonneg hratio _)
 
 /-- Positivity of `Λ_ε^±` on the range used in Claim 14.6. -/
 theorem lambda_nonneg
@@ -229,16 +195,6 @@ theorem lambda_nonneg
   exact mul_nonneg
     (mul_nonneg (Real.rpow_nonneg hbase _) (Real.rpow_nonneg ht _)) hT
 
-/-- Strict positivity of `E_N` under the strict positivity furnished by
-Proposition 13.1 for `T̂⁺,T̂⁻`. -/
-theorem errorEnvelope_pos
-    (H : Section13HatLayers) (N : ℕ) {D d s : ℝ}
-    (hD : 1 < D) (hs : 0 < s) (hT : 0 < H.T (ErrorSign.ofDepth N) s) :
-    0 < errorEnvelope H N D d s := by
-  unfold errorEnvelope
-  have hbase : 0 < 1 + s ^ d / Real.log D := errorBase_pos hD hs.le
-  exact mul_pos
-    (mul_pos (Real.rpow_pos_of_pos hbase _) (Real.rpow_pos_of_pos hs _)) hT
 
 /-- Strict positivity of `q_D^±` on the range used by Lemma 8.7. -/
 theorem qD_pos
@@ -265,85 +221,6 @@ theorem lambda_pos
   exact mul_pos
     (mul_pos (Real.rpow_pos_of_pos hbase _) (Real.rpow_pos_of_pos ht _)) hT
 
-/-- Continuity of `E_N` on a positive interval, conditional only on continuity
-of the selected Section 13 layer there. -/
-theorem continuousOn_errorEnvelope
-    (H : Section13HatLayers) (N : ℕ) (D d : ℝ) {a : ℝ}
-    (hD : 1 < D) (ha : 0 < a)
-    (hT : ContinuousOn (H.T (ErrorSign.ofDepth N)) (Ici a)) :
-    ContinuousOn (errorEnvelope H N D d) (Ici a) := by
-  unfold errorEnvelope
-  have hsPow : ContinuousOn (fun s : ℝ => s ^ d) (Ici a) :=
-    continuousOn_id.rpow continuousOn_const (by
-      intro s hs
-      left
-      exact ne_of_gt (ha.trans_le hs))
-  have hbase : ContinuousOn (fun s : ℝ => 1 + s ^ d / Real.log D) (Ici a) :=
-    continuousOn_const.add (hsPow.div_const _)
-  have hbasePos : ∀ s ∈ Ici a, 0 < 1 + s ^ d / Real.log D :=
-    fun _ hs => errorBase_pos hD (ha.trans_le hs).le
-  have houter : ContinuousOn (fun s : ℝ => (1 + s ^ d / Real.log D) ^ s) (Ici a) :=
-    hbase.rpow continuousOn_id (fun s hs => Or.inl (ne_of_gt (hbasePos s hs)))
-  have hspow : ContinuousOn (fun s : ℝ => s ^ (H.kappaHat - 1 + 1)) (Ici a) :=
-    continuousOn_id.rpow continuousOn_const (by
-      intro s hs
-      exact Or.inl (ne_of_gt (ha.trans_le hs)))
-  exact (houter.mul hspow).mul hT
-
-/-- Continuity of `q_D^±` on `(1,∞)`, conditional only on continuity of `T̂^±`. -/
-theorem continuousOn_qD
-    (H : Section13HatLayers) (sign : ErrorSign) (D d Δ : ℝ)
-    (hD : 1 < D) (hT : Continuous (H.T sign)) :
-    ContinuousOn (qD H sign D d Δ) (Ioi 1) := by
-  unfold qD
-  have htpos : ∀ t ∈ Ioi (1 : ℝ), 0 < t := fun t ht => zero_lt_one.trans ht
-  have htmpos : ∀ t ∈ Ioi (1 : ℝ), 0 < t - 1 := fun t ht => sub_pos.mpr ht
-  have htpow : ContinuousOn (fun t : ℝ => t ^ d) (Ioi 1) :=
-    continuousOn_id.rpow continuousOn_const (fun t ht => Or.inl (ne_of_gt (htpos t ht)))
-  have hbase : ContinuousOn (fun t : ℝ => 1 + t ^ d / Real.log D) (Ioi 1) :=
-    continuousOn_const.add (htpow.div_const _)
-  have hbasePos : ∀ t ∈ Ioi (1 : ℝ), 0 < 1 + t ^ d / Real.log D :=
-    fun t ht => errorBase_pos hD (htpos t ht).le
-  have houter : ContinuousOn
-      (fun t : ℝ => (1 + t ^ d / Real.log D) ^ (t - 1)) (Ioi 1) :=
-    hbase.rpow (continuousOn_id.sub continuousOn_const)
-      (fun t ht => Or.inl (ne_of_gt (hbasePos t ht)))
-  have hshift : ContinuousOn (fun t : ℝ => (t - 1) ^ (H.kappaHat - 1 + 1)) (Ioi 1) :=
-    (continuousOn_id.sub continuousOn_const).rpow continuousOn_const
-      (fun t ht => Or.inl (ne_of_gt (htmpos t ht)))
-  have hratio : ContinuousOn (fun t : ℝ => t / (t - 1)) (Ioi 1) :=
-    continuousOn_id.div (continuousOn_id.sub continuousOn_const)
-      (fun t ht => ne_of_gt (htmpos t ht))
-  have hratioPow : ContinuousOn (fun t : ℝ => (t / (t - 1)) ^ Δ) (Ioi 1) :=
-    hratio.rpow continuousOn_const (fun t ht =>
-      Or.inl (ne_of_gt (div_pos (htpos t ht) (htmpos t ht))))
-  have hTshift : ContinuousOn (fun t : ℝ => H.T sign (t - 1)) (Ioi 1) := by
-    simpa [Function.comp_def] using
-      hT.continuousOn.comp (continuousOn_id.sub continuousOn_const)
-        (fun _ _ => Set.mem_univ _)
-  exact ((houter.mul hshift).mul hTshift).mul hratioPow
-
-/-- Continuity of `Λ_ε^±` on `(0,∞)`, conditional only on continuity of `T̂^±`. -/
-theorem continuousOn_lambda
-    (H : Section13HatLayers) (sign : ErrorSign) (D d ε : ℝ)
-    (hD : 1 < D) (hε : 0 ≤ ε) (hT : Continuous (H.T sign)) :
-    ContinuousOn (lambda H sign D d ε) (Ioi 0) := by
-  unfold lambda
-  have htpos : ∀ t ∈ Ioi (0 : ℝ), 0 < t := fun t ht => ht
-  have htepos : ∀ t ∈ Ioi (0 : ℝ), 0 < t + ε := fun t ht => add_pos_of_pos_of_nonneg ht hε
-  have hpow : ContinuousOn (fun t : ℝ => (t + ε) ^ d) (Ioi 0) :=
-    (continuousOn_id.add continuousOn_const).rpow continuousOn_const
-      (fun t ht => Or.inl (ne_of_gt (htepos t ht)))
-  have hbase : ContinuousOn (fun t : ℝ => 1 + (t + ε) ^ d / Real.log D) (Ioi 0) :=
-    continuousOn_const.add (hpow.div_const _)
-  have hbasePos : ∀ t ∈ Ioi (0 : ℝ), 0 < 1 + (t + ε) ^ d / Real.log D :=
-    fun t ht => errorBase_pos hD (htepos t ht).le
-  have houter := hbase.rpow continuousOn_id
-    (fun t ht => Or.inl (ne_of_gt (hbasePos t ht)))
-  have htpow : ContinuousOn (fun t : ℝ => t ^ (H.kappaHat + 1)) (Ioi 0) :=
-    continuousOn_id.rpow continuousOn_const
-      (fun t ht => Or.inl (ne_of_gt (htpos t ht)))
-  exact (houter.mul htpow).mul hT.continuousOn
 
 /-- Analytic Claim 14.6(i), deliberately left as a named premise. -/
 def Claim14_6_MonotoneLambdaPremise
@@ -358,13 +235,6 @@ def Claim14_6_MonotoneQPremise
     AntitoneOn (fun t => qD H sign.opposite D d Δ t * t)
       (Ioc (H.betaHat + sign.epsilon) σ)
 
-/-- Analytic Claim 14.6(iii), deliberately left as a named premise.  At κ=1,
-`dt^κ = dt`, hence the ordinary interval integral below. -/
-def Claim14_6_IntegralPremise
-    (H : Section13HatLayers) (D d Δ σ : ℝ) : Prop :=
-  ∀ sign s, H.betaHat + sign.epsilon ≤ s → s ≤ σ →
-    (∫ t in s..σ, qD H sign.opposite D d Δ t) <
-      (1 - 1 / σ) ^ (1 - Δ) * lambda H sign D d 0 s
 
 end SuzukiLemma144KappaOne
 end MathlibNt.SieveTheory.SwitchingPrinciple

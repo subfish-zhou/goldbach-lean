@@ -27,12 +27,7 @@ noncomputable def HIntegral' (f : ℂ → E) (x₁ x₂ y : ℝ) : E :=
 noncomputable def VIntegral' (f : ℂ → E) (x y₁ y₂ : ℝ) : E :=
     (1 / (2 * π * I)) • VIntegral f x y₁ y₂
 
-lemma HIntegral_symm :
-    HIntegral f x₁ x₂ y = -HIntegral f x₂ x₁ y := integral_symm _ _
 
-lemma VIntegral_symm :
-    VIntegral f x y₁ y₂ = -VIntegral f x y₂ y₁ := by
-  simp_rw [VIntegral, integral_symm y₁ y₂, smul_neg, neg_neg]
 
 /-- A `RectangleIntegral` of a function `f` is one over a rectangle
   determined by `z` and `w` in `ℂ`. -/
@@ -188,18 +183,7 @@ theorem RectangleIntegral'_congr (h : Set.EqOn f g (RectangleBorder z w)) :
     RectangleIntegral' f z w = RectangleIntegral' g z w := by
   rw [RectangleIntegral', RectangleIntegral_congr h]
 
-theorem rectangleIntegral_symm (f : ℂ → E) (z w : ℂ) :
-    RectangleIntegral f z w = RectangleIntegral f w z := by
-  simp_rw [RectangleIntegral, HIntegral, VIntegral, intervalIntegral.integral_symm w.re,
-    intervalIntegral.integral_symm w.im, sub_neg_eq_add, smul_neg, sub_neg_eq_add,
-    ← sub_eq_add_neg, neg_add_eq_sub, sub_add_eq_add_sub]
 
-theorem rectangleIntegral_symm_re (f : ℂ → E) (z w : ℂ) :
-    RectangleIntegral f (w.re + z.im * I) (z.re + w.im * I) = -RectangleIntegral f z w := by
-  simp only [RectangleIntegral, add_re, ofReal_re, mul_re, I_re, mul_zero, ofReal_im, I_im,
-    mul_one, sub_self, add_zero, add_im, mul_im, zero_add, neg_sub, ← sub_eq_zero, sub_zero]
-  rw [HIntegral_symm (y := z.im), HIntegral_symm (y := w.im)]
-  abel
 
 def RectangleBorderIntegrable (f : ℂ → E) (z w : ℂ) : Prop :=
     IntervalIntegrable (fun x => f (x + z.im * I)) volume z.re w.re ∧
@@ -408,46 +392,15 @@ lemma RectanglePullToNhdOfPole [CompleteSpace E] {z w p : ℂ}
   exact RectanglePullToNhdOfPole' (by simp_all [cpos.le])
     (square_mem_nhds p (ne_of_gt cpos)) hc fHolo
 
-lemma RectanglePullToNhdOfPole'' [CompleteSpace E] {z w p : ℂ}
-    (zRe_le_wRe : z.re ≤ w.re) (zIm_le_wIm : z.im ≤ w.im)
-    (pInRectInterior : Rectangle z w ∈ 𝓝 p) (fHolo : HolomorphicOn f (Rectangle z w \ {p})) :
-    ∀ᶠ (c : ℝ) in 𝓝[>]0,
-      RectangleIntegral' f z w = RectangleIntegral' f (-c - I * c + p) (c + I * c + p) := by
-  filter_upwards [RectanglePullToNhdOfPole zRe_le_wRe zIm_le_wIm pInRectInterior fHolo] with c h
-  simp_rw [RectangleIntegral', h]
 
-theorem ResidueTheoremAtOrigin_aux1c (a b : ℝ) :
-    let f : ℝ → ℂ := fun y => (y + I)⁻¹
-    IntervalIntegrable f volume a b :=
-  (ContinuousOn.inv₀ (by fun_prop)
-    (by simp [Complex.ext_iff])).intervalIntegrable
 
-theorem ResidueTheoremAtOrigin_aux1c' (a b : ℝ) :
-    let f : ℝ → ℂ := fun y => (y - I)⁻¹
-    IntervalIntegrable f volume a b :=
-  (ContinuousOn.inv₀ (by fun_prop)
-    (by simp [Complex.ext_iff])).intervalIntegrable
 
-theorem ResidueTheoremAtOrigin_aux2c (a b : ℝ) :
-    let f : ℝ → ℂ := fun y => (1 + y * I)⁻¹
-    IntervalIntegrable f volume a b :=
-  (ContinuousOn.inv₀ (by fun_prop)
-    (by simp [Complex.ext_iff])).intervalIntegrable
 
-theorem ResidueTheoremAtOrigin_aux2c' (a b : ℝ) :
-    let f : ℝ → ℂ := fun y => (-1 + y * I)⁻¹
-    IntervalIntegrable f volume a b :=
-  (ContinuousOn.inv₀ (by fun_prop)
-    (by simp [Complex.ext_iff])).intervalIntegrable
 
 theorem RectangleIntegral.const_smul (f : ℂ → E) (z w c : ℂ) :
     RectangleIntegral (fun s => c • f s) z w = c • RectangleIntegral f z w := by
   simp [RectangleIntegral, HIntegral, VIntegral, smul_add, smul_sub, smul_smul, mul_comm]
 
-theorem RectangleIntegral.const_mul' (f : ℂ → E) (z w c : ℂ) :
-    RectangleIntegral' (fun s => c • f s) z w = c • RectangleIntegral' f z w := by
-  simp [RectangleIntegral', RectangleIntegral.const_smul, smul_smul]
-  ring_nf
 
 theorem RectangleIntegral.translate (f : ℂ → E) (z w p : ℂ) :
     RectangleIntegral (fun s => f (s - p)) z w = RectangleIntegral f (z - p) (w - p) := by
@@ -746,14 +699,6 @@ lemma residue_eq_of_tendsto {f : ℂ → ℂ} {p c : ℂ}
   unfold residue
   exact h.limUnder_eq
 
-lemma residue_analyticAt_eq_zero {f : ℂ → ℂ} {p : ℂ} (hf : AnalyticAt ℂ f p) :
-    residue f p = 0 := by
-  apply residue_eq_of_tendsto
-  have hsub : Filter.Tendsto (fun z : ℂ ↦ z - p) (nhdsWithin p {p}ᶜ) (nhds 0) :=
-    tendsto_sub_nhds_zero_iff.mpr (tendsto_id.mono_left nhdsWithin_le_nhds)
-  have hf' : Filter.Tendsto f (nhdsWithin p {p}ᶜ) (nhds (f p)) :=
-    hf.continuousAt.continuousWithinAt.tendsto
-  simpa using hsub.mul hf'
 
 lemma simplePole_sub_residue_isBigO_one {f : ℂ → ℂ} {p : ℂ}
     (hf : MeromorphicAt f p) (hord : meromorphicOrderAt f p = (-1 : ℤ)) :
@@ -1190,28 +1135,4 @@ lemma RectangleIntegral'_eq_sumResiduesIn {f : ℂ → ℂ} {z w : ℂ}
     _ = sumResiduesIn fNF poles := by simp
     _ = sumResiduesIn f poles := h_residue_congr.symm
 
-lemma residue_eq_zero_of_not_pole_of_meromorphicAt {F : ℂ → ℂ} {s : ℂ}
-    (hs_mero : MeromorphicAt F s) (hs_not_pole : 0 ≤ meromorphicOrderAt F s) :
-    residue F s = 0 := by
-  apply residue_eq_of_tendsto
-  obtain ⟨c, hc⟩ := tendsto_nhds_of_meromorphicOrderAt_nonneg hs_mero hs_not_pole
-  have hsub : Filter.Tendsto (fun z : ℂ ↦ z - s) (nhdsWithin s {s}ᶜ) (nhds 0) :=
-    tendsto_sub_nhds_zero_iff.mpr (tendsto_id.mono_left nhdsWithin_le_nhds)
-  simpa using hsub.mul hc
 
-lemma sumResiduesIn_inter_eq_of_set_eq {F : ℂ → ℂ} {Rn S2 P : Set ℂ}
-    (h_set_eq : Rn ∩ P = S2 ∩ P)
-    (h_residue_zero : ∀ s ∈ S2, s ∉ P → residue F s = 0) :
-    sumResiduesIn F (Rn ∩ P) = sumResiduesIn F S2 := by
-  rw [sumResiduesIn, sumResiduesIn, tsum_subtype, tsum_subtype]
-  apply tsum_congr
-  intro s
-  by_cases hs_S2 : s ∈ S2
-  · by_cases hs_pole : s ∈ P
-    · have hs_rect_pole : s ∈ Rn ∩ P := h_set_eq.symm ▸ ⟨hs_S2, hs_pole⟩
-      simp [hs_S2, hs_rect_pole]
-    · have hs_not_rect_pole : s ∉ Rn ∩ P := fun hs => hs_pole hs.2
-      have hres0 : residue F s = 0 := h_residue_zero s hs_S2 hs_pole
-      simp [hs_S2, hs_not_rect_pole, hres0]
-  · have hs_not_rect_pole : s ∉ Rn ∩ P := fun hs => hs_S2 (h_set_eq ▸ hs).1
-    simp [hs_S2, hs_not_rect_pole]

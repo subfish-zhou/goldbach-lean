@@ -88,19 +88,6 @@ theorem goldbachB9LowPositivePrefixSiftedAtoms_eq_filter (N : ℕ) (eps Z : ℝ)
     mem_goldbachB10SiftedAtoms_iff]
   tauto
 
-theorem goldbachB9LowPositivePrefixPrimeAtoms_eq_Pi10_filter (N : ℕ) (eps : ℝ) :
-    goldbachB9LowPositivePrefixPrimeAtoms N eps =
-      (goldbachPi10Atoms N eps ((N : ℝ) ^ (4 / 53 : ℝ))
-        ((N : ℝ) ^ (1 / 3 : ℝ))).filter
-          (fun x => (x.1.1 : ℝ) < (N : ℝ) ^ (1 / 10 : ℝ)) := by
-  classical
-  ext x
-  rw [goldbachB9LowPositivePrefixPrimeAtoms, mem_filter]
-  simp only [mem_filter,
-    mem_goldbachB9LowPositivePrefixAtoms_iff, mem_goldbachB10Atoms_iff,
-    mem_goldbachPi10Atoms_iff, goldbachB10Point, goldbachPi10Point,
-    goldbachPi10Output]
-  tauto
 
 theorem goldbachB9LowPositivePrefixAtoms_product_window {N : ℕ} {eps : ℝ}
     {x : Σ _rs : ℕ × ℕ, ℕ} (hx : x ∈ goldbachB9LowPositivePrefixAtoms N eps) :
@@ -118,15 +105,6 @@ theorem goldbachB9LowPositivePrefixAtoms_product_window {N : ℕ} {eps : ℝ}
   · simpa [goldbachC10Prod, Nat.cast_mul, mul_comm, mul_left_comm, mul_assoc] using
       (lt_div_iff₀ hm).mp hhi
 
-theorem goldbachB9LowPositivePrefixSiftedAtoms_product_window {N : ℕ} {eps Z : ℝ}
-    {x : Σ _rs : ℕ × ℕ, ℕ}
-    (hx : x ∈ goldbachB9LowPositivePrefixSiftedAtoms N eps Z) :
-    x.2.Prime ∧
-      eps * (N : ℝ) < ((x.1.1 * x.1.2) * x.2 : ℕ) ∧
-      (((x.1.1 * x.1.2) * x.2 : ℕ) : ℝ) < N := by
-  classical
-  rw [goldbachB9LowPositivePrefixSiftedAtoms_eq_filter] at hx
-  exact goldbachB9LowPositivePrefixAtoms_product_window (mem_filter.mp hx).1
 
 /-- This inclusion is used only for the already-paid low-output error. -/
 theorem goldbachB9LowPositivePrefixAtoms_subset_B9Plus (N : ℕ) (eps : ℝ) :
@@ -155,8 +133,6 @@ theorem goldbachS5ActualAtom_retained_epsilon {N : ℕ} {eps : ℝ}
   simpa only [Nat.cast_mul, goldbachC9Prod, goldbachC8Prod,
     goldbachC10Prod, mul_comm] using hlo
 
-theorem goldbachS5LowFirstSwitch_preserves_pair (x : Σ _rs : ℕ × ℕ, ℕ) :
-    (goldbachS5Switch x).1 = x.1 := rfl
 
 theorem goldbachS5LowFirstSwitch_mem_positivePrimeAtoms {N : ℕ} {eps : ℝ}
     (hN : 2 ≤ N) (heps : 0 < eps)

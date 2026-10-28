@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "declarations": [
+    {
+      "name": "_private.MathlibNt.SieveTheory.LinearSieve.RosserChains.0.MathlibNt.SieveTheory.LinearSieve.sorted_prefix_card_eq_filter_ge",
+      "owners": [
+        "MathlibNt.SieveTheory.LinearSieve.RosserChains"
+      ],
+      "kind": "theorem",
+      "typeHash": "2787789504",
+      "incoming_declarations": [
+        "MathlibNt.SieveTheory.LinearSieve.lowerRosserAdmissibleSet_iff_sorted_prefix_cube_lt",
+        "MathlibNt.SieveTheory.LinearSieve.upperRosserAdmissibleSet_iff_sorted_prefix_cube_lt"
+      ],
+      "outside_provider_consumers": [],
+      "expected_replacement": "MathlibNt.SieveTheory.LinearSieve.sorted_prefix_card_eq_filter_ge",
+      "matching_original_wf_statement": "MathlibNt.SieveTheory.LiLiuPrereqWF.rounded_prefix_card",
+      "replacement": "MathlibNt.SieveTheory.LinearSieve.sorted_prefix_card_eq_filter_ge",
+      "same_kind_and_type_hash": true
+    }
+  ],
+  "exact_statement_replacement_count": 1,
+  "original_consumer_count": 2,
+  "new_wf_consumer": "MathlibNt.SieveTheory.LiLiuPrereqWF.rounded_prefix_card",
+  "method": "The existing private Rosser cardinality proof becomes public with its complete statement unchanged. Both old canonical consumers and the original WF public cardinality name actually reach it. This is one promotion, not a separately deleted mathematical proof."
+}

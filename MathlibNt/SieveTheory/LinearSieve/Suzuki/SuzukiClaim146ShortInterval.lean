@@ -85,19 +85,6 @@ lemma qD_mul_eq_short_minus
   simp only [perturbation]
   ring
 
-lemma qD_mul_eq_at_plus_boundary
-    {H : Section13HatLayers} {β D d Δ : ℝ}
-    (hH : Section13HatContract H β) :
-    qD H ErrorSign.minus D d Δ (β + 1) * (β + 1) =
-      β * perturbation D d 1 β *
-        ((β + 1) / β) ^ (1 + Δ) := by
-  have ht : 1 < β + 1 := by linarith [hH.beta_gt_one]
-  rw [← equation14_15 H ErrorSign.minus D d Δ (β + 1) ht]
-  rw [lambda_eq_perturb_mul_weightedHat]
-  rw [show β + 1 - 1 = β by ring]
-  rw [hH.initial_minus β (by linarith [hH.beta_gt_one]) le_rfl]
-  simp only [perturbation]
-  ring
 
 lemma qD_mul_antitoneOn_short_minus
     {H : Section13HatLayers} {β D d Δ τ σ ρ : ℝ}
@@ -180,110 +167,6 @@ lemma qD_mul_antitoneOn_short_minus
   change qD H ErrorSign.plus D d Δ y * y ≤ qD H ErrorSign.plus D d Δ x * x
   rw [hEq x hx, hEq y hy]
   exact hf ⟨hx.1.le, hx.2⟩ ⟨hy.1.le, hy.2⟩ hxy
-
-/-- Full quantitative Claim 14.6(ii).  The `minus` outer-sign branch is split at
-`β + 2`: T4 gives the lower piece and shifted Claim 14.6(i) gives the upper
-piece.  For the `plus` outer sign, the shifted high-range argument starts
-immediately above `β + 1`. -/
-theorem claim14_6_ii_of_log_bound
-    {H : Section13HatLayers} {β D d Δ σ ρ : ℝ}
-    (hH : Section13HatContract H β) (hd : 0 ≤ d) (hΔ : -1 ≤ Δ)
-    (hσ : ∀ sign : ErrorSign, β + sign.epsilon ≤ σ) (hρ : 0 < ρ)
-    (hlog : 0 < Real.log D)
-    (hDlarge : (1 + σ * d) * (σ + 1) ^ d ≤ ρ * Real.log D)
-    (hdelay : ∀ sign t, β + sign.epsilon < t → t ≤ σ →
-      ρ * weightedHat H sign t ≤ t * H.T sign.opposite (t - 1))
-    (hshort : ρ * (σ * (σ - 1)) ≤ 1 + Δ) :
-    Claim14_6_MonotoneQPremise H D d Δ σ := by
-  unfold Claim14_6_MonotoneQPremise
-  rw [hH.betaHat_eq]
-  have hLambda := claim14_6_i_of_log_bound hH hd hσ hρ hlog hDlarge hdelay
-  have hLambda0 : ∀ (sgn : ErrorSign) (t : ℝ), 0 < t →
-      0 ≤ lambda H sgn D d 1 t := by
-    intro sgn t ht
-    rw [lambda_eq_perturb_mul_weightedHat]
-    apply mul_nonneg
-    · apply Real.rpow_nonneg
-      have hu : 0 ≤ (t + 1) ^ d / Real.log D :=
-        div_nonneg (Real.rpow_nonneg (by linarith) _) hlog.le
-      linarith
-    · exact mul_nonneg (sq_nonneg t) (hH.positive sgn t ht).le
-  intro sign
-  cases sign with
-  | plus =>
-      have hshift : AntitoneOn
-          (fun t => lambda H ErrorSign.minus D d 1 (t - 1))
-          (Ioc (β + 1) σ) := by
-        intro x hx y hy hxy
-        apply hLambda ErrorSign.minus 1 (Or.inr rfl)
-        · constructor
-          · simpa [ErrorSign.epsilon] using (show β ≤ x - 1 by linarith [hx.1])
-          · linarith [hx.2]
-        · constructor
-          · simpa [ErrorSign.epsilon] using (show β ≤ y - 1 by linarith [hy.1])
-          · linarith [hy.2]
-        · linarith
-      apply qD_mul_antitoneOn_of_shifted_lambda H ErrorSign.plus D d Δ hΔ
-        (S := Ioc (β + 1) σ)
-      · intro t ht
-        change 1 < t
-        have htlow := ht.1
-        linarith [hH.beta_gt_one]
-      · exact hshift
-      · intro t ht
-        exact hLambda0 ErrorSign.minus (t - 1) (by
-          linarith [hH.beta_gt_one, ht.1])
-  | minus =>
-      let c : ℝ := β + 2
-      by_cases hσc : σ ≤ c
-      · have hshort' := qD_mul_antitoneOn_short_minus
-          (H := H) (β := β) (D := D) (d := d) (Δ := Δ)
-          (τ := σ) (σ := σ) (ρ := ρ) hH hd hΔ hρ hlog hDlarge
-          (by simpa [ErrorSign.epsilon] using hσ ErrorSign.minus) hσc le_rfl hshort
-        simpa [ErrorSign.epsilon] using hshort'
-      · have hcσ : c ≤ σ := le_of_not_ge hσc
-        have hlow := qD_mul_antitoneOn_short_minus
-          (H := H) (β := β) (D := D) (d := d) (Δ := Δ)
-          (τ := c) (σ := σ) (ρ := ρ) hH hd hΔ hρ hlog hDlarge
-          (by dsimp [c]; linarith) (by simp [c]) hcσ hshort
-        have hshift : AntitoneOn
-            (fun t => lambda H ErrorSign.plus D d 1 (t - 1))
-            (Icc c σ) := by
-          intro x hx y hy hxy
-          apply hLambda ErrorSign.plus 1 (Or.inr rfl)
-          · constructor
-            · simpa [ErrorSign.epsilon] using (show β + 1 ≤ x - 1 by
-                dsimp [c] at hx
-                linarith [hx.1])
-            · linarith [hx.2]
-          · constructor
-            · simpa [ErrorSign.epsilon] using (show β + 1 ≤ y - 1 by
-                dsimp [c] at hy
-                linarith [hy.1])
-            · linarith [hy.2]
-          · linarith
-        have hhigh : AntitoneOn
-            (fun t => qD H ErrorSign.plus D d Δ t * t) (Icc c σ) := by
-          apply qD_mul_antitoneOn_of_shifted_lambda H ErrorSign.minus D d Δ hΔ
-          · intro t ht
-            change 1 < t
-            have htc : β + 2 ≤ t := by simpa [c] using ht.1
-            linarith [hH.beta_gt_one, htc]
-          · exact hshift
-          · intro t ht
-            apply hLambda0 ErrorSign.plus (t - 1)
-            have htc : β + 2 ≤ t := by simpa [c] using ht.1
-            linarith [hH.beta_gt_one, htc]
-        intro x hx y hy hxy
-        simp [ErrorSign.epsilon] at hx hy
-        by_cases hyc : y ≤ c
-        · exact hlow ⟨hx.1, hxy.trans hyc⟩ ⟨hy.1, hyc⟩ hxy
-        · have hcy : c ≤ y := le_of_not_ge hyc
-          by_cases hxc : x ≤ c
-          · exact (hhigh ⟨le_rfl, hcσ⟩ ⟨hcy, hy.2⟩ hcy).trans
-              (hlow ⟨hx.1, hxc⟩
-                ⟨by dsimp [c]; linarith [hH.beta_gt_one], le_rfl⟩ hxc)
-          · exact hhigh ⟨le_of_not_ge hxc, hx.2⟩ ⟨hcy, hy.2⟩ hxy
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

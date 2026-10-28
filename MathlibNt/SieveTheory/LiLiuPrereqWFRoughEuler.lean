@@ -343,13 +343,4 @@ theorem exists_signedFamilyDensity_replacement_target :
     (show 0 ≤ 2 * (∏ p ∈ P, (1 - ω p / (p : ℝ))) * C by positivity)
   convert hm using 1 <;> ring
 
-#check roughEulerProduct_le_normalized
-#print axioms roughEulerProduct_le_normalized
-#check exists_signedFamilyDensity_replacement_normalized
-#print axioms exists_signedFamilyDensity_replacement_normalized
-#check roughEuler_replacement_scalar
-#print axioms roughEuler_replacement_scalar
-#check exists_signedFamilyDensity_replacement_target
-#print axioms exists_signedFamilyDensity_replacement_target
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

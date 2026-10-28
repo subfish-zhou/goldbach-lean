@@ -1,4 +1,4 @@
-import Mathlib.NumberTheory.Harmonic.Bounds
+import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
 import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectionEuler
 
 /-!
@@ -14,23 +14,6 @@ namespace MathlibNt.SieveTheory.LiuWeight
 
 open Finset
 open MathlibNt.SieveTheory.SingularSeries
-
-theorem liuHarmonic_eq_harmonic (m : ℕ) :
-    liuHarmonic m = (harmonic m : ℝ) := by
-  rw [liuHarmonic, harmonic_eq_sum_Icc, Rat.cast_sum]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Rat.cast_inv, Rat.cast_natCast]
-
-theorem log_add_one_le_liuHarmonic (m : ℕ) :
-    Real.log (m + 1) ≤ liuHarmonic m := by
-  rw [liuHarmonic_eq_harmonic]
-  simpa only [Nat.cast_add, Nat.cast_one] using log_add_one_le_harmonic m
-
-theorem liuHarmonic_le_one_add_log (m : ℕ) :
-    liuHarmonic m ≤ 1 + Real.log m := by
-  rw [liuHarmonic_eq_harmonic]
-  exact harmonic_le_one_add_log m
 
 /-- The error left after replacing `H_{⌊x/d⌋}` by `log x - log d`. -/
 noncomputable def liuHarmonicResidual (x d : ℕ) : ℝ :=
@@ -97,14 +80,6 @@ theorem summable_abs_liuSelbergCorrection_mul_log_nat
   rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (by exact_mod_cast hd)]
   ring
 
-theorem summable_liuSelbergCorrectionTail
-    {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :
-    Summable (liuSelbergCorrectionTail N x) := by
-  have hs : Summable (liuSelbergCorrection N) := by
-    apply Summable.of_norm
-    simpa only [Real.norm_eq_abs] using
-      summable_abs_liuSelbergCorrection hNeven hN
-  exact hs.indicator _
 
 theorem summable_liuSelbergCorrectionAbsTail
     {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :

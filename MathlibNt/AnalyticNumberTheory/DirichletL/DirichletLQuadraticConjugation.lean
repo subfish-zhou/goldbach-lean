@@ -1,5 +1,5 @@
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticFunctionalEquation
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrimitiveRootNumberNorm
 
 open Complex Finset Filter Set
 open scoped Topology
@@ -84,12 +84,5 @@ theorem LFunction_ofReal_im_eq_zero_of_sq_eq_one
   rw [Complex.conj_ofReal] at h
   exact Complex.conj_eq_iff_im.mp h.symm
 
-/-- Zeros of a nonprincipal quadratic Dirichlet L-function in `re s > 0` are
-closed under complex conjugation. -/
-theorem LFunction_conj_eq_zero_of_sq_eq_one
-    (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (hquad : χ ^ 2 = 1)
-    (s : ℂ) (hs : 0 < s.re) (hz : χ.LFunction s = 0) :
-    χ.LFunction (conj s) = 0 := by
-  rw [LFunction_conj_eq_conj_LFunction_of_sq_eq_one χ hχ hquad s hs, hz, map_zero]
 
 end DirichletCharacter

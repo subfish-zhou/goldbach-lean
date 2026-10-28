@@ -1,7 +1,5 @@
 import MathlibNt.SieveTheory.FiniteFibres
 import MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence
-import MathlibNt.SieveTheory.LinearSieve
-import Mathlib.Data.Nat.Cast.Order.Field
 
 open scoped BigOperators
 

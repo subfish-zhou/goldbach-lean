@@ -1,3 +1,4 @@
+import MathlibNt.SieveTheory.Switching.BoundaryDensity
 import MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedDistribution
 import MathlibNt.SieveTheory.MertensTheorem
 import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
@@ -16,8 +17,6 @@ namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 set_option autoImplicit false
 set_option maxHeartbeats 400000
 
-noncomputable local instance instDecidableGoldbachS2RosserFactor (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The actual `S2` switched sieve uses the standard Goldbach Euler product. -/
 noncomputable def goldbachS2PrimeProduct (N : ℕ) (Z : ℝ) : ℝ :=

@@ -1,0 +1,337 @@
+[
+  {
+    "label": "bp:foundation-pnt",
+    "before": "AnalyticNumberTheory/PrimeDistribution/PrimeNumberTheorem.lean:15-20",
+    "after": "AnalyticNumberTheory/PrimeDistribution/PrimeNumberTheorem.lean:15"
+  },
+  {
+    "label": "bp:foundation-mertens",
+    "before": "AnalyticNumberTheory/Mertens/Theorems.lean:23-36",
+    "after": "AnalyticNumberTheory/Mertens/Theorems.lean:24"
+  },
+  {
+    "label": "bp:foundation-local-product",
+    "before": "MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean:2094-2100",
+    "after": "MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean:1723"
+  },
+  {
+    "label": "bp:foundation-bv",
+    "before": "MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean:36-41",
+    "after": "MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean:37"
+  },
+  {
+    "label": "bp:foundation-weighted-bv",
+    "before": "MathlibNt/SieveTheory/Distribution/Bombieri1965RichertWeightedConsumer.lean:17-23",
+    "after": "MathlibNt/SieveTheory/Distribution/Bombieri1965RichertWeightedConsumer.lean:18"
+  },
+  {
+    "label": "bp:foundation-jr-hats",
+    "before": "MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean:258-290",
+    "after": "MathlibNt/SieveTheory/LinearSieve/JurkatRichert/JurkatRichert1965Section13HatSource.lean:258"
+  },
+  {
+    "label": "bp:foundation-suzuki-lower",
+    "before": "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean:106-128",
+    "after": "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma147JurkatRichertInterval.lean:104"
+  },
+  {
+    "label": "bp:foundation-suzuki-upper",
+    "before": "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean:73-80",
+    "after": "MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiUpperRosserDensityEndpointDirect.lean:69"
+  },
+  {
+    "label": "bp:foundation-liupan",
+    "before": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean:47-100",
+    "after": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean:48"
+  },
+  {
+    "label": "bp:foundation-liupan-canonical",
+    "before": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean:106-108",
+    "after": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanUnweightedUnconditional.lean:104"
+  },
+  {
+    "label": "bp:foundation-pan-bounded",
+    "before": "MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean:89-101",
+    "after": "MathlibNt/SieveTheory/LiLiuPanBoundedAggregate.lean:89"
+  },
+  {
+    "label": "bp:foundation-selberg-denominator",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorAsymptotic.lean:82-88",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorAsymptotic.lean:82"
+  },
+  {
+    "label": "bp:foundation-selberg-remainder",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean:348-355",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean:302"
+  },
+  {
+    "label": "bp:foundation-fouvry-rectangle",
+    "before": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean:9-22",
+    "after": "MathlibNt/AnalyticNumberTheory/LargeSieve/LiLiuFouvryKGoldbachRectangle.lean:9"
+  },
+  {
+    "label": "bp:chen-positive-weight",
+    "before": "MathlibNt/SieveTheory/Switching/Weights.lean:407",
+    "after": "MathlibNt/SieveTheory/Switching/Weights.lean:315"
+  },
+  {
+    "label": "bp:chen-finite-counting",
+    "before": "MathlibNt/SieveTheory/Switching/WeightedCounting.lean:175",
+    "after": "MathlibNt/SieveTheory/Switching/WeightedCounting.lean:102"
+  },
+  {
+    "label": "bp:chen-lower-sieve",
+    "before": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:829",
+    "after": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:273"
+  },
+  {
+    "label": "bp:chen-base-asymptotic",
+    "before": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:1679",
+    "after": "MathlibNt/SieveTheory/Switching/RosserSieveAsymptotics.lean:1122"
+  },
+  {
+    "label": "bp:chen-finite-upper",
+    "before": "MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean:1150",
+    "after": "MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean:1141"
+  },
+  {
+    "label": "bp:chen-weighted-bv",
+    "before": "MathlibNt/SieveTheory/LinearSieve/Richert/Richert1969Ordinary418Specialization.lean:831",
+    "after": "MathlibNt/SieveTheory/LinearSieve/Richert/Richert1969Ordinary418Specialization.lean:720"
+  },
+  {
+    "label": "bp:chen-upper-asymptotic",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:764",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:761"
+  },
+  {
+    "label": "bp:chen-distinct-lower",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:830",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:828"
+  },
+  {
+    "label": "bp:chen-prime-powers",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1054",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1011"
+  },
+  {
+    "label": "bp:chen-valuation-lower",
+    "before": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1323",
+    "after": "MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean:1145"
+  },
+  {
+    "label": "bp:chen-triple-endpoints",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean:847",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean:633"
+  },
+  {
+    "label": "bp:chen-square-majorant",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean:1158",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean:943"
+  },
+  {
+    "label": "bp:chen-square-expansion",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean:204",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean:181"
+  },
+  {
+    "label": "bp:chen-square-main-term",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergEvenAssembly.lean:65",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergEvenAssembly.lean:64"
+  },
+  {
+    "label": "bp:chen-switched-weight-payment",
+    "before": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanModernWeightTransfer.lean:80",
+    "after": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanModernWeightTransfer.lean:78"
+  },
+  {
+    "label": "bp:chen-square-remainder",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean:451",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergRemainder.lean:403"
+  },
+  {
+    "label": "bp:chen-triple-upper",
+    "before": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean:1317",
+    "after": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergCorrectedChenBridge.lean:1101"
+  },
+  {
+    "label": "bp:chen-representation-lower-bound",
+    "before": "Goldbach/Theorem.lean:24",
+    "after": "Goldbach/Theorem.lean:23"
+  },
+  {
+    "label": "bp:liliu-representation",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:33"
+  },
+  {
+    "label": "bp:liliu-count-positive",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:58"
+  },
+  {
+    "label": "bp:liliu-imbalance",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:246"
+  },
+  {
+    "label": "bp:liliu-basic",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOnePlusOneNineFinite.lean:341"
+  },
+  {
+    "label": "bp:liliu-six",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachFiniteBudget",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachFiniteBudget.lean:78"
+  },
+  {
+    "label": "bp:liliu-twelve",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachWeightTwelve.lean:58"
+  },
+  {
+    "label": "bp:liliu-sifted",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachPi10Sifted.lean:372"
+  },
+  {
+    "label": "bp:liliu-positive",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachS1PositivePair",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachS1PositivePair.lean:9"
+  },
+  {
+    "label": "bp:liliu-retained",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachWeightAllRetainedEndpointsConsumed.lean:25"
+  },
+  {
+    "label": "bp:liliu-b9",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachS5PaperSplitUpper",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachS5PaperSplitUpper.lean:13"
+  },
+  {
+    "label": "bp:liliu-pair",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorReusedCounts",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean:8"
+  },
+  {
+    "label": "bp:liliu-pair-certificate",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:17"
+  },
+  {
+    "label": "bp:liliu-level",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorLevel",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorLevel.lean:68"
+  },
+  {
+    "label": "bp:liliu-domain",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernelReduction.lean:197"
+  },
+  {
+    "label": "bp:liliu-g11-certificate",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralScalar",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorIntegralScalar.lean:48"
+  },
+  {
+    "label": "bp:liliu-g11-actual",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorActualProducer",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorActualProducer.lean:86"
+  },
+  {
+    "label": "bp:liliu-cross",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorReusedCounts",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorReusedCounts.lean:43"
+  },
+  {
+    "label": "bp:liliu-cross-certificate",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationScalar",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG12EvaluationScalar.lean:19"
+  },
+  {
+    "label": "bp:liliu-author-consume",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorCountLedger",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorCountLedger.lean:9"
+  },
+  {
+    "label": "bp:liliu-ledger",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:8"
+  },
+  {
+    "label": "bp:liliu-coefficient",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:45"
+  },
+  {
+    "label": "bp:liliu-paper",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG11AuthorQuantitative.lean:62"
+  },
+  {
+    "label": "bp:liliu-old-margin",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:21"
+  },
+  {
+    "label": "bp:liliu-existence",
+    "before": "MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean:62"
+  },
+  {
+    "label": "bp:foundation-bv-low",
+    "before": null,
+    "after": "MathlibNt/AnalyticNumberTheory/BombieriVinogradov/Bombieri1965Richert418Unconditional.lean:28"
+  },
+  {
+    "label": "bp:foundation-bv-high",
+    "before": null,
+    "after": "MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVHighChosenUnconditional.lean:509"
+  },
+  {
+    "label": "bp:liliu-s1-density-six",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean:107-116",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachS1LowerDensitySix.lean:104"
+  },
+  {
+    "label": "bp:liliu-upper-density-six",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean:202-211",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachUpperDensitySix.lean:201"
+  },
+  {
+    "label": "bp:liliu-s3-main-six",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean:62-70",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachS3RosserMainUpper.lean:60"
+  },
+  {
+    "label": "bp:liliu-g10-integral",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean:8-15",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachG10CorrectedIntegralUpper.lean:6"
+  },
+  {
+    "label": "bp:liliu-i10-consumed",
+    "before": "MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean:24-35",
+    "after": "MathlibNt/SieveTheory/LiLiuGoldbachWeightI10Consumer.lean:20"
+  },
+  {
+    "label": "bp:liliu-public-natural",
+    "before": "Goldbach/OnePlusOneNine.lean:15-19",
+    "after": "Goldbach/OnePlusOneNine.lean:14"
+  },
+  {
+    "label": "bp:liliu-public-real",
+    "before": "Goldbach/OnePlusOneNine.lean:22-26",
+    "after": "Goldbach/OnePlusOneNine.lean:22"
+  },
+  {
+    "label": "bp:liliu-public-count",
+    "before": "Goldbach/OnePlusOneNine.lean:29-35",
+    "after": "Goldbach/OnePlusOneNine.lean:29"
+  },
+  {
+    "label": "bp:liliu-public-coefficient",
+    "before": "Goldbach/OnePlusOneNine.lean:38-44",
+    "after": "Goldbach/OnePlusOneNine.lean:38"
+  }
+]

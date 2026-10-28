@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZeroSpecialized
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017GlobalPropagation
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDDEUnitShiftRatioSanitized
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral
@@ -242,38 +241,6 @@ noncomputable def section13_bridgeAtThree {H : Section13HatLayers}
         field_simp [ne_of_gt hden] at this ⊢
         nlinarith
 
-/-- The positive sign has `2 + ε₊ = 3`, so the corrected common bridge is
-literally the requested production `Section13HatSection10Bridge`. -/
-noncomputable def section13_plus_section10Bridge {H : Section13HatLayers}
-    (hH : Section13HatSourceContract H) :
-    Section13HatSection10Bridge H ErrorSign.plus := by
-  let B := section13_bridgeAtThree hH ErrorSign.plus
-  refine ⟨B.Qhat, ?_, B.K, B.one_le_K, ?_, ?_⟩
-  · have heq : (2 : ℝ) + ErrorSign.epsilon ErrorSign.plus = 3 := by
-      norm_num [ErrorSign.epsilon]
-    rw [heq]
-    exact B.dde
-  · intro s hs
-    apply B.hat_le s
-    norm_num [ErrorSign.epsilon] at hs ⊢
-    exact hs
-  · intro s hs
-    apply B.Q_le s
-    norm_num [ErrorSign.epsilon] at hs ⊢
-    exact hs
-
-/-- Audit lemma exposing why the production record cannot be assembled for the
-negative sign from the stated source contract: it asks for the scalar `Q̂` DDE
-already on `s > 1`, whereas `section13Qhat_dde` is available only on `s > 3`.
-This is an interface-strength mismatch, not a missing comparison or pairing. -/
-theorem production_minus_bridge_requires_early_scalar_dde
-    {H : Section13HatLayers} (B : Section13HatSection10Bridge H ErrorSign.minus) :
-    ∀ s, 2 < s →
-      HasDerivAt B.Qhat (-(2 * B.Qhat s + B.Qhat (s - 1)) / s) s := by
-  intro s hs
-  apply B.dde.original_dde s
-  norm_num [ErrorSign.epsilon] at hs ⊢
-  exact hs
 
 end BridgeAssembly
 

@@ -126,45 +126,5 @@ theorem caseISigmaZeroDirectRemainder_le_sourceOrder
           errorEnvelope H N (D : ℝ) d (sourceSigma (D : ℝ) d)) := by
           field_simp [ne_of_gt hC]
 
-/-- First concrete missing factor in the `Σ₁₁` route.  It is exactly the
-source comparison needed after expanding the endpoint denominator, not a
-renamed source-order or absorption inequality. -/
-def CaseISigma11FiniteLayerEnvelopeFactor : Prop :=
-  ∀ (H : Section13HatLayers) (N : ℕ) (D : ℝ) (d Δ s : ℝ),
-    1 < D → 2 ≤ s →
-    finiteSourceLayer 1 2 (N - 1) (s - 1) ≤
-      errorEnvelope H N D d s * (Real.log D) ^ (-Δ)
-
-/-- First concrete missing factor in the `Σ₁₂` endpoint route.  This is the
-literal pointwise `q_D^∓(s)` versus inherited envelope comparison. -/
-def CaseISigma12QDEnvelopeFactor : Prop :=
-  ∀ (H : Section13HatLayers) (N : ℕ) (D : ℝ) (d Δ s : ℝ),
-    1 < D → 2 ≤ s →
-    qD H (ErrorSign.ofDepth N).opposite D d Δ s ≤
-      errorEnvelope H N D d s
-
-/-- The remaining common scalar factor after either Lemma-8.7 endpoint has
-been reduced to the inherited envelope.  This is the precise asymptotic
-calculation still required: `σ² loglog D / log D`, with the extra
-`(log D)^Δ` only for `Σ₁₁`. -/
-def CaseIEndpointSourceScalarFactors (d Δ : ℝ) : Prop :=
-  (∀ᶠ D : ℝ in atTop,
-      sourceSigma D d ^ 2 * Real.log (Real.log D) / Real.log D ≤ 1) ∧
-  (∀ᶠ D : ℝ in atTop,
-      sourceSigma D d ^ 2 * Real.log (Real.log D) *
-          (Real.log D) ^ Δ / Real.log D ≤ 1)
-
-/-- Once the direct `Σ₀` packet has been normalised with coefficient
-`C145 / C`, the accepted scalar gap theorem absorbs that coefficient. -/
-theorem eventually_caseISigmaZeroCoefficient_le_sameC_gap
-    {C C145 d Δ : ℝ} (hC : 0 < C) (hC145 : 0 ≤ C145)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∀ᶠ D : ℝ in atTop,
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient (C145 / C) D d ≤ 1 - q.ρ := by
-  exact eventually_caseISourceOrderCoefficient_le_sameC_gap
-    (div_nonneg hC145 hC.le) hΔ0 hΔ1 hd
-
 
 end MathlibNt.SieveTheory

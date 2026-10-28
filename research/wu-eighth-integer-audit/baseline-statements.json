@@ -1,0 +1,5 @@
+{
+  "WR2ClassicalEighthRawCertificate:all_paid": "(i:ℕ)(hi:i<2048):upperValue((point(i)+point((i)+1))/2)≤payment(i)",
+  "WR2ClassicalEighthRawCertificate:raw_upper": ":8*Wu2008DoubleSieve.SeventhEighth.J8≤(52990343:ℝ)/10000000",
+  "WR2ClassicalEighthRawPayments:numerator_sum": ":(∑i∈range2048,numeratori)=5258450040652036"
+}

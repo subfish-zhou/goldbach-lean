@@ -124,46 +124,5 @@ def truncatedWNonzeroMode (M : ℝ) (H : ℕ → ℕ → ℕ)
             wPoissonFrequency M a q r n₁ n₂ h).re
       else 0
 
-/-- A quantitative truncation of the actual W remainder. No cancellation of
-the retained finite Kloosterman-type sum is assumed. -/
-theorem smoothWNonzeroMode_truncation_error (k : ℕ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ H : ℕ → ℕ → ℕ,
-      ∀ N Q : Finset ℕ, ∀ β c : ℕ → ℝ, ∀ a : ℤ, (∀ q ∈ Q, q ≠ 0) →
-      |smoothWNonzeroMode M N Q β c a - truncatedWNonzeroMode M H N Q β c a| ≤
-        C * ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-          ∑ n₁ ∈ N, ∑ n₂ ∈ N,
-            if WCompatible q r n₁ n₂ then
-              |c q * c r * β n₁ * β n₂| /
-                (1 + (M / (q.lcm r : ℝ)) * H q r) ^ k
-            else 0 := by
-  classical
-  obtain ⟨C, hC, hbound⟩ := wPoissonFrequency_truncation_error k
-  refine ⟨C, hC, fun M hM H N Q β c a hQ ↦ ?_⟩
-  unfold smoothWNonzeroMode truncatedWNonzeroMode
-  simp only [← Finset.sum_sub_distrib, Finset.mul_sum]
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro q hq
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro r hr
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro n₁ _
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro n₂ _
-  by_cases hc : WCompatible q r n₁ n₂
-  · simp only [if_pos hc]
-    rw [← mul_sub, abs_mul, ← Complex.sub_re]
-    calc
-      _ ≤ |c q * c r * β n₁ * β n₂| *
-          (C / (1 + (M / (q.lcm r : ℝ)) * H q r) ^ k) :=
-        mul_le_mul_of_nonneg_left
-          ((Complex.abs_re_le_norm _).trans
-            (hbound M hM q r (hQ q (Finset.mem_filter.mp hq).1)
-              (hQ r (Finset.mem_filter.mp hr).1) a n₁ n₂ (H q r))) (abs_nonneg _)
-      _ = _ := by ring
-  · simp only [if_neg hc, sub_self, abs_zero, mul_zero, le_refl]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound
 
 /-!
 # Uniform subpower payment of the joint gcd mean
@@ -74,54 +73,5 @@ theorem mainJoint_mean_subpower {δ : ℝ} (hδ : 0 < δ) :
       rw [mul_pow, hpower]
       ring
 
-private theorem joint_unweighted_le (a U V : ℤ) (P : Finset (ℕ × ℕ))
-    (hP : ∀ p ∈ P, mainJointNumerator a U V p.1 p.2 ≠ 0) :
-    (∑ p ∈ P, ((p.1 * p.2).gcd (mainJointNumerator a U V p.1 p.2).natAbs : ℝ)) ≤
-      ∑ p ∈ P, ((p.1 * p.2).gcd (mainJointNumerator a U V p.1 p.2).natAbs : ℝ) *
-        fouvryTau 2 (mainJointNumerator a U V p.1 p.2).natAbs := by
-  apply sum_le_sum
-  intro p hp
-  apply le_mul_of_one_le_right (by positivity)
-  exact_mod_cast one_le_fouvryTau_succ 1 (Int.natAbs_ne_zero.mpr (hP p hp))
-
-/-- The same joint mean without the optional divisor weight. -/
-theorem mainJoint_mean_unweighted_subpower {δ : ℝ} (hδ : 0 < δ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (a U V : ℤ) (S : ℕ) (P : Finset (ℕ × ℕ)),
-      a ≠ 0 → U ≠ 0 → V ≠ 0 →
-      (∀ p ∈ P, (0 < p.1 ∧ p.1 ≤ S) ∧ (0 < p.2 ∧ p.2 ≤ S) ∧
-        mainJointNumerator a U V p.1 p.2 ≠ 0) →
-      (∑ p ∈ P, ((p.1 * p.2).gcd (mainJointNumerator a U V p.1 p.2).natAbs : ℝ)) ≤
-        C * (S : ℝ) ^ 2 * (1 + Real.log S) *
-          ((a.natAbs * (U.natAbs + V.natAbs) * S : ℕ) : ℝ) ^ δ := by
-  obtain ⟨C, hC, hbound⟩ := mainJoint_mean_subpower hδ
-  refine ⟨C, hC, fun a U V S P ha hU hV hP => ?_⟩
-  exact (joint_unweighted_le a U V P (fun p hp => (hP p hp).2.2)).trans
-    (hbound a U V S P ha hU hV hP)
-
-/-- The full positive rectangle, with only its zero numerators removed.
-Both the weighted and unweighted estimates use the same uniform constant. -/
-theorem mainJoint_rectangular_subpower {δ : ℝ} (hδ : 0 < δ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ (a U V : ℤ) (S : ℕ),
-      a ≠ 0 → U ≠ 0 → V ≠ 0 →
-      let P := ((Ioc 0 S) ×ˢ (Ioc 0 S)).filter
-        (fun p : ℕ × ℕ => mainJointNumerator a U V p.1 p.2 ≠ 0)
-      let B := C * (S : ℝ) ^ 2 * (1 + Real.log S) *
-        ((a.natAbs * (U.natAbs + V.natAbs) * S : ℕ) : ℝ) ^ δ
-      (∑ p ∈ P, ((p.1 * p.2).gcd (mainJointNumerator a U V p.1 p.2).natAbs : ℝ) *
-        fouvryTau 2 (mainJointNumerator a U V p.1 p.2).natAbs) ≤ B ∧
-      (∑ p ∈ P, ((p.1 * p.2).gcd (mainJointNumerator a U V p.1 p.2).natAbs : ℝ)) ≤ B := by
-  obtain ⟨C, hC, hbound⟩ := mainJoint_mean_subpower hδ
-  refine ⟨C, hC, fun a U V S ha hU hV => ?_⟩
-  dsimp only
-  let P := ((Ioc 0 S) ×ˢ (Ioc 0 S)).filter
-    (fun p : ℕ × ℕ => mainJointNumerator a U V p.1 p.2 ≠ 0)
-  have hP (p : ℕ × ℕ) (hp : p ∈ P) :
-      (0 < p.1 ∧ p.1 ≤ S) ∧ (0 < p.2 ∧ p.2 ≤ S) ∧
-        mainJointNumerator a U V p.1 p.2 ≠ 0 := by
-    obtain ⟨hpbox, hn⟩ := mem_filter.mp hp
-    obtain ⟨hs, ht⟩ := mem_product.mp hpbox
-    exact ⟨mem_Ioc.mp hs, mem_Ioc.mp ht, hn⟩
-  have hb := hbound a U V S P ha hU hV hP
-  exact ⟨hb, (joint_unweighted_le a U V P (fun p hp => (hP p hp).2.2)).trans hb⟩
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

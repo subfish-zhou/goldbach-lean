@@ -51,30 +51,5 @@ theorem sourceSigma_gt_one_of_large
     _ < (Real.log D) ^ (1 / d) * Real.log (Real.log (27 * D)) := by
       simpa only [mul_one] using mul_lt_mul_of_pos_left hll1 hfirstpos
 
-/-- Eventual `σ(D) > 1` in the source parameter range, with an explicit
-threshold and no size-dependent premise. -/
-theorem exists_sourceSigma_gt_one_threshold
-    {Δ d : ℝ} (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ D : ℝ, D0 ≤ D → 1 < sourceSigma D d := by
-  have hβ : 0 < 1 - Δ := sub_pos.mpr hΔ1
-  have hq : 0 < 7 / (1 - Δ) := by positivity
-  have hd0 : 0 < d := hq.trans hd
-  refine ⟨Real.exp (Real.exp 1), ?_, ?_⟩
-  · exact Real.one_lt_exp_iff.mpr (Real.exp_pos 1)
-  · intro D hD
-    exact sourceSigma_gt_one_of_large hd0 hD
-
-/-- At Suzuki's exact source cutoff, the source bracket contraction gap is
-at least `(1-Δ)/sourceSigma D d` for all sufficiently large `D`. -/
-theorem exists_sourceSigma_contraction_gap_threshold
-    (Δ d : ℝ) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ D : ℝ, D0 ≤ D →
-      (1 - Δ) / sourceSigma D d ≤
-        1 - (1 - 1 / sourceSigma D d) ^ (1 - Δ) := by
-  obtain ⟨D0, hD0, hσ⟩ := exists_sourceSigma_gt_one_threshold hΔ1 hd
-  refine ⟨D0, hD0, fun D hD ↦ ?_⟩
-  exact rpow_contraction_gap hΔ0 hΔ1 (hσ D hD)
-
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

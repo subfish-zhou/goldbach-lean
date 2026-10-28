@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivative
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SumIntegralComparisons
 
 /-!
@@ -119,22 +118,6 @@ lemma sum_norm_cpowWeight_sub_le (s : ℂ) (hs : 0 < s.re) {m n : ℕ}
   have hn : 0 ≤ (n : ℝ) ^ (-s.re) := Real.rpow_nonneg (by positivity) _
   nlinarith
 
-/-- The shifted infinite total variation is summable. -/
-lemma summable_norm_cpowWeight_sub (s : ℂ) (hs : 0 < s.re) (m : ℕ) (hm : 1 ≤ m) :
-    Summable (fun j : ℕ => ‖cpowWeight s (m + j + 1) - cpowWeight s (m + j)‖) := by
-  apply summable_of_sum_range_le (fun _ => norm_nonneg _)
-  intro n
-  simpa [sum_Ico_eq_sum_range] using
-    sum_norm_cpowWeight_sub_le s hs hm (Nat.le_add_right m n)
-
-/-- Explicit `tsum` bound for the infinite total variation. -/
-lemma tsum_norm_cpowWeight_sub_le (s : ℂ) (hs : 0 < s.re) (m : ℕ) (hm : 1 ≤ m) :
-    ∑' j : ℕ, ‖cpowWeight s (m + j + 1) - cpowWeight s (m + j)‖ ≤
-      (‖s‖ / s.re) * (m : ℝ) ^ (-s.re) := by
-  apply Real.tsum_le_of_sum_range_le (fun _ => norm_nonneg _)
-  intro n
-  simpa [sum_Ico_eq_sum_range] using
-    sum_norm_cpowWeight_sub_le s hs hm (Nat.le_add_right m n)
 
 /-- The derivative weight `-log(x) x⁻ˢ`, with the logarithm kept real on the positive axis. -/
 noncomputable def logCpowWeight (s : ℂ) (x : ℝ) : ℂ :=
@@ -314,23 +297,5 @@ lemma sum_norm_logCpowWeight_sub_le (s : ℂ) (hs : 0 < s.re) {m n : ℕ}
     positivity
   linarith
 
-lemma summable_norm_logCpowWeight_sub (s : ℂ) (hs : 0 < s.re) (m : ℕ) (hm : 1 ≤ m) :
-    Summable (fun j : ℕ =>
-      ‖logCpowWeight s (m + j + 1) - logCpowWeight s (m + j)‖) := by
-  apply summable_of_sum_range_le (fun _ => norm_nonneg _)
-  intro n
-  simpa [sum_Ico_eq_sum_range] using
-    sum_norm_logCpowWeight_sub_le s hs hm (Nat.le_add_right m n)
-
-lemma tsum_norm_logCpowWeight_sub_le (s : ℂ) (hs : 0 < s.re) (m : ℕ) (hm : 1 ≤ m) :
-    ∑' j : ℕ, ‖logCpowWeight s (m + j + 1) - logCpowWeight s (m + j)‖ ≤
-      (m : ℝ) ^ (-s.re) *
-        (1 / s.re + ‖s‖ * (Real.log m / s.re + 1 / s.re ^ 2)) := by
-  change (∑' j : ℕ, ‖logCpowWeight s (m + j + 1) - logCpowWeight s (m + j)‖) ≤
-    logVariationBudget s m
-  apply Real.tsum_le_of_sum_range_le (fun _ => norm_nonneg _)
-  intro n
-  simpa [sum_Ico_eq_sum_range] using
-    sum_norm_logCpowWeight_sub_le s hs hm (Nat.le_add_right m n)
 
 end DirichletLAbelWeightVariation

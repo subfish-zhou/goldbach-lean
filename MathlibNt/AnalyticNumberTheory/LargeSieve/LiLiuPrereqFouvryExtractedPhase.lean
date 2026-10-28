@@ -96,9 +96,6 @@ def wExtractedArithmeticPhase (a h : ℤ) (z : WExtractedTuple) : ℂ :=
   fourier h (wSmallRootPhase v.d v.d₁ v.δ v.δ₁ v.δ₂
     v.k₁ v.k₂ v.n₁ v.n₂ a) * fourier h (wReciprocalPhase v a)
 
-theorem norm_wExtractedArithmeticPhase (a h : ℤ) (z : WExtractedTuple) :
-    ‖wExtractedArithmeticPhase a h z‖ = 1 := by
-  simp only [wExtractedArithmeticPhase, norm_mul, fourier_apply, Circle.norm_coe, mul_one]
 
 /-- The fixed-key sum now has only a five-variable analytic weight.
 The original cutoff, low-omega tests, compatibility, and signed coefficients
@@ -138,22 +135,5 @@ theorem wExtractedKeyExponential_eq_analyticWeight
   rw [hw]
   ring
 
-/-- A selected value may be zero. Only the other branch provides an actual
-member and hence positive canonical parameters. -/
-theorem wExtractedKeyExponential_zero_or_witness
-    (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ) (β c₁ γ ζ : ℕ → ℝ)
-    (a : ℤ) (P : WOriginalTuple → Prop) (R S ξ : ℝ)
-    (b : ℕ) (K : WExtractedKey) (u : ℝ) :
-    wExtractedKeyExponential H N Q β c₁ γ ζ a P R S ξ b K u = 0 ∨
-      ∃ t ∈ wExtractedKeyFiber H N Q a P R S ξ b K,
-        wExtractedCoefficient β c₁ γ ζ t.1 ≠ 0 := by
-  by_cases he : wExtractedKeyExponential H N Q β c₁ γ ζ a P R S ξ b K u = 0
-  · exact Or.inl he
-  · right
-    by_contra hn
-    push Not at hn
-    apply he
-    unfold wExtractedKeyExponential wFourierExponentialSum
-    exact sum_eq_zero (fun t ht => by dsimp only; rw [hn t ht]; simp)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

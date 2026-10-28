@@ -1,5 +1,14 @@
-import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation21ActualShift
-import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation21LogDerivativeFinal
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit
+import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma2PrimitiveLargeSieve
+import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMomentExplicit
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
+import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17ContourShift
+import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacterElementaryPeriodBound
+import Mathlib.Analysis.Calculus.FDeriv.Measurable
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
+import Mathlib.MeasureTheory.Measure.Lebesgue.Integral
+import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 noncomputable section
 open Classical Complex Finset MeasureTheory Set Filter
@@ -56,42 +65,6 @@ theorem Eq21FiniteContour_rectangle_vertical_identity
     _ = (-I) * (-chen1973HorizontalSection f β α T) := by rw [hc1]
     _ = I * chen1973HorizontalSection f β α T := by ring
 
-theorem Eq21FiniteContour_mellinKernel_differentiableAt
-    {x : ℕ} (hx : 3 ≤ x) {s : ℂ} (hs : 0 < s.re) :
-    DifferentiableAt ℂ (chen1973MellinKernel (x : ℝ)) s := by
-  exact AnalyticNumberTheory.LargeSieve.eq21_mellinKernel_differentiableAt hx hs
-
-
-/-- Holomorphy of the actual term, using only nonvanishing on this rectangle. -/
-theorem Eq21FiniteContour_term_differentiableOn
-    {x d : ℕ} (hx : 3 ≤ x) (hd : 1 < d) (χ : PrimitiveCharacter d)
-    {pp : ℕ × ℕ} (hp₁ : 0 < pp.1) (hp₂ : 0 < pp.2) {T : ℝ}
-    (hzero : ∀ s : ℂ, chen1973Lemma6Eq21Sigma x ≤ s.re →
-      s.re ≤ chen1973Lemma6Alpha x → |s.im| ≤ T →
-      chen1973Lemma6PrimitiveLValue d s χ ≠ 0) :
-    DifferentiableOn ℂ (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp)
-      {s : ℂ | chen1973Lemma6Eq21Sigma x ≤ s.re ∧
-        s.re ≤ chen1973Lemma6Alpha x ∧ |s.im| ≤ T} := by
-  let _ : NeZero d := ⟨Nat.ne_zero_of_lt hd⟩
-  have hχ : χ.1 ≠ 1 := primitiveCharacter_ne_one hd χ
-  have hy : 0 < (x : ℝ) / ((pp.1 : ℝ) * pp.2) :=
-    div_pos (by exact_mod_cast (show 0 < x by omega))
-      (mul_pos (by exact_mod_cast hp₁) (by exact_mod_cast hp₂))
-  intro s hs
-  have hspos := (chen1973Lemma6_eq21_sigma_pos hx).trans_le hs.1
-  have hLglobal : Differentiable ℂ χ.1.LFunction := χ.1.differentiable_LFunction hχ
-  have hL0 : χ.1.LFunction s ≠ 0 := by
-    simpa only [chen1973Lemma6PrimitiveLValue, dif_pos hd] using
-      hzero s hs.1 hs.2.1 hs.2.2
-  unfold chen1973Lemma6Eq21TermShiftIntegrand chen1973Lemma6Eq21ShiftIntegrand
-  simp only [chen1973PrimitiveLDeriv, chen1973Lemma6PrimitiveLValue, dif_pos hd]
-  have hpower : DifferentiableAt ℂ
-      (fun z : ℂ => (((x : ℝ) / ((pp.1 : ℝ) * pp.2) : ℝ) : ℂ) ^ z) s :=
-    differentiableAt_id.const_cpow (Or.inl (by exact_mod_cast hy.ne'))
-  have hkernel := Eq21FiniteContour_mellinKernel_differentiableAt hx hspos
-  have hlogDeriv := hLglobal.deriv.differentiableAt.div (hLglobal s) hL0
-  exact ((differentiableAt_const _).mul
-    ((hpower.mul hkernel).mul hlogDeriv)).differentiableWithinAt
 
 /-- Every finite vertical section is integrable before Cauchy is applied. -/
 theorem Eq21FiniteContour_vertical_intervalIntegrable
@@ -104,59 +77,5 @@ theorem Eq21FiniteContour_vertical_intervalIntegrable
   rw [uIcc_of_le (by linarith : -T ≤ T)] at ht
   simpa using (show β ≤ v ∧ v ≤ α ∧ |t| ≤ T from ⟨hv.1, hv.2, abs_le.mpr ht⟩)
 
-/-- Every finite horizontal section is integrable on the genuine rectangle. -/
-theorem Eq21FiniteContour_horizontal_intervalIntegrable
-    {f : ℂ → ℂ} {β α T t : ℝ} (hβα : β ≤ α) (ht : |t| ≤ T)
-    (hf : ContinuousOn f {s : ℂ | β ≤ s.re ∧ s.re ≤ α ∧ |s.im| ≤ T}) :
-    IntervalIntegrable (fun v : ℝ => f ((v : ℂ) + t * I)) volume β α := by
-  apply ContinuousOn.intervalIntegrable
-  apply hf.comp (by fun_prop : ContinuousOn (fun v : ℝ => (v : ℂ) + t * I) (uIcc β α))
-  intro v hv
-  rw [uIcc_of_le hβα] at hv
-  simpa using (show β ≤ v ∧ v ≤ α ∧ |t| ≤ T from ⟨hv.1, hv.2, ht⟩)
-
-/-- Finite middle interval and two open tails, for an actually integrable function. -/
-theorem Eq21FiniteContour_integral_split {f : ℝ → ℂ} (hf : Integrable f) (T : ℝ) :
-    (∫ t : ℝ, f t) = (∫ t in -T..T, f t) +
-      (∫ t in Iio (-T), f t) + ∫ t in Ioi T, f t := by
-  have h₁ := intervalIntegral.integral_Iic_add_Ioi
-    (hf.integrableOn : IntegrableOn f (Iic T)) (hf.integrableOn : IntegrableOn f (Ioi T))
-  have h₂ := intervalIntegral.integral_Iio_sub_Iio'
-    (hf.integrableOn : IntegrableOn f (Iio T)) (hf.integrableOn : IntegrableOn f (Iio (-T)))
-  rw [integral_Iic_eq_integral_Iio] at h₁
-  linear_combination -h₁ + h₂
-
-/-- W2: exact signed decomposition of ActualPhi, with BOTH high tails on alpha.
-No sigma high-tail object or full-height nonvanishing is assumed. -/
-theorem Eq21FiniteContour_actualPhi_eq_truncated_with_alpha_tails
-    {x d : ℕ} (hx : 3 ≤ x) (hd : 1 < d) (χ : PrimitiveCharacter d)
-    {pp : ℕ × ℕ} (hp₁ : 0 < pp.1) (hp₂ : 0 < pp.2)
-    {T : ℝ} (hT : 0 ≤ T)
-    (hzero : ∀ s : ℂ, chen1973Lemma6Eq21Sigma x ≤ s.re →
-      s.re ≤ chen1973Lemma6Alpha x → |s.im| ≤ T →
-      chen1973Lemma6PrimitiveLValue d s χ ≠ 0) :
-    chen1973Lemma6ActualPhi x d χ pp * χ.1 ((pp.1 * pp.2 : ℕ) : ZMod d) =
-      -(((1 / (2 * Real.pi) : ℝ) : ℂ) *
-        ((∫ t in -T..T, chen1973VerticalSection
-          (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp) (chen1973Lemma6Eq21Sigma x) t) +
-        I * chen1973HorizontalSection (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp)
-          (chen1973Lemma6Eq21Sigma x) (chen1973Lemma6Alpha x) T +
-        (∫ t in Iio (-T), chen1973VerticalSection
-          (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp) (chen1973Lemma6Alpha x) t) +
-        ∫ t in Ioi T, chen1973VerticalSection
-          (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp) (chen1973Lemma6Alpha x) t)) := by
-  have hy : 0 < (x : ℝ) / ((pp.1 : ℝ) * pp.2) :=
-    div_pos (by exact_mod_cast (show 0 < x by omega))
-      (mul_pos (by exact_mod_cast hp₁) (by exact_mod_cast hp₂))
-  have hα := chen1973Lemma6_eq21_alphaTerm_integrable hx hd χ hy
-  have hf := Eq21FiniteContour_term_differentiableOn hx hd χ hp₁ hp₂ hzero
-  have hσα := chen1973Lemma6_eq21_sigma_le_alpha hx
-  -- Rectangle holomorphy supplies the boundary regularity for Cauchy's identity;
-  -- full alpha-line integrability supplies both open tails in the integral split.
-  have hc := Eq21FiniteContour_rectangle_vertical_identity hσα hT hf
-  rw [chen1973Lemma6_eq21_actualPhi_mul_eq_alphaTerm χ hd hx hp₁ hp₂,
-    Eq21FiniteContour_integral_split hα T]
-  congr 2
-  linear_combination hc
 
 end AnalyticNumberTheory.LargeSieve

@@ -102,12 +102,6 @@ and `θ` (the sum of `log p` over primes). -/
 def lambdaPrimePowerCorrection (y q a : ℕ) : ℂ :=
   lambdaAPPrefix y q a - (primeThetaAPPrefix y q a : ℂ)
 
-/-- The correction is exactly what must be removed from the von Mangoldt prefix
-to leave the prime-only logarithmic weight. -/
-theorem lambdaAPPrefix_sub_primePowerCorrection (y q a : ℕ) :
-    lambdaAPPrefix y q a - lambdaPrimePowerCorrection y q a =
-      (primeThetaAPPrefix y q a : ℂ) := by
-  simp [lambdaPrimePowerCorrection]
 
 /-- The correction has the promised arithmetic content: it is precisely the
 von Mangoldt mass on non-primes in the residue class (hence, by the support of

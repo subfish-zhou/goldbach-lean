@@ -1,11 +1,5 @@
-import MathlibNt.Analysis.LogGridEstimates
-import MathlibNt.Analysis.MovingIntervalIntegral
-import MathlibNt.Analysis.IntegralExcessCover
 import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGrid
-import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
 
 open Filter Finset MeasureTheory Set
 open scoped ENNReal BigOperators Interval Topology
@@ -68,13 +62,6 @@ private lemma goldbachB10Beta_le_gamma : goldbachB10Beta ≤ goldbachB10Gamma :=
   dsimp [goldbachB10Beta, goldbachB10Gamma]
   norm_num
 
-private lemma goldbachB10Gamma_le_half : goldbachB10Gamma ≤ (1 / 2 : ℝ) := by
-  dsimp [goldbachB10Gamma]
-  norm_num
-
-private lemma goldbachB10Gamma_le_half_minus_beta : goldbachB10Gamma ≤ (1 - goldbachB10Beta) / 2 := by
-  dsimp [goldbachB10Gamma, goldbachB10Beta]
-  norm_num
 
 private lemma goldbachB10BetaGridEnd_eq_half_minus_beta :
     goldbachB10BetaGridEnd = (1 - goldbachB10Beta) / 2 := by
@@ -211,11 +198,6 @@ private theorem goldbachB10LogGridRegion_subset_ambientBox {n : ℕ} (hn : 0 < n
     ⟨(goldbachB10LogGridRegion_geometry hn hx).2.1.1.le,
       (goldbachB10LogGridRegion_geometry hn hx).2.1.2⟩⟩
 
-private lemma measurableSet_goldbachB10LogGridRegion (n : ℕ) :
-    MeasurableSet (goldbachB10LogGridRegion n) := by
-  classical
-  rw [goldbachB10LogGridRegion]
-  exact Finset.measurableSet_biUnion _ fun q _ => measurableSet_goldbachB10LogGridCell n q
 
 private lemma measurableSet_goldbachB10LogSourceRegion :
     MeasurableSet goldbachB10LogSourceRegion := by
@@ -223,9 +205,6 @@ private lemma measurableSet_goldbachB10LogSourceRegion :
     ((measurableSet_lt measurable_const measurable_snd).inter
       (measurableSet_le measurable_snd (by fun_prop)))
 
-private lemma measurableSet_goldbachB10LogAmbientBox :
-    MeasurableSet goldbachB10LogAmbientBox :=
-  measurableSet_Icc.prod measurableSet_Icc
 
 private lemma isCompact_goldbachB10LogAmbientBox :
     IsCompact goldbachB10LogAmbientBox :=
@@ -233,28 +212,18 @@ private lemma isCompact_goldbachB10LogAmbientBox :
 
 private lemma goldbachB10LogDensity_nonneg {x : ℝ × ℝ} (hx : x ∈ goldbachB10LogAmbientBox) :
     0 ≤ goldbachB10LogDensity x := by
-  dsimp [goldbachB10LogAmbientBox, goldbachB10LogDensity, liuLogDensity]
-  have hx1 : 0 ≤ x.1 := by
-    exact le_trans (by
-      dsimp [goldbachB10AlphaGridStart]
-      norm_num : (0 : ℝ) ≤ goldbachB10AlphaGridStart) hx.1.1
-  have hx2 : 0 ≤ x.2 := by
-    exact le_trans (by
-      dsimp [goldbachB10BetaGridStart]
-      norm_num : (0 : ℝ) ≤ goldbachB10BetaGridStart) hx.2.1
-  apply one_div_nonneg.mpr
-  exact mul_nonneg hx1 hx2
+  change 0 ≤ 1 / (x.1 * x.2)
+  exact one_div_nonneg.mpr (mul_nonneg
+    ((by norm_num [goldbachB10AlphaGridStart] : (0 : ℝ) ≤ goldbachB10AlphaGridStart).trans hx.1.1)
+    ((by norm_num [goldbachB10BetaGridStart] : (0 : ℝ) ≤ goldbachB10BetaGridStart).trans hx.2.1))
 
 private lemma goldbachB10LogKernel_nonneg {x : ℝ × ℝ} (hx : x ∈ goldbachB10LogAmbientBox) :
     0 ≤ goldbachB10LogKernel x := by
-  dsimp [goldbachB10LogAmbientBox, goldbachB10LogKernel, liuLogKernel]
+  change 0 ≤ 1 / (1 - x.1 - x.2)
   apply one_div_nonneg.mpr
-  have hden : 0 ≤ 1 - x.1 - x.2 := by
-    have hsum : x.1 + x.2 ≤ goldbachB10Gamma + goldbachB10BetaGridEnd := by
-      exact add_le_add hx.1.2 hx.2.2
-    dsimp [goldbachB10Gamma, goldbachB10BetaGridEnd] at hsum ⊢
-    linarith
-  exact hden
+  have hgap : goldbachB10Gamma + goldbachB10BetaGridEnd ≤ (1 : ℝ) := by
+    norm_num [goldbachB10Gamma, goldbachB10BetaGridEnd]
+  linarith [hx.1.2, hx.2.2]
 
 private lemma goldbachB10LogIntegrand_nonneg {x : ℝ × ℝ} (hx : x ∈ goldbachB10LogAmbientBox) :
     0 ≤ goldbachB10LogIntegrand x := by
@@ -263,32 +232,13 @@ private lemma goldbachB10LogIntegrand_nonneg {x : ℝ × ℝ} (hx : x ∈ goldba
 
 private lemma continuousOn_goldbachB10LogDensity :
     ContinuousOn goldbachB10LogDensity goldbachB10LogAmbientBox := by
-  unfold goldbachB10LogDensity liuLogDensity
-  apply ContinuousOn.div continuousOn_const
-    (continuous_fst.continuousOn.mul continuous_snd.continuousOn)
-  intro x hx
-  exact mul_ne_zero (by
-      have : (0 : ℝ) < goldbachB10AlphaGridStart := by
-        dsimp [goldbachB10AlphaGridStart]
-        norm_num
-      linarith [hx.1.1])
-    (by
-      have : (0 : ℝ) < goldbachB10BetaGridStart := by
-        dsimp [goldbachB10BetaGridStart]
-        norm_num
-      linarith [hx.2.1])
+  exact continuousOn_liuLogDensity_box
+    (by norm_num [goldbachB10AlphaGridStart]) (by norm_num [goldbachB10BetaGridStart])
 
 private lemma continuousOn_goldbachB10LogKernel :
     ContinuousOn goldbachB10LogKernel goldbachB10LogAmbientBox := by
-  unfold goldbachB10LogKernel liuLogKernel
-  apply ContinuousOn.div continuousOn_const
-    ((continuousOn_const.sub continuous_fst.continuousOn).sub continuous_snd.continuousOn)
-  intro x hx
-  change 1 - x.1 - x.2 ≠ 0
-  have hsum : x.1 + x.2 ≤ goldbachB10Gamma + goldbachB10BetaGridEnd := by
-    exact add_le_add hx.1.2 hx.2.2
-  dsimp [goldbachB10Gamma, goldbachB10BetaGridEnd] at hsum ⊢
-  linarith
+  exact continuousOn_liuLogKernel_box
+    (by norm_num [goldbachB10Gamma, goldbachB10BetaGridEnd])
 
 private lemma continuousOn_goldbachB10LogIntegrand :
     ContinuousOn goldbachB10LogIntegrand goldbachB10LogAmbientBox := by
@@ -350,32 +300,24 @@ private lemma goldbachB10LogGridCell_subset_ambientBox {n : ℕ} (hn : 0 < n)
 
 private theorem goldbachB10LogGridUpperSum_eq_integral (n : ℕ) (hn : 0 < n) :
     goldbachB10LogGridUpperSum n = ∫ x, goldbachB10LogGridUpperIntegrand n x := by
-  classical
   unfold goldbachB10LogGridUpperSum goldbachB10LogGridUpperIntegrand
-  rw [MeasureTheory.integral_finsetSum]
-  · apply Finset.sum_congr rfl
-    intro q hq
-    rw [MeasureTheory.integral_const_mul,
-      MeasureTheory.integral_indicator (measurableSet_goldbachB10LogGridCell n q)]
-    rw [logarithmicRectangleMass_eq_setIntegral
-      (goldbachB10AlphaGridPoint_pos hn) (goldbachB10AlphaGridPoint_lt_succ hn)
-      (goldbachB10BetaGridPoint_pos hn) (goldbachB10BetaGridPoint_lt_succ hn)]
-    rfl
-  · intro q hq
-    exact (integrable_indicator_of_integrableOn
-      (measurableSet_goldbachB10LogGridCell n q)
-      (integrableOn_goldbachB10LogDensity (measurableSet_goldbachB10LogGridCell n q)
-        (goldbachB10LogGridCell_subset_ambientBox hn hq))).const_mul _
+  rw [MathlibNt.Analysis.LogGridEstimates.integral_weighted_sum _ _ _ _
+    (fun q _ => measurableSet_goldbachB10LogGridCell n q)
+    (fun q hq => integrableOn_goldbachB10LogDensity (measurableSet_goldbachB10LogGridCell n q)
+      (goldbachB10LogGridCell_subset_ambientBox hn hq))]
+  apply Finset.sum_congr rfl
+  intro q _
+  rw [logarithmicRectangleMass_eq_setIntegral
+    (goldbachB10AlphaGridPoint_pos hn) (goldbachB10AlphaGridPoint_lt_succ hn)
+    (goldbachB10BetaGridPoint_pos hn) (goldbachB10BetaGridPoint_lt_succ hn)]
+  rfl
 
 private lemma integrable_goldbachB10LogGridUpperIntegrand (n : ℕ) (hn : 0 < n) :
     Integrable (goldbachB10LogGridUpperIntegrand n) := by
-  classical
-  unfold goldbachB10LogGridUpperIntegrand
-  exact integrable_finsetSum _ fun q hq =>
-    (integrable_indicator_of_integrableOn
-      (measurableSet_goldbachB10LogGridCell n q)
-      (integrableOn_goldbachB10LogDensity (measurableSet_goldbachB10LogGridCell n q)
-        (goldbachB10LogGridCell_subset_ambientBox hn hq))).const_mul _
+  exact MathlibNt.Analysis.LogGridEstimates.integrable_weighted_sum _ _ _ _
+    (fun q _ => measurableSet_goldbachB10LogGridCell n q)
+    (fun q hq => integrableOn_goldbachB10LogDensity (measurableSet_goldbachB10LogGridCell n q)
+      (goldbachB10LogGridCell_subset_ambientBox hn hq))
 
 private lemma goldbachB10LogGridUpperIntegrand_nonneg {n : ℕ} (hn : 0 < n)
     (x : ℝ × ℝ) : 0 ≤ goldbachB10LogGridUpperIntegrand n x := by
@@ -446,17 +388,10 @@ private lemma volume_unitBox :
 private lemma goldbachB10LogDensity_le_forty {x : ℝ × ℝ}
     (hx : x ∈ goldbachB10LogAmbientBox) :
     goldbachB10LogDensity x ≤ 40 := by
-  have hprod : (1 / 40 : ℝ) ≤ x.1 * x.2 := by
-    have h1 : (1 / 10 : ℝ) ≤ x.1 := by
-      simpa [goldbachB10AlphaGridStart] using hx.1.1
-    have h2 : (1 / 4 : ℝ) ≤ x.2 := by
-      simpa [goldbachB10BetaGridStart] using hx.2.1
-    calc
-      (1 / 40 : ℝ) = (1 / 10 : ℝ) * (1 / 4 : ℝ) := by norm_num
-      _ ≤ x.1 * x.2 := by gcongr
-  unfold goldbachB10LogDensity liuLogDensity
-  rw [div_le_iff₀ (by linarith [hx.1.1, hx.2.1])]
-  nlinarith
+  convert liuLogDensity_le_of_lower_bounds
+    (by norm_num : (0 : ℝ) < 1/10) (by norm_num : (0 : ℝ) < 1/4)
+    (by simpa [goldbachB10AlphaGridStart] using hx.1.1)
+    (by simpa [goldbachB10BetaGridStart] using hx.2.1) using 1; norm_num
 
 private lemma goldbachB10LogGrid_upperKernel_le_four {n : ℕ} (hn : 0 < n)
     {q : Fin n × Fin n} (_hq : q ∈ goldbachB10LogGridCells n) :
@@ -657,28 +592,8 @@ theorem goldbachB10LogGridUpperSum_sub_mainIntegral_le
 theorem tendsto_goldbachB10LogGridUpperSum_mainIntegral :
     Tendsto (fun n : ℕ => goldbachB10LogGridUpperSum (n + 1)) atTop
       (nhds goldbachB10MainIntegral) := by
-  have herror :
-      Tendsto (fun n : ℕ => (260 : ℝ) / ((n + 1 : ℕ) : ℝ)) atTop (nhds 0) := by
-    simpa only [Nat.cast_add, Nat.cast_one, div_eq_mul_inv, one_mul, mul_zero] using
-      (Tendsto.const_mul (260 : ℝ)
-        (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ) :
-          Tendsto (fun n : ℕ => 1 / ((n : ℝ) + 1)) atTop (nhds 0)))
-  have hdiff :
-      Tendsto
-        (fun n : ℕ => goldbachB10LogGridUpperSum (n + 1) - goldbachB10MainIntegral)
-        atTop (nhds 0) := by
-    apply squeeze_zero'
-    · exact Filter.Eventually.of_forall fun n =>
-        sub_nonneg.mpr
-          (goldbachB10MainIntegral_le_goldbachB10LogGridUpperSum (n + 1) (Nat.succ_pos n))
-    · exact Filter.Eventually.of_forall fun n =>
-        goldbachB10LogGridUpperSum_sub_mainIntegral_le (n + 1) (Nat.succ_pos n)
-    · exact herror
-  have hconst :
-      Tendsto (fun _ : ℕ => goldbachB10MainIntegral) atTop
-        (nhds goldbachB10MainIntegral) :=
-    tendsto_const_nhds
-  simpa only [sub_add_cancel, zero_add] using hdiff.add hconst
+  exact MathlibNt.Analysis.LogGridEstimates.tendsto_of_sub_le_div_nat
+    (fun n hn => goldbachB10MainIntegral_le_goldbachB10LogGridUpperSum n hn) (fun n hn => goldbachB10LogGridUpperSum_sub_mainIntegral_le n hn)
 
 /-- Eventual epsilon form of `goldbachB10LogGridUpperSum → I10`. -/
 theorem eventually_abs_goldbachB10LogGridUpperSum_sub_mainIntegral_lt

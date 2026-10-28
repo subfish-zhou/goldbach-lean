@@ -1,5 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9MainMassTransport
+import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
 import MathlibNt.SieveTheory.LiLiuGoldbachB8LogKernel
+
 
 open scoped BigOperators
 
@@ -82,12 +83,6 @@ theorem goldbachB9PairLogKernelTerm_eq
   simp only [goldbachC10Prod, Nat.cast_mul, liuPairLogKernel, primeLogExponent,
     add_div, sub_sub]
 
-theorem goldbachB9PairLogKernel_eq_logCoordinateSum (N : ℕ) :
-    goldbachB9PairLogKernel N =
-      ∑ rs ∈ goldbachC10Pairs N ((N : ℝ) ^ (4 / 53 : ℝ))
-        ((N : ℝ) ^ (1 / 3 : ℝ)), liuPairLogKernel N rs := by
-  unfold goldbachB9PairLogKernel
-  exact Finset.sum_congr rfl (fun _ hrs => goldbachB9PairLogKernelTerm_eq hrs)
 
 theorem goldbachB9PairLogKernelTerm_nonneg
     {N : ℕ} (hN : 2 ≤ N) {rs : ℕ × ℕ}
@@ -98,10 +93,6 @@ theorem goldbachB9PairLogKernelTerm_nonneg
     (mul_nonneg (mul_nonneg (Nat.cast_nonneg rs.1) (Nat.cast_nonneg rs.2))
       (goldbachB9OneSubPrimeLogExponent_pos hN hrs).le)
 
-theorem goldbachB9PairLogKernel_nonneg {N : ℕ} (hN : 2 ≤ N) :
-    0 ≤ goldbachB9PairLogKernel N := by
-  rw [goldbachB9PairLogKernel_eq_logCoordinateSum]
-  exact Finset.sum_nonneg (fun _ hrs => goldbachB9PairLogKernelTerm_nonneg hN hrs)
 
 noncomputable def goldbachB9PairsInLogRectangle
     (N : ℕ) (a₀ a₁ b₀ b₁ : ℝ) : Finset (ℕ × ℕ) :=

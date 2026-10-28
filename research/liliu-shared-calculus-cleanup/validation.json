@@ -1,0 +1,92 @@
+{
+  "phase": "Li-Liu shared calculus and author-weight proofs",
+  "status": "pass",
+  "started_at_utc": "2026-10-27T08:57:47.879901+00:00",
+  "source_modules": 1803,
+  "checks": {
+    "full_source_build": {
+      "exit_code": 0,
+      "log_sha256": "364df88ee859b407d53d4ae71df806ddcf85e9d06052ed9f2e7281b0e00d4f7c"
+    },
+    "public_literal_and_axiom_checks": {
+      "exit_code": 0,
+      "log_sha256": "9ac15b05873545dce60a9b43a2d9948b3b32157f2c13143b72e2a12fdb781a07"
+    },
+    "strengthened_internal_statement_contracts": {
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kernel_replay_Goldbach.Theorem": {
+      "exit_code": 0,
+      "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+    },
+    "kernel_replay_Goldbach.Checks": {
+      "exit_code": 0,
+      "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNine": {
+      "exit_code": 0,
+      "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+    },
+    "kernel_replay_Goldbach.OnePlusOneNineChecks": {
+      "exit_code": 0,
+      "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+    },
+    "kernel_replay_Goldbach.All": {
+      "exit_code": 0,
+      "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+    },
+    "script_tests": {
+      "exit_code": 0,
+      "log_sha256": "31a608b4cd879085699a586dd1d2ceb3a26c15ff411a49c9e5de3605876d2b49"
+    }
+  },
+  "auxiliary_input_sha256": {
+    "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean": "e670fe75c11a6cbd25cc97f31e28cd107b46762947e81a58d03716ba851d2f17"
+  },
+  "finished_at_utc": "2026-10-27T09:17:49.493391+00:00",
+  "input_manifest_sha256": "2e4053b901d420320800b39f93d9524d4a43d8c2d96620e3c04705964f923a4c",
+  "scope": "Main Chen and Li-Liu libraries; separate concurrent research/wu2008 sources and numerical certificates excluded.",
+  "source_state": "Uncommitted working-tree sources pinned in validation-inputs.json; checkout HEAD is a base, not deployment evidence.",
+  "baseline_validation_sha256": "313e7a3ec9b8c679509329673b5e296623f35f1da4373bb0a3fee4ecd7e67a21",
+  "net_main_code_lines": -27,
+  "net_liliu_closure_code_lines": -27,
+  "net_chen_closure_code_lines": -6,
+  "new_auxiliary_lean_code_lines": 0,
+  "type_preservation_report": "type-preservation.json",
+  "promoted_analytic_proof_sources_unchanged": true,
+  "moved_weight_proof_source_unchanged": true,
+  "all_import_lists_unchanged": true,
+  "final_review_at_utc": "2026-10-27T09:21:05.523324+00:00",
+  "final_static_check": {
+    "exit_code": 0,
+    "log_sha256": "30c4b7f29246850cf62e7a16e0c2d02f96219b3d720692f5d971ba1170c8cc5d"
+  },
+  "evidence_sha256": {
+    "changes.json": "c34414149b3bff54c6774a5760e121e2ea17a9f365826413140a52fea0fdeecf",
+    "source-size.json": "52dbcb8fb4e722380ab62d902747b919629e53e8ca27eea17efb86ff803b9362",
+    "type-preservation.json": "74b212aeb5072ed4c6e582d05299071c1f78f57f30bcfe6c52bc477b7130c191",
+    "private-proof-redirects.json": "d7281e64a451749e4b8e1057fc60c420a49ee721ec8063176e3d5537ca4090a5",
+    "retained-private-statements.json": "73243c7ca9e11b6db11492b4a656c742ca5016c888ad97b0990f81ce138069d2",
+    "moved-public-proofs.json": "d0e486472de2c7b2d0d1c4552b80fa98f0e4449a9889ac2dd25c47262e09fc49",
+    "shared-proof-references.json": "4aa008ea943f49b5f42fb5900fde89345e299ee4a3388e1d8e43c6dfcf35e287",
+    "scope-membership.json": "cffdeb051e844fb08dd024e8d4e3d0c3afdc1667cad0b6b1661b2250a7450ef4",
+    "standalone-probes.json": "96327230adde6d24ae21d2e5742a12f234af6d8c6f7fff628de43416ec0fec1a",
+    "blueprint-validation.json": "dc6051d56361d2911b8bc2f3d62771ac4f5fc4388fb481ff348cd5b9fbe23d69",
+    "analysis.json": "f31a78c168e3a75a89c2f6867285e072a8b83d65db3d4dc2698425887712c412"
+  },
+  "auxiliary_tools_sha256": {
+    "research/liliu-shared-calculus-cleanup/reproduce.py": "064e72b78b1de342519ccb32c49c43d3fe9a77a8389a78f06611706b81d3d0fa",
+    "research/liliu-cleanup/measure_main.py": "ec4399974303a962aecc16138e8e2a4dee923290de2eee616f66d330dc032cc8",
+    "research/liliu-audit/reproduce.py": "26dfb09652a4256d51d452265952dfb5ac6524820a9ad2d4c946bb1f30c3ddbd",
+    "research/chen-audit/TypeCensus.lean": "e5b786dc795c6002845fca490b89fd623a5c3a762d8b3cc965b522f5a3aaf846"
+  },
+  "documentation_sha256": {
+    "README.md": "3a47441531b814f03dac8151b6fa5c44666b4c194a9079049e6b613197c4c180",
+    "docs/LILIU_SHARED_CALCULUS_CLEANUP.md": "f746509ba088e4cbdc6ed0f286792a6235a7bf34906945095b4c4c967d96f99a",
+    "docs/SOURCE_SIZE.md": "e1a8e66f5f705842ae464d52c602fbf626daaff634cbdb88596f23eaf405b022",
+    "docs/VERIFICATION.md": "4567ac1a7f6512c67a8040597b54f49c7f433328994bb38c3903fa74ec7d07b1",
+    "docs/RELEASE_NOTES.md": "5ec75923b69ed41fadc202f43b3d4bf798b88ade4363159c0cdb13a90b5d687b",
+    "docs/ARCHITECTURE.md": "d8228ccd1730d6e791f9aafe143f687dc969468fa40e38488b17ee74d5ca795d"
+  }
+}

@@ -1,6 +1,5 @@
-import MathlibNt.Analysis.LogGridEstimates
 import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGrid
-import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
 
 open MeasureTheory Set
 
@@ -28,30 +27,11 @@ def goldbachB9LeftStrip (n : ℕ) : Set (ℝ × ℝ) :=
 def goldbachB9BottomStrip (n : ℕ) : Set (ℝ × ℝ) :=
   Icc (4 / 53) (1 / 3) ×ˢ Ioc (1 / 3 - goldbachB9BetaGridStep n) (1 / 3)
 
-def goldbachB9ObliqueStrip (n : ℕ) : Set (ℝ × ℝ) :=
-  {x | x.1 ∈ Icc (4 / 53) (1 / 3) ∧
-    (1 - x.1) / 2 < x.2 ∧
-    x.2 < (1 - x.1) / 2 +
-      (goldbachB9AlphaGridStep n + 2 * goldbachB9BetaGridStep n) / 2}
 
 theorem measurableSet_goldbachB9LogGridCell (n : ℕ) (q : Fin n × Fin n) :
     MeasurableSet (goldbachB9LogGridCell n q) :=
   measurableSet_Ioc.prod measurableSet_Ioc
 
-theorem measurableSet_goldbachB9LogGridRegion (n : ℕ) :
-    MeasurableSet (goldbachB9LogGridRegion n) := by
-  classical
-  exact Finset.measurableSet_biUnion _ fun q _ => measurableSet_goldbachB9LogGridCell n q
-
-theorem measurableSet_goldbachB9LogSourceRegion :
-    MeasurableSet goldbachB9LogSourceRegion := by
-  exact (measurableSet_Ioc.preimage measurable_fst).inter
-    ((measurableSet_lt measurable_const measurable_snd).inter
-      (measurableSet_le measurable_snd (by fun_prop)))
-
-theorem measurableSet_goldbachB9LogAmbientBox :
-    MeasurableSet goldbachB9LogAmbientBox :=
-  measurableSet_Icc.prod measurableSet_Icc
 
 theorem isCompact_goldbachB9LogAmbientBox : IsCompact goldbachB9LogAmbientBox :=
   isCompact_Icc.prod isCompact_Icc
@@ -64,43 +44,6 @@ theorem measurableSet_goldbachB9BottomStrip (n : ℕ) :
     MeasurableSet (goldbachB9BottomStrip n) :=
   measurableSet_Icc.prod measurableSet_Ioc
 
-theorem measurableSet_goldbachB9ObliqueStrip (n : ℕ) :
-    MeasurableSet (goldbachB9ObliqueStrip n) := by
-  exact (measurableSet_Icc.preimage measurable_fst).inter
-    ((measurableSet_lt (by fun_prop) measurable_snd).inter
-      (measurableSet_lt measurable_snd (by fun_prop)))
-
-theorem goldbachB9LogSourceRegion_section (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9LogSourceRegion =
-      if u ∈ Ioc (4 / 53 : ℝ) (1 / 3) then Ioc (1 / 3) ((1 - u) / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9LogSourceRegion]
-
-theorem goldbachB9LeftStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9LeftStrip n =
-      if u ∈ Ioc (4 / 53 - goldbachB9AlphaGridStep n) (4 / 53) then
-        Icc (1 / 4) (1 / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9LeftStrip]
-
-theorem goldbachB9BottomStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9BottomStrip n =
-      if u ∈ Icc (4 / 53 : ℝ) (1 / 3) then
-        Ioc (1 / 3 - goldbachB9BetaGridStep n) (1 / 3) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9BottomStrip]
-
-theorem goldbachB9ObliqueStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9ObliqueStrip n =
-      if u ∈ Icc (4 / 53 : ℝ) (1 / 3) then
-        Ioo ((1 - u) / 2) ((1 - u) / 2 +
-          (goldbachB9AlphaGridStep n + 2 * goldbachB9BetaGridStep n) / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9ObliqueStrip, and_assoc]
 
 theorem volume_goldbachB9LeftStrip (n : ℕ) :
     volume (goldbachB9LeftStrip n) = ENNReal.ofReal ((17 / 240 : ℝ) / n) := by
@@ -124,19 +67,6 @@ theorem volume_goldbachB9BottomStrip (n : ℕ) :
   unfold goldbachB9BetaGridStep goldbachB9BetaGridWidth
   ring
 
-theorem volume_goldbachB9ObliqueStrip (n : ℕ) :
-    volume (goldbachB9ObliqueStrip n) = ENNReal.ofReal ((1927 / 19080 : ℝ) / n) := by
-  unfold goldbachB9ObliqueStrip
-  rw [MathlibNt.Analysis.LogGridEstimates.volume_strip (4 / 53) (1 / 3)
-    ((goldbachB9AlphaGridStep n + 2 * goldbachB9BetaGridStep n) / 2) (fun u => (1 - u) / 2)
-    (measurableSet_goldbachB9ObliqueStrip n) (by
-    unfold goldbachB9AlphaGridStep goldbachB9BetaGridStep
-      goldbachB9AlphaGridWidth goldbachB9BetaGridWidth
-    positivity)]
-  congr 1
-  unfold goldbachB9AlphaGridStep goldbachB9BetaGridStep
-    goldbachB9AlphaGridWidth goldbachB9BetaGridWidth
-  ring
 
 theorem goldbachB9LogGridCell_pairwiseDisjoint {n : ℕ} (hn : 0 < n) :
     (Set.univ : Set (Fin n × Fin n)).Pairwise
@@ -168,43 +98,11 @@ theorem goldbachB9LogGridRegion_subset_ambientBox {n : ℕ} (hn : 0 < n) :
   obtain ⟨q, _, hxq⟩ := Set.mem_iUnion₂.mp hx
   exact goldbachB9LogGridCell_subset_ambientBox hn q hxq
 
-theorem goldbachB9LogSourceRegion_subset_ambientBox :
-    goldbachB9LogSourceRegion ⊆ goldbachB9LogAmbientBox := by
-  intro x hx
-  change x.1 ∈ Ioc (4 / 53 : ℝ) (1 / 3) ∧ x.2 ∈ Ioc (1 / 3) ((1 - x.1) / 2) at hx
-  exact ⟨⟨by linarith [hx.1.1], hx.1.2⟩,
-    ⟨by linarith [hx.2.1], by linarith [hx.1.1, hx.2.2]⟩⟩
 
 theorem goldbachB9LogAmbientBox_gap {x : ℝ × ℝ} (hx : x ∈ goldbachB9LogAmbientBox) :
     (1 / 6 : ℝ) ≤ 1 - x.1 - x.2 := by
   linarith [hx.1.2, hx.2.2]
 
-/-- The source has a horizontal lower edge, not the B8 diagonal edge. -/
-theorem goldbachB9LogGridRegion_excess_subset {n : ℕ} (hn : 0 < n) :
-    goldbachB9LogGridRegion n \ goldbachB9LogSourceRegion ⊆
-      goldbachB9LeftStrip n ∪ goldbachB9BottomStrip n ∪ goldbachB9ObliqueStrip n := by
-  intro x hx
-  obtain ⟨hg, hs⟩ := hx
-  obtain ⟨q, hq, hxq⟩ := Set.mem_iUnion₂.mp hg
-  have hb := goldbachB9LogGridCell_subset_ambientBox hn q hxq
-  have hsel := mem_goldbachB9LogGridCells_iff.mp hq
-  change
-    x.1 ∈ Ioc (goldbachB9AlphaGridPoint n q.1) (goldbachB9AlphaGridPoint n (q.1 + 1)) ∧
-      x.2 ∈ Ioc (goldbachB9BetaGridPoint n q.2) (goldbachB9BetaGridPoint n (q.2 + 1))
-    at hxq
-  rw [goldbachB9AlphaGridPoint_succ, goldbachB9BetaGridPoint_succ] at hxq hsel
-  by_cases hl : x.1 ≤ (4 / 53 : ℝ)
-  · apply Or.inl ∘ Or.inl
-    exact ⟨⟨by linarith [hxq.1.1, hsel.1], hl⟩, hb.2⟩
-  · have hl' : (4 / 53 : ℝ) < x.1 := lt_of_not_ge hl
-    by_cases hd : x.2 ≤ (1 / 3 : ℝ)
-    · apply Or.inl ∘ Or.inr
-      exact ⟨⟨hl'.le, hb.1.2⟩, ⟨by linarith [hxq.2.1, hsel.2.1], hd⟩⟩
-    · apply Or.inr
-      have hu : (1 - x.1) / 2 < x.2 := by
-        by_contra h
-        exact hs ⟨⟨hl', hb.1.2⟩, ⟨lt_of_not_ge hd, le_of_not_gt h⟩⟩
-      exact ⟨⟨hl'.le, hb.1.2⟩, hu, by linarith [hxq.1.2, hxq.2.2, hsel.2.2]⟩
 
 end
 

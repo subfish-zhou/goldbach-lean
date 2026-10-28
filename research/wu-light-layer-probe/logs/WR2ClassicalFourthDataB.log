@@ -1,0 +1,23 @@
+	Command being timed: "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean -j1 -DwarningAsError=true -DautoImplicit=false -R /tmp/wu-light-layer-probe/runs/1793080881828776939-3f6db919/src -o /tmp/wu-light-layer-probe/runs/1793080881828776939-3f6db919/lib/WR2ClassicalFourthDataB.olean /tmp/wu-light-layer-probe/runs/1793080881828776939-3f6db919/src/WR2ClassicalFourthDataB.lean"
+	User time (seconds): 7.45
+	System time (seconds): 1.19
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.73
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1797292
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 6
+	Minor (reclaiming a frame) page faults: 61625
+	Voluntary context switches: 533
+	Involuntary context switches: 1044
+	Swaps: 0
+	File system inputs: 840
+	File system outputs: 6184
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

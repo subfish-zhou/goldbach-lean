@@ -38,7 +38,7 @@ theorem summable_liuUniversalAbsEulerDeviation :
 
 theorem liuSelbergAbsPrimeDeviation_two_nonneg (p : Nat.Primes) :
     0 ≤ liuSelbergAbsPrimeDeviation 2 p := by
-  exact liuSelbergAbsPrimeDeviation_nonneg_core (by norm_num) p
+  exact liuSelbergAbsPrimeDeviation_nonneg_core (N := 2) p
 
 theorem liuUniversalAbsEulerFactor_nonneg (p : Nat.Primes) :
     0 ≤ liuUniversalAbsEulerFactor p := by
@@ -83,15 +83,14 @@ noncomputable def liuPrimeDivisorKernel (N : ℕ) (p : Nat.Primes) : ℝ :=
   if (p : ℕ) ∣ N then 1 + ((p : ℝ)⁻¹) else 1
 
 theorem liuSelbergAbsPrimeDeviation_nonneg
-    {N : ℕ} (_hNeven : Even N) (p : Nat.Primes) :
+    {N : ℕ} (p : Nat.Primes) :
     0 ≤ liuSelbergAbsPrimeDeviation N p := by
-  exact liuSelbergAbsPrimeDeviation_nonneg_core _hNeven p
+  exact liuSelbergAbsPrimeDeviation_nonneg_core p
 
 theorem liuAbsoluteEulerFactor_one_le
-    {N : ℕ} (hNeven : Even N) (p : Nat.Primes) :
+    {N : ℕ} (p : Nat.Primes) :
     1 ≤ liuAbsoluteEulerFactor N p := by
-  unfold liuAbsoluteEulerFactor
-  linarith [liuSelbergAbsPrimeDeviation_nonneg hNeven p]
+  exact le_add_of_nonneg_right (liuSelbergAbsPrimeDeviation_nonneg (N := N) p)
 
 theorem multipliable_liuAbsoluteEulerFactor
     {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
@@ -115,7 +114,7 @@ theorem liuAbsoluteEulerFactor_le_universal_mul_kernel
       1 + ((p : ℝ)⁻¹) = 1 * (1 + ((p : ℝ)⁻¹)) := by ring
       _ ≤ liuUniversalAbsEulerFactor p * (1 + ((p : ℝ)⁻¹)) :=
         mul_le_mul_of_nonneg_right
-          (liuAbsoluteEulerFactor_one_le (N := 2) (by norm_num) p)
+          (liuAbsoluteEulerFactor_one_le (N := 2) p)
           (by positivity)
   · have hp2 : ¬(p : ℕ) ∣ 2 := by
       intro hp2
@@ -198,7 +197,7 @@ theorem tprod_liuAbsoluteEulerFactor_le_uniform
     dsimp only [h]
     rw [liuPrimeDivisorKernel]
     have ha : 1 ≤ liuUniversalAbsEulerFactor p :=
-      liuAbsoluteEulerFactor_one_le (N := 2) (by norm_num) p
+      liuAbsoluteEulerFactor_one_le (N := 2) p
     split_ifs with hp
     · have hb : 1 ≤ 1 + ((p : ℝ)⁻¹) := by
         have hpR : 0 ≤ (p : ℝ) := by positivity
@@ -210,7 +209,7 @@ theorem tprod_liuAbsoluteEulerFactor_le_uniform
   calc
     ∏ p ∈ s, liuAbsoluteEulerFactor N p ≤ ∏ p ∈ s, h p :=
       Finset.prod_le_prod
-        (fun p _ => by linarith [liuAbsoluteEulerFactor_one_le hNeven p])
+        (fun p _ => by linarith [liuAbsoluteEulerFactor_one_le (N := N) p])
         (fun p _ => liuAbsoluteEulerFactor_le_universal_mul_kernel hNeven p)
     _ ≤ ∏' p : Nat.Primes, h p :=
       ge_of_tendsto hmult.hasProd (Filter.eventually_atTop.mpr
@@ -296,8 +295,8 @@ theorem tsum_abs_liuSelbergCorrection_le_tprod_liuAbsoluteEulerFactor
           ⟨S, fun T hST =>
             Finset.prod_le_prod_of_subset_of_one_le hST
               (fun p _ => by
-                linarith [liuAbsoluteEulerFactor_one_le hNeven p])
-              (fun p _ _ => liuAbsoluteEulerFactor_one_le hNeven p)⟩)
+                linarith [liuAbsoluteEulerFactor_one_le (N := N) p])
+              (fun p _ _ => liuAbsoluteEulerFactor_one_le (N := N) p)⟩)
   apply le_of_tendsto
     (summable_abs_liuSelbergCorrection hNeven hN).tendsto_sum_tsum_nat
   filter_upwards [] with z
@@ -508,12 +507,6 @@ theorem liuSquarefreeDivisorKernel_nonneg (N d : ℕ) :
   · positivity
   · exact le_rfl
 
-theorem liuPrimeDivisorLogSum_nonneg (N : ℕ) :
-    0 ≤ liuPrimeDivisorLogSum N := by
-  unfold liuPrimeDivisorLogSum
-  apply Finset.sum_nonneg
-  intro p hp
-  exact div_nonneg (Real.log_natCast_nonneg p) (by positivity)
 
 theorem tsum_liuSquarefreeDivisorKernel_mul_log_le
     {N : ℕ} (hN : 0 < N) :

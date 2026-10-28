@@ -1,17 +1,4 @@
-import Hf4QuadPanel0
-import Hf4QuadBatch0
-import Hf4QuadBatch1
-import Hf4QuadBatch2
-import Hf4QuadBatch3
-import Hf4QuadBatch4
-import Hf4QuadBatch5
-import Hf4QuadBatch6
-import Hf4QuadBatch7
-import Hf4QuadBatch8
-import Hf4QuadBatch9
-import Hf4QuadBatch10
-import Hf4QuadBatch11
-import Hf4QuadBatch12
+import Hf4QuadEndpointBridges
 
 noncomputable section
 namespace Hf4Quad

@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SmallDHighCoordinate
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ScalarEventual
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
 import Mathlib.Analysis.SpecialFunctions.Exponential
 
@@ -166,84 +165,6 @@ private lemma exists_caseA_errorEnvelope_lower_for_fixed_q
     norm_num [Real.rpow_one]
     exact (min_le_right _ _).trans hTx
 
-lemma exists_caseA_scalar_constant_for_fixed_q
-    (S : BoundingSieve) (H : Section13HatLayers) (hH : Section13HatSourceContract H)
-    {q : ℕ} (hq : 2 ≤ q) {d Δ K : ℝ} (hd : 2 < d) (hK : 0 < K) :
-    ∃ A : ℝ, 0 < A ∧ ∀ (n p : ℕ) (x : ℝ),
-      p = ⌈(q : ℝ) ^ (1 / x)⌉₊ → 2 ≤ x →
-      suzukiSourceL (p : ℝ) K ^ (⌊x - 2⌋₊ + 1) /
-            ((⌊x - 2⌋₊ + 1).factorial : ℝ) *
-          Real.exp (suzukiSourceL (p : ℝ) K) ≤
-        A * claim14_5Scale S H n (q : ℝ) d Δ
-          (sourceSigma (q : ℝ) d) K x := by
-  obtain ⟨e0, he0, hEnvelopeLower⟩ :=
-    exists_caseA_errorEnvelope_lower_for_fixed_q H hH hq hd
-  have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
-  have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
-  have hsigma : 0 < sourceSigma (q : ℝ) d := sourceSigma_pos_of_nat_two_le hq
-  have hV : 0 < claim14_5VProduct S (q : ℝ) := by
-    simpa [claim14_5VProduct, suzukiVProduct] using suzukiVProduct_pos S (q : ℝ)
-  let B : ℝ := claim14_5VProduct S (q : ℝ) *
-      (Real.exp (Real.sqrt K) / (Real.log (q : ℝ) * sourceSigma (q : ℝ) d)) *
-      e0 * (Real.log (q : ℝ)) ^ (-Δ)
-  have hB : 0 < B := by dsimp [B]; positivity
-  let Lq : ℝ := suzukiSourceL (q : ℝ) K
-  let A : ℝ := Real.exp (2 * Lq) / B
-  have hA : 0 < A := by dsimp [A]; positivity
-  refine ⟨A, hA, ?_⟩
-  intro n p x hp hx
-  have hx0 : 0 < x := by linarith
-  have hpq : p ≤ q := by
-    rw [hp]
-    exact claim145_natCeil_rpow_le hq hx
-  have hp2 : 2 ≤ p := by
-    rw [hp]
-    have hpow : (1 : ℝ) < (q : ℝ) ^ (1 / x) :=
-      Real.one_lt_rpow hq1 (one_div_pos.mpr hx0)
-    have : 1 < ⌈(q : ℝ) ^ (1 / x)⌉₊ := (Nat.lt_ceil).mpr (by simpa using hpow)
-    omega
-  let Lp : ℝ := suzukiSourceL (p : ℝ) K
-  have hLp : 0 < Lp := by
-    have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
-    have hlogp : Real.log 2 ≤ Real.log (p : ℝ) :=
-      Real.strictMonoOn_log.monotoneOn (by norm_num)
-        (show (0 : ℝ) < (p : ℝ) by exact_mod_cast (show 0 < p by omega))
-        (by exact_mod_cast hp2)
-    have hfirst : 0 ≤ Real.log (Real.log (p : ℝ) / Real.log 2) := by
-      apply Real.log_nonneg
-      exact (le_div_iff₀ hlog2).2 (by simpa using hlogp)
-    have hsecond : 0 < Real.log (1 + K / Real.log 2) := by
-      apply Real.log_pos
-      have : 0 < K / Real.log 2 := div_pos hK hlog2
-      linarith
-    dsimp [Lp, suzukiSourceL]
-    linarith
-  have hLpq : Lp ≤ Lq := by
-    dsimp [Lp, Lq]
-    exact suzukiSourceL_mono (by exact_mod_cast (show 1 < p by omega)) (by exact_mod_cast hpq)
-  have hleft :
-      Lp ^ (⌊x - 2⌋₊ + 1) / (((⌊x - 2⌋₊ + 1).factorial : ℕ) : ℝ) *
-          Real.exp Lp ≤ Real.exp (2 * Lq) := by
-    have hterm := Real.pow_div_factorial_le_exp Lp hLp.le (⌊x - 2⌋₊ + 1)
-    calc
-      _ ≤ Real.exp Lp * Real.exp Lp :=
-        mul_le_mul_of_nonneg_right hterm (Real.exp_pos Lp).le
-      _ = Real.exp (2 * Lp) := by rw [← Real.exp_add]; congr 1; ring
-      _ ≤ Real.exp (2 * Lq) := Real.exp_le_exp.mpr (by linarith)
-  have hEnvelope : e0 ≤ errorEnvelope H n (q : ℝ) d x :=
-    hEnvelopeLower n x hx
-  have hscale : B ≤ claim14_5Scale S H n (q : ℝ) d Δ
-      (sourceSigma (q : ℝ) d) K x := by
-    unfold claim14_5Scale
-    dsimp [B]
-    exact mul_le_mul_of_nonneg_right
-      (mul_le_mul_of_nonneg_left hEnvelope (by positivity))
-      (Real.rpow_nonneg hlogq.le _)
-  calc
-    _ ≤ Real.exp (2 * Lq) := by simpa [Lp] using hleft
-    _ = A * B := by dsimp [A]; field_simp [ne_of_gt hB]
-    _ ≤ A * claim14_5Scale S H n (q : ℝ) d Δ
-        (sourceSigma (q : ℝ) d) K x := mul_le_mul_of_nonneg_left hscale hA.le
 
 /-- Fixed-quotient scalar comparison with its coefficient chosen before the
 varying sieve.  Uniformity is paid by the local-product hypothesis at `K`. -/
@@ -346,68 +267,6 @@ lemma exists_caseA_scalar_constant_for_fixed_q_uniform_in_S
     _ ≤ A * claim14_5Scale S H n (q : ℝ) d Δ
         (sourceSigma (q : ℝ) d) K x := mul_le_mul_of_nonneg_left hscale hA.le
 
-/-- A fixed finite quotient range admits one scalar constant, uniform in the
-depth, quotient, natural-ceiling cutoff, and real coordinate. -/
-theorem exists_claim145SmallDCaseAScalarComparison_of_fixedDmin
-    (S : BoundingSieve) (H : Section13HatLayers) (hH : Section13HatSourceContract H)
-    (Dmin : ℕ) {d Δ K C1 ΘK : ℝ} (hd : 2 < d) (hK : 0 < K)
-    (hCaseA_lt : ∀ q : ℕ, 2 ≤ q →
-      Real.log (q : ℝ) ≤ C1 * K ^ ΘK → q < Dmin) :
-    ∃ C145 : ℝ, 0 < C145 ∧
-      Claim145SmallDCaseAScalarComparison S H d Δ C145 K C1 ΘK := by
-  classical
-  let Aq : ℕ → ℝ := fun q => if hq : 2 ≤ q then
-    Classical.choose (exists_caseA_scalar_constant_for_fixed_q S H hH hq (Δ := Δ) hd hK)
-    else 0
-  have hAq_pos : ∀ q : ℕ, 2 ≤ q → 0 < Aq q := by
-    intro q hq
-    dsimp only [Aq]
-    rw [dif_pos hq]
-    exact (Classical.choose_spec
-      (exists_caseA_scalar_constant_for_fixed_q S H hH hq (Δ := Δ) hd hK)).1
-  have hAq_bound : ∀ q : ℕ, 2 ≤ q → ∀ (n p : ℕ) (x : ℝ),
-      p = ⌈(q : ℝ) ^ (1 / x)⌉₊ → 2 ≤ x →
-      suzukiSourceL (p : ℝ) K ^ (⌊x - 2⌋₊ + 1) /
-            ((⌊x - 2⌋₊ + 1).factorial : ℝ) *
-          Real.exp (suzukiSourceL (p : ℝ) K) ≤
-        Aq q * claim14_5Scale S H n (q : ℝ) d Δ
-          (sourceSigma (q : ℝ) d) K x := by
-    intro q hq
-    dsimp only [Aq]
-    rw [dif_pos hq]
-    exact (Classical.choose_spec
-      (exists_caseA_scalar_constant_for_fixed_q S H hH hq (Δ := Δ) hd hK)).2
-  let C145 : ℝ := 1 + ∑ q ∈ Finset.Ico 2 Dmin, Aq q
-  have hsum0 : 0 ≤ ∑ q ∈ Finset.Ico 2 Dmin, Aq q := by
-    apply Finset.sum_nonneg
-    intro q hq
-    exact (hAq_pos q (Finset.mem_Ico.mp hq).1).le
-  have hC145 : 0 < C145 := by dsimp [C145]; linarith
-  refine ⟨C145, hC145, ?_⟩
-  intro n q p x hq hp hx hsmall
-  have hqD : q < Dmin := hCaseA_lt q hq hsmall
-  have hterm : Aq q ≤ ∑ a ∈ Finset.Ico 2 Dmin, Aq a := by
-    apply Finset.single_le_sum
-    · intro a ha
-      exact (hAq_pos a (Finset.mem_Ico.mp ha).1).le
-    · simp [hq, hqD]
-  have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
-  have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
-  have hscale0 : 0 ≤ claim14_5Scale S H n (q : ℝ) d Δ
-      (sourceSigma (q : ℝ) d) K x := by
-    have hx0 : 0 < x := by linarith
-    have hsigma : 0 < sourceSigma (q : ℝ) d := sourceSigma_pos_of_nat_two_le hq
-    have hE : 0 ≤ errorEnvelope H n (q : ℝ) d x :=
-      errorEnvelope_nonneg H n hq1 hx0.le
-        (hH.toSection13HatContract.positive _ x hx0).le
-    unfold claim14_5Scale
-    exact mul_nonneg
-      (mul_nonneg
-        (mul_nonneg (suzukiVProduct_pos S (q : ℝ)).le
-          (div_nonneg (Real.exp_pos _).le (mul_pos hlogq hsigma).le)) hE)
-      (Real.rpow_nonneg hlogq.le _)
-  exact (hAq_bound q hq n p x hp hx).trans
-    (mul_le_mul_of_nonneg_right (by dsimp [C145]; linarith) hscale0)
 
 /-- Uniform-in-sieve fixed-`Dmin` scalar producer.  Its finite maximum is formed
 before `S`; the local-product contract is consumed only pointwise. -/

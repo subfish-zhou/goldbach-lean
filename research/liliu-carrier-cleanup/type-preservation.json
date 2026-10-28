@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "original_public_declarations": 10394,
+  "unchanged_original_public_kind_type_hashes": 10394,
+  "current_public_declarations": 10399,
+  "missing_public_declarations": [],
+  "added_public_declarations": [
+    "MathlibNt.Analysis.eventually_log_mul_rpow_le",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_lt_eq_halfOpen_of_le",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_eq_closed",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachClosedPrimes_filter_not_lt_self_eq_singleton"
+  ],
+  "kind_or_type_mismatches": [],
+  "protected_endpoints": [
+    "Goldbach.one_plus_one_nine",
+    "Goldbach.one_plus_one_nine_real",
+    "Goldbach.one_plus_one_nine_count",
+    "Goldbach.one_plus_one_nine_lower_bound",
+    "Goldbach.chen_theorem",
+    "Goldbach.representation_lower_bound"
+  ],
+  "method": "Public kind/type hashes across complete main-library censuses; private and specified generated names excluded. Every original public kind/type hash must match."
+}

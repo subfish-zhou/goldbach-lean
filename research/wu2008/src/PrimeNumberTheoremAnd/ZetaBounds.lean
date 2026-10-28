@@ -887,8 +887,6 @@ lemma ZetaBnd_aux1a {a b : ℝ} (apos : 0 < a) (a_lt_b : a < b) {s : ℂ} (σpos
 lemma Finset.Ioc_eq_Ico (M N : ℕ) : Finset.Ioc N M = Finset.Ico (N + 1) (M + 1) := by
   ext a; simp only [Finset.mem_Ioc, Finset.mem_Ico]; constructor <;> intro ⟨h₁, h₂⟩ <;> omega
 
-lemma Finset.Ioc_eq_Icc (M N : ℕ) : Finset.Ioc N M = Finset.Icc (N + 1) M := by
-  ext a; simp only [Finset.mem_Ioc, Finset.mem_Icc]; constructor <;> intro ⟨h₁, h₂⟩ <;> omega
 
 lemma Finset.Icc_eq_Ico (M N : ℕ) : Finset.Icc N M = Finset.Ico N (M + 1) := by
   ext a; simp only [Finset.mem_Icc, Finset.mem_Ico]; constructor <;> intro ⟨h₁, h₂⟩ <;> omega
@@ -1432,10 +1430,6 @@ lemma norm_add₆_le {E : Type*} [SeminormedAddGroup E] (a : E) (b : E) (c : E) 
   apply le_trans <| norm_add_le (a + b + c + d + e) f
   simp only [add_le_add_iff_right]; apply norm_add₅_le
 
-lemma mul_le_mul₃ {α : Type*} {a b c d e f : α} [MulZeroClass α] [Preorder α] [PosMulMono α]
-    [MulPosMono α] (h₁ : a ≤ b) (h₂ : c ≤ d) (h₃ : e ≤ f) (c0 : 0 ≤ c) (b0 : 0 ≤ b)
-    (e0 : 0 ≤ e) : a * c * e ≤ b * d * f := by
-  apply mul_le_mul (mul_le_mul h₁ h₂ c0 b0) h₃ e0 <| mul_nonneg b0 <| le_trans c0 h₂
 
 @[blueprint
   (title := "ZetaBnd-aux2")
@@ -1697,13 +1691,6 @@ lemma norm_complex_log_ofNat (n : ℕ) : ‖(n : ℂ).log‖ = (n : ℝ).log := 
   rw [← this, Complex.norm_of_nonneg]
   exact Real.log_natCast_nonneg n
 
-lemma Real.log_natCast_monotone : Monotone (fun (n : ℕ) ↦ Real.log n) := by
-  intro n m hnm
-  cases n
-  · simp only [CharP.cast_eq_zero, Real.log_zero, Real.log_natCast_nonneg]
-  · apply Real.log_le_log <;> simp only [Nat.cast_add, Nat.cast_one]
-    · exact Nat.cast_add_one_pos _
-    · exact_mod_cast hnm
 
 lemma Finset.Icc0_eq (N : ℕ) : Finset.Icc 0 N = {0} ∪ Finset.Icc 1 N := by
   refine Finset.ext_iff.mpr ?_
@@ -2461,17 +2448,7 @@ lemma ZetaInvBound1 {σ t : ℝ} (σ_gt : 1 < σ) :
     pos_of_mul_pos_right (zero_lt_one.trans_le hproduct) (by positivity)
   exact (div_le_iff₀ hzeta_pos).mpr hproduct
 
-lemma Ioi_union_Iio_mem_cocompact {a : ℝ} (ha : 0 ≤ a) : Ioi (a : ℝ) ∪ Iio (-a : ℝ) ∈ cocompact ℝ := by
-  simp only [Filter.mem_cocompact]
-  use Icc (-a) a
-  constructor
-  · exact isCompact_Icc
-  · rw [@compl_subset_iff_union, ← union_assoc, Icc_union_Ioi_eq_Ici, union_comm, Iio_union_Ici]
-    linarith
 
-lemma lt_abs_mem_cocompact {a : ℝ} (ha : 0 ≤ a) : {t | a < |t|} ∈ cocompact ℝ := by
-  convert Ioi_union_Iio_mem_cocompact ha using 1; ext t
-  simp only [mem_ofPred_eq, mem_union, mem_Ioi, mem_Iio, lt_abs, lt_neg]
 
 @[blueprint
   (title := "ZetaInvBound2")

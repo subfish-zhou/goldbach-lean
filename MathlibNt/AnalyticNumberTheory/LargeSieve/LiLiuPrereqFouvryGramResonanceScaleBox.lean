@@ -53,7 +53,7 @@ theorem wGramResonanceScaleBox_card_le (K : WExtractedKey) (F : ℕ)
       Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ hf)
     _ = _ := by ring
 
-private theorem prefix_coordinate_mem
+theorem wGramPrefix_coordinate_mem_scale
     {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
     {a : ℤ} {x η R S M Z : ℝ} {K : WExtractedKey} {b : ℕ}
     {j cap : Fin 5 → ℕ} {positive : Bool} {c : Finset (ℕ × ℕ)}
@@ -67,7 +67,7 @@ private theorem prefix_coordinate_mem
     (mem_filter.mp hb).1 i
   exact mem_Ico.mpr ((Nat.log_eq_iff (Or.inr ⟨by decide, hp.ne'⟩)).mp he)
 
-private theorem prefix_frequency_mem
+theorem wGramPrefix_frequency_mem_scale
     {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
     {a : ℤ} {x η R S M Z : ℝ} {K : WExtractedKey} {b : ℕ}
     {j cap : Fin 5 → ℕ} {positive : Bool} {c : Finset (ℕ × ℕ)}
@@ -76,7 +76,7 @@ private theorem prefix_frequency_mem
       (wGramPrefix N a x η R S M Z K b j cap positive) c) :
     t.2 ∈ wGramResonanceScaleFrequencies (j 0) positive := by
   have hn : t.2.natAbs ∈ wGramResonanceScaleInterval (j 0) :=
-    prefix_coordinate_mem hN ht 0
+    wGramPrefix_coordinate_mem_scale hN ht 0
   have hs := (mem_filter.mp (mem_filter.mp (mem_filter.mp ht).1).1).2.2
   apply mem_image.mpr
   refine ⟨t.2.natAbs, hn, ?_⟩
@@ -124,21 +124,9 @@ theorem wGramResonanceBases_subset_scaleBox
   obtain ⟨⟨t, u⟩, hp, rfl⟩ := mem_image.mp hlabel
   obtain ⟨ht, hu⟩ := mem_product.mp (mem_filter.mp hp).1
   exact mem_product.mpr
-    ⟨mem_product.mpr ⟨prefix_coordinate_mem hN ht 3, prefix_coordinate_mem hN ht 2⟩,
-      mem_product.mpr ⟨prefix_frequency_mem hN ht,
-        mem_product.mpr ⟨hn, prefix_coordinate_mem hN hu 4⟩⟩⟩
+    ⟨mem_product.mpr ⟨wGramPrefix_coordinate_mem_scale hN ht 3, wGramPrefix_coordinate_mem_scale hN ht 2⟩,
+      mem_product.mpr ⟨wGramPrefix_frequency_mem_scale hN ht,
+        mem_product.mpr ⟨hn, wGramPrefix_coordinate_mem_scale hN hu 4⟩⟩⟩
 
-theorem wGramResonanceBases_card_le_scaleBox
-    {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
-    {F : ℕ} (hNF : ∀ n ∈ N, n ≤ F)
-    {a : ℤ} {x η R S M Z : ℝ} (hR : 0 ≤ R) (hS : 0 ≤ S)
-    (hM : 0 < M) (hZ : 0 < Z) (K : WExtractedKey) (b : ℕ)
-    (j cap : Fin 5 → ℕ) (positive : Bool) (c : Finset (ℕ × ℕ)) :
-    (wGramResonanceBases (wGramZeroLabels K a (wCoprimeFiber x N S
-      (wGramPrefix N a x η R S M Z K b j cap positive) c))).card ≤
-        wGramResonanceScaleBoxCard K F j :=
-  (card_le_card (wGramResonanceBases_subset_scaleBox
-    hN hNF hR hS hM hZ K b j cap positive c)).trans
-      (wGramResonanceScaleBox_card_le K F j positive)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

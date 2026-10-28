@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "common_provider": "MathlibNt.Analysis.IntegralExcessCover.integral_sub_setIntegral_le_of_excess_cover",
+  "verified_consumers": [
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridUpperSum_sub_mainIntegral_le",
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RelaxedIntegralUpperSum_le_low_add_error"
+  ],
+  "retained_scaled_source_integrability": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.integrable_fouvryG9WeightedScaledSource",
+  "actual_scaled_source_reference_reachable": true,
+  "verified_original_area_producers": {
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridUpperSum_sub_mainIntegral_le": [
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_goldbachB9HighLeftStrip",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_goldbachB9HighBottomStrip",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_goldbachB9HighObliqueStrip"
+    ],
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RelaxedIntegralUpperSum_le_low_add_error": [
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_goldbachB9LeftStrip",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_goldbachB9BottomStrip",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_fouvryG9WeightedObliqueStrip",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.volume_fouvryG9WeightedRightStrip"
+    ]
+  },
+  "verified_original_pointwise_and_cover_producers": {
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridUpperSum_sub_mainIntegral_le": [
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridUpperIntegrand_le",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridUpperIntegrand_le_integrand_add",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachB9HighLogGridRegion_excess_subset"
+    ],
+    "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9RelaxedIntegralUpperSum_le_low_add_error": [
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9WeightedUpperIntegrand_le",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9WeightedUpperIntegrand_le_integrand_add",
+      "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.fouvryG9WeightedRegion_excess_subset"
+    ]
+  },
+  "method": "Actual compiled reference cones verify the existing generic integral proof, every original strip-area producer, caps/local errors/excess covers, and reuse of the original public weighted-source integrability theorem."
+}

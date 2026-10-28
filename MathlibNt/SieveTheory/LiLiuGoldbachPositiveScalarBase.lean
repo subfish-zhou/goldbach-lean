@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachWeightFiveNegativeScalars
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
 
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple

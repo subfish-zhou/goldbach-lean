@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "phase": "Li-Liu cleanup wave 1",
+  "checked_at_utc": "2026-10-26T07:53:05.919026+00:00",
+  "source_modules": 1800,
+  "source_state": "Uncommitted main-source working-tree snapshot identified by wave1-inputs.json.",
+  "build_jobs": 10508,
+  "checks": {
+    "full_source_build": {
+      "command": [
+        "lake",
+        "--rehash",
+        "--wfail",
+        "build"
+      ],
+      "exit_code": 0,
+      "log_sha256": "6bb82d8e5990d1b5a6b8233ebeae06341b31bd4e95b84c2ad91727ac723d70ba"
+    },
+    "both_public_literal_axiom_probes": {
+      "command": [
+        "python3",
+        "scripts/check.py"
+      ],
+      "exit_code": 0,
+      "log_sha256": "ab76b29c87e94f4a0a4daa84f9cdfd2800f0e0882bac59a21443fe61ebcb03c4"
+    },
+    "surviving_public_types": {
+      "exit_code": 0,
+      "report": "wave1-types.json"
+    }
+  },
+  "source_input_manifest_sha256": "8b9013fa0783f75521e93091963890cd5185152a4c77fdac9bca9f9c0f50db61",
+  "net_main_code_lines": -29808,
+  "net_liliu_import_closure_code_lines": -19986,
+  "retired_modules": 344,
+  "added_modules": 1,
+  "scope_limits": "The independent public-module replays and complete script suite run after the subsequent cleanup wave. Concurrent Wu certificate compression has separate evidence and is excluded from these main-library savings.",
+  "concurrent_wu_validation": "../wu-precision-audit/validation.json"
+}

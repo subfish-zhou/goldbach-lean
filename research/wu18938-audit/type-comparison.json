@@ -1,0 +1,2055 @@
+{
+  "method": "Compare declaration kind and canonical expression type hash from Lean ModuleData; binder names and metadata erased. Public declarations exclude _private names. Duplicate part records are deduplicated; all kind/type variants (including exported axiom stubs and their private theorem bodies) are compared. Types of internal finite proof blocks intentionally change with compilation partition size.",
+  "unchanged_public_declarations": 216096,
+  "unchanged_public_in_non_generated_modules": 216091,
+  "compared_retained_modules": 4769,
+  "changed_public_types": [
+    {
+      "module": "WR2ClassicalCCertificate",
+      "name": "WuPaper.ClassicalC.all_midpoints_paid._proof_1_1",
+      "before": [
+        [
+          "theorem",
+          "4042681671"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4225052519"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCCertificate",
+      "name": "WuPaper.ClassicalC.all_midpoints_paid._proof_1_2",
+      "before": [
+        [
+          "theorem",
+          "1415051531"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4197697734"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock000",
+      "name": "WuPaper.ClassicalC.c_grid_block_000",
+      "before": [
+        [
+          "theorem",
+          "526336449"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2584627414"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock001",
+      "name": "WuPaper.ClassicalC.c_grid_block_001",
+      "before": [
+        [
+          "theorem",
+          "3806474516"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1548174168"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock002",
+      "name": "WuPaper.ClassicalC.c_grid_block_002",
+      "before": [
+        [
+          "theorem",
+          "960009984"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "106218399"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock003",
+      "name": "WuPaper.ClassicalC.c_grid_block_003",
+      "before": [
+        [
+          "theorem",
+          "171422045"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "647199573"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock004",
+      "name": "WuPaper.ClassicalC.c_grid_block_004",
+      "before": [
+        [
+          "theorem",
+          "3677829041"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2446722919"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock005",
+      "name": "WuPaper.ClassicalC.c_grid_block_005",
+      "before": [
+        [
+          "theorem",
+          "1028559802"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1501991678"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock006",
+      "name": "WuPaper.ClassicalC.c_grid_block_006",
+      "before": [
+        [
+          "theorem",
+          "2056397312"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3895585883"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock007",
+      "name": "WuPaper.ClassicalC.c_grid_block_007",
+      "before": [
+        [
+          "theorem",
+          "797228666"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1074543140"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock008",
+      "name": "WuPaper.ClassicalC.c_grid_block_008",
+      "before": [
+        [
+          "theorem",
+          "1440367151"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1555815701"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock009",
+      "name": "WuPaper.ClassicalC.c_grid_block_009",
+      "before": [
+        [
+          "theorem",
+          "509641370"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "920292480"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock010",
+      "name": "WuPaper.ClassicalC.c_grid_block_010",
+      "before": [
+        [
+          "theorem",
+          "144004105"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2119315803"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock011",
+      "name": "WuPaper.ClassicalC.c_grid_block_011",
+      "before": [
+        [
+          "theorem",
+          "94685066"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1862243368"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock012",
+      "name": "WuPaper.ClassicalC.c_grid_block_012",
+      "before": [
+        [
+          "theorem",
+          "659112061"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "382553687"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock013",
+      "name": "WuPaper.ClassicalC.c_grid_block_013",
+      "before": [
+        [
+          "theorem",
+          "1137428953"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "67301146"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock014",
+      "name": "WuPaper.ClassicalC.c_grid_block_014",
+      "before": [
+        [
+          "theorem",
+          "3245829098"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3685726954"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock015",
+      "name": "WuPaper.ClassicalC.c_grid_block_015",
+      "before": [
+        [
+          "theorem",
+          "2992168715"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "549209119"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock016",
+      "name": "WuPaper.ClassicalC.c_grid_block_016",
+      "before": [
+        [
+          "theorem",
+          "2668612314"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1695326527"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock017",
+      "name": "WuPaper.ClassicalC.c_grid_block_017",
+      "before": [
+        [
+          "theorem",
+          "1394122317"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4026482455"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock018",
+      "name": "WuPaper.ClassicalC.c_grid_block_018",
+      "before": [
+        [
+          "theorem",
+          "443724156"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1991860260"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock019",
+      "name": "WuPaper.ClassicalC.c_grid_block_019",
+      "before": [
+        [
+          "theorem",
+          "4211535651"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "520616013"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock020",
+      "name": "WuPaper.ClassicalC.c_grid_block_020",
+      "before": [
+        [
+          "theorem",
+          "1266427229"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2105598164"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock021",
+      "name": "WuPaper.ClassicalC.c_grid_block_021",
+      "before": [
+        [
+          "theorem",
+          "762069486"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3372013512"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock022",
+      "name": "WuPaper.ClassicalC.c_grid_block_022",
+      "before": [
+        [
+          "theorem",
+          "1939994802"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2389224242"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock023",
+      "name": "WuPaper.ClassicalC.c_grid_block_023",
+      "before": [
+        [
+          "theorem",
+          "3075723870"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2475459860"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock024",
+      "name": "WuPaper.ClassicalC.c_grid_block_024",
+      "before": [
+        [
+          "theorem",
+          "122478285"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2672092448"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock025",
+      "name": "WuPaper.ClassicalC.c_grid_block_025",
+      "before": [
+        [
+          "theorem",
+          "3593694822"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2663717525"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock026",
+      "name": "WuPaper.ClassicalC.c_grid_block_026",
+      "before": [
+        [
+          "theorem",
+          "2141759851"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "592067839"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock027",
+      "name": "WuPaper.ClassicalC.c_grid_block_027",
+      "before": [
+        [
+          "theorem",
+          "1288187033"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1035035037"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock028",
+      "name": "WuPaper.ClassicalC.c_grid_block_028",
+      "before": [
+        [
+          "theorem",
+          "1953967420"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2552109116"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock029",
+      "name": "WuPaper.ClassicalC.c_grid_block_029",
+      "before": [
+        [
+          "theorem",
+          "3108622444"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2544343195"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock030",
+      "name": "WuPaper.ClassicalC.c_grid_block_030",
+      "before": [
+        [
+          "theorem",
+          "3149018473"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3117384590"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock031",
+      "name": "WuPaper.ClassicalC.c_grid_block_031",
+      "before": [
+        [
+          "theorem",
+          "4159488349"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4049376719"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock032",
+      "name": "WuPaper.ClassicalC.c_grid_block_032",
+      "before": [
+        [
+          "theorem",
+          "2058483760"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2193211290"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock033",
+      "name": "WuPaper.ClassicalC.c_grid_block_033",
+      "before": [
+        [
+          "theorem",
+          "2573688656"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "441355884"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock034",
+      "name": "WuPaper.ClassicalC.c_grid_block_034",
+      "before": [
+        [
+          "theorem",
+          "2992402844"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "127679894"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock035",
+      "name": "WuPaper.ClassicalC.c_grid_block_035",
+      "before": [
+        [
+          "theorem",
+          "3682808329"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "631363197"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock036",
+      "name": "WuPaper.ClassicalC.c_grid_block_036",
+      "before": [
+        [
+          "theorem",
+          "206889857"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "403094495"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock037",
+      "name": "WuPaper.ClassicalC.c_grid_block_037",
+      "before": [
+        [
+          "theorem",
+          "2887553105"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1225785117"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock038",
+      "name": "WuPaper.ClassicalC.c_grid_block_038",
+      "before": [
+        [
+          "theorem",
+          "3314382634"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3653551856"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock039",
+      "name": "WuPaper.ClassicalC.c_grid_block_039",
+      "before": [
+        [
+          "theorem",
+          "1002940112"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4028465919"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock040",
+      "name": "WuPaper.ClassicalC.c_grid_block_040",
+      "before": [
+        [
+          "theorem",
+          "456227959"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3571792216"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock041",
+      "name": "WuPaper.ClassicalC.c_grid_block_041",
+      "before": [
+        [
+          "theorem",
+          "3847975961"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2832457109"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock042",
+      "name": "WuPaper.ClassicalC.c_grid_block_042",
+      "before": [
+        [
+          "theorem",
+          "2207675936"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "952726276"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock043",
+      "name": "WuPaper.ClassicalC.c_grid_block_043",
+      "before": [
+        [
+          "theorem",
+          "3257392747"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "591309791"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock044",
+      "name": "WuPaper.ClassicalC.c_grid_block_044",
+      "before": [
+        [
+          "theorem",
+          "3339788749"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1018703710"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock045",
+      "name": "WuPaper.ClassicalC.c_grid_block_045",
+      "before": [
+        [
+          "theorem",
+          "1736099227"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3975309415"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock046",
+      "name": "WuPaper.ClassicalC.c_grid_block_046",
+      "before": [
+        [
+          "theorem",
+          "3557017457"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2908227990"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock047",
+      "name": "WuPaper.ClassicalC.c_grid_block_047",
+      "before": [
+        [
+          "theorem",
+          "3644713235"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2793754317"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock048",
+      "name": "WuPaper.ClassicalC.c_grid_block_048",
+      "before": [
+        [
+          "theorem",
+          "3212630221"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1151464684"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock049",
+      "name": "WuPaper.ClassicalC.c_grid_block_049",
+      "before": [
+        [
+          "theorem",
+          "1429080065"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1982193176"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock050",
+      "name": "WuPaper.ClassicalC.c_grid_block_050",
+      "before": [
+        [
+          "theorem",
+          "3033205671"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2018271345"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock051",
+      "name": "WuPaper.ClassicalC.c_grid_block_051",
+      "before": [
+        [
+          "theorem",
+          "3835434043"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2754448512"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock052",
+      "name": "WuPaper.ClassicalC.c_grid_block_052",
+      "before": [
+        [
+          "theorem",
+          "4221631484"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3868508353"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock053",
+      "name": "WuPaper.ClassicalC.c_grid_block_053",
+      "before": [
+        [
+          "theorem",
+          "825995431"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "137593760"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock054",
+      "name": "WuPaper.ClassicalC.c_grid_block_054",
+      "before": [
+        [
+          "theorem",
+          "4235079862"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2365321349"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock055",
+      "name": "WuPaper.ClassicalC.c_grid_block_055",
+      "before": [
+        [
+          "theorem",
+          "2332316356"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2972517517"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock056",
+      "name": "WuPaper.ClassicalC.c_grid_block_056",
+      "before": [
+        [
+          "theorem",
+          "3393581438"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2526381880"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock057",
+      "name": "WuPaper.ClassicalC.c_grid_block_057",
+      "before": [
+        [
+          "theorem",
+          "1989902041"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4040804967"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock058",
+      "name": "WuPaper.ClassicalC.c_grid_block_058",
+      "before": [
+        [
+          "theorem",
+          "507427810"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1938744981"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock059",
+      "name": "WuPaper.ClassicalC.c_grid_block_059",
+      "before": [
+        [
+          "theorem",
+          "2319881224"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3775536452"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock060",
+      "name": "WuPaper.ClassicalC.c_grid_block_060",
+      "before": [
+        [
+          "theorem",
+          "57142755"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "598330302"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock061",
+      "name": "WuPaper.ClassicalC.c_grid_block_061",
+      "before": [
+        [
+          "theorem",
+          "812513256"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2747707324"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock062",
+      "name": "WuPaper.ClassicalC.c_grid_block_062",
+      "before": [
+        [
+          "theorem",
+          "781745479"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1697814160"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalCGridBlock063",
+      "name": "WuPaper.ClassicalC.c_grid_block_063",
+      "before": [
+        [
+          "theorem",
+          "1204437782"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2637083165"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawCertificate",
+      "name": "WuPaper.ClassicalEighth.raw_upper._simp_1_2",
+      "before": [
+        [
+          "theorem",
+          "1762064320"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3462730834"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawCertificate",
+      "name": "WuPaper.ClassicalEighth.all_paid._proof_1_2",
+      "before": [
+        [
+          "theorem",
+          "1415051531"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4197697734"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawCertificate",
+      "name": "WuPaper.ClassicalEighth.all_paid._proof_1_1",
+      "before": [
+        [
+          "theorem",
+          "1181989896"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3150807969"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock000",
+      "name": "WuPaper.ClassicalEighth.grid_block_000",
+      "before": [
+        [
+          "theorem",
+          "1499671816"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1555876436"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock001",
+      "name": "WuPaper.ClassicalEighth.grid_block_001",
+      "before": [
+        [
+          "theorem",
+          "1138869780"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3705007961"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock002",
+      "name": "WuPaper.ClassicalEighth.grid_block_002",
+      "before": [
+        [
+          "theorem",
+          "2485566006"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3683148116"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock003",
+      "name": "WuPaper.ClassicalEighth.grid_block_003",
+      "before": [
+        [
+          "theorem",
+          "1015953002"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4200325523"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock004",
+      "name": "WuPaper.ClassicalEighth.grid_block_004",
+      "before": [
+        [
+          "theorem",
+          "1664239378"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1115915758"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock005",
+      "name": "WuPaper.ClassicalEighth.grid_block_005",
+      "before": [
+        [
+          "theorem",
+          "3562053663"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3991236893"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock006",
+      "name": "WuPaper.ClassicalEighth.grid_block_006",
+      "before": [
+        [
+          "theorem",
+          "2378279950"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1694394144"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock007",
+      "name": "WuPaper.ClassicalEighth.grid_block_007",
+      "before": [
+        [
+          "theorem",
+          "694279710"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "614498815"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock008",
+      "name": "WuPaper.ClassicalEighth.grid_block_008",
+      "before": [
+        [
+          "theorem",
+          "2917398381"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1098839335"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock009",
+      "name": "WuPaper.ClassicalEighth.grid_block_009",
+      "before": [
+        [
+          "theorem",
+          "1968132374"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "4215453181"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock010",
+      "name": "WuPaper.ClassicalEighth.grid_block_010",
+      "before": [
+        [
+          "theorem",
+          "3421940747"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2136472813"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock011",
+      "name": "WuPaper.ClassicalEighth.grid_block_011",
+      "before": [
+        [
+          "theorem",
+          "512075958"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2496569501"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock012",
+      "name": "WuPaper.ClassicalEighth.grid_block_012",
+      "before": [
+        [
+          "theorem",
+          "226757616"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "615933237"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock013",
+      "name": "WuPaper.ClassicalEighth.grid_block_013",
+      "before": [
+        [
+          "theorem",
+          "873351223"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1046781580"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock014",
+      "name": "WuPaper.ClassicalEighth.grid_block_014",
+      "before": [
+        [
+          "theorem",
+          "280743391"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1080218581"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock015",
+      "name": "WuPaper.ClassicalEighth.grid_block_015",
+      "before": [
+        [
+          "theorem",
+          "179064794"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2438682070"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock016",
+      "name": "WuPaper.ClassicalEighth.grid_block_016",
+      "before": [
+        [
+          "theorem",
+          "1911013020"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2398225639"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock017",
+      "name": "WuPaper.ClassicalEighth.grid_block_017",
+      "before": [
+        [
+          "theorem",
+          "3409267008"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1049664139"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock018",
+      "name": "WuPaper.ClassicalEighth.grid_block_018",
+      "before": [
+        [
+          "theorem",
+          "3299708551"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3890009051"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock019",
+      "name": "WuPaper.ClassicalEighth.grid_block_019",
+      "before": [
+        [
+          "theorem",
+          "2685681664"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "881280798"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock020",
+      "name": "WuPaper.ClassicalEighth.grid_block_020",
+      "before": [
+        [
+          "theorem",
+          "612048969"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3480903245"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock021",
+      "name": "WuPaper.ClassicalEighth.grid_block_021",
+      "before": [
+        [
+          "theorem",
+          "287814541"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1192100580"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock022",
+      "name": "WuPaper.ClassicalEighth.grid_block_022",
+      "before": [
+        [
+          "theorem",
+          "2915431576"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2821888239"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock023",
+      "name": "WuPaper.ClassicalEighth.grid_block_023",
+      "before": [
+        [
+          "theorem",
+          "752673671"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3066890193"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock024",
+      "name": "WuPaper.ClassicalEighth.grid_block_024",
+      "before": [
+        [
+          "theorem",
+          "2188801723"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3979174291"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock025",
+      "name": "WuPaper.ClassicalEighth.grid_block_025",
+      "before": [
+        [
+          "theorem",
+          "2529551516"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "536854322"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock026",
+      "name": "WuPaper.ClassicalEighth.grid_block_026",
+      "before": [
+        [
+          "theorem",
+          "2425648596"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "297355362"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock027",
+      "name": "WuPaper.ClassicalEighth.grid_block_027",
+      "before": [
+        [
+          "theorem",
+          "4247424341"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "2243499592"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock028",
+      "name": "WuPaper.ClassicalEighth.grid_block_028",
+      "before": [
+        [
+          "theorem",
+          "3327503093"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1032315135"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock029",
+      "name": "WuPaper.ClassicalEighth.grid_block_029",
+      "before": [
+        [
+          "theorem",
+          "2275017392"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "3522242861"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock030",
+      "name": "WuPaper.ClassicalEighth.grid_block_030",
+      "before": [
+        [
+          "theorem",
+          "74004410"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "899120302"
+        ]
+      ]
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock031",
+      "name": "WuPaper.ClassicalEighth.grid_block_031",
+      "before": [
+        [
+          "theorem",
+          "4074949464"
+        ]
+      ],
+      "after": [
+        [
+          "theorem",
+          "1047333705"
+        ]
+      ]
+    }
+  ],
+  "removed_public_in_retained_modules": [
+    {
+      "module": "WR2ClassicalEighthRawCertificate",
+      "name": "WuPaper.ClassicalEighth.payment.eq_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawCertificate",
+      "name": "WuPaper.ClassicalEighth.raw_upper._simp_1_3"
+    }
+  ],
+  "added_public_in_retained_modules": [
+    {
+      "module": "WR2ClassicalCGridBlock000",
+      "name": "WuPaper.ClassicalC.c_grid_block_000._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock001",
+      "name": "WuPaper.ClassicalC.c_grid_block_001._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock002",
+      "name": "WuPaper.ClassicalC.c_grid_block_002._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock003",
+      "name": "WuPaper.ClassicalC.c_grid_block_003._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock004",
+      "name": "WuPaper.ClassicalC.c_grid_block_004._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock005",
+      "name": "WuPaper.ClassicalC.c_grid_block_005._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock006",
+      "name": "WuPaper.ClassicalC.c_grid_block_006._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock007",
+      "name": "WuPaper.ClassicalC.c_grid_block_007._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock008",
+      "name": "WuPaper.ClassicalC.c_grid_block_008._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock009",
+      "name": "WuPaper.ClassicalC.c_grid_block_009._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock010",
+      "name": "WuPaper.ClassicalC.c_grid_block_010._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock011",
+      "name": "WuPaper.ClassicalC.c_grid_block_011._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock012",
+      "name": "WuPaper.ClassicalC.c_grid_block_012._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock013",
+      "name": "WuPaper.ClassicalC.c_grid_block_013._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock014",
+      "name": "WuPaper.ClassicalC.c_grid_block_014._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock015",
+      "name": "WuPaper.ClassicalC.c_grid_block_015._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock016",
+      "name": "WuPaper.ClassicalC.c_grid_block_016._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock017",
+      "name": "WuPaper.ClassicalC.c_grid_block_017._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock018",
+      "name": "WuPaper.ClassicalC.c_grid_block_018._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock019",
+      "name": "WuPaper.ClassicalC.c_grid_block_019._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock020",
+      "name": "WuPaper.ClassicalC.c_grid_block_020._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock021",
+      "name": "WuPaper.ClassicalC.c_grid_block_021._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock022",
+      "name": "WuPaper.ClassicalC.c_grid_block_022._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock023",
+      "name": "WuPaper.ClassicalC.c_grid_block_023._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock024",
+      "name": "WuPaper.ClassicalC.c_grid_block_024._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock025",
+      "name": "WuPaper.ClassicalC.c_grid_block_025._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock026",
+      "name": "WuPaper.ClassicalC.c_grid_block_026._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock027",
+      "name": "WuPaper.ClassicalC.c_grid_block_027._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock028",
+      "name": "WuPaper.ClassicalC.c_grid_block_028._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock029",
+      "name": "WuPaper.ClassicalC.c_grid_block_029._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock030",
+      "name": "WuPaper.ClassicalC.c_grid_block_030._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock031",
+      "name": "WuPaper.ClassicalC.c_grid_block_031._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock032",
+      "name": "WuPaper.ClassicalC.c_grid_block_032._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock033",
+      "name": "WuPaper.ClassicalC.c_grid_block_033._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock034",
+      "name": "WuPaper.ClassicalC.c_grid_block_034._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock035",
+      "name": "WuPaper.ClassicalC.c_grid_block_035._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock036",
+      "name": "WuPaper.ClassicalC.c_grid_block_036._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock037",
+      "name": "WuPaper.ClassicalC.c_grid_block_037._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock038",
+      "name": "WuPaper.ClassicalC.c_grid_block_038._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock039",
+      "name": "WuPaper.ClassicalC.c_grid_block_039._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock040",
+      "name": "WuPaper.ClassicalC.c_grid_block_040._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock041",
+      "name": "WuPaper.ClassicalC.c_grid_block_041._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock042",
+      "name": "WuPaper.ClassicalC.c_grid_block_042._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock043",
+      "name": "WuPaper.ClassicalC.c_grid_block_043._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock044",
+      "name": "WuPaper.ClassicalC.c_grid_block_044._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock045",
+      "name": "WuPaper.ClassicalC.c_grid_block_045._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock046",
+      "name": "WuPaper.ClassicalC.c_grid_block_046._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock047",
+      "name": "WuPaper.ClassicalC.c_grid_block_047._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock048",
+      "name": "WuPaper.ClassicalC.c_grid_block_048._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock049",
+      "name": "WuPaper.ClassicalC.c_grid_block_049._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock050",
+      "name": "WuPaper.ClassicalC.c_grid_block_050._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock051",
+      "name": "WuPaper.ClassicalC.c_grid_block_051._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock052",
+      "name": "WuPaper.ClassicalC.c_grid_block_052._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock053",
+      "name": "WuPaper.ClassicalC.c_grid_block_053._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock054",
+      "name": "WuPaper.ClassicalC.c_grid_block_054._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock055",
+      "name": "WuPaper.ClassicalC.c_grid_block_055._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock056",
+      "name": "WuPaper.ClassicalC.c_grid_block_056._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock057",
+      "name": "WuPaper.ClassicalC.c_grid_block_057._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock058",
+      "name": "WuPaper.ClassicalC.c_grid_block_058._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock059",
+      "name": "WuPaper.ClassicalC.c_grid_block_059._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock060",
+      "name": "WuPaper.ClassicalC.c_grid_block_060._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock061",
+      "name": "WuPaper.ClassicalC.c_grid_block_061._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock062",
+      "name": "WuPaper.ClassicalC.c_grid_block_062._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCGridBlock063",
+      "name": "WuPaper.ClassicalC.c_grid_block_063._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalCertificate",
+      "name": "WuPaper.ClassicalSlots.one8938"
+    },
+    {
+      "module": "WR2ClassicalEighthRawCertificate",
+      "name": "WuPaper.ClassicalEighth.raw_upper._simp_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock000",
+      "name": "WuPaper.ClassicalEighth.grid_block_000._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock001",
+      "name": "WuPaper.ClassicalEighth.grid_block_001._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock002",
+      "name": "WuPaper.ClassicalEighth.grid_block_002._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock003",
+      "name": "WuPaper.ClassicalEighth.grid_block_003._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock004",
+      "name": "WuPaper.ClassicalEighth.grid_block_004._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock005",
+      "name": "WuPaper.ClassicalEighth.grid_block_005._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock006",
+      "name": "WuPaper.ClassicalEighth.grid_block_006._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock007",
+      "name": "WuPaper.ClassicalEighth.grid_block_007._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock008",
+      "name": "WuPaper.ClassicalEighth.grid_block_008._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock009",
+      "name": "WuPaper.ClassicalEighth.grid_block_009._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock010",
+      "name": "WuPaper.ClassicalEighth.grid_block_010._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock011",
+      "name": "WuPaper.ClassicalEighth.grid_block_011._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock012",
+      "name": "WuPaper.ClassicalEighth.grid_block_012._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock013",
+      "name": "WuPaper.ClassicalEighth.grid_block_013._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock014",
+      "name": "WuPaper.ClassicalEighth.grid_block_014._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock015",
+      "name": "WuPaper.ClassicalEighth.grid_block_015._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock016",
+      "name": "WuPaper.ClassicalEighth.grid_block_016._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock017",
+      "name": "WuPaper.ClassicalEighth.grid_block_017._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock018",
+      "name": "WuPaper.ClassicalEighth.grid_block_018._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock019",
+      "name": "WuPaper.ClassicalEighth.grid_block_019._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock020",
+      "name": "WuPaper.ClassicalEighth.grid_block_020._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock021",
+      "name": "WuPaper.ClassicalEighth.grid_block_021._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock022",
+      "name": "WuPaper.ClassicalEighth.grid_block_022._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock023",
+      "name": "WuPaper.ClassicalEighth.grid_block_023._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock024",
+      "name": "WuPaper.ClassicalEighth.grid_block_024._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock025",
+      "name": "WuPaper.ClassicalEighth.grid_block_025._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock026",
+      "name": "WuPaper.ClassicalEighth.grid_block_026._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock027",
+      "name": "WuPaper.ClassicalEighth.grid_block_027._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock028",
+      "name": "WuPaper.ClassicalEighth.grid_block_028._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock029",
+      "name": "WuPaper.ClassicalEighth.grid_block_029._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock030",
+      "name": "WuPaper.ClassicalEighth.grid_block_030._proof_1_1"
+    },
+    {
+      "module": "WR2ClassicalEighthRawGridBlock031",
+      "name": "WuPaper.ClassicalEighth.grid_block_031._proof_1_1"
+    },
+    {
+      "module": "WR2XiSourceRefinedTarget",
+      "name": "WuPaper.R2Xi.SourceContinuousCount.one8938_of_coefficient"
+    }
+  ],
+  "unexpected": [],
+  "changed_finite_block_types": 96,
+  "changed_coverage_auxiliary_types": 4,
+  "changed_simplifier_auxiliary_types": 1,
+  "relocated_unchanged_declarations": [
+    {
+      "name": "WuPaper.ClassicalEighth.payment.eq_1",
+      "before_module": "WR2ClassicalEighthRawCertificate",
+      "after_module": "WR2ClassicalEighthTableCheck",
+      "signature": [
+        [
+          "theorem",
+          "1351105032"
+        ]
+      ]
+    }
+  ],
+  "new_modules": [
+    "src/WR2ClassicalCTableCheck.lean",
+    "src/WR2ClassicalEighthTableCheck.lean"
+  ],
+  "removed_modules_count": 672,
+  "status": "pass"
+}

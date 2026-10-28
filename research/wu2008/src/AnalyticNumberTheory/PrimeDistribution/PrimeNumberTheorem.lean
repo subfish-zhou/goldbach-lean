@@ -1,4 +1,4 @@
-import PrimeNumberTheoremAnd.Consequences
+import PrimeNumberTheoremAnd.MediumPNTQualitativeBridge
 import PrimeNumberTheoremAnd.MediumPNT
 
 /-!
@@ -39,71 +39,35 @@ theorem natPrimeCountingPNT : NatPrimeCountingPNT := by
   intro n
   simpa using hcount (n : ℝ)
 
-/-- **Upper bound for π**: the PNT supplies a constant such that
+/-- **Upper bound for π**: Chebyshev's estimate supplies a constant such that
 `π(x) ≤ C·x/log x` uniformly for `x ≥ 2`. This gives the analytic
 bound `≤ C·N/(a·log(N/a))` for `switchingCount ≤ π(N/a)`
 in the three-factor main-term estimate. -/
 theorem primeCounting_upper_bound :
     ∃ C : ℝ, 0 < C ∧ ∀ x : ℕ, 2 ≤ x →
       (Nat.primeCounting x : ℝ) ≤ C * (x : ℝ) / log (x : ℝ) := by
-  obtain ⟨c, hc, hcount⟩ := natPrimeCountingPNT
-  obtain ⟨C₀, hC₀ev⟩ := (hc.isBigO).bound
-  rcases Filter.eventually_atTop.mp hC₀ev with ⟨X₀, hX₀⟩
-  let C₀b : ℝ := max C₀ 1
-  have hC0b : 1 ≤ C₀b := by
-    dsimp [C₀b]
-    exact le_max_right _ _
-  let X : ℕ := max X₀ 2
-  let C : ℝ := max (1 + C₀b) (2 * log (X : ℝ))
-  refine ⟨C, ?_, ?_⟩
-  · dsimp [C]
-    have h1 : 0 < 1 + C₀b := by linarith
-    exact lt_of_lt_of_le h1 (le_max_left _ _)
+  refine ⟨2 * log 4 + 2, ?_, ?_⟩
+  · have h4 : 0 < log (4 : ℝ) := Real.log_pos (by norm_num)
+    linarith
   · intro x hx
-    by_cases hxbig : X ≤ x
-    · have hx1 : (1 : ℝ) < x := by exact_mod_cast (by omega : 1 < x)
-      have hlog : 0 < log (x : ℝ) := Real.log_pos hx1
-      have hcx : |c x| ≤ C₀b := by
-        have h0 : |c x| ≤ C₀ := by
-          simpa using hX₀ x (le_trans (le_max_left X₀ 2) hxbig)
-        exact le_trans h0 (le_max_left _ _)
-      have hmain : (Nat.primeCounting x : ℝ) ≤ (1 + C₀b) * (x : ℝ) / log (x : ℝ) := by
-        rw [hcount]
-        have hle : 1 + c x ≤ 1 + C₀b := by linarith [le_trans (le_abs_self (c x)) hcx]
-        exact div_le_div_of_nonneg_right
-          (mul_le_mul_of_nonneg_right hle (by positivity : 0 ≤ (x : ℝ))) (le_of_lt hlog)
-      have hC : (1 + C₀b) * (x : ℝ) / log (x : ℝ) ≤ C * (x : ℝ) / log (x : ℝ) := by
-        have hC1 : 1 + C₀b ≤ C := by
-          dsimp [C]
-          exact le_max_left _ _
-        exact div_le_div_of_nonneg_right
-          (mul_le_mul_of_nonneg_right hC1 (by positivity : 0 ≤ (x : ℝ))) (le_of_lt hlog)
-      exact le_trans hmain hC
-    · have hxlt : x < X := lt_of_not_ge hxbig
-      have hpi : (Nat.primeCounting x : ℝ) ≤ (x : ℝ) + 1 := by
-        have hle : Nat.primeCounting x ≤ x + 1 := by
-          change Nat.count Nat.Prime (x + 1) ≤ x + 1
-          exact Nat.count_le Nat.Prime
-        exact_mod_cast hle
-      have hx1 : (1 : ℝ) ≤ x := by exact_mod_cast (by omega : 1 ≤ x)
-      have hlog : 0 < log (x : ℝ) := Real.log_pos (by exact_mod_cast (by omega : 1 < x))
-      have hlogX : 0 < log (X : ℝ) := by
-        have hX2 : (2 : ℝ) ≤ X := by exact_mod_cast (le_max_right X₀ 2)
-        exact Real.log_pos (by linarith)
-      have hlogx_le : log (x : ℝ) ≤ log (X : ℝ) :=
-        Real.log_le_log (by positivity) (by exact_mod_cast (le_of_lt hxlt))
-      have hC2 : 2 * log (x : ℝ) ≤ C := by
-        dsimp [C]
-        calc
-          2 * log (x : ℝ) ≤ 2 * log (X : ℝ) := by gcongr
-          _ ≤ max (1 + C₀b) (2 * log (X : ℝ)) := le_max_right _ _
-      calc
-        (Nat.primeCounting x : ℝ) ≤ (x : ℝ) + 1 := hpi
-        _ ≤ 2 * (x : ℝ) := by linarith
-        _ = (2 * log (x : ℝ)) * (x : ℝ) / log (x : ℝ) := by
-              field_simp [hlog.ne']
-        _ ≤ C * (x : ℝ) / log (x : ℝ) := by
-              exact div_le_div_of_nonneg_right
-                (mul_le_mul_of_nonneg_right hC2 (by positivity : 0 ≤ (x : ℝ))) (le_of_lt hlog)
+    have hx1 : (1 : ℝ) < x := by exact_mod_cast (by omega : 1 < x)
+    have hx0 : (0 : ℝ) ≤ x := by positivity
+    have hlog : 0 < log (x : ℝ) := Real.log_pos hx1
+    have hlog_le : log (x : ℝ) ≤ 2 * sqrt (x : ℝ) := by
+      simpa [Real.sqrt_eq_rpow, div_eq_mul_inv, mul_comm] using
+        (Real.log_le_rpow_div (x := (x : ℝ)) (ε := 1 / 2) hx0 (by norm_num))
+    have hsqrt : sqrt (x : ℝ) * log (x : ℝ) ≤ 2 * (x : ℝ) := by
+      nlinarith [mul_le_mul_of_nonneg_left hlog_le (Real.sqrt_nonneg (x : ℝ)),
+        Real.sq_sqrt hx0]
+    have hpi := Chebyshev.pi_le_log4_mul_div hx1
+    simp only [Nat.floor_natCast, Real.log_sqrt hx0] at hpi
+    apply (le_div_iff₀ hlog).2
+    calc
+      (Nat.primeCounting x : ℝ) * log (x : ℝ) ≤
+          (log 4 * (x : ℝ) / (log (x : ℝ) / 2) + sqrt (x : ℝ)) * log (x : ℝ) :=
+        mul_le_mul_of_nonneg_right hpi hlog.le
+      _ = 2 * log 4 * (x : ℝ) + sqrt (x : ℝ) * log (x : ℝ) := by
+        field_simp [hlog.ne']
+      _ ≤ (2 * log 4 + 2) * (x : ℝ) := by nlinarith only [hsqrt]
 
 end AnalyticNumberTheory.PrimeDistribution

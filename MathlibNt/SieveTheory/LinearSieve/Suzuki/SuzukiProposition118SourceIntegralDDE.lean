@@ -1,6 +1,4 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceTailPairingZero
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceQFinitePrefixClosure
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118FinitePrefixPairing
 
 /-!
 # Integral DDE for the genuine Proposition 11.8 source
@@ -636,97 +634,5 @@ theorem continuousOn_weighted_suzukiProposition118SourceQ
   dsimp [f]
   linarith
 
-/-- Consequently the genuine source is continuous at every point strictly
-above the lower boundary (on the series side of the possible boundary jump). -/
-theorem continuousAt_suzukiProposition118SourceQ_of_two_lt
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    {s : ℝ} (hs : 2 < s) : ContinuousAt suzukiProposition118SourceQ s := by
-  have hW := continuousOn_weighted_suzukiProposition118SourceQ hH
-    (M := s + 1) (by linarith)
-  have hWAt := hW.continuousAt (Icc_mem_nhds hs (by linarith : s < s + 1))
-  have hdiv := hWAt.div (continuousAt_id) (ne_of_gt (by linarith : 0 < s))
-  apply hdiv.congr_of_eventuallyEq
-  filter_upwards [eventually_ne_nhds (ne_of_gt (by linarith : 0 < s))] with u hu
-  change suzukiProposition118SourceQ u =
-    (u * suzukiProposition118SourceQ u) / u
-  field_simp
-
-/-- On the prescribed initial history, the source is continuous away from its
-endpoints. -/
-theorem continuousAt_suzukiProposition118SourceQ_of_one_lt_of_lt_two
-    {s : ℝ} (hs1 : 1 < s) (hs2 : s < 2) :
-    ContinuousAt suzukiProposition118SourceQ s := by
-  have hrat : ContinuousAt
-      (fun u : ℝ => SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude / u) s :=
-    continuousAt_const.div continuousAt_id (ne_of_gt (by linarith : 0 < s))
-  apply hrat.congr_of_eventuallyEq
-  filter_upwards [Iio_mem_nhds hs2] with u hu
-  have hu' : u < 2 := hu
-  rw [suzukiProposition118SourceQ, if_pos hu']
-
-/-- The source itself is interval-integrable on compact intervals contained in
-`(1,∞)`; the single switch point at `2` is harmless. -/
-theorem suzukiProposition118SourceQ_intervalIntegrable_of_one_lt
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    {x y : ℝ} (hx : 1 < x) (hxy : x ≤ y) :
-    IntervalIntegrable suzukiProposition118SourceQ volume x y := by
-  by_cases hy : y ≤ 2
-  · have hs := suzukiProposition118SourceQ_shift_intervalIntegrable_of_le_three
-      (x := x + 1) (y := y + 1) (by linarith) (by linarith) (by linarith)
-    convert hs.comp_add_right 1 using 1 <;> ring
-  by_cases hx2 : 2 ≤ x
-  · exact suzukiProposition118SourceQ_intervalIntegrable hH hx2 hxy
-  · have hxle2 : x ≤ 2 := le_of_not_ge hx2
-    have h2y : 2 ≤ y := le_of_not_ge hy
-    have hloShift := suzukiProposition118SourceQ_shift_intervalIntegrable_of_le_three
-      (x := x + 1) (y := (3 : ℝ)) (by linarith) (by linarith) le_rfl
-    have hlo : IntervalIntegrable suzukiProposition118SourceQ volume x 2 := by
-      convert hloShift.comp_add_right 1 using 1 <;> ring
-    exact hlo.trans (suzukiProposition118SourceQ_intervalIntegrable hH le_rfl h2y)
-
-/-- Away from the unique possible kink `s=3`, the integral DDE differentiates
-to the weighted source equation `(sQ(s))'=-Q(s-1)`. -/
-theorem hasDerivAt_weighted_suzukiProposition118SourceQ
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    {s : ℝ} (hs : 2 < s) (hs3 : s ≠ 3) :
-    HasDerivAt (fun u => u * suzukiProposition118SourceQ u)
-      (-suzukiProposition118SourceQ (s - 1)) s := by
-  let f : ℝ → ℝ := fun t => suzukiProposition118SourceQ (t - 1)
-  have hf := suzukiProposition118SourceQ_shift_intervalIntegrable hH
-    (x := (2 : ℝ)) (y := s) (by norm_num) hs.le
-  have hfcont : ContinuousAt f s := by
-    dsimp [f]
-    by_cases hlt : s < 3
-    · exact (continuousAt_suzukiProposition118SourceQ_of_one_lt_of_lt_two
-        (by linarith) (by linarith)).comp
-          ((hasDerivAt_id s).sub_const 1).continuousAt
-    · exact (continuousAt_suzukiProposition118SourceQ_of_two_lt hH
-      (by linarith [lt_of_le_of_ne (not_lt.mp hlt) hs3.symm])).comp
-        ((hasDerivAt_id s).sub_const 1).continuousAt
-  have hfmeas : StronglyMeasurableAtFilter f (𝓝 s) volume := by
-    by_cases hlt : s < 3
-    · apply ContinuousAt.stronglyMeasurableAtFilter isOpen_Ioo
-        (s := Ioo (2 : ℝ) 3) _ s ⟨hs, hlt⟩
-      intro u hu
-      dsimp [f]
-      exact (continuousAt_suzukiProposition118SourceQ_of_one_lt_of_lt_two
-        (by linarith [hu.1]) (by linarith [hu.2])).comp
-          ((hasDerivAt_id u).sub_const 1).continuousAt
-    · have h3s : 3 < s := lt_of_le_of_ne (not_lt.mp hlt) hs3.symm
-      apply ContinuousAt.stronglyMeasurableAtFilter isOpen_Ioi
-        (s := Ioi (3 : ℝ)) _ s h3s
-      intro u hu
-      change 3 < u at hu
-      dsimp [f]
-      exact (continuousAt_suzukiProposition118SourceQ_of_two_lt hH
-        (by linarith [hu])).comp ((hasDerivAt_id u).sub_const 1).continuousAt
-  have hprim := intervalIntegral.integral_hasDerivAt_right hf hfmeas hfcont
-  have hbase := hprim.neg.const_add ((2 : ℝ) * suzukiProposition118SourceQ 2)
-  apply hbase.congr_of_eventuallyEq
-  filter_upwards [Ioi_mem_nhds hs] with u hu
-  have hdde := suzukiProposition118SourceQ_weighted_sub hH
-    (x := (2 : ℝ)) (y := u) (by norm_num) hu.le
-  dsimp [f]
-  linarith
 
 end MathlibNt.SieveTheory

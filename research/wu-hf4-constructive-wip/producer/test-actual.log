@@ -1,0 +1,14 @@
+test_constructive_has_no_stale_inverse_namespace (test_portable.PortableTests.test_constructive_has_no_stale_inverse_namespace) ... ok
+test_exact17_both_routes (test_portable.PortableTests.test_exact17_both_routes) ... ok
+test_extra_input_rejected (test_portable.PortableTests.test_extra_input_rejected) ... ok
+test_header_mutation_rejected (test_portable.PortableTests.test_header_mutation_rejected) ... ok
+test_header_origin_exact40 (test_portable.PortableTests.test_header_origin_exact40) ... ok
+test_no_retired_modules_generated (test_portable.PortableTests.test_no_retired_modules_generated) ... ok
+test_numeric_formula_mutation_rejected (test_portable.PortableTests.test_numeric_formula_mutation_rejected) ... ok
+test_public_formal_headers_remain40_original (test_portable.PortableTests.test_public_formal_headers_remain40_original) ... ok
+test_relocated_read_fence_no_old_sources (test_portable.PortableTests.test_relocated_read_fence_no_old_sources) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 26.379s
+
+OK

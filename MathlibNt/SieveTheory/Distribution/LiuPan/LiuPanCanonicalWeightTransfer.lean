@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanUnweightedToWeighted
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionSourceCount
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanLiMainTermEnvelope
 
 open Finset
 open scoped BigOperators

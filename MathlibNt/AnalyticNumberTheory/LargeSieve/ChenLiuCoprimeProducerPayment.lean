@@ -1,6 +1,6 @@
+import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
 import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
 import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowEndpoint
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
 
 /-! Uniform logarithmic payment for the complete nonprincipal Liu source.
 The cofactor remains free after the common threshold; conductor one is omitted
@@ -13,18 +13,6 @@ open MathlibNt.SieveTheory.LiuWeight
 
 namespace AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducer
 
-theorem sum_inv_totient_le_four_log_sq {N D : ℕ}
-    (hlog : 1 ≤ Real.log (N : ℝ)) (hD : D ≤ N) :
-    (∑ m ∈ Icc 1 D, (m.totient : ℝ)⁻¹) ≤ 4 * Real.log (N : ℝ) ^ 2 := by
-  calc
-    _ ≤ conductorHarmonicFactor D ^ 2 := sum_inv_totient_le_harmonic_sq D
-    _ ≤ conductorHarmonicFactor N ^ 2 :=
-      pow_le_pow_left₀ (conductorHarmonicFactor_nonneg D)
-        (conductorHarmonicFactor_mono hD) 2
-    _ ≤ (1 + Real.log (N : ℝ)) ^ 2 :=
-      pow_le_pow_left₀ (conductorHarmonicFactor_nonneg N)
-        (conductorHarmonicFactor_le N) 2
-    _ ≤ _ := by nlinarith
 
 theorem eventually_high_remainder_le (s : ℝ) :
     ∀ᶠ N : ℕ in atTop,

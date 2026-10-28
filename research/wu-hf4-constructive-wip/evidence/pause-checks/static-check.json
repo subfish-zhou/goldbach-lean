@@ -1,0 +1,35 @@
+{
+  "source_modules": 1803,
+  "reachable_modules": 1455,
+  "entrypoint_closures": {
+    "AnalyticNumberTheory": 50,
+    "Goldbach": 529,
+    "Goldbach.All": 1451,
+    "Goldbach.Blueprint": 1452,
+    "Goldbach.Checks": 530,
+    "Goldbach.OnePlusOneNine": 1432,
+    "Goldbach.OnePlusOneNineChecks": 1433,
+    "MathlibNt": 527
+  },
+  "default_libraries": {
+    "Goldbach": [
+      "Goldbach",
+      "Goldbach.+"
+    ],
+    "MathlibNt": [
+      "MathlibNt",
+      "MathlibNt.+"
+    ],
+    "AnalyticNumberTheory": [
+      "AnalyticNumberTheory",
+      "AnalyticNumberTheory.+"
+    ],
+    "PrimeNumberTheoremAnd": [
+      "PrimeNumberTheoremAnd.+"
+    ]
+  },
+  "default_library_glob_modules": 1803,
+  "default_build_modules": 1803,
+  "library_only_modules": 348,
+  "issues": []
+}

@@ -1,0 +1,54 @@
+{
+  "whole_tree": {
+    "before": {
+      "modules": 4771,
+      "code_lines": 728674,
+      "physical_lines": 837957,
+      "utf8_bytes": 41323841
+    },
+    "after": {
+      "modules": 4771,
+      "code_lines": 728665,
+      "physical_lines": 837948,
+      "utf8_bytes": 41323445
+    },
+    "reduction": {
+      "modules": 0,
+      "code_lines": 9,
+      "physical_lines": 9,
+      "utf8_bytes": 396
+    }
+  },
+  "theorem_closure": {
+    "before": {
+      "modules": 4389,
+      "code_lines": 688336,
+      "physical_lines": 791964,
+      "utf8_bytes": 37133585
+    },
+    "after": {
+      "modules": 4384,
+      "code_lines": 687911,
+      "physical_lines": 791470,
+      "utf8_bytes": 37114796
+    },
+    "reduction": {
+      "modules": 5,
+      "code_lines": 425,
+      "physical_lines": 494,
+      "utf8_bytes": 18789
+    }
+  },
+  "modified_modules": [
+    "WSrcFifthGainAnalyticEnvelope",
+    "WSrcFifthGainAnalyticRoot"
+  ],
+  "exited_closure_modules": [
+    "WE09JointMainBudget",
+    "WE09JointMainLow",
+    "WE09JointMainMajorLog",
+    "WE09JointMainPayment",
+    "WE09JointMainRoot"
+  ],
+  "unchanged_modules": 4769
+}

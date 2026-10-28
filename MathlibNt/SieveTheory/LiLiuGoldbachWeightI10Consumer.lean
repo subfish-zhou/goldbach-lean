@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG10CorrectedIntegralUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightTwelve
 
 noncomputable section
 

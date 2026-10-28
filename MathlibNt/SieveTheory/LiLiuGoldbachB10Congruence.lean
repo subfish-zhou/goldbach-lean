@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted
-import Mathlib.Data.Nat.ModEq
 
 open Finset
 
@@ -8,8 +7,6 @@ open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
-noncomputable local instance instDecidableGoldbachB10Congruence (P : Prop) : Decidable P :=
-  Classical.propDecidable P
 
 /-- The corrected `C10` product fibre over a fixed value `m = rs`. -/
 noncomputable def goldbachC10ProductFiber (N : ℕ) (b c : ℝ) (m : ℕ) : Finset (ℕ × ℕ) :=
@@ -84,28 +81,6 @@ theorem goldbachC10Coeff_le_one
   obtain ⟨htu, htuEq⟩ := mem_goldbachC10ProductFiber_iff.mp htu
   exact goldbachC10Prod_injOn hrs htu (hrsEq.trans htuEq.symm)
 
-private theorem B10Congruence_prod_pos_of_pair_mem
-    {N : ℕ} {b c : ℝ} {rs : ℕ × ℕ}
-    (hrs : rs ∈ goldbachC10Pairs N b c) :
-    0 < goldbachC10Prod rs := by
-  rcases mem_goldbachC10Pairs_iff.mp hrs with ⟨hrPrime, hsPrime, _, _, _, _, _⟩
-  exact Nat.mul_pos hrPrime.pos hsPrime.pos
-
-/-- A genuine labelled `B10` atom always satisfies the strict product bound
-`mq < N`. -/
-theorem goldbachB10Atom_prod_lt
-    {N : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ}
-    (hx : x ∈ goldbachB10Atoms N ε b c) :
-    goldbachC10Prod x.1 * x.2 < N := by
-  rcases mem_goldbachB10Atoms_iff.mp hx with ⟨hrsMem, _, _, _, hqUpper⟩
-  have hmpos : 0 < goldbachC10Prod x.1 := B10Congruence_prod_pos_of_pair_mem hrsMem
-  have hmposReal : 0 < (goldbachC10Prod x.1 : ℝ) := by exact_mod_cast hmpos
-  have hreal : (x.2 : ℝ) * (goldbachC10Prod x.1 : ℝ) < N := by
-    rw [lt_div_iff₀ hmposReal] at hqUpper
-    simpa [mul_comm] using hqUpper
-  have hnat : x.2 * goldbachC10Prod x.1 < N := by
-    exact_mod_cast hreal
-  simpa [goldbachC10Prod, mul_comm] using hnat
 
 theorem goldbachB10Atom_output_eq_sub
     (N : ℕ) (x : Σ _rs : ℕ × ℕ, ℕ) :
@@ -216,40 +191,5 @@ noncomputable def goldbachB10DivisorAtoms
     (N d : ℕ) (ε b c : ℝ) : Finset (Σ _rs : ℕ × ℕ, ℕ) :=
   (goldbachB10Atoms N ε b c).filter fun x => d ∣ goldbachPi10Output N x
 
-theorem mem_goldbachB10DivisorAtoms_iff
-    {N d : ℕ} {ε b c : ℝ} {x : Σ _rs : ℕ × ℕ, ℕ} :
-    x ∈ goldbachB10DivisorAtoms N d ε b c ↔
-      x ∈ goldbachB10Atoms N ε b c ∧ d ∣ goldbachPi10Output N x := by
-  simp [goldbachB10DivisorAtoms]
-
-/-- On each labelled atom, the divisor filter can be replaced exactly by the
-coprimality-plus-inverse residue condition from
-`goldbachB10Atom_output_dvd_iff_residueCondition`. -/
-theorem goldbachB10DivisorAtoms_eq_residueFilter
-    {N d : ℕ} {ε b c : ℝ}
-    (hd : 1 ≤ d)
-    (hdN : Nat.Coprime d N) :
-    goldbachB10DivisorAtoms N d ε b c =
-      (goldbachB10Atoms N ε b c).filter
-        (goldbachB10DivisorResidueCondition N d) := by
-  ext x
-  constructor
-  · intro hx
-    rcases mem_goldbachB10DivisorAtoms_iff.mp hx with ⟨hxB10, hdiv⟩
-    exact Finset.mem_filter.mpr
-      ⟨hxB10, (goldbachB10Atom_output_dvd_iff_residueCondition hd hdN hxB10).mp hdiv⟩
-  · intro hx
-    rcases Finset.mem_filter.mp hx with ⟨hxB10, hcond⟩
-    exact mem_goldbachB10DivisorAtoms_iff.mpr
-      ⟨hxB10, (goldbachB10Atom_output_dvd_iff_residueCondition hd hdN hxB10).mpr hcond⟩
-
-theorem goldbachB10DivisorAtoms_card_eq_residueFilter_card
-    {N d : ℕ} {ε b c : ℝ}
-    (hd : 1 ≤ d)
-    (hdN : Nat.Coprime d N) :
-    (goldbachB10DivisorAtoms N d ε b c).card =
-      ((goldbachB10Atoms N ε b c).filter
-        (goldbachB10DivisorResidueCondition N d)).card := by
-  rw [goldbachB10DivisorAtoms_eq_residueFilter hd hdN]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

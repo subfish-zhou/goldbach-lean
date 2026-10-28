@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
 import MathlibNt.SieveTheory.LiLiuPrereqWFZeroDensity
-import Mathlib.NumberTheory.SelbergSieve
 
 /-!
 # A genuine density sieve on the zero-deleted small-prime carrier
@@ -87,14 +86,6 @@ theorem densityBoundingSieve_prime_lt_ceil {u : ℝ}
   exact Nat.lt_ceil.mpr
     (hcut p ((densityBoundingSieve_mem_primeFactors B hB g hgm hg p).mp hp).1)
 
-theorem densityBoundingSieve_rounded_carrier {L u : ℝ}
-    (hL : 1 < L) (hu : 1 < u) (hcut : ∀ p ∈ B, (p : ℝ) < u) :
-    (densityBoundingSieve B hB g hgm hg).prodPrimes.primeFactors.filter
-      (fun p => p < ⌈(⌈L⌉₊ : ℝ) ^ (1 / roundedSieveCoordinate L u)⌉₊) =
-        nonzeroDensityPrimes B g := by
-  rw [roundedSieveCoordinate_cutoff hL hu, Finset.filter_eq_self.mpr
-    (densityBoundingSieve_prime_lt_ceil B hB g hgm hg hcut),
-    densityBoundingSieve_primeFactors]
 
 theorem densityBoundingSieve_euler :
     (∏ p ∈ (densityBoundingSieve B hB g hgm hg).prodPrimes.primeFactors,
@@ -126,19 +117,6 @@ theorem densityBoundingSieve_mainSums_eq_setDensities (L : ℝ) :
     upperWeight_density_eq_setDensity L hgm (primeProduct_squarefree B hB), hpf] at h
   exact h
 
-/-- The lower sign remains minus; the upper sign remains plus. These are the
-whole original defects, not only a truncation or high-minimum part. -/
-theorem densityBoundingSieve_mainSums_eq_fullDefects {L : ℝ}
-    (hL : 1 < L) (hcut : ∀ p ∈ B, (p : ℝ) < L) :
-    let S := densityBoundingSieve B hB g hgm hg
-    S.mainSum (lowerWeight S.prodPrimes (⌈L⌉₊ : ℝ)) =
-        (∏ p ∈ B, (1 - g p)) - lowerDensityDefect L g (B.sort (· ≤ ·)) ∧
-    S.mainSum (upperWeight S.prodPrimes (⌈L⌉₊ : ℝ)) =
-        (∏ p ∈ B, (1 - g p)) + upperDensityDefect L g (B.sort (· ≤ ·)) := by
-  have h := densityBoundingSieve_mainSums B hB g hgm hg L
-  rw [lowerWeight_density_eq_euler_sub_defect B hL hB hcut hgm,
-    upperWeight_density_eq_euler_add_defect B hL hB hgm] at h
-  exact h
 
 theorem densityBoundingSieve_dimensionOne {K : ℝ}
     (hdim : DimensionOneProductBound B g K) :
@@ -180,22 +158,5 @@ theorem densityBoundingSieve_localProduct {K : ℝ} (hK : 0 ≤ K)
         and_iff_right (Nat.prime_of_mem_primeFactors hp))
     rw [← hfilter]
     exact densityBoundingSieve_dimensionOne B hB g hgm hg hdim w z hw hwz
-
-theorem densityBoundingSieve_empty_carrier
-    (hz : ∀ p ∈ B, g p = 0) :
-    (densityBoundingSieve B hB g hgm hg).prodPrimes = 1 := by
-  have hE : nonzeroDensityPrimes B g = ∅ := by
-    apply Finset.eq_empty_iff_forall_notMem.mpr
-    intro p hp
-    exact (Finset.mem_filter.mp hp).2 (hz p (Finset.mem_filter.mp hp).1)
-  change (nonzeroDensityPrimes B g).prod id = 1
-  rw [hE, Finset.prod_empty]
-
-#check densityBoundingSieve
-#print axioms densityBoundingSieve
-#print axioms densityBoundingSieve_mainSums_eq_fullDefects
-#print axioms densityBoundingSieve_rounded_carrier
-#print axioms densityBoundingSieve_dimensionOne
-#print axioms densityBoundingSieve_localProduct
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser

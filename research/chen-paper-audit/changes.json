@@ -1,0 +1,85 @@
+{
+  "baseline": "Previously accepted cleanup working tree, fingerprinted before this phase; no intermediate Git commit was created.",
+  "files": [
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergOptimalWeights.lean",
+      "before_code_lines": 1060,
+      "after_code_lines": 215,
+      "before_physical_lines": 1141,
+      "after_physical_lines": 275,
+      "before_bytes": 49801,
+      "after_bytes": 12042,
+      "before_sha256": "bd3b3c766d41c8da33a37f3f2bdf71bd90f053e5c3583951589c434c113f5167",
+      "after_sha256": "bfa5460774194de60136b5ef2608942025afa5b5e57822973cd1244d0d6ff4c2"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/SelbergUpperBound.lean",
+      "before_code_lines": 177,
+      "after_code_lines": 141,
+      "before_physical_lines": 347,
+      "after_physical_lines": 307,
+      "before_bytes": 14797,
+      "after_bytes": 13094,
+      "before_sha256": "5ccab96ce3b65fafbde1a0cc8ddd17a826a5314a0aedf40256bb2772c6f85179",
+      "after_sha256": "7b65038190e104e04750cab98ca5963058b265cf74974c1371f14ce9315f37dc"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergDenominatorConvolution.lean",
+      "before_code_lines": 445,
+      "after_code_lines": 431,
+      "before_physical_lines": 504,
+      "after_physical_lines": 490,
+      "before_bytes": 19694,
+      "after_bytes": 19192,
+      "before_sha256": "acc93489b0130a8ea3f12221b706f02729944959a6e9ed45b0d61046cb8c8df5",
+      "after_sha256": "217b83f67f2f500d1276c8488b611e78d4b625eb184af87cf294434c04642d30"
+    },
+    {
+      "file": "AnalyticNumberTheory/Sieve/SelbergUpperBound.lean",
+      "before_code_lines": 299,
+      "after_code_lines": 93,
+      "before_physical_lines": 436,
+      "after_physical_lines": 210,
+      "before_bytes": 19886,
+      "after_bytes": 9033,
+      "before_sha256": "af1ae6b8545fe4099a738d717360ee2a9e1748de710194e8b3a9571acbe0ff20",
+      "after_sha256": "2d3f08a5d46a85faa4a0c3d19d010cef6e8602ebad090da205dc90bdc7aa094e"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/TruncatedOptimalWeights.lean",
+      "before_code_lines": 0,
+      "after_code_lines": 503,
+      "before_physical_lines": 0,
+      "after_physical_lines": 554,
+      "before_bytes": 0,
+      "after_bytes": 24234,
+      "before_sha256": null,
+      "after_sha256": "a4fba5ea2df670e004742e1b07fae09dfe7c526e268402352649c2002384e6d0"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Selberg/Liu/LiuSelbergMainTermInstantiation.lean",
+      "before_code_lines": 25,
+      "after_code_lines": 24,
+      "before_physical_lines": 50,
+      "after_physical_lines": 48,
+      "before_bytes": 1791,
+      "after_bytes": 1745,
+      "before_sha256": "d421e407d02d4c4c6ab8bc46c7b2a8303332ed620c53c399cf4542357c955334",
+      "after_sha256": "06029aa4dc043fd3701e796fdeae704212c3012b5136bdbe0c6294e19d7ecf8a"
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Switching/VaryingPrimeSieve.lean",
+      "before_code_lines": 1373,
+      "after_code_lines": 1374,
+      "before_physical_lines": 1554,
+      "after_physical_lines": 1555,
+      "before_bytes": 71174,
+      "after_bytes": 71229,
+      "before_sha256": "e7212fea2d1a579cdd47cc5bb0daeba043d055a6fb0f4e13eb8564f1a9a47cf3",
+      "after_sha256": "f40d167b1ff20deb5adcd950b79ab0257e65e097d91f3e72d74692648eb44c67"
+    }
+  ],
+  "net_code_lines": -598,
+  "net_physical_lines": -593,
+  "net_bytes": -26574
+}

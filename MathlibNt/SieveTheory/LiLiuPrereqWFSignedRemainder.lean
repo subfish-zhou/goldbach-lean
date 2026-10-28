@@ -104,11 +104,4 @@ theorem signedFamily_sequence_sieve (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime)
     Finset.sum_le_sum (fun i _ =>
     (signedFamilyAggregate_canonical_gcd_divisor_sum_bounds P hP hD hε hεsmall hcut (a i)).2)⟩
 
-#check sequence_divisor_sum
-#check signedFamily_main_remainder_identity
-#check signedFamily_sequence_sieve
-#print axioms sequence_divisor_sum
-#print axioms signedFamily_main_remainder_identity
-#print axioms signedFamily_sequence_sieve
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF

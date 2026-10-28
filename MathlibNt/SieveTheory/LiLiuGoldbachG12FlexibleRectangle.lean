@@ -1,4 +1,4 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangleC2
+import MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle
 
 noncomputable section
 open Classical Finset
@@ -141,80 +141,5 @@ theorem rectangle_signedError (N : ℕ) (ε : ℝ) (M U T V : ℕ)
     (htest (fun m r => Int.ModEq d ((m : ℤ)*r) (N : ℤ)))
     (htest (fun m r => (m*r).Coprime d))
 
-theorem mother_partition (N : ℕ) (ε : ℝ) (M U T V : ℕ)
-    (hlow : (N : ℝ)^(4/53 : ℝ) ≤ T)
-    (hhigh : (V : ℝ) < (N : ℝ)^(1/10 : ℝ)) :
-    Disjoint (rectangle N ε M U T V) (boundary N ε M U T V) ∧
-      rectangle N ε M U T V ∪ boundary N ε M U T V = mother N ε := by
-  have hs := rectangle_subset_mother N ε M U T V hlow hhigh
-  exact ⟨disjoint_sdiff_self_right, union_sdiff_of_subset hs⟩
-
-/-- Body multiplicity 400 remains on both the inner and residual sums. -/
-theorem weighted_partition (N : ℕ) (ε : ℝ) (M U T V : ℕ)
-    (hlow : (N : ℝ)^(4/53 : ℝ) ≤ T)
-    (hhigh : (V : ℝ) < (N : ℝ)^(1/10 : ℝ)) (f : ℕ × ℕ → ℝ) :
-    (400 * ∑ p ∈ mother N ε, goldbachG12NormalizedCoefficient N p.1 * f p) =
-      (400 * ∑ p ∈ rectangle N ε M U T V,
-        goldbachG12NormalizedCoefficient N p.1 * f p) +
-      (400 * ∑ p ∈ boundary N ε M U T V,
-        goldbachG12NormalizedCoefficient N p.1 * f p) := by
-  obtain ⟨hd, hu⟩ := mother_partition N ε M U T V hlow hhigh
-  rw [← hu, sum_union hd, mul_add]
-
-theorem signed_partition (N : ℕ) (ε : ℝ) (M U T V : ℕ)
-    (hlow : (N : ℝ)^(4/53 : ℝ) ≤ T)
-    (hhigh : (V : ℝ) < (N : ℝ)^(1/10 : ℝ))
-    (Q : Finset ℕ) (c : ℕ → ℝ) :
-    discrepancy N (mother N ε) Q c =
-      signedError (Ioc M U) (Ioc T V) Q (alpha N ε T V) (beta N) c (N : ℤ) +
-        discrepancy N (boundary N ε M U T V) Q c := by
-  rw [← rectangle_signedError]
-  obtain ⟨hd, hu⟩ := mother_partition N ε M U T V hlow hhigh
-  unfold discrepancy G12LowRectangle.discrepancy
-  rw [← sum_add_distrib]
-  apply sum_congr rfl
-  intro d _
-  rw [← hu, sum_union hd, sum_union hd]
-  ring
-
-/-- The original low count splits with its full repeated-body coefficient.
-The old mother-to-fibre identification is reused, not reproved. -/
-theorem original_low_partition (N : ℕ) (ε : ℝ) (M U T V : ℕ)
-    (hlow : (N : ℝ)^(4/53 : ℝ) ≤ T)
-    (hhigh : (V : ℝ) < (N : ℝ)^(1/10 : ℝ)) :
-    (∑ m ∈ goldbachG12ActiveProductSupport N,
-      (goldbachG12ProductCoefficient N ((N : ℝ)^(4/53 : ℝ))
-        ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)) m : ℝ) *
-      (((goldbachG11ProductFirstPrimeFiber N ε ((N : ℝ)^(4/53 : ℝ)) m).filter
-        (fun r : ℕ => (r : ℝ) < (N : ℝ)^(1/10 : ℝ))).card : ℝ)) =
-      (400 * ∑ p ∈ rectangle N ε M U T V,
-        goldbachG12NormalizedCoefficient N p.1 *
-          (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) +
-      (400 * ∑ p ∈ boundary N ε M U T V,
-        goldbachG12NormalizedCoefficient N p.1 *
-          (if (N-p.2*p.1).Prime then (1 : ℝ) else 0)) := by
-  rw [← G12LowRectangle.original_low_count]
-  exact weighted_partition N ε M U T V hlow hhigh _
-
-/-- The old dyadic rectangle is a specialization, not a second physical mother. -/
-theorem dyadic_specialization (N : ℕ) (ε : ℝ) (M T : ℕ) :
-    rectangle N ε M (2*M) T (2*T) = G12LowRectangle.rectangle N ε M T := rfl
-
-theorem mother_zero (ε : ℝ) : mother 0 ε = ∅ := G12LowRectangle.mother_zero ε
-
-theorem rectangle_zero (ε : ℝ) (M U T V : ℕ) : rectangle 0 ε M U T V = ∅ := by
-  apply eq_empty_iff_forall_notMem.mpr
-  rintro ⟨m,r⟩ hp
-  have hn := (mem_filter.mp (mem_product.mp hp).1).2.2.2.2
-  omega
-
-theorem rectangle_empty_long (N : ℕ) (ε : ℝ) (M T V : ℕ) :
-    rectangle N ε M M T V = ∅ := by simp [rectangle, longSet]
-
-theorem rectangle_empty_short (N : ℕ) (ε : ℝ) (M U T : ℕ) :
-    rectangle N ε M U T T = ∅ := by simp [rectangle, shortSet]
-
-theorem product_endpoint_excluded (N m r : ℕ) (ε : ℝ) (he : r*m = N) :
-    (m,r) ∉ mother N ε := G12LowRectangle.product_endpoint_excluded N m r ε he
 
 end G12FlexibleRectangle

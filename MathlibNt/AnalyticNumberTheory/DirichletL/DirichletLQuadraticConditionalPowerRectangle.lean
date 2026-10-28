@@ -193,34 +193,5 @@ theorem LFunction_ne_zero_on_quadraticConditionalLowerRectangle
   · rw [habsim]
     linarith
 
-/-- The logarithmic derivative is holomorphic on the upper fixed rectangle. -/
-theorem logDerivative_holomorphicOn_quadraticConditionalUpperRectangle
-    {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
-    {A η τ T : ℝ} (hA : 0 < A) (hτ : 0 < τ) (hT : τ ≤ T)
-    (hzero : ∀ (β t : ℝ),
-      β ∈ Ico
-        (1 - A * (q : ℝ) ^ (-2 * η) /
-          (dirichletLQuadraticConditionalPowerZeroFreeH q t) ^ 12) 1 →
-      χ.LFunction (β + I * t) ≠ 0) :
-    HolomorphicOn (fun s => deriv χ.LFunction s / χ.LFunction s)
-      (dirichletLQuadraticConditionalUpperRectangle A η q τ T) := by
-  have hL : Differentiable ℂ χ.LFunction := χ.differentiable_LFunction hχ
-  exact hL.deriv.differentiableOn.div hL.differentiableOn
-    (LFunction_ne_zero_on_quadraticConditionalUpperRectangle χ hχ hA hτ hT hzero)
-
-/-- Explicit quantitative bound supplied by the production derivative theorem.
-Unlike a fictitious uniform lower bound, this statement displays the exact
-remaining denominator. -/
-theorem norm_logDerivative_le_derivativeBudget_div_LValue
-    {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
-    {σ t : ℝ} (hσhalf : 1 / 2 ≤ σ) (hσtwo : σ ≤ 2)
-    (hnear : 1 - 1 / Real.log (dirichletLConductorHeightCutoff q t) ≤ σ) :
-    ‖deriv χ.LFunction (σ + I * t) / χ.LFunction (σ + I * t)‖ ≤
-      (64 * (1 + Real.log (dirichletLConductorHeightCutoff q t)) ^ 2) /
-        ‖χ.LFunction (σ + I * t)‖ := by
-  rw [norm_div]
-  exact div_le_div_of_nonneg_right
-    (norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
-      χ hχ hσhalf hσtwo hnear) (norm_nonneg _)
 
 end AnalyticNumberTheory.LargeSieve

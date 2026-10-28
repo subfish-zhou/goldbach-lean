@@ -73,22 +73,6 @@ theorem mem_goldbachG11FirstPrimeFiber_iff {N r : ℕ} {eps z : ℝ}
     mem_goldbachClosedPrimes_iff, Nat.cast_le]
   tauto
 
-theorem goldbachG11FirstPrimeFiber_interval_iff {N r : ℕ} {eps z : ℝ}
-    {u : GoldbachG11SwitchedBody} (hB : 0 < goldbachG11SwitchedBodyProd u) :
-    r ∈ goldbachG11FirstPrimeFiber N eps z u ↔
-      r ∈ goldbachClosedPrimes N z u.2.2.1 ∧
-        eps * N / goldbachG11SwitchedBodyProd u < (r : ℝ) ∧
-          (r : ℝ) < (N : ℝ) / goldbachG11SwitchedBodyProd u ∧
-            (N - r * goldbachG11SwitchedBodyProd u).Prime := by
-  classical
-  have hBR : (0 : ℝ) < goldbachG11SwitchedBodyProd u := by exact_mod_cast hB
-  simp only [goldbachG11FirstPrimeFiber, Finset.mem_filter,
-    div_lt_iff₀ hBR, lt_div_iff₀ hBR, Nat.cast_mul]
-  have hcast : r * goldbachG11SwitchedBodyProd u < N ↔
-      (r : ℝ) * goldbachG11SwitchedBodyProd u < N := by
-    exact_mod_cast (Iff.rfl : r * goldbachG11SwitchedBodyProd u < N ↔
-      r * goldbachG11SwitchedBodyProd u < N)
-  rw [hcast]
 
 theorem goldbachG11FirstPrimeFiber_coprime_iff {N r : ℕ} {eps z : ℝ}
     {u : GoldbachG11SwitchedBody} (hr : r ∈ goldbachG11FirstPrimeFiber N eps z u) :

@@ -1,7 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
-import MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibreActual
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
 
 open Finset
 open scoped BigOperators Classical

@@ -37,7 +37,7 @@ theorem b10_li_difference_nonneg_le (κ a b : ℝ) (ha : 2 ≤ a) (hab : a ≤ b
         (Real.log_le_log (by norm_num : (0 : ℝ) < 2) (ha.trans ht.1)))
     simpa only [intervalIntegral.integral_const, smul_eq_mul, div_eq_mul_inv, one_mul] using hupper
 
-private theorem b10_two_mul_le_of_rpow {Y m : ℕ} (hY : 8 ≤ Y)
+theorem b10_two_mul_le_of_rpow {Y m : ℕ} (hY : 8 ≤ Y)
     (hm : (m : ℝ) ≤ (Y : ℝ) ^ ((2 : ℝ) / 3)) : 2 * (m : ℝ) ≤ Y := by
   have hYpos : (0 : ℝ) < Y := by exact_mod_cast (show 0 < Y by omega)
   have h8 : (8 : ℝ) ^ ((1 : ℝ) / 3) = 2 := by

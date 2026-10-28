@@ -77,7 +77,4 @@ theorem large_dimension_square_le_target {a ε x y K : ℝ}
       mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hH (sq_nonneg b)) hr
     _ = _ := by dsimp [b, r]; ring
 
-#print axioms dimension_quotient_le_target
-#print axioms large_dimension_square_le_target
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.EdgeDensity

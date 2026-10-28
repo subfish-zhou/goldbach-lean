@@ -1,0 +1,41 @@
+{
+  "validation_scope": "Python audit rejection paths only; no Lean or production writes",
+  "cases": [
+    {
+      "case": "shared_horner",
+      "rejected": true,
+      "reason": "Frozen shared module changed: WR2IntegerLogHorner"
+    },
+    {
+      "case": "spurious_25_factor",
+      "rejected": true,
+      "reason": "Frozen shared module changed: WR2IntegerLogUpper"
+    },
+    {
+      "case": "shared_ceil",
+      "rejected": true,
+      "reason": "Frozen shared module changed: WR2ClassicalCumulativeDivision"
+    },
+    {
+      "case": "numerator_formula",
+      "rejected": true,
+      "reason": "Lean formula changed: BqRawNumerator"
+    },
+    {
+      "case": "denominator_formula",
+      "rejected": true,
+      "reason": "Lean formula changed: BqRawDenominator"
+    },
+    {
+      "case": "support_guard",
+      "rejected": true,
+      "reason": "Lean formula changed: Bq"
+    },
+    {
+      "case": "zero_rounding",
+      "rejected": true,
+      "reason": "Lean formula changed: Bq"
+    }
+  ],
+  "all_rejected": true
+}

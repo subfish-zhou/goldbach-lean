@@ -1,0 +1,127 @@
+[
+  {
+    "file": "papers/Chen1973.pdf",
+    "sha256": "1427545fdec17092977c1c2f80c7964105274f3e9ea8c3938ddf59201eb7c8b1",
+    "pdf_pages": 20,
+    "ocr_note": "Original PDF unchanged; OCR is a reading aid, equations require page-image checks.",
+    "authors": [
+      "Chen Jing-run"
+    ],
+    "title": "On the representation of a larger even integer as the sum of a prime and the product of at most two primes",
+    "journal_pages": [
+      157,
+      176
+    ],
+    "correspondence_pdf_pages": [
+      1,
+      2,
+      3,
+      4,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  {
+    "file": "papers/PanDingWang1975.pdf",
+    "sha256": "d68aee0a8238cbff3d5eae5240709527392a76862d1348e6f6778237b9106212",
+    "pdf_pages": 12,
+    "ocr_note": "Original PDF unchanged; OCR is a reading aid, equations require page-image checks.",
+    "authors": [
+      "Pan Cheng-dong",
+      "Ding Xia-xi",
+      "Wang Yuan"
+    ],
+    "title": "On the representation of every large even integer as a sum of a prime and an almost prime",
+    "journal_pages": [
+      599,
+      610
+    ],
+    "correspondence_pdf_pages": [
+      1,
+      2,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  {
+    "file": "papers/JurkatRichert1965.pdf",
+    "sha256": "9292ebe75dcc15a4f3e187657c9cc3d8661c4168ab828a962a6dbe407c0d1ce6",
+    "pdf_pages": 13,
+    "ocr_note": "Original PDF unchanged; OCR is a reading aid, equations require page-image checks.",
+    "authors": [
+      "W. B. Jurkat",
+      "H.-E. Richert"
+    ],
+    "title": "An improvement of Selberg’s sieve method I",
+    "journal_pages": [
+      217,
+      240
+    ],
+    "scan_mapping": "PDF page 1 right = journal p. 217; PDF page 13 left = journal p. 240. Exclude adjacent journal pages 216 and 241.",
+    "correspondence_pdf_pages": [
+      1,
+      2,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "file": "papers/Wang1962.pdf",
+    "sha256": "55247804deff1197d63bbcbbcdedb26ef44a7319b9a13d8ebd08168ce65d4693",
+    "pdf_pages": 22,
+    "ocr_note": "Original PDF unchanged; OCR is a reading aid, equations require page-image checks.",
+    "authors": [
+      "Wang Yuan"
+    ],
+    "title": "On the representation of large integer as a sum of a prime and an almost prime",
+    "journal_pages": [
+      1033,
+      1054
+    ],
+    "scan_mapping": "PDF page 1 = journal p. 1033; ignore outer collected-volume page numbering.",
+    "correspondence_pdf_pages": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "file": "papers/richert1969.pdf",
+    "sha256": "c16033cb852770b96762476343335da2e1a3b32bf76c7a43d219ec6a20dcaf4a",
+    "pdf_pages": 22,
+    "ocr_note": "Embedded text extracted; equations checked against images when used.",
+    "authors": [
+      "H.-E. Richert"
+    ],
+    "title": "Selberg’s sieve with weights",
+    "journal_pages": [
+      1,
+      22
+    ],
+    "correspondence_pdf_pages": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      18,
+      19,
+      20
+    ]
+  }
+]

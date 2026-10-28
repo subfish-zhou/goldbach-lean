@@ -1,0 +1,238 @@
+{
+  "schema": "resume-history-archive-v1",
+  "plan_sha256": "5aa4be19dd0242fa8a61a057ee099596c03b9fe1df1463d791e67cc04dd0a25b",
+  "plan": {
+    "schema": "resume-history-copy-plan-v1",
+    "run": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219",
+    "adoption": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893",
+    "destination": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/resume-history",
+    "files": {
+      "attempts/resume-1793107251147507595/archive.json": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/attempts/resume-1793107251147507595/archive.json",
+        "sha256": "eb461d279fcb0e2c428c654031de071a52f05096e7cc271532ec4a1d5da7e077",
+        "bytes": 13575938
+      },
+      "attempts/resume-1793107251147507595/original/STATUS.json": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/attempts/resume-1793107251147507595/original/STATUS.json",
+        "sha256": "eb468a4451413166b89aac8556226e354ddaa9ec67e5856f700da0897ed5ebca",
+        "bytes": 160
+      },
+      "attempts/resume-1793107251147507595/original/logs/W08EntriesRest.log": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/attempts/resume-1793107251147507595/original/logs/W08EntriesRest.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "attempts/resume-1793107251147507595/original/logs/W08EntriesRest.time.txt": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/attempts/resume-1793107251147507595/original/logs/W08EntriesRest.time.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "attempts/resume-1793107251147507595/original/receipts/W08EntriesRest.json": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/attempts/resume-1793107251147507595/original/receipts/W08EntriesRest.json",
+        "sha256": "c67d4d0901f5ba202d85a75b74dd5f4d152400096b4ea8d628e50514463fd45e",
+        "bytes": 2090
+      },
+      "attempts/resume-1793107251147507595/original/results.json": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/attempts/resume-1793107251147507595/original/results.json",
+        "sha256": "c6a99354bec40460b8f4752289e9c960af5305b842055d6ed077fa5b0074dcd8",
+        "bytes": 7276516
+      },
+      "resume-transaction.json": {
+        "source": "/tmp/wu-main-port-audit/isolation-downstream/run-1793087450746487219/resume-transaction.json",
+        "sha256": "f756b8e61d86972152500e0063c92cefebb44a7c84b2391deff8dcb9f8c6f452",
+        "bytes": 1251
+      },
+      "tools/resume-isolated.py": {
+        "source": "/tmp/wu-main-port-audit/resume-isolated.py",
+        "sha256": "6d8c088d34c0c30c8d462bf14f790714cfacaa159c02c62fb0e728068f1706c7",
+        "bytes": 20723
+      },
+      "tools/resume_audit.py": {
+        "source": "/tmp/wu-main-port-audit/resume_audit.py",
+        "sha256": "e070de7af53c19ffbbb169ce1abfd49a65f76dc04b06484b4f6fbfdc2338150c",
+        "bytes": 17513
+      },
+      "tools/run-isolated.py": {
+        "source": "/tmp/wu-main-port-audit/run-isolated.py",
+        "sha256": "44e1d57567b41c862fb608f050928cbcd01c33537b4187492a8467d3b6ac593e",
+        "bytes": 12564
+      },
+      "tools/adopt-isolated.py": {
+        "source": "/tmp/wu-main-port-audit/adopt-isolated.py",
+        "sha256": "7807ccb031863b4dd472aed62b84042e521d1266642ff6dd59b01e20a2eee9bf",
+        "bytes": 20040
+      },
+      "tools/test_resume_audit.py": {
+        "source": "/tmp/wu-main-port-audit/test_resume_audit.py",
+        "sha256": "b11866743bb07bd2c37630322247b015b4c5ccd6088765ea10a7264efe53da82",
+        "bytes": 10045
+      },
+      "tools/archive_history.py": {
+        "source": "/tmp/wu-resume-history-portable/archive_history.py",
+        "sha256": "94150f3b4f86d1d788a9d794aed81e1392b4aa1f5e55b9e665869d10e620647d",
+        "bytes": 9235
+      },
+      "tools/test_history.py": {
+        "source": "/tmp/wu-resume-history-portable/test_history.py",
+        "sha256": "8ef735a094a05fb61c54d0cbddf35e0bdaad194f8a09aa53a72d466e6326e89b",
+        "bytes": 6350
+      },
+      "reviews/independent-driver-review/final-driver-review.json": {
+        "source": "/tmp/wu-main-port-resume-review/final-driver-review.json",
+        "sha256": "44d206abb305b3f3e067df21e0a41b1767c8b5261e67eb9554ebf08840089cde",
+        "bytes": 570
+      },
+      "reviews/independent-driver-review/test_driver_loop.py": {
+        "source": "/tmp/wu-main-port-resume-review/test_driver_loop.py",
+        "sha256": "6df403b459712f4d8e010df4b206c2b9fa79ad77797802950fbf303a4231bd19",
+        "bytes": 3743
+      },
+      "reviews/independent-driver-review/DRIVER-REVIEW.md": {
+        "source": "/tmp/wu-main-port-resume-review/DRIVER-REVIEW.md",
+        "sha256": "0ca3b1a1b96b3609d4d6f849e508a57f2c9e3bfe274c42335a4606fddf6e45bb",
+        "bytes": 4871
+      },
+      "reviews/independent-driver-review/INITIAL-REVIEW.md": {
+        "source": "/tmp/wu-main-port-resume-review/INITIAL-REVIEW.md",
+        "sha256": "0f345ac73afd41eb2b3cf82e8bed2b2926c1bf09a0a370d98f5986370e276c38",
+        "bytes": 4583
+      },
+      "reviews/independent-driver-review/loop-final.log": {
+        "source": "/tmp/wu-main-port-resume-review/loop-final.log",
+        "sha256": "e8bac38dd596d887e5e6aa0ee6d0b3beedb249aa1fa1350a5ca91c827587d983",
+        "bytes": 584
+      },
+      "reviews/independent-driver-review/loop-fixture.json": {
+        "source": "/tmp/wu-main-port-resume-review/loop-fixture.json",
+        "sha256": "16e8bdd2acada299ed2099ca1190c61612597b0f76719b71129a97caa6294b90",
+        "bytes": 571
+      },
+      "reviews/independent-driver-review/orphan-fixture.json": {
+        "source": "/tmp/wu-main-port-resume-review/orphan-fixture.json",
+        "sha256": "007fba40976c32316a8d6272bb6f345e3d072f12af7e87015b220e9ea295dfbf",
+        "bytes": 410
+      },
+      "reviews/independent-driver-review/test_driver_transactions.py": {
+        "source": "/tmp/wu-main-port-resume-review/test_driver_transactions.py",
+        "sha256": "44d902bbe7cae4dc33f55f56b690e00cc3bb750926c22b3eb8badcbc9ec80b0f",
+        "bytes": 3075
+      },
+      "reviews/independent-driver-review/review-inputs.json": {
+        "source": "/tmp/wu-main-port-resume-review/review-inputs.json",
+        "sha256": "c1e8ea43ab4060dbeb4c5815573f17245df416c2cc133948d297095dda691a49",
+        "bytes": 1018
+      },
+      "reviews/independent-driver-review/test_real_python_orphan.py": {
+        "source": "/tmp/wu-main-port-resume-review/test_real_python_orphan.py",
+        "sha256": "3d860fa1a2ca4587a84142b6f1fd82dcbb095968068f7a17167c7d87d8a5437e",
+        "bytes": 3006
+      },
+      "reviews/independent-driver-review/signal-mask-fixture.json": {
+        "source": "/tmp/wu-main-port-resume-review/signal-mask-fixture.json",
+        "sha256": "efee4154adfca5ef66d0810ded735ffc3ea9c70e554887b8b2bf59a8b5e319b4",
+        "bytes": 179
+      },
+      "reviews/independent-driver-review/transaction-fixtures.json": {
+        "source": "/tmp/wu-main-port-resume-review/transaction-fixtures.json",
+        "sha256": "900e9e8678c38b6b409538c74d3c635dd8f0dd37dd049e5428582fdf27dea8e0",
+        "bytes": 1028
+      },
+      "reviews/independent-driver-review/loop-failure-fixture.json": {
+        "source": "/tmp/wu-main-port-resume-review/loop-failure-fixture.json",
+        "sha256": "3ef28559a7dd6e48bfb6bada0120d28baabbf8ff092aca9b96cc1eedd2a28f65",
+        "bytes": 573
+      },
+      "reviews/independent-driver-review/loop-failure-final.log": {
+        "source": "/tmp/wu-main-port-resume-review/loop-failure-final.log",
+        "sha256": "7362df01809956983c92c92ac3d9aff0c42a970b23aec6b658b93c038c8bf64c",
+        "bytes": 588
+      },
+      "reviews/independent-driver-review/transactions-final.log": {
+        "source": "/tmp/wu-main-port-resume-review/transactions-final.log",
+        "sha256": "442a96f07430bd3764ecdfd52b83f5d5eb09c537e28946597f83d2b7b1a1521a",
+        "bytes": 1028
+      },
+      "reviews/auditor-review/resume-audit-review.json": {
+        "source": "/tmp/wu-main-port-audit/resume-audit-review.json",
+        "sha256": "5c2b6fd1c168549e3060db6306bd06477a72177e7a4ba0ac85c67d47aa7c4643",
+        "bytes": 1164
+      },
+      "reviews/auditor-review/resume-audit-tests.json": {
+        "source": "/tmp/wu-main-port-audit/resume-audit-tests.json",
+        "sha256": "b88d74512995e2a5fc93370bddc601e1814f3915df6608f268b3212ba1ee6dc1",
+        "bytes": 121
+      },
+      "reviews/auditor-review/resume-audit-tests.log": {
+        "source": "/tmp/wu-main-port-audit/resume-audit-tests.log",
+        "sha256": "bcf280c27f3d563edf48756ea65501c7a46b7e572fe93101c313de15fdfeb926",
+        "bytes": 1271
+      },
+      "reviews/auditor-review/resume-audit-current-final.log": {
+        "source": "/tmp/wu-main-port-audit/resume-audit-current-final.log",
+        "sha256": "ada9926288daad1406c55527e8a1d45a4a3bcbfc05509a7c84c62fbf79971b7e",
+        "bytes": 415
+      },
+      "adoption-binding/journal.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/journal.json",
+        "sha256": "a7358fd70e47235dd9fa20763671035d18f25e240714cacd22cee3443d71f8bc",
+        "bytes": 1664173
+      },
+      "adoption-binding/evidence/ADOPTION-ACCEPTANCE.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/ADOPTION-ACCEPTANCE.json",
+        "sha256": "f082c60489f86742f7bd2d15d83e954b969c4fb970553120b60f30d4b544c957",
+        "bytes": 761
+      },
+      "adoption-binding/evidence/acceptance.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/acceptance.json",
+        "sha256": "d005b2157fb44e05489a4e8c0aad0335d03c85fa4af04f365bf6c79207743902",
+        "bytes": 12055
+      },
+      "adoption-binding/evidence/STATUS.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/STATUS.json",
+        "sha256": "422544662938575629bd1698e9a5b046a4c300a19ee12d63a0d139a600648a11",
+        "bytes": 276
+      },
+      "adoption-binding/evidence/results.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/results.json",
+        "sha256": "782dffe392f820f75ed9fd53ab77b0263bc3dea2369d28a01b63e93285401a7e",
+        "bytes": 9564016
+      },
+      "adoption-binding/evidence/plan.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/plan.json",
+        "sha256": "533e564a47538e7890e07534b13f40d5c5813e90171a647e0d8f1deb415a57ad",
+        "bytes": 1542925
+      },
+      "adoption-binding/evidence/candidate-manifest.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/candidate-manifest.json",
+        "sha256": "09ecc19d3e22783f39316b733e3e79f48907fbd3aaa44e0d114dbec14873d30c",
+        "bytes": 358074
+      },
+      "adoption-binding/evidence/preservation.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/preservation.json",
+        "sha256": "b211cc906165a7731c90da3130472f86798c15a1e713f47e082e88b315cdc570",
+        "bytes": 8708
+      },
+      "adoption-binding/evidence/verified-base-receipts.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/verified-base-receipts.json",
+        "sha256": "786a7d8fca664a7d5f3e8a01b11be8c44b504fdde3b40733d3a590bd71aa4bb3",
+        "bytes": 1127505
+      },
+      "adoption-binding/evidence/validation/verified-inputs.json": {
+        "source": "/home/azureuser/goldbach-lean/research/wu2008/build/adoptions/main-port-1793115991771640893/evidence/validation/verified-inputs.json",
+        "sha256": "ca51bd366ef7a75db4f6f73a175ddb00ad7f4fb18a86975497c8bd3581eb861d",
+        "bytes": 6348749
+      }
+    },
+    "historical_facts": {
+      "original_successful_prefix_rows": 2375,
+      "original_timeout_exit_code": 124,
+      "original_wait_budget_seconds": 600,
+      "original_elapsed_seconds": 600.0093059390783,
+      "retry_wait_budget_seconds": 1800,
+      "retry_elapsed_seconds": 725.018719855696,
+      "retry_is_new_attempt_not_original_success": true,
+      "full_inherited_os_environ_attested": false
+    },
+    "not_a_new_acceptance_or_Lean_validation": true
+  }
+}

@@ -102,8 +102,6 @@ theorem continuous_buchstab : Continuous buchstab := by
   exact (continuous_approx n).continuousAt.congr_of_eventuallyEq
     (buchstab_eventuallyEq_approx n u (by linarith))
 
-theorem continuousOn_buchstab : ContinuousOn buchstab (Ici 1) :=
-  continuous_buchstab.continuousOn
 
 /-- The prescribed initial condition, including both endpoints. -/
 theorem buchstab_eq_one_div {u : ℝ} (hu₁ : 1 ≤ u) (hu₂ : u ≤ 2) :

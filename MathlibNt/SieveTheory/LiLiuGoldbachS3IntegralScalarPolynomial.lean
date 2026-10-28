@@ -226,45 +226,5 @@ theorem goldbachS3_innerPolynomial_le_inner {s : ℝ}
   rw [hzero] at h
   exact sub_nonneg.mp h
 
-/-- Two-sided, uniform certification of the approximation error. -/
-theorem goldbachS3_innerEnvelope_error {s : ℝ}
-    (hs : s ∈ Icc (3 : ℝ) (45/8 : ℝ)) :
-    0 ≤ goldbachS3_innerEnvelope s - jurkatRichertInnerIntegral s ∧
-      goldbachS3_innerEnvelope s - jurkatRichertInnerIntegral s ≤ 3/(5*10^9) := by
-  constructor
-  · exact sub_nonneg.mpr (goldbachS3_inner_le_envelope hs)
-  · have h := goldbachS3_innerPolynomial_le_inner hs
-    have hs1 : 0 < s-1 := by linarith [hs.1]
-    have hz : (s-3)/(s-1) ≤ (3/5 : ℝ) := (div_le_iff₀ hs1).2 (by linarith [hs.2])
-    unfold goldbachS3_innerEnvelope
-    linarith
-
-/-- A closed rational majorant of the entire original piecewise numerator. -/
-noncomputable def goldbachS3_fullEnvelope (s : ℝ) : ℝ :=
-  (1 + goldbachS3_innerEnvelope (max s 3) + (max (s-5) 0)^4 / 576) /
-    (s * ((53/8 : ℝ)-s))
-
-/-- Whole-interval majorization of the actual exp-free integrand by a closed expression. -/
-theorem goldbachS3_fullEnvelope_majorizes {s : ℝ}
-    (hs : s ∈ Icc (53/24 : ℝ) (45/8 : ℝ)) :
-    (if s ≤ 3 then 1 else if s ≤ 5 then 1 + jurkatRichertInnerIntegral s else
-      1 + jurkatRichertInnerIntegral 5 +
-        ∫ t in (5 : ℝ)..s,
-          (Real.log (t-2) + ∫ v in (3 : ℝ)..t-2,
-            jurkatRichertInnerIntegral v / v) / (t-1)) /
-      (s * ((53/8 : ℝ)-s)) ≤ goldbachS3_fullEnvelope s := by
-  unfold goldbachS3_fullEnvelope
-  apply div_le_div_of_nonneg_right _ (by nlinarith [hs.1, hs.2])
-  split_ifs with h3 h5
-  · rw [max_eq_right h3, max_eq_right (by linarith : s-5 ≤ 0)]
-    simp [goldbachS3_innerEnvelope, goldbachS3_innerPolynomial]
-  · rw [max_eq_left (by linarith : 3 ≤ s), max_eq_right (by linarith : s-5 ≤ 0)]
-    have h := goldbachS3_inner_le_envelope ⟨by linarith, hs.2⟩
-    norm_num
-    linarith
-  · rw [max_eq_left (by linarith : 3 ≤ s), max_eq_left (by linarith : 0 ≤ s-5),
-      goldbachS3_third_body_split (by linarith : 5 ≤ s)]
-    linarith [goldbachS3_inner_le_envelope ⟨by linarith, hs.2⟩,
-      goldbachS3_nested_quartic_majorant (by linarith : 5 ≤ s)]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

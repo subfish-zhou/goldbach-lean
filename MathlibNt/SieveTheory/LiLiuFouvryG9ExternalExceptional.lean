@@ -104,21 +104,6 @@ theorem externalTerm_full_sum_split (upper : Bool) (P : Finset ℕ)
   exact supported_sum_split_primorial (by linarith [hf.1]) hf.2.2.1
     (prod_ne_zero_iff.mpr fun p hp => (hP p hp).ne_zero) r
 
-/-- The exact family identity is obtained by summing memberwise identities;
-it makes no well-factorability assertion about an aggregate. -/
-theorem externalFamily_full_sum_split (upper : Bool) (P : Finset ℕ)
-    (hP : ∀ p ∈ P, p.Prime) {D η : ℝ} (z : ℝ)
-    (hD : 2 ≤ D) (hη : 0 < η) (hηsmall : η < 1 / 8) (r : ℕ → ℝ) :
-    (∑ t ∈ externalTags upper P D η z,
-      ∑ d ∈ Icc 1 ⌊D ^ (1 + η + η ^ 9)⌋₊, externalTerm upper P D η z t d * r d) =
-      (∑ t ∈ externalTags upper P D η z,
-        ∑ d ∈ (P.prod id).divisors, externalTerm upper P D η z t d * r d) +
-      ∑ t ∈ externalTags upper P D η z,
-        ∑ d ∈ (Icc 1 ⌊D ^ (1 + η + η ^ 9)⌋₊).filter (fun d => ¬ d ∣ P.prod id),
-          externalTerm upper P D η z t d * r d := by
-  rw [← sum_add_distrib]
-  exact sum_congr rfl fun t ht =>
-    externalTerm_full_sum_split upper P hP z hD hη hηsmall t ht r
 
 /-- Quantitative primorial-to-full transport, retaining absolute values
 memberwise. The generic remainder majorant is local to `Icc 1 (floor Q)`. -/
@@ -142,12 +127,5 @@ theorem externalUpperFamily_full_transport_budget (P : Finset ℕ)
         add_sub_cancel_left]
     _ ≤ _ := externalUpperFamily_exceptional_remainder_budget P z hD hη hηsmall
       _ r H hH hr
-
-#print axioms externalUpperFamily_full_transport_budget
-#print axioms externalUpperTerm_exceptional_mass_le
-#print axioms externalUpperTerm_exceptional_remainder_le
-#print axioms externalUpperFamily_exceptional_remainder_budget
-#print axioms externalTerm_full_sum_split
-#print axioms externalFamily_full_sum_split
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

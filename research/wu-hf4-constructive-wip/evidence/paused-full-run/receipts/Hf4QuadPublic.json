@@ -1,0 +1,45 @@
+{
+  "module": "Hf4QuadPublic",
+  "exit_code": 0,
+  "seconds": 3.4487719424068928,
+  "source_sha256": "0e8599b424a09995246912b310decd856bf3d107d82eda9ff50b89e7138dc999",
+  "object_sha256": "eeaba3e19956d2f81cc19e1cade93bdc7154d163aee85a3a624cd0af4fdec8e3",
+  "dependencies": {
+    "Hf4QuadAggregate": "cdb232eed89741bfbd8998894221fcaa0d3b7e8cc07ceb0a97612860c9d5873b"
+  },
+  "dependency_contexts": {
+    "Hf4QuadAggregate": "8c11c640d8d46f17743efd340210c1bd3c7e57a5a8fc1fd2047e8dd3f41006e3"
+  },
+  "context_sha256": "9a10b26444a6d93a83f49a25019d6cba2a5b3b97d1d09abbb8a1d02d91c0ac6f",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4QuadPublic.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4QuadPublic.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/Hf4QuadPublic.olean",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/Hf4QuadPublic.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.log",
+  "log_sha256": "8a64503b32b8f95dfb04af8d50932ab25fe0f0a6c7e8d1cdedade47693cb1a2d",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/Hf4QuadPublic.resources",
+  "resource_sha256": "8d12c3e1f7605b3ab605a607691076b2d4e5f5c0f1c744ee9a35a966d9e77fec",
+  "artifact_bundle_sha256": {
+    ".olean": "eeaba3e19956d2f81cc19e1cade93bdc7154d163aee85a3a624cd0af4fdec8e3"
+  }
+}

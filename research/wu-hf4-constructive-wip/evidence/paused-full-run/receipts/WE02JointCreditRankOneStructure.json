@@ -1,0 +1,49 @@
+{
+  "module": "WE02JointCreditRankOneStructure",
+  "exit_code": 0,
+  "seconds": 5.854506440460682,
+  "source_sha256": "471e66714914ec33948bd840a241c69e34ac5d70c727e271dc5e025f7699af60",
+  "object_sha256": "5be4c2bc26d1ae1c6d23da6ce54f3b2c84fec5a87ff5cff96e72b428ae094f8c",
+  "dependencies": {
+    "WE02JointCreditRoot": "17321df24675d3f36b7cdb87afe55bb3dce98fa9ad0e27b31e82e0a489faf7f0",
+    "W02Certified": "b34eb549da7e87db6016db35fc4420932b8822157368947f96c7a262e7388dd0"
+  },
+  "dependency_contexts": {
+    "WE02JointCreditRoot": "604c3f0114da54c47b58238bf539a044194ce135dba2247d2c776bc69cfd3d29",
+    "W02Certified": "3b6c482aa085616b82edeb732bfd3b69be0d89f1fdcdb1155f1d63618b54d359"
+  },
+  "context_sha256": "1a78e9d4b81d329b3721b709316b5a06c24fc31894a5f22790bb694758f9c951",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneStructure.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneStructure.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE02JointCreditRankOneStructure.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE02JointCreditRankOneStructure.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.log",
+  "log_sha256": "e7633538e6376ffc358ca459ca577d924e6c26632a041a85b331568bbd873c6f",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE02JointCreditRankOneStructure.resources",
+  "resource_sha256": "70e9a62d9da69c0bcc225c7d7fc39a9b55bd868aa0868d0446e545cfc5514a98",
+  "artifact_bundle_sha256": {
+    ".olean": "5be4c2bc26d1ae1c6d23da6ce54f3b2c84fec5a87ff5cff96e72b428ae094f8c"
+  }
+}

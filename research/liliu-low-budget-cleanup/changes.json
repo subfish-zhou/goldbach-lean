@@ -1,0 +1,179 @@
+{
+  "files": [
+    {
+      "file": "MathlibNt/AnalyticNumberTheory/LargeSieve/PanQuotientBounds.lean",
+      "status": "modified",
+      "before_sha256": "3ba941bd1dc462ef9c535aafd6e8ad795a370ec1f69389f11201df45c84afa65",
+      "after_sha256": "c507b187adb772188bfb773e05233a14eb6c5acf874ba25acf73986a6a165edf",
+      "before": {
+        "code_lines": 69,
+        "physical_lines": 73,
+        "utf8_bytes": 3313
+      },
+      "after": {
+        "code_lines": 64,
+        "physical_lines": 68,
+        "utf8_bytes": 3079
+      },
+      "delta": {
+        "code_lines": -5,
+        "physical_lines": -5,
+        "utf8_bytes": -234
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/Distribution/LiuPan/LiuPanActualErrorEnvelope.lean",
+      "status": "modified",
+      "before_sha256": "e0966e779e86f97a3f0037fc5a33d9672551e0347dde2359fb623d642a73e7a5",
+      "after_sha256": "376a4bad5e3b106f39d4ef56087cf2f79d6aeb7a7ba47131d8b999c965695075",
+      "before": {
+        "code_lines": 91,
+        "physical_lines": 102,
+        "utf8_bytes": 4619
+      },
+      "after": {
+        "code_lines": 110,
+        "physical_lines": 122,
+        "utf8_bytes": 5569
+      },
+      "delta": {
+        "code_lines": 19,
+        "physical_lines": 20,
+        "utf8_bytes": 950
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/JurkatRichert1965ChenGammaOneQOne.lean",
+      "status": "modified",
+      "before_sha256": "2ed1d99685b642a935985d68817ea1488d82f66566ab7633b1239ae5bad090c9",
+      "after_sha256": "92c4a78b4b0e76d29f5433a6e21c8e9b99b75c763d8d70ac1c5ce980b910c848",
+      "before": {
+        "code_lines": 5249,
+        "physical_lines": 5977,
+        "utf8_bytes": 251960
+      },
+      "after": {
+        "code_lines": 5229,
+        "physical_lines": 5957,
+        "utf8_bytes": 251260
+      },
+      "delta": {
+        "code_lines": -20,
+        "physical_lines": -20,
+        "utf8_bytes": -700
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachB10PanTwoEndpoints.lean",
+      "status": "modified",
+      "before_sha256": "333a35222c98e541cd03de08cd0bc15989a844ae3ddd60ef8bd598d50fd5560a",
+      "after_sha256": "a0b7271ec8391ba945bfb566eb5fc458832c74862f381b7fa02355ad2cc51021",
+      "before": {
+        "code_lines": 180,
+        "physical_lines": 196,
+        "utf8_bytes": 9198
+      },
+      "after": {
+        "code_lines": 156,
+        "physical_lines": 169,
+        "utf8_bytes": 8060
+      },
+      "delta": {
+        "code_lines": -24,
+        "physical_lines": -27,
+        "utf8_bytes": -1138
+      }
+    },
+    {
+      "file": "MathlibNt/SieveTheory/LiLiuGoldbachS2SwitchedDistribution.lean",
+      "status": "modified",
+      "before_sha256": "6c4f18b36a60b1d23c4d4857d7bf5bcf65e095c191dab0ccf1b26de24c1c343b",
+      "after_sha256": "a03dbaef557e67dc5618affa771bc42712480fc7f344d64a562e8426c1cdd77b",
+      "before": {
+        "code_lines": 478,
+        "physical_lines": 518,
+        "utf8_bytes": 23043
+      },
+      "after": {
+        "code_lines": 455,
+        "physical_lines": 493,
+        "utf8_bytes": 22047
+      },
+      "delta": {
+        "code_lines": -23,
+        "physical_lines": -25,
+        "utf8_bytes": -996
+      }
+    },
+    {
+      "file": "MathlibNt/Wu2004MeanValue/BalancedLowSource.lean",
+      "status": "modified",
+      "before_sha256": "0945fa37ea3a2cf0823a032c78fd5cdf1a5807c5402f374a030fd4b8c8e7d871",
+      "after_sha256": "becc1e2e111dd6c01f290bc9aa5b3034cec48ca269847c37e91d84b1c84174dc",
+      "before": {
+        "code_lines": 201,
+        "physical_lines": 208,
+        "utf8_bytes": 10315
+      },
+      "after": {
+        "code_lines": 122,
+        "physical_lines": 129,
+        "utf8_bytes": 6264
+      },
+      "delta": {
+        "code_lines": -79,
+        "physical_lines": -79,
+        "utf8_bytes": -4051
+      }
+    },
+    {
+      "file": "MathlibNt/Wu2004MeanValue/LowPrefix.lean",
+      "status": "modified",
+      "before_sha256": "eb612c61d5748bbc8a182d19408b95ead9833e2a2463416d64425c1abbd05e8f",
+      "after_sha256": "85b33bc7ea6524a3e7c7ae177c0281de06f9553c322df9f74e46dc74e1561825",
+      "before": {
+        "code_lines": 134,
+        "physical_lines": 147,
+        "utf8_bytes": 7200
+      },
+      "after": {
+        "code_lines": 79,
+        "physical_lines": 91,
+        "utf8_bytes": 4476
+      },
+      "delta": {
+        "code_lines": -55,
+        "physical_lines": -56,
+        "utf8_bytes": -2724
+      }
+    },
+    {
+      "file": "MathlibNt/Wu2004MeanValue/LowSource.lean",
+      "status": "modified",
+      "before_sha256": "d673179759635ba28b692cd4ff1bf7c7737ff3b76498308cf2a28f2ef03a111f",
+      "after_sha256": "894d68bd1f3c8eecd2a006b6541184546441cd8f0c70b436f95d0e4cb5204185",
+      "before": {
+        "code_lines": 133,
+        "physical_lines": 147,
+        "utf8_bytes": 7471
+      },
+      "after": {
+        "code_lines": 133,
+        "physical_lines": 147,
+        "utf8_bytes": 7482
+      },
+      "delta": {
+        "code_lines": 0,
+        "physical_lines": 0,
+        "utf8_bytes": 11
+      }
+    }
+  ],
+  "net_delta": {
+    "code_lines": -187,
+    "physical_lines": -192,
+    "utf8_bytes": -8882
+  },
+  "deleted_modules": [],
+  "added_modules": []
+}

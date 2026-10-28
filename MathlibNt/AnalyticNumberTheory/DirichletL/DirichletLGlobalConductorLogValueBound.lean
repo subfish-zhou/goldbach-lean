@@ -1,5 +1,4 @@
 import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
-import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # A logarithmic conductor-height bound for nonprincipal Dirichlet L-values

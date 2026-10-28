@@ -1,8 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibreActual
 import MathlibNt.SieveTheory.LiLiuFouvryG9RectangleSieve
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9BufferedScale
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ShortInterval
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
 
 noncomputable section
 open Finset

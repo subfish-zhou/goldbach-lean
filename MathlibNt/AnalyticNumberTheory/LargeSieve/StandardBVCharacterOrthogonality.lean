@@ -82,9 +82,6 @@ theorem lambdaCharacterPrefix_one (y q : ℕ) :
     if n.Coprime q then lambdaNatCoeff n else 0
   simp only [ZMod.isUnit_iff_coprime, mul_ite, mul_one, mul_zero]
 
-/-- The principal contribution to the character average. -/
-def principalLambdaContribution (y q : ℕ) : ℂ :=
-  (q.totient : ℂ)⁻¹ * coprimeLambdaPrefix y q
 
 /-- Its error relative to the global Chebyshev main term `y`. -/
 def principalLambdaMainError (y q : ℕ) : ℂ :=

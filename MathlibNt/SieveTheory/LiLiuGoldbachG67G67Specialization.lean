@@ -64,23 +64,5 @@ theorem elementaryIntegral_eq_oneDimensional :
   unfold G67ElementaryIntegral.elementaryIntegral oneDimensionalIntegral
   rw [h6,h7]
 
-/-- The actual C67 bound consumes the exact one-dimensional expression without analytic premises. -/
-theorem actual_constant_lower_oneDimensional :
-    4 * oneDimensionalIntegral ≤ goldbachG67IntegralConstant := by
-  rw [← elementaryIntegral_eq_oneDimensional]
-  exact G67ElementaryIntegral.actual_constant_lower
-
-/-- Fully expanded public endpoint for later certified one-dimensional constant estimates. -/
-theorem actual_constant_lower_explicit :
-    4 * ((1/2 : ℝ) *
-      (∫ s in ((4/53 : ℝ)+(4/53 : ℝ))..((4/33 : ℝ)+(4/33 : ℝ)),
-        max 0 (Real.log (((1/2-s)-(4/53 : ℝ))/(4/53 : ℝ))/(1/2-s)) *
-        (Real.log (min (4/33 : ℝ) (s-4/53) * (s-max (4/53 : ℝ) (s-4/33)) /
-          (max (4/53 : ℝ) (s-4/33) * (s-min (4/33 : ℝ) (s-4/53)))) / s)) +
-      (∫ s in ((4/53 : ℝ)+(4/33 : ℝ))..((4/33 : ℝ)+(3/11 : ℝ)),
-        max 0 (Real.log (((1/2-s)-(4/53 : ℝ))/(4/53 : ℝ))/(1/2-s)) *
-        (Real.log (min (4/33 : ℝ) (s-4/33) * (s-max (4/53 : ℝ) (s-3/11)) /
-          (max (4/53 : ℝ) (s-3/11) * (s-min (4/33 : ℝ) (s-4/33)))) / s))) ≤
-      goldbachG67IntegralConstant := actual_constant_lower_oneDimensional
 
 end G67SumCoordinate

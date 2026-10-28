@@ -21,28 +21,6 @@ theorem goldbachWeightRemainingSix_eq_remainingFive_sub_two_s4
 noncomputable def goldbachWeightFiveCoefficient (ε : ℝ) : ℝ :=
   goldbachWeightSixCoefficient ε - 16 * goldbachB8MainIntegral
 
-/-- The actual S4 integral bound is consumed, without a sign assumption on the five remaining terms. -/
-theorem goldbachWeight_remainingFive_S1_S2_S3_S4_I10_consumed_eventually
-    (δ ε : ℝ) (hδ : 0 < δ) (hε : 0 < ε) (hεu : ε < (2 : ℝ) / 15) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-      (goldbachWeightRemainingFive (goldbachDifferenceCarrier N ε) N
-        ((N : ℝ) ^ (4 / 53 : ℝ)) ((N : ℝ) ^ (4 / 33 : ℝ))
-        ((N : ℝ) ^ (3 / 11 : ℝ)) : ℝ) +
-        (goldbachWeightFiveCoefficient ε - δ) *
-          (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ)^2) ≤
-        4 * (D19 N : ℝ) := by
-  obtain ⟨Nr, hNr, hr⟩ := goldbachWeight_remainingSix_S1_S2_S3_I10_consumed_eventually
-    (δ / 2) ε (by positivity) hε hεu
-  obtain ⟨Ns, _hNs, hs⟩ := goldbachS4_normalized_upper_integral
-    (δ / 4) ε (by positivity) hε hεu
-  refine ⟨max Nr Ns, hNr.trans (le_max_left _ _), ?_⟩
-  intro N hN hEven
-  have hbase := hr N ((le_max_left _ _).trans hN) hEven
-  have hupper := hs N ((le_max_right _ _).trans hN) hEven
-  rw [goldbachWeightRemainingSix_eq_remainingFive_sub_two_s4] at hbase
-  push_cast at hbase
-  unfold goldbachWeightFiveCoefficient
-  nlinarith [hbase, hupper]
 
 /-- The small-epsilon quantifiers remain epsilon0 first, then a threshold for each epsilon. -/
 theorem goldbachWeight_remainingFive_small_epsilon (δ : ℝ) (hδ : 0 < δ) :

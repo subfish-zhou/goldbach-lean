@@ -1,6 +1,5 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
 import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 open Filter
 

@@ -1,0 +1,3 @@
+'Hf4Quad.original_Q_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hf4Quad.original_Q_width' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Hf4Quad.original_Q_below_parent_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]

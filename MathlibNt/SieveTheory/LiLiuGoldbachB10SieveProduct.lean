@@ -1,6 +1,4 @@
 import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
-import MathlibNt.SieveTheory.LiuSingularSeries
-import MathlibNt.SieveTheory.MertensTheorem
 import MathlibNt.SieveTheory.Arithmetic.GoldbachLiuProductBridge
 
 noncomputable section

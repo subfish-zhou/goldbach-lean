@@ -60,50 +60,6 @@ theorem changeLevel_ne_of_primitive_values [NeZero Q]
   obtain ⟨n, hn⟩ := hne
   exact hn (congrArg (fun η : DirichletCharacter ℂ q => η n) hchars)
 
-theorem primitiveCharacter_sq_eq_one [NeZero Q]
-    {χ : DirichletCharacter ℂ Q} (hχ : χ ^ 2 = 1) :
-    χ.primitiveCharacter ^ 2 = 1 := by
-  apply changeLevel_injective χ.conductor_dvd_level
-  rw [map_pow, changeLevel_primitiveCharacter, hχ, map_one]
-
-theorem primitiveCharacter_ne_one_of_ne_one
-    {χ : DirichletCharacter ℂ Q} (hχ : χ ≠ 1) :
-    χ.primitiveCharacter ≠ 1 := by
-  intro h
-  apply hχ
-  rw [← changeLevel_primitiveCharacter χ, h, map_one]
-
-/-- The conductor reduction is an equality for the actual continued L-function,
-including at one when the character is nonprincipal. -/
-theorem LFunction_eq_primitive_mul_inductionEulerProduct [NeZero Q]
-    (χ : DirichletCharacter ℂ Q) {s : ℂ} (hs : χ ≠ 1 ∨ s ≠ 1) :
-    χ.LFunction s =
-      χ.primitiveCharacter.LFunction s *
-        inductionEulerProduct χ.primitiveCharacter Q s := by
-  simpa only [changeLevel_primitiveCharacter, inductionEulerProduct] using
-    LFunction_changeLevel χ.conductor_dvd_level χ.primitiveCharacter
-      (hs.imp primitiveCharacter_ne_one_of_ne_one id)
-
-/-- Full induction identity for the actual four-factor product. Neither the
-levels nor the conductor of their product are assumed coprime. -/
-theorem twoCharacter_LFunction_product_induction
-    [NeZero q] [NeZero r] [NeZero Q]
-    (hq : q ∣ Q) (hr : r ∣ Q)
-    (χ : DirichletCharacter ℂ q) (ψ : DirichletCharacter ℂ r)
-    {s : ℂ} (hχ : χ ≠ 1 ∨ s ≠ 1) (hψ : ψ ≠ 1 ∨ s ≠ 1)
-    (hprod : changeLevel hq χ * changeLevel hr ψ ≠ 1 ∨ s ≠ 1) :
-    riemannZeta s * (changeLevel hq χ).LFunction s *
-        (changeLevel hr ψ).LFunction s *
-        (changeLevel hq χ * changeLevel hr ψ).LFunction s =
-      (riemannZeta s * χ.LFunction s * ψ.LFunction s *
-        (changeLevel hq χ * changeLevel hr ψ).primitiveCharacter.LFunction s) *
-      (inductionEulerProduct χ Q s * inductionEulerProduct ψ Q s *
-        inductionEulerProduct
-          (changeLevel hq χ * changeLevel hr ψ).primitiveCharacter Q s) := by
-  rw [LFunction_changeLevel hq χ hχ, LFunction_changeLevel hr ψ hψ,
-    LFunction_eq_primitive_mul_inductionEulerProduct _ hprod]
-  unfold inductionEulerProduct
-  ring
 
 private theorem norm_character_prime_cpow_le
     (χ : DirichletCharacter ℂ q) (p : ℕ) (β : ℝ) :
@@ -165,15 +121,6 @@ theorem LFunction_changeLevel_real_eq_zero_iff
     (hχ.imp id (fun h => by exact_mod_cast h))]
   exact mul_eq_zero_iff_right (inductionEulerProduct_ne_zero χ Q hβ)
 
-/-- Exact primitive reduction of a positive-real zero of an imprimitive
-character, including a nonprincipal character at one. -/
-theorem LFunction_real_eq_zero_iff_primitive
-    [NeZero Q] (χ : DirichletCharacter ℂ Q)
-    {β : ℝ} (hβ : 0 < β) (hχ : χ ≠ 1 ∨ β ≠ 1) :
-    χ.LFunction (β : ℂ) = 0 ↔ χ.primitiveCharacter.LFunction (β : ℂ) = 0 := by
-  rw [LFunction_eq_primitive_mul_inductionEulerProduct χ
-    (hχ.imp id (fun h => by exact_mod_cast h))]
-  exact mul_eq_zero_iff_right (inductionEulerProduct_ne_zero χ.primitiveCharacter Q hβ)
 
 /-- The actual residue coefficient, not an independently chosen main term. -/
 noncomputable def twoCharacterResidue [NeZero Q]
@@ -183,23 +130,6 @@ noncomputable def twoCharacterResidue [NeZero Q]
 open Filter
 open scoped Topology ComplexOrder
 
-/-- The four-factor function has this actual residue at one whenever all
-three character factors are nonprincipal. -/
-theorem twoCharacter_product_residue_one [NeZero Q]
-    (χ ψ : DirichletCharacter ℂ Q)
-    (hχ : χ ≠ 1) (hψ : ψ ≠ 1) (hprod : χ * ψ ≠ 1) :
-    Tendsto (fun s : ℂ => (s - 1) *
-      (riemannZeta s * χ.LFunction s * ψ.LFunction s * (χ * ψ).LFunction s))
-      (𝓝[≠] 1) (𝓝 (twoCharacterResidue χ ψ)) := by
-  have hc (η : DirichletCharacter ℂ Q) (hη : η ≠ 1) :
-      Tendsto η.LFunction (𝓝[≠] (1 : ℂ)) (𝓝 (η.LFunction 1)) :=
-    (η.differentiableAt_LFunction 1 (Or.inr hη)).continuousAt.tendsto.mono_left
-      nhdsWithin_le_nhds
-  convert ((riemannZeta_residue_one.mul (hc χ hχ)).mul (hc ψ hψ)).mul
-    (hc (χ * ψ) hprod) using 1
-  · funext s
-    ring
-  · simp [twoCharacterResidue]
 
 /-- Distinct nonprincipal quadratic characters give a strictly positive
 real residue. Distinctness is essential: the diagonal has another pole. -/
@@ -216,24 +146,5 @@ theorem twoCharacterResidue_pos [NeZero Q]
   exact mul_pos (mul_pos (hp χ hχ hχ1) (hp ψ hψ hψ1))
     (hp (χ * ψ) (sq_mul_eq_one hχ hψ) (mul_ne_one_of_quadratic_ne hψ hne))
 
-/-- The main-term coefficient after arbitrary common-level induction,
-with all three missing Euler products explicit. -/
-theorem twoCharacterResidue_induction
-    [NeZero q] [NeZero r] [NeZero Q]
-    (hq : q ∣ Q) (hr : r ∣ Q)
-    (χ : DirichletCharacter ℂ q) (ψ : DirichletCharacter ℂ r)
-    (hχ : χ ≠ 1) (hψ : ψ ≠ 1)
-    (hprod : changeLevel hq χ * changeLevel hr ψ ≠ 1) :
-    twoCharacterResidue (changeLevel hq χ) (changeLevel hr ψ) =
-      (χ.LFunction 1 * ψ.LFunction 1 *
-        (changeLevel hq χ * changeLevel hr ψ).primitiveCharacter.LFunction 1) *
-      (inductionEulerProduct χ Q 1 * inductionEulerProduct ψ Q 1 *
-        inductionEulerProduct
-          (changeLevel hq χ * changeLevel hr ψ).primitiveCharacter Q 1) := by
-  rw [twoCharacterResidue, LFunction_changeLevel hq χ (Or.inl hχ),
-    LFunction_changeLevel hr ψ (Or.inl hψ),
-    LFunction_eq_primitive_mul_inductionEulerProduct _ (Or.inl hprod)]
-  unfold inductionEulerProduct
-  ring
 
 end DirichletCharacter

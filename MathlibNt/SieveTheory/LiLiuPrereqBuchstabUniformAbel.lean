@@ -197,15 +197,6 @@ theorem hasDerivAt_buchstab_off_two {u : ℝ} (hu : 1 < u) (hu2 : u ≠ 2) :
     exact buchstab_eq_one_div hv.le hv2.le
   · simpa [buchstabSlope, h] using hasDerivAt_buchstab (lt_of_not_ge h)
 
-theorem abs_buchstabSlope_le_one {u : ℝ} (hu : 1 ≤ u) :
-    |buchstabSlope u| ≤ 1 := by
-  by_cases h : u ≤ 2
-  · rw [buchstabSlope, if_pos h, abs_neg, abs_of_nonneg (by positivity)]
-    exact (div_le_one (by positivity : 0 < u ^ 2)).2 (by nlinarith)
-  · have hu2 : 2 < u := lt_of_not_ge h
-    rw [buchstabSlope, if_neg h, ← deriv_buchstab hu2]
-    exact (abs_deriv_buchstab_le hu2).trans
-      ((div_le_one (by positivity : 0 < 2 * u)).2 (by linarith))
 
 /-- The actual weight occurring in the rough-count recursion. -/
 noncomputable def buchstabPrimeKernel (x t : ℝ) : ℝ :=
@@ -331,13 +322,6 @@ private theorem abs_buchstabPrimeKernelSlope_le_coarse {x t : ℝ} (hx : 0 ≤ x
   have hp : 0 ≤ x / (t ^ 2 * Real.log t) := by positivity
   linarith
 
-/-- Compatibility specialization of the unrestricted differential bound. -/
-theorem abs_buchstabPrimeKernelSlope_le {x t : ℝ} (hx : 0 ≤ x)
-    (ht : 0 < t) (hl : 1 ≤ Real.log t)
-    (hu : 1 ≤ Real.log x / Real.log t - 1)
-    (_hU : Real.log x / Real.log t ≤ 100) :
-    |buchstabPrimeKernelSlope x t| ≤ 102 * (x / (t ^ 2 * Real.log t)) := by
-  exact abs_buchstabPrimeKernelSlope_le_coarse hx ht hl hu
 
 theorem integrableOn_buchstabPrimeKernelSlope_unrestricted {x y : ℝ}
     (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x) :
@@ -357,11 +341,6 @@ theorem integrableOn_buchstabPrimeKernelSlope_unrestricted {x y : ℝ}
   exact abs_buchstabPrimeKernelSlope_le_coarse hr.1 (by linarith [ht.1]) hr.2.1
     (by linarith [hr.2.2])
 
-theorem integrableOn_buchstabPrimeKernelSlope {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x)
-    (_hU : Real.log x / Real.log y ≤ 100) :
-    IntegrableOn (buchstabPrimeKernelSlope x) (Icc y (Real.sqrt x)) := by
-  exact integrableOn_buchstabPrimeKernelSlope_unrestricted hy hxy
 
 private theorem kernel_hasDerivAt_on_band {x y t : ℝ}
     (hy : primeErrorStart ≤ y)
@@ -385,29 +364,6 @@ private theorem kernel_hasDerivAt_on_band {x y t : ℝ}
     linarith
   exact htc ((Real.exp_log ht0).symm.trans (congrArg Real.exp hlog))
 
-/-- The actual prime kernel satisfies Abel summation, even when
-`exp (log x / 3)` lies in the interval. -/
-theorem buchstabPrimeKernel_abel_unrestricted {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x) :
-    ∑ p ∈ primesIoc y (Real.sqrt x), buchstabPrimeKernel x p =
-      buchstabPrimeKernel x (Real.sqrt x) * primePi (Real.sqrt x) -
-      buchstabPrimeKernel x y * primePi y -
-      ∫ t in y..Real.sqrt x, buchstabPrimeKernelSlope x t * primePi t := by
-  have hy1 : 1 < y := by linarith [primeErrorStart_spec.1]
-  exact prime_abel_off_one (c := Real.exp (Real.log x / 3))
-    (by linarith) (Real.le_sqrt_of_sq_le hxy)
-    (continuousOn_buchstabPrimeKernel x hy1)
-    (fun _ ht htc => kernel_hasDerivAt_on_band hy ht htc)
-    (integrableOn_buchstabPrimeKernelSlope_unrestricted hy hxy)
-
-theorem buchstabPrimeKernel_abel {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x)
-    (_hU : Real.log x / Real.log y ≤ 100) :
-    ∑ p ∈ primesIoc y (Real.sqrt x), buchstabPrimeKernel x p =
-      buchstabPrimeKernel x (Real.sqrt x) * primePi (Real.sqrt x) -
-      buchstabPrimeKernel x y * primePi y -
-      ∫ t in y..Real.sqrt x, buchstabPrimeKernelSlope x t * primePi t := by
-  exact buchstabPrimeKernel_abel_unrestricted hy hxy
 
 private theorem continuousOn_log_quotient {a b : ℝ} (ha : 1 < a) :
     ContinuousOn (fun t : ℝ => t / Real.log t) (Icc a b) := by
@@ -652,14 +608,6 @@ theorem buchstabPrimeKernel_sum_Ioc_error_le_unrestricted {x y : ℝ}
       rw [heq]
       nlinarith
 
-theorem buchstabPrimeKernel_sum_Ioc_error_le {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x)
-    (_hU : Real.log x / Real.log y ≤ 100) :
-    |(∑ p ∈ primesIoc y (Real.sqrt x), buchstabPrimeKernel x p) -
-      x / Real.log x *
-        ((Real.log x / Real.log y) * buchstab (Real.log x / Real.log y) - 1)| ≤
-      104 * (primeErrorEnvelope y + 1 / Real.log y) * (x / Real.log y) := by
-  exact buchstabPrimeKernel_sum_Ioc_error_le_unrestricted hy hxy
 
 /-- The lower prime cutoff is included, the upper cutoff is excluded. -/
 noncomputable def primesIco (a b : ℝ) : Finset ℕ :=
@@ -785,27 +733,5 @@ theorem buchstabPrimeKernel_sum_Ico_error_le_unrestricted {x y : ℝ}
   rw [he]
   linarith
 
-theorem buchstabPrimeKernel_sum_Ico_error_le {x y : ℝ}
-    (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x)
-    (_hU : Real.log x / Real.log y ≤ 100) :
-    |(∑ p ∈ primesIco y (Real.sqrt x), buchstabPrimeKernel x p) -
-      x / Real.log x *
-        ((Real.log x / Real.log y) * buchstab (Real.log x / Real.log y) - 1)| ≤
-      106 * (primeErrorEnvelope y + 1 / Real.log y) * (x / Real.log y) := by
-  exact buchstabPrimeKernel_sum_Ico_error_le_unrestricted hy hxy
-
-/-- The constant is quantified before both parameters. The summand and main
-term are the actual Buchstab kernel, not abstract replacement interfaces. -/
-theorem buchstab_prime_sum_replacement_uniform :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ x y : ℝ,
-      primeErrorStart ≤ y → y ^ 2 ≤ x → Real.log x / Real.log y ≤ 100 →
-      |(∑ p ∈ primesIco y (Real.sqrt x),
-        x / ((p : ℝ) * Real.log p) * buchstab (Real.log x / Real.log p - 1)) -
-        x / Real.log x *
-          ((Real.log x / Real.log y) * buchstab (Real.log x / Real.log y) - 1)| ≤
-        C * (primeErrorEnvelope y + 1 / Real.log y) * (x / Real.log y) := by
-  refine ⟨106, by norm_num, ?_⟩
-  intro x y hy hxy hU
-  exact buchstabPrimeKernel_sum_Ico_error_le hy hxy hU
 
 end LiLiuPrereqBuchstab

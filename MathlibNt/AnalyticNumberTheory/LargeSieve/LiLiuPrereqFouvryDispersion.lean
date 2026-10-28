@@ -143,13 +143,6 @@ theorem dispersion_identity
   intro m _
   ring
 
-theorem dispersion_nonneg
-    (S N Q : Finset ℕ) (w β c : ℕ → ℝ) (a : ℤ)
-    (hw : ∀ m ∈ S, 0 ≤ w m) :
-    0 ≤ dispersionW S N Q w β c a - 2 * dispersionV S N Q w β c a +
-      dispersionU S N Q w β c a := by
-  rw [← dispersion_identity]
-  exact Finset.sum_nonneg (fun m hm => mul_nonneg (hw m hm) (sq_nonneg _))
 
 theorem signedError_sq_le_dispersion
     (M N Q : Finset ℕ) (α β c : ℕ → ℝ) (a : ℤ) :

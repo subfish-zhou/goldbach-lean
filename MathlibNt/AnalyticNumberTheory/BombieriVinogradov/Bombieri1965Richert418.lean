@@ -67,10 +67,6 @@ theorem abs_primeAPError_le_residueMax {x q l : ℕ}
   right
   exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
 
-theorem primeAPResidueMaxError_nonneg (x q : ℕ) :
-    0 ≤ primeAPResidueMaxError x q := by
-  unfold primeAPResidueMaxError
-  exact Finset.le_max' _ 0 (by simp)
 
 theorem primeAPResidueMaxError_le_prefixMax {N x q : ℕ}
     (hx : x ∈ Finset.Icc 2 N) :

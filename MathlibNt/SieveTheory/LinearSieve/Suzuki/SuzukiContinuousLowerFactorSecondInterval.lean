@@ -37,11 +37,6 @@ noncomputable def suzukiContinuousLowerFactor (s : ℝ) : ℝ :=
 noncomputable def suzukiContinuousUpperFactor (s : ℝ) : ℝ :=
   1 + suzukiProposition118SourceTPlus s
 
-/-- The source amplitude is the weighted upper factor at the first upper
-endpoint. -/
-theorem suzukiLowerSieveAmplitude_eq_three_mul_upperFactor :
-    suzukiLowerSieveAmplitude = 3 * suzukiContinuousUpperFactor 3 := by
-  rfl
 
 /-- Translation of the first upper integral into the usual source/JR
 coordinates. -/

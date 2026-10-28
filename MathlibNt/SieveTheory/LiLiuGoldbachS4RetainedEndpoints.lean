@@ -1,11 +1,8 @@
+
 import MathlibNt.Tactic.PolynomialDeriv
 import MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction
 import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-
-import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralScalar
-/- Retained endpoint only. Necessary private proof copied verbatim apart from
-namespace and final rational terminal; source SHA256 2e52947b68c4d24ee156e57ffe66028ec88376d35663cd774acccd258b9bff5b. -/
+/- The strongest retained rational endpoint is certified directly here. -/
 set_option pp.deepTerms true
 set_option pp.proofs true
 set_option pp.maxSteps 1000000
@@ -168,62 +165,8 @@ theorem goldbachB8MainIntegral_eight_mul_le_60961168 :
   exact (mul_le_mul_of_nonneg_left hmono (by norm_num : (0 : ℝ) ≤ 8)).trans
     s4Primitive_endpoint
 
-/-- The unchanged actual S4 count, with all upstream analytic errors already paid. -/
-theorem goldbachS4_normalized_upper_60961168
-    (δ ε : ℝ) (hδ : 0 < δ) (hε : 0 < ε) (hεu : ε < (2 : ℝ)/15) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → Even N →
-      (goldbachS4 (goldbachDifferenceCarrier N ε) N ((N : ℝ) ^ (3/11 : ℝ)) : ℝ) ≤
-        ((60961168/100000000 : ℝ) + δ) *
-          (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ)^2) := by
-  obtain ⟨N₀, hN₀, hS⟩ := goldbachS4_normalized_upper_integral δ ε hδ hε hεu
-  refine ⟨N₀, hN₀, ?_⟩
-  intro N hN hEven
-  have hscale : 0 ≤ SingularSeries.liuSingularSeries N * (N : ℝ) /
-      Real.log (N : ℝ)^2 :=
-    div_nonneg (mul_nonneg (SingularSeries.liuSingularSeries_pos N).le
-      (Nat.cast_nonneg N)) (sq_nonneg _)
-  exact (hS N hN hEven).trans (mul_le_mul_of_nonneg_right
-    (add_le_add goldbachB8MainIntegral_eight_mul_le_60961168 (le_rfl : δ ≤ δ)) hscale)
-
-/-- Exact recovery from the previously published rational scalar. -/
-theorem retained_scalar_gain :
-    (60962/100000 : ℝ) - (60961168/100000000 : ℝ) =
-      (13/1562500 : ℝ) := by norm_num
-
-theorem retained_scalar_strict_improvement :
-    (60961168/100000000 : ℝ) < (60962/100000 : ℝ) := by norm_num
 
 -- Complete source-declaration type and transitive axiom coverage (private in-module).
-#check @s4LogPoly
-#print axioms s4LogPoly
-#check @s4GeomPoly
-#print axioms s4GeomPoly
-#check @s4Log_bound
-#print axioms s4Log_bound
-#check @s4Geom_bound
-#print axioms s4Geom_bound
-#check @s4LogPoly_nonneg
-#print axioms s4LogPoly_nonneg
-#check @s4Change_deriv
-#print axioms s4Change_deriv
-#check @s4Change_maps
-#print axioms s4Change_maps
-#check @s4Change_integral
-#print axioms s4Change_integral
-#check @s4Primitive
-#print axioms s4Primitive
-#check @s4Primitive_deriv
-#print axioms s4Primitive_deriv
-#check @s4Primitive_endpoint
-#print axioms s4Primitive_endpoint
-#check @goldbachB8MainIntegral_eight_mul_le_60961168
-#print axioms goldbachB8MainIntegral_eight_mul_le_60961168
-#check @goldbachS4_normalized_upper_60961168
-#print axioms goldbachS4_normalized_upper_60961168
-#check @retained_scalar_gain
-#print axioms retained_scalar_gain
-#check @retained_scalar_strict_improvement
-#print axioms retained_scalar_strict_improvement
 
 end
 end S4Retained

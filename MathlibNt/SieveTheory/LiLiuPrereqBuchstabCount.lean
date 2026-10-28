@@ -36,13 +36,6 @@ noncomputable def roughCount (x z : ℝ) : ℕ := (roughNumbers x z).card
   · intro h
     exact ⟨Nat.lt_succ_iff.mpr (Nat.le_floor h.2.1), h⟩
 
-theorem rough_iff_no_small_prime {z : ℝ} {n : ℕ} :
-    Rough z n ↔ ∀ p : ℕ, p.Prime → (p : ℝ) < z → ¬p ∣ n := by
-  constructor
-  · intro h p hp hpz hpn
-    exact (not_lt_of_ge (h p hp hpn)) hpz
-  · intro h p hp hpn
-    exact le_of_not_gt (fun hpz => h p hp hpz hpn)
 
 theorem rough_one (z : ℝ) : Rough z 1 := by
   intro p hp hp1
@@ -87,12 +80,6 @@ theorem minFac_mul_of_rough {p m : ℕ} (hp : p.Prime)
   · exact Nat.minFac_le_of_dvd hp.two_le (dvd_mul_right p m)
   · exact_mod_cast (rough_iff_minFac hne).mp (rough_mul_prime hp hm)
 
-theorem rough_div_minFac (n : ℕ) :
-    Rough (n.minFac : ℝ) (n / n.minFac) := by
-  intro p hp hpd
-  have hpn : p ∣ n :=
-    dvd_trans hpd (Nat.div_dvd_of_dvd (Nat.minFac_dvd n))
-  exact_mod_cast Nat.minFac_le_of_dvd hp.two_le hpn
 
 theorem rough_of_dvd {z : ℝ} {m n : ℕ} (hmn : m ∣ n) (hn : Rough z n) :
     Rough z m :=

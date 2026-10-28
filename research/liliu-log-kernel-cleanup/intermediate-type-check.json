@@ -1,0 +1,20 @@
+{
+  "status": "rejected_before_final_acceptance",
+  "intermediate_full_build_and_public_kernel_checks": "pass",
+  "missing_original_public_names": [],
+  "raw_kind_or_type_hash_mismatches": [
+    "MathlibNt.SieveTheory.LiuWeight.liuPanPerronPoissonRealIntegral_eq_paired",
+    "MathlibNt.SieveTheory.LiuWeight.liuPanPerronPoissonUpperRectangle_boundary",
+    "MathlibNt.SieveTheory.LiuWeight.liuPanPerronPoissonUpperRectangle_residue",
+    "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPerronPoissonHorizontalIntegral_le",
+    "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPerronPoissonVerticalLeftIntegral_le",
+    "MathlibNt.SieveTheory.LiuWeight.norm_liuPanPerronPoissonVerticalRightIntegral_le",
+    "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanPerronPoissonHorizontalIntegral_atTop",
+    "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanPerronPoissonRealIntegral_atTop",
+    "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanPerronPoissonVerticalLeftIntegral_atTop",
+    "MathlibNt.SieveTheory.LiuWeight.tendsto_liuPanPerronPoissonVerticalRightIntegral_atTop"
+  ],
+  "reason": "Perron import narrowing omitted Mathlib.Analysis.CStarAlgebra.Classes. Ten intermediate statements elaborated complex normed-space instances through another path. This intermediate snapshot is not accepted.",
+  "correction": "Explicitly import the original complex CStar algebra instance provider. Standalone Perron compilation and census restore all 46 original public kind/type hashes; a fresh whole-main validation follows.",
+  "prototype_census_sha256": "1decdeb5f4413cfee75fc19a999b2674195c97cb6002f0c76d95987c61fef8d2"
+}

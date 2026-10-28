@@ -183,32 +183,6 @@ theorem bandMass_le_thinSum {N : ℕ} (ε l u : ℝ) (hlu : l ≤ u) :
   rw [hmass,← hgroup,← hS,← hT]
   exact_mod_cast hc
 
-/-- Weighted domination for any literal set of physical pairs. -/
-theorem pairMass_le_bandMass (N : ℕ) (ε l u : ℝ) (S : Finset (ℕ × ℕ))
-    (hS : ∀ p ∈ S, p.1 ∈ goldbachG12ActiveProductSupport N ∧
-      p.2 ∈ bandWindow N ε l u p.1) :
-    (∑ p ∈ S, goldbachG12NormalizedCoefficient N p.1) ≤ bandMass N ε l u := by
-  let B := ((goldbachG12ActiveProductSupport N) ×ˢ range (N+1)).filter
-    (fun p => p.2 ∈ bandWindow N ε l u p.1)
-  have hsub : S ⊆ B := by
-    intro p hp
-    obtain ⟨hm,hr⟩ := hS p hp
-    exact mem_filter.mpr ⟨mem_product.mpr ⟨hm,
-      (mem_filter.mp (mem_filter.mp hr).1).1⟩,hr⟩
-  have heq : (∑ p ∈ B, goldbachG12NormalizedCoefficient N p.1) = bandMass N ε l u := by
-    rw [show B = _ from rfl, sum_filter, sum_product]
-    apply sum_congr rfl
-    intro m _
-    have he : (range (N+1)).filter (fun r => r ∈ bandWindow N ε l u m) =
-        bandWindow N ε l u m := by
-      ext r
-      simp only [mem_filter]
-      exact ⟨fun h => h.2, fun h => ⟨(mem_filter.mp (mem_filter.mp h).1).1,h⟩⟩
-    rw [← sum_filter,he]
-    simp only [sum_const,nsmul_eq_mul,mul_comm]
-  rw [← heq]
-  exact sum_le_sum_of_subset_of_nonneg hsub (fun p _ _ =>
-    (goldbachG12NormalizedCoefficient_bounds N p.1).1)
 
 /-- Only the two product failures; the roughness failure is not paid here. -/
 def productBoundary (ρ : ℝ) (N : ℕ) (ε : ℝ) : Finset (ℕ × ℕ) :=
@@ -245,61 +219,6 @@ theorem productBoundary_in_bands {ρ a ε : ℝ} {N : ℕ}
     have hh := upper_product_band (show 0 < a by linarith) hm0 hTr (hmesh k hk) huR hnR
     exact Or.inr (mem_filter.mpr ⟨hrW,hrnd,hh.1,by simpa only [one_mul] using hh.2⟩)
 
-/-- No cell-count loss: union first, then pay the two physical bands once. -/
-theorem productBoundary_mass_le_bands {ρ a ε : ℝ} {N : ℕ}
-    (hN : 1 ≤ N) (ha : 1 < a) (he : 0 < ε)
-    (hmesh : ∀ k ∈ indices ρ N,
-      (shortUpper ρ N k : ℝ) ≤ a*(shortLower ρ N k : ℝ)) :
-    (∑ p ∈ productBoundary ρ N ε, goldbachG12NormalizedCoefficient N p.1) ≤
-      bandMass N ε (ε/a) (a*ε) + bandMass N ε (1/a) 1 := by
-  let S := productBoundary ρ N ε
-  let A := fun p : ℕ × ℕ => p.2 ∈ bandWindow N ε (ε/a) (a*ε) p.1
-  have h₁ := pairMass_le_bandMass N ε (ε/a) (a*ε) (S.filter A) (by
-    intro p hp
-    obtain ⟨hp,hA⟩ := mem_filter.mp hp
-    exact ⟨(productBoundary_in_bands hN ha he hmesh hp).1,hA⟩)
-  have h₂ := pairMass_le_bandMass N ε (1/a) 1 (S.filter (fun p => ¬A p)) (by
-    intro p hp
-    obtain ⟨hp,hA⟩ := mem_filter.mp hp
-    have hh := productBoundary_in_bands hN ha he hmesh hp
-    exact ⟨hh.1,hh.2.resolve_left hA⟩)
-  have heq : (∑ p ∈ S, goldbachG12NormalizedCoefficient N p.1) =
-      (∑ p ∈ S.filter A, goldbachG12NormalizedCoefficient N p.1) +
-        ∑ p ∈ S.filter (fun p => ¬A p), goldbachG12NormalizedCoefficient N p.1 := by
-    rw [sum_filter,sum_filter,← sum_add_distrib]
-    apply sum_congr rfl
-    intro p _
-    by_cases hA : A p <;> dsimp only [A] at hA ⊢ <;> simp [hA]
-  rw [show productBoundary ρ N ε = S from rfl,heq]
-  exact add_le_add h₁ h₂
-
-/-- Actual fine-grid product-boundary payment at raw-mother normalization.
-The roughness boundary and the output-prime second logarithm remain separate. -/
-theorem productBoundary_integral_budget {a ε : ℝ}
-    (ha : 1 < a) (ha2 : a ≤ 2) (he : 0 < ε) (he2 : ε ≤ 2/15)
-    (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → ∀ ρ : ℝ,
-      (∀ k ∈ indices ρ N,
-        (shortUpper ρ N k : ℝ) ≤ a*(shortLower ρ N k : ℝ)) →
-      Real.log (N : ℝ)/(N : ℝ) *
-        (400 * ∑ p ∈ productBoundary ρ N ε, goldbachG12NormalizedCoefficient N p.1) ≤
-        (564383/1000000 : ℝ) * (3*(a-1)) *
-          goldbachG12PrimeIntegral (fun _ => 1) + δ := by
-  obtain ⟨N₀,hN₀,hb⟩ := product_bands_integral_budget ha ha2 he he2 δ hδ
-  refine ⟨N₀,hN₀,?_⟩
-  intro N hN ρ hmesh
-  have hN1 : 1 ≤ N := by omega
-  have hlog : 0 ≤ Real.log (N : ℝ)/(N : ℝ) :=
-    div_nonneg (Real.log_nonneg (by exact_mod_cast hN1)) (Nat.cast_nonneg _)
-  have hlo : ε/a ≤ a*ε := (div_le_self he.le ha.le).trans
-    (le_mul_of_one_le_left he.le ha.le)
-  have hhi : 1/a ≤ (1 : ℝ) := (div_le_iff₀ (show 0 < a by linarith)).mpr (by linarith)
-  have hmass := mul_le_mul_of_nonneg_left (productBoundary_mass_le_bands hN1 ha he hmesh)
-    (show (0 : ℝ) ≤ 400 by norm_num)
-  rw [mul_add] at hmass
-  have hthin := hmass.trans (add_le_add (bandMass_le_thinSum ε _ _ hlo)
-    (bandMass_le_thinSum ε _ _ hhi))
-  exact (mul_le_mul_of_nonneg_left hthin hlog).trans (hb N hN)
 
 /-- The remaining roughness branch, retained as a literal physical set. -/
 def roughBoundary (ρ : ℝ) (N : ℕ) (ε : ℝ) : Finset (ℕ × ℕ) :=
@@ -332,15 +251,6 @@ theorem boundary_union_decomposition (ρ : ℝ) (N : ℕ) (ε : ℝ) :
       exact mem_biUnion.mpr ⟨k,hk,(boundaryCell_iff ρ N ε k p.1 p.2 hm).mpr
         (Or.inl hf)⟩
 
-/-- The union budget is also exactly the sum over the original disjoint cells. -/
-theorem productBoundary_sum_cells {ρ : ℝ} (hρ : 1 < ρ) (N : ℕ) (ε : ℝ)
-    (f : ℕ × ℕ → ℝ) :
-    (∑ p ∈ productBoundary ρ N ε, f p) =
-      ∑ k ∈ indices ρ N, ∑ p ∈ (motherCell ρ N ε k).filter
-        (fun p => (shortLower ρ N k : ℝ)*p.1 < ε*N ∨ N ≤ shortUpper ρ N k*p.1), f p := by
-  apply sum_biUnion
-  intro k _ l _ hkl
-  exact (cell_disjoint hρ N ε hkl).mono (filter_subset _ _) (filter_subset _ _)
 
 /-- Explicit rounding allowance discharges every clipped short-cell ratio. -/
 theorem short_ratio_of_rounding {ρ a : ℝ} (hρ : 1 < ρ) (hρa : ρ ≤ a)
@@ -354,40 +264,5 @@ theorem short_ratio_of_rounding {ρ a : ℝ} (hρ : 1 < ρ) (hρa : ρ ≤ a)
   have hh := mul_le_mul_of_nonneg_left hlo (sub_nonneg.mpr hρa)
   nlinarith only [hw,hscale,hh]
 
-/-- A source-level body witness identifies minFac; no arbitrary new q is postulated. -/
-theorem active_minFac_body_witness {N m : ℕ}
-    (hm : m ∈ goldbachG12ActiveProductSupport N) :
-    ∃ v ∈ goldbachG12GoodCrossBodies N ((N : ℝ)^(4/53 : ℝ))
-      ((N : ℝ)^(4/33 : ℝ)) ((N : ℝ)^(3/11 : ℝ)),
-      goldbachG11SwitchedBodyProd v = m ∧ m.minFac = v.2.2.1 := by
-  obtain ⟨v,hv,hvm⟩ := mem_image.mp (mem_filter.mp hm).1
-  refine ⟨v,hv,hvm,?_⟩
-  rw [← hvm]
-  exact goldbachG11SwitchedBodyProd_minFac
-    (mem_goldbachG11GoodSwitchedBodies_iff.mp (goldbachG12GoodCrossBodies_subset _ _ _ _ hv)).1
-
-/-- Fully discharged rounded-grid budget for any fixed finer ratio rho<a.
-No cellwise analytic hypothesis remains; the cutoff precedes N. -/
-theorem fixed_grid_productBoundary_integral_budget {ρ a ε : ℝ}
-    (hρ : 1 < ρ) (hρa : ρ < a) (ha2 : a ≤ 2) (he : 0 < ε) (he2 : ε ≤ 2/15)
-    (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      Real.log (N : ℝ)/(N : ℝ) *
-        (400 * ∑ p ∈ productBoundary ρ N ε, goldbachG12NormalizedCoefficient N p.1) ≤
-        (564383/1000000 : ℝ) * (3*(a-1)) *
-          goldbachG12PrimeIntegral (fun _ => 1) + δ := by
-  obtain ⟨N₁,hN₁,hb⟩ := productBoundary_integral_budget (hρ.trans hρa) ha2 he he2 δ hδ
-  have hg := ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 4/53)).comp
-    tendsto_natCast_atTop_atTop).eventually (Filter.eventually_ge_atTop (ρ/(a-ρ)))
-  obtain ⟨K,hK⟩ := Filter.eventually_atTop.mp hg
-  refine ⟨max N₁ K,hN₁.trans (le_max_left _ _),?_⟩
-  intro N hN
-  apply hb N ((le_max_left _ _).trans hN) ρ
-  intro k _
-  apply short_ratio_of_rounding hρ hρa.le
-  have hh : ρ/(a-ρ) ≤ (lowCut N : ℝ) :=
-    (hK N ((le_max_right _ _).trans hN)).trans (Nat.le_ceil _)
-  have hh' := (div_le_iff₀ (sub_pos.mpr hρa)).mp hh
-  simpa only [mul_comm] using hh'
 
 end G12FineGrid

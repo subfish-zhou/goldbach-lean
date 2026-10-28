@@ -1,5 +1,4 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarEnvelopeBounds
-
+import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

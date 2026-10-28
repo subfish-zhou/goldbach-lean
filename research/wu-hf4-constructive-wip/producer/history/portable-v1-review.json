@@ -1,0 +1,16 @@
+{
+  "status": "PORTABLE_SOURCE_REPRODUCTION_PASS_NOT_LEAN_ACCEPTANCE",
+  "producer_sha256": "34af18a316841014c09559e347b8848633d13923d1c3640536a69a2134d1eb8f",
+  "frozen_input_manifest_sha256": "91685888829c040fc6ea905f0b7e348bfb1d352c174d83acca99f9b2ea894d43",
+  "frozen_input_count": 19,
+  "python_tests": 7,
+  "both_routes_golden_modules_each": 17,
+  "canonical_fields_sha256": "e797b939f8cbb0a48f5c2b0e75853807de778b560a3a5d1fc75d3ef1eda0071f",
+  "relocated_package_read_fence_both_routes_pass": true,
+  "all40_header_origin_hashes_pass": true,
+  "old_runtime_dependency_paths_removed": true,
+  "mathematical_generated_Lean_byte_changes": 0,
+  "retired_source_modules_generated": 0,
+  "Lean_executed": false,
+  "production_modified": false
+}

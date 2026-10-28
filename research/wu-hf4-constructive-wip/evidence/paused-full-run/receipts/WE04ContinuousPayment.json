@@ -1,0 +1,49 @@
+{
+  "module": "WE04ContinuousPayment",
+  "exit_code": 0,
+  "seconds": 7.508869137614965,
+  "source_sha256": "c2754df9de030ba180b980ea19d90079585b6b43d7d42f3f13cd64d110ea1fe4",
+  "object_sha256": "cdf0bcc0436d64aec5fb339b1ccd0b2d2a04410a29349245eb921fb23d1a1903",
+  "dependencies": {
+    "WE04ContinuousSurplus": "60d9f581f68e3de8a25903f00f34c999e914fd89695b351042510888adf9f442",
+    "W17AcceptedBudget": "3aa7dbda7fdbba2702353415d2dbad17f043d23462cf217b6542b80e19fba0f7"
+  },
+  "dependency_contexts": {
+    "WE04ContinuousSurplus": "95f91c47e6f44b4e154779280f134ca7614636f04ab698bef431be94a26941db",
+    "W17AcceptedBudget": "63f880f1945c26af14834c03a019b493ea77f569f230c140b423455a44ae0878"
+  },
+  "context_sha256": "297efe72262a51093e25026657ad51b5a6e07b8781e6674c2d1d7f3412c93a49",
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE04ContinuousPayment.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE04ContinuousPayment.lean"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-R",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/lib/WE04ContinuousPayment.olean",
+    "-DautoImplicit=false",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/sources/WE04ContinuousPayment.lean"
+  ],
+  "log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "resource_log": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/logs/WE04ContinuousPayment.resources",
+  "resource_sha256": "1471741aa5a23d4ec556a5903511f786ac7c297f8010cdb2859720a760c75517",
+  "artifact_bundle_sha256": {
+    ".olean": "cdf0bcc0436d64aec5fb339b1ccd0b2d2a04410a29349245eb921fb23d1a1903"
+  }
+}

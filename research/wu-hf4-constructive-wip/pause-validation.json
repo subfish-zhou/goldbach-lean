@@ -1,0 +1,24 @@
+{
+  "status": "USER_REQUESTED_PAUSE_CURRENT_SOURCE_SNAPSHOT_READY_TO_PUSH",
+  "optimization_paused": true,
+  "production_manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+  "production_modules": 4151,
+  "production_final_closure_effective": 525529,
+  "production_bound": "r ^ 5000 \u2264 q ^ 4469",
+  "hf4_candidate_adopted": false,
+  "hf4_fresh_passed": 53,
+  "hf4_fresh_planned": 389,
+  "hf4_unchanged_verified": 3762,
+  "owned_hf4_compiler_ended": true,
+  "checks": {
+    "python_tests": 116,
+    "python_skipped": 1,
+    "static_source_check": "pass",
+    "portable_hf4_source_check": "pass"
+  },
+  "records": {
+    "portable-producer-check.log": "4517786421b6e14c364f2988f3f577400011bc37c8c2d1a7cff7ce1ad5527b9b",
+    "static-check.json": "30c4b7f29246850cf62e7a16e0c2d02f96219b3d720692f5d971ba1170c8cc5d",
+    "python-tests.log": "7b57e2d2f65333708c8a0f2eda582118f54771a65a61f207f2aac6707a4230e9"
+  }
+}

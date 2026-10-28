@@ -1,4 +1,5 @@
-import MathlibNt.SieveTheory.LiuPrimePairLogGridLimit
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
+import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
 import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
 
 open MeasureTheory Set Finset

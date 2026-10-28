@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "validation_scope": "Numerical preservation only, not full Lean acceptance",
+  "baseline_commit": "c4e1b8d00dda9661140f95e0f03f0d5a08d636c2",
+  "baseline_payment_sha256": "9e1a3769d6801c9adf04417d4690f9d734e772f5960db208811929f7e8bac1a4",
+  "current_source_sha256": {
+    "WR2IntegerLogHorner.lean": "85f3cd4443233f0c0448c465e42d4ed2edefc95c9210623fcb8b1c4c105713f7",
+    "WR2IntegerLogUpper.lean": "9772541af0e346f40e2ba755390d39bce0874414842763dde664d9b4f3fadff6",
+    "WR2ClassicalFourthDataBq.lean": "d1a40c94e1f72c704db6249c634db41319ba3a061546038d2ab8429af85afcc6",
+    "WR2ExactRationalLog.lean": "6e4ab0ba5595abd8528822260e9f40e2b7e61e4924cb4eaeae11c09d6c9bf275",
+    "WR2ClassicalCumulativeDivision.lean": "8a83c9c4fb34f1bc6ae537d74b9355c1ad2a4bb081fd768241873442b2208401",
+    "WR2ClassicalFourthTableCheck.lean": "1ee00d1c9308ef53228afcdc26a2b63c7293a2d709a213be6f014c3aa9c62db3"
+  },
+  "frozen_shared_source_sha256": {
+    "WR2IntegerLogHorner": "85f3cd4443233f0c0448c465e42d4ed2edefc95c9210623fcb8b1c4c105713f7",
+    "WR2ClassicalCumulativeDivision": "8a83c9c4fb34f1bc6ae537d74b9355c1ad2a4bb081fd768241873442b2208401",
+    "WR2IntegerLogUpper": "9772541af0e346f40e2ba755390d39bce0874414842763dde664d9b4f3fadff6",
+    "WR2ClassicalFourthTableCheck": "1ee00d1c9308ef53228afcdc26a2b63c7293a2d709a213be6f014c3aa9c62db3",
+    "WR2ExactRationalLog": "6e4ab0ba5595abd8528822260e9f40e2b7e61e4924cb4eaeae11c09d6c9bf275",
+    "WR2ClassicalCertificate": "ccd260b66cdd786b22d6b81e6fffe966bd57efc45c2370d95aed3f5b2d8c0804"
+  },
+  "source_binding": "Actual Horner arithmetic AST plus normalized binding of all remaining evaluated formulas, logHi and ceilDiv",
+  "logHi_remainder": "2*z^25/(1-z^2), without /25",
+  "payment_count": 10541,
+  "all_ceil_values_equal": true,
+  "first_payment": 0,
+  "last_payment": 278448567680703,
+  "exact_division_indices": [
+    0
+  ],
+  "zero_endpoint": true,
+  "outside_zero": {
+    "last_supported_index": 10540,
+    "bound_definition": true,
+    "samples": [
+      10541,
+      10623,
+      10624,
+      1000000000000
+    ]
+  },
+  "unrounded_rational_cross_checks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    2540,
+    4000,
+    8000,
+    10540
+  ],
+  "limitation": "Python preservation audit; downstream cumulative and final Lean proofs require independent rebuilding."
+}

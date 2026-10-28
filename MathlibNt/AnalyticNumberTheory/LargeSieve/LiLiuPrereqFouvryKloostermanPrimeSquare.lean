@@ -60,42 +60,5 @@ theorem completeKloosterman_square_modulus_norm_le_roots (m : ℕ) [NeZero m]
   rw [zmod_reduction_preimage_card] at hle
   exact_mod_cast (hle.trans_eq (Nat.mul_comm s.card m))
 
-theorem prime_quadratic_root_card_le_two (p : ℕ) [Fact p.Prime]
-    (a d : ZMod p) (ha : a ≠ 0) :
-    (univ.filter fun v : ZMod p ↦ a * v ^ 2 = d).card ≤ 2 := by
-  classical
-  let s := univ.filter fun v : ZMod p ↦ a * v ^ 2 = d
-  by_cases hs : s.Nonempty
-  · obtain ⟨v, hv⟩ := hs
-    have hv' : a * v ^ 2 = d := (mem_filter.mp hv).2
-    have hsub : s ⊆ {v, -v} := by
-      intro w hw
-      have hw' := (mem_filter.mp hw).2
-      have he : w ^ 2 = v ^ 2 := mul_left_cancel₀ ha (hw'.trans hv'.symm)
-      simpa only [mem_insert, mem_singleton] using
-        (sq_eq_sq_iff_eq_or_eq_neg.mp he)
-    exact (card_le_card hsub).trans (card_insert_le _ _ |>.trans (by simp))
-  · have hz : s = ∅ := not_nonempty_iff_eq_empty.mp hs
-    change s.card ≤ 2
-    rw [hz]
-    simp
-
-/-- A genuine square-root estimate, uniform in both frequencies, for primitive
-prime-square pairs. This includes the prime two. -/
-theorem completeKloosterman_prime_square_norm_le (p : ℕ) [Fact p.Prime]
-    (a d : ℤ) (hprimitive : ¬ (p : ℤ) ∣ a ∨ ¬ (p : ℤ) ∣ d) :
-    ‖completeKloosterman (p * p) (a : ZMod (p * p)) d‖ ≤ 2 * (p : ℝ) := by
-  have bound (b c : ℤ) (hb : ¬ (p : ℤ) ∣ b) :
-      ‖completeKloosterman (p * p) (b : ZMod (p * p)) c‖ ≤ 2 * (p : ℝ) := by
-    have hroot := prime_quadratic_root_card_le_two p (b : ZMod p) (c : ZMod p)
-      (fun hz ↦ hb ((ZMod.intCast_zmod_eq_zero_iff_dvd b p).mp hz))
-    have hR : ((univ.filter fun v : ZMod p ↦ (b : ZMod p) * v ^ 2 =
-        (c : ZMod p)).card : ℝ) ≤ 2 := by exact_mod_cast hroot
-    exact (completeKloosterman_square_modulus_norm_le_roots p b c).trans
-      ((mul_le_mul_of_nonneg_left hR (Nat.cast_nonneg p)).trans_eq (mul_comm _ _))
-  rcases hprimitive with ha | hd
-  · exact bound a d ha
-  · rw [completeKloosterman_symm]
-    exact bound d a hd
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

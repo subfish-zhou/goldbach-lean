@@ -1,0 +1,1 @@
+'Hf4Quad.ConstructiveDag.DirectTable.mass_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]

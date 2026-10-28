@@ -216,7 +216,4 @@ theorem exists_signedFamilyDensity_upper_edge :
         apply mul_le_mul_of_nonneg_left _ hV.le
         linarith [mul_le_mul_of_nonneg_right hconst hT]
 
-#check exists_signedFamilyDensity_upper_edge
-#print axioms exists_signedFamilyDensity_upper_edge
-
 end MathlibNt.SieveTheory.LiLiuPrereqWF.EdgeDensity

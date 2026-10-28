@@ -1,0 +1,24 @@
+{
+  "scope": "All surviving public, non-obvious-generated declarations from the complete previously accepted main library. Types compared structurally after erasing binder names and metadata; universe parameter names retained.",
+  "compared_declarations": 11864,
+  "type_hash_mismatches": [],
+  "missing_public_declarations": [],
+  "status": "pass",
+  "kind_mismatches": [],
+  "added_public_declarations": [
+    "MathlibNt.SieveTheory.LiuWeight.sum_nu_mul_truncatedSelbergOptimalLambda_eq_optimalX",
+    "MathlibNt.SieveTheory.LiuWeight.truncatedSelbergOptimalX_eq_sum_nu_mul_lambda"
+  ],
+  "excluded_names": {
+    "prefix": "_",
+    "substrings": [
+      "._proof_",
+      "._simp_",
+      ".match_",
+      ".eq_",
+      "._sunfold"
+    ]
+  },
+  "baseline_modules": 2142,
+  "current_modules": 2143
+}

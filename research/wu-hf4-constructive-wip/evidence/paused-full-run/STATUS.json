@@ -1,0 +1,11 @@
+{
+  "status": "PAUSED_BY_USER_NOT_ACCEPTANCE_NOT_ADOPTED",
+  "completed_successful_modules": 53,
+  "planned_fresh": 389,
+  "verified_unchanged": 3762,
+  "interrupted_module": "WE02JointCreditRankOneRoot",
+  "all_completed_exit_zero": true,
+  "requested_at_unix": 1793181312.5121474,
+  "owned_child_gone": true,
+  "source_manifest_unchanged": true
+}

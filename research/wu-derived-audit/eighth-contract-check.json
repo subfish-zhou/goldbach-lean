@@ -1,0 +1,42 @@
+{
+  "unchanged_grid_statements": [
+    "WR2ClassicalEighthCorrectionGridBlock005.lean",
+    "WR2ClassicalEighthCorrectionGridBlock031.lean",
+    "WR2ClassicalEighthCorrectionGridBlock030.lean",
+    "WR2ClassicalEighthCorrectionGridBlock019.lean",
+    "WR2ClassicalEighthCorrectionGridBlock004.lean",
+    "WR2ClassicalEighthCorrectionGridBlock016.lean",
+    "WR2ClassicalEighthCorrectionGridBlock029.lean",
+    "WR2ClassicalEighthCorrectionGridBlock002.lean",
+    "WR2ClassicalEighthCorrectionGridBlock003.lean",
+    "WR2ClassicalEighthCorrectionGridBlock008.lean",
+    "WR2ClassicalEighthCorrectionGridBlock001.lean",
+    "WR2ClassicalEighthCorrectionGridBlock009.lean",
+    "WR2ClassicalEighthCorrectionGridBlock011.lean",
+    "WR2ClassicalEighthCorrectionGridBlock007.lean",
+    "WR2ClassicalEighthCorrectionGridBlock000.lean",
+    "WR2ClassicalEighthCorrectionGridBlock014.lean",
+    "WR2ClassicalEighthCorrectionGridBlock020.lean",
+    "WR2ClassicalEighthCorrectionGridBlock025.lean",
+    "WR2ClassicalEighthCorrectionGridBlock021.lean",
+    "WR2ClassicalEighthCorrectionGridBlock027.lean",
+    "WR2ClassicalEighthCorrectionGridBlock028.lean",
+    "WR2ClassicalEighthCorrectionGridBlock010.lean",
+    "WR2ClassicalEighthCorrectionGridBlock006.lean",
+    "WR2ClassicalEighthCorrectionGridBlock026.lean",
+    "WR2ClassicalEighthCorrectionGridBlock024.lean",
+    "WR2ClassicalEighthCorrectionGridBlock022.lean",
+    "WR2ClassicalEighthCorrectionGridBlock013.lean",
+    "WR2ClassicalEighthCorrectionGridBlock023.lean",
+    "WR2ClassicalEighthCorrectionGridBlock017.lean",
+    "WR2ClassicalEighthCorrectionGridBlock012.lean",
+    "WR2ClassicalEighthCorrectionGridBlock018.lean",
+    "WR2ClassicalEighthCorrectionGridBlock015.lean"
+  ],
+  "unchanged_source_hashes": {
+    "WR2ClassicalEighthCorrection": "1625d2d6bd71d941cb5055086f67e6f75a328309f00c6f002a1eb602c99652cd",
+    "WR2ClassicalEighthCorrectionUniform": "60af42f8c895b6f774beefb21ba5cf139470fc4a1a679442b2644484a1af394e",
+    "WR2ClassicalEighthCorrectionPayments": "17355bfeaddac486512aad07ccb6bf2ab4d5c3ca6c84cf6f57e5a5b8545f0442",
+    "WR2ClassicalEighthCorrectionCertificate": "a0b4918c70b864b45673a7c895c07f2a2e735e3c51ef538ecb72d0f23a392e5a"
+  }
+}

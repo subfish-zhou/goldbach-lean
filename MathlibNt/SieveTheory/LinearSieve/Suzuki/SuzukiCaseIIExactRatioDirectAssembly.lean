@@ -1,5 +1,4 @@
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIRawRoundedTransportRefactor
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedTransportErrorBridge
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedTransportExactRatio
 import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform
 
@@ -175,7 +174,6 @@ theorem caseII_total_le_doubleRounded_direct_sourceLarge_relative_natCeil_of_err
             caseIIConcreteRoundedRelativeBracketSourceLarge N (D : ℝ) d Δ σ K) := by
       dsimp [P, E, L, R, C_end, caseIIConcreteRoundedRelativeBracketSourceLarge]
       ring
-
 
 
 end MathlibNt.SieveTheory

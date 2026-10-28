@@ -1,20 +1,10 @@
 import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectJoinedTerms
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalizationRoots
+import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalizationMonomials
+
 
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
-
-/-- The literal inclusive upper endpoint, not an interval assumption on a mask. -/
-theorem directPayMain_span (R S : ℝ) (K : WExtractedKey) (j cap : Fin 5 → ℕ) :
-    ((wKSectionGridUpper R S K j cap + 1 : ℕ) : ℝ) ≤ 2 * (2 : ℝ) ^ j 1 := by
-  have hu : wKSectionGridUpper R S K j cap ≤ 2 ^ (j 1 + 1) - 1 :=
-    (min_le_right _ _).trans (min_le_right _ _)
-  have hp : 0 < (2 : ℕ) ^ (j 1 + 1) := by positivity
-  have hh : wKSectionGridUpper R S K j cap + 1 ≤ 2 ^ (j 1 + 1) := by omega
-  have hh' : ((wKSectionGridUpper R S K j cap + 1 : ℕ) : ℝ) ≤
-      (2 : ℝ) ^ (j 1 + 1) := by exact_mod_cast hh
-  simpa only [pow_succ, mul_comm] using hh'
 
 /-- True upper modulus used by the main completion factor. -/
 theorem directPayMain_modulus (j : Fin 5 → ℕ) :

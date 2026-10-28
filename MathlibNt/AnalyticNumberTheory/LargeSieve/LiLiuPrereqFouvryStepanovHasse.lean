@@ -70,11 +70,6 @@ def stepanovHasseOperator (f : F[X]) (hf : f ≠ 0) (n k : ℕ) :
     rw [stepanov_hasse_div_mul f hf]
     simp only [RingHom.id_apply, smul_mul_assoc, stepanov_hasse_div_mul f hf, map_smul]
 
-@[simp]
-theorem stepanovHasseOperator_apply (f : F[X]) (hf : f ≠ 0)
-    (n k : ℕ) (g : F[X]) :
-    stepanovHasseOperator f hf n k g =
-      hasseDeriv k (g * f ^ n) / f ^ (n - k) := rfl
 
 /-- The factorization in Harcos Lemma 10, including the endpoint `k = n`. -/
 theorem stepanovHasseOperator_spec (f : F[X]) (hf : f ≠ 0)
@@ -83,19 +78,6 @@ theorem stepanovHasseOperator_spec (f : F[X]) (hf : f ≠ 0)
       stepanovHasseOperator f hf n k g * f ^ (n - k) :=
   (stepanov_hasse_div_mul f hf n k g).symm
 
-@[simp]
-theorem stepanovHasseOperator_zero (f : F[X]) (hf : f ≠ 0)
-    (n : ℕ) (g : F[X]) :
-    stepanovHasseOperator f hf n 0 g = g := by
-  simp only [stepanovHasseOperator_apply, hasseDeriv_zero, LinearMap.id_apply, Nat.sub_zero]
-  exact mul_div_cancel_right₀ g (pow_ne_zero n hf)
-
-@[simp]
-theorem stepanovHasseOperator_self (f : F[X]) (hf : f ≠ 0)
-    (n : ℕ) (g : F[X]) :
-    stepanovHasseOperator f hf n n g = hasseDeriv n (g * f ^ n) := by
-  simpa only [Nat.sub_self, pow_zero, mul_one] using
-    (stepanovHasseOperator_spec f hf n n g).symm
 
 /-- The natural-degree form of Harcos's estimate; valid also for `g = 0`. -/
 theorem stepanovHasseOperator_natDegree_le (f : F[X]) (hf : f ≠ 0)

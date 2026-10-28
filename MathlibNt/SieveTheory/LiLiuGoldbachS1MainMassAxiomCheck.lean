@@ -1,4 +1,0 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
-open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
-#check goldbachS1_strictEndpoint_mainMass_lower
-#print axioms goldbachS1_strictEndpoint_mainMass_lower

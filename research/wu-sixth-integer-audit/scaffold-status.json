@@ -1,0 +1,12 @@
+{
+  "status": "source_and_values_checked_pending_full_acceptance",
+  "baseline": "accepted C integer compression",
+  "baseline_modules": 4583,
+  "baseline_code_lines": 615278,
+  "archive_index_hash_matches": 4583,
+  "retained_non_grid_sixth_statements": 63,
+  "allowed_source_changes": "WR2ClassicalSixth* only",
+  "shared_horner_must_remain_byte_identical": true,
+  "production_sixth_validation": "8192 payments, 128 block targets, 63 retained contracts and 6 negative controls checked; full Lean acceptance belongs to root pipeline",
+  "lean_run_by_this_scaffold": false
+}

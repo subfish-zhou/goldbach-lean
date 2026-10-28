@@ -441,7 +441,7 @@ certify
  \frac{54233}{10000}\le4J_{\rm elem}\le C_{67}.
 \]
 The second inequality is a proved elementary-to-actual integral
-comparison; it is this inequality that will also enter the older ledger.
+comparison; the resulting certificate enters the quantitative ledger.
 No floating-point quadrature value is used as a premise.
 \inputleannode{bp:liliu-pair-certificate}
 
@@ -462,7 +462,7 @@ This is not the parameter $\log m/\log q$ of each actual cofactor;
 that parameter is not equal to the displayed endpoint ratio.
 The enlargement is also why no factor $1-\varepsilon$ survives in
 the $G_{11}$ coefficient, unlike the window-sensitive tenth-term bound.
-See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG11MainMassBuchstab.lean}{full rough mother and loss of the window factor}
+See \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG11GridKernelPaid.lean}{weighted rough-mass comparison}
 and \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG11PrimeKernel.lean}{canonical upper-endpoint geometry}.
 Write $\omega_{\mathrm B}$ for Buchstab's function,
 with $u\omega_{\mathrm B}(u)=1$ on $[1,2]$ and $(u\omega_{\mathrm B}(u))'=\omega_{\mathrm B}(u-1)$ for $u>2$.
@@ -589,41 +589,20 @@ $\kappa \mathcal X_N\le D_{1,19/10}(N)$.  The ceiling itself is not asserted.
 Choosing $\kappa=1/2000$ and using $\mathcal X_N>0$ gives the strict paper bound
 $D_{1,19/10}(N)>(1/2500)\mathcal X_N=0.0004\mathcal X_N$, not merely a weak inequality.
 \inputleannode{bp:liliu-paper}
-The qualitative existence route remains separate.  It uses the coarser
-actual $G_{11}$ coefficient $10385101/10^8$ and the five-branch
-$J_{\rm elem}$ defined above.  Its margin is the integral expression
-\[
- m_{\rm old}=4J_{\rm elem}+c_0-C_9-\frac{10385101}{10^8}-C_{12},
- \qquad \frac{126891}{200000000}\le m_{\rm old}.
-\]
-The rational number is a certified lower bound, not the definition of
-$m_{\rm old}$.  In particular $C_{67}$ has not merely been renamed.
-The old route has its own actual-count ledger:
-for every $\delta>0$, there exists $\varepsilon_0\in(0,2/15]$ such that,
-for each fixed $0<\varepsilon<\varepsilon_0$, there exists
-$N_0(\delta,\varepsilon)\ge4$ for which
-\[
- (m_{\rm old}-\delta)\mathcal X_N\le4D_{1,19/10}(N)
- \qquad(N\ge N_0\text{ even}).
-\]
-The proof substitutes $4J_{\rm elem}\le C_{67}$ into the older
-actual cross-integral ledger, keeping its coarser eleventh-term cost;
-see \sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachSharpPiecewiseLedger.lean}{old margin definition and actual-count ledger}.
-Its scalar positivity and independent witness exit are in
-\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean}{old certified margin and existence theorem}.
-Its own certified quantitative ceiling is $126891/800000000$,
-not the author-route ceiling.
-\inputleannode{bp:liliu-old-margin}
-Taking $\delta=m_{\rm old}/2$, then $\varepsilon=\varepsilon_0/2$, proves
-$D_{1,19/10}(N)>0$ and extracts the natural-power witnesses.
-The source-exponent bridge finally gives $r\le q^{(19/10)-1}$.
-This is the actual implementation of the unconditional existence theorem;
-it need not be rerouted through the stronger counting theorem.
+The same strict count now supplies the qualitative existence result.
+For sufficiently large even $N$, $\mathcal X_N>0$, so
+$D_{1,19/10}(N)>(1/2500)\mathcal X_N$ implies $D_{1,19/10}(N)>0$.
+The finite cardinality theorem then extracts natural-power witnesses.
+\inputleannode{bp:liliu-count-existence}
+The exact exponent bridge gives $r\le q^{(19/10)-1}$ for those same witnesses.
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachOneNineUnconditional.lean}{existence from the quantitative count}
+contains both consequences; the shared pair certificate is in
+\sourcefile{MathlibNt/SieveTheory/LiLiuGoldbachG67IntegralCertificate.lean}{certified G67 integral lower bound}.
 \inputleannode{bp:liliu-existence}
 
-\subsection{Four public interfaces for the two exits}
+\subsection{Four public interfaces from one quantitative argument}
 Import \texttt{Goldbach.OnePlusOneNine}. The public natural-power and
-real-exponent interfaces expose the earlier-margin existence route:
+real-exponent interfaces extract witnesses from the positive quantitative count:
 \inputleannode{bp:liliu-public-natural}
 \inputleannode{bp:liliu-public-real}
 The author-$G_{11}$ ledger supplies the strict paper count and the stronger
