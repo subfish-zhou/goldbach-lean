@@ -69,6 +69,39 @@ def project_paths(nodes, edges, selected):
     return selected, projected
 
 
+def declaration_line(lines, recorded):
+    """Resolve a declaration's exported position to the line that opens it.
+
+    Lean records a declaration range from its doc comment when one precedes it,
+    and the marker's line is already 1-based. Skip only that comment, so the
+    anchor names the declaration itself rather than its prose.
+    """
+    if not 1 <= recorded <= len(lines):
+        raise ValueError('Recorded declaration source location is outside the source file')
+    index = recorded - 1
+    if not lines[index].lstrip().startswith('/-'):
+        return recorded
+    depth, closing = 0, None
+    for offset in range(index, len(lines)):
+        for token in re.finditer(r'/-|-/', lines[offset]):
+            depth += 1 if token.group() == '/-' else -1
+            if depth <= 0:
+                closing = (offset, token.end())
+                break
+        if closing is not None:
+            break
+    if closing is None:
+        raise ValueError('Unterminated comment in recorded declaration source location')
+    line, column = closing
+    if lines[line][column:].strip():
+        return line + 1
+    while line + 1 < len(lines) and not lines[line + 1].strip():
+        line += 1
+    if line + 1 >= len(lines):
+        raise ValueError('Recorded declaration source location has no declaration')
+    return line + 2
+
+
 def ProcessOptions(options, document):
     from plasTeX.PackageResource import PackageCss, PackagePreCleanupCB
     document.addPackageResource(PackageCss(path=Path(__file__).with_name('reader.css')))
@@ -167,9 +200,11 @@ def ProcessOptions(options, document):
                 raise ValueError('Compiled catalogue source location is missing or mismatched')
             declaration, source, line = match.groups()
             relative = verified_source_path(root, source, item['path'])
+            lines = (root / relative).read_text().splitlines()
             locations[declaration] = (
                 'https://github.com/subfish-zhou/goldbach-lean/blob/'
-                f'{revision}/{quote(relative.as_posix())}#L{int(line) + 1}')
+                f'{revision}/{quote(relative.as_posix())}'
+                f'#L{declaration_line(lines, int(line))}')
         for graph in document.userdata['dep_graph']['graphs'].values():
             for node in graph.nodes:
                 declarations = node.userdata.get('leandecls', [])
