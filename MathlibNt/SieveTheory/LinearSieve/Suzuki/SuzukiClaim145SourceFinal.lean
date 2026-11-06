@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseABoundedK
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowSFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseAHighSFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseABoundedK
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowSFinal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseAHighSFinal
+
+@[expose] public section
 
 open scoped Classical BigOperators
 

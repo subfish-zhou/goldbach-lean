@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
-import MathlibNt.SieveTheory.Switching.CorrectedSievePanBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
+public import MathlibNt.SieveTheory.Switching.CorrectedSievePanBridge
 
 /-!
 # Weighted counting bridges and prime-power penalties
@@ -10,6 +12,8 @@ estimates reduce positivity to stated uniform analytic inputs.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta

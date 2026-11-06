@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FineGridSafety
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScalePackage
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FineGridSafety
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScalePackage
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

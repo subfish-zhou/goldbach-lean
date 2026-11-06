@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEuler
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEuler
 
 /-! # The coefficientwise Euler logarithmic derivative -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -23,15 +27,15 @@ theorem harcosEulerGeometric_step (d : ℕ) (hd : 0 < d) (c : ℂ) :
   · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hn
     have hne : d + m ≠ 0 := by omega
     simp only [harcosEulerGeometric, PowerSeries.coeff_mk, PowerSeries.coeff_one,
-      if_neg hne, zero_add, Nat.le_add_right, if_true, Nat.add_sub_cancel_left,
+      ite_eq_right hne, zero_add, Nat.le_add_right, ite_true, Nat.add_sub_cancel_left,
       Nat.dvd_add_self_left, Nat.add_div_left _ hd]
     split_ifs <;> simp [pow_succ, mul_comm]
   · have hlt : n < d := by omega
-    simp only [if_neg hn, mul_zero, add_zero, harcosEulerGeometric,
+    simp only [ite_eq_right hn, mul_zero, add_zero, harcosEulerGeometric,
       PowerSeries.coeff_mk, PowerSeries.coeff_one]
     by_cases hz : n = 0
     · simp [hz]
-    · rw [if_neg hz, if_neg]
+    · rw [ite_eq_right hz, ite_eq_right]
       exact fun h ↦ (Nat.le_of_dvd (Nat.pos_of_ne_zero hz) h).not_gt hlt
 
 theorem harcosEulerGeometric_mul (d : ℕ) (hd : 0 < d) (c : ℂ) :
@@ -58,10 +62,10 @@ private theorem eulerMarkedSeries_step (η : (ZMod p)[X] →* ℂ)
   rw [mul_assoc, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow_mul']
   by_cases hn : k.natDegree ≤ n
   · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hn
-    simp only [Nat.le_add_right, if_true, Nat.add_sub_cancel_left,
+    simp only [Nat.le_add_right, ite_true, Nat.add_sub_cancel_left,
       map_add, eulerMarkedSeries, harcosEulerSeries, PowerSeries.coeff_mk]
     exact harcosEulerMarked_add_degree η k hk hi m
-  · simp only [if_neg hn, mul_zero, eulerMarkedSeries, PowerSeries.coeff_mk]
+  · simp only [ite_eq_right hn, mul_zero, eulerMarkedSeries, PowerSeries.coeff_mk]
     exact harcosEulerMarked_eq_zero η k n (by omega)
 
 theorem harcosEulerMarked_series (η : (ZMod p)[X] →* ℂ)
@@ -126,7 +130,7 @@ theorem harcosEulerLog_coeff (η : (ZMod p)[X] →* ℂ) (N n : ℕ) (hn : n ≤
     simp [harcosEulerLog, harcosEulerGeometric, harcosEulerLogCoefficient]
   rw [harcosEulerLog, map_sum]
   simp_rw [PowerSeries.coeff_C_mul, map_sub, harcosEulerGeometric,
-    PowerSeries.coeff_mk, PowerSeries.coeff_one, if_neg hz, sub_zero]
+    PowerSeries.coeff_mk, PowerSeries.coeff_one, ite_eq_right hz, sub_zero]
   rw [harcosEulerPrimes, sum_biUnion]
   · have hfilter : (range (N + 1)).filter (· ∣ n) = n.divisors := by
       ext d
@@ -142,16 +146,16 @@ theorem harcosEulerLog_coeff (η : (ZMod p)[X] →* ℂ) (N n : ℕ) (hn : n ≤
         apply sum_congr rfl
         intro d _
         by_cases hd : d ∣ n
-        · rw [if_pos hd, mul_sum]
+        · rw [ite_eq_left hd, mul_sum]
           apply sum_congr rfl
           intro k hk
           have hkdeg := ((mem_harcosMonicPolynomials d k).mp (mem_filter.mp hk).1).2
-          rw [hkdeg, if_pos hd]
-        · rw [if_neg hd]
+          rw [hkdeg, ite_eq_left hd]
+        · rw [ite_eq_right hd]
           apply sum_eq_zero
           intro k hk
           have hkdeg := ((mem_harcosMonicPolynomials d k).mp (mem_filter.mp hk).1).2
-          rw [hkdeg, if_neg hd, mul_zero]
+          rw [hkdeg, ite_eq_right hd, mul_zero]
       _ = _ := by rw [← sum_filter, hfilter]; rfl
   · intro d _ e _ hde
     apply disjoint_left.mpr

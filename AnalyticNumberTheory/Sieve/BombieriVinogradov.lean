@@ -1,10 +1,12 @@
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Tactic.Linarith
 
 /-! # AnalyticNumberTheory.Sieve.BombieriVinogradov
 
@@ -40,6 +42,8 @@ References:
   - Liu, Z. (2022), arXiv:2203.07871, Theorem 1
   - Halberstam & Richert, "Sieve Methods" (1974), Ch. 9
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

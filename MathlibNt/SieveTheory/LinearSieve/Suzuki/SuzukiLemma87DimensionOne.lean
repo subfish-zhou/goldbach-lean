@@ -1,5 +1,9 @@
-import Mathlib.Analysis.Complex.ExponentialBounds
-import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
+module
+
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open MeasureTheory Set

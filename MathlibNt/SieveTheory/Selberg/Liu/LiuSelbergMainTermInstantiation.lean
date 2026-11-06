@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairTransfer
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorAsymptotic
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairTransfer
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorAsymptotic
 
 /-!
 # Liu's genuine-li Selberg main-term instantiation
@@ -9,6 +11,8 @@ coefficient with the finite component-bound theorem.  The source-facing result
 retains the evenness and nonempty-cutoff implications required by the optimized
 weight construction.
 -/
+
+@[expose] public section
 
 open Filter
 

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergMainTerm
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergMainTerm
 /-!
 # Exact finite Selberg optimization for Liu's source modulus
 
@@ -9,6 +11,8 @@ After it, the genuinely analytic missing statement is precisely the eventual,
 uniform weighted Mertens--Selberg lower bound for
 `∑_{l ∣ Q, l ≤ R} ∏_{p ∣ l} 1 / (p - 2)`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open scoped ArithmeticFunction.Moebius
@@ -51,7 +55,7 @@ theorem liuSelbergTerm_eq_selbergTerms
   have hp2r : (2 : ℝ) < p := by exact_mod_cast hpgt
   have hnu : S.nu p = ((p : ℝ) - 1)⁻¹ := by
     dsimp [S, liuSelbergBoundingSieve, liuSelbergReciprocalTotient]
-    rw [if_neg hpprime.ne_zero, Nat.totient_prime hpprime]
+    rw [ite_eq_right hpprime.ne_zero, Nat.totient_prime hpprime]
     rw [Nat.cast_sub hpprime.one_le]
     simp [one_div]
   rw [hnu]

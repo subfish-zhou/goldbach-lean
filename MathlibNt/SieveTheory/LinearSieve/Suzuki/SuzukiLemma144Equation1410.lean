@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseISourceRecurrence
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseISourceRecurrence
 
 /-!
 # Suzuki (14.10): finite assembly of the pointwise induction hypothesis
@@ -9,6 +11,8 @@ The recursive natural argument always uses ceiling division.  The cutoff and
 continuous-layer coordinates are displayed explicitly as real powers/logarithms.
 No endpoint estimate for either resulting sum is assumed.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

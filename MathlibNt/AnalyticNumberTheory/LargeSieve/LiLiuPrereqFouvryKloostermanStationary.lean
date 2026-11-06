@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanPrimePower
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanPrimePower
 
 /-!
 # Exact stationary-phase localization at square moduli
@@ -8,6 +10,8 @@ Translation by a square-zero layer removes every nonstationary residue.
 The square-modulus specialization works for all positive moduli, including
 powers of two, and leaves only the actual quadratic congruence.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -25,7 +29,7 @@ private theorem sum_localize_eigenvalue {ι : Type*} [Fintype ι]
     simp only [G, hc, hF]
     by_cases hx : c x = 1
     · simp [hx]
-    · simp only [hx, if_false]
+    · simp only [hx, ite_false]
       field_simp
   have hz : (∑ x, if c x = 1 then 0 else F x) = 0 := by
     simp_rw [← hg]
@@ -52,7 +56,7 @@ theorem completeKloosterman_square_zero_localization (q : ℕ) [NeZero q]
   have hc (u : ZMod q) : c (u + t) = c u := by
     simp only [c, zmod_isUnit_add_square_zero u t ht]
     by_cases hu : IsUnit u
-    · simp only [hu, if_true]
+    · simp only [hu, ite_true]
       rw [zmod_inv_add_square_zero u t hu ht]
       congr 1
       linear_combination (d : ZMod q) * (2 * (u⁻¹) ^ 3 - t * (u⁻¹) ^ 4) * ht
@@ -60,14 +64,14 @@ theorem completeKloosterman_square_zero_localization (q : ℕ) [NeZero q]
   have hF (u : ZMod q) : F (u + t) = c u * F u := by
     simp only [F, c, zmod_isUnit_add_square_zero u t ht]
     by_cases hu : IsUnit u
-    · simp only [hu, if_true]
+    · simp only [hu, ite_true]
       rw [zmod_inv_add_square_zero u t hu ht, ← AddChar.map_add_eq_mul]
       congr 1
       ring
     · simp [hu]
   have hchar (u : ZMod q) (hu : IsUnit u) :
       c u = 1 ↔ t * (a * u ^ 2 - (d : ZMod q)) = 0 := by
-    simp only [c, hu, if_true]
+    simp only [c, hu, ite_true]
     have hi := ZMod.mul_inv_of_unit u hu
     have hzero : ZMod.stdAddChar (t * (a - (d : ZMod q) * (u⁻¹) ^ 2)) = 1 ↔
         t * (a - (d : ZMod q) * (u⁻¹) ^ 2) = 0 := by
@@ -95,7 +99,7 @@ theorem completeKloosterman_square_zero_localization (q : ℕ) [NeZero q]
   apply sum_congr rfl
   intro u _
   by_cases hu : IsUnit u
-  · simp only [hchar u hu, F, hu, if_true, true_and]
+  · simp only [hchar u hu, F, hu, ite_true, true_and]
   · simp [F, hu]
 
 theorem zmod_mul_modulus_eq_zero_iff (q r : ℕ) [NeZero q] [NeZero r]

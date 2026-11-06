@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection10CutoffCorrectedRatio
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection10CutoffCorrectedRatio
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaElementaryHead
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

@@ -1,5 +1,7 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Tactic
 
 /-!
 # Rosser boundary densities and dyadic tails
@@ -9,6 +11,8 @@ bounds, and factorial density estimates majorize finite Rosser boundary chains.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta

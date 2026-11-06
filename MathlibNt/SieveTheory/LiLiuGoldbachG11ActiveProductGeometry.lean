@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedMother
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedMother
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

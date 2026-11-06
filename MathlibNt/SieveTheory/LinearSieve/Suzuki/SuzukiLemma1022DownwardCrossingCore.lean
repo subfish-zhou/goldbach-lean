@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Topology.Order.ProjIcc
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiConstruction
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Topology.Order.ProjIcc
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval

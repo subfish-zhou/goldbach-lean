@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Quantitative
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Quantitative
+
+@[expose] public section
 
 open Set Filter Topology
 open scoped Classical

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedCaseIEndpoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedCaseIEndpoint
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

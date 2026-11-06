@@ -1,7 +1,11 @@
-import Lean
+module
+
+public import Lean
 
 /-! Read-only, version-pinned .olean declaration index. Hashes are candidate keys,
 not kernel equality certificates. No environment import and no proof pretty-print. -/
+@[expose] public section
+
 open Lean
 namespace ProofOpt
 

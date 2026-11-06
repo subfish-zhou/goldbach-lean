@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerronAssembly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerronAssembly
 
 /-!
 # A common moving product cutoff
@@ -7,6 +9,8 @@ The profile depends on the source coordinate, but not on the conductor or
 character. Its Mellin coefficient is an entire function of the spectral
 parameter; it is not treated as a constant when shifting a contour.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset MeasureTheory
@@ -32,7 +36,7 @@ theorem movingCoefficient_norm_le (f : ℕ → ℂ) (v : ℕ → ℕ) (x : ℕ)
     unfold liuPanPerronHalfStep
     linarith
   rw [movingCoefficient, norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hratio]
-  exact mul_le_one₀ (hf a) (by positivity)
+  exact (mul_le_of_le_one_left (by positivity) (hf a)).trans
     (Real.rpow_le_one hratio.le hratio1 hs)
 
 theorem movingCoefficient_differentiable (f : ℕ → ℂ) (v : ℕ → ℕ) (x a : ℕ) :

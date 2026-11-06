@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment
+
+@[expose] public section
 
 noncomputable section
 open Filter

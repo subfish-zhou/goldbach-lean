@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10UpperError
-import MathlibNt.SieveTheory.LiLiuGoldbachB10CommonRemainder
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10UpperError
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10CommonRemainder
+
+@[expose] public section
 
 open scoped BigOperators
 open MathlibNt.SieveTheory

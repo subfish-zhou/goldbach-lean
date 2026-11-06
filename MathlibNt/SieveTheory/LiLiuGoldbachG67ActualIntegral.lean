@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachIdealPairKernel
-import MathlibNt.SieveTheory.LiLiuGoldbachG67KernelQuadrature
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachIdealPairKernel
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67KernelQuadrature
+
+@[expose] public section
 
 open scoped BigOperators Interval NNReal
 open Finset

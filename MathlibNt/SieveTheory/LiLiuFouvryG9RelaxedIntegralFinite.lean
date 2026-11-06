@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators Topology
@@ -101,7 +105,7 @@ theorem fouvryG9RelaxedIntegral_kernel_le_grid (n N : ℕ) (hn : 0 < n) (hN : 2 
           split_ifs
           · exact mul_nonneg (fouvryG9RelaxedIntegral_corner_pos hn hδ q).le (by positivity)
           · exact le_rfl) hq
-    rw [if_pos hrect] at hsingle
+    rw [ite_eq_left hrect] at hsingle
     exact hc.trans hsingle
   apply hfirst.trans
   rw [Finset.sum_comm]

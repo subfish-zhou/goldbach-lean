@@ -1,5 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrimitiveRootNumberNorm
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
+public import Mathlib.NumberTheory.MulChar.Lemmas
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrimitiveRootNumberNorm
+
+@[expose] public section
 
 open Complex Finset Filter Set
 open scoped Topology

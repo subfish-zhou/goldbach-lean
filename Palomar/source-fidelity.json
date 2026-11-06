@@ -1,0 +1,41 @@
+{
+  "method": "Compare complete files after removing inserted module/public-import/exposure headers and blank lines. The guard additionally normalizes the explicit private-level proof environment load.",
+  "checks": {
+    "Goldbach/Statement.lean": true,
+    "Goldbach/Theorem.lean": true,
+    "Goldbach/Checks.lean": true,
+    "Goldbach/OnePlusOneNine.lean": true,
+    "Goldbach/OnePlusOneNineChecks.lean": true,
+    "producer_list_identical": true,
+    "guard_body_changes_limited_to_module_header_and_full_proof_import": true
+  },
+  "nanoda_remediation": {
+    "method": "Reverse only the new injectivity lemma and five certificate invocations, then compare the entire existing files. Also compare numeric literal sequences.",
+    "files": {
+      "MathlibNt/SieveTheory/LiLiuGoldbachS3PolynomialCertificate.lean": {
+        "before_sha256": "fda56385d9ecadfb2309391f0efc45c4694b3d13a0c29ca1be8fcd933e14c44f",
+        "after_sha256": "1595dcd3355785d2bd9a64f3db02428ce1fe680fd557b1a6162d1933c78a9209",
+        "existing_content_matches_after_reversing_certificate_repair": true,
+        "numeric_literal_sequence_identical": true
+      },
+      "MathlibNt/SieveTheory/LiLiuGoldbachS3IntegralScalarCoefficients.lean": {
+        "before_sha256": "5e447f4b20b7f22a5f95019169e4bd142d18e00aca1fa012cb7a41d408bff41a",
+        "after_sha256": "f273801df6960644aca4f66b2b74ba9fc266c0b41a6065c2866f0a96e9174bdc",
+        "existing_content_matches_after_reversing_certificate_repair": true,
+        "numeric_literal_sequence_identical": true
+      },
+      "MathlibNt/SieveTheory/LiLiuGoldbachPositiveScalarPolynomial.lean": {
+        "before_sha256": "2f3042d427a53ece79623cb15e4ab900eb0d4e125b4c198f950994c045076126",
+        "after_sha256": "07c51762643fe372c9db8e5cfc1a85576b87e280159d0aa097ceb6b81e1b84bd",
+        "existing_content_matches_after_reversing_certificate_repair": true,
+        "numeric_literal_sequence_identical": true
+      }
+    },
+    "changed_main_source_files": [
+      "MathlibNt/SieveTheory/LiLiuGoldbachPositiveScalarPolynomial.lean",
+      "MathlibNt/SieveTheory/LiLiuGoldbachS3IntegralScalarCoefficients.lean",
+      "MathlibNt/SieveTheory/LiLiuGoldbachS3PolynomialCertificate.lean"
+    ],
+    "research_byte_mismatches": 0
+  }
+}

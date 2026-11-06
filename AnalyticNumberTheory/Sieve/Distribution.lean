@@ -1,7 +1,9 @@
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Tactic.Linarith
 
 /-!
 # Generic distribution lemmas
@@ -10,6 +12,8 @@ Finite lemmas connecting the multiples of a modulus in an additive sieve
 support to prime-counting congruences, and the coprimality characterization
 used to identify sieve remainders.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

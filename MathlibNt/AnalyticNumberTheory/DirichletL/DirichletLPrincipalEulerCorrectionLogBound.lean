@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
-import Mathlib.NumberTheory.DirichletCharacter.Bounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
+public import Mathlib.NumberTheory.DirichletCharacter.Bounds
+
+@[expose] public section
 
 open Complex Finset
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarAnalytic
-import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarValues
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarAnalytic
+public import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarValues
+@[expose] public section
+
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

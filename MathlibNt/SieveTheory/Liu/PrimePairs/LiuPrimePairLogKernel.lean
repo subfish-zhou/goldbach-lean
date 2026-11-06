@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
-import MathlibNt.SieveTheory.Arithmetic.PrimeReciprocalLogRectangle
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
+public import MathlibNt.SieveTheory.Arithmetic.PrimeReciprocalLogRectangle
 
 /-!
 # Liu's prime-pair logarithmic kernel
@@ -10,6 +12,8 @@ from a fixed exponent rectangle by the corresponding ordered-prime reciprocal
 mass, and aggregates any finite rectangle cover.  Overlap in the cover is
 allowed; no moving-boundary or limit transfer is asserted.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -292,7 +296,7 @@ theorem liuPairLogKernelSum_le_sum_rectangleMajorants_of_cover
           apply Finset.single_le_sum _ hi
           intro j _
           exact ite_nonneg (liuPairLogKernel_nonneg hN hp) le_rfl
-        simpa only [if_pos hip] using hle
+        simpa only [ite_eq_left hip] using hle
       _ = ∑ i ∈ s, liuPairLogKernelRectangleContribution
           N (a₀ i) (a₁ i) (b₀ i) (b₁ i) := by
         rw [Finset.sum_comm]

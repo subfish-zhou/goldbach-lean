@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergOptimalWeights
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergOptimalWeights
 
 /-!
 # Arithmetic convolution for Liu's Selberg denominator
@@ -7,6 +9,8 @@ import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergOptimalWeights
 This file isolates the exact multiplicative arithmetic underlying the finite
 Selberg denominator.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open scoped ArithmeticFunction.Moebius
@@ -365,7 +369,7 @@ theorem liuSelbergCorrection_prime_of_not_dvd
   rw [show p = p ^ 1 by simp, liuSelbergCorrection_prime_pow_sum hp]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
     pow_zero, pow_one, tsub_self]
-  simp only [Nat.one_sub, if_true, pow_one]
+  simp only [Nat.one_sub, ite_true, pow_one]
   rw [liuMoebiusReciprocal_prime_pow_one hp,
     liuSelbergArithmeticFunction_prime_pow_one hp hpn]
   simp [liuMoebiusReciprocal_one, liuSelbergArithmeticFunction_apply]
@@ -411,7 +415,7 @@ theorem liuSelbergCorrection_prime_of_dvd
     liuSelbergCorrection N p = -(p : ℝ)⁻¹ := by
   rw [show p = p ^ 1 by simp, liuSelbergCorrection_prime_pow_sum hp]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
-    pow_zero, pow_one, Nat.one_sub, if_true]
+    pow_zero, pow_one, Nat.one_sub, ite_true]
   rw [liuMoebiusReciprocal_prime_pow_one hp]
   have ha : liuSelbergArithmeticFunction N p = 0 :=
     by simpa using

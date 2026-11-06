@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitiveL1
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitiveL1
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

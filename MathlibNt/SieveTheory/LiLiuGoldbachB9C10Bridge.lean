@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
-import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

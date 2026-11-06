@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedScale
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedScale
 
 /-!
 # Positive coordinates for five-variable partial summation
@@ -7,6 +9,8 @@ The frequency sign is kept separate. Coordinate cutoffs select genuine
 rectangular prefixes of the actual arithmetic carrier; they do not erase
 compatibility, residue, low-omega, or original-support conditions.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

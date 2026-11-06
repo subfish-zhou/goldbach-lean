@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LowPositivePrefixFinite
-import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LowPositivePrefixFinite
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

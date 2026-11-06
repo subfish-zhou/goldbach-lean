@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserAllDepth
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserAllDepth
+
+@[expose] public section
 
 open Set Filter Topology
 

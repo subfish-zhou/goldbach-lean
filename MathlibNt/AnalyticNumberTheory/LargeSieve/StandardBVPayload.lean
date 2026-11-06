@@ -1,8 +1,10 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVElementaryPayments
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVElementaryPayments
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
 
 /-!
  # Closed elementary payload for Standard Bombieri--Vinogradov
@@ -11,6 +13,8 @@ This module packages the elementary lanes left by the low/high conductor split.
 The asymptotic payment is proved from Mathlib's `Real.isLittleO_pow_log_id_atTop`;
 no scalar asymptotic inequality is retained as a premise.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

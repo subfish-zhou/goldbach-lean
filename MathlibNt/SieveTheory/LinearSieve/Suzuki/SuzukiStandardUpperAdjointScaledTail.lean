@@ -3,7 +3,9 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
 
 /-!
 # The scaled Laplace tail of Suzuki's standard upper adjoint
@@ -12,6 +14,8 @@ The change of variables `u = s * x` rewrites `s * p(s)` as the integral of
 `exp (-u - Ein (u / s))` over the positive half-line.  Dominated convergence,
 using `0 ≤ Ein` there, then gives the limit `1`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

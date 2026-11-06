@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution
 
 /-!
 # Delayed decomposition of the second modulus coefficient
@@ -11,6 +13,8 @@ low-omega convolution, or interval structure of an arithmetic fiber, is used.
 The further canonical `Δ, Δ'` extraction and Fourier estimates are not
 asserted here.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

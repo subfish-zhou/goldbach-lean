@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedAnalyticReduction
-import Mathlib.Analysis.SpecialFunctions.Log.Base
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedAnalyticReduction
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 /-!
 # Uniform logarithmic cost of the actual frequency shells
@@ -7,6 +9,8 @@ import Mathlib.Analysis.SpecialFunctions.Log.Base
 The count bound depends only on the ambient scale and the fixed cutoff
 exponent, not the residue, nu, coefficient family, or surviving masks.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Filter

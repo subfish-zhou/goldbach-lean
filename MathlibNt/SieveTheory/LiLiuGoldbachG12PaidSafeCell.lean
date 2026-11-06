@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PaidRectangle
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PaidRectangle
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

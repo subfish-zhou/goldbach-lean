@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanActualCountCharacters
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowCarrierCorrection
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanActualCountCharacters
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowCarrierCorrection
 
 /-! Pan--Wang--Ding p.601: the primitive regrouping is (2.4), while
 (2.5) is the principal PNT estimate.  The two cofactor screens are (2.6)--(2.8).
 This file only supplies exact finite equalities, keeping the whole a-sum. -/
+@[expose] public section
+
 noncomputable section
 open scoped BigOperators
 open Classical Finset

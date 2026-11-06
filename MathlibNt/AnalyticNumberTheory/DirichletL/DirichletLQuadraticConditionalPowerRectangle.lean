@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalPowerZeroFree
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLNonquadraticConductorLogRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalPowerZeroFree
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLNonquadraticConductorLogRectangle
 
 /-!
 # Fixed-height quadratic rectangles away from height zero
@@ -12,6 +14,8 @@ derivative and logarithmic-derivative estimates available there.  The latter
 keeps the actual L-value in the denominator; no lower bound for that value is
 silently postulated.
 -/
+
+@[expose] public section
 
 open Complex Set
 
@@ -72,7 +76,7 @@ theorem dirichletLQuadraticConditionalPowerZeroFreeH_le_fixedH
   have habsden : 2 * τ ≤ |2 * t| := by rw [habs]; linarith
   have hinv : 1 / |2 * t| ≤ 1 / (2 * τ) :=
     one_div_le_one_div_of_le hden habsden
-  simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dif_neg ht,
+  simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dite_eq_right ht,
     dirichletLQuadraticConditionalFixedH]
   linarith
 

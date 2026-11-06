@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSecondaryGrowth
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSecondaryGrowth
 
 /-! Actual occupied-block geometry with only the numerator scale enlarged. -/
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

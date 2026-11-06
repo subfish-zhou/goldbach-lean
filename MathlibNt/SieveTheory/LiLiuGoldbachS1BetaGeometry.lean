@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
-import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+public import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ExtendedUpperEdge
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ExtendedUpperEdge
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.G9ExtendedUpper
 open Finset ArithmeticFunction SmallRosser
@@ -70,7 +74,7 @@ theorem exists_externalFamilyDensity_upper_extended :
       nlinarith only [mul_le_mul_of_nonneg_left hTD hCe.le,
         mul_le_mul_of_nonneg_right hconst hT]
     rw [externalDensity_eq true P hP]
-    simp only [not_le.mpr hzD, if_false, if_true]
+    simp only [not_le.mpr hzD, ite_false, ite_true]
     change signedFamilyDensity true (externalEdgePrimes P D) D ε
       (geometricSieveLabel D ε) (primeDensity ω) ≤
         V * (jr1965F (Real.log Q / Real.log z) + Ce * TD) at hupper

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
+
+@[expose] public section
 
 open scoped BigOperators Topology
 open Classical Finset Filter

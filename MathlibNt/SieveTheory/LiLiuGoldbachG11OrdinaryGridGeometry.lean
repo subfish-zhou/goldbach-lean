@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

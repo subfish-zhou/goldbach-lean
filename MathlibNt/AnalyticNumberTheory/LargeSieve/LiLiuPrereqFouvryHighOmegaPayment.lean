@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaError
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaError
 
 /-!
 # Payment at the growing cutoff `(log x)^(1/5)`
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaError
 The threshold depends only on fixed orders and the requested logarithmic
 saving. It precedes all changing scales, supports, coefficients and residues.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

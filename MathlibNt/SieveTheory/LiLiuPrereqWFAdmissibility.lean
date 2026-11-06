@@ -1,6 +1,8 @@
-import Mathlib.Algebra.Order.BigOperators.GroupWithZero.List
-import Mathlib.Analysis.Real.Sqrt
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoxAllocation
+module
+
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.List
+public import Mathlib.Analysis.Real.Sqrt
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoxAllocation
 
 /-!
 # Iwaniec's numerical admissibility and lower-endpoint allocation
@@ -20,6 +22,8 @@ induction of Lemma 1, p. 312 (`pages/iwaniec-4.png`, left page). The resulting
 partition preserves occurrences, including repeated labels. No assertion that
 the two subsequences retain the original parity conditions is made here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWFAdmissibility
 

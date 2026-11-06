@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergMainTermInstantiation
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergMainTermInstantiation
 
 /-!
 # Liu's Selberg assembly on the even filter
@@ -9,6 +11,8 @@ filter rather than requested for all natural numbers.  It retains the
 componentwise source-input route and also supplies the canonical aggregate
 Pan--Wang--Ding route.
 -/
+
+@[expose] public section
 
 open Filter
 

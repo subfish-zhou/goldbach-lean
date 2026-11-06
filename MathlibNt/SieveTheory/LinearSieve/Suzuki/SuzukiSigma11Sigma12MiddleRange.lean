@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open MeasureTheory Set

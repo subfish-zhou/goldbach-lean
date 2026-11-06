@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeSeries
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Analytic.Uniqueness
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeSeries
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Calculus.FDeriv.Analytic
+public import Mathlib.Analysis.Analytic.Uniqueness
 
 /-!
 # Analytic continuation of the conditionally convergent derivative series
@@ -10,6 +12,8 @@ The natural partial sums converge locally uniformly on `re s > 0`.  Thus their
 ordered limit is holomorphic there, and the identity theorem identifies it with
 the derivative of the Dirichlet `L`-function.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter Set
 open scoped Topology
@@ -37,7 +41,7 @@ noncomputable def orderedDerivativeFunction
 lemma orderedDerivativeFunction_eq (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     (s : ℂ) (hs : 0 < s.re) :
     orderedDerivativeFunction χ hχ s = orderedLogDerivativeSeries χ hχ s hs := by
-  simp only [orderedDerivativeFunction, dif_pos hs]
+  simp only [orderedDerivativeFunction, dite_eq_left hs]
 
 private lemma norm_logCpowWeight_le {δ : ℝ}
     {s : ℂ} (hre : δ ≤ s.re) {n : ℕ} (hn : 1 ≤ n) :

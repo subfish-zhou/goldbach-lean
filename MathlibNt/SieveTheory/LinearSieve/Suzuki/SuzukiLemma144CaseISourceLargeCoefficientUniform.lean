@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIAbsorption
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeilClosed
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIAbsorption
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeilClosed
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

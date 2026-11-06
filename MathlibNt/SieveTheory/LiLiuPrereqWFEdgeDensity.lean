@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensityScalar
-import MathlibNt.SieveTheory.LiLiuPrereqWFCoordinateShift
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensityScalar
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoordinateShift
 
 /-!
 # Genuine upper density at the external near-two edge
@@ -8,6 +10,8 @@ The family is the accepted upper family on primes strictly below `sqrt D`.
 For large dimension constants its bounded aggregate replaces, rather than
 inflates, the internal analytic estimate.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.EdgeDensity
 

@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedCarrier
-import MathlibNt.SieveTheory.LiuPanWangDingSource
-import MathlibNt.SieveTheory.LiuTrueLiPan
-import MathlibNt.SieveTheory.LiLiuGoldbachS2SieveGate
-import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2SwitchedCarrier
+public import MathlibNt.SieveTheory.LiuPanWangDingSource
+public import MathlibNt.SieveTheory.LiuTrueLiPan
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2SieveGate
+public import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -143,7 +147,7 @@ private theorem S2SwitchedDivisorQFiber_card_eq
       if Nat.Coprime r d then (primesInAPBelow N r d (N % d) : ℝ) else 0 := by
   rcases Finset.mem_filter.mp hr with ⟨_, hrPrime, hrCopN, _, _⟩
   by_cases hrd : Nat.Coprime r d
-  · rw [if_pos hrd, S2SwitchedDivisorQFiber_eq_prefix hd hr]
+  · rw [ite_eq_left hrd, S2SwitchedDivisorQFiber_eq_prefix hd hr]
     norm_num
     rw [← S2Switched_primesInAPBelow_eq_card hrPrime.one_le le_rfl]
   · have hempty : S2SwitchedDivisorQFiber N d r = ∅ := by
@@ -162,7 +166,7 @@ private theorem S2SwitchedDivisorQFiber_card_eq
         exact False.elim ((hrPrime.coprime_iff_not_dvd.mp hrCopN) hrN)
       · intro hq
         cases hq
-    rw [if_neg hrd, hempty]
+    rw [ite_eq_right hrd, hempty]
     simp
 
 private theorem S2Switched_panAPPrefixCount_eq_support_sum
@@ -191,7 +195,7 @@ private theorem S2Switched_panAPPrefixCount_eq_support_sum
             refine Finset.sum_congr rfl ?_
             intro r hr
             by_cases hrd : Nat.Coprime r d
-            · rw [if_pos hrd, if_pos hrd]
+            · rw [ite_eq_left hrd, ite_eq_left hrd]
               simp [goldbachS2SwitchedCoeff_eq_one_of_mem hr]
             · simp [hrd]
 
@@ -226,7 +230,7 @@ private theorem S2Switched_panMainPrefix_eq_support_sum
             refine Finset.sum_congr rfl ?_
             intro r hr
             by_cases hrd : Nat.Coprime r d
-            · rw [if_pos hrd, if_pos hrd]
+            · rw [ite_eq_left hrd, ite_eq_left hrd]
               simp [goldbachS2SwitchedCoeff_eq_one_of_mem hr]
             · simp [hrd]
 
@@ -294,8 +298,8 @@ theorem goldbachS2SwitchedPanMainPrefix_eq_div_gatedMainMass
             refine Finset.sum_congr rfl ?_
             intro r hr
             by_cases hrd : Nat.Coprime r d
-            · rw [if_pos hrd, if_pos hrd]
-            · rw [if_neg hrd, if_neg hrd]
+            · rw [ite_eq_left hrd, ite_eq_left hrd]
+            · rw [ite_eq_right hrd, ite_eq_right hrd]
               simp
     _ = goldbachS2SwitchedGatedMainMass N T d / Nat.totient d := by
           rw [← Finset.sum_div, goldbachS2SwitchedGatedMainMass]
@@ -321,9 +325,9 @@ theorem liuMainPanCoprimeIntervalSum_eq_goldbachS2SwitchedPrefixCount_sub_mainPr
             refine Finset.sum_congr rfl ?_
             intro r hr
             by_cases hrd : Nat.Coprime r d
-            · rw [if_pos hrd, if_pos hrd, if_pos hrd]
+            · rw [ite_eq_left hrd, ite_eq_left hrd, ite_eq_left hrd]
               ring
-            · rw [if_neg hrd, if_neg hrd, if_neg hrd]
+            · rw [ite_eq_right hrd, ite_eq_right hrd, ite_eq_right hrd]
               ring
     _ = _ := by rw [Finset.sum_sub_distrib]
 

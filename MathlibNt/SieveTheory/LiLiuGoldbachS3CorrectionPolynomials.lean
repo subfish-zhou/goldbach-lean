@@ -1,5 +1,9 @@
-import MathlibNt.Tactic.PolynomialDeriv
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMajorant
+module
+
+public import MathlibNt.Tactic.PolynomialDeriv
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMajorant
+
+@[expose] public section
 
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple

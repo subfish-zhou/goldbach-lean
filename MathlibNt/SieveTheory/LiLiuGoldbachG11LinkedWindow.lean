@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeCutoffBoundary
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiEndpoints
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeCutoffBoundary
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiEndpoints
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

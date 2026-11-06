@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
-import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
+public import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+
+@[expose] public section
 
 noncomputable section
 

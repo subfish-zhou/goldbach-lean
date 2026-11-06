@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
 
 /-!
 # Exceptional mass and finite remainder transport for the actual external family
@@ -8,6 +10,8 @@ The upper edge uses a smaller prime carrier only in the existing family definiti
 exceptional moduli are still measured against the original primorial. The generic
 finite remainder budget does not assume injectivity of any underlying sequence.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -23,12 +27,12 @@ theorem externalUpperTerm_exceptional_mass_le (P : Finset ℕ) {D η : ℝ}
       |externalTerm true P D η z t d| * (d.totient : ℝ)⁻¹) ≤
         (4 / D ^ (η ^ 2)) * (1 + Real.log T) ^ 2 := by
   by_cases hz : z ≤ Real.sqrt D
-  · simp only [externalTags, hz, if_true] at ht
-    simpa only [externalTerm, hz, if_true] using
+  · simp only [externalTags, hz, ite_true] at ht
+    simpa only [externalTerm, hz, ite_true] using
       signedFamilyTerm_exceptional_mass_le true P (geometricSieveLabel D η)
         t hD hη hηsmall ht T
-  · simp only [externalTags, hz, if_false, if_true] at ht
-    simp only [externalTerm, hz, if_false, if_true]
+  · simp only [externalTags, hz, ite_false, ite_true] at ht
+    simp only [externalTerm, hz, ite_false, ite_true]
     have hsub : externalEdgePrimes P D ⊆ P := filter_subset _ _
     have hprod : (externalEdgePrimes P D).prod id ∣ P.prod id :=
       prod_dvd_prod_of_subset _ _ id hsub

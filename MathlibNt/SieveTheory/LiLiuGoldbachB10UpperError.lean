@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset MathlibNt.SieveTheory

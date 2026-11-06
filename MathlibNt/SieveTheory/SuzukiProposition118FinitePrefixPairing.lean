@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118FinitePrefixPairing
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118FinitePrefixPairing
 
 /-! Compatibility import for the canonical module in its current library location. -/

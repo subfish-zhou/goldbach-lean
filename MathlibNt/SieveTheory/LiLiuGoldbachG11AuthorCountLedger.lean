@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5PaperSplitUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorActualProducer
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5PaperSplitUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorActualProducer
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

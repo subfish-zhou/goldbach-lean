@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.BombieriDavenport
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
  # Prefix-maximal weighted primitive-character large sieve
@@ -18,6 +20,8 @@ loss explicitly.  Keeping the finite decomposition hypotheses visible makes the
 lemma directly reusable by Vaughan decompositions without introducing any
 analytic or asymptotic assumption.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

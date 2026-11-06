@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticHarmonicTruncation
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradov
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticHarmonicTruncation
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradov
+
+@[expose] public section
 
 open Complex Finset ZMod
 open scoped BigOperators Real

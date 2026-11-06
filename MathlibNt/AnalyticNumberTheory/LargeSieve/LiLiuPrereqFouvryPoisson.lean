@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothCutoff
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothCutoff
 
 /-!
 # Poisson extraction for the fixed dyadic cutoff
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothCutoff
 The period and the shift are arbitrary. The error constant is chosen before
 the scale, period, and shift, including when the period exceeds the scale.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -114,7 +118,7 @@ theorem dyadicCutoffPoissonRemainder_uniform :
       ‖dyadicCutoffPoissonRemainder t x h‖ ≤ C * poissonNonzeroDecay t h := by
     by_cases hh : h = 0
     · simp [dyadicCutoffPoissonRemainder, poissonNonzeroDecay, hh]
-    · simp only [dyadicCutoffPoissonRemainder, poissonNonzeroDecay, if_neg hh,
+    · simp only [dyadicCutoffPoissonRemainder, poissonNonzeroDecay, ite_eq_right hh,
         norm_mul, norm_smul, Real.norm_eq_abs, abs_of_pos ht,
         fourier_apply, Circle.norm_coe, mul_one]
       calc

@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.Algebra.Polynomial.OfFn
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Algebra.Polynomial.OfFn
 
 /-!
 # Harcos's polynomial character
@@ -9,6 +11,8 @@ The coefficient formula in Harcos, §3, Definition 4 and Lemma 6
 (`pages/harcos-lpolynomial-05.png`). `nextCoeff` is zero on constants;
 this includes the degree-zero endpoint in the multiplicativity statement.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -61,7 +65,7 @@ theorem harcosEta_mul (a b : ZMod p) (f g : (ZMod p)[X]) :
     field_simp
     ring
   rw [mul_coeff_zero] at hc
-  simp only [harcosEta, mul_coeff_zero, mul_ne_zero hf hg, hf, hg, if_false]
+  simp only [harcosEta, mul_coeff_zero, mul_ne_zero hf hg, hf, hg, ite_false]
   rw [nextCoeff_div_leadingCoeff_mul f g hf' hg', hc,
     ← AddChar.map_add_eq_mul]
   congr 1

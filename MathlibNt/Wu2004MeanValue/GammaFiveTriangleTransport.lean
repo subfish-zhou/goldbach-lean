@@ -1,13 +1,15 @@
-import Mathlib.Tactic.Linarith
-import Mathlib.MeasureTheory.Measure.Haar.Unique
-import Mathlib.Tactic.Measurability
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
-import Mathlib.Tactic.FunProp
-import Mathlib.MeasureTheory.Group.Integral
-import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Tactic.Linarith
+public import Mathlib.MeasureTheory.Measure.Haar.Unique
+public import Mathlib.Tactic.Measurability
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Function.LocallyIntegrable
+public import Mathlib.Tactic.FunProp
+public import Mathlib.MeasureTheory.Group.Integral
+public import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
 
 /-!
 # Parameterized affine transport of the Gamma₅ triangle
@@ -17,6 +19,8 @@ cutoff. The change of variables v = S(1-t-u) includes its Jacobian exactly.
 Unlike the earlier fourth-row calculation, these identities leave S and B
 as parameters, so that all four original rows can use the same transport.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open MeasureTheory Set
@@ -83,7 +87,7 @@ theorem triangle_source_support (S B : ℝ) (legal : Bool) (H : ℝ → ℝ) :
   intro p hp
   have hr : triangleRegion S B legal p.1 p.2 := by
     by_contra hn
-    exact hp (if_neg hn)
+    exact hp (ite_eq_right hn)
   exact ⟨⟨hr.1,hr.2.1.trans hr.2.2.1⟩,⟨hr.1.trans hr.2.1,hr.2.2.1⟩⟩
 
 theorem triangle_source_measurable (S B : ℝ) (legal : Bool) {H : ℝ → ℝ}
@@ -107,10 +111,10 @@ theorem triangle_source_bound {S B : ℝ} (hS : 0 < S) (hB : B < 1/2)
     have hden : (1/S)*(1/S)*(1-2*B) ≤ t*u*(1-t-u) :=
       mul_le_mul (mul_le_mul hr.1 (hr.1.trans hr.2.1) ha.le ht.le) hgap hc.le
         (mul_nonneg ht.le hu.le)
-    rw [triangleSource, if_pos hr, Real.norm_eq_abs, abs_div,
+    rw [triangleSource, ite_eq_left hr, Real.norm_eq_abs, abs_div,
       abs_of_pos (hd.trans_le hden)]
     exact div_le_div₀ (by norm_num) (hb _) hd hden
-  · rw [triangleSource, if_neg hr, norm_zero]
+  · rw [triangleSource, ite_eq_right hr, norm_zero]
     exact (one_div_pos.mpr hd).le
 
 /-- Compact support and the preceding bound justify Fubini on the source. -/
@@ -139,7 +143,7 @@ theorem triangle_masked_support {S : ℝ} (hS : 0 < S) (B : ℝ)
   intro p hp
   have hr : triangleSection S B legal p.1 p.2 := by
     by_contra hn
-    exact hp (if_neg hn)
+    exact hp (ite_eq_right hn)
   have hv : p.1/S*S = p.1 := div_mul_cancel₀ _ hS.ne'
   have ha : 1/S*S = 1 := one_div_mul_cancel hS.ne'
   have htB : p.2 ≤ B := by linarith [hr.2.1,hr.2.2.1]

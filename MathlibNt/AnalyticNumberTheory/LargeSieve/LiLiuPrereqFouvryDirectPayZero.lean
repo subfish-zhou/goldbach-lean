@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayZeroSquare
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayZeroSquare
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

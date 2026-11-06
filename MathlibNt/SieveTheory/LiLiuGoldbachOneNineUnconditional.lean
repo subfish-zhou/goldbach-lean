@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative
-import MathlibNt.SieveTheory.LiLiuGoldbachOneNineLiteralExponent
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorQuantitative
+public import MathlibNt.SieveTheory.LiLiuGoldbachOneNineLiteralExponent
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

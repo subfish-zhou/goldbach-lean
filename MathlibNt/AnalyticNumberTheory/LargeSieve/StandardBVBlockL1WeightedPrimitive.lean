@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.StandardBVHighActualVaughanRows
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ProductionDyadicConductorGeometry
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.StandardBVHighActualVaughanRows
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ProductionDyadicConductorGeometry
 
 /-!
  # Block-L¹ weighted primitive consumers for the production Vaughan rows
@@ -15,6 +17,8 @@ ledgers.  The small lane is the production coefficient at
 ledger plus high-conductor Cauchy.  The former `v = min N 1` path remains only
 as an explicitly named compatibility wrapper.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

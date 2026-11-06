@@ -1,4 +1,8 @@
-import PrimeNumberTheoremAnd.ZetaBounds
+module
+
+public import PrimeNumberTheoremAnd.ZetaBounds
+
+@[expose] public section
 
 open Complex Topology Filter Set
 

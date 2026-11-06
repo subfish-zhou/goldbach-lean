@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanCRT
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanCRT
 
 /-!
 # Common-frequency descent
@@ -7,6 +9,8 @@ Reduction of units is surjective even when the removed factor is not coprime
 to the retained modulus. Its uniform fibers give a totient ratio, not in
 general the removed factor. In particular the modulus-one endpoint is retained.
 -/
+
+@[expose] public section
 
 noncomputable section
 

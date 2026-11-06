@@ -1,8 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosCharacter
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEulerIndex
-import Mathlib.RingTheory.Trace.Basic
-import Mathlib.Algebra.Polynomial.Reverse
-import Mathlib.FieldTheory.Finite.Extension
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosCharacter
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEulerIndex
+public import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.Algebra.Polynomial.Reverse
+public import Mathlib.FieldTheory.Finite.Extension
 
 /-!
 # Minimal-polynomial linkage in Harcos's Theorem 6
@@ -12,6 +14,8 @@ Harcos, §3, pages 7–8 (`pages/harcos-lpolynomial-07.png` and
 with a power of the polynomial character. The extension multiplicity is
 a natural-number quotient, not division in the base field.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -116,7 +120,7 @@ theorem harcos_minpoly_eta_power (a b : ZMod p) (m : ℕ) (t : F) (ht : t ≠ 0)
         (m * (Module.finrank (ZMod p) F / (minpoly (ZMod p) t).natDegree)) := by
   have hc := minpoly.coeff_zero_ne_zero (IsIntegral.of_finite (ZMod p) t) ht
   rw [harcos_trace_minpoly_phase (ZMod p) a b t ht]
-  simp only [harcosEta, hc, if_false,
+  simp only [harcosEta, hc, ite_false,
     (minpoly.monic (IsIntegral.of_finite (ZMod p) t)).leadingCoeff, div_one]
   rw [← AddChar.map_nsmul_eq_pow, nsmul_eq_mul, Nat.cast_mul]
   congr 1
@@ -277,7 +281,7 @@ variable (p : ℕ) [Fact p.Prime]
 theorem harcosEta_frequency_of_coeff_zero_ne (a b m : ZMod p)
     (k : (ZMod p)[X]) (hk : k.coeff 0 ≠ 0) :
     harcosEta (m * a) (m * b) k = harcosEta a b k ^ m.val := by
-  simp only [harcosEta, hk, if_false]
+  simp only [harcosEta, hk, ite_false]
   rw [← AddChar.map_nsmul_eq_pow, nsmul_eq_mul, ZMod.natCast_zmod_val]
   congr 1
   ring

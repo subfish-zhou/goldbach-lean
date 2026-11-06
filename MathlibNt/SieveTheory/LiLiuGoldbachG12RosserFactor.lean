@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedSifted
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RosserFactor
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedSifted
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RosserFactor
+@[expose] public section
+
 open scoped BigOperators
 open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 open MathlibNt.SieveTheory.SwitchingPrinciple

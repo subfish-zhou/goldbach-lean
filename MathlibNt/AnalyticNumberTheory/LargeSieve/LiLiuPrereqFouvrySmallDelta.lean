@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCovariance
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCovariance
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds
 
 /-!
 # Small gcd contribution to the actual W-minus-U zero mode
@@ -9,6 +11,8 @@ An L-infinity times L-one covariance bound avoids a factor of the gcd.
 Elementary reciprocal divisor means then evaluate the entire small-gcd
 modulus sum. The complementary large-gcd contribution is left explicit.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

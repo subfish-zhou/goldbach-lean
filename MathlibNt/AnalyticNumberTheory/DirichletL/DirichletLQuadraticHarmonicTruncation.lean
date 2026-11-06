@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConjugation
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConjugation
 
 /-!
 # Real harmonic truncations for quadratic Dirichlet L-values
@@ -8,6 +10,8 @@ approximation to `L(1, χ)`.  It is the first elementary reduction used in the
 large-conductor Landau--Siegel argument: after this point the missing input is
 a lower bound for an explicit finite quadratic-character harmonic sum.
 -/
+
+@[expose] public section
 
 open Complex Finset
 

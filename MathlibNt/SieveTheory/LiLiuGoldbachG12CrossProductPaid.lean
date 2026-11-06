@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossProduct
-import MathlibNt.SieveTheory.LiLiuGoldbachQuadrupleExceptionBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossProduct
+public import MathlibNt.SieveTheory.LiLiuGoldbachQuadrupleExceptionBudget
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

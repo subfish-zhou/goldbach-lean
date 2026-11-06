@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
-import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
-import Mathlib.Data.Fintype.Order
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
+public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
+public import Mathlib.Data.Fintype.Order
 
 /-!
 # Removing finitely many conductors from a quadratic Siegel lower bound
@@ -14,6 +16,8 @@ conductors.
 
 No characters or conductors are enumerated in this argument.
 -/
+
+@[expose] public section
 
 open Complex
 

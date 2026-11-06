@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
-import Mathlib.Algebra.Order.Floor.Semifield
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
+public import Mathlib.Algebra.Order.Floor.Semifield
+
+@[expose] public section
 
 open Filter
 

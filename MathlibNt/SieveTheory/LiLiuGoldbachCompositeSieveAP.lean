@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

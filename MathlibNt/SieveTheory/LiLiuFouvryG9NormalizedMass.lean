@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9S5MassUpper
-import MathlibNt.SieveTheory.LiLiuFouvryG9MainScalar
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9S5MassUpper
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MainScalar
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpoint
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144RecursiveCoordinateSourceSigma
+module
 
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpoint
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144RecursiveCoordinateSourceSigma
+
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

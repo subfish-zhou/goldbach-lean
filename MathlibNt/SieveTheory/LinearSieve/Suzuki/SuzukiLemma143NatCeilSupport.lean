@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141Factorial
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143UniformTailCore
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141Factorial
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143UniformTailCore
 
 /-!
 # Suzuki Lemma 14.3 at the natural-ceiling cutoff
@@ -9,6 +11,8 @@ For `z = ⌈D^(1/s)⌉₊`, the strict condition `p < z` is transported exactly 
 `p < D^(1/s)`.  This makes every source carrier through layer `⌊s-2⌋₊`
 empty, without the generally false surrogate inequality `z^M ≤ D`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset Set

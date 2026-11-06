@@ -1,4 +1,6 @@
-import Goldbach.Theorem
+module
+
+public import Goldbach.Theorem
 
 /-!
 # Goldbach: Chen's theorem in Lean

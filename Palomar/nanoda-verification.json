@@ -1,0 +1,2090 @@
+{
+  "status": "local_palomar_mechanical_pass",
+  "recorded_at_utc": "2026-11-06T17:03:24.410325+00:00",
+  "scope": "Three qualitative Palomar Challenge statements. Six original public endpoints separately pass their literal, axiom and Lean checks.",
+  "repair": {
+    "files": {
+      "MathlibNt/SieveTheory/LiLiuGoldbachS3PolynomialCertificate.lean": {
+        "before_sha256": "fda56385d9ecadfb2309391f0efc45c4694b3d13a0c29ca1be8fcd933e14c44f",
+        "after_sha256": "1595dcd3355785d2bd9a64f3db02428ce1fe680fd557b1a6162d1933c78a9209",
+        "existing_content_matches_after_reversing_certificate_repair": true,
+        "numeric_literal_sequence_identical": true
+      },
+      "MathlibNt/SieveTheory/LiLiuGoldbachS3IntegralScalarCoefficients.lean": {
+        "before_sha256": "5e447f4b20b7f22a5f95019169e4bd142d18e00aca1fa012cb7a41d408bff41a",
+        "after_sha256": "f273801df6960644aca4f66b2b74ba9fc266c0b41a6065c2866f0a96e9174bdc",
+        "existing_content_matches_after_reversing_certificate_repair": true,
+        "numeric_literal_sequence_identical": true
+      },
+      "MathlibNt/SieveTheory/LiLiuGoldbachPositiveScalarPolynomial.lean": {
+        "before_sha256": "2f3042d427a53ece79623cb15e4ab900eb0d4e125b4c198f950994c045076126",
+        "after_sha256": "07c51762643fe372c9db8e5cfc1a85576b87e280159d0aa097ceb6b81e1b84bd",
+        "existing_content_matches_after_reversing_certificate_repair": true,
+        "numeric_literal_sequence_identical": true
+      }
+    },
+    "added_physical_lines": 19,
+    "added_effective_lines": 16,
+    "shared_lemma": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Polynomial.eq_of_num_den_eq",
+    "changed_private_certificate_types": [
+      "_private.MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarPolynomial.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPositiveScalarA_hasDerivAt._proof_1_1",
+      "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3pCoeffs_eq._proof_1_1",
+      "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q0_eq._proof_1_1",
+      "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q1_eq._proof_1_1",
+      "_private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q2_eq._proof_1_1"
+    ],
+    "removed_declarations": [],
+    "all_other_existing_declaration_types_identical": true,
+    "six_public_endpoint_type_hashes": {
+      "Goldbach.chen_theorem": "3254811107",
+      "Goldbach.representation_lower_bound": "3280396414",
+      "Goldbach.one_plus_one_nine": "4182699065",
+      "Goldbach.one_plus_one_nine_real": "2217977431",
+      "Goldbach.one_plus_one_nine_count": "3318567759",
+      "Goldbach.one_plus_one_nine_lower_bound": "3567425146"
+    },
+    "research_files_checked": 7151,
+    "research_byte_mismatches": 0
+  },
+  "nanoda": {
+    "binary": "Lean v4.35.0 bundled nanoda_bin",
+    "version": "0.4.19",
+    "lean_cmake_source_pin": "3a2407216ee84a75f9e1aead6803d0578be06ae7",
+    "binary_sha256": "cbf13950fc4a48f635a0beceeb5ed32dd82568b870cfd081b6391c1f2cf02ba5",
+    "configuration": {
+      "export_file_path": "/tmp/goldbach-nanoda-20261106/trusted-replay/exports/solution.export",
+      "nat_extension": true,
+      "num_threads": 4,
+      "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "string_extension": true,
+      "unpermitted_axiom_hard_error": false,
+      "use_stdin": false
+    },
+    "resource_observation": {
+      "382114": {
+        "argv": [
+          "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+          "/tmp/goldbach-nanoda-20261106/trusted-replay/judge/tmp/tmp.XXVxyK8H"
+        ],
+        "peak_rss_kib": 5414284
+      }
+    },
+    "binary_matches_prior_accepted_upgrade": true
+  },
+  "isolated_probes": {
+    "coefficient-decide": {
+      "probe": "coefficient-decide",
+      "exit_code": 134,
+      "seconds": 3.59,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-decide.ndjson",
+        "/tmp/goldbach-nanoda-20261106/coefficient-decide.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-decide-config.json",
+        "/tmp/goldbach-nanoda-20261106/coefficient-decide-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/coefficient-decide-config.json"
+      ]
+    },
+    "coefficient-rfl": {
+      "probe": "coefficient-rfl",
+      "exit_code": 134,
+      "seconds": 2.82,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-rfl.ndjson",
+        "/tmp/goldbach-nanoda-20261106/coefficient-rfl.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-rfl-config.json",
+        "/tmp/goldbach-nanoda-20261106/coefficient-rfl-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/coefficient-rfl-config.json"
+      ]
+    },
+    "coefficient-eager": {
+      "probe": "coefficient-eager",
+      "exit_code": 134,
+      "seconds": 3.49,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-eager.ndjson",
+        "/tmp/goldbach-nanoda-20261106/coefficient-eager.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-eager-config.json",
+        "/tmp/goldbach-nanoda-20261106/coefficient-eager-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/coefficient-eager-config.json"
+      ]
+    },
+    "coefficient-norm": {
+      "probe": "coefficient-norm",
+      "exit_code": 0,
+      "seconds": 4.95,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-norm.ndjson",
+        "/tmp/goldbach-nanoda-20261106/coefficient-norm.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-norm-config.json",
+        "/tmp/goldbach-nanoda-20261106/coefficient-norm-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/coefficient-norm-config.json"
+      ]
+    },
+    "coefficient-parts": {
+      "probe": "coefficient-parts",
+      "exit_code": 0,
+      "seconds": 6.4,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-parts.ndjson",
+        "/tmp/goldbach-nanoda-20261106/coefficient-parts.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/coefficient-parts-config.json",
+        "/tmp/goldbach-nanoda-20261106/coefficient-parts-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/coefficient-parts-config.json"
+      ]
+    },
+    "pCoefficient": {
+      "probe": "pCoefficient",
+      "exit_code": 134,
+      "seconds": 71.05,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient.ndjson",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-config.json",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-config.json"
+      ]
+    },
+    "pCoefficient-parts": {
+      "probe": "pCoefficient-parts",
+      "exit_code": 0,
+      "seconds": 25.53,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-parts.ndjson",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-parts.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-parts-config.json",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-parts-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/pCoefficient-parts-config.json"
+      ]
+    },
+    "q0Coefficient": {
+      "probe": "q0Coefficient",
+      "exit_code": 124,
+      "seconds": 180.06,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q0Coefficient.ndjson",
+        "/tmp/goldbach-nanoda-20261106/q0Coefficient.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q0Coefficient-config.json",
+        "/tmp/goldbach-nanoda-20261106/q0Coefficient-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/q0Coefficient-config.json"
+      ]
+    },
+    "q1Coefficient": {
+      "probe": "q1Coefficient",
+      "exit_code": 134,
+      "seconds": 83.03,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q1Coefficient.ndjson",
+        "/tmp/goldbach-nanoda-20261106/q1Coefficient.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q1Coefficient-config.json",
+        "/tmp/goldbach-nanoda-20261106/q1Coefficient-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/q1Coefficient-config.json"
+      ]
+    },
+    "q2Coefficient": {
+      "probe": "q2Coefficient",
+      "exit_code": 134,
+      "seconds": 89.82,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q2Coefficient.ndjson",
+        "/tmp/goldbach-nanoda-20261106/q2Coefficient.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q2Coefficient-config.json",
+        "/tmp/goldbach-nanoda-20261106/q2Coefficient-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/q2Coefficient-config.json"
+      ]
+    },
+    "q0-parts": {
+      "probe": "q0-parts",
+      "exit_code": 0,
+      "seconds": 11.28,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q0-parts.ndjson",
+        "/tmp/goldbach-nanoda-20261106/q0-parts.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q0-parts-config.json",
+        "/tmp/goldbach-nanoda-20261106/q0-parts-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/q0-parts-config.json"
+      ]
+    },
+    "q1-parts": {
+      "probe": "q1-parts",
+      "exit_code": 0,
+      "seconds": 10.58,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q1-parts.ndjson",
+        "/tmp/goldbach-nanoda-20261106/q1-parts.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q1-parts-config.json",
+        "/tmp/goldbach-nanoda-20261106/q1-parts-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/q1-parts-config.json"
+      ]
+    },
+    "q2-parts": {
+      "probe": "q2-parts",
+      "exit_code": 0,
+      "seconds": 14.56,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--stack=16777216",
+        "--",
+        "timeout",
+        "180",
+        "/usr/bin/bwrap",
+        "--ro-bind",
+        "/",
+        "/",
+        "--tmpfs",
+        "/home",
+        "--tmpfs",
+        "/root",
+        "--tmpfs",
+        "/run/user",
+        "--tmpfs",
+        "/tmp",
+        "--dir",
+        "/tmp/home",
+        "--dev",
+        "/dev",
+        "--proc",
+        "/proc",
+        "--clearenv",
+        "--tmpfs",
+        "/run",
+        "--tmpfs",
+        "/var",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q2-parts.ndjson",
+        "/tmp/goldbach-nanoda-20261106/q2-parts.ndjson",
+        "--ro-bind",
+        "/tmp/goldbach-nanoda-20261106/q2-parts-config.json",
+        "/tmp/goldbach-nanoda-20261106/q2-parts-config.json",
+        "--ro-bind",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0",
+        "--setenv",
+        "LEAN_ABORT_ON_PANIC",
+        "1",
+        "--setenv",
+        "HOME",
+        "/tmp/home",
+        "--unshare-all",
+        "--die-with-parent",
+        "--new-session",
+        "--chdir",
+        "/tmp",
+        "--",
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/nanoda_bin",
+        "/tmp/goldbach-nanoda-20261106/q2-parts-config.json"
+      ]
+    }
+  },
+  "official_preflight": {
+    "status": "pass",
+    "verifier_commit": "14aa8d6b3c2f14a8540605e37144560b9a00e7e7",
+    "bwrap_version": "bubblewrap 0.12.0",
+    "tool_sha256": {
+      "lake": "8ba83c98f76562d03b8dbc33f1057151ba6cbb121679dde76b2260ccc90495e1",
+      "lean": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+      "leanexport": "f6a6483d518a11b323c28b9bac176d2220df0e9fc3230833815db9586669c074",
+      "leanchecker": "12c38901cdbfab178f1bf6145dd30012e9a3b2c11ca695292a5884fa3cbaddb6",
+      "nanoda_bin": "cbf13950fc4a48f635a0beceeb5ed32dd82568b870cfd081b6391c1f2cf02ba5",
+      "con-ron": "60f4ca9fb9436c323789fa49aae33af6dcd1b9b54b43a66b461779ce79fd8eec",
+      "bwrap": "253e099329c33dab105efd3d2613a7fb2e2ab5b142c5b150be30b6fd6e0bf478"
+    },
+    "finished_at_utc": "2026-11-06T16:08:44.766028+00:00"
+  },
+  "mechanical_replay": {
+    "status": "pass",
+    "scope": "Local mechanical replay using the unmodified Palomar verifier functions. Pinned caches reused. Registry submission and hosted-provider capacity preflight are separate.",
+    "checks": {
+      "official-source-and-metadata": {
+        "sources": {
+          "schema_version": 1,
+          "module_required": true,
+          "maximum_lines": 10000,
+          "files_checked": 1805
+        },
+        "metadata": "pass",
+        "toolchain": "pass"
+      },
+      "official-dependency-provenance": {
+        "allowlisted_packages": {
+          "Cli": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "Qq": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "LeanSearchClient": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "proofwidgets": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "plausible": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "mathlib": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "aesop": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "batteries": [
+            "leanprover-community/mathlib4",
+            "high"
+          ],
+          "importGraph": [
+            "leanprover-community/mathlib4",
+            "high"
+          ]
+        },
+        "mathlib_toolchain": [
+          {
+            "revision": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+            "toolchain": "leanprover/lean4:v4.35.0"
+          }
+        ]
+      },
+      "official-canonical-challenge": {
+        "alias": "PalomarCanonical8d22e290f1921cc13c2935fd.Challenge",
+        "olean_sha256": "5cd24716ff6b00079eaeddf47bb348f0da768df4ddcf8ed7f227d7f95328bd6d",
+        "provenance": {
+          "source_count": 4,
+          "dependencies": [
+            {
+              "repository": "leanprover-community/mathlib4",
+              "provenance": "allowlisted"
+            }
+          ],
+          "untrusted_sources": [],
+          "trust_level": "high"
+        }
+      },
+      "publication-default-build": {
+        "exit_code": 0,
+        "log_sha256": "c95a56b5ea050e1ee68924262dc5173348506b964e813945c105d875243c2fab"
+      },
+      "publication-solution-build": {
+        "exit_code": 0,
+        "log_sha256": "6e74476f0ade976e4a9e13b0e8e140393865c76b7a6a16b258696c6af3ab38fc"
+      },
+      "official-challenge-export": {
+        "exit_code": 0,
+        "log_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "bytes": 70487410,
+        "sha256": "32e76e4488253c16619b8dea1a2ee7bf2e166f33af4a4593bed5e62747a3c1bf"
+      },
+      "official-solution-export": {
+        "exit_code": 0,
+        "log_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "bytes": 1526260316,
+        "sha256": "408e1b02a546565b14afaf273615a5e8ca00d28be87439f772f62d082736be0e"
+      },
+      "official-protected-comparator": {
+        "exit_code": 0,
+        "statement_comparison": "pass",
+        "Lean default": "accepted",
+        "nanoda": "accepted",
+        "log_sha256": "ba70bf705f67a7d50936586b59f5ed2490bf8d606a6f401eebb1161515e442d4"
+      },
+      "official-con-ron": {
+        "name": "con-ron",
+        "status": "accepted",
+        "reason": "complete",
+        "exit_code": 0,
+        "detail": "con-ron: accepted 99075 declarations (--verified)",
+        "argv": [
+          "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.35.0/bin/con-ron",
+          "--jobs=2",
+          "--verified"
+        ],
+        "budget_seconds": 1800
+      }
+    },
+    "source": "/home/azureuser/goldbach-lean/.build/palomar-verified",
+    "verifier_commit": "14aa8d6b3c2f14a8540605e37144560b9a00e7e7",
+    "started_at_utc": "2026-11-06T16:10:22Z",
+    "tool_sha256": {
+      "lake": "8ba83c98f76562d03b8dbc33f1057151ba6cbb121679dde76b2260ccc90495e1",
+      "lean": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+      "leanexport": "f6a6483d518a11b323c28b9bac176d2220df0e9fc3230833815db9586669c074",
+      "leanchecker": "12c38901cdbfab178f1bf6145dd30012e9a3b2c11ca695292a5884fa3cbaddb6",
+      "nanoda_bin": "cbf13950fc4a48f635a0beceeb5ed32dd82568b870cfd081b6391c1f2cf02ba5",
+      "con-ron": "60f4ca9fb9436c323789fa49aae33af6dcd1b9b54b43a66b461779ce79fd8eec",
+      "bwrap": "253e099329c33dab105efd3d2613a7fb2e2ab5b142c5b150be30b6fd6e0bf478"
+    },
+    "stage": "complete",
+    "finished_at_utc": "2026-11-06T16:27:56Z"
+  },
+  "additional_replay": {
+    "status": "pass",
+    "checks": {
+      "pinned-con-ron-control-PalomarPreflightSolution": {
+        "name": "con-ron",
+        "status": "accepted",
+        "reason": "complete",
+        "exit_code": 0,
+        "detail": "con-ron: accepted 466 declarations (--verified)\n\ncon-ron: 1 inductive blocks modelled in-process: Lean.Syntax (30 generated records, checked by the fold as declarations and not counted as records of the file)",
+        "argv": [
+          "/tmp/goldbach-nanoda-20261106/trusted-checker-update/con-ron",
+          "--jobs=2",
+          "--verified"
+        ],
+        "budget_seconds": 120
+      },
+      "pinned-con-ron-control-PalomarPreflightIllTyped": {
+        "name": "con-ron",
+        "status": "rejected",
+        "reason": "invalid-declaration",
+        "exit_code": 1,
+        "detail": "con-ron: 1 inductive blocks modelled in-process: Lean.Syntax (30 generated records, checked by the fold as declarations and not counted as records of the file)\ncon-ron: rejected: type mismatch in declaration [at thm palomar_preflight, fold position 10] (--verified) t=6.541s",
+        "argv": [
+          "/tmp/goldbach-nanoda-20261106/trusted-checker-update/con-ron",
+          "--jobs=2",
+          "--verified"
+        ],
+        "budget_seconds": 120
+      },
+      "pinned-con-ron-solution": {
+        "name": "con-ron",
+        "status": "accepted",
+        "reason": "complete",
+        "exit_code": 0,
+        "detail": "con-ron: accepted 99071 declarations (--verified)\n\ncon-ron: 1 inductive blocks modelled in-process: Lean.Syntax (30 generated records, checked by the fold as declarations and not counted as records of the file)",
+        "argv": [
+          "/tmp/goldbach-nanoda-20261106/trusted-checker-update/con-ron",
+          "--jobs=2",
+          "--verified"
+        ],
+        "budget_seconds": 1800
+      },
+      "additional-independent-kernels": {
+        "exit_code": 0,
+        "kernels": [
+          "Lean paranoid",
+          "lean4lean",
+          "con-leche",
+          "Lean default"
+        ],
+        "log_sha256": "97b8d0655ac50c1a75825471d8c4b4e0e5b1486c8292ae9424d9126592a3bdae"
+      }
+    },
+    "stage": "complete",
+    "finished_at_utc": "2026-11-06T17:02:57Z"
+  },
+  "registry_pinned_con_ron": {
+    "binary": "/tmp/goldbach-nanoda-20261106/trusted-checker-update/con-ron",
+    "provenance": {
+      "kind": "maintainer-pinned-release",
+      "source_toolchain": "leanprover/lean4:v4.35.0",
+      "release_tag": "v4.36.0-rc1",
+      "release_commit": "c9afcddf514a6772bd4d649f7cfc04eff0b9f15e",
+      "archive_sha256": "26b3cea1a006ad419215520b8668dcd3f6a9eeba1a123756563a739f9c6274b2",
+      "binary_sha256": "4e5616d94374cae37324dad2594f6230c2bb2297240249fc78ff508f3bc5acef",
+      "archive_url": "https://github.com/leanprover/lean4/releases/download/v4.36.0-rc1/lean-4.36.0-rc1-linux.tar.zst"
+    }
+  },
+  "resource_metrics": [
+    {
+      "elapsed_seconds": 0.241,
+      "max_rss_kib": 78920,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.12,
+      "user_cpu_seconds": 0.157,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 284780000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 80834560,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.398,
+      "max_rss_kib": 352884,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.168,
+      "user_cpu_seconds": 0.334,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 509627000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 361373696,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.228,
+      "max_rss_kib": 78792,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.107,
+      "user_cpu_seconds": 0.157,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 270351000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 80703488,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.384,
+      "max_rss_kib": 353144,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.155,
+      "user_cpu_seconds": 0.266,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 426864000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 361639936,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.232,
+      "max_rss_kib": 79116,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.108,
+      "user_cpu_seconds": 0.161,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 276266000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 81035264,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.38,
+      "max_rss_kib": 353172,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.141,
+      "user_cpu_seconds": 0.275,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 421989000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 361668608,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.229,
+      "max_rss_kib": 79176,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.102,
+      "user_cpu_seconds": 0.165,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 272806000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 81096704,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.383,
+      "max_rss_kib": 353016,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.156,
+      "user_cpu_seconds": 0.262,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 424320000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 361508864,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.312,
+      "max_rss_kib": 54536,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.077,
+      "user_cpu_seconds": 0.297,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 380797000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 55865344,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.138,
+      "max_rss_kib": 33180,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 1,
+      "system_cpu_seconds": 0.043,
+      "user_cpu_seconds": 0.134,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 183208000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 33996800,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.378,
+      "max_rss_kib": 54456,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 1,
+      "system_cpu_seconds": 0.072,
+      "user_cpu_seconds": 0.318,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 396333000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 55783424,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.144,
+      "max_rss_kib": 33236,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 1,
+      "system_cpu_seconds": 0.039,
+      "user_cpu_seconds": 0.141,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 186898000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 34054144,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.326,
+      "max_rss_kib": 82888,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 0,
+      "system_cpu_seconds": 0.034,
+      "user_cpu_seconds": 0.338,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 377920000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 84897792,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.31,
+      "max_rss_kib": 78504,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "comparator-preflight",
+      "returncode": 1,
+      "system_cpu_seconds": 0.032,
+      "user_cpu_seconds": 0.316,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 354726000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 80408576,
+      "phase": "comparator-preflight:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 1.315,
+      "max_rss_kib": 258820,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "official-canonical-challenge",
+      "returncode": 0,
+      "system_cpu_seconds": 0.442,
+      "user_cpu_seconds": 0.946,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 1393962000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 265052160,
+      "phase": "official-canonical-challenge:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.054,
+      "max_rss_kib": 23412,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "official-canonical-challenge",
+      "returncode": 0,
+      "system_cpu_seconds": 0.035,
+      "user_cpu_seconds": 0.052,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 94308000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 23994368,
+      "phase": "official-canonical-challenge:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 0.051,
+      "max_rss_kib": 23392,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 1,
+      "phase": "official-canonical-challenge",
+      "returncode": 0,
+      "system_cpu_seconds": 0.025,
+      "user_cpu_seconds": 0.065,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 97387000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 23973888,
+      "phase": "official-canonical-challenge:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 8.045,
+      "max_rss_kib": 331152,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "publication-default-build",
+      "returncode": 0,
+      "system_cpu_seconds": 4.066,
+      "user_cpu_seconds": 9.97,
+      "workspace_disk_peak_bytes": 2437120
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 14042072000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 339120128,
+      "phase": "publication-default-build:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 8.691,
+      "max_rss_kib": 943244,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "publication-solution-build",
+      "returncode": 0,
+      "system_cpu_seconds": 4.498,
+      "user_cpu_seconds": 9.557,
+      "workspace_disk_peak_bytes": 6877184
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 14061590000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 965902336,
+      "phase": "publication-solution-build:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 4.713,
+      "max_rss_kib": 597296,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "official-challenge-export",
+      "returncode": 0,
+      "system_cpu_seconds": 0.726,
+      "user_cpu_seconds": 4.019,
+      "workspace_disk_peak_bytes": 64299008
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 4751536000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 611651584,
+      "phase": "official-challenge-export:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 305.162,
+      "max_rss_kib": 3907808,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "official-solution-export",
+      "returncode": 0,
+      "system_cpu_seconds": 4.786,
+      "user_cpu_seconds": 300.027,
+      "workspace_disk_peak_bytes": 2157678592
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 304819251000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 4001615872,
+      "phase": "official-solution-export:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 591.563,
+      "max_rss_kib": 8610836,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "official-protected-comparator",
+      "returncode": 0,
+      "system_cpu_seconds": 11.402,
+      "user_cpu_seconds": 745.546,
+      "workspace_disk_peak_bytes": 64503808
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 756953589000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 8817516544,
+      "phase": "official-protected-comparator:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 121.411,
+      "max_rss_kib": 4875588,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "official-con-ron",
+      "returncode": 0,
+      "system_cpu_seconds": 15.161,
+      "user_cpu_seconds": 212.887,
+      "workspace_disk_peak_bytes": 106496
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 228053704000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 4992622592,
+      "phase": "official-con-ron:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 6.678,
+      "max_rss_kib": 123744,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "pinned-con-ron-control-PalomarPreflightSolution",
+      "returncode": 0,
+      "system_cpu_seconds": 0.043,
+      "user_cpu_seconds": 6.707,
+      "workspace_disk_peak_bytes": 8192
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 6756004000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 126734336,
+      "phase": "pinned-con-ron-control-PalomarPreflightSolution:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 6.56,
+      "max_rss_kib": 122164,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "pinned-con-ron-control-PalomarPreflightIllTyped",
+      "returncode": 1,
+      "system_cpu_seconds": 0.052,
+      "user_cpu_seconds": 6.544,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 6601922000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 125116416,
+      "phase": "pinned-con-ron-control-PalomarPreflightIllTyped:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 283.191,
+      "max_rss_kib": 7343032,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "pinned-con-ron-solution",
+      "returncode": 0,
+      "system_cpu_seconds": 41.59,
+      "user_cpu_seconds": 480.477,
+      "workspace_disk_peak_bytes": 438272
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 522073501000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 7519285248,
+      "phase": "pinned-con-ron-solution:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    },
+    {
+      "elapsed_seconds": 1794.027,
+      "max_rss_kib": 7760372,
+      "memory_source": "cgroup",
+      "peak_tasks_observed": 3,
+      "phase": "additional-independent-kernels",
+      "returncode": 0,
+      "system_cpu_seconds": 66.499,
+      "user_cpu_seconds": 2657.017,
+      "workspace_disk_peak_bytes": 3309568
+    },
+    {
+      "cpu_max_applied": false,
+      "cpu_usage_nanoseconds": 2723523239000,
+      "deadline_fired": false,
+      "exec_main_code": "1",
+      "exec_main_status": "0",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 7946641408,
+      "phase": "additional-independent-kernels:cgroup",
+      "pids_events_max": 0,
+      "rlimits_applied": {
+        "FSIZE": 1099511627776,
+        "NOFILE": 1048576
+      },
+      "supervisor": "cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "inactive",
+      "systemd_result": "success"
+    }
+  ],
+  "main_acceptance": {
+    "phase": "NanoDa coefficient certificate remediation",
+    "status": "pass",
+    "started_at_utc": "2026-11-06T16:04:07.634704+00:00",
+    "checks": {
+      "full-source-build": {
+        "command": [
+          "lake",
+          "--rehash",
+          "--wfail",
+          "build"
+        ],
+        "exit_code": 0,
+        "log_sha256": "744e8c49335981861c1d52d9f942478884e5ff97fe20ba911c26b56ec560f3c4"
+      },
+      "public-statements-and-axioms": {
+        "command": [
+          "python3",
+          "scripts/check.py"
+        ],
+        "exit_code": 0,
+        "log_sha256": "4afb38bcbf65fbf312df5d6a87c3abbda60b2b1aeb09120a080205b3ba18d8e2"
+      },
+      "strengthened-statements": {
+        "command": [
+          "lake",
+          "env",
+          "lean",
+          "-DwarningAsError=true",
+          "research/liliu-shared-lemma-cleanup/StrengthenedStatements.lean"
+        ],
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "kernel-Goldbach.Theorem": {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "--verbose",
+          "Goldbach.Theorem"
+        ],
+        "exit_code": 0,
+        "log_sha256": "dc3c884077e660c8b3aeb3d2f4777d20bce2cb3ff2746806ed84eb2873108440"
+      },
+      "kernel-Goldbach.Checks": {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "--verbose",
+          "Goldbach.Checks"
+        ],
+        "exit_code": 0,
+        "log_sha256": "2c09fdeff22406d008982ede6e8c67601f6b9159a19c06a56e23e9122771ffbb"
+      },
+      "kernel-Goldbach.OnePlusOneNine": {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "--verbose",
+          "Goldbach.OnePlusOneNine"
+        ],
+        "exit_code": 0,
+        "log_sha256": "52d414bb095b4e0e62564a5dbdcd1ad416972f9015180c56c78b8b54fbe0ec9a"
+      },
+      "kernel-Goldbach.OnePlusOneNineChecks": {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "--verbose",
+          "Goldbach.OnePlusOneNineChecks"
+        ],
+        "exit_code": 0,
+        "log_sha256": "ae77c4fd109670d4a50af7573d80b20a2f63baefcdb0827adba7642995445bc9"
+      },
+      "kernel-Goldbach.All": {
+        "command": [
+          "lake",
+          "env",
+          "leanchecker",
+          "--verbose",
+          "Goldbach.All"
+        ],
+        "exit_code": 0,
+        "log_sha256": "7af6645b2ed8e48dcccaed62b432fecfe18e07b28c708e7a488f6a8c953f7967"
+      },
+      "script-tests": {
+        "command": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts",
+          "-p",
+          "test_*.py"
+        ],
+        "exit_code": 0,
+        "log_sha256": "d34e22bda2bde22d1a7b67bb5a9278759d156c59c5ec9aa3c8527d8c23c1195b"
+      },
+      "palomar-solution": {
+        "command": [
+          "lake",
+          "--wfail",
+          "build",
+          "Palomar.Solution"
+        ],
+        "exit_code": 0,
+        "log_sha256": "f9ca72e866e12c5c3dc8565cd073d2515f8f4d651d01c2d9dd570d184d9b9605"
+      }
+    },
+    "finished_at_utc": "2026-11-06T16:10:27.663993+00:00",
+    "input_manifest_sha256": "4726bbe1b5cc26accff8569939ea5306cd7dc54b570c09933356ba77d4f66d54"
+  },
+  "proof_export": {
+    "exit_code": 0,
+    "log_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "bytes": 1526260316,
+    "sha256": "408e1b02a546565b14afaf273615a5e8ca00d28be87439f772f62d082736be0e"
+  },
+  "limitations": [
+    "Local builds reuse verified main/dependency caches.",
+    "Hosted-provider capacity preflight, public commit submission and registry registration are separate.",
+    "Historical automation account and source relationships require maintainer review."
+  ],
+  "local_evidence_directory": "/tmp/goldbach-nanoda-20261106",
+  "reproduction_scripts": {
+    "palomar_preflight.py": "48399a11e6c9c57892334dba1890e6e948663555e0937e4f0a7b145f7bcfa23d",
+    "palomar_replay.py": "c3c0345b648be073c2d8ef2d36df9ef26bd0e46d898d790971988c09723b2440",
+    "extra_replay.py": "350fab99c1a50b7898296b3afa82520d78f31f0208538ca5dc4cae3c1395ac21",
+    "check_probe.py": "6625792c751ecf941b3fb9cb8204a4d4aaddfec5f6bb7f06c038ca85e077146a",
+    "validate.py": "061c4aa7356170df9910af54dc39aa613d44449a0dba76b2ce902bd8790390ed"
+  }
+}

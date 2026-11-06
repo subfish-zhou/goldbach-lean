@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9CommonRemainder
-import MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass
-import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9CommonRemainder
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+
+
+@[expose] public section
 
 open Filter
 open AnalyticNumberTheory.Sieve

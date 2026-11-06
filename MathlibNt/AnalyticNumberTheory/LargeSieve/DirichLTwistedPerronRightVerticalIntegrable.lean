@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 open ArithmeticFunction (vonMangoldt)

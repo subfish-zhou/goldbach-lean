@@ -3,7 +3,9 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiContinuousLowerFactorSecondInterval
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiContinuousLowerFactorSecondInterval
 
 /-!
 # Suzuki's upper-source pairing and the amplitude normalization
@@ -25,6 +27,8 @@ constructs the genuine upper source `P`, its Section-10 pairing, proves the
 threshold identity from the actual adjoint equation, and exposes the exact
 final bridge.  No Section-13 hat layer occurs here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 
@@ -57,7 +61,7 @@ theorem suzukiUpperSourceP_of_two_lt {s : ℝ} (hs : 2 < s) :
     suzukiUpperSourceP s =
       2 + suzukiProposition118SourceTPlus s - suzukiContinuousLowerTail s := by
   rw [suzukiUpperSourceP]
-  simp only [if_neg (not_le_of_gt hs), suzukiContinuousUpperFactor,
+  simp only [ite_eq_right (not_le_of_gt hs), suzukiContinuousUpperFactor,
     suzukiContinuousLowerFactor, suzukiContinuousLowerTail]
   ring
 

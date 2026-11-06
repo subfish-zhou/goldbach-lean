@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIICubicClosedEndpoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIICubicClosedEndpoint
 
 /-! Compatibility import for the canonical module in its current library location. -/

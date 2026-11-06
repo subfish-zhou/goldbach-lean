@@ -1,6 +1,8 @@
-import Mathlib.Analysis.PSeries
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # Inverse-totient mass of moduli divisible by large prime squares
@@ -14,6 +16,8 @@ Supermultiplicativity of the totient then handles each prime square, and a
 finite inverse-square tail gives `4 H(T)^2 / u` for primes at least `u > 0`.
 No assertion about the support or coefficients of a sieve family is used.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.PrimeSquareMass
 
@@ -137,7 +141,7 @@ theorem badModuli_mass_le_totient_tail (T : ℕ) (R : Finset ℕ)
         have hsingle := single_le_sum (s := R) (a := p)
             (f := fun p => if p ^ 2 ∣ n then (n.totient : ℝ)⁻¹ else 0)
             (fun q _ => by split_ifs <;> positivity) hp
-        rw [if_pos hpn] at hsingle
+        rw [ite_eq_left hpn] at hsingle
         exact hsingle
       · exact sum_nonneg fun p _ => by split_ifs <;> positivity
     _ = ∑ p ∈ R, ∑ n ∈ (Icc 1 T).filter (p ^ 2 ∣ ·), (n.totient : ℝ)⁻¹ := by

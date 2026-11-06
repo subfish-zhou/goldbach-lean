@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarInnerBounds
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarAssembly
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarInnerBounds
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarAssembly
+
+@[expose] public section
 
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple
@@ -39,7 +43,7 @@ theorem s3main_high_bound {a : ℝ} (ha : 3 ≤ a) (haU : a ≤ 45/8) :
   have h := mul_le_mul_of_nonneg_left (div_le_div_of_nonneg_right hi hp) (by norm_num : (0 : ℝ) ≤ 53)
   unfold goldbachS3_scalarMainKernel s3E
   rw [max_eq_left (ha.trans hs.1)]
-  convert (add_le_add_left h (53/(s*((53/8 : ℝ)-s)))) using 1 <;> first | rfl | ring
+  convert (add_le_add_left h (53/(s*((53/8 : ℝ)-s)))) using 1 <;> ring
 
 theorem s3main4_bound :
     53 * (∫ s in (53/24 : ℝ)..(45/8 : ℝ), goldbachS3_scalarMainKernel s) ≤ (s3B4 : ℝ) := by

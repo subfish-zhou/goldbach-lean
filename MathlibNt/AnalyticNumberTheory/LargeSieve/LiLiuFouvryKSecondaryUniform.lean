@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSecondaryWeight
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSecondaryWeight
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

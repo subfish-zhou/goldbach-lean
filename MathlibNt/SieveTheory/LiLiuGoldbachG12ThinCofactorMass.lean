@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabUpperMass
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorant
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabUpperMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorant
+
+@[expose] public section
 
 open Set Filter LiLiuPrereqBuchstab
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralEventual
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralEventual
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

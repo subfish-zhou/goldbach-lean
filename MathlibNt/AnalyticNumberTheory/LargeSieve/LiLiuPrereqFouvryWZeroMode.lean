@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryArithmeticPoisson
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryArithmeticPoisson
 
 /-!
 # The full, unpruned W zero frequency
@@ -11,6 +13,8 @@ The oscillatory remainder is retained. The crude uniform coefficient envelope
 is not the Fouvry (1987) distribution estimate. No WF/SW or spectral estimate
 is used, and neither (8.25) nor (9.1) is imported.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -98,7 +102,7 @@ theorem productProgressionWeight_eq_zero_of_incompatible
     productProgressionWeight S w a q r n₁ n₂ = 0 := by
   apply Finset.sum_eq_zero
   intro m _
-  exact if_neg fun h ↦ hc (product_congruences_compatible hq ha h.1 h.2)
+  exact ite_eq_right fun h ↦ hc (product_congruences_compatible hq ha h.1 h.2)
 
 private theorem progressionRow_eq_unrestricted (N Q : Finset ℕ)
     (β c : ℕ → ℝ) (a : ℤ) (m : ℕ) :
@@ -107,8 +111,8 @@ private theorem progressionRow_eq_unrestricted (N Q : Finset ℕ)
   apply Finset.sum_congr rfl
   intro q hq
   by_cases hm : m.Coprime q
-  · simp only [if_pos hm]
-  · rw [if_neg hm, progressionMass_eq_zero_of_not_coprime N β
+  · simp only [ite_eq_left hm]
+  · rw [ite_eq_right hm, progressionMass_eq_zero_of_not_coprime N β
       (Finset.mem_filter.mp hq).2 hm, mul_zero]
 
 /-- Literal expansion of the actual signed dispersion W, before gcd pruning
@@ -143,14 +147,14 @@ theorem dispersionW_eq_product_progression_sum
   apply Finset.sum_congr rfl
   intro n₂ _
   by_cases hn : n₁.Coprime q ∧ n₂.Coprime r
-  · rw [if_pos hn]
+  · rw [ite_eq_left hn]
     unfold productProgressionWeight
     simp only [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro m _
     split_ifs <;> simp_all
     ring
-  · rw [if_neg hn]
+  · rw [ite_eq_right hn]
     apply Finset.sum_eq_zero
     intro m _
     have hc : ¬(Int.ModEq q ((m : ℤ) * n₁) a ∧
@@ -179,7 +183,7 @@ theorem productCRTResidue_spec {q r n₁ n₂ : ℕ} (a : ℤ)
       Int.ModEq r (productCRTResidue q r n₁ n₂ a * n₂) a ∧
       ∀ m : ℤ, (Int.ModEq q (m * n₁) a ∧ Int.ModEq r (m * n₂) a) ↔
         Int.ModEq (q.lcm r) m (productCRTResidue q r n₁ n₂ a) := by
-  simpa only [productCRTResidue, dif_pos hc] using
+  simpa only [productCRTResidue, dite_eq_left hc] using
     Classical.choose_spec (exists_product_crt_residue hc.1 hc.2.1 hc.2.2 a)
 
 theorem productProgressionWeight_eq_crt_progression
@@ -311,11 +315,11 @@ theorem dispersionW_eq_smoothWMain_add_nonzeroMode
   apply Finset.sum_congr rfl
   intro n₂ _
   by_cases hc : WCompatible q r n₁ n₂
-  · simp only [if_pos hc]
+  · simp only [ite_eq_left hc]
     rw [productProgressionWeight_eq_main_add_fourier hM a
       (hQ q (Finset.mem_filter.mp hq).1) (hQ r (Finset.mem_filter.mp hr).1) hc]
     ring
-  · simp only [if_neg hc, add_zero]
+  · simp only [ite_eq_right hc, add_zero]
 
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

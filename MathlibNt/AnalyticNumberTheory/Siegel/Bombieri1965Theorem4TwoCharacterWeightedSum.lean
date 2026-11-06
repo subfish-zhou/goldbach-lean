@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterContinuation
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterContinuation
 
 /-!
 # Weighted sums of the genuine two-character convolution
@@ -8,6 +10,8 @@ the constant term. The summatory error supplies an explicit endpoint and tail
 remainder. Positivity is used only for the lower bound on the finite sum.
 No zero existence or uniform Siegel bound is assumed or asserted.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory
 open scoped Topology

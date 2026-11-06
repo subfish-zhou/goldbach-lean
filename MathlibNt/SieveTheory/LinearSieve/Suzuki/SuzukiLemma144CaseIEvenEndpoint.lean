@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrenceStrictCeil
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144IHInstantiation
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrenceStrictCeil
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144IHInstantiation
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -68,7 +72,7 @@ theorem lemma144_caseI_even_endpoint_inherited_domain
     inheritedCoordinate_gt_one_of_lt_sqrt hpPrime.two_le (by omega) hpRoot
   have hMmod : M % 2 = 0 := Nat.even_iff.mp hM
   have hpredOdd : (M - 1) % 2 = 1 := by omega
-  simp only [KappaOneModel.parityDomain, hpredOdd, if_pos, Set.mem_Ioi]
+  simp only [KappaOneModel.parityDomain, hpredOdd, ite_eq_left, Set.mem_Ioi]
   norm_num
   exact hcoord
 

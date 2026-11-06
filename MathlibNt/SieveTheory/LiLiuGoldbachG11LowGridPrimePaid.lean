@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridSiftedPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSmallOutput
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridSiftedPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSmallOutput
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

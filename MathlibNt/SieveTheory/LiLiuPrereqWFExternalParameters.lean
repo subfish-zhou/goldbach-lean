@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFParameters
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFParameters
 
 /-!
 # A single internal level for a prescribed external level
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqWFParameters
 The internal level is chosen before every factorization and every sieve
 datum. The logarithmic error is transported without changing the original K.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainNonzero
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainNonzero
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceReindex
 
 /-!
 # Main nonzero occupied labels, with the common index and r varying
@@ -8,6 +10,8 @@ Only the two ordered inner triples are fixed. The original beta/zeta weight
 is independent of both averaged coordinates; the shared k multiplicity
 remains in the already constructed Gram section.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

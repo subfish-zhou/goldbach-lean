@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

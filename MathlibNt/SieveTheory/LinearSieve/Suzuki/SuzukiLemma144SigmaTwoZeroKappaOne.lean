@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144SigmaTwoDichotomy
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144SigmaTwoDichotomy
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.FiniteFibres
-import MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence
+module
+
+public import MathlibNt.SieveTheory.FiniteFibres
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10Congruence
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9S5Kernel
-import MathlibNt.SieveTheory.LiLiuFouvryG9KernelBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9S5Kernel
+public import MathlibNt.SieveTheory.LiLiuFouvryG9KernelBudget
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

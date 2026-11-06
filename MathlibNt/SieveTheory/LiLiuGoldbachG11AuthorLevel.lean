@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedAnalyticMain
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedAnalyticMain
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -51,7 +55,7 @@ theorem goldbachG11MixedLevel_log_lower {N : ℕ} {ε ρ δ : ℝ}
     have hh : Real.log T/Real.log (N : ℝ) ≤ min (Real.log (p : ℝ)/Real.log (N : ℝ)) (1/10) :=
       le_min (div_le_div_of_nonneg_right hlogp hlogN.le) ((div_le_iff₀ hlogN).2 (by linarith))
     have hc := (div_le_iff₀ hlogN).mp hh
-    rw [goldbachG11MixedLevel,if_pos hl,goldbachG11GridLowLevel]
+    rw [goldbachG11MixedLevel,ite_eq_left hl,goldbachG11GridLowLevel]
     change _ ≤ Real.log ((N : ℝ)^(5/9-δ)/T^(5/9 : ℝ))
     rw [Real.log_div (Real.rpow_pos_of_pos hn _).ne' (Real.rpow_pos_of_pos hT0 _).ne',
       Real.log_rpow hn,Real.log_rpow hT0]
@@ -61,7 +65,7 @@ theorem goldbachG11MixedLevel_log_lower {N : ℕ} {ε ρ δ : ℝ}
     rw [Real.log_rpow hn] at hh
     have hr : (1/10 : ℝ) ≤ Real.log (p : ℝ)/Real.log (N : ℝ) :=
       (le_div_iff₀ hlogN).2 (by linarith)
-    rw [min_eq_right hr,goldbachG11MixedLevel,if_neg hl,goldbachG11OrdinaryLevel,Real.log_rpow hn]
+    rw [min_eq_right hr,goldbachG11MixedLevel,ite_eq_right hl,goldbachG11OrdinaryLevel,Real.log_rpow hn]
     nlinarith
 
 /-- The author weight is derived from the literal two-route level, rather than

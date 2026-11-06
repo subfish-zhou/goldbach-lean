@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpOutputIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpOutputIntegral
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter

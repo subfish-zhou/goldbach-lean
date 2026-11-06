@@ -1,9 +1,11 @@
-import Mathlib.Data.Nat.Totient
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Data.Nat.Squarefree
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-!
 # Goldbach local density
@@ -13,6 +15,8 @@ sieve problems such as Chen's theorem and the Goldbach conjecture.  On
 squarefree moduli it is the reciprocal totient, which is the main term of the
 Bombieri--Vinogradov distribution estimates.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

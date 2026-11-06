@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
 
 /-!
  # Elementary scalar payments for Standard Bombieri--Vinogradov
@@ -9,6 +11,8 @@ This module closes the lanes which require no distributional input.  The only
 analytic inputs left to a final Standard-BV consumer are the low-conductor
 Siegel--Walfisz estimate and the high-conductor Type-I/II hybrid estimate.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -27,7 +31,7 @@ lemma reciprocalLogWeight_antitone_of_two_le
     {m n : ℕ} (hm : 2 ≤ m) (hmn : m ≤ n) :
     reciprocalLogWeight n ≤ reciprocalLogWeight m := by
   have hn : 2 ≤ n := hm.trans hmn
-  simp only [reciprocalLogWeight, if_pos hm, if_pos hn]
+  simp only [reciprocalLogWeight, ite_eq_left hm, ite_eq_left hn]
   have hmlog : 0 < Real.log (m : ℝ) :=
     Real.log_pos (by exact_mod_cast (show 1 < m by omega))
   have hlog : Real.log (m : ℝ) ≤ Real.log (n : ℝ) :=

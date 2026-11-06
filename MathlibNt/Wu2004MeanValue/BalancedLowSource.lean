@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.BalancedLowPrefix
-import MathlibNt.Wu2004MeanValue.LowRealEndpoints
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedLowPrefix
+public import MathlibNt.Wu2004MeanValue.LowRealEndpoints
 
 /-! Low conductors on every fixed balanced cofactor range. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset Filter

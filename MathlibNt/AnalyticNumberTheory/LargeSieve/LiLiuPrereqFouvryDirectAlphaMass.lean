@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficients
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectCoefficients
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

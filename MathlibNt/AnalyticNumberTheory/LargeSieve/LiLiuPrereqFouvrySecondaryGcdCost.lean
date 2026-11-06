@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
 
 /-!
 # The refined secondary mean for the actual individual-cancellation cost
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMe
 Only the nonnegative span and modulus factors are replaced by endpoint
 envelopes. The arithmetic square-root sum is still averaged in `r`.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

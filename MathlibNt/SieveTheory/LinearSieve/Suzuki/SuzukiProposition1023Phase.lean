@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiQuantitativeDerivatives
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiQuantitativeDerivatives
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval
@@ -8,9 +12,9 @@ namespace Section10CanonicalXi
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
-private noncomputable def phaseThreshold : ℝ := Real.exp 2
-private noncomputable def phaseLogConstant : ℝ := xi phaseThreshold + 3
-private noncomputable def phaseConstant : ℝ :=
+noncomputable def phaseThreshold : ℝ := Real.exp 2
+noncomputable def phaseLogConstant : ℝ := xi phaseThreshold + 3
+noncomputable def phaseConstant : ℝ :=
   xi phaseThreshold + Real.log phaseLogConstant
 
 lemma xi_monotone : Monotone xi := by

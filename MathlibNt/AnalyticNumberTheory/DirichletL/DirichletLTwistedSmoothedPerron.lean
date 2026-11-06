@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLFoundation
-import PrimeNumberTheoremAnd.MediumPNT
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLFoundation
+public import PrimeNumberTheoremAnd.MediumPNT
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 open ArithmeticFunction (vonMangoldt)

@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.Harmonic.Bounds
-import PrimeNumberTheoremAnd.Mathlib.Analysis.SpecialFunctions.Log.Basic
-import PrimeNumberTheoremAnd.Wiener
+module
 
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import PrimeNumberTheoremAnd.Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import PrimeNumberTheoremAnd.Wiener
+
+
+@[expose] public section
 
 set_option lang.lemmaCmd true
 
@@ -327,8 +331,7 @@ theorem pi_alt : ∃ c : ℝ → ℝ, c =o[atTop] (fun _ ↦ (1 : ℝ)) ∧
     obtain rfl|hx := eq_or_ne x 1
     · simp
     obtain rfl|hx := eq_or_ne x (-1 : ℝ)
-    · simp
-      norm_num
+    · simp [Nat.floor_of_nonpos (by norm_num : (-1 : ℝ) ≤ 0)]
     have : log x ≠ 0 := by simp_all
     field
 
@@ -344,7 +347,7 @@ theorem pi_alt' :
   rw [this]
   convert hf1.mul_isBigO (f₂ := (fun x ↦ x / log x)) (g₂ := (fun x ↦ x /log x))
       (isBigO_refl ..) using 2
-  all_goals first | ring | rfl
+  all_goals ring
 
 
 blueprint_comment /--

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionDomain
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionDomain
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount
 
 /-!
 # Excluding the degenerate beta diagonal on the retained IV.3 carrier
@@ -9,6 +11,8 @@ beta coordinate would then be `d ≤ x^η`, contradicting its lower support.
 The nonzero differences below are derived from the actual support and mask,
 not imposed on the final original carrier.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

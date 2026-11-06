@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
 
 /-! Compatibility import for the canonical module in its current library location. -/

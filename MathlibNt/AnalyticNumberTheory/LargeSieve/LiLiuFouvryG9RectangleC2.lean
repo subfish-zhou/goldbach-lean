@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ShortInterval
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9BufferedScale
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ModulusSupport
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ShortInterval
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9BufferedScale
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ModulusSupport
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

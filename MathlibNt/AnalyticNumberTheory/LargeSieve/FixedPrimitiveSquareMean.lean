@@ -3,7 +3,9 @@ Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma2PrimitiveLargeSieve
+module
+
+public import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma2PrimitiveLargeSieve
 
 /-! # Fixed primitive large-sieve constant for complex coefficients
 
@@ -11,13 +13,15 @@ The constant is chosen before the coefficients, interval and conductor bounds.
 This shared tool is independent of Chen's later moment and contour estimates.
 -/
 
+@[expose] public section
+
 noncomputable section
 open Classical Complex Finset Set
 open scoped BigOperators ArithmeticFunction
 namespace AnalyticNumberTheory.LargeSieve
 
 /-- The real sharp Lemma-2 package, with its absolute constant selected once. -/
-private theorem eq19SharpRealPackage : Chen1973Lemma2EquationThree :=
+theorem eq19SharpRealPackage : Chen1973Lemma2EquationThree :=
   chen1973Lemma2_equationThree_of_equationTwo
     (chen1973Lemma2_equationTwo_of_fareyEquationFour chen1973FareyEquationFour)
 

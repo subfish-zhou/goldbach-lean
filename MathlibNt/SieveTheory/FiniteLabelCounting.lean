@@ -1,6 +1,10 @@
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Data.Finset.Sigma
-import Mathlib.Algebra.Order.Sub.Basic
+module
+
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Data.Finset.Sigma
+public import Mathlib.Algebra.Order.Sub.Basic
+
+@[expose] public section
 
 open scoped BigOperators
 

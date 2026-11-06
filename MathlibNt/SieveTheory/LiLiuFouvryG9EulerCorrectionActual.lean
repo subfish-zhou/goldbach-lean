@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrection
-import MathlibNt.SieveTheory.LiLiuFouvryG9RectangleSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrection
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RectangleSieve
+
+@[expose] public section
 
 noncomputable section
 open Finset

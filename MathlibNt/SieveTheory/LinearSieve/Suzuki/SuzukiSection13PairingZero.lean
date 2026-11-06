@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingComparison
-import Mathlib.Analysis.SpecialFunctions.PolynomialExp
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingComparison
+public import Mathlib.Analysis.SpecialFunctions.PolynomialExp
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

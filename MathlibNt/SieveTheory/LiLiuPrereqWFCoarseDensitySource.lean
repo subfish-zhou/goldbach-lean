@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFAnalytic
-import MathlibNt.SieveTheory.SuzukiUpperSourcePTail
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFAnalytic
+public import MathlibNt.SieveTheory.SuzukiUpperSourcePTail
 
 /-!
 # The genuine continuous mass of the ordinary Rosser producer
@@ -9,6 +11,8 @@ The amplitude comes from the admitted adjoint pairing. The identification
 extends from the initial intervals by the integral method of steps, with no
 upper bound on the sieve coordinate or on the finite source depth.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.CoarseDensity
 

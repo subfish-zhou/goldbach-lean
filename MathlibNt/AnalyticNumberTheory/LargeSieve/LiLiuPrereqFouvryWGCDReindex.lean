@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCD
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCD
 
 /-!
 # Exact five-gcd reindexing of the retained W sum
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCD
 All finite supports, signed coefficients, and frequencies are preserved.
 The large-factor contribution is split off explicitly, not declared negligible.
 -/
+
+@[expose] public section
 
 noncomputable section
 

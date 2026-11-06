@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorHarmonic
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorHarmonic
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

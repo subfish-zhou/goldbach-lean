@@ -26,7 +26,7 @@ The [structural Chen audit](docs/CHEN_REDUNDANCY_AUDIT.md) records a net saving
 of 115,586 effective main-library lines. The subsequent
 [comparison with five original papers](docs/CHEN_PAPER_COMPARISON.md)
 shares three finite Selberg optimizer proofs and saves another 598 lines.
-The current Chen import closure contains 99,214 effective code lines.
+The current Chen import closure contains 100,345 effective code lines after the Lean 4.35 module migration.
 The [implemented Li–Liu cleanup](docs/LILIU_CLEANUP.md) follows the
 [original-paper audit](docs/LILIU_REDUNDANCY_AUDIT.md), unifies the count and
 existence routes, removes duplicate certificates and separates generic sieve
@@ -67,8 +67,14 @@ two complex-power identities, saving another 27 main/Li–Liu lines and 6 Chen l
 The [finite-prefix follow-up](docs/LILIU_FINITE_PREFIX_CLEANUP.md) shares the original
 squarefree-divisor and sorted-prefix proofs, saving another 66 main/Li–Liu lines
 and 49 Chen lines.
-Current main size: 201,756 effective lines; current Li–Liu import closure:
-194,201 lines.
+Current main size is 205,091 effective lines. The Li–Liu import closure contains
+197,121 lines after the Lean 4.35 module migration and NanoDa certificate repair. Module headers and API
+compatibility code are included. See the [Palomar preparation record](docs/PALOMAR_PREPARATION.md)
+for the upgrade and subsequent code-quality work.
+The local Palomar mechanical replay passes with the bundled Lean and NanoDa
+checkers. The registry-pinned con-ron and the three additional bundled checkers
+also accept the complete export. The [NanoDa verification record](Palomar/nanoda-verification.json)
+records the coefficient-certificate repair and measured resources.
 The [recorded build benchmarks](docs/BUILD_BENCHMARK.md)
 measure the v1.0.0-rc1 and v1.0.0 **1+2** developments.
 
@@ -182,18 +188,18 @@ large even `N` has `N = p + r*q`, with `p` and `q` prime, `r = 1` or prime,
 and `r^5000 ≤ q^4469`. The previous `one894` interface is retained.
 
 The complete 4,151-module research scope, independent literal statement and axiom
-checks, and final module kernel replay have passed. The production receipt check
-reuses 3,500 actual compiled source proofs and verifies 651 unchanged dependencies.
-Follow the research README for separate verification commands and acceptance records.
-The latest [structural compression](docs/WU_STRUCTURAL_COMPRESSION.md) saves 7,612
-effective lines while preserving precision and budgets. The final theorem import
-closure now contains 525,529 effective lines, 601,107 fewer than the original version.
-The preceding [LiuPan lemma pruning](docs/WU_LIUPAN_PRUNING.md) remains a historical
-accepted phase with 383 removed declarations and 10,924 lines saved.
-
-The [paused next Hf4 candidate](research/wu-hf4-constructive-wip/README.md) is
-preserved separately with its producer and partial verification evidence; it is
-excluded from the accepted totals above.
+checks, and final module kernel replay have passed. The latest
+[unused-proof pruning](docs/WU_UNUSED_PROOF_PRUNING.md) removes 2,119 unused proof
+declarations, saving 31,209 effective lines while preserving precision and error
+budgets. It compiles 3,957 affected modules, verifies 194 cached contexts, and
+passes 21 fresh root kernel replays and five post-install checks. The final
+theorem import closure contains 469,022 effective lines, 657,614 fewer than the
+original version. The preceding [constructive Hf4](docs/WU_HF4_CONSTRUCTIVE.md),
+[structural](docs/WU_STRUCTURAL_COMPRESSION.md) and
+[383-lemma](docs/WU_LIUPAN_PRUNING.md) phases remain historical accepted records.
+The [pause/resume snapshot](research/wu-hf4-constructive-wip/README.md) preserves
+execution history; its public/private pruning candidates have now been reviewed
+against the new environment and adopted in this separate phase.
 
 ## Build and check
 
@@ -218,7 +224,7 @@ command above replays the Chen public module against cached imports. The
 [verification guide](docs/VERIFICATION.md) gives the Li–Liu inspection and replay
 commands as well.
 
-The checks reject proof placeholders and custom axioms in the shipped source,
+The checks reject proof placeholders and custom axioms in the main proof libraries,
 verify the public theorem axiom reports against Lean's standard classical
 axioms (`propext`, `Classical.choice`, `Quot.sound`), and check source hygiene.
 Read [`docs/VERIFICATION.md`](docs/VERIFICATION.md) for the exact coverage and
@@ -247,10 +253,12 @@ To use the integration branch instead, run `git fetch origin`, then
 `git switch --track origin/integrate/liliu19-latest` instead. Preserve or commit
 any local work before switching branches.
 
-The package configuration, toolchain and dependency pins are unchanged. Lake
-can reuse unchanged dependency artifacts and rebuilds new or changed modules
-and affected consumers as needed. Keep the existing `.lake/` directory; rebuild
-work depends on your cache state and selected target.
+The Palomar preparation upgrades the main project to Lean and Mathlib `v4.35.0`.
+Run `lake exe cache get` after updating to fetch the matching dependency cache,
+then rebuild the selected target. Keep the existing `.lake/` directory so Lake
+can reuse compatible artifacts. The separate Wu research project retains its
+own pinned environment. See the [preparation record](docs/PALOMAR_PREPARATION.md)
+for the publication scope and verification results.
 
 ## Organization
 

@@ -1,8 +1,12 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMovingPrefix
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMovingPrefix
 
 /-! Preserve the frozen SW prefix maximum when transporting to `N / a`.
 No new Siegel--Walfisz input is assumed. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Filter Finset

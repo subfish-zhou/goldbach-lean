@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
 
 /-!
 # Liu's genuine logarithmic-integral weight sum
@@ -7,6 +9,8 @@ This module reindexes the finite characteristic weight by its unique prime-pair
 representation and separates Liu's printed reciprocal-log estimate from the
 comparison between the genuine logarithmic integral and `x / log x`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter Asymptotics

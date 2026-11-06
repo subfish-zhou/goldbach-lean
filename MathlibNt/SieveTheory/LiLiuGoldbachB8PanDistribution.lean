@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
-import MathlibNt.SieveTheory.LiuPanWangDingSource
-import MathlibNt.SieveTheory.LiuTrueLiPan
-import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
+public import MathlibNt.SieveTheory.LiuPanWangDingSource
+public import MathlibNt.SieveTheory.LiuTrueLiPan
+public import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter
@@ -72,7 +76,7 @@ private theorem B8PanDivisorQFiber_card {N d m : ℕ}
     ((B8PanDivisorQFiber N d m).card : ℝ) =
       if Nat.Coprime m d then (primesInAPBelow N m d (N % d) : ℝ) else 0 := by
   by_cases hc : Nat.Coprime m d
-  · rw [if_pos hc]
+  · rw [ite_eq_left hc]
     congr 1
     unfold B8PanDivisorQFiber primesInAPBelow
     congr 1
@@ -85,7 +89,7 @@ private theorem B8PanDivisorQFiber_card {N d m : ℕ}
     · rintro ⟨hq, hp, hle, hmod⟩
       exact ⟨hq, hp, (goldbachC8Product_mul_lt_iff_le hm).mpr hle,
         (Nat.modEq_iff_dvd' hle).mp (hmod.trans (Nat.mod_modEq N d))⟩
-  · rw [if_neg hc]
+  · rw [ite_eq_right hc]
     have he : B8PanDivisorQFiber N d m = ∅ := by
       apply Finset.eq_empty_iff_forall_notMem.mpr
       intro q hq
@@ -160,8 +164,8 @@ theorem goldbachB8PlusRemainder_eq_panError
   apply Finset.sum_congr rfl
   intro m _
   by_cases hc : Nat.Coprime m d
-  · simp only [if_pos hc, liuScaledAPError]
-  · simp only [if_neg hc, zero_div, sub_self]
+  · simp only [ite_eq_left hc, liuScaledAPError]
+  · simp only [ite_eq_right hc, zero_div, sub_self]
 
 theorem goldbachC8ProductSupport_mem_panInterval {N : ℕ} {B : ℝ}
     (hN : 2 ≤ N) (hlow : liuPanSourceIntervalLower N B < liuSourceZ10 N) :
@@ -215,7 +219,7 @@ theorem goldbachB8PlusRemainder_abs_le_maxL
   have hS : (unitResidues d).Nonempty := ⟨N % d, hl⟩
   unfold liuMainPanCoprimeIntervalMaxL
   dsimp only
-  rw [dif_pos hS]
+  rw [dite_eq_left hS]
   exact Finset.le_max'
     ((unitResidues d).image (fun l =>
       |liuMainPanCoprimeIntervalSum (liuLogarithmicIntegral (2 / Real.log 2))
@@ -277,7 +281,7 @@ theorem goldbachB8PlusGatedMainMass_eq_mainMass_of_dvd_prodPrimes
     goldbachB8PlusGatedMainMass N d = goldbachB8PlusMainMass N := by
   apply Finset.sum_congr rfl
   intro m hm
-  rw [if_pos (goldbachC8ProductSupport_coprime_of_dvd_prodPrimes hm hZ hd)]
+  rw [ite_eq_left (goldbachC8ProductSupport_coprime_of_dvd_prodPrimes hm hZ hd)]
 
 theorem goldbachB8PlusBoundingSieve_rem_eq_remainder
     {N d : ℕ} (hEven : Even N) {Z : ℝ}

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryCountCenter
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryPrimorialPairing
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryCountCenter
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryPrimorialPairing
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -17,10 +21,10 @@ theorem goldbachG11OrdinaryCenter_eq_density (N : ℕ) (S : Finset ℕ) (L U : �
   change (if m.Coprime d then _ else 0) =
     _*(if d.Coprime m then (d.totient : ℝ)⁻¹ else 0)
   by_cases h : m.Coprime d
-  · rw [if_pos h,if_pos h.symm]
+  · rw [ite_eq_left h,ite_eq_left h.symm]
     ring
   · have hh : ¬d.Coprime m := fun hc => h hc.symm
-    rw [if_neg h,if_neg hh]
+    rw [ite_eq_right h,ite_eq_right hh]
     simp
 
 theorem goldbachG11OrdinaryCenter_externalDensity (N : ℕ) (S P : Finset ℕ)

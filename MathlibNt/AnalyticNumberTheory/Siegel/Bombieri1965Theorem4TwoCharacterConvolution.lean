@@ -1,4 +1,6 @@
-import Mathlib.NumberTheory.LSeries.Nonvanishing
+module
+
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
 
 /-!
 # The genuine two-character convolution
@@ -12,6 +14,8 @@ of `χ.zetaMul`.  The exceptional local case, where both character values are
 `-1`, is controlled by the alternating geometric sum.  These are identities
 of the actual coefficients, not estimates by a positive majorant.
 -/
+
+@[expose] public section
 
 open Complex Finset
 open ArithmeticFunction hiding log
@@ -85,7 +89,7 @@ private lemma twist_zetaMul_prime_pow_nonneg_of_neg_one
       simp only [zetaMul, toArithmeticFunction, coe_zeta_mul_apply, coe_mk,
         Nat.sum_divisors_prime_pow hp, pow_eq_zero_iff', hp.ne_zero, ne_eq,
         false_and, ↓reduceIte, Nat.cast_pow, map_pow, hχp, neg_one_geom_sum,
-        if_pos hk']
+        ite_eq_left hk']
     rw [hz, mul_zero]
 
 private lemma twoCharacterConvolution_prime_pow_nonneg_of_twist

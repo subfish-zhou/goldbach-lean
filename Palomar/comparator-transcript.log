@@ -1,0 +1,69 @@
+Palomar protected Comparator, original bundled Lean and NanoDa
+
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Running Lean default kernel on solution
+Lean default kernel accepts the solution
+Your solution is okay!
+
+
+
+Registry-pinned con-ron
+{
+  "name": "con-ron",
+  "status": "accepted",
+  "reason": "complete",
+  "exit_code": 0,
+  "detail": "con-ron: accepted 99071 declarations (--verified)\n\ncon-ron: 1 inductive blocks modelled in-process: Lean.Syntax (30 generated records, checked by the fold as declarations and not counted as records of the file)",
+  "argv": [
+    "/tmp/goldbach-nanoda-20261106/trusted-checker-update/con-ron",
+    "--jobs=2",
+    "--verified"
+  ],
+  "budget_seconds": 1800
+}
+
+Additional bundled independent checkers
+Running Lean paranoid kernel on solution
+Lean paranoid kernel accepts the solution
+Running con-leche kernel on solution
+con-leche: accepted 99075 declarations (--verified)
+con-leche kernel accepts the solution
+Running lean4lean kernel on solution
+[anonymous]:thmDecl G67CenteredEvaluation.endpoint3_eq: lean4lean took 1142
+[anonymous]:thmDecl G67CenteredEvaluation.profileCoeffs_eq: lean4lean took 2006
+[anonymous]:thmDecl G67CenteredEvaluation.weight3_eq: lean4lean took 3789
+[anonymous]:thmDecl G67CenteredEvaluation.density3_eq: lean4lean took 12331
+[anonymous]:thmDecl G67CenteredEvaluation.weight2_eq: lean4lean took 2011
+[anonymous]:thmDecl G67CenteredEvaluation.density2_eq: lean4lean took 11275
+[anonymous]:thmDecl G67CenteredEvaluation.endpoint1_eq: lean4lean took 1251
+[anonymous]:thmDecl G67CenteredEvaluation.endpoint2_eq: lean4lean took 1181
+[anonymous]:thmDecl G67CenteredEvaluation.weight4_eq: lean4lean took 4129
+[anonymous]:thmDecl G67CenteredEvaluation.density4_eq: lean4lean took 15212
+[anonymous]:thmDecl G67CenteredEvaluation.weight1_eq: lean4lean took 2128
+[anonymous]:thmDecl G67CenteredEvaluation.density1_eq: lean4lean took 12099
+[anonymous]:thmDecl G67CenteredEvaluation.weight5_eq: lean4lean took 3891
+[anonymous]:thmDecl G67CenteredEvaluation.density5_eq: lean4lean took 12034
+[anonymous]:thmDecl _private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3pCoeffs_eq._proof_1_1: lean4lean took 17078
+[anonymous]:thmDecl _private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q0_eq._proof_1_1: lean4lean took 12697
+[anonymous]:thmDecl _private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q2_eq._proof_1_1: lean4lean took 13473
+[anonymous]:thmDecl MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2_value: lean4lean took 1044
+[anonymous]:thmDecl MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1_value: lean4lean took 1006
+[anonymous]:thmDecl _private.MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarCoefficients.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3q1_eq._proof_1_1: lean4lean took 14145
+[anonymous]:thmDecl MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.G9Analytic.partial_fraction1: lean4lean took 1485
+[anonymous]:thmDecl LiLiuPrereqFouvry.Rectangle.mixedDifference_eq_endpointCube: lean4lean took 2496
+[anonymous]:thmDecl LiLiuBuchstabSharp.closure_polynomial2_sharp: lean4lean took 3682
+[anonymous]:thmDecl LiLiuBuchstabSharp.closure_stage2_upper: lean4lean took 1725
+[anonymous]:thmDecl LiLiuBuchstabSharp.closure_polynomial3_sharp: lean4lean took 9238
+[anonymous]:thmDecl LiLiuBuchstabSharp.closure_stage3_upper: lean4lean took 2775
+[anonymous]:thmDecl _private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10H_deriv: lean4lean took 1600
+[anonymous]:thmDecl _private.MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarPolynomial.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPositiveScalarA_hasDerivAt._proof_1_1: lean4lean took 7673
+[anonymous]:thmDecl MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.G9Analytic.partial_fraction2: lean4lean took 1641
+[anonymous]:thmDecl LiLiuGoldbachG12BuchstabMajorant.polynomial1_broad: lean4lean took 1734
+[anonymous]:thmDecl LiLiuGoldbachG12BuchstabMajorant.polynomial2_sharp: lean4lean took 2625
+[anonymous]:thmDecl LiLiuGoldbachG12BuchstabMajorant.polynomial1_sharp: lean4lean took 2934
+checked 99072 declarations
+lean4lean kernel accepts the solution
+Running Lean default kernel on solution
+Lean default kernel accepts the solution
+Your solution is okay!

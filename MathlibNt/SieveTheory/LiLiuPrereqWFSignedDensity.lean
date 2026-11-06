@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedSieve
-import MathlibNt.SieveTheory.LiLiuPrereqWFFundamentalLemma
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedSieve
+public import MathlibNt.SieveTheory.LiLiuPrereqWFFundamentalLemma
 
 /-!
 # Same-family density and the small-weight replacement cost
@@ -10,6 +12,8 @@ labelled permutation. The upper replacement error is added, and the lower
 replacement error is subtracted. The remaining coarse rounded density is not
 estimated by the small-weight fundamental lemma.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -115,9 +119,9 @@ theorem signedFamilyDensity_partition (upper : Bool) (P : Finset ℕ)
       intro r _
       rw [smallWeightDensity_eq_powerset true P D ε hg,
         smallWeightDensity_eq_powerset false P D ε hg]
-      simp only [Bool.false_eq_true, if_false, if_true]
+      simp only [Bool.false_eq_true, ite_false, ite_true]
       unfold signedSmallWeight
-      by_cases hr : LooseSign upper r.card <;> simp only [hr, if_false, if_true]
+      by_cases hr : LooseSign upper r.card <;> simp only [hr, ite_false, ite_true]
       · rw [Finset.mul_sum, Finset.sum_mul]
         apply Finset.sum_congr rfl
         intro a _
@@ -135,7 +139,7 @@ private theorem coefficient_small_replacement (upper : Bool) (b c : ℕ → ℝ)
           (if Even r.card then 0 else -normalizedSignedSet upper b c D r) := by
   cases upper <;> by_cases heven : Even r.card <;>
     simp only [normalizedSignedSet, normalizedUpperSet, normalizedLowerSet,
-      LooseSign, Bool.false_eq_true, if_false, if_true, heven, not_true_eq_false,
+      LooseSign, Bool.false_eq_true, ite_false, ite_true, heven, not_true_eq_false,
       not_false_eq_true] <;> split_ifs <;> ring
 
 /-- Both signs use the SAME aggregate: the upper error is positive and the
@@ -162,7 +166,7 @@ theorem signedFamilyDensity_replacement_identity (upper : Bool) (P : Finset ℕ)
   apply Finset.sum_congr rfl
   intro r _
   rw [coefficient_small_replacement]
-  cases upper <;> simp only [if_true, Bool.false_eq_true, if_false] <;> ring
+  cases upper <;> simp only [ite_true, Bool.false_eq_true, ite_false] <;> ring
 
 theorem negativeRoughMass_bounds (upper : Bool) (b c : ℕ → ℝ) (D : ℝ)
     (R : Finset ℕ) (g : ℕ → ℝ) (hg : ∀ p ∈ R, 0 ≤ g p) :
@@ -174,7 +178,7 @@ theorem negativeRoughMass_bounds (upper : Bool) (b c : ℕ → ℝ) (D : ℝ)
     intro r
     cases upper <;> by_cases heven : Even r.card <;>
       simp only [normalizedSignedSet, normalizedUpperSet, normalizedLowerSet,
-        Bool.false_eq_true, if_false, if_true, heven] <;> (try split_ifs) <;> norm_num
+        Bool.false_eq_true, ite_false, ite_true, heven] <;> (try split_ifs) <;> norm_num
   have hprod : ∀ r ∈ R.powerset, 0 ≤ ∏ p ∈ r, g p :=
     fun r hr => Finset.prod_nonneg (fun p hp => hg p (mem_powerset.mp hr hp))
   constructor
@@ -235,7 +239,7 @@ theorem exists_signedFamilyDensity_replacement_bound :
     dsimp [gap, smallWeightDensity, g]
     linarith [hsmall.2.1, hsmall.2.2.1]
   have hgap : gap ≤ 2 * V * E := by
-    simpa only [gap, smallWeightDensity, Bool.false_eq_true, if_false, if_true,
+    simpa only [gap, smallWeightDensity, Bool.false_eq_true, ite_false, ite_true,
       g, primeDensity_apply] using hsmall.2.2.2.2
   have hmax0 : 0 ≤ 2 * V * E := hgap0.trans hgap
   have hm := negativeRoughMass_bounds upper b c D (P \ B) g
@@ -258,7 +262,7 @@ theorem exists_signedFamilyDensity_replacement_bound :
       2 * V * E * ∏ p ∈ P \ B, (1 + g p)
   rw [hid, add_sub_cancel_left]
   have hn := mul_nonneg hgap0 hm.1
-  cases upper <;> simp only [Bool.false_eq_true, if_false, if_true, one_mul,
+  cases upper <;> simp only [Bool.false_eq_true, ite_false, ite_true, one_mul,
     neg_mul, abs_neg, neg_neg, abs_of_nonneg hn] <;> exact ⟨hn, hcost⟩
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

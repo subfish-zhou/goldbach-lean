@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridRectangle
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

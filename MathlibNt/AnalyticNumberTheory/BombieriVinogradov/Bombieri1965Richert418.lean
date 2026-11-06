@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalNonprincipalOnly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalNonprincipalOnly
 
 /-!
  # Richert (4.18) normalization and a modern large-sieve producer
@@ -22,6 +24,8 @@ The final theorem is a modern replacement producer.  It uses the project's
 large-sieve/Vaughan chain and retains only its genuine low-conductor
 nonprincipal primitive Siegel--Walfisz input.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

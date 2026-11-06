@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceSeriesPairing
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceSeriesPairing
 
 /-!
 # Proposition 11.8: decay of the genuine source Q and pairing at infinity
@@ -8,6 +10,8 @@ Instead it applies the production finite-depth domination from Lemma 13.2 to
 finite odd/even source partial sums, passes to their genuine `tsum` limits, and
 only then invokes the hat contract's (T5) decay.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset Set Filter Topology MeasureTheory intervalIntegral
@@ -103,7 +107,7 @@ theorem suzukiProposition118SourceQ_nonneg_and_le_hat
     tsum_nonneg (suzukiLayer_one_two_odd_nonneg hs1)
   have hminus0 : 0 ≤ suzukiProposition118SourceTMinus s :=
     tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg hs k)
-  rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr hs)]
+  rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr hs)]
   refine ⟨add_nonneg hplus0 hminus0, ?_⟩
   rcases hseries s hs with ⟨hp, hm⟩
   calc

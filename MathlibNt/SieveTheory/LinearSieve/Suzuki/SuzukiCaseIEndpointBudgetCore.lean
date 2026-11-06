@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanDistribution
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanDistribution
+
+@[expose] public section
 
 noncomputable section
 

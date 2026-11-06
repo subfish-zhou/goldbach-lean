@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowSiegelWalfiszProducer
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVHighChosenUnconditional
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowSiegelWalfiszProducer
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVHighChosenUnconditional
 
 /-!
  # Final low-only producer for Standard Bombieri--Vinogradov
@@ -11,6 +13,8 @@ only the genuine low-end input.  At source level this is exactly the
 nonprincipal primitive Siegel--Walfisz source together with the modulus-one
 global principal PNT source.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProgressionEuler
-import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProgressionEuler
+public import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

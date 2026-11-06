@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorGridCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorGridCount
+
+@[expose] public section
 
 open Filter Set LiLiuPrereqBuchstab
 noncomputable section

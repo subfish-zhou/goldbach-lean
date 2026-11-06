@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIRawRoundedTransportRefactor
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedTransportExactRatio
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIRawRoundedTransportRefactor
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedTransportExactRatio
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIISourceLargeLogUniform
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

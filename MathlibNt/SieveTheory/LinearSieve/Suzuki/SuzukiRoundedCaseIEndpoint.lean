@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointFromCaseI
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointFromCaseI
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

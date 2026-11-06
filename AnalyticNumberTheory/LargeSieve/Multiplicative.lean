@@ -1,7 +1,9 @@
-import AnalyticNumberTheory.LargeSieve.WellSpaced
-import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
-import Mathlib.NumberTheory.DirichletCharacter.Bounds
-import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+module
+
+public import AnalyticNumberTheory.LargeSieve.WellSpaced
+public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
+public import Mathlib.NumberTheory.DirichletCharacter.Bounds
+public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 
 /-! # AnalyticNumberTheory.LargeSieve.Multiplicative
 
@@ -60,6 +62,8 @@ References: Montgomery, "Topics in Multiplicative Number Theory" (1971), Ch. 1;
 Iwaniec & Kowalski, "Analytic Number Theory" (2004), Ch. 7;
 Kedlaya, "Notes on Analytic Number Theory", Ch. 16 (Bombieri--Davenport).
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -179,7 +183,7 @@ theorem geomSum_zmod_charReal {q : ℕ} (hq : 0 < q) (k : ℤ) :
           _ = ((m * r : ℤ) : ℝ) := by
                 norm_num
       rw [harg, charReal_int_eq_one]
-    rw [if_pos hk', hsum]
+    rw [ite_eq_left hk', hsum]
     simp
   · -- If q does not divide k, the geometric-series numerator is e(k·q/q) - 1 = 0 and the denominator is nonzero.
     have hθ : ¬ ∃ t : ℤ, (t : ℝ) = (k : ℝ) / (q : ℝ) := by
@@ -210,7 +214,7 @@ theorem geomSum_zmod_charReal {q : ℕ} (hq : 0 < q) (k : ℤ) :
     have hzero : (charReal (q * ((k : ℝ) / (q : ℝ))) - 1) / (charReal ((k : ℝ) / (q : ℝ)) - 1) = 0 := by
       rw [hnum]
       simp
-    rw [if_neg hk]
+    rw [ite_eq_right hk]
     calc
       (∑ r ∈ Finset.range q, charReal ((k : ℝ) * (r : ℝ) / (q : ℝ)))
           = ∑ r ∈ Finset.range q, charReal ((r : ℝ) * ((k : ℝ) / (q : ℝ))) := by
@@ -306,7 +310,7 @@ theorem zmodParseval {q : ℕ} (hq : 0 < q) (z : ℕ → ℂ) :
             intro r s hr hs
             by_cases hrs : r = s
             · subst hrs
-              rw [if_pos rfl]
+              rw [ite_eq_left rfl]
               calc
                 (∑ a ∈ Finset.range q, charReal ((a : ℝ) * ((r : ℝ) - (r : ℝ)) / (q : ℝ)))
                     = ∑ a ∈ Finset.range q, (1 : ℂ) := by
@@ -315,7 +319,7 @@ theorem zmodParseval {q : ℕ} (hq : 0 < q) (z : ℕ → ℂ) :
                       have h0 : (a : ℝ) * ((r : ℝ) - (r : ℝ)) / (q : ℝ) = 0 := by ring
                       rw [h0, charReal_zero]
                 _ = (q : ℂ) := by simp
-            · rw [if_neg hrs]
+            · rw [ite_eq_right hrs]
               have hdiv : ¬ (q : ℤ) ∣ ((r : ℤ) - (s : ℤ)) := by
                 intro hd
                 rcases hd with ⟨m, hm⟩
@@ -349,7 +353,7 @@ theorem zmodParseval {q : ℕ} (hq : 0 < q) (z : ℕ → ℂ) :
               have hgeo' : (∑ a ∈ Finset.range q,
                   charReal ((↑((r : ℤ) - (s : ℤ)) : ℝ) * (a : ℝ) / (q : ℝ))) = 0 := by
                 have hgeo := geomSum_zmod_charReal hq ((r : ℤ) - (s : ℤ))
-                rw [hgeo, if_neg hdiv]
+                rw [hgeo, ite_eq_right hdiv]
               calc
                 (∑ a ∈ Finset.range q, charReal ((a : ℝ) * ((r : ℝ) - (s : ℝ)) / (q : ℝ)))
                     = ∑ a ∈ Finset.range q,
@@ -451,13 +455,13 @@ theorem charOrthSum {q : ℕ} (hq : 0 < q) (m n : ZMod q) :
       -- The sum now equals if n = m then q.totient else 0, by hsum.
       by_cases hmn : m = n
       · have hcond : IsUnit m ∧ IsUnit n ∧ m = n := ⟨hm, hn, hmn⟩
-        rw [if_pos hcond]
-        rw [hsum, if_pos hmn.symm]
+        rw [ite_eq_left hcond]
+        rw [hsum, ite_eq_left hmn.symm]
       · have hnot : ¬ (IsUnit m ∧ IsUnit n ∧ m = n) := by
           intro h
           exact hmn h.2.2
-        rw [if_neg hnot]
-        rw [hsum, if_neg (fun hnm => hmn hnm.symm)]
+        rw [ite_eq_right hnot]
+        rw [hsum, ite_eq_right (fun hnm => hmn hnm.symm)]
     · -- n is not a unit: star(χ n) = star 0 = 0.
       have hχn : ∀ χ : DirichletCharacter ℂ q, star (χ n) = 0 := by
         intro χ
@@ -466,7 +470,7 @@ theorem charOrthSum {q : ℕ} (hq : 0 < q) (m n : ZMod q) :
       have hnot : ¬ (IsUnit m ∧ IsUnit n ∧ m = n) := by
         intro h
         exact hn h.2.1
-      rw [if_neg hnot]
+      rw [ite_eq_right hnot]
       -- The sum is zero.
       apply Finset.sum_eq_zero
       intro χ hχ
@@ -478,7 +482,7 @@ theorem charOrthSum {q : ℕ} (hq : 0 < q) (m n : ZMod q) :
     have hnot : ¬ (IsUnit m ∧ IsUnit n ∧ m = n) := by
       intro h
       exact hm h.1
-    rw [if_neg hnot]
+    rw [ite_eq_right hnot]
     apply Finset.sum_eq_zero
     intro χ hχ
     rw [hχm χ, zero_mul]

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergPrimeDivisorGrowth
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergPrimeDivisorGrowth
 
 /-!
 # Liu's Selberg denominator asymptotic
@@ -8,6 +10,8 @@ with the uniform harmonic remainder and the triangular Euler error gives the
 sharp normalized asymptotic for Liu's finite Selberg denominator, and hence the
 optimized coefficient input.
 -/
+
+@[expose] public section
 
 open scoped BigOperators Topology
 

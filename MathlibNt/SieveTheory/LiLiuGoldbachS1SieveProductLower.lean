@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+
+@[expose] public section
 
 noncomputable section
 
@@ -130,7 +134,7 @@ private theorem S1SieveProductLower_omittedCorrection_le_exp
         (S1SieveProductLowerOmittedPrimes N Z).prod
           (fun _ => Real.exp (1 / ((Z - 2 : ℕ) : ℝ))) := by
       unfold S1SieveProductLowerOmittedCorrection
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p hp
         exact (SingularSeries.liuCorrectionFactor_pos (Finset.mem_filter.mp hp).2.1).le
       · intro p hp

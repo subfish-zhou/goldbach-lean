@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport
 
 /-!
 # Sparse-modulus exclusion in the original progression sum
@@ -8,6 +10,8 @@ The elementary progression-counting part of Fouvry (1984), p. 236, (8.5).
 Coprimality is retained in the sparse modulus row until the actual bump
 progression is counted. Absolute values are taken before enlarging any mask.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -133,13 +137,13 @@ theorem wMaskedOriginal_abs_le_sparse_modulus_sums
       dsimp only
       by_cases hm : Int.ModEq t.1.1 ((m : ℤ) * t.2.1) a ∧
           Int.ModEq t.1.2 ((m : ℤ) * t.2.2) a
-      · simp only [if_pos hm]
+      · simp only [ite_eq_left hm]
         rcases hP t ho hp with hs | hs
-        · rw [if_pos ⟨hs, hcompat.1⟩]
+        · rw [ite_eq_left ⟨hs, hcompat.1⟩]
           split_ifs <;> nlinarith [scaledDyadicCutoff_nonneg M m]
-        · rw [if_pos (show t.1.2 ∈ S ∧ t.2.2.Coprime t.1.2 from ⟨hs, hcompat.2.1⟩)]
+        · rw [ite_eq_left (show t.1.2 ∈ S ∧ t.2.2.Coprime t.1.2 from ⟨hs, hcompat.2.1⟩)]
           split_ifs <;> nlinarith [scaledDyadicCutoff_nonneg M m]
-      · simp only [if_neg hm, le_refl]
+      · simp only [ite_eq_right hm, le_refl]
     _ ≤ ∑ t ∈ (Q ×ˢ Q) ×ˢ (N ×ˢ N), F t := by
       apply sum_le_sum_of_subset_of_nonneg
       · intro t ht
@@ -172,7 +176,7 @@ theorem wMaskedOriginal_abs_le_sparse_modulus_sums
         by_cases hr : r ∈ S ∧ p.2.Coprime r <;>
         by_cases hqm : Int.ModEq q ((m : ℤ) * p.1) a <;>
         by_cases hrm : Int.ModEq r ((m : ℤ) * p.2) a <;>
-        simp_all only [Nat.Coprime, and_true, and_false, if_true, if_false,
+        simp_all only [Nat.Coprime, and_true, and_false, ite_true, ite_false,
           mul_one, mul_zero, zero_mul, add_zero, zero_add] <;> ring
 
 /-- A finite row-cap estimate for the original sum. The unrestricted row

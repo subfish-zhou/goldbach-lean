@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral
-import MathlibNt.SieveTheory.LiLiuFouvryG9MainScalar
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryIntegral
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MainScalar
+
+@[expose] public section
 
 noncomputable section
 open scoped Interval

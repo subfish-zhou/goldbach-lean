@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
 
 /-!
 # Finite counting of the genuine zero-numerator branch
@@ -7,6 +9,8 @@ Fouvry (1987), pp. 631--632, (4.8)--(4.9). The first beta index `n`
 is common to both phases. Frequencies remain integers: no positivity or
 same-tuple restriction is imposed on the variable frequency.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

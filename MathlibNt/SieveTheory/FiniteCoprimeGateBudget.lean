@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
 
 /-! Shared finite coprimality-gate estimates for weighted supports. -/
+
+@[expose] public section
 
 open Classical Finset
 open scoped BigOperators
@@ -33,14 +37,14 @@ theorem bad_inverseTotientMass_le {N Q m K : ℕ} {z : ℝ}
       intro d _
       by_cases hbad : ¬m.Coprime d
       · obtain ⟨p, hp, hpm, hpd⟩ := Nat.Prime.not_coprime_iff_dvd.mp hbad
-        rw [if_pos hbad]
+        rw [ite_eq_left hbad]
         have hmem := Nat.mem_primeFactors.mpr ⟨hp, hpm, ne_of_gt hm⟩
-        simpa only [if_pos hpd] using
+        simpa only [ite_eq_left hpd] using
           (single_le_sum (f := fun q => if q ∣ d then (d.totient : ℝ)⁻¹ else 0)
             (fun q (_ : q ∈ m.primeFactors) => by
             split_ifs <;> positivity) hmem :
             (if p ∣ d then (d.totient : ℝ)⁻¹ else 0) ≤ _)
-      · rw [if_neg hbad]
+      · rw [ite_eq_right hbad]
         exact sum_nonneg (fun p _ => by split_ifs <;> positivity)
     _ = ∑ p ∈ m.primeFactors, directConductorWeight Q p := by
       rw [sum_comm]

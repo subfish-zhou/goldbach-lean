@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.LargeSieve.Multiplicative
+module
+
+public import AnalyticNumberTheory.LargeSieve.Multiplicative
 
 /-! # AnalyticNumberTheory.LargeSieve.CharacterIndicators
 
@@ -35,6 +37,8 @@ References: Liu, "On the weighted Pan theorem" (2022) §II--§III;
 Halberstam--Richert, "Sieve Methods" (1974) Ch. 10; Montgomery (1971) Ch. 1.
 -/
 
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve
 
 open scoped BigOperators
@@ -66,7 +70,7 @@ theorem charIndicator_ap {q : ℕ} (hq : 0 < q) {l : ℕ} (hl : IsUnit (l : ZMod
     have hn : IsUnit (n : ZMod q) := by simpa [heq] using hl
     have hφ : (Nat.totient q : ℂ) ≠ 0 := by
       exact_mod_cast (Nat.totient_pos.mpr hq).ne'
-    rw [if_pos hmod, if_pos ⟨hn, hl, heq⟩]
+    rw [ite_eq_left hmod, ite_eq_left ⟨hn, hl, heq⟩]
     exact (inv_mul_cancel₀ hφ).symm
   · -- Away from the progression, orthogonality vanishes whether n is a unit or not.
     have hne : (n : ZMod q) ≠ (l : ZMod q) :=

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPaymentDyadic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPaymentDyadic
 
 
 /-!
@@ -10,6 +12,8 @@ The original signed error is now restricted to low-omega beta pairs with
 domain followed by the same-mask payment, not monotonicity of a signed sum.
 The two supported modulus factors and the IV.3 estimate remain separate.
 -/
+
+@[expose] public section
 
 noncomputable section
 

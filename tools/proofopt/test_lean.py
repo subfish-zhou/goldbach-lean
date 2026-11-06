@@ -80,6 +80,21 @@ end Fixture
     for name,(body,good) in audit_cases.items():
         p=output/('Audit_'+name+'.lean');p.write_text('import CoverageFixture\nimport proofopt.Audit\n'+body)
         invoke('audit-'+name,[str(p)],good)
+    # Module exports hide imported theorem bodies. Audits need the stored proofs.
+    p=output/'ModuleFixture.lean'
+    p.write_text('module\npublic theorem imported_target (n : Nat) : n = n := rfl\n'
+                 'public theorem imported_general (α : Sort u) (x : α) : x = x := rfl\n'
+                 'public theorem imported_backwards (n : Nat) : n = n := imported_target n\n')
+    invoke('module-fixture',['-o',str(output/'ModuleFixture.olean'),str(p)])
+    p=output/'ModuleProbe.lean'
+    p.write_text('module\nimport ModuleFixture\nimport proofopt.Coverage\nimport proofopt.Audit\n'
+                 '#proofopt_coverage imported_target imported_general\n'
+                 '#proofopt_coverage imported_target imported_backwards\n'
+                 '#proofopt_consumes imported_backwards imported_target\n')
+    text=invoke('module-proof-audits',[str(p)])
+    rows=parse_results(text,[('imported_target','imported_general'),
+                             ('imported_target','imported_backwards')])
+    assert [r['status'] for r in rows]==['success','rejected']
     # Real elaborated types with different binder shapes exercise feature retrieval
     # and then the existing kernel/text-replay gates; this fixture claims no LOC saving.
     from features import TypeFeatures
@@ -104,7 +119,7 @@ end FeatureFixture
     pair=parse_results(text,[(a['name'],b['name'])])[0];assert pair['status']=='success'
     p=output/'FeatureReplay.lean';p.write_text('import FeatureFixture\ntheorem feature_replay : '+pair['type']+' := '+pair['proof']+'\n')
     invoke('feature-replay',['-DautoImplicit=false','-DwarningAsError=true',str(p)])
-    receipt={'tool_compiles':5,'coverage_pairs':5,'proof_text_replayed':2,'feature_retrieval_kernel_replayed':True,'corrupted_type_rejected':True,'source_span_cases':4,'preservation_cases':4,'audit_cases':3}
+    receipt={'tool_compiles':5,'coverage_pairs':5,'proof_text_replayed':2,'feature_retrieval_kernel_replayed':True,'corrupted_type_rejected':True,'source_span_cases':4,'preservation_cases':4,'audit_cases':3,'module_import_audits':3}
     (output/'acceptance.json').write_text(json.dumps(receipt,indent=2)+'\n')
     return receipt
 

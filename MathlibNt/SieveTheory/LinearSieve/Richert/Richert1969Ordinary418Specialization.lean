@@ -3,7 +3,9 @@ Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969CombinedModulusEStar
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969CombinedModulusEStar
 
 /-!
 # Richert 1969: specialization of ordinary (4.18) to Chen's weighted remainder
@@ -19,6 +21,8 @@ Bombieri--Vinogradov estimate to Chen's combined moduli.  The cutoff,
 pointwise envelope, Lemma 3 payment, and logarithmic-integral normalization
 shift are all discharged here.  No weighted Bombieri theorem is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -60,7 +64,7 @@ private theorem primeProduct_le_totient_ratio
   have hprodS0 : 0 ≤ ∏ p ∈ S, f p :=
     Finset.prod_nonneg fun p hp => hf0 p (hST hp)
   have hdiff : ∏ p ∈ T \ S, f p ≤ 1 :=
-    Finset.prod_le_one
+    Finset.prod_le_one₀
       (fun p hp => hf0 p (Finset.sdiff_subset hp))
       (fun p hp => hf1 p (Finset.sdiff_subset hp))
   have hprod : (∏ p ∈ T, f p) ≤ ∏ p ∈ S, f p := by

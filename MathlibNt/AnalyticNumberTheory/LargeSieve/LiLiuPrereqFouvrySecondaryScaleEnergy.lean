@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryScaleBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryScaleBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdEnergy
 
 /-!
 # Summing the complete occupied secondary contribution
@@ -8,6 +10,8 @@ Both the divisor envelope and the ratio count are proved before use.
 No fixed-data sum remains in the secondary term. The coarse powers below
 still require comparison with the global C.2 scale; this is not (4.10).
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

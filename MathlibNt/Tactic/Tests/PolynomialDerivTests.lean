@@ -1,5 +1,9 @@
-import MathlibNt.Tactic.PolynomialDeriv
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+module
+
+public import MathlibNt.Tactic.PolynomialDeriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+@[expose] public section
 
 example (a b x : ℝ) : HasDerivAt (fun t : ℝ => a*t^3 + b*t - 7)
     (3*a*x^2+b) x := by

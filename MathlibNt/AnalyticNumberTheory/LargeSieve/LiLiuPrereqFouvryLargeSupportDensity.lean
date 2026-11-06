@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupport
-import Mathlib.Analysis.PSeries
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupport
+public import Mathlib.Analysis.PSeries
 
 /-!
 # Finite density of large square divisors
@@ -8,6 +10,8 @@ The union over square divisors has an exact finite range and a floor-sum
 majorant. The elementary inverse-square tail gives the uniform constant
 `2`, including cutoffs below one and empty intervals.
 -/
+
+@[expose] public section
 
 noncomputable section
 

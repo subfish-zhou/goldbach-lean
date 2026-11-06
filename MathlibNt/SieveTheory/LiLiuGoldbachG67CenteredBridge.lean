@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredBranches
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredBranches
+@[expose] public section
+
 open Set hiding center
 open MeasureTheory
 open scoped Interval

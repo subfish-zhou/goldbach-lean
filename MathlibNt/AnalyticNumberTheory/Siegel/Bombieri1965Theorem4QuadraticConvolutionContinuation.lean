@@ -1,8 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionAsymptotic
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
-import Mathlib.Analysis.MellinTransform
-import Mathlib.NumberTheory.LSeries.SumCoeff
-import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionAsymptotic
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
+public import Mathlib.Analysis.MellinTransform
+public import Mathlib.NumberTheory.LSeries.SumCoeff
+public import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 
 /-!
 # Mellin continuation of the quadratic convolution
@@ -10,6 +12,8 @@ import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 This is a modern analytic argument using the proved square-root error in the
 summatory convolution, rather than a transcription of Bombieri's proof.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory Set Asymptotics
 open scoped Topology
@@ -126,7 +130,7 @@ theorem IsPrimitive.integrableOn_quadraticConvolutionErrorKernel
     IntegrableOn (quadraticConvolutionErrorKernel χ s) (Ioi (1 : ℝ)) := by
   have h := IsPrimitive.mellinConvergent_quadraticConvolutionCutoffError χ hprim hχ hs
   rw [MellinConvergent, cutoff_mellin_kernel,
-    integrableOn_indicator_iff measurableSet_Ioi] at h
+    integrableOn_indicator_iff measurableSet_Ioi.nullMeasurableSet] at h
   simpa only [Ioi_inter_Ioi, max_eq_left (show (0 : ℝ) ≤ 1 by norm_num)] using h
 
 /-- Holomorphy comes from the Mellin transform convergence strip, not from an

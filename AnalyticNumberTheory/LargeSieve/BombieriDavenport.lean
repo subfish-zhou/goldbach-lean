@@ -1,5 +1,7 @@
-import AnalyticNumberTheory.Sieve.PanMeanValueBody
-import Mathlib.NumberTheory.DirichletCharacter.GaussSum
+module
+
+public import AnalyticNumberTheory.Sieve.PanMeanValueBody
+public import Mathlib.NumberTheory.DirichletCharacter.GaussSum
 
 /-! # AnalyticNumberTheory.LargeSieve.BombieriDavenport
 
@@ -35,6 +37,8 @@ analytic input is the primitive-character version with the (q/phi(q)) weight,
 proved below as bombieriDavenport_le; see the file trailer for the explicit
 corrected sub-steps of the type-I assembly.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

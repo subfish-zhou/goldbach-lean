@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
-import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib.Topology.Order.LeftRight
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridKernelPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralBound
-import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
+module
+
+public import Mathlib.Topology.Order.LeftRight
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridKernelPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
+
+@[expose] public section
 
 open Finset Filter
 open scoped BigOperators Topology

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionWeightedSum
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionWeightedSum
 
 /-!
 # Small actual quadratic L-values force near-one real zeros
@@ -8,6 +10,8 @@ near its pole follows from the actual regularized zeta function. This modern
 argument does not assume a Siegel lower bound or the existence of an
 exceptional zero.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter
 open scoped Topology

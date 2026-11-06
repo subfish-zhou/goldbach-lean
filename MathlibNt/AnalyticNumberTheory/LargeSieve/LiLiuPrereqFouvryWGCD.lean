@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPrimeSupport
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPhaseThreeFactor
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPrimeSupport
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPhaseThreeFactor
 /-!
 # The canonical five-gcd coordinates of W
 
@@ -7,6 +9,8 @@ Fouvry (1984), pp. 235--237, before any large-factor terms are discarded.
 The five outer coordinates are `d,d₁,δ,δ₁,δ₂`. The four remaining coordinates
 recover the original moduli and beta indices exactly.
 -/
+
+@[expose] public section
 
 noncomputable section
 

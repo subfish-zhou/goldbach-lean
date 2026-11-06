@@ -1,6 +1,8 @@
-import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
-import Mathlib.NumberTheory.Harmonic.ZetaAsymp
-import Mathlib.NumberTheory.LSeries.Nonvanishing
+module
+
+public import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
+public import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
 
 /-!
 # Zeta--von Mangoldt bridge for Mertens constants
@@ -9,6 +11,8 @@ This module begins the constant-identification workline.  It records the
 analytic normalization at `s = 1`; connecting it to hard prime cutoffs is the
 remaining Abelian bridge.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

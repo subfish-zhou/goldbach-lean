@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.Arithmetic.SingularSeries
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.SingularSeries
 
 /-! Compatibility import for the canonical module in its current library location. -/

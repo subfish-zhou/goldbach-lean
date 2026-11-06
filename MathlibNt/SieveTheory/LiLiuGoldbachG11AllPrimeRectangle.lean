@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -28,9 +32,9 @@ theorem goldbachG11AllPrimeWeight_nonneg (N : ℕ) (v : ℕ × ℕ) :
 theorem goldbachG11RectangleWeight_le_allPrime (N : ℕ) (v : ℕ × ℕ) :
     goldbachG11RectangleWeight N v ≤ goldbachG11AllPrimeWeight N v := by
   by_cases h : v.2.Coprime N
-  · simpa only [goldbachG11RectangleWeight,goldbachG11AllPrimeWeight,if_pos h] using
+  · simpa only [goldbachG11RectangleWeight,goldbachG11AllPrimeWeight,ite_eq_left h] using
       (le_refl (goldbachG11AllPrimeWeight N v))
-  · simpa only [goldbachG11RectangleWeight,if_neg h,mul_zero] using goldbachG11AllPrimeWeight_nonneg N v
+  · simpa only [goldbachG11RectangleWeight,ite_eq_right h,mul_zero] using goldbachG11AllPrimeWeight_nonneg N v
 
 
 /-- Drop the short copN filter only in the sifted term, not in the small-output budget. -/

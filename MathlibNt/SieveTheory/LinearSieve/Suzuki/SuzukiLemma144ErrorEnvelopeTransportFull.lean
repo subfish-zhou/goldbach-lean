@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146iErrorEnvelopeTransport
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146iErrorEnvelopeTransport
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

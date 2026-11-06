@@ -1,7 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayFunctions
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Topology.EMetricSpace.BoundedVariation
-import Mathlib.Topology.Order.Compact
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayFunctions
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Topology.EMetricSpace.BoundedVariation
+public import Mathlib.Topology.Order.Compact
 
 /-!
 # Order properties of the constructed Jurkat--Richert delay functions
@@ -9,6 +11,8 @@ import Mathlib.Topology.Order.Compact
 The weighted difference satisfies the Dickman renewal identity. Its positivity
 gives the order and monotonicity statements in Jurkat--Richert (1965), (5.11)--(5.13).
 -/
+
+@[expose] public section
 
 noncomputable section
 

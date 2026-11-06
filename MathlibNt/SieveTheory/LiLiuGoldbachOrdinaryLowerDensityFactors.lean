@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensitySource
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensitySource
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option warningAsError true

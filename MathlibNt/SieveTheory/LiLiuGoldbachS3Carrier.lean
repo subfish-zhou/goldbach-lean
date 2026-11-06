@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
-import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+public import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

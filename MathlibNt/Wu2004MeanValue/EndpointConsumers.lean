@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.MovingHighAggregate
-import MathlibNt.Wu2004MeanValue.RealEndpoints
+module
+
+public import MathlibNt.Wu2004MeanValue.MovingHighAggregate
+public import MathlibNt.Wu2004MeanValue.RealEndpoints
 
 /-!
 # Real moving endpoints and the manuscript's prime-endpoint domain
@@ -9,6 +11,8 @@ at the real endpoint `r(a)`. On every nonempty manuscript block both prime
 endpoints are at least the source prime, hence at least 2. No extension of
 the logarithmic integral below 2 is used.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

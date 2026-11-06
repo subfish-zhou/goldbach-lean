@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

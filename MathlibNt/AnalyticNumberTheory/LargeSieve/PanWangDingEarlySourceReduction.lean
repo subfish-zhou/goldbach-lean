@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveGaussFareyExactBridge
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveGaussFareyExactBridge
 
 /-!
  # Pan--Wang--Ding (1975), early source reductions
@@ -16,6 +18,8 @@ its literal left side to the unconditional reduced-Farey large-sieve factor
 currently proved in production; it does not rename that weaker factor as the
 paper's source estimate.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

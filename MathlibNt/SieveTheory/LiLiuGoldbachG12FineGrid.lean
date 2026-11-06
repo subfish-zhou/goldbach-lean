@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangleC2
-import MathlibNt.SieveTheory.LiLiuFouvryG9RectanglePrefixFinite
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangleC2
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RectanglePrefixFinite
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

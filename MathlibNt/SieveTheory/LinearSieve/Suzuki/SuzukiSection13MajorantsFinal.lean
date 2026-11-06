@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

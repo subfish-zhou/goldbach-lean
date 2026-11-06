@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
 
 /-! Compatibility import for the canonical module in its current library location. -/

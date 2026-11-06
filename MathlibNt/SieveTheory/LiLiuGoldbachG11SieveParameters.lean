@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport
-import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RosserFactor
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightG11GoodConsumed
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RosserFactor
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightG11GoodConsumed
+
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

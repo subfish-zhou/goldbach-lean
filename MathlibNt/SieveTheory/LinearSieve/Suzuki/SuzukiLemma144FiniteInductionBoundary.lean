@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedBaseOne
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedBaseOne
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

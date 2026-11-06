@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductCoefficient
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductCoefficient
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle
+
+@[expose] public section
 
 open Filter Finset
 open scoped BigOperators

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

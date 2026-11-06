@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
 
 /-!
 # Liu's lambda-pair Selberg remainder
@@ -10,6 +12,8 @@ paper's `N^(1/4-epsilon/2)` cutoff.  Grouping pairs by their least common
 multiple bounds the signed remainder by the already verified
 `3^omega(d)` full-distribution majorant.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -344,7 +348,7 @@ theorem abs_liuSelbergRemainder_le_fullDistributionMajorant
       intro d1 hd1
       apply Finset.sum_le_sum
       intro d2 hd2
-      rw [if_pos (liuSelberg_lcm_le_sourceDEpsilon_of_mem_sourceCarrier
+      rw [ite_eq_left (liuSelberg_lcm_le_sourceDEpsilon_of_mem_sourceCarrier
         hN hd1 hd2)]
       simp only [abs_mul]
       calc

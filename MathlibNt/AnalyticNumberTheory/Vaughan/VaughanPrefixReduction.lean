@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DyadicPrefixMaximal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DyadicPrefixMaximal
 
 /-!
  # Finite Vaughan decomposition and primitive-character prefix reduction
@@ -19,6 +21,8 @@ theorem consumes this equality inside every primitive-character prefix and
 reduces its weighted square maximum to three explicit coefficient energies.
 No cutoff is selected or hidden.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

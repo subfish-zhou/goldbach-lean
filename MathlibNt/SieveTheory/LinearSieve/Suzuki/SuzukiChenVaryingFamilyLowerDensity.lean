@@ -1,7 +1,9 @@
-import MathlibNt.SieveTheory.Switching.RosserSieveAsymptotics
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147JurkatRichertInterval
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenAdaptiveDepthAbsorption
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDensityBoundingSieveBridge
+module
+
+public import MathlibNt.SieveTheory.Switching.RosserSieveAsymptotics
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147JurkatRichertInterval
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenAdaptiveDepthAbsorption
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDensityBoundingSieveBridge
 
 /-!
 # Uniform Suzuki lower density for Chen's varying source family
@@ -12,6 +14,8 @@ constant is chosen before the varying family
 floor level, adaptive supported-carrier depth, and the exact Euler/main-sum
 bridges.  No conclusion-shaped comparison premise is used.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology Finset

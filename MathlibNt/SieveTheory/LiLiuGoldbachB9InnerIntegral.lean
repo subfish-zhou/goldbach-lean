@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval

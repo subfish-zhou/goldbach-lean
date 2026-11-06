@@ -1,5 +1,7 @@
-import Mathlib.NumberTheory.AlmostPrime
-import Mathlib.Data.Finset.Range
+module
+
+public import Mathlib.NumberTheory.AlmostPrime
+public import Mathlib.Data.Finset.Range
 
 /-!
 # The finite Chen representation set
@@ -7,6 +9,8 @@ import Mathlib.Data.Finset.Range
 This count depends only on primality and the number of prime factors. Keeping
 it separate from sieve weights lets finite counting arguments use it directly.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SwitchingPrinciple
 

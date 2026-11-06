@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionAPCount
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionAPCount
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
-import MathlibNt.SieveTheory.LiuSingularSeries
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
+public import MathlibNt.SieveTheory.LiuSingularSeries
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

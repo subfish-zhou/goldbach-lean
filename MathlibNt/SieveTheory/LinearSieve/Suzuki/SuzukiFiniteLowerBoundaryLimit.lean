@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveAmplitudeLimit
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveAmplitudeLimit
 
 /-!
 # The finite lower-boundary constant and its real limit
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveAmplitudeLimit
 This module records the unconditional consequences of the already proved real
 summability.  It does not assume or define Suzuki's source normalization `B=0`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Filter Topology

@@ -1,5 +1,7 @@
-import PrimeNumberTheoremAnd.Consequences
-import Mathlib.Analysis.SpecialFunctions.Log.Monotone
+module
+
+public import PrimeNumberTheoremAnd.Consequences
+public import Mathlib.Analysis.SpecialFunctions.Log.Monotone
 
 /-!
 # A monotone error envelope for the actual prime counting function
@@ -8,6 +10,8 @@ The ordinary PNT is reused from the byte-frozen nine-module source closure.
 The comparator is `t / log t`, so Abel summation against its derivative
 has an additional explicit `1 / log t ^ 2` term.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -34,7 +38,7 @@ theorem tendsto_primeRelativeError :
   simpa only [Pi.div_apply, sub_self, abs_zero] using
     (h.sub (tendsto_const_nhds (x := (1 : ℝ)))).abs
 
-private theorem exists_primeError_start :
+theorem exists_primeError_start :
     ∃ Y : ℝ, 3 ≤ Y ∧ Real.exp 1 ≤ Y ∧
       ∀ t ≥ Y, primeRelativeError t ≤ 1 := by
   obtain ⟨Y, hY⟩ := eventually_atTop.1

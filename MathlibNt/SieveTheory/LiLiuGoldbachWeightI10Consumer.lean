@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG10CorrectedIntegralUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10CorrectedIntegralUpper
+
+@[expose] public section
 
 noncomputable section
 

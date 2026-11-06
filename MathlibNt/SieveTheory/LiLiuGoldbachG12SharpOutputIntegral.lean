@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpMassIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpMassIntegral
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

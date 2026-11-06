@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132FiniteHatUniformInterface
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132EndpointSlack
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132OddLowStrip
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132BaseOneDirect
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132FiniteHatUniformInterface
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132EndpointSlack
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132OddLowStrip
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132BaseOneDirect
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

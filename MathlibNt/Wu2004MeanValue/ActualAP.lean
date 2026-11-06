@@ -1,6 +1,8 @@
-import MathlibNt.Wu2004MeanValue.PrincipalWeighted
-import MathlibNt.Wu2004MeanValue.EndpointConsumers
-import MathlibNt.SieveTheory.LiuPanCofactorReduction
+module
+
+public import MathlibNt.Wu2004MeanValue.PrincipalWeighted
+public import MathlibNt.Wu2004MeanValue.EndpointConsumers
+public import MathlibNt.SieveTheory.LiuPanCofactorReduction
 
 /-!
 # Actual AP errors at a common real moving profile
@@ -10,6 +12,8 @@ The finite character and cofactor algebra of Pan--Wang--Ding (1975), p. 601,
 The profile and coefficients are common across moduli; the reduced residue
 may be chosen separately for each modulus, but not for each source coordinate.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 
@@ -61,8 +65,8 @@ private theorem count_characters (r : ℝ) (d b m : ℕ) (hm : 0 < m)
       intro χ _
       by_cases hp : p.Prime
       · by_cases hpd : p.Coprime d
-        · simp only [if_pos (show p.Prime ∧ p.Coprime d from ⟨hp, hpd⟩),
-            if_pos hp, one_mul]
+        · simp only [ite_eq_left (show p.Prime ∧ p.Coprime d from ⟨hp, hpd⟩),
+            ite_eq_left hp, one_mul]
           ring
         · simp [hp, hpd, χ.map_nonunit ((ZMod.isUnit_iff_coprime p d).not.mpr hpd)]
       · simp [hp]
@@ -89,11 +93,11 @@ theorem actualCount_eq_characterMean (S : Finset ℕ) (f r : ℕ → ℝ)
       apply sum_congr rfl
       intro m hm
       by_cases hc : m.Coprime d
-      · rw [if_pos hc, count_characters (r m) d b m (hS m hm) hd hb]
+      · rw [ite_eq_left hc, count_characters (r m) d b m (hS m hm) hd hb]
         simp only [mul_sum]
         apply sum_congr rfl
         intro χ _
-        rw [if_pos hc]
+        rw [ite_eq_left hc]
         ring
       · simp [hc]
     _ = _ := by
@@ -108,14 +112,14 @@ private theorem actualAmplitude_one (S : Finset ℕ) (f r : ℕ → ℝ) (d : �
   apply sum_congr rfl
   intro m _
   by_cases hc : m.Coprime d
-  · rw [if_pos hc, if_pos hc, MulChar.one_apply ((ZMod.isUnit_iff_coprime m d).mpr hc),
+  · rw [ite_eq_left hc, ite_eq_left hc, MulChar.one_apply ((ZMod.isUnit_iff_coprime m d).mpr hc),
       mul_one]
     congr 1
     simp only [Complex.ofReal_sum]
     apply sum_congr rfl
     intro p _
     by_cases hp : p.Prime ∧ p.Coprime d
-    · simp only [if_pos hp,
+    · simp only [ite_eq_left hp,
         MulChar.one_apply ((ZMod.isUnit_iff_coprime p d).mpr hp.2), Complex.ofReal_one]
     · simp [hp]
   · simp [hc]
@@ -138,7 +142,7 @@ theorem actualAPSum_eq_characterExpansion (S : Finset ℕ) (f r : ℕ → ℝ)
     intro m hm
     have hmR : (m : ℝ) ≠ 0 := by exact_mod_cast (hS m hm).ne'
     by_cases hc : m.Coprime d
-    · simp only [if_pos hc, ebar, Complex.ofReal_mul, Complex.ofReal_sub,
+    · simp only [ite_eq_left hc, ebar, Complex.ofReal_mul, Complex.ofReal_sub,
         Complex.ofReal_div, Complex.ofReal_natCast, mul_div_cancel_left₀ _ hmR]
       ring
     · simp [hc]
@@ -149,7 +153,7 @@ theorem actualAPSum_eq_characterExpansion (S : Finset ℕ) (f r : ℕ → ℝ)
     apply sum_congr rfl
     intro m _
     by_cases hc : m.Coprime d
-    · simp only [if_pos hc, Complex.ofReal_mul, Complex.ofReal_sub]
+    · simp only [ite_eq_left hc, Complex.ofReal_mul, Complex.ofReal_sub]
       ring
     · simp [hc]
   rw [herr, actualCount_eq_characterMean S f r d b hS hd hb, hP]

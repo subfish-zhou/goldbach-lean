@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoxAllocation
-import MathlibNt.SieveTheory.LiLiuPrereqWFDividedPowers
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoxAllocation
+public import MathlibNt.SieveTheory.LiLiuPrereqWFDividedPowers
 
 /-!
 # Closed-support common well-factorability
@@ -8,6 +10,8 @@ The function is fixed before all real level splits. The constructed example is
 one normalized prime box with one extra box-width of support slack; it is not
 the Iwaniec upper/lower sieve family and asserts no sieve density estimate.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

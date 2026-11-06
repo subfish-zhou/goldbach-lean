@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMass
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMass
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Classical Finset Filter

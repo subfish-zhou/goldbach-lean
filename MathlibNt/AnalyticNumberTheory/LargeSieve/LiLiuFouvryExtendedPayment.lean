@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedParameters
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedParameters
 
 /-! Uniform scalar payment for the three actual normalized monomials.
 This module selects no analytic hypotheses and does not assert C.2. -/
+@[expose] public section
+
 noncomputable section
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGrid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGrid
+
+@[expose] public section
 
 open Filter
 open scoped Topology

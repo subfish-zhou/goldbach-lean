@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelDiscrepancyControl
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelDiscrepancyControl
 
 /-!
 # Total control of the quadratic Siegel convolution discrepancy
@@ -15,6 +17,8 @@ leaves an error on the scale forced by `sqrt q (1 + log q)`.  A genuine
 higher-convolution or power-amplification producer is still required before
 one can derive `L(1,χ) ≫_η q⁻η`.
 -/
+
+@[expose] public section
 
 open Complex Finset
 open scoped BigOperators Real
@@ -72,7 +76,7 @@ lemma abs_quadratic_shortFloorError_le
             (((X / d : ℕ) : ℝ) - (X : ℝ) / (d : ℝ)) * (χ d).re := by
         ring
       rw [heq, abs_mul]
-      exact mul_le_one₀ hfloor (abs_nonneg _) hchi
+      exact (mul_le_of_le_one_left (abs_nonneg _) hfloor).trans hchi
     _ = ((Ico 1 m).card : ℝ) := by simp
     _ ≤ (m : ℝ) := by
       rw [Nat.card_Ico]

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshRegion
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshRegion
+
+@[expose] public section
 
 open Filter MeasureTheory Set
 open scoped BigOperators Topology Interval

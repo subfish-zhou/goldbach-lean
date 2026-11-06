@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
 
 /-!
 # A common-index and r mean in the main nonzero branch
@@ -9,6 +11,8 @@ The subsequent common-index mean uses that constant term. The remaining
 `s*s'` gcd and divisor weight are retained explicitly, not bounded by a
 power of the scale and silently absorbed into an epsilon loss.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

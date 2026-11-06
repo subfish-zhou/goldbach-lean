@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalization
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalization
 
 /-!
 # Local monomials after reciprocal payment
@@ -7,6 +9,8 @@ These are algebraic normalization tools, not asserted producers of main
 or secondary energy. Exponents are arbitrary and are only enlarged to
 global scales when their post-payment values are nonnegative.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

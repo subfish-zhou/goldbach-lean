@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularSharpBridge
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanRectangularPrefixMaximalAmbient
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularSharpBridge
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanRectangularPrefixMaximalAmbient
 
 /-!
 # Honest rectangular maximal estimate for one actual Vaughan Type-II shell
@@ -9,6 +11,8 @@ rectangular maximum before applying the ambient prefix-maximal theorem.  Its
 conclusion deliberately retains the rank-one right hand side and the literal
 coefficient `L¹` mass.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

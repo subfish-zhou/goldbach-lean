@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitiveL1
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitiveL1
 
 /-!
 # Exact rectangular sharp bridge for one Vaughan Type-II shell
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitive
 This module only records a finite identity.  It does not claim any scalar
 large-sieve closure.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -42,7 +46,7 @@ theorem vaughanBilinearTensorCoeff_one_eq_rectRightCoeff
     have ht0 : 0 ≤ t := le_trans (by norm_num) ht
     have htcast : (t.toNat : ℤ) = t := Int.toNat_of_nonneg ht0
     by_cases het : e ∣ t.toNat
-    · rw [if_pos het, if_pos]
+    · rw [ite_eq_left het, ite_eq_left]
       · simp
       · obtain ⟨m, hm⟩ := het
         have htNatPos : 0 < t.toNat := by
@@ -64,7 +68,7 @@ theorem vaughanBilinearTensorCoeff_one_eq_rectRightCoeff
               _ = (d : ℤ) * t := by rw [← Nat.cast_mul, hmet]
               _ ≤ y := hdt)
         · exact hmet
-    · rw [if_neg het, if_neg]
+    · rw [ite_eq_right het, ite_eq_right]
       rintro ⟨m, hm, hprod⟩
       apply het
       refine ⟨m, ?_⟩
@@ -80,15 +84,15 @@ private theorem vaughanBilinearTensorCoeff_one_eq_ite_rectRightCoeff
         (vaughanCanonicalDyadicBlock N v l) t =
       if (d : ℤ) * t ≤ y then vaughanTypeIIRectRightCoeff N v l t else 0 := by
   by_cases hdt : (d : ℤ) * t ≤ y
-  · rw [if_pos hdt]
+  · rw [ite_eq_left hdt]
     exact vaughanBilinearTensorCoeff_one_eq_rectRightCoeff N v l y d t hd ht hdt
-  · rw [if_neg hdt]
+  · rw [ite_eq_right hdt]
     unfold vaughanBilinearTensorCoeff
     apply Finset.sum_eq_zero
     intro e he
     apply Finset.sum_eq_zero
     intro m hm
-    rw [if_neg]
+    rw [ite_eq_right]
     intro hem
     apply hdt
     have he0 : 0 < e := (mem_vaughanCanonicalDyadicBlock.mp he).1
@@ -106,7 +110,7 @@ private theorem vaughanTypeIIRectRightCoeff_eq_zero_of_lt
   unfold vaughanTypeIIRectRightCoeff
   apply Finset.sum_eq_zero
   intro e he
-  rw [if_neg]
+  rw [ite_eq_right]
   intro het
   have hepow : 2 ^ l ≤ e := (vaughanCanonicalDyadicBlock_pow_bounds he).1
   have ht0 : 0 ≤ t := le_trans (by norm_num) ht
@@ -221,7 +225,7 @@ theorem vaughanTypeIICanonicalBilinearBlock_eq_rectangularSharp
   · apply Finset.sum_congr rfl
     intro d hdmem
     have hdpos := hDS d hdmem
-    simp only [vaughanTypeIIRectLeftCoeff, Int.toNat_natCast, if_pos hdmem]
+    simp only [vaughanTypeIIRectLeftCoeff, Int.toNat_natCast, ite_eq_left hdmem]
     refine Eq.trans (sum_Icc_natCast_eq_int 1 N (F d)).symm ?_
     refine Eq.trans ?_ (sum_Icc_natCast_eq_int (2 ^ l) (N / 2 ^ k)
       (fun x => vaughanMoebiusCoeff d * vaughanTypeIIRectRightCoeff N v l x *

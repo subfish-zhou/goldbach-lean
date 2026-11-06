@@ -1,10 +1,14 @@
-import Lean
+module
+
+public import Lean
 
 /-!
 Read compiled objects, not an elaborated namespace approximation. Each batch is
 an isolated process so compacted regions cannot accumulate across the project.
 No project module is recompiled and no imported extension is executed.
 -/
+public section
+
 open Lean
 
 private def kind : ConstantInfo → String

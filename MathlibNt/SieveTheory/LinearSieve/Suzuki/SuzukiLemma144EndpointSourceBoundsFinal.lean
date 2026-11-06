@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12QDEnvelopePointwise
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEndpointScalarBounds
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseFinal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12QDEnvelopePointwise
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEndpointScalarBounds
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogDerivative
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogDerivative
 
 /-! Compatibility import for the canonical module in its current library location. -/

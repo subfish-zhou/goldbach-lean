@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosMinpoly
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosPowerSum
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanPrimePower
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosMinpoly
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosPowerSum
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanPrimePower
 
 /-!
 # The odd-prime Kloosterman bound
@@ -10,6 +12,8 @@ identity, the actual extension trace identity, and the Stepanov point bound
 are all proved in the imported modules. Cesaro averaging converts the bound
 on the total root power sum into individual bounds without losing multiplicity.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -32,7 +36,7 @@ theorem harcosReciprocalRoots_norm_le (hp2 : p ≠ 2) (a b : ZMod p)
         -(∑ k ∈ (univ : Finset (ZMod p)).erase 0,
           harcosExtensionKloosterman p a b k n) := by
     simp only [s, z, sum_product, Fintype.sum_bool, Bool.false_eq_true,
-      if_false, if_true]
+      ite_false, ite_true]
     rw [← sum_neg_distrib]
     apply sum_congr rfl
     intro k hk

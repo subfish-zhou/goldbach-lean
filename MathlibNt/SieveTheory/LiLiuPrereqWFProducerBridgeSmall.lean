@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridgeSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridgeSieve
 
 /-!
 # The genuine density sieve for the actual small-prime family
@@ -8,6 +10,8 @@ Only densities below the actual cutoff are constrained. The product bound is
 first truncated at that cutoff and then transported through zero deletion.
 No moving-range or analytic estimate is used here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

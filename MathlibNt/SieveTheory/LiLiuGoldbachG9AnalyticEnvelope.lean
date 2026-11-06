@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8LogKernel
-import MathlibNt.SieveTheory.LiuPrimePairLogGrid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8LogKernel
+public import MathlibNt.SieveTheory.LiuPrimePairLogGrid
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -237,7 +241,7 @@ theorem goldbachB8PairLogKernel_le_logGridMajorant
           · exact goldbachB8PairLogKernelTerm_nonneg hN hrs
           · exact le_rfl
         have hsingle := Finset.single_le_sum hnonneg hq
-        simpa only [if_pos hrect] using hsingle
+        simpa only [ite_eq_left hrect] using hsingle
       _ = _ := by
         rw [Finset.sum_comm]
         apply Finset.sum_congr rfl

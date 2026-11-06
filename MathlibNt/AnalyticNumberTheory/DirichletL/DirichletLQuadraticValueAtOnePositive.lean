@@ -1,4 +1,8 @@
-import Mathlib.NumberTheory.LSeries.Nonvanishing
+module
+
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+
+@[expose] public section
 
 open Complex Filter Topology
 open ArithmeticFunction hiding log

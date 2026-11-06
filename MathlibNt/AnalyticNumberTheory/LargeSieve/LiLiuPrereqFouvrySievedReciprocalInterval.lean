@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryProgressionWeil
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryProgressionWeil
 
 /-!
 # Reciprocal sums on genuine residue-class intervals
@@ -8,6 +10,8 @@ progression. Choosing its first admissible point retains multiplicities and
 gives a parameter interval whose length is bounded by the original span
 divided by the step.
 -/
+
+@[expose] public section
 
 noncomputable section
 

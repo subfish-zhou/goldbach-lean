@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67G67Specialization
-import MathlibNt.SieveTheory.LiLiuGoldbachG67SumWeightProperties
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67G67Specialization
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67SumWeightProperties
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

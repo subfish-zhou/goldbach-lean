@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiuPrimePairLogKernel
-import MathlibNt.SieveTheory.LiuPanPrimePowerCharacters
+module
+
+public import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+public import MathlibNt.SieveTheory.LiuPanPrimePowerCharacters
 
 /-! Coprime prime mass on fixed half-open intervals; endpoints precede the limit. -/
+@[expose] public section
+
 namespace MathlibNt.SieveTheory.LiuWeight
 open Filter Finset
 open scoped Topology BigOperators

@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoxSquarefree
-import MathlibNt.SieveTheory.LiLiuPrereqWFSeparated
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoxSquarefree
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSeparated
 
 /-!
 # Squarefree coefficients of the existing normalized box product
@@ -8,6 +10,8 @@ Each box multiplicity contributes one coefficient, not factorially many copies.
 The identities below concern the already defined full-integer arithmetic
 functions. No squarefree mask or density-transfer hypothesis is introduced.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -56,12 +60,12 @@ theorem boxWeight_squarefree_eq_indicator (B : Finset ℕ) (k : ℕ) {n : ℕ}
       ((Nat.squarefree_iff_nodup_primeFactorsList hn.ne_zero).mp hn)).symm
   by_cases hB : n.primeFactors ⊆ B
   · by_cases hk : n.primeFactors.card = k
-    · rw [if_pos ⟨hB, hk⟩]
+    · rw [ite_eq_left ⟨hB, hk⟩]
       exact boxWeight_squarefree_eq_one B k hn hB (hcard.trans hk)
-    · rw [if_neg (fun h => hk h.2), boxWeight_apply,
+    · rw [ite_eq_right (fun h => hk h.2), boxWeight_apply,
         primeBox_pow_eq_zero_of_cardFactors_ne B k n (by simpa [hcard] using hk)]
       simp
-  · rw [if_neg (fun h => hB h.1)]
+  · rw [ite_eq_right (fun h => hB h.1)]
     by_contra hne
     exact hB (boxWeight_primeSupported B k n hne)
 
@@ -153,7 +157,7 @@ theorem boxProduct_primeProduct_eq_indicator {ι : Type*} [DecidableEq ι]
   by_cases hsub : P ⊆ s.biUnion B
   · simpa only [hsub, true_and] using
       boxProduct_primeProduct_of_subset s B k hdisj P hP hsub
-  · rw [if_neg (fun h => hsub h.1)]
+  · rw [ite_eq_right (fun h => hsub h.1)]
     by_contra hne
     have hs := boxProduct_primeSupported s B k (P.prod id) hne
     exact hsub (by simpa only [id_eq, Nat.primeFactors_prod hP] using hs)
@@ -204,7 +208,7 @@ theorem smallWeight_boxProduct_primeProduct_eq_indicator {ι : Type*} [Decidable
       boxProduct_primeProduct_eq_indicator s B k hdisj (P \ B₀) hPR]
     simp only [hsub, hRsub, true_and, hcounts]
     split_ifs <;> simp
-  · rw [if_neg (fun h => hsub h.1)]
+  · rw [ite_eq_right (fun h => hsub h.1)]
     by_contra hne
     have hs := primeSupported_mul hψ (boxProduct_primeSupported s B k) (P.prod id) hne
     exact hsub (by simpa only [id_eq, Nat.primeFactors_prod hP] using hs)

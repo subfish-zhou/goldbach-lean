@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaTwelveGlobalScaling
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaElevenPrimeSumIdentification
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaTwelveGlobalScaling
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaElevenPrimeSumIdentification
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

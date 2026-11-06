@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoxCoefficients
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoxProfiles
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoxCoefficients
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoxProfiles
 
 /-!
 # A fixed occurrence-aware normalized signed geometric family
@@ -13,6 +15,8 @@ The favourable signs use lower endpoints; the opposite signs require distinct
 boxes and the strict upper-endpoint tests. This is the normalized convention
 of `SignedRounding`, not Iwaniec's factorial-copy labelled-slot sum.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -190,9 +194,9 @@ theorem signedTagAccepted_boxProfile_iff (upper : Bool) (label : ℕ → ℕ)
       exact h hp hq (congrArg b heq)
   rw [SignedTagAccepted, boxProfile_length, hbase]
   by_cases hloose : LooseSign upper S.card
-  · rw [if_pos hloose, if_pos hloose, boxProfile_prod, RoundedSupport]
+  · rw [ite_eq_left hloose, ite_eq_left hloose, boxProfile_prod, RoundedSupport]
     exact and_comm
-  · rw [if_neg hloose, if_neg hloose, hnodup, TightRoundedSupport,
+  · rw [ite_eq_right hloose, ite_eq_right hloose, hnodup, TightRoundedSupport,
       ← roundedSupport_boxProfile_iff upper label c D S hmono]
     constructor
     · exact fun h => h.2

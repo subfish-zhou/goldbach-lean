@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter LiLiuPrereqBuchstab

@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.LowSource
+module
+
+public import MathlibNt.Wu2004MeanValue.LowSource
 
 /-! Actual real prime endpoints in the low primitive conductor source.
 The scale `x` is natural; endpoints and the fixed product constant are real. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDiscreteParityRecurrence
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOne
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDiscreteParityRecurrence
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOne
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset

@@ -1,6 +1,10 @@
-import MathlibNt.Wu2004MeanValue.LowPrefix
+module
+
+public import MathlibNt.Wu2004MeanValue.LowPrefix
 
 /-! Siegel--Walfisz at a balanced quotient, with the harmonic cofactor gain. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Filter Finset

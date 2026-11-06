@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportDensity
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportDensity
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights
 
 /-!
 # Reciprocal mass of the large-square-divisor support
@@ -7,6 +9,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeigh
 Exact finite reindexing of multiples, followed by the inverse-square tail,
 retains the square-root saving in harmonic rather than counting measure.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -82,7 +86,7 @@ theorem sum_one_div_largeSquareDivisorSet_le {L Z : ℝ}
       obtain ⟨b, hb, hn⟩ := mem_biUnion.mp hn
       calc
         _ = (if b ^ 2 ∣ n then (1 : ℝ) / n else 0) := by
-          rw [if_pos (mem_filter.mp hn).2]
+          rw [ite_eq_left (mem_filter.mp hn).2]
         _ ≤ _ := single_le_sum
           (f := fun b => if b ^ 2 ∣ n then (1 : ℝ) / n else 0)
           (fun _ _ => by split_ifs <;> positivity) hb

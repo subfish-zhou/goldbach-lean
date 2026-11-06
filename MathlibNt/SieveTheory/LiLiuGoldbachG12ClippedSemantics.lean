@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

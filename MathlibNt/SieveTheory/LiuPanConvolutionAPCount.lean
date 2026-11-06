@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionAPCount
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionAPCount
 
 /-! Compatibility import for the canonical module in its current library location. -/

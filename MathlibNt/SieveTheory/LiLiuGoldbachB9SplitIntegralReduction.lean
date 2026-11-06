@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9InnerIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9InnerIntegral
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval

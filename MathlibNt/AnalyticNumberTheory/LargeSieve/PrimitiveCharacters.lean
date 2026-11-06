@@ -1,6 +1,8 @@
 
 
-import AnalyticNumberTheory.LargeSieve.BombieriDavenport
+module
+
+public import AnalyticNumberTheory.LargeSieve.BombieriDavenport
 
 /-!
  # Primitive Dirichlet characters for the multiplicative large sieve
@@ -19,6 +21,8 @@ constructs the standard primitive additive character on `ZMod q`, bridges its
 Gauss sums to the existing finite Fourier API, and proves both
 `‖τ(χ)‖ ^ 2 = q` and `‖τ(χ)‖ = √q` for primitive complex characters.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -109,9 +113,9 @@ theorem sum_primitive_le_sum_all {q : ℕ}
 /-! ## Primitive Gauss sums -/
 
 /-- The standard `q`-th root of unity used for the primitive additive character. -/
-private def primitiveGaussRoot (q : ℕ) : ℂ := charReal (1 / (q : ℝ))
+def primitiveGaussRoot (q : ℕ) : ℂ := charReal (1 / (q : ℝ))
 
-private lemma primitiveGaussRoot_isPrimitiveRoot (q : ℕ) (hq : q ≠ 0) :
+lemma primitiveGaussRoot_isPrimitiveRoot (q : ℕ) (hq : q ≠ 0) :
     IsPrimitiveRoot (primitiveGaussRoot q) q := by
   have h := Complex.isPrimitiveRoot_exp_of_isCoprime (1 : ℤ) q hq isCoprime_one_left
   convert h using 1
@@ -120,7 +124,7 @@ private lemma primitiveGaussRoot_isPrimitiveRoot (q : ℕ) (hq : q ≠ 0) :
   norm_num
   ring
 
-private lemma primitiveGaussRoot_pow (q : ℕ) (hq : q ≠ 0) :
+lemma primitiveGaussRoot_pow (q : ℕ) (hq : q ≠ 0) :
     primitiveGaussRoot q ^ q = 1 :=
   (primitiveGaussRoot_isPrimitiveRoot q hq).pow_eq_one
 
@@ -159,7 +163,7 @@ private theorem primitiveGaussAddChar_mulShift_apply (q : ℕ) [NeZero q]
     rw [Int.cast_natCast, ZMod.natCast_zmod_val]
     exact heq
   have hmain := charReal_eq_of_int_modEq (NeZero.pos q) hmod
-  convert hmain using 1 <;> norm_num [Int.cast_mul]
+  convert hmain using 1; norm_num [Int.cast_mul]
 
 /-- Sums over `ZMod q` can be written using the canonical representatives `0 ≤ r < q`. -/
 theorem sum_zmod_eq_sum_range {q : ℕ} [NeZero q] {M : Type*} [AddCommMonoid M]
@@ -198,8 +202,7 @@ theorem gaussSum_primitiveGaussAddChar_mulShift {q : ℕ} [NeZero q]
       charReal ((a.val : ℝ) * (x.val : ℝ) / (q : ℝ)) by
     have h := primitiveGaussAddChar_mulShift_apply q (a.val : ℤ) x
     rw [ha] at h
-    convert h using 1
-    all_goals norm_num]
+    convert h using 1]
 
 /-- Primitive complex Dirichlet characters have the classical Gauss-sum norm:
 `|τ(χ)|² = q`. -/

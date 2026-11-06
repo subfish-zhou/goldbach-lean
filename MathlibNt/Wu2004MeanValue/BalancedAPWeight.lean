@@ -1,6 +1,10 @@
-import MathlibNt.Wu2004MeanValue.BalancedAPWeightCount
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedAPWeightCount
 
 /-! Wu's exact modulus weight, paid using the product-fiber envelope. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset

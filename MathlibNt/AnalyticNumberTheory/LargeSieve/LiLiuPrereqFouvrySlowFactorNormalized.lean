@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactor
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactor
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 /-! # Ordinary mixed derivatives of the concrete normalized slow weight -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -50,7 +54,6 @@ theorem hasDerivAt_normalizedJet (A B : ℝ) (js : List (Fin 5)) (v : Point)
   have hh := ((hasDerivAt_jet A B js amplitude (fun i => Real.log (v i)) j).scomp
     (v j) (Real.hasDerivAt_log hv)).const_mul (inverseFactors js v : ℂ)
   convert hh using 1
-  · rfl
   · ext t
     simp only [normalizedJet, inverseFactors_update js v j hj, log_update,
       Function.comp_apply]

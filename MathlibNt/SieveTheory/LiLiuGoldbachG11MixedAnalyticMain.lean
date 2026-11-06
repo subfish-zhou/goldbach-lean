@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedDensityPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridPlainMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedDensityPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridPlainMass
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -89,7 +93,7 @@ theorem goldbachG11MixedDensity_analytic_upper :
     have hnF : 0 ≤ fouvryG9UpperFactor N (goldbachG11GridLowLevel N δ ρ k) C K θ*
         fouvryG9BaseEuler N (Real.sqrt N)*goldbachG11EulerCorrection N := mul_nonneg (mul_nonneg hf.1 hbase) hcorr
     have hout := hh.trans (mul_le_mul_of_nonneg_left hmass hnF)
-    simpa only [F,goldbachG11MixedLevel,if_pos hkc] using hout
+    simpa only [F,goldbachG11MixedLevel,ite_eq_left hkc] using hout
   have hTboundary : 1 ≤ (N : ℝ)^(1/10 : ℝ) := Real.one_le_rpow (by linarith) (by norm_num)
   obtain ⟨_,_,hQ,_,hQN⟩ := hw N ((N : ℝ)^(1/10 : ℝ)) hNM hTboundary (le_refl _)
   have hzQ := (g9WF_sqrt_cutoff hn4R hTboundary (le_refl _) hδ hδu).2
@@ -110,7 +114,7 @@ theorem goldbachG11MixedDensity_analytic_upper :
       exact ⟨(goldbachG11ProductSupport_data (mem_filter.mp hm).1).1,hr,hcard.trans (by norm_num)⟩
     have hh := hf.2 (ℕ × ℕ) (goldbachG11GridLong N ε ρ k ×ˢ goldbachG11GridShort N ρ k)
       Prod.fst (goldbachG11AllPrimeWeight N) (fun v _ => goldbachG11AllPrimeWeight_nonneg N v) ha
-    simpa only [F,P,goldbachG11GridPlainMass,goldbachG11MixedLevel,if_neg (mem_filter.mp hk).2] using hh
+    simpa only [F,P,goldbachG11GridPlainMass,goldbachG11MixedLevel,ite_eq_right (mem_filter.mp hk).2] using hh
   unfold goldbachG11MixedDensityMain goldbachG11GridAnalyticMain
   rw [goldbachG11OrdinaryDensityMain_eq_pairs hρ hρu hbig (goldbachG11HighGridUsed N ε ρ)
     (filter_subset _ _) (fun _ => fouvryG9SievePrimes N (Real.sqrt N)) (fun _ => Real.sqrt N)]

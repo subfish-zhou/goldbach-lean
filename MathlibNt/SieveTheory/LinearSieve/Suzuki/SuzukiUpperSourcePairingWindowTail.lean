@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingConservation
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingConservation
 
 /-!
 # Tail of the upper-source pairing window
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingConserva
 The unit-window term tends to zero from the genuine source tail and the scaled
 Laplace tail of the standard upper adjoint.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

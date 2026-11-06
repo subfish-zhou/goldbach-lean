@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ActiveProductGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ActiveProductGeometry
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

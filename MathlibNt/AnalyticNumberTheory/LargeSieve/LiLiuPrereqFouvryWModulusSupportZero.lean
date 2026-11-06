@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusSupport
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
 
 /-!
 # Same-mask zero mode for the two supported-modulus exclusions
@@ -9,6 +11,8 @@ taking absolute values. Beta and modulus coefficients remain signed; the
 beta input is only its absolute mass. No Siegel--Walfisz hypothesis, mask
 symmetry, or restriction of unmasked cancellation is used.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayDecay
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingConservation
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointDDE
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEinEulerTailAsymptotic
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayDecay
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingConservation
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointDDE
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEinEulerTailAsymptotic
 
 /-!
 # Jurkat--Richert (5.10) for the constructed global delay functions
@@ -15,6 +17,8 @@ not the original paper's appeal to de Bruijn's estimates (5.3). Only the generic
 pairing identity and unconditional adjoint producers are reused; no Suzuki
 source-tail or amplitude-normalization hypothesis is consumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

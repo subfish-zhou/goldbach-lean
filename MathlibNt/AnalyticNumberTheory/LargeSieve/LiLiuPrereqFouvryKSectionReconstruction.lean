@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySeparatedCorrelation
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorDomain
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySeparatedCorrelation
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorDomain
 
 /-!
 # Reconstruction of an actual IV.3 k₁ section
@@ -8,6 +10,8 @@ The six-key and the five fixed coordinates `(r',n₁,n₂,s',h)` recover the
 original extracted tuple, not merely its phase. Canonicality below is
 expressed by prime support and coprimality, without an extraction oracle.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

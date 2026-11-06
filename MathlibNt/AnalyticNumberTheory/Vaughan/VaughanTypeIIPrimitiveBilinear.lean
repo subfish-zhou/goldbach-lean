@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIDyadicLedger
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIDyadicLedger
 
 /-!
  # Primitive-character bilinear large sieve for Vaughan Type II rectangles
@@ -10,6 +12,8 @@ coefficient is independent of the character, so the weighted primitive
 Bombieri--Davenport inequality can be applied for each outer `d`.  Cauchy is
 used only in `d`; no coefficient is ever repackaged and squared by `n=d*e*m`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -73,7 +77,7 @@ theorem vaughanBilinearInner_eq_tensor
       Finset.mem_Icc.mpr
         ⟨by exact_mod_cast hem_pos, by exact_mod_cast hem_le⟩
     simp_rw [ite_mul, zero_mul]
-    rw [Finset.sum_ite_eq, if_pos hem_mem]
+    rw [Finset.sum_ite_eq, ite_eq_left hem_mem]
     simp only [Int.toNat_natCast, Int.cast_natCast]
   rw [hsingle]
   rw [show ((e * m : ℕ) : ZMod q) =

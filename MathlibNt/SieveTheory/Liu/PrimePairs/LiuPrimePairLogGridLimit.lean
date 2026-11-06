@@ -1,8 +1,10 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
-import MathlibNt.Analysis.LogGridEstimates
-import MathlibNt.Analysis.MovingIntervalIntegral
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainIntegral
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+public import MathlibNt.Analysis.LogGridEstimates
+public import MathlibNt.Analysis.MovingIntervalIntegral
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainIntegral
 
 /-!
 # The canonical logarithmic grid tends to Liu's source integral
@@ -11,6 +13,8 @@ This file interprets each logarithmic rectangle mass as an actual integral,
 checks the half-open grid partition, and compares the resulting upper sum with
 the integral on Liu's triangular source region.
 -/
+
+@[expose] public section
 
 open Filter Finset MeasureTheory Set
 open scoped BigOperators Interval Topology

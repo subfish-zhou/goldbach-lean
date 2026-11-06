@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalPowerRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalPowerRectangle
 
 /-!
 # A fixed quadratic rectangle crossing height zero
@@ -10,6 +12,8 @@ lower bound for `L(1, χ)`, supplies a positive central band.  The existing
 annular rectangles cover the two remaining bands.  Their common left edge then
 gives one rectangle across the whole interval `[-T,T]`.
 -/
+
+@[expose] public section
 
 open Complex Set
 

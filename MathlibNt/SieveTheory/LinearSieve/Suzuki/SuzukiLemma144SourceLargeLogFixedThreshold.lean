@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
+
+@[expose] public section
 
 open scoped Classical BigOperators
 

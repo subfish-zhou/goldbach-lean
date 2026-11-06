@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCalculus
-import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarBase
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCalculus
+public import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarBase
+
+@[expose] public section
 
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple
@@ -43,7 +47,9 @@ theorem goldbachPositiveScalarA_hasDerivAt (z : ℝ) :
     HasDerivAt goldbachPositiveScalarA
       (goldbachPositiveScalarP z * goldbachPositiveScalarH z) z := by
   have hc : S3Polynomial.derivative goldbachPositiveScalarACoeffs =
-      S3Polynomial.mul s3pCoeffs goldbachPositiveScalarHCoeffs := by decide +kernel
+      S3Polynomial.mul s3pCoeffs goldbachPositiveScalarHCoeffs := by
+    apply S3Polynomial.eq_of_num_den_eq
+    decide +kernel
   have h := S3Polynomial.eval_hasDerivAt goldbachPositiveScalarACoeffs z
   rw [hc, S3Polynomial.eval_mul] at h
   exact h

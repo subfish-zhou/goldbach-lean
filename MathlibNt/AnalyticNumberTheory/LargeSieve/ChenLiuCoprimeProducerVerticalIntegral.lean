@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerLong
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerLong
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
+
+@[expose] public section
 
 noncomputable section
 

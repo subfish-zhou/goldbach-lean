@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaPayment
 
 /-!
 # Large common-modulus payment at the C.2 dyadic scale
@@ -11,6 +13,8 @@ The fixed shift scale precedes the eventual threshold and all changing data.
 The upper bound `T ≤ x^(1/9)` is used only to deduce `sqrt x ≤ M`
 from the eventual inequality `4*x^(1/9+1/2) ≤ x`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

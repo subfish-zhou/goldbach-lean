@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonance
-import Mathlib.Algebra.GCDMonoid.Nat
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonance
+public import Mathlib.Algebra.GCDMonoid.Nat
 
 /-!
 # Removing the artificial progression-step loss in the secondary mean
@@ -8,6 +10,8 @@ The previous inclusion of multiples in `(0,B*s]` paid a full factor `s`.
 The gcd product inequality instead pays only `gcd(s,|A|)`. No coprimality
 of `s` and `A`, and no nonzero coefficient of the common `n`, is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

@@ -1,5 +1,7 @@
-import AnalyticNumberTheory.Sieve.PanMeanValueBody
-import Mathlib.NumberTheory.Chebyshev
+module
+
+public import AnalyticNumberTheory.Sieve.PanMeanValueBody
+public import Mathlib.NumberTheory.Chebyshev
 
 /-!
 # Auxiliary estimates for the all-character Type II audit
@@ -18,6 +20,8 @@ For the primitive-character large sieve, see Montgomery (1971), Chapter 1,
 Theorem 5.1, and Davenport, Chapter 27. Mathlib's Dirichlet-character library
 supplies conductor, primitivity and Gauss-sum infrastructure.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 
@@ -521,7 +525,7 @@ private lemma v3_one_one_abs_le_log (n : ℕ) :
   rw [vaughanThird_one_one n]
   have hΛ : Λ n ≤ Real.log (n + 1) := by
     by_cases hn : IsPrimePow n
-    · rw [ArithmeticFunction.vonMangoldt_apply, if_pos hn]
+    · rw [ArithmeticFunction.vonMangoldt_apply, ite_eq_left hn]
       have hnpos : 0 < n := by
         rcases hn with ⟨p, k, hp, hk, hpn⟩
         have hpk : 0 < p ^ k := pow_pos (Nat.pos_of_ne_zero hp.1) k
@@ -533,7 +537,7 @@ private lemma v3_one_one_abs_le_log (n : ℕ) :
         nlinarith
       have hpos : 0 < (Nat.minFac n : ℝ) := by exact_mod_cast hminpos
       exact Real.log_le_log hpos (by simpa using hle)
-    · rw [ArithmeticFunction.vonMangoldt_apply, if_neg hn]
+    · rw [ArithmeticFunction.vonMangoldt_apply, ite_eq_right hn]
       have hpos : 0 < (n : ℝ) + 1 := by positivity
       exact le_trans (by norm_num) (Real.log_nonneg (by nlinarith : 1 ≤ (n : ℝ) + 1))
   calc
@@ -741,14 +745,14 @@ theorem vCharAbs_lower (m p₁ p₂ : ℕ) (hp₁ : p₁.Prime) (hp₂ : p₂.Pr
             have hlogle : Real.log (n : ℝ) = Real.log (n : ℝ) := rfl
             have hΛb : Λ n ≤ Real.log (n : ℝ) := by
               by_cases hpp : IsPrimePow n
-              · rw [ArithmeticFunction.vonMangoldt_apply, if_pos hpp]
+              · rw [ArithmeticFunction.vonMangoldt_apply, ite_eq_left hpp]
                 have hmin : Nat.minFac n ≤ n := Nat.minFac_le (by omega : 0 < n)
                 have hminpos : 0 < Nat.minFac n := Nat.minFac_pos n
                 have hle : (Nat.minFac n : ℝ) ≤ (n : ℝ) := by exact_mod_cast hmin
                 have hpos : 0 < (Nat.minFac n : ℝ) := by exact_mod_cast hminpos
                 have hposn : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
                 exact Real.log_le_log hpos hle
-              · rw [ArithmeticFunction.vonMangoldt_apply, if_neg hpp]
+              · rw [ArithmeticFunction.vonMangoldt_apply, ite_eq_right hpp]
                 have hposn : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
                 exact le_trans (by norm_num) (Real.log_nonneg (by exact_mod_cast hn1 : 1 ≤ (n : ℝ)))
             exact hΛb

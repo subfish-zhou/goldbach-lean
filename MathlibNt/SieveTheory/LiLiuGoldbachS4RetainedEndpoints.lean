@@ -1,8 +1,12 @@
 
-import MathlibNt.Tactic.PolynomialDeriv
-import MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
+module
+
+public import MathlibNt.Tactic.PolynomialDeriv
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
 /- The strongest retained rational endpoint is certified directly here. -/
+@[expose] public section
+
 set_option pp.deepTerms true
 set_option pp.proofs true
 set_option pp.maxSteps 1000000

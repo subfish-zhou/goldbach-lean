@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Switching.SourceSieve
-import MathlibNt.SieveTheory.Selberg.SelbergUpperBound
+module
+
+public import MathlibNt.SieveTheory.Switching.SourceSieve
+public import MathlibNt.SieveTheory.Selberg.SelbergUpperBound
 
 /-!
 # Varying-prime sieves and cutoff corrections
@@ -10,6 +12,8 @@ explicitly before comparison with the corrected weighted count.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta

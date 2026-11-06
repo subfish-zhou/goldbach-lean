@@ -1,5 +1,7 @@
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Tactic
 
 /-! # Finite Selberg optimization with an arbitrary cutoff
 
@@ -7,6 +9,8 @@ The reverse-divisor Möbius construction and its exact quadratic minimum are
 proved once. The full-divisor and Liu-source optimizers specialize this result.
 The finite algebra is independent of Wang 1962's analytic hypothesis (R*).
 -/
+
+@[expose] public section
 
 open scoped BigOperators ArithmeticFunction.Moebius ArithmeticFunction.zeta
 open Finset
@@ -87,10 +91,10 @@ private lemma sum_moebius_quotient {e l : ℕ} (he : e ≠ 0) :
   by_cases hle : l ∣ e
   · exact sum_moebius_quotient_of_dvd he hle
   · have hel : e ≠ l := fun h => hle (h ▸ dvd_refl l)
-    rw [if_neg hel]
+    rw [ite_eq_right hel]
     apply Finset.sum_eq_zero
     intro d hd
-    exact if_neg (fun hld => hle (hld.trans (Nat.mem_divisors.mp hd).1))
+    exact ite_eq_right (fun hld => hle (hld.trans (Nat.mem_divisors.mp hd).1))
 
 /-- Divisors of the sieve product retained by a finite Selberg cutoff. -/
 def truncatedSelbergCarrier (S : BoundingSieve) (R : ℕ) : Finset ℕ :=
@@ -170,7 +174,7 @@ theorem truncatedSelbergOptimalX_eq_sum_nu_mul_lambda
     have hdP : d ∣ S.prodPrimes :=
       (Nat.mem_divisors.mp (Finset.mem_filter.mp hd).1).1
     have hnu : S.nu d ≠ 0 := S.nu_ne_zero hdP
-    rw [truncatedSelbergOptimalLambda, if_pos hd]
+    rw [truncatedSelbergOptimalLambda, ite_eq_left hd]
     field_simp [hnu]
     rfl
   have hexpand :
@@ -182,7 +186,7 @@ theorem truncatedSelbergOptimalX_eq_sum_nu_mul_lambda
     apply Finset.sum_congr rfl
     intro d hd
     by_cases hld : l ∣ d
-    · rw [if_pos hld, if_pos hld, hcancel d hd]
+    · rw [ite_eq_left hld, ite_eq_left hld, hcancel d hd]
     · simp [hld]
   rw [hexpand]
   have hdouble :
@@ -195,8 +199,8 @@ theorem truncatedSelbergOptimalX_eq_sum_nu_mul_lambda
     apply Finset.sum_congr rfl
     intro d hd
     by_cases hld : l ∣ d
-    · simp only [hld, if_true]
-    · simp only [hld, if_false, Finset.sum_const_zero]
+    · simp only [hld, ite_true]
+    · simp only [hld, ite_false, Finset.sum_const_zero]
   rw [hdouble]
   rw [Finset.sum_comm]
   have hinner : ∀ e ∈ C,
@@ -260,7 +264,7 @@ theorem truncatedSelbergOptimalX_eq_sum_nu_mul_lambda
       rw [hinner e he]
     _ = truncatedSelbergOptimalX S R l := by
       simp_rw [mul_ite, mul_one, mul_zero]
-      rw [Finset.sum_ite_eq' C l, if_pos (by simpa [C] using hl)]
+      rw [Finset.sum_ite_eq' C l, ite_eq_left (by simpa [C] using hl)]
 
 /-- The reverse-divisor construction is normalized at one. -/
 theorem truncatedSelbergOptimalLambda_one
@@ -272,7 +276,7 @@ theorem truncatedSelbergOptimalLambda_one
   have h1 : 1 ∈ C := by
     exact Finset.mem_filter.mpr
       ⟨Nat.mem_divisors.mpr ⟨one_dvd _, S.prodPrimes_ne_zero⟩, hR⟩
-  rw [truncatedSelbergOptimalLambda, if_pos h1]
+  rw [truncatedSelbergOptimalLambda, ite_eq_left h1]
   have hsum :
       (∑ e ∈ C, if 1 ∣ e then
         (μ (e / 1) : ℝ) * truncatedSelbergOptimalX S R e else 0) = 1 := by
@@ -286,7 +290,7 @@ theorem truncatedSelbergOptimalLambda_one
           S.squarefree_of_mem_divisors_prodPrimes (Finset.mem_filter.mp he).1
         have hmu : ((μ e : ℤ) : ℝ) ^ 2 = 1 := by
           exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hesq
-        rw [if_pos (one_dvd e), Nat.div_one, truncatedSelbergOptimalX, if_pos he]
+        rw [ite_eq_left (one_dvd e), Nat.div_one, truncatedSelbergOptimalX, ite_eq_left he]
         calc
           (μ e : ℝ) * ((μ e : ℝ) * S.selbergTerms e / G) =
               ((μ e : ℝ) ^ 2) * S.selbergTerms e / G := by ring
@@ -304,7 +308,7 @@ theorem sum_nu_mul_truncatedSelbergOptimalLambda_eq_optimalX
       truncatedSelbergOptimalX S R l := by
   by_cases hl : l ∈ truncatedSelbergCarrier S R
   · exact (truncatedSelbergOptimalX_eq_sum_nu_mul_lambda S R l hl).symm
-  · rw [truncatedSelbergOptimalX, if_neg hl]
+  · rw [truncatedSelbergOptimalX, ite_eq_right hl]
     apply Finset.sum_eq_zero
     intro d hd
     by_cases hld : l ∣ d
@@ -342,12 +346,12 @@ theorem mainSum_truncatedSelbergOptimalLambda
     apply Finset.sum_congr rfl
     intro l hl
     by_cases hlR : l ≤ R
-    · rw [if_pos hlR]
+    · rw [ite_eq_left hlR]
       have hlP : l ∣ S.prodPrimes := (Nat.mem_divisors.mp hl).1
       have hlC : l ∈ truncatedSelbergCarrier S R :=
         Finset.mem_filter.mpr ⟨hl, hlR⟩
       rw [sum_nu_mul_truncatedSelbergOptimalLambda_eq_optimalX S R l hlP,
-        truncatedSelbergOptimalX, if_pos hlC]
+        truncatedSelbergOptimalX, ite_eq_left hlC]
       have hterm : S.selbergTerms l ≠ 0 :=
         (S.selbergTerms_pos hlP).ne'
       have hmu : ((μ l : ℤ) : ℝ) ^ 2 = 1 := by
@@ -358,10 +362,10 @@ theorem mainSum_truncatedSelbergOptimalLambda
         S.selbergTerms l / G ^ 2
       field_simp [hterm, hG.ne']
       rw [hmu]
-    · rw [if_neg hlR]
+    · rw [ite_eq_right hlR]
       have hlP : l ∣ S.prodPrimes := (Nat.mem_divisors.mp hl).1
       rw [sum_nu_mul_truncatedSelbergOptimalLambda_eq_optimalX S R l hlP,
-        truncatedSelbergOptimalX, if_neg]
+        truncatedSelbergOptimalX, ite_eq_right]
       · simp
       · simp [truncatedSelbergCarrier, hlR]
   change
@@ -527,12 +531,12 @@ theorem abs_truncatedSelbergOptimalLambda_le_one
           exact_mod_cast ArithmeticFunction.abs_moebius_eq_one_of_squarefree hqsq
         have hterm : 0 < S.selbergTerms e := S.selbergTerms_pos
           ((Nat.mem_divisors.mp (Finset.mem_filter.mp he).1).1)
-        rw [if_pos hde, truncatedSelbergOptimalX, if_pos he, abs_mul, abs_div,
+        rw [ite_eq_left hde, truncatedSelbergOptimalX, ite_eq_left he, abs_mul, abs_div,
           abs_mul, hmuq, hmue, abs_of_pos hterm, abs_of_pos hG]
-        rw [if_pos hde]
+        rw [ite_eq_left hde]
         ring
       · simp [hde]
-    rw [truncatedSelbergOptimalLambda, if_pos hd, abs_div, abs_of_pos hnu]
+    rw [truncatedSelbergOptimalLambda, ite_eq_left hd, abs_div, abs_of_pos hnu]
     calc
       |∑ e ∈ C, if d ∣ e then
           (μ (e / d) : ℝ) * truncatedSelbergOptimalX S R e else 0| / S.nu d ≤

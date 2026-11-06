@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSufficientAssembly
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualPhysical
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSufficientAssembly
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualPhysical
 
 /-!
  # Feasibility boundary for the Standard-BV high-conductor Vaughan source
@@ -17,6 +19,8 @@ narrow exact high-conductor contract, with moving Vaughan cutoffs, which the
 existing Standard-BV consumer really needs.  No inhabitant of that analytic
 contract is asserted here.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedOutputSemantics
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12OriginalGridPartition
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CutoffSlicePayment
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedOutputSemantics
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12OriginalGridPartition
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12CutoffSlicePayment
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

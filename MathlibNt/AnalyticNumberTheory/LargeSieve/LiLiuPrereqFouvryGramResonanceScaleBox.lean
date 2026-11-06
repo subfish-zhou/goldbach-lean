@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceEnergy
 
 /-!
 # The local finite box of occupied resonance bases
@@ -8,6 +10,8 @@ Its frequency interval has the actual fixed sign. Its second beta width is
 `F/d`, obtained from the original upper beta support, not from the first beta
 coordinate. No positivity is assumed for keys with empty occupied carriers.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

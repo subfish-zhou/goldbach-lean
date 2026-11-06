@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.Analysis.SieveNormalization
-import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
-import MathlibNt.SieveTheory.LiLiuGoldbachS2MainMassUpper
-import MathlibNt.SieveTheory.LiuPanPrimePowerCharacters
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2PaidUpper
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.Analysis.SieveNormalization
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2MainMassUpper
+public import MathlibNt.SieveTheory.LiuPanPrimePowerCharacters
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralBound
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralBound
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval BigOperators

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregateBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregateBound
 
 /-!
 # The nonzero secondary resonance with a common first beta index
@@ -7,6 +9,8 @@ The relation `h'*s = h*s'` does not force the correlation numerator to
 vanish. In this branch its common `n*s'` factor is extracted before
 averaging in `r`, never by applying a nonzero-coefficient mean in `n`.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

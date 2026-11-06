@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
+public import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization
 
 /-! Pointwise envelopes for the literal Liu main term. The additive
 normalization κ is unrestricted; no distribution hypothesis is introduced. -/
+
+@[expose] public section
 
 noncomputable section
 open Finset

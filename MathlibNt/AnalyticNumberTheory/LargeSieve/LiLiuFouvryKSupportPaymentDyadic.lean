@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportPayment
 
 /-!
 # Fixed-residue-scale large supported-factor payment at the C.2 dyadic scale
@@ -8,6 +10,8 @@ separation of the lengths is needed, and the modulus endpoint may reach `x`.
 The original sum, zero mode and tail retain the same arbitrary mask, with
 frequency cutoff exactly `wUniformCutoff M (x ^ η)`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

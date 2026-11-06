@@ -1,5 +1,9 @@
-import MathlibNt.Tactic.ElementaryDeriv
-import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticEnvelope
+module
+
+public import MathlibNt.Tactic.ElementaryDeriv
+public import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticEnvelope
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothMainTerm
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothMainTerm
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
 
 /-!
 # Finite beta covariance in the actual W and U zero modes
@@ -12,6 +14,8 @@ The discrepancy estimates below are conditional on independent beta
 arithmetic-progression estimates; they do not prove a Siegel--Walfisz
 estimate or the final Fouvry distribution bound.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -43,7 +47,7 @@ private theorem sum_betaReducedResidues_indicator {δ n : ℕ}
   rw [Finset.sum_eq_single (n % δ)]
   · simp [Nat.ModEq]
   · intro b hb hne
-    apply if_neg
+    apply ite_eq_right
     intro he
     have hb' := Finset.mem_range.mp (Finset.mem_filter.mp hb).1
     have he' : n % δ = b := by
@@ -64,7 +68,7 @@ theorem sum_betaResidueMass (N : Finset ℕ) (β : ℕ → ℝ)
   by_cases hn : n.Coprime q
   · have hn' := hn
     simp only [Nat.Coprime] at hn ⊢
-    simp only [hn, true_and, if_true]
+    simp only [hn, true_and, ite_true]
     exact sum_betaReducedResidues_indicator hδ (hn'.of_dvd_right hdq) _
   · simp [hn]
 
@@ -81,7 +85,7 @@ private theorem beta_pair_indicator {q r n₁ n₂ : ℕ}
       simp only [Nat.Coprime] at h₁ h₂
       simp only [WCompatible, Nat.Coprime, h₁, h₂, true_and]
       by_cases hc : Nat.ModEq (q.gcd r) n₁ n₂
-      · rw [if_pos hc]
+      · rw [ite_eq_left hc]
         have he (b : ℕ) :
             Nat.ModEq (q.gcd r) n₁ b ↔ Nat.ModEq (q.gcd r) n₂ b :=
           ⟨fun h ↦ hc.symm.trans h, fun h ↦ hc.trans h⟩
@@ -89,7 +93,7 @@ private theorem beta_pair_indicator {q r n₁ n₂ : ℕ}
         simp only [ite_mul_ite, mul_zero]
         exact sum_betaReducedResidues_indicator (Nat.gcd_pos_of_pos_left r hq)
           (h₁'.of_dvd_right (Nat.gcd_dvd_left q r)) _
-      · rw [if_neg hc]
+      · rw [ite_eq_right hc]
         apply Finset.sum_eq_zero
         intro b _
         by_cases hb : Nat.ModEq (q.gcd r) n₁ b

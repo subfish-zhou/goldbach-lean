@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpEnclosure
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
+module
+
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpEnclosure
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+@[expose] public section
+
 set_option autoImplicit false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 1600000

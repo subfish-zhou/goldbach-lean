@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
-import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutputPrime
-import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
+public import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutputPrime
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle
+
+@[expose] public section
 
 open Finset Filter
 open scoped BigOperators Classical

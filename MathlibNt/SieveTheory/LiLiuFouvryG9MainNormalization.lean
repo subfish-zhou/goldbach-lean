@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9FiniteTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9FiniteTransport
+
+@[expose] public section
 
 noncomputable section
 open Finset
@@ -21,10 +25,10 @@ theorem g9IntegerFibreCenter_eq_progressionDensity (U V : Finset ℕ)
   change (if (m*n).Coprime d then α m*β n else 0)/(d.totient : ℝ) =
     α m*β n*(if d.Coprime (m*n) then (d.totient : ℝ)⁻¹ else 0)
   by_cases h : (m*n).Coprime d
-  · rw [if_pos h, if_pos h.symm]
+  · rw [ite_eq_left h, ite_eq_left h.symm]
     ring
   · have h' : ¬d.Coprime (m*n) := fun hh => h hh.symm
-    rw [if_neg h, if_neg h']
+    rw [ite_eq_right h, ite_eq_right h']
     simp
 
 /-- Exact normalization of the entire actual main term into the already

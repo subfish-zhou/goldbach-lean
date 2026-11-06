@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RectanglePrefixPNT
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RectanglePrefixPNT
+
+@[expose] public section
 
 noncomputable section
 open Finset

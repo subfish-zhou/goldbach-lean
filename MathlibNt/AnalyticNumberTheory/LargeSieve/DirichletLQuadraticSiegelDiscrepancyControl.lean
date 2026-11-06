@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelDiscrepancyControl
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelDiscrepancyControl
 
 /-! Compatibility import for the canonical module in its current library location. -/

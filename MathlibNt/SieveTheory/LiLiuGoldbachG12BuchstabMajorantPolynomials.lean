@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosure
+module
+
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosure
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option maxRecDepth 100000

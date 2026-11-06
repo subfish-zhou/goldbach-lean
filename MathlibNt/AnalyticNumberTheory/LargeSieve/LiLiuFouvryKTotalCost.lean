@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKKey
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPartialSummation
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectErrorScalar
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKKey
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPartialSummation
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectErrorScalar
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

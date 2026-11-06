@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanModernWeightTransfer
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanModernWeightTransfer
+
+@[expose] public section
 
 noncomputable section
 open Finset

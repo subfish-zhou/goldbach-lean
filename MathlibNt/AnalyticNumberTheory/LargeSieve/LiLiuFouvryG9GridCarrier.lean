@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridIndex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridIndex
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

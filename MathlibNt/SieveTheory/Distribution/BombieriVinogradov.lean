@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
+module
+
+public import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
 
 /-!
 ! # MathlibNt.SieveTheory.BombieriVinogradov
@@ -11,6 +13,8 @@ main term is a genuine logarithmic integral rather than the proxy `x / log x`.
 For references see Bombieri, *On the large sieve* (1965), Vinogradov (1965),
 or Halberstam--Richert, *Sieve Methods*, Chapter 9.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.BombieriVinogradov
 
@@ -56,7 +60,7 @@ theorem abs_standardPrimeAPError_le_max {x q l : ℕ}
   unfold standardPrimeAPMaxError
   dsimp only
   have hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty := ⟨l, hl⟩
-  rw [dif_pos hS]
+  rw [dite_eq_left hS]
   exact Finset.le_max' ((AnalyticNumberTheory.Sieve.unitResidues q).image
     (fun l => |standardPrimeAPError x q l|)) _
     (Finset.mem_image.mpr ⟨l, hl, rfl⟩)

@@ -1,9 +1,13 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectJoinedPrefix
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectJoinedPrefix
 
 /-! # The explicit terms of the joined retained-prefix estimate
 These are exactly the mass and three expressions in
 `direct_retained_prefix_three_terms`, exposed for separate scalar payment.
 -/
+@[expose] public section
+
 noncomputable section
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

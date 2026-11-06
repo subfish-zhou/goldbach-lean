@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDDEUnitShiftRatioSanitized
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PQBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDDEUnitShiftRatioSanitized
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PQBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

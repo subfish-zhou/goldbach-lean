@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
+
+@[expose] public section
 
 open scoped BigOperators
 

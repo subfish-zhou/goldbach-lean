@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9AnalyticDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9AnalyticDensity
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

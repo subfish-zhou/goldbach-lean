@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIRawRoundedFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIRawRoundedFinal
 
 /-! Compatibility import for the canonical module in its current library location. -/

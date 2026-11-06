@@ -1,5 +1,7 @@
-import AnalyticNumberTheory.Mertens.PrimeAbel
-import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+module
+
+public import AnalyticNumberTheory.Mertens.PrimeAbel
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 /-!
 # Logarithmic change of variables for the prime Abel integral
@@ -8,6 +10,8 @@ This file records the substitution `x = exp u` in the integral occurring in
 `primeDirichletSum_eq_mul_integral_of_pos`.  The Jacobian cancels the extra
 factor `x⁻¹`, leaving the exponential Abel kernel `exp (-εu)`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

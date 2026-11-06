@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedTransport
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical Finset LiLiuPrereqBuchstab

@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCount
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceReindex
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCount
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceReindex
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox
 
 /-!
 # The ratio-counting box for actual occupied secondary bases
@@ -9,6 +11,8 @@ The sign of both frequencies is fixed by the original block. Absolute values
 therefore give an injection, without identifying positive and negative labels.
 The three beta coordinates retain their distinct multiplicities.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

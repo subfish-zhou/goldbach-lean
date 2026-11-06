@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5Cofactor
-import MathlibNt.SieveTheory.LiLiuGoldbachS5CarrierGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5Cofactor
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5CarrierGeometry
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

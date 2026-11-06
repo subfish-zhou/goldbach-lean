@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteAbel
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteAbel
 
 /-! Compatibility import for the canonical module in its current library location. -/

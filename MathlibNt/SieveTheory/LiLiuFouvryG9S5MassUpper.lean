@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9SiftedMassUpper
-import MathlibNt.SieveTheory.LiLiuFouvryG9LiteralMother
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9SiftedMassUpper
+public import MathlibNt.SieveTheory.LiLiuFouvryG9LiteralMother
+
+@[expose] public section
 
 noncomputable section
 open Finset

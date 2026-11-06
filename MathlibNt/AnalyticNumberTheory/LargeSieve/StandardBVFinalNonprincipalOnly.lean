@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalLowOnlyProducer
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalPNTSourceFromMediumPNT
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalLowOnlyProducer
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalPNTSourceFromMediumPNT
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

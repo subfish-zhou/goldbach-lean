@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightFiveNegativeScalars
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightFiveNegativeScalars
+
+@[expose] public section
 
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple

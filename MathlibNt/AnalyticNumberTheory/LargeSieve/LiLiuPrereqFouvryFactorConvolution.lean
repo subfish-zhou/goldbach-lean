@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryParameters
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryParameters
 
 /-!
 # A signed factorization and its high-omega deletion
@@ -10,6 +12,8 @@ from the second factor produces a convolution, not a new well-factorable
 weight. Its discarded part has an actual divisor majorant and high-omega
 modulus support.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

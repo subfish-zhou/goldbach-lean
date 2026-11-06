@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensityBounds
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensityBounds
 
 /-! # Uniform scalar budgets for the unbounded dimension constant -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.EdgeDensity
 

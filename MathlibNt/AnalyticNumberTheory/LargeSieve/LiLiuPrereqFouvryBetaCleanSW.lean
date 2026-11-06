@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound
 
 /-!
 # Uniform Siegel--Walfisz transport under divisor deletion
@@ -9,6 +11,8 @@ Every constant is chosen before the original family index, residue and scale.
 The extra divisor order absorbs the deleted mass even when the original
 sieve order is zero. The logarithmic payment holds at every scale at least one.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

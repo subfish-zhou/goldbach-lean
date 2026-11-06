@@ -1,6 +1,10 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval
@@ -12,7 +16,7 @@ theorem hasDerivAt_log_div_log {D x : ℝ} (hx : x ≠ 0) (hlogx : Real.log x �
     HasDerivAt (fun y : ℝ => Real.log D / Real.log y)
       (- Real.log D / (x * (Real.log x) ^ 2)) x := by
   convert ((hasDerivAt_const x (Real.log D)).div
-    (Real.hasDerivAt_log hx) hlogx) using 1 <;> try rfl
+    (Real.hasDerivAt_log hx) hlogx) using 1
   ring
 
 /-- Exact change of variables behind the dimension-one main term.  This is the

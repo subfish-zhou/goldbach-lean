@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanRankOneSeparation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanRankOneSeparation
 
 /-!
  # Y-uniform phase separation for the damped arctangent kernel
@@ -11,6 +13,8 @@ selector `Y q χ` may be chosen separately for every primitive character before
 one applies the rectangular rank-one mean theorem.  No maximal-mean estimate is
 claimed here.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

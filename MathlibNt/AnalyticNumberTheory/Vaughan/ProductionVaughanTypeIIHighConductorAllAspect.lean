@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAllAspectBlockScalar
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAllAspectBlockScalar
 
 /-!
 # Full Vaughan Type-II mean on the production high-conductor cells
@@ -9,6 +11,8 @@ arbitrary finite conductor set, applies the all-aspect scalar theorem cell by
 cell, and finally reindexes the production high-conductor set through the
 pairwise disjoint canonical conductor geometry.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

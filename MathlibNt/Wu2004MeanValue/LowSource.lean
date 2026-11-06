@@ -1,8 +1,12 @@
-import MathlibNt.Wu2004MeanValue.LowPrefix
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPayment
+module
+
+public import MathlibNt.Wu2004MeanValue.LowPrefix
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPayment
 
 /-! Low primitive conductor source with independent `(q, χ, a)` endpoints.
 The whole coefficient sum remains inside the norm in the exported estimate. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset

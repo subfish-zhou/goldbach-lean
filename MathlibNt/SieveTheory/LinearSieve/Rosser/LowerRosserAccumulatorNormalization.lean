@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Rosser.LowerRosserSuzukiActualBridge
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Rosser.LowerRosserSuzukiActualBridge
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

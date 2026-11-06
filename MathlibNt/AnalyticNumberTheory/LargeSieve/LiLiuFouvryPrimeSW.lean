@@ -1,8 +1,12 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPrimePrefix
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPrimePrefix
 
 /-! Concrete prime intervals and the exact support of the independent sieve loss. -/
+@[expose] public section
+
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 open Finset
 noncomputable section
@@ -56,13 +60,13 @@ theorem primeSWSum_sieve_sub (N : Finset ℕ) (P : ℕ → Prop) [DecidablePred 
   apply sum_congr rfl
   intro n _
   by_cases hp : P n
-  · simp only [hp, true_and, if_true]
+  · simp only [hp, true_and, ite_true]
     by_cases hc : n.Coprime h
-    · rw [if_pos hc, if_neg (not_not.mpr hc)]
+    · rw [ite_eq_left hc, ite_eq_right (not_not.mpr hc)]
       ring
-    · rw [if_neg hc, if_pos hc]
+    · rw [ite_eq_right hc, ite_eq_left hc]
       ring
-  · simp only [hp, false_and, if_false, sub_self, neg_zero]
+  · simp only [hp, false_and, ite_false, sub_self, neg_zero]
 
 /-- Uniform sieve perturbation for every predicate, not an SW assertion for subsets. -/
 theorem primeSWSum_sieve_abs_sub_le (N : Finset ℕ) (P : ℕ → Prop)

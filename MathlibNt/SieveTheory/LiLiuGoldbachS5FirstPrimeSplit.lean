@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG10BuchstabBridge
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10BuchstabBridge
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

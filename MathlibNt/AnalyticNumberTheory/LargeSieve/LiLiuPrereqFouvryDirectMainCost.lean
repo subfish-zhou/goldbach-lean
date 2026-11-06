@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointCarrier
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointCarrier
 
 /-! # Fully summed main cost on the actual Gram carrier
 
@@ -6,6 +8,8 @@ The local denominator is retained before taking the arithmetic mean. In
 particular neither the D' term nor span/q is discarded. No joint-arithmetic
 bound is assumed: its constants come from the proved restricted mean.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

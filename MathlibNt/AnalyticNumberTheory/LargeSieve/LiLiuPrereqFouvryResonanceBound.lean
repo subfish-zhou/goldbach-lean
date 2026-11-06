@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceCount
 
 /-!
 # Uniform local-scale payment for the resonance divisor count
@@ -8,6 +10,8 @@ The bounds are uniform in the common first beta index and signed product.
 `A` bounds `|P|`, and `B` bounds `d₁*n + |P|`; no dyadic parameters
 are confused with the original, unextracted beta coordinates.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

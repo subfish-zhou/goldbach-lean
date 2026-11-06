@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87DimensionOne
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma133WeightedTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Integral
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146ShortInterval
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87DimensionOne
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma133WeightedTail
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146Integral
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146ShortInterval
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open MeasureTheory Set

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughElementary
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughElementary
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset LiLiuPrereqBuchstab
@@ -40,11 +44,11 @@ theorem nearWindowMass_le_nearMass {N : ℕ} (ε a : ℝ) :
           (goldbachG12ProductCoefficient N z b c m : ℝ) * (W m).card := by
         apply sum_congr rfl
         intro m hm
-        simp only [W,if_pos hm,← mul_assoc,
+        simp only [W,ite_eq_left hm,← mul_assoc,
           goldbachG12NormalizedCoefficient_mul_four_hundred,z,b,c]
       _ = _ := sum_subset (filter_subset _ _) (by
         intro m _ hm
-        simp only [W,if_neg hm,card_empty,Nat.cast_zero,mul_zero])
+        simp only [W,ite_eq_right hm,card_empty,Nat.cast_zero,mul_zero])
   let S := (goldbachG12GoodCrossBodies N z b c).sigma
     (fun v => W (goldbachG11SwitchedBodyProd v))
   let T := (nearLabels N a).sigma (fun v => roughNumbers ((N : ℝ)/goldbachG11LabelProd v) v.2.2.2)
@@ -55,9 +59,9 @@ theorem nearWindowMass_le_nearMass {N : ℕ} (ε a : ℝ) :
     obtain ⟨hv,hr⟩ := mem_sigma.mp ha
     have hm : goldbachG11SwitchedBodyProd v ∈ goldbachG12ActiveProductSupport N := by
       by_contra hn
-      simp only [W,if_neg hn,notMem_empty] at hr
+      simp only [W,ite_eq_right hn,notMem_empty] at hr
     have hr' : r ∈ nearWindow N ε a (goldbachG11SwitchedBodyProd v) := by
-      simpa only [W,if_pos hm] using hr
+      simpa only [W,ite_eq_left hm] using hr
     obtain ⟨hrW,hrN,hnear⟩ := mem_filter.mp hr'
     obtain ⟨hl,hk⟩ := goldbachG12MainMass_good_pair_mem hv hm hrW hrN
     have hmin := goldbachG11SwitchedBodyProd_minFac

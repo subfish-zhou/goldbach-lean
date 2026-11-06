@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealNormalization
-import MathlibNt.SieveTheory.LiLiuGoldbachG67MovingLower
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealNormalization
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67MovingLower
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

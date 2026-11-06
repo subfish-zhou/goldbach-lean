@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedRemainder
-import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedSupport
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedRemainder
+public import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedSupport
 
 /-!
 # Transport to full-modulus sums without masking the WF coefficients
@@ -10,6 +12,8 @@ hypotheses and uses the canonical arithmetic-progression density `1 / φ(d)`
 on reduced residue classes. A prime-only dimension-one condition is never
 used to control arbitrary prime-power densities.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

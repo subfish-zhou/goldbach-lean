@@ -1,7 +1,9 @@
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.Nat.Totient
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Tactic
 
 /-!
 # The finite signed dispersion reduction
@@ -13,6 +15,8 @@ inside the modulus sum. The integer residue and the two supports are arbitrary.
 The square expansion and Cauchy--Schwarz reduction are proved here; no
 logarithmic saving, Siegel--Walfisz estimate or Kloosterman estimate is assumed.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -61,7 +65,7 @@ theorem progressionMass_eq_zero_of_not_coprime
     progressionMass N β a q m = 0 := by
   apply Finset.sum_eq_zero
   intro n _
-  exact if_neg (fun h => hm (coprime_of_product_congruent ha h).1)
+  exact ite_eq_right (fun h => hm (coprime_of_product_congruent ha h).1)
 
 theorem sum_coprime_product_factor (N : Finset ℕ) (α β : ℕ → ℝ) (m q : ℕ) :
     (∑ n ∈ N, if (m * n).Coprime q then α m * β n else 0) =
@@ -87,7 +91,7 @@ theorem bilinearDiscrepancy_eq_rows
   apply Finset.sum_congr rfl
   intro m _
   by_cases hm : m.Coprime q
-  · simp only [if_pos hm]
+  · simp only [ite_eq_left hm]
     ring
   · simp [hm, progressionMass_eq_zero_of_not_coprime N β ha hm]
 
@@ -107,9 +111,9 @@ theorem signedError_eq_rows
       apply Finset.sum_congr rfl
       intro m _
       by_cases hm : m.Coprime q
-      · simp only [if_pos hm]
+      · simp only [ite_eq_left hm]
         ring
-      · simp only [if_neg hm, mul_zero]
+      · simp only [ite_eq_right hm, mul_zero]
     _ = _ := by
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
@@ -119,9 +123,9 @@ theorem signedError_eq_rows
       apply Finset.sum_congr rfl
       intro q _
       by_cases hm : m.Coprime q
-      · simp only [if_pos hm]
+      · simp only [ite_eq_left hm]
         ring
-      · simp only [if_neg hm, sub_self]
+      · simp only [ite_eq_right hm, sub_self]
 
 def dispersionW (S N Q : Finset ℕ) (w β c : ℕ → ℝ) (a : ℤ) : ℝ :=
   ∑ m ∈ S, w m * progressionRow N Q β c a m ^ 2

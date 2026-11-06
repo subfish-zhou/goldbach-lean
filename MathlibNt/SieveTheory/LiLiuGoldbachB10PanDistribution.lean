@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanTwoEndpoints
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset MathlibNt.SieveTheory.LiuWeight

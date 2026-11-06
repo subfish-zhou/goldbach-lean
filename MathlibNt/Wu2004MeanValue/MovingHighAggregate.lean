@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.MovingCell
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
+module
+
+public import MathlibNt.Wu2004MeanValue.MovingCell
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
 
 /-!
 # High primitive conductors with one common moving profile
@@ -7,6 +9,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggre
 The entire source sum is inside the norm. The cutoff may vary arbitrarily
 with its source coordinate, but is the same for every modulus and character.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter
@@ -72,8 +76,8 @@ theorem movingHighSource_le_sum_active_cells
           intro χ hχ
           rw [movingAmplitude_eq_sum_dyadicCells
             (panSourceG f m) (panSourceD m) v A₁ A₂ hA₁ χ]
-          convert norm_sum_le _ _ using 1 <;>
-            first | rfl | simp [pow_succ, mul_comm, mul_left_comm]
+          convert norm_sum_le _ _ using 1
+          simp [pow_succ, mul_comm, mul_left_comm]
         _ = ∑ k ∈ range (panDyadicDepth A₁ A₂),
             movingSourceCell f v m A₁ A₂ k (conductorRadius x B j) := by
           unfold movingSourceCell
@@ -187,9 +191,9 @@ theorem chosen_high_source_common_moving_profile_log_saving :
     by_cases hz : v a = 0
     · simp [f', hz, panSourceG]
     · have hpos : 1 ≤ v a := by omega
-      have hva : v' a = v a := by simp only [v', if_pos ha, max_eq_right hpos]
+      have hva : v' a = v a := by simp only [v', ite_eq_left ha, max_eq_right hpos]
       rw [hva]
-      simp only [panSourceG, f', if_neg hz]
+      simp only [panSourceG, f', ite_eq_right hz]
   rw [heq]
   calc
     _ ≤ (Nat.log 2 x + 1 : ℝ) ^ 2 *

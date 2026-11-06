@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9Scale
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9Scale
+
+@[expose] public section
 
 noncomputable section
 open Filter

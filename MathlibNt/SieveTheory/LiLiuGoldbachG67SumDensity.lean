@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67SumGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67SumGeometry
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

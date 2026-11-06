@@ -1,7 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridgeCoefficients
-import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridgeSmall
-import MathlibNt.SieveTheory.UpperRosserSuzukiExactBridge
-import MathlibNt.SieveTheory.SuzukiLiteralAllDepthLowerRosserExact
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridgeCoefficients
+public import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridgeSmall
+public import MathlibNt.SieveTheory.UpperRosserSuzukiExactBridge
+public import MathlibNt.SieveTheory.SuzukiLiteralAllDepthLowerRosserExact
 
 /-!
 # The original small weights and the admitted finite Suzuki producers
@@ -11,6 +13,8 @@ zero-density primes preserves the entire signed densities and the Euler
 product. The lower and upper defects are exactly the actual Suzuki sums
 at exhaustive even and odd depths, respectively.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

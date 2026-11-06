@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
-import MathlibNt.SieveTheory.LiuLogarithmicIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
+public import MathlibNt.SieveTheory.LiuLogarithmicIntegral
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

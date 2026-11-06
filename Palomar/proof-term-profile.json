@@ -1,0 +1,427 @@
+{
+  "method": "One-pass structural depth of exported expression DAGs. Constant and literal nodes are leaves. Depth is a localization candidate metric; kernel reduction recursion and memory are separate measurements.",
+  "export_bytes": 1526260316,
+  "expression_nodes": 26965201,
+  "maximum_expression_depth": 1214,
+  "name_nodes": 588171,
+  "typed_declaration_records": 97771,
+  "record_kinds": {
+    "meta": 1,
+    "il": 4532,
+    "param": 105,
+    "inductive": 1304,
+    "quot": 4,
+    "succ": 724,
+    "def": 17261,
+    "max": 3589,
+    "thm": 80454,
+    "imax": 114,
+    "axiom": 3,
+    "opaque": 49
+  },
+  "deepest_declarations": [
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base4_bound",
+      "type_depth": 22,
+      "value_depth": 1214
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base5_bound",
+      "type_depth": 22,
+      "value_depth": 1213
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPositiveScalarA_zero",
+      "type_depth": 7,
+      "value_depth": 1055
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0_value",
+      "type_depth": 14,
+      "value_depth": 1004
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2_value",
+      "type_depth": 15,
+      "value_depth": 1002
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1_value",
+      "type_depth": 14,
+      "value_depth": 1002
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0b_value",
+      "type_depth": 14,
+      "value_depth": 1002
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPositiveScalar_rounding",
+      "type_depth": 14,
+      "value_depth": 856
+    },
+    {
+      "name": "Real.log_three_near_10",
+      "type_depth": 14,
+      "value_depth": 680
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint1_eq",
+      "type_depth": 14,
+      "value_depth": 542
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint3_eq",
+      "type_depth": 15,
+      "value_depth": 541
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint5_eq",
+      "type_depth": 11,
+      "value_depth": 540
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint2_eq",
+      "type_depth": 15,
+      "value_depth": 537
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint4_eq",
+      "type_depth": 14,
+      "value_depth": 533
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive5_deriv",
+      "type_depth": 22,
+      "value_depth": 528
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive2_deriv",
+      "type_depth": 22,
+      "value_depth": 528
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive3_deriv",
+      "type_depth": 22,
+      "value_depth": 527
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive1_deriv",
+      "type_depth": 22,
+      "value_depth": 527
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive4_deriv",
+      "type_depth": 22,
+      "value_depth": 523
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_polynomial3_sharp",
+      "type_depth": 14,
+      "value_depth": 516
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_stage3_upper",
+      "type_depth": 16,
+      "value_depth": 463
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_stage2_upper",
+      "type_depth": 16,
+      "value_depth": 451
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_seed_upper",
+      "type_depth": 16,
+      "value_depth": 451
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_polynomial2_sharp",
+      "type_depth": 14,
+      "value_depth": 448
+    },
+    {
+      "name": "LiLiuGoldbachG12BuchstabMajorant.polynomial1_sharp",
+      "type_depth": 14,
+      "value_depth": 429
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_stage1_upper",
+      "type_depth": 16,
+      "value_depth": 427
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10H_deriv",
+      "type_depth": 22,
+      "value_depth": 416
+    },
+    {
+      "name": "G67CenteredEvaluation.density5_eq",
+      "type_depth": 6,
+      "value_depth": 414
+    },
+    {
+      "name": "G67CenteredEvaluation.density2_eq",
+      "type_depth": 6,
+      "value_depth": 414
+    },
+    {
+      "name": "G67CenteredEvaluation.density3_eq",
+      "type_depth": 6,
+      "value_depth": 413
+    },
+    {
+      "name": "G67CenteredEvaluation.density1_eq",
+      "type_depth": 6,
+      "value_depth": 413
+    },
+    {
+      "name": "G67CenteredEvaluation.density4_eq",
+      "type_depth": 6,
+      "value_depth": 409
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.G9Analytic.endpoints_le_target",
+      "type_depth": 11,
+      "value_depth": 387
+    },
+    {
+      "name": "G12AnalyticCertificate.rationalIntegral_le_target",
+      "type_depth": 15,
+      "value_depth": 369
+    },
+    {
+      "name": "Real.log_two_near_10",
+      "type_depth": 14,
+      "value_depth": 362
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10G_bound",
+      "type_depth": 17,
+      "value_depth": 357
+    },
+    {
+      "name": "summable_mul_of_summable_norm'",
+      "type_depth": 23,
+      "value_depth": 354
+    },
+    {
+      "name": "G67CenteredEvaluation.profileLog",
+      "type_depth": 13,
+      "value_depth": 348
+    },
+    {
+      "name": "LinearMap.mkContinuous\u2082OfExists._proof_7",
+      "type_depth": 62,
+      "value_depth": 347
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10H_endpoint",
+      "type_depth": 16,
+      "value_depth": 343
+    }
+  ],
+  "deepest_project_declarations": [
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base4_bound",
+      "type_depth": 22,
+      "value_depth": 1214
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3base5_bound",
+      "type_depth": 22,
+      "value_depth": 1213
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPositiveScalarA_zero",
+      "type_depth": 7,
+      "value_depth": 1055
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0_value",
+      "type_depth": 14,
+      "value_depth": 1004
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j2_value",
+      "type_depth": 15,
+      "value_depth": 1002
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j1_value",
+      "type_depth": 14,
+      "value_depth": 1002
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.s3j0b_value",
+      "type_depth": 14,
+      "value_depth": 1002
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachPositiveScalar_rounding",
+      "type_depth": 14,
+      "value_depth": 856
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint1_eq",
+      "type_depth": 14,
+      "value_depth": 542
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint3_eq",
+      "type_depth": 15,
+      "value_depth": 541
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint5_eq",
+      "type_depth": 11,
+      "value_depth": 540
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint2_eq",
+      "type_depth": 15,
+      "value_depth": 537
+    },
+    {
+      "name": "G67CenteredEvaluation.endpoint4_eq",
+      "type_depth": 14,
+      "value_depth": 533
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive5_deriv",
+      "type_depth": 22,
+      "value_depth": 528
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive2_deriv",
+      "type_depth": 22,
+      "value_depth": 528
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive3_deriv",
+      "type_depth": 22,
+      "value_depth": 527
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive1_deriv",
+      "type_depth": 22,
+      "value_depth": 527
+    },
+    {
+      "name": "G67CenteredEvaluation.primitive4_deriv",
+      "type_depth": 22,
+      "value_depth": 523
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_polynomial3_sharp",
+      "type_depth": 14,
+      "value_depth": 516
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_stage3_upper",
+      "type_depth": 16,
+      "value_depth": 463
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_stage2_upper",
+      "type_depth": 16,
+      "value_depth": 451
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_seed_upper",
+      "type_depth": 16,
+      "value_depth": 451
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_polynomial2_sharp",
+      "type_depth": 14,
+      "value_depth": 448
+    },
+    {
+      "name": "LiLiuGoldbachG12BuchstabMajorant.polynomial1_sharp",
+      "type_depth": 14,
+      "value_depth": 429
+    },
+    {
+      "name": "LiLiuBuchstabSharp.closure_stage1_upper",
+      "type_depth": 16,
+      "value_depth": 427
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10H_deriv",
+      "type_depth": 22,
+      "value_depth": 416
+    },
+    {
+      "name": "G67CenteredEvaluation.density5_eq",
+      "type_depth": 6,
+      "value_depth": 414
+    },
+    {
+      "name": "G67CenteredEvaluation.density2_eq",
+      "type_depth": 6,
+      "value_depth": 414
+    },
+    {
+      "name": "G67CenteredEvaluation.density3_eq",
+      "type_depth": 6,
+      "value_depth": 413
+    },
+    {
+      "name": "G67CenteredEvaluation.density1_eq",
+      "type_depth": 6,
+      "value_depth": 413
+    },
+    {
+      "name": "G67CenteredEvaluation.density4_eq",
+      "type_depth": 6,
+      "value_depth": 409
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.G9Analytic.endpoints_le_target",
+      "type_depth": 11,
+      "value_depth": 387
+    },
+    {
+      "name": "G12AnalyticCertificate.rationalIntegral_le_target",
+      "type_depth": 15,
+      "value_depth": 369
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10G_bound",
+      "type_depth": 17,
+      "value_depth": 357
+    },
+    {
+      "name": "G67CenteredEvaluation.profileLog",
+      "type_depth": 13,
+      "value_depth": 348
+    },
+    {
+      "name": "_private.MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints.0.MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.B10Retained.b10H_endpoint",
+      "type_depth": 16,
+      "value_depth": 343
+    },
+    {
+      "name": "G67CenteredEvaluation.twoLog",
+      "type_depth": 11,
+      "value_depth": 342
+    },
+    {
+      "name": "MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Correction.T_deriv",
+      "type_depth": 22,
+      "value_depth": 336
+    },
+    {
+      "name": "G67CenteredEvaluation.slLog",
+      "type_depth": 15,
+      "value_depth": 335
+    },
+    {
+      "name": "G67CenteredEvaluation.seLog",
+      "type_depth": 11,
+      "value_depth": 335
+    }
+  ],
+  "seconds": 33.36
+}

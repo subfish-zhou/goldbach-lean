@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
 
 /-!
 # Uniform rapid truncation of the retained Poisson series
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
 The error constant depends only on the requested power and the fixed bump.
 The estimate remains uniform when the period exceeds the smoothing scale.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -28,7 +32,7 @@ theorem dyadicPoissonTail_uniform (k : ℕ) :
       ‖dyadicPoissonTail t x H h‖ ≤
         (C / (1 + t * H) ^ k) * poissonNonzeroDecay t h := by
     by_cases hh : h.natAbs ≤ H
-    · simp only [dyadicPoissonTail, if_pos hh, norm_zero]
+    · simp only [dyadicPoissonTail, ite_eq_left hh, norm_zero]
       unfold poissonNonzeroDecay
       split_ifs <;> positivity
     · have hne : h ≠ 0 := by intro hz; subst h; simp at hh
@@ -42,8 +46,8 @@ theorem dyadicPoissonTail_uniform (k : ℕ) :
         exact add_le_add_right (mul_le_mul_of_nonneg_left hH ht.le) 1
       have hpow : (1 + t * (H : ℝ)) ^ k ≤ (1 + |t * (h : ℝ)|) ^ k :=
         pow_le_pow_left₀ (by positivity) hbase k
-      simp only [dyadicPoissonTail, if_neg hh, dyadicCutoffPoissonRemainder,
-        if_neg hne, norm_mul, norm_smul, Real.norm_eq_abs, abs_of_pos ht,
+      simp only [dyadicPoissonTail, ite_eq_right hh, dyadicCutoffPoissonRemainder,
+        ite_eq_right hne, norm_mul, norm_smul, Real.norm_eq_abs, abs_of_pos ht,
         fourier_apply, Circle.norm_coe, mul_one, poissonNonzeroDecay]
       calc
         _ ≤ t * (C / (1 + |t * (h : ℝ)|) ^ (k + 2)) :=
@@ -81,7 +85,7 @@ theorem dyadicPoissonRemainder_eq_truncation {t : ℝ} (ht : 0 < t)
     rw [Finset.mem_Icc, ← abs_le, ← Int.natCast_natAbs]
     exact_mod_cast (Iff.rfl : h.natAbs ≤ H ↔ h.natAbs ≤ H)
   have hg : Summable g := summable_of_ne_finset_zero
-    (s := Finset.Icc (-(H : ℤ)) H) (fun h hh ↦ by simp only [g, if_neg hh])
+    (s := Finset.Icc (-(H : ℤ)) H) (fun h hh ↦ by simp only [g, ite_eq_right hh])
   obtain ⟨C, _, htail⟩ := dyadicPoissonTail_uniform 0
   have hr := (htail t ht x H).1.of_norm
   have he : dyadicCutoffPoissonRemainder t x =
@@ -94,10 +98,10 @@ theorem dyadicPoissonRemainder_eq_truncation {t : ℝ} (ht : 0 < t)
     _ = _ := by
       congr 1
       rw [tsum_eq_sum (s := Finset.Icc (-(H : ℤ)) H)
-        (fun h hh ↦ by simp only [g, if_neg hh])]
+        (fun h hh ↦ by simp only [g, ite_eq_right hh])]
       apply Finset.sum_congr rfl
       intro h hh
-      simp only [g, if_pos hh]
+      simp only [g, ite_eq_left hh]
 
 theorem wPoissonFrequency_truncation_error (k : ℕ) :
     ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ q r : ℕ, q ≠ 0 → r ≠ 0 →

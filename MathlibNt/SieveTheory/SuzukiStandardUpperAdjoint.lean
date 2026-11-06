@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
 
 /-! Compatibility import for the canonical module in its current library location. -/

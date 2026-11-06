@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma142InfiniteTail
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma142InfiniteTail
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
 
 /-!
 # Suzuki Lemma 14.3: an `N`-uniform exponential-tail domination
@@ -16,6 +18,8 @@ The production source objects specialize Suzuki's parameter to `β = 2`.  Thus
 `z ^ (⌊s - 2⌋₊ + 2) ≤ D` is the exact natural-number support condition needed
 below (and is the form consumed from the real logarithmic coordinate bridge).
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset Set
@@ -61,7 +65,7 @@ theorem suzukiActualT_le_exponentialTail_of_support
       intro n hn
       by_cases hMn : M ≤ n
       · simp [hMn]
-      · rw [if_neg hMn, hzero n (Nat.lt_of_not_ge hMn)]
+      · rw [ite_eq_right hMn, hzero n (Nat.lt_of_not_ge hMn)]
     _ ≤ ∑ n ∈ suzukiActualParityCarrier N, f n := by
       apply Finset.sum_le_sum
       intro n hn
@@ -72,7 +76,7 @@ theorem suzukiActualT_le_exponentialTail_of_support
       apply hf.sum_le_tsum (suzukiActualParityCarrier N)
       intro n hn
       by_cases hMn : M ≤ n
-      · simp only [f, if_pos hMn]
+      · simp only [f, ite_eq_left hMn]
         exact div_nonneg (pow_nonneg hL n) (by positivity)
       · simp [f, hMn]
     _ = suzukiExponentialTail L M := by

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SmallDHighCoordinate
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SmallDHighCoordinate
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Filter Topology Asymptotics

@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCell
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPair
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPrefixAssembly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCell
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPair
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPrefixAssembly
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

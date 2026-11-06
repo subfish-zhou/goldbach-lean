@@ -1,6 +1,8 @@
-import PrimeNumberTheoremAnd.ZetaBounds
-import Mathlib.NumberTheory.LSeries.DirichletContinuation
-import Mathlib.Algebra.BigOperators.Module
+module
+
+public import PrimeNumberTheoremAnd.ZetaBounds
+public import Mathlib.NumberTheory.LSeries.DirichletContinuation
+public import Mathlib.Algebra.BigOperators.Module
 
 /-!
 # Finite Abel foundation for a weak Dirichlet-L strip
@@ -10,6 +12,8 @@ proves the explicit prefix bound `‖∑ k < N, χ k‖ ≤ q` and exact finite 
 identities for the Dirichlet-series and derivative weights.  No strip source
 predicate is assumed.
 -/
+
+@[expose] public section
 
 open Complex Finset
 

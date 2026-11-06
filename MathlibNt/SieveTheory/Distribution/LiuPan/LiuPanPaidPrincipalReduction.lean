@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanActualCountCharacters
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalRemainder
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanModernWeightTransfer
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanActualCountCharacters
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalRemainder
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanModernWeightTransfer
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiuWeight
 open AnalyticNumberTheory.LargeSieve.PanPrincipal

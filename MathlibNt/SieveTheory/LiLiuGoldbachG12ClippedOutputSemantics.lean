@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedUniform
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedUniform
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

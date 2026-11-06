@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingCount
-import MathlibNt.SieveTheory.LiLiuGoldbachG67PaidLower
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingCount
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67PaidLower
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053NonCircular
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053NonCircular
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval

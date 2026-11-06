@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalCentralLogDerivative
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalCentralLogDerivative
+
+@[expose] public section
 
 set_option maxHeartbeats 800000
 

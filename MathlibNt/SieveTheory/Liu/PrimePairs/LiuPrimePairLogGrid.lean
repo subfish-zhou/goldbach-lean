@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogKernel
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogKernel
 
 /-!
 # A canonical logarithmic grid for Liu's prime pairs
@@ -11,6 +13,8 @@ The resulting finite rectangle majorant converges, for each fixed positive
 
 No limit as the mesh tends to zero is asserted here.
 -/
+
+@[expose] public section
 
 open scoped BigOperators Topology
 

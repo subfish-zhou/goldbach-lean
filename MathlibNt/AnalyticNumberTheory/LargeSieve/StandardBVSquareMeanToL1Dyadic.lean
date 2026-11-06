@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanAllCharacterAnalyticLedger
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeILongVariable
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanAllCharacterAnalyticLedger
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeILongVariable
 
 /-!
  # Standard BV: exact dyadic square-mean to L¹ conversion
@@ -15,6 +17,8 @@ conductor cells is retained.
 The character quantity is a genuine prefix maximum.  Nothing in this file
 replaces it by the endpoint `y = N`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AnalyticDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AnalyticDensity
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

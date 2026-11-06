@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveFactorFirstIntervalIdentity
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveFactorFirstIntervalIdentity
 
 /-!
 # Suzuki Lemma 14.7: continuous lower factor on the first interval
@@ -9,6 +11,8 @@ the carrier-adaptive finite even source sum is bounded by the full summable
 source series.  In particular, it makes no claim that an adaptive finite depth
 is itself a limit.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset

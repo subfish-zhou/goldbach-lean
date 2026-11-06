@@ -3,7 +3,9 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveFactorFirstInterval
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveFactorFirstInterval
 
 /-!
 # Finite conservation behind Suzuki's first lower interval
@@ -23,6 +25,8 @@ for `m ≥ 1` and `2 ≤ s ≤ 4`.  Its final corollary isolates, without a
 conclusion-shaped hypothesis, the two genuine tails still needed to identify the
 explicit first-interval factor with `1` minus the even continuous-layer limit.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory intervalIntegral
@@ -91,9 +95,9 @@ theorem mul_suzukiOddSourceUpperPartialSum_eq_finiteAmplitude_sub
         (by linarith) hu3,
         SuzukiFiniteContinuousLayers.suzukiLayer_one_one_two_eq_zero_of_three_le
           (by norm_num : (3 : ℝ) ≤ 3)]
-      simp only [mul_zero, zero_add, if_pos]
+      simp only [mul_zero, zero_add, ite_eq_left]
       field_simp
-    · rw [if_neg hk0, add_zero]
+    · rw [ite_eq_right hk0, add_zero]
       apply mul_suzukiLayer_one_two_odd_eq_three_mul_at_three
       · omega
       · omega
@@ -103,7 +107,7 @@ theorem mul_suzukiOddSourceUpperPartialSum_eq_finiteAmplitude_sub
   have hzero : 0 ∈ Finset.range m := by
     simp only [Finset.mem_range]
     omega
-  rw [Finset.sum_ite_eq', if_pos hzero]
+  rw [Finset.sum_ite_eq', ite_eq_left hzero]
   unfold suzukiFiniteLowerAmplitude suzukiOddSourceUpperPartialSum
   rw [← Finset.mul_sum]
   ring

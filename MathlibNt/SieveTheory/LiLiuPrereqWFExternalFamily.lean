@@ -1,7 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFFamilyDensity
-import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinalityExp
-import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedRemainder
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalParameters
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFFamilyDensity
+public import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinalityExp
+public import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedRemainder
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalParameters
 
 
 /-!
@@ -12,6 +14,8 @@ family is the original family on primes below sqrt D. No coefficients are
 masked. Both the density and the signed remainder below sum the actual
 members over divisors of the ORIGINAL primorial.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -56,8 +60,8 @@ theorem sequenceSifted_antitone {ι : Type*} (I : Finset ι) (a : ι → ℕ)
   intro i _
   have hdiv := prod_dvd_prod_of_subset B P id hBP
   by_cases h : (a i).Coprime (P.prod id)
-  · simp only [if_pos h, if_pos (Nat.Coprime.of_dvd_right hdiv h), le_refl]
-  · simp only [if_neg h]
+  · simp only [ite_eq_left h, ite_eq_left (Nat.Coprime.of_dvd_right hdiv h), le_refl]
+  · simp only [ite_eq_right h]
     split_ifs <;> norm_num
 
 /-- Enlarging only the summation carrier does not change these coefficients
@@ -171,10 +175,10 @@ theorem externalFamily_sequence_sieve {ι : Type*} (P : Finset ℕ)
   rw [externalDensity_eq false P hP, externalDensity_eq true P hP,
     externalRemainder_eq false P hP, externalRemainder_eq true P hP]
   by_cases hz : z ≤ Real.sqrt D
-  · simp only [hz, if_true]
+  · simp only [hz, ite_true]
     exact signedFamily_sequence_sieve P hP hD hε hεsmall
       (fun p hp => (hcut p (mem_sdiff.mp hp).1).trans_le hz) I a X g
-  · simp only [hz, if_false, Bool.false_eq_true, if_true, mul_zero, add_zero]
+  · simp only [hz, ite_false, Bool.false_eq_true, ite_true, mul_zero, add_zero]
     refine ⟨sequenceSifted_nonneg I a P, ?_⟩
     have hB : externalEdgePrimes P D ⊆ P := filter_subset _ _
     exact (sequenceSifted_antitone I a hB).trans

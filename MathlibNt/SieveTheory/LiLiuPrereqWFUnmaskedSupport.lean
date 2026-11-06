@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedFamily
-import MathlibNt.SieveTheory.LiLiuPrereqWFPrimeSquareMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedFamily
+public import MathlibNt.SieveTheory.LiLiuPrereqWFPrimeSquareMass
 
 /-!
 # The actual non-squarefree support of the unmasked family
@@ -10,6 +12,8 @@ be a rough prime. This is a statement about the original full-integer weights;
 no squarefree mask is applied and no preservation of well-factorability by a
 mask is asserted.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

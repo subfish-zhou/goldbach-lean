@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePartition
-import Mathlib.Analysis.SpecialFunctions.Log.Base
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePartition
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 /-!
 # Logarithmic cardinality bound for the Fouvry partition
@@ -8,6 +10,8 @@ The explicit absolute constant `4 / log 2` converts the exact binary count
 to the bound in F87, Lemma 7. Real cutoffs are handled by the natural floor,
 with the original integer-pair domain proved exactly.
 -/
+
+@[expose] public section
 
 namespace LiLiuPrereqFouvry.CoprimePartition
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1SieveProductLower
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1SieveProductLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
+
+@[expose] public section
 
 open scoped BigOperators
 

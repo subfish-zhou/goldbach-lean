@@ -1,6 +1,10 @@
-import Lean
+module
+
+public import Lean
 
 /-! Independent proof-cone and actual-consumption checks for a frozen candidate. -/
+@[expose] public section
+
 namespace ProofOpt.Audit
 open Lean Elab Command
 
@@ -19,6 +23,9 @@ syntax "#proofopt_consumes " ident ident : command
 elab_rules : command
   | `(#proofopt_consumes $source:ident $target:ident) => do
     let env := (← getEnv).setExporting false
+    let proofEnv ← if env.header.isModule then
+      importModules env.header.imports {} (loadExts := false) (level := .private)
+    else pure env
     let mut todo := [(source.getId, [source.getId])]
     let mut seen : Std.HashSet Name := {}
     let mut path : List Name := []
@@ -29,7 +36,7 @@ elab_rules : command
       seen := seen.insert n
       if n == target.getId then
         path := revPath.reverse
-      else if let some ci := env.find? n then
+      else if let some ci := proofEnv.find? n <|> env.find? n then
         -- Follow value dependencies only. Mere imports/type mentions are not consumption.
         if let some value := ci.value? (allowOpaque := true) then
           for next in value.getUsedConstants do

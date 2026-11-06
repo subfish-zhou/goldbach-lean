@@ -1,6 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialData
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialData
+public import Mathlib.Tactic.Ring
+public import Mathlib.Data.Rat.Cast.Lemmas
+public import Mathlib.Tactic.NormNum
 /-!
 # Exact coefficient operations for the S3 integral certificate
 
@@ -10,8 +13,19 @@ large symbolic expansions over the reals. Numerical certificates are checked
 by Lean's kernel, without native evaluation axioms.
 -/
 
+@[expose] public section
+
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 namespace S3Polynomial
+
+/-- Checking numerator/denominator pairs keeps coefficient certificates independent
+of the proof fields in the rational-number representation. -/
+theorem eq_of_num_den_eq (cs ds : List ℚ)
+    (h : cs.map (fun q => (q.num, q.den)) = ds.map (fun q => (q.num, q.den))) :
+    cs = ds := by
+  apply (List.map_inj_right (f := fun q : ℚ => (q.num, q.den)) ?_).mp h
+  intro a b hab
+  exact Rat.ext (congrArg Prod.fst hab) (congrArg Prod.snd hab)
 
 def add : List ℚ → List ℚ → List ℚ
   | [], ys => ys

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG10SwitchFinite
-import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10SwitchFinite
+public import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
+
+@[expose] public section
 
 open Filter
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine

@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedNonquadraticErrorAssembly
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedPsiClose
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPointwiseSWPaymentCore
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedNonquadraticErrorAssembly
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedPsiClose
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPointwiseSWPaymentCore
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 

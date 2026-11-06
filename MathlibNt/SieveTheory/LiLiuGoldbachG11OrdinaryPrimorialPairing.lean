@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -45,7 +49,7 @@ theorem goldbachG11_external_primorial_pairing (N : ℕ) (P : Finset ℕ)
         mem_filter.mpr ⟨mem_Icc.mpr ⟨hd0,hdQ⟩,hsq,hcop.symm⟩
       have hc1 := hw.1 d
       rw [fouvryTau_order_one (Nat.ne_of_gt hd0),Nat.cast_one] at hc1
-      rw [if_pos hdS,abs_mul]
+      rw [ite_eq_left hdS,abs_mul]
       exact (mul_le_mul_of_nonneg_right hc1 (abs_nonneg _)).trans_eq (one_mul _)
   calc
     _ ≤ ∑ d ∈ (P.prod id).divisors, |c d*R d| := abs_sum_le_sum_abs _ _

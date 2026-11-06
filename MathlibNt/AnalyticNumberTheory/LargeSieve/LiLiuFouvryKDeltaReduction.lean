@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmegaReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKHighOmegaReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaReduction
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

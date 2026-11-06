@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedConvolution
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedConvolution
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportReduction
 
 
 /-!
@@ -11,6 +13,8 @@ the trimmed convolution is paid at the original signed error, including the
 equality progression. Only then is the accepted five-small-factor reduction
 applied to the trimmed convolution and its second coefficient expanded.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
-import MathlibNt.SieveTheory.LiLiuGoldbachS5SquareMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5SquareMass
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

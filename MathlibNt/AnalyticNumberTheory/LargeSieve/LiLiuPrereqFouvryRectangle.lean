@@ -1,8 +1,10 @@
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Tactic
+module
+
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Tactic
 
 /-!
 # Finite rectangular partial summation
@@ -12,6 +14,8 @@ coefficients, phases, and nonrectangular support indicators belong in `a`, not i
 the weight. The difference kernel is the tensor product of forward differences,
 with the weight extended by zero outside the box.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -65,7 +69,7 @@ private theorem prod_eq_indicator (x u : ι → ℕ) :
   by_cases h : x = u
   · subst u
     simp
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     obtain ⟨i, hi⟩ : ∃ i, x i ≠ u i := Function.ne_iff.mp h
     exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
 

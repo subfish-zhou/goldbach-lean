@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairPaidLower
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairPaidLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

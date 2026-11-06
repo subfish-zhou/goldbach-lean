@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67G67Truncation
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67G67Truncation
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

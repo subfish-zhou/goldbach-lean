@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCDReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCDReindex
 
 /-!
 # Poisson extraction with the same arithmetic mask
@@ -8,6 +10,8 @@ progression sum, not its truncated nonzero frequencies. This module keeps
 the same mask on the original sum, zero mode, retained frequencies and tail.
 No estimate for an unmasked zero mode is restricted to a new subset.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangleC2
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangleC2
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset G12RectangleWF
@@ -62,17 +66,17 @@ theorem prime_le_sifted_small (N : ℕ) (A : Finset (ℕ × ℕ)) (Z : ℝ) :
   apply sum_le_sum
   intro a _
   by_cases hp : (output N a).Prime
-  · rw [if_pos hp]
+  · rw [ite_eq_left hp]
     by_cases hc : (output N a).Coprime (goldbachB10ProdPrimes N Z)
     · change _ ≤ (if (output N a).Coprime (goldbachB10ProdPrimes N Z) then 1 else 0) + _
-      rw [if_pos hc]
+      rw [ite_eq_left hc]
       split_ifs <;> norm_num
     · have hd := (hp.coprime_iff_not_dvd).not.mp hc
       have hd' : output N a ∣ goldbachB10ProdPrimes N Z := by simpa using hd
       have hs := Nat.lt_ceil.mpr (prime_dvd_goldbachB10ProdPrimes_lt hp hd')
       change _ ≤ (if (output N a).Coprime (goldbachB10ProdPrimes N Z) then 1 else 0) + _
       simp [hc, hs]
-  · rw [if_neg hp]
+  · rw [ite_eq_right hp]
     split_ifs <;> norm_num
 
 /-- The genuine producer is called on the actual repeated labels on any finite atom set.

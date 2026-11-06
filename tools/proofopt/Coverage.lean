@@ -1,7 +1,11 @@
-import Lean
+module
+
+public import Lean
 
 /-! Explicit-pair, bounded theorem coverage probe. No environment-wide proof search.
     Usage: #proofopt_coverage Fully.Qualified.target Fully.Qualified.provider -/
+@[expose] public meta section
+
 namespace ProofOpt.Coverage
 open Lean Meta Elab Command
 
@@ -17,7 +21,7 @@ def refs (ci : ConstantInfo) : Array Name :=
 
 /-- Inspect the entire dependency cone, returning an explicit forbidden path.
     Also disallow sorryAx transitively, not just at the expression root. -/
-def forbiddenPath (roots : Array Name) (target : Name) : MetaM (Option (List Name)) := do
+def forbiddenPath (proofEnv : Environment) (roots : Array Name) (target : Name) : MetaM (Option (List Name)) := do
   let env ← getEnv
   let mut seen : NameSet := {}
   let mut queue := roots.map fun n => (n, [n])
@@ -29,7 +33,7 @@ def forbiddenPath (roots : Array Name) (target : Name) : MetaM (Option (List Nam
     if n == target || n == ``sorryAx then return some path.reverse
     if seen.contains n then continue
     seen := seen.insert n
-    let some ci := env.find? n | throwError "dependency unavailable: {n}"
+    let some ci := proofEnv.find? n <|> env.find? n | throwError "dependency unavailable: {n}"
     for next in refs ci do
       unless seen.contains next do
         queue := queue.push (next, next :: path)
@@ -57,13 +61,16 @@ def probe (target provider : Name) : TermElabM Json := do
   if target == provider then
     return result target provider "rejected" "self_reference"
   let env ← getEnv
-  let some tc := env.find? target |
+  let proofEnv ← if env.header.isModule then
+    importModules env.header.imports {} (loadExts := false) (level := .private)
+  else pure env
+  let some tc := proofEnv.find? target <|> env.find? target |
     return result target provider "rejected" "unknown_target"
-  let some pc := env.find? provider |
+  let some pc := proofEnv.find? provider <|> env.find? provider |
     return result target provider "rejected" "unknown_provider"
   unless tc.isTheorem && pc.isTheorem do
     return result target provider "rejected" "both_names_must_be_theorems"
-  if let some path ← forbiddenPath #[provider] target then
+  if let some path ← forbiddenPath proofEnv #[provider] target then
     return result target provider "rejected" s!"provider_dependency: {pathText path}"
   let ty := tc.type
   unless ← isProp ty do
@@ -97,7 +104,7 @@ def probe (target provider : Name) : TermElabM Json := do
       [("remaining", toJson remaining)]
   if proof.hasFVar || proof.hasLooseBVars || proof.hasSorry then
     return result target provider "rejected" "nonclosed_or_sorry_proof"
-  if let some path ← forbiddenPath proof.getUsedConstants target then
+  if let some path ← forbiddenPath proofEnv proof.getUsedConstants target then
     return result target provider "rejected" s!"proof_dependency: {pathText path}"
   -- Meta check is supplementary; the subsequent isolated kernel declaration
   -- checks the *original complete target type*, not just the introduced goal.

@@ -1,11 +1,13 @@
-import MathlibNt.SieveTheory.Selberg.TruncatedOptimalWeights
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.NumberTheory.ArithmeticFunction.Zeta
-import Mathlib.NumberTheory.Divisors
+module
 
-import AnalyticNumberTheory.Sieve.LinearSieve
-import AnalyticNumberTheory.Sieve.SelbergIdentities
-import AnalyticNumberTheory.Sieve.WeightedPan
+public import MathlibNt.SieveTheory.Selberg.TruncatedOptimalWeights
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.NumberTheory.ArithmeticFunction.Zeta
+public import Mathlib.NumberTheory.Divisors
+
+public import AnalyticNumberTheory.Sieve.LinearSieve
+public import AnalyticNumberTheory.Sieve.SelbergIdentities
+public import AnalyticNumberTheory.Sieve.WeightedPan
 
 /-! # AnalyticNumberTheory.Sieve.SelbergUpperBound
 
@@ -49,6 +51,8 @@ References:
   - Liu, Z. (2022), arXiv:2203.07871, §III
   - Mathlib `SelbergSieve.lean`: BoundingSieve, Λ² sieve, selbergTerms
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 
@@ -132,7 +136,7 @@ private theorem optimalSelbergX_eq_truncated (S : BoundingSieve) {l : ℕ}
   have hlC : l ∈ truncatedSelbergCarrier S S.prodPrimes := by
     rw [fullSelbergCarrier_eq]
     exact Nat.mem_divisors.mpr ⟨hl, S.prodPrimes_ne_zero⟩
-  rw [truncatedSelbergOptimalX, if_pos hlC, optimalSelbergX,
+  rw [truncatedSelbergOptimalX, ite_eq_left hlC, optimalSelbergX,
     selbergMainTerm_eq_truncated]
   ring
 
@@ -143,12 +147,12 @@ private theorem optimalSelbergWeight_eq_truncated (S : BoundingSieve) :
   unfold optimalSelbergWeight truncatedSelbergOptimalLambda
   rw [fullSelbergCarrier_eq]
   by_cases hd : d ∣ S.prodPrimes
-  · rw [dif_pos hd, if_pos (Nat.mem_divisors.mpr ⟨hd, S.prodPrimes_ne_zero⟩)]
+  · rw [dite_eq_left hd, ite_eq_left (Nat.mem_divisors.mpr ⟨hd, S.prodPrimes_ne_zero⟩)]
     apply congrArg (fun x : ℝ => x / S.nu d)
     apply Finset.sum_congr rfl
     intro e he
     rw [optimalSelbergX_eq_truncated S (Nat.mem_divisors.mp he).1]
-  · rw [dif_neg hd, if_neg (fun h => hd (Nat.mem_divisors.mp h).1)]
+  · rw [dite_eq_right hd, ite_eq_right (fun h => hd (Nat.mem_divisors.mp h).1)]
 
 /-- **Normalization of the optimal weight**: `w*(1) = 1`. -/
 theorem optimalSelbergWeight_one (S : BoundingSieve) :

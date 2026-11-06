@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorObjects
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorObjects
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 /-!
 # Suzuki §13 hat layers at sieve dimension one
@@ -15,6 +17,8 @@ partial sums for them.  The finite-level results below mean results on a compact
 interval `[a,b]`; the only limit input needed to turn the DDE into the tail
 integral (13.12)/(13.14) is decay at infinity.
 -/
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FineGrid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FineGrid
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

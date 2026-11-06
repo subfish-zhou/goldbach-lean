@@ -1,18 +1,24 @@
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Tactic.Convert
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Tactic.Convert
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 open Lean Meta Elab Tactic
+
+meta section
 
 namespace GoldbachProofTools
 
 /-- Reify a univariate ring expression. Anything independent of the variable is
     a coefficient; unsupported variable-dependent operations are rejected. -/
-private def coefficient (e : Expr) : MetaM Expr := do
+def coefficient (e : Expr) : MetaM Expr := do
   let c ← mkAppOptM ``Polynomial.C #[some (← inferType e), none]
   mkAppM ``DFunLike.coe #[c, e]
 
-private partial def reify (x : Expr) (e : Expr) : MetaM Expr := do
+partial def reify (x : Expr) (e : Expr) : MetaM Expr := do
   let e := e.consumeMData
   if !e.containsFVar x.fvarId! then
     return ← coefficient e

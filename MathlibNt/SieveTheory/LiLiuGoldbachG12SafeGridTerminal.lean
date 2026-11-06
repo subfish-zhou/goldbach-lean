@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PaidFixedGrid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PaidFixedGrid
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorChangeLevelLedger
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorChangeLevelLedger
 
 /-!
  # Linear-polylogarithmic control of imprimitive conductor multiplicity
@@ -11,6 +13,8 @@ average order of the divisor function.  The proof is completely finite:
 sum is transposed, and the resulting harmonic sum is bounded by a telescoping
 logarithm.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

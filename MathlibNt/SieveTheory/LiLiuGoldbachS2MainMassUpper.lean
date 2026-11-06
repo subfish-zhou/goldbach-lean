@@ -1,10 +1,14 @@
-import Mathlib.Topology.Order.LeftRight
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Order.Filter.AtTopBot.Basic
-import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
-import MathlibNt.SieveTheory.LiuLogarithmicIntegral
-import MathlibNt.SieveTheory.LiuWeightMainSum
-import MathlibNt.SieveTheory.MertensTheorem
+module
+
+public import Mathlib.Topology.Order.LeftRight
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
+public import MathlibNt.SieveTheory.LiuLogarithmicIntegral
+public import MathlibNt.SieveTheory.LiuWeightMainSum
+public import MathlibNt.SieveTheory.MertensTheorem
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter Finset

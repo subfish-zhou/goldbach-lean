@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.LowRealEndpoints
-import MathlibNt.Wu2004MeanValue.EndpointConsumers
+module
+
+public import MathlibNt.Wu2004MeanValue.LowRealEndpoints
+public import MathlibNt.Wu2004MeanValue.EndpointConsumers
 
 /-!
 # Whole primitive source for a common real prime profile
@@ -7,6 +9,8 @@ import MathlibNt.Wu2004MeanValue.EndpointConsumers
 The conductor split exponent is independent of any later modulus exponent.
 Both source and prime variables retain their cofactor coprimality screens.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

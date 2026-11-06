@@ -2,7 +2,11 @@
 Temporary κ = 1 finite-source package for Suzuki, Proposition 9.3.
 The proofs use the source-correct recursion through `KappaOneModel.layer`.
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayersKappaOne
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayersKappaOne
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers
 
@@ -28,18 +32,18 @@ private lemma sourceTerm_continuousOn {β : ℝ} (hβ : 1 < β) (N n : ℕ) :
     ContinuousOn (fun s => if n % 2 = N % 2 then suzukiLayer 1 β n s else 0)
       (parityDomain β N) := by
   by_cases h : n % 2 = N % 2
-  · simp only [h, if_true]
+  · simp only [h, ite_true]
     have hn := continuousOn_parityDomain hβ n
     rw [parityDomain_eq_of_mod_eq h] at hn
     exact hn.congr fun s _ => (layer_eq_suzukiLayer β n s).symm
-  · simp only [h, if_false]
+  · simp only [h, ite_false]
     exact continuousOn_const
 
 private lemma sourceTerm_nonneg {β : ℝ} (hβ : 1 < β) (N n : ℕ)
     {s : ℝ} (hs : s ∈ parityDomain β N) :
     0 ≤ (if n % 2 = N % 2 then suzukiLayer 1 β n s else 0) := by
   by_cases h : n % 2 = N % 2
-  · simp only [h, if_true]
+  · simp only [h, ite_true]
     rw [← layer_eq_suzukiLayer]
     apply nonneg_on_parityDomain hβ n s
     rwa [parityDomain_eq_of_mod_eq h]
@@ -50,12 +54,12 @@ private lemma sourceTerm_weighted_antitone {β : ℝ} (hβ : 1 < β) (N n : ℕ)
       (fun s => s * (if n % 2 = N % 2 then suzukiLayer 1 β n s else 0))
       (parityDomain β N) := by
   by_cases h : n % 2 = N % 2
-  · simp only [h, if_true]
+  · simp only [h, ite_true]
     have hn := weighted_antitoneOn_parityDomain hβ n
     rw [parityDomain_eq_of_mod_eq h] at hn
     intro s hs t ht hst
     simpa only [← layer_eq_suzukiLayer] using hn hs ht hst
-  · simp only [h, if_false, mul_zero]
+  · simp only [h, ite_false, mul_zero]
     intro s hs t ht hst
     exact le_rfl
 
@@ -64,12 +68,12 @@ private lemma sourceTerm_antitone {β : ℝ} (hβ : 1 < β) (N n : ℕ) :
       (fun s => if n % 2 = N % 2 then suzukiLayer 1 β n s else 0)
       (parityDomain β N) := by
   by_cases h : n % 2 = N % 2
-  · simp only [h, if_true]
+  · simp only [h, ite_true]
     have hn := antitoneOn_parityDomain hβ n
     rw [parityDomain_eq_of_mod_eq h] at hn
     intro s hs t ht hst
     simpa only [← layer_eq_suzukiLayer] using hn hs ht hst
-  · simp only [h, if_false]
+  · simp only [h, ite_false]
     intro s hs t ht hst
     exact le_rfl
 
@@ -137,7 +141,7 @@ theorem finiteSourceLayer_add_two (β : ℝ) (N : ℕ) (s : ℝ) :
   rw [Finset.sum_Icc_succ_top (by omega : 1 ≤ N + 1)]
   have hskip : (N + 1) % 2 ≠ N % 2 := by omega
   have htake : (N + 1 + 1) % 2 = N % 2 := by omega
-  simp only [hskip, htake, if_false, if_true, add_zero]
+  simp only [hskip, htake, ite_false, ite_true, add_zero]
 
 end
 end MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers

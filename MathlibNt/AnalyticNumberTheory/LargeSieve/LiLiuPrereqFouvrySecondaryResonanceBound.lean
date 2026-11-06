@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceReindex
 
 /-!
 # Consuming the secondary r-mean on the original occupied carrier
@@ -8,6 +10,8 @@ The signed coefficient weight remains an exact, `r`-independent factor.
 The mean keeps the existing losses: the span is bounded by `GridUpper+1`,
 and the gcd average extends to `(0,hi]`, rather than paying just the width.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

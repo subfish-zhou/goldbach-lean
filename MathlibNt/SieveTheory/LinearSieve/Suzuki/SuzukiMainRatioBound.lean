@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteAbel
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteAbel
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval

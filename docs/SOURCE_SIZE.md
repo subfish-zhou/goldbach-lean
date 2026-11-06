@@ -1,13 +1,35 @@
 # Source size and proof simplification
 
-The current measurements compare the working tree against accepted commit
+## Lean 4.35 and module migration
+
+The main project still has 1,803 modules. The module headers, public sections and
+API compatibility work add source lines. These changes are recorded separately
+from the accepted mathematical simplifications below. The NanoDa repair adds
+one shared numerator/denominator injectivity lemma and applies it to five
+coefficient certificates, adding 16 effective and 19 physical lines in total.
+
+| Scope | Before upgrade, effective lines | After migration, effective lines | After migration, physical lines |
+|---|---:|---:|---:|
+| Complete main libraries | 201,756 | 205,091 | 247,040 |
+| Chen import closure, 528 modules | 99,214 | 100,345 | 122,196 |
+| Li–Liu import closure, 1,432 modules | 194,201 | 197,121 | 236,570 |
+
+The [migration measurement](../Palomar/source-size.json) counts every main source
+file, including public headers and the retained compatibility parser. The
+independent Palomar Challenge and Solution add two publication modules outside
+these main-library totals. The [preparation record](PALOMAR_PREPARATION.md)
+describes the separate Wu research scope.
+
+## Historical simplification measurements accepted on 2026-10-27
+
+The following accepted measurements compare the pre-upgrade working tree against commit
 `c4e1b8d00dda9661140f95e0f03f0d5a08d636c2`. The
-[current machine-readable report](../research/liliu-finite-prefix-cleanup/source-size.json)
+[accepted machine-readable report](../research/liliu-finite-prefix-cleanup/source-size.json)
 counts the complete main source tree, including moved code, additions and
 deletions. Reproduce the main report with `python3 research/liliu-cleanup/measure_main.py`.
 
 The main rows describe this accepted Chen/Li–Liu snapshot. The Wu row is the
-latest independently accepted [structural compression snapshot](../research/wu-structural-compression-audit/measurement.json).
+latest independently accepted [unused-proof pruning snapshot](../research/wu-unused-proof-audit/measurement.json).
 Wu research acceptance is separate from the main acceptance. The main
 measurement tool does not read that changing research tree; the combined
 `scripts/source_size.py` additionally requires a matching Wu source manifest.
@@ -18,19 +40,21 @@ measurement tool does not read that changing research tree; the combined
 |---|---:|---:|---:|
 | Chen 1+2: `Goldbach.Theorem` | 743 → 528 | 216,923 → 99,214 | 119,981 |
 | Li–Liu 1+1.9: `Goldbach.OnePlusOneNine` | 1,733 → 1,432 | 331,316 → 194,201 | 230,788 |
-| Wu04/Wu08 1+1.8938 (also 1+1.894): `WR2ClassicalCertificate` | 8,444 → 3,764 | 1,126,636 → 525,529 | 621,451 |
+| Wu04/Wu08 1+1.8938 (also 1+1.894): `WR2ClassicalCertificate` | 8,444 → 3,764 | 1,126,636 → 469,022 | 548,778 |
 
 Each row counts the entry module and every transitively imported local module
 once within that row. Shared dependencies occur in multiple rows, so the rows
 must not be added. External Lake dependencies, including Mathlib, are excluded;
 the adapted local `PrimeNumberTheoremAnd` sources are included. The Wu row uses
 the separate research tree and includes generated numerical certificates. Its
-accepted full inventory contains 4,151 modules and 566,283 effective lines. The
-[latest Wu audit](WU_STRUCTURAL_COMPRESSION.md) records 7,612 fewer effective Lean
-lines and 9,092 fewer physical lines in both scopes; the cumulative closure
-saving is 601,107 effective lines. Original grids, precision and numerical bounds
-are preserved. The preceding [383-lemma phase](WU_LIUPAN_PRUNING.md) and earlier
-compression measurements remain historical snapshots in their audit directories.
+accepted full inventory contains 4,151 modules and 509,776 effective lines. The
+[latest Wu audit](WU_UNUSED_PROOF_PRUNING.md) removes 2,119 unused proof declarations
+from 1,082 modules, saving 31,209 effective lines and 34,117 physical lines in
+both scopes. Cumulative closure savings are 657,614 effective lines. The preceding
+[constructive Hf4 phase](WU_HF4_CONSTRUCTIVE.md) saved a separate 25,298 effective
+lines. Original grids, precision and numerical bounds remain.
+The preceding [structural phase](WU_STRUCTURAL_COMPRESSION.md), [383-lemma phase](WU_LIUPAN_PRUNING.md)
+and earlier measurements remain historical snapshots in their audit directories.
 
 Effective code lines are nonblank lines after removing Lean line comments and
 nested block comments, retaining string literals and code before inline comments.

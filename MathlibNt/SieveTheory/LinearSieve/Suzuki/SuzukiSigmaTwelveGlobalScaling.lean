@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigma11Sigma12MiddleRange
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigma11Sigma12MiddleRange
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset MeasureTheory Set

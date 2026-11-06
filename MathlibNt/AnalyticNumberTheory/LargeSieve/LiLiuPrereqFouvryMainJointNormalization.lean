@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
 
 /-!
 # Primitive coordinates for the joint main-term gcd
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMe
 Only the reduced coordinates are coprime. The original two summation
 variables are unrestricted positive integers, and all coefficients are signed.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

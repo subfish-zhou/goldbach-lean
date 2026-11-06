@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualDecomposition
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualDecomposition
 
 /-!
  # Rank-one rectangular primitive L¹ means
@@ -13,6 +15,8 @@ Vaughan hyperbolic shell is dominated by finitely many such rectangles.
 
 This module is intentionally not imported by a canonical facade.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

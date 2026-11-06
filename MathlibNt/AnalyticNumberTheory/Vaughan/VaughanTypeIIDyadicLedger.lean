@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIBilinear
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIBilinear
 
 /-!
  # Canonical dyadic ledger for the full Vaughan Type-II prefix
@@ -11,6 +13,8 @@ also handles `d = 1` (or `e = 1`), while a cutoff lying inside a dyadic shell
 only truncates that one shell.  Every retained integer belongs to exactly one
 block, including the zero/empty boundary cases.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -136,7 +140,7 @@ theorem vaughanTypeIIFullAt_eq_bounded_rectangular {n N u v : ℕ}
   apply Finset.sum_congr rfl
   intro d hd
   by_cases hdn : d ∣ n
-  · simp only [if_pos hdn]
+  · simp only [ite_eq_left hdn]
     have hdpos : 0 < d := (mem_vaughanTypeIIRange.mp hd).1
     have hndpos : 0 < n / d := Nat.div_pos (Nat.le_of_dvd hn hdn) hdpos
     have heset : (n / d).divisors.filter (fun e => v < e) =

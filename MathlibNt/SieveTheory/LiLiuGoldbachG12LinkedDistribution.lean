@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Classical Finset Filter

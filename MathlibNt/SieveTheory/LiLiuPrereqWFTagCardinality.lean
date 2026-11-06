@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedFamily
-import Mathlib.Data.Finset.Prod
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedFamily
+public import Mathlib.Data.Finset.Prod
 
 /-!
 # A uniform bound for the actual normalized signed tags
@@ -9,6 +11,8 @@ accepted multiplicity profile, including the empty profile. No factorial
 copies are introduced. The estimates do not require any condition on the
 supplied prime labelling: numerical acceptance itself bounds every label.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

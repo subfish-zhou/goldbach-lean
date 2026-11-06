@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosCurve
-import Mathlib.FieldTheory.Finite.Trace
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosCurve
+public import Mathlib.FieldTheory.Finite.Trace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 /-!
 # Harcos's trace-zero count
@@ -9,6 +11,8 @@ The last six counting lines of Corollary 3 on Harcos, page 8
 (`pages/harcos-stepanov-08.png`), use the actual field trace and the
 change of variables `y = 2at - (x^p - x)`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -99,7 +103,7 @@ theorem harcos_artinSchreier_fiber_card [DecidableEq L] [DecidableEq K] (c : L) 
   classical
   change (univ.filter fun x : L => harcosArtinSchreier K L x = c).card = _
   by_cases hc : Algebra.trace K L c = 0
-  · rw [if_pos hc]
+  · rw [ite_eq_left hc]
     obtain ⟨r, hr⟩ := (harcos_artinSchreier_exists_iff K L c).mpr hc
     change harcosArtinSchreier K L r = c at hr
     have hcard : (univ.filter fun x : L => harcosArtinSchreier K L x = 0).card =
@@ -121,7 +125,7 @@ theorem harcos_artinSchreier_fiber_card [DecidableEq L] [DecidableEq K] (c : L) 
         · intro x _
           exact add_sub_cancel_right x r
       _ = Fintype.card K := hcard
-  · rw [if_neg hc]
+  · rw [ite_eq_right hc]
     apply card_eq_zero.mpr
     apply eq_empty_iff_forall_notMem.mpr
     intro x hx

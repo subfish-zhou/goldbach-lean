@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpTerminal
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpQuadrature
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpTerminal
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpQuadrature
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

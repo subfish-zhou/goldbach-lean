@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 /-!
 # Global bounds for the Buchstab function
@@ -7,6 +9,8 @@ import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 The global integral equation propagates the interval `[1/2, 1]` from
 `[1, 2]` to every subsequent unit interval.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

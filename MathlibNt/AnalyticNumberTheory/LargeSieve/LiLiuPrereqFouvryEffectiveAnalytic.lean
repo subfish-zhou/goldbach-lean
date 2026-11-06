@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedScale
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedScale
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff
 
 /-!
 # Reusing the actual analytic reduction with a smaller frequency cutoff
@@ -7,6 +9,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff
 The integral, signed coefficients, full modulus interval, and six-key box
 are unchanged. Only the genuinely retained frequency set is made smaller.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

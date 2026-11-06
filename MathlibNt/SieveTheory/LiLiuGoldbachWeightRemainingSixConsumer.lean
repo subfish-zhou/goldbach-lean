@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSix
-import MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSix
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

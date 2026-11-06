@@ -1,10 +1,12 @@
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+module
+
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 /-
 Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingNormalization
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingNormalization
 
 /-!
 # Suzuki's standard upper adjoint `r_{1,-1}`
@@ -27,6 +29,8 @@ It closes the local identities which drive both remaining endpoints:
 The latter reduces `p(1)=exp(-γ)` to the classical (non-Buchstab) asymptotic
 `x * exp(-Ein x) → exp(-γ)`.  No value at `1` is inserted by definition.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

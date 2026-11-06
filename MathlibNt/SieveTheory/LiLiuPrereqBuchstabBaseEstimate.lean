@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBase
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNT
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBase
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNT
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
 
 /-!
 # A uniform quantitative base band for actual rough counts
@@ -8,6 +10,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
 The extra boundary term is essential when `x` is near `y`. The unit and
 possible prime square are retained in the exact formula before estimation.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

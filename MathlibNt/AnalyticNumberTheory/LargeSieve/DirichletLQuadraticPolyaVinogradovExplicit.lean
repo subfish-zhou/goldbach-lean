@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit
 
 /-! Compatibility import for the canonical module in its current library location. -/

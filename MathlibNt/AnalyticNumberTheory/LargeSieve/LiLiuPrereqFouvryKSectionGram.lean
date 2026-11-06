@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionCancellation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionCancellation
 
 /-!
 # Returning individual cancellation to the original weighted Gram section
@@ -7,6 +9,8 @@ The inner weights are fixed along the reconstructed section. The equality
 below retains both original tuple indices and the common-k condition until
 the exact reindexing; it does not identify repeated beta coordinates.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

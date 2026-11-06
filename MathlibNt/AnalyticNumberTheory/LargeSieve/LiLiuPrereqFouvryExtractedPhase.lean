@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedKeyBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWSmallRoot
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedKeyBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWSmallRoot
 
 /-!
 # The actual extracted exponential kernel in source phase coordinates
@@ -9,6 +11,8 @@ phase is `-u*h/lcm`; `a` occurs in the CRT phase, not a second time in
 this Fourier phase. All arithmetic coefficients and carrier restrictions
 remain outside the smooth weight.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

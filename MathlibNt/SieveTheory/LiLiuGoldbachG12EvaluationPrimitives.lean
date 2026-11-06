@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticPrimitives
-import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticPrimitives
+public import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
+
+@[expose] public section
 
 noncomputable section
 open MeasureTheory Set

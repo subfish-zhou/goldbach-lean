@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanPrefixReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanPrefixReduction
 
 /-!
  # Genuine bilinear blocks for Vaughan Type II
@@ -11,6 +13,8 @@ prefix in `n` into the exact variables `n = d*e*m`; multiplicativity then puts
 one character on each variable.  The final estimates apply Cauchy only in the
 outer `d` variable and leave the complete `e,m` sum visible.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

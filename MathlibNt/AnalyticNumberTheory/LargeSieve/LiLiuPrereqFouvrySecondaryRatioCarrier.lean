@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioBox
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioBox
 
 /-!
 # The logarithmic ratio count on the actual secondary carrier
@@ -7,6 +9,8 @@ The code retains the common first beta coordinate, both second beta indices,
 both sieve coordinates, and both signed frequencies. Only the known fixed
 sign is removed. Thus ordered multiplicities are not lost.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

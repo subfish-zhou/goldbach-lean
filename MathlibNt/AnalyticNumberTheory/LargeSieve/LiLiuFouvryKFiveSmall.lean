@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPaymentDyadic
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupportReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPaymentDyadic
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportReduction
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

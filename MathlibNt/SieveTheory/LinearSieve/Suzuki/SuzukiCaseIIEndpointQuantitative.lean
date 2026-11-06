@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIILambdaShortInterval
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointTransport
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIILambdaShortInterval
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointTransport
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open MeasureTheory Set

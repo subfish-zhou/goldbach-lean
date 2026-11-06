@@ -1,5 +1,7 @@
-import Goldbach
-import Goldbach.OnePlusOneNine
+module
+
+public import Goldbach
+public import Goldbach.OnePlusOneNine
 
 /-!
 # Both Goldbach theorem interfaces

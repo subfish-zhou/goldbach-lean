@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
+
+@[expose] public section
 
 open Filter MeasureTheory Set
 open scoped Interval

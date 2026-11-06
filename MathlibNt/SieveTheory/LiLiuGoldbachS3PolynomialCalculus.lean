@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCertificate
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCertificate
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
 
 /-!
 # Differentiation of exact coefficient lists
@@ -10,6 +12,8 @@ Constants have the empty derivative list, so no trailing zero is introduced.
 The evaluation theorem converts finite rational coefficient identities into
 ordinary real derivative proofs.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.S3Polynomial
 

@@ -1,5 +1,9 @@
-import MathlibNt.Analysis.LogScaleAbsorption
-import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
+module
+
+public import MathlibNt.Analysis.LogScaleAbsorption
+public import MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiuWeight

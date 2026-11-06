@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedEndpointTransport
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioCoefficients
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedEndpointTransport
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioCoefficients
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

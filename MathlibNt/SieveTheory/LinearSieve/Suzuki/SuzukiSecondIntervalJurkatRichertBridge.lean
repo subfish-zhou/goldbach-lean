@@ -1,10 +1,12 @@
-import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
 /-
 Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiContinuousLowerFactorSecondInterval
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiContinuousLowerFactorSecondInterval
 
 /-!
 # Suzuki's second lower interval and the Jurkat--Richert factor
@@ -14,6 +16,8 @@ This module isolates the analytic identification of Suzuki's source bracket on
 is kept symbolic; identifying it with the standard dimension-one factor is
 explicitly conditional on `A = 2 * exp γ`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

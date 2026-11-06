@@ -1,10 +1,14 @@
-import PrimeNumberTheoremAnd.MediumPNT
+module
+
+public import PrimeNumberTheoremAnd.MediumPNT
 
 /-!
 # Prime-distribution API
 
 This module is the stable facade over the ported PNTAnd implementation.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.PrimeDistribution
 

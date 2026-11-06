@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportGeometry
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportGeometry
 
 /-!
 # Supported-modulus exclusions at the actual C.2 scale
@@ -8,6 +10,8 @@ For `x = 4MT`, `T ≤ x^(1/9)` and `L ≤ x^(5/9)` imply `L ≤ M`
 eventually. This pays the actual progression endpoints and preserves the same
 mask in the original sum, exact zero mode, and uniformly truncated tail.
 -/
+
+@[expose] public section
 
 noncomputable section
 

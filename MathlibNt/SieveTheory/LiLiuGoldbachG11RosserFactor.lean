@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.FiniteLabelCounting
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
-import MathlibNt.SieveTheory.FiniteRealWindows
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
-import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
+module
 
+public import MathlibNt.SieveTheory.FiniteLabelCounting
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedDistribution
+public import MathlibNt.SieveTheory.FiniteRealWindows
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
+
+
+@[expose] public section
 
 open scoped BigOperators
 open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne

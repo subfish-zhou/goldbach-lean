@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourcePairingFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourcePairingFinal
 
 /-!
 # Suzuki's lower sieve factor on the first interval
@@ -8,6 +10,8 @@ series limit.  For `2 ≤ s ≤ 4`, the finite even partial sums converge to
 Suzuki's `T⁻(s)`, while the finite amplitude and boundary residuals vanish.
 Consequently the explicit first-interval factor is exactly `1 - T⁻(s)`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Topology MeasureTheory intervalIntegral

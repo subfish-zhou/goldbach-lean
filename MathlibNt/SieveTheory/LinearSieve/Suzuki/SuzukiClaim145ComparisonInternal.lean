@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143FullTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143LogExponent
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerInternal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143FullTail
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143LogExponent
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerInternal
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

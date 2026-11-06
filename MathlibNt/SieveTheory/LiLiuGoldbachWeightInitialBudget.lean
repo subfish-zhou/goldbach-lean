@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitial
+
+@[expose] public section
 
 open scoped BigOperators
 

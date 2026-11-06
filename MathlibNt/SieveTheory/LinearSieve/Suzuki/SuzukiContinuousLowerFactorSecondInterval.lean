@@ -3,7 +3,9 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147ContinuousLowerFactor
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147ContinuousLowerFactor
 
 /-!
 # Suzuki's continuous lower factor on the second interval
@@ -13,6 +15,8 @@ integral identities and the already proved first lower interval determine the
 upper factor on `[3,5]` and then the lower factor on `[4,6]`.  Suzuki's source
 amplitude remains symbolic throughout.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

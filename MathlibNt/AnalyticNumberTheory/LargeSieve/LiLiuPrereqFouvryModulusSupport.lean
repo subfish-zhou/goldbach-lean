@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportHarmonic
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportHarmonic
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaClean
 
 /-!
 # Sparse modulus support and inverse-lcm mass
@@ -8,6 +10,8 @@ The canonical supported parts `δ₁,δ₂` force a large square divisor in the
 corresponding modulus. A gcd harmonic row estimate and three fixed-order
 divisor bounds preserve this saving for signed inverse-lcm weights.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -164,7 +168,7 @@ theorem sum_abs_lcm_weight_sparse_pairs_uniform (j : ℕ) {ε : ℝ} (hε : 0 < 
      have hf : 0 ≤ f p := abs_nonneg _
      have hs := hFs p hp
      change f p ≤ _
-     rcases hs with hs | hs <;> simp only [if_pos hs] <;> split_ifs <;> linarith
+     rcases hs with hs | hs <;> simp only [ite_eq_left hs] <;> split_ifs <;> linarith
    _ ≤ ∑ p ∈ Q ×ˢ Q,
        ((if p.1 ∈ largeSquareDivisorSet ⌊L⌋₊ Z then f p else 0) +
          (if p.2 ∈ largeSquareDivisorSet ⌊L⌋₊ Z then f p else 0)) := by

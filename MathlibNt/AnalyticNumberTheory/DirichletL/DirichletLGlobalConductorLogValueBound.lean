@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
 
 /-!
 # A logarithmic conductor-height bound for nonprincipal Dirichlet L-values
@@ -7,6 +9,8 @@ The natural-order conditional series is cut at
 `q * (⌊|t|⌋₊ + 1)`.  The finite part is bounded by a harmonic sum, while the
 factor `q / m` in the Abel tail pays for the height of `s`.
 -/
+
+@[expose] public section
 
 open Complex Finset
 

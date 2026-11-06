@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalMoving
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPayment
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalMoving
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPayment
 
 /-! Pan (2.4)'s actual principal remainder for Liu's weight, before division by φ(q).
 This does not assert any estimate for the nonprincipal-character contribution. -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanPrincipal
 open Classical Finset Filter
 open MathlibNt.SieveTheory.LiuWeight

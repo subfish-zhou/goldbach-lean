@@ -1,7 +1,9 @@
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic
 
 /-!
 # Divided Dirichlet powers of a prime box
@@ -10,6 +12,8 @@ The normalization is performed on the full arithmetic function, not just its
 squarefree coefficients. Multiplicity is retained by taking factorially many
 copies when recovering the unnormalized power.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -184,7 +188,7 @@ theorem boxWeight_bounded_split (B : Finset ℕ) (a b : ℕ) :
   refine ⟨dividedPower_split _ a b, ?_, boxWeight_abs_le_one B b⟩
   intro n
   rw [smul_map, smul_eq_mul, abs_mul, abs_of_pos (factorial_ratio_pos a b)]
-  exact mul_le_one₀ (factorial_ratio_le_one a b)
-    (abs_nonneg _) (boxWeight_abs_le_one B a n)
+  exact (mul_le_of_le_one_left (abs_nonneg _) (factorial_ratio_le_one a b)).trans
+    (boxWeight_abs_le_one B a n)
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

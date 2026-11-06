@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaSW
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanFirstGCD
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaSW
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanFirstGCD
 
 /-!
 # High-omega preprocessing at the original C.2 entry
@@ -10,6 +12,8 @@ is dispersion reapplied to the low-omega SW family. The resulting signed W
 has an explicit restriction on both beta indices, with the same original
 modulus coefficients and the same constructed frequency cutoff.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

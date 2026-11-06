@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalScalar
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralScalar
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFinalScalar
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralScalar
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

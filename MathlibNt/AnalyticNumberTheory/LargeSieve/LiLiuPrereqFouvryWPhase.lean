@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPoissonTail
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPoissonTail
 
 /-!
 # An actual W phase: CRT peeling and reciprocal inversion
@@ -9,6 +11,8 @@ The peeled factor `k` is coprime to its complement in their lcm. No five-gcd
 decomposition, small-modulus bound, or estimate for the finite remainder is
 asserted here. In particular the complementary phase has not been discarded.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
-import MathlibNt.SieveTheory.LiLiuGoldbachRepeatBound
-import MathlibNt.SieveTheory.LiLiuGoldbachEndpointBound
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachRepeatBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachEndpointBound
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

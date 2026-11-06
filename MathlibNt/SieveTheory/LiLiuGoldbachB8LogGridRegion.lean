@@ -1,6 +1,10 @@
-import MathlibNt.Analysis.LogGridEstimates
-import MathlibNt.SieveTheory.LiLiuGoldbachB8FixedGridLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachB8DiagonalStrip
+module
+
+public import MathlibNt.Analysis.LogGridEstimates
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8FixedGridLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8DiagonalStrip
+
+@[expose] public section
 
 open MeasureTheory Set
 

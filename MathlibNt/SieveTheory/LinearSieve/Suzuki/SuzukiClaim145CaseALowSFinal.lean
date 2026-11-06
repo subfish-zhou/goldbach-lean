@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowS
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowS
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Filter Topology Asymptotics Set

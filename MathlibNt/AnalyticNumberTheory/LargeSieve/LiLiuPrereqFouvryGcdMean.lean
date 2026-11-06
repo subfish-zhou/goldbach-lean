@@ -1,7 +1,9 @@
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Tactic
 
 /-!
 # Fouvry's finite gcd mean
@@ -9,6 +11,8 @@ import Mathlib.Tactic
 Fouvry (1987), Lemma 2, p. 622. The divisor expansion is finite and
 uniform in the nonzero integer whose gcd is being averaged.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -20,7 +24,7 @@ theorem gcd_le_divisor_sum {a : ℕ} (ha : a ≠ 0) (n : ℕ) :
     Nat.mem_divisors.mpr ⟨Nat.gcd_dvd_left a n, ha⟩
   calc
     a.gcd n = (if a.gcd n ∣ n then a.gcd n else 0) := by
-      rw [if_pos (Nat.gcd_dvd_right a n)]
+      rw [ite_eq_left (Nat.gcd_dvd_right a n)]
     _ ≤ ∑ d ∈ a.divisors, if d ∣ n then d else 0 :=
       Finset.single_le_sum (f := fun d => if d ∣ n then d else 0)
         (fun _ _ => Nat.zero_le _) hg

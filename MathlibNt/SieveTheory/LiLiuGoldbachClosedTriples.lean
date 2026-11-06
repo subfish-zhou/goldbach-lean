@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachDoubleDifference
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachDoubleDifference
+
+@[expose] public section
 
 open scoped BigOperators
 

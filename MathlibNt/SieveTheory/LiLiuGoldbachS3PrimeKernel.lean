@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3RatioGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachUpperThirdInterval
-import MathlibNt.SieveTheory.LiLiuGoldbachRationalEndpoints
-import MathlibNt.SieveTheory.LiLiuGoldbachTotientCorrection
-import MathlibNt.SieveTheory.MertensTheorem
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3RatioGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachUpperThirdInterval
+public import MathlibNt.SieveTheory.LiLiuGoldbachRationalEndpoints
+public import MathlibNt.SieveTheory.LiLiuGoldbachTotientCorrection
+public import MathlibNt.SieveTheory.MertensTheorem
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter

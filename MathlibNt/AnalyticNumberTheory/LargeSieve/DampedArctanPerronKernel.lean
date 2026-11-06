@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.TruncatedPerronKernel
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.TruncatedPerronKernel
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+
+@[expose] public section
 
 noncomputable section
 
@@ -139,8 +143,8 @@ theorem abs_indicator_sub_dampedArctanPerronKernel_le
   · have hpos : 0 < -x := neg_pos.mpr hxneg
     have hbound := abs_one_sub_dampedArctanPerronKernel_le hε hpos
     rw [dampedArctanPerronKernel_neg] at hbound
-    simpa [if_neg (not_lt.mpr hxneg.le), abs_neg] using hbound
-  · simpa [if_pos hxpos] using
+    simpa [ite_eq_right (not_lt.mpr hxneg.le), abs_neg] using hbound
+  · simpa [ite_eq_left hxpos] using
       (abs_one_sub_dampedArctanPerronKernel_le hε hxpos)
 
 /-- At an integer half-step, the logarithmic separation converts the pointwise

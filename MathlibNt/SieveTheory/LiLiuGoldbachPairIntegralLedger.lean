@@ -1,13 +1,17 @@
-import Mathlib.Topology.Order.LeftRight
-import MathlibNt.SieveTheory.LiLiuGoldbachG67ActualIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachG67IdealNormalization
-import MathlibNt.SieveTheory.LiLiuGoldbachG67NormalizedLower
-import MathlibNt.SieveTheory.LiLiuGoldbachS5PaperSplitUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution
+module
 
+public import Mathlib.Topology.Order.LeftRight
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67ActualIntegral
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67IdealNormalization
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67NormalizedLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5PaperSplitUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightAllRetainedEndpointsConsumed
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution
+
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

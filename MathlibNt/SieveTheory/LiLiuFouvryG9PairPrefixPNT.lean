@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9PrefixWeights
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9PrefixWeights
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

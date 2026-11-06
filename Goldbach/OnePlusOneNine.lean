@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachOneNineUnconditional
 
 /-!
 # Li–Liu's one-plus-one-point-nine theorem
@@ -7,6 +9,8 @@ This entry point exposes the unconditional existence theorem and the quantitativ
 bound for distinct primes. `Goldbach.Theorem` remains the independent Chen 1+2
 entry point. Import `Goldbach.All` to use both public interfaces together.
 -/
+
+@[expose] public section
 
 namespace Goldbach
 

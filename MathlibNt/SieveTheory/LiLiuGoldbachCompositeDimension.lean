@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
-import MathlibNt.SieveTheory.MertensTheorem
-import MathlibNt.SieveTheory.SuzukiLemma147JurkatRichertInterval
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+public import MathlibNt.SieveTheory.MertensTheorem
+public import MathlibNt.SieveTheory.SuzukiLemma147JurkatRichertInterval
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset MathlibNt.SieveTheory.SwitchingPrinciple

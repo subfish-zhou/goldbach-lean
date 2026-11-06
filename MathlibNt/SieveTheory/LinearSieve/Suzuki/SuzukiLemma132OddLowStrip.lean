@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -81,7 +85,7 @@ theorem finiteSourceLayer_odd_lowStrip_exact
       have hz : suzukiLayer 1 2 1 3 = 0 := by
         apply suzukiLayer_eq_zero_of_le
         norm_num
-      simp only [Nat.one_mod, hodd, if_true, hz, mul_zero, add_zero]
+      simp only [Nat.one_mod, hodd, ite_true, hz, mul_zero, add_zero]
       exact hbase
     · by_cases hnpar : n % 2 = N % 2
       · have hnodd : n % 2 = 1 := by omega
@@ -89,7 +93,7 @@ theorem finiteSourceLayer_odd_lowStrip_exact
         have hn3 : 3 ≤ n := by
           have hn_ge_one : 1 ≤ n := (Finset.mem_Icc.mp hnIcc).1
           omega
-        simp only [hn1, if_false, zero_add, hnpar, if_true]
+        simp only [hn1, ite_false, zero_add, hnpar, ite_true]
         exact weighted_suzukiLayer_odd_lowStrip hn3 hnodd hx0 hx3
       · simp [hn1, hnpar]
   have hfirst : (∑ n ∈ S, if n = 1 then (3 - x) else 0) = 3 - x := by

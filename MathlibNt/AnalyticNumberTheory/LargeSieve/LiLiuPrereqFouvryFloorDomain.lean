@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFullLevelDomain
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFloorCutoff
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFullLevelDomain
 
 /-!
 # Exact inner interval for the paid floor cutoff
@@ -8,6 +10,8 @@ The repaired cutoff has a closed ceiling lower endpoint involving `|h|`,
 not the old strict floor endpoint involving `|h|-1`. These identities retain
 the fixed gcd condition; they do not remove the other arithmetic masks.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Finset

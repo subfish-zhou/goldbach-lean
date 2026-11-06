@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ScaledC2Sieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ScaledC2Sieve
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

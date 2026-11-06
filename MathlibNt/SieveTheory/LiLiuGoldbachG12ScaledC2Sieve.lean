@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScalePackage
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexiblePaidC2Sieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScalePackage
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexiblePaidC2Sieve
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

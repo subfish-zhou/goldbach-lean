@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachCompositeSieveAP
-import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairPrefix
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
-import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairLevel
-import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachCompositeSieveAP
+public import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairPrefix
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
+public import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairLevel
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

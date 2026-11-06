@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogKernel
-import MathlibNt.SieveTheory.LiLiuGoldbachLogDarboux
-import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealCoordinate
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogKernel
+public import MathlibNt.SieveTheory.LiLiuGoldbachLogDarboux
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealCoordinate
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped NNReal Interval

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.BombieriVinogradov
+module
+
+public import MathlibNt.SieveTheory.BombieriVinogradov
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

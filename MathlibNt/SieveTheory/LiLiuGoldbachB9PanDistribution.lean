@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
-import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixes
-import MathlibNt.SieveTheory.LiuPanWangDingSource
-import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
-import MathlibNt.SieveTheory.LiuPanActualErrorEnvelope
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixes
+public import MathlibNt.SieveTheory.LiuPanWangDingSource
+public import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+public import MathlibNt.SieveTheory.LiuPanActualErrorEnvelope
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

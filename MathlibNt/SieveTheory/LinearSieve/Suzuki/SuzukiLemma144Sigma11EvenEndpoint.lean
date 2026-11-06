@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11Internal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11Internal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointFinal
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set
@@ -29,7 +33,7 @@ theorem finiteSourceLayer_continuousOn_closedDomain
   apply continuousOn_finsetSum
   intro n hn
   by_cases hpar : n % 2 = N % 2
-  · simp only [hpar, if_true]
+  · simp only [hpar, ite_true]
     have hclosed : KappaOneModel.closedDomain β n =
         KappaOneModel.closedDomain β N := by
       unfold KappaOneModel.closedDomain KappaOneModel.eps
@@ -38,7 +42,7 @@ theorem finiteSourceLayer_continuousOn_closedDomain
     rw [hclosed] at hreg
     exact hreg.congr fun s _ =>
       (KappaOneModel.layer_eq_suzukiLayer β n s).symm
-  · simpa only [hpar, if_false] using
+  · simpa only [hpar, ite_false] using
       (continuousOn_const : ContinuousOn (fun _ : ℝ => (0 : ℝ)) _)
 
 private theorem finiteSourceLayer_nonneg_on_closedDomain
@@ -50,7 +54,7 @@ private theorem finiteSourceLayer_nonneg_on_closedDomain
   apply Finset.sum_nonneg
   intro n hn
   by_cases hpar : n % 2 = N % 2
-  · simp only [hpar, if_true]
+  · simp only [hpar, ite_true]
     rw [← KappaOneModel.layer_eq_suzukiLayer]
     apply (KappaOneModel.regular hβ n).nonneg s
     unfold KappaOneModel.closedDomain KappaOneModel.eps at hs ⊢
@@ -68,7 +72,7 @@ private theorem finiteSourceLayer_weighted_antitoneOn_closedDomain
   apply Finset.sum_le_sum
   intro n hn
   by_cases hpar : n % 2 = N % 2
-  · simp only [hpar, if_true]
+  · simp only [hpar, ite_true]
     rw [← KappaOneModel.layer_eq_suzukiLayer,
       ← KappaOneModel.layer_eq_suzukiLayer]
     apply (KappaOneModel.regular hβ n).weighted_antitone
@@ -347,7 +351,7 @@ theorem Sigma11FiniteLayerMajorization_even_endpoint
     norm_num
   have hsdom : (2 : ℝ) ∈ KappaOneModel.parityDomain 2 M := by
     unfold KappaOneModel.parityDomain
-    rw [if_neg (by omega : M % 2 ≠ 1)]
+    rw [ite_eq_right (by omega : M % 2 ≠ 1)]
     change (2 : ℝ) ≤ 2
     exact le_rfl
   have hint : ∀ n ∈ finiteSourceRecursionIndices M,

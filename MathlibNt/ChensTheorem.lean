@@ -1,4 +1,6 @@
-import Mathlib.NumberTheory.AlmostPrime
+module
+
+public import Mathlib.NumberTheory.AlmostPrime
 
 /-!
 # Prime-plus-at-most-two-primes representation vocabulary
@@ -11,6 +13,8 @@ The retained internal name `Semiprime` means *at most* two prime factors here;
 Mathlib's `Nat.IsSemiprime` means exactly two. The public theorem avoids that
 terminological ambiguity by stating the disjunction explicitly.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.ChensTheorem
 

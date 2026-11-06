@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaDecay
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaDecay
 
 /-!
 # Chen--Suzuki floor/ceiling coordinate bridge
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaDecay
 This module contains the parameter arithmetic only.  It is deliberately independent
 of the sieve implementation, so the eventual estimates do not rely on a finite scan.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

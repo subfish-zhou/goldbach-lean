@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.LargeSieve.Duality
+module
+
+public import AnalyticNumberTheory.LargeSieve.Duality
 
 /-! # AnalyticNumberTheory.LargeSieve.WellSpaced
 
@@ -47,6 +49,8 @@ naive dyadic-shell counting and the Schur test incur a `log(1/δ)` factor.
 References: Montgomery, "Topics in Multiplicative Number Theory" (1971), Ch. 1;
 Iwaniec & Kowalski, "Analytic Number Theory" (2004), Ch. 7.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -414,16 +418,16 @@ theorem shell_geom_bound {ρ : ℝ} (hρ0 : 0 < ρ) (hρ : ρ ≤ 1 / 2) {J : �
         (2 : ℝ) ^ (j - 1) * if ρ ≤ (1 / 2 : ℝ) ^ (j - 1) then (1 : ℝ) else 0 := by
     apply Finset.sum_congr rfl
     intro j hj
-    rw [if_pos (hind j hj)]
+    rw [ite_eq_left (hind j hj)]
     ring
   have hsub : Finset.Icc 2 k ⊆ Finset.Icc 2 J := Finset.Icc_subset_Icc (by norm_num) hkJ
   have hnonneg : ∀ j ∈ Finset.Icc 2 J, j ∉ Finset.Icc 2 k →
       0 ≤ (2 : ℝ) ^ (j - 1) * if ρ ≤ (1 / 2 : ℝ) ^ (j - 1) then (1 : ℝ) else 0 := by
     intro j hj hjn
     by_cases hc : ρ ≤ (1 / 2 : ℝ) ^ (j - 1)
-    · rw [if_pos hc]
+    · rw [ite_eq_left hc]
       positivity
-    · rw [if_neg hc]
+    · rw [ite_eq_right hc]
       positivity
   have hsum_low : (∑ j ∈ Finset.Icc 2 k, (2 : ℝ) ^ (j - 1)) ≤
       ∑ j ∈ Finset.Icc 2 J,

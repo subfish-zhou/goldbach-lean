@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -20,24 +24,26 @@ structure ProductionConductorBlockGeometry (N Q C : ℕ) where
     2 / (logConductorThreshold N C : ℝ)
   lower_sum_le : (∑ i ∈ index, (i : ℝ)) ≤ 2 * (Q : ℝ)
 
-private def dyadicDepth (R Q : ℕ) : ℕ := Nat.log 2 (Q / R) + 1
+namespace ProductionDyadicConductor
 
-private def dyadicLowers (R Q : ℕ) : Finset ℕ :=
+def dyadicDepth (R Q : ℕ) : ℕ := Nat.log 2 (Q / R) + 1
+
+def dyadicLowers (R Q : ℕ) : Finset ℕ :=
   if R < Q then
     (Finset.range (dyadicDepth R Q)).image fun j => R * 2 ^ j
   else ∅
 
-private def dyadicCell (N Q C i : ℕ) : Finset ℕ :=
+def dyadicCell (N Q C i : ℕ) : Finset ℕ :=
   (highConductorSet N Q C).filter fun d => i < d ∧ d ≤ 2 * i
 
-private lemma exists_dyadic_exponent_of_mem {R Q i : ℕ}
+lemma exists_dyadic_exponent_of_mem {R Q i : ℕ}
     (hi : i ∈ dyadicLowers R Q) :
     ∃ j ∈ Finset.range (dyadicDepth R Q), R * 2 ^ j = i := by
   by_cases hRQ : R < Q
   · exact Finset.mem_image.mp (by simpa [dyadicLowers, hRQ] using hi)
   · simp [dyadicLowers, hRQ] at hi
 
-private lemma sum_two_pow (k : ℕ) :
+lemma sum_two_pow (k : ℕ) :
     ∑ j ∈ Finset.range k, (2 : ℕ) ^ j = 2 ^ k - 1 := by
   induction k with
   | zero => simp
@@ -47,7 +53,7 @@ private lemma sum_two_pow (k : ℕ) :
       rw [pow_succ]
       omega
 
-private lemma sum_inv_two_pow_le_two (k : ℕ) :
+lemma sum_inv_two_pow_le_two (k : ℕ) :
     (∑ j ∈ Finset.range k, ((2 : ℝ) ^ j)⁻¹) ≤ 2 := by
   rw [show (∑ j ∈ Finset.range k, ((2 : ℝ) ^ j)⁻¹) =
       ∑ j ∈ Finset.range k, ((2 : ℝ)⁻¹) ^ j by
@@ -59,7 +65,7 @@ private lemma sum_inv_two_pow_le_two (k : ℕ) :
   norm_num
   linarith
 
-private lemma dyadicLower_injective (R : ℕ) (hR : 0 < R) :
+lemma dyadicLower_injective (R : ℕ) (hR : 0 < R) :
     Function.Injective (fun j => R * 2 ^ j) := by
   intro i j hij
   have : 2 ^ i = 2 ^ j := by
@@ -67,7 +73,7 @@ private lemma dyadicLower_injective (R : ℕ) (hR : 0 < R) :
   exact (pow_right_injective₀ (by norm_num : (0 : ℕ) < 2)
     (by norm_num : (2 : ℕ) ≠ 1)) this
 
-private lemma dyadic_cover_aux (R Q d : ℕ) (hR : 0 < R) (hRd : R < d)
+lemma dyadic_cover_aux (R Q d : ℕ) (hR : 0 < R) (hRd : R < d)
     (hdQ : d ≤ Q) :
     ∃ j < dyadicDepth R Q, R * 2 ^ j < d ∧ d ≤ 2 * (R * 2 ^ j) := by
   let x := (d - 1) / R
@@ -99,7 +105,7 @@ private lemma dyadic_cover_aux (R Q d : ℕ) (hR : 0 < R) (hRd : R < d)
     omega
   exact ⟨j, hj, hlo, hhi⟩
 
-private lemma dyadic_cells_pairwise (N Q C R : ℕ) (_hR : 0 < R) :
+lemma dyadic_cells_pairwise (N Q C R : ℕ) (_hR : 0 < R) :
     (↑(dyadicLowers R Q) : Set ℕ).PairwiseDisjoint (dyadicCell N Q C) := by
   intro i hi j hj hij
   change Disjoint (dyadicCell N Q C i) (dyadicCell N Q C j)
@@ -126,6 +132,10 @@ private lemma dyadic_cells_pairwise (N Q C R : ℕ) (_hR : 0 < R) :
     have : 2 * (R * 2 ^ b) ≤ R * 2 ^ a := by
       nlinarith
     omega
+
+end ProductionDyadicConductor
+
+open ProductionDyadicConductor
 
 /-- Canonical production dyadic conductor geometry.  Its cells are
 `R*2^j < d ≤ min (2*R*2^j) Q`, intersected with the production high-conductor
@@ -165,12 +175,12 @@ noncomputable def productionConductorBlockGeometry
       rw [Finset.mem_biUnion]
       refine ⟨R * 2 ^ j, ?_, ?_⟩
       · have hRQ : R < Q := hRd.trans_le hdQ
-        simp only [I, dyadicLowers, if_pos hRQ]
+        simp only [I, dyadicLowers, ite_eq_left hRQ]
         exact Finset.mem_image.mpr ⟨j, Finset.mem_range.mpr hj, rfl⟩
       · exact Finset.mem_filter.mpr ⟨hd, hlo, hhi⟩
   · by_cases hRQ : R < Q
     · change (∑ i ∈ dyadicLowers R Q, (i : ℝ)⁻¹) ≤ 2 / (R : ℝ)
-      rw [dyadicLowers, if_pos hRQ]
+      rw [dyadicLowers, ite_eq_left hRQ]
       rw [Finset.sum_image (f := fun i : ℕ => ((i : ℝ)⁻¹))
         (dyadicLower_injective R hR).injOn]
       rw [show (∑ j ∈ Finset.range (dyadicDepth R Q), ((R * 2 ^ j : ℕ) : ℝ)⁻¹) =
@@ -189,7 +199,7 @@ noncomputable def productionConductorBlockGeometry
     · simp [I, dyadicLowers, hRQ, div_nonneg]
   · by_cases hRQ : R < Q
     · change (∑ i ∈ dyadicLowers R Q, (i : ℝ)) ≤ 2 * (Q : ℝ)
-      rw [dyadicLowers, if_pos hRQ]
+      rw [dyadicLowers, ite_eq_left hRQ]
       rw [Finset.sum_image (f := fun i : ℕ => (i : ℝ))
         (dyadicLower_injective R hR).injOn]
       push_cast

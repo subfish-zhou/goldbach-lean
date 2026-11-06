@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachBuchstab
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachBuchstab
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

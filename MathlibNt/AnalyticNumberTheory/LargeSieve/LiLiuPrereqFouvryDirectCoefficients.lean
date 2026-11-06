@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceBound
 
 /-! Fixed orders, including zero, pay the actual cleaned and split coefficients.
 Constants are chosen before every support, family, signed shift and scale. -/
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

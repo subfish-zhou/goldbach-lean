@@ -1,7 +1,9 @@
-import AnalyticNumberTheory.Mertens.AbelianRemainder
-import AnalyticNumberTheory.Mertens.LogChange
-import AnalyticNumberTheory.Mertens.ConstantIdentity
-import AnalyticNumberTheory.Mertens.GammaKernel
+module
+
+public import AnalyticNumberTheory.Mertens.AbelianRemainder
+public import AnalyticNumberTheory.Mertens.LogChange
+public import AnalyticNumberTheory.Mertens.ConstantIdentity
+public import AnalyticNumberTheory.Mertens.GammaKernel
 
 /-!
 # The prime Dirichlet finite part
@@ -10,6 +12,8 @@ This module applies Mertens' second theorem to the exponential Abel kernel.
 It identifies the finite part of the prime Dirichlet series at `s = 1` and
 thereby identifies the canonical product constant with Euler's constant.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

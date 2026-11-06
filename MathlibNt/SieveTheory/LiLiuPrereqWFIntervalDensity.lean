@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSmallDensity
-import Mathlib.Analysis.Complex.ExponentialBounds
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSmallDensity
+public import Mathlib.Analysis.Complex.ExponentialBounds
 
 
 /-!
@@ -11,6 +13,8 @@ retains the normalization needed by the dimension-one hypothesis.
 The resulting estimate is useful on `w ≤ p < u` when `log u / log w`
 is bounded. It does not control the remaining small-minimum boundaries.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

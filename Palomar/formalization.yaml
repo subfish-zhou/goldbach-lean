@@ -1,0 +1,115 @@
+version: v0.4
+project:
+  name: Chen's theorem and the Li-Liu 1+1.9 refinement
+  description: >-
+    A Lean formalization of Chen's prime-plus-at-most-two-primes theorem and
+    Li-Liu's constrained-factor refinement. The selected statements give one
+    threshold for all subsequent even natural numbers. The Li-Liu factor bound
+    is recorded both as r^10 <= q^9 and as r <= q^((19/10)-1).
+  authors: ["Ziyu Zhou"]
+  responsible_maintainers: ["Ziyu Zhou"]
+  author_identifiers:
+    Ziyu Zhou:
+      orcid: https://orcid.org/0009-0009-7661-7545
+      github: subfish-zhou
+  license: Apache-2.0
+classification:
+  arxiv: [math.NT]
+  msc2020: [11P32, 11N36]
+sources:
+  - title: On the representation of a larger even integer as the sum of a prime and the product of at most two primes
+    authors: [Chen Jing-run]
+    id: Scientia Sinica 16(2) (1973), 157-176
+    type: article
+    location: Theorem I and the final representation argument
+    relationship: formalizes
+  - title: A Corrected Simplified Proof of Chen's Theorem
+    authors: [Zihao Liu]
+    id: https://arxiv.org/abs/2203.07871v1
+    type: preprint
+    relationship: adapts
+    note: The corrected switched-sieve proof informs the Chen development.
+  - title: Theorem (1+1.9) on the Goldbach Conjecture
+    authors: [Jiamin Li, Jianya Liu]
+    id: https://arxiv.org/abs/2606.05224v1
+    type: preprint
+    location: Theorem 1.1 and Sections 5.1-5.5
+    relationship: formalizes
+  - title: On the representation of every large even integer as a sum of a prime and an almost prime
+    authors: [Pan Cheng-dong, Ding Xia-xi, Wang Yuan]
+    id: Scientia Sinica 18(5) (1975), 599-610
+    type: article
+    relationship: adapts
+  - title: An improvement of Selberg's sieve method I
+    authors: [W. B. Jurkat, H.-E. Richert]
+    id: Acta Arithmetica 11 (1965), 217-240
+    type: article
+    relationship: adapts
+  - title: Selberg's sieve with weights
+    authors: [H.-E. Richert]
+    id: Mathematika 16(1) (1969), 1-22
+    type: article
+    relationship: adapts
+  - title: On the representation of large integer as a sum of a prime and an almost prime
+    authors: [Wang Yuan]
+    id: Scientia Sinica 11(8) (1962), 1033-1054
+    type: article
+    relationship: adapts
+related_formalizations:
+  - id: https://github.com/subfish-zhou/goldbach-lean
+    relationship: builds-on
+    note: >-
+      The publication contains the complete upgraded Chen and Li-Liu main
+      libraries from this development. Source-file copyright notices and
+      inherited author attributions are retained, including the adapted
+      PrimeNumberTheoremAnd sources and modules attributed to Nous Research.
+status:
+  scope: Three qualitative Chen and Li-Liu representation statements selected by Comparator.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: [propext, Classical.choice, Quot.sound]
+  main_results:
+    - declaration: GoldbachPalomar.chen_theorem
+      file: Palomar/Solution.lean
+      comparator_config: Palomar/comparator.json
+    - declaration: GoldbachPalomar.one_plus_one_nine
+      file: Palomar/Solution.lean
+      comparator_config: Palomar/comparator.json
+    - declaration: GoldbachPalomar.one_plus_one_nine_real
+      file: Palomar/Solution.lean
+      comparator_config: Palomar/comparator.json
+automation:
+  methods:
+    - method: agent
+      framework: OpenAI Codex
+      tool_setup: >-
+        AI-assisted proof development, source-to-paper comparison, dependency
+        inspection and refactoring. The current preparation ports the main
+        libraries to Lean and Mathlib v4.35.0 and runs build and kernel checks.
+  notes: >-
+    The present metadata records the known Codex-assisted development and
+    migration. A complete model-by-model account of earlier development stages
+    is unavailable in this record and requires maintainer review.
+fidelity:
+  divergences: >-
+    The representation thresholds are existential. The natural-power bound is
+    an exact arithmetic presentation of the Li-Liu relative-factor condition.
+    The qualitative comparison selects existence theorems. Quantitative count
+    endpoints are available in the main libraries and have separate checks.
+    The proof development reorganizes and shares source arguments and retains
+    the analytic correction and distribution terms documented in its modules.
+review:
+  status: agent-reviewed, local Palomar mechanical replay passed
+  notes: >-
+    The project passes source, literal-statement, standard-axiom and Lean
+    kernel checks. Local replay through Palomar's unmodified verification
+    functions accepts the independently compiled Challenge and complete
+    Solution export with the bundled Lean and NanoDa kernels. The
+    registry-pinned con-ron, Lean paranoid, lean4lean and con-leche also accept
+    the export. Five rational coefficient certificates use a proved
+    numerator/denominator injectivity lemma to avoid the earlier NanoDa
+    stack and memory failure. Local builds reuse verified caches. Hosted
+    capacity preflight and registry publication occur during submission.
+    The author identity is confirmed by the maintainer. Source relationships,
+    historical automation account and review description require maintainer
+    review before registration.

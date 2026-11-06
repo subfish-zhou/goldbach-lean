@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpIntegralSplit
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpIntegralSplit
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
+
+@[expose] public section
 
 noncomputable section
 open MeasureTheory Set Filter

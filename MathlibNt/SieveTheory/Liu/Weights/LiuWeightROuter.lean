@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogarithmicIntegral
 
 /-!
 # Liu's `eqn-r` distribution majorant
@@ -12,6 +14,8 @@ endpoint is supplied by the genuine logarithmic-integral development.
 No Selberg remainder `R`, Pan Type I/II estimate, or signed-main-term estimate is
 asserted here.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

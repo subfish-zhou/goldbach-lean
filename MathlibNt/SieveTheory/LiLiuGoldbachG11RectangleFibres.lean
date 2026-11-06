@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitiveL1
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanMaximalPhaseSeparation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanHyperbolicPrimitiveL1
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanMaximalPhaseSeparation
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -111,12 +115,12 @@ theorem selectorRectangularSmoothedKernelWeightedPrimitiveMean_le
       simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs,
         abs_of_pos (Real.exp_pos _)]
       simp only [rectangularKernelCharacterSum, dampedLogRectangularCharacterSum,
-        truncatedPerronIntegrand, if_neg (ne_of_gt ht), Complex.ofReal_div]
+        truncatedPerronIntegrand, ite_eq_right (ne_of_gt ht), Complex.ofReal_div]
       dsimp only [w]
       simp only [Finset.mul_sum, mul_left_comm]
     rw [hident]
     refine (mul_le_mul_of_nonneg_left hbound (Real.exp_pos _).le).trans_eq ?_
-    simp only [dampedPerronMajorantIntegrand, if_neg (ne_of_gt ht)]
+    simp only [dampedPerronMajorantIntegrand, ite_eq_right (ne_of_gt ht)]
     dsimp [d, s]
     ring
   have hint := dampedPerron_integral_le_two_majorants hε hε1

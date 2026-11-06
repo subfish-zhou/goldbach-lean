@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachOrdinaryLowerDensity
-import MathlibNt.SieveTheory.LiLiuGoldbachPairLayerCoordinateConsumers
-import MathlibNt.SieveTheory.LiLiuGoldbachCompositeDimension
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachOrdinaryLowerDensity
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairLayerCoordinateConsumers
+public import MathlibNt.SieveTheory.LiLiuGoldbachCompositeDimension
+
+@[expose] public section
 
 open scoped BigOperators Topology
 open Filter Finset

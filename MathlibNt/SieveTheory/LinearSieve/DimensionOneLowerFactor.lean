@@ -1,10 +1,14 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Tactic
 
 /-! The explicit dimension-one lower-sieve factor and its continuity theorem.
 Chen and Li-Liu specialize the same interval theorem at different points. -/
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.SwitchingPrinciple

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.SuzukiUpperSourcePTail
-import MathlibNt.SieveTheory.SuzukiUpperRosserDensityProducer
-import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+module
+
+public import MathlibNt.SieveTheory.SuzukiUpperSourcePTail
+public import MathlibNt.SieveTheory.SuzukiUpperRosserDensityProducer
+public import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+
+@[expose] public section
 
 open Set Filter MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple

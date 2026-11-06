@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017GlobalPropagation
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017GlobalPropagation
 
 /-! Compatibility import for the canonical module in its current library location. -/

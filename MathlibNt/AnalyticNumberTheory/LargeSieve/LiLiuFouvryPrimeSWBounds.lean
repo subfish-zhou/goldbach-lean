@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSW
-import MathlibNt.SieveTheory.Richert1969Ordinary418Specialization
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSW
+public import MathlibNt.SieveTheory.Richert1969Ordinary418Specialization
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 open Finset Filter

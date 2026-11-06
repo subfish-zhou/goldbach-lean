@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularMaximalShell
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularCoeffBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularMaximalShell
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularCoeffBounds
 
 /-!
 # Explicit honest bound for one rectangular Vaughan Type-II shell
@@ -9,6 +11,8 @@ retains the actual `largeSieveBound` used by `rankOneRectangularLSRHS`.
 In particular it does not identify that weak large-sieve constant with the
 smaller, canonical-looking quantity `D + Q^2`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

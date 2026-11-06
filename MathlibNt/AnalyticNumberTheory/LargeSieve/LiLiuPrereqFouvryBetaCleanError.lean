@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanSW
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanSW
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
 
 /-!
 # Divisor deletion at the actual signed-error entry
@@ -8,6 +10,8 @@ The equality `m*n=a` is separated before summing modulus divisors.
 It costs the total modulus mass once per beta index, not once per alpha index.
 All remaining progression terms have a nonzero difference.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -141,7 +145,7 @@ theorem sum_progression_moduli_le_split
       by_cases he : (m : ℤ) * n = a
       · simp only [he, Int.ModEq.refl, ite_true]
         linarith
-      · simpa only [if_neg he, add_zero] using hne m hm he
+      · simpa only [ite_eq_right he, add_zero] using hne m hm he
     _ = (S.card : ℝ) * D +
         ∑ m ∈ S, if (m : ℤ) * n = a then ∑ q ∈ Q, |c q| else 0 := by
       rw [sum_add_distrib]; simp

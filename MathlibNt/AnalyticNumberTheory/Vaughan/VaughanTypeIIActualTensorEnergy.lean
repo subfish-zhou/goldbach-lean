@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIPrimitiveBilinear
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIPrimitiveBilinear
 
 /-!
  # Actual tensor energy and rectangle aggregation for Vaughan Type II
@@ -9,6 +11,8 @@ This module bounds the coefficient obtained after collecting `t=e*m` by
 Cauchy on the *actual fibre*.  The subsequent sum remains a sum in `(d,t)`;
 it is never repackaged pointwise in `n=d*e*m`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -29,21 +33,21 @@ private theorem tensor_inner_sum_eq_indicator
       if ∃ m ∈ Finset.Icc 1 (y / (d * e)), ((e * m : ℕ) : ℤ) = t then z else 0 := by
   by_cases h : ∃ m ∈ Finset.Icc 1 (y / (d * e)), ((e * m : ℕ) : ℤ) = t
   · obtain ⟨m, hm, hmt⟩ := h
-    rw [if_pos ⟨m, hm, hmt⟩]
+    rw [ite_eq_left ⟨m, hm, hmt⟩]
     rw [Finset.sum_eq_single m]
     · simp [hmt]
     · intro m' hm' hne
-      rw [if_neg]
+      rw [ite_eq_right]
       intro hm't
       apply hne
       apply Nat.eq_of_mul_eq_mul_left he
       exact_mod_cast hm't.trans hmt.symm
     · intro hmnot
       exact False.elim (hmnot hm)
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     apply Finset.sum_eq_zero
     intro m hm
-    rw [if_neg]
+    rw [ite_eq_right]
     exact fun hmt => h ⟨m, hm, hmt⟩
 
 /-- Exact fibre form of the actual Vaughan tensor coefficient. -/

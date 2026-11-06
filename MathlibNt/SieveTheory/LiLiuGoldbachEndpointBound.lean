@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser
 
 /-!
 # Exact density defects for the actual small Rosser weights
@@ -8,6 +10,8 @@ failed cubic test at the newly inserted least prime, with equality on the
 failure side. The lower error is subtracted and the upper error is added.
 No analytic estimate for these explicit errors is assumed or asserted.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 
@@ -129,25 +133,25 @@ theorem lowerSetWeight_pair_eq_boundary {L : ℝ} {q : ℕ} {s : Finset ℕ}
         (prod_insert_min_lt_of_even hqs hq hqL hqmin hbase.2 heven)
         (admissible_insert_min_of_even hqs hqmin hbase.2 heven)
       have hb : ¬LowerBoundary L q s := fun h => h.2.2.1 heven
-      simp only [setWeight, if_pos hbase, if_pos hins, if_neg hb, hcard]
+      simp only [setWeight, ite_eq_left hbase, ite_eq_left hins, ite_eq_right hb, hcard]
       simp [heven]
     · have htest := lower_insert_test hqs hqmin hbase.2 heven
       by_cases hc : ((s.prod id : ℕ) : ℝ) * (q : ℝ) ^ 3 < L
       · have hins := And.intro (insert_cut_of_cube hqs hq hc) (htest.mpr hc)
         have hb : ¬LowerBoundary L q s := fun h => (not_le.mpr hc) h.2.2.2
-        simp only [setWeight, if_pos hbase, if_pos hins, if_neg hb, hcard]
+        simp only [setWeight, ite_eq_left hbase, ite_eq_left hins, ite_eq_right hb, hcard]
         simp [heven]
       · have hins : ¬LowerAdmissibleSet L (insert q s) := fun h => hc (htest.mp h)
         have hb : LowerBoundary L q s := ⟨hbase.1, hbase.2, heven, le_of_not_gt hc⟩
-        simp only [setWeight, if_pos hbase, hins, and_false, if_false, if_neg heven,
-          if_pos hb]
+        simp only [setWeight, ite_eq_left hbase, hins, and_false, ite_false, ite_eq_right heven,
+          ite_eq_left hb]
         norm_num
   · have hins : ¬((((insert q s).prod id : ℕ) : ℝ) < L ∧
         LowerAdmissibleSet L (insert q s)) :=
       fun h => hbase ⟨insert_cut_back hqs hq h.1,
         admissible_of_insert_min hqs hqmin h.2⟩
     have hb : ¬LowerBoundary L q s := fun h => hbase ⟨h.1, h.2.1⟩
-    simp only [setWeight, if_neg hbase, if_neg hins, if_neg hb]
+    simp only [setWeight, ite_eq_right hbase, ite_eq_right hins, ite_eq_right hb]
     norm_num
 
 /-- Exact signed cancellation, including the failed odd-prefix boundary. -/
@@ -163,25 +167,25 @@ theorem upperSetWeight_pair_eq_boundary {L : ℝ} {q : ℕ} {s : Finset ℕ}
       by_cases hc : ((s.prod id : ℕ) : ℝ) * (q : ℝ) ^ 3 < L
       · have hins := And.intro (insert_cut_of_cube hqs hq hc) (htest.mpr hc)
         have hb : ¬UpperBoundary L q s := fun h => (not_le.mpr hc) h.2.2.2
-        simp only [upperSetWeight, if_pos hbase, if_pos hins, if_neg hb, hcard]
+        simp only [upperSetWeight, ite_eq_left hbase, ite_eq_left hins, ite_eq_right hb, hcard]
         simp [heven]
       · have hins : ¬UpperAdmissibleSet L (insert q s) := fun h => hc (htest.mp h)
         have hb : UpperBoundary L q s := ⟨hbase.1, hbase.2, heven, le_of_not_gt hc⟩
-        simp only [upperSetWeight, if_pos hbase, hins, and_false, if_false,
-          if_pos heven, if_pos hb]
+        simp only [upperSetWeight, ite_eq_left hbase, hins, and_false, ite_false,
+          ite_eq_left heven, ite_eq_left hb]
         norm_num
     · have hins := And.intro
         (prod_insert_min_lt_of_odd hqs hq hqmin hbase.2 heven)
         (upperAdmissible_insert_min_of_odd hqs hqmin hbase.2 heven)
       have hb : ¬UpperBoundary L q s := fun h => heven h.2.2.1
-      simp only [upperSetWeight, if_pos hbase, if_pos hins, if_neg hb, hcard]
+      simp only [upperSetWeight, ite_eq_left hbase, ite_eq_left hins, ite_eq_right hb, hcard]
       simp [heven]
   · have hins : ¬((((insert q s).prod id : ℕ) : ℝ) < L ∧
         UpperAdmissibleSet L (insert q s)) :=
       fun h => hbase ⟨insert_cut_back hqs hq h.1,
         upperAdmissible_of_insert_min hqs hqmin h.2⟩
     have hb : ¬UpperBoundary L q s := fun h => hbase ⟨h.1, h.2.1⟩
-    simp only [upperSetWeight, if_neg hbase, if_neg hins, if_neg hb]
+    simp only [upperSetWeight, ite_eq_right hbase, ite_eq_right hins, ite_eq_right hb]
     norm_num
 
 theorem lowerSetDensity_insert_min (g : ℕ → ℝ)
@@ -200,9 +204,9 @@ theorem lowerSetDensity_insert_min (g : ℕ → ℝ)
     (fun p hp => hqmin p (hsub hp))
   rw [Finset.prod_insert hqs]
   by_cases hb : LowerBoundary L q s
-  · rw [if_pos hb] at hp ⊢
+  · rw [ite_eq_left hb] at hp ⊢
     linear_combination (g q * ∏ p ∈ s, g p) * hp
-  · rw [if_neg hb] at hp ⊢
+  · rw [ite_eq_right hb] at hp ⊢
     linear_combination (g q * ∏ p ∈ s, g p) * hp
 
 theorem upperSetDensity_insert_min (g : ℕ → ℝ)
@@ -221,9 +225,9 @@ theorem upperSetDensity_insert_min (g : ℕ → ℝ)
     (fun p hp => hqmin p (hsub hp))
   rw [Finset.prod_insert hqs]
   by_cases hb : UpperBoundary L q s
-  · rw [if_pos hb] at hp ⊢
+  · rw [ite_eq_left hb] at hp ⊢
     linear_combination (g q * ∏ p ∈ s, g p) * hp
-  · rw [if_neg hb] at hp ⊢
+  · rw [ite_eq_right hb] at hp ⊢
     linear_combination (g q * ∏ p ∈ s, g p) * hp
 
 /-- No complete multiplicativity is used: all divisors here are squarefree. -/

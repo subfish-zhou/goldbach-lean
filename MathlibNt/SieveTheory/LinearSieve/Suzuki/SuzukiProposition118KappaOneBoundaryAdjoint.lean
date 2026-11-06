@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteLowerBoundaryLimit
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteLowerBoundaryLimit
 
 /-!
 # Suzuki Proposition 11.8(ii) at `κ = 1`, `β = 2`: the boundary-adjoint algebra
@@ -22,6 +24,8 @@ one must identify the genuine layer-series pairing with the scalar evaluated
 below and prove its vanishing by the Section-10 adjoint conservation route.  No
 conclusion-shaped hypothesis is used to claim `suzukiLowerBoundaryLimit = 0`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

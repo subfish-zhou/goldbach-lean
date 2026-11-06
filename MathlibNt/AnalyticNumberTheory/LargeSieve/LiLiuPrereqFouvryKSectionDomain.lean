@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReconstruction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReconstruction
 
 /-!
 # The full-level, paid-floor IV.3 k₁ carrier
@@ -8,6 +10,8 @@ constant along the section. Canonical extraction and compatibility leave
 explicit coprimalities in `k₁`; the floor frequency bound is an interval.
 This is an exact carrier identity, not a bound for an arbitrary masked sum.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

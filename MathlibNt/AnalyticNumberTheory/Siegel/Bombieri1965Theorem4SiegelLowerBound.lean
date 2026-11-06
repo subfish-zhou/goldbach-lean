@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterFixedWitness
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticSmallValueRealZero
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterFixedWitness
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticSmallValueRealZero
 
 /-!
 # A conductor-uniform lower bound for actual quadratic L-values
@@ -9,6 +11,8 @@ assumed zero-repulsion, exceptional-zero, or L-value lower-bound premise.
 Either a fixed left neighborhood has no primitive quadratic real zero, or
 one actual witness in that neighborhood is chosen before every target.
 -/
+
+@[expose] public section
 
 open Complex
 

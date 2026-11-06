@@ -1,4 +1,8 @@
-import Mathlib.NumberTheory.LSeries.DirichletContinuation
+module
+
+public import Mathlib.NumberTheory.LSeries.DirichletContinuation
+
+@[expose] public section
 
 open Complex Finset ZMod
 

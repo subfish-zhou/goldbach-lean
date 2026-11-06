@@ -1,4 +1,8 @@
-import MathlibNt.Tactic.ElementaryDeriv
+module
+
+public import MathlibNt.Tactic.ElementaryDeriv
+@[expose] public section
+
 open Lean Meta Elab Tactic
 
 -- Inspect the actual goal queue: failure to close must be a remaining nonzero

@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFAnalytic
-import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridge
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFAnalytic
+public import MathlibNt.SieveTheory.LiLiuPrereqWFProducerBridge
 
 /-!
 # Large-D fundamental-lemma density of the original small weights
@@ -10,6 +12,8 @@ the explicit threshold is selected before all sieve data, `K`, and depths.
 This proves the large-`D` form of Iwaniec p.316 (22), not the density of the
 as-yet unassembled full signed box family.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundary
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundary
+@[expose] public section
+
 open MeasureTheory Set
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -57,10 +61,10 @@ theorem volume_fouvryG9WeightedObliqueStrip (n : ℕ) (h : ℝ) (hh : 0 ≤ h) :
     funext u
     rw [fouvryG9WeightedObliqueStrip_section]
     by_cases hu : u ∈ Icc (4 / 53 : ℝ) (1 / 3)
-    · rw [if_pos hu, indicator_of_mem hu, Real.volume_Ioo]
+    · rw [ite_eq_left hu, indicator_of_mem hu, Real.volume_Ioo]
       congr 1
       ring
-    · rw [if_neg hu, indicator_of_notMem hu, measure_empty]
+    · rw [ite_eq_right hu, indicator_of_notMem hu, measure_empty]
   rw [hfun, lintegral_indicator measurableSet_Icc, setLIntegral_const, Real.volume_Icc,
     ← ENNReal.ofReal_mul (by
       unfold goldbachB9AlphaGridStep goldbachB9BetaGridStep

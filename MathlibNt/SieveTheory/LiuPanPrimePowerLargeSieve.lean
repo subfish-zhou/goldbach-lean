@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
 
 /-! Compatibility import for the canonical module in its current library location. -/

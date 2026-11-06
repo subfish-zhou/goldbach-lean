@@ -1,9 +1,13 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.FourFactorUnconditionalEndpoints
-import MathlibNt.Analysis.LogPowerBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.FourFactorUnconditionalEndpoints
+public import MathlibNt.Analysis.LogPowerBounds
 
 /-! Actual prime counting, extracted only from the q=1 term of Standard BV.
 The fixed normalization is κ₀=2/log 2. Real endpoint changes are paid by an
 integrable short interval, not by replacing the logarithmic integral argument. -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanPrincipal
 open Classical Finset Filter
 open MathlibNt.SieveTheory.BombieriVinogradov MathlibNt.SieveTheory.LiuWeight

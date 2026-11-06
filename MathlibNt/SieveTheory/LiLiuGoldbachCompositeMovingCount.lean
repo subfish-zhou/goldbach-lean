@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingDensity
-import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairLevel
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachCompositeMovingDensity
+public import MathlibNt.SieveTheory.LiLiuGoldbachOrderedPairLevel
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter Finset

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
+@[expose] public section
+
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -32,20 +36,20 @@ theorem goldbachS3_scalarBody_low {s : ℝ} (hs : s ≤ 5) :
   unfold goldbachS3_scalarMainKernel
   dsimp only
   by_cases h3 : s ≤ 3
-  · rw [if_pos h3, max_eq_right h3]
+  · rw [ite_eq_left h3, max_eq_right h3]
     norm_num [jurkatRichertInnerIntegral]
-  · rw [if_neg h3, if_pos hs, max_eq_left (by linarith : 3 ≤ s)]
+  · rw [ite_eq_right h3, ite_eq_left hs, max_eq_left (by linarith : 3 ≤ s)]
 
 theorem goldbachS3_scalarBody_high {s : ℝ} (hs : 5 ≤ s) :
     S3Body s = goldbachS3_scalarMainKernel s + goldbachS3_scalarCorrectionKernel s := by
   unfold goldbachS3_scalarMainKernel goldbachS3_scalarCorrectionKernel
   dsimp only
-  rw [if_neg (by linarith : ¬s ≤ 3), max_eq_left (by linarith : 3 ≤ s)]
+  rw [ite_eq_right (by linarith : ¬s ≤ 3), max_eq_left (by linarith : 3 ≤ s)]
   by_cases h5 : s ≤ 5
   · have he : s = 5 := le_antisymm h5 hs
     subst s
     simp
-  · rw [if_neg h5, goldbachS3_third_body_split hs, add_div]
+  · rw [ite_eq_right h5, goldbachS3_third_body_split hs, add_div]
 
 theorem goldbachS3_scalarCorrection_continuous :
     ContinuousOn goldbachS3_scalarCorrectionKernel (Icc (5 : ℝ) (45/8 : ℝ)) := by

@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCoprimePartition
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCoprimePartition
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

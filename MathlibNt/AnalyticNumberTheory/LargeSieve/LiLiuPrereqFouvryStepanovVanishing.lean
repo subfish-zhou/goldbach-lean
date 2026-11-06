@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovConstraints
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovNonzero
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovConstraints
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovNonzero
 
 /-!
 # Vanishing of the actual Stepanov auxiliary polynomial
@@ -10,6 +12,8 @@ This is the passage from (20) to (22) on printed page 11 of Harcos,
 derivatives of `X^(jq)` below order `q`. Factoring out `f^(ell-k)`
 additionally requires `k ≤ ell`; the vanishing application uses `k < ell ≤ q`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

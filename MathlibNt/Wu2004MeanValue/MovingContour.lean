@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.MovingIntegral
+module
+
+public import MathlibNt.Wu2004MeanValue.MovingIntegral
 
 /-! The short moving kernel is shifted as a genuinely holomorphic function.
 Only its pointwise norm estimate uses the frozen-coefficient bound. -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset MeasureTheory

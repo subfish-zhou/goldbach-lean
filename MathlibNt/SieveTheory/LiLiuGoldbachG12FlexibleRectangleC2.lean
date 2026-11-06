@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangle
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleRectangle
+
+@[expose] public section
 
 open Filter Finset
 open scoped BigOperators

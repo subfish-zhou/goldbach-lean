@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionContinuation
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvolutionContinuation
 
 /-!
 # Weighted quadratic convolution and its actual continued constant
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4QuadraticConvol
 This modern partial-summation argument keeps the finite sum and its tail
 explicit. The constant is the actual continued product, not a free parameter.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory
 open scoped Topology

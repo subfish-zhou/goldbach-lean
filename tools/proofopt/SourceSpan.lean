@@ -1,6 +1,10 @@
-import Lean
+module
+
+public import Lean
 
 /-! Parser-backed proof-body source positions. Never rewrite equation/where declarations. -/
+@[expose] public meta section
+
 namespace ProofOpt.SourceSpan
 open Lean Elab Command
 

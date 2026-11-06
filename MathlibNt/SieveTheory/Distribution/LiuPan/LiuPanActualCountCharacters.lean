@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanWangDingSource
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
 
 /-! Pan (2.4), first line only: actual prime counts, with the true principal
 remainder retained. No analytic estimate or conductor decomposition is used. -/
+@[expose] public section
+
 noncomputable section
 open scoped BigOperators
 open Finset Classical
@@ -73,7 +77,7 @@ private theorem actual_count_characters (N a q l : ℕ) (ha : 0 < a)
       intro χ hχ
       by_cases hprime : p.Prime
       · by_cases hcop : p.Coprime q
-        · simp only [if_pos (show p.Prime ∧ p.Coprime q from ⟨hprime, hcop⟩), if_pos hprime, one_mul]
+        · simp only [ite_eq_left (show p.Prime ∧ p.Coprime q from ⟨hprime, hcop⟩), ite_eq_left hprime, one_mul]
           ring
         · simp [hprime, hcop,
             χ.map_nonunit ((ZMod.isUnit_iff_coprime p q).not.mpr hcop)]
@@ -103,11 +107,11 @@ theorem liuPanActualCount_eq_characterMean (N A₁ A₂ q l : ℕ)
       intro a ha
       by_cases hc : a.Coprime q
       · have ha_pos : 0 < a := (Nat.zero_le A₁).trans_lt (mem_Ioc.mp ha).1
-        rw [if_pos hc, actual_count_characters N a q l ha_pos hq hl]
+        rw [ite_eq_left hc, actual_count_characters N a q l ha_pos hq hl]
         rw [mul_sum, mul_sum]
         apply sum_congr rfl
         intro χ hχ
-        rw [if_pos hc]
+        rw [ite_eq_left hc]
         -- Reassociate the complete prime sum without expanding its summands.
         ring
       · simp [hc]
@@ -124,14 +128,14 @@ theorem liuPanActualCharacterAmplitude_one (N A₁ A₂ q : ℕ) (f : ℕ → �
   apply sum_congr rfl
   intro a ha
   by_cases hc : a.Coprime q
-  · rw [if_pos hc, if_pos hc, MulChar.one_apply ((ZMod.isUnit_iff_coprime a q).mpr hc), mul_one]
+  · rw [ite_eq_left hc, ite_eq_left hc, MulChar.one_apply ((ZMod.isUnit_iff_coprime a q).mpr hc), mul_one]
     congr 1
     apply sum_congr rfl
     intro p hp
     by_cases h : p.Prime ∧ p.Coprime q
-    · rw [if_pos h, if_pos h, MulChar.one_apply ((ZMod.isUnit_iff_coprime p q).mpr h.2)]
-    · simp only [if_neg h]
-  · simp only [if_neg hc]
+    · rw [ite_eq_left h, ite_eq_left h, MulChar.one_apply ((ZMod.isUnit_iff_coprime p q).mpr h.2)]
+    · simp only [ite_eq_right h]
+  · simp only [ite_eq_right hc]
 
 /-- Exact complex error decomposition. The phase star(chi(l)) and chi(a)
 remain coupled until AFTER the complete source summation. -/
@@ -153,7 +157,7 @@ theorem liuMainPanCoprimeIntervalSum_eq_actualCharacterExpansion
     apply sum_congr rfl
     intro a ha
     by_cases hc : a.Coprime q
-    · simp only [if_pos hc, Complex.ofReal_mul, Complex.ofReal_sub,
+    · simp only [ite_eq_left hc, Complex.ofReal_mul, Complex.ofReal_sub,
         Complex.ofReal_div, Complex.ofReal_natCast]
       ring
     · simp [hc]
@@ -164,7 +168,7 @@ theorem liuMainPanCoprimeIntervalSum_eq_actualCharacterExpansion
     apply sum_congr rfl
     intro a ha
     by_cases hc : a.Coprime q
-    · simp only [if_pos hc, Complex.ofReal_mul, Complex.ofReal_sub, Complex.ofReal_sum,
+    · simp only [ite_eq_left hc, Complex.ofReal_mul, Complex.ofReal_sub, Complex.ofReal_sum,
         apply_ite Complex.ofReal, Complex.ofReal_one, Complex.ofReal_zero]
       ring
     · simp [hc]

@@ -1,5 +1,8 @@
-import MathlibNt.SieveTheory.LiuTrueLiPan
-import MathlibNt.SieveTheory.LiuPanPrincipalPNT
+module
+
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import MathlibNt.SieveTheory.LiuTrueLiPan
+public import MathlibNt.SieveTheory.LiuPanPrincipalPNT
 
 /-!
 # Wu's real product endpoints
@@ -12,6 +15,8 @@ The integral below is a total Lean expression. Analytic uses in this module
 require its argument to be at least 2; no convention across the singularity
 at 1 is inferred from totalization.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductCoefficient
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductCoefficient
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

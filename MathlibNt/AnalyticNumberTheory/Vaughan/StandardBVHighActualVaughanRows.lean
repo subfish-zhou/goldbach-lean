@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVHighHybridFeasibility
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVChosenSmallSquare
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVHighHybridFeasibility
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVChosenSmallSquare
 
 /-!
  # Actual Vaughan square ledgers produce the moving high source
@@ -12,6 +14,8 @@ In particular, it is not an estimate for the final unsquared high mean.  The
 fixed exponent `κ` is the complete reserve for shell counts, prefix maxima,
 Möbius/logarithmic convolution coefficients, and the conductor/Abel envelopes.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

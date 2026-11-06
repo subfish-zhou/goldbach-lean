@@ -1,6 +1,10 @@
-import Mathlib.Order.Filter.AtTopBot.Basic
-import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
-import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
+module
+
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import MathlibNt.SieveTheory.LiLiuGoldbachBadBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.PrimeDistribution.PrimeNumberTheorem
+module
+
+public import AnalyticNumberTheory.PrimeDistribution.PrimeNumberTheorem
 
 /-!
 # Effective Chebyshev theta estimate
@@ -7,6 +9,8 @@ This is the quantitative bridge from the PNTAnd estimate for `psi` to the
 prime-only Chebyshev function `theta`. It is the analytic input used by the
 Mertens partial-summation development.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.PrimeDistribution
 

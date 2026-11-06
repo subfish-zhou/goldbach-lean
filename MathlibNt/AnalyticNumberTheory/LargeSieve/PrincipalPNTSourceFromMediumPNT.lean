@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -171,7 +175,7 @@ private lemma reciprocalLogWeight_nonneg (n : ℕ) : 0 ≤ reciprocalLogWeight n
 
 private lemma reciprocalLogWeight_succ_le {n : ℕ} (hn : 2 ≤ n) :
     reciprocalLogWeight (n + 1) ≤ reciprocalLogWeight n := by
-  simp only [reciprocalLogWeight, if_pos hn, if_pos (show 2 ≤ n + 1 by omega)]
+  simp only [reciprocalLogWeight, ite_eq_left hn, ite_eq_left (show 2 ≤ n + 1 by omega)]
   apply inv_anti₀
   · exact Real.log_pos (by exact_mod_cast (show 1 < n by omega))
   · exact Real.log_le_log (by exact_mod_cast (show 0 < n by omega)) (by norm_num)

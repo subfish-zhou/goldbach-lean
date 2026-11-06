@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIDyadicLedger
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIDyadicLedger
 
 /-! Compatibility import for the canonical module in its current library location. -/

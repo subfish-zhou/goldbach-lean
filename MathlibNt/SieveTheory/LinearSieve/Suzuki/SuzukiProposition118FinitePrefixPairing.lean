@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceTailPairingZero
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceTailPairingZero
 
 /-!
 # Proposition 11.8 from finite full-layer prefixes
@@ -9,6 +11,8 @@ below the boundary it uses the finite amplitude `A_m / s`.  Thus the initial
 history is part of the prefix, rather than being silently replaced by the
 out-of-domain values of the recursive layer formula.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset Set Filter Topology MeasureTheory intervalIntegral

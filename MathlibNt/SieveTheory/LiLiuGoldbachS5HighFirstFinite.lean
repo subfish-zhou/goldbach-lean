@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplit
-import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplit
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

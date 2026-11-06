@@ -1,7 +1,9 @@
-import Mathlib.Analysis.Normed.Group.Tannery
-import AnalyticNumberTheory.Mertens.Product
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
-import Mathlib.NumberTheory.Harmonic.GammaDeriv
+module
+
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import AnalyticNumberTheory.Mertens.Product
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+public import Mathlib.NumberTheory.Harmonic.GammaDeriv
 
 /-!
 # Abelian ingredients for Mertens' product theorem
@@ -10,6 +12,8 @@ This module keeps the Euler-product continuity argument separate from the
 hard-cutoff Mertens estimates.  The remaining constant-identification bridge
 will use these ingredients together with an Abelian finite-part lemma.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

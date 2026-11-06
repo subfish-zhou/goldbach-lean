@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Remainder1423
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceParameters
+
+@[expose] public section
 
 open Filter Topology Asymptotics
 

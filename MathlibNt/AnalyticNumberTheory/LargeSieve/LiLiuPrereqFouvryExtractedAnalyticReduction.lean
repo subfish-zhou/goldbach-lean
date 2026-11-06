@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFullLevelDomain
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFourierIntegral
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFullLevelDomain
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFourierIntegral
 
 /-!
 # Analytic reduction of the original C.2 error on its full modulus range
@@ -9,6 +11,8 @@ dyadic block is selected afterwards from the actual retained frequencies.
 Neither the first signed coefficient nor the real Fourier factor is
 replaced by a pointwise absolute-value majorant.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaDyadic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDeltaDyadic
 
 
 /-!
@@ -10,6 +12,8 @@ modulus. Its large part is paid using its own original sum, zero mode and tail.
 The retained signed sum has the same coefficients, phases and frequency cutoff.
 The three remaining support-factor exclusions and IV.3 are not asserted here.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge
 
 /-!
 # Fixed-order divisor coefficients are subpolynomial
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge
 The proved moment estimate, with an arbitrarily large fixed moment, pays
 every positive power. No divisor bound is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

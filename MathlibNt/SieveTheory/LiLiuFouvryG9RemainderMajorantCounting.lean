@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorant
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorant
+
+@[expose] public section
 
 noncomputable section
 open Finset
@@ -16,23 +20,23 @@ theorem fouvryG9RemainderMajorant_divCount {ι : Type*} (S : Finset ι)
       ∑ j ∈ range (L/d+1), if a x = j*d then w x else 0 := by
     intro x hx
     by_cases hdiv : d ∣ a x
-    · rw [if_pos hdiv]
+    · rw [ite_eq_left hdiv]
       symm
       rw [sum_eq_single (a x/d)]
-      · rw [Nat.div_mul_cancel hdiv, if_pos rfl]
+      · rw [Nat.div_mul_cancel hdiv, ite_eq_left rfl]
       · intro j _ hj
-        apply if_neg
+        apply ite_eq_right
         intro he
         apply hj
         rw [he, Nat.mul_div_cancel _ hd]
       · intro h
         exact False.elim (h (mem_range.mpr (Nat.lt_succ_of_le
           (Nat.div_le_div_right (ha x hx)))))
-    · rw [if_neg hdiv]
+    · rw [ite_eq_right hdiv]
       symm
       apply sum_eq_zero
       intro j _
-      apply if_neg
+      apply ite_eq_right
       intro he
       exact hdiv (he ▸ dvd_mul_left d j)
   calc

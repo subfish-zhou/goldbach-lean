@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8MainMassTransport
-import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8MainMassTransport
+public import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+
+@[expose] public section
 
 open scoped BigOperators
 

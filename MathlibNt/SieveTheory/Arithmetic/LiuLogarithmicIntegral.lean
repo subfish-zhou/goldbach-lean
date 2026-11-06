@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightPaperQ
-import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightPaperQ
+public import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 /-!
 # A genuine logarithmic-integral model for Liu's main term
@@ -13,6 +15,8 @@ does not identify that normalization, so it remains a parameter here.
 This function is not identified with the analytic-number-theory compatibility
 function called `logarithmicIntegral`, which is the historical proxy `x / log x`.
 -/
+
+@[expose] public section
 
 open MeasureTheory intervalIntegral
 

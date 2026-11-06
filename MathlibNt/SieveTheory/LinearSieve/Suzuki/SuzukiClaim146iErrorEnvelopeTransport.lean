@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
 
 /-!
 # Claim 14.6(i) to the production error envelope
@@ -8,6 +10,8 @@ with `errorEnvelope H N D d s`: at `κ = 1`, `lambda` has one additional factor
 of `s`.  This file records the exact normalization and derives the endpoint
 transport needed from Claim 14.6(i).
 -/
+
+@[expose] public section
 
 open Set
 

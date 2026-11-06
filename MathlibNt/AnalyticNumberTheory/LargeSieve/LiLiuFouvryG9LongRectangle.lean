@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongCoefficient
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongCoefficient
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

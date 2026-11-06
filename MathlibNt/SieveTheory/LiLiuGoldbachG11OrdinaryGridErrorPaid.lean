@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryLevel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryLevel
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

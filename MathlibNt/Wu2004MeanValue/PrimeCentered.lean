@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.BalancedPrincipalSelected
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedPrincipalSelected
 
 /-!
 # Actual prime-count centering in Wu (2004), equation (5.7)
@@ -8,6 +10,8 @@ actual number of primes, not li. Their difference is the principal error
 summed over the modulus-dependent coprime source set, before taking absolute
 values. The balanced PNT estimate pays this filtered difference uniformly.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 
@@ -32,12 +36,12 @@ theorem primeCenteredAPSum_eq_inverse (S : Finset ℕ) (f r : ℕ → ℝ) (d b 
   apply sum_congr rfl
   intro m hm
   by_cases hmd : m.Coprime d
-  · rw [if_pos hmd, if_pos hmd,
+  · rw [ite_eq_left hmd, ite_eq_left hmd,
       scaledPrimeCount_eq_inverse _ _ _ _ (mul_nonneg (Nat.cast_nonneg _) (hr m hm))
         (hS m hm) hmd]
     have hm0 : (m : ℝ) ≠ 0 := by exact_mod_cast (hS m hm).ne'
     rw [mul_div_cancel_left₀ _ hm0]
-  · simp only [if_neg hmd]
+  · simp only [ite_eq_right hmd]
 
 theorem primeCenteredAPSum_eq_actual_sub_principal
     (S : Finset ℕ) (f r : ℕ → ℝ) (d b : ℕ)
@@ -50,9 +54,9 @@ theorem primeCenteredAPSum_eq_actual_sub_principal
   intro m hm
   by_cases hmd : m.Coprime d
   · have hm0 : (m : ℝ) ≠ 0 := by exact_mod_cast (hS m hm).ne'
-    simp only [if_pos hmd, ebar, principalError, mul_div_cancel_left₀ _ hm0]
+    simp only [ite_eq_left hmd, ebar, principalError, mul_div_cancel_left₀ _ hm0]
     ring
-  · simp only [if_neg hmd, zero_div, sub_zero]
+  · simp only [ite_eq_right hmd, zero_div, sub_zero]
 
 /-- The two families may even be selected independently for each modulus.
 The coprimality mask is kept inside the prime-error sum. -/

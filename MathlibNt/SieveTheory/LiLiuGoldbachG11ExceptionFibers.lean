@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.FiniteLabelCounting
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughSandwich
-import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
+module
+
+public import MathlibNt.SieveTheory.FiniteLabelCounting
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughSandwich
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5SwitchedCarrier
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.BalancedAP
-import MathlibNt.Wu2004MeanValue.PrimeCentered
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedAP
+public import MathlibNt.Wu2004MeanValue.PrimeCentered
 
 /-!
 # Balanced distribution centered at the actual prime count
@@ -8,6 +10,8 @@ This consumes the proved actual AP producer and the filtered principal
 transport. No distribution or PNT estimate is a caller-supplied premise.
 It supplies the prime-count normalization used in Wu (2004), (5.7).
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridGeometry
-import MathlibNt.SieveTheory.FiniteRealWindows
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridGeometry
+public import MathlibNt.SieveTheory.FiniteRealWindows
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
+@[expose] public section
+
 open Finset
 open scoped BigOperators Classical
 open Wu2004MeanValue AnalyticNumberTheory.Sieve

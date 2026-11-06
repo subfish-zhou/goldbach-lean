@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaDecay
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceSigmaDecay
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne
 

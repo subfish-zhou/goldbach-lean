@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13HatLayersKappaOne
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13HatLayersKappaOne
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 

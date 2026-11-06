@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorObjects
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ErrorObjects
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Set

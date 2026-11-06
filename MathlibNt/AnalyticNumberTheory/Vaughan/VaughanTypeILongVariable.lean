@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIBilinear
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIBilinear
 
 /-!
  # Vaughan Type I in the long variable
@@ -13,6 +15,8 @@ The final ledger deliberately freezes only the resulting coefficient moment.
 It does not assume a Type-I character estimate, and it does not reuse the
 pointwise divisor-cardinality energy from `VaughanTypeIEnergy`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -92,7 +96,7 @@ theorem vaughanTypeIMiddleAt_eq_bounded {n y u v : ℕ} (hn : 0 < n) (hny : n �
   apply Finset.sum_congr rfl
   intro d hd
   by_cases hdn : d ∣ n
-  · simp only [if_pos hdn]
+  · simp only [ite_eq_left hdn]
     have hdpos : 0 < d := (mem_vaughanTypeIShortRange.mp hd).1
     have hndpos : 0 < n / d := Nat.div_pos (Nat.le_of_dvd hn hdn) hdpos
     have heset : (n / d).divisors.filter (fun e => e ≤ v) =

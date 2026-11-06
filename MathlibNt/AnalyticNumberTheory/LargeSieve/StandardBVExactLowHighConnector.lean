@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
 
 /-!
  # Exact lambda-prefix to low/high conductor connector
@@ -10,6 +12,8 @@ prefix used by Standard-BV character orthogonality and the integer interval
 prefix used by conductor regrouping.  It then applies the exact low/high
 Finset partition, with no analytic hypothesis.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

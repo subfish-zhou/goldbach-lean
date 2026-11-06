@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiuWeightMainSum
-import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget
+module
+
+public import MathlibNt.SieveTheory.LiuWeightMainSum
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10MainGateBudget
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter Finset

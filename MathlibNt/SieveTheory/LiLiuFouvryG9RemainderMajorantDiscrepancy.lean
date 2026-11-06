@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantCounting
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantCounting
+
+@[expose] public section
 
 noncomputable section
 open Finset
@@ -30,7 +34,7 @@ theorem fouvryG9RemainderMajorant_discrepancy
       _ ≤ J*(5*(N : ℝ)/q) := mul_le_mul_of_nonneg_left hc hJ
       _ = _ := by ring
   have hmass : (∑ p ∈ S, w p) ≤ 5*J*(N : ℝ) := by
-    simpa only [one_dvd, if_true, Nat.cast_one, div_one] using hcount 1 (by omega) hN
+    simpa only [one_dvd, ite_true, Nat.cast_one, div_one] using hcount 1 (by omega) hN
   have hφ : (0 : ℝ) < d.totient := by exact_mod_cast Nat.totient_pos.mpr hd
   have hφd : (d.totient : ℝ) ≤ d := by exact_mod_cast Nat.totient_le d
   have hA0 : 0 ≤ g9IntegerFibreDivisibility U V α β N d := by

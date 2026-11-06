@@ -1,10 +1,14 @@
-import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418Unconditional
+module
+
+public import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418Unconditional
 
 /-! # Shared unconditional distribution endpoints for switched-source consumers
 
 These consumer names use the canonical proved Siegel--Walfisz and Standard BV
 producer also used by the base Chen sieve.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

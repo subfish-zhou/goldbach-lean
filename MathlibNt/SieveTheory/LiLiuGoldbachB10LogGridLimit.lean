@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGrid
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGrid
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+
+@[expose] public section
 
 open Filter Finset MeasureTheory Set
 open scoped ENNReal BigOperators Interval Topology
@@ -15,7 +19,7 @@ open PrimeReciprocalLogRectangle
 
 private abbrev goldbachB10LogDensity : ℝ × ℝ → ℝ := liuLogDensity
 private abbrev goldbachB10LogKernel : ℝ × ℝ → ℝ := liuLogKernel
-private abbrev goldbachB10LogIntegrand : ℝ × ℝ → ℝ := liuLogIntegrand
+abbrev goldbachB10LogIntegrand : ℝ × ℝ → ℝ := liuLogIntegrand
 
 /-- The actual two-variable integral `I10` from Liu's printed `(5.46)`. -/
 noncomputable def goldbachB10MainIntegral : ℝ :=
@@ -30,7 +34,7 @@ private def goldbachB10LogGridCell (n : ℕ) (q : Fin n × Fin n) : Set (ℝ × 
 private def goldbachB10LogGridRegion (n : ℕ) : Set (ℝ × ℝ) :=
   ⋃ q ∈ goldbachB10LogGridCells n, goldbachB10LogGridCell n q
 
-private def goldbachB10LogSourceRegion : Set (ℝ × ℝ) :=
+def goldbachB10LogSourceRegion : Set (ℝ × ℝ) :=
   {x | x.1 ∈ Ioc goldbachB10Beta goldbachB10Gamma ∧
     x.2 ∈ Ioc goldbachB10Gamma ((1 - x.1) / 2)}
 

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerCutoff
-import MathlibNt.AnalyticNumberTheory.LargeSieve.FixedPrimitiveSquareMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerCutoff
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.FixedPrimitiveSquareMean
 
 /-!
 # The short-polynomial primitive mean in Pan (2.25)--(2.27)
@@ -9,6 +11,8 @@ and the complete prime polynomial. Cauchy--Schwarz is applied across characters,
 not across the source coefficients. The fixed large-sieve constant is already
 proved and precedes all coefficients, spectral parameters, and real cutoffs.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter
@@ -108,7 +112,7 @@ theorem polynomial_second_moment_energy (S : Finset ℕ) (c : ℕ → ℂ) (N : 
       _ = _ := by
         apply sum_congr rfl
         intro n hn
-        simp only [b, if_pos hn]
+        simp only [b, ite_eq_left hn]
         ring
   have henergy : (∑ z ∈ Icc (1 : ℤ) N, ‖b z.toNat‖ ^ 2) =
       ∑ n ∈ S, ‖c n / (n : ℂ) ^ s‖ ^ 2 := by
@@ -118,7 +122,7 @@ theorem polynomial_second_moment_energy (S : Finset ℕ) (c : ℕ → ℂ) (N : 
     calc
       _ = ∑ n ∈ S, ‖b n‖ ^ 2 :=
         (sum_subset hS (by intro n hn hnS; simp [b, hnS])).symm
-      _ = _ := by apply sum_congr rfl; intro n hn; simp only [b, if_pos hn]
+      _ = _ := by apply sum_congr rfl; intro n hn; simp only [b, ite_eq_left hn]
   have h := primitive_square_moment_real_cell (fun z => b z.toNat) 0 N hR
   simpa only [zero_add, hamp, henergy] using h
 

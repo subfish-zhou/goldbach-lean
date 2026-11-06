@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWF
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RosserFactor
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWF
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RosserFactor
+
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

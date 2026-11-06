@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightBounds
-import MathlibNt.SieveTheory.LiLiuGoldbachG12MainMassTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightBounds
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12MainMassTransport
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical Finset LiLiuPrereqBuchstab
@@ -61,11 +65,11 @@ theorem goldbachG12WeightedGood_le_fullRough (N : ℕ) (ε : ℝ) (w : ℕ → �
           (goldbachG12ProductCoefficient N z b c m : ℝ) * (∑ r ∈ W m, w r) := by
         apply sum_congr rfl
         intro m hm
-        simp only [W, g12WeightedActiveWindow, if_pos hm,
+        simp only [W, g12WeightedActiveWindow, ite_eq_left hm,
           ← mul_assoc, goldbachG12NormalizedCoefficient_mul_four_hundred, z, b, c]
       _ = _ := sum_subset (filter_subset _ _) (by
         intro m _ hm
-        simp only [W, g12WeightedActiveWindow, if_neg hm, sum_empty, mul_zero])
+        simp only [W, g12WeightedActiveWindow, ite_eq_right hm, sum_empty, mul_zero])
   let S := (goldbachG12GoodCrossBodies N z b c).sigma
     (fun u => W (goldbachG11SwitchedBodyProd u))
   let T := (goldbachG12Labels N z b c).sigma
@@ -77,10 +81,10 @@ theorem goldbachG12WeightedGood_le_fullRough (N : ℕ) (ε : ℝ) (w : ℕ → �
     obtain ⟨hu, hr⟩ := mem_sigma.mp ha
     have hm : goldbachG11SwitchedBodyProd u ∈ goldbachG12ActiveProductSupport N := by
       by_contra hn
-      simp only [W, g12WeightedActiveWindow, if_neg hn, notMem_empty] at hr
+      simp only [W, g12WeightedActiveWindow, ite_eq_right hn, notMem_empty] at hr
     have hr' : r ∈ (goldbachG11LinkedPrimeWindow N ε
         (goldbachG11SwitchedBodyProd u)).filter (fun r => ¬r ∣ N) := by
-      simpa only [W, g12WeightedActiveWindow, if_pos hm] using hr
+      simpa only [W, g12WeightedActiveWindow, ite_eq_left hm] using hr
     exact mem_sigma.mpr
       (goldbachG12MainMass_good_pair_mem hu hm (mem_filter.mp hr').1 (mem_filter.mp hr').2)
   have hinj : Set.InjOn f S := by

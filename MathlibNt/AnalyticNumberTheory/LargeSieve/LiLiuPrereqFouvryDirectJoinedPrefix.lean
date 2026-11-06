@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainSubpowerEnergy
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMassConsumer
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalization
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainSubpowerEnergy
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMassConsumer
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectNormalization
 
 /-! # Actual A/B/C join on one retained prefix
 
@@ -8,6 +10,8 @@ All numerical mass and energy inputs of the normalization consumer are
 constructed from fixed-order coefficients and the actual arithmetic
 producer. The explicit local scale expressions still require payment.
 -/
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

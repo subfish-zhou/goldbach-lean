@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorReusedCounts
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorCountLedger
-import MathlibNt.SieveTheory.LiLiuGoldbachG67IntegralCertificate
-import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticScalar
-import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationScalar
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorReusedCounts
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorCountLedger
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67IntegralCertificate
+public import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticScalar
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationScalar
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedRightTailQuantitative
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedContourNormBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedRightTailQuantitative
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedContourNormBounds
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 
@@ -73,7 +77,6 @@ theorem norm_verticalIntegral'_le_of_finite_contour_bounds
     rw [norm_div, norm_one, norm_mul, norm_mul, Complex.norm_ofNat,
       Complex.norm_real, norm_I]
     norm_num
-    rw [abs_of_pos Real.pi_pos]
     have hinv : Real.pi⁻¹ ≤ 1 :=
       (inv_le_one₀ Real.pi_pos).2 (by linarith [Real.pi_gt_three])
     nlinarith [inv_nonneg.mpr Real.pi_pos.le]

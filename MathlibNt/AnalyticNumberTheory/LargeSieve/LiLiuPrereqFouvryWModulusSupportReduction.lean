@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportOriginal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportZero
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportOriginal
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportZero
 /-!
 # The original C.2 error restricted to five small canonical factors
 
@@ -9,6 +11,8 @@ partition and the same-mask analytic payment. The original signed coefficients,
 low-omega conditions, beta-family SW constants, and frequency cutoff are retained.
 No estimate of the remaining IV.3 oscillatory sum is asserted.
 -/
+
+@[expose] public section
 
 noncomputable section
 

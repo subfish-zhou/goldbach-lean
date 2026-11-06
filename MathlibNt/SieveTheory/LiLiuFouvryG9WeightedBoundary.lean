@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralContinuous
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralContinuous
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped BigOperators Interval

@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPrimePrefix
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPrimePrefix
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds
 
 /-! Uniform transport to the natural quotient in Pan's low-conductor endpoint. -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Filter
 open scoped Topology

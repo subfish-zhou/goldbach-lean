@@ -1,11 +1,13 @@
-import Mathlib.Algebra.Order.Antidiag.Nat
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Tactic.Ring
+module
 
-import AnalyticNumberTheory.Sieve.BombieriVinogradov
+public import Mathlib.Algebra.Order.Antidiag.Nat
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Data.Nat.Squarefree
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Tactic.Ring
+
+public import AnalyticNumberTheory.Sieve.BombieriVinogradov
 
 /-! # AnalyticNumberTheory.Sieve.WeightedPan
 
@@ -56,6 +58,8 @@ References:
   - Halberstam & Richert, "Sieve Methods" (1974), Ch. 10
   - Liu, Z. (2022), arXiv:2203.07871
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

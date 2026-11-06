@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantDiscrepancy
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantDiscrepancy
+
+@[expose] public section
 
 noncomputable section
 open Finset

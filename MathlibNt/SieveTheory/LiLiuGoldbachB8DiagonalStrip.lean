@@ -1,7 +1,11 @@
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 open MeasureTheory Set
 
@@ -35,10 +39,10 @@ theorem volume_goldbachAffineDiagonalStrip (a b h : ℝ) (hh : 0 ≤ h) :
     funext u
     rw [goldbachAffineDiagonalStrip_section]
     by_cases hu : u ∈ Icc a b
-    · rw [if_pos hu, indicator_of_mem hu, Real.volume_Ioc]
+    · rw [ite_eq_left hu, indicator_of_mem hu, Real.volume_Ioc]
       congr 1
       ring
-    · rw [if_neg hu, indicator_of_notMem hu, measure_empty]
+    · rw [ite_eq_right hu, indicator_of_notMem hu, measure_empty]
   rw [hfun, lintegral_indicator measurableSet_Icc, setLIntegral_const,
     Real.volume_Icc, ← ENNReal.ofReal_mul hh]
 

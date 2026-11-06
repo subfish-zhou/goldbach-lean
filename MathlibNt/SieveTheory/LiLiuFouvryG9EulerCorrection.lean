@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ProgressionDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ProgressionDensity
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 open Finset

@@ -1,8 +1,10 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ReducedFareyGauss
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Orthonormal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ReducedFareyGauss
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Orthonormal
 
 /-!
  # Exact primitive Gauss-to-Farey square-ledger bridge
@@ -13,6 +15,8 @@ interval sum, keeps both the Gauss factor and the reciprocal-totient weight,
 and isolates the one finite numerical estimate needed before the additive
 Farey large sieve can be applied.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarTransport
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedRoughUniform
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarTransport
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedRoughUniform
+
+@[expose] public section
 
 open Finset LiLiuPrereqBuchstab
 open scoped BigOperators Classical

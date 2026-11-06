@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKDivisor
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryModulusHighOmegaError
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaPayment
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

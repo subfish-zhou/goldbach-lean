@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVExactLowHighConnector
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVExactLowHighConnector
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
 
 /-!
  # Narrow sufficient assembly for Standard Bombieri--Vinogradov
@@ -11,6 +13,8 @@ internally.  The publication-facing theorem retains only a low-conductor
 Siegel--Walfisz/PNT source and the exact high-conductor Vaughan hybrid source.
 Neither source contains a Standard-BV conclusion.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

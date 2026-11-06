@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedSieve
-import MathlibNt.SieveTheory.LiLiuFouvryG9IntegerFibre
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedSieve
+public import MathlibNt.SieveTheory.LiLiuFouvryG9IntegerFibre
+
+@[expose] public section
 
 noncomputable section
 open Finset

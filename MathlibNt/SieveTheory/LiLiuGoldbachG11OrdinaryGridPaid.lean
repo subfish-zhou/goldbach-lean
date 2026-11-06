@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryFiniteSieve
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridErrorPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSmallOutput
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryFiniteSieve
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridErrorPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSmallOutput
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

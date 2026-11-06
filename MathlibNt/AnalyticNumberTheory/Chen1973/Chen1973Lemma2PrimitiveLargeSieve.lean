@@ -3,11 +3,13 @@ Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveGaussFareyExactBridge
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.DistLEIntegral
-import Mathlib.Analysis.InnerProductSpace.Calculus
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveGaussFareyExactBridge
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.DistLEIntegral
+public import Mathlib.Analysis.InnerProductSpace.Calculus
 
 /-!
 # Chen 1973, Lemma 2: primitive-character large sieve
@@ -28,6 +30,8 @@ remaining source-calculus sentence (equation (4), whose sharp constant is not
 provided by the repository's weaker logarithmic `largeSieveBound`) is exposed
 as `Chen1973FareyEquationFour`; it is not replaced by the weaker bound.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -61,7 +65,7 @@ lemma charReal_intervalIntegral_int (k : ℤ) (u : ℝ) :
   by_cases hk : k = 0
   · subst k
     simp [charReal]
-  · rw [if_neg hk]
+  · rw [ite_eq_right hk]
     unfold charReal
     rw [show (fun x : ℝ => Complex.exp ((2 * Real.pi * (((k : ℝ) * x : ℝ) : ℂ)) * Complex.I)) =
         (fun x : ℝ => Complex.exp ((((2 * Real.pi * (k : ℝ) : ℝ) : ℂ) * Complex.I) * x)) by
@@ -127,7 +131,7 @@ lemma chen1973_fourier_parseval (s : Finset ℤ) (b : ℤ → ℂ) (u : ℝ) :
         rw [intervalIntegral.integral_const_mul, charReal_intervalIntegral_int]
         by_cases hnm : n = m
         · subst m
-          simp only [sub_self, if_pos, mul_one]
+          simp only [sub_self, ite_eq_left, mul_one]
           calc
             b n * star (b n) = (Complex.normSq (b n) : ℂ) := Complex.mul_conj (b n)
             _ = (‖b n‖ : ℂ) ^ 2 := by
@@ -1069,7 +1073,7 @@ theorem sum_chen1973ModulusCell
   have hown : q ∈ chen1973ModulusCell D Q (Nat.log2 ((q - 1) / D)) := by
     simp [chen1973ModulusCell, hq]
   have hidx := chen1973ModulusCell_index_lt hD hown
-  simp only [Finset.sum_ite_eq, Finset.mem_range, if_pos hidx]
+  simp only [Finset.sum_ite_eq, Finset.mem_range, ite_eq_left hidx]
 
 /-- One source dyadic cell, obtained from (2) at cutoff `2^(k+1)D` and the
 pointwise inequality `1/q ≤ 1/(2^k D)`. -/

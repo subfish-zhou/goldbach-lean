@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSquareMeanToL1Dyadic
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSquareMeanToL1Dyadic
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
 
 /-!
  # Direct L¹ Vaughan route at the physical scale
@@ -13,6 +15,8 @@ analytic interfaces are the Type-I and Type-II *mean values themselves*; the
 small/correction terms remain visible, while the reciprocal-totient conductor
 weight is discharged by a separate unconditional finite-arithmetic module.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

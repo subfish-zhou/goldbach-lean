@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPi10NormalizedUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPi10NormalizedUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralUpper
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

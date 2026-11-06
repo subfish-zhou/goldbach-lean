@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWLogSaving
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWLogSaving
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 open Finset Filter

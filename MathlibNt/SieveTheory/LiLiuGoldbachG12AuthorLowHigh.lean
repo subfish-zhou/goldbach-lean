@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorSourceBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorSourceBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical Finset

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ThirdPrimeEventual
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ThirdPrimeEventual
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedMass
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

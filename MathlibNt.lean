@@ -1,1 +1,3 @@
-import MathlibNt.ChensTheoremUnconditional
+module
+
+public import MathlibNt.ChensTheoremUnconditional

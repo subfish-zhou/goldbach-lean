@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredBridge
-import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredEndpoint
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredBridge
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredEndpoint
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

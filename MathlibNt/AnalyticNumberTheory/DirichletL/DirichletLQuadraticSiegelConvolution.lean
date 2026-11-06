@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit
 
 /-!
 # The nonnegative quadratic convolution in Siegel's elementary argument
@@ -14,6 +16,8 @@ last theorem combines this arithmetic lower bound with the explicit
 Pólya--Vinogradov harmonic tail.  Its remaining discrepancy is kept as an
 explicit term; no unproved upper estimate for that term is assumed.
 -/
+
+@[expose] public section
 
 open Complex Finset
 open ArithmeticFunction hiding log

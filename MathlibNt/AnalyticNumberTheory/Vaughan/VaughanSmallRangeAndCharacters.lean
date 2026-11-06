@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanPrefixReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanPrefixReduction
 
 /-!
  # Vaughan's small range and all-character bookkeeping
@@ -10,6 +12,8 @@ ledgers.  It also records the exact, purely finite interfaces needed to pass
 from conductor-level primitive characters to all characters.  No prime-number
 theorem or Bombieri--Vinogradov conclusion is stated or used.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -70,11 +74,11 @@ theorem vaughanSmallCoeff_energy_eq_support (b : ℤ → ℂ) (N v : ℕ) :
       apply Finset.sum_congr rfl
       intro n hn
       by_cases hnv : n.toNat ≤ v
-      · rw [if_pos hnv, vaughanSmallCoeff_eq_of_toNat_le b v hnv,
+      · rw [ite_eq_left hnv, vaughanSmallCoeff_eq_of_toNat_le b v hnv,
           norm_mul, mul_pow]
         simp only [Complex.norm_real, Real.norm_eq_abs,
           abs_of_nonneg ArithmeticFunction.vonMangoldt_nonneg]
-      · rw [if_neg hnv, vaughanSmallCoeff_eq_zero_of_v_lt_toNat b v
+      · rw [ite_eq_right hnv, vaughanSmallCoeff_eq_zero_of_v_lt_toNat b v
           (Nat.lt_of_not_ge hnv)]
         simp
     _ = _ := by

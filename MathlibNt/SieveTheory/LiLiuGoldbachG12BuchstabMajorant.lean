@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorantPolynomials
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorantPolynomials
+
+@[expose] public section
 
 set_option autoImplicit false
 

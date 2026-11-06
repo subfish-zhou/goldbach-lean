@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass
-import MathlibNt.SieveTheory.LiLiuGoldbachB8MainMassTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8NormalizedMainMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8MainMassTransport
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

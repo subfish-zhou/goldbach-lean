@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeight
-import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeight
+public import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
 
 /-!
 # A generic paper-Q-style modulus for Liu's finite weight
@@ -13,6 +15,8 @@ The exact finite outer divisor sum from Liu's `eqn-r0` is also assembled, with
 its cutoff retained. No asymptotic estimate or subsequent maximum bound is
 asserted.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -928,7 +932,7 @@ theorem paperQStyleFullDivisorWeightSum_le_primeProduct_inv_cube
         (1 + 3 / ((p : ℝ) - 1))) ≤
       ∏ p ∈ paperQStylePrimes N w,
         (1 - 1 / (p : ℝ))⁻¹ ^ 3 := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro p hp
             have hp' := (Finset.mem_filter.mp hp).2.1
             have hpR : (1 : ℝ) < p := by exact_mod_cast hp'.one_lt
@@ -938,7 +942,7 @@ theorem paperQStyleFullDivisorWeightSum_le_primeProduct_inv_cube
             exact paperQStyleEulerFactor_le_mertensFactor_inv_cube
               (Finset.mem_filter.mp hp).2.1
     _ ≤ ∏ p ∈ allPrimes, (1 - 1 / (p : ℝ))⁻¹ ^ 3 := by
-      apply Finset.prod_le_prod_of_subset_of_one_le
+      apply Finset.prod_le_prod_of_subset_of_one_le₀
       · intro p hp
         rw [paperQStylePrimes, Finset.mem_filter] at hp
         have hpw : p < w + 1 := Finset.mem_range.mp hp.1

@@ -1,6 +1,10 @@
-import MathlibNt.Analysis.IntegralExcessCover
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstLogRegion
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized
+module
+
+public import MathlibNt.Analysis.IntegralExcessCover
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstLogRegion
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstNormalized
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped BigOperators Interval

@@ -1,6 +1,10 @@
-import Lean
+module
+
+public import Lean
 
 /-! Exact compiled declaration preservation, separate from candidate fingerprints. -/
+@[expose] public section
+
 open Lean
 
 unsafe def loadInfos (regions : IO.Ref (Array CompactedRegion)) (path : String) :

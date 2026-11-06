@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12GridBoundaryBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12GridBoundaryBudget
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter LiLiuPrereqBuchstab

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144NoDminFullInduction
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOneAllD
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseFullUniform
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144NoDminFullInduction
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseOneAllD
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144BaseFullUniform
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

@@ -1,14 +1,19 @@
-import Mathlib.Analysis.Fourier.RiemannLebesgueLemma
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.LSeries.PrimesInAP
-import Mathlib.NumberTheory.MulChar.Lemmas
-import Mathlib.Topology.EMetricSpace.BoundedVariation
-import PrimeNumberTheoremAnd.Mathlib.Analysis.Asymptotics.Asymptotics
-import PrimeNumberTheoremAnd.Fourier
-import PrimeNumberTheoremAnd.SmoothExistence
-import Mathlib.Analysis.Convolution
+module
+
+public import Mathlib.Analysis.Fourier.RiemannLebesgueLemma
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.NumberTheory.LSeries.PrimesInAP
+public import Mathlib.NumberTheory.MulChar.Lemmas
+public import Mathlib.Topology.EMetricSpace.BoundedVariation
+public import PrimeNumberTheoremAnd.Mathlib.Analysis.Asymptotics.Asymptotics
+public import PrimeNumberTheoremAnd.Fourier
+public import PrimeNumberTheoremAnd.SmoothExistence
+public import Mathlib.Analysis.Convolution
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+
+@[expose] public section
 
 set_option lang.lemmaCmd true
 set_option linter.style.header false
@@ -522,7 +527,7 @@ lemma dirichlet_test' {a b : ℕ → ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
     (h : Summable (shift (cumsum a) * nnabla b)) : Summable (a * b) := by
   have l1 : ∀ᶠ n in atTop, 0 ≤ (shift (cumsum a) * nnabla b) n := by
     filter_upwards [hbb] with n hb
-    exact mul_nonneg (by simpa [shift] using! Finset.sum_nonneg' ha) (sub_nonneg.mpr hb)
+    exact mul_nonneg (by simpa [shift] using! Finset.sum_nonneg (fun i _ => ha i)) (sub_nonneg.mpr hb)
   rw [summable_iff_bounded (mul_nonneg ha hb)]
   rw [summable_iff_bounded' l1] at h
   apply bounded_of_shift
@@ -1145,10 +1150,10 @@ lemma cancel_aux {C : ℝ} {f g : ℕ → ℝ} (hf : 0 ≤ f) (hg : 0 ≤ g)
 
   have l1 (n : ℕ) :
       (g n - g (n + 1)) * ∑ i ∈ Finset.range (n + 1), f i ≤ (g n - g (n + 1)) * (C * (n + 1)) := by
-    apply mul_le_mul le_rfl (by simpa using! hf' (n + 1)) (Finset.sum_nonneg' hf) ?_
+    apply mul_le_mul le_rfl (by simpa using! hf' (n + 1)) (Finset.sum_nonneg (fun i _ => hf i)) ?_
     simp only [sub_nonneg] ; apply hg' ; simp
   have l2 (x : ℕ) : C * (↑(x + 1) + 1) - C * (↑x + 1) = C := by simp ; ring
-  have l3 (n : ℕ) : 0 ≤ cumsum f n := Finset.sum_nonneg' hf
+  have l3 (n : ℕ) : 0 ≤ cumsum f n := Finset.sum_nonneg (fun i _ => hf i)
 
   convert_to ∑ i ∈ Finset.range n, (g i) • (f i) ≤ _
   · simp [mul_comm]
@@ -1305,11 +1310,13 @@ lemma hh_integrable_aux (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
   have k3 : ContinuousWithinAt g₀ (Ici 0) 0 := by
     rw [Metric.continuousWithinAt_iff]
     rw [Metric.tendsto_nhdsWithin_nhds] at k2
-    peel k2 with ε hε δ hδ x h
-    intro (hx : 0 ≤ x)
+    intro ε hε
+    obtain ⟨δ, hδ, hbound⟩ := k2 ε hε
+    refine ⟨δ, hδ, ?_⟩
+    intro x (hx : 0 ≤ x)
     have := le_iff_lt_or_eq.mp hx
     cases this with
-    | inl hx => exact h hx
+    | inl hx => exact hbound hx
     | inr hx => simp [g₀, hx.symm, hε]
 
   have k4 : ∀ x ∈ Ioi 0, 0 ≤ g' x := by

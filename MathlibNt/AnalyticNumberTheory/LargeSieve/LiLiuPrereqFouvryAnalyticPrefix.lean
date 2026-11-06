@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticBox
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangleCoordinates
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticBox
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangleCoordinates
 
 /-!
 # Actual arithmetic prefixes after five-variable partial summation
@@ -8,6 +10,8 @@ The original finite fiber remains inside every prefix, including its coupled
 frequency cutoff and arithmetic masks. Only the concrete smooth factor is
 differenced; no assertion that a prefix is an arithmetic progression is made.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

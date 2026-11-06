@@ -1,11 +1,13 @@
-import MathlibNt.SieveTheory.Switching.VaryingPrimeSieve
+module
+
+public import MathlibNt.SieveTheory.Switching.VaryingPrimeSieve
 /-
 Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969BombieriWeightPayment
+public import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418
+public import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969BombieriWeightPayment
 
 /-!
 # Richert 1969: the combined-modulus E-star adapter
@@ -22,6 +24,8 @@ carrier.  This file proves the exact finite reindexing and both directions of
 the fixed logarithmic-integral normalization comparison.  It does not assume
 the divisor-weighted Bombieri conclusion.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -55,7 +59,7 @@ theorem standardPrimeAPMaxError_le_richert_add
         richert418NormalizationShift q := by
   unfold BombieriVinogradov.standardPrimeAPMaxError
   dsimp only
-  rw [dif_pos hres]
+  rw [dite_eq_left hres]
   apply Finset.max'_le
   intro z hz
   rcases Finset.mem_image.mp hz with ⟨l, hl, rfl⟩

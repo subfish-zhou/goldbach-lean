@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDerivativeDDELargeRange
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDerivativeDDECompactRange
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingClaim146iIICorrected
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedEndpointTransport
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceContractionGap
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceRoundedGeometryPacket
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDerivativeDDELargeRange
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingDerivativeDDECompactRange
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingClaim146iIICorrected
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiRoundedEndpointTransport
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIISourceContractionGap
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceRoundedGeometryPacket
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

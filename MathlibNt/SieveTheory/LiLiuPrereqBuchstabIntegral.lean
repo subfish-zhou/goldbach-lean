@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabFunction
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 /-!
 # The exact Buchstab logarithmic integral
@@ -9,6 +11,8 @@ logarithmic kernel. The fundamental theorem is used only on the interior:
 the upper endpoint, where the Buchstab argument is `2`, needs continuity
 but not differentiability. In particular the square endpoint is included.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

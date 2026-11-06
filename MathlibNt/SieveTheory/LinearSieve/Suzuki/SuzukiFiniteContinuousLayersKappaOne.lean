@@ -2,8 +2,12 @@
 A temporary, independent κ = 1 reconstruction of Suzuki (9.1)--(9.2).
 Crucially, (9.2) integrates the *normalized* preceding layer.
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayers
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayers
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers.KappaOneModel
 

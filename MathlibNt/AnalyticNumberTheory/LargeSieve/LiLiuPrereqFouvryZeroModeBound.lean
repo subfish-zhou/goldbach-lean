@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights
 
 /-!
 # Full zero-mode estimate with the lcm weight retained
@@ -8,6 +10,8 @@ gcd, without a small/large gcd split. A fixed-order divisor majorant and the
 harmonic lcm mean pay all modulus weights. This estimates the full unpruned
 W zero mode minus U zero mode, not the nonzero Fourier remainder.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

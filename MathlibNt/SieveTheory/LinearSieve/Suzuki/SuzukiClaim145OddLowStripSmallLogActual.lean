@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145OddLowStripSmallLogScalar
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowSFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145OddLowStripSmallLogScalar
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseALowSFinal
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Filter Finset Set Topology

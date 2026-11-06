@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeSupportBound
 
 /-!
 # Fixed-residue-scale large-supported-factor bound
@@ -7,6 +9,8 @@ Only the auxiliary divisor-growth scale is enlarged to `Cscale * x`.
 The progression sum, beta endpoint, arbitrary mask and supported-factor
 threshold `Y` are unchanged. The fixed enlargement is paid in the constant.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

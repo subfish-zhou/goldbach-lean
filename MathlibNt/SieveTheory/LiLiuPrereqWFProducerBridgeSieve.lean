@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
-import MathlibNt.SieveTheory.LiLiuPrereqWFZeroDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
+public import MathlibNt.SieveTheory.LiLiuPrereqWFZeroDensity
 
 /-!
 # A genuine density sieve on the zero-deleted small-prime carrier
@@ -12,6 +14,8 @@ Euler product, including when the surviving carrier is empty.
 
 No unadmitted producer module is imported here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

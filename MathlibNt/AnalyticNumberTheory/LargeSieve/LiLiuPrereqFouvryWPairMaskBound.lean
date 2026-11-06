@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
 
 /-!
 # Original and same-mask zero-mode bounds from finite beta-pair support
@@ -9,6 +11,8 @@ required support information is that the beta pair belongs to a specified
 finite set. Both bounds retain arbitrary coefficient signs and do not
 restrict an unmasked cancellation estimate to a signed submask.
 -/
+
+@[expose] public section
 
 noncomputable section
 

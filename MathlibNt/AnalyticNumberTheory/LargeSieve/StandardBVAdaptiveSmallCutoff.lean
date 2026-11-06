@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVBlockL1WeightedPrimitive
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVBlockL1WeightedPrimitive
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

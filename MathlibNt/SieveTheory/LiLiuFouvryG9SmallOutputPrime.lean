@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutput
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutput
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter
@@ -27,12 +31,12 @@ theorem fouvryG9PrimeOutput_indicator (N r : ℕ) (z : ℝ) :
       (if r.Coprime ((fouvryG9SievePrimes N z).prod id) then 1 else 0) +
       (if (r : ℝ) < z then 1 else 0) := by
   by_cases hs : (r : ℝ) < z
-  · simp only [if_pos hs]
+  · simp only [ite_eq_left hs]
     split_ifs <;> norm_num
   · by_cases hp : r.Prime
     · have hc := fouvryG9PrimeOutput_coprime (N := N) hp (le_of_not_gt hs)
-      simp only [if_pos hp, if_pos hc, if_neg hs, add_zero, le_refl]
-    · simp only [if_neg hp,if_neg hs,add_zero]
+      simp only [ite_eq_left hp, ite_eq_left hc, ite_eq_right hs, add_zero, le_refl]
+    · simp only [ite_eq_right hp,ite_eq_right hs,add_zero]
       split_ifs <;> norm_num
 
 

@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetMeasurable
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudget
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetMeasurable
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossBudget
 
 /-!
 # Triangular Gamma₅ loss budgets
@@ -12,6 +14,8 @@ The four strict debits, including the second functional's factor 1/5, are
 1/1500, 1/1000, 9/8000 and 1/2000. Actual count identities and the remaining
 signed terms must still be supplied before these bounds can close Ξ₂.
 -/
+
+@[expose] public section
 
 open Real Set MeasureTheory
 open scoped Interval
@@ -41,7 +45,7 @@ theorem generalKernel_left_linear {S B v : ℝ}
   have hl := (Real.log_le_sub_one_of_pos (div_pos hB0 hd))
   rw [hratio] at hl
   have hlin0 : 0 ≤ (v-S*(1-2*B))/(S*(1-B)/2) := by positivity
-  rw [generalKernel, if_pos (show S*(1-2*B) ≤ v ∧ v ≤ S*(1-B)/2 from hv)]
+  rw [generalKernel, ite_eq_left (show S*(1-2*B) ≤ v ∧ v ≤ S*(1-B)/2 from hv)]
   have hm := (mul_le_mul_of_nonneg_left (hl.trans hc) hp0).trans
     (mul_le_mul_of_nonneg_right hp hlin0)
   calc
@@ -76,7 +80,7 @@ theorem generalKernel_right_linear {S B v : ℝ}
     have hc := div_le_div_of_nonneg_left hnum
       (by positivity : 0 < S*(1-B)/2) hv.1
     have hlin0 : 0 ≤ 3*(S/3-v)/(S*(1-B)/2) := by positivity
-    rw [generalKernel, if_neg hn, if_pos ⟨hvc,hve⟩]
+    rw [generalKernel, ite_eq_right hn, ite_eq_left ⟨hvc,hve⟩]
     have hm := (mul_le_mul_of_nonneg_left (hl.trans hc) hp0).trans
       (mul_le_mul_of_nonneg_right hp hlin0)
     calc
@@ -84,7 +88,7 @@ theorem generalKernel_right_linear {S B v : ℝ}
         div_le_div_of_nonneg_right hm (by norm_num)
       _ = _ := by field_simp; ring
   · have he : v = S/3 := by linarith [hv.2]
-    rw [generalKernel, if_neg hn, if_neg (by simp [hve]), he]
+    rw [generalKernel, ite_eq_right hn, ite_eq_right (by simp [hve]), he]
     simp
 
 /-- The two linear bounds pay half the constant-height rectangle budget. -/

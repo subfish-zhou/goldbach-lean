@@ -1,8 +1,10 @@
-import Mathlib.Algebra.Polynomial.HasseDeriv
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.Polynomial.HasseDeriv
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-!
 # Hasse differentiation in Stepanov's construction
@@ -15,6 +17,8 @@ The operator is polynomial division of `hasseDeriv k (g * f ^ n)` by
 `f ^ (n - k)`. Its factorization is proved, not assumed. No monicity or
 characteristic restriction is needed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

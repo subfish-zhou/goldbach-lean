@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticBox
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticBox
 
 /-!
 # Actual local frequency scales
@@ -7,6 +9,8 @@ The floor cutoff is the already-paid actual cutoff, not a hypothetical
 replacement. The ceiling version keeps its extra unit. All dyadic claims
 below have an actual member; an empty block is handled separately.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

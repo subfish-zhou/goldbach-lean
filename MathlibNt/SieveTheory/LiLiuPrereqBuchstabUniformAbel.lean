@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPrimeSums
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBounds
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPrimeSums
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBounds
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabIntegral
 
 /-!
 # Uniform prime-sum replacement, including the Buchstab corner
@@ -19,6 +21,8 @@ The finite summation argument below follows Mathlib's `AbelSummation`
 (Xavier Roblot, Apache 2.0), replacing its everywhere differentiability
 assumption by the fundamental theorem on subintervals.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -269,13 +273,13 @@ theorem abs_shift_mul_buchstabSlope_le_two {u : ℝ} (hu : 1 ≤ u) :
   have hu0 : 0 < u := by linarith
   rw [abs_mul, abs_of_pos (by linarith : 0 < u+1)]
   by_cases h : u ≤ 2
-  · rw [buchstabSlope, if_pos h, abs_neg, abs_of_pos (by positivity : 0 < 1/u^2)]
+  · rw [buchstabSlope, ite_eq_left h, abs_neg, abs_of_pos (by positivity : 0 < 1/u^2)]
     rw [mul_one_div]
     apply (div_le_iff₀ (sq_pos_of_pos hu0)).mpr
     nlinarith [sq_nonneg (u-1)]
   · have hu2 : 2 < u := lt_of_not_ge h
     have hd : |buchstabSlope u| ≤ 1/(2*u) := by
-      rw [buchstabSlope, if_neg h, ← deriv_buchstab hu2]
+      rw [buchstabSlope, ite_eq_right h, ← deriv_buchstab hu2]
       exact abs_deriv_buchstab_le hu2
     apply (mul_le_mul_of_nonneg_left hd (by linarith)).trans
     rw [mul_one_div]
@@ -647,7 +651,7 @@ theorem sum_primesIcc_eq_sum_primesIco_add {a b : ℝ} (hb : 0 ≤ b) (f : ℝ �
       intro h
       have hlt := ((mem_primesIco hb).1 h).2.2
       simp [hpb] at hlt
-    rw [if_pos ⟨p, hp, hpb⟩, hs, Finset.sum_insert hn, hpb, add_comm]
+    rw [ite_eq_left ⟨p, hp, hpb⟩, hs, Finset.sum_insert hn, hpb, add_comm]
   · have hs : primesIcc a b = primesIco a b := by
       ext p
       rw [mem_primesIcc hb, mem_primesIco hb]
@@ -658,7 +662,7 @@ theorem sum_primesIcc_eq_sum_primesIco_add {a b : ℝ} (hb : 0 ≤ b) (f : ℝ �
         exact he ⟨p, (mem_primesIcc hb).2 hp, hpb⟩
       · intro hp
         exact ⟨hp.1, hp.2.1, hp.2.2.le⟩
-    rw [if_neg he, hs, add_zero]
+    rw [ite_eq_right he, hs, add_zero]
 
 private theorem kernel_endpoint_le {x y t : ℝ}
     (hy : primeErrorStart ≤ y) (hxy : y ^ 2 ≤ x) (ht : t ∈ Icc y (Real.sqrt x)) :

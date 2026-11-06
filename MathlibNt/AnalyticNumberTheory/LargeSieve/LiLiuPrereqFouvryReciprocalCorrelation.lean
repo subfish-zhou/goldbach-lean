@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedPhase
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompleteWeil
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedPhase
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompleteWeil
 
 /-!
 # The same-first-index reciprocal correlation in F87 IV.3
@@ -9,6 +11,8 @@ Fouvry (1987), p. 632, (4.7)--(4.8). The two phases share `n`, not just
 `n`. The factors `s,s'` need not be coprime. Signed frequencies and residue,
 zero correlation numerator, and modulus one are all retained.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -156,7 +160,7 @@ theorem iv3ReciprocalCircle_eq_reciprocalPhase {q B k : ℕ} [NeZero q]
     exact ⟨⟨k, (k : ZMod q)⁻¹, ZMod.coe_mul_inv_eq_one k hk,
       by simpa only [mul_comm] using ZMod.coe_mul_inv_eq_one k hk⟩, rfl⟩
   rw [iv3ReciprocalCircle_stdAddChar (hB.mul_left hk),
-    reciprocalPhase, if_pos hunit, Int.cast_mul, iv3_wPhaseInverse_zmod hB]
+    reciprocalPhase, ite_eq_left hunit, Int.cast_mul, iv3_wPhaseInverse_zmod hB]
   have hi : ((B * k : ℕ) : ZMod q)⁻¹ =
       (B : ZMod q)⁻¹ * (k : ZMod q)⁻¹ := by
     apply ZMod.inv_eq_of_mul_eq_one

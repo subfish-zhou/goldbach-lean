@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedAnalyticMain
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedAnalyticMain
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

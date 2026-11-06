@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11EffectiveProductSupport
-import MathlibNt.SieveTheory.LiuPanPrincipalPNT
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11EffectiveProductSupport
+public import MathlibNt.SieveTheory.LiuPanPrincipalPNT
+
+@[expose] public section
 
 open scoped BigOperators Topology
 open Finset Filter

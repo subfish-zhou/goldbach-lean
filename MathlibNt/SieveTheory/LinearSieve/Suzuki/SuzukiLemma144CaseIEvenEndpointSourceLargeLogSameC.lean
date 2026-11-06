@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIGeometryPacket
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11EvenEndpoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIGeometryPacket
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11EvenEndpoint
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

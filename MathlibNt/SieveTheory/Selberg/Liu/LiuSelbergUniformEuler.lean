@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorHarmonic
-import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorHarmonic
+public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 
 /-!
 # Uniform Euler controls for Liu's Selberg correction
@@ -7,6 +9,8 @@ import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 The finite factors below isolate the dependence on the prime divisors of the
 even integer `N`; the infinite factor is fixed once and for all at `N = 2`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -107,9 +111,9 @@ theorem liuAbsoluteEulerFactor_le_universal_mul_kernel
   by_cases hpd : (p : ℕ) ∣ N
   · have hlocal : liuAbsoluteEulerFactor N p = 1 + ((p : ℝ)⁻¹) := by
       unfold liuAbsoluteEulerFactor liuSelbergAbsPrimeDeviation
-      rw [tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2, if_pos hpd]
+      rw [tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2, ite_eq_left hpd]
       ring
-    rw [hlocal, liuPrimeDivisorKernel, if_pos hpd]
+    rw [hlocal, liuPrimeDivisorKernel, ite_eq_left hpd]
     calc
       1 + ((p : ℝ)⁻¹) = 1 * (1 + ((p : ℝ)⁻¹)) := by ring
       _ ≤ liuUniversalAbsEulerFactor p * (1 + ((p : ℝ)⁻¹)) :=
@@ -126,10 +130,10 @@ theorem liuAbsoluteEulerFactor_le_universal_mul_kernel
     have hlocal : liuAbsoluteEulerFactor N p = liuUniversalAbsEulerFactor p := by
       unfold liuAbsoluteEulerFactor liuUniversalAbsEulerFactor
         liuSelbergAbsPrimeDeviation
-      rw [tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2, if_neg hpd,
+      rw [tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2, ite_eq_right hpd,
         tsum_abs_liuSelbergCorrection_prime_pow (N := 2) (by norm_num) p.2,
-        if_neg hp2]
-    rw [hlocal, liuPrimeDivisorKernel, if_neg hpd, mul_one]
+        ite_eq_right hp2]
+    rw [hlocal, liuPrimeDivisorKernel, ite_eq_right hpd, mul_one]
 
 theorem hasProd_liuPrimeDivisorKernel
     {N : ℕ} (hN : 0 < N) :
@@ -144,7 +148,7 @@ theorem hasProd_liuPrimeDivisorKernel
   have houtside (p : Nat.Primes) (hp : p ∉ S) :
       liuPrimeDivisorKernel N p = 1 := by
     rw [liuPrimeDivisorKernel]
-    apply if_neg
+    apply ite_eq_right
     intro hpd
     have hpF : (p : ℕ) ∈ N.primeFactors :=
       Nat.mem_primeFactors.mpr ⟨p.2, hpd, hN.ne'⟩
@@ -170,7 +174,7 @@ theorem hasProd_liuPrimeDivisorKernel
       have hpd : ((e p : Nat.Primes) : ℕ) ∣ N := by
         change (p : ℕ) ∣ N
         exact (Nat.mem_primeFactors.mp p.2).2.1
-      rw [liuPrimeDivisorKernel, if_pos hpd]
+      rw [liuPrimeDivisorKernel, ite_eq_left hpd]
       rfl
   rw [← hprod]
   exact hasProd_prod_of_ne_finset_one houtside
@@ -208,13 +212,13 @@ theorem tprod_liuAbsoluteEulerFactor_le_uniform
   intro s
   calc
     ∏ p ∈ s, liuAbsoluteEulerFactor N p ≤ ∏ p ∈ s, h p :=
-      Finset.prod_le_prod
+      Finset.prod_le_prod₀
         (fun p _ => by linarith [liuAbsoluteEulerFactor_one_le (N := N) p])
         (fun p _ => liuAbsoluteEulerFactor_le_universal_mul_kernel hNeven p)
     _ ≤ ∏' p : Nat.Primes, h p :=
       ge_of_tendsto hmult.hasProd (Filter.eventually_atTop.mpr
         ⟨s, fun t hst =>
-          Finset.prod_le_prod_of_subset_of_one_le hst
+          Finset.prod_le_prod_of_subset_of_one_le₀ hst
             (fun p _ => by linarith [hone p])
             (fun p _ _ => hone p)⟩)
     _ = liuUniversalAbsEuler * liuPrimeDivisorProduct N := by
@@ -293,7 +297,7 @@ theorem tsum_abs_liuSelbergCorrection_le_tprod_liuAbsoluteEulerFactor
         rw [hprod]
         exact ge_of_tendsto hmult.hasProd (Filter.eventually_atTop.mpr
           ⟨S, fun T hST =>
-            Finset.prod_le_prod_of_subset_of_one_le hST
+            Finset.prod_le_prod_of_subset_of_one_le₀ hST
               (fun p _ => by
                 linarith [liuAbsoluteEulerFactor_one_le (N := N) p])
               (fun p _ _ => liuAbsoluteEulerFactor_one_le (N := N) p)⟩)
@@ -345,7 +349,7 @@ theorem liuUniversalProduct_le_one : liuUniversalProduct ≤ 1 := by
   intro s
   calc
     ∏ p ∈ s, (1 + liuBaseDeviation p) ≤ ∏ _p ∈ s, (1 : ℝ) :=
-      Finset.prod_le_prod (fun p _ => (one_add_liuBaseDeviation_pos p).le)
+      Finset.prod_le_prod₀ (fun p _ => (one_add_liuBaseDeviation_pos p).le)
         (fun p _ => one_add_liuBaseDeviation_le_one p)
     _ = 1 := by simp
 
@@ -373,12 +377,12 @@ theorem liuCorrection_le_liuPrimeDivisorProduct_cube (N : ℕ) :
     (N.primeFactors.filter fun p => 2 < p).prod liuCorrectionFactor ≤
         (N.primeFactors.filter fun p => 2 < p).prod
           (fun p => (1 + ((p : ℝ)⁻¹)) ^ 3) :=
-      Finset.prod_le_prod
+      Finset.prod_le_prod₀
         (fun p hp => (liuCorrectionFactor_pos (Finset.mem_filter.mp hp).2).le)
         (fun p hp => liuCorrectionFactor_le_primeCube
           (Finset.mem_filter.mp hp).2)
     _ ≤ N.primeFactors.prod (fun p => (1 + ((p : ℝ)⁻¹)) ^ 3) :=
-      Finset.prod_le_prod_of_subset_of_one_le
+      Finset.prod_le_prod_of_subset_of_one_le₀
         (by intro p hp; exact (Finset.mem_filter.mp hp).1)
         (fun p hp => by
           have hpR : 0 ≤ (p : ℝ) := by positivity
@@ -455,22 +459,22 @@ private theorem liuSquarefreeDivisorKernel_eq {N : ℕ} (hN : 0 < N) (d : ℕ) :
       if d ∈ (liuPrimeDivisorRadical N).divisors then (d : ℝ)⁻¹ else 0 := by
   unfold liuSquarefreeDivisorKernel
   by_cases hd : d ∈ (liuPrimeDivisorRadical N).divisors
-  · rw [if_pos hd, if_pos ((liuSquarefreeDivisorKernel_support hN d).mpr hd)]
-  · rw [if_neg hd, if_neg (mt (liuSquarefreeDivisorKernel_support hN d).mp hd)]
+  · rw [ite_eq_left hd, ite_eq_left ((liuSquarefreeDivisorKernel_support hN d).mpr hd)]
+  · rw [ite_eq_right hd, ite_eq_right (mt (liuSquarefreeDivisorKernel_support hN d).mp hd)]
 
 theorem summable_liuSquarefreeDivisorKernel {N : ℕ} (hN : 0 < N) :
     Summable (liuSquarefreeDivisorKernel N) := by
   apply summable_of_ne_finset_zero
     (s := (liuPrimeDivisorRadical N).divisors)
   intro d hd
-  rw [liuSquarefreeDivisorKernel_eq hN, if_neg hd]
+  rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_right hd]
 
 theorem summable_liuSquarefreeDivisorKernel_mul_log {N : ℕ} (hN : 0 < N) :
     Summable (fun d : ℕ => liuSquarefreeDivisorKernel N d * Real.log d) := by
   apply summable_of_ne_finset_zero
     (s := (liuPrimeDivisorRadical N).divisors)
   intro d hd
-  rw [liuSquarefreeDivisorKernel_eq hN, if_neg hd, zero_mul]
+  rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_right hd, zero_mul]
 
 theorem tsum_liuSquarefreeDivisorKernel {N : ℕ} (hN : 0 < N) :
     (∑' d : ℕ, liuSquarefreeDivisorKernel N d) =
@@ -485,7 +489,7 @@ theorem tsum_liuSquarefreeDivisorKernel {N : ℕ} (hN : 0 < N) :
           ∑ d ∈ (liuPrimeDivisorRadical N).divisors, liuReciprocal d := by
         apply Finset.sum_congr rfl
         intro d hd
-        rw [liuSquarefreeDivisorKernel_eq hN, if_pos hd]
+        rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_left hd]
         simp [liuReciprocal, (Nat.pos_of_mem_divisors hd).ne']
       _ = ∏ p ∈ (liuPrimeDivisorRadical N).primeFactors,
           (1 + liuReciprocal p) := hEuler.symm
@@ -498,7 +502,7 @@ theorem tsum_liuSquarefreeDivisorKernel {N : ℕ} (hN : 0 < N) :
         intro p hp
         simp [liuReciprocal, (Nat.prime_of_mem_primeFactors hp).ne_zero]
   · intro d hd
-    rw [liuSquarefreeDivisorKernel_eq hN, if_neg hd]
+    rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_right hd]
 
 theorem liuSquarefreeDivisorKernel_nonneg (N d : ℕ) :
     0 ≤ liuSquarefreeDivisorKernel N d := by
@@ -534,7 +538,7 @@ theorem tsum_liuSquarefreeDivisorKernel_mul_log_le
         have hdR := Nat.dvd_of_mem_divisors hd
         have hpfsub : d.primeFactors ⊆ R.primeFactors :=
           Nat.primeFactors_mono hdR hR0
-        rw [liuSquarefreeDivisorKernel_eq hN, if_pos hd]
+        rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_left hd]
         rw [Real.log_nat_eq_sum_factorization]
         rw [Finsupp.sum, Nat.support_factorization, Finset.mul_sum]
         calc
@@ -550,7 +554,7 @@ theorem tsum_liuSquarefreeDivisorKernel_mul_log_le
               (Nat.div_dvd_of_dvd hpd).trans hdR
             have hdpmem : d / p ∈ R.divisors :=
               Nat.mem_divisors.mpr ⟨hpdR, hR0⟩
-            rw [liuSquarefreeDivisorKernel_eq hN, if_pos hdpmem]
+            rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_left hdpmem]
             have hfac : d.factorization p = 1 :=
               Nat.factorization_eq_one_of_squarefree hdsq hpprime hpd
             rw [hfac, Nat.cast_one, one_mul]
@@ -572,10 +576,10 @@ theorem tsum_liuSquarefreeDivisorKernel_mul_log_le
                     liuSquarefreeDivisorKernel N (d / p) else 0 := by
                 apply Finset.sum_congr rfl
                 intro p hp
-                rw [if_pos (Nat.dvd_of_mem_primeFactors hp)]
+                rw [ite_eq_left (Nat.dvd_of_mem_primeFactors hp)]
               _ = _ := Finset.sum_subset hpfsub (by
                 intro p hpR hp
-                rw [if_neg]
+                rw [ite_eq_right]
                 intro hpd
                 exact hp (Nat.mem_primeFactors.mpr
                   ⟨Nat.prime_of_mem_primeFactors hpR, hpd, hd0⟩))
@@ -607,7 +611,7 @@ theorem tsum_liuSquarefreeDivisorKernel_mul_log_le
         rw [← Finset.sum_mul]
         ring
   · intro d hd
-    rw [liuSquarefreeDivisorKernel_eq hN, if_neg hd, zero_mul]
+    rw [liuSquarefreeDivisorKernel_eq hN, ite_eq_right hd, zero_mul]
 
 /-- The absolute Selberg correction as an arithmetic function. -/
 noncomputable def liuSelbergCorrectionAbsFunction (N : ℕ) : ArithmeticFunction ℝ :=
@@ -671,16 +675,16 @@ theorem liuSquarefreeDivisorKernelFunction_isMultiplicative
   have hsq := Nat.squarefree_mul hmn
   by_cases hm : m ∈ N.divisors ∧ Squarefree m <;>
     by_cases hn : n ∈ N.divisors ∧ Squarefree n
-  · rw [if_pos ⟨hmem.mpr ⟨hm.1, hn.1⟩, hsq.mpr ⟨hm.2, hn.2⟩⟩,
-      if_pos hm, if_pos hn,
+  · rw [ite_eq_left ⟨hmem.mpr ⟨hm.1, hn.1⟩, hsq.mpr ⟨hm.2, hn.2⟩⟩,
+      ite_eq_left hm, ite_eq_left hn,
       Nat.cast_mul, mul_inv]
-  · rw [if_neg, if_pos hm, if_neg hn, mul_zero]
+  · rw [ite_eq_right, ite_eq_left hm, ite_eq_right hn, mul_zero]
     intro h
     exact hn ⟨(hmem.mp h.1).2, (hsq.mp h.2).2⟩
-  · rw [if_neg, if_neg hm, if_pos hn, zero_mul]
+  · rw [ite_eq_right, ite_eq_right hm, ite_eq_left hn, zero_mul]
     intro h
     exact hm ⟨(hmem.mp h.1).1, (hsq.mp h.2).1⟩
-  · rw [if_neg, if_neg hm, if_neg hn, zero_mul]
+  · rw [ite_eq_right, ite_eq_right hm, ite_eq_right hn, zero_mul]
     intro h
     exact hm ⟨(hmem.mp h.1).1, (hsq.mp h.2).1⟩
 
@@ -818,7 +822,7 @@ theorem liuSelbergCorrectionAbsFunction_le_convolution
       (liuSelbergAbsKernelConvolution_isMultiplicative hN) hn,
     Nat.prod_factorization_eq_prod_primeFactors,
     Nat.prod_factorization_eq_prod_primeFactors]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro p hpN
     exact abs_nonneg _
   intro p hpN

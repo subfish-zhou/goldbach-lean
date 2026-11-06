@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaDifferentialTail
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaDifferentialTail
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportDensity
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPairMaskBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeSupportDensity
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPairMaskBound
 
 /-!
 # Original and zero-mode bounds for a large supported beta factor
@@ -9,6 +11,8 @@ beta coordinate. Cauchy--Schwarz then saves a fourth root of the cutoff.
 The original and zero-mode estimates apply to the identical arbitrary mask;
 no symmetry or preservation of well-factorability under masking is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

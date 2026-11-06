@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLNonquadraticConductorLogRectangle
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogDerivative
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLNonquadraticConductorLogRectangle
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogDerivative
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 

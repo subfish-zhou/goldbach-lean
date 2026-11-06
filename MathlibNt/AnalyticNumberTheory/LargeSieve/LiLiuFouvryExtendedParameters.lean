@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectGlobalParameters
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectGlobalParameters
 
 /-!
 # A small upper-end extension of the original Fouvry parameters
@@ -8,6 +10,8 @@ Only scalar parameter inequalities are extended; no distribution theorem,
 coefficient estimate, G9 boundary reduction, or residue claim is made here.
 The old range is discharged by the existing producers whenever applicable.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

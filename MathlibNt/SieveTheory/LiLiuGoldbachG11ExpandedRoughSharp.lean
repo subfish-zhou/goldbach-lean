@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedOrdered
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedRoughUniform
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosure
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedOrdered
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedRoughUniform
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosure
+
+@[expose] public section
 
 open Finset LiLiuPrereqBuchstab
 open scoped BigOperators Classical

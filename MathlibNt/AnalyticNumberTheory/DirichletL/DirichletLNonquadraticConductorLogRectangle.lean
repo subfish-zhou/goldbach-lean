@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogZeroFree
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogZeroFree
+
+@[expose] public section
 
 open Complex Set
 

@@ -1,6 +1,8 @@
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiEndpoints
-import MathlibNt.Wu2004MeanValue.PrimeCenteredDistribution
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PiLiEndpoints
+public import MathlibNt.Wu2004MeanValue.PrimeCenteredDistribution
 
 /-!
 # G11 geometric prime-window distribution from a proved common profile
@@ -9,6 +11,8 @@ The two complete prime-count-centered prefixes use the same effective
 support, coefficient and source constants. No output-prime condition is
 inserted into the coefficient.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 
@@ -40,13 +44,13 @@ theorem goldbachG11LinkedCompletedResidue_coprime (N d : ℕ) :
     (goldbachG11LinkedCompletedResidue N d).Coprime d := by
   unfold goldbachG11LinkedCompletedResidue
   by_cases h : N.Coprime d
-  · simpa only [if_pos h] using h
-  · rw [if_neg h]
+  · simpa only [ite_eq_left h] using h
+  · rw [ite_eq_right h]
     exact Nat.coprime_one_left d
 
 theorem goldbachG11LinkedCompletedResidue_eq {N d : ℕ} (h : N.Coprime d) :
     goldbachG11LinkedCompletedResidue N d = N := by
-  exact if_pos h
+  exact ite_eq_left h
 
 def goldbachG11LinkedModuli (N Q : ℕ) : Finset ℕ :=
   (Icc 1 Q).filter (fun d => Squarefree d ∧ N.Coprime d)

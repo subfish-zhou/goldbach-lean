@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScaleCoefficient
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScaleCoefficient
+
+@[expose] public section
 
 namespace G12LocalScale
 open Real

@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
 
 /-!
  # Direct reciprocal-totient conductor multiplicity
@@ -8,6 +10,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinea
 This module proves the finite arithmetic estimate needed by the direct L¹
 conductor regrouping.  It is independent of the Vaughan decomposition.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

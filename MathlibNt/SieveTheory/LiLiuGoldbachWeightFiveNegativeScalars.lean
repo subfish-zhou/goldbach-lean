@@ -1,10 +1,14 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMainBound
-import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
-import MathlibNt.SieveTheory.LiLiuGoldbachS2IntegralScalar
-import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFive
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMainBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2IntegralScalar
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10IntegralReduction
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8IntegralReduction
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFive
+
+
+@[expose] public section
 
 open MathlibNt.SieveTheory.SwitchingPrinciple
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

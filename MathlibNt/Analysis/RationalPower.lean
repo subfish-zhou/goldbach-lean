@@ -1,4 +1,6 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-!
 # Clearing a positive denominator in a real-power inequality
@@ -6,6 +8,8 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 Natural powers provide an exact arithmetic form of rational exponent bounds,
 including when either base is zero.
 -/
+
+@[expose] public section
 
 namespace MathlibNt
 

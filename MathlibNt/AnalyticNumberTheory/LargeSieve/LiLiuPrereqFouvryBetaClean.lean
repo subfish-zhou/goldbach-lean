@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
 
 /-!
 # Removing the divisors of a changing nonzero residue from beta
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
 The deleted mass is bounded by one divisor sum, including at order zero.
 The subpolynomial constant precedes the residue, scale, support and sequence.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -33,7 +37,7 @@ theorem abs_betaClean_le (β : ℕ → ℝ) (a : ℤ) (n : ℕ) :
 theorem betaClean_nonzero_not_dvd {β : ℕ → ℝ} {a : ℤ} {n : ℕ}
     (hn : betaClean β a n ≠ 0) : ¬(n : ℤ) ∣ a := by
   intro hd
-  exact hn (if_pos hd)
+  exact hn (ite_eq_left hd)
 
 
 theorem betaClean_abs_le_fouvryTau {k : ℕ} {N : Finset ℕ}

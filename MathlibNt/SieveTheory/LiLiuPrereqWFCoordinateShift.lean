@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.JurkatRichert1965ChenDelayMonotonicity
+module
+
+public import MathlibNt.SieveTheory.JurkatRichert1965ChenDelayMonotonicity
 
 /-!
 # Uniform changes of sieve coordinate
@@ -7,6 +9,8 @@ The actual delay equations give a derivative bound of order `1 / s` on
 `[s, ∞)`. Thus multiplicative coordinate changes have a bound independent of
 the (unbounded) coordinate. The endpoint `s = 2` needs only continuity.
 -/
+
+@[expose] public section
 
 noncomputable section
 

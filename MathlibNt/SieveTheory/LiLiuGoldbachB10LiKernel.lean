@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10ContinuousMain
+
+@[expose] public section
 
 open MeasureTheory Filter
 open MathlibNt.SieveTheory.LiuWeight

@@ -35,6 +35,54 @@ the research gates supply the Wu acceptance evidence. The current
 by full production receipt verification. Standalone `leanchecker` must set
 `LEAN_SYSROOT` to the pinned compiler prefix; see the research README command.
 
+## Lean 4.35 and module migration (2026-11-06)
+
+The complete 1,803-module main build passes with warnings treated as failures
+(10,863 jobs). All six public literal-statement and standard-axiom checks, the
+existing strengthened-statement probe and five named kernel replays pass. The
+script suite runs 124 tests, with 123 passes and one optional fixture skip.
+
+The six protected endpoints retain their original kinds and canonical type
+hashes. Their complete source files retain the original bodies after accounting
+for the module headers. The producer guard keeps its original target list and
+loads complete stored theorem bodies at private olean level for inspection.
+All four quantitative/existence producer checks pass.
+
+The full declaration inventory records 65 added names, including promoted
+helpers and retained tactic-parser declarations. One compiler-generated
+constructor-index helper disappears. There are 731 changed raw type hashes,
+with changed references to upstream instance projections, helper visibility or
+generated proof names. The [interface review](../Palomar/interface-review.json)
+records these separately from the protected endpoint checks.
+
+The auxiliary proofopt suite passes 32 Python tests. Its five Lean tools pass
+compilation and positive/negative fixtures, including three new module-import
+audits. The Blueprint has 68 nodes, 120 edges, four chapters and six exits.
+The documentation driver passes compilation and a four-module API generation
+smoke test using the compatible doc-gen4 pin.
+
+The publication exporter includes the complete upgraded main libraries and two
+independent Palomar entry modules. Challenge's three deliberate specification
+holes are isolated from the proved Solution. The [preparation guide](PALOMAR_PREPARATION.md)
+and [validation record](../Palomar/validation.json) describe the publication checks,
+source hashes and review work. The independently pinned Wu research sources keep
+their existing byte-level records.
+
+The complete Solution export passes the local Palomar mechanical replay with
+the original bundled Lean and NanoDa checkers. The Challenge is independently
+compiled under a verifier-owned alias against the allowlisted dependencies.
+The registry-pinned con-ron and the additional Lean paranoid, lean4lean and
+con-leche checkers also accept it.
+
+Five closed rational coefficient equalities now check numerator/denominator
+pairs and use `S3Polynomial.eq_of_num_den_eq` to recover the list equality. The
+[NanoDa record](../Palomar/nanoda-verification.json) identifies the original failing
+auxiliary declarations, exact checker binaries, successful controls and final
+resource measurements. The [validation record](../Palomar/validation.json) retains
+the earlier failure diagnostics as history. Local builds reuse verified caches.
+Hosted-provider capacity preflight and registry publication belong to the
+subsequent submission workflow.
+
 ## Accepted shared finite-prefix and divisor proofs (2026-10-27)
 
 All nine gates pass: warning-free 1,803-module full build (10,511 jobs), public

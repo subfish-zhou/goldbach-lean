@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeDeltaOriginal
 
 /-!
 # Shared fixed-scale large-common-modulus bound for original W
@@ -11,6 +13,8 @@ Consequently the fixed enlargement enters the constant as
 The diagonal costs its square mass, not the square of its absolute mass.
 No WF property of a restricted weight is asserted.
 -/
+
+@[expose] public section
 
 noncomputable section
 

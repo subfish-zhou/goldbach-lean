@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachQuadrupleExceptionFibers
-import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachQuadrupleExceptionFibers
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5CountTransport
+
+@[expose] public section
 
 open scoped BigOperators
 

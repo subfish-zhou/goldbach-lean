@@ -1,10 +1,14 @@
-import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
-import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
-import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
-import AnalyticNumberTheory.Sieve.LinearSieve
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
+public import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
+public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
+public import AnalyticNumberTheory.Sieve.LinearSieve
 
 /-! Generic upper factor and its fundamental-lemma interface.
 Chen applications consume this interface; the generic producer has no Chen source. -/
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.SwitchingPrinciple

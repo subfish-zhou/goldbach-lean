@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothMainTerm
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
-import Mathlib.Data.Finset.NatDivisors
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothMainTerm
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
+public import Mathlib.Data.Finset.NatDivisors
 
 /-!
 # Global bounds for the actual smooth U and V error terms
@@ -9,6 +11,8 @@ These bounds apply to arbitrary signed coefficients of fixed divisor order,
 arbitrary subsets of the real-endpoint supports, and every integer residue.
 No well-factorability, squarefree support, or error estimate is assumed.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

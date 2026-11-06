@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
-import MathlibNt.SieveTheory.UpperRosserSuzukiExactBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
+public import MathlibNt.SieveTheory.UpperRosserSuzukiExactBridge
+
+@[expose] public section
 
 open Set Filter Topology
 

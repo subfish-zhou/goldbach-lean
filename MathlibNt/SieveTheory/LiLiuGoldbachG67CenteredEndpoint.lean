@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral1
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral2
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral3
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral4
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral5
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral1
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral2
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral3
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral4
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Integral5
+
+@[expose] public section
 
 open MeasureTheory Finset
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedOrdered
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedOrdered
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -40,7 +44,7 @@ theorem goldbachG11Expanded_divisor_cards {N : ℕ} (hN : 4 ≤ N) {ρ : ℝ}
         simp [hp]
       _ = _ := sum_subset (hsub m) (by
         intro p hpL hp
-        apply if_neg
+        apply ite_eq_right
         intro hpW
         exact hp (mem_filter.mpr ⟨hpW,(Nat.mem_primeFactors.mp (mem_filter.mp hpL).1).2.1⟩))
   have hfiber (p : ℕ) (hp : p ∈ L) : ((E.filter (fun m => p ∈ W m)).card : ℝ) ≤ 2*N/(p : ℝ) := by

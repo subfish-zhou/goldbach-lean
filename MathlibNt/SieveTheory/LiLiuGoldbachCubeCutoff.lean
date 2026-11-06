@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

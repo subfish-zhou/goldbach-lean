@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.FiniteFibres
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
-import MathlibNt.SieveTheory.LiLiuGoldbachS2PrimePairs
+module
+
+public import MathlibNt.SieveTheory.FiniteFibres
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2PrimePairs
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalNonprincipalOnly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVFinalNonprincipalOnly
 
 /-!
 # Raw Landau--Siegel lower bounds supply the low Siegel--Walfisz source
@@ -8,6 +10,8 @@ The quadratic and nonquadratic uniform pointwise estimates are combined at the
 same requested exponents and ambient endpoint.  The finite pointwise-to-prefix
 amplitude bridge then supplies the exact low source used by Standard BV.
 -/
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 

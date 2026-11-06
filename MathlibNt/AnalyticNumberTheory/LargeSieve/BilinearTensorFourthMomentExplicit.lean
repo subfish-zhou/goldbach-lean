@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ImprimitiveConductorWeightLinear
 
 /-!
  # Explicit Q-dependent bilinear tensor moment bound
@@ -19,6 +21,8 @@ producer for the canonical Vaughan block.  No prefix maximum is present; a
 prefix version should be obtained separately by the dyadic/Rademacher--Menshov
 reduction, paying its displayed logarithm squared.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

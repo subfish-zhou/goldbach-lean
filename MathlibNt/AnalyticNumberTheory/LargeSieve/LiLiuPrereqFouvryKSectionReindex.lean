@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionDomain
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionDomain
 
 /-!
 # Exact reindexing of the remaining IV.3 section
@@ -8,6 +10,8 @@ retained. The only varying restrictions are an explicit interval and
 coprimalities. This does not yet freeze the small-root phase or pay for
 the residue classes needed in an application of the progression bound.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

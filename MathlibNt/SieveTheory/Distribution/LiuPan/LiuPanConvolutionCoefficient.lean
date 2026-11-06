@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeight
-import Mathlib.NumberTheory.Divisors
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeight
+public import Mathlib.NumberTheory.Divisors
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

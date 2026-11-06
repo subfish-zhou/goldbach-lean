@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
+
+@[expose] public section
 
 open Filter
 

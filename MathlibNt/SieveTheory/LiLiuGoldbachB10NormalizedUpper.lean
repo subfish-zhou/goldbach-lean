@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.Analysis.SieveNormalization
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PaidUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.Analysis.SieveNormalization
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PaidUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+
+@[expose] public section
 
 noncomputable section
 

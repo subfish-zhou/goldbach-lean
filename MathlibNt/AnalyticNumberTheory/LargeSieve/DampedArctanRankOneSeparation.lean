@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.TruncatedPerronKernel
-import MathlibNt.AnalyticNumberTheory.LargeSieve.RankOneRectangularPrimitiveL1
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.TruncatedPerronKernel
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.RankOneRectangularPrimitiveL1
 
 /-!
  # Finite rank-one separation of the damped arctangent kernel
@@ -13,6 +15,8 @@ rectangular terms and records the coefficient-energy bounds needed to feed
 
 This module is intentionally not imported by a canonical facade.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

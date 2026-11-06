@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughSandwich
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughSandwich
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

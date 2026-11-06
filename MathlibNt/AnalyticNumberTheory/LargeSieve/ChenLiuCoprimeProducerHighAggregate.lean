@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerronAssembly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerronAssembly
 
 /-!
 # The full high-conductor Pan source sum
@@ -8,6 +10,8 @@ nonnegative majorant, not an identification, of a strictly truncated outer
 modulus carrier. Conductor cells use the exact real radii; only complete
 dyadic source blocks are separated by a triangle inequality.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter
@@ -108,8 +112,8 @@ theorem panIymHigh_le_sum_active_sourceCells
           intro χ hχ
           rw [panSourceCharacterAmplitude_eq_sum_dyadicCells
             (panSourceG f m) (panSourceD m) x A₁ A₂ hA₁ χ]
-          convert norm_sum_le _ _ using 1 <;>
-            first | rfl | simp [pow_succ, mul_comm, mul_left_comm]
+          convert norm_sum_le _ _ using 1
+          simp [pow_succ, mul_comm, mul_left_comm]
         _ = ∑ k ∈ range (panDyadicDepth A₁ A₂),
             sourceCell f m x A₁ A₂ k (conductorRadius x B j) := by
           unfold sourceCell

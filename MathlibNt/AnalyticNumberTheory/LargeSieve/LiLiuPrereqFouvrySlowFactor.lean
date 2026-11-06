@@ -1,8 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Tactic
 
 /-!
 # The concrete five-variable slow factor, in logarithmic coordinates
@@ -13,6 +15,8 @@ independently of the original arithmetic scales. The two real phase parameters
 include all scaling constants; arithmetic coefficients and reciprocal/root
 phases are not part of this weight.
 -/
+
+@[expose] public section
 
 noncomputable section
 

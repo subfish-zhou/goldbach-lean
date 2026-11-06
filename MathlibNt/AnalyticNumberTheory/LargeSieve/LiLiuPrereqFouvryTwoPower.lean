@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTwoPowerRoots
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTwoPowerRoots
 
 /-!
 # Primitive Kloosterman estimates at powers of two
@@ -8,6 +10,8 @@ smaller half-power. Four roots and the exact size of the reduction fibers
 suffice: the factor `k+1` absorbs the elementary stationary-phase constant.
 No odd-characteristic Gauss-sum identity is used.
 -/
+
+@[expose] public section
 
 noncomputable section
 

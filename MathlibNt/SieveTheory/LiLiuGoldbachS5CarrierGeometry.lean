@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

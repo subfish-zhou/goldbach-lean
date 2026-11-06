@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedDensity
 
 /-!
 # Full-carrier normalization of the actual small-weight replacement
@@ -8,6 +10,8 @@ The absolute constant precedes epsilon, and the threshold precedes all
 prime carriers, densities, depths, and signs. This does not estimate the
 remaining signed rough density by the linear-sieve functions.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -23,7 +27,7 @@ private theorem plusProduct_le_euler_mul_square {g : ℕ → ℝ}
   have hV : 0 < V := Finset.prod_pos fun p hp => sub_pos.mpr (hg p hp).2
   have hprod : (∏ p ∈ R, (1 + g p)) * V ≤ 1 := by
     rw [show V = ∏ p ∈ R, (1 - g p) from rfl, ← Finset.prod_mul_distrib]
-    exact Finset.prod_le_one
+    exact Finset.prod_le_one₀
       (fun p hp => mul_nonneg (by linarith [(hg p hp).1])
         (sub_nonneg.mpr (hg p hp).2.le))
       (fun p _ => by nlinarith [sq_nonneg (g p)])

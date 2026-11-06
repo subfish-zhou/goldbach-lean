@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open MeasureTheory Set

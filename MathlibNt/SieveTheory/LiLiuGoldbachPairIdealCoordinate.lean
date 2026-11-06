@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachJRLowerLipschitz
-import MathlibNt.SieveTheory.LiLiuGoldbachPairLayerCoordinate
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachJRLowerLipschitz
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairLayerCoordinate
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

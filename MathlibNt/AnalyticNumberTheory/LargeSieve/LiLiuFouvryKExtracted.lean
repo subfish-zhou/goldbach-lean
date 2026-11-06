@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFactored
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedFactorExtraction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFactored
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedFactorExtraction
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

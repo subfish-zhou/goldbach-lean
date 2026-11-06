@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.FiniteWeights
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.FiniteWeights
 
 /-!
 # Rosser boundary chains and logarithmic regions
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LinearSieve.FiniteWeights
 Upper admissibility, sorted prime chains, lower fixed-depth recursions,
 pair removal, and logarithmic-coordinate regions.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LinearSieve
 
@@ -217,13 +221,11 @@ theorem lowerRosserBoundaryChain_singleton_iff {D q p : ℕ} :
   · rintro ⟨_, _, hprod, _, hterminal⟩
     simpa using And.intro hprod hterminal
   · rintro ⟨hpD, hterminal⟩
-    refine ⟨?_, by simp, by simpa using hpD, ?_, by simpa using hterminal⟩
-    · intro i j hij
-      fin_cases i; fin_cases j
-      simp at hij
-    · intro i hiOdd
-      fin_cases i
-      simp at hiOdd
+    refine ⟨by simp [List.sortedGT_iff_pairwise], by simp, by simpa using hpD,
+      ?_, by simpa using hterminal⟩
+    intro i hiOdd
+    fin_cases i
+    simp at hiOdd
 
 /-- Removing the first two entries of a positive lower Rosser boundary chain
 produces the exact residual lower chain at the ceiling-divided level.  The

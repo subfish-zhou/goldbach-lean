@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalErrorAssembly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalErrorAssembly
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 
@@ -109,7 +113,7 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
           dsimp only [dirichletLQuadraticConditionalFixedLeft, x, p, H, τ]
           linarith) (le_refl 1) htlow htT
       change 64 * H ^ 2 * x ≤ ‖χ.LFunction (1 + I * t)‖
-      convert h using 1; push_cast; ring
+      convert h using 1
     have hdiff0 := norm_LFunction_sub_le_sixtyfour_mul_conductorHeightLogSq
       χ hχ (σ₁ := 1) (σ₂ := σ) (t := t) (by norm_num) hnear1 hσone' hσtwo
     have hdiff : ‖χ.LFunction (σ + I * t) - χ.LFunction (1 + I * t)‖ ≤

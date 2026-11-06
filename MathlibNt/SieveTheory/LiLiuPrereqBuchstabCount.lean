@@ -1,7 +1,9 @@
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Algebra.Order.Floor.Semiring
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Algebra.Order.Floor.Semiring
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic
 
 /-!
 # Actual rough integers and the finite Buchstab identity
@@ -10,6 +12,8 @@ The carrier consists of positive natural numbers bounded by a real number.
 The cutoff excludes primes strictly below `z`; in particular the unit is
 retained and a prime equal to the cutoff is not excluded.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

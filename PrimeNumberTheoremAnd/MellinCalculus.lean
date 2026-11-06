@@ -1,11 +1,15 @@
-import Architect
-import Batteries.Tactic.Lemma
-import Mathlib.Algebra.GroupWithZero.Units.Basic
-import Mathlib.Analysis.MellinTransform
-import Mathlib.MeasureTheory.Integral.IntegrableOn
-import Mathlib.Tactic.Bound
-import Mathlib.Tactic.GCongr
-import PrimeNumberTheoremAnd.Auxiliary
+module
+
+public import Architect
+public import Batteries.Tactic.Lemma
+public import Mathlib.Algebra.GroupWithZero.Units.Basic
+public import Mathlib.Analysis.MellinTransform
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.Tactic.Bound
+public import Mathlib.Tactic.GCongr
+public import PrimeNumberTheoremAnd.Auxiliary
+
+@[expose] public section
 
 open scoped ContDiff
 
@@ -1107,12 +1111,14 @@ lemma MellinOfSmooth1a {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
         have hy : y ∉ Icc (2 ^ (-ε)) (2 ^ ε) := by
           simp only [mem_Icc, not_and, not_le]; exact hS hz.1 <| (div_le_one hz.2).mp hxy
         simp [DeltaSpikeSupport εpos hz.2.le suppν hy]
-    · apply Integrable.piecewise Smeas ?_ integrableOn_zero
+    · apply Integrable.piecewise Smeas.nullMeasurableSet ?_ integrableOn_zero
       simp only [IntegrableOn, Measure.restrict_restrict_of_subset SsubI]
       apply MeasureTheory.Integrable.mono_measure ?_
       · apply MeasureTheory.Measure.restrict_mono' SsubT.eventuallyLE le_rfl
       have : volume.restrict (Tx ×ˢ Ty) = (volume.restrict Tx).prod (volume.restrict Ty) := by
         rw [Measure.prod_restrict, MeasureTheory.Measure.volume_eq_prod]
+      change Integrable (fun x : ℝ × ℝ => f x.2 * (x.1 : ℂ) ^ (s - 1))
+        (volume.restrict (Tx ×ˢ Ty))
       conv => rw [this]; lhs; intro; rw [mul_comm]
       apply MeasureTheory.Integrable.mul_prod (f := fun x ↦ (x : ℂ) ^ (s - 1))
         (μ := Measure.restrict volume Tx)
@@ -1277,7 +1283,7 @@ lemma Smooth1ContinuousAt {SmoothingF : ℝ → ℝ}
         have : x ∈ Ioi 0 := by
           apply mem_Ioi.mpr
           apply lt_of_lt_of_le (by bound) hx.1
-        rw [indicator, if_pos this]
+        rw [indicator, ite_eq_left this]
     · unfold indicator
       simp_rw [mem_Ioi]
       apply Function.support_subset_iff.mpr

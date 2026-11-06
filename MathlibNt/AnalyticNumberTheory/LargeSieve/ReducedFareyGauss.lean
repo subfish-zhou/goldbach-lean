@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
 
 /-!
  # Reduced Farey indices for primitive-character Gauss expansions
@@ -17,6 +19,8 @@ indices is bounded by `largeSieveBound`.  Thus later primitive-character
 arguments may sum Gauss frequencies across moduli without introducing the
 forbidden multiplicities from unreduced rational representatives.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

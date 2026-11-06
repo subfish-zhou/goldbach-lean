@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarScalar
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarScalar
+
+@[expose] public section
 
 open Finset LiLiuPrereqBuchstab
 open scoped BigOperators Classical

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLAbelWeightVariation
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLAbelWeightVariation
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-!
 # Conditional convergence of the derivative Dirichlet series
@@ -7,6 +9,8 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 This module combines the exact finite Abel identity, the modulus bound for character
 prefix sums, and the total-variation estimate for the logarithmic cpow weight.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter Set
 open scoped Topology

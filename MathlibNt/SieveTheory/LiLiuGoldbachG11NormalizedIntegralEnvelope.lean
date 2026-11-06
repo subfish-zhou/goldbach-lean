@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelIntegralBound
-import MathlibNt.SieveTheory.LiLiuGoldbachG11EulerFactorNormalized
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RemainderPayments
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelIntegralBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11EulerFactorNormalized
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RemainderPayments
+
+@[expose] public section
 
 open Filter Set LiLiuPrereqBuchstab
 open scoped Topology

@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPhase
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryEffectiveAnalytic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPhase
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryEffectiveAnalytic
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

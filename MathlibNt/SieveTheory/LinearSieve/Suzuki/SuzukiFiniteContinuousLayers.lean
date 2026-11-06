@@ -3,8 +3,10 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 
 /-!
 # Suzuki's finite continuous layers: source-correct normalized recursion
@@ -19,6 +21,8 @@ source equations are available without division.  Their normalization bridge is
 valid for every `s`; cancellation in the opposite direction requires a nonzero
 normalizing factor (below we expose the natural hypothesis `0 < s`).
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers
 

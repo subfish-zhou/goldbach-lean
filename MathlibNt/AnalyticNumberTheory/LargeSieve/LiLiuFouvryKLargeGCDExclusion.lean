@@ -1,7 +1,9 @@
-import MathlibNt.Analysis.LogPowerBounds
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDOriginal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
+module
+
+public import MathlibNt.Analysis.LogPowerBounds
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDOriginal
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
 
 /-!
 # Quantitative first large-gcd exclusion for the actual nonzero W sum
@@ -12,6 +14,8 @@ the first gcd coordinate, not the union of all five large-gcd coordinates.
 The beta parameter `T` is an upper endpoint, not a dyadic lower endpoint.
 The condition `β n ≠ 0 → n ∤ a` is retained; its preprocessing is separate.
 -/
+
+@[expose] public section
 
 noncomputable section
 

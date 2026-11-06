@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstMainMass
-import MathlibNt.SieveTheory.LiLiuGoldbachB9CommonRemainder
-import MathlibNt.SieveTheory.LiLiuGoldbachB8PaidUpper
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstMainMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9CommonRemainder
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8PaidUpper
+
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter
@@ -65,9 +69,9 @@ theorem goldbachB9HighFirstDivCount_eq_product_sum {N d : ℕ}
   intro m hm
   rw [goldbachC10Coeff_eq_one_of_mem_productSupport hm, one_mul]
   by_cases hc : Nat.Coprime m d
-  · rw [if_pos hc, if_pos hc, goldbachB9PlusProductResidueQFiber_card_eq_prefix
+  · rw [ite_eq_left hc, ite_eq_left hc, goldbachB9PlusProductResidueQFiber_card_eq_prefix
       (goldbachB9HighFirstSupport_subset N hN hm) hc]
-  · simp only [if_neg hc, Nat.cast_zero]
+  · simp only [ite_eq_right hc, Nat.cast_zero]
 
 private theorem highFirst_coeff_sum {N A₁ A₂ : ℕ} (f : ℕ → ℝ)
     (hs : goldbachB9HighFirstSupport N ⊆ Ioc A₁ A₂) :
@@ -108,8 +112,8 @@ theorem goldbachB9HighFirstGatedRemainder_eq_panError {N A₁ A₂ d : ℕ}
   apply sum_congr rfl
   intro m _
   by_cases hc : Nat.Coprime m d
-  · simp only [if_pos hc, liuScaledAPError, goldbachB9PlusLiWeight]
-  · simp only [if_neg hc, zero_div, sub_self]
+  · simp only [ite_eq_left hc, liuScaledAPError, goldbachB9PlusLiWeight]
+  · simp only [ite_eq_right hc, zero_div, sub_self]
 
 private theorem highFirst_abs_le_maxL {N A₁ A₂ d : ℕ}
     (hN : 2 ≤ N) (hd : 1 ≤ d) (hdN : Nat.Coprime d N)
@@ -126,7 +130,7 @@ private theorem highFirst_abs_le_maxL {N A₁ A₂ d : ℕ}
   have hS : (unitResidues d).Nonempty := ⟨N % d, hl⟩
   unfold liuMainPanCoprimeIntervalMaxL
   dsimp only
-  rw [dif_pos hS]
+  rw [dite_eq_left hS]
   exact le_max' ((unitResidues d).image (fun l =>
     |liuMainPanCoprimeIntervalSum (liuLogarithmicIntegral (2 / Real.log 2))
       N A₁ A₂ d l

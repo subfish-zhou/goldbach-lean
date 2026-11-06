@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedFactorExtraction
-import Mathlib.Data.Nat.Log
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDelayedFactorExtraction
+public import Mathlib.Data.Nat.Log
 
 /-!
 # Disjoint dyadic pieces of the retained frequencies
@@ -8,6 +10,8 @@ The half-open shells avoid duplicating powers of two. Both signs stay in
 the same shell, and zero is removed using its actual zero summand.
 The original tuple-dependent cutoff is retained, not enlarged.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

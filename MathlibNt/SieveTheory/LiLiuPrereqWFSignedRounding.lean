@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRoundedAdmissibility
 
 /-!
 # Finite sieve direction for one normalized signed box convention
@@ -14,6 +16,8 @@ specialization and identification with the common full-integer box weights
 are separate from the pointwise sieve inequalities proved here.
 -/
 
+@[expose] public section
+
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
 open Finset ArithmeticFunction
@@ -27,11 +31,11 @@ theorem roundedSupport_mono {upper : Bool} {b c : ℕ → ℝ} {D : ℝ}
     {s : Finset ℕ} (hb : ∀ p ∈ s, 0 ≤ b p)
     (hbc : ∀ p ∈ s, b p ≤ c p) (h : RoundedSupport upper c D s) :
     RoundedSupport upper b D s := by
-  refine ⟨lt_of_le_of_lt (Finset.prod_le_prod hb hbc) h.1, ?_⟩
+  refine ⟨lt_of_le_of_lt (Finset.prod_le_prod₀ hb hbc) h.1, ?_⟩
   intro p hp hpar
   apply lt_of_le_of_lt _ (h.2 p hp hpar)
   apply mul_le_mul
-  · exact Finset.prod_le_prod
+  · exact Finset.prod_le_prod₀
       (fun q hq => hb q (Finset.mem_filter.mp hq).1)
       (fun q hq => hbc q (Finset.mem_filter.mp hq).1)
   · exact pow_le_pow_left₀ (hb p hp) (hbc p hp) 2

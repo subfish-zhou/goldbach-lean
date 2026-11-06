@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
+
+@[expose] public section
 
 open Finset Filter Set
 open scoped BigOperators Topology
@@ -84,7 +88,7 @@ theorem goldbachG12PrimeKernel_le_boxCover {ι : Type*} (S : Finset ι)
       obtain ⟨j, hj, hvj⟩ := hcover v hv
       change f v ≤ ∑ j ∈ S, if v ∈ goldbachG11PrimeBox N (lo j) (hi j) then f v else 0
       calc
-        _ = if v ∈ goldbachG11PrimeBox N (lo j) (hi j) then f v else 0 := by rw [if_pos hvj]
+        _ = if v ∈ goldbachG11PrimeBox N (lo j) (hi j) then f v else 0 := by rw [ite_eq_left hvj]
         _ ≤ _ := Finset.single_le_sum
           (f := fun k : ι => if v ∈ goldbachG11PrimeBox N (lo k) (hi k) then f v else 0)
           (fun _ _ => ite_nonneg (hf v hv) le_rfl) hj

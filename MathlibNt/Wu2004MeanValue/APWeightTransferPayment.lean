@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.APWeightTransfer
+module
+
+public import MathlibNt.Wu2004MeanValue.APWeightTransfer
 
 /-!
 # Reciprocal ninth-moment payment at the actual AP level
@@ -7,6 +9,8 @@ Only the explicitly named unweighted actual AP mass is an input to the
 last theorem. The arbitrary-coefficient envelope and the divisor moment
 are proved inputs, not extra analytic hypotheses.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

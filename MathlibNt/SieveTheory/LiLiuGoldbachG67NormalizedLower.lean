@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67PaidLower
-import MathlibNt.SieveTheory.LiuSingularSeries
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67PaidLower
+public import MathlibNt.SieveTheory.LiuSingularSeries
+
+@[expose] public section
 
 open Filter
 

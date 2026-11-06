@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2
+
+@[expose] public section
 
 noncomputable section
 open Finset

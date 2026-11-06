@@ -1,12 +1,16 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LocalProduct
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
-import MathlibNt.SieveTheory.MertensTheorem
-import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
-import MathlibNt.SieveTheory.SuzukiLemma147JurkatRichertInterval
-import MathlibNt.SieveTheory.SuzukiChenAdaptiveDepthAbsorption
-import MathlibNt.SieveTheory.SuzukiDensityBoundingSieveBridge
-import MathlibNt.SieveTheory.SuzukiMovingSigmaElementaryHead
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LocalProduct
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
+public import MathlibNt.SieveTheory.MertensTheorem
+public import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+public import MathlibNt.SieveTheory.SuzukiLemma147JurkatRichertInterval
+public import MathlibNt.SieveTheory.SuzukiChenAdaptiveDepthAbsorption
+public import MathlibNt.SieveTheory.SuzukiDensityBoundingSieveBridge
+public import MathlibNt.SieveTheory.SuzukiMovingSigmaElementaryHead
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

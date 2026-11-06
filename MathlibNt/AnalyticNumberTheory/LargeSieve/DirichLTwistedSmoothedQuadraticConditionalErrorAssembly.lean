@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalAnnularLogDerivative
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedRightTailQuantitative
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedPsiClose
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalAnnularLogDerivative
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedRightTailQuantitative
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedPsiClose
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 

@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 
 /-!
 # A fixed smooth dyadic cutoff
@@ -7,6 +9,8 @@ The bump is chosen once, independently of every scale and Fourier frequency.
 Its outer radius is one around `3 / 2`, so its support is even smaller than
 the interval `[1 / 2, 3]` required for dyadic smoothing.
 -/
+
+@[expose] public section
 
 noncomputable section
 

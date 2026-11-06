@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveLedgerAssembly
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveLedgerAssembly
 
 /-! Compatibility import for the canonical module in its current library location. -/

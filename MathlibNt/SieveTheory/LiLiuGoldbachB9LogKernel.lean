@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
-import MathlibNt.SieveTheory.LiLiuGoldbachB8LogKernel
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8LogKernel
+
+
+@[expose] public section
 
 open scoped BigOperators
 

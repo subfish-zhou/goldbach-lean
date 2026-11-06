@@ -1,6 +1,8 @@
-import MathlibNt.Wu2004MeanValue.BalancedLargeAP
-import MathlibNt.Wu2004MeanValue.BalancedAPWeight
-import MathlibNt.Wu2004MeanValue.SourceMasks
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedLargeAP
+public import MathlibNt.Wu2004MeanValue.BalancedAPWeight
+public import MathlibNt.Wu2004MeanValue.SourceMasks
 
 /-!
 # Actual weighted AP distribution for a balanced common profile
@@ -9,6 +11,8 @@ All constants precede the ambient integer, source, coefficient, real prime
 profile, modulus cutoff and reduced residue selection. The lower bound
 `r(m) ≥ x^eta` is not needed: the stronger domain `r(m) ≥ 2` suffices.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset Filter
@@ -78,8 +82,8 @@ theorem balanced_common_profile_unit_natural (A eta : ℝ)
   have hrext : ∀ m ∈ Ioc L U, 2 ≤ rext m ∧ (m : ℝ) * rext m ≤ N := by
     intro m hm
     by_cases hmS : m ∈ S
-    · simpa only [rext, if_pos hmS] using hr m hmS
-    · rw [show rext m = 2 by simp only [rext, if_neg hmS]]
+    · simpa only [rext, ite_eq_left hmS] using hr m hmS
+    · rw [show rext m = 2 by simp only [rext, ite_eq_right hmS]]
       refine ⟨le_rfl, ?_⟩
       have hmU : (m : ℝ) ≤ (N : ℝ) ^ (1 - eta) :=
         (by exact_mod_cast (mem_Ioc.mp hm).2 : (m : ℝ) ≤ U).trans hU
@@ -95,11 +99,11 @@ theorem balanced_common_profile_unit_natural (A eta : ℝ)
           sourceMask S f m * ebar ((m : ℝ) * rext m) d v m else 0 := by
         apply sum_congr rfl
         intro m hm
-        simp only [sourceMask, rext, if_pos hm]
+        simp only [sourceMask, rext, ite_eq_left hm]
       _ = _ := by
         apply sum_subset hSinterval
         intro m _ hm
-        simp only [sourceMask, if_neg hm, zero_mul, ite_self]
+        simp only [sourceMask, ite_eq_right hm, zero_mul, ite_self]
   have hu := hunweighted N hN₁ (b + 1) (by linarith) Q L U
     (sourceMask S f) rext a hU hQ hL (abs_sourceMask_le S f 1 (by norm_num) hf) hrext ha
   have hu' : (∑ d ∈ Icc 1 Q, |actualAPSum S f r d (a d)|) ≤
@@ -135,9 +139,9 @@ theorem balanced_common_profile_weighted_natural (A eta F : ℝ)
     apply sum_congr rfl
     intro m _
     by_cases hm : m.Coprime d
-    · simp only [if_pos hm, g]
+    · simp only [ite_eq_left hm, g]
       field_simp
-    · simp only [if_neg hm, mul_zero]
+    · simp only [ite_eq_right hm, mul_zero]
   calc
     _ = (F + 1) * ∑ d ∈ Icc 1 Q, wuModulusWeight d * |actualAPSum S g r d (a d)| := by
       simp only [heq, abs_mul, abs_of_pos hF1, mul_sum]

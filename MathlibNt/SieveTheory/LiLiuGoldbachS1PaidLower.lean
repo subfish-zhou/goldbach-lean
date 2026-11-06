@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LevelSix
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
-import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerRosser
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LevelSix
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1MainMass
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter

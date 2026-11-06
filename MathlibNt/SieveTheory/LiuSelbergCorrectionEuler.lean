@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectionEuler
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectionEuler
 
 /-! Compatibility import for the canonical module in its current library location. -/

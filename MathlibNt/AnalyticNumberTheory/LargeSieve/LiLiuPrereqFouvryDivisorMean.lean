@@ -1,7 +1,9 @@
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Tactic
 
 /-!
 # Fixed-order divisor means and coefficient square sums
@@ -10,6 +12,8 @@ The actual ordered divisor function is the Dirichlet convolution power `ζ ^ k`.
 The mean estimate uses only the elementary hyperbola identity and the harmonic
 sum bound. The square majorant is unrestricted: no squarefree support is needed.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -110,7 +114,7 @@ theorem fouvryTau_mul_le (k l n : ℕ) :
     (fouvryTau_multiplicative (k * l)).multiplicative_factorization _ hn]
   simp only [Finsupp.prod, Nat.support_factorization]
   rw [← Finset.prod_mul_distrib]
-  apply Finset.prod_le_prod'
+  apply Finset.prod_le_prod
   intro p hp
   simp only [fouvryTau_prime_pow (Nat.prime_of_mem_primeFactors hp)]
   exact multichoose_mul_le _ _ _

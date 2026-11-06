@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantActual
-import MathlibNt.SieveTheory.LiLiuFouvryG9TransportPayment
-import MathlibNt.SieveTheory.LiLiuFouvryG9MainNormalization
-import MathlibNt.SieveTheory.LiLiuFouvryG9ExternalError
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RemainderMajorantActual
+public import MathlibNt.SieveTheory.LiLiuFouvryG9TransportPayment
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MainNormalization
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ExternalError
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

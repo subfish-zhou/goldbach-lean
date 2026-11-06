@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFIntervalDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFIntervalDensity
 
 /-!
 # Deleting zero-density primes without changing the actual density
@@ -8,6 +10,8 @@ a deleted prime have zero density, irrespective of their Rosser admissibility.
 In particular both entire defects, not merely their high-minimum parts, survive
 this reduction exactly.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

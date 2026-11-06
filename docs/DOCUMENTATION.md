@@ -104,15 +104,17 @@ homepage or compatibility redirect.
 
 ## Pinned generator and isolation
 
-The nested `docbuild/` Lake project uses Lean `v4.33.0-rc1` and doc-gen4's
-[official matching tag](https://github.com/leanprover/doc-gen4/tree/v4.33.0-rc1),
-frozen at `498457dedc5bf2eb884c5100804ef24c96b92a08`. Its committed manifest pins
+The nested `docbuild/` Lake project uses Lean `v4.35.0` and doc-gen4's
+[official matching tag](https://github.com/leanprover/doc-gen4/tree/v4.35.0),
+frozen at `0e1ffe2e4ba5ecfdfaf15c65b8d3805dbb7134ae`. Its committed manifest pins
 all generator dependencies. The theorem project and its core `lakefile.toml`,
 `lake-manifest.json` and `lean-toolchain` remain independent of this generator
 project. Documentation dependencies live under `docbuild/.lake/packages`;
 the generator reads the theorem project's existing mathlib installation in place.
+The driver keeps the legacy source format required by this doc-gen4 release.
+The main proof libraries and the independent Palomar sources use `module`.
 
-The [upstream README](https://github.com/leanprover/doc-gen4/blob/v4.33.0-rc1/README.md)
+The [upstream README](https://github.com/leanprover/doc-gen4/blob/v4.35.0/README.md)
 recommends a nested Lake project. Its normal `:docs` facets recursively document
 imports and Lean core. At this pinned version those facets and the renderer
 provide no external-documentation base-URL option. `GoldbachDocs.lean` therefore

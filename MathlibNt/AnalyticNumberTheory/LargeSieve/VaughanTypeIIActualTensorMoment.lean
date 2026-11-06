@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMoment
 
 /-! Compatibility import for the canonical module in its current library location. -/

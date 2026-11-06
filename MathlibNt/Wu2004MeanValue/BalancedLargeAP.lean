@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.BalancedPrincipalSelected
-import MathlibNt.Wu2004MeanValue.BalancedPrimitive
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedPrincipalSelected
+public import MathlibNt.Wu2004MeanValue.BalancedPrimitive
 
 /-! Actual unweighted AP distribution for the common balanced profile. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset

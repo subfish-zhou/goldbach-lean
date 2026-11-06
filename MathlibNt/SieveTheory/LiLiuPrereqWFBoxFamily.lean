@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSeparated
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSeparated
 
 /-!
 # Fixed multi-box weights at every real level split
@@ -9,6 +11,8 @@ The subsequent `LiLiuPrereqWFGeometry` and `LiLiuPrereqWFGeometricBoxes`
 derive this condition with Iwaniec's geometric parameter losses. Constructing
 the complete signed sieve family with its density remains a separate task.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

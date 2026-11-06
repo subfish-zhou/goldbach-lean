@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterAsymptotic
-import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterAsymptotic
+public import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 
 /-!
 # Mellin continuation of the genuine two-character convolution
@@ -9,6 +11,8 @@ transform of its proved summatory error. Only the first character must be
 quadratic; neither character must be primitive. This is not a source
 transcription of Bombieri's argument.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory Set Asymptotics
 open scoped Topology
@@ -164,7 +168,7 @@ theorem integrableOn_twoCharacterErrorKernel
     · exact twoCharacterCutoffError_isBigO_zero χ ψ _
     · simp only [neg_re]; linarith
   rw [MellinConvergent, cutoff_mellin_kernel,
-    integrableOn_indicator_iff measurableSet_Ioi] at h
+    integrableOn_indicator_iff measurableSet_Ioi.nullMeasurableSet] at h
   simpa only [Ioi_inter_Ioi, max_eq_left (show (0 : ℝ) ≤ 1 by norm_num)] using h
 
 /-- Holomorphy is proved from the actual `O(t^(3/4))` error. -/

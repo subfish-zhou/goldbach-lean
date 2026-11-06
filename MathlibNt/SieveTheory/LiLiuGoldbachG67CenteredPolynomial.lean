@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
-import MathlibNt.SieveTheory.LiLiuGoldbachG67G67Piecewise
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67G67Piecewise
+
+@[expose] public section
 
 open MeasureTheory Finset
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

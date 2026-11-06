@@ -1,10 +1,12 @@
-import AnalyticNumberTheory.Sieve.WeightedPan
-import AnalyticNumberTheory.Sieve.VaughanIdentity
-import Mathlib.Data.ZMod.Basic
-import AnalyticNumberTheory.LargeSieve.CharacterIndicators
-import Mathlib.Algebra.Order.Chebyshev
-import Mathlib.GroupTheory.Exponent
-import Mathlib.Data.ZMod.Units
+module
+
+public import AnalyticNumberTheory.Sieve.WeightedPan
+public import AnalyticNumberTheory.Sieve.VaughanIdentity
+public import Mathlib.Data.ZMod.Basic
+public import AnalyticNumberTheory.LargeSieve.CharacterIndicators
+public import Mathlib.Algebra.Order.Chebyshev
+public import Mathlib.GroupTheory.Exponent
+public import Mathlib.Data.ZMod.Units
 
 /-! # AnalyticNumberTheory.Sieve.PanMeanValueBody
 
@@ -52,6 +54,8 @@ all-character bound. Further assembly is in `PanAssembly.lean`;
 the main-term distinction is described in `PanMainTerm.lean`.
 -/
 
+@[expose] public section
+
 namespace AnalyticNumberTheory.Sieve
 
 open Finset Real
@@ -78,7 +82,7 @@ This holds for every `q`, including the trivial cases `q = 0,1`. -/
 theorem natInvMod_spec {q a : ℕ} (hcop : a.Coprime q) :
     a * natInvMod q a % q = 1 % q := by
   unfold natInvMod
-  rw [dif_pos hcop]
+  rw [dite_eq_left hcop]
   have hz : ((a * (a⁻¹ : ZMod q).val : ℕ) : ZMod q) = ((1 : ℕ) : ZMod q) := by
     rw [Nat.cast_mul]
     simpa using (ZMod.mul_val_inv hcop)
@@ -234,7 +238,7 @@ lemma isUnit_natInvMod_mul_residue {q a l : ℕ} (hq : 0 < q) (hcop_a : a.Coprim
   rw [hval, Nat.cast_mul]
   have hni : (natInvMod q a : ZMod q) = (a⁻¹ : ZMod q) := by
     unfold natInvMod
-    rw [dif_pos hcop_a]
+    rw [dite_eq_left hcop_a]
     exact ZMod.natCast_zmod_val (a⁻¹ : ZMod q)
   have hui : IsUnit (a⁻¹ : ZMod q) := by
     refine ⟨⟨(a⁻¹ : ZMod q), (a : ZMod q), ?_, ?_⟩, rfl⟩

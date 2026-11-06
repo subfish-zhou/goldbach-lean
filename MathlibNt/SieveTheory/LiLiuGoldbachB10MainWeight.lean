@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixes
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixes
+
+@[expose] public section
 
 open scoped BigOperators
 open MeasureTheory

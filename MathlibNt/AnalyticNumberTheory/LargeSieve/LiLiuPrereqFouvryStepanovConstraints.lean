@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovHasse
-import Mathlib.RingTheory.Polynomial.DegreeLT
-import Mathlib.LinearAlgebra.Dimension.Constructions
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovHasse
+public import Mathlib.RingTheory.Polynomial.DegreeLT
+public import Mathlib.LinearAlgebra.Dimension.Constructions
 
 /-!
 # The actual finite-dimensional Stepanov equations
@@ -9,6 +11,8 @@ The two polynomial families have degree strictly less than the integer `B`.
 The `k`th equation is Harcos (22), with its two distinct Hasse operators.
 No rank or nonzero-solution hypothesis is imposed on the equation matrix.
 -/
+
+@[expose] public section
 
 noncomputable section
 

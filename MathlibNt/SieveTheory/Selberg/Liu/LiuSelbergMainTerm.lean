@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergRemainder
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergRemainder
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
 
 /-!
 # Liu's factored Selberg main term
@@ -9,6 +11,8 @@ analytic estimates needed to bound its factors.  The component bounds below are
 transparent propositions; no Selberg or logarithmic-integral estimate is
 asserted.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -91,7 +95,7 @@ theorem fullDivisors_quadraticSum_eq_liuSelbergCoefficientFactor_of_support
   apply Finset.sum_congr rfl
   intro d1 hd1
   by_cases h1 : d1 ≤ paperQSourceCutoff N epsilon
-  · simp only [h1, if_true]
+  · simp only [h1, ite_true]
     apply Finset.sum_congr rfl
     intro d2 hd2
     by_cases h2 : d2 ≤ paperQSourceCutoff N epsilon

@@ -1,8 +1,10 @@
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
 
 /-!
 # Generic Selberg main-term identities
@@ -13,6 +15,8 @@ value of `g`, and the closed factorization of the divisor sum
 product.  These are the finite algebraic core of the Selberg main term,
 shared by every Goldbach-type sieve problem.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

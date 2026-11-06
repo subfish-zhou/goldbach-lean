@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10LogKernel
-import MathlibNt.SieveTheory.LiuPrimePairLogGrid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10LogKernel
+public import MathlibNt.SieveTheory.LiuPrimePairLogGrid
+
+@[expose] public section
 
 open scoped BigOperators Topology
 

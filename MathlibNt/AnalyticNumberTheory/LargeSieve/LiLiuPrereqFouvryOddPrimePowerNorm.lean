@@ -1,10 +1,14 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePowerStationary
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePowerStationary
 
 /-!
 Average the localized complete sum over translations by `m`. Each stationary
 orbit has a genuine quadratic Gauss norm. This retains the square-root saving
 at moduli `p * m²`, rather than estimating the orbit term by term.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -72,9 +76,9 @@ theorem completeKloosterman_odd_square_layer_norm_le_roots (p m : ℕ)
         if S u then ((m * m : ℕ) : ℝ) * Real.sqrt (p : ℝ) else 0 := by
     simp only [F, hS]
     by_cases hu : S u
-    · simp only [hu, if_true]
+    · simp only [hu, ite_true]
       exact oddPrimePower_stationary_orbit_norm p m hp2 hpm a d hd u hu.1 hu.2
-    · simp only [hu, if_false, sum_const_zero, norm_zero]
+    · simp only [hu, ite_false, sum_const_zero, norm_zero]
   have havg : (q : ℂ) * completeKloosterman q (a : ZMod q) d =
       ∑ u : ZMod q, ∑ t : ZMod q, F (u + (m : ZMod q) * t) := by
     have ht (t : ZMod q) :

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryMainGate
-import MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrection
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryMainGate
+public import MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrection
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -28,10 +32,10 @@ theorem progressionEuler_rough_le (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime �
     intro p hp
     by_cases hd : p ∣ v
     · have hnc : ¬p.Coprime v := fun hc => (hP p hp).1.coprime_iff_not_dvd.mp hc hd
-      rw [progressionDensity_prime v (hP p hp).1,if_neg hnc,sub_zero,if_pos hd]
+      rw [progressionDensity_prime v (hP p hp).1,ite_eq_right hnc,sub_zero,ite_eq_left hd]
       exact g9_euler_factor_payment hL (hrough p (hS (mem_filter.mpr ⟨hp,hd⟩)))
     · have hc := (hP p hp).1.coprime_iff_not_dvd.mpr hd
-      simp only [progressionDensity_prime v (hP p hp).1,if_pos hc,if_neg hd,mul_one,le_refl]
+      simp only [progressionDensity_prime v (hP p hp).1,ite_eq_left hc,ite_eq_right hd,mul_one,le_refl]
   have hpnonneg : ∀ p ∈ P, 0 ≤ 1-progressionDensity v p := by
     intro p hp
     exact sub_nonneg.mpr (progressionDensity_prime_nonneg_lt_one v (hP p hp).1 (hP p hp).2).2.le
@@ -40,7 +44,7 @@ theorem progressionEuler_rough_le (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime �
     simp only [prod_const]
     rfl
   calc
-    _ ≤ ∏ p ∈ P,(1-1/((p : ℝ)-1))*(if p ∣ v then C else 1) := prod_le_prod hpnonneg hpoint
+    _ ≤ ∏ p ∈ P,(1-1/((p : ℝ)-1))*(if p ∣ v then C else 1) := prod_le_prod₀ hpnonneg hpoint
     _ = g9BaseEuler P*C^S.card := by rw [prod_mul_distrib,he]; rfl
     _ ≤ _ := mul_le_mul_of_nonneg_left
       (pow_le_pow_right₀ hC ((card_le_card hS).trans hK)) (g9_baseEuler_nonneg P (fun p hp => (hP p hp).2))

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachOrdinaryLowerDensityFactors
-import MathlibNt.SieveTheory.SuzukiLemma147JurkatRichertInterval
-import MathlibNt.SieveTheory.SuzukiDensityBoundingSieveBridge
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachOrdinaryLowerDensityFactors
+public import MathlibNt.SieveTheory.SuzukiLemma147JurkatRichertInterval
+public import MathlibNt.SieveTheory.SuzukiDensityBoundingSieveBridge
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option warningAsError true

@@ -1,6 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Tactic
 
 /-!
 # Elementary finite objects for Mertens' theorems
@@ -10,6 +12,8 @@ and the corresponding Euler product.  It contains only elementary finite-sum,
 finite-product, positivity, and local logarithm estimates; analytic asymptotic
 results belong in later modules.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053MinusExclusion
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053MinusExclusion
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval

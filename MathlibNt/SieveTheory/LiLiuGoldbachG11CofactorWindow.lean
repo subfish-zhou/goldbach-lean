@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughQuotient
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabCount
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughQuotient
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabCount
+
+
+@[expose] public section
 
 set_option autoImplicit false
 

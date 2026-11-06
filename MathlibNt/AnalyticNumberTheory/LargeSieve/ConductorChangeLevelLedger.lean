@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanSmallRangeAndCharacters
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanSmallRangeAndCharacters
 
 /-!
  # Conductor grouping and change-level correction ledger
@@ -9,6 +11,8 @@ A finite, quantitative reduction from all nonprincipal Dirichlet characters to
 primitive characters grouped by conductor.  The principal summand is retained
 literally.  No prime-number theorem or Bombieri--Vinogradov assertion occurs.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

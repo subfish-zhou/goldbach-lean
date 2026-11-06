@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedMother
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedMother
+
+@[expose] public section
 
 open Finset LiLiuPrereqBuchstab
 open scoped BigOperators Classical
