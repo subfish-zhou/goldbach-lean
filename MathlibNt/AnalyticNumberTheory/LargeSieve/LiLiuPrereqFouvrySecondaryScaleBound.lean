@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCarrier
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryRatioCarrier
 
 /-!
 # An explicit envelope for the remaining secondary base sum
@@ -8,6 +10,8 @@ This coarse envelope uses `gcd(s,|A|) <= s`; the sharper occupied mean
 remains separately available. Divisor coefficients are paid by a proved
 uniform power bound, not an assumed arithmetic-error estimate.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

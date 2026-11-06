@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongRectangle
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9IntervalEndpoints
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LongRectangle
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9IntervalEndpoints
+
+@[expose] public section
 
 noncomputable section
 open Finset

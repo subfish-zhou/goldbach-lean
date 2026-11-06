@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSquareMeanToL1Dyadic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSquareMeanToL1Dyadic
 
 /-!
 # Standard Bombieri--Vinogradov: finite character orthogonality
@@ -8,6 +10,8 @@ reduced residue class and Dirichlet-character prefix sums.  In particular, the
 principal character is split literally before any estimate is made.  No
 Bombieri--Vinogradov conclusion is assumed or stated.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

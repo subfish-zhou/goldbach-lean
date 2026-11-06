@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePartitionLogarithmic
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePartitionLogarithmic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-!
 # Subpolynomial cost at the F87 prime-factor cutoff
@@ -8,6 +10,8 @@ The partition count is at most `x^ε`, uniformly for `2 ≤ T ≤ x` and
 `ω ≤ C*(log x)^(1/5)`, for any fixed positive `C`. In particular `C = 2`
 includes the product-variable cutoff used in F87, Section III.7, p. 628.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 open scoped Topology

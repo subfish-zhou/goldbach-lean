@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelFiniteExceptions
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelFiniteExceptions
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedQuadraticPointwiseSiegelWalfisz
 
 /-!
 # Tatuzawa exceptional uniqueness and the Landau--Siegel lower bound
@@ -17,6 +19,8 @@ uniqueness.  Proving that separation by Euler-product positivity / zero
 repulsion remains the analytic frontier; no such theorem is assumed to have
 been completed here.
 -/
+
+@[expose] public section
 
 open Complex Set
 

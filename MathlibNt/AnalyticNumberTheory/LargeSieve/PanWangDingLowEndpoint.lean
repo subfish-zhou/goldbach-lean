@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMovingPrefix
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPayment
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowMovingPrefix
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPayment
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Classical Finset

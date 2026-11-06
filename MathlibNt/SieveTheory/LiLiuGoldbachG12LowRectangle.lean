@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKGoldbachRectangle
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

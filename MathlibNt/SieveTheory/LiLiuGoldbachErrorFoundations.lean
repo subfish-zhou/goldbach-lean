@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
-import Mathlib.Data.Nat.Cast.Order.Field
-import Mathlib.Order.Interval.Finset.Nat
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachClosedTriples
+public import Mathlib.Data.Nat.Cast.Order.Field
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -29,7 +33,7 @@ private theorem real_pow_card_le_prod_of_mem_ge (s : Finset ℕ) (z : ℝ)
     (hz : 0 ≤ z) (hmem : ∀ p ∈ s, z ≤ (p : ℝ)) :
     z ^ s.card ≤ ∏ p ∈ s, (p : ℝ) := by
   simpa only [Finset.prod_const] using
-    (Finset.prod_le_prod (fun _ _ => hz) hmem)
+    (Finset.prod_le_prod₀ (fun _ _ => hz) hmem)
 
 /-- The filtered set of distinct prime divisors above `N^κ` has cardinality at most `20`
 once `1 ≤ n < N` and `1 / 21 < κ`. -/

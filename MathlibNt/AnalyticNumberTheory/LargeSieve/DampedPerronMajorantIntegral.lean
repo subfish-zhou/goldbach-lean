@@ -1,4 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+module
+
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+
+@[expose] public section
 
 open Real Set MeasureTheory intervalIntegral
 
@@ -19,12 +23,12 @@ lemma dampedPerronMajorantIntegrand_nonneg {ε L t : ℝ} (hL : 0 ≤ L) (ht : 0
     0 ≤ dampedPerronMajorantIntegrand ε L t := by
   by_cases h0 : t = 0
   · simp [dampedPerronMajorantIntegrand, h0]
-  · rw [dampedPerronMajorantIntegrand, if_neg h0]
+  · rw [dampedPerronMajorantIntegrand, ite_eq_right h0]
     positivity
 
 lemma dampedPerronMajorantIntegrand_le_head {ε L t : ℝ} (hL : 0 ≤ L) (hε : 0 ≤ ε)
     (ht : t ∈ Ioc (0 : ℝ) 1) : dampedPerronMajorantIntegrand ε L t ≤ L := by
-  rw [dampedPerronMajorantIntegrand, if_neg ht.1.ne']
+  rw [dampedPerronMajorantIntegrand, ite_eq_right ht.1.ne']
   have he : Real.exp (-ε * t) ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith [ht.1.le])
   have hm0 : 0 ≤ min 1 (L * t) := le_min zero_le_one (mul_nonneg hL ht.1.le)
   have hm : min 1 (L * t) ≤ L * t := min_le_right _ _
@@ -34,7 +38,7 @@ lemma dampedPerronMajorantIntegrand_le_head {ε L t : ℝ} (hL : 0 ≤ L) (hε :
 lemma dampedPerronMajorantIntegrand_le_inv {ε L t : ℝ} (hε : 0 ≤ ε) (hL : 0 ≤ L)
     (ht : 1 ≤ t) : dampedPerronMajorantIntegrand ε L t ≤ t⁻¹ := by
   have ht0 : 0 < t := zero_lt_one.trans_le ht
-  rw [dampedPerronMajorantIntegrand, if_neg ht0.ne']
+  rw [dampedPerronMajorantIntegrand, ite_eq_right ht0.ne']
   have he : Real.exp (-ε * t) ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith)
   have hm0 : 0 ≤ min 1 (L * t) := le_min zero_le_one (mul_nonneg hL ht0.le)
   have hm : min 1 (L * t) ≤ 1 := min_le_left _ _
@@ -52,7 +56,7 @@ lemma dampedPerronMajorantIntegrand_le_tail {ε L t : ℝ} (hε : 0 < ε) (_hL :
     simpa [one_div] using ht
   calc
     dampedPerronMajorantIntegrand ε L t ≤ t⁻¹ * Real.exp (-ε * t) := by
-      rw [dampedPerronMajorantIntegrand, if_neg ht0.ne', div_eq_mul_inv]
+      rw [dampedPerronMajorantIntegrand, ite_eq_right ht0.ne', div_eq_mul_inv]
       have hm : min 1 (L * t) ≤ 1 := min_le_left _ _
       have he0 : 0 ≤ Real.exp (-ε * t) := (Real.exp_pos _).le
       have hi0 : 0 ≤ t⁻¹ := inv_nonneg.mpr ht0.le
@@ -75,7 +79,7 @@ lemma dampedPerronMajorant_integrableOn_tail {ε L : ℝ} (hε : 0 < ε) (hL : 0
   · exact (dampedPerronMajorantIntegrand_measurable ε L).aestronglyMeasurable.restrict
   · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     rw [Real.norm_eq_abs, abs_of_nonneg (dampedPerronMajorantIntegrand_nonneg hL (zero_lt_one.trans ht).le)]
-    rw [dampedPerronMajorantIntegrand, if_neg (zero_lt_one.trans ht).ne', div_eq_mul_inv]
+    rw [dampedPerronMajorantIntegrand, ite_eq_right (zero_lt_one.trans ht).ne', div_eq_mul_inv]
     have hm : min 1 (L * t) ≤ 1 := min_le_left _ _
     have hi : t⁻¹ ≤ 1 := (inv_le_one₀ (zero_lt_one.trans ht)).mpr ht.le
     have he0 : 0 ≤ Real.exp (-ε * t) := (Real.exp_pos _).le

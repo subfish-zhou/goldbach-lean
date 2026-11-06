@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonance
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceDomain
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonance
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceDomain
 
 /-!
 # Actual secondary labels, with only the common r varying
@@ -8,6 +10,8 @@ The base retains `(n,n₂,s,h,n₂',s',h')`. Reindexing is exact on occupied
 ordered labels; in particular neither beta index nor frequency is identified.
 The signed coefficient weight is independent of the fiber coordinate `r`.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

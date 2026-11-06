@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModePayment
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDExclusion
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
 
 
 /-!
@@ -13,6 +15,8 @@ The full truncation tail and the complementary first-large-gcd contribution
 are paid after multiplication by alpha-squared. This is only the first gcd
 exclusion: it is neither `WGCDData.Small` (all five gcds) nor IV.3.
 -/
+
+@[expose] public section
 
 noncomputable section
 

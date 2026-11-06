@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergUniformEuler
+module
+
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergUniformEuler
 
 /-!
 # Growth of Liu's prime-divisor Euler factors
@@ -8,6 +10,8 @@ We split the prime divisors of `N` at the transparent cutoff
 the elementary estimate `log (1 + 1 / p) ≤ 1 / p` and the radical of `N`
 control the large primes.
 -/
+
+@[expose] public section
 
 open scoped BigOperators Topology
 
@@ -95,14 +99,14 @@ private theorem small_prime_divisor_product_le
     (N.primeFactors.filter (· ≤ y)).prod (fun p => 1 + ((p : ℝ)⁻¹)) ≤
         (N.primeFactors.filter (· ≤ y)).prod
           (fun p => (1 - ((p : ℝ)⁻¹))⁻¹) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p hp
         positivity
       · intro p hp
         exact one_add_prime_inv_le_one_sub_prime_inv_inv
           (Nat.prime_of_mem_primeFactors (mem_filter.mp hp).1)
     _ ≤ P.prod (fun p => (1 - ((p : ℝ)⁻¹))⁻¹) := by
-      apply Finset.prod_le_prod_of_subset_of_one_le hsub
+      apply Finset.prod_le_prod_of_subset_of_one_le₀ hsub
       · intro p hp
         exact (one_le_one_sub_prime_inv_inv
           (Nat.prime_of_mem_primeFactors (mem_filter.mp hp).1)).trans' zero_le_one
@@ -169,7 +173,7 @@ private theorem large_prime_divisor_product_le
         (fun p => 1 + ((p : ℝ)⁻¹)) ≤
         (N.primeFactors.filter (y < ·)).prod
           (fun p => Real.exp ((p : ℝ)⁻¹)) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p hp
         positivity
       · intro p hp

@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanSelectorHyperbolicPrimitiveL1
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanSelectorHyperbolicPrimitiveL1
 
 /-!
  # Rectangular sharp hyperbolic prefix maxima with an ambient scale
@@ -8,6 +10,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanSelectorHyperbolicP
 This leaf separates the endpoint `H` over which the prefix maximum is taken
 from the ambient support and damping scale `M` used by the selector estimate.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

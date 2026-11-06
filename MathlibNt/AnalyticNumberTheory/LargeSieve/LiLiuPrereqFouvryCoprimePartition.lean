@@ -1,10 +1,12 @@
-import Mathlib.Data.Nat.Bitwise
-import Mathlib.Data.Nat.Log
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Fintype.Card
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Nat.Bitwise
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic
 
 /-!
 # The coprimality partition of Fouvry
@@ -13,6 +15,8 @@ The binary separation argument underlying F84, Lemma 6 (pp. 226–227),
 and F87, Lemma 7 (p. 624). The exponent is the square of the bound on
 the number of distinct prime factors, as in F84's proof and F87's statement.
 -/
+
+@[expose] public section
 
 namespace LiLiuPrereqFouvry.CoprimePartition
 
@@ -44,7 +48,7 @@ theorem bitColor_spec {T a b : ℕ} (ha : a ≤ T) (hb : b ≤ T) (hab : a ≠ b
       b.testBit (bitColor T a b).1 ≠ (bitColor T a b).2 := by
   classical
   have h := exists_separating_bit ha hb hab
-  simpa only [bitColor, dif_pos h, ne_eq, true_and] using
+  simpa only [bitColor, dite_eq_left h, ne_eq, true_and] using
     And.intro (rfl : a.testBit (Classical.choose h).val =
       a.testBit (Classical.choose h).val) (Classical.choose_spec h).symm
 
@@ -83,7 +87,7 @@ theorem exists_paddedFactor {ω n p : ℕ} (hω : n.primeFactors.card ≤ ω)
     exact hp
   obtain ⟨i, hi⟩ := hp'
   refine ⟨⟨i.val, lt_of_lt_of_le i.isLt hω⟩, ?_⟩
-  simpa only [paddedFactor, dif_pos i.isLt] using hi
+  simpa only [paddedFactor, dite_eq_left i.isLt] using hi
 
 theorem paddedFactor_le {T ω n pad : ℕ} (hn : n ≤ T) (hpad : pad ≤ T)
     (i : Fin ω) : paddedFactor ω n pad i ≤ T := by

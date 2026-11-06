@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKMainGrowth
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKMainGrowth
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

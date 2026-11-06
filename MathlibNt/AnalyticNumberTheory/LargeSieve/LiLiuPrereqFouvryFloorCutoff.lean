@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
 
 /-!
 # Replacing the retained ceiling cutoff by the floor cutoff
@@ -10,6 +12,8 @@ actual signed masked finite sum, and estimate its change before any supremum.
 The sharper tail estimate uses the first omitted integer, not the last retained
 integer. All constants are independent of the arithmetic mask and residue.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -81,7 +85,7 @@ theorem dyadicPoissonTail_first_omitted_uniform (k : ℕ) :
       ‖dyadicPoissonTail t x H h‖ ≤
         (C / (1 + t * ((H : ℝ) + 1)) ^ k) * poissonNonzeroDecay t h := by
     by_cases hh : h.natAbs ≤ H
-    · simp only [dyadicPoissonTail, if_pos hh, norm_zero]
+    · simp only [dyadicPoissonTail, ite_eq_left hh, norm_zero]
       unfold poissonNonzeroDecay
       split_ifs <;> positivity
     · have hne : h ≠ 0 := by intro hz; subst h; simp at hh
@@ -95,8 +99,8 @@ theorem dyadicPoissonTail_first_omitted_uniform (k : ℕ) :
         exact add_le_add_right (mul_le_mul_of_nonneg_left hH ht.le) 1
       have hpow : (1 + t * ((H : ℝ) + 1)) ^ k ≤ (1 + |t * (h : ℝ)|) ^ k :=
         pow_le_pow_left₀ (by positivity) hbase k
-      simp only [dyadicPoissonTail, if_neg hh, dyadicCutoffPoissonRemainder,
-        if_neg hne, norm_mul, norm_smul, Real.norm_eq_abs, abs_of_pos ht,
+      simp only [dyadicPoissonTail, ite_eq_right hh, dyadicCutoffPoissonRemainder,
+        ite_eq_right hne, norm_mul, norm_smul, Real.norm_eq_abs, abs_of_pos ht,
         fourier_apply, Circle.norm_coe, mul_one, poissonNonzeroDecay]
       calc
         _ ≤ t * (C / (1 + |t * (h : ℝ)|) ^ (k + 2)) :=

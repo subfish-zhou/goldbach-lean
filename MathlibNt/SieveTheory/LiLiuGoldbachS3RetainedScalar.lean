@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMainBound
-import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMainBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionEvaluation
+
+@[expose] public section
 
 open MeasureTheory
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

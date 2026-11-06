@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AllPrimeRectangle
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryAPWindow
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AllPrimeRectangle
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryAPWindow
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridSource
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -48,10 +52,10 @@ theorem goldbachG11OrdinaryDivCount_centered (N d : ℕ) (S : Finset ℕ) (L U :
   apply sum_congr rfl
   intro m hm
   by_cases hmd : m.Coprime d
-  · simp only [if_pos hmd]
+  · simp only [ite_eq_left hmd]
     rw [goldbachG11OrdinaryAPWindow_card_inverse N m d (hS m hm) hL hLU hmd]
     ring
-  · simp only [if_neg hmd,goldbachG11OrdinaryAPWindow_empty_of_not_coprime N m d L U hNd hmd,
+  · simp only [ite_eq_right hmd,goldbachG11OrdinaryAPWindow_empty_of_not_coprime N m d L U hNd hmd,
       card_empty,Nat.cast_zero,mul_zero,sub_zero]
 
 /-- Specialize the exact identity to the same occupied G11 grid consumed by

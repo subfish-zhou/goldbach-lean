@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9PanDistribution
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9PanDistribution
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

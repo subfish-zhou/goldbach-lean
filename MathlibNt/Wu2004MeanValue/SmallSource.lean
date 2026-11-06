@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.SmallBV
+module
+
+public import MathlibNt.Wu2004MeanValue.SmallBV
 
 /-!
 # Small-coefficient Wu errors with fully independent real endpoints
@@ -9,6 +11,8 @@ whole cardinality, rather than rescaling BV separately at every coefficient.
 Extra logarithmic saving pays this loss. Endpoints, coefficients and supports
 can all be selected independently for each modulus.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

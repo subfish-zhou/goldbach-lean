@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactorNormalized
-import Mathlib.Analysis.Calculus.MeanValue
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactorNormalized
+public import Mathlib.Analysis.Calculus.MeanValue
 
 /-!
 # Mixed rectangular increments of the actual slow weight
@@ -8,6 +10,8 @@ Each increment costs its side length, not the number of sampled points.
 Consequently subdivision of any side does not increase the sum of these
 bounds. This is the local analytic estimate used by rectangular summation.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -40,7 +44,6 @@ theorem hasDerivAt_boxDiff (A B : ℝ) (ds js : List (Fin 5)) (lo hi x : Point)
     simp only [Function.update_of_ne hji] at hu hl
     have hh := hu.sub hl
     convert hh using 1
-    · rfl
     · ext t
       simp only [boxDiff, Pi.sub_apply, Function.update_comm hij]
     · rfl

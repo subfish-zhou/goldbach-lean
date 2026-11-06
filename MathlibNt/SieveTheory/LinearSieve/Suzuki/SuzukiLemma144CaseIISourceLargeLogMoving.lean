@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioDirectAssembly
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIExactRatioDirectAssembly
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology

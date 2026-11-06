@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorEnergy
 
 /-! Compatibility import for the canonical module in its current library location. -/

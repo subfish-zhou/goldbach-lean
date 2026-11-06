@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogZeroFree
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalNonquadraticConductorLogZeroFree
 
 /-!
 # Sharp conductor-logarithmic nonquadratic logarithmic derivative bound
@@ -8,6 +10,8 @@ for the L-value throughout a narrower strip, and that lower bound is then
 divided into the sharp derivative estimate.  No positive power of the modulus
 or height occurs.
 -/
+
+@[expose] public section
 
 open Complex Set
 

@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetGeneral
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetGeneral
 
 /-!
 # Gamma₅ budgets for bounded measurable weights
@@ -11,6 +13,8 @@ used without a separate integrability hypothesis.
 Identifying these kernels with the actual count gains remains a separate
 requirement; this module only discharges the analytic integrability step.
 -/
+
+@[expose] public section
 
 open Real Set MeasureTheory
 open scoped Interval

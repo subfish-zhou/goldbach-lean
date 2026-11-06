@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RectanglePrefixFinite
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNT
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RectanglePrefixFinite
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNT
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

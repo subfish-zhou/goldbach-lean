@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
 
 /-!
 # High-omega deletion at the original signed error
@@ -7,6 +9,8 @@ No well-factorability claim is made for a masked modulus sequence: the
 original signed `c` is retained throughout. Clean beta excludes the equality
 progression before the modulus divisor bound is used.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

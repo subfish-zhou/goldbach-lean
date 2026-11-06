@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Removing common prime factors from signed frequencies
@@ -8,6 +10,8 @@ The only analytic input is the primitive prime-power estimate. The descent
 retains the totient correction at modulus one, so both zero frequencies and
 arbitrary signed nonprimitive frequencies are included.
 -/
+
+@[expose] public section
 
 noncomputable section
 

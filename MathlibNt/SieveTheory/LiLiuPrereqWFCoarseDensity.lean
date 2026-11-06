@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensitySource
-import MathlibNt.SieveTheory.LiLiuPrereqWFRoughComparison
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensitySource
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRoughComparison
 
 /-!
 # The same ordinary rough density, with the genuine global F/f factors
@@ -9,6 +11,8 @@ is correspondingly `log (ceil D) / log z`. Monotonicity of the genuine JR
 functions then returns to `log D / log z` in the favorable directions.
 The moving-range power budget is retained explicitly in this module.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.CoarseDensity
 
@@ -20,11 +24,11 @@ open scoped Classical
 theorem roughOrdinaryDensity_lower (D : ℝ) (B : Finset ℕ) (g : ℕ → ℝ) :
     roughOrdinaryDensity false D B g = lowerSetDensity D g B := by
   simp only [roughOrdinaryDensity, ordinaryRoughSet, Bool.false_eq_true,
-    if_false, lowerSetDensity]
+    ite_false, lowerSetDensity]
 
 theorem roughOrdinaryDensity_upper (D : ℝ) (B : Finset ℕ) (g : ℕ → ℝ) :
     roughOrdinaryDensity true D B g = upperSetDensity D g B := by
-  simp only [roughOrdinaryDensity, ordinaryRoughSet, if_true, upperSetDensity]
+  simp only [roughOrdinaryDensity, ordinaryRoughSet, ite_true, upperSetDensity]
 
 theorem exp_sqrt_max_two_le_target {K : ℝ} (hK : 0 ≤ K) :
     Real.exp (Real.sqrt (max K 2)) ≤ Real.exp (6 * K + 2) := by
@@ -41,7 +45,7 @@ theorem dimensionOneProductBound_subset {P B : Finset ℕ} {g : ℕ → ℝ} {K 
     DimensionOneProductBound B g K := by
   intro w z hw hwz
   apply le_trans _ (hdim w z hw hwz)
-  apply prod_le_prod_of_subset_of_one_le (Finset.filter_subset_filter _ hBP)
+  apply prod_le_prod_of_subset_of_one_le₀ (Finset.filter_subset_filter _ hBP)
   · intro p hp
     exact inv_nonneg.mpr (sub_nonneg.mpr (hg p (hBP (mem_filter.mp hp).1)).2.le)
   · intro p hp _

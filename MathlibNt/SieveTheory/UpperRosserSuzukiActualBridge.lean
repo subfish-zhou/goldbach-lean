@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserDensityProducer
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserDensityProducer
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset
@@ -138,7 +142,7 @@ private theorem upperSuzukiUnnormalizedLayer_succ
           intro p₀ hp₀
           have hp₀z : p₀ < z := (Finset.mem_filter.mp hp₀).2
           by_cases hcut : p₀ ^ 3 < D
-          · rw [if_pos hcut]
+          · rw [ite_eq_left hcut]
             apply Finset.sum_congr
             · ext p₁
               simp only [Z, suzukiSupportedBelow, Finset.mem_filter]
@@ -173,7 +177,7 @@ private theorem upperSuzukiUnnormalizedLayer_succ
                     exact ⟨⟨⟨hpS, hpp₁.trans hp₁z⟩, hqp⟩, hpp₁⟩
                 rw [hcarrier]
                 ring
-          · rw [if_neg hcut]
+          · rw [ite_eq_right hcut]
             apply Finset.sum_eq_zero
             intro p₁ hp₁
             exact False.elim (hcut (Finset.mem_filter.mp hp₁).2.2)

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedRoughSharp
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedDivisors
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarPaid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedRoughSharp
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExpandedDivisors
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CollarPaid
+
+@[expose] public section
 
 open Filter
 noncomputable section

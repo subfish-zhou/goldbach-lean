@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacterElementaryPeriodBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacterElementaryPeriodBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowHighConductor
 
 /-!
 # Elementary-period Vaughan Type-I bound by row Cauchy
@@ -9,6 +11,8 @@ Inside either lane it uses finite Cauchy--Schwarz on the complete row index;
 there is no rowwise triangle inequality.  The sole lane triangle is applied to
 `first - middle` after both complete lanes have been bounded.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePower
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTwoPower
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLocalGlobal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePower
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTwoPower
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLocalGlobal
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWeilBridge
 
 
 /-!
@@ -13,6 +15,8 @@ then give the divisor/gcd envelope for every positive modulus. The existing
 Fourier completion yields Fouvry's Lemma 3, uniformly in signed frequencies and
 real interval endpoints; no complete-sum estimate remains as a hypothesis.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
-import MathlibNt.SieveTheory.LiuWeightMainSum
-import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
+public import MathlibNt.SieveTheory.LiuWeightMainSum
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+
+@[expose] public section
 
 open Filter
 open MathlibNt.SieveTheory.BombieriVinogradov

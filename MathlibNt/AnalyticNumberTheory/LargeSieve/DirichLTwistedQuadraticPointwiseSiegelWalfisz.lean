@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalContourNorm
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PointwisePrimitivePrefixAmplitudeBridge
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedQuadraticConditionalContourNorm
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedNonquadraticPointwiseSiegelWalfisz
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PointwisePrimitivePrefixAmplitudeBridge
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 

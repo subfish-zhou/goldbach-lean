@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairHarmonic
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterSingleAsymptotic
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterInduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairHarmonic
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterSingleAsymptotic
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterInduction
 
 /-!
 # A sublinear error for the genuine fourfold convolution
@@ -8,6 +10,8 @@ import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterInd
 This modern hyperbola argument combines the actual one-character main term,
 positivity, and the harmonic tail of the actual second pair.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory
 open scoped Topology

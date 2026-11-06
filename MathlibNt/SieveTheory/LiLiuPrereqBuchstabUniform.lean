@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBands
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBands
 
 /-!
 # Uniform Buchstab asymptotics for the actual rough-integer count
@@ -8,6 +10,8 @@ works for every `u ∈ [u₀,M]`. The earlier cap-100 interface remains a specia
 The normalization is proved positive, and the count retains the unit, real
 floor endpoint, strict small-prime cutoff, and prime-square endpoint.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

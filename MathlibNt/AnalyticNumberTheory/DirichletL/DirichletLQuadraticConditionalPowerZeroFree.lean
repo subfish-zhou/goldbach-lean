@@ -1,9 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ZetaPolePlusLogBound
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrincipalEulerCorrectionLogBound
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDifferenceBound
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ZetaPolePlusLogBound
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrincipalEulerCorrectionLogBound
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDifferenceBound
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
 
 /-!
 # Closed quadratic zero-free ingredients
@@ -14,6 +16,8 @@ argument once its sharp derivative budgets have been instantiated, and the
 high-height `(3,4,1)` contradiction while consuming the actual principal
 Euler-correction and pole-plus-log zeta bounds.
 -/
+
+@[expose] public section
 
 open Complex Set
 
@@ -251,7 +255,7 @@ theorem one_le_dirichletLQuadraticConditionalPowerZeroFreeH
     have hlogtwo : 0 ≤ Real.log (|2 * t| + 2) :=
       Real.log_nonneg (by linarith [abs_nonneg (2 * t)])
     have hinv : 0 < 1 / |2 * t| := one_div_pos.mpr habs
-    simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dif_neg ht]
+    simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dite_eq_right ht]
     linarith
 
 /-- The conductor logarithm is dominated by the common scale. -/
@@ -265,7 +269,7 @@ theorem one_add_log_conductorHeightCutoff_le_quadraticH
     have hlogtwo : 0 ≤ Real.log (|2 * t| + 2) :=
       Real.log_nonneg (by linarith [abs_nonneg (2 * t)])
     have hinv : 0 < 1 / |2 * t| := one_div_pos.mpr habs
-    simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dif_neg ht]
+    simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dite_eq_right ht]
     linarith
 
 /-- For nonzero height, the pole-plus-log factor is also dominated by the
@@ -279,7 +283,7 @@ theorem one_add_log_twoHeight_add_inv_le_quadraticH
       exact Nat.mul_ne_zero (NeZero.ne q) (by simp [dirichletLHeightBlock]))
   have hlog : 0 ≤ Real.log (dirichletLConductorHeightCutoff q t) :=
     Real.log_nonneg hcut
-  simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dif_neg ht]
+  simp only [dirichletLQuadraticConditionalPowerZeroFreeH, dite_eq_right ht]
   linarith
 
 /-- A genuine conditional quadratic headline.  A Siegel-type lower bound at

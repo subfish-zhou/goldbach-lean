@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridDisjointEnvelope
-import MathlibNt.SieveTheory.PrimeReciprocalLogScale
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridDisjointEnvelope
+public import MathlibNt.SieveTheory.PrimeReciprocalLogScale
+
+@[expose] public section
 
 open Finset Filter
 open scoped BigOperators Topology Classical

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridCost
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridCost
+
+@[expose] public section
 
 open Finset Filter
 open scoped BigOperators Classical

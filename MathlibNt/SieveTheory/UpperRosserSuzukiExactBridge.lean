@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.UpperRosserSuzukiActualBridge
+module
+
+public import MathlibNt.SieveTheory.UpperRosserSuzukiActualBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

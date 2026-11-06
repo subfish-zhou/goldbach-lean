@@ -1,8 +1,12 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportOriginal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportOriginal
 
 /-! Fixed-scale divisor growth on the actual nonzero progression difference.
 Only its arithmetic bound uses the auxiliary scale; physical M, T, x, Y and
 the actual tuple mask are unchanged. -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

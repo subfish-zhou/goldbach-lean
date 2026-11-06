@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Arithmetic.PrimeReciprocalLogScale
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.PrimeReciprocalLogScale
 
 /-!
 # Prime reciprocal sums on fixed logarithmic rectangles
@@ -14,6 +16,8 @@ then give a reusable simple-function limit for fixed Darboux grids.
 
 No moving boundary or kernel-weighted transfer is asserted here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.PrimeReciprocalLogRectangle
 

@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalPNT
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrincipalPNT
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanQuotientBounds
 
 /-! Uniform elementary quotient transport through PanQuotientBounds;
 no nonprincipal-character theorem is consumed. -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanPrincipal
 open Filter MathlibNt.SieveTheory.LiuWeight
 open scoped Topology

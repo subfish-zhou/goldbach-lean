@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418Unconditional
-import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization
+module
+
+public import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418Unconditional
+public import MathlibNt.SieveTheory.LinearSieve.Richert.Richert1969Ordinary418Specialization
 
 /-!
 # The modern Bombieri producer in Richert's weighted source chain
@@ -9,6 +11,8 @@ premise in the existing ordinary-to-weighted Richert argument. The two
 Jurkat--Richert Theorem A density lemmas remain explicit assumptions; neither
 the historical Bombieri density proof nor a generic sieve theorem is claimed.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.Bombieri1965RichertWeightedConsumer
 

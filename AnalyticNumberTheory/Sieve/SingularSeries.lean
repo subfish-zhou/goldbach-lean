@@ -1,18 +1,20 @@
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 
 /-! # AnalyticNumberTheory.Sieve.SingularSeries
 
@@ -39,6 +41,8 @@ References:
   - Liu, Z. (2022), "A Corrected Simplified Proof of Chen's Theorem", arXiv:2203.07871
   - Halberstam & Richert, "Sieve Methods" (1974)
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

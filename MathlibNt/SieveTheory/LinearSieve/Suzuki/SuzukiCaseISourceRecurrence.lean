@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

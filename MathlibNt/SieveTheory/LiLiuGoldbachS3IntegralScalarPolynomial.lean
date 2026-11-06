@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialData
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMajorant
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialData
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarMajorant
+
+@[expose] public section
 
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple

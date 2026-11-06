@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointRegime
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaElevenPrimeSumIdentification
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaTwelveCarrierEquality
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiErrorEnvelopeCeilBridge
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointRegime
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaElevenPrimeSumIdentification
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSigmaTwelveCarrierEquality
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset MeasureTheory Set

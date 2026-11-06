@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionPhase
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionPhase
 
 /-!
 # Individual cancellation on a real IV.3 paired section
@@ -7,6 +9,8 @@ Both floor cutoffs and all original filters are retained. Small-root
 freezing and the exact sieve reduction connect this carrier to the
 proved reciprocal interval theorem, with only `tau(|a|)` as sieve cost.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -134,18 +138,18 @@ theorem wKSectionPairResidueSum_norm_eq
           (hU (mem_filter.mp hu).1) (hU (mem_filter.mp hu₀).1) hmod
         have hka : k.Coprime a.natAbs := hcp.1.2.2.1.symm
         simp only [hp.1, hp.2.1, hp.2.2.1, hp.2.2.2.1, hp'.1, hp'.2.1,
-          hp'.2.2.1, hp'.2.2.2.1, hcp.1, hcp.2, hmod, and_self, if_true, true_and,
+          hp'.2.2.1, hp'.2.2.2.1, hcp.1, hcp.2, hmod, and_self, ite_true, true_and,
           hroot, hroot', hdata.2.2.2, root]
-        rw [if_pos hka]
+        rw [ite_eq_left hka]
       · have hz := wKSection_sieved_phase_eq (a := a) (r := r) (n₁ := n₁)
           (s := s) (s' := s') hkD
           (iv3CorrelationNumerator K.1.2.1 n₁ n₂ n₂' s s' a h h' *
             wPhaseInverse (K.D' * n₂ * n₂') (n₁ * r * s * s'))
-        simp only [if_neg hcp] at hz
+        simp only [ite_eq_right hcp] at hz
         simp only [hp.1, hp.2.1, hp.2.2.1, hp.2.2.2.1, hp'.1, hp'.2.1,
-          hp'.2.2.1, hp'.2.2.2.1, true_and, hmod, and_true, if_neg hcp,
+          hp'.2.2.1, hp'.2.2.2.1, true_and, hmod, and_true, ite_eq_right hcp,
           ← hz, mul_zero]
-    · simp only [hmod, and_false, false_and, if_false, mul_zero]
+    · simp only [hmod, and_false, false_and, ite_false, mul_zero]
   rw [heq, norm_mul]
   have hroot : ‖root‖ = 1 := by
     simp only [root, norm_mul, norm_star, norm_wActualSmallRootFactor, mul_one]

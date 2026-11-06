@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalParameters
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalParameters
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-! Uniform local C2 scales. The ambient scale and the local scale stay distinct. -/
+@[expose] public section
+
 namespace G12LocalScale
 open Real Filter
 open scoped Topology

@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
 
 /-! The actual progression density, in the standard multiplicative omega interface.
 All identities retain the given density at every natural number, including zero.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

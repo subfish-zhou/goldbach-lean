@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4SiegelLowerBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4SiegelLowerBound
 
 /-! Compatibility import for the canonical module in its current library location. -/

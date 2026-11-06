@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCertificate
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarTables
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PolynomialCertificate
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarTables
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset
@@ -8,7 +12,9 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 
 theorem s3pCoeffs_eq (z : ℝ) : s3eval s3pCoeffs z = goldbachS3_innerPolynomial 24 48 z := by
-  have hc : s3pCoeffs = S3Polynomial.innerCoeffs 24 48 := by decide +kernel
+  have hc : s3pCoeffs = S3Polynomial.innerCoeffs 24 48 := by
+    apply S3Polynomial.eq_of_num_den_eq
+    decide +kernel
   rw [hc]
   exact S3Polynomial.eval_innerCoeffs 24 48 z
 
@@ -16,7 +22,9 @@ theorem s3q0_eq (y : ℝ) :
     s3eval s3q0 y = (s3eval s3pCoeffs (0+y) + (0+y)/10^9) *
       (-8/(3-0)*(∑ k ∈ range 64, (y/(3-0))^k) +
        360/(29-45*0)*((∑ k ∈ range 64, (45*y/(29-45*0))^k) + (5/2 : ℝ)*(3/5)^64)) := by
-  have hc : s3q0 = S3Polynomial.segmentCoeffs s3pCoeffs 0 := by decide +kernel
+  have hc : s3q0 = S3Polynomial.segmentCoeffs s3pCoeffs 0 := by
+    apply S3Polynomial.eq_of_num_den_eq
+    decide +kernel
   rw [hc]
   simpa only [Rat.cast_zero] using S3Polynomial.eval_segmentCoeffs s3pCoeffs 0 y
 
@@ -24,7 +32,9 @@ theorem s3q1_eq (y : ℝ) :
     s3eval s3q1 y = (s3eval s3pCoeffs ((1/3)+y) + ((1/3)+y)/10^9) *
       (-8/(3-(1/3))*(∑ k ∈ range 64, (y/(3-(1/3)))^k) +
        360/(29-45*(1/3))*((∑ k ∈ range 64, (45*y/(29-45*(1/3)))^k) + (5/2 : ℝ)*(3/5)^64)) := by
-  have hc : s3q1 = S3Polynomial.segmentCoeffs s3pCoeffs (1/3) := by decide +kernel
+  have hc : s3q1 = S3Polynomial.segmentCoeffs s3pCoeffs (1/3) := by
+    apply S3Polynomial.eq_of_num_den_eq
+    decide +kernel
   rw [hc]
   simpa only [Rat.cast_div, Rat.cast_one, Rat.cast_ofNat] using
     S3Polynomial.eval_segmentCoeffs s3pCoeffs (1/3) y
@@ -33,7 +43,9 @@ theorem s3q2_eq (y : ℝ) :
     s3eval s3q2 y = (s3eval s3pCoeffs ((1/2)+y) + ((1/2)+y)/10^9) *
       (-8/(3-(1/2))*(∑ k ∈ range 64, (y/(3-(1/2)))^k) +
        360/(29-45*(1/2))*((∑ k ∈ range 64, (45*y/(29-45*(1/2)))^k) + (5/2 : ℝ)*(3/5)^64)) := by
-  have hc : s3q2 = S3Polynomial.segmentCoeffs s3pCoeffs (1/2) := by decide +kernel
+  have hc : s3q2 = S3Polynomial.segmentCoeffs s3pCoeffs (1/2) := by
+    apply S3Polynomial.eq_of_num_den_eq
+    decide +kernel
   rw [hc]
   simpa only [Rat.cast_div, Rat.cast_one, Rat.cast_ofNat] using
     S3Polynomial.eval_segmentCoeffs s3pCoeffs (1/2) y

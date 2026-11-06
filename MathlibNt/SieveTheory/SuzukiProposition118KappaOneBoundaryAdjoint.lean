@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118KappaOneBoundaryAdjoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118KappaOneBoundaryAdjoint
 
 /-! Compatibility import for the canonical module in its current library location. -/

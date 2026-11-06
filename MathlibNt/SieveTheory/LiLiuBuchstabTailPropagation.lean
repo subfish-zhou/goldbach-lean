@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBounds
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBounds
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

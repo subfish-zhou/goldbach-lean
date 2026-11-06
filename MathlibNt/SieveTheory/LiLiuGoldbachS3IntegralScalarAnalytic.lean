@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarPolynomial
+
+@[expose] public section
 
 open Set MeasureTheory Finset
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

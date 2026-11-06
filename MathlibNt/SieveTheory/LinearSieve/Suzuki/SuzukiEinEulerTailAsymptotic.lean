@@ -3,9 +3,11 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 
 /-!
 # The classical Euler--Ein tail asymptotic
@@ -16,6 +18,8 @@ This module proves unconditionally that
 
 for the Suzuki `Ein` used in `SuzukiStandardUpperAdjoint`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 
@@ -265,7 +269,7 @@ private theorem harmonic_sub_suzukiEin_le (n : ℕ) (hn : 2 ≤ n) :
           simpa [one_mul, Real.rpow_one, sub_eq_add_neg, add_comm, add_left_comm, add_assoc,
             mul_assoc, mul_left_comm, mul_comm] using
             (integrableOn_rpow_mul_exp_neg_mul_rpow (p := (1 : ℝ)) (s := (1 : ℝ))
-              (b := (((n - 1 : ℕ) : ℝ))) (by norm_num) le_rfl hpos)
+              (b := (((n - 1 : ℕ) : ℝ))) (by norm_num) zero_lt_one hpos)
         simpa [mul_assoc, mul_left_comm, mul_comm] using hbase.const_mul (n : ℝ))
   refine h_int.trans ?_
   have h_eq :

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensity
 
 /-!
 # Large-D genuine F/f density for the actual geometric rough carrier
@@ -7,6 +9,8 @@ The threshold is chosen before the cutoff, prime set, density, and product
 constant. The moving range follows from `z ≥ D^(ε²)` and an explicit power
 budget. When `z < D^(ε²)`, the actual rough carrier is empty instead.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.CoarseDensity
 

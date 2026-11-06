@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularExplicitShell
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ProductionDyadicConductorGeometry
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularExplicitShell
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ProductionDyadicConductorGeometry
 
 /-!
 # Conductor-cell local actual Vaughan Type-II shells
@@ -9,6 +11,8 @@ apply the rectangular aspect gate at `Q = 2 * i`.  In particular, the
 coefficient-`L¹` family term remains the literal term over the actual cell, and
 the complementary filtered family is called residual rather than extreme.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

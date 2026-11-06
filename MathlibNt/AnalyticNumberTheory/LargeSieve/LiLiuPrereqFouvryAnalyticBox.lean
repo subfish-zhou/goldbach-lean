@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryEffectiveAnalytic
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDyadicCoordinates
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactorDifference
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryEffectiveAnalytic
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDyadicCoordinates
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactorDifference
 
 /-!
 # Concrete normalized slow-phase parameters on actual dyadic W blocks
@@ -9,6 +11,8 @@ The parameter bound is derived from a member of the actual floor-retained
 carrier. It therefore applies to the entire continuous normalized rectangle
 without mistaking an arbitrary key-box member for positive canonical data.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

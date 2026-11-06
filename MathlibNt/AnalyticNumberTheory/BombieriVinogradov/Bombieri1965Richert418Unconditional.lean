@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4SiegelLowerBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LandauSiegelToStandardBVCanonicalSmoothing
-import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4SiegelLowerBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LandauSiegelToStandardBVCanonicalSmoothing
+public import MathlibNt.AnalyticNumberTheory.BombieriVinogradov.Bombieri1965Richert418
 
 /-!
 # Unconditional modern producer for Richert (4.18)
@@ -13,6 +15,8 @@ estimate. No analytic source proposition is assumed.
 This is a modern replacement proof, not a transcription of Bombieri's
 Theorem 5 density argument or of an uninspected Prachar proof.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418
 

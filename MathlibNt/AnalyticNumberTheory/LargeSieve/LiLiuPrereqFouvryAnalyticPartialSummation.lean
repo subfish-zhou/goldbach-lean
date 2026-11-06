@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPrefix
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangleSlowVariation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPrefix
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangleSlowVariation
 
 /-!
 # Concrete slow-weight removal from the actual extracted dispersion sum
@@ -8,6 +10,8 @@ The degree-five variation loss is derived from actual floor-retained tuples.
 Empty blocks are treated separately. All arithmetic coefficients, phases,
 support conditions and the coupled cutoff remain inside genuine prefixes.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

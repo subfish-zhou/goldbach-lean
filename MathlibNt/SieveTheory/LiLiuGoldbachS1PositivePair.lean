@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1AlphaNormalizedLower
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaNormalizedLower
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1AlphaNormalizedLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaNormalizedLower
+
+@[expose] public section
 
 open MathlibNt.SieveTheory.SwitchingPrinciple
 

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdCost
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdCost
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryResonanceBound
 
 /-!
 # Refined secondary means on the original occupied fibers
@@ -7,6 +9,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryReson
 All fixed-data multiplicities and the original signed weights are retained.
 The new bound is no worse than the earlier dyadic mean on every occupied base.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

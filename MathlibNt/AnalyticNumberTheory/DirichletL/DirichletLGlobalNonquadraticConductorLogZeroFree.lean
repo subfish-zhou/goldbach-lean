@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDifferenceBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogDerivativeBound
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDifferenceBound
 
 /-!
 # A conductor-logarithmic global nonquadratic zero-free region
@@ -9,6 +11,8 @@ The de la Vallée Poussin product lower bound is combined directly with the
 natural-order conductor-height value and derivative estimates.  In particular,
 the resulting width contains no positive power of the modulus.
 -/
+
+@[expose] public section
 
 open Complex Set
 

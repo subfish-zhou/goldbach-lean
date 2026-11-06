@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelConvolution
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelConvolution
 
 /-!
 # Explicit floor-sum control of the quadratic Siegel convolution discrepancy
@@ -8,6 +10,8 @@ The cutoff error is then separated into a short floor error and a genuinely
 oscillatory long tail.  In particular, the floor error costs only the cutoff
 `m`, rather than the ambient length `X`.
 -/
+
+@[expose] public section
 
 open Complex Finset
 open DirichletLAbelWeightVariation

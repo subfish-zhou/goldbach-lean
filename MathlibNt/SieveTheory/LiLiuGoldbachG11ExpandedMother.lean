@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridDisjointEnvelope
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridDisjointEnvelope
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

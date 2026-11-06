@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayMonotonicity
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayMonotonicity
 
 /-!
 # Exponential coalescence of the actual Jurkat--Richert delay pair
@@ -8,6 +10,8 @@ Monotonicity then supplies a common limit with the same rate. This module does
 not identify that limit with `1`; that normalization is a separate obligation
 in the proof of (5.10). No asymptotic estimate is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

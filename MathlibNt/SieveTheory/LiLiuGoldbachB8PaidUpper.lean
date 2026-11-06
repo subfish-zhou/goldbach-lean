@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8RosserFactor
-import MathlibNt.SieveTheory.LiLiuGoldbachB8PanDistribution
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8RosserFactor
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8PanDistribution
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

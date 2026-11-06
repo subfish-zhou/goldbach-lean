@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachClosedLowerBound
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachClosedLowerBound
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

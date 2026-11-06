@@ -1,9 +1,13 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetGeneral
-import MathlibNt.Wu2004MeanValue.GammaFiveLossSections
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetGeneral
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossSections
 
 /-! Exact logarithmic loss from imposing the Gamma₅ legal section cutoff.
 These pointwise identities are independent of the weight H. Applications to
 counting still require the full and legal integral transport identities. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open Real
@@ -16,7 +20,7 @@ theorem sectionLog_half {W B : ℝ} (hL : 0 < W-B) (hB : W/2 ≤ B) :
     sectionLog W (W-B) (W/2) = log (B/(W-B)) := by
   have hW : 0 < W := by linarith
   by_cases h : W-B < W/2
-  · rw [sectionLog, if_pos h]
+  · rw [sectionLog, ite_eq_left h]
     congr 1
     field_simp
     ring
@@ -24,7 +28,7 @@ theorem sectionLog_half {W B : ℝ} (hL : 0 < W-B) (hB : W/2 ≤ B) :
     have hr : B/(W-B) = 1 := by
       apply (div_eq_one_iff_eq hL.ne').mpr
       linarith
-    simp only [sectionLog, if_neg h, hr, log_one]
+    simp only [sectionLog, ite_eq_right h, hr, log_one]
 
 /-- Removing the legal cutoff gives the two branches of the loss logarithm. -/
 theorem sectionLog_difference {W B r : ℝ} (hL : 0 < W-B)
@@ -33,7 +37,7 @@ theorem sectionLog_difference {W B r : ℝ} (hL : 0 < W-B)
       if r ≤ W-B then log (B/(W-B)) else log ((W-r)/r) := by
   rw [sectionLog_half hL hB]
   by_cases h : r ≤ W-B
-  · simp only [sectionLog, if_neg (not_lt.mpr h), if_pos h, sub_zero]
+  · simp only [sectionLog, ite_eq_right (not_lt.mpr h), ite_eq_left h, sub_zero]
   · have hBr : W-B < r := lt_of_not_ge h
     have hB0 : 0 < B := by linarith
     have hWr : 0 < W-r := by linarith
@@ -44,7 +48,7 @@ theorem sectionLog_difference {W B r : ℝ} (hL : 0 < W-B)
       · apply mul_pos hr
         linarith
       · exact mul_pos hL hWr
-    rw [if_neg h, sectionLog, if_pos hBr, ← log_div hx hy]
+    rw [ite_eq_right h, sectionLog, ite_eq_left hBr, ← log_div hx hy]
     congr 1
     field_simp [hB0.ne', hr.ne', hL.ne', hWr.ne']
     ring
@@ -76,23 +80,23 @@ theorem sectionLog_loss_identity {S B v : ℝ}
       have hh : v/S ≤ (1-B)/2 := (div_le_iff₀ hS).mpr (by nlinarith)
       linarith
   by_cases hc : v ≤ S*(1-B)/2
-  · rw [if_pos (hcut.mpr hc), generalKernel, if_pos ⟨hv.1,hc⟩]
+  · rw [ite_eq_left (hcut.mpr hc), generalKernel, ite_eq_left ⟨hv.1,hc⟩]
     ring
   · have hn : ¬(S*(1-2*B) ≤ v ∧ v ≤ S*(1-B)/2) := fun h => hc h.2
-    rw [if_neg (fun h => hc (hcut.mp h)), generalKernel, if_neg hn]
+    rw [ite_eq_right (fun h => hc (hcut.mp h)), generalKernel, ite_eq_right hn]
     have heq : (1-v/S-v/S)/(v/S) = (S-2*v)/v := by
       field_simp
       ring
     rw [heq]
     by_cases he : v < S/3
-    · rw [if_pos ⟨lt_of_not_ge hc,he⟩]
+    · rw [ite_eq_left ⟨lt_of_not_ge hc,he⟩]
       ring
     · have hvE : v = S/3 := le_antisymm hv.2 (le_of_not_gt he)
       have hnE : ¬(S*(1-B)/2 < v ∧ v < S/3) := fun h => he h.2
       have hratio : (S-2*v)/v = 1 := by
         apply (div_eq_one_iff_eq hv0.ne').mpr
         linarith
-      rw [if_neg hnE, hratio, log_one, mul_zero, mul_zero]
+      rw [ite_eq_right hnE, hratio, log_one, mul_zero, mul_zero]
 
 /-- Full logarithmic section before imposing t ≤ v/S. -/
 noncomputable def fullSectionLog (S B v : ℝ) : ℝ :=
@@ -129,8 +133,8 @@ theorem full_sub_legal_kernel {S B : ℝ}
     have hg : generalKernel S B v = 0 := by
       by_contra hn
       exact hleft (generalKernel_support hS hB hBhi hn).1.le
-    simp only [fullSectionLog, legalSectionLog, sectionLog, if_neg (not_lt.mpr hF),
-      if_neg (not_lt.mpr (hU.trans hF)), sub_self, mul_zero, hg]
+    simp only [fullSectionLog, legalSectionLog, sectionLog, ite_eq_right (not_lt.mpr hF),
+      ite_eq_right (not_lt.mpr (hU.trans hF)), sub_self, mul_zero, hg]
 
 /-- Weighted form of the exact loss identity, without extra integrability
 hypotheses: multiplication by the constant commutes with the interval integral. -/

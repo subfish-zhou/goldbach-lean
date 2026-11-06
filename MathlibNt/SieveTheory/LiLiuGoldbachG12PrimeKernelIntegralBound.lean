@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossMesh
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossMesh
+
+@[expose] public section
 
 open Set
 

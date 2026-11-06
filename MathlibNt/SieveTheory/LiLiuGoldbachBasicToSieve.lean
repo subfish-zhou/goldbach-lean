@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -111,7 +115,7 @@ theorem goldbachBasicWeight_nonneg_of_le {zAlpha zTau n : ℕ}
       unfold OmegaAtLeast at *
       omega
     simp [goldbachBasicWeight, h3, h2]
-  · simp only [goldbachBasicWeight, h3, and_false, if_false, add_zero, sub_zero]
+  · simp only [goldbachBasicWeight, h3, and_false, ite_false, add_zero, sub_zero]
     split_ifs <;> simp_all
 
 theorem prime_not_dvd_of_coprime {n M ℓ : ℕ}
@@ -386,7 +390,7 @@ theorem goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
         have hright :
             goldbachS1Point N u n - goldbachS2Point N T n -
                 goldbachS4Point N u n - goldbachBadPoint N n ≤ 0 := by
-          rw [hs1, if_pos hrough, hbad]
+          rw [hs1, ite_eq_left hrough, hbad]
           have hs2' := goldbachS2Point_nonneg N n T
           have hs4' : (1 : ℤ) ≤ goldbachS4Point N u n := hs4
           omega
@@ -394,7 +398,7 @@ theorem goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
       · have hright :
             goldbachS1Point N u n - goldbachS2Point N T n -
                 goldbachS4Point N u n - goldbachBadPoint N n ≤ 0 := by
-          rw [hs1, if_neg hrough, hbad]
+          rw [hs1, ite_eq_right hrough, hbad]
           have hs2' := goldbachS2Point_nonneg N n T
           have hs4' := goldbachS4Point_nonneg N n u
           omega
@@ -406,7 +410,7 @@ theorem goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
           have hright :
               goldbachS1Point N u n - goldbachS2Point N T n -
                   goldbachS4Point N u n - goldbachBadPoint N n ≤ 0 := by
-            rw [hs1, if_pos hrough, hbad]
+            rw [hs1, ite_eq_left hrough, hbad]
             have hs2' : (1 : ℤ) ≤ goldbachS2Point N T n := hs2
             have hs4' := goldbachS4Point_nonneg N n u
             omega
@@ -414,14 +418,14 @@ theorem goldbachBasicWeight_ge_s1_sub_s2_sub_s4_sub_bad
         · have hweightOne : goldbachBasicWeight ⌈u⌉₊ ⌈T⌉₊ n = 1 := by
             have h2false : ¬(LeastPrimeFactorAtLeast ⌈T⌉₊ n ∧ OmegaAtLeast 2 n) := hT2
             simp [goldbachBasicWeight, hrough, h3, h2false]
-          rw [hweightOne, hs1, if_pos hrough, hbad]
+          rw [hweightOne, hs1, ite_eq_left hrough, hbad]
           have hs2' := goldbachS2Point_nonneg N n T
           have hs4' := goldbachS4Point_nonneg N n u
           omega
       · have hright :
             goldbachS1Point N u n - goldbachS2Point N T n -
                 goldbachS4Point N u n - goldbachBadPoint N n ≤ 0 := by
-          rw [hs1, if_neg hrough, hbad]
+          rw [hs1, ite_eq_right hrough, hbad]
           have hs2' := goldbachS2Point_nonneg N n T
           have hs4' := goldbachS4Point_nonneg N n u
           omega

@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveTriangleTransport
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveTriangleTransport
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 
 /-!
 # Literal nested Gamma₅ integral
@@ -9,6 +11,8 @@ nested integral. The legal version retains both insertion inequalities.
 The interval [1,3] is justified from the transported support, rather than
 inserted as an additional cutoff in the source.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open MeasureTheory Set
@@ -33,7 +37,7 @@ theorem triangle_source_inner {S B : ℝ} (hB : B < 1/2)
   have hs : Function.support (triangleSource S B legal H t) ⊆ Icc t B := by
     intro u hu
     by_contra hn
-    exact hu (if_neg (fun h => hn ⟨h.2.1,h.2.2.1⟩))
+    exact hu (ite_eq_right (fun h => hn ⟨h.2.1,h.2.2.1⟩))
   rw [integral_eq_interval ht.2 hs]
   apply intervalIntegral.integral_congr
   rw [uIcc_of_le ht.2]
@@ -55,7 +59,7 @@ theorem triangle_literal_product {S B : ℝ} (hS : 0 < S) (hB : B < 1/2)
     by_contra hn
     apply ht
     have he (u : ℝ) : triangleSource S B legal H t u = 0 := by
-      apply if_neg
+      apply ite_eq_right
       exact fun h => hn ⟨h.1,h.2.1.trans h.2.2.1⟩
     simp only [he, integral_zero]
   rw [show (∫ p : ℝ × ℝ, triangleSource S B legal H p.1 p.2) =

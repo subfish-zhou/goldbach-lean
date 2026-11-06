@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.ActualAP
+module
+
+public import MathlibNt.Wu2004MeanValue.ActualAP
 
 /-! Exact source splitting. The split exponent need not equal the final
 modulus-level exponent subsequently chosen by the small-source theorem. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 
@@ -17,8 +21,8 @@ theorem abs_sourceMask_le (S : Finset ℕ) (f : ℕ → ℝ) (F : ℝ)
     (hF : 0 ≤ F) (hf : ∀ m ∈ S, |f m| ≤ F) (m : ℕ) :
     |sourceMask S f m| ≤ F := by
   by_cases hm : m ∈ S
-  · simpa only [sourceMask, if_pos hm] using hf m hm
-  · simpa only [sourceMask, if_neg hm, abs_zero] using hF
+  · simpa only [sourceMask, ite_eq_left hm] using hf m hm
+  · simpa only [sourceMask, ite_eq_right hm, abs_zero] using hF
 
 theorem actualAPSum_split_source (S : Finset ℕ) (f r : ℕ → ℝ)
     (L U d b : ℕ) (hS : S ⊆ Icc 1 U) :
@@ -37,14 +41,14 @@ theorem actualAPSum_split_source (S : Finset ℕ) (f r : ℕ → ℝ)
           if m.Coprime d then sourceMask S f m * ebar ((m : ℝ) * r m) d b m else 0 := by
         apply sum_congr rfl
         intro m hm
-        rw [sourceMask, if_pos (mem_filter.mp hm).1]
+        rw [sourceMask, ite_eq_left (mem_filter.mp hm).1]
       _ = _ := by
         apply sum_subset hsub
         intro m hm hn
         have hmS : m ∉ S := by
           intro h
           exact hn (mem_filter.mpr ⟨h, by have := (mem_Ioc.mp hm).1; omega⟩)
-        simp only [sourceMask, if_neg hmS, zero_mul, ite_self]
+        simp only [sourceMask, ite_eq_right hmS, zero_mul, ite_self]
   rw [← hhigh]
   unfold actualAPSum
   rw [sum_filter, sum_filter]
@@ -63,16 +67,16 @@ theorem sourceMask_endpoint_extension (S : Finset ℕ) (f r : ℕ → ℝ)
   constructor
   · intro m
     by_cases hm : m ∈ S
-    · simpa only [if_pos hm] using hS m hm
-    · simp only [if_neg hm, mul_zero]
+    · simpa only [ite_eq_left hm] using hS m hm
+    · simp only [ite_eq_right hm, mul_zero]
       exact ⟨le_rfl, hx⟩
   · intro T d b
     unfold actualAPSum
     apply sum_congr rfl
     intro m _
     by_cases hm : m ∈ S
-    · simp only [if_pos hm]
-    · simp only [sourceMask, if_neg hm, zero_mul, ite_self]
+    · simp only [ite_eq_left hm]
+    · simp only [sourceMask, ite_eq_right hm, zero_mul, ite_self]
 
 theorem ceil_log_source_cutoff (x b : ℝ) (hlog : 2 ≤ Real.log x) (hb : 0 ≤ b) :
     Real.log x ^ (2 * b) ≤ (⌈Real.log x ^ (2 * b)⌉₊ : ℝ) ∧
@@ -99,8 +103,8 @@ theorem legal_source_endpoint_extension (S : Finset ℕ) (f r : ℕ → ℝ)
   constructor
   · intro m hm
     by_cases hmS : m ∈ S
-    · simpa only [if_pos hmS] using hS m hmS
-    · rw [if_neg hmS]
+    · simpa only [ite_eq_left hmS] using hS m hmS
+    · rw [ite_eq_right hmS]
       have hx0 : 0 ≤ x := by linarith
       have hroot : 2 ≤ Real.sqrt x := (Real.le_sqrt (by norm_num) hx0).mpr (by norm_num; exact hx)
       have hsquare := Real.sq_sqrt hx0
@@ -112,8 +116,8 @@ theorem legal_source_endpoint_extension (S : Finset ℕ) (f r : ℕ → ℝ)
     apply sum_congr rfl
     intro m _
     by_cases hm : m ∈ S
-    · simp only [if_pos hm]
-    · simp only [sourceMask, if_neg hm, zero_mul, ite_self]
+    · simp only [ite_eq_left hm]
+    · simp only [sourceMask, ite_eq_right hm, zero_mul, ite_self]
 
 end
 end Wu2004MeanValue

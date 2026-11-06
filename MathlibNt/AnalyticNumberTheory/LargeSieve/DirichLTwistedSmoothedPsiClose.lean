@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVCharacterOrthogonality
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLTwistedSmoothedPerron
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVCharacterOrthogonality
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 open scoped BigOperators ArithmeticFunction

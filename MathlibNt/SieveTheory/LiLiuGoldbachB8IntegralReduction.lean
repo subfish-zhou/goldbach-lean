@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridLimit
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridLimit
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval

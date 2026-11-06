@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFFamilyDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFFamilyDensity
 
 /-!
 # Euler and absolute bounds for the same truncated signed family
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqWFFamilyDensity
 The tail includes primes equal to the truncation point. The absolute estimate
 uses the actual squarefree aggregate, not the sum of magnitudes of its labels.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.EdgeDensity
 
@@ -64,11 +68,10 @@ theorem signedFamilyDensity_abs_le_plusProduct (upper : Bool) (P : Finset ℕ)
       hD hε (geometricSieveLabel_mem P hP (by linarith) hε)
       (geometricSieveLabel_head_lt P hP (by linarith) hε hcut)
       (primeProduct_squarefree s hsp) (by simpa only [hspf] using hsP), abs_mul]
-    apply mul_le_one₀
+    refine (mul_le_of_le_one_left (abs_nonneg _) ?_).trans ?_
     · cases upper <;>
         simp only [normalizedSignedSet, normalizedUpperSet, normalizedLowerSet,
-          Bool.false_eq_true, if_true, if_false] <;> split_ifs <;> norm_num
-    · exact abs_nonneg _
+          Bool.false_eq_true, ite_true, ite_false] <;> split_ifs <;> norm_num
     · unfold signedSmallWeight
       split_ifs
       · exact upperSmallWeight_boundedOne P D ε _
@@ -97,14 +100,14 @@ theorem plusProduct_le_full_euler (P B : Finset ℕ) (hBP : B ⊆ P)
     rw [hfilter, prod_inv_distrib] at h
     exact h
   have hplus : (∏ p ∈ B, (1 + g p)) ≤ ∏ p ∈ P, (1 + g p) := by
-    apply prod_le_prod_of_subset_of_one_le hBP
+    apply prod_le_prod_of_subset_of_one_le₀ hBP
     · intro p hp
       linarith [(hg p (hBP hp)).1]
     · intro p hp _
       linarith [(hg p hp).1]
   have hprod : (∏ p ∈ P, (1 + g p)) * V ≤ 1 := by
     rw [show V = ∏ p ∈ P, (1 - g p) from rfl, ← prod_mul_distrib]
-    exact prod_le_one
+    exact prod_le_one₀
       (fun p hp => mul_nonneg (by linarith [(hg p hp).1])
         (sub_nonneg.mpr (hg p hp).2.le))
       (fun p _ => by nlinarith [sq_nonneg (g p)])

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147LowerFiniteFactor
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147LowerFiniteFactor
 
 /-!
 # The even continuous-layer limit at the lower source
@@ -9,6 +11,8 @@ module defines the unconditional limit honestly in `ℝ≥0∞`, as the supremum
 the even partial sums.  This allows the production depth to vary with the
 finite carrier: no fixed-depth diagonal argument is used.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators ENNReal
 open Finset

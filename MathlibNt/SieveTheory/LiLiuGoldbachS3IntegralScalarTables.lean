@@ -1,4 +1,6 @@
-import Mathlib.Data.Rat.Defs
+module
+
+public import Mathlib.Data.Rat.Defs
 
 /-!
 # Exact numerical tables for the S3 integral certificate
@@ -7,6 +9,8 @@ The coefficient tables are checked against the named finite constructions
 in `LiLiuGoldbachS3IntegralScalarCoefficients`. Primitive values and final
 rational comparison constants are verified in the same module.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

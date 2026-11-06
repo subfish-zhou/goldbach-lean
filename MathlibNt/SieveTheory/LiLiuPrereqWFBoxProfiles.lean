@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedRounding
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedRounding
 
 /-!
 # Occurrence-preserving canonical box profiles
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqWFSignedRounding
 Profiles are sorted multisets of labels, not sets of labels. Distinct prime
 sets with the same multiplicities give the same profile.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

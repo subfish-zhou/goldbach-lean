@@ -1,5 +1,7 @@
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.BigOperators.Ring.Finset
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
 
 /-!
 # Finite polynomial data for the S3 integral certificate
@@ -8,6 +10,8 @@ The finite rational polynomials and their primitives do not depend on the
 analytic sieve estimates. Their derivative and envelope bounds are proved
 in the analytic modules.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

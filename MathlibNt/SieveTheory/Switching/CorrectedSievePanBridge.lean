@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Switching.Weights
+module
+
+public import MathlibNt.SieveTheory.Switching.Weights
 
 /-!
 # The corrected sieve and the Pan counting bridge
@@ -9,6 +11,8 @@ Pan remainder. Support and truncation hypotheses remain explicit.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta
@@ -75,7 +79,7 @@ the noncoprime `R₁` in `eqn-r0`. At the end, the source-faithful signed API is
 theorem moebius_sq_eq_one_of_squarefree {d : ℕ} (hd : Squarefree d) :
     (((ArithmeticFunction.moebius d : ℤ) : ℝ) ^ 2) = 1 := by
   have hz : (ArithmeticFunction.moebius d : ℤ) ^ 2 = 1 := by
-    rw [ArithmeticFunction.moebius_sq, if_pos hd]
+    rw [ArithmeticFunction.moebius_sq, ite_eq_left hd]
   exact_mod_cast hz
 
 

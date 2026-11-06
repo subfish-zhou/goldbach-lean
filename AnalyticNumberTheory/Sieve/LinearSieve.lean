@@ -1,9 +1,11 @@
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.AlmostPrime
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.AlmostPrime
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Tactic.Linarith
 
 /-! # AnalyticNumberTheory.Sieve.LinearSieve
 
@@ -32,6 +34,8 @@ References:
   - Halberstam & Richert, "Sieve Methods" (1974), Ch. 8
   - Liu, Z. (2022), arXiv:2203.07871, §III
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

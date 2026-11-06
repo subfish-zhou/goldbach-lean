@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionSourceCount
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanLiMainTermEnvelope
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionSourceCount
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanLiMainTermEnvelope
+
+@[expose] public section
 
 noncomputable section
 open Finset
@@ -113,7 +117,7 @@ theorem liuMainPanCoprimeIntervalSum_abs_le_maxL
   have hS : (AnalyticNumberTheory.Sieve.unitResidues d).Nonempty := ⟨N % d, hl⟩
   unfold liuMainPanCoprimeIntervalMaxL
   dsimp only
-  rw [dif_pos hS]
+  rw [dite_eq_left hS]
   exact Finset.le_max'
     ((AnalyticNumberTheory.Sieve.unitResidues d).image
       (fun l => |liuMainPanCoprimeIntervalSum main Y A₁ A₂ d l f|))

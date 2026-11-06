@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanPrimeSquare
-import Mathlib.Data.Int.NatPrime
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanPrimeSquare
+public import Mathlib.Data.Int.NatPrime
 
 /-!
 # Four-root bound over powers of two
@@ -8,6 +10,8 @@ If two unit roots have equal squares modulo `2^(n+1)`, their reductions
 modulo `2^n` agree up to sign. Each of these two reduction fibers has size
 two. The proof uses only divisibility of the difference of squares.
 -/
+
+@[expose] public section
 
 noncomputable section
 

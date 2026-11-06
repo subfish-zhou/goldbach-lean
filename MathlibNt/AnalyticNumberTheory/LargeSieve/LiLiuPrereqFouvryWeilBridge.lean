@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Data.ZMod.Coprime
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Data.ZMod.Coprime
 
 /-!
 # The exact interval and gcd form of the conditional Weil-to-Fouvry bridge
@@ -9,6 +11,8 @@ import Mathlib.Data.ZMod.Coprime
 The complete Kloosterman estimate is an explicit hypothesis, not a proved
 input. The interval conversion and the divisor/logarithm payment are proved.
 -/
+
+@[expose] public section
 
 noncomputable section
 

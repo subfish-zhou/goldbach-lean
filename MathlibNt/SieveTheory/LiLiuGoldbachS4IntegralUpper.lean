@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachS4PairKernelUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4PairKernelUpper
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

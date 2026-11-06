@@ -5,8 +5,12 @@ The production API currently represents V₁(D,z)/V(z), rather than V₁(D,z)
 itself: each summand is ν(p) V(p)/V(z).  This is the exact finite object to
 which Suzuki Lemma 8.4 applies.  No final Lemma-14.4 error package is assumed.
 -/
-import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
+module
+
+public import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset

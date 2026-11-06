@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenParameterBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenParameterBridge
+
+@[expose] public section
 
 open Set Filter Topology
 

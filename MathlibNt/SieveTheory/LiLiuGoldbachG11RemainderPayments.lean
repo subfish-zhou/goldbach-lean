@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -31,7 +35,7 @@ theorem goldbachG11_smallOutput_paid (δ : ℝ) (hδ : 0 < δ) :
   calc
     _ ≤ 16000*(N : ℝ)^((1 : ℝ)/4) := by linarith
     _ ≤ _ := hp
-    _ ≤ _ := by convert hs using 1 <;> first | rfl | ring
+    _ ≤ _ := by convert hs using 1 <;> ring
 
 
 end

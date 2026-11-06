@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.DimensionOneLowerFactor
+
+@[expose] public section
 
 open Set Filter MeasureTheory
 open scoped Topology

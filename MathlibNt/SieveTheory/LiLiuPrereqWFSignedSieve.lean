@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedFamily
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedFamily
 
 /-!
 # Finite sieve inequalities for the fixed normalized signed family
@@ -11,6 +13,8 @@ We first sum the actual small Rosser weights on the positive and negative
 rough branches separately. Only then do we use the normalized rough sieve
 inequalities. The tight lower-even convention remains that of (18).
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -142,12 +146,12 @@ theorem normalizedSignedSet_small_sum_bounds (P A r : Finset ℕ)
         (∑ a ∈ A.powerset, signedSmallWeight true P D ε r.card (a.prod id)) := by
   obtain ⟨hlo, hhi⟩ := smallWeight_powerset_bounds P A hD hε hε1 hA
   by_cases heven : Even r.card
-  · simp only [signedSmallWeight, LooseSign, Bool.false_eq_true, if_false,
-      if_true, heven, not_true_eq_false,
+  · simp only [signedSmallWeight, LooseSign, Bool.false_eq_true, ite_false,
+      ite_true, heven, not_true_eq_false,
       normalizedLowerSet, normalizedUpperSet]
     constructor <;> split_ifs <;> simp_all
-  · simp only [signedSmallWeight, LooseSign, Bool.false_eq_true, if_false,
-      if_true, heven, not_false_eq_true,
+  · simp only [signedSmallWeight, LooseSign, Bool.false_eq_true, ite_false,
+      ite_true, heven, not_false_eq_true,
       normalizedLowerSet, normalizedUpperSet]
     constructor <;> split_ifs <;> simp_all
 
@@ -355,7 +359,7 @@ theorem geometricSieveLabel_mem (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime)
       exact hpB (mem_filter.mpr ⟨hpP, hprime, h⟩)
     simpa only [geometricLower, pow_zero, mul_one] using le_of_not_gt hnot
   have hex := exists_geometric_upper hD hε p
-  rw [geometricSieveLabel, dif_pos hex, mem_geometricPrimeBox]
+  rw [geometricSieveLabel, dite_eq_left hex, mem_geometricPrimeBox]
   refine ⟨hpP, hprime, ?_, Nat.find_spec hex⟩
   rcases Nat.eq_zero_or_pos (Nat.find hex) with hzero | hpos
   · simpa only [hzero] using hbase

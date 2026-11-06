@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanStationary
-import Mathlib.GroupTheory.Index
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanStationary
+public import Mathlib.GroupTheory.Index
 
 /-!
 # Unconditional square-root cancellation at prime-square moduli
@@ -8,6 +10,8 @@ The stationary-phase identity is evaluated using equal-sized reduction
 fibers and the two-root bound in a field. This proves the primitive
 prime-square case, including `p=2`; the prime-modulus Weil theorem is not used.
 -/
+
+@[expose] public section
 
 noncomputable section
 

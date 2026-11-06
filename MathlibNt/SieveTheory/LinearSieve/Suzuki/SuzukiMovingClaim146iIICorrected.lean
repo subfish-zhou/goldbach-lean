@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146iII
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146iII
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCutoffClaim146iiiSanitized
+
+@[expose] public section
 
 open Set Filter Topology
 open MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

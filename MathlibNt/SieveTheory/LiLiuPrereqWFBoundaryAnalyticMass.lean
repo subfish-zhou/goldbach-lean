@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalytic
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalytic
 
 /-!
 # The actual rough boundary mass
@@ -7,6 +9,8 @@ A failed full-product or parity-qualified cubic-prefix test supplies one
 distinguished prime. Its complementary prefix and suffix are kept disjoint
 until their weight factors exactly. Only then are both subsets summed freely.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -159,8 +163,8 @@ theorem mass_le_window_sums (upper : Bool) (R : Finset ℕ) {D a : ℝ}
           (prod_nonneg (fun p hp => hg p (hS hp))))
           (prod_nonneg (fun p hp => hg p (hT hp)))
       by_cases hv : Valid D a b i
-      · simp only [hv, hv.2.2, if_true, le_refl]
-      · simp only [hv, if_false]
+      · simp only [hv, hv.2.2, ite_true, le_refl]
+      · simp only [hv, ite_false]
         split_ifs <;> linarith
     _ = _ := by
       simp only [indices, sum_product]

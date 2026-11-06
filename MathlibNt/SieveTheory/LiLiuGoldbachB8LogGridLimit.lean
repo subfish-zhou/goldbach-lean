@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridRegion
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8LogGridRegion
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+
+@[expose] public section
 
 open Finset MeasureTheory Set
 open scoped ENNReal BigOperators Interval

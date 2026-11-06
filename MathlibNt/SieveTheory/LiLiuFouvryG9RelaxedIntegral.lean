@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedMass
-import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators Topology

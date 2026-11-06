@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9SieveTotal
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9SieveTotal
+@[expose] public section
+
 noncomputable section
 open Finset Filter
 open MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

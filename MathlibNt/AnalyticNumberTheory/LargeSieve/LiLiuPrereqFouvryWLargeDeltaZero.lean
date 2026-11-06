@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDZero
 
 /-!
 # The same-mask zero mode for a large common modulus
@@ -12,6 +14,8 @@ This bounds the actual masked zero mode, not a centered covariance or
 Siegel--Walfisz cancellation restricted to a mask. The original progression
 sum, nonzero modes, and their signed-error composition are separate results.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -107,8 +111,8 @@ theorem masked_beta_pair_abs_le_largeDelta
     apply sum_le_sum
     intro p _
     by_cases hc : WCompatible q r p.1 p.2 ∧ P ((q, r), p)
-    · simp only [if_pos hc, if_pos hc.1.2.2, le_refl]
-    · simp only [if_neg hc, abs_zero]
+    · simp only [ite_eq_left hc, ite_eq_left hc.1.2.2, le_refl]
+    · simp only [ite_eq_right hc, abs_zero]
       split_ifs <;> positivity
   · have hempty (p : ℕ × ℕ) (hp : p ∈ N ×ˢ N) :
         ¬ (WCompatible q r p.1 p.2 ∧ P ((q, r), p)) := by
@@ -116,7 +120,7 @@ theorem masked_beta_pair_abs_le_largeDelta
       exact hδ (hP ((q, r), p)
         (mem_filter.mpr ⟨mem_product.mpr ⟨mem_product.mpr ⟨hq, hr⟩, hp⟩, hc.1⟩)
         hc.2)
-    rw [sum_eq_zero (fun p hp ↦ if_neg (hempty p hp)), abs_zero]
+    rw [sum_eq_zero (fun p hp ↦ ite_eq_right (hempty p hp)), abs_zero]
     exact mul_nonneg (by positivity) (sum_nonneg (fun n _ ↦ sq_nonneg (β n)))
 
 /-- Quantitative common-modulus zero-mode bound, with arbitrary signed

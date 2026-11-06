@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelConvolution
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticTatuzawaExceptionalUniqueness
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelConvolution
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticTatuzawaExceptionalUniqueness
+
+@[expose] public section
 
 open Complex Finset
 open ArithmeticFunction hiding log

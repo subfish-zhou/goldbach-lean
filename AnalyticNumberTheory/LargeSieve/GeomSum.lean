@@ -1,11 +1,13 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Order.Interval.Finset.SuccPred
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.Order.Interval.Finset.SuccPred
+public import Mathlib.Tactic
 
 /-! # AnalyticNumberTheory.LargeSieve.GeomSum
 
@@ -25,6 +27,8 @@ the geometric-series formula, `|e(x)−1| = 2|sin(πx)|`, and
 References: Iwaniec--Kowalski, "Analytic Number Theory" (2004), Ch. 7 Lemma 7.6;
 Davenport, "Multiplicative Number Theory", Ch. 27.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

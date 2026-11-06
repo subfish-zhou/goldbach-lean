@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDispersion
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDispersion
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 
 /-!
 # The finite U and V main-term expansions
@@ -9,6 +11,8 @@ expand both modulus sums, then remove the coprimality restriction by
 Mobius inversion. The mixed term is rearranged as in (7.13).
 This stops before Poisson summation and its error estimates.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -89,7 +93,7 @@ theorem dispersionU_eq_double_sum
   all_goals
     simp only [Nat.Coprime] at hq hr ⊢
     simp [hq, hr, div_eq_mul_inv, mul_inv_rev]
-    <;> ring
+  ring
 
 
 /-- The mixed term with the m-sum exposed, as in F84 (7.13), without inverse notation. -/
@@ -116,7 +120,7 @@ theorem dispersionV_eq_progression_sum
       apply Finset.sum_congr rfl
       intro m _
       by_cases hm : m.Coprime q
-      · rw [if_pos hm]
+      · rw [ite_eq_left hm]
         unfold progressionMass
         simp_rw [Finset.mul_sum, Finset.sum_mul]
         apply Finset.sum_congr rfl
@@ -126,22 +130,22 @@ theorem dispersionV_eq_progression_sum
           by_cases hr : m.Coprime r
           · have hc : n.Coprime q ∧ m.Coprime r ∧
                 Int.ModEq q ((m : ℤ) * n) a := ⟨hn, hr, hmn⟩
-            simp only [if_pos hmn, if_pos hr, if_pos hc]
+            simp only [ite_eq_left hmn, ite_eq_left hr, ite_eq_left hc]
             ring
           · have hc : ¬(n.Coprime q ∧ m.Coprime r ∧
                 Int.ModEq q ((m : ℤ) * n) a) := fun h => hr h.2.1
-            simp only [if_pos hmn, if_neg hr, if_neg hc, mul_zero]
+            simp only [ite_eq_left hmn, ite_eq_right hr, ite_eq_right hc, mul_zero]
         · have hc : ¬(n.Coprime q ∧ m.Coprime r ∧
               Int.ModEq q ((m : ℤ) * n) a) := fun h => hmn h.2.2
-          simp only [if_neg hmn, if_neg hc, mul_zero, zero_mul]
-      · rw [if_neg hm, mul_zero, zero_mul]
+          simp only [ite_eq_right hmn, ite_eq_right hc, mul_zero, zero_mul]
+      · rw [ite_eq_right hm, mul_zero, zero_mul]
         symm
         apply Finset.sum_eq_zero
         intro n _
         have hc : ¬(n.Coprime q ∧ m.Coprime r ∧
             Int.ModEq q ((m : ℤ) * n) a) :=
           fun h => hm (coprime_of_product_congruent ha h.2.2).1
-        simp only [if_neg hc, mul_zero]
+        simp only [ite_eq_right hc, mul_zero]
     _ = _ := by
       rw [Finset.sum_comm, Finset.mul_sum]
       apply Finset.sum_congr rfl

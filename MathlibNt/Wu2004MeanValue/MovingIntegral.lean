@@ -1,4 +1,8 @@
-import MathlibNt.Wu2004MeanValue.MovingKernel
+module
+
+public import MathlibNt.Wu2004MeanValue.MovingKernel
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset MeasureTheory

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpEnvelope
-import MathlibNt.SieveTheory.LiLiuGoldbachG12IntegralReduction
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpEnvelope
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12IntegralReduction
+
+@[expose] public section
 
 noncomputable section
 open MeasureTheory Set
@@ -38,11 +42,11 @@ theorem integral_eq_density (h : ℝ → ℝ) :
 
 theorem sharp_low {u : ℝ} (hu : u < 1/10) :
     G12SharpWeight.weight u = (561990/1000000 : ℝ) * goldbachG11AuthorWeight u := by
-  simp only [G12SharpWeight.weight, G12SharpWeight.factor, if_pos hu]
+  simp only [G12SharpWeight.weight, G12SharpWeight.factor, ite_eq_left hu]
 
 theorem sharp_high {u : ℝ} (hu : 1/10 ≤ u) :
     G12SharpWeight.weight u = (564383/1000000 : ℝ) * goldbachG11AuthorWeight u := by
-  simp only [G12SharpWeight.weight, G12SharpWeight.factor, if_neg (not_lt.mpr hu)]
+  simp only [G12SharpWeight.weight, G12SharpWeight.factor, ite_eq_right (not_lt.mpr hu)]
 
 private theorem low_integrable (g : ℝ → ℝ)
     (hg : ContinuousOn g (Icc (4/53 : ℝ) (4/33))) :

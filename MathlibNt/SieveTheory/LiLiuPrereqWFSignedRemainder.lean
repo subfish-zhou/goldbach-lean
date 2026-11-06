@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedDensity
 
 /-!
 # Actual signed remainders for the common normalized family
@@ -8,6 +10,8 @@ All divisor sums are over the sieve primorial. The remainder is the actual
 divisibility count minus the chosen main density, never an assumed error
 certificate and never a sum of absolute values.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

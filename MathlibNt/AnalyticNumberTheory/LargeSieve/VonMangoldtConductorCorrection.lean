@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorBadPrimeCorrection
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorBadPrimeCorrection
 
 /-!
  # Von Mangoldt conductor change-level correction
@@ -15,6 +17,8 @@ The interval starts at zero: all prefix sums below are over `[1,y]`.  No claim i
 made here for translated intervals, where a separate count of prime powers in a
 short interval would be needed.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -93,7 +97,7 @@ theorem card_primeFactors_le_log2 {q : ℕ} (hq : 0 < q) :
   calc
     2 ^ q.primeFactors.card = ∏ _p ∈ q.primeFactors, 2 := by simp
     _ ≤ ∏ p ∈ q.primeFactors, p := by
-      exact Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
+      exact Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _)
         (fun p hp => (Nat.mem_primeFactors.mp hp).1.two_le)
     _ ≤ q := Nat.le_of_dvd hq (Nat.prod_primeFactors_dvd q)
 
@@ -123,7 +127,7 @@ theorem vonMangoldt_changeLevelError_norm_le
     ‖conductorChangeLevelError χ vonMangoldtIntegerCoeff n‖ ≤
       if n ∈ vonMangoldtBadSupport q N then 2 * Real.log (N : ℝ) else 0 := by
   by_cases hbad : n ∈ vonMangoldtBadSupport q N
-  · rw [if_pos hbad]
+  · rw [ite_eq_left hbad]
     have hn0 : 0 ≤ n := by
       have := (Finset.mem_Icc.mp hn).1
       omega
@@ -142,7 +146,7 @@ theorem vonMangoldt_changeLevelError_norm_le
     rw [hb] at he
     nlinarith only [he, hΛ0, hΛN,
       norm_nonneg (conductorChangeLevelError χ vonMangoldtIntegerCoeff n)]
-  · rw [if_neg hbad]
+  · rw [ite_eq_right hbad]
     have hm := Finset.mem_Icc.mp hn
     simp only [mem_vonMangoldtBadSupport, hm.1, hm.2, true_and] at hbad
     rcases not_and_or.mp hbad with hΛ | hcop

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmoothErrorBounds
 
 /-!
 # A constructed frequency cutoff and uniform masked tail bound
@@ -8,6 +10,8 @@ Choosing `H(q,r)=ceil(lcm(q,r)*Z/M)` makes the dimensionless frequency
 cutoff at least `Z` for every modulus pair. The remaining coefficient
 envelope is evaluated by the proved global fixed-order divisor means.
 -/
+
+@[expose] public section
 
 noncomputable section
 

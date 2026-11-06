@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPrefix
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePartitionCost
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPrefix
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePartitionCost
 
 /-!
 # Lemma 7 on the actual extracted arithmetic carrier
@@ -9,6 +11,8 @@ Its positivity, coprimality and growing prime-factor bounds are derived from
 the original retained masks. The partition acts on tuples, not on their
 possibly repeated pair images, so no beta-index multiplicity is lost.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

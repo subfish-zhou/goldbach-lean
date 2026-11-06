@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.RealEndpoints
+module
+
+public import MathlibNt.Wu2004MeanValue.RealEndpoints
 
 /-!
 # Open product intervals and the upper-endpoint atom
@@ -8,6 +10,8 @@ printed p. 220 instead has a closed upper endpoint. Subtracting two Wu counts
 therefore requires removal of one possible upper-endpoint prime, not an
 unqualified equality with the open interval.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachTwoBasic
-import MathlibNt.SieveTheory.LiLiuGoldbachS4Split
-import MathlibNt.SieveTheory.LiLiuGoldbachDoubleDifference
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachTwoBasic
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4Split
+public import MathlibNt.SieveTheory.LiLiuGoldbachDoubleDifference
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

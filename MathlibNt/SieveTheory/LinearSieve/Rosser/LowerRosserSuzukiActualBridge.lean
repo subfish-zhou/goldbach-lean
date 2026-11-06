@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerDepthFourMass
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerDepthFourMass
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset
@@ -220,7 +224,7 @@ private theorem lowerRosserEvenBoundaryLayerMass_succ_pair
   unfold lowerRosserEvenBoundaryLayerMass
   rw [show 2 * (k + 1 + 1) = (2 * k + 2) + 2 by omega,
     lowerRosserBoundaryLayerMass]
-  simp only [if_neg (show ¬ Odd (2 * k + 2 + 2) from
+  simp only [ite_eq_right (show ¬ Odd (2 * k + 2 + 2) from
     Nat.not_odd_iff_even.mpr
       (show Even (2 * k + 2 + 2) from ⟨k + 2, by omega⟩))]
   apply Finset.sum_congr rfl
@@ -228,7 +232,7 @@ private theorem lowerRosserEvenBoundaryLayerMass_succ_pair
   congr 1
   rw [show 2 * k + 2 + 1 = (2 * k + 1) + 2 by omega,
     lowerRosserBoundaryLayerMass]
-  simp only [if_pos (show Odd (2 * k + 1 + 2) from ⟨k + 1, by omega⟩)]
+  simp only [ite_eq_left (show Odd (2 * k + 1 + 2) from ⟨k + 1, by omega⟩)]
   rfl
 
 /-- Exact all-depth layer bridge: pair depth `k` is Suzuki source depth
@@ -243,7 +247,7 @@ theorem lowerRosserEvenBoundaryLayerMass_eq_unnormalizedLayer
       | zero =>
           classical
           unfold lowerRosserEvenBoundaryLayerMass lowerSuzukiUnnormalizedLayer
-          simp only [lowerRosserBoundaryLayerMass, if_neg (by norm_num : ¬ Odd 2)]
+          simp only [lowerRosserBoundaryLayerMass, ite_eq_right (by norm_num : ¬ Odd 2)]
           simp_rw [Finset.mul_sum]
           have hreindex :
               (∑ p ∈ suzukiSupportedBelow S z,

@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SmallDHighCoordinate
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
-import Mathlib.Analysis.SpecialFunctions.Exponential
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SmallDHighCoordinate
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145ComparisonInternal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerFinal
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set Filter Topology
@@ -286,7 +290,7 @@ theorem exists_claim145SmallDCaseAScalarComparison_of_fixedDmin_uniform_in_S
   have hAq_pos : ∀ q : ℕ, 2 ≤ q → 0 < Aq q := by
     intro q hq
     dsimp only [Aq]
-    rw [dif_pos hq]
+    rw [dite_eq_left hq]
     exact (Classical.choose_spec
       (exists_caseA_scalar_constant_for_fixed_q_uniform_in_S H hH hq
         (Δ := Δ) hd hK)).1
@@ -300,7 +304,7 @@ theorem exists_claim145SmallDCaseAScalarComparison_of_fixedDmin_uniform_in_S
           (sourceSigma (q : ℝ) d) K x := by
     intro q hq
     dsimp only [Aq]
-    rw [dif_pos hq]
+    rw [dite_eq_left hq]
     exact (Classical.choose_spec
       (exists_caseA_scalar_constant_for_fixed_q_uniform_in_S H hH hq
         (Δ := Δ) hd hK)).2

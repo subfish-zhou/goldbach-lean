@@ -1,11 +1,15 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainNonzeroReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointSubpower
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainNonzeroReindex
 
 /-! # Arithmetic on the difference-preserving main carrier
 
 The common index remains part of the carrier. In particular its two forbidden
 diagonals are never reintroduced when either arithmetic mean is applied.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

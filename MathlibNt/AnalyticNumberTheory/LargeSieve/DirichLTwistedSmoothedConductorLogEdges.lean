@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedConductorLogContour
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedConductorLogContour
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 open scoped ArithmeticFunction.Moebius LSeries.notation
@@ -174,7 +178,7 @@ theorem norm_dirichletLFunction_ge_sub_one_div
     by_cases hn : n = 0
     · subst n
       simp [LSeries.term, Real.zero_rpow (by linarith : -σ ≠ 0)]
-    · rw [LSeries.term, if_neg hn, norm_div,
+    · rw [LSeries.term, ite_eq_right hn, norm_div,
         norm_natCast_cpow_of_re_ne_zero n (by
           dsimp only [s]
           norm_num

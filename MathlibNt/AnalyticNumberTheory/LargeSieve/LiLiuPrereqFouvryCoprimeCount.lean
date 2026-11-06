@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainTerm
-import Mathlib.Data.Nat.Factorization.Basic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainTerm
+public import Mathlib.Data.Nat.Factorization.Basic
 
 /-!
 # A uniform elementary main-term estimate for hard cutoffs
@@ -9,6 +11,8 @@ prefix count with error at most the number of divisors of the modulus.
 This supplies an actual U main-term estimate for a hard cutoff. It does
 not supply the smooth Poisson estimates needed later for V and W.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportOriginal
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportZero
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKModSupportOriginal
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWModulusSupportZero
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
 
 /-!
 # Power saving for both supported modulus factors
@@ -9,6 +11,8 @@ The square-divisor saving pays the fixed-order divisor losses and logarithms.
 The original progression endpoint is absorbed under `L ≤ M`; this condition
 will be derived, not assumed, at the C.2 dyadic scale.
 -/
+
+@[expose] public section
 
 noncomputable section
 

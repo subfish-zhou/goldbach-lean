@@ -1,10 +1,14 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayZero
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKMainUniform
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSecondaryUniform
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectPayZero
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKMainUniform
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSecondaryUniform
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryExtendedPayment
 
 /-! The actual retained coprime cell, with all three energies and their
 normalizations produced internally. No cancellation/envelope hypothesis. -/
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

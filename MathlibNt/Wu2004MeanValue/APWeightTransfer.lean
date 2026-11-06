@@ -1,6 +1,8 @@
-import MathlibNt.Wu2004MeanValue.SmallSource
-import MathlibNt.Wu2004MeanValue.OpenIntervals
-import MathlibNt.SieveTheory.LiuPanLiMainTermEnvelope
+module
+
+public import MathlibNt.Wu2004MeanValue.SmallSource
+public import MathlibNt.Wu2004MeanValue.OpenIntervals
+public import MathlibNt.SieveTheory.LiuPanLiMainTermEnvelope
 
 /-!
 # Weight payment for the actual Wu AP discrepancy
@@ -9,6 +11,8 @@ The elementary envelope below is for arbitrary bounded coefficients, not
 the special Liu semiprime coefficient. The source sum precedes its absolute
 value, and one residue is retained across all its coordinates.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

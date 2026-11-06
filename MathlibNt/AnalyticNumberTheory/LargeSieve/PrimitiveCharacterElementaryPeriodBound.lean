@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

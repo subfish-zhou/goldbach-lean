@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12MovingEuler
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12MovingEuler
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

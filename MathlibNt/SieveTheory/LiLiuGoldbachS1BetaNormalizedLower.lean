@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFixedNormalizedLower
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFactorContinuity
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFixedNormalizedLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaFactorContinuity
+
+@[expose] public section
 
 noncomputable section
 

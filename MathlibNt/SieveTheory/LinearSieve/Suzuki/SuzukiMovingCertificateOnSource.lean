@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceClaim146AssemblyNext
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceClaim146AssemblyNext
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

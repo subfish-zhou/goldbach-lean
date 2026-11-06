@@ -1,7 +1,9 @@
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Data.Int.GCD
-import Mathlib.Analysis.SpecialFunctions.Exp
-import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
+module
+
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.Data.Int.GCD
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
 
 /-!
 # MathlibNt.SieveTheory.SelbergUpperBound
@@ -39,6 +41,8 @@ References:
   - Halberstam & Richert, "Sieve Methods" (1974), Ch. 3
   - Mathlib `SelbergSieve.lean`: BoundingSieve, SelbergSieve, Λ² sieve
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SelbergUpperBound
 
@@ -189,7 +193,7 @@ theorem divisor_sum_bound_squarefree (A : ℝ) (hA : 0 < A) :
     calc
       n.primeFactors.prod (fun p => 1 + chenDivisorWeight A p)
           ≤ n.primeFactors.prod (fun p => exp (A * (1 / ((p : ℝ) - 1)))) := by
-            apply Finset.prod_le_prod
+            apply Finset.prod_le_prod₀
             · intro p hp
               have hnonneg : 0 ≤ chenDivisorWeight A p := by
                 unfold chenDivisorWeight

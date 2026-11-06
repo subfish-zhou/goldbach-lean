@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

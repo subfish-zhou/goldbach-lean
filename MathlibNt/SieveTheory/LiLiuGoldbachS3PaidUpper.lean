@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
-import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3LevelGeometry
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpWeight
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpWeight
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
+@[expose] public section
+
 noncomputable section
 namespace G12SharpQuadrature
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

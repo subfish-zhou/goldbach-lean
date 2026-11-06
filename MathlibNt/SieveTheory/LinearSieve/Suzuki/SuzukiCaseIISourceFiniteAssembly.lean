@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceCaseIICutoff
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseII
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSourceCaseIICutoff
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseII
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVOneNaturalBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset

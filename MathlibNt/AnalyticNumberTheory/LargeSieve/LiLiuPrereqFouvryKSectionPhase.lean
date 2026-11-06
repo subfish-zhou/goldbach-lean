@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionPair
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySievedReciprocal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionPair
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySievedReciprocal
 
 /-!
 # Freezing the actual small root and reducing the paired sieve
@@ -9,6 +11,8 @@ modulus. Its unit conditions are derived from original tuple membership.
 On a unit residue class, the only sieve cost not already supplied by
 reciprocal nonunit vanishing is the divisor cost of `|a|`.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -101,7 +105,7 @@ theorem wKSection_sieved_phase_eq
   by_cases hkq : k.Coprime (n₁ * r * s * s')
   · simp only [wKSectionCoprime_pair_iff_of_units K a r n₁ s s' k hkD hkq]
   · have hz : reciprocalPhase (n₁ * r * s * s') d k = 0 := by
-      rw [reciprocalPhase, if_neg]
+      rw [reciprocalPhase, ite_eq_right]
       exact fun hu => hkq ((ZMod.isUnit_iff_coprime k _).mp hu)
     simp only [hz, ite_self]
 

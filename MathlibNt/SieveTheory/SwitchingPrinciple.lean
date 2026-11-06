@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics
+module
+
+public import MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics
 
 /-!
 # Chen's switching and weighted-counting interface

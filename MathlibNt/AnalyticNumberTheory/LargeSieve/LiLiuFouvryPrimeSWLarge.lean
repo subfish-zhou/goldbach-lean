@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWBounds
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 open Finset Filter

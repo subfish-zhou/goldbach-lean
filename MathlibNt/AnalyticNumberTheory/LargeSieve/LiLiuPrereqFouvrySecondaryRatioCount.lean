@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdMean
 
 /-!
 # Counting the secondary frequency-sieve ratio relation
@@ -8,6 +10,8 @@ multiple of `s/gcd(s,h)` and determines `h'` uniquely. In a dyadic `s`
 block this pays only `2*gcd(s,h)` partners, not an independent frequency
 and sieve-variable box. The resulting collision count is logarithmic.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

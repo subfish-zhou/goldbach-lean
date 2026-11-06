@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachTwoBasic
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachTwoBasic
+
+@[expose] public section
 
 open Filter
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine

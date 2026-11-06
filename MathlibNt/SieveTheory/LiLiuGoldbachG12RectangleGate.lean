@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter
@@ -53,7 +57,7 @@ theorem linked_mass_le {N : ℕ} (hN : 2 ≤ N) (ε : ℝ) :
     intro x hx
     have hd := atom_data hN hx
     have hh : N-x.2*x.1 < N := by rw [mul_comm]; omega
-    simp only [Nat.ceil_natCast, if_pos hh]
+    simp only [Nat.ceil_natCast, ite_eq_left hh]
   simpa only [he, Nat.ceil_natCast] using goldbachG12LinkedSmallOutputMass_le hN ε (N : ℝ)
 
 theorem subset_mass_le {N : ℕ} {ε : ℝ} {A : Finset (ℕ × ℕ)}

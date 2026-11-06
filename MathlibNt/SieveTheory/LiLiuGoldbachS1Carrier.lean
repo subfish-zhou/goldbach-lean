@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
-import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
-import MathlibNt.SieveTheory.BombieriVinogradov
-import Mathlib.Data.Nat.Cast.Order.Field
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
+public import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
+public import MathlibNt.SieveTheory.BombieriVinogradov
+public import Mathlib.Data.Nat.Cast.Order.Field
+
+@[expose] public section
 
 open scoped BigOperators
 

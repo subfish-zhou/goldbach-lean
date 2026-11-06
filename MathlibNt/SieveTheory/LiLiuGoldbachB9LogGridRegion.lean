@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGrid
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGrid
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+
+@[expose] public section
 
 open MeasureTheory Set
 

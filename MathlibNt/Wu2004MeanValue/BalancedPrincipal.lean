@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.PrincipalWeighted
+module
+
+public import MathlibNt.Wu2004MeanValue.PrincipalWeighted
 
 /-!
 # Principal errors for balanced cofactor profiles
@@ -8,6 +10,8 @@ prime-prefix estimate at `ceil(x/m)` retains the harmonic `1/m` gain.
 The logarithmic comparison now costs `eta^(-A)`, not the square-root
 specialization's `2^A`. No source-wise cancellation estimate is used here.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

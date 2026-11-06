@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
+module
+
+public import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
 
 /-!
 # Canonical Pan--Wang--Ding source theorem interface
@@ -22,6 +24,8 @@ The analytic theorem itself remains an explicit proposition.  No primitive-
 character `L¹` majorant is inferred from it: such a majorant is strictly
 stronger and suffers a genuine weighted-conductor resonance obstruction.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

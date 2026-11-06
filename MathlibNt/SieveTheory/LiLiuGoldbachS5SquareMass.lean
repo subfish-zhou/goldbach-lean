@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4FiniteError
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4FiniteError
+
+@[expose] public section
 
 open Filter
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

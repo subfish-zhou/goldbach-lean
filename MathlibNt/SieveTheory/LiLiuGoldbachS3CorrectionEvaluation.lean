@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionPolynomials
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3CorrectionPolynomials
+
+@[expose] public section
 
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple

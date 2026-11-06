@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
-import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
+public import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensity
 
 
 
@@ -13,6 +15,8 @@ constants and thresholds precede the density data and the original K.
 The zero lower edge uses the proved O(epsilon) bound for the genuine f;
 the truncated upper edge uses its own proved Euler-normalized density.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -84,7 +88,7 @@ theorem exists_externalFamilyDensity_ff :
   refine ⟨hD4, ?_⟩
   rw [externalDensity_eq false P hP, externalDensity_eq true P hP]
   by_cases hzD : z ≤ Real.sqrt D
-  · simp only [hzD, if_true]
+  · simp only [hzD, ite_true]
     have hden := hi D hDiD P hP ω hω hg z hz hzD
       (fun p hp => hcut p (mem_sdiff.mp hp).1) K hK hdim
     have hshift := hs ε hε hε8 (Real.log D / Real.log z)
@@ -105,7 +109,7 @@ theorem exists_externalFamilyDensity_ff :
     constructor
     · nlinarith only [hden.1, hpay, hfl]
     · nlinarith only [hden.2, hpay, hfu]
-  · simp only [hzD, if_false, Bool.false_eq_true, if_true]
+  · simp only [hzD, ite_false, Bool.false_eq_true, ite_true]
     have hedge : Real.sqrt D < z := lt_of_not_ge hzD
     have hcoord := external_edge_coordinate (by linarith : 1 < Q) hε hε8 hz hzQ hedge
     have hlow := CoordinateShift.lower_edge_le hε hε8 hcoord.1 hcoord.2.le

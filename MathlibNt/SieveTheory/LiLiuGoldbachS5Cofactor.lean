@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

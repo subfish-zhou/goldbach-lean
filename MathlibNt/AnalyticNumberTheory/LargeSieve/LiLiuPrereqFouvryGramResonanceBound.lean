@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceCount
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceCount
 
 /-!
 # Uniform local-scale count and coefficient payment on occupied zero labels
@@ -8,6 +10,8 @@ One constant depending only on epsilon bounds every actual fiber by
 `C*A^(2*epsilon)*B^epsilon`. Coefficients are bounded only on their original
 supports; no envelope on the enlarged divisor carrier is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

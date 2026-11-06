@@ -1,13 +1,18 @@
-import Batteries.Tactic.Lemma
-import Mathlib.MeasureTheory.Function.Floor
-import Mathlib.MeasureTheory.Order.Group.Lattice
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import PrimeNumberTheoremAnd.Auxiliary
-import PrimeNumberTheoremAnd.Fourier
-import PrimeNumberTheoremAnd.Mathlib.Analysis.SpecialFunctions.Log.Basic
-import PrimeNumberTheoremAnd.ResidueCalcOnRectangles
-import PrimeNumberTheoremAnd.EulerMaclaurin
+module
+
+public import Batteries.Tactic.Lemma
+public import Mathlib.MeasureTheory.Function.Floor
+public import Mathlib.MeasureTheory.Order.Group.Lattice
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+public import Mathlib.Analysis.PSeriesComplex
+public import PrimeNumberTheoremAnd.Auxiliary
+public import PrimeNumberTheoremAnd.Fourier
+public import PrimeNumberTheoremAnd.Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import PrimeNumberTheoremAnd.ResidueCalcOnRectangles
+public import PrimeNumberTheoremAnd.EulerMaclaurin
+
+@[expose] public section
 
 set_option lang.lemmaCmd true
 
@@ -3397,7 +3402,7 @@ theorem triv_bound_zeta :  ∃C ≥ 0, ∀(σ₀ t : ℝ), 1 < σ₀ →
         _ = ENNReal.toReal (1 + ε_div_two) - ENNReal.toReal (ENNReal.ofReal 1) := by simp
         _ ≤ ENNReal.toReal (1 + ε_div_two - ENNReal.ofReal 1) := ENNReal.le_toReal_sub U4
         _ = ENNReal.toReal (ε_div_two) := by
-          simp only [ENNReal.ofReal_one, ENNReal.addLECancellable_iff_ne, ne_eq,
+          simp only [ENNReal.ofReal_one, ENNReal.addLECancellable_iff_ne_top, ne_eq,
             ENNReal.one_ne_top, not_false_eq_true, AddLECancellable.add_tsub_cancel_left]
         _ < ε.toReal := Z0
 
@@ -3452,7 +3457,7 @@ theorem triv_bound_zeta :  ∃C ≥ 0, ∀(σ₀ t : ℝ), 1 < σ₀ →
         _ = ENNReal.toReal (1 + ε_div_two) - ENNReal.toReal (ENNReal.ofReal 1) := by simp
         _ ≤ ENNReal.toReal (1 + ε_div_two - ENNReal.ofReal 1) := ENNReal.le_toReal_sub U4
         _ = ENNReal.toReal (ε_div_two) := by
-          simp only [ENNReal.ofReal_one, ENNReal.addLECancellable_iff_ne, ne_eq,
+          simp only [ENNReal.ofReal_one, ENNReal.addLECancellable_iff_ne_top, ne_eq,
             ENNReal.one_ne_top, not_false_eq_true, AddLECancellable.add_tsub_cancel_left]
         _ < ε.toReal := Z0
 

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayAsymptotic
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenDelayAsymptotic
 
 /-!
 # The actual dimension-one Section 13 hat functions
@@ -7,6 +9,8 @@ The positive extensions of `-F' / (2 exp γ)` and `f' / (2 exp γ)` give
 Suzuki's two hat functions. Their source contract is derived from the
 constructed Jurkat--Richert delay solution, not assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -138,7 +142,7 @@ theorem hasDerivAt_jr1965F_hat {s : ℝ} (hs : 0 < s) :
       filter_upwards [eventually_lt_nhds (show s < 3 by linarith)] with x hx
       exact jr1965F_eq_of_le_three hx.le
     apply (hd.congr_of_eventuallyEq he).congr_deriv
-    simp only [jr1965HatPlus, if_pos (show s ≤ 3 by linarith), id_eq]
+    simp only [jr1965HatPlus, ite_eq_left (show s ≤ 3 by linarith), id_eq]
     ring
 
 theorem hasDerivAt_jr1965f_hat {s : ℝ} (hs : 2 < s) :
@@ -272,13 +276,13 @@ theorem jr1965Section13HatSourceContract :
   initial_plus := by
     intro s hs hs3
     change s ^ 2 * jr1965HatPlus s = 2 - 1
-    rw [jr1965HatPlus, if_pos (show s ≤ 3 by linarith)]
+    rw [jr1965HatPlus, ite_eq_left (show s ≤ 3 by linarith)]
     field_simp
     norm_num
   initial_minus := by
     intro s hs hs2
     change s ^ 2 * jr1965HatMinus s = 2
-    rw [jr1965HatMinus, if_pos hs2]
+    rw [jr1965HatMinus, ite_eq_left hs2]
     field_simp
   dde := by
     intro sign s hs

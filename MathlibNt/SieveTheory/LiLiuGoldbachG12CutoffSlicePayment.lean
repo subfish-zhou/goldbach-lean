@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12GridAdmission
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12GridAdmission
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

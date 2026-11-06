@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughTransport
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

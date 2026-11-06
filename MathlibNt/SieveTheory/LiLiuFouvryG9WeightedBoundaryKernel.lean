@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryGeometry
+@[expose] public section
+
 open MeasureTheory Set
 open scoped BigOperators Interval
 noncomputable section

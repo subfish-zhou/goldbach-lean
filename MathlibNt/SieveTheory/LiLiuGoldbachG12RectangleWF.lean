@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundingSieve
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LowRectangle
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundingSieve
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalSieve
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
+
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

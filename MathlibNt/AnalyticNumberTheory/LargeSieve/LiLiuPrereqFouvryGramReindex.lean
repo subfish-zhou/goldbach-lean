@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionGram
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionGram
 
 /-!
 # Occupied labels for the entire separated Gram energy
@@ -7,6 +9,8 @@ A label retains the common `(r,n₁)` and both ordered triples `(n₂,s,h)`.
 It forgets only the common `k`, which is summed inside its fiber.
 Labels are images of actual tuple-pairs, not an unrestricted rectangular box.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -102,12 +106,12 @@ theorem sum_wGramLabels {A : Type*} [AddCommMonoid A]
       (wGCDTuple (wExtractedOriginal t.1)).n₁ = L.1.2 ∧
       (wGCDTuple (wExtractedOriginal t.1)).n₂ = L.2.1.1 ∧
       t.1.1.2.2 = L.2.1.2.1 ∧ t.2 = L.2.1.2.2
-  · rw [if_pos ht]
+  · rw [ite_eq_left ht]
     apply sum_congr rfl
     intro u _
     simp only [wCorrelationOuter, wGramLabel, Prod.ext_iff]
     split_ifs <;> simp_all only [and_true, true_and, and_self] <;> tauto
-  · rw [if_neg ht]
+  · rw [ite_eq_right ht]
     apply sum_eq_zero
     intro u _
     simp only [wCorrelationOuter, wGramLabel, Prod.ext_iff]

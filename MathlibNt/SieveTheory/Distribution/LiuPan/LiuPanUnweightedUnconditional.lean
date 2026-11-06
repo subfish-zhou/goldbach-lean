@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveLedgerAssembly
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPaidPrincipalReduction
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCanonicalWeightTransfer
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveLedgerAssembly
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPaidPrincipalReduction
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCanonicalWeightTransfer
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

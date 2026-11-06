@@ -1,8 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.DimensionOneUpperFactor
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingWindowTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEinEulerTailAsymptotic
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointDDE
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSecondIntervalJurkatRichertBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.DimensionOneUpperFactor
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePairingWindowTail
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEinEulerTailAsymptotic
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointDDE
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSecondIntervalJurkatRichertBridge
 
 /-!
 # Tail of Suzuki's genuine upper source
@@ -11,6 +13,8 @@ The two nonnegative parity source tails are dominated by their sum `Q`, whose
 exponential decay was already obtained from the Section 13 source contract.
 Consequently the genuine upper source tends to `2`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 
@@ -47,7 +51,7 @@ theorem tendsto_suzukiProposition118Source_parity_zero
       suzukiProposition118SourceTPlus s ≤ suzukiProposition118SourceQ s ∧
         suzukiProposition118SourceTMinus s ≤ suzukiProposition118SourceQ s := by
     filter_upwards [eventually_ge_atTop (2 : ℝ), hnonneg] with s hs hsign
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr hs)]
+    rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr hs)]
     exact ⟨le_add_of_nonneg_right hsign.2, le_add_of_nonneg_left hsign.1⟩
   have hQ := tendsto_suzukiProposition118SourceQ_zero hH
   exact ⟨squeeze_zero' (hnonneg.mono fun _ hs => hs.1)
@@ -114,7 +118,7 @@ private theorem suzukiUpperSourceParity_shift_intervalIntegrable
     have hm0 : 0 ≤ suzukiProposition118SourceTMinus (t - 1) :=
       tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg ht2 k)
     rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hp0,
-      suzukiProposition118SourceQ, if_neg (not_lt.mpr ht2),
+      suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr ht2),
       abs_of_nonneg (add_nonneg hp0 hm0)]
     linarith
   · apply hQ.mono_fun hmmeas
@@ -126,7 +130,7 @@ private theorem suzukiUpperSourceParity_shift_intervalIntegrable
     have hm0 : 0 ≤ suzukiProposition118SourceTMinus (t - 1) :=
       tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg ht2 k)
     rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hm0,
-      suzukiProposition118SourceQ, if_neg (not_lt.mpr ht2),
+      suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr ht2),
       abs_of_nonneg (add_nonneg hp0 hm0)]
     linarith
 

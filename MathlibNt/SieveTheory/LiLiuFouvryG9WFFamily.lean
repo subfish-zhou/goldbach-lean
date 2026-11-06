@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFLevel
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WFLevel
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF

@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseFinal
 
 /-! Compatibility import for the canonical module in its current library location. -/

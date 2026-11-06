@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAllAspectBlockScalar
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAllAspectBlockScalar
 
 /-! Compatibility import for the canonical module in its current library location. -/

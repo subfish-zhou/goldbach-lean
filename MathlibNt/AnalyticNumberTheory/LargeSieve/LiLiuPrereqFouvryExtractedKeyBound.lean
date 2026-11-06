@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedAnalyticReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedAnalyticReduction
 
 /-!
 # Quantitative six-key grouping of the actual extracted exponential sum
@@ -12,6 +14,8 @@ between these fibers, not between their oscillatory summands.
 This supplies the finite-key cost underlying Fouvry (1987), p. 627, (3.12).
 It is not an IV.3 cancellation estimate or a completion of C.2.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

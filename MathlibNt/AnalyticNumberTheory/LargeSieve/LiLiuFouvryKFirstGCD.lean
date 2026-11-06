@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDBetaClean
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanFirstGCD
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKLargeGCDBetaClean
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanFirstGCD
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

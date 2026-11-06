@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossProductPaid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossProductPaid
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

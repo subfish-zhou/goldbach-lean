@@ -1,11 +1,15 @@
-import MathlibNt.Analysis.LogGridEstimates
-import MathlibNt.Analysis.MovingIntervalIntegral
-import MathlibNt.SieveTheory.Arithmetic.PrimeReciprocalLogRectangle
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Tactic
+module
+
+public import MathlibNt.Analysis.LogGridEstimates
+public import MathlibNt.Analysis.MovingIntervalIntegral
+public import MathlibNt.SieveTheory.Arithmetic.PrimeReciprocalLogRectangle
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Tactic
 
 /-! Shared logarithmic-coordinate functions and rectangle integrals.
 The grid selection and convergence proofs remain with their source consumers. -/
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval

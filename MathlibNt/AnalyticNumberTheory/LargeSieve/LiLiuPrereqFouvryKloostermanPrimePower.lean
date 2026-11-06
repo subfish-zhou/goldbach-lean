@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
 
 /-!
 # Elementary prime-power cancellation
@@ -8,6 +10,8 @@ one frequency is divisible by the prime, it multiplies the complete sum by
 a nontrivial constant character, forcing the sum to vanish. The argument
 works in characteristic two as well; it uses no quadratic Gauss-sum formula.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -63,7 +67,7 @@ theorem completeKloosterman_vanish_of_square_zero_shift (q : ℕ) [NeZero q]
     dsimp only [F]
     simp only [zmod_isUnit_add_square_zero u t ht]
     by_cases hu : IsUnit u
-    · simp only [hu, if_true]
+    · simp only [hu, ite_true]
       rw [zmod_inv_add_square_zero u t hu ht]
       have he : a * (u + t) + (d : ZMod q) * (u⁻¹ - t * (u⁻¹) ^ 2) =
           a * t + (a * u + (d : ZMod q) * u⁻¹) := by

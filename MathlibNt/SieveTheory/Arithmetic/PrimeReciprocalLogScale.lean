@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
 
 /-!
 # Prime reciprocal sums on logarithmic intervals
@@ -11,6 +13,8 @@ fixed-endpoint limit
 for `0 < a < b`.  Both cutoffs are real powers; the finite carrier uses the
 floor of the upper cutoff, and the lower endpoint remains strict.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.PrimeReciprocalLogScale
 

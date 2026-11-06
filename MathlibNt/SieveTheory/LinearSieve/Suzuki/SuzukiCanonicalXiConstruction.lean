@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1028CommonMajorant
-import Mathlib.Analysis.Calculus.Deriv.Inverse
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1028CommonMajorant
+public import Mathlib.Analysis.Calculus.Deriv.Inverse
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval
@@ -165,7 +169,7 @@ lemma eta_image_Ici : eta '' Ici (0 : ℝ) = Ici 1 := by
 /-- Order isomorphism realizing the increasing inverse of `η : [0,∞) → [1,∞)`. -/
 noncomputable def etaOrderIso : (Ici (0 : ℝ)) ≃o (Ici (1 : ℝ)) :=
   (eta_strictMonoOn.orderIso eta (Ici 0)).trans
-    (OrderIso.setCongr (eta '' Ici (0 : ℝ)) (Ici 1) eta_image_Ici)
+    (Set.orderIsoOfEq (eta '' Ici (0 : ℝ)) (Ici 1) eta_image_Ici)
 
 
 /-- Canonical global extension: the positive inverse on `(1,∞)`, and zero on `(-∞,1]`. -/

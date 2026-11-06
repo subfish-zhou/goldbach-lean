@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9FamilyCost
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFFamily
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9FamilyCost
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WFFamily
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

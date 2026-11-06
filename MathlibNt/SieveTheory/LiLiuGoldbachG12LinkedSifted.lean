@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundingSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundingSieve
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Finset

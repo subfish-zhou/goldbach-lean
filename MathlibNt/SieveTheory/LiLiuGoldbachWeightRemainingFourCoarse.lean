@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachB9NormalizedMainMass
-import MathlibNt.SieveTheory.LiLiuGoldbachB9InnerIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFive
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9NormalizedMainMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9InnerIntegral
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFive
+
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

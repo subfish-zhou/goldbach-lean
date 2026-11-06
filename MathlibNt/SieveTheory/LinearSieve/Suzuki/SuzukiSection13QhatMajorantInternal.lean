@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1027ExplicitAdjoint
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13MajorantsFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1027ExplicitAdjoint
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13MajorantsFinal
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

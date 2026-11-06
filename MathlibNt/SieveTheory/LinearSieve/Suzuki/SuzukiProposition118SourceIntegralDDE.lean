@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118FinitePrefixPairing
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118FinitePrefixPairing
 
 /-!
 # Integral DDE for the genuine Proposition 11.8 source
@@ -7,6 +9,8 @@ This module derives the integral delay equation directly from Suzuki's finite
 continuous-layer recursion, and then feeds it to the Section-10 Iwaniec pairing.
 No DDE or pairing conclusion is assumed.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval ENNReal
 open Finset Set Filter Topology MeasureTheory intervalIntegral
@@ -347,7 +351,7 @@ private theorem suzukiProposition118SourceQ_weighted_sub_of_le_three
       have hty : t ≤ y := ht.2
       exact lt_of_le_of_ne (by linarith : t - 1 ≤ 2)
         (fun heq => ht3 (by linarith))
-    rw [suzukiProposition118SourceQ, if_pos hu2]
+    rw [suzukiProposition118SourceQ, ite_eq_left hu2]
   have hPlusAe : ∀ᵐ t : ℝ ∂volume, t ∈ Ι x y →
       suzukiProposition118SourceTPlus (t - 1) = g t - 1 := by
     filter_upwards [hne2, hne3] with t ht2 ht3
@@ -395,10 +399,10 @@ private theorem suzukiProposition118SourceQ_weighted_sub_of_le_three
     simpa using hadd
   have hQx : suzukiProposition118SourceQ x =
       suzukiProposition118SourceTPlus x + suzukiProposition118SourceTMinus x := by
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr hx)]
+    rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr hx)]
   have hQy : suzukiProposition118SourceQ y =
       suzukiProposition118SourceTPlus y + suzukiProposition118SourceTMinus y := by
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr (hx.trans hxy))]
+    rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr (hx.trans hxy))]
   rw [hQx, hQy, hQIntegral]
   linarith
 
@@ -449,7 +453,7 @@ theorem suzukiProposition118SourceQ_intervalIntegrable
       (volume.restrict (Icc x y)) := by
     apply hmeasSeries.congr
     filter_upwards [ae_restrict_mem measurableSet_Icc] with s hs
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr (hx.trans hs.1))]
+    rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr (hx.trans hs.1))]
   apply Integrable.mono' hGcont.integrableOn_Icc hmeasQ
   filter_upwards [ae_restrict_mem measurableSet_Icc] with s hs
   rcases hQ s (hx.trans hs.1) with ⟨hQ0, hQle⟩
@@ -503,7 +507,7 @@ private theorem suzukiProposition118SourceQ_weighted_sub_of_three_le
       rw [suzukiProposition118SourceTMinus]
       exact tsum_nonneg (fun k => suzukiLayer_one_two_even_nonneg ht2 k)
     rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hp0]
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr ht2), abs_of_nonneg (add_nonneg hp0 hm0)]
+    rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr ht2), abs_of_nonneg (add_nonneg hp0 hm0)]
     linarith
   have hmint : IntervalIntegrable
       (fun t => suzukiProposition118SourceTMinus (t - 1)) volume x y := by
@@ -513,21 +517,21 @@ private theorem suzukiProposition118SourceQ_weighted_sub_of_three_le
     have ht2 : 2 ≤ t - 1 := by rcases ht with ht | ht <;> linarith
     change suzukiProposition118SourceQ (t - 1) -
       suzukiProposition118SourceTPlus (t - 1) = suzukiProposition118SourceTMinus (t - 1)
-    rw [suzukiProposition118SourceQ, if_neg (not_lt.mpr ht2), add_sub_cancel_left]
+    rw [suzukiProposition118SourceQ, ite_eq_right (not_lt.mpr ht2), add_sub_cancel_left]
   have hQeq : ∀ t ∈ Set.uIcc x y,
       suzukiProposition118SourceQ (t - 1) =
         suzukiProposition118SourceTPlus (t - 1) +
           suzukiProposition118SourceTMinus (t - 1) := by
     intro t ht
-    rw [suzukiProposition118SourceQ, if_neg]
+    rw [suzukiProposition118SourceQ, ite_eq_right]
     rw [Set.mem_uIcc] at ht
     rcases ht with ht | ht <;> linarith
   rw [show suzukiProposition118SourceQ x =
       suzukiProposition118SourceTPlus x + suzukiProposition118SourceTMinus x by
-        rw [suzukiProposition118SourceQ, if_neg (by linarith)],
+        rw [suzukiProposition118SourceQ, ite_eq_right (by linarith)],
     show suzukiProposition118SourceQ y =
       suzukiProposition118SourceTPlus y + suzukiProposition118SourceTMinus y by
-        rw [suzukiProposition118SourceQ, if_neg (by linarith)],
+        rw [suzukiProposition118SourceQ, ite_eq_right (by linarith)],
     intervalIntegral.integral_congr hQeq,
     intervalIntegral.integral_add hpint hmint]
   linarith
@@ -562,7 +566,7 @@ private theorem suzukiProposition118SourceQ_shift_intervalIntegrable_of_le_three
     lt_of_le_of_ne (by linarith [ht.1] : 1 ≤ t - 1) (fun heq => ht2 (by linarith))
   have hu2 : t - 1 < 2 :=
     lt_of_le_of_ne (by linarith [ht.2] : t - 1 ≤ 2) (fun heq => ht3 (by linarith))
-  rw [suzukiProposition118SourceQ, if_pos hu2]
+  rw [suzukiProposition118SourceQ, ite_eq_left hu2]
 
 /-- The direct finite-layer argument gives the source integral DDE on every
 interval `2 ≤ x ≤ y`, including intervals crossing the kink at `3`. -/

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDelta
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds
 
 
 /-!
@@ -9,6 +11,8 @@ The symmetric inequality `2 |c_q c_r| ≤ c_q² + c_r²` pays the two modulus
 weights by a single divisor moment. No submultiplicativity of `tau_j` at
 noncoprime arguments, and no arithmetic-progression input, is assumed.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

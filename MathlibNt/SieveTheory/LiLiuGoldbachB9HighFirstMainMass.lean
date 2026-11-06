@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5HighFirstFinite
-import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5HighFirstFinite
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9MainGate
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

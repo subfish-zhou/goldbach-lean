@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPrimeDarbouxLower
-import MathlibNt.SieveTheory.LiLiuGoldbachSymmetricPairs
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPrimeDarbouxLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachSymmetricPairs
+
+@[expose] public section
 
 open Finset Set
 open scoped BigOperators Interval NNReal

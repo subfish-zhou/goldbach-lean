@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayersKappaOne
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteContinuousLayersKappaOne
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-!
 # Suzuki Lemma 14.4 error objects and algebraic normalization (κ = 1)
@@ -8,6 +10,8 @@ Source-faithful transcription of the objects used around (14.13)--(14.15).
 The Section 13 majorants `T̂⁺, T̂⁻` are parameters: their genuinely analytic
 monotonicity and integral estimates are exposed below as named premises.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Set

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.MovingContour
+module
+
+public import MathlibNt.Wu2004MeanValue.MovingContour
 
 /-! The frozen short and long large-sieve means apply pointwise to the same
 Mellin coefficient for every modulus and character. -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter MeasureTheory

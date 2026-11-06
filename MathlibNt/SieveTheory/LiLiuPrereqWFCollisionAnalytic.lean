@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFRoughComparison
-import MathlibNt.SieveTheory.LiLiuPrereqWFRoughEuler
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRoughComparison
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRoughEuler
 
 /-!
 # Analytic control of the actual same-box collisions
@@ -9,6 +11,8 @@ interval, including its closed lower and strict upper endpoint. Summing over
 the actual distinct prime pairs retains the rough Euler normalization.
 No count of prime subsets or bound on a different family is used.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -51,7 +55,7 @@ theorem interval_sum_le (P S : Finset ℕ) {g : ℕ → ℝ} {K w z : ℝ}
   apply hs.trans
   apply sub_le_sub_right
   apply le_trans _ (hdim w z hw hwz)
-  apply Finset.prod_le_prod_of_subset_of_one_le hS
+  apply Finset.prod_le_prod_of_subset_of_one_le₀ hS
   · intro p hp
     exact inv_nonneg.mpr (sub_nonneg.mpr (hg p (mem_filter.mp (hS hp)).1).2.le)
   · intro p hp _

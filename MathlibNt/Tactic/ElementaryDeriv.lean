@@ -1,16 +1,22 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Tactic.Convert
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Tactic.Convert
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
 
 open Lean Meta Elab Tactic
+meta section
+
 namespace GoldbachProofTools.Elementary
 
 /-- Construct a derivative proof from a bounded real-expression grammar. Supplied
     derivative facts are reused; nonzero obligations are ordinary metavariable goals. -/
-private partial def derive (x point : Expr) (known : Array Expr)
+partial def derive (x point : Expr) (known : Array Expr)
     (nonzero : Expr → MetaM Expr) (body : Expr) : MetaM Expr := do
   let e := body.consumeMData
   if !e.containsFVar x.fvarId! then

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67SumDensity
-import Mathlib.MeasureTheory.Group.Prod
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67SumDensity
+public import Mathlib.MeasureTheory.Group.Prod
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

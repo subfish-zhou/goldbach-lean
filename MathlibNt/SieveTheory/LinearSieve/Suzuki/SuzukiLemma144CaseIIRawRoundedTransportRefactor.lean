@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144RecursiveCoordinateSourceSigma
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeilClosed
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144RecursiveCoordinateSourceSigma
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma12NatCeilClosed
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -102,7 +106,7 @@ theorem caseII_endpoint_le_concrete_finiteSourceLayer_add_qD_natCeil_of_errorTra
   have hry : r ≤ (y : ℝ) :=
     (Nat.le_ceil r).trans_eq (congrArg Nat.cast hyceil).symm
   have hsdom : s ∈ KappaOneModel.parityDomain β N := by
-    simp only [KappaOneModel.parityDomain, Nat.odd_iff.mp hN, if_pos, Set.mem_Ioi]
+    simp only [KappaOneModel.parityDomain, Nat.odd_iff.mp hN, ite_eq_left, Set.mem_Ioi]
     dsimp [s]
     linarith
   have hNm1mod : (N - 1) % 2 = 0 := by

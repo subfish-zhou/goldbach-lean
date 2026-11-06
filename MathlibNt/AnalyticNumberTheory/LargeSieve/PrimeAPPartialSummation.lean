@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVCharacterOrthogonality
-import MathlibNt.SieveTheory.Distribution.BombieriVinogradov
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVCharacterOrthogonality
+public import MathlibNt.SieveTheory.Distribution.BombieriVinogradov
 
 /-!
 # Discrete partial summation from Chebyshev AP errors to prime AP errors
@@ -9,6 +11,8 @@ orthogonality module.  It does not assume a Bombieri--Vinogradov conclusion.
 The only separately packaged source term is the scalar comparison between the
 discrete Abel main term and the genuine logarithmic integral.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -54,9 +58,9 @@ theorem reciprocalLogWeight_mul_primeThetaAPIncrement (q a n : ℕ) :
     reciprocalLogWeight n * primeThetaAPIncrement q a n = primeAPIncrement q a n := by
   unfold reciprocalLogWeight primeThetaAPIncrement primeAPIncrement
   by_cases h : n.Prime ∧ n ≡ a [MOD q]
-  · rw [if_pos h, if_pos h]
+  · rw [ite_eq_left h, ite_eq_left h]
     have hn2 : 2 ≤ n := h.1.two_le
-    rw [if_pos hn2]
+    rw [ite_eq_left hn2]
     have hlog : Real.log (n : ℝ) ≠ 0 :=
       (Real.log_pos (by exact_mod_cast h.1.one_lt)).ne'
     field_simp

@@ -11,7 +11,11 @@ integrally by
 in addition to p < z.  The source later removes the lower cutoff only after a
 support-vanishing argument, and only in the parity domain used in Section 14.
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDiscreteParityRecurrence
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDiscreteParityRecurrence
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

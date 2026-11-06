@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.VonMangoldtConductorCorrection
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMomentExplicit
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.VonMangoldtConductorCorrection
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorMomentExplicit
 
 /-!
  # All-character nonprincipal Vaughan ledger and Type-II scale audit
@@ -11,6 +13,8 @@ out, keeps the full prefix maximum on the all-character side, and records that
 the currently proved tensor Type-II estimate is only an endpoint estimate.
 Consequently no Standard Bombieri--Vinogradov theorem is claimed.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

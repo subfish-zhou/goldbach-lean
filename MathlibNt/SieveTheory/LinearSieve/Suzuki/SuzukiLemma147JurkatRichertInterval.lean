@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePTail
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePTail
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
 
 /-!
 # Suzuki Lemma 14.7 on the Jurkat--Richert interval
@@ -11,6 +13,8 @@ the full legal range `2 ≤ s`.  On `4 ≤ s ≤ 6`, the source normalization th
 then identifies that factor with the standard dimension-one Jurkat--Richert
 factor.  The adaptive depth and the complete error term are unchanged.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset

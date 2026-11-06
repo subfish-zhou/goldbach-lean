@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146SourceAssembly
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFixedGapRpowMargin
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingSigmaClaim146SourceAssembly
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFixedGapRpowMargin
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

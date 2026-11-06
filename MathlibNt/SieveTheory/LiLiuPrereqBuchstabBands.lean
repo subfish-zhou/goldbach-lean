@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBaseEstimate
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniformAbel
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabBaseEstimate
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniformAbel
 
 /-!
 # Finite-band estimates for the actual rough-integer count
@@ -8,6 +10,8 @@ The error function is constructed from the actual PNT envelope. Constants are
 independent of both real parameters, and the boundary term retains the unit
 when the two parameters are close.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

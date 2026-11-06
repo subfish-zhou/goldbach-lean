@@ -1,7 +1,11 @@
-import MathlibNt.Tactic.ElementaryDeriv
-import Mathlib.Tactic.Ring
+module
+
+public import MathlibNt.Tactic.ElementaryDeriv
+public import Mathlib.Tactic.Ring
 
 -- Nonzero logarithm arguments, including negative ones, are valid over the reals.
+@[expose] public section
+
 example (x : ℝ) (hx : x ≠ 0) : HasDerivAt Real.log (1/x) x := by
   elementary_deriv []
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9NormalizedMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9NormalizedMass
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

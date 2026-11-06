@@ -1,8 +1,10 @@
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.Data.List.Induction
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
+public import Mathlib.Data.List.Induction
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-!
 # The numerical two-box allocation core
@@ -15,6 +17,8 @@ Every occurrence is assigned to exactly one box, in its original order. The inpu
 carry arbitrary labels, with a real weight attached to each label. In fact the numerical
 argument does not require the weights to be nonnegative.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWFBoxAllocation
 

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiuPanUnweightedToWeighted
-import MathlibNt.SieveTheory.LiuPanConvolutionSourceCount
-import MathlibNt.SieveTheory.LiuPanLiMainTermEnvelope
+module
+
+public import MathlibNt.SieveTheory.LiuPanUnweightedToWeighted
+public import MathlibNt.SieveTheory.LiuPanConvolutionSourceCount
+public import MathlibNt.SieveTheory.LiuPanLiMainTermEnvelope
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators

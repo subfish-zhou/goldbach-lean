@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramReindex
 
 /-!
 # Global occupied-section estimate for the separated Gram energy
@@ -7,6 +9,8 @@ The exact identity precedes the real triangle inequality. In particular no
 absolute values are inserted into the original signed beta/zeta weights.
 The zero-numerator branch uses the actual paired-carrier count, not Weil.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

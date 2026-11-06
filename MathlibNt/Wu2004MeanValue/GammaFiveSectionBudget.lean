@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveLossKernelIdentity
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetTriangle
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossKernelIdentity
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetTriangle
 
 /-!
 # Paid bounds for full versus legal Gamma₅ sections
@@ -9,6 +11,8 @@ These are bounds on logarithmic section integrals. Their use in the original
 count inequalities additionally requires identifying the full and legal
 section integrals with the corresponding two-dimensional gains.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open Set MeasureTheory

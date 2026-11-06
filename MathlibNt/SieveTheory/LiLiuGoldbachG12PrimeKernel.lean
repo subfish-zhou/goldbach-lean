@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
+
+@[expose] public section
 
 open Finset Set
 open scoped BigOperators Interval

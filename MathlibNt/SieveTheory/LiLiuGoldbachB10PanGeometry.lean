@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10EndpointScale
-import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import MathlibNt.SieveTheory.LiuPanWangDingSource
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10EndpointScale
+public import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+public import MathlibNt.SieveTheory.LiuPanWangDingSource
+
+@[expose] public section
 
 open Filter
 

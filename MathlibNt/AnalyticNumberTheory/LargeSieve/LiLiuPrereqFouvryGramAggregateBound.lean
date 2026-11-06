@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregate
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregate
 
 /-!
 # Quantitative full-energy bound with the zero numerator separated
@@ -8,6 +10,8 @@ signed dyadic block, prefix and pair of arbitrary real coefficient sequences.
 Only occupied labels are tested for canonicality. The resonant branch pays
 the actual shared-k count; individual cancellation is used on the other branch.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -70,11 +74,11 @@ theorem wSeparatedCorrelationEnergy_fouvry {ε : ℝ} (hε : 0 < ε) :
       intro L hL
       apply (wGramWeight_mul_re_le K β ζ L _).trans
       by_cases hl : wGramNumerator K a L = 0
-      · rw [if_pos hl]
+      · rw [ite_eq_left hl]
         exact mul_le_mul_of_nonneg_left
           (wGramPairSum_norm_le_count N a x η R S M Z K b j cap positive c L)
           (abs_nonneg _)
-      · rw [if_neg hl]
+      · rw [ite_eq_right hl]
         apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
         obtain ⟨hf, hf', hΔ, hΔ', he⟩ :=
           wGramLabels_eligible hN (fun _ hq => (mem_Ioc.mp hq).1) hV hL

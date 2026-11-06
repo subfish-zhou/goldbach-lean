@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarEndpoints
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarEndpoints
+
+@[expose] public section
 
 open Set MeasureTheory
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

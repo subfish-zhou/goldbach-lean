@@ -1,6 +1,8 @@
-import MathlibNt.SieveTheory.Switching.VaryingPrimeSieve
-import MathlibNt.Tactic.ElementaryDeriv
-import MathlibNt.SieveTheory.Switching.BoundaryDensity
+module
+
+public import MathlibNt.SieveTheory.Switching.VaryingPrimeSieve
+public import MathlibNt.Tactic.ElementaryDeriv
+public import MathlibNt.SieveTheory.Switching.BoundaryDensity
 
 /-!
 # Rosser lower sieves and Mertens normalization
@@ -11,6 +13,8 @@ singular-series normalization to give the base lower-sieve asymptotic.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta
@@ -439,7 +443,7 @@ private theorem singularSeriesTruncated_one_step_lower (N m : ℕ) (hm : 3 ≤ m
     have hmR : (3 : ℝ) ≤ m := by exact_mod_cast hm
     have hm1 : (0 : ℝ) < (m : ℝ) - 1 := by linarith
     by_cases hp : m.Prime
-    · simp only [hp, if_true]
+    · simp only [hp, ite_true]
       by_cases hpdvd : m ∣ N
       · rw [SingularSeries.localFactor_of_dvd hp (by omega) hpdvd]
         field_simp [hm1.ne']
@@ -448,7 +452,7 @@ private theorem singularSeriesTruncated_one_step_lower (N m : ℕ) (hm : 3 ≤ m
         field_simp [hm1.ne']
         ring_nf
         rfl
-    · simp only [hp, if_false]
+    · simp only [hp, ite_false]
       have : 0 ≤ 1 / ((m : ℝ) - 1) ^ 2 := by positivity
       linarith
   calc

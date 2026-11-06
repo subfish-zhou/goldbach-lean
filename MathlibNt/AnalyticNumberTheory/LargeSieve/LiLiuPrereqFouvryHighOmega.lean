@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanError
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanError
 
 /-!
 # Exponential saving from high distinct-prime-factor beta support
@@ -7,6 +9,8 @@ The cutoff is real. The elementary Rankin weight is `2 ^ omega(n)`;
 its absorption only doubles the fixed divisor order, with no power of the
 ambient scale lost.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -40,7 +44,7 @@ theorem abs_betaHighOmega_le (β : ℕ → ℝ) (ξ : ℝ) (n : ℕ) :
 theorem two_pow_card_primeFactors_le_tau {n : ℕ} (hn : n ≠ 0) :
     2 ^ n.primeFactors.card ≤ fouvryTau 2 n := by
   rw [fouvryTau_two, Nat.card_divisors hn, ← prod_const]
-  apply prod_le_prod'
+  apply prod_le_prod
   intro p hp
   have hp' : n.factorization p ≠ 0 := by
     exact Finsupp.mem_support_iff.mp (by rwa [Nat.support_factorization])

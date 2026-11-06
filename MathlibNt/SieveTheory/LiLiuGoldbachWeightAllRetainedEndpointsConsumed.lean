@@ -1,11 +1,15 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3RetainedScalar
-import MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints
-import MathlibNt.SieveTheory.LiLiuGoldbachS4RetainedEndpoints
-import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarClosed
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralBound
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosure
-import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3RetainedScalar
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10RetainedEndpoints
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4RetainedEndpoints
+public import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarClosed
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorIntegralBound
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosure
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
+
+
+@[expose] public section
 
 open MathlibNt.SieveTheory.SwitchingPrinciple
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

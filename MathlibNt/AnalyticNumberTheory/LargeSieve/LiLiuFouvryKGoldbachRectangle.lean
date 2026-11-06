@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKC2
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeC2
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKC2
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

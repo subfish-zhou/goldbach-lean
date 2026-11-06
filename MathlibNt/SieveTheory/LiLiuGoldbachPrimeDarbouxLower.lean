@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachCoprimePrimeBoxRectangle
-import MathlibNt.SieveTheory.LiLiuGoldbachLogDarboux
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachCoprimePrimeBoxRectangle
+public import MathlibNt.SieveTheory.LiLiuGoldbachLogDarboux
+
+@[expose] public section
 
 open Finset Set
 open scoped BigOperators Interval NNReal

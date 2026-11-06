@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerLemma86
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87DimensionOne
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerLemma86
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87DimensionOne
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open MeasureTheory Set
@@ -28,10 +32,10 @@ private theorem shifted_parityDomain_mono
     y - 1 ∈ suzukiParityDomainOne β M := by
   by_cases hpar : M % 2 = 1
   · simp only [suzukiParityDomainOne, KappaOneModel.parityDomain, hpar,
-      if_true, Set.mem_Ioi] at hx ⊢
+      ite_true, Set.mem_Ioi] at hx ⊢
     linarith
   · simp only [suzukiParityDomainOne, KappaOneModel.parityDomain, hpar,
-      if_false, Set.mem_Ici] at hx ⊢
+      ite_false, Set.mem_Ici] at hx ⊢
     linarith
 
 /-- The shifted clamp supplies exactly the global continuity, nonnegativity,

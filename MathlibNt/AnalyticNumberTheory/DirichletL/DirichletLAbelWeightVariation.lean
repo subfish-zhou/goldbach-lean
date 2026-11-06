@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivative
-import Mathlib.Analysis.SumIntegralComparisons
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivative
+public import Mathlib.Analysis.SumIntegralComparisons
 
 /-!
 # Total variation bounds for Dirichlet Abel weights
@@ -8,6 +10,8 @@ The bounds here are obtained from the real-interval fundamental theorem of calcu
 `intervalIntegral.norm_integral_le_integral_norm`.  In particular, no monotonicity assertion is
 made about the complex-valued weights.
 -/
+
+@[expose] public section
 
 open Complex Finset Set MeasureTheory
 

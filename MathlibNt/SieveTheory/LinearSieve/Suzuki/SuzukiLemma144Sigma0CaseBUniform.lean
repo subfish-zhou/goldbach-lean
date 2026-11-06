@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrenceStrictCeil
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrenceStrictCeil
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseBUniform
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

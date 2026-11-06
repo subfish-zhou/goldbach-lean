@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFRoughDensityTarget
-import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensityTarget
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRoughDensityTarget
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoarseDensityTarget
 
 /-!
 # Genuine F/f density of the fixed normalized signed family
@@ -10,6 +12,8 @@ against the absolute rough Euler majorant before the coarse F/f inequalities
 are used. The original dimension-one constant and uniform threshold order
 are retained.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -27,7 +31,7 @@ theorem roughSignedDensity_abs_le_euler (upper : Bool) (b c : ℕ → ℝ)
   have hp : 0 ≤ ∏ p ∈ s, g p := prod_nonneg (fun p hp => hg p (mem_powerset.mp hs hp))
   have hc : |normalizedSignedSet upper b c D s| ≤ 1 := by
     cases upper <;> simp only [normalizedSignedSet, normalizedUpperSet, normalizedLowerSet,
-      Bool.false_eq_true, if_true, if_false] <;> split_ifs <;> norm_num
+      Bool.false_eq_true, ite_true, ite_false] <;> split_ifs <;> norm_num
   rw [abs_mul, abs_of_nonneg hp]
   simpa only [one_mul] using mul_le_mul_of_nonneg_right hc hp
 
@@ -106,9 +110,9 @@ theorem exists_signedFamilyDensity_coarse_comparison_target :
     have hh := hs D hDsD P ω hω
       (fun p hp => hg p (mem_filter.mp hp).1) K hK hdim
     cases upper
-    · simpa only [small, smallWeightDensity, Bool.false_eq_true, if_false,
+    · simpa only [small, smallWeightDensity, Bool.false_eq_true, ite_false,
         VB, B, g, primeDensity_apply, E] using hh.1
-    · simpa only [small, smallWeightDensity, if_true,
+    · simpa only [small, smallWeightDensity, ite_true,
         VB, B, g, primeDensity_apply, E] using hh.2
   have hrho : |rho| ≤ ∏ p ∈ R, (1 + g p) :=
     roughSignedDensity_abs_le_euler upper b c D R g

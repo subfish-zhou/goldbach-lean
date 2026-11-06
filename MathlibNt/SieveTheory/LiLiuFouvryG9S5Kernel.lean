@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9NormalizedError
-import MathlibNt.SieveTheory.LiLiuFouvryG9MassKernel
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9NormalizedError
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MassKernel
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegral
+
+@[expose] public section
 
 noncomputable section
 open Finset

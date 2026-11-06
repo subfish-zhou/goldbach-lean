@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachT16Coverage
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruplePaid
-import MathlibNt.SieveTheory.LiLiuGoldbachFiniteBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG10SwitchBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachCubeCutoff
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachT16Coverage
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightTriplePartition
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruplePaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachFiniteBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10SwitchBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachCubeCutoff
+
+@[expose] public section
 
 open Filter
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine

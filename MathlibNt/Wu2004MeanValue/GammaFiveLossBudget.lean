@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetGeneral
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossBudgetGeneral
 
 /-!
 # Fourth-row Gamma₅ loss budget
@@ -8,6 +10,8 @@ The explicit kernel formula is retained for identification with the research
 kernel. It includes the second functional's factor 1/5. Supplying the actual
 improvement function and proving the count bridge are separate steps.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 

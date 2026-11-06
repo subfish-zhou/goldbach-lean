@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachIntermediateSums
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachIntermediateSums
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

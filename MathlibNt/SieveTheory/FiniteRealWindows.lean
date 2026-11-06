@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Data.Finset.Card
+module
+
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Data.Finset.Card
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

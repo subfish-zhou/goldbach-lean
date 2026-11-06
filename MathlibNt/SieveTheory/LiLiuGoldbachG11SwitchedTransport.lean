@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedMother
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightG11RoughConsumed
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedMother
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightG11RoughConsumed
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

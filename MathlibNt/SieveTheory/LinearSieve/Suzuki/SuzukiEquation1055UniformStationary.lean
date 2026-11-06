@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053KernelExpansion
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1053KernelExpansion
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval

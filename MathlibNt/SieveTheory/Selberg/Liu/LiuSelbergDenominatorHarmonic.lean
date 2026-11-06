@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectionEuler
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectionEuler
 
 /-!
 # Harmonic remainder in Liu's Selberg denominator
@@ -7,6 +9,8 @@ import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectionEuler
 This file isolates the elementary harmonic error in the exact denominator
 convolution.  All estimates are pointwise in the fixed even integer `N`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

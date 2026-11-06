@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshLimit
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshLimit
+
+@[expose] public section
 
 open Set
 

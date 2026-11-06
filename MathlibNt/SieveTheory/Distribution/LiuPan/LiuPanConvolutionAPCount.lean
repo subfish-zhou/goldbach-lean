@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionCoefficient
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanConvolutionCoefficient
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset
@@ -74,7 +78,7 @@ theorem liuCoprimeIntervalCount_eq_sum_betaInterval (N z y A₁ A₂ q l : ℕ) 
     rw [primesInAPBelow_eq_divisor_card N a q l (by have := (Finset.mem_Ioc.mp ha).1; omega)]
     simp only [Finset.card_eq_sum_ones, Nat.cast_sum, Finset.sum_filter]
     by_cases hc : a.Coprime q
-    · rw [if_pos hc]
+    · rw [ite_eq_left hc]
       simp only [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro n _

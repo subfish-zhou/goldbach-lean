@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerLong
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerLong
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
 
 /-!
 # Finite-height Perron truncation for the complete Pan source
@@ -9,6 +11,8 @@ and exponential height. Reciprocal product weights are retained in the error:
 an unweighted count up to the exponential height would lose the saving.
 Only the truncation remainder is estimated coefficientwise.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter
@@ -134,9 +138,11 @@ theorem hyperbola_error_le_harmonic {q x y : ℕ} {T : ℝ}
     have hu0 := (hU u hu).ne'
     have hv0 := (hV v hv).ne'
     have hcoeff : ‖liuPanPerronProductCoefficient A B χ u v‖ ≤ 1 := by
-      simp only [liuPanPerronProductCoefficient, hu0, hv0, or_self, if_false, norm_mul]
-      exact mul_le_one₀ (mul_le_one₀ (hA u hu) (norm_nonneg _) (hB v hv))
-        (norm_nonneg _) (_root_.AnalyticNumberTheory.LargeSieve.dirichletChar_norm_le_one q χ _)
+      simp only [liuPanPerronProductCoefficient, hu0, hv0, or_self, ite_false, norm_mul]
+      have hAB : ‖A u‖ * ‖B v‖ ≤ 1 :=
+        (mul_le_of_le_one_left (norm_nonneg _) (hA u hu)).trans (hB v hv)
+      exact (mul_le_of_le_one_left (norm_nonneg _) hAB).trans
+        (_root_.AnalyticNumberTheory.LargeSieve.dirichletChar_norm_le_one q χ _)
     rw [← mul_boole, ← mul_sub, norm_mul]
     calc
       _ ≤ 1 * ((108 * (x : ℝ) ^ 3 / T) / (u * v : ℕ)) :=
@@ -237,8 +243,8 @@ theorem source_amplitude_eq_hyperbola {q : ℕ}
       have han : a * n ≤ y := by
         simpa only [Nat.mul_comm] using
           (Nat.le_div_iff_mul_le ha0).mp (mem_Icc.mp hn).2
-      simp only [if_pos han, liuPanPerronProductCoefficient, ha0.ne', hn0.ne',
-        or_self, if_false, Nat.cast_mul, map_mul]
+      simp only [ite_eq_left han, liuPanPerronProductCoefficient, ha0.ne', hn0.ne',
+        or_self, ite_false, Nat.cast_mul, map_mul]
       ring
     _ = _ := sum_subset hsub (by
       intro n hn hnsmall
@@ -248,7 +254,7 @@ theorem source_amplitude_eq_hyperbola {q : ℕ}
         apply hnsmall
         exact mem_Icc.mpr ⟨hn1, (Nat.le_div_iff_mul_le ha0).mpr
           (by simpa only [Nat.mul_comm] using h)⟩
-      simp only [if_neg hnot])
+      simp only [ite_eq_right hnot])
 
 /-- Perron's formula for the complete source/prime amplitude, at Pan's line
 and height, with an unconditional error uniform in the source and character. -/

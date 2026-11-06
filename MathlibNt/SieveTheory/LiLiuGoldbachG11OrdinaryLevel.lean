@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSubpowerBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridSubpowerBudget
+
+@[expose] public section
 
 open Filter
 open scoped BigOperators

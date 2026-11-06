@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinality
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinality
 
 /-!
 # The exponential bound for the actual normalized signed family
@@ -8,6 +10,8 @@ which is already sufficient without the logarithmic grid-count estimate.
 The elementary inequality `log t ≤ t / 2` then absorbs this alphabet
 and the length bound into `exp (8 ε⁻³)`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

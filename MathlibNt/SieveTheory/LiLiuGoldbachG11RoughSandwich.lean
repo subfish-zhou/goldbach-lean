@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughQuotient
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RoughQuotient
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

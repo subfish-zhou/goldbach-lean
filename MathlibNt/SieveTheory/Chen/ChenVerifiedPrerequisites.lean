@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenRichertConsumer
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectedChenBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965ChenRichertConsumer
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergCorrectedChenBridge
 
 /-!
 # Chen's 1+2 endpoint after the verified sieve and distribution inputs
@@ -13,6 +15,8 @@ These are conditional Chen theorems, not unconditional analytic producers.
 The quantitative statement counts the existing `chenGoodRepresentations`;
 neither the historical counting bridge nor a weakened counting object is used.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology

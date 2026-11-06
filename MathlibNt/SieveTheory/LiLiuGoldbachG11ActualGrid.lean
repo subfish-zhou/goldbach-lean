@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCover
-import MathlibNt.SieveTheory.LiLiuGoldbachG11EffectiveProductSupport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCover
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11EffectiveProductSupport
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

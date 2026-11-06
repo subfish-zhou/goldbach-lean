@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPi10Sifted
+
+@[expose] public section
 
 open Finset
 

@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+
+@[expose] public section
 
 open Filter Finset MeasureTheory Set
 open scoped BigOperators Topology Interval

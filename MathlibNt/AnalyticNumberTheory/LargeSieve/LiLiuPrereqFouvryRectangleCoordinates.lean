@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangle
 
 /-!
 # Rectangular partial summation on a finite indexed carrier
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangle
 The coordinate map need not be injective: repeated coordinates, arithmetic
 coefficients, and all support masks stay inside the original carrier sums.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

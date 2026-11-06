@@ -1,9 +1,13 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.FourFactorUnconditionalEndpoints
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.FourFactorUnconditionalEndpoints
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
 
 /-! Actual prime-character prefixes for the nonprincipal low-conductor lane.
 No assertion is made about the unpunctured `panIymLow` (which contains q = 1).
 Only finite Abel summation and the existing prime-power correction are used. -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Classical Finset Filter
 open scoped BigOperators ArithmeticFunction Topology

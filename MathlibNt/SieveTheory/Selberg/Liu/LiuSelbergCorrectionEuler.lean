@@ -1,5 +1,7 @@
-import Mathlib.NumberTheory.EulerProduct.Basic
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorConvolution
+module
+
+public import Mathlib.NumberTheory.EulerProduct.Basic
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorConvolution
 
 /-!
 # Euler total of Liu's Selberg correction
@@ -7,6 +9,8 @@ import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorConvolution
 This file proves absolute summability of the correction in the exact
 denominator convolution and identifies its signed Euler total.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -42,14 +46,14 @@ theorem tsum_abs_liuSelbergCorrection_prime_pow
       else
         1 + 3 / ((p : ℝ) * ((p : ℝ) - 2)) := by
   by_cases hpn : p ∣ N
-  · rw [if_pos hpn, tsum_eq_sum (s := Finset.range 2)]
+  · rw [ite_eq_left hpn, tsum_eq_sum (s := Finset.range 2)]
     · simp [Finset.sum_range_succ, liuSelbergCorrection_one,
         liuSelbergCorrection_prime_of_dvd hp hpn, abs_inv]
     · intro e he
       have he2 : 2 ≤ e := Nat.le_of_not_gt (by simpa using he)
       rw [liuSelbergCorrection_prime_pow_eq_zero_of_dvd hp hpn he2]
       simp
-  · rw [if_neg hpn, tsum_eq_sum (s := Finset.range 3)]
+  · rw [ite_eq_right hpn, tsum_eq_sum (s := Finset.range 3)]
     · have hp2 : 2 < p := by
         have hpne : p ≠ 2 := by
           intro h
@@ -144,7 +148,7 @@ theorem summable_liuSelbergAbsPrimeDeviation
     have hdNat : Summable dNat := by
       apply summable_of_ne_finset_zero (s := N.primeFactors)
       intro p hp
-      simp only [dNat, if_neg hp]
+      simp only [dNat, ite_eq_right hp]
     have hdsub := hdNat.subtype Nat.Prime
     apply hdsub.congr
     intro p
@@ -167,11 +171,11 @@ theorem summable_liuSelbergAbsPrimeDeviation
   · rw [liuSelbergAbsPrimeDeviation,
       tsum_abs_liuSelbergCorrection_prime_pow hNeven p.2]
     by_cases hpdvd : (p : ℕ) ∣ N
-    · simp only [if_pos hpdvd, d, b]
+    · simp only [ite_eq_left hpdvd, d, b]
       have hbnonneg :
           (0 : ℝ) ≤ 12 / (((p : ℕ) : ℝ) - 1) ^ 2 := by positivity
       linarith
-    · simp only [if_neg hpdvd, d, b, zero_add]
+    · simp only [ite_eq_right hpdvd, d, b, zero_add]
       have hp2 : 2 < (p : ℕ) := by
         have hpne : (p : ℕ) ≠ 2 := by
           intro heq
@@ -266,7 +270,7 @@ private theorem summable_norm_of_summable_prime_deviation
       rw [hprod]
       exact ge_of_tendsto hmult.hasProd (Filter.eventually_atTop.mpr
         ⟨S, fun T hST =>
-          Finset.prod_le_prod_of_subset_of_one_le hST
+          Finset.prod_le_prod_of_subset_of_one_le₀ hST
             (fun p _ => by linarith [hdev_nonneg p])
             (fun p _ _ => by linarith [hdev_nonneg p])⟩)
 
@@ -327,14 +331,14 @@ private theorem summable_abs_liuSelbergCorrection_mul_fourthRoot
       (∑' e : ℕ, ‖f ((p : ℕ) ^ e)‖) - 1 =
         if (p : ℕ) ∣ N then ‖f p‖ else ‖f p‖ + ‖f ((p : ℕ) ^ 2)‖ := by
     by_cases hpn : (p : ℕ) ∣ N
-    · rw [if_pos hpn, tsum_eq_sum (s := Finset.range 2)]
+    · rw [ite_eq_left hpn, tsum_eq_sum (s := Finset.range 2)]
       · simp [Finset.sum_range_succ, hf1]
       · intro e he
         have he2 : 2 ≤ e := Nat.le_of_not_gt (by simpa using he)
         simp only [f]
         rw [liuSelbergCorrection_prime_pow_eq_zero_of_dvd p.2 hpn he2]
         simp
-    · rw [if_neg hpn, tsum_eq_sum (s := Finset.range 3)]
+    · rw [ite_eq_right hpn, tsum_eq_sum (s := Finset.range 3)]
       · simp [Finset.sum_range_succ, hf1]
         ring
       · intro e he
@@ -352,7 +356,7 @@ private theorem summable_abs_liuSelbergCorrection_mul_fourthRoot
     have haNat : Summable aNat := by
       apply summable_of_ne_finset_zero (s := N.primeFactors)
       intro p hp
-      simp only [aNat, if_neg hp]
+      simp only [aNat, ite_eq_right hp]
     apply (haNat.subtype Nat.Prime).congr
     intro p
     simp only [Function.comp_apply, aNat, a]
@@ -388,7 +392,7 @@ private theorem summable_abs_liuSelbergCorrection_mul_fourthRoot
     by_cases hpd : (p : ℕ) ∣ N
     · simp [a, b, hpd]
       positivity
-    · simp only [a, hpd, if_false, zero_add]
+    · simp only [a, hpd, ite_false, zero_add]
       have hp2 : 2 < (p : ℕ) := by
         have hpne : (p : ℕ) ≠ 2 := by
           intro heq

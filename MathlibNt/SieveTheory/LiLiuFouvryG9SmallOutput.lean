@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9MotherSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MotherSieve
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter
@@ -17,7 +21,7 @@ theorem g9SmallOutput_fibre_sum {ι : Type*} (S : Finset ι) (a : ι → ℕ)
       ∑ r ∈ range ⌈z⌉₊, if a x = r then w x else 0 := by
     intro x _
     by_cases h : (a x : ℝ) < z
-    · rw [if_pos h, mul_one]
+    · rw [ite_eq_left h, mul_one]
       symm
       rw [sum_eq_single (a x)]
       · simp
@@ -25,11 +29,11 @@ theorem g9SmallOutput_fibre_sum {ι : Type*} (S : Finset ι) (a : ι → ℕ)
         simp [Ne.symm hr]
       · intro hn
         exact False.elim (hn (mem_range.mpr (Nat.lt_ceil.mpr h)))
-    · rw [if_neg h, mul_zero]
+    · rw [ite_eq_right h, mul_zero]
       symm
       apply sum_eq_zero
       intro r hr
-      apply if_neg
+      apply ite_eq_right
       intro ha
       apply h
       rw [ha]

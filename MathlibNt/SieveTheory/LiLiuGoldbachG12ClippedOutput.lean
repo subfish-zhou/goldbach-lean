@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedConsumers
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -132,16 +136,16 @@ theorem primeOutput_le_sifted (hN : 2 ≤ N) (h : Admissible N ε g L U) (Z : �
     intro p _
     have hw := outputWeight_nonneg h p
     by_cases hp : p.Prime
-    · rw [if_pos hp]
+    · rw [ite_eq_left hp]
       by_cases hc : (goldbachB10ProdPrimes N Z).Coprime p
-      · rw [if_pos hc]
+      · rw [ite_eq_left hc]
         split_ifs <;> linarith
       · have hpd : p ∣ goldbachB10ProdPrimes N Z := by
           by_contra hpd
           exact hc ((hp.coprime_iff_not_dvd.mpr hpd).symm)
         have hs : p < Nat.ceil Z := Nat.lt_ceil.mpr (prime_dvd_goldbachB10ProdPrimes_lt hp hpd)
-        simp only [if_neg hc,if_pos hs,zero_add,le_refl]
-    · rw [if_neg hp]
+        simp only [ite_eq_right hc,ite_eq_left hs,zero_add,le_refl]
+    · rw [ite_eq_right hp]
       split_ifs <;> linarith
   rw [output_sum,output_sum] at hsplit
   unfold primeOutput siftedMass

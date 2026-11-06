@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruple
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruple
+
+@[expose] public section
 
 open scoped BigOperators
 

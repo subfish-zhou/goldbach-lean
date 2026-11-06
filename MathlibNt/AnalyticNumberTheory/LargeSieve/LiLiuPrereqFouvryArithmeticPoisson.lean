@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPoisson
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimeCount
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryPoisson
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimeCount
 
 /-!
 # Arithmetic Poisson summation for the fixed dyadic cutoff
@@ -8,6 +10,8 @@ The finite natural progression is identified with the entire affine integer
 lattice using the positive support of the cutoff. The error constant is chosen
 before the scale, modulus, residue, and finite support set.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -77,7 +81,7 @@ theorem scaledDyadicCutoff_finset_progression_eq_tsum
       exact ⟨-z.val, by ring⟩
     have hr : (i z : ℝ) = (a : ℝ) + (q : ℝ) * z.val := by
       exact_mod_cast hcast z
-    simp only [f, hc, if_pos, hr, g]
+    simp only [f, hc, ite_eq_left, hr, g]
   calc
     _ = ∑' m : ℕ, f m := by
       symm
@@ -236,13 +240,13 @@ theorem coprime_product_progression_weight_eq_moebius
       apply Finset.sum_congr rfl
       intro d _
       by_cases hdq : d.Coprime q
-      · simp only [if_pos hdq]
-      · rw [if_neg hdq]
+      · simp only [ite_eq_left hdq]
+      · rw [ite_eq_right hdq]
         have hz : (∑ m ∈ S,
             if d ∣ m ∧ Int.ModEq q ((m : ℤ) * n) a then w m else 0) = 0 := by
           apply Finset.sum_eq_zero
           intro m _
-          apply if_neg
+          apply ite_eq_right
           intro hm
           exact hdq (Nat.Coprime.of_dvd_left hm.1 (coprime_of_product_congruent ha hm.2).1)
         rw [hz, mul_zero]

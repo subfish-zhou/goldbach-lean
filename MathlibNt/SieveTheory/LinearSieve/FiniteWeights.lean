@@ -1,17 +1,19 @@
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Order.Floor.Div
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.AlmostPrime
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Tactic.Linarith
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainTermNormalization
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainRatioBound
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiPowerCoordinates
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.Order.Floor.Div
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.AlmostPrime
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Tactic.Linarith
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainTermNormalization
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainRatioBound
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiPowerCoordinates
 
 /-!
 # Finite Moebius, Selberg, and lower Rosser weights
@@ -19,6 +21,8 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiPowerCoordinates
 Finite lower and upper sieve inequalities, lower Rosser coefficients, and
 Euler-normalized lower density recursions.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LinearSieve
 
@@ -304,10 +308,10 @@ private theorem lowerRosserSetWeight_pair_nonpos
           lowerRosserAdmissibleSet_insert_min_of_even
             hqs hqmin hbase.2 heven⟩
       unfold lowerRosserSetWeight
-      rw [if_pos hbase, if_pos hins, if_pos heven, if_neg hodd]
+      rw [ite_eq_left hbase, ite_eq_left hins, ite_eq_left heven, ite_eq_right hodd]
       norm_num
     · unfold lowerRosserSetWeight
-      rw [if_neg hbase]
+      rw [ite_eq_right hbase]
       split <;> norm_num
   · have hinsEven : Even (insert q s).card := by
       rw [hcard, Nat.even_add_one]
@@ -324,14 +328,14 @@ private theorem lowerRosserSetWeight_pair_nonpos
     by_cases hbase :
         s.prod id < D ∧ LowerRosserAdmissibleSet D s
     · unfold lowerRosserSetWeight
-      rw [if_pos hbase, if_neg heven]
+      rw [ite_eq_left hbase, ite_eq_right heven]
       split <;> norm_num
     · have hins :
           ¬((insert q s).prod id < D ∧
             LowerRosserAdmissibleSet D (insert q s)) :=
         fun h ↦ hbase (hback h)
       unfold lowerRosserSetWeight
-      rw [if_neg hbase, if_neg hins]
+      rw [ite_eq_right hbase, ite_eq_right hins]
       norm_num
 
 private theorem sum_lowerRosserSetWeight_nonpos
@@ -762,7 +766,7 @@ theorem lowerRosserWeight_certificate {P D : ℕ} (hP : Squarefree P)
       Finset.sum_singleton, Finset.prod_empty]
     unfold lowerRosserWeight
     split <;> norm_num
-  · rw [if_neg hn1]
+  · rw [ite_eq_right hn1]
     have hnFactors : n.primeFactors.Nonempty := by
       rw [Finset.nonempty_iff_ne_empty]
       intro hempty

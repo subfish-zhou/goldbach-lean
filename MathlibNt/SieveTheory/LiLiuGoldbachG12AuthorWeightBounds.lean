@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernel
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

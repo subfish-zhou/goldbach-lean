@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovPointCount
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovPointCount
 
 /-!
 # Harcos's affine curve
@@ -10,6 +12,8 @@ The count is the actual affine count, not the count of a projective completion.
 The final section removes the auxiliary normalization `f(0) ≠ 0` by translation,
 giving Theorem 7 in its original domain.
 -/
+
+@[expose] public section
 
 noncomputable section
 

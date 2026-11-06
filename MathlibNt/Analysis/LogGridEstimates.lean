@@ -1,13 +1,17 @@
-import Mathlib.Analysis.SpecificLimits.Basic
-import MathlibNt.Analysis.IntegralExcessCover
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import MathlibNt.Analysis.IntegralExcessCover
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.MeasureTheory.Function.LocallyIntegrable
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
 
 /-! Shared estimates for half-open logarithmic grids. The density, cell selection,
 and boundary cover remain parameters of the consumers, not replacement measures. -/
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped BigOperators

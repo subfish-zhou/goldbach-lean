@@ -1,5 +1,9 @@
-import MathlibNt.Wu2004MeanValue.APWeightTransferPayment
-import MathlibNt.Wu2004MeanValue.ActualAP
+module
+
+public import MathlibNt.Wu2004MeanValue.APWeightTransferPayment
+public import MathlibNt.Wu2004MeanValue.ActualAP
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

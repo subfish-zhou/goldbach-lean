@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachSmallEpsilon
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachSmallEpsilon
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
+
+@[expose] public section
 
 open Filter
 open MathlibNt.SieveTheory.SwitchingPrinciple

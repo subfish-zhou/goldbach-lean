@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryScaleEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointAggregate
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryScaleEnergy
 
 /-! # The joint main mean on the original occupied labels
 
@@ -7,6 +9,8 @@ The two differences are deduced from canonicality and the original beta
 support before any extension of the r fiber. Both ordered beta indices
 and both signed frequencies remain independent coordinates.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

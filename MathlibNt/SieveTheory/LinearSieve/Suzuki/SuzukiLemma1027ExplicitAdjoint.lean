@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13QhatMajorantClosure
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1056UniformStationary
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13QhatMajorantClosure
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1056UniformStationary
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

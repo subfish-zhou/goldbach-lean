@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFactorPaid
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedAnalyticCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFactorPaid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MixedAnalyticCount
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

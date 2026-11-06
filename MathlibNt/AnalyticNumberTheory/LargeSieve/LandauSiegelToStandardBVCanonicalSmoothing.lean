@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LandauSiegelToLowSWSource
-import Mathlib.Analysis.Calculus.BumpFunction.Normed
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LandauSiegelToLowSWSource
+public import Mathlib.Analysis.Calculus.BumpFunction.Normed
 
 /-!
 # Canonical smoothing data for the raw Landau--Siegel Standard-BV endpoint
@@ -8,6 +10,8 @@ This module constructs a fixed nonnegative smooth bump supported in `[1/2, 2]`,
 normalizes it for the multiplicative measure `dx/x`, and removes all smoothing
 data from the final raw-Landau--Siegel-to-Standard-BV headline.
 -/
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory Metric
 

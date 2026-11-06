@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10Support
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10Support
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -115,7 +119,7 @@ private theorem B10ProductCount_divisorPairFiber_eq_if
         goldbachB10ProductResidueQFiber N d ε (goldbachC10Prod rs)
       else ∅ := by
   by_cases hcop : Nat.Coprime (goldbachC10Prod rs) d
-  · rw [if_pos hcop, B10ProductCountDivisorPairFiber, goldbachB10Fiber_eq_productQFiber,
+  · rw [ite_eq_left hcop, B10ProductCountDivisorPairFiber, goldbachB10Fiber_eq_productQFiber,
       goldbachB10ProductResidueQFiber]
     ext q
     constructor
@@ -155,7 +159,7 @@ private theorem B10ProductCount_divisorPairFiber_eq_if
         (goldbachB10Atom_output_dvd_iff_residueCondition
           (x := Sigma.mk rs q) hd hdN hxAtom).mp hdiv
       exact hcop hres.1
-    · simp [if_neg hcop]
+    · simp [ite_eq_right hcop]
 
 theorem goldbachB10DivisorAtoms_card_eq_sum_productSupport
     {N d : ℕ} (ε b c : ℝ)

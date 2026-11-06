@@ -3,11 +3,18 @@ Copyright (c) 2022 Abby J. Goldberg. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Abby J. Goldberg, Mario Carneiro, Heather Macbeth
 -/
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombinationPrime
+module
+
+public import Mathlib.Tactic.Abel
+public meta import Mathlib.Tactic.LinearCombination
 
 /-!
 # additive_combination Tactic
+
+The equality-expression grammar below is retained from Mathlib revision
+`e4c91783ca8e6a7c693ae624ade32fd22d4e43c1`, whose
+`Mathlib.Tactic.LinearCombinationPrime` module was removed upstream.
+Its Apache-2.0 attribution is retained above.
 
 In this file, the `additive_combination` tactic is created.  This tactic, which
 works over `AddGroup`s, attempts to simplify the target by creating a additive combination
@@ -31,9 +38,109 @@ Lastly, calls a normalization tactic on this target.
 
 -/
 
+public meta section
+
 namespace Mathlib.Tactic.LinearCombinationPrime
 open Lean
 open Elab Meta Term
+
+variable {α : Type*} {a a' a₁ a₂ b b' b₁ b₂ c : α}
+
+theorem pf_add_c [Add α] (p : a = b) (c : α) : a + c = b + c := p ▸ rfl
+theorem c_add_pf [Add α] (p : b = c) (a : α) : a + b = a + c := p ▸ rfl
+theorem add_pf [Add α] (p₁ : (a₁ : α) = b₁) (p₂ : a₂ = b₂) : a₁ + a₂ = b₁ + b₂ := p₁ ▸ p₂ ▸ rfl
+theorem pf_sub_c [Sub α] (p : a = b) (c : α) : a - c = b - c := p ▸ rfl
+theorem c_sub_pf [Sub α] (p : b = c) (a : α) : a - b = a - c := p ▸ rfl
+theorem sub_pf [Sub α] (p₁ : (a₁ : α) = b₁) (p₂ : a₂ = b₂) : a₁ - a₂ = b₁ - b₂ := p₁ ▸ p₂ ▸ rfl
+theorem neg_pf [Neg α] (p : (a : α) = b) : -a = -b := p ▸ rfl
+theorem pf_mul_c [Mul α] (p : a = b) (c : α) : a * c = b * c := p ▸ rfl
+theorem c_mul_pf [Mul α] (p : b = c) (a : α) : a * b = a * c := p ▸ rfl
+theorem mul_pf [Mul α] (p₁ : (a₁ : α) = b₁) (p₂ : a₂ = b₂) : a₁ * a₂ = b₁ * b₂ := p₁ ▸ p₂ ▸ rfl
+theorem inv_pf [Inv α] (p : (a : α) = b) : a⁻¹ = b⁻¹ := p ▸ rfl
+theorem pf_div_c [Div α] (p : a = b) (c : α) : a / c = b / c := p ▸ rfl
+theorem c_div_pf [Div α] (p : b = c) (a : α) : a / b = a / c := p ▸ rfl
+theorem div_pf [Div α] (p₁ : (a₁ : α) = b₁) (p₂ : a₂ = b₂) : a₁ / a₂ = b₁ / b₂ := p₁ ▸ p₂ ▸ rfl
+
+/-- Result of `expandLinearCombo`, either an equality proof or a value. -/
+inductive Expanded
+  /-- A proof of `a = b`. -/
+  | proof (pf : Syntax.Term)
+  /-- A value, equivalently a proof of `c = c`. -/
+  | const (c : Syntax.Term)
+
+/--
+Performs macro expansion of a linear combination expression,
+using `+`/`-`/`*`/`/` on equations and values.
+* `.proof p` means that `p` is a syntax corresponding to a proof of an equation.
+  For example, if `h : a = b` then `expandLinearCombo (2 * h)` returns `.proof (c_add_pf 2 h)`
+  which is a proof of `2 * a = 2 * b`.
+* `.const c` means that the input expression is not an equation but a value.
+-/
+partial def expandLinearCombo (ty : Expr) (stx : Syntax.Term) : TermElabM Expanded := withRef stx do
+  match stx with
+  | `(($e)) => expandLinearCombo ty e
+  | `($e₁ + $e₂) => do
+    match ← expandLinearCombo ty e₁, ← expandLinearCombo ty e₂ with
+    | .const c₁, .const c₂ => .const <$> ``($c₁ + $c₂)
+    | .proof p₁, .const c₂ => .proof <$> ``(pf_add_c $p₁ $c₂)
+    | .const c₁, .proof p₂ => .proof <$> ``(c_add_pf $p₂ $c₁)
+    | .proof p₁, .proof p₂ => .proof <$> ``(add_pf $p₁ $p₂)
+  | `($e₁ - $e₂) => do
+    match ← expandLinearCombo ty e₁, ← expandLinearCombo ty e₂ with
+    | .const c₁, .const c₂ => .const <$> ``($c₁ - $c₂)
+    | .proof p₁, .const c₂ => .proof <$> ``(pf_sub_c $p₁ $c₂)
+    | .const c₁, .proof p₂ => .proof <$> ``(c_sub_pf $p₂ $c₁)
+    | .proof p₁, .proof p₂ => .proof <$> ``(sub_pf $p₁ $p₂)
+  | `(-$e) => do
+    match ← expandLinearCombo ty e with
+    | .const c => .const <$> `(-$c)
+    | .proof p => .proof <$> ``(neg_pf $p)
+  | `(← $e:term) => do
+    match ← expandLinearCombo ty e with
+    | .const c => return .const c
+    | .proof p => .proof <$> ``(Eq.symm $p)
+  | `($e₁ * $e₂) => do
+    match ← expandLinearCombo ty e₁, ← expandLinearCombo ty e₂ with
+    | .const c₁, .const c₂ => .const <$> ``($c₁ * $c₂)
+    | .proof p₁, .const c₂ => .proof <$> ``(pf_mul_c $p₁ $c₂)
+    | .const c₁, .proof p₂ => .proof <$> ``(c_mul_pf $p₂ $c₁)
+    | .proof p₁, .proof p₂ => .proof <$> ``(mul_pf $p₁ $p₂)
+  | `($e⁻¹) => do
+    match ← expandLinearCombo ty e with
+    | .const c => .const <$> `($c⁻¹)
+    | .proof p => .proof <$> ``(inv_pf $p)
+  | `($e₁ / $e₂) => do
+    match ← expandLinearCombo ty e₁, ← expandLinearCombo ty e₂ with
+    | .const c₁, .const c₂ => .const <$> ``($c₁ / $c₂)
+    | .proof p₁, .const c₂ => .proof <$> ``(pf_div_c $p₁ $c₂)
+    | .const c₁, .proof p₂ => .proof <$> ``(c_div_pf $p₂ $c₁)
+    | .proof p₁, .proof p₂ => .proof <$> ``(div_pf $p₁ $p₂)
+  | e =>
+    -- We have the expected type from the goal, so we can fully synthesize this leaf node.
+    withSynthesize do
+      -- It is OK to use `ty` as the expected type even if `e` is a proof.
+      -- The expected type is just a hint.
+      let c ← withSynthesizeLight <| Term.elabTerm e ty
+      if (← whnfR (← inferType c)).isEq then
+        .proof <$> c.toSyntax
+      else
+        .const <$> c.toSyntax
+
+theorem eq_trans₃ (p : (a : α) = b) (p₁ : a = a') (p₂ : b = b') : a' = b' := p₁ ▸ p₂ ▸ p
+
+theorem eq_of_add [AddGroup α] (p : (a : α) = b) (H : (a' - b') - (a - b) = 0) : a' = b' := by
+  rw [← sub_eq_zero] at p ⊢; rwa [sub_eq_zero, p] at H
+
+theorem eq_of_add_pow [Ring α] [NoZeroDivisors α] (n : ℕ) (p : (a : α) = b)
+    (H : (a' - b') ^ n - (a - b) = 0) : a' = b' := by
+  rw [← sub_eq_zero] at p ⊢; apply eq_zero_of_pow_eq_zero (n := n); rwa [sub_eq_zero, p] at H
+
+end Mathlib.Tactic.LinearCombinationPrime
+
+namespace Mathlib.Tactic.LinearCombinationPrime
+open Lean
+open Elab Meta Term
+open Mathlib.Tactic.LinearCombination (normStx expStx)
 
 variable {α β : Type*}
 

@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.BalancedLowSource
-import MathlibNt.Wu2004MeanValue.CommonPrimitive
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedLowSource
+public import MathlibNt.Wu2004MeanValue.CommonPrimitive
 
 /-! The low/high conductor split for a common balanced prime profile. -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset Filter

@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanScale
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKCleanScale
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

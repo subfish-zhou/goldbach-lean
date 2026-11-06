@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BandOutput
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BandOutput
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

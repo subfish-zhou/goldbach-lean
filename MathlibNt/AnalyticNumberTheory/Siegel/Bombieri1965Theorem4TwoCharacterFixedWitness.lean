@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterValueUpperBound
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterWeightedSum
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterValueUpperBound
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterWeightedSum
 
 /-!
 # Comparison against one fixed genuine real zero
@@ -8,6 +10,8 @@ The witness and its actual zero are chosen before the target character.
 Induction is to the product of the levels, without a coprimality assumption.
 The diagonal is handled by equality of the naturally ordered L-series.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter
 open scoped Topology

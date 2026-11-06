@@ -1,9 +1,11 @@
-import MathlibNt.SieveTheory.Chen.Representations
-import Mathlib.Topology.MetricSpace.ThickenedIndicator
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorAsymptotic
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
-import MathlibNt.SieveTheory.Distribution.BombieriVinogradov
-import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
+module
+
+public import MathlibNt.SieveTheory.Chen.Representations
+public import Mathlib.Topology.MetricSpace.ThickenedIndicator
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergDenominatorAsymptotic
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
+public import MathlibNt.SieveTheory.Distribution.BombieriVinogradov
+public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
 
 /-!
 # Chen weights and representation counts
@@ -45,6 +47,8 @@ References:
   - Liu, Z. (2022), arXiv:2203.07871
   - Nathanson, "Additive Number Theory", GTM 164, Ch. 10
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta
@@ -180,7 +184,7 @@ private lemma omega_le_two_of_lt_cube {n y : ℕ} (hy : 2 ≤ y) (hn : n ≠ 0)
     (hall : ∀ p : ℕ, p.Prime → p ∣ n → y ≤ p) (hn_lt : (n : ℝ) < (y : ℝ) ^ 3) :
     (n.primeFactorsList.length) ≤ 2 := by
   have hprod : y ^ n.primeFactorsList.length ≤ n.primeFactorsList.prod := by
-    apply List.pow_card_le_prod
+    apply List.pow_length_le_prod
     intro p hp
     exact hall p (Nat.prime_of_mem_primeFactorsList hp) (Nat.dvd_of_mem_primeFactorsList hp)
   by_contra h
@@ -566,7 +570,7 @@ theorem chenZ_tail_prime_count_le (N n : ℕ) (hNbig : 2 ^ 110 < N)
       (correctedChenZ N : ℝ) ^ s.card = ∏ p ∈ s, (correctedChenZ N : ℝ) := by
         rw [Finset.prod_const]
       _ ≤ ∏ p ∈ s, (p : ℝ) := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro p hp
           exact hz_nonneg
         · intro p hp
@@ -669,7 +673,7 @@ theorem chenZ_tail_prod_le_vanishing (N : ℕ)
     have hpz : correctedChenZ N ≤ p := (Finset.mem_Ico.mp hpIco).1
     have hp2 : 2 < p := by omega
     by_cases hpd : p ∣ N
-    · rw [if_pos hpd, SingularSeries.localFactor_of_dvd hpPrime hp2 hpd]
+    · rw [ite_eq_left hpd, SingularSeries.localFactor_of_dvd hpPrime hp2 hpd]
       have hp1R : (1 : ℝ) < p := by exact_mod_cast (show 1 < p by omega)
       have hp1pos : 0 < (p : ℝ) - 1 := by linarith
       have hpzR : (correctedChenZ N : ℝ) ≤ (p : ℝ) := by exact_mod_cast hpz
@@ -685,14 +689,14 @@ theorem chenZ_tail_prod_le_vanishing (N : ℕ)
           field_simp [ne_of_gt hp1pos]
           ring
         _ ≤ B := by simpa [B] using add_le_add_left hinv 1
-    · rw [if_neg hpd]
+    · rw [ite_eq_right hpd]
       exact (SingularSeries.localFactor_not_dvd_lt_one hpPrime hp2 hpd).le
   have hle :
       ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
           (fun p => SingularSeries.localFactor p N) ≤
         ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
           (fun p => if p ∣ N then B else 1) := by
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro p hp
       exact (SingularSeries.localFactor_pos
         ((Finset.mem_filter.mp hp).2)).le

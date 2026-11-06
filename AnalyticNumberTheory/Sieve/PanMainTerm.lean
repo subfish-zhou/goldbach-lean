@@ -1,6 +1,8 @@
-import AnalyticNumberTheory.Sieve.PanMeanValueBody
-import AnalyticNumberTheory.Mertens.PartialSummation
-import AnalyticNumberTheory.Sieve.GoldbachDensity
+module
+
+public import AnalyticNumberTheory.Sieve.PanMeanValueBody
+public import AnalyticNumberTheory.Mertens.PartialSummation
+public import AnalyticNumberTheory.Sieve.GoldbachDensity
 
 /-! # AnalyticNumberTheory.Sieve.PanMainTerm
 
@@ -72,6 +74,8 @@ under `X ≤ x X`. Finally,
 These results belong to the coarse pure-main-term chain and do not
 establish the classical signed logarithmic-saving estimate.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 
@@ -250,8 +254,8 @@ theorem panMainTotientWeightedSum_le_prod_one_add (Q : ℕ) :
           apply Finset.sum_congr rfl
           intro q hq
           by_cases h : Squarefree q
-          · rw [if_pos h]
-          · rw [if_neg h]
+          · rw [ite_eq_left h]
+          · rw [ite_eq_right h]
             exact panMainTotientWeight_term_non_squarefree q h
     _ = ∑ q ∈ (Finset.range (Q + 1)).filter Squarefree,
           ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card / (Nat.totient q : ℝ) := by
@@ -385,7 +389,7 @@ theorem panMainTotientWeightedSum_le_polylog :
       _ ≤ rexp (∑ p ∈ primesUpTo Q, (3 : ℝ) / ((p : ℝ) - 1)) := by
             -- Nonnegativity is needed only for primes in the product.
             rw [Real.exp_sum]
-            apply Finset.prod_le_prod
+            apply Finset.prod_le_prod₀
             · intro p hp
               have hp1 : (1 : ℝ) ≤ p := by
                 exact_mod_cast (mem_primesUpTo.mp hp).1.one_lt.le

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
 
 /-!
 # Natural producer formulas for the actual real-level coefficients
@@ -11,6 +13,8 @@ second weight or assume equality to it.
 This module itself needs no producer import. The checked named-producer
 identification is in `LiLiuPrereqWFProducerBridge`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

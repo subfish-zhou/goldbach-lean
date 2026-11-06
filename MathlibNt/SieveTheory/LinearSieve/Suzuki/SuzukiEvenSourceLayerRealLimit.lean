@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerEvenLimit
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerEvenLimit
 
 /-!
 # Real convergence of the even lower source layers
@@ -9,6 +11,8 @@ Lemma 13.2 development into genuine real summability.  In particular, the
 the production Section-13 source contract is available.  No finite scan and no
 caller-supplied summable sequence occurs here.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators ENNReal
 open Finset Filter Topology Set

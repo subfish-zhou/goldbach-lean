@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.DimensionOneUpperFactor
-import MathlibNt.SieveTheory.Switching.WeightedCounting
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.DimensionOneUpperFactor
+public import MathlibNt.SieveTheory.Switching.WeightedCounting
 
 /-!
 # Source sieve carriers and Jurkat--Richert factors
@@ -10,6 +12,8 @@ upper linear-sieve factors retain their precise boundary conventions.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta
@@ -879,7 +883,7 @@ private lemma jurkatRichertUpperLinearSieveFactor_base_branch {a : ℝ}
     jurkatRichertUpperLinearSieveFactor (5 - 10 * a) =
       2 * Real.exp Real.eulerMascheroniConstant / (5 - 10 * a) := by
   unfold jurkatRichertUpperLinearSieveFactor
-  rw [if_pos (by linarith [ha.1])]
+  rw [ite_eq_left (by linarith [ha.1])]
 
 /-- The zero-epsilon Jurkat--Richert weight is continuous on the medium-prime
 exponent interval. -/
@@ -1020,11 +1024,11 @@ theorem jurkatRichertUpperLinearSieveFactor_perturbation
     (1 / (1 - 6 * ε)) * jurkatRichertUpperLinearSieveFactor s
   unfold jurkatRichertUpperLinearSieveFactor
   by_cases ht3 : t ≤ 3
-  · rw [if_pos ht3]
+  · rw [ite_eq_left ht3]
     by_cases hs3 : s ≤ 3
-    · rw [if_pos hs3]
+    · rw [ite_eq_left hs3]
       exact hbase
-    · rw [if_neg hs3]
+    · rw [ite_eq_right hs3]
       have hI : 0 ≤ jurkatRichertInnerIntegral s :=
         jurkatRichertInnerIntegral_nonneg (le_of_not_ge hs3)
       have hfactor : 2 * Real.exp Real.eulerMascheroniConstant / s ≤
@@ -1033,9 +1037,9 @@ theorem jurkatRichertUpperLinearSieveFactor_perturbation
         nlinarith [mul_nonneg (div_nonneg hC hspos.le) hI]
       exact hbase.trans
         (mul_le_mul_of_nonneg_left hfactor (one_div_pos.mpr hden).le)
-  · rw [if_neg ht3]
+  · rw [ite_eq_right ht3]
     have hs3 : ¬s ≤ 3 := fun hs3 => ht3 (le_trans hts hs3)
-    rw [if_neg hs3]
+    rw [ite_eq_right hs3]
     have ht3' : 3 ≤ t := le_of_not_ge ht3
     have hIt : 0 ≤ jurkatRichertInnerIntegral t :=
       jurkatRichertInnerIntegral_nonneg ht3'

@@ -1,6 +1,8 @@
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Algebra.Field.GeomSum
+module
+
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Algebra.Field.GeomSum
 
 /-!
 # Finite power sums detect the modulus of every root
@@ -10,6 +12,8 @@ Harcos, *Weil's bound for Kloosterman sums* (`pages/harcos-weil-01.png`).
 Cesàro averages isolate all copies of a maximal-modulus root simultaneously;
 their positive multiplicity prevents cancellation. No distinctness is needed.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -48,7 +52,7 @@ theorem harcos_cesaro_powers_tendsto {z : ℂ} (hz : ‖z‖ ≤ 1) :
   · subst z
     simpa using
       (tendsto_const_nhds : Tendsto (fun _ : ℕ ↦ (1 : ℂ)) atTop (𝓝 1)).cesaro_smul
-  · simpa only [if_neg hz1] using harcos_cesaro_powers_tendsto_zero hz hz1
+  · simpa only [ite_eq_right hz1] using harcos_cesaro_powers_tendsto_zero hz hz1
 
 /-- A geometric bound on all sufficiently large power sums bounds every root.
 The indexing map may have repetitions: maximal equal roots contribute their

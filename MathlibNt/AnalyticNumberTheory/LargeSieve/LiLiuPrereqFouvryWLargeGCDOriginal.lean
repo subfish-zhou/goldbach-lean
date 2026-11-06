@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryTauPointwise
 
 /-!
 # The original progression sum with a large beta gcd
@@ -10,6 +12,8 @@ are bounded by divisors of the nonzero differences `m*n-a`. The hypothesis
 that nonzero beta coefficients have `n ∤ a` is essential: it removes the
 equality term, and its preprocessing is not proved here.
 -/
+
+@[expose] public section
 
 noncomputable section
 

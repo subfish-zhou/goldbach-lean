@@ -1,5 +1,9 @@
-import MathlibNt.Analysis.RationalPower
-import MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite
+module
+
+public import MathlibNt.Analysis.RationalPower
+public import MathlibNt.SieveTheory.LiLiuGoldbachOnePlusOneNineFinite
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine

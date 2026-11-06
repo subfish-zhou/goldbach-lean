@@ -1,6 +1,8 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Algebra.Order.Floor.Semiring
-import Mathlib.Tactic
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Algebra.Order.Floor.Semiring
+public import Mathlib.Tactic
 
 /-!
 # The global Buchstab delay function
@@ -10,6 +12,8 @@ Their locally stable value defines a function on all of `ℝ`; on `[1, ∞)` it
 satisfies the initial condition and the Buchstab delay differential equation.
 The extension below `1` is only used to keep the approximants globally continuous.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

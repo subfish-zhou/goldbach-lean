@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFGeometry
 
 /-!
 # The actual geometric prime boxes
@@ -13,6 +15,8 @@ admissibility. It includes a fixed supplied small-prime weight. The subsequent
 `LiLiuPrereqWFSmallRosser` supplies concrete upper/lower weights and their
 finite sieve inequalities; their density remains a separate obligation.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

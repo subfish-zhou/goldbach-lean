@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
-import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10RosserFactor
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
+
+@[expose] public section
 
 open scoped BigOperators
 open AnalyticNumberTheory.Sieve

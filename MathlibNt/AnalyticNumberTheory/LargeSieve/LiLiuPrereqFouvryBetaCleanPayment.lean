@@ -1,5 +1,7 @@
-import MathlibNt.Analysis.LogPowerBounds
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanError
+module
+
+public import MathlibNt.Analysis.LogPowerBounds
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanError
 
 /-!
 # Logarithmic payment of beta divisor deletion in the actual signed error
@@ -8,6 +10,8 @@ The thresholds precede the changing residue, scales, finite supports and signed
 coefficients. All three divisor orders may be zero. The equality progression
 is paid separately, without a nondivisibility, SW, Shiu or distribution input.
 -/
+
+@[expose] public section
 
 noncomputable section
 

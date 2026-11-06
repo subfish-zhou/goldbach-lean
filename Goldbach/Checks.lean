@@ -1,6 +1,10 @@
-import Goldbach
+module
+
+public import Goldbach
 
 /-! # Public theorem type and axiom checks -/
+
+@[expose] public section
 
 #print Goldbach.ChenTheorem
 #check @Goldbach.chen_theorem

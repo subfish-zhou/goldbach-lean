@@ -1,8 +1,10 @@
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Tactic
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainRatioBound
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainTermNormalization
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiPowerCoordinates
+module
+
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Tactic
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainRatioBound
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMainTermNormalization
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiPowerCoordinates
 
 /-!
 # Dimension-one prime sums and finite Abel identities
@@ -12,6 +14,8 @@ dimension-one prime-sum comparison of Suzuki's Lemma 8.6.
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta

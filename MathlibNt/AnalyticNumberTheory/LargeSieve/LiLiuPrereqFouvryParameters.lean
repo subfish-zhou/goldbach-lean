@@ -1,5 +1,7 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Tactic
 
 /-!
 # Admissible C.2 factor levels, including the endpoint
@@ -9,6 +11,8 @@ When the printed S exponent is negative, set S = 1 and transfer its exponent
 to R, keeping the original level exactly. This is only a parameter lemma:
 it does not assert any distribution estimate or a dyadic decomposition.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

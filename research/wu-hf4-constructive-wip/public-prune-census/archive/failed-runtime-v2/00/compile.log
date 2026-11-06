@@ -1,4 +1,0 @@
-/tmp/wu-public-census-runtime-v2/run-1793175477499311096/00/Probe.lean:14:0: error: maximum recursion depth reached in the code generator
-function inline stack:
-inferInstance
-...

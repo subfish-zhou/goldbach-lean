@@ -1,9 +1,11 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.MeasureTheory.Integral.ExpDecay
-import Mathlib.NumberTheory.DirichletCharacter.Basic
-import Mathlib.Tactic
-import PrimeNumberTheoremAnd.ResidueCalcOnRectangles
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.MeasureTheory.Integral.ExpDecay
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Mathlib.Tactic
+public import PrimeNumberTheoremAnd.ResidueCalcOnRectangles
 
 /-!
 # A finite Perron consumer for Liu's primitive hyperbola
@@ -12,6 +14,8 @@ This module supplies only the exact finite algebra needed by a later Perron
 argument.  The truncated-kernel approximation is an explicit hypothesis; no
 analytic estimate for that kernel is asserted here.
 -/
+
+@[expose] public section
 
 open scoped BigOperators Interval
 
@@ -90,7 +94,7 @@ theorem liuPanPerronDirichletPolynomial_mul
     liuPanPerronNatPower_of_ne hu0,
     liuPanPerronNatPower_of_ne hv0,
     liuPanPerronNatPower_of_ne (Nat.mul_ne_zero hu0 hv0)]
-  simp only [liuPanPerronProductCoefficient, hu0, hv0, or_self, if_false]
+  simp only [liuPanPerronProductCoefficient, hu0, hv0, or_self, ite_false]
   have hχmul : χ (((u * v : ℕ) : ZMod q)) =
       χ (u : ZMod q) * χ (v : ZMod q) := by
     rw [Nat.cast_mul, map_mul]
@@ -2224,8 +2228,8 @@ theorem norm_liuPanTruncatedPerronKernel_sub_indicator_le
     · have halog : 0 < a := by
         dsimp only [a]
         exact Real.log_pos hzgt
-      rw [if_pos hzgt]
-      simp only [Lc, Ls, if_pos halog, abs_of_pos halog]
+      rw [ite_eq_left hzgt]
+      simp only [Lc, Ls, ite_eq_left halog, abs_of_pos halog]
       rw [Real.rpow_def_of_pos hz]
       field_simp [Real.pi_ne_zero]
       rw [← Real.exp_add]
@@ -2236,7 +2240,7 @@ theorem norm_liuPanTruncatedPerronKernel_sub_indicator_le
       have halog : a < 0 := by
         dsimp only [a]
         exact Real.log_neg hz hzlt
-      simp [hzgt, Lc, Ls, if_neg (not_lt.mpr halog.le)]
+      simp [hzgt, Lc, Ls, ite_eq_right (not_lt.mpr halog.le)]
   have hfactor : 0 ≤ z ^ σ / Real.pi := by
     positivity
   rw [hK]

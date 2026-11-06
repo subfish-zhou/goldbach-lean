@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPhase
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWPhase
 
 /-!
 # The three-factor reciprocal phase of the actual W residue
@@ -8,6 +10,8 @@ The integer parameters describe an already admissible five-gcd piece. We prove
 the phase transformation, not the partition into such pieces or its error bound.
 Every inverse below is a signed Bezout inverse modulo its displayed denominator.
 -/
+
+@[expose] public section
 
 noncomputable section
 

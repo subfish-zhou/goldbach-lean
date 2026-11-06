@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainLogSum
-import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10MainLogSum
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10LogMass
 
 
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

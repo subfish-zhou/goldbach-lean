@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachS1PositivePair
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightI10Consumer
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2NormalizedUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1PositivePair
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightI10Consumer
+
+@[expose] public section
 
 open MathlibNt.SieveTheory.SwitchingPrinciple
 

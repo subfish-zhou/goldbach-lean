@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143UniformTailCore
-import Mathlib.Analysis.SpecialFunctions.Stirling
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143UniformTailCore
+public import Mathlib.Analysis.SpecialFunctions.Stirling
 
 /-!
 # Suzuki Lemma 14.3: explicit logarithmic exponent
@@ -13,6 +15,8 @@ into a completely explicit exponential bound.  The final theorem takes
 (non-asymptotic) large-cutoff condition ensuring that the floor error has the
 favourable sign.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 

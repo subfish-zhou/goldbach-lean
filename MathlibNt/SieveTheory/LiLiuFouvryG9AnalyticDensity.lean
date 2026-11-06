@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ProgressionDensityDimension
-import MathlibNt.SieveTheory.LiLiuFouvryG9ExtendedUpper
-import MathlibNt.SieveTheory.LiLiuFouvryG9MotherSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ProgressionDensityDimension
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ExtendedUpper
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MotherSieve
+
+@[expose] public section
 
 noncomputable section
 open Finset

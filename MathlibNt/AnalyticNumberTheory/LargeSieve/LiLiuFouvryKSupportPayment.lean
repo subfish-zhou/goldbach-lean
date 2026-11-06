@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupport
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKSupport
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanTail
 
 /-!
 # Fixed-residue-scale power payment for a large supported beta factor
@@ -9,6 +11,8 @@ saves `x ^ (-η / 4)` before paying the divisor loss and logarithms.
 The original sum and zero mode retain the same arbitrary mask, and neither
 length requires a positive power lower bound.
 -/
+
+@[expose] public section
 
 noncomputable section
 

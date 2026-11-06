@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarReduction
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3NormalizedUpper
+@[expose] public section
+
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple
 

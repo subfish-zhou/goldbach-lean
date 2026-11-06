@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedTransport
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option warningAsError true

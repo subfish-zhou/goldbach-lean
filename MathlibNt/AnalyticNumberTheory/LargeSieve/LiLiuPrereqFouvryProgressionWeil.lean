@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
 
 /-!
 # Reciprocal cancellation on unit-step arithmetic progressions
@@ -7,6 +9,8 @@ The step is a unit modulo the modulus, not necessarily one as an integer.
 The integer parameter retains its multiplicity on intervals longer than the
 modulus. Only the inherent nonunit vanishing of `reciprocalPhase` is imposed.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -30,10 +34,10 @@ theorem reciprocalPhase_unit_mul {q v : ℕ} [NeZero q] (hv : v.Coprime q)
         (v : ZMod q) * z * ((v : ZMod q)⁻¹ * z⁻¹) =
             ((v : ZMod q) * (v : ZMod q)⁻¹) * (z * z⁻¹) := by ring
         _ = 1 := by rw [ZMod.mul_inv_of_unit _ hu, ZMod.mul_inv_of_unit _ hz, one_mul]
-    simp only [reciprocalPhase, if_pos (hu.mul hz), if_pos hz, Int.cast_mul,
+    simp only [reciprocalPhase, ite_eq_left (hu.mul hz), ite_eq_left hz, Int.cast_mul,
       iv3_wPhaseInverse_zmod hv, hi, mul_assoc]
   · have hn : ¬ IsUnit ((v : ZMod q) * z) := fun h ↦ hz (IsUnit.mul_iff.mp h).2
-    simp only [reciprocalPhase, if_neg hn, if_neg hz]
+    simp only [reciprocalPhase, ite_eq_right hn, ite_eq_right hz]
 
 /-- Exact reduction to a shifted integer interval. There is no reduction of
 the parameter modulo `q`, so repeated residues are counted correctly. -/

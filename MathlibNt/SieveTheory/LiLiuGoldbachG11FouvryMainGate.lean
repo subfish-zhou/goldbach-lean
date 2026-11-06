@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryRectangle
+
+@[expose] public section
 
 open Finset Filter
 open scoped BigOperators

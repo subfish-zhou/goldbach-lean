@@ -1,6 +1,10 @@
-import Mathlib.Topology.Order.LeftRight
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedRosser
-import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
+module
+
+public import Mathlib.Topology.Order.LeftRight
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedRosser
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11NormalizedIntegralEnvelope
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.FiniteCoprimeGateBudget
-import MathlibNt.SieveTheory.FiniteRealWindows
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
-import MathlibNt.Wu2004MeanValue.RealEndpoints
+module
 
+public import MathlibNt.SieveTheory.FiniteCoprimeGateBudget
+public import MathlibNt.SieveTheory.FiniteRealWindows
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
+public import MathlibNt.Wu2004MeanValue.RealEndpoints
+
+
+@[expose] public section
 
 open scoped BigOperators Topology
 open Classical Finset Filter

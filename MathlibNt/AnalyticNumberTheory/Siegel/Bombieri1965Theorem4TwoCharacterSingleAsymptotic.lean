@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairSummatory
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelTotalDiscrepancy
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairSummatory
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelTotalDiscrepancy
 
 /-!
 # The unprimitive one-character input to the fourfold asymptotic
@@ -7,6 +9,8 @@ import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelTotalD
 This modern hyperbola argument uses complete periods, rather than
 Pólya--Vinogradov. Its constant is uniform in the actual common modulus.
 -/
+
+@[expose] public section
 
 open Complex Finset
 open scoped ComplexOrder

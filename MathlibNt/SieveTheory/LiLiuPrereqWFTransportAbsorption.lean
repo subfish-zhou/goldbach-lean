@@ -1,6 +1,8 @@
-import MathlibNt.Analysis.RealLogPowerThreshold
-import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedRemainder
-import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinalityExp
+module
+
+public import MathlibNt.Analysis.RealLogPowerThreshold
+public import MathlibNt.SieveTheory.LiLiuPrereqWFUnmaskedRemainder
+public import MathlibNt.SieveTheory.LiLiuPrereqWFTagCardinalityExp
 
 
 
@@ -11,6 +13,8 @@ The family-size factor is the cardinality of the actual signed tags, bounded
 by the proved source estimate, not by a cardinality assumption. The remaining
 envelopes involve only the consumer scale and the positive power saving.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

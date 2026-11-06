@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarPolynomial
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPositiveScalarPolynomial
+@[expose] public section
+
 open Set MeasureTheory Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

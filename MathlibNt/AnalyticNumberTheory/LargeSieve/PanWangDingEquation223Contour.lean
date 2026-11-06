@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
-import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation21FiniteContour
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
+public import MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation21FiniteContour
+
+@[expose] public section
 
 set_option maxHeartbeats 800000
 noncomputable section
@@ -103,7 +107,8 @@ theorem panShortF₁_norm_le {q : ℕ} (m H : ℕ) (χ : PrimitiveCharacter q)
   apply panFinitePolynomial_norm_le _ _ H (fun _ h => h) _ s hs
   intro n _
   rw [norm_mul]
-  exact mul_le_one₀ (panSourceD_norm_le m n) (norm_nonneg _) (χ.1.norm_le_one _)
+  exact (mul_le_of_le_one_left (norm_nonneg _) (panSourceD_norm_le m n)).trans
+    (χ.1.norm_le_one _)
 
 theorem panDyadicG_norm_le {q : ℕ} (f : ℕ → ℂ) (hf : ∀ n, ‖f n‖ ≤ 1)
     (m A₁ A₂ k : ℕ) (χ : PrimitiveCharacter q)
@@ -114,7 +119,8 @@ theorem panDyadicG_norm_le {q : ℕ} (f : ℕ → ℂ) (hf : ∀ n, ‖f n‖ �
     exact Finset.mem_Icc.mpr ⟨by omega, hb.trans (min_le_right _ _)⟩
   · intro a _
     rw [norm_mul]
-    exact mul_le_one₀ (panSourceG_norm_le f hf m a) (norm_nonneg _) (χ.1.norm_le_one _)
+    exact (mul_le_of_le_one_left (norm_nonneg _) (panSourceG_norm_le f hf m a)).trans
+      (χ.1.norm_le_one _)
 
 
 /-! ## Integrability and the finite-shift estimate -/

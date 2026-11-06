@@ -1,5 +1,7 @@
-import Goldbach.Statement
-import MathlibNt.ChensTheoremUnconditional
+module
+
+public import Goldbach.Statement
+public import MathlibNt.ChensTheoremUnconditional
 
 /-!
 # Chen's theorem
@@ -8,6 +10,8 @@ The public theorem is stated in the independent, literal specification from
 `Goldbach.Statement`. Its proof supplies the complete sieve and distribution
 chain and expands the internal almost-prime predicate.
 -/
+
+@[expose] public section
 
 namespace Goldbach
 

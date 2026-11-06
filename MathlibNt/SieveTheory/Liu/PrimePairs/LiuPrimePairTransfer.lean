@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGridLimit
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGridLimit
 
 /-!
 # Liu's prime-pair sum to integral transfer
@@ -7,6 +9,8 @@ This module combines the refining logarithmic-grid limit with the finite prime
 limit for one fixed grid. The grid is chosen before the finite-`N` threshold,
 preserving the quantifier order in Liu's source transfer.
 -/
+
+@[expose] public section
 
 open Filter
 

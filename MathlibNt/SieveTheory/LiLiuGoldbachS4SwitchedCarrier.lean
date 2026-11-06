@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4CarrierGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

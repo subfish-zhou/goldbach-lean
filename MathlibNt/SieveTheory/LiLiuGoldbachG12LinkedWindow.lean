@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ActiveProduct
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ActiveProduct
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LinkedWindow
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseAHighSScalar
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145CaseAHighSScalar
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Filter Topology Asymptotics

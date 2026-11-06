@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensity
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.G9ExtendedUpper
 open JurkatRichert1965ChenGammaOneQOne

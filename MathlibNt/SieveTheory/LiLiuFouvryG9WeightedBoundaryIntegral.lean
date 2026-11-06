@@ -1,5 +1,9 @@
-import MathlibNt.Analysis.IntegralExcessCover
-import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryKernel
+module
+
+public import MathlibNt.Analysis.IntegralExcessCover
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedBoundaryKernel
+@[expose] public section
+
 open MeasureTheory Set
 open scoped BigOperators Interval
 noncomputable section

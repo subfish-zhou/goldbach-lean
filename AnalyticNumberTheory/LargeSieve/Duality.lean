@@ -1,5 +1,7 @@
-import AnalyticNumberTheory.LargeSieve.Additive
-import AnalyticNumberTheory.LargeSieve.GeomSum
+module
+
+public import AnalyticNumberTheory.LargeSieve.Additive
+public import AnalyticNumberTheory.LargeSieve.GeomSum
 
 /-! # AnalyticNumberTheory.LargeSieve.Duality
 
@@ -33,6 +35,8 @@ the identities, not the sharp Montgomery bound.
 References: Montgomery, "Topics in Multiplicative Number Theory" (1971), Ch. 1;
 Iwaniec & Kowalski, "Analytic Number Theory" (2004), Ch. 7.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

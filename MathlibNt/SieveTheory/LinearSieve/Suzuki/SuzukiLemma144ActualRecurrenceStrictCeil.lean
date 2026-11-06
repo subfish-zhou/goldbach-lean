@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiNatCeilPowerCarrier
 
 /-!
 # Suzuki (14.9) with the strict natural-ceiling carrier
@@ -8,6 +10,8 @@ The odd-depth recurrence needs only the source condition `p^3 < D` for the
 actual summation indices `p < z`.  It does not need the generally false
 natural-ceiling surrogate `z^3 ≤ D`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

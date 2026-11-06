@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFCommon
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCommon
 
 /-!
 # Convolution across disjoint prime boxes
@@ -7,6 +9,8 @@ Disjoint prime ranges, unlike arbitrary bounded coefficients, give a unique
 nonzero factorization at each integer. This controls convolutions of normalized
 boxes and also allows an already constructed small-prime weight as a factor.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -88,7 +92,7 @@ theorem boundedOne_mul_of_disjoint {B C : Finset ℕ} (hBC : Disjoint B C)
   have hsum : (∑ d ∈ n.divisorsAntidiagonal, f d.1 * g d.2) ≠ 0 := hz
   obtain ⟨d, hd, hfd⟩ := Finset.exists_ne_zero_of_sum_ne_zero hsum
   rw [mul_apply, Finset.sum_eq_single_of_mem d hd, abs_mul]
-  · exact mul_le_one₀ (hfb _) (abs_nonneg _) (hgb _)
+  · exact (mul_le_of_le_one_left (abs_nonneg _) (hfb _)).trans (hgb _)
   · intro e he hed
     by_contra hfe
     apply hed

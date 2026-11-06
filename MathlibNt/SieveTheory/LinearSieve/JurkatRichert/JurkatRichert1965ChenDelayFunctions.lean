@@ -1,7 +1,9 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Tactic
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Tactic
 
 /-!
 # The Jurkat--Richert delay functions by finite method of steps
@@ -15,6 +17,8 @@ the sieve functions themselves are used only on the positive half-line.
 The normalization is (5.5), and the integral and differential recurrences are
 (5.7) and (5.6) of Jurkat--Richert (1965). No asymptotic estimates are asserted.
 -/
+
+@[expose] public section
 
 noncomputable section
 

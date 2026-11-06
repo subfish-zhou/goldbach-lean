@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySecondaryGcdBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleEnergy
 
 /-!
 # The refined secondary arithmetic mean in the complete original energy
@@ -8,6 +10,8 @@ Constants are selected before the varying residue, support and coefficients.
 The secondary fixed-data sum and the primary nonzero sum remain explicit.
 This is not the fully aggregated estimate (4.10).
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

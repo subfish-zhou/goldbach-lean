@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017Comparison
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017Comparison
+
+@[expose] public section
 
 open Set MeasureTheory intervalIntegral
 open scoped Interval

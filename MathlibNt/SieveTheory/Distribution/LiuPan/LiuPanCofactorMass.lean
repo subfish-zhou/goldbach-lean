@@ -1,10 +1,14 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
 
 /-!
 Independent reciprocal-totient mass API for the cofactor payment in Pan (2.6).
 This is a COARSE TWO-LOG bound, not the printed one-log estimate. It reuses
 production's finite divisor/harmonic proof, with no new Mertens analysis.
 -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanCofactor
 open Finset
 open scoped BigOperators

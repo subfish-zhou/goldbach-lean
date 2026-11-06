@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingEight
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingEight
+
+@[expose] public section
 
 open Filter
 open MathlibNt.SieveTheory.SwitchingPrinciple

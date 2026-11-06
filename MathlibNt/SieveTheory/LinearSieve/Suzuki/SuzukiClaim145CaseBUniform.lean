@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
-import MathlibNt.Analysis.RealLogPowerThreshold
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
+public import MathlibNt.Analysis.RealLogPowerThreshold
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Filter Finset Topology
@@ -536,9 +540,8 @@ theorem claim145_caseB_uniform_in_S
           x ^ (-Δ) * (b ^ s * proposition131iiLowerProfile C s) := by
       positivity
     convert hscalarCore.trans (le_mul_of_one_le_right holdnonneg hu1) using 1
-    · rfl
-    · dsimp [C145, b, x, u]
-      field_simp [ne_of_gt hx, ne_of_gt hσpos]
+    dsimp [C145, b, x, u]
+    field_simp [ne_of_gt hx, ne_of_gt hσpos]
   exact suzukiLemma14_3_le_claim145Scale_of_scalar_at S H hlocal hD h_cond1 hs h_cond2 hKpos hC145 hprop h_cond3 h_cond4
 
 

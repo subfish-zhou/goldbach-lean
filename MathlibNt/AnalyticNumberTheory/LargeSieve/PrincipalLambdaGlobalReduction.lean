@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
 
 /-!
 # Reduction of every principal character to the global PNT source
@@ -8,6 +10,8 @@ prime powers `p^k` with `p ∣ q`.  This module makes that deletion literal,
 bounds it by `ω(q) (log₂ N + 1) log N`, sums the correction over `q ≤ Q`, and
 feeds the modulus-one source contract into the prime-AP partial-summation bridge.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -91,8 +95,8 @@ theorem coprimeLambdaPrefix_one_eq_add_badMass (y q : ℕ) :
   intro n hn
   have hone : n.Coprime 1 := Nat.coprime_one_right n
   by_cases h : n.Coprime q
-  · simp only [if_pos hone, if_pos h, add_zero]
-  · simp only [if_pos hone, if_neg h, zero_add]
+  · simp only [ite_eq_left hone, ite_eq_left h, add_zero]
+  · simp only [ite_eq_left hone, ite_eq_right h, zero_add]
 
 private lemma lambda_norm_le_log_of_le_global
     {n N : ℕ} (hn : n ≤ N) (hN : 2 ≤ N) :
@@ -117,12 +121,12 @@ theorem norm_principalBadLambdaMass_le_omega
       have hlog : 0 ≤ Real.log (N : ℝ) :=
         Real.log_nonneg (by exact_mod_cast (show 1 ≤ N by omega))
       by_cases hc : n.Coprime q
-      · simp only [if_pos hc, norm_zero]
+      · simp only [ite_eq_left hc, norm_zero]
         split_ifs <;> positivity
       · by_cases hΛ : ArithmeticFunction.vonMangoldt n = 0
-        · simp only [if_neg hc, lambdaNatCoeff, hΛ, Complex.ofReal_zero, norm_zero]
+        · simp only [ite_eq_right hc, lambdaNatCoeff, hΛ, Complex.ofReal_zero, norm_zero]
           split_ifs <;> positivity
-        · rw [if_neg hc, if_pos]
+        · rw [ite_eq_right hc, ite_eq_left]
           · exact lambda_norm_le_log_of_le_global hnN hN
           · exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr
               (Nat.lt_succ_iff.mpr hnN), hΛ, hc⟩

@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovVanishing
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Algebra.BigOperators.Intervals
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovVanishing
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Algebra.BigOperators.Intervals
 
 /-!
 # Integer parameters for the Stepanov construction
@@ -12,6 +14,8 @@ dimension `2 * J * B`; the equation space has the actual dimension
 `∑ k : Fin ell, (B + k.val * (m - 1) + (J - 1))`.
 The ceiling choices below prove the strict inequality between these dimensions.
 -/
+
+@[expose] public section
 
 noncomputable section
 

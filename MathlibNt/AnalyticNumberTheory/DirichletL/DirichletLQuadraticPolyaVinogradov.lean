@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrimitiveRootNumberNorm
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrimitiveRootNumberNorm
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
+public import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # Fourier completion for primitive quadratic character sums
@@ -9,6 +11,8 @@ This file records the finite Fourier identity underlying the quadratic
 Pólya--Vinogradov estimate.  In particular, the Gauss factor is paid from the
 proved primitive root-number norm, rather than postulated as an extra bound.
 -/
+
+@[expose] public section
 
 open Complex Finset ZMod
 

@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPerronRightVerticalIntegrable
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedPerronRightVerticalIntegrable
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLRightHalfPlaneBounds
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 open ArithmeticFunction (vonMangoldt)

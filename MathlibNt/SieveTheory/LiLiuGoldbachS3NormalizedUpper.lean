@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
-import MathlibNt.SieveTheory.LiLiuGoldbachS3LiEulerUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PaidUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3RosserMainUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3LiEulerUpper
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter

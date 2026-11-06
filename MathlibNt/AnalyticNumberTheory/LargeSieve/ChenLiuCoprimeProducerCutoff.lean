@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEquation223Source
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEquation223Source
 
 /-!
 # The real cutoff in Pan--Wang--Ding (2.26)
@@ -9,6 +11,8 @@ The integer endpoint of the short polynomial is the floor of the *real*
 square, not the square of a rounded conductor. The conductor interval is
 open on the left and closed on the right, including at integral endpoints.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset MeasureTheory Filter

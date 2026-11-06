@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.Mertens.FinitePart
+module
+
+public import AnalyticNumberTheory.Mertens.FinitePart
 
 /-!
 # Final reusable Mertens theorems
@@ -6,6 +8,8 @@ import AnalyticNumberTheory.Mertens.FinitePart
 This module exposes the conventional Euler--Mascheroni form after the
 finite-part module identifies the canonical constant.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

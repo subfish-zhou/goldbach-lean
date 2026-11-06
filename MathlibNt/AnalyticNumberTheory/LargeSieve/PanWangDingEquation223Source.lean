@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEquation223Contour
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEquation223Contour
+
+@[expose] public section
 
 set_option maxHeartbeats 800000
 noncomputable section

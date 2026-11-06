@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LogPowerBounds
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

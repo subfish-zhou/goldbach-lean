@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridCost
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9RectangleC2
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
+module
 
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridCost
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9RectangleC2
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WFBridge
+
+
+@[expose] public section
 
 noncomputable section
 open Finset

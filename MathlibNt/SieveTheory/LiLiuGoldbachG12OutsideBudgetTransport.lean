@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12OutsideBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12OutsideBudget
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

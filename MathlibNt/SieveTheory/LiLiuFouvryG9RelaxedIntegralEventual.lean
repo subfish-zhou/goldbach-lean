@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralFinite
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedIntegralFinite
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators Topology

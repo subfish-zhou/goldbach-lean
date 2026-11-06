@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZeroSpecialized
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017GlobalPropagation
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZeroSpecialized
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1017GlobalPropagation
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

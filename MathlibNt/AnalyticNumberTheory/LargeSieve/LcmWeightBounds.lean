@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
 
 /-!
 # Finite logarithmic lcm-weight bounds
@@ -6,6 +8,8 @@ import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
 These finite arithmetic estimates depend only on divisor moments and harmonic
 sums, not on smoothing, Poisson summation, or dispersion estimates.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds
 
@@ -65,7 +69,7 @@ theorem sum_gcd_div_le_tau_log {L : ℝ} (hL : 1 ≤ L)
       intro r _
       calc
         _ = (if q.gcd r ∣ r then (q.gcd r : ℝ) / r else 0) := by
-          rw [if_pos (Nat.gcd_dvd_right q r)]
+          rw [ite_eq_left (Nat.gcd_dvd_right q r)]
         _ ≤ _ := single_le_sum
           (f := fun d => if d ∣ r then (d : ℝ) / r else 0)
           (fun d _ => by split_ifs <;> positivity)

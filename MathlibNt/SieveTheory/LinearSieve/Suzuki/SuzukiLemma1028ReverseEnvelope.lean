@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1055SourceExpansion
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseRatio
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1055SourceExpansion
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiiReverseRatio
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

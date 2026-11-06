@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightPaperQ
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightPaperQ
+public import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-! Elementary harmonic bounds for the finite Liu source weight. -/
+
+@[expose] public section
 
 open Finset
 namespace MathlibNt.SieveTheory.LiuWeight

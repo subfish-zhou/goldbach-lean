@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingCertificateOnSource
 
 /-! Compatibility import for the canonical module in its current library location. -/

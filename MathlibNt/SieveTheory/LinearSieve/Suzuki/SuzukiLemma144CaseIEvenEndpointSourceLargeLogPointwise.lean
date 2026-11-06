@@ -1,10 +1,14 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma0CaseBUniform
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeCoefficientUniform
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144SourceLargeLogFixedThreshold
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogUniform
+module
 
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBudgetCore
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointSourceLargeLogSameC
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma0CaseBUniform
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeCoefficientUniform
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144SourceLargeLogFixedThreshold
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISourceLargeLogUniform
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIEndpointBudgetCore
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -200,7 +204,7 @@ theorem exists_lemma14_4_caseI_evenEndpoint_sourceLargeLog_pointwise_uniform_in_
       have hm0 : M % 2 = 0 := Nat.even_iff.mp hM
       omega
     have hcoord0 : 0 < inheritedCoordinate D p := by
-      simp only [KappaOneModel.parityDomain, hpred, if_pos, Set.mem_Ioi] at hcoord
+      simp only [KappaOneModel.parityDomain, hpred, ite_eq_left, Set.mem_Ioi] at hcoord
       norm_num at hcoord
       linarith
     exact (hH.positive _ _ hcoord0).le

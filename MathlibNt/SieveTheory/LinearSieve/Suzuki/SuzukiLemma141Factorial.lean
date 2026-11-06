@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141ElementaryMass
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141ElementaryMass
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

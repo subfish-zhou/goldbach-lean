@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
+
+@[expose] public section
 
 open scoped BigOperators ArithmeticFunction.Moebius ArithmeticFunction.zeta
 
@@ -22,7 +26,7 @@ theorem dirichletCharacter_eq_primitive_mul_coprimeIndicator {q : ℕ} [NeZero q
     · have hnq : n.Coprime q := by
         rw [← hq, Nat.coprime_mul_iff_right]
         exact ⟨hd, hr⟩
-      rw [if_pos hr]
+      rw [ite_eq_left hr]
       simp only [mul_one]
       simpa using
         (χ.primitiveCharacter_apply_of_isCoprime (a := (n : ℤ))
@@ -30,7 +34,7 @@ theorem dirichletCharacter_eq_primitive_mul_coprimeIndicator {q : ℕ} [NeZero q
     · have hnq : ¬n.Coprime q := by
         rw [← hq, Nat.coprime_mul_iff_right]
         exact fun h => hr h.2
-      rw [if_neg hr]
+      rw [ite_eq_right hr]
       simp only [mul_zero]
       exact MulChar.map_nonunit χ ((ZMod.isUnit_iff_coprime n q).not.mpr hnq)
   · have hnq : ¬n.Coprime q := by

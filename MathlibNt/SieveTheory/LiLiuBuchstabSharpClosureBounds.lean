@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosureSteps
+module
+
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosureSteps
+@[expose] public section
+
 set_option autoImplicit false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 6400000

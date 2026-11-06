@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSignedDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSignedDensity
 
 /-!
 # Finite comparison with the ordinary coarse Rosser density
@@ -13,6 +15,8 @@ These are finite quantitative comparisons. Estimates of the resulting pair
 and boundary masses on the analytic scale, and the full coarse F/f estimate,
 are not asserted here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -85,7 +89,7 @@ theorem ordinaryRoughSet_eq_support (upper : Bool) (D : ℝ) (s : Finset ℕ) :
       if RoundedSupport upper (fun p : ℕ => (p : ℝ)) D s then
         (if Even s.card then 1 else -1) else 0 := by
   cases upper <;>
-    simp only [ordinaryRoughSet, Bool.false_eq_true, if_false, if_true,
+    simp only [ordinaryRoughSet, Bool.false_eq_true, ite_false, ite_true,
       SmallRosser.setWeight, SmallRosser.upperSetWeight,
       roundedSupport_cast_lower_iff, roundedSupport_cast_upper_iff]
 
@@ -108,7 +112,7 @@ theorem normalizedSignedSet_eq_ordinaryRoughSet_of_good
       fun h => roundedSupport_mono (fun p _ => Nat.cast_nonneg p) hpc (hbc.mp h)⟩
   rw [ordinaryRoughSet_eq_support, hcast]
   cases upper <;>
-    simp only [normalizedSignedSet, Bool.false_eq_true, if_false, if_true,
+    simp only [normalizedSignedSet, Bool.false_eq_true, ite_false, ite_true,
       normalizedUpperSet, normalizedLowerSet, TightRoundedSupport, hinj, true_and,
       ← hbc] <;> split_ifs <;> rfl
 
@@ -120,7 +124,7 @@ theorem normalizedSignedSet_abs_sub_le_one (upper : Bool) (b c : ℕ → ℝ)
   cases upper <;> by_cases heven : Even s.card <;>
     simp only [normalizedSignedSet, normalizedUpperSet, normalizedLowerSet,
       ordinaryRoughSet, SmallRosser.upperSetWeight, SmallRosser.setWeight,
-      Bool.false_eq_true, if_false, if_true, heven] <;> split_ifs <;> norm_num
+      Bool.false_eq_true, ite_false, ite_true, heven] <;> split_ifs <;> norm_num
 
 theorem normalizedSignedSet_directed_nonneg
     {upper : Bool} {b c : ℕ → ℝ} {D : ℝ} {s : Finset ℕ}
@@ -131,7 +135,7 @@ theorem normalizedSignedSet_directed_nonneg
       (normalizedSignedSet upper b c D s - ordinaryRoughSet upper D s) := by
   cases upper <;>
     simp only [normalizedSignedSet, ordinaryRoughSet, Bool.false_eq_true,
-      if_false, if_true, one_mul, neg_one_mul]
+      ite_false, ite_true, one_mul, neg_one_mul]
   · linarith [normalizedLowerSet_le_setWeight hb hbp hpc (D := D)]
   · exact sub_nonneg.mpr (upperSetWeight_le_normalizedUpperSet hb hbp hpc)
 
@@ -146,7 +150,7 @@ theorem normalizedSignedSet_abs_sub_le_bad
   have hunit := normalizedSignedSet_abs_sub_le_one upper b c D s
   by_cases hc : RoughCollision b s <;>
     by_cases hx : RoughBoundaryCrossing upper b c D s <;>
-    simp only [hc, hx, if_true, if_false]
+    simp only [hc, hx, ite_true, ite_false]
   · linarith
   · linarith
   · linarith
@@ -197,7 +201,7 @@ theorem roughSignedDensity_comparison
     have hsign : (if upper then (1 : ℝ) else -1) *
         (normalizedSignedSet upper b c D s - ordinaryRoughSet upper D s) ≤
         |normalizedSignedSet upper b c D s - ordinaryRoughSet upper D s| := by
-      cases upper <;> simp only [Bool.false_eq_true, if_false, if_true,
+      cases upper <;> simp only [Bool.false_eq_true, ite_false, ite_true,
         one_mul, neg_one_mul]
       · exact neg_le_abs _
       · exact le_abs_self _
@@ -284,7 +288,7 @@ theorem roughCollisionMass_le_pair_euler (b : ℕ → ℝ) (R : Finset ℕ)
           0 ≤ (if p ∈ s ∧ q ∈ s then ∏ r ∈ s, g r else 0) :=
         fun _ _ => by split_ifs <;> positivity
       by_cases hc : RoughCollision b s
-      · rw [if_pos hc]
+      · rw [ite_eq_left hc]
         obtain ⟨p, hp, q, hq, hpq, heq⟩ :=
           (roughCollision_iff_exists_pair b s).mp hc
         have hqR : q ∈ R.filter (fun q => p < q ∧ b p = b q) :=
@@ -295,8 +299,8 @@ theorem roughCollisionMass_le_pair_euler (b : ℕ → ℝ) (R : Finset ℕ)
             if p ∈ s ∧ q ∈ s then ∏ r ∈ s, g r else 0)
           (fun p _ => Finset.sum_nonneg (fun q _ => hterm p q)) (mem_powerset.mp hs hp)
         apply le_trans _ houter
-        simpa only [hp, hq, and_self, if_true] using hinner
-      · rw [if_neg hc]
+        simpa only [hp, hq, and_self, ite_true] using hinner
+      · rw [ite_eq_right hc]
         exact Finset.sum_nonneg
           (fun p _ => Finset.sum_nonneg (fun q _ => hterm p q))
     _ = ∑ p ∈ R, ∑ q ∈ R.filter (fun q => p < q ∧ b p = b q),
@@ -321,7 +325,7 @@ theorem roughCollisionMass_le_pair_euler (b : ℕ → ℝ) (R : Finset ℕ)
       apply Finset.sum_le_sum
       intro q hq
       have hE : (∏ r ∈ R \ {p, q}, (1 + g r)) ≤ ∏ r ∈ R, (1 + g r) :=
-        Finset.prod_le_prod_of_subset_of_one_le sdiff_subset
+        Finset.prod_le_prod_of_subset_of_one_le₀ sdiff_subset
           (fun r hr => by linarith [hg r (mem_sdiff.mp hr).1])
           (fun r hr _ => by linarith [hg r hr])
       simpa only [mul_comm] using

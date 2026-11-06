@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorSieveFactor
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorSieveFactor
+
+@[expose] public section
 
 open Filter
 open scoped Topology

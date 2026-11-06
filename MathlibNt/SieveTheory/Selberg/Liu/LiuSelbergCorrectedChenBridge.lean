@@ -1,10 +1,13 @@
-import MathlibNt.ChensTheorem
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergEvenAssembly
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
-import Mathlib.Algebra.BigOperators.Module
-import Mathlib.Analysis.SpecialFunctions.NonIntegrable
-import MathlibNt.SieveTheory.SwitchingPrinciple
+module
+
+public import MathlibNt.ChensTheorem
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergEvenAssembly
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
+public import Mathlib.Algebra.BigOperators.Module
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Mathlib.Analysis.SpecialFunctions.NonIntegrable
+public import MathlibNt.SieveTheory.SwitchingPrinciple
 
 /-!
 # Finite bridge from Liu's Selberg square to corrected Chen triples
@@ -14,6 +17,8 @@ and the corrected Chen triple count.  A candidate residual prime contributes
 unit Selberg weight unless it divides Liu's paper modulus; those exceptional
 primes remain as an explicit finite residual.
 -/
+
+@[expose] public section
 
 open scoped BigOperators Classical
 
@@ -127,7 +132,7 @@ theorem correctedChenSelectedLargeFactors_spec
   have hex : ∃ q : ℕ × ℕ,
       correctedChenLargeFactorConditions N x.1 x.2 q :=
     ⟨(p₂, p₃), h⟩
-  rw [correctedChenSelectedLargeFactors, dif_pos hex]
+  rw [correctedChenSelectedLargeFactors, dite_eq_left hex]
   exact Classical.choose_spec hex
 
 /-- The selected-factor map sends a first-factor witness either to the common
@@ -280,9 +285,9 @@ theorem correctedChenSourceEndpointMap_mem
       have hmem : x ∈ correctedChenUpperEndpointCarrier N := by
         rw [correctedChenUpperEndpointCarrier, mem_sigma, mem_filter]
         exact ⟨hp, mem_range.mpr hp₁Y, hp₁Prime, hZp₁, hdvd⟩
-      rw [correctedChenSourceEndpointMap, if_neg hlower]
+      rw [correctedChenSourceEndpointMap, ite_eq_right hlower]
       dsimp only
-      rw [if_neg hsource, mem_disjSum]
+      rw [ite_eq_right hsource, mem_disjSum]
       refine Or.inr ⟨Sum.inr x, ?_, rfl⟩
       rw [mem_disjSum]
       exact Or.inr ⟨x, hmem, rfl⟩
@@ -1010,7 +1015,7 @@ theorem liuSelbergCorrectedTripleSlice_le_square_add_QResidual
         by_cases hc : N - p₁ * p₂ * p₃ ∈ correctedChenCandidates N
         · by_cases hQ : N - p₁ * p₂ * p₃ ∣ Q
           · simp [hQ, sq_nonneg]
-          · rw [if_pos ⟨hc, hQ⟩, hpacket hp₃ hc hQ]
+          · rw [ite_eq_left ⟨hc, hQ⟩, hpacket hp₃ hc hQ]
             norm_num
         · simp [hc, sq_nonneg]
       _ ≤ ∑ p₃ ∈ (range (N + 1)).filter

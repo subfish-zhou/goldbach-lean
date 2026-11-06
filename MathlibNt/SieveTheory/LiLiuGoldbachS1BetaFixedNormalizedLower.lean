@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaPaidLower
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity
-import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaMainScale
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.Analysis.SieveNormalization
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaPaidLower
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaLowerDensity
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1BetaMainScale
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.Analysis.SieveNormalization
+
+@[expose] public section
 
 noncomputable section
 

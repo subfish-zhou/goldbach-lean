@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDistribution
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Finset

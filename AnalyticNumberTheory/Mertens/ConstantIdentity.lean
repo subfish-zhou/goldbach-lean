@@ -1,5 +1,7 @@
-import AnalyticNumberTheory.Mertens.Abelian
-import AnalyticNumberTheory.Mertens.MangoldtBridge
+module
+
+public import AnalyticNumberTheory.Mertens.Abelian
+public import AnalyticNumberTheory.Mertens.MangoldtBridge
 
 /-!
 # Constant identification from the prime finite part
@@ -8,6 +10,8 @@ This module closes the zeta/Euler-product side of the Mertens constant
 calculation.  The only remaining analytic input is the Abelian finite-part
 limit for the prime Dirichlet series.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

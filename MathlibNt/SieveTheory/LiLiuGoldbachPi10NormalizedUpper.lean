@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10NormalizedUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightLogScale
+
+@[expose] public section
 
 noncomputable section
 

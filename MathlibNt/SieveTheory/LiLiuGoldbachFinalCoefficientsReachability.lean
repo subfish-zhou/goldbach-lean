@@ -1,13 +1,19 @@
-import Goldbach.OnePlusOneNine
-import Lean
+module
+
+public import Goldbach.OnePlusOneNine
+public import Lean
 
 /-! The retained final dependency check follows the quantitative proof and both
 existence consequences. Literal statements and axiom whitelists are checked in
 `Goldbach.OnePlusOneNineChecks`. -/
 
+@[expose] public section
+
 open Lean Elab Command in
 run_cmd do
-  let env ← getEnv
+  -- Load stored proof bodies throughout the import closure for this audit.
+  let env ← importModules #[{ module := `Goldbach.OnePlusOneNine }] {}
+    (loadExts := false) (level := .private)
   let checks : List (Name × List Name) := [
     (`Goldbach.one_plus_one_nine_count, [`MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_authorG11_numericLedger, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeight_paperSplit_authorG11_consumed_small_epsilon, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Author_reused_pair_lower, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG11Author_reused_cross_upper, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachWeightG11_le_authorIntegral_direct, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG67IntegralConstant_lower_certified, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbachG67_piecewise_lower_certified, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.G9Analytic.actual_le_target, `G12AnalyticCertificate.actual_le_target, `G12SharpOutput.original_total_integral, `G12SharpQuadrature.sharp_kernel_le_integral_eventually, `G12AuthorOutput.admitted_boundary_mesh]),
     (`Goldbach.one_plus_one_nine, [`MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.goldbach_D19_gt_paper_0004, `MathlibNt.SieveTheory.LiLiuOnePlusOneNine.D19_pos_iff]),

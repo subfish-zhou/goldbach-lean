@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
+module
+
+public import MathlibNt.SieveTheory.Liu.LogarithmicIntegral.LiuTrueLiPan
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
 
 /-!
 # Global bound for Liu's AP prime-power correction
@@ -8,6 +10,8 @@ This module bounds the progression-restricted correction by the unrestricted
 nonprime von Mangoldt sum. On nonzero von Mangoldt support, `n >= 2`, so the
 normalizing logarithm is bounded below by the exact constant `log 2`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -28,7 +32,7 @@ private theorem globalPrimePowerCorrection_term_le (n : ℕ) :
       (if n.Prime then 0 else Λ n / Real.log 2) := by
   by_cases hp : n.Prime
   · simp [hp]
-  simp only [hp, if_false]
+  simp only [hp, ite_false]
   by_cases hΛ : Λ n = 0
   · simp [hΛ]
   have hn : 2 ≤ n := IsPrimePow.two_le (vonMangoldt_ne_zero_iff.mp hΛ)

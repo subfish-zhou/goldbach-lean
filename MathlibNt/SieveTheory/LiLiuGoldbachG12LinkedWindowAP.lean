@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
-import MathlibNt.SieveTheory.FiniteRealWindows
-import MathlibNt.Wu2004MeanValue.RealEndpoints
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindow
+public import MathlibNt.SieveTheory.FiniteRealWindows
+public import MathlibNt.Wu2004MeanValue.RealEndpoints
+
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Wu2004MeanValue AnalyticNumberTheory.Sieve

@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.Sieve.WeightedPan
+module
+
+public import AnalyticNumberTheory.Sieve.WeightedPan
 
 /-!
 # Liu's finite `p₁p₂` weight
@@ -13,6 +15,8 @@ the unique admissible pair with `p₁ ∣ d`.  The signed non-coprime sum is onl
 bounded by that expression.  No outer `d ∣ Q` weighted asymptotic estimate is
 asserted here.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

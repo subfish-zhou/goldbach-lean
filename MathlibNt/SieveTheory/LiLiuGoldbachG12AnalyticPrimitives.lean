@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticEnvelope
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AnalyticEnvelope
+
+@[expose] public section
 
 noncomputable section
 open MeasureTheory Set

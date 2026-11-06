@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11OrdinaryGridGeometry
+
+@[expose] public section
 
 open Finset Filter
 open scoped BigOperators Classical

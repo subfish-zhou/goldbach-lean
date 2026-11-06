@@ -3,8 +3,10 @@ Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-!
 # The truncated Perron sine kernel
@@ -12,6 +14,8 @@ import Mathlib.MeasureTheory.Integral.DominatedConvergence
 This file records only the real-analytic foundation for a truncated Perron kernel.  In
 particular, it makes no step-function or approximation claim.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -31,7 +35,7 @@ theorem truncatedPerronIntegrand_eq_mul_sinc (x t : ℝ) :
   · simp [truncatedPerronIntegrand, ht]
   by_cases hx : x = 0
   · simp [truncatedPerronIntegrand, ht, hx]
-  · rw [truncatedPerronIntegrand, if_neg ht, Real.sinc_of_ne_zero (mul_ne_zero ht hx)]
+  · rw [truncatedPerronIntegrand, ite_eq_right ht, Real.sinc_of_ne_zero (mul_ne_zero ht hx)]
     field_simp
 
 

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSixConsumer
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4IntegralUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingSixConsumer
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

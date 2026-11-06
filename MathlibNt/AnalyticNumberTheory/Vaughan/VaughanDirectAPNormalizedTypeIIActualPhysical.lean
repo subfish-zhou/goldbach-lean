@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualDecomposition
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIIActualDecomposition
 
 /-!
  # Physical AP-normalized bounds for actual Vaughan Type-II shells
@@ -9,6 +11,8 @@ This file starts with the genuine collected hyperbolic-prefix maximum.  It appli
 prefix-maximal large sieve row by row, sums the rows after paying the Möbius
 energy, and only then uses Cauchy in primitive characters and moduli.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

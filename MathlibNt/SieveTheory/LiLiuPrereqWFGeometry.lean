@@ -1,6 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import MathlibNt.SieveTheory.LiLiuPrereqWFAdmissibility
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoxFamily
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import MathlibNt.SieveTheory.LiLiuPrereqWFAdmissibility
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoxFamily
 
 /-!
 # Real endpoint dilation and the small-weight support budget
@@ -15,6 +17,8 @@ The small weight is an actual supplied arithmetic function, not a sieve
 conclusion record. This module does not construct the Rosser small weight
 or assert its sieve direction or density.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

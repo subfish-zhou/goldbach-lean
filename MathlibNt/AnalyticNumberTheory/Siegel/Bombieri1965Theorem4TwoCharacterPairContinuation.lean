@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairSummatory
-import Mathlib.Analysis.MellinTransform
-import Mathlib.NumberTheory.LSeries.SumCoeff
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairSummatory
+public import Mathlib.Analysis.MellinTransform
+public import Mathlib.NumberTheory.LSeries.SumCoeff
 
 /-!
 # Mellin continuation of a nonprincipal character pair
@@ -11,6 +13,8 @@ L-functions on `Re s > 1/2`. No primitivity or quadraticity is needed.
 In particular the value at one is the actual L-value product, not a
 formal or absolutely convergent harmonic series.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory Set Asymptotics
 open scoped Topology
@@ -121,7 +125,7 @@ theorem integrableOn_characterPairKernel (ψ η : DirichletCharacter ℂ q)
     IntegrableOn (characterPairKernel ψ η s) (Ioi (1 : ℝ)) := by
   have h := mellinConvergent_characterPairCutoff ψ η hψ hη hs
   rw [MellinConvergent, characterPair_cutoff_mellin_kernel,
-    integrableOn_indicator_iff measurableSet_Ioi] at h
+    integrableOn_indicator_iff measurableSet_Ioi.nullMeasurableSet] at h
   simpa only [Ioi_inter_Ioi, max_eq_left (show (0 : ℝ) ≤ 1 by norm_num)] using h
 
 theorem differentiableAt_characterPairIntegral (ψ η : DirichletCharacter ℂ q)

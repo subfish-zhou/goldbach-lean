@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSufficientAssembly
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSufficientAssembly
 
 /-!
  # Producer for the low-conductor Standard-BV source
@@ -11,6 +13,8 @@ pointwise primitive nonprincipal `ψ(N,χ)` Siegel--Walfisz estimate.  All finit
 character multiplicities, conductor fibres and logarithmic losses are paid
 here.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

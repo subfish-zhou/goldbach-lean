@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangleCoordinates
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactorDifference
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryRectangleCoordinates
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySlowFactorDifference
 
 /-!
 # Cardinality-free partial summation for the coupled five-variable weight
@@ -9,6 +11,8 @@ concrete normalized weight. Interior grid widths telescope, and upper faces
 contribute one endpoint mass per inactive coordinate. The final factor is at
 most `2^5`; no arithmetic coefficient or mask is differentiated.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -198,7 +202,7 @@ theorem variation_normalizedWeight_le
       (∏ i : Fin 5, (1 + g i (hi i) - g i (lo i))) ≤ (32 : ℝ) := by
     calc
       (∏ i : Fin 5, (1 + g i (hi i) - g i (lo i))) ≤ ∏ _i : Fin 5, (2 : ℝ) := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro i _
           have := hg i (hbox i)
           linarith

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FineGridSafety
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ThinIntegralBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FineGridSafety
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ThinIntegralBudget
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

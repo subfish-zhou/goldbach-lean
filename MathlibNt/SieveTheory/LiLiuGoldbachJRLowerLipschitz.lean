@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFCoordinateShift
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoordinateShift
 
 /-! Actual JR lower function: global real-domain Lipschitz and endpoint control. -/
+
+@[expose] public section
 
 noncomputable section
 

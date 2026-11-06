@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Forms
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Forms
+
+@[expose] public section
 
 open MeasureTheory Finset
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
@@ -257,7 +261,6 @@ theorem primitive4_deriv (s : ℝ) : HasDerivAt H4 (D4 s) s := by
   apply HasDerivAt.congr_deriv
   · repeat' first
       | exact hasDerivAt_pow _ s
-      | exact hasDerivAt_pow 1 s
       | apply HasDerivAt.add
       | apply HasDerivAt.const_mul
   -- The remaining identity is the exact rational coefficient calculation.

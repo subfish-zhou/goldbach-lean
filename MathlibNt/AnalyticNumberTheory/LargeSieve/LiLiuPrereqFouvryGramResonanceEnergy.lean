@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceBound
 
 /-!
 # Consuming the occupied resonance count in the original whole energy
@@ -13,6 +15,8 @@ The support gap is proved from `x>1`, `eta<epsilonSupport` and
 The remaining base sum and nonzero sum still require analytic aggregation.
 This is not the complete C.2 estimate.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

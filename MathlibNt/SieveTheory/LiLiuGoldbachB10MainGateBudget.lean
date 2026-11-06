@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
-import MathlibNt.SieveTheory.FiniteCoprimeGateBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
+public import MathlibNt.SieveTheory.FiniteCoprimeGateBudget
+
+@[expose] public section
 
 noncomputable section
 

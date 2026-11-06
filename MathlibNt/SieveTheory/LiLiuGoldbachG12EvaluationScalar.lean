@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationFTC
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationFTC
+@[expose] public section
+
 noncomputable section
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 namespace G12AnalyticCertificate

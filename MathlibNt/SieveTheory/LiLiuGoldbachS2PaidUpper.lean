@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS2RosserFactor
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS2RosserFactor
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanGeometry
+
+@[expose] public section
 
 open Filter
 open scoped BigOperators
@@ -273,7 +277,7 @@ theorem goldbachS2SwitchedSiftedCount_upper_paid
         jurkatRichertUpperLinearSieveFactor s =
           2 * Real.exp Real.eulerMascheroniConstant / s := by
       unfold jurkatRichertUpperLinearSieveFactor
-      rw [if_pos hsData.2.2.2]
+      rw [ite_eq_left hsData.2.2.2]
     have hdiv :
         2 / s ≤ 1 + τ / 2 := by
       have hsden : 0 < 1 + τ / 2 := by positivity

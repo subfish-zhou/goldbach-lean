@@ -1,5 +1,7 @@
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Algebra.Ring.Parity
+module
+
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Algebra.Ring.Parity
 
 /-!
 # The literal statement of Chen's theorem
@@ -8,6 +10,8 @@ This specification uses only natural-number primality, parity, addition, and
 multiplication. It does not use any project-specific almost-prime predicate.
 The two factors in the composite case are allowed to coincide.
 -/
+
+@[expose] public section
 
 namespace Goldbach
 

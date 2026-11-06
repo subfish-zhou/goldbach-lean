@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridFamilyError
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridTransportCost
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridRemainderMajorant
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFullTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridFamilyError
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridTransportCost
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridRemainderMajorant
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFullTransport
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

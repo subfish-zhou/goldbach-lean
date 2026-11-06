@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CofactorWindow
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGeometry
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniform
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CofactorWindow
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGeometry
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabUniform
+
+@[expose] public section
 
 set_option autoImplicit false
 

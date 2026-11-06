@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowSiegelWalfiszProducer
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVLowSiegelWalfiszProducer
 
 /-!
  # Pointwise prefix bounds imply primitive prefix-amplitude bounds
@@ -9,6 +11,8 @@ This file is the finite, honest bridge needed by a pointwise
 Siegel--Walfisz theorem.  Its premise bounds every actual twisted prefix
 through `N`; it does not assume the maximum that occurs in the conclusion.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

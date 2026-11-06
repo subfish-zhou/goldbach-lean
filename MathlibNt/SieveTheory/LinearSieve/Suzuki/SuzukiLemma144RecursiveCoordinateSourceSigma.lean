@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIErrorTransportUniform
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIErrorTransportUniform
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset Set Topology
@@ -22,7 +26,7 @@ asymptotically empty fixed finite support.
 private noncomputable def sourceRatio (d x : ℝ) : ℝ :=
   x ^ (1 - 1 / d) / Real.log (Real.log 27 + x)
 
-private noncomputable def sourceRatioStart (d : ℝ) : ℝ :=
+noncomputable def sourceRatioStart (d : ℝ) : ℝ :=
   Real.exp (2 / (1 - 1 / d))
 
 private theorem sourceRatio_hasDerivAt {d x : ℝ} (hx : 0 < x)

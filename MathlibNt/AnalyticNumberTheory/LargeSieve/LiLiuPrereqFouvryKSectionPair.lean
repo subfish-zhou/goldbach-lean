@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKSectionReindex
 
 /-!
 # Both cutoff intervals in an actual IV.3 pair
@@ -7,6 +9,8 @@ The common-k diagonal is reindexed without identifying distinct original
 tuples. Its interval is the intersection of the two separately reconstructed
 carriers, hence includes both paid floor cutoffs. No cancellation is claimed.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

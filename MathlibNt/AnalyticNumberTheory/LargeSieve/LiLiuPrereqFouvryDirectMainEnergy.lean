@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainCost
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainCost
 
 /-! # Original Gram energy with all three arithmetic branches paid
 
@@ -7,6 +9,8 @@ prefix and coprime cell. Zero and secondary envelopes are unchanged; the
 main branch has no occupied-base, frequency, common-index or gcd sum.
 This is a local theorem, not the global C.2 power normalization.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

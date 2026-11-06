@@ -1,6 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Linarith
 
 /-!
 # Rational budgets for the refinement loss
@@ -10,6 +12,8 @@ certificates cover the source exponent 1.8938 and the requested exponent
 1.894 directly. They do not supply the ordinary-count lower bound needed
 to pay either loss.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.RefinementLossBudget
 

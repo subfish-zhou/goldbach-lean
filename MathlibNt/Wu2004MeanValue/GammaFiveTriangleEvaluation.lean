@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveTriangleLog
-import Mathlib.Tactic.Tauto
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveTriangleLog
+public import Mathlib.Tactic.Tauto
 
 /-! Exact logarithmic evaluation of both literal Gamma₅ triangle integrals. -/
+@[expose] public section
+
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open Real Set MeasureTheory
 open scoped Classical Interval

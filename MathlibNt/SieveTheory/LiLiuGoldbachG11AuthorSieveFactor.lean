@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorLevel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorLevel
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

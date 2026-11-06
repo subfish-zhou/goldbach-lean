@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFOutput
-import MathlibNt.SieveTheory.LiLiuGoldbachG12OutsideBudgetLogSaving
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFOutput
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12OutsideBudgetLogSaving
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

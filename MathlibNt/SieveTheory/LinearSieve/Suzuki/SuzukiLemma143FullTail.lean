@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141LocalProductMass
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143NatCeilSupport
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma141LocalProductMass
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma143NatCeilSupport
 
 /-!
 # Suzuki Lemmas 14.1--14.3: explicit uniform exponential tail
@@ -8,6 +10,8 @@ This file closes the dimension-one local-product hypothesis into the pointwise
 Lemma 14.1 source estimate and then combines the natural-ceiling support theorem
 with Lemma 14.2.  The resulting bound is uniform in `N`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

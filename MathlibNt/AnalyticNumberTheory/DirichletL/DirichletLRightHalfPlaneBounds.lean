@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.NumberTheory.DirichletCharacter.Bounds
+module
+
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.NumberTheory.DirichletCharacter.Bounds
+
+@[expose] public section
 
 open Complex MeasureTheory Set
 
@@ -62,7 +66,7 @@ theorem norm_dirichletLSeries_le {q : ℕ} (χ : DirichletCharacter ℂ q)
       ‖LSeries.term (fun n : ℕ => χ n) (σ + Complex.I * t) n‖ ≤ (n : ℝ) ^ (-σ) := by
     by_cases hn : n = 0
     · simp [LSeries.term, hn, Real.zero_rpow (by linarith : -σ ≠ 0)]
-    · rw [LSeries.term, if_neg hn, norm_div,
+    · rw [LSeries.term, ite_eq_right hn, norm_div,
         norm_natCast_cpow_of_re_ne_zero n (by rw [hre]; linarith), hre,
         Real.rpow_neg (Nat.cast_nonneg n)]
       simpa only [one_div] using

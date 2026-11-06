@@ -1,6 +1,10 @@
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Algebra.Order.Group.Indicator
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Algebra.Order.Group.Indicator
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 open MeasureTheory Set Finset
 open scoped BigOperators ENNReal

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWF
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWF
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -78,7 +82,7 @@ theorem member_full_identity (N : ℕ) (A : Finset (ℕ × ℕ)) (Z Q : ℝ)
       ∑ d ∈ (goldbachB10ProdPrimes N Z).divisors, f d * residue N A d := by
     apply sum_congr rfl
     intro d hd
-    rw [if_pos (hg d hd)]
+    rw [ite_eq_left (hg d hd)]
   rw [hr] at hsplit
   have hI : Icc 1 ⌊Q⌋₊ = Ioc 0 ⌊Q⌋₊ := by ext d; simp; omega
   rw [hI] at hsplit

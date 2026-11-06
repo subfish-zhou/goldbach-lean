@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpLog
+module
+
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpLog
+
+@[expose] public section
 
 set_option autoImplicit false
 

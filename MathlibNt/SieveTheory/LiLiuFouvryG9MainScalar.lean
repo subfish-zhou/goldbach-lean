@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
+
+@[expose] public section
 
 noncomputable section
 open Filter Finset

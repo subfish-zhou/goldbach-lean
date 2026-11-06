@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCD
-import Mathlib.Data.Nat.Squarefree
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCD
+public import Mathlib.Data.Nat.Squarefree
 
 /-!
 # Large prime support produces a large square divisor
@@ -8,6 +10,8 @@ For the `d₁` exclusion in Fouvry (1984), (8.3), a large prime factor is
 unnecessary: a positive integer supported on the primes of `d` produces
 a square divisor of `d * s` at least as large as `s`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

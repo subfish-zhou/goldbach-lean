@@ -3,9 +3,11 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjoint
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 
 /-!
 # The differential--delay equation for Suzuki's standard upper adjoint
@@ -13,6 +15,8 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 This module proves the equation from the defining Laplace integral.  In
 particular, the differential--delay equation is not used as an assumption.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

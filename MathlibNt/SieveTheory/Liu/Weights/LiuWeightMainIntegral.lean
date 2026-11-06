@@ -1,5 +1,7 @@
-import MathlibNt.Tactic.ElementaryDeriv
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
+module
+
+public import MathlibNt.Tactic.ElementaryDeriv
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightMainSum
 
 /-!
 # Liu's reciprocal-log main integral
@@ -8,6 +10,8 @@ This file defines the exact source integral and the uniform prime-sum transfer
 predicate behind Liu's printed `0.49254` estimate. The downstream logarithmic
 grid development proves the transfer predicate.
 -/
+
+@[expose] public section
 
 open Filter MeasureTheory Set
 open scoped Interval

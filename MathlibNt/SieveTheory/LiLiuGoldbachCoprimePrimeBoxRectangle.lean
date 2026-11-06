@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachCoprimePrimeBox
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachCoprimePrimeBox
 
 /-! Actual coprime half-open boxes and finite signed weighted limits, retaining the diagonal. -/
+@[expose] public section
+
 namespace MathlibNt.SieveTheory.LiuWeight
 open Filter Finset
 open scoped Topology BigOperators

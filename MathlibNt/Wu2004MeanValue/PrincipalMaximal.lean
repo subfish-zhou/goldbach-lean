@@ -1,4 +1,6 @@
-import MathlibNt.Wu2004MeanValue.RealEndpoints
+module
+
+public import MathlibNt.Wu2004MeanValue.RealEndpoints
 
 /-!
 # Uniform prime-counting error at coefficient-dependent real endpoints
@@ -8,6 +10,8 @@ in Wu (2004), Lemma 2.3. It consumes the frozen, proved Standard BV theorem
 through its modulus-one term. All constants precede the moving endpoints.
 Wu's integral normalization is used exactly, on the domain `[2, infinity)`.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

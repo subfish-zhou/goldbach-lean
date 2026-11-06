@@ -1,5 +1,7 @@
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Algebra.BigOperators.Associated
+module
+
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Algebra.BigOperators.Associated
 
 /-!
 # Canonical prime-support splitting
@@ -8,6 +10,8 @@ Separate the full prime powers in `n` according to whether their primes divide `
 These are the `d`-infinity factors used in Fouvry (1984), pp. 235–236.
 The definitions are total; reconstruction requires only `0 < n`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

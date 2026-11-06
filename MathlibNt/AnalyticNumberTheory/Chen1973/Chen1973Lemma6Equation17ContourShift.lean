@@ -3,19 +3,21 @@ Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import Mathlib.Analysis.MellinInversion
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLFoundation
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+module
+
+public import Mathlib.Analysis.MellinInversion
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveCharacters
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLFoundation
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 /-!
 # Chen 1973, Lemma 6, equation (17): the `L' S` contour shift
@@ -25,6 +27,8 @@ integrand is the actual product
 `L'(s,χ) S(H,s,χ) y^s K_x(s)`, with `K_x` Chen's rational Mellin kernel.
 The proof never divides by `L` on the beta line.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118KappaOneBoundaryAdjoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118KappaOneBoundaryAdjoint
 
 /-!
 # Suzuki Proposition 11.8: source parity series and the boundary pairing
@@ -14,6 +16,8 @@ As on printed pp. 63--65, Proposition 11.8 extends
 `s P(s) = s Q(s) = A`.  We then evaluate the genuine Section-10 Iwaniec
 pairing of this source `Q` with `q(s)=s-1` at `β=2`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset Set Filter Topology MeasureTheory intervalIntegral
@@ -135,7 +139,7 @@ theorem suzukiProposition118SourceQ_at_two
     suzukiProposition118SourceQ 2 =
       (SuzukiFiniteContinuousLayers.suzukiLowerSieveAmplitude -
         suzukiLowerBoundaryLimit) / 2 := by
-  rw [suzukiProposition118SourceQ, if_neg (by norm_num : ¬ (2 : ℝ) < 2)]
+  rw [suzukiProposition118SourceQ, ite_eq_right (by norm_num : ¬ (2 : ℝ) < 2)]
   have hplus := mul_suzukiProposition118SourceTPlus_eq_amplitude_sub hH
     (s := (2 : ℝ)) (by norm_num) (by norm_num)
   simp only [suzukiProposition118SourceTMinus_eq]
@@ -169,7 +173,7 @@ theorem suzukiProposition118SourceQ_initialWindowIntegral :
     intro ht
     rw [uIoc_of_le (by norm_num : (1 : ℝ) ≤ 2)] at ht
     have htlt : t < 2 := lt_of_le_of_ne ht.2 (fun h => ht2 h)
-    rw [suzukiProposition118SourceQ, if_pos htlt]
+    rw [suzukiProposition118SourceQ, ite_eq_left htlt]
     dsimp [suzukiProposition118KappaOneSourceAdjoint, A]
     have ht0 : t ≠ 0 := ne_of_gt (by linarith [ht.1])
     field_simp

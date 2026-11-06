@@ -1,11 +1,13 @@
-import Mathlib.Analysis.PSeries
-import Mathlib.Data.Nat.Prime.Infinite
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Topology.ContinuousMap.Weierstrass
-import Mathlib.Tactic.IntervalCases
-import AnalyticNumberTheory
-import MathlibNt.SieveTheory.Arithmetic.SingularSeries
+module
+
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Data.Nat.Prime.Infinite
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Topology.ContinuousMap.Weierstrass
+public import Mathlib.Tactic.IntervalCases
+public import AnalyticNumberTheory
+public import MathlibNt.SieveTheory.Arithmetic.SingularSeries
 
 /-!
 # MathlibNt.SieveTheory.MertensTheorem
@@ -37,6 +39,8 @@ References:
   - Liu, Z. (2022), arXiv:2203.07871, Lemma 1
   - Nathanson, "Additive Number Theory", GTM 164
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.MertensTheorem
 
@@ -107,7 +111,7 @@ private theorem sum_primeReciprocalCoeff_Icc (n : ℕ) :
   rw [← Finset.sum_filter]
 
 /-- Derivative of a test function pulled back to logarithmic scale. -/
-private noncomputable def logScaleDeriv (f' : ℝ → ℝ) (N : ℕ) (t : ℝ) : ℝ :=
+noncomputable def logScaleDeriv (f' : ℝ → ℝ) (N : ℕ) (t : ℝ) : ℝ :=
   f' (log t / log N) / (t * log N)
 
 private theorem hasDerivAt_logScale
@@ -1319,7 +1323,7 @@ theorem sieveProduct_identity (N z : ℕ) (hz : 2 ≤ z) (hN : Even N) :
       intro hp2
       exact hpnd (by simpa [hp2] using h2dvd)
     unfold SingularSeries.localFactor
-    rw [if_neg hpne2, if_neg hpnd]
+    rw [ite_eq_right hpne2, ite_eq_right hpnd]
     have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp'.ne_zero
     have hpm1 : (p : ℝ) - 1 ≠ 0 := by
       have : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le
@@ -1336,9 +1340,9 @@ theorem sieveProduct_identity (N z : ℕ) (hz : 2 ≤ z) (hN : Even N) :
     unfold SingularSeries.localFactor
     by_cases hp2 : p = 2
     · subst hp2
-      rw [if_pos rfl, if_pos h2dvd]
+      rw [ite_eq_left rfl, ite_eq_left h2dvd]
       norm_num
-    · rw [if_neg hp2, if_pos hpd]
+    · rw [ite_eq_right hp2, ite_eq_left hpd]
       have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp'.ne_zero
       have hpm1 : (p : ℝ) - 1 ≠ 0 := by
         have : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le

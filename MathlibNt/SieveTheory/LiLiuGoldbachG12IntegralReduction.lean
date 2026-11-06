@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernel
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelReduction
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped Interval

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabUpperMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedWindowAP
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabUpperMass
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical Finset LiLiuPrereqBuchstab
@@ -88,10 +92,10 @@ theorem goldbachG12MainMassBad_le {N : ℕ} (hN : 4 ≤ N) (ε : ℝ) :
           if r ∈ W m then (1 : ℝ) else 0 := by
         apply sum_congr rfl
         intro r hr
-        exact (if_pos (mem_filter.mp hr).1).symm
+        exact (ite_eq_left (mem_filter.mp hr).1).symm
       _ = _ := sum_subset (hsub m hm) (by
         intro r hrL hr
-        apply if_neg
+        apply ite_eq_right
         intro hrW
         exact hr (mem_filter.mpr ⟨hrW,
           (Nat.mem_primeFactors.mp (mem_filter.mp hrL).1).2.1⟩))

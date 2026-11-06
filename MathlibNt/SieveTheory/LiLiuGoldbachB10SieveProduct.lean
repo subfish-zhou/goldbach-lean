@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
-import MathlibNt.SieveTheory.Arithmetic.GoldbachLiuProductBridge
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
+public import MathlibNt.SieveTheory.Arithmetic.GoldbachLiuProductBridge
+
+@[expose] public section
 
 noncomputable section
 

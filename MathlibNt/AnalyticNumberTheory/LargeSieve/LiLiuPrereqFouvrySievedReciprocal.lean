@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySievedReciprocalInterval
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySievedReciprocalInterval
 
 /-!
 # One coprimality sieve on a unit residue-class interval
@@ -9,6 +11,8 @@ divisors meeting the phase modulus vanish intrinsically, and divisors meeting
 the progression modulus are excluded by the unit residue. The surviving
 divisor sections are CRT progressions of step `e * v`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -33,7 +37,7 @@ theorem reciprocalDivisorInterval_eq_zero_of_not_coprime_modulus
   · have hku : ¬ IsUnit (k : ZMod q) := by
       intro hu
       exact heq (((ZMod.isUnit_iff_coprime k q).mp hu).of_dvd_left hk.2)
-    simp only [reciprocalPhase, if_neg hku]
+    simp only [reciprocalPhase, ite_eq_right hku]
   · rfl
 
 /-- A divisor sharing the step cannot divide an integer in a unit residue. -/

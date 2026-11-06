@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainRestrictedArithmetic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainRestrictedArithmetic
 
 /-! # The complete restricted main arithmetic aggregate
 
@@ -6,6 +8,8 @@ Cauchy--Schwarz is applied jointly over the common index and all ordered
 bases, after the r mean. The two resulting sums use different fiberings of
 the same retained carrier. No unrestricted common-index residual is used.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

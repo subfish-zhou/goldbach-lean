@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
-import MathlibNt.AnalyticNumberTheory.LargeSieve.BilinearTensorFourthMomentExplicit
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.BilinearTensorFourthMomentExplicit
 
 /-!
  # Actual hyperbolic decomposition of the direct Vaughan Type-II mean
@@ -13,6 +15,8 @@ takes the finite maximum of each resulting collected `(d,t=e*m)` prefix over the
 original prefix endpoint `y`.  Rectangles whose lower dyadic corner lies above
 `N` are proved identically zero and removed before the direct mean is summed.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -121,7 +125,7 @@ theorem vaughanTypeIIFullPrefix_eq_sum_active_canonical
   intro kl hkl
   by_cases hactive : 2 ^ kl.1 * 2 ^ kl.2 ≤ N
   · simp [hactive]
-  · rw [if_neg hactive]
+  · rw [ite_eq_right hactive]
     exact vaughanTypeIICanonicalBilinearBlock_eq_zero_of_inactive χ hyN
       (Nat.lt_of_not_ge hactive)
 

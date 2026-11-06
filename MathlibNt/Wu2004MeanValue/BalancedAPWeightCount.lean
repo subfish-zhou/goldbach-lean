@@ -1,10 +1,14 @@
-import MathlibNt.Wu2004MeanValue.APWeightTransferActualAP
+module
+
+public import MathlibNt.Wu2004MeanValue.APWeightTransferActualAP
 
 /-!
 The source-wise `+1` AP envelope would cost `d * |S|`, which is not
 payable above the square root. Instead, group the actual pairs by their
 product. A positive integer has at most one such pair per prime divisor.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 open Classical Finset

@@ -1,7 +1,9 @@
-import AnalyticNumberTheory.Mertens.Basic
-import AnalyticNumberTheory.PrimeDistribution.ChebyshevTheta
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.MeasureTheory.Integral.Asymptotics
+module
+
+public import AnalyticNumberTheory.Mertens.Basic
+public import AnalyticNumberTheory.PrimeDistribution.ChebyshevTheta
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.MeasureTheory.Integral.Asymptotics
 
 /-!
 # Abel summation for prime reciprocal sums
@@ -9,6 +11,8 @@ import Mathlib.MeasureTheory.Integral.Asymptotics
 This finite identity is the bridge from effective Chebyshev-theta estimates to
 Mertens' second theorem.  It deliberately contains no asymptotic claim.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

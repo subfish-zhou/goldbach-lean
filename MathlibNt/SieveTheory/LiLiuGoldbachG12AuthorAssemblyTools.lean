@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundaryOutputBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SafeGridTerminal
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorLowHigh
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BoundaryOutputBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SafeGridTerminal
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorLowHigh
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

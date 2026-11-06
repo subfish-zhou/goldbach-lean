@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
-import MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
+public import MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
+
+@[expose] public section
 
 open scoped BigOperators
 

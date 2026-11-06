@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ExtendedUpperScalar
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ExtendedUpperScalar
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.G9ExtendedUpper
 open Finset ArithmeticFunction SmallRosser EdgeDensity

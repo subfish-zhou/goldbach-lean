@@ -1,6 +1,8 @@
-import Mathlib.Analysis.Fourier.ZMod
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import Mathlib.Analysis.Fourier.ZMod
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # Finite Fourier completion of the reciprocal sum
@@ -9,6 +11,8 @@ The modulus is any positive natural number, including one. Neither frequency
 is assumed coprime to it. These are finite identities and bounds, not an
 assertion of the complete Kloosterman square-root estimate.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -115,7 +119,7 @@ theorem completeKloosterman_modulus_one (m : ZMod 1) (d : ℤ) :
   have he (u : ZMod 1) : ZMod.stdAddChar u = 1 := by
     rw [Subsingleton.elim u 0]; simp
   rw [completeKloosterman_eq]
-  simp only [hu, if_true, he, sum_const, card_univ, ZMod.card, nsmul_eq_mul,
+  simp only [hu, ite_true, he, sum_const, card_univ, ZMod.card, nsmul_eq_mul,
     Nat.cast_one, one_mul]
 
 

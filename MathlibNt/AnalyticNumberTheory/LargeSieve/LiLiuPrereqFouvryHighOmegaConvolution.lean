@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmega
 
 /-!
 # Shifted divisor moments without a power loss
@@ -7,6 +9,8 @@ Regrouping the product `m*n` uses the exact divisor antidiagonal.
 The absolute-value shift has at most two preimages. The inequality
 `u*v ≤ u²+v²` then gives a uniform fixed logarithmic cost.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

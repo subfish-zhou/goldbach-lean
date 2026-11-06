@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabCount
-import Mathlib.NumberTheory.PrimeCounting
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabCount
+public import Mathlib.NumberTheory.PrimeCounting
 
 /-!
 # The exact base range, including prime squares
@@ -8,6 +10,8 @@ Below the square of the sieve threshold a rough integer is a unit or a prime.
 At the square endpoint there is one additional integer precisely when the
 threshold itself is prime.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 

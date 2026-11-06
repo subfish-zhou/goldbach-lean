@@ -3,9 +3,11 @@ Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Tactic
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCharacters
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Tactic
 
 /-!
 # Richert 1969: Lemma 3 and the payment from ordinary Bombieri
@@ -23,6 +25,8 @@ applies Cauchy--Schwarz, uses Lemma 3 with `h = 9` to pay the square of
 `3 ^ omega(d)`, and uses a pointwise `d E*(N,d)` envelope on the second factor.
 The theorem below records exactly that finite implication.
 -/
+
+@[expose] public section
 
 noncomputable section
 

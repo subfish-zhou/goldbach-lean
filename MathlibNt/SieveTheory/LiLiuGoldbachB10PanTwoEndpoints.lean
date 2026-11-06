@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixes
-import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10PanPrefixes
+public import MathlibNt.SieveTheory.LiLiuPanBoundedAggregate
+
+@[expose] public section
 
 open scoped BigOperators
 

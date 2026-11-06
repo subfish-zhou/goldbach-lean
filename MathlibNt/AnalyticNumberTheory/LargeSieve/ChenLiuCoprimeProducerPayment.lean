@@ -1,10 +1,14 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowEndpoint
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightHarmonic
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHighAggregate
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowEndpoint
 
 /-! Uniform logarithmic payment for the complete nonprincipal Liu source.
 The cofactor remains free after the common threshold; conductor one is omitted
 before applying the low-conductor estimate. -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedGeometry
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 open scoped BigOperators Topology
@@ -36,9 +40,9 @@ theorem residual_eq_prefix_sub {N : ℕ}
   apply sum_congr rfl
   intro m _
   by_cases hmd : m.Coprime d
-  · simp only [if_pos hmd]
+  · simp only [ite_eq_left hmd]
     ring
-  · simp only [if_neg hmd, sub_zero]
+  · simp only [ite_eq_right hmd, sub_zero]
 
 /-- A single source witness pays for both complete prefixes, uniformly in epsilon. -/
 theorem residual_weighted (A : ℝ) (hA : 0 < A) :

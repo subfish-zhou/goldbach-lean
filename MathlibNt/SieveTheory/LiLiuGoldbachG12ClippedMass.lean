@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedDistribution
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter
@@ -93,8 +97,8 @@ theorem divisorResidual_eq (hN : 2 ≤ N) (h : Admissible N ε g L U)
     apply sum_congr rfl
     intro m hm
     by_cases hmd : m.Coprime d
-    · simp only [if_pos hmd]
-    · rw [if_neg hmd, outputDivisors_empty h hm hNd hmd]
+    · simp only [ite_eq_left hmd]
+    · rw [ite_eq_right hmd, outputDivisors_empty h hm hNd hmd]
       simp
   unfold divisorResidual residual
   rw [hc, Finset.sum_div, ← sum_sub_distrib]

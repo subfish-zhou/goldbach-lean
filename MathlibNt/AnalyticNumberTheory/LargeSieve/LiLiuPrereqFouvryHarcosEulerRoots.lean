@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEulerSeries
-import Mathlib.RingTheory.PowerSeries.Inverse
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEulerSeries
+public import Mathlib.RingTheory.PowerSeries.Inverse
 
 /-!
 # Harcos's irreducible sum equals the negative root power sum
@@ -7,6 +9,8 @@ import Mathlib.RingTheory.PowerSeries.Inverse
 The input character is the actual polynomial character. The Euler logarithmic
 identity is produced by finite factorization, not assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -35,7 +39,7 @@ private def eulerRootLog (α β : ℂ) : PowerSeries ℂ :=
 private theorem eulerRootLog_mul (α β : ℂ) :
     eulerRootLog α β *
         ((1 - PowerSeries.C α * PowerSeries.X) * (1 - PowerSeries.C β * PowerSeries.X)) =
-      PowerSeries.X * (PowerSeries.derivative ℂ)
+      PowerSeries.X * (PowerSeries.derivative (R := ℂ))
         ((1 - PowerSeries.C α * PowerSeries.X) * (1 - PowerSeries.C β * PowerSeries.X)) := by
   have ha := harcosEulerGeometric_mul 1 (by omega) α
   have hb := harcosEulerGeometric_mul 1 (by omega) β

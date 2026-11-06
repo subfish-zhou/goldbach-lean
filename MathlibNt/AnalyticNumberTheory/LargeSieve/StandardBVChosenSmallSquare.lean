@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerLargeSieve
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

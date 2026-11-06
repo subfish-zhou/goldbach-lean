@@ -1,0 +1,10 @@
+{
+  "challenge_module": "Palomar.Challenge",
+  "solution_module": "Palomar.Solution",
+  "theorem_names": [
+    "GoldbachPalomar.chen_theorem",
+    "GoldbachPalomar.one_plus_one_nine",
+    "GoldbachPalomar.one_plus_one_nine_real"
+  ],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+}

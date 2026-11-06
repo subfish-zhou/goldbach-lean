@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularCoeffBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularCoeffBounds
 
 /-! Compatibility import for the canonical module in its current library location. -/

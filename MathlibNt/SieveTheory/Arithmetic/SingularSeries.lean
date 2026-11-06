@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.Sieve.SingularSeries
+module
+
+public import AnalyticNumberTheory.Sieve.SingularSeries
 
 /-!
 # MathlibNt.SieveTheory.SingularSeries
@@ -25,6 +27,8 @@ References:
   - Liu, Z. (2022), "A Corrected Simplified Proof of Chen's Theorem", arXiv:2203.07871
   - Halberstam & Richert, "Sieve Methods" (1974)
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SingularSeries
 

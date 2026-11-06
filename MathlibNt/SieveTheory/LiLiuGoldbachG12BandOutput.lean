@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedOutputSemantics
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedSemantics
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedOutputSemantics
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ClippedSemantics
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleGateSaving
+
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

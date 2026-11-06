@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceBranchInterface
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144MovingDomainFiniteInduction
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Filter Finset MeasureTheory Set Topology
@@ -52,10 +56,10 @@ theorem ActualClaim145BoundAt.to_lemma144_moving_of_scalar
   have hsig : 0 < sourceSigma (D : ℝ) d := sourceSigma_pos_of_nat_two_le hD
   have hs0 : 0 < s := by
     by_cases hodd : N % 2 = 1
-    · rw [KappaOneModel.parityDomain, if_pos hodd] at hs
+    · rw [KappaOneModel.parityDomain, ite_eq_left hodd] at hs
       norm_num at hs
       exact lt_trans zero_lt_one hs
-    · rw [KappaOneModel.parityDomain, if_neg hodd] at hs
+    · rw [KappaOneModel.parityDomain, ite_eq_right hodd] at hs
       exact lt_of_lt_of_le (by norm_num) hs
   have hE : 0 ≤ errorEnvelope H N (D : ℝ) d s :=
     errorEnvelope_nonneg H N hD1 hs0.le

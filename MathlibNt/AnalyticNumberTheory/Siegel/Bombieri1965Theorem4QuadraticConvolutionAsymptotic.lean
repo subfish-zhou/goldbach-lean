@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelTotalDiscrepancy
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelTotalDiscrepancy
 
 /-!
 # The actual one-character convolution main term
@@ -8,6 +10,8 @@ The floor-sum discrepancy and the genuine harmonic tail give a uniform
 unconditional arithmetic input to the weighted positive-convolution route,
 not a lower-bound assumption on `L(1, chi)`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve.Bombieri1965Theorem4
 

@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.Mertens.Abelian
+module
+
+public import AnalyticNumberTheory.Mertens.Abelian
 
 /-!
 # Scaling the Euler--Mascheroni Gamma kernel
@@ -6,6 +8,8 @@ import AnalyticNumberTheory.Mertens.Abelian
 This file records the positive-dilation form of the logarithmic Gamma kernel
 needed in Abelian finite-part arguments.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

@@ -3,7 +3,9 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePTail
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperSourcePTail
 
 /-!
 # Source factor for the dimension-one upper Rosser density
@@ -15,6 +17,8 @@ first-interval identity for Suzuki's already-defined odd layer series.  Above
 `3`, the identity is derived from the parity integral DDE; the amplitude remains
 separate and is then replaced by its independently produced value `2 exp γ`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 
@@ -67,7 +71,7 @@ theorem suzukiContinuousUpperFactor_eq_jurkatRichertUpperLinearSieveFactor
         hH h3s (hshi.trans (by norm_num : (4 : ℝ) ≤ 5))
     rw [hsource, hA]
     unfold jurkatRichertUpperLinearSieveFactor
-    rw [if_neg hs3]
+    rw [ite_eq_right hs3]
     rfl
 
 /-- The complete upper-factor identification on Chen's varying-`q` window,

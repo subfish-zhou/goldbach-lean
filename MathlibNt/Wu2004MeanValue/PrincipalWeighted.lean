@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.PrincipalMaximal
-import MathlibNt.SieveTheory.LiuPanPrincipalRemainder
+module
+
+public import MathlibNt.Wu2004MeanValue.PrincipalMaximal
+public import MathlibNt.SieveTheory.LiuPanPrincipalRemainder
 
 /-!
 # The complete induced-principal contribution in Wu's weighted norm
@@ -9,6 +11,8 @@ deletion bound and weighted reciprocal-totient estimate pay for this removal,
 uniformly even over modulus-dependent coefficient and endpoint choices.
 No nonprincipal-character estimate is asserted here.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

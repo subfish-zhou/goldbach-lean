@@ -3,7 +3,9 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerEvenLimit
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerEvenLimit
 
 /-!
 # Suzuki's source lower factor on its first explicit interval
@@ -19,6 +21,8 @@ where `A = 3 * T⁺(3) + 3`. The definition below records this source formula;
 its identification with `1 - T⁻` remains a separate theorem obligation.
 It is independent of the nonstandard placeholder `LinearSieve.sieveFunctionf`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers
 

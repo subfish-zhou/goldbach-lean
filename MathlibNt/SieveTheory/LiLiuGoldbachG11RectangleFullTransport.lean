@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryFiniteSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11FouvryFiniteSieve
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

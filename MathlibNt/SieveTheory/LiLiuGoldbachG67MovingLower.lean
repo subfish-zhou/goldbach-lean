@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPairMovingKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairMovingKernel
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

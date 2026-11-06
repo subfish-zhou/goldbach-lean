@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass
-import MathlibNt.SieveTheory.LiLiuGoldbachG12GateBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDivisorDistribution
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11CommonMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12GateBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LinkedDivisorDistribution
+
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open Finset

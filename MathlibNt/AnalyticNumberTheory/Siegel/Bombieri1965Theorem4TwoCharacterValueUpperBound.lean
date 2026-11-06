@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterSingleAsymptotic
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterInduction
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrincipalEulerCorrectionLogBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterSingleAsymptotic
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterInduction
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrincipalEulerCorrectionLogBound
 
 /-!
 # Subpower upper bounds for the actual two-character residue
@@ -9,6 +11,8 @@ The target character's original L-value is retained. Its induction correction,
 and the other two L-values at the common modulus, cost only logarithms.
 No coprimality or primitivity is needed for these upper bounds.
 -/
+
+@[expose] public section
 
 open Complex Finset
 

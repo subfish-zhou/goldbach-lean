@@ -1,5 +1,7 @@
-import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
+public import Mathlib.Tactic
 
 /-! # AnalyticNumberTheory.Sieve.VaughanIdentity
 
@@ -27,6 +29,8 @@ References:
   - Halberstam & Richert, "Sieve Methods" (1974), Ch. 9-10
   - Iwaniec & Kowalski, "Analytic Number Theory" (2004), Ch. 13.4
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Sieve
 

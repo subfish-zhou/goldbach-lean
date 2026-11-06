@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerShort
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerShort
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitivePerron
 
 /-!
 # The half-step variant of the finite shift in Pan (2.23)
@@ -8,6 +10,8 @@ The cutoff is `y + 1/2`, while both finite polynomials retain their complete
 source coefficients. This is a boundary-safe variant, not a transcription of
 the natural-cutoff integral. No Perron truncation estimate is assumed here.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset MeasureTheory Set Filter

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstDistribution
-import MathlibNt.SieveTheory.LiLiuGoldbachB9NormalizedMainMass
+module
+
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstDistribution
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9NormalizedMainMass
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

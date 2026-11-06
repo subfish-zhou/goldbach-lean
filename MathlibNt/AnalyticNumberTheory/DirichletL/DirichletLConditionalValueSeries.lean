@@ -1,8 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLAbelWeightVariation
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Analytic.Uniqueness
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLAbelWeightVariation
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Calculus.FDeriv.Analytic
+public import Mathlib.Analysis.Analytic.Uniqueness
 
 /-!
 # Naturally ordered conditional Dirichlet L-series
@@ -12,6 +14,8 @@ converge when `re s > 0`.  We retain the natural order (rather than using an
 unordered `tsum`), prove an explicit Abel tail, establish compact-local uniform
 convergence, and identify the resulting holomorphic function with `χ.LFunction`.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter Set
 open scoped Topology
@@ -214,7 +218,7 @@ noncomputable def orderedValueFunction
 lemma orderedValueFunction_eq (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
     (s : ℂ) (hs : 0 < s.re) :
     orderedValueFunction χ hχ s = orderedValueSeries χ hχ s hs := by
-  simp only [orderedValueFunction, dif_pos hs]
+  simp only [orderedValueFunction, dite_eq_left hs]
 
 /-- Compact-window majorant requested by the Abel estimate. -/
 noncomputable def compactValueTailMajorant (q : ℕ) (δ M : ℝ) (m : ℕ) : ℝ :=

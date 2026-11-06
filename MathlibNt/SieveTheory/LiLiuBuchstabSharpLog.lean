@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuBuchstabTailPropagation
+module
+
+public import MathlibNt.SieveTheory.LiLiuBuchstabTailPropagation
+
+@[expose] public section
 
 set_option autoImplicit false
 

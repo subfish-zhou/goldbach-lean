@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZero
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13PairingZero
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

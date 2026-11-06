@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
-import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG10Cofactor
+public import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+
+@[expose] public section
 
 open scoped BigOperators
 

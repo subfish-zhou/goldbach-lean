@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEvenSourceLayerRealLimit
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveFactorEvenLimitBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEvenSourceLayerRealLimit
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLowerSieveFactorEvenLimitBridge
 
 /-!
 # Convergence of Suzuki's finite lower amplitude
@@ -9,6 +11,8 @@ also bounds the odd source layers at `s = 3`.  Hence their partial sums converge
 to the `tsum` occurring in Suzuki's canonical first-interval amplitude.  This
 closes the `A_m - A` term in the finite residual decomposition.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset Filter Topology

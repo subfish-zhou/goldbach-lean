@@ -1,6 +1,10 @@
-import Goldbach.OnePlusOneNine
+module
+
+public import Goldbach.OnePlusOneNine
 
 /-! # Independent literal and axiom checks for the Li–Liu public interface -/
+
+@[expose] public section
 
 noncomputable section
 attribute [local instance] Classical.propDecidable

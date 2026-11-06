@@ -1,8 +1,12 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMass
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectOuterMass
 
 /-! A single signed-WF consumer with its split chosen before the shift and
 all subsequent frequency/key/cell/prefix choices. The loss is any prescribed
 positive power, rather than an uninstantiated coefficient envelope. -/
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

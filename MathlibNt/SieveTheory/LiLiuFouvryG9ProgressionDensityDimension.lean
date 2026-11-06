@@ -1,10 +1,14 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ProgressionDensity
-import MathlibNt.SieveTheory.MertensTheorem
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ProgressionDensity
+public import MathlibNt.SieveTheory.MertensTheorem
 
 /-! A uniform dimension-one constant for the actual progression density.
 This is only an exact finite-product adapter to the proved Goldbach interval
 bound. No Mertens estimate is reproved here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

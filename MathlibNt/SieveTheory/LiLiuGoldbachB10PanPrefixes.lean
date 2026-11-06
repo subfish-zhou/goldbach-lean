@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
-import MathlibNt.SieveTheory.LiuTrueLiPan
-import MathlibNt.SieveTheory.LiuPanActualCountCharacters
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10ProductCount
+public import MathlibNt.SieveTheory.LiuTrueLiPan
+public import MathlibNt.SieveTheory.LiuPanActualCountCharacters
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -313,7 +317,7 @@ private theorem B10PanPrefixes_panAPPrefixCount_eq_support_sum
             refine Finset.sum_congr rfl ?_
             intro m hm
             by_cases hmd : Nat.Coprime m d
-            · rw [if_pos hmd, if_pos hmd]
+            · rw [ite_eq_left hmd, ite_eq_left hmd]
               simp [goldbachC10CoeffReal_eq_one_of_mem_productSupport hm]
             · simp [hmd]
 
@@ -345,7 +349,7 @@ theorem goldbachB10DivisorAtoms_card_eq_panAPPrefixCount_sub
               refine Finset.sum_congr rfl ?_
               intro m hm
               by_cases hmd : Nat.Coprime m d
-              · rw [if_pos hmd, if_pos hmd]
+              · rw [ite_eq_left hmd, ite_eq_left hmd]
                 simp [goldbachC10Coeff_eq_one_of_mem_productSupport hm]
               · simp [hmd]
   calc
@@ -359,7 +363,7 @@ theorem goldbachB10DivisorAtoms_card_eq_panAPPrefixCount_sub
               refine Finset.sum_congr rfl ?_
               intro m hm
               by_cases hmd : Nat.Coprime m d
-              · rw [if_pos hmd]
+              · rw [ite_eq_left hmd]
                 have hm0 : goldbachC10CoeffReal N b c m ≠ 0 :=
                   (goldbachC10CoeffReal_ne_zero_iff).2 hm
                 have hm1 : 1 ≤ m := (goldbachC10CoeffReal_ne_zero_imp_one_lt hm0).le
@@ -381,8 +385,8 @@ theorem goldbachB10DivisorAtoms_card_eq_panAPPrefixCount_sub
               refine Finset.sum_congr rfl ?_
               intro m hm
               by_cases hmd : Nat.Coprime m d
-              · rw [if_pos hmd, if_pos hmd, if_pos hmd]
-              · rw [if_neg hmd, if_neg hmd, if_neg hmd]
+              · rw [ite_eq_left hmd, ite_eq_left hmd, ite_eq_left hmd]
+              · rw [ite_eq_right hmd, ite_eq_right hmd, ite_eq_right hmd]
                 ring
     _ = (∑ m ∈ goldbachC10ProductSupport N b c,
             if Nat.Coprime m d then (primesInAPBelow N m d (N % d) : ℝ) else 0) -
@@ -435,9 +439,9 @@ theorem liuMainPanCoprimeIntervalSum_eq_prefixCount_sub_mainPrefix
             refine Finset.sum_congr rfl ?_
             intro m hm
             by_cases hmd : Nat.Coprime m d
-            · rw [if_pos hmd, if_pos hmd, if_pos hmd]
+            · rw [ite_eq_left hmd, ite_eq_left hmd, ite_eq_left hmd]
               ring
-            · rw [if_neg hmd, if_neg hmd, if_neg hmd]
+            · rw [ite_eq_right hmd, ite_eq_right hmd, ite_eq_right hmd]
               ring
     _ = _ := by rw [Finset.sum_sub_distrib]
 

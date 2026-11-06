@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterConvolution
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivative
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Data.Nat.Sqrt
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterConvolution
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivative
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.Data.Nat.Sqrt
 
 /-!
 # Uniform cancellation in the genuine two-character pair
@@ -12,6 +14,8 @@ coprime conductors. The pair is the actual Dirichlet convolution, not a
 nonnegative majorant. This is an unweighted summatory estimate, not yet a
 weighted main-term formula for the fourfold convolution.
 -/
+
+@[expose] public section
 
 open Complex Finset
 open ArithmeticFunction hiding log

@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11EvenEndpoint
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11EvenEndpoint
 
 /-! Compatibility import for the canonical module in its current library location. -/

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RelaxedMass
+
+@[expose] public section
 
 noncomputable section
 open Finset

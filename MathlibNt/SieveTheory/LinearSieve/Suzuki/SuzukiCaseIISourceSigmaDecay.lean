@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointQuantitative
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIEndpointQuantitative
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne
 

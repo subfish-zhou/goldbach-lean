@@ -1,5 +1,7 @@
-import Mathlib.Data.Finset.Sort
-import MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser
+module
+
+public import Mathlib.Data.Finset.Sort
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSmallRosser
 
 /-!
 # Rounded cubic tests with the source's occurrence indexing
@@ -10,6 +12,8 @@ prefixes and their cardinality. This module identifies these tests by sorting
 the original natural-number labels, never their endpoint values. Thus equal
 values of `b` keep distinct slots in every mapped prefix product.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

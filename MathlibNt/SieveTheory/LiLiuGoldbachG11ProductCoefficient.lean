@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedMother
-import MathlibNt.SieveTheory.LiLiuGoldbachG11BodyMinFac
-import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedMother
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11BodyMinFac
+public import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

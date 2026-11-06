@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaPayment
 
 /-!
 # Uniform coprime Siegel--Walfisz transport at the growing omega cutoff
@@ -8,6 +10,8 @@ range is paid explicitly, so no saving-dependent lower cutoff is hidden in
 the index type. Coefficient order is unchanged; the SW sieve order rises by
 one to include order zero.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

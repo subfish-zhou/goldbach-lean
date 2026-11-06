@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingEarlySourceReduction
 
 /-!
  # Pan--Wang--Ding Theorem A and the dyadic cover in (2.13)
@@ -13,6 +15,8 @@ whole conductor and source rectangles.  The triangle inequality is applied
 only after each complete source block has been summed; it is never pushed
 inside the `a`-sum.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

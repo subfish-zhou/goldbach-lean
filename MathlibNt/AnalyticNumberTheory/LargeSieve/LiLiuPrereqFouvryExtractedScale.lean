@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedPhase
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryExtractedPhase
 
 /-!
 # Actual phase scales and nonempty-key guards
@@ -7,6 +9,8 @@ The source slow phase is estimated using the original beta coordinate
 `N₁ = d*d₁*n₁`, not the reduced coordinate `n₁`. In particular
 `|a| <= 4*M*T` and `N₁ >= T` give `|a|/N₁ <= 4*M`, uniformly in `a`.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

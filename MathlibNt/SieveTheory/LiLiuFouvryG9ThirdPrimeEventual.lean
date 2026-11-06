@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrectionActual
-import MathlibNt.SieveTheory.LiLiuFouvryG9MainUpper
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9EulerCorrectionActual
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MainUpper
+
+@[expose] public section
 
 noncomputable section
 open Finset Filter

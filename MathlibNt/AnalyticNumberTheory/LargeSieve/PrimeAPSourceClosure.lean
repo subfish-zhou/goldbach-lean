@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPPartialSummation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPPartialSummation
 
 /-!
 # Elementary source closure for prime-AP partial summation
@@ -8,6 +10,8 @@ count.  It also records the minimal one-dimensional hypotheses needed for the
 global PNT and Chebyshev-to-`li` sources.  No AP or Bombieri--Vinogradov
 conclusion is assumed in either source contract.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -112,14 +116,14 @@ theorem norm_lambdaPrimePowerCorrection_le_explicit
         have hnN : n ≤ N :=
           (Nat.le_of_lt_succ (Finset.mem_range.mp hn)).trans hy
         by_cases hr : (n : ZMod q) = (a : ZMod q) ∧ ¬ n.Prime
-        · rw [if_pos hr]
+        · rw [ite_eq_left hr]
           by_cases hΛ : ArithmeticFunction.vonMangoldt n = 0
           · simp [lambdaNatCoeff, hΛ, higherPrimePowerSupport]
-          · rw [if_pos]
+          · rw [ite_eq_left]
             · exact lambda_norm_le_log_of_le hnN hN
             · exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr
                 (Nat.lt_succ_iff.mpr hnN), hr.2, hΛ⟩
-        · simp only [if_neg hr, norm_zero]
+        · simp only [ite_eq_right hr, norm_zero]
           by_cases hm : n ∈ higherPrimePowerSupport N <;> simp [hm, hlog]
       _ ≤ ((higherPrimePowerSupport N).card : ℝ) * Real.log (N : ℝ) := by
         rw [← Finset.sum_filter]

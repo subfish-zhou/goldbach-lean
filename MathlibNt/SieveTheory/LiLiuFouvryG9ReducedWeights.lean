@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ExternalExceptional
-import MathlibNt.SieveTheory.LiLiuFouvryG9RectangleSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ExternalExceptional
+public import MathlibNt.SieveTheory.LiLiuFouvryG9RectangleSieve
+
+@[expose] public section
 
 noncomputable section
 open Finset

@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorChangeLevelLedger
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ConductorChangeLevelLedger
 
 /-!
  # Bad-prime compression for conductor change-level corrections
@@ -16,6 +18,8 @@ claim, or new axiom.  In particular, `ConductorCorrectionBlockBound` is a named
 predicate, not a claimed theorem: it freezes the remaining analytic square-mean
 estimate in its weakest useful (block, not maximal-prefix) form.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorConvolution
 
 /-!
 # Canonical extraction of a divisor from two positive factors
@@ -8,6 +10,8 @@ Here the extracted divisor is called `D`; in that identity it is `δ δ₂`,
 not the three-factor phase modulus `δ δ₁ δ₂`.
 The split is determined by `Δ' = gcd D s`, using gcd cancellation only.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

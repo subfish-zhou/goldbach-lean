@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanUnweightedToWeighted
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanUnweightedToWeighted
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators

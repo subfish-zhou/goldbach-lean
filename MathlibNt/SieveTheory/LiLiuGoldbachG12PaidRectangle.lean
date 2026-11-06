@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LogBudgetTools
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LogBudgetTools
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,6 +1,8 @@
-import AnalyticNumberTheory.Mertens.Basic
-import Mathlib.NumberTheory.LSeries.SumCoeff
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import AnalyticNumberTheory.Mertens.Basic
+public import Mathlib.NumberTheory.LSeries.SumCoeff
+public import Mathlib.NumberTheory.Harmonic.Bounds
 
 /-!
 # Abel summation for the reciprocal-prime Dirichlet series
@@ -10,6 +12,8 @@ the coefficient sequence which is `1 / p` at primes and zero elsewhere.  Its
 partial sums are exactly `primeReciprocalSum`, so the resulting integral is a
 direct Abel/Mellin bridge for Mertens' second theorem.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

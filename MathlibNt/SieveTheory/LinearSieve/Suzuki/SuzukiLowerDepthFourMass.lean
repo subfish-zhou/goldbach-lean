@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection14LegalDomainBridge
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ActualRecurrence
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection14LegalDomainBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset
@@ -93,10 +97,10 @@ theorem suzukiSourceV_eq_lowerRosserBoundaryLayerMass
                 ih (n + 1) (by omega) (D ⌈/⌉ prime) prime (by omega)
               by_cases hodd : Odd (n + 2)
               · rw [suzukiSourceV_odd_succ_eq_upper_only S (by omega) hodd]
-                simp only [lowerRosserBoundaryLayerMass, if_pos hodd, hstep]
+                simp only [lowerRosserBoundaryLayerMass, ite_eq_left hodd, hstep]
               · rw [suzukiSourceV_succ_eq_unrestricted S (by omega)
                     (fun h => (hodd h).elim)]
-                simp only [lowerRosserBoundaryLayerMass, if_neg hodd, hstep]
+                simp only [lowerRosserBoundaryLayerMass, ite_eq_right hodd, hstep]
 
 /-- The `m`-th (one-indexed mathematically, zero-indexed here) even boundary
 layer has Suzuki depth `2(m+1)`. -/

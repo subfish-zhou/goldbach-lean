@@ -1,9 +1,13 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePowerRoots
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePowerRoots
 
 /-!
 Elementary quadratic Gauss cancellation by translation and additive orthogonality.
 The linear coefficient is unrestricted; no multiplicative character is used.
 -/
+
+@[expose] public section
 
 noncomputable section
 

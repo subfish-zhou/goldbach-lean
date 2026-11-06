@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosLPolynomial
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.RingTheory.PowerSeries.Derivative
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosLPolynomial
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.RingTheory.PowerSeries.Derivative
 
 /-!
 # Finite Euler coefficient identities for actual monic polynomials
@@ -9,6 +11,8 @@ This is the algebraic, coefficientwise version of the Euler-product argument
 in Harcos, §3, Lemma 7 and Theorem 6 (`pages/harcos-lpolynomial-05.png`–`07.png`).
 The multiplicities below are those of the actual polynomial factorization.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -142,7 +146,8 @@ theorem harcosEuler_degree_marked (η : (ZMod p)[X] →* ℂ) (n : ℕ) :
         symm
         apply sum_subset hsub
         intro k _ hk
-        simp [Multiset.count_eq_zero.mpr (by simpa using hk)]
+        rw [Multiset.count_eq_zero.mpr (fun h => hk (Multiset.mem_toFinset.mpr h))]
+        simp
       _ = n := hdeg
   have hsc := congrArg (fun x : ℕ ↦ (x : ℂ)) hs
   push_cast at hsc

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13BridgeAssembly
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition1023Phase
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiSection13BridgeAssembly
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition1023Phase
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

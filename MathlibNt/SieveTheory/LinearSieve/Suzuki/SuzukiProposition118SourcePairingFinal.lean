@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceIntegralDDE
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceIntegralDDE
 
 /-!
 # Final source-pairing closure for Suzuki Proposition 11.8
@@ -9,6 +11,8 @@ The genuine source pairing is continuous on every `[2,M]` and has zero right
  on the whole closed interval in one step.  Decay at infinity then forces the
  boundary scalar, and hence Suzuki's `B`, to vanish.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval ENNReal
 open Finset Set Filter Topology MeasureTheory intervalIntegral
@@ -42,8 +46,8 @@ private theorem continuousWithinAt_sourceQ_Ici
       continuousAt_const.div continuousAt_id hs0
     apply hrat.continuousWithinAt.congr_of_eventuallyEq
     · filter_upwards [Filter.Eventually.filter_mono inf_le_left (Iio_mem_nhds hs2)] with u hu
-      rw [suzukiProposition118SourceQ, if_pos hu]
-    · rw [suzukiProposition118SourceQ, if_pos hs2]
+      rw [suzukiProposition118SourceQ, ite_eq_left hu]
+    · rw [suzukiProposition118SourceQ, ite_eq_left hs2]
   · have hs2' : 2 ≤ s := le_of_not_gt hs2
     have hW := continuousOn_weighted_suzukiProposition118SourceQ hH
       (M := s + 1) (by linarith)
@@ -88,7 +92,7 @@ private theorem sourceWeighted_intervalIntegrable_history
   rw [uIoc_of_le hxy] at ht
   have htlt : t < 2 := lt_of_le_of_ne (ht.2.trans hy) (fun h => ht2 h)
   dsimp [sourceWeighted]
-  rw [suzukiProposition118SourceQ, if_pos htlt]
+  rw [suzukiProposition118SourceQ, ite_eq_left htlt]
   have ht0 : t ≠ 0 := ne_of_gt
     (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (hx.trans ht.1.le))
   field_simp [ht0]

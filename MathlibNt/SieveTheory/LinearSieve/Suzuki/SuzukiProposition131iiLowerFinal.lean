@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1022LowerBarrier
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiQhatLocal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerInternal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma1022LowerBarrier
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiQhatLocal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition131iiLowerInternal
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Set Filter Topology MeasureTheory intervalIntegral

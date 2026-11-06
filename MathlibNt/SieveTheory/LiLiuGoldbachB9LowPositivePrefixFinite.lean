@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplit
-import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS5FirstPrimeSplit
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9C10Bridge
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveTriangleEvaluation
-import MathlibNt.Wu2004MeanValue.GammaFiveSectionBudget
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveTriangleEvaluation
+public import MathlibNt.Wu2004MeanValue.GammaFiveSectionBudget
 
 /-!
 # Four-row loss bounds for the literal Gamma₅ triangles
@@ -9,6 +11,8 @@ both legal insertion gates. The normalization by five is explicit. To use
 these in a count inequality, its improvement function and parameter row must
 still be identified with the corresponding objects here.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open Real Set MeasureTheory

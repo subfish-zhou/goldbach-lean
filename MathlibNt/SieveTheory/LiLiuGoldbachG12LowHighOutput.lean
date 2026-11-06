@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFOutput
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFOutput
+
+@[expose] public section
 
 set_option maxHeartbeats 2000000
 

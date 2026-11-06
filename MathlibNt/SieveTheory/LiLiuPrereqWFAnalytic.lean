@@ -1,7 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFParameters
-import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
-import MathlibNt.SieveTheory.SuzukiLemma132SlackFinal
-import MathlibNt.SieveTheory.SuzukiLemma144LiteralAllDepthUniformInS
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFParameters
+public import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+public import MathlibNt.SieveTheory.SuzukiLemma132SlackFinal
+public import MathlibNt.SieveTheory.SuzukiLemma144LiteralAllDepthUniformInS
 
 /-!
 # Exponential control from the constructed JR hat producer
@@ -10,6 +12,8 @@ The factor `s` is cancelled against the denominator of the actual hat formula.
 The all-depth theorem is used only in its moving range and at its rounded
 natural cutoff. Constants are selected before the sieve, density, and depth.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

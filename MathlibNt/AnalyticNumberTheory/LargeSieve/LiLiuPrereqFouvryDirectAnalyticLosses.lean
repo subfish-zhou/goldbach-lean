@@ -1,7 +1,11 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPartialSummation
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFrequencyCount
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPartialSummation
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFrequencyCount
 
 /-! Actual five-coordinate counting and slow-variation costs. -/
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

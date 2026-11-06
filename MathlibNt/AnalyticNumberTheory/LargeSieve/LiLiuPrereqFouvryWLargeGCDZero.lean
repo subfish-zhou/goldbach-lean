@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMaskedW
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLargeGCDBetaMass
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighDeltaWeights
 
 /-!
 # The zero mode of the large beta-gcd exclusion
@@ -10,6 +12,8 @@ It is an absolute zero-mode bound, not a restriction of the signed
 unmasked Siegel--Walfisz cancellation. The original progression sum
 and the other four gcd exclusions still require separate estimates.
 -/
+
+@[expose] public section
 
 noncomputable section
 

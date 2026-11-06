@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEta
-import Mathlib.Analysis.RCLike.Sqrt
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEta
+public import Mathlib.Analysis.RCLike.Sqrt
+public import Mathlib.RingTheory.PowerSeries.Basic
 
 /-!
 # Actual coefficient sums for Harcos's L-polynomial
@@ -9,6 +11,8 @@ The monic polynomials are parametrized by all their lower coefficients, not
 by an assumed list of L-function coefficients. Source: Harcos, §3, Theorem 5,
 `pages/harcos-lpolynomial-06.png`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -160,7 +164,7 @@ private theorem sum_char_mul (c : ZMod p) :
     ∑ t : ZMod p, ZMod.stdAddChar (c * t) = if c = 0 then (p : ℂ) else 0 := by
   by_cases hc : c = 0
   · simp [hc]
-  · rw [if_neg hc]
+  · rw [ite_eq_right hc]
     exact AddChar.sum_eq_zero_of_ne_one (ZMod.isPrimitive_stdAddChar p hc)
 
 theorem harcosCoefficient_ge_three (a b : ZMod p) (ha : a ≠ 0)
@@ -178,9 +182,9 @@ theorem harcosCoefficient_ge_three (a b : ZMod p) (ha : a ≠ 0)
     simp [Fin.snoc, Fin.castLT, sub_eq_add_neg, AddChar.map_add_eq_mul]
   simp_rw [he]
   by_cases hw : w ⟨0, by omega⟩ = 0
-  · simp only [hw, if_true, sum_const_zero]
-  · simp only [hw, if_false, ← Finset.sum_mul, sum_char_mul, neg_ne_zero.mpr ha,
-      if_false, zero_mul]
+  · simp only [hw, ite_true, sum_const_zero]
+  · simp only [hw, ite_false, ← Finset.sum_mul, sum_char_mul, neg_ne_zero.mpr ha,
+      ite_false, zero_mul]
 
 private theorem sum_fin_one (f : ZMod p → ℂ) :
     ∑ v : Fin 1 → ZMod p, f (v 0) = ∑ c : ZMod p, f c := by
@@ -226,11 +230,11 @@ theorem harcosCoefficient_two (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 0) :
     field_simp
     constructor <;> intro h <;> linear_combination -h
   rw [Finset.sum_eq_single (-b / a)]
-  · rw [if_neg hroot, if_pos ((hz _ hroot).2 rfl)]
+  · rw [ite_eq_right hroot, ite_eq_left ((hz _ hroot).2 rfl)]
   · intro c _ hc
     by_cases hc0 : c = 0
     · simp [hc0]
-    · rw [if_neg hc0, if_neg (fun h ↦ hc ((hz c hc0).1 h))]
+    · rw [ite_eq_right hc0, ite_eq_right (fun h ↦ hc ((hz c hc0).1 h))]
   · simp
 
 /-- The formal generating series, before any coefficient evaluation. -/
@@ -250,7 +254,7 @@ theorem harcosLPolynomial_coeff (a b : ZMod p) (ha : a ≠ 0) (n : ℕ) :
   · rw [harcosCoefficient_ge_three a b ha n (by omega)]
     apply Finset.sum_eq_zero
     intro i hi
-    rw [if_neg (by have := Finset.mem_range.mp hi; omega)]
+    rw [ite_eq_right (by have := Finset.mem_range.mp hi; omega)]
 
 
 theorem harcosLSeries_eq_polynomial (a b : ZMod p) (ha : a ≠ 0) :

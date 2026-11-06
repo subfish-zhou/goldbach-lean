@@ -1,4 +1,8 @@
-import Mathlib.Algebra.BigOperators.Ring.Finset
+module
+
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -1,4 +1,6 @@
-import AnalyticNumberTheory.Mertens.PartialSummation
+module
+
+public import AnalyticNumberTheory.Mertens.PartialSummation
 
 /-!
 # Finite logarithmic bridge for Mertens' product theorem
@@ -8,6 +10,8 @@ identification of the limiting constant with Euler's constant is deliberately
 kept separate: it requires an Euler-product/Abelian bridge, rather than only
 the prime-number theorem.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHighOmegaConvolution
 
 /-!
 # High-omega signed modulus weights at the actual error
@@ -8,6 +10,8 @@ An arbitrary signed modulus weight supported on `omega(q) > ξ` gains
 shift is nonzero, so the shifted divisor moment pays the progression sum
 without any `x^epsilon` loss. No factorability of a masked weight is asserted.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -25,7 +29,7 @@ theorem modulusHighOmega_abs_le_rankin (j : ℕ) (Q : Finset ℕ) (c : ℕ → �
   have he : betaHighOmega c ξ q = c q := by
     by_cases h : c q = 0
     · simp [betaHighOmega, h]
-    · exact if_pos (hω q hq h)
+    · exact ite_eq_left (hω q hq h)
   rw [← he]
   exact abs_betaHighOmega_le_rankin j hc ξ hq
 

@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedSource
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorant
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12AuthorWeightedSource
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BuchstabMajorant
+
+
+@[expose] public section
 
 open scoped Topology
 open Filter

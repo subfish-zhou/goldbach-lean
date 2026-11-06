@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticPrimitives
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticPrimitives
+
+@[expose] public section
 
 open Set MeasureTheory Finset
 open scoped Interval

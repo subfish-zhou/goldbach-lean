@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregateBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceDomain
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregateBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceDomain
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryResonanceBound
 
 /-!
 # Exact resonance fibers of occupied Gram labels
@@ -9,6 +11,8 @@ The base is `((r,n₁),h,n₂',s')`, and its fiber is `(n₂,s,h')`.
 Both maps retain the common first beta coordinate and signed frequencies.
 No diagonal restriction is imposed.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

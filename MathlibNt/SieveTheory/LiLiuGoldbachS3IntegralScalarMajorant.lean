@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarBase
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3IntegralScalarBase
+
+@[expose] public section
 
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectMainEnergy
 
 /-! # Divisor-free explicit main contribution
 
@@ -6,6 +8,8 @@ In addition to the joint gcd mean, the remaining single completion factor
 `tau(|a|)` is paid by its proved uniform subpower bound. The already paid
 zero and secondary contributions are kept literally unchanged.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

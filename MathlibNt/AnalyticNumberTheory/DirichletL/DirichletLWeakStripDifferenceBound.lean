@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
-import Mathlib.NumberTheory.DirichletCharacter.Bounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
+public import Mathlib.NumberTheory.DirichletCharacter.Bounds
 
 /-!
 # Weak-strip difference bounds for Dirichlet L-functions
@@ -8,6 +10,8 @@ This module integrates the continued derivative along a horizontal segment and
 then applies the pointwise weak-strip derivative estimate at every point of the
 integration path.
 -/
+
+@[expose] public section
 
 open Complex Set
 

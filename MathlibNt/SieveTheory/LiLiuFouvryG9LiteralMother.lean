@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutputPrime
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9SmallOutputPrime
+
+@[expose] public section
 
 noncomputable section
 open Finset

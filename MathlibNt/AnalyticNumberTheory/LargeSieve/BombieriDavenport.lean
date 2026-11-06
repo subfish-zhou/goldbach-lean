@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ReducedFareyGauss
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ReducedFareyGauss
 
 /-!
  # Weighted primitive-character Bombieri--Davenport inequality
@@ -10,6 +12,8 @@ reduced Farey additive large sieve.  The only loss relative to the classical
 `N + Q²` constant is the explicit dyadic-shell logarithm already present in
 `largeSieveBound`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

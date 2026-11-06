@@ -1,6 +1,8 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorEnergy
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIIActualTensorEnergy
 
 /-!
  # Divisor-square moments for the actual Vaughan Type-II tensor energy
@@ -15,6 +17,8 @@ The only frozen analytic input below is the classical divisor-square moment
 bound.  It is stated for that scalar prefix, not for the tensor energy or for
 the final Type-II conclusion.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

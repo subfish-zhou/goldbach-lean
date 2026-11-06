@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridRegion
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridRegion
+
+@[expose] public section
 
 open Finset MeasureTheory Set
 open scoped ENNReal BigOperators Interval

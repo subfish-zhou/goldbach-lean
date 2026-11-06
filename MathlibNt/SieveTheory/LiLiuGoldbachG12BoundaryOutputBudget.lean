@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12BandMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12BandMass
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

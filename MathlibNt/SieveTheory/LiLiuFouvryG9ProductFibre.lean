@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9IntegerFibre
-import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedSieve
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9IntegerFibre
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WeightedSieve
+
+@[expose] public section
 
 open Finset
 
@@ -91,11 +95,11 @@ theorem fouvryG9_weighted_natAbs_fibre_le
       have hw : 0 ≤ α p.1 * β p.2 := mul_nonneg (hα p.1 hm).1 (hβ p.2 hn).1
       by_cases h : ((N : ℤ) - (p.1 : ℤ) * p.2).natAbs = r
       · obtain hplus | hminus := fouvryG9_natAbs_product_values N p.1 p.2 r h
-        · simp only [h, hplus, if_true]
+        · simp only [h, hplus, ite_true]
           split_ifs <;> linarith
-        · simp only [h, hminus, if_true]
+        · simp only [h, hminus, ite_true]
           split_ifs <;> linarith
-      · simp only [h, if_false]
+      · simp only [h, ite_false]
         split_ifs <;> linarith
     _ = _ := Finset.sum_add_distrib
     _ ≤ _ := add_le_add (fouvryG9_weighted_product_fibre_le U V α β (N + r) hα hβ)

@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovParameters
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryStepanovParameters
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 
 /-!
 # Stepanov's square-root point-count bound
@@ -8,6 +10,8 @@ The nonzero auxiliary polynomials and their proved Hasse multiplicities
 give the one-sided counts in Harcos (13). The quadratic character then
 converts these bounds into the affine point count in Theorem 7.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -65,14 +69,14 @@ private theorem stepanov_quadraticChar_locus_bounds (f : F[X])
       simp only [stepanovLocus, mem_filter, mem_univ, true_and]
       right
       simpa [h] using hp.symm
-    rw [h, if_pos hx]
+    rw [h, ite_eq_left hx]
     norm_num
     split_ifs <;> norm_num
   · have hx : x ∈ stepanovLocus f (-1) := by
       simp only [stepanovLocus, mem_filter, mem_univ, true_and]
       right
       simpa [h] using hp.symm
-    rw [h, if_pos hx]
+    rw [h, ite_eq_left hx]
     norm_num
     split_ifs <;> norm_num
 

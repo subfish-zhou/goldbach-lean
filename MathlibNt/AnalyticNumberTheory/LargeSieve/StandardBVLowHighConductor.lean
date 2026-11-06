@@ -1,7 +1,9 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalLambdaGlobalReduction
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrincipalLambdaGlobalReduction
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
 
 /-!
  # Standard BV through a low/high primitive-conductor split
@@ -20,6 +22,8 @@ There is no factor `R⁻¹`.  Consequently the needed inverse-log saving is
 located explicitly in `VaughanHighConductorHybridSaving`, not attributed to
 Cauchy or to the choice of the modulus exponent `B`.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

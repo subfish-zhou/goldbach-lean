@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWZeroMode
 
 /-!
 # Removing the Fourier transform from a finite W sum
@@ -15,6 +17,8 @@ The finite exponential sum retains all signed coefficients and all CRT
 phases. The maximum is constructed on the actual support interval, rather
 than postulated as an analytic hypothesis. No distribution estimate is proved.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -93,7 +97,7 @@ theorem wPoissonFrequency_eq_integral {M : ℝ} (hM : 0 < M)
       ∫ x : ℝ, (scaledDyadicCutoff M x : ℂ) *
         wFourierExponential a q r n₁ n₂ h x := by
   unfold wPoissonFrequency dyadicCutoffPoissonRemainder
-  rw [if_neg hh]
+  rw [ite_eq_right hh]
   have hfreq : M / (q.lcm r : ℝ) * (h : ℝ) =
       M * ((h : ℝ) / (q.lcm r : ℝ)) := by ring
   rw [hfreq]

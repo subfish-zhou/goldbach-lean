@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGcdMean
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
-import Mathlib.Analysis.Real.Sqrt
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGcdMean
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDivisorMean
+public import Mathlib.Analysis.Real.Sqrt
 
 /-!
 # The beta-pair mass discarded at a large common divisor
@@ -10,6 +12,8 @@ Here the common divisor is `gcd(n₁, n₂)` of the two beta variables, not
 divisor moment give an explicit inverse-square-root cutoff gain. No
 arithmetic-progression, Siegel--Walfisz, or Shiu estimate is used.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

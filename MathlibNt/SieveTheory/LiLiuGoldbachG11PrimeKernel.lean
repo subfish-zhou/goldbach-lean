@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport
-import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
-import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11MainMassTransport
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11BuchstabEndpointMass
+public import MathlibNt.SieveTheory.LiuPrimePairLogKernel
+
+
+@[expose] public section
 
 open Finset Set LiLiuPrereqBuchstab
 open scoped BigOperators Interval

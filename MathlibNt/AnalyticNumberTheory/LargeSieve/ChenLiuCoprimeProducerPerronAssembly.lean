@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerron
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHalfStepContour
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerVerticalIntegral
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerPerron
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerHalfStepContour
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerVerticalIntegral
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
 
 /-!
 # The complete Pan source cell after Perron truncation
@@ -9,6 +11,8 @@ import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadicClosure
 Both short and long polynomials are retained. The common half-step represents
 the exact integer hyperbola, so there is no omitted boundary divisor term.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter MeasureTheory

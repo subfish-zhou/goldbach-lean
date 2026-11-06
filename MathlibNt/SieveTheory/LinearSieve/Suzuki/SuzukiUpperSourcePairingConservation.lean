@@ -3,8 +3,10 @@ Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointScaledTail
-import Mathlib.Analysis.Calculus.MeanValue
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiStandardUpperAdjointScaledTail
+public import Mathlib.Analysis.Calculus.MeanValue
 
 /-!
 # Unconditional upper-source pairing conservation route
@@ -14,6 +16,8 @@ upper source construction: its forward integral DDE and its tail `P(s) → 2`.
 It proves the Iwaniec pairing is constant on `[2,∞)` from the integral DDE and
 the standard-adjoint DDE, without using Proposition 11.8(iii).
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

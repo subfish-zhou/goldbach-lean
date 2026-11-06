@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Equation1410
 
 /-!
 # Claim 14.6(i) bridge for the ceiling-coordinate error envelope
@@ -9,6 +11,8 @@ nonnegativity and antitonicity of `Λ₀` imply antitonicity of `E_N`.
 The final theorem supplies this fact to the `hError` slot of the natural-ceiling
 coordinate bridge from `SuzukiLemma144Equation1410`.
 -/
+
+@[expose] public section
 
 open Set
 

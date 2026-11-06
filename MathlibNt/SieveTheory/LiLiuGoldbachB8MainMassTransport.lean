@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
-import MathlibNt.SieveTheory.LiuWeightMainSum
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB8FibreSieve
+public import MathlibNt.SieveTheory.LiuWeightMainSum
+
+@[expose] public section
 
 open scoped BigOperators
 open Filter Finset

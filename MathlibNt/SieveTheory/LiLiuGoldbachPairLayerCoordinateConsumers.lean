@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPairLayerCoordinate
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairLayerCoordinate
+
+@[expose] public section
 
 open Filter
 

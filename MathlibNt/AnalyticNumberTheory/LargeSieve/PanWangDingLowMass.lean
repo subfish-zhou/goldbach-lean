@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowCarrierCorrection
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowCarrierCorrection
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Classical Finset Filter

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1056ScalarAbsorption
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiQuantitativeDerivatives
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMinusFirstCrossingProducer
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiEquation1056ScalarAbsorption
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCanonicalXiQuantitativeDerivatives
+
+@[expose] public section
 
 open Set Filter Topology MeasureTheory intervalIntegral
 open scoped Interval

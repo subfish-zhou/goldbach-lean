@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationPrimitives
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12EvaluationPrimitives
+@[expose] public section
+
 noncomputable section
 open MeasureTheory Set
 open scoped Interval

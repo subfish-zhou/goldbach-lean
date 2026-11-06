@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFRemainder
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleWFRemainder
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset G12RectangleWF

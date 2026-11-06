@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryZeroModeBound
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvrySmallDeltaPayment
 
 /-!
 # Family-uniform logarithmic payment of the complete zero-mode difference
@@ -9,6 +11,8 @@ condition. Constants precede all family members, supports, scales, modulus
 weights and integer residues. The lcm-weight estimate leaves no gcd range
 unpaid in W zero minus U zero. Nonzero W frequencies are not estimated here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGridLimit
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10LogGridLimit
+
+@[expose] public section
 
 open scoped BigOperators
 

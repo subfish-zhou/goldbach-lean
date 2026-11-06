@@ -1,5 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Tactic
+
+@[expose] public section
 
 open scoped BigOperators
 

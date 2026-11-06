@@ -1,6 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Topology.Instances.AddCircle.Real
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Topology.Instances.AddCircle.Real
+public import Mathlib.Tactic
 
 /-! # AnalyticNumberTheory.LargeSieve.Additive
 
@@ -39,6 +41,8 @@ References:
   - Iwaniec & Kowalski, "Analytic Number Theory" (2004), Ch. 7
   - Halberstam & Richert, "Sieve Methods" (1974), Ch. 9-10
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

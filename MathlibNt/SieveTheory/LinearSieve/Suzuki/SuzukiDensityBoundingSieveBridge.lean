@@ -1,10 +1,12 @@
-import AnalyticNumberTheory.Sieve.LinearSieve
+module
+
+public import AnalyticNumberTheory.Sieve.LinearSieve
 /-
 Copyright (c) 2026.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Nous Research
 -/
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147ContinuousLowerFactor
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma147ContinuousLowerFactor
 
 /-!
 # Exact finite bridge from Suzuki densities to `BoundingSieve`
@@ -13,6 +15,8 @@ This module identifies the finite carriers and products used on the Suzuki side
 with the corresponding Jurkat--Richert `BoundingSieve` objects.  No analytic
 estimate or limiting argument enters these identities.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

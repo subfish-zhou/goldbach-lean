@@ -13,7 +13,11 @@ strict integral inequalities.
 parity sum; Suzuki uses `T_N(D,z)` in Lemma 14.4 but reserves the displayed
 Section 9 notation for its continuous counterpart.
 -/
-import MathlibNt.SieveTheory.LowerSuzukiDiscreteBridge
+module
+
+public import MathlibNt.SieveTheory.LowerSuzukiDiscreteBridge
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

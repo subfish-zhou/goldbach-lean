@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
-import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuLogCoordinates
+public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
+
+@[expose] public section
 
 open MeasureTheory Set Finset
 open scoped BigOperators Interval NNReal

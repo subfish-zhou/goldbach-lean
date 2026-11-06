@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim1413Internal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISuccessor
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim1413Internal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseISuccessor
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

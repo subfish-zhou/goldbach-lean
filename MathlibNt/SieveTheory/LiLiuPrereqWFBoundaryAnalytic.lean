@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFCollisionAnalytic
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCollisionAnalytic
 
 /-!
 # Analytic boundary windows
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqWFCollisionAnalytic
 Closed lower and strict upper logarithmic windows are estimated directly
 from the original dimension-one product hypothesis.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

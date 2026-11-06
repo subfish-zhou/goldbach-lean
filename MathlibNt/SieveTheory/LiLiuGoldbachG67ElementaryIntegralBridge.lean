@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67ElementaryIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67ElementaryIntegral
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Interval

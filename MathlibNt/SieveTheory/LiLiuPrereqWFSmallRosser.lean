@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
-import MathlibNt.SieveTheory.LiLiuPrereqWFGeometricBoxes
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
+public import MathlibNt.SieveTheory.LiLiuPrereqWFGeometricBoxes
 
 /-!
 # Concrete lower and upper small-prime Rosser weights
@@ -15,6 +17,8 @@ small sieve prime product. The finite cancellation argument is independent
 of the density assertion in that lemma. No density or asymptotic estimate
 is asserted here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 
@@ -50,7 +54,7 @@ theorem lowerWeight_eq_producer (M : ℕ) (L : ℝ) :
 theorem lowerWeight_active {M n : ℕ} {L : ℝ} (h : lowerWeight M L n ≠ 0) :
     n ∈ M.divisors ∧ (n : ℝ) < L ∧ LowerAdmissibleSet L n.primeFactors := by
   by_contra hn
-  rw [lowerWeight_apply, if_neg hn] at h
+  rw [lowerWeight_apply, ite_eq_right hn] at h
   exact h rfl
 
 theorem lowerWeight_boundedOne (M : ℕ) (L : ℝ) : BoundedOne (lowerWeight M L) := by
@@ -310,7 +314,7 @@ theorem upperWeight_eq_producer (M : ℕ) (L : ℝ) :
 theorem upperWeight_active {M n : ℕ} {L : ℝ} (h : upperWeight M L n ≠ 0) :
     n ∈ M.divisors ∧ (n : ℝ) < L ∧ UpperAdmissibleSet L n.primeFactors := by
   by_contra hn
-  rw [upperWeight_apply, if_neg hn] at h
+  rw [upperWeight_apply, ite_eq_right hn] at h
   exact h rfl
 
 theorem upperWeight_boundedOne (M : ℕ) (L : ℝ) : BoundedOne (upperWeight M L) := by

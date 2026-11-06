@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFrequencyBlocks
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFrequencyBlocks
 
 /-!
 # The genuine full-level modulus carrier
@@ -8,6 +10,8 @@ mask is absorbed into a well-factorable coefficient. The inner factor has
 an exact floor interval and explicitly retained arithmetic restrictions;
 the filtered fiber is not asserted to be an unweighted interval.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

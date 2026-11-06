@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleCorrectionBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12FlexibleCorrectionBudget
+@[expose] public section
+
 noncomputable section
 open Classical Finset
 open scoped BigOperators

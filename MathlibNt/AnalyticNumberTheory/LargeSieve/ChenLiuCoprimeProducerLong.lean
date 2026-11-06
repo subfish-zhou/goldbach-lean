@@ -1,6 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerShort
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingTheoremADyadicCoverage
-import Mathlib.Analysis.SpecialFunctions.Log.Base
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducerShort
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingTheoremADyadicCoverage
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 /-!
 # Pan's long-polynomial primitive mean
@@ -10,6 +12,8 @@ sharp primitive large sieve to complete dyadic polynomials, then sum the
 long-polynomial blocks. The source polynomial is never split into absolute
 values of individual source coefficients.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Complex Finset Filter

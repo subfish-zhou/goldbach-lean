@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNT
-import Mathlib.NumberTheory.AbelSummation
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqBuchstabPNT
+public import Mathlib.NumberTheory.AbelSummation
 
 /-!
 # Abel summation and elementary weighted sums over actual primes
@@ -12,6 +14,8 @@ The finite tails of `1 / (p log p)` are bounded by `4 / log a` or
 `2 b² / log² b`. These estimates use the imported actual PNT, not
 prime-distribution hypotheses supplied to the sum theorems.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -232,7 +236,7 @@ theorem sum_primesIcc_eq_sum_primesIoc_add {y b : ℝ} (hb : 0 ≤ b) (f : ℝ �
       intro h
       have hlt := ((mem_primesIoc hb).1 h).2.1
       simp [hpy] at hlt
-    rw [if_pos ⟨p, hp, hpy⟩, hs, Finset.sum_insert hn, hpy, add_comm]
+    rw [ite_eq_left ⟨p, hp, hpy⟩, hs, Finset.sum_insert hn, hpy, add_comm]
   · have hs : primesIcc y b = primesIoc y b := by
       ext p
       rw [mem_primesIcc hb, mem_primesIoc hb]
@@ -243,7 +247,7 @@ theorem sum_primesIcc_eq_sum_primesIoc_add {y b : ℝ} (hb : 0 ≤ b) (f : ℝ �
         exact he ⟨p, (mem_primesIcc hb).2 hp, hyp.symm⟩
       · intro hp
         exact ⟨hp.1, hp.2.1.le, hp.2.2⟩
-    rw [if_neg he, hs, add_zero]
+    rw [ite_eq_right he, hs, add_zero]
 
 /-- (E), with both endpoints included and an explicit absolute constant. -/
 theorem sum_primesIcc_inv_mul_log_le {y b : ℝ}

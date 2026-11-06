@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryArithmeticPoisson
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryArithmeticPoisson
 
 /-!
 # A common smooth main term for the signed U and V dispersion sums
@@ -9,6 +11,8 @@ errors are bounded by explicit coefficient envelopes, with constants chosen
 before the scale, supports, coefficients, moduli, and residue. No growth bound
 for those envelopes and no well-factorability hypothesis is asserted here.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
@@ -253,7 +257,7 @@ theorem dispersionV_smooth_uniform_error :
         intro n _
         by_cases hn : n.Coprime q
         · simp only [Nat.Coprime] at hn ⊢
-          simp only [hn, true_and, if_true]
+          simp only [hn, true_and, ite_true]
           rw [← mul_sub, abs_mul]
           calc
             _ ≤ |β n| * (C * (r.divisors.card : ℝ)) :=

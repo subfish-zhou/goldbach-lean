@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10MainWeight
+
+@[expose] public section
 
 open scoped BigOperators
 open MathlibNt.SieveTheory.LiuWeight

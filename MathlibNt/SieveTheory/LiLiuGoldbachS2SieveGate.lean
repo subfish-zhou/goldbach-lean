@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+
+@[expose] public section
 
 open Finset
 
@@ -35,6 +39,6 @@ theorem goldbachS2_gated_sum_eq_sum
     ∑ r ∈ goldbachS2Primes N ((N : ℝ) ^ ((9 : ℝ) / 19 - ε)), w r := by
   apply Finset.sum_congr rfl
   intro r hr
-  rw [if_pos (goldbachS2_sieveDivisor_coprime N hN hεu hr hZ hd)]
+  rw [ite_eq_left (goldbachS2_sieveDivisor_coprime N hN hεu hr hZ hd)]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

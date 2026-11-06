@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorExtraction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorExtraction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryFactorHighOmegaReduction
 
 /-!
 # Canonical divisor extraction in the actual delayed W
@@ -9,6 +11,8 @@ The explicit finite target retains the original support, compatibility, mask,
 low omega of `s`, signed first coefficient, and exactly the same cutoff `H`.
 This is a finite preprocessing identity, not (3.12) or an IV.3 estimate.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

@@ -1,8 +1,12 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPrimePrefix
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PanWangDingLowPrimePrefix
 
 /-! The nonprincipal carrier required by the first line of Pan (2.4), and the
 literal bad-prime correction used in (2.12).  The existing `panIymLow` is not
 changed and is not asserted to be small. -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanLow
 open Classical Finset Filter
 open scoped BigOperators Topology
@@ -71,13 +75,13 @@ theorem primePrefix_sub_coprimePrimePrefix {q : ℕ}
   apply sum_congr rfl
   intro n _
   by_cases hp : n.Prime
-  · rw [if_pos hp]
+  · rw [ite_eq_left hp]
     by_cases hc : n.Coprime m
-    · rw [if_pos ⟨hp, hc⟩, if_neg (by tauto : ¬ (n.Prime ∧ ¬ n.Coprime m))]
+    · rw [ite_eq_left ⟨hp, hc⟩, ite_eq_right (by tauto : ¬ (n.Prime ∧ ¬ n.Coprime m))]
       exact sub_self _
-    · rw [if_neg (by tauto : ¬ (n.Prime ∧ n.Coprime m)), if_pos ⟨hp, hc⟩, sub_zero]
-  · rw [if_neg hp, if_neg (by tauto : ¬ (n.Prime ∧ n.Coprime m)),
-      if_neg (by tauto : ¬ (n.Prime ∧ ¬ n.Coprime m)), sub_self]
+    · rw [ite_eq_right (by tauto : ¬ (n.Prime ∧ n.Coprime m)), ite_eq_left ⟨hp, hc⟩, sub_zero]
+  · rw [ite_eq_right hp, ite_eq_right (by tauto : ¬ (n.Prime ∧ n.Coprime m)),
+      ite_eq_right (by tauto : ¬ (n.Prime ∧ ¬ n.Coprime m)), sub_self]
 
 /-- Uniform bad-prime bound by omega(m).  The positive-m hypothesis is essential. -/
 theorem norm_primePrefix_sub_coprimePrimePrefix_le {q : ℕ}

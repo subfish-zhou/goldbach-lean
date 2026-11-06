@@ -1,10 +1,13 @@
-import AnalyticNumberTheory.Mertens.Theorems
-import AnalyticNumberTheory.Sieve.GoldbachDensity
-import AnalyticNumberTheory.Sieve.SelbergUpperBound
-import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
-import Mathlib.Data.Finset.NatDivisors
-import Mathlib.NumberTheory.SmoothNumbers
-import Mathlib.RingTheory.Radical.NatInt
+module
+
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import AnalyticNumberTheory.Mertens.Theorems
+public import AnalyticNumberTheory.Sieve.GoldbachDensity
+public import AnalyticNumberTheory.Sieve.SelbergUpperBound
+public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
+public import Mathlib.Data.Finset.NatDivisors
+public import Mathlib.NumberTheory.SmoothNumbers
+public import Mathlib.RingTheory.Radical.NatInt
 
 /-!
 # The Jurkat--Richert 1965 `gamma(p) = 1`, `q = 1` specialization
@@ -24,6 +27,8 @@ coefficient machinery at `1 / p`; no identification with the concrete count
 expansion is asserted.  The algebraic comparison and terminal lemmas isolate
 two further finite steps needed by the source proof.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ArithmeticFunction.zeta ArithmeticFunction.Moebius
 
@@ -1350,7 +1355,7 @@ theorem siftedCount_literalQuotientCarrier_eq_divisibilityFiber
       (Finset.mem_filter.mp ha).1 (Finset.mem_filter.mp hb).1 hab
 
 /-- A product of distinct primes is squarefree. -/
-private theorem squarefree_prod_of_primes
+theorem squarefree_prod_of_primes
     {s : Finset ℕ} (hs : ∀ p ∈ s, p.Prime) :
     Squarefree (s.prod id) := by
   refine Finset.squarefree_prod_of_pairwise_isCoprime
@@ -1409,7 +1414,7 @@ theorem natReciprocalMonoidHom_apply (n : ℕ) :
     natReciprocalMonoidHom n = 1 / (n : ℝ) := by
   simp [natReciprocalMonoidHom, one_div]
 
-private theorem dvd_of_radical_eq
+theorem dvd_of_radical_eq
     {n q : ℕ}
     (h : UniqueFactorizationMonoid.radical n = q) :
     q ∣ n := by
@@ -1562,7 +1567,7 @@ noncomputable def RegularSource.boundingSieve
   nu := (ζ : ArithmeticFunction ℝ).pdiv .id
   nu_mult := by arith_mult
   nu_pos_of_prime := fun p hp _ => by
-    simp [if_neg hp.ne_zero, Nat.pos_of_ne_zero hp.ne_zero]
+    simp [ite_eq_right hp.ne_zero, Nat.pos_of_ne_zero hp.ne_zero]
   nu_lt_one_of_prime := fun p hp _ => by
     simp only [ArithmeticFunction.pdiv_apply,
       ArithmeticFunction.natCoe_apply, ArithmeticFunction.zeta_apply,
@@ -1905,7 +1910,7 @@ theorem sieveProduct_exp_two_le_of_log_le_two
       ⟨hpData.1, hpData.2.1.trans_le hzExp,
         fun hp1 => hpData.1.ne_one (Nat.dvd_one.mp hp1)⟩
   unfold sieveProduct
-  apply Finset.prod_le_prod_of_subset_of_le_one hsubset
+  apply Finset.prod_le_prod_of_subset_of_le_one₀ hsubset
   · intro p hp
     have hpPrime := (mem_siftingPrimes.mp hp).1
     have hpReal : (1 : ℝ) < p := by exact_mod_cast hpPrime.one_lt
@@ -2748,10 +2753,10 @@ theorem reciprocalTotientSum_coprime_mul_decomposition
       have hcut : m ≤ xi / t ↔ m * t ≤ xi :=
         Nat.le_div_iff_mul_le htPos
       by_cases h : m * t ≤ xi
-      · rw [if_pos h, if_pos (hcut.mpr h), Nat.totient_mul hmt]
+      · rw [ite_eq_left h, ite_eq_left (hcut.mpr h), Nat.totient_mul hmt]
         push_cast
         ring
-      · rw [if_neg h, if_neg (fun hmLe => h (hcut.mp hmLe))]
+      · rw [ite_eq_right h, ite_eq_right (fun hmLe => h (hcut.mp hmLe))]
 
 /-- Reciprocal totient as an arithmetic function, used only to evaluate the
 finite divisor packet in Lemma 3.1. -/
@@ -3096,7 +3101,7 @@ theorem RegularSource.levelSelbergWeight_eq_printed
     apply Finset.sum_congr rfl
     intro e he
     by_cases hde : d ∣ e
-    · rw [if_pos hde, if_pos hde,
+    · rw [ite_eq_left hde, ite_eq_left hde,
         LiuWeight.truncatedSelbergOptimalX]
       have heMem :
           e ∈ LiuWeight.truncatedSelbergCarrier
@@ -3104,7 +3109,7 @@ theorem RegularSource.levelSelbergWeight_eq_printed
         simpa [LiuWeight.truncatedSelbergCarrier,
           selbergReciprocalTotientCarrier,
           RegularSource.boundingSieve] using he
-      rw [if_pos heMem]
+      rw [ite_eq_left heMem]
       have heDiv : e ∣ (siftingPrimes source.k z).prod id :=
         (Nat.mem_divisors.mp (Finset.mem_filter.mp he).1).1
       rw [source.boundingSieve_selbergTerm_of_dvd z heDiv]
@@ -3119,7 +3124,7 @@ theorem RegularSource.levelSelbergWeight_eq_printed
       ring
     · simp [hde]
   rw [RegularSource.levelSelbergWeight,
-    LiuWeight.truncatedSelbergOptimalLambda, if_pos hdMem, hsum,
+    LiuWeight.truncatedSelbergOptimalLambda, ite_eq_left hdMem, hsum,
     source.boundingSieve_nu_apply z hdPos]
   field_simp
 
@@ -3320,7 +3325,7 @@ theorem RegularSource.levelSelbergLambdaSquared_support
   apply Finset.sum_eq_zero
   intro d2 hd2
   by_cases heq : d = Nat.lcm d1 d2
-  · rw [if_pos heq]
+  · rw [ite_eq_left heq]
     by_cases h1 : source.levelSelbergWeight z xi d1 = 0
     · simp [h1]
     by_cases h2 : source.levelSelbergWeight z xi d2 = 0
@@ -3654,7 +3659,7 @@ theorem selbergEulerProduct_le_exp_four_mul
         (1 - (p : ℝ) ^ (-sigma))⁻¹) ≤
         ∏ p ∈ siftingPrimes 1 z,
           Real.exp (4 * (p : ℝ) ^ (-sigma)) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p hp
         exact inv_nonneg.mpr (sub_nonneg.mpr (by
           have := hsmall p hp

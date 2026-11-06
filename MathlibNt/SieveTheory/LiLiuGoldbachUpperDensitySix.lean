@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.SuzukiUpperRosserDensityEndpointDirect
-import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+module
+
+public import MathlibNt.SieveTheory.SuzukiUpperRosserDensityEndpointDirect
+public import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+
+@[expose] public section
 
 open Set Filter Topology
 open MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers

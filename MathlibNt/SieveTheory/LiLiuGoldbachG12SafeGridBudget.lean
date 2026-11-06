@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ScaledNormalized
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ScaledNormalized
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

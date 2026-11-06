@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceDomain
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceDomain
 
 /-!
 # Paying the actual occupied zero fibers by their divisor encoding
@@ -7,6 +9,8 @@ The divisor variables are `(n₂,s)`; cancellation determines the signed `h'`.
 The coefficient-dependent majorant preserves both original beta/zeta factors.
 The k payment is only `2^(j 1)`, obtained from the actual interval.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpGeometry
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SharpGeometry
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical Finset LiLiuPrereqBuchstab

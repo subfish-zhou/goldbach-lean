@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryBetaCleanPayment
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWTailBound
 
 /-!
 # Full-tail payment at the constructed cutoff
@@ -8,6 +10,8 @@ The cutoff is always `wUniformCutoff M (x ^ η)`. The rapid-decay order is
 chosen only in the proof, never by changing this cutoff. The estimate holds
 for every arithmetic mask, signed weights, and residue, with no SW input.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -34,9 +38,9 @@ theorem smoothWNonzeroMode_sub_truncated_eq_full_tail
   apply sum_congr rfl
   intro n₂ _
   by_cases hc : WCompatible q r n₁ n₂
-  · simp only [if_pos hc, wTupleCoefficient, Complex.sub_re]
+  · simp only [ite_eq_left hc, wTupleCoefficient, Complex.sub_re]
     ring
-  · simp only [if_neg hc, sub_self]
+  · simp only [ite_eq_right hc, sub_self]
 
 /-- Uniform alpha-squared logarithmic payment of the actual masked tail.
 All divisor orders may be zero. No relation between `M` and the supports is

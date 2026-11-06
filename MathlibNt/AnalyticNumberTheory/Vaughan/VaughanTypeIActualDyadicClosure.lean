@@ -1,10 +1,14 @@
 
 
-import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectL1Physical
 
 /-!
  # Unconditional closure of the actual dyadic Vaughan Type-I input
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

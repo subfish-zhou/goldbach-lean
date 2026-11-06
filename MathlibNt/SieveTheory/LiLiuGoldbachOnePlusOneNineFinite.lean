@@ -1,9 +1,11 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Data.Nat.Factors
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.SplitIfs
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Data.Nat.Factors
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.SplitIfs
 
 /-!
 # Li--Liu's literal `1 + 1.9` count and actual finite Goldbachbasic bridge
@@ -18,6 +20,8 @@ In particular, this is not an encoding by an unrestricted almost-prime
 predicate.  The witnesses `r` and `q`, their primality conditions, and the
 size relation all remain literal.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 
@@ -183,7 +187,7 @@ theorem goldbachBasicWeight_le_one (zAlpha zTau n : ℕ) :
   by_cases h3 : OmegaAtLeast 3 n
   · have h2 : OmegaAtLeast 2 n := by unfold OmegaAtLeast at *; omega
     simp [goldbachBasicWeight, h3, h2]
-  · simp only [goldbachBasicWeight, h3, and_false, if_false, add_zero, sub_zero]
+  · simp only [goldbachBasicWeight, h3, and_false, ite_false, add_zero, sub_zero]
     split_ifs <;> omega
 
 /-- Uniform scalar absorption. The cutoff depends only on ε, and is chosen
@@ -275,7 +279,7 @@ theorem goldbachBasic_pointwise_of_growth {N p : ℕ} {ε α : ℝ}
       · refine ⟨r, q, Or.inr hr, hq, ?_, ?_⟩
         · omega
         · exact oneNine_power_bound hε hnreal hscale hr.pos heq hcut
-    simpa only [if_pos hrep] using
+    simpa only [ite_eq_left hrep] using
       goldbachBasicWeight_le_one (goldbachPowerCutoff N α)
         (goldbachPowerCutoff N ((9 : ℝ) / 19 - ε)) (N - p)
   · have hw' : goldbachBasicWeight (goldbachPowerCutoff N α)

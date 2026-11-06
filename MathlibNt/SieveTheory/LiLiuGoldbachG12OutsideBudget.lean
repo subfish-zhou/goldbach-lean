@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
-import MathlibNt.SieveTheory.LiLiuFouvryG9ExternalExceptional
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RectangleWFSmall
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ExternalExceptional
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

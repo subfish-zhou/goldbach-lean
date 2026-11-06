@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectLocalScaleFrequency
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregateBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryDirectLocalScaleFrequency
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramAggregateBound
 
 /-!
 # Reciprocal normalization, keeping the long interval term
@@ -8,6 +10,8 @@ Exact local algebra precedes any global enlargement. The last theorem is
 explicitly conditional only on numeric outer-mass and energy estimates;
 it is not a claimed proof of C.2, nor a new cancellation hypothesis.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

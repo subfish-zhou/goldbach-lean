@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.RosserChains
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.RosserChains
 
 /-!
 # Finite upper Rosser density and certificates
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LinearSieve.RosserChains
 Logarithmic realization of discrete chains, fixed-depth density recursions,
 Euler-normalized boundary identities, and upper weight certificates.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LinearSieve
 
@@ -489,7 +493,7 @@ theorem upperRosserBoundaryChainsFixedDepthDensity_zero
     ext l
     rw [Finset.mem_filter]
     by_cases hcube : D ≤ q ^ 3
-    · rw [if_pos hcube]
+    · rw [ite_eq_left hcube]
       constructor
       · rintro ⟨hl, hlen⟩
         have : l = [] := List.eq_nil_of_length_eq_zero (by simpa using hlen)
@@ -500,15 +504,11 @@ theorem upperRosserBoundaryChainsFixedDepthDensity_zero
         subst l
         refine ⟨(mem_upperRosserBoundaryChains_iff hqs hqprime hqmin).2 ?_,
           by simp⟩
-        refine ⟨by simp, ?_, by simp, ?_⟩
-        · intro i
-          exact Fin.elim0 i
-        · refine ⟨?_, by simp, by simpa using hD, ?_, by simpa using hcube⟩
-          · intro i
-            exact Fin.elim0 i
-          · intro i
-            exact Fin.elim0 i
-    · rw [if_neg hcube]
+        refine ⟨by simp, List.sortedGT_nil, by simp, ?_⟩
+        refine ⟨List.sortedGT_nil, by simp, by simpa using hD, ?_, by simpa using hcube⟩
+        intro i
+        exact Fin.elim0 i
+    · rw [ite_eq_right hcube]
       constructor
       · rintro ⟨hl, hlen⟩
         have : l = [] := List.eq_nil_of_length_eq_zero (by simpa using hlen)
@@ -1045,7 +1045,7 @@ theorem upperRosserWeight_certificate {P D : ℕ} (hP : Squarefree P)
   · subst n
     simp [upperRosserWeight, UpperRosserAdmissible,
       UpperRosserAdmissibleSet, hP0, hD1]
-  · rw [if_neg hn1]
+  · rw [ite_eq_right hn1]
     have hnFactors : n.primeFactors.Nonempty := by
       rw [Finset.nonempty_iff_ne_empty]
       intro hempty

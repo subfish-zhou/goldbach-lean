@@ -1,8 +1,10 @@
-import MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics
-import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965Section13HatSource
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenVaryingFamilyLowerDensity
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserDensityEndpointDirect
-import MathlibNt.SieveTheory.Distribution.Bombieri1965RichertWeightedConsumer
+module
+
+public import MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics
+public import MathlibNt.SieveTheory.LinearSieve.JurkatRichert.JurkatRichert1965Section13HatSource
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiChenVaryingFamilyLowerDensity
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiUpperRosserDensityEndpointDirect
+public import MathlibNt.SieveTheory.Distribution.Bombieri1965RichertWeightedConsumer
 
 /-!
 # The actual Chen--Richert consumer with its sieve inputs discharged
@@ -19,6 +21,8 @@ it is not attributed to the literal 1965 Theorem 5. The public endpoints
 below concern the actual Chen sources and carry no imported sieve or
 distribution premise.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology

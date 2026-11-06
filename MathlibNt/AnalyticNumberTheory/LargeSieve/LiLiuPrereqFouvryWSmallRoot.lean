@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCDReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWGCDReindex
 
 /-!
 # The small-modulus root of the W phase
@@ -8,6 +10,8 @@ The large CRT residue may be replaced, modulo `D`, by the CRT on the two
 small moduli. The resulting root phase is constant on explicit congruence
 classes; no equality of chosen integer representatives is asserted.
 -/
+
+@[expose] public section
 
 noncomputable section
 

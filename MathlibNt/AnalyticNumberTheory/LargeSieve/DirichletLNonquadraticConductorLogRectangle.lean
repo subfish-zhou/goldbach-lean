@@ -1,3 +1,5 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLNonquadraticConductorLogRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLNonquadraticConductorLogRectangle
 
 /-! Compatibility import for the canonical module in its current library location. -/

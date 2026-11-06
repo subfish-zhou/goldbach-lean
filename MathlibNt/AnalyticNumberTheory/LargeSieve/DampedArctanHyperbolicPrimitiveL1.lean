@@ -1,8 +1,10 @@
 
 
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanPerronKernel
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedPerronMajorantIntegral
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanRankOneSeparation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanPerronKernel
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedPerronMajorantIntegral
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DampedArctanRankOneSeparation
 
 /-!
  # Damped-arctangent rectangular hyperbolic primitive means
@@ -12,6 +14,8 @@ quantitative endpoints.  It combines the exact `Ioi` damped Perron formula,
 the finite two-term rank-one separation, the weighted rectangular primitive
 large sieve, and the explicit damped-majorant integral.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -389,9 +393,9 @@ theorem rectangularSharpHyperbolicCharacterSum_norm_le_smoothed
               (Real.log (MathlibNt.SieveTheory.LiuWeight.liuPanPerronHalfStep Y /
                 ((m * n : ℤ) : ℝ)))| := by
       by_cases hcut : m * n ≤ (Y : ℤ)
-      · simp only [if_pos hcut, ← Complex.ofReal_one, ← Complex.ofReal_sub,
+      · simp only [ite_eq_left hcut, ← Complex.ofReal_one, ← Complex.ofReal_sub,
           Complex.norm_real, Real.norm_eq_abs]
-      · simp only [if_neg hcut, ← Complex.ofReal_zero, ← Complex.ofReal_sub,
+      · simp only [ite_eq_right hcut, ← Complex.ofReal_zero, ← Complex.ofReal_sub,
           Complex.norm_real, Real.norm_eq_abs]
     calc
       ‖a m‖ * ‖b n‖ * ‖χ.1 ((m * n : ℤ) : ZMod q)‖ *

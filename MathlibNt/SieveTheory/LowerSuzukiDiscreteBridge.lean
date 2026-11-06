@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
-import MathlibNt.SieveTheory.LinearSieve.RosserChains
+module
+
+public import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
+public import MathlibNt.SieveTheory.LinearSieve.RosserChains
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

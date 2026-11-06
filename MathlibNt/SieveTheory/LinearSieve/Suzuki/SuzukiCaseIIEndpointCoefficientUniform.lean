@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIPositiveEndpointPacket
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma132SlackFinal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseIIPositiveEndpointPacket
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set
@@ -46,10 +50,10 @@ theorem caseII_endpoint_source_layers_uniform
     have hNmod : N % 2 = 1 := Nat.odd_iff.mp hN
     have hpredmod : (N - 1) % 2 = 0 := by omega
     have h3dom : (3 : ℝ) ∈ KappaOneModel.parityDomain 2 N := by
-      rw [KappaOneModel.parityDomain, if_pos hNmod]
+      rw [KappaOneModel.parityDomain, ite_eq_left hNmod]
       norm_num
     have h2dom : (2 : ℝ) ∈ KappaOneModel.parityDomain 2 (N - 1) := by
-      rw [KappaOneModel.parityDomain, if_neg (by omega : (N - 1) % 2 ≠ 1)]
+      rw [KappaOneModel.parityDomain, ite_eq_right (by omega : (N - 1) % 2 ≠ 1)]
       norm_num
     have h3 := hfinite N 3 (by omega) (by norm_num) h3dom
     have h2 := hfinite (N - 1) 2 (by omega) (by norm_num) h2dom

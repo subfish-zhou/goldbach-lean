@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairContinuation
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterPairContinuation
 
 /-!
 # The harmonic tail of the genuine character pair
@@ -7,6 +9,8 @@ This modern partial-summation argument combines square-root cancellation with
 the proved Mellin continuation. The constant in the harmonic approximation
 is the actual product of L-values at one.
 -/
+
+@[expose] public section
 
 open Complex Finset Filter MeasureTheory Set
 open scoped Topology

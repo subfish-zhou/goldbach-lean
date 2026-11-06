@@ -1,6 +1,10 @@
-import Mathlib.Data.Finset.Interval
-import Mathlib.Algebra.BigOperators.Group.Finset.Interval
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Finset.Interval
+public import Mathlib.Algebra.BigOperators.Group.Finset.Interval
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LinearSieve
 

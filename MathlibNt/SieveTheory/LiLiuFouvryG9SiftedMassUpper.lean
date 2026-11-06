@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9EulerEventual
-import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9EulerEventual
+public import MathlibNt.SieveTheory.LiLiuFouvryG9BaseEuler
+
+@[expose] public section
 
 noncomputable section
 open Finset

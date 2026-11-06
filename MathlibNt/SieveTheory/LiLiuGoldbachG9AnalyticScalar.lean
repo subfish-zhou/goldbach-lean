@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG9AnalyticLogBounds
+
+@[expose] public section
 
 open Finset
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig.G9Analytic

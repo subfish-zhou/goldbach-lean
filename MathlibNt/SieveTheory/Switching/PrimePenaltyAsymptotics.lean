@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.Switching.RosserSieveAsymptotics
+module
+
+public import MathlibNt.SieveTheory.Switching.RosserSieveAsymptotics
 
 /-!
 # Varying-prime asymptotics and q¹ penalty distribution
@@ -9,6 +11,8 @@ double Möbius identities retain the separate, explicit aggregate-error hypothes
 
 All declarations retain the `MathlibNt.SieveTheory.SwitchingPrinciple` namespace.
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.Moebius
 open scoped ArithmeticFunction.zeta

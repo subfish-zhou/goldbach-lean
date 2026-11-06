@@ -1,10 +1,12 @@
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.UniqueFactorizationDomain.Multiplicity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Multiplicity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-!
 # Nonvanishing of the Stepanov auxiliary polynomial
@@ -16,6 +18,8 @@ The argument is the first half of printed page 11 of Gergely Harcos,
 The nonsquare hypothesis is geometric: it concerns the polynomial after
 base change to the algebraic closure, not just squares over the finite field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

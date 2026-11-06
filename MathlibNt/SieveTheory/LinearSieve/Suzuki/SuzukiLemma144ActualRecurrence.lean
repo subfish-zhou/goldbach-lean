@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
 
 /-!
 # Suzuki Lemma 14.4: the actual discrete recurrence and (14.9)
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiVnSemanticResolution
 This file works with the source-faithful natural-valued layers `suzukiSourceV`.
 The quotient in every recursive layer is therefore literally `D ⌈/⌉ p`.
 -/
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuPanBoundedPrincipal
-import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
-import MathlibNt.SieveTheory.LiuPanUnweightedUnconditional
+module
+
+public import MathlibNt.SieveTheory.LiLiuPanBoundedPrincipal
+public import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+public import MathlibNt.SieveTheory.LiuPanUnweightedUnconditional
+
+@[expose] public section
 
 noncomputable section
 

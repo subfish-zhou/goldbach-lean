@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
-import MathlibNt.SieveTheory.LiLiuGoldbachQuadrupleExceptionBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12RoughConnection
+public import MathlibNt.SieveTheory.LiLiuGoldbachQuadrupleExceptionBudget
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

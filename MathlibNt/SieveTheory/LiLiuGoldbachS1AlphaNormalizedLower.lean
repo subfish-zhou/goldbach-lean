@@ -1,9 +1,13 @@
-import Mathlib.Order.Filter.AtTopBot.Basic
-import MathlibNt.Analysis.SieveNormalization
-import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix
-import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
-import MathlibNt.SieveTheory.LiLiuGoldbachS1PaidLower
+module
+
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import MathlibNt.Analysis.SieveNormalization
+public import MathlibNt.SieveTheory.Arithmetic.LiuLogScaleAbsorption
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LowerDensitySix
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1MainScale
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1PaidLower
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

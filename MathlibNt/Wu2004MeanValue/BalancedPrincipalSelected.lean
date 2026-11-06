@@ -1,5 +1,7 @@
-import MathlibNt.Wu2004MeanValue.BalancedPrincipal
-import MathlibNt.Wu2004MeanValue.ActualAP
+module
+
+public import MathlibNt.Wu2004MeanValue.BalancedPrincipal
+public import MathlibNt.Wu2004MeanValue.ActualAP
 
 /-!
 # Modulus-selected balanced principal errors
@@ -7,6 +9,8 @@ import MathlibNt.Wu2004MeanValue.ActualAP
 The support may be selected separately for every modulus. In particular,
 the cofactor coprimality mask is applied before the inner absolute value.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 

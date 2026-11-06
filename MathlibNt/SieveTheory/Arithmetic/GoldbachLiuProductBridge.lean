@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiuSingularSeries
-import MathlibNt.SieveTheory.MertensTheorem
+module
+
+public import MathlibNt.SieveTheory.LiuSingularSeries
+public import MathlibNt.SieveTheory.MertensTheorem
 
 /-!
 # Exact Goldbach product bridge in Liu's normalization
@@ -15,6 +17,8 @@ bound is shared by the `S1` lower and `B10` upper estimates.  No infinite-series
 approximation is made here: each consumer separately controls the difference
 between the actual finite truncation and the full Liu singular series.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.GoldbachLiuProductBridge
 

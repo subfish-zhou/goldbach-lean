@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterConvolution
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
+module
+
+public import MathlibNt.AnalyticNumberTheory.Siegel.Bombieri1965Theorem4TwoCharacterConvolution
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticValueAtOnePositive
 
 /-!
 # Two-character induction with the missing Euler factors retained
@@ -8,6 +10,8 @@ This modern reduction uses a common multiple of the two levels, not a
 coprimality assumption. The product character need not be primitive.
 All three finite Euler products remain in the analytic identity.
 -/
+
+@[expose] public section
 
 open Complex Finset
 
@@ -74,7 +78,7 @@ theorem norm_inductionEulerProduct_le
     ‖inductionEulerProduct χ Q (β : ℂ)‖ ≤
       ∏ p ∈ Q.primeFactors, (1 + (p : ℝ) ^ (-β)) := by
   rw [inductionEulerProduct, norm_prod]
-  apply prod_le_prod (fun _ _ => norm_nonneg _)
+  apply prod_le_prod₀ (fun _ _ => norm_nonneg _)
   intro p _
   exact (norm_sub_le _ _).trans (by
     simpa using add_le_add_left (norm_character_prime_cpow_le χ p β) 1)
@@ -91,7 +95,7 @@ theorem prod_one_sub_rpow_le_norm_inductionEulerProduct
     (∏ p ∈ Q.primeFactors, (1 - (p : ℝ) ^ (-β))) ≤
       ‖inductionEulerProduct χ Q (β : ℂ)‖ := by
   rw [inductionEulerProduct, norm_prod]
-  apply prod_le_prod
+  apply prod_le_prod₀
     (fun p hp => sub_nonneg.mpr
       (prime_rpow_neg_lt_one (Nat.prime_of_mem_primeFactors hp) hβ).le)
   intro p _

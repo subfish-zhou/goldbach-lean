@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLiteralAllDepthLowerRosserExact
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLiteralAllDepthLowerRosserExact
+
+@[expose] public section
 
 open scoped Classical BigOperators Interval
 open Finset MeasureTheory Set

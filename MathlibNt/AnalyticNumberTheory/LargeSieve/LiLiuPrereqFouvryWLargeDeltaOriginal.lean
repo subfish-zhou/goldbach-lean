@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryWLargeGCDOriginal
 
 /-!
 # Large common modulus in the original W progression sum
@@ -7,6 +9,8 @@ Compatibility is retained until the common modulus has become a divisor
 of the beta difference. The diagonal is separated before this divisor set
 is formed. All additional arithmetic masks and signed weights are allowed.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -105,7 +109,7 @@ theorem sum_cutoff_largeDeltaWitness_le {M Y : ℝ} (hM : 1 ≤ M) (hY : 0 < Y)
           (fun e _ ↦ by split_ifs <;>
             first | rfl | exact scaledDyadicCutoff_nonneg M m)
           (mem_filter.mpr ⟨hd, hYd, hnd⟩)
-        simpa only [if_pos hmd] using hs
+        simpa only [ite_eq_left hmd] using hs
       · exact sum_nonneg (fun d _ ↦ by
           split_ifs <;> first | rfl | exact scaledDyadicCutoff_nonneg M m)
     _ = ∑ d ∈ D, ∑ m ∈ dyadicCutoffNatSupport M,
@@ -169,9 +173,9 @@ theorem wMaskedOriginal_abs_le_largeDelta_modulus_sums
       intro m _
       by_cases hm : Int.ModEq t.1.1 ((m : ℤ) * t.2.1) a ∧
           Int.ModEq t.1.2 ((m : ℤ) * t.2.2) a
-      · simp only [if_pos hm, if_pos (wLargeDeltaWitness_of_compatible
+      · simp only [ite_eq_left hm, ite_eq_left (wLargeDeltaWitness_of_compatible
           (mem_filter.mp ho).2 (hP t ho hp) hm.1), mul_one]
-      · simp only [if_neg hm]
+      · simp only [ite_eq_right hm]
     _ ≤ ∑ t ∈ (Q ×ˢ Q) ×ˢ (N ×ˢ N), F t := by
       apply sum_le_sum_of_subset_of_nonneg
       · intro t ht
@@ -257,7 +261,7 @@ theorem wMaskedOriginal_abs_le_largeDelta_row_cap
       apply mul_le_mul_of_nonneg_left _ (sq_nonneg A)
       apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
       split_ifs with he
-      · simpa only [WLargeDeltaWitness, he, true_or, if_true] using
+      · simpa only [WLargeDeltaWitness, he, true_or, ite_true] using
           sum_scaledDyadicCutoff_le hM
       · exact sum_cutoff_largeDeltaWitness_le hM hY a p.1 p.2 he
 

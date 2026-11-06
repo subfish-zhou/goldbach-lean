@@ -1,8 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.SplitIfs
-import Mathlib.Tactic.FinCases
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.SplitIfs
+public import Mathlib.Tactic.FinCases
 /-!
 # Parameterized scalar budgets for Gamma₅ loss
 
@@ -14,6 +16,8 @@ These are scalar certificates. The hypotheses on H are retained explicitly;
 identities with each research row's actual gain must be established before
 using these debits in the second-functional count inequalities.
 -/
+
+@[expose] public section
 
 open Real Set MeasureTheory
 open scoped Interval
@@ -84,7 +88,7 @@ theorem generalKernel_support {S B : ℝ} (hS : 0 < S)
   apply hv
   by_cases he : v = S*(1-2*B)
   · subst v
-    rw [generalKernel, if_pos ⟨le_rfl,hmid⟩]
+    rw [generalKernel, ite_eq_left ⟨le_rfl,hmid⟩]
     have heq : 1-S*(1-2*B)/S-B = B := by field_simp; ring
     rw [heq, div_self hB0.ne', log_one, mul_zero, zero_div]
   · have hn : ¬(S*(1-2*B) ≤ v ∧ v ≤ S*(1-B)/2) := by
@@ -93,7 +97,7 @@ theorem generalKernel_support {S B : ℝ} (hS : 0 < S)
     have hn' : ¬(S*(1-B)/2 < v ∧ v < S/3) := by
       intro hh
       exact h ⟨hmid.trans_lt hh.1, hh.2.le⟩
-    simp only [generalKernel, if_neg hn, if_neg hn']
+    simp only [generalKernel, ite_eq_right hn, ite_eq_right hn']
 
 /-- One-fifth loss budget as an explicit rational function of the row parameters. -/
 theorem general_weighted_integral_bound {S B : ℝ}

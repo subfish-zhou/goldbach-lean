@@ -1,12 +1,16 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIHighConductorAllAspect
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIElementaryPeriodCauchy
-import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVAdaptiveSmallCutoff
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIHighConductorAllAspect
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIElementaryPeriodCauchy
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVAdaptiveSmallCutoff
 
 /-!
 # Unconditional chosen Standard-BV high-conductor source
 
 This checker constructs the genuine chosen high-conductor source with explicit parameters.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

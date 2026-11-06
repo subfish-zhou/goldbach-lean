@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GridGeometry
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GridGeometry
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleFibres
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
-import MathlibNt.SieveTheory.LiLiuGoldbachS4FiniteError
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4SwitchedCarrier
+public import MathlibNt.SieveTheory.LiLiuGoldbachS4FiniteError
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

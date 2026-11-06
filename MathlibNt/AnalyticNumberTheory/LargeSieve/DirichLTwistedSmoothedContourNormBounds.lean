@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedConductorLogEdges
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirichLTwistedSmoothedConductorLogEdges
+
+@[expose] public section
 
 open Set Function Filter Complex Real MeasureTheory
 

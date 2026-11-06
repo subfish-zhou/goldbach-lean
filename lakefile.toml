@@ -6,12 +6,12 @@ defaultTargets = ["Goldbach", "MathlibNt", "AnalyticNumberTheory", "PrimeNumberT
 [[require]]
 name = "LeanArchitect"
 git = "https://github.com/hanwenzhu/LeanArchitect.git"
-rev = "78dd66840d3efe8c824c699fc03381cec817c271"
+rev = "9f3bb53916b9d6fa05b7777389e1844f82b1c9a6"
 
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"
-rev = "e4c91783ca8e6a7c693ae624ade32fd22d4e43c1"
+rev = "56a005855ea17e0b0958f73ec801ae140b0a1679"
 
 [[lean_lib]]
 name = "PrimeNumberTheoremAnd"
@@ -28,3 +28,8 @@ globs = ["MathlibNt", "MathlibNt.+"]
 [[lean_lib]]
 name = "Goldbach"
 globs = ["Goldbach", "Goldbach.+"]
+
+# Independent specification and proved implementations for Palomar comparison.
+[[lean_lib]]
+name = "Palomar"
+globs = ["Palomar.Challenge", "Palomar.Solution"]

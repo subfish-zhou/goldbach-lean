@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstMainMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LogGridLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstMainMass
+
+@[expose] public section
 
 open scoped BigOperators Topology
 
@@ -118,7 +122,7 @@ theorem goldbachK9High_le_logGridMajorant
         split_ifs
         · exact goldbachB9PairLogKernelTerm_nonneg hN (goldbachB9HighPairs_subset N hN hrs)
         · exact le_rfl
-      simpa only [if_pos hrect] using Finset.single_le_sum hnonneg hq
+      simpa only [ite_eq_left hrect] using Finset.single_le_sum hnonneg hq
     _ ≤ ∑ q ∈ goldbachB9HighLogGridCells n,
         goldbachB9PairLogKernelRectangleContribution N
           (goldbachB9AlphaGridPoint n q.1) (goldbachB9AlphaGridPoint n (q.1 + 1))

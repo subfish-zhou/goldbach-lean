@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiuPanActualCountCharacters
-import MathlibNt.SieveTheory.LiuPanPrincipalRemainder
+module
+
+public import MathlibNt.SieveTheory.LiuPanActualCountCharacters
+public import MathlibNt.SieveTheory.LiuPanPrincipalRemainder
 
 /-! Bounded-coefficient principal remainder estimates for Pan's actual source
 sum, reusing the production moving-prefix and scalar-budget theorems. -/
+
+@[expose] public section
 
 noncomputable section
 

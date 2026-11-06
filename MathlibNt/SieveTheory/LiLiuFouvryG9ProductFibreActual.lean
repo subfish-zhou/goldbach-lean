@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibre
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ProductFibre
+
+@[expose] public section
 
 open Finset
 open MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
@@ -11,7 +15,7 @@ theorem fouvryG9_prime_copN_beta_bounds (N n : ℕ) :
     (if n.Coprime N then primeSWBeta n else 0) ≤ (fouvryTau 1 n : ℝ) := by
   classical
   by_cases hc : n.Coprime N
-  · simp only [if_pos hc]
+  · simp only [ite_eq_left hc]
     by_cases hp : n.Prime
     · simp [primeSWBeta, hp, fouvryTau, ArithmeticFunction.zeta_apply, hp.ne_zero]
     · simp [primeSWBeta, hp]

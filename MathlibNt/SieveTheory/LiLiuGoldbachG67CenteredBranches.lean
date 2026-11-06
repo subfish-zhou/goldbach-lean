@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredError
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredError
+@[expose] public section
+
 open Set hiding center
 open MeasureTheory
 open scoped Interval

@@ -1,6 +1,10 @@
-import Mathlib.Topology.Order.LeftRight
-import MathlibNt.SieveTheory.LiLiuGoldbachG12ThinCofactorMass
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
+module
+
+public import Mathlib.Topology.Order.LeftRight
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12ThinCofactorMass
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelIntegralBound
+
+@[expose] public section
 
 open Finset Set Filter LiLiuPrereqBuchstab
 open scoped BigOperators Topology

@@ -1,11 +1,16 @@
-import PrimeNumberTheoremAnd.MellinCalculus
-import PrimeNumberTheoremAnd.ZetaBounds
-import PrimeNumberTheoremAnd.ZetaConj
-import PrimeNumberTheoremAnd.SmoothExistence
-import Mathlib.Algebra.Group.Support
-import Mathlib.Analysis.MellinInversion
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.NumberTheory.Chebyshev
+module
+
+public import PrimeNumberTheoremAnd.MellinCalculus
+public import PrimeNumberTheoremAnd.ZetaBounds
+public import PrimeNumberTheoremAnd.ZetaConj
+public import PrimeNumberTheoremAnd.SmoothExistence
+public import Mathlib.Algebra.Group.Support
+public import Mathlib.Analysis.MellinInversion
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.Algebra.Order.Interval.Set.Group
+
+@[expose] public section
 
 set_option lang.lemmaCmd true
 
@@ -396,7 +401,7 @@ theorem SmoothedChebyshevClose_aux {Smooth1 : (ℝ → ℝ) → ℝ → ℝ → 
     simp only [Nat.ceil_pos, n₀]
     subst C_eq
     simp_all only [mem_Ioo, and_imp, ge_iff_le, implies_true, mul_pos_iff_of_pos_left, sub_pos]
-    exact mul_lt_one_of_nonneg_of_lt_one_left c₁_pos.le c₁_lt ε_lt_one.le
+    exact (mul_le_of_le_one_right c₁_pos.le ε_lt_one.le).trans_lt c₁_lt
 
   have n₀_inside_le_X : X * (1 - c₁ * ε) ≤ X := by
     nth_rewrite 2 [← mul_one X]
@@ -2036,9 +2041,7 @@ lemma I2Bound {SmoothingF : ℝ → ℝ}
           SmoothedChebyshevIntegrand SmoothingF ε X (↑σ - ↑T * I)‖ ≤
           C' * X / (ε * T) * |1 + (Real.log X)⁻¹ - σ₁| := by
         refine intervalIntegral.norm_integral_le_of_norm_le_const ?_
-        convert this using 3
-        apply uIoc_of_le
-        exact interval_length_nonneg
+        simpa only [uIoc_of_le interval_length_nonneg] using this
       _ ≤ C' * X / (ε * T) * 2 := by
         apply mul_le_mul_of_nonneg_left
         · rw[abs_of_nonneg (sub_nonneg.mpr interval_length_nonneg)]

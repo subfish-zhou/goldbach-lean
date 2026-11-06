@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.Switching.BoundaryDensity
-import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
-import MathlibNt.SieveTheory.MertensTheorem
-import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
-import MathlibNt.SieveTheory.SuzukiClaim145SourceParameters
-import MathlibNt.SieveTheory.SuzukiUpperRosserDensityEndpointDirect
+module
+
+public import MathlibNt.SieveTheory.Switching.BoundaryDensity
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10FibreSieve
+public import MathlibNt.SieveTheory.MertensTheorem
+public import MathlibNt.SieveTheory.JurkatRichert1965Section13HatSource
+public import MathlibNt.SieveTheory.SuzukiClaim145SourceParameters
+public import MathlibNt.SieveTheory.SuzukiUpperRosserDensityEndpointDirect
+
+@[expose] public section
 
 open scoped BigOperators
 

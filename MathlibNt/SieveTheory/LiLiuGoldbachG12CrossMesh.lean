@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelLimit
-import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshLimit
+module
+
+public import MathlibNt.SieveTheory.Liu.PrimePairs.LiuPrimePairLogGrid
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PrimeKernelLimit
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11PrimeKernelMeshLimit
+
+@[expose] public section
 
 open Filter MeasureTheory Set
 open scoped BigOperators Topology Interval

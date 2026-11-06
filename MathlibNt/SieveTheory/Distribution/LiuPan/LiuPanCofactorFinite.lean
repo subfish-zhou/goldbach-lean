@@ -1,10 +1,14 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.DirectConductorWeight
 
 /-!
 Pan--Wang--Ding (1975), original p.601, (2.6): finite cofactor transport.
 The payload is arbitrary; in the application it is the whole-a norm, not
 an a-wise triangle majorant. All positive divisors, including d=1, are retained.
 -/
+@[expose] public section
+
 namespace AnalyticNumberTheory.LargeSieve.PanCofactor
 open Finset
 open scoped BigOperators

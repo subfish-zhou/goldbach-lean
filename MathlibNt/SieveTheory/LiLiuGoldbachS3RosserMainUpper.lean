@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1LocalProduct
-import MathlibNt.SieveTheory.LiLiuGoldbachUpperDensitySix
-import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
-import MathlibNt.SieveTheory.MertensTheorem
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1LocalProduct
+public import MathlibNt.SieveTheory.LiLiuGoldbachUpperDensitySix
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
+public import MathlibNt.SieveTheory.MertensTheorem
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset Filter

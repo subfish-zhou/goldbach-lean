@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SieveParameters
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 noncomputable section

@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveCharacterTransfer
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorFinite
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorMass
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimitiveCharacterTransfer
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorFinite
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanCofactorMass
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiuWeight
 open Finset _root_.AnalyticNumberTheory.LargeSieve

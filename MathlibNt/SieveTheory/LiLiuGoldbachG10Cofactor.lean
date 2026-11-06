@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
-import Mathlib.Analysis.SpecialFunctions.Sqrt
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachErrorFoundations
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+
+@[expose] public section
 
 open scoped BigOperators
 

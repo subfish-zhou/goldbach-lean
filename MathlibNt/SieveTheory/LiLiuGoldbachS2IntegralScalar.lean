@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachSmallEpsilon
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachSmallEpsilon
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 

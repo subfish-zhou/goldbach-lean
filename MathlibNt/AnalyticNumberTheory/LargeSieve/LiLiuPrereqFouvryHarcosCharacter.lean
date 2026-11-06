@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosTrace
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosTrace
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryKloostermanDescent
 /-!
 # Harcos's extension-field character sums
 
@@ -7,6 +9,8 @@ The coefficients belong to the fixed prime field, not to a varying extension.
 The trace is `Algebra.trace`; its Frobenius formula and additive-character
 orthogonality identify the sum over frequencies with the actual affine count.
 -/
+
+@[expose] public section
 
 noncomputable section
 

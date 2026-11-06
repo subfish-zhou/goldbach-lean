@@ -1,5 +1,9 @@
-import MathlibNt.Analysis.LogPowerBounds
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWLarge
+module
+
+public import MathlibNt.Analysis.LogPowerBounds
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryPrimeSWLarge
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 open Finset Filter

@@ -1,9 +1,11 @@
 
 
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Mathlib.Topology.Algebra.GroupWithZero
-import MathlibNt.SieveTheory.Arithmetic.SingularSeries
+module
+
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Mathlib.Topology.Algebra.GroupWithZero
+public import MathlibNt.SieveTheory.Arithmetic.SingularSeries
 
 /-!
  # MathlibNt.SieveTheory.Arithmetic.LiuSingularSeries
@@ -13,6 +15,8 @@ its exact finite truncation from the legacy sieve-normalized proxy.
 
 Source: Liu, `main.tex`, lines 98--102.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SingularSeries
 
@@ -30,7 +34,7 @@ theorem liuLocalFactor_of_dvd {p N : ℕ} (hp2 : 2 < p) (hpdvd : p ∣ N) :
     liuLocalFactor p N =
       ((p : ℝ) - 1) / ((p : ℝ) - 2) *
         (1 - 1 / ((p : ℝ) - 1) ^ 2) := by
-  rw [liuLocalFactor, if_pos hpdvd]
+  rw [liuLocalFactor, ite_eq_left hpdvd]
   have hp1 : (p : ℝ) - 1 ≠ 0 := by
     have hp1' : (1 : ℝ) < p := by exact_mod_cast (show 1 < p by omega)
     linarith
@@ -43,7 +47,7 @@ theorem liuLocalFactor_of_dvd {p N : ℕ} (hp2 : 2 < p) (hpdvd : p ∣ N) :
 /-- A nondivisor contributes exactly Liu's universal base factor. -/
 theorem liuLocalFactor_of_not_dvd {p N : ℕ} (hp2 : 2 < p) (hpn : ¬p ∣ N) :
     liuLocalFactor p N = 1 - 1 / ((p : ℝ) - 1) ^ 2 := by
-  rw [liuLocalFactor, if_neg hpn]
+  rw [liuLocalFactor, ite_eq_right hpn]
   have hp1 : (p : ℝ) - 1 ≠ 0 := by
     have hp1' : (1 : ℝ) < p := by exact_mod_cast (show 1 < p by omega)
     linarith
@@ -212,7 +216,7 @@ theorem liuUniversalProduct_le_truncated (z : ℕ) :
   have hmono : Antitone liuUniversalProductTruncated := by
     intro m n hmn
     unfold liuUniversalProductTruncated
-    apply Finset.prod_le_prod_of_subset_of_le_one
+    apply Finset.prod_le_prod_of_subset_of_le_one₀
     · intro p hp
       simp only [mem_range] at hp ⊢
       omega
@@ -254,7 +258,7 @@ theorem liuCorrection_pos (N : ℕ) : 0 < liuCorrection N := by
 
 theorem one_le_liuCorrection (N : ℕ) : 1 ≤ liuCorrection N := by
   unfold liuCorrection
-  exact Finset.one_le_prod fun p hp => one_le_liuCorrectionFactor (mem_filter.mp hp).2
+  exact Finset.one_le_prod₀ fun p hp => one_le_liuCorrectionFactor (mem_filter.mp hp).2
 
 /-- The correction product through `z`, written on the same index set as the
 finite universal product. -/
@@ -275,7 +279,7 @@ theorem liuCorrectionTruncated_pos (N z : ℕ) :
 theorem one_add_liuBaseDeviation_eq_baseFactor {p : ℕ}
     (hp : p.Prime) (hp2 : 2 < p) :
     1 + liuBaseDeviation p = 1 - 1 / ((p : ℝ) - 1) ^ 2 := by
-  simp only [liuBaseDeviation, hp, hp2, and_self, if_true]
+  simp only [liuBaseDeviation, hp, hp2, and_self, ite_true]
   rw [neg_div]
   ring
 
@@ -285,10 +289,10 @@ theorem liuLocalFactor_eq_correction_mul_base {p N : ℕ}
       (if p ∣ N then liuCorrectionFactor p else 1) *
         (1 + liuBaseDeviation p) := by
   by_cases hpdvd : p ∣ N
-  · rw [if_pos hpdvd, liuLocalFactor_of_dvd hp2 hpdvd,
+  · rw [ite_eq_left hpdvd, liuLocalFactor_of_dvd hp2 hpdvd,
       one_add_liuBaseDeviation_eq_baseFactor hp hp2]
     rfl
-  · rw [if_neg hpdvd, one_mul, liuLocalFactor_of_not_dvd hp2 hpdvd,
+  · rw [ite_eq_right hpdvd, one_mul, liuLocalFactor_of_not_dvd hp2 hpdvd,
       one_add_liuBaseDeviation_eq_baseFactor hp hp2]
 
 theorem liuUniversalProductTruncated_eq_oddPrimeProd (z : ℕ) :
@@ -340,7 +344,7 @@ theorem liuCorrectionTruncated_le_liuCorrection
   classical
   unfold liuCorrectionTruncated liuCorrection
   rw [← Finset.prod_filter]
-  apply Finset.prod_le_prod_of_subset_of_one_le
+  apply Finset.prod_le_prod_of_subset_of_one_le₀
   · intro p hp
     rcases Finset.mem_filter.mp hp with ⟨hpbase, hpdvd⟩
     rcases Finset.mem_filter.mp hpbase with ⟨_, hpprime, hp2⟩

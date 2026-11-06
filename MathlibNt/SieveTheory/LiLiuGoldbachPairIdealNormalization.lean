@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealCoordinate
-import MathlibNt.SieveTheory.LiLiuGoldbachPairLiEuler
-import MathlibNt.SieveTheory.LiLiuGoldbachPairMovingKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairIdealCoordinate
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairLiEuler
+public import MathlibNt.SieveTheory.LiLiuGoldbachPairMovingKernel
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

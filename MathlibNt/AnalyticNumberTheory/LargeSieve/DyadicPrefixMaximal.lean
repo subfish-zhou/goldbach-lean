@@ -1,4 +1,8 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrefixMaximal
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrefixMaximal
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 
@@ -139,7 +143,7 @@ theorem weighted_primitive_prefix_maximal
     have H2 := decomp_eq y N hy2 (fun n => f (M + n))
     rw [H2]
     dsimp [prefixBlocks]
-    rw [dif_pos hy2]
+    rw [dite_eq_left hy2]
     rw [Finset.sum_image]
     · rw [← Finset.sum_attach]
       apply Finset.sum_congr rfl
@@ -155,7 +159,7 @@ theorem weighted_primitive_prefix_maximal
         rw [H2_eq]
         exact (Nat.div_mul_le_self y (2^k)).trans hy2
       dsimp [blockStart, blockLength]
-      rw [if_pos hk2]
+      rw [ite_eq_left hk2]
       have h_sum := sum_Ioc_nat_eq_sum_Icc_int M (2 * (y / 2 ^ (k + 1)) * 2 ^ k)
         (2 * (y / 2 ^ (k + 1)) * 2 ^ k + 2 ^ k) f
       push_cast at h_sum

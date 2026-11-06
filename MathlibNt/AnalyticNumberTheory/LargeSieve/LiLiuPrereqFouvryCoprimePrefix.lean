@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCoprimePartition
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPartialSummation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCoprimePartition
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryAnalyticPartialSummation
 
 /-!
 # The actual coprimality partition back at the original distribution error
@@ -8,6 +10,8 @@ Only the triangle inequality between Lemma 7 cells is used. Every cell
 contains the original signed coefficients, tuple multiplicities, arithmetic
 phases and remaining filters. This is not an unweighted Weil estimate.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightTwelve
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightTwelve
+
+@[expose] public section
 
 open Filter
 open scoped Topology

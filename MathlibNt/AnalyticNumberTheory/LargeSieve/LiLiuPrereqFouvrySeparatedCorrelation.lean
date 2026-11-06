@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCorrelation
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePrefix
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCorrelation
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCoprimePrefix
 
 /-!
 # Removing the actual outer coefficients before the IV.3 Gram expansion
@@ -9,6 +11,8 @@ shared outer triple. Their exact L2 cost is outside the correlation sum.
 The remaining signed coefficient depends only on `(n₂,s')`, not on `k₁`.
 The small-root phase and all carrier restrictions are still retained.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

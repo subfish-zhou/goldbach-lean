@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLGlobalConductorLogValueBound
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
 
 /-!
 # A squared-logarithmic conductor-height bound for Dirichlet L-derivatives
@@ -8,6 +10,8 @@ The naturally ordered derivative series is cut at the shared cutoff
 `q * (⌊|t|⌋₊ + 1)`.  Its finite prefix is estimated by a harmonic sum, and in
 the Abel tail the factor `q / m` pays for the full height of the argument.
 -/
+
+@[expose] public section
 
 open Complex Finset
 

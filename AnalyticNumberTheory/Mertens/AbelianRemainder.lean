@@ -1,5 +1,7 @@
-import AnalyticNumberTheory.Mertens.PartialSummation
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
+module
+
+public import AnalyticNumberTheory.Mertens.PartialSummation
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-!
 # An Abelian remainder estimate
@@ -8,6 +10,8 @@ This file isolates the dominated-convergence argument used after the
 logarithmic change of variables in Mertens' theorem.  A fixed positive cutoff
 avoids imposing artificial hypotheses at the origin.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.Mertens
 

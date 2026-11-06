@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9LowFinal
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9LowFinal
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral
+
+@[expose] public section
 
 noncomputable section
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

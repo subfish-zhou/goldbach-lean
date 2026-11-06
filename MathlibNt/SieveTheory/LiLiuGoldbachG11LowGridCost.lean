@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridSource
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11LowGridSource
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators

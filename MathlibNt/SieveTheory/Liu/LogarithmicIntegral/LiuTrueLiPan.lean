@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.Liu.Weights.LiuWeightROuter
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+module
+
+public import MathlibNt.SieveTheory.Liu.Weights.LiuWeightROuter
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-!
 # Main-parametric Pan consumption for Liu's coprime majorant
@@ -11,6 +13,8 @@ model and proves the finite structural implication needed by Liu's coprime
 The residue maximum uses the live ANT `unitResidues` convention. In particular,
 the unique canonical residue modulo `1` is `0`.
 -/
+
+@[expose] public section
 
 open scoped Asymptotics BigOperators
 
@@ -170,12 +174,12 @@ theorem liuMainPanMaxL_nonneg
   unfold liuMainPanMaxL
   dsimp only
   by_cases hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty
-  · rw [dif_pos hS]
+  · rw [dite_eq_left hS]
     rcases hS with ⟨l, hl⟩
     apply (abs_nonneg (liuMainPanCoprimeSum main Y X q l f)).trans
     apply Finset.le_max'
     exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
-  · rw [dif_neg hS]
+  · rw [dite_eq_right hS]
 
 
 /-- A canonical reduced residue is bounded by the residue maximum at the same
@@ -188,7 +192,7 @@ theorem abs_liuMainPanCoprimeSum_le_maxL
   have hS : (AnalyticNumberTheory.Sieve.unitResidues q).Nonempty := ⟨l, hl⟩
   unfold liuMainPanMaxL
   dsimp only
-  rw [dif_pos hS]
+  rw [dite_eq_left hS]
   apply Finset.le_max'
   exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
 
@@ -324,7 +328,7 @@ private theorem abs_liuMainCoprimeSum_li_normalization_sub_le
       apply Finset.sum_le_sum
       intro a ha
       by_cases hcop : a.Coprime d
-      · rw [if_pos hcop, if_pos hcop]
+      · rw [ite_eq_left hcop, ite_eq_left hcop]
         rw [← mul_sub, liuScaledAPError_sub_normalization]
         have htot : (0 : ℝ) < Nat.totient d := by
           exact_mod_cast Nat.totient_pos.mpr hd
@@ -335,7 +339,7 @@ private theorem abs_liuMainCoprimeSum_li_normalization_sub_le
         rw [abs_of_nonneg hw]
         ring_nf
         exact le_rfl
-      · rw [if_neg hcop, if_neg hcop, zero_sub, neg_zero, abs_zero]
+      · rw [ite_eq_right hcop, ite_eq_right hcop, zero_sub, neg_zero, abs_zero]
         exact mul_nonneg (div_nonneg (abs_nonneg _) (by positivity)) (by
           unfold liuWeight
           split <;> positivity)
@@ -359,7 +363,7 @@ private theorem abs_liuMainCoprimeSum_li_normalization_sub_le
           omega
         subst a
         unfold liuWeight
-        rw [if_neg]
+        rw [ite_eq_right]
         intro hsupp
         rcases liuWeightSupport_iff.mp hsupp with ⟨p₁, p₂, hp, hzero⟩
         have hprod : 0 < p₁ * p₂ := Nat.mul_pos hp.1.pos hp.2.1.pos

@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBox
 
 /-!
 # Quantitatively eliminating the occupied-base sum
@@ -7,6 +9,8 @@ The two power envelopes use only local dyadic highs and the original beta
 upper support divided by `d`. Monotonicity is valid for every nonnegative
 exponent, including empty carriers and degenerate arbitrary keys.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

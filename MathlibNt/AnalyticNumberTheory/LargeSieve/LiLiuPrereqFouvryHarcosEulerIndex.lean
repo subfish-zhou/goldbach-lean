@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEulerRoots
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosEulerRoots
 
 /-! # The finite Euler index for comparison with minimal-polynomial orbits -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -35,7 +39,7 @@ theorem harcosEulerLogCoefficient_eq_flat (η : (ZMod p)[X] →* ℂ) (n : ℕ) 
   apply sum_congr rfl
   intro k _
   simp only [PowerSeries.coeff_C_mul, map_sub, harcosEulerGeometric,
-    PowerSeries.coeff_mk, PowerSeries.coeff_one, if_neg hn, sub_zero]
+    PowerSeries.coeff_mk, PowerSeries.coeff_one, ite_eq_right hn, sub_zero]
   split_ifs <;> simp
 
 /-- The exact flat, nonzero-root index used by the finite-field orbit sum. -/

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67Constants
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67Constants
+
+@[expose] public section
 
 open MeasureTheory Finset
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

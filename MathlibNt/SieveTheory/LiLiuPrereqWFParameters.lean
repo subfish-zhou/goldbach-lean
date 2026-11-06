@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
-import MathlibNt.SieveTheory.LiLiuPrereqWFZeroDensity
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFRounding
+public import MathlibNt.SieveTheory.LiLiuPrereqWFZeroDensity
 
 /-!
 # Parameters for the rounded, moving-range density estimate
@@ -8,6 +10,8 @@ The coordinate depends on `D, ε` only, never on a prime carrier, density,
 or truncation depth. Increasing the product constant to `max K 2` incurs
 the displayed absolute factor in `exp (sqrt K)`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

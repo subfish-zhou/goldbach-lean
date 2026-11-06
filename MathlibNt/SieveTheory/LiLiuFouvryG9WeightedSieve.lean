@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFExternalFamily
 
 /-!
 # Nonnegative weighted finite sieve for the existing external WF family
@@ -9,6 +11,8 @@ inequality. The signed external coefficients are rearranged by exact finite
 sum identities. All divisor sums remain over the original primorial; no
 transport to a full level interval or analytic density estimate is claimed.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 

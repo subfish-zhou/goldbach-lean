@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12PaidSafeCell
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12PaidSafeCell
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

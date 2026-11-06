@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalCrossZeroRectangle
+module
+
+public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticConditionalCrossZeroRectangle
 
 /-!
 # Quantitative logarithmic derivative in the quadratic central band
@@ -12,6 +14,8 @@ The resulting bound retains the honest factor `q^η / c` forced by the supplied
 raw Siegel lower bound `c q⁻η ≤ L(1,χ)`.  Removing that power requires a stronger
 (polylogarithmic) lower input, not a topological argument.
 -/
+
+@[expose] public section
 
 open Complex Set
 

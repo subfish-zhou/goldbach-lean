@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalyticTarget
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalyticTarget
 
 /-!
 # The same rough signed density at the normalized analytic scale
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalyticTarget
 Both actual error classes are now paid. The comparison is to the very same
 ordinary rough Rosser coefficient, with its original level and parity.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -81,7 +85,7 @@ theorem roughSignedDensity_abs_sub_le_target (upper : Bool) (P : Finset ℕ)
   obtain ⟨h0, h1⟩ := roughSignedDensity_canonical_pair_bound upper P hP (D := D)
     (by linarith) hε g (fun p hp => (hg p (mem_sdiff.mp hp).1).1)
   dsimp only at hp hb h0 h1 ⊢
-  cases upper <;> simp only [Bool.false_eq_true, if_false, if_true,
+  cases upper <;> simp only [Bool.false_eq_true, ite_false, ite_true,
     one_mul, neg_one_mul] at *
   · rw [abs_of_nonpos (by linarith)]
     nlinarith

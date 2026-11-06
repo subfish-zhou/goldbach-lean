@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+
+@[expose] public section
 
 open scoped BigOperators
 

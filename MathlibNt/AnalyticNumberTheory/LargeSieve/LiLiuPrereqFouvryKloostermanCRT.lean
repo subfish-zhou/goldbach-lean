@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion
-import Mathlib.Data.ZMod.Units
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryCompletion
+public import Mathlib.Data.ZMod.Units
 
 /-!
 # Twisted Chinese remaindering for the actual complete Kloosterman sum
@@ -9,6 +11,8 @@ n * gcdB m n = 1`. Thus `gcdB m n` is the inverse of `n` modulo `m`.
 No frequency is required to be a unit, and either coprime factor may be one.
 These are exact arithmetic identities, not an invocation of a Weil bound.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -104,7 +108,7 @@ theorem completeKloosterman_crt (m n : ℕ) [NeZero m] [NeZero n]
     (if IsUnit (f u) then _ else _) * (if IsUnit (g u) then _ else _)
   by_cases hunit : IsUnit u
   · have hfg := (hu u).mp hunit
-    simp only [hunit, hfg.1, hfg.2, if_true]
+    simp only [hunit, hfg.1, hfg.2, ite_true]
     rw [stdAddChar_crt m n h]
     change ZMod.stdAddChar ((m.gcdB n : ZMod m) *
         f ((a : ZMod (m * n)) * u + (d : ZMod (m * n)) * u⁻¹)) *

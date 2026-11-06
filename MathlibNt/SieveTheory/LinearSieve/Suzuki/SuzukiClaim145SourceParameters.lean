@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceFinal
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim145SourceFinal
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory
 

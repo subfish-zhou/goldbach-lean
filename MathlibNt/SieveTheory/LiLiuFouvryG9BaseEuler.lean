@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9MainUpper
-import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9MainUpper
+public import MathlibNt.SieveTheory.LiLiuGoldbachB10SieveProduct
+
+@[expose] public section
 
 noncomputable section
 open Finset

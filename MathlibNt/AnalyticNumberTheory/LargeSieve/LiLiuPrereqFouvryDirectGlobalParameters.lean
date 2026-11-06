@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryParameters
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryParameters
 
 /-!
 # Uniform exponent margins for the existing C.2 split
@@ -7,6 +9,8 @@ Reuse the existing factor exponents, including the S = 1 branch. These
 are scalar payment lemmas, not an assertion of the distribution estimate.
 Actual coefficient, carrier and local-frequency estimates are separate.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 

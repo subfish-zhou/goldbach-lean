@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedTransport
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11SwitchedTransport
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

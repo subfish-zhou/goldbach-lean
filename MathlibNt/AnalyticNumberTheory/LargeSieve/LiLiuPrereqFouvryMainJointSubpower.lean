@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointMean
 
 /-!
 # Uniform subpower payment of the joint gcd mean
@@ -7,6 +9,8 @@ The constant is chosen before all three signed coefficients and the scale.
 Zero numerators are excluded by the support, not charged as ordinary rows.
 There is no coprimality hypothesis on either original summation variable.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

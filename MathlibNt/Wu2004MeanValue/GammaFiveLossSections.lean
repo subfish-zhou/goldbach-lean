@@ -1,5 +1,7 @@
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.Linarith
 
 /-!
 # Geometry of the Gamma₅ loss sections
@@ -10,6 +12,8 @@ both are empty below it, and remove the extra cutoff above it. They are
 parameterized endpoint identities; connecting them to the actual feedback
 integrals requires the corresponding change-of-variables identities.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue.GammaFiveLossBudget
 

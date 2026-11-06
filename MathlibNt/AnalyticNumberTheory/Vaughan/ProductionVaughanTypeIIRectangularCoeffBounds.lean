@@ -1,8 +1,12 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularSharpBridge
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIRectangularSharpBridge
 
 /-!
 # Honest coefficient bounds for the Type-II rectangular bridge
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

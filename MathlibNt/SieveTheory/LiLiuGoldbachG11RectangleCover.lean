@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11RectangleCount
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical
@@ -66,7 +70,7 @@ theorem goldbachG11_finite_positive_cover {ι κ : Type*} (S : Finset ι) (K : F
       have h := single_le_sum (s := K) (a := k)
         (f := fun j => if v ∈ R j then f v else 0)
         (fun j _ => by split_ifs; exact hf v; exact le_rfl) hk
-      simpa only [if_pos hvk] using h
+      simpa only [ite_eq_left hvk] using h
     _ = ∑ k ∈ K, ∑ v ∈ S.filter (fun v => v ∈ R k), f v := by
       rw [sum_comm]
       simp only [sum_filter]
@@ -101,7 +105,7 @@ theorem goldbachG11GoodSwitchedTotal_le_rectanglePrimeMass_cover {κ : Type*}
       rw [MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.g9IntegerFibre_original
         N m p (by simpa [Nat.mul_comm] using hprod.le)]
       simpa [Nat.mul_comm] using hout
-    simp only [f, if_pos hp, mul_one]
+    simp only [f, ite_eq_left hp, mul_one]
   rw [he]
   apply goldbachG11_finite_positive_cover _ K (fun k => U k ×ˢ V k) f hf
   rintro ⟨m,p⟩ hv

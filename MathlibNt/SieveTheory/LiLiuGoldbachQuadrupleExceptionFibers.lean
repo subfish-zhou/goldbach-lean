@@ -1,7 +1,11 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionFibers
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionFibers
 
 /- The accepted G11 fibre proof only uses the lower prime cutoff.
 This parameter-polymorphic version retains its proof for every upper cutoff. -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

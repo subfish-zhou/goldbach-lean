@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCoprimePartition
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryActualCoprimePartition
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryReciprocalCorrelation
 
 /-!
 # IV.3 correlation on the actual extracted carrier
@@ -9,6 +11,8 @@ coprimalities; the original tuple conditions supply all other inverses.
 The two terms share `k₁`, `r'`, and `n₁`. The small-root factors are
 retained, and no interval estimate is applied to an arbitrary masked sum.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS3PrimeKernel
+
+@[expose] public section
 
 open Set MeasureTheory
 open MathlibNt.SieveTheory.SwitchingPrinciple
@@ -105,16 +109,16 @@ theorem goldbachS3_scalar_exp_free {β : ℝ}
   have hden : (53 / 8 : ℝ) - s ≠ 0 := by linarith [hs.2]
   dsimp only
   by_cases hs3 : s ≤ 3
-  · rw [if_pos hs3]
+  · rw [ite_eq_left hs3]
     have h := goldbachS3_scalar_exp_cancel_first hslo hs3
     field_simp [hs0, hden] at h ⊢
     rw [h]
   · by_cases hs5 : s ≤ 5
-    · rw [if_neg hs3, if_pos hs5]
+    · rw [ite_eq_right hs3, ite_eq_left hs5]
       have h := goldbachS3_scalar_exp_cancel_second (by linarith) hs5
       field_simp [hs0, hden] at h ⊢
       rw [h]
-    · rw [if_neg hs3, if_neg hs5]
+    · rw [ite_eq_right hs3, ite_eq_right hs5]
       have h := goldbachS3_scalar_exp_cancel_third (by linarith) hshi
       field_simp [hs0, hden] at h ⊢
       rw [h]

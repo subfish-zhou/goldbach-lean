@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosureBounds
+module
+
+public import MathlibNt.SieveTheory.LiLiuBuchstabSharpClosureBounds
+
+@[expose] public section
 
 set_option autoImplicit false
 

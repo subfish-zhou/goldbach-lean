@@ -1,5 +1,7 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFSmallDensity
-import Mathlib.Algebra.Order.Floor.Semiring
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFSmallDensity
+public import Mathlib.Algebra.Order.Floor.Semiring
 
 /-!
 # Exact integer-level transport of the actual small weights
@@ -8,6 +10,8 @@ The natural level is `ceil L`, not `floor L + 1`: every test in the
 coefficients is a strict comparison of an integer with the real level.
 The rounded cutoff is matched using `s = log (ceil L) / log u`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredPolynomial
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG67CenteredPolynomial
+
+@[expose] public section
 
 open Set MeasureTheory Finset
 open scoped Interval

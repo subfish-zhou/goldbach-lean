@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstLogGrid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstLogGrid
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped BigOperators Interval

@@ -1,3 +1,5 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanModernWeightTransfer
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanModernWeightTransfer
 
 /-! Compatibility import for the canonical module in its current library location. -/

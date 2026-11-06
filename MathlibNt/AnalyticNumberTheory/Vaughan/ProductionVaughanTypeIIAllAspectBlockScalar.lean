@@ -1,7 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAspectSafeBlockL1
-import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveWeightedFamilyMassBound
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Analysis.Complex.ExponentialBounds
+module
+
+public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAspectSafeBlockL1
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveWeightedFamilyMassBound
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-!
 # All-aspect scalar payment for actual Vaughan Type-II cells
@@ -11,6 +13,8 @@ This checker leaf starts from the honest explicit collected-shell estimate at
 weak `largeSieveBound`.  No aspect split or complementary analytic source is
 used.  The sharp family-mass term is paid in full.
 -/
+
+@[expose] public section
 
 namespace AnalyticNumberTheory.LargeSieve
 

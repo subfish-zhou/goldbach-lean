@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceReindex
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceReindex
 
 /-!
 # Resonance hypotheses from actual occupied witnesses
@@ -8,6 +10,8 @@ are recovered from the original key fiber. The lower beta support excludes
 both degenerate differences. The common-k payment stays at its local dyadic
 width, not the full level.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

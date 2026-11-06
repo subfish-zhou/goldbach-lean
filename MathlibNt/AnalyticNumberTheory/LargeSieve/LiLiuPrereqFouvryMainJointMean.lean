@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointNormalization
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryMainJointNormalization
 
 /-!
 # A logarithmic joint gcd mean
@@ -7,6 +9,8 @@ The angular sum is split into its two triangles. The ordinary gcd mean
 on the shorter side and the existing reciprocal gcd mean on the longer
 side replace a dyadic-shell argument.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset
@@ -65,9 +69,9 @@ theorem mainJoint_angular_mean {A B S : ℕ} (hA : 0 < A) (hB : 0 < B)
       apply sum_le_sum
       intro v _
       rcases le_total u v with huv | hvu
-      · rw [max_eq_right huv, if_pos huv]
+      · rw [max_eq_right huv, ite_eq_left huv]
         exact le_add_of_nonneg_right (by split_ifs <;> positivity)
-      · rw [max_eq_left hvu, if_pos hvu, mul_comm (v.gcd B : ℝ)]
+      · rw [max_eq_left hvu, ite_eq_left hvu, mul_comm (v.gcd B : ℝ)]
         exact le_add_of_nonneg_left (by split_ifs <;> positivity)
     _ = (∑ v ∈ Ioc 0 S, ∑ u ∈ Ioc 0 S,
         if u ≤ v then (u.gcd A : ℝ) * v.gcd B / (v : ℝ) ^ 2 else 0) +

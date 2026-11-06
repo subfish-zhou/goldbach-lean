@@ -1,4 +1,6 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBound
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryGramResonanceScaleBound
 
 /-!
 # Explicit local zero-resonance payment in the original full energy
@@ -11,6 +13,8 @@ actual fixed frequency sign. The nonzero Fouvry sum is unchanged.
 This is a local estimate, not the global C.2 normalization: nonzero primary
 and secondary aggregation, outer L² summation and the epsilon ledger remain.
 -/
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset

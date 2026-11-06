@@ -1,6 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MathlibNt.Analysis.SieveNormalization
 

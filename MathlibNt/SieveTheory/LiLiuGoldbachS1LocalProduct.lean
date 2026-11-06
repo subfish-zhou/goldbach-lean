@@ -1,8 +1,12 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
-import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
-import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachS1Carrier
+public import MathlibNt.SieveTheory.Arithmetic.MertensTheorem
+public import MathlibNt.SieveTheory.Switching.SuzukiPrimeSums
 
 /-! A single uniform local-product witness for the actual Goldbach S1 sieve. -/
+@[expose] public section
+
 open scoped BigOperators
 open Finset
 open MathlibNt.SieveTheory.SwitchingPrinciple

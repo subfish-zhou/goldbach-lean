@@ -1,7 +1,11 @@
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Normed.Lp.PiLp
-import Mathlib.Analysis.Calculus.Deriv.Prod
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Normed.Lp.PiLp
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+public import Mathlib.Tactic
+
+@[expose] public section
 
 noncomputable section
 open Complex Finset

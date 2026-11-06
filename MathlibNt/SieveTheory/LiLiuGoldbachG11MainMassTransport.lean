@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11GateBudget
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical Finset LiLiuPrereqBuchstab

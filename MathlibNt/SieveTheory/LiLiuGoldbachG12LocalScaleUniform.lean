@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScale
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12LocalScale
+
+@[expose] public section
 
 namespace G12LocalScale
 open Real Filter

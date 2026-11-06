@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiFiniteSourceLayerProp93
 
 /-!
 # Suzuki Lemma 8.6 for the source-correct finite source layer
@@ -7,6 +9,8 @@ The normalized finite layer is only naturally continuous on its parity domain.
 A lower clamp gives a global continuous extension without changing any value on
 the source interval `[s, σ]` or at its prime coordinates.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers
 

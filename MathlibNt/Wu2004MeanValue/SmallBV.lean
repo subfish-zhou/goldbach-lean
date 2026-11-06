@@ -1,7 +1,9 @@
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import MathlibNt.Wu2004MeanValue.PrincipalWeighted
-import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
-import MathlibNt.SieveTheory.Richert1969Ordinary418Specialization
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import MathlibNt.Wu2004MeanValue.PrincipalWeighted
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418Unconditional
+public import MathlibNt.SieveTheory.Richert1969Ordinary418Specialization
 
 /-!
 # Frozen ordinary BV in the exact Wu modulus norm
@@ -10,6 +12,8 @@ The ordinary producer is the frozen, unconditional Richert (4.18) theorem.
 Its integral starts at 2 without an additive constant. Only its already proved
 Richert weight payment is specialized here; no BV analytic input is reproved.
 -/
+
+@[expose] public section
 
 namespace Wu2004MeanValue
 
@@ -30,7 +34,7 @@ theorem wu_weighted_sum_eq_squarefree (S : Finset ℕ) (E : ℕ → ℝ) :
   apply sum_congr rfl
   intro d _
   by_cases hd : Squarefree d
-  · simp only [hd, if_true, wuModulusWeight,
+  · simp only [hd, ite_true, wuModulusWeight,
       (show (((ArithmeticFunction.moebius d : ℤ) : ℝ) ^ 2) = 1 by
       exact_mod_cast ArithmeticFunction.moebius_sq_eq_one_of_squarefree hd), one_mul]
   · simp [hd, wuModulusWeight, ArithmeticFunction.moebius_eq_zero_of_not_squarefree hd]

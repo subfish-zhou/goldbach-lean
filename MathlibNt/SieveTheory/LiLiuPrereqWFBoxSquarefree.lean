@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFDividedPowers
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFDividedPowers
 
 /-!
 # Exact squarefree coefficients of the fixed divided-power box
@@ -8,6 +10,8 @@ with `k` prime factors in the box, the raw slot sum is exactly `k!` and its
 divided power is exactly one. This distinguishes a normalized aggregate
 from its factorial-copy expansion; it asserts no sieve-density estimate.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -36,7 +40,7 @@ theorem primeBox_pow_squarefree (B : Finset ℕ) (k : ℕ) {n : ℕ}
           ∑ _p ∈ n.primeFactors, k.factorial := by
             apply Finset.sum_congr rfl
             intro p hp
-            rw [if_pos (hB hp)]
+            rw [ite_eq_left (hB hp)]
             have hd : n / p ∣ n :=
               ⟨p, (Nat.div_mul_cancel (Nat.dvd_of_mem_primeFactors hp)).symm⟩
             apply ih (fun x hx => hn x (dvd_trans hx hd))

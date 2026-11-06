@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLocalGlobalPrimePower
-import Mathlib.Data.Nat.Factorization.Induction
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryLocalGlobalPrimePower
+public import Mathlib.Data.Nat.Factorization.Induction
 
 /-!
 # From primitive prime powers to every nonzero modulus
@@ -9,6 +11,8 @@ coprimality with the corresponding modulus preserves the full three-way gcd.
 Together with exact common-factor descent this proves the all-modulus estimate
 from a single explicitly quantified primitive prime-power input.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFloorReduction
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPartialSummation
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKFloorReduction
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryKPartialSummation
+@[expose] public section
+
 noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachB9LowPositivePrefixTransport
-import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral
-import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFourCoarse
+module
 
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ExceptionBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9LowPositivePrefixTransport
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9HighFirstIntegral
+public import MathlibNt.SieveTheory.LiLiuGoldbachB9SplitIntegralReduction
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightRemainingFourCoarse
+
+
+@[expose] public section
 
 open scoped BigOperators
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

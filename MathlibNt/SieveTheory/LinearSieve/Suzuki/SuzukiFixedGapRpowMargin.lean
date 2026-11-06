@@ -1,5 +1,9 @@
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne
 

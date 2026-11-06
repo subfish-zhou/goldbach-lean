@@ -1,6 +1,10 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridRectangle
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ScaleLevel
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LevelTransport
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridRectangle
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9ScaleLevel
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9LevelTransport
+
+@[expose] public section
 
 noncomputable section
 open Finset

@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9ReducedWeights
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9ReducedWeights
+
+@[expose] public section
 
 noncomputable section
 open Finset

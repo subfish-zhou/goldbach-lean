@@ -1,5 +1,7 @@
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePowerNorm
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosPrimeWeil
+module
+
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryOddPrimePowerNorm
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosPrimeWeil
 
 /-!
 # Primitive Weil bounds for every power of an odd prime
@@ -9,6 +11,8 @@ use square-zero localization and unit-root rigidity; higher odd exponents use
 the proved quadratic Gauss cancellation. Unequal prime valuations vanish.
 All frequencies are arbitrary signed integers.
 -/
+
+@[expose] public section
 
 noncomputable section
 

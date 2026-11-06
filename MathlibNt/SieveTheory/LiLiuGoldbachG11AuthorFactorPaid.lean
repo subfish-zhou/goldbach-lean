@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFactorDecay
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11AuthorFactorDecay
+
+@[expose] public section
 
 open Finset
 open scoped BigOperators Classical

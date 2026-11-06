@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuFouvryG9WFLevel
-import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridCost
-import MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption
+module
+
+public import MathlibNt.SieveTheory.LiLiuFouvryG9WFLevel
+public import MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuFouvryG9GridCost
+public import MathlibNt.SieveTheory.LiLiuPrereqWFTransportAbsorption
+
+@[expose] public section
 
 noncomputable section
 open Filter

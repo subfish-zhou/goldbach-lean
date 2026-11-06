@@ -1,9 +1,13 @@
-import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanUnweightedUnconditional
-import MathlibNt.SieveTheory.Chen.ChenVerifiedPrerequisites
+module
+
+public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanUnweightedUnconditional
+public import MathlibNt.SieveTheory.Chen.ChenVerifiedPrerequisites
 
 /-! Unconditional Chen 1+2, using the proved Liu--Pan distribution source
 and the existing verified Jurkat--Richert / Selberg counting assembly.
 This file makes no claim about the separate 1+1.9 contract. -/
+@[expose] public section
+
 namespace MathlibNt.ChensTheorem
 open Filter
 

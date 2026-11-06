@@ -1,6 +1,10 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossSwitch
-import MathlibNt.SieveTheory.LiLiuGoldbachProductCoefficientCap
-import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12CrossSwitch
+public import MathlibNt.SieveTheory.LiLiuGoldbachProductCoefficientCap
+public import MathlibNt.SieveTheory.LiLiuGoldbachG11ProductGrouping
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruple
-import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialPaid
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightQuadruple
+public import MathlibNt.SieveTheory.LiLiuGoldbachWeightInitialPaid
+
+@[expose] public section
 
 open MathlibNt.SieveTheory.LiLiuOnePlusOneNine
 namespace MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

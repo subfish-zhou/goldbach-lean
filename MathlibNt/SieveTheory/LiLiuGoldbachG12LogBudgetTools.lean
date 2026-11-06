@@ -1,5 +1,9 @@
-import MathlibNt.SieveTheory.LiLiuGoldbachG12SafeGridBudget
-import MathlibNt.SieveTheory.LiLiuGoldbachG12GridAdmission
+module
+
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12SafeGridBudget
+public import MathlibNt.SieveTheory.LiLiuGoldbachG12GridAdmission
+
+@[expose] public section
 
 noncomputable section
 open Classical Finset Filter

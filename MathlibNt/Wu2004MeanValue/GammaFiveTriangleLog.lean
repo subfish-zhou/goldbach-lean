@@ -1,7 +1,11 @@
-import MathlibNt.Wu2004MeanValue.GammaFiveTriangleLiteral
-import MathlibNt.Wu2004MeanValue.GammaFiveLossKernelIdentity
+module
+
+public import MathlibNt.Wu2004MeanValue.GammaFiveTriangleLiteral
+public import MathlibNt.Wu2004MeanValue.GammaFiveLossKernelIdentity
 
 /-! Evaluation of the transported Gamma₅ sections as logarithmic kernels. -/
+@[expose] public section
+
 namespace Wu2004MeanValue.GammaFiveLossBudget
 open Real Set MeasureTheory
 open scoped Classical Interval
@@ -50,11 +54,11 @@ theorem section_density_integral {L U W : ℝ} (hL : 0 < L)
 theorem sectionLog_of_le {W L U : ℝ} (hL : 0 < L) (hLU : L ≤ U) (hUW : U < W) :
     sectionLog W L U = log (U*(W-L)/(L*(W-U))) := by
   by_cases h : L < U
-  · exact if_pos h
+  · exact ite_eq_left h
   · have he : U = L := le_antisymm (le_of_not_gt h) hLU
     subst U
     have hd : L*(W-L) ≠ 0 := mul_ne_zero hL.ne' (sub_pos.mpr hUW).ne'
-    simp only [sectionLog, lt_self_iff_false, if_false, div_self hd, log_one]
+    simp only [sectionLog, lt_self_iff_false, ite_false, div_self hd, log_one]
 
 /-- Integrating the closed section mask gives the clipped logarithmic section. -/
 theorem masked_section_integral {W L U : ℝ} (hL : 0 < L) (hUW : U < W) (v : ℝ) :
@@ -70,6 +74,6 @@ theorem masked_section_integral {W L U : ℝ} (hL : 0 < L) (hUW : U < W) (v : �
   · rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hLU,
       section_density_integral hL hLU hUW, sectionLog_of_le hL hLU hUW]
   · simp only [Icc_eq_empty hLU, Measure.restrict_empty, integral_zero_measure,
-      sectionLog, if_neg (not_lt.mpr (le_of_not_ge hLU)), mul_zero]
+      sectionLog, ite_eq_right (not_lt.mpr (le_of_not_ge hLU)), mul_zero]
 
 end Wu2004MeanValue.GammaFiveLossBudget

@@ -1,4 +1,6 @@
-import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalyticMass
+module
+
+public import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalyticMass
 
 /-!
 # Euler-normalized analytic scale for the actual boundary mass
@@ -6,6 +8,8 @@ import MathlibNt.SieveTheory.LiLiuPrereqWFBoundaryAnalyticMass
 The constant is absolute, and the original dimension-one constant is
 retained in `exp (6*K+2)`. No threshold is allowed to depend on `K`.
 -/
+
+@[expose] public section
 
 namespace MathlibNt.SieveTheory.LiLiuPrereqWF
 
@@ -140,7 +144,7 @@ theorem roughPlusProduct_le_dimensionOne (P : Finset ℕ)
     have hprod : (∏ p ∈ P \ geometricSmallPrimes P D ε, (1 - g p)⁻¹) ≤
         ∏ p ∈ P.filter (fun p : ℕ => p.Prime ∧
           D ^ (ε ^ 2) ≤ (p : ℝ) ∧ (p : ℝ) < D), (1 - g p)⁻¹ := by
-      apply prod_le_prod_of_subset_of_one_le hsub
+      apply prod_le_prod_of_subset_of_one_le₀ hsub
       · intro p hp
         exact inv_nonneg.mpr (sub_nonneg.mpr (hg p (mem_filter.mp (hsub hp)).1).2.le)
       · intro p hp _
@@ -153,7 +157,7 @@ theorem roughPlusProduct_le_dimensionOne (P : Finset ℕ)
     rw [hid] at hdim'
     exact hprod.trans hdim'
   apply le_trans _ hinv
-  apply prod_le_prod
+  apply prod_le_prod₀
   · intro p hp
     linarith [(hg p (mem_sdiff.mp hp).1).1]
   · intro p hp

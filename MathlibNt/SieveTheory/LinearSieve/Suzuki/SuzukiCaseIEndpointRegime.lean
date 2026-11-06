@@ -1,4 +1,8 @@
-import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseISourceRecurrence
+module
+
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiCaseISourceRecurrence
+
+@[expose] public section
 
 open scoped Classical BigOperators
 open Finset
